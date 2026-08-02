@@ -91,9 +91,9 @@ export const ProgressRing = ({
             gap={3}
             align="center"
             classNames={classNames}
-            body={
-                <>
-                    {/* Relative container: the ring fills it, the label overlays its center */}
+            items={[
+                // Relative container: the ring fills it, the label overlays its center
+                () => (
                     <div className={cn("relative inline-flex items-center justify-center", ring)}>
                         {isSkeleton ? (
                             // ATOM GAP: `Progress.ProgressCircle`'s own skeleton is fixed to
@@ -118,12 +118,12 @@ export const ProgressRing = ({
                             </>
                         )}
                     </div>
-                    {/* Optional caption — small + muted, distinct from the centered value */}
-                    {caption !== undefined ? (
-                        <Typography size="xs" color="muted" align="center" isSkeleton={isSkeleton} text={caption} />
-                    ) : null}
-                </>
-            }
+                ),
+                // Optional caption — small + muted, distinct from the centered value
+                ...(caption !== undefined ? [() => (
+                    <Typography size="xs" color="muted" align="center" isSkeleton={isSkeleton} text={caption} />
+                )] : []),
+            ]}
         />
     )
 }

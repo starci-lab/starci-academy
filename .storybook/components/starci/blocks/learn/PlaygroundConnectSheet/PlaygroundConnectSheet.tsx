@@ -167,12 +167,10 @@ const PlaygroundConnectSheet = ({
                     justify="between"
                     padding={4}
 
-                    body={
-                        <>
-                            <HeroSkeleton className="h-5 w-24 rounded-full" />
-                            <HeroSkeleton className="h-8 w-24 rounded-xl" />
-                        </>
-                    }
+                    items={[
+                        () => <HeroSkeleton className="h-5 w-24 rounded-full" />,
+                        () => <HeroSkeleton className="h-8 w-24 rounded-xl" />,
+                    ]}
                 />
             </div>
         )
@@ -189,25 +187,25 @@ const PlaygroundConnectSheet = ({
             gap={3}
             align="center"
 
-            body={
-                <>
+            items={[
+                () => (
                     <Chip
                         tone={STATUS_TONE[safeConnection]}
                         dotClassName={STATUS_DOT_CLASS[safeConnection]}
                         text={STATUS_LABEL[safeConnection]}
 
                     />
-                    {isConnected && latencyMs != null ? (
-                        <Typography
-                            size="sm"
-                            color="muted"
-                            tabularNums
-                            text={`${latencyMs} ms`}
+                ),
+                ...(isConnected && latencyMs != null ? [() => (
+                    <Typography
+                        size="sm"
+                        color="muted"
+                        tabularNums
+                        text={`${latencyMs} ms`}
 
-                        />
-                    ) : null}
-                </>
-            }
+                    />
+                )] : []),
+            ]}
         />
     )
 
@@ -216,8 +214,8 @@ const PlaygroundConnectSheet = ({
             gap={3}
             align="center"
 
-            body={
-                <>
+            items={[
+                () => (
                     <Button
                         label="Reconnect"
                         variant="secondary"
@@ -225,6 +223,8 @@ const PlaygroundConnectSheet = ({
                         prefixIcon={ArrowClockwiseIcon}
                         onPress={onReconnect}
                     />
+                ),
+                () => (
                     <Button
                         isIconOnly
                         size="sm"
@@ -233,16 +233,15 @@ const PlaygroundConnectSheet = ({
                         ariaLabel={open ? "Collapse connection panel" : "Expand connection panel"}
                         onPress={() => onOpenChange(!open)}
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
     // Depends on the loop variable, so it cannot be hoisted to a const above the
     // return — a small named helper instead, in the style this file already uses.
-    const renderLogLine = (entry: PlaygroundAgentLogLine, index: number) => (
+    const renderLogLine = (entry: PlaygroundAgentLogLine) => (
         <Typography
-            key={index}
             size="xs"
             color={LOG_COLOR[entry.level]}
             tabularNums={false}
@@ -256,7 +255,7 @@ const PlaygroundConnectSheet = ({
             <div>
                 <StatRibbon items={buildDeviceItems(device)} valueType="body" bordered />
             </div>
-            <StackV gap={2} body={(agentLog ?? []).map(renderLogLine)} />
+            <StackV gap={2} items={(agentLog ?? []).map((entry) => () => renderLogLine(entry))} />
         </>
     ) : (
         <Typography size="sm" color="muted" text={NOT_CONNECTED_HINT} />
@@ -271,17 +270,15 @@ const PlaygroundConnectSheet = ({
                 justify="between"
                 padding={4}
 
-                body={
-                    <>
-                        {statusGroup}
-                        {actionsGroup}
-                    </>
-                }
+                items={[
+                    () => statusGroup,
+                    () => actionsGroup,
+                ]}
             />
             {/* BODY — mounted only while open, matching a real bottom-sheet's collapsed state. */}
             {open ? (
                 <div className="border-t border-default">
-                    <StackV gap={4} padding={4} body={sheetBody} />
+                    <StackV gap={4} padding={4} items={[() => sheetBody]} />
                 </div>
             ) : null}
         </div>

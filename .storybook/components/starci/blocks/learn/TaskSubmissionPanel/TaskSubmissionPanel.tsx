@@ -150,8 +150,8 @@ const GithubUrlField = ({
         <StackV
             gap={2}
 
-            body={
-                <>
+            items={[
+                () => (
                     <InputText
                         label="Repo GitHub"
                         value={githubUrl}
@@ -162,16 +162,16 @@ const GithubUrlField = ({
                         isSkeleton={isSkeleton}
 
                     />
-                    {!isSkeleton && AutosaveIcon != null ? (
-                        <InlineIconLabel
-                            icon={AutosaveIcon}
-                            tone={AUTOSAVE_TONE[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
-                            size="xs"
-                            label={AUTOSAVE_LABEL[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
-                        />
-                    ) : null}
-                </>
-            }
+                ),
+                ...(!isSkeleton && AutosaveIcon != null ? [() => (
+                    <InlineIconLabel
+                        icon={AutosaveIcon}
+                        tone={AUTOSAVE_TONE[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
+                        size="xs"
+                        label={AUTOSAVE_LABEL[autosaveStatus as Exclude<TaskSubmissionAutosaveStatus, "idle">]}
+                    />
+                )] : []),
+            ]}
         />
     )
 }
@@ -190,15 +190,15 @@ const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton }: Set
         align="center"
         justify="between"
 
-        body={
-            <>
+        items={[
+            () => (
                 <StackH
                     gap={3}
                     align="center"
                     wrap
 
-                    body={
-                        <>
+                    items={[
+                        () => (
                             <InlineIconLabel
                                 icon={CodeIcon}
                                 tone="default"
@@ -206,6 +206,8 @@ const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton }: Set
                                 isSkeleton={isSkeleton}
                                 label={settingsSummary.langLabel}
                             />
+                        ),
+                        () => (
                             <InlineIconLabel
                                 icon={GitBranchIcon}
                                 tone="default"
@@ -213,9 +215,11 @@ const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton }: Set
                                 isSkeleton={isSkeleton}
                                 label={settingsSummary.branch}
                             />
-                        </>
-                    }
+                        ),
+                    ]}
                 />
+            ),
+            () => (
                 <Button
                     isIconOnly
                     prefixIcon={GearSixIcon}
@@ -226,8 +230,8 @@ const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton }: Set
                     isSkeleton={isSkeleton}
 
                 />
-            </>
-        }
+            ),
+        ]}
     />
 )
 
@@ -247,9 +251,9 @@ const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton 
         justify="between"
         wrap
 
-        body={
-            <>
-                {aiStatusText != null ? (
+        items={[
+            () =>
+                aiStatusText != null ? (
                     <InlineIconLabel
                         icon={SparkleIcon}
                         tone="default"
@@ -260,7 +264,8 @@ const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton 
                 ) : (
                     // Keeps the row's justify-between shape even with no status text to show.
                     <span />
-                )}
+                ),
+            () => (
                 <Button
                     label="Grade"
                     variant="primary"
@@ -270,8 +275,8 @@ const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton 
                     isSkeleton={isSkeleton}
 
                 />
-            </>
-        }
+            ),
+        ]}
     />
 )
 
@@ -332,19 +337,17 @@ const TaskResultSummary = ({ result, isSkeleton }: TaskResultSummaryProps) => {
         <StackV
             gap={2}
 
-            body={
-                <>
-                    <StackH gap={4} align="baseline" wrap body={scoreRow} />
-                    {result.shortFeedback != null ? (
-                        <Typography
-                            size="sm"
-                            isSkeleton={isSkeleton}
-                            text={result.shortFeedback}
+            items={[
+                () => <StackH gap={4} align="baseline" wrap items={[() => scoreRow]} />,
+                ...(result.shortFeedback != null ? [() => (
+                    <Typography
+                        size="sm"
+                        isSkeleton={isSkeleton}
+                        text={result.shortFeedback}
 
-                        />
-                    ) : null}
-                </>
-            }
+                    />
+                )] : []),
+            ]}
         />
     )
 }
@@ -359,8 +362,8 @@ const GithubGradingSettingsBody = ({ form }: GithubGradingSettingsBodyProps) => 
     <StackV
         gap={4}
 
-        body={
-            <>
+        items={[
+            () => (
                 <SelectSingle
                     label="Grading language"
                     options={form.languageOptions}
@@ -368,6 +371,8 @@ const GithubGradingSettingsBody = ({ form }: GithubGradingSettingsBodyProps) => 
                     onValueChange={form.onLanguageChange}
 
                 />
+            ),
+            () => (
                 <InputText
                     label="Branch"
                     value={form.branch}
@@ -375,6 +380,8 @@ const GithubGradingSettingsBody = ({ form }: GithubGradingSettingsBodyProps) => 
                     placeholder="main"
 
                 />
+            ),
+            () => (
                 <InputPassword
                     label="GitHub token"
                     value={form.token}
@@ -383,8 +390,8 @@ const GithubGradingSettingsBody = ({ form }: GithubGradingSettingsBodyProps) => 
                     placeholder="ghp_…"
 
                 />
-            </>
-        }
+            ),
+        ]}
     />
 )
 
@@ -419,8 +426,8 @@ const TaskSubmissionPanel = ({
                 <StackV
                     gap={4}
 
-                    body={
-                        <>
+                    items={[
+                        () => (
                             <GithubUrlField
                                 githubUrl={githubUrl}
                                 onGithubUrlChange={onGithubUrlChange}
@@ -429,12 +436,16 @@ const TaskSubmissionPanel = ({
                                 isSkeleton={isSkeleton}
 
                             />
+                        ),
+                        () => (
                             <SettingsSummaryRow
                                 settingsSummary={settingsSummary}
                                 onOpenSettings={() => onSettingsOpenChange(true)}
                                 isSkeleton={isSkeleton}
 
                             />
+                        ),
+                        () => (
                             <EvaluateActionRow
                                 onEvaluate={onEvaluate}
                                 isEvaluating={isEvaluating}
@@ -442,9 +453,9 @@ const TaskSubmissionPanel = ({
                                 isSkeleton={isSkeleton}
 
                             />
-                            <TaskResultSummary result={latestResult} isSkeleton={isSkeleton} />
-                        </>
-                    }
+                        ),
+                        () => <TaskResultSummary result={latestResult} isSkeleton={isSkeleton} />,
+                    ]}
                 />
             )}
         />

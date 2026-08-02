@@ -98,8 +98,8 @@ const QuotaBar = ({
             align="center"
             justify="between"
 
-            body={(
-                <>
+            items={[
+                () => (
                     <Typography
                         size="sm"
                         color="muted"
@@ -108,6 +108,8 @@ const QuotaBar = ({
 
                         text={label}
                     />
+                ),
+                () => (
                     <Typography
                         size="sm"
                         weight="medium"
@@ -129,8 +131,8 @@ const QuotaBar = ({
                             </>
                         )}
                     />
-                </>
-            )}
+                ),
+            ]}
         />
     )
 
@@ -153,22 +155,20 @@ const QuotaBar = ({
             gap={4}
             className={className}
 
-            body={(
-                <>
-                    {labelRow}
-                    {bar}
-                    {showCaption ? (
-                        <Typography
-                            size="xs"
-                            color="muted"
-                            isSkeleton={isSkeleton}
-                            classNames={isSkeleton ? ["w-1/2"] : undefined}
+            items={[
+                () => labelRow,
+                () => bar,
+                ...(showCaption ? [() => (
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        classNames={isSkeleton ? ["w-1/2"] : undefined}
 
-                            text={resetLabel ?? undefined}
-                        />
-                    ) : null}
-                </>
-            )}
+                        text={resetLabel ?? undefined}
+                    />
+                )] : []),
+            ]}
         />
     )
 }

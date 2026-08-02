@@ -132,9 +132,9 @@ const CardBody = ({
                 align="center"
                 className="relative"
 
-                body={
-                    <StackV gap={3} classNames={["min-w-0", "flex-1"]} body={titleAndMeta} />
-                }
+                items={[
+                    () => <StackV gap={3} classNames={["min-w-0", "flex-1"]} items={[() => titleAndMeta]} />,
+                ]}
             />
             {/* Progress SITS right under the text cluster, BEFORE the button:
             where am I → how much progress → what's next. Put it

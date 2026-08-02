@@ -77,16 +77,12 @@ const MessageRow = ({
             gap={2}
             align="center"
 
-            body={
-                <>
-                    <Avatar src={answer.author.avatarUrl} name={answer.author.displayName} seed={answer.author.id} size="sm" />
-                    <Typography size="xs" weight="medium" text={displayName} />
-                    <Typography size="xs" color="muted" text={answer.createdTimeAgo} />
-                    {answer.isAcceptedAnswer ? (
-                        <Chip tone="success" text="Accepted answer" />
-                    ) : null}
-                </>
-            }
+            items={[
+                () => <Avatar src={answer.author.avatarUrl} name={answer.author.displayName} seed={answer.author.id} size="sm" />,
+                () => <Typography size="xs" weight="medium" text={displayName} />,
+                () => <Typography size="xs" color="muted" text={answer.createdTimeAgo} />,
+                ...(answer.isAcceptedAnswer ? [() => <Chip tone="success" text="Accepted answer" />] : []),
+            ]}
         />
     )
 
@@ -95,26 +91,26 @@ const MessageRow = ({
             gap={3}
             align="center"
 
-            body={
-                <>
+            items={[
+                () => (
                     <QaReactionBar
                         count={answer.reactionCount}
                         myReaction={answer.myReaction}
                         onReact={interactive.onReact}
 
                     />
-                    {interactive.canAccept ? (
-                        <Button
-                            variant={answer.isAcceptedAnswer ? "secondary" : "ghost"}
-                            size="sm"
-                            prefixIcon={CheckCircleIcon}
-                            label={answer.isAcceptedAnswer ? "Unaccept" : "Mark as the correct answer"}
-                            onPress={() => interactive.onAcceptAnswer(!answer.isAcceptedAnswer)}
+                ),
+                ...(interactive.canAccept ? [() => (
+                    <Button
+                        variant={answer.isAcceptedAnswer ? "secondary" : "ghost"}
+                        size="sm"
+                        prefixIcon={CheckCircleIcon}
+                        label={answer.isAcceptedAnswer ? "Unaccept" : "Mark as the correct answer"}
+                        onPress={() => interactive.onAcceptAnswer(!answer.isAcceptedAnswer)}
 
-                        />
-                    ) : null}
-                </>
-            }
+                    />
+                )] : []),
+            ]}
         />
     ) : null
 
@@ -134,7 +130,7 @@ const MessageRow = ({
 
     return (
         <div className={cn("flex w-full", isMine ? "justify-end" : "justify-start")}>
-            <StackV gap={2} className={cn("min-w-0 max-w-[92%]", isMine && "items-end")} body={bubbleBody} />
+            <StackV gap={2} className={cn("min-w-0 max-w-[92%]", isMine && "items-end")} items={[() => bubbleBody]} />
         </div>
     )
 }
@@ -159,20 +155,18 @@ const QaMessageBubble = ({
                     gap={2}
                     align="center"
 
-                    body={
-                        <>
-                            <Avatar isSkeleton size="sm" />
-                            <HeroSkeleton className="h-3 w-16 rounded" />
-                            <HeroSkeleton className="h-3 w-10 rounded" />
-                        </>
-                    }
+                    items={[
+                        () => <Avatar isSkeleton size="sm" />,
+                        () => <HeroSkeleton className="h-3 w-16 rounded" />,
+                        () => <HeroSkeleton className="h-3 w-10 rounded" />,
+                    ]}
                 />
                 <HeroSkeleton className="h-16 w-full rounded-2xl" />
             </>
         )
         return (
             <div>
-                <StackV gap={2} className="max-w-[92%]" body={skeletonBody} />
+                <StackV gap={2} className="max-w-[92%]" items={[() => skeletonBody]} />
             </div>
         )
     }
@@ -201,7 +195,7 @@ const QaMessageBubble = ({
 
     return (
         <div>
-            <StackV gap={2} body={threadBody} />
+            <StackV gap={2} items={[() => threadBody]} />
         </div>
     )
 }

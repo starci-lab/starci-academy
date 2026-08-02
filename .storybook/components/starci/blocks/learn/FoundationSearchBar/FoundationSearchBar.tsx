@@ -81,8 +81,8 @@ const FoundationSearchBar = ({
                 justify="between"
 
 
-                body={
-                    <>
+                items={[
+                    () => (
                         <SearchAutocomplete
                             items={items}
                             inputValue={query}
@@ -92,26 +92,34 @@ const FoundationSearchBar = ({
                             isSkeleton={isSkeleton}
 
                         />
-                        {isSkeleton || isCountLoading ? (
-                            <Typography
-                                size="sm"
-                                color="muted"
-                                isSkeleton
-                                classNames={["shrink-0"]}
+                    ),
+                    ...(isSkeleton || isCountLoading
+                        ? [
+                            () => (
+                                <Typography
+                                    size="sm"
+                                    color="muted"
+                                    isSkeleton
+                                    classNames={["shrink-0"]}
 
-                            />
-                        ) : resultCount !== undefined ? (
-                            <Typography
-                                size="sm"
-                                color="muted"
-                                tabularNums
-                                text={resultCountLabel(resultCount)}
-                                classNames={["shrink-0"]}
+                                />
+                            ),
+                        ]
+                        : resultCount !== undefined
+                            ? [
+                                () => (
+                                    <Typography
+                                        size="sm"
+                                        color="muted"
+                                        tabularNums
+                                        text={resultCountLabel(resultCount)}
+                                        classNames={["shrink-0"]}
 
-                            />
-                        ) : null}
-                    </>
-                }
+                                    />
+                                ),
+                            ]
+                            : []),
+                ]}
             />
         </div>
     )

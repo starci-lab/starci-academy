@@ -93,24 +93,24 @@ const ContentAiChatDrawer = ({
     // neither renders unless both do.
     const hasModeSwitch = mode != null && onModeChange != null
 
-    const titleAndModeSwitch = (
-        <>
+    const titleAndModeSwitch = [
+        () => (
             <span className="min-w-0 flex-1">
                 <Typography text={title ?? FALLBACK_TITLE} weight="bold" truncate />
             </span>
-            {hasModeSwitch ? (
-                <span>
-                    <ButtonRadioGroup
-                        items={MODE_ITEMS}
-                        value={mode as ContentAiChatDrawerMode}
-                        onChange={(next) => onModeChange?.(next)}
-                        ariaLabel={MODE_SWITCH_ARIA_LABEL}
+        ),
+        ...(hasModeSwitch ? [() => (
+            <span>
+                <ButtonRadioGroup
+                    items={MODE_ITEMS}
+                    value={mode as ContentAiChatDrawerMode}
+                    onChange={(next) => onModeChange?.(next)}
+                    ariaLabel={MODE_SWITCH_ARIA_LABEL}
 
-                    />
-                </span>
-            ) : null}
-        </>
-    )
+                />
+            </span>
+        )] : []),
+    ]
 
     const header: ReactNode = (
         <StackH
@@ -118,7 +118,7 @@ const ContentAiChatDrawer = ({
             justify="between"
             className="pr-8"
 
-            body={titleAndModeSwitch}
+            items={titleAndModeSwitch}
         />
     )
 

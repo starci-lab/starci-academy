@@ -124,16 +124,16 @@ const ReactionButton = ({
             gap={3}
             align="center"
 
-            body={
-                <>
+            items={[
+                () => (
                     <span className="flex items-center -space-x-1">
                         {topReactions.map((reaction) => (
                             <ReactionGlyph key={reaction.type} type={reaction.type} size="sm" />
                         ))}
                     </span>
-                    <Typography size="sm" text={String(total)} />
-                </>
-            }
+                ),
+                () => <Typography size="sm" text={String(total)} />,
+            ]}
         />
     ) : null
 
@@ -169,7 +169,7 @@ const ReactionButton = ({
     )
 
     return (
-        <StackH gap={3} align="center" body={triggerAndSummary} />
+        <StackH gap={3} align="center" items={[() => triggerAndSummary]} />
     )
 }
 

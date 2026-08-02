@@ -118,9 +118,9 @@ const InterviewerPresence = ({
             gap={2}
             align="center"
 
-            body={
-                <>
-                    <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-accent" />
+            items={[
+                () => <span aria-hidden className="size-1.5 animate-pulse rounded-full bg-accent" />,
+                () => (
                     <Typography
                         text={speakingLabel}
                         size="sm"
@@ -128,8 +128,8 @@ const InterviewerPresence = ({
                         weight="medium"
 
                     />
-                </>
-            }
+                ),
+            ]}
         />
     ) : null
 
@@ -137,31 +137,33 @@ const InterviewerPresence = ({
         <StackV
             gap={1}
 
-            body={
-                <>
+            items={[
+                () => (
                     <Typography
                         text={persona.name}
                         weight="medium"
 
                     />
+                ),
+                () => (
                     <StackH
                         gap={3}
                         align="center"
 
-                        body={
-                            <>
+                        items={[
+                            () => (
                                 <Typography
                                     text={persona.role}
                                     size="sm"
                                     color="muted"
 
                                 />
-                                {speakingStatus}
-                            </>
-                        }
+                            ),
+                            () => speakingStatus,
+                        ]}
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
@@ -170,12 +172,10 @@ const InterviewerPresence = ({
             gap={3}
             align="center"
 
-            body={
-                <>
-                    {avatarWithPulse}
-                    {nameAndRole}
-                </>
-            }
+            items={[
+                () => avatarWithPulse,
+                () => nameAndRole,
+            ]}
         />
     )
 
@@ -196,12 +196,10 @@ const InterviewerPresence = ({
             align="center"
             justify="between"
 
-            body={
-                <>
-                    {identity}
-                    {toggleButton}
-                </>
-            }
+            items={[
+                () => identity,
+                () => toggleButton,
+            ]}
         />
     )
 
@@ -210,13 +208,11 @@ const InterviewerPresence = ({
             gap={2}
             align="center"
 
-            body={
-                <>
-                    <span aria-hidden className="size-1.5 animate-bounce rounded-full bg-muted" />
-                    <span aria-hidden className="size-1.5 animate-bounce rounded-full bg-muted [animation-delay:150ms]" />
-                    <span aria-hidden className="size-1.5 animate-bounce rounded-full bg-muted [animation-delay:300ms]" />
-                </>
-            }
+            items={[
+                () => <span aria-hidden className="size-1.5 animate-bounce rounded-full bg-muted" />,
+                () => <span aria-hidden className="size-1.5 animate-bounce rounded-full bg-muted [animation-delay:150ms]" />,
+                () => <span aria-hidden className="size-1.5 animate-bounce rounded-full bg-muted [animation-delay:300ms]" />,
+            ]}
         />
     ) : null
 
@@ -224,17 +220,17 @@ const InterviewerPresence = ({
         <StackV
             gap={2}
 
-            body={
-                <>
+            items={[
+                () => (
                     <MarkdownContent
                         source={questionMarkdown as string}
                         measure="reading"
 
 
                     />
-                    {typingDots}
-                </>
-            }
+                ),
+                () => typingDots,
+            ]}
         />
     ) : null
 
@@ -243,12 +239,10 @@ const InterviewerPresence = ({
             <StackV
                 gap={3}
 
-                body={
-                    <>
-                        {headerRow}
-                        {questionRegion}
-                    </>
-                }
+                items={[
+                    () => headerRow,
+                    () => questionRegion,
+                ]}
             />
         </div>
     )

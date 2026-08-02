@@ -127,8 +127,8 @@ const SubmissionScoreCard = ({
             align="center"
             wrap
 
-            body={
-                <>
+            items={[
+                () => (
                     <InlineIconLabel
                         icon={SparkleIcon}
                         tone="default"
@@ -136,31 +136,31 @@ const SubmissionScoreCard = ({
                         isSkeleton={isSkeleton}
                         label={`${gradedByLabel ?? "Graded by"} ${gradedByModel}`}
                     />
-                    {modelCategory != null ? (
-                        <EnumChip
-                            value={modelCategory}
-                            map={MODEL_CATEGORY_MAP}
-                            isSkeleton={isSkeleton}
+                ),
+                ...(modelCategory != null ? [() => (
+                    <EnumChip
+                        value={modelCategory}
+                        map={MODEL_CATEGORY_MAP}
+                        isSkeleton={isSkeleton}
 
-                        />
-                    ) : null}
-                    {timeAgo != null ? (
-                        <Typography
-                            size="xs"
-                            color="muted"
-                            isSkeleton={isSkeleton}
-                            text={timeAgo}
+                    />
+                )] : []),
+                ...(timeAgo != null ? [() => (
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        text={timeAgo}
 
-                        />
-                    ) : null}
-                </>
-            }
+                    />
+                )] : []),
+            ]}
         />
     ) : null
 
     const scoreSummary = (
         <>
-            <StackH gap={4} align="baseline" wrap body={scoreRow} />
+            <StackH gap={4} align="baseline" wrap items={[() => scoreRow]} />
 
             {pointsNeeded != null && pointsNeeded > 0 ? (
                 <Typography
@@ -202,7 +202,7 @@ const SubmissionScoreCard = ({
                 label={label}
                 isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={4} body={scoreSummary} />}
+                body={() => <StackV gap={4} items={[() => scoreSummary]} />}
             />
         </div>
     )

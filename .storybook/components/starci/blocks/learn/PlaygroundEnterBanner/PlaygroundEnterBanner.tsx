@@ -65,8 +65,8 @@ const PlaygroundEnterBanner = ({
                 <StackV
                     gap={4}
 
-                    body={
-                        <>
+                    items={[
+                        () => (
                             <Typography
                                 size="sm"
                                 color={allReady ? "success" : "muted"}
@@ -76,6 +76,8 @@ const PlaygroundEnterBanner = ({
 
                                 text={readiness}
                             />
+                        ),
+                        () => (
                             <Button
                                 variant="primary"
                                 label={SECTION_LABEL}
@@ -87,8 +89,8 @@ const PlaygroundEnterBanner = ({
 
                                 classNames={["w-fit"]}
                             />
-                        </>
-                    }
+                        ),
+                    ]}
                 />
             )}
         />

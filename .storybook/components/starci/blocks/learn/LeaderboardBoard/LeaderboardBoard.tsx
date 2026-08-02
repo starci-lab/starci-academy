@@ -146,8 +146,8 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
             align="center"
             className="w-24"
 
-            body={
-                <>
+            items={[
+                () => (
                     <div>
                         <Avatar
                             name={entry.username}
@@ -158,6 +158,8 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
 
                         />
                     </div>
+                ),
+                () => (
                     <Typography
                         size="sm"
                         weight="medium"
@@ -169,6 +171,8 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
                         classNames={["w-full"]}
 
                     />
+                ),
+                () => (
                     <Typography
                         size="xs"
                         color="muted"
@@ -176,10 +180,10 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
                         text={isSkeleton ? undefined : entry.pointsLabel}
 
                     />
-                    {riser}
-                    {entry.isMe ? <span className="sr-only">{meLabel}</span> : null}
-                </>
-            }
+                ),
+                () => riser,
+                ...(entry.isMe ? [() => <span className="sr-only">{meLabel}</span>] : []),
+            ]}
         />
     )
 }
@@ -190,9 +194,9 @@ const Podium = ({ entries, meLabel, isSkeleton }: PodiumProps) => (
         justify="center"
         align="end"
 
-        body={[...entries]
+        items={[...entries]
             .sort((a, b) => PODIUM_VISUAL_ORDER[a.rank] - PODIUM_VISUAL_ORDER[b.rank])
-            .map((entry) => podiumEntryCard(entry, meLabel, isSkeleton))}
+            .map((entry) => () => podiumEntryCard(entry, meLabel, isSkeleton))}
     />
 )
 
@@ -282,8 +286,8 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean): Sur
             gap={3}
             align="center"
 
-            body={
-                <>
+            items={[
+                () => (
                     <Typography
                         size="sm"
                         color="muted"
@@ -294,6 +298,8 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean): Sur
                         classNames={["w-1/4", "shrink-0"]}
 
                     />
+                ),
+                () => (
                     <div className="min-w-0 flex-1">
                         <UserCell
                             username={row.username}
@@ -313,9 +319,9 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean): Sur
 
                         />
                     </div>
-                    {row.isMe ? <span className="sr-only">{meLabel}</span> : null}
-                </>
-            }
+                ),
+                ...(row.isMe ? [() => <span className="sr-only">{meLabel}</span>] : []),
+            ]}
         />
     ),
 })
@@ -371,9 +377,9 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
         <StackV
             gap={1}
 
-            body={
-                <>
-                    {/* The rank NUMBER is typed data; "Rank #N" is the block's own wording (§14d.1). */}
+            items={[
+                // The rank NUMBER is typed data; "Rank #N" is the block's own wording (§14d.1).
+                () => (
                     <Typography
                         size="base"
                         weight="bold"
@@ -382,23 +388,25 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
                         text={isSkeleton ? undefined : `Rank #${standing.rank}`}
 
                     />
+                ),
+                () => (
                     <Typography
                         size="sm"
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : standing.primaryLabel}
 
                     />
-                    {standing.secondaryLabel ? (
-                        <Typography
-                            size="xs"
-                            color="muted"
-                            isSkeleton={isSkeleton}
-                            text={isSkeleton ? undefined : standing.secondaryLabel}
+                ),
+                ...(standing.secondaryLabel ? [() => (
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        text={isSkeleton ? undefined : standing.secondaryLabel}
 
-                        />
-                    ) : null}
-                </>
-            }
+                    />
+                )] : []),
+            ]}
         />
     ) : null
 
@@ -410,12 +418,10 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
                     gap={3}
                     align="center"
 
-                    body={
-                        <>
-                            <IconTile icon={TrophyIcon} tone="accent" size="sm" isSkeleton={isSkeleton} />
-                            {standingLabels}
-                        </>
-                    }
+                    items={[
+                        () => <IconTile icon={TrophyIcon} tone="accent" size="sm" isSkeleton={isSkeleton} />,
+                        () => standingLabels,
+                    ]}
                 />
             )}
         />
@@ -425,19 +431,19 @@ const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCount, meL
         <StackV
             gap={6}
 
-            body={
-                <>
-                    {standingCard}
-                    {podiumEntries.length > 0 ? (
-                        <Podium entries={podiumEntries} meLabel={meLabel} isSkeleton={isSkeleton} />
-                    ) : null}
+            items={[
+                () => standingCard,
+                ...(podiumEntries.length > 0 ? [() => (
+                    <Podium entries={podiumEntries} meLabel={meLabel} isSkeleton={isSkeleton} />
+                )] : []),
+                () => (
                     <SurfaceCardList
                         items={buildListItems(rows, selfRow, hiddenBetweenCount, meLabel, isSkeleton)}
 
 
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 }

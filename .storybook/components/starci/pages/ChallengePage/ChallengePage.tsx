@@ -106,8 +106,8 @@ const ChallengePage = ({
     passThreshold,
     isSkeleton = false,
 }: ChallengePageProps) => {
-    const readColumn = (
-        <>
+    const readColumn = [
+        () => (
             <ChallengeHeader
 
                 onBackPress={onBackPress}
@@ -120,6 +120,8 @@ const ChallengePage = ({
                 isSkeleton={isSkeleton}
 
             />
+        ),
+        () => (
             <ChallengeBrief
 
                 prerequisites={prerequisites}
@@ -130,11 +132,11 @@ const ChallengePage = ({
                 isSkeleton={isSkeleton}
 
             />
-        </>
-    )
+        ),
+    ]
 
-    const actColumn = (
-        <>
+    const actColumn = [
+        () => (
             <ChallengeDeliverableList
 
                 items={deliverables}
@@ -142,6 +144,8 @@ const ChallengePage = ({
                 isSkeleton={isSkeleton}
 
             />
+        ),
+        () => (
             <ChallengeScoreCard
 
                 earnedScore={earnedScore}
@@ -150,14 +154,14 @@ const ChallengePage = ({
                 isSkeleton={isSkeleton}
 
             />
-        </>
-    )
+        ),
+    ]
 
     const challengeBody = (
         <SplitWorkspace
 
-            main={<StackV gap={7} body={readColumn} />}
-            aside={<StackV gap={6} body={actColumn} />}
+            main={<StackV gap={7} items={readColumn} />}
+            aside={<StackV gap={6} items={actColumn} />}
         />
     )
 

@@ -24,7 +24,7 @@ const SectionCard = ({
 }) => (
     <Card className={cn(classNames)} data-tier="composite" data-component="MetricCard">
         <CardContent>
-            <StackV gap={4} body={body} />
+            <StackV gap={4} items={[() => body]} />
         </CardContent>
     </Card>
 )
@@ -99,22 +99,18 @@ export const MetricCard = ({
         <SectionCard classNames={classNames} body={
             <StackV
                 gap={3}
-                body={
-                    <>
-                        {/* Primary metric value — large and visually prominent */}
-                        <Typography size="h4" isSkeleton={isSkeleton} text={value} />
-
-                        {/* Descriptive label — body-sm foreground, the prominent line */}
-                        <Typography size="sm" isSkeleton={isSkeleton} text={label} />
-
-                        {/* Optional hint — small + muted footnote, DISTINCT from the label.
-                            While loading there is no `hint` to test yet, so the composite still
-                            decides to shimmer a third line (the count is its call, not the atom's). */}
-                        {hint !== undefined || isSkeleton ? (
-                            <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={hint} />
-                        ) : null}
-                    </>
-                }
+                items={[
+                    // Primary metric value — large and visually prominent
+                    () => <Typography size="h4" isSkeleton={isSkeleton} text={value} />,
+                    // Descriptive label — body-sm foreground, the prominent line
+                    () => <Typography size="sm" isSkeleton={isSkeleton} text={label} />,
+                    // Optional hint — small + muted footnote, DISTINCT from the label.
+                    // While loading there is no `hint` to test yet, so the composite still
+                    // decides to shimmer a third line (the count is its call, not the atom's).
+                    ...(hint !== undefined || isSkeleton ? [() => (
+                        <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={hint} />
+                    )] : []),
+                ]}
             />
         } />
     )

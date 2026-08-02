@@ -121,20 +121,22 @@ const Base = ({
                                     gap={2}
                                     pattern="title-subtitle"
                                     className={cn("pr-8", titleClassName)}
-                                    body={
-                                        <>
+                                    items={[
+                                        () => (
                                             <Typography
                                                 weight="bold"
                                                 text={title}
                                             />
-                                            {description != null ? (
+                                        ),
+                                        ...(description != null
+                                            ? [() => (
                                                 <Typography size="sm"
                                                     color="muted"
                                                     text={description}
                                                 />
-                                            ) : null}
-                                        </>
-                                    }
+                                            )]
+                                            : []),
+                                    ]}
                                 />
                             </Drawer.Header>
                         ) : null}

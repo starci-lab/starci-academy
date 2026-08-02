@@ -77,7 +77,7 @@ const QuizQuestion = ({
             gap={3}
             align="center"
 
-            body={<Chip tone="default" text={levelLabel} />}
+            items={[() => <Chip tone="default" text={levelLabel} />]}
         />
     ) : null
 
@@ -85,16 +85,16 @@ const QuizQuestion = ({
         <StackV
             gap={3}
 
-            body={
-                <>
-                    <Typography size="sm" weight="medium" text="Expected answer" />
+            items={[
+                () => <Typography size="sm" weight="medium" text="Expected answer" />,
+                () => (
                     <MarkdownContent
                         source={expectedAnswer}
                         measure="compact"
 
                     />
-                </>
-            }
+                ),
+            ]}
         />
     ) : null
 
@@ -102,34 +102,36 @@ const QuizQuestion = ({
         <StackV
             gap={6}
 
-            body={
-                <>
+            items={[
+                () => (
                     <StackH
                         gap={3}
                         align="center"
 
-                        body={
+                        items={[
                             // One chip for the classifying axis. The reasoning below is an
                             // ordinary document — two loud signals and the learner reads the
                             // verdict twice.
-                            <Chip
-                                tone={verdict === "correct" ? "success" : "danger"}
-                                icon={verdict === "correct" ? CheckCircleIcon : XCircleIcon}
-                                text={verdict === "correct" ? "Correct" : "Not quite"}
+                            () => (
+                                <Chip
+                                    tone={verdict === "correct" ? "success" : "danger"}
+                                    icon={verdict === "correct" ? CheckCircleIcon : XCircleIcon}
+                                    text={verdict === "correct" ? "Correct" : "Not quite"}
 
-                            />
-                        }
+                                />
+                            ),
+                        ]}
                     />
-                    {expectedAnswerBlock}
-                    {explanation != null ? (
-                        <MarkdownContent
-                            source={explanation}
-                            measure="compact"
+                ),
+                () => expectedAnswerBlock,
+                ...(explanation != null ? [() => (
+                    <MarkdownContent
+                        source={explanation}
+                        measure="compact"
 
-                        />
-                    ) : null}
-                </>
-            }
+                    />
+                )] : []),
+            ]}
         />
     ) : null
 
@@ -138,20 +140,21 @@ const QuizQuestion = ({
             gap={3}
             justify="end"
 
-            body={
-                isGraded ? (
-                    <Button label={nextLabel} variant="primary" onPress={onNext} />
-                ) : (
-                    <Button
-                        label={submitLabel}
-                        variant="primary"
-                        onPress={onSubmit}
-                        isDisabled={answer.trim().length === 0}
-                        isPending={isPending}
+            items={[
+                () =>
+                    isGraded ? (
+                        <Button label={nextLabel} variant="primary" onPress={onNext} />
+                    ) : (
+                        <Button
+                            label={submitLabel}
+                            variant="primary"
+                            onPress={onSubmit}
+                            isDisabled={answer.trim().length === 0}
+                            isPending={isPending}
 
-                    />
-                )
-            }
+                        />
+                    ),
+            ]}
         />
     )
 
@@ -189,7 +192,7 @@ const QuizQuestion = ({
             <SurfaceCard
                 isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={6} body={questionBody} />}
+                body={() => <StackV gap={6} items={[() => questionBody]} />}
             />
         </div>
     )

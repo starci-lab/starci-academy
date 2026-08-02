@@ -159,12 +159,10 @@ const Row = ({
                     gap={3}
                     classNames={["shrink-0"]}
                     className="ml-auto"
-                    body={
-                        <>
-                            {MetaSlot ? <MetaSlot /> : null}
-                            {TrailingSlot ? <TrailingSlot /> : null}
-                        </>
-                    }
+                    items={[
+                        ...(MetaSlot ? [() => <MetaSlot />] : []),
+                        ...(TrailingSlot ? [() => <TrailingSlot />] : []),
+                    ]}
                 />
             ) : null}
         </>
@@ -297,23 +295,21 @@ const Labeled = ({
             as="section"
             gap={4}
             classNames={classNames}
-            body={
-                <>
+            items={[
+                () => (
                     <StackH
                         gap={3}
-                        body={
-                            <>
-                                {Icon ? <Icon /> : null}
-                                <Label>{label}</Label>
-                            </>
-                        }
+                        items={[
+                            ...(Icon ? [() => <Icon />] : []),
+                            () => <Label>{label}</Label>,
+                        ]}
                     />
-                    <StackV gap={3} body={rows} />
-                    {/* `isSkeleton`-gated: while loading there is no data behind the CTA yet,
-                        same reasoning as the `meta`/`trailing` omission on `Row` above. */}
-                    {!isSkeleton && Action ? <div><Action /></div> : null}
-                </>
-            }
+                ),
+                () => <StackV gap={3} items={[() => rows]} />,
+                // `isSkeleton`-gated: while loading there is no data behind the CTA yet,
+                // same reasoning as the `meta`/`trailing` omission on `Row` above.
+                ...(!isSkeleton && Action ? [() => <div><Action /></div>] : []),
+            ]}
         />
     )
 }
@@ -359,10 +355,9 @@ const Meta = ({ chip: Chip, items, classNames}: ListMetaProps) => (
         gap={3}
         classNames={["min-w-0", ...(classNames ?? [])]}
 
-        body={
-            <>
-                {Chip ? <span className="shrink-0"><Chip /></span> : null}
-                {items.length > 0 ? (
+        items={[
+            ...(Chip ? [() => <span className="shrink-0"><Chip /></span>] : []),
+            ...(items.length > 0 ? [() => (
                     <Typography size="xs"
                         text={(
                             <>
@@ -383,9 +378,8 @@ const Meta = ({ chip: Chip, items, classNames}: ListMetaProps) => (
                         classNames={["min-w-0"]}
 
                     />
-                ) : null}
-            </>
-        }
+            )] : []),
+        ]}
     />
 )
 
@@ -459,8 +453,8 @@ const ToggleRow = ({
             gap={4}
             classNames={classNames}
             pattern="label-field"
-            body={
-                <>
+            items={[
+                () => (
                     <TitledText
                         title={label}
                         subtitle={description}
@@ -468,7 +462,8 @@ const ToggleRow = ({
                         classNames={["flex-1"]}
 
                     />
-                    {isSkeleton ? (
+                ),
+                () => isSkeleton ? (
                         <ChoiceSwitch
                             isSkeleton
                             isSelected={false}
@@ -491,9 +486,8 @@ const ToggleRow = ({
                                 </Switch.Control>
                             </Switch.Content>
                         </Switch>
-                    )}
-                </>
-            }
+                    ),
+            ]}
         />
     </div>
 )

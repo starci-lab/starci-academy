@@ -185,18 +185,16 @@ export const _CourseContents = ({
             ? () => (
                 <StackH
                     gap={3}
-                    body={
-                        <>
-                            {difficulty != null ? <DifficultyChip difficulty={difficulty} /> : null}
-                            {isPremium ? (
-                                <LockIcon
-                                    aria-label={labels.premiumLabel}
-                                    focusable="false"
-                                    className="size-5 text-muted"
-                                />
-                            ) : null}
-                        </>
-                    }
+                    items={[
+                        ...(difficulty != null ? [() => <DifficultyChip difficulty={difficulty} />] : []),
+                        ...(isPremium ? [() => (
+                            <LockIcon
+                                aria-label={labels.premiumLabel}
+                                focusable="false"
+                                className="size-5 text-muted"
+                            />
+                        )] : []),
+                    ]}
                 />
             )
             : undefined
@@ -221,9 +219,9 @@ export const _CourseContents = ({
             body={
                 <StackV
                     gap={7}
-                    body={
-                        <>
-                            {/* Header — its OWN tier, gap-10 (page band) from the content cluster below. */}
+                    items={[
+                        // Header — its OWN tier, gap-10 (page band) from the content cluster below.
+                        () => (
                             <PageHeader
                                 breadcrumb={BreadcrumbSlot}
                                 title={title}
@@ -231,60 +229,60 @@ export const _CourseContents = ({
                                 meta={MetaChips}
                                 isSkeleton={isSkeleton}
                             />
-
-                            {/* Content cluster: GitHub-team warning · trial strip · continue · nudges · path.
-                                The connected children (GithubTeamGate · TrialConversionStrip · LearnNudges)
-                                own THEIR resting shape — they self-fetch and shimmer themselves. */}
+                        ),
+                        // Content cluster: GitHub-team warning · trial strip · continue · nudges · path.
+                        // The connected children (GithubTeamGate · TrialConversionStrip · LearnNudges)
+                        // own THEIR resting shape — they self-fetch and shimmer themselves.
+                        () => (
                             <StackV
                                 gap={6}
-                                body={
-                                    <>
-                                        <GithubTeamGate />
-                                        {trialStrip ? (
-                                            <TrialConversionStrip
-                                                courseId={trialStrip.courseId}
-                                                freeLessonsRemaining={trialStrip.freeLessonsRemaining}
-                                            />
-                                        ) : null}
-
-                                        {/* Continue + progress — flat (no card face), the honest unified meter. */}
+                                items={[
+                                    () => <GithubTeamGate />,
+                                    ...(trialStrip ? [() => (
+                                        <TrialConversionStrip
+                                            courseId={trialStrip.courseId}
+                                            freeLessonsRemaining={trialStrip.freeLessonsRemaining}
+                                        />
+                                    )] : []),
+                                    // Continue + progress — flat (no card face), the honest unified meter.
+                                    () => (
                                         <StackV
                                             gap={4}
-                                            body={
-                                                <>
+                                            items={[
+                                                () => (
                                                     <StackH
                                                         align="start"
                                                         justify="between"
                                                         gap={4}
-                                                        body={
-                                                            <>
+                                                        items={[
+                                                            () => (
                                                                 <StackV
                                                                     gap={1}
                                                                     classNames={["min-w-0"]}
-                                                                    body={
-                                                                        <>
-                                                                            <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.eyebrow} />
-                                                                            {isSkeleton || resumeTitle ? (
-                                                                                <Typography size="base" weight="semibold" truncate isSkeleton={isSkeleton} text={resumeTitle} />
-                                                                            ) : null}
-                                                                        </>
-                                                                    }
+                                                                    items={[
+                                                                        () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.eyebrow} />,
+                                                                        ...(isSkeleton || resumeTitle ? [() => (
+                                                                            <Typography size="base" weight="semibold" truncate isSkeleton={isSkeleton} text={resumeTitle} />
+                                                                        )] : []),
+                                                                    ]}
                                                                 />
-                                                                {/* Button carries no `isSkeleton` — a resting screen shows no CTA yet. */}
-                                                                {!isSkeleton && onResume ? (
-                                                                    <Button
-                                                                        label={labels.resumeButton}
-                                                                        variant="primary"
-                                                                        size="lg"
-                                                                        suffixIcon={ArrowRightIcon}
-                                                                        iconSlide
-                                                                        onPress={onResume}
-                                                                        classNames={["shrink-0"]}
-                                                                    />
-                                                                ) : null}
-                                                            </>
-                                                        }
+                                                            ),
+                                                            // Button carries no `isSkeleton` — a resting screen shows no CTA yet.
+                                                            ...(!isSkeleton && onResume ? [() => (
+                                                                <Button
+                                                                    label={labels.resumeButton}
+                                                                    variant="primary"
+                                                                    size="lg"
+                                                                    suffixIcon={ArrowRightIcon}
+                                                                    iconSlide
+                                                                    onPress={onResume}
+                                                                    classNames={["shrink-0"]}
+                                                                />
+                                                            )] : []),
+                                                        ]}
                                                     />
+                                                ),
+                                                () => (
                                                     <ProgressMeter
                                                         value={completionPercent}
                                                         max={100}
@@ -292,22 +290,21 @@ export const _CourseContents = ({
                                                         showValue
                                                         isSkeleton={isSkeleton}
                                                     />
-                                                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.progressStat} />
-                                                </>
-                                            }
+                                                ),
+                                                () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.progressStat} />,
+                                            ]}
                                         />
-
-                                        {/* Contextual nudges — aids that orbit the spine; each self-hides at 0. */}
-                                        <LearnNudges />
-
-                                        {/* Keep-going path — the current module's lessons (the full tree lives
-                                            in the left content-map rail, so the body never re-draws it).
-                                            While loading it shimmers the SAME list with placeholder rows. */}
-                                        {isSkeleton || lessons.length > 0 ? (
+                                    ),
+                                    // Contextual nudges — aids that orbit the spine; each self-hides at 0.
+                                    () => <LearnNudges />,
+                                    // Keep-going path — the current module's lessons (the full tree lives
+                                    // in the left content-map rail, so the body never re-draws it).
+                                    // While loading it shimmers the SAME list with placeholder rows.
+                                    ...((isSkeleton || lessons.length > 0) ? [() => (
                                             <StackV
                                                 gap={4}
-                                                body={
-                                                    <>
+                                                items={[
+                                                    () => (
                                                         <Typography
                                                             size="sm"
                                                             weight="semibold"
@@ -315,16 +312,15 @@ export const _CourseContents = ({
                                                             isSkeleton={isSkeleton}
                                                             text={`${labels.keepGoing} · ${moduleTitle ?? ""}`}
                                                         />
-                                                        <SurfaceCardList items={isSkeleton ? SKELETON_LESSON_ROWS : lessonRows} isSkeleton={isSkeleton} />
-                                                    </>
-                                                }
+                                                    ),
+                                                    () => <SurfaceCardList items={isSkeleton ? SKELETON_LESSON_ROWS : lessonRows} isSkeleton={isSkeleton} />,
+                                                ]}
                                             />
-                                        ) : null}
-                                    </>
-                                }
+                                    )] : []),
+                                ]}
                             />
-                        </>
-                    }
+                        ),
+                    ]}
                 />
             }
         />

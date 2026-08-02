@@ -63,27 +63,25 @@ const ratingTileBody = (option: RatingOption, position: number): ReactNode => (
     <StackV
         gap={3}
 
-        body={
-            <>
+        items={[
+            () => (
                 <StackH
                     gap={3}
                     align="center"
                     justify="between"
 
-                    body={
-                        <>
-                            <Typography size="sm" weight="medium" text={option.label} />
-                            {/* One chip per tile, and it goes to the KEY — that is the classifying
-                                mark. The interval below is a quiet fact, so it stays as text. */}
-                            <Chip tone="default" text={String(position + 1)} />
-                        </>
-                    }
+                    items={[
+                        () => <Typography size="sm" weight="medium" text={option.label} />,
+                        // One chip per tile, and it goes to the KEY — that is the classifying
+                        // mark. The interval below is a quiet fact, so it stays as text.
+                        () => <Chip tone="default" text={String(position + 1)} />,
+                    ]}
                 />
-                {option.hint != null ? (
-                    <Typography size="xs" color="muted" text={option.hint} />
-                ) : null}
-            </>
-        }
+            ),
+            ...(option.hint != null ? [() => (
+                <Typography size="xs" color="muted" text={option.hint} />
+            )] : []),
+        ]}
     />
 )
 

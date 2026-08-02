@@ -208,12 +208,12 @@ const CourseQaPage = ({
 
                 />
             ) : (
-                <StackV gap={6} body={questionSection} />
+                <StackV gap={6} items={[() => questionSection]} />
             )}
         </>
     )
 
-    const courseQaBody = <StackV gap={6} body={courseQaSections} />
+    const courseQaBody = <StackV gap={6} items={[() => courseQaSections]} />
 
     return <Container size="md" padding={6} body={courseQaBody} />
 }

@@ -161,24 +161,22 @@ const ToolbarBase = ({
                         >
                             <StackH
                                 gap={3}
-                                body={
-                                    <>
-                                        {item.icon}
-                                        {/* a tab WITH an icon hides its label visually on mobile
-                                            (icon-only) and shows it from sm up; `sr-only` keeps the
-                                            accessible name on mobile. An icon-less tab always shows it. */}
-                                        {item.compactLabel != null ? (
+                                items={[
+                                    () => <>{item.icon}</>,
+                                    // a tab WITH an icon hides its label visually on mobile
+                                    // (icon-only) and shows it from sm up; `sr-only` keeps the
+                                    // accessible name on mobile. An icon-less tab always shows it.
+                                    ...(item.compactLabel != null ? [() => (
                                             <>
                                                 <span className="@app-sm:hidden">{item.compactLabel}</span>
                                                 <span className="hidden @app-sm:inline">{item.label}</span>
                                             </>
-                                        ) : item.label ? (
+                                    )] : item.label ? [() => (
                                             <span className={cn(item.icon && "sr-only @app-sm:not-sr-only")}>
                                                 {item.label}
                                             </span>
-                                        ) : null}
-                                    </>
-                                }
+                                    )] : []),
+                                ]}
                             />
                             {/* REQUIRED for "primary" and secondary-ACCENT — HeroUI Tabs
                                 renders no selected-state chrome of its own. Suppressed for
@@ -259,12 +257,10 @@ const ToolbarBase = ({
         <StackH
             gap={2}
             classNames={["min-w-0"]}
-            body={
-                <>
-                    <div>{renderGroup(leftTabs)}</div>
-                    <div>{leftEnd}</div>
-                </>
-            }
+            items={[
+                () => <div>{renderGroup(leftTabs)}</div>,
+                () => <div>{leftEnd}</div>,
+            ]}
         />
     ) : (
         <div>{renderGroup(leftTabs)}</div>
@@ -289,12 +285,10 @@ const ToolbarBase = ({
             justify="between"
             classNames={classNames}
 
-            body={
-                <>
-                    {leftGroup}
-                    {rightGroup}
-                </>
-            }
+            items={[
+                () => leftGroup,
+                () => rightGroup,
+            ]}
         />
     )
 }

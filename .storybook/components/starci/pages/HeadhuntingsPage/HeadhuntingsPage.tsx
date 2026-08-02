@@ -120,11 +120,11 @@ const HeadhuntingsPage = ({
                 isSkeleton={isSkeleton}
 
             />
-            <StackV gap={4} body={directorySection} />
+            <StackV gap={4} items={[() => directorySection]} />
         </>
     )
 
-    const headhuntingsBody = <StackV gap={6} body={headhuntingsSections} />
+    const headhuntingsBody = <StackV gap={6} items={[() => headhuntingsSections]} />
 
     return <Container size="md" padding={6} body={headhuntingsBody} />
 }

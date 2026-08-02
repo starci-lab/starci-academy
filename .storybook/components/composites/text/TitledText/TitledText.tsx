@@ -135,8 +135,8 @@ export const TitledText = ({
             gap={1}
             classNames={rootClassNames}
 
-            body={
-                <>
+            items={[
+                () => (
                     <Typography
                         size={cfg.titleSize}
                         weight={isSkeleton ? undefined : (weight ?? cfg.titleWeight)}
@@ -146,31 +146,31 @@ export const TitledText = ({
                         text={title}
 
                     />
-                    {subtitle ? (
-                        <Typography
-                            size={cfg.subSize}
-                            color={isSkeleton ? undefined : cfg.subColor}
-                            weight={isSkeleton ? undefined : cfg.subWeight}
-                            truncate={isSkeleton ? undefined : truncate}
-                            isSkeleton={isSkeleton}
-                            classNames={isSkeleton ? [cfg.skeleton.sub] : undefined}
-                            text={subtitle}
+                ),
+                ...(subtitle ? [() => (
+                    <Typography
+                        size={cfg.subSize}
+                        color={isSkeleton ? undefined : cfg.subColor}
+                        weight={isSkeleton ? undefined : cfg.subWeight}
+                        truncate={isSkeleton ? undefined : truncate}
+                        isSkeleton={isSkeleton}
+                        classNames={isSkeleton ? [cfg.skeleton.sub] : undefined}
+                        text={subtitle}
 
-                        />
-                    ) : null}
-                    {hint ? (
-                        <Typography
-                            size="xs"
-                            color={isSkeleton ? undefined : "muted"}
-                            truncate={isSkeleton ? undefined : truncate}
-                            isSkeleton={isSkeleton}
-                            classNames={isSkeleton ? [cfg.skeleton.hint] : undefined}
-                            text={hint}
+                    />
+                )] : []),
+                ...(hint ? [() => (
+                    <Typography
+                        size="xs"
+                        color={isSkeleton ? undefined : "muted"}
+                        truncate={isSkeleton ? undefined : truncate}
+                        isSkeleton={isSkeleton}
+                        classNames={isSkeleton ? [cfg.skeleton.hint] : undefined}
+                        text={hint}
 
-                        />
-                    ) : null}
-                </>
-            }
+                    />
+                )] : []),
+            ]}
         />
     )
 }

@@ -98,9 +98,9 @@ const QuizSetup = ({
         <StackV
             gap={3}
 
-            body={
-                <>
-                    <Typography size="sm" weight="medium" text="Session name" />
+            items={[
+                () => <Typography size="sm" weight="medium" text="Session name" />,
+                () => (
                     <InputText
                         value={name}
                         onValueChange={onNameChange}
@@ -108,8 +108,8 @@ const QuizSetup = ({
                         ariaLabel="Session name"
 
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
@@ -117,9 +117,9 @@ const QuizSetup = ({
         <StackV
             gap={3}
 
-            body={
-                <>
-                    <Typography size="sm" weight="medium" text="Length" />
+            items={[
+                () => <Typography size="sm" weight="medium" text="Length" />,
+                () => (
                     <ButtonRadioGroup
                         ariaLabel="Session length"
                         value={length}
@@ -130,8 +130,8 @@ const QuizSetup = ({
                             content: `${LENGTH_LABEL[key]} · ${LENGTH_CARDS[key]} questions`,
                         }))}
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
@@ -139,9 +139,9 @@ const QuizSetup = ({
         <StackV
             gap={3}
 
-            body={
-                <>
-                    <Typography size="sm" weight="medium" text="Level" />
+            items={[
+                () => <Typography size="sm" weight="medium" text="Level" />,
+                () => (
                     <ButtonRadioGroup
                         ariaLabel="Question level"
                         value={level}
@@ -152,8 +152,8 @@ const QuizSetup = ({
                             content: LEVEL_LABEL[key],
                         }))}
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
@@ -162,16 +162,18 @@ const QuizSetup = ({
             gap={3}
             justify="end"
 
-            body={
-                <Button
-                    label={`Start · ${LENGTH_CARDS[length]} questions`}
-                    variant="primary"
-                    prefixIcon={PlayIcon}
-                    onPress={onStart}
-                    isPending={isPending}
+            items={[
+                () => (
+                    <Button
+                        label={`Start · ${LENGTH_CARDS[length]} questions`}
+                        variant="primary"
+                        prefixIcon={PlayIcon}
+                        onPress={onStart}
+                        isPending={isPending}
 
-                />
-            }
+                    />
+                ),
+            ]}
         />
     )
 
@@ -181,18 +183,16 @@ const QuizSetup = ({
         <StackV
             gap={3}
 
-            body={
-                <>
-                    {errorMessage != null ? (
-                        <Callout
-                            status="danger"
-                            title={errorMessage}
+            items={[
+                ...(errorMessage != null ? [() => (
+                    <Callout
+                        status="danger"
+                        title={errorMessage}
 
-                        />
-                    ) : null}
-                    {submitRow}
-                </>
-            }
+                    />
+                )] : []),
+                () => submitRow,
+            ]}
         />
     )
 
@@ -224,7 +224,7 @@ const QuizSetup = ({
                 label={label}
                 isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={6} body={formBody} />}
+                body={() => <StackV gap={6} items={[() => formBody]} />}
             />
         </div>
     )

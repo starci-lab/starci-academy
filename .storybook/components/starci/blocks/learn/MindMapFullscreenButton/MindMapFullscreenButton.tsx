@@ -65,8 +65,8 @@ const MindMapFullscreenButton = ({
             <StackV
                 gap={2}
 
-                body={
-                    <>
+                items={[
+                    () => (
                         <ButtonBase
                             isIconOnly
                             isSkeleton={isSkeleton}
@@ -77,6 +77,8 @@ const MindMapFullscreenButton = ({
                             onPress={onZoomIn}
 
                         />
+                    ),
+                    () => (
                         <ButtonBase
                             isIconOnly
                             isSkeleton={isSkeleton}
@@ -87,6 +89,8 @@ const MindMapFullscreenButton = ({
                             onPress={onZoomOut}
 
                         />
+                    ),
+                    () => (
                         <ButtonBase
                             isIconOnly
                             isSkeleton={isSkeleton}
@@ -99,8 +103,8 @@ const MindMapFullscreenButton = ({
                             onPress={onToggleFullscreen}
 
                         />
-                    </>
-                }
+                    ),
+                ]}
             />
         </div>
     )

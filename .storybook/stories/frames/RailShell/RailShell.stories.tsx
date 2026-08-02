@@ -51,12 +51,12 @@ const Frame = ({ width, label, children }: FrameProps) => (
 
 /** A stand-in for whatever the caller puts in a slot — never real content. */
 const Box = ({ label, lines }: { label: string; lines: number }) => (
-    <StackV gap={4} body={<>
-        <Typography size="sm" text={label} weight="medium" />
-        {Array.from({ length: lines }, (_, index) => (
-            <div data-tier="fixture" key={index} className="h-10 rounded-2xl bg-surface-secondary" />
-        ))}
-    </>} />
+    <StackV gap={4} items={[
+        () => <Typography size="sm" text={label} weight="medium" />,
+        ...Array.from({ length: lines }, () => () => (
+            <div data-tier="fixture" className="h-10 rounded-2xl bg-surface-secondary" />
+        )),
+    ]} />
 )
 
 /**

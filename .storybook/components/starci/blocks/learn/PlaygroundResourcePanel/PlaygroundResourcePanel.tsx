@@ -103,9 +103,8 @@ const groupToAccordionItem = (group: PlaygroundResourceGroup): SurfaceCardAccord
         <StackV
             gap={1}
 
-            body={group.resources.map((resource, index) => (
+            items={group.resources.map((resource, index) => () => (
                 <ListRow
-                    key={`${group.kind}:${resource.name}`}
                     title={resource.name}
                     meta={() => (
                         <Chip
@@ -167,8 +166,8 @@ const PlaygroundResourcePanel = ({
             justify="between"
             align="center"
 
-            body={
-                <>
+            items={[
+                () => (
                     <Typography
                         size="sm"
                         weight="medium"
@@ -176,20 +175,20 @@ const PlaygroundResourcePanel = ({
                         text={PANEL_LABEL}
 
                     />
-                    {/* A count of zero (or no snapshot at all) is not news — see `ContentModeNav`'s
-                        "a count of zero is not news" convention — so it only appears once there's
-                        something real to count. */}
-                    {hasResources ? (
-                        <Typography
-                            size="xs"
-                            color="muted"
-                            tabularNums
-                            text={String(resources.length)}
+                ),
+                // A count of zero (or no snapshot at all) is not news — see `ContentModeNav`'s
+                // "a count of zero is not news" convention — so it only appears once there's
+                // something real to count.
+                ...(hasResources ? [() => (
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        tabularNums
+                        text={String(resources.length)}
 
-                        />
-                    ) : null}
-                </>
-            }
+                    />
+                )] : []),
+            ]}
         />
     )
 
@@ -197,12 +196,10 @@ const PlaygroundResourcePanel = ({
         <StackV
             gap={4}
 
-            body={
-                <>
-                    {headerRow}
-                    {body}
-                </>
-            }
+            items={[
+                () => headerRow,
+                () => body,
+            ]}
         />
     )
 }

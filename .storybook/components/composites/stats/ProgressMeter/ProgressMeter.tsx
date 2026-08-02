@@ -108,14 +108,12 @@ export const ProgressMeter = ({
         <StackH
             gap={3}
             justify="between"
-            body={
-                <>
-                    <Typography size="xs" color="muted" truncate classNames={["min-w-0"]} isSkeleton={isSkeleton} text={label} />
-                    {showValue ? (
+            items={[
+                () => <Typography size="xs" color="muted" truncate classNames={["min-w-0"]} isSkeleton={isSkeleton} text={label} />,
+                ...(showValue ? [() => (
                         <Typography size="xs" color="muted" classNames={["shrink-0"]} isSkeleton={isSkeleton} text={<>{percent}%</>} />
-                    ) : null}
-                </>
-            }
+                )] : []),
+            ]}
         />
     ) : null
     // Additive row, independent of `topRow` above: a component-based
@@ -128,20 +126,18 @@ export const ProgressMeter = ({
         <StackH
             gap={3}
             justify="between"
-            body={
-                <>
-                    {Leading ? (
+            items={[
+                () => Leading ? (
                         <div className="min-w-0">
                             <Leading isSkeleton={isSkeleton} />
                         </div>
-                    ) : <span />}
-                    {Trailing ? (
+                    ) : <span />,
+                ...(Trailing ? [() => (
                         <div className="shrink-0">
                             <Trailing isSkeleton={isSkeleton} />
                         </div>
-                    ) : null}
-                </>
-            }
+                )] : []),
+            ]}
         />
     ) : null
     // Two DIFFERENT jobs, so two boxes. A single div doing both — `pt-6` (24px,
@@ -200,13 +196,11 @@ export const ProgressMeter = ({
             gap={3}
             classNames={classNames}
 
-            body={
-                <>
-                    {topRow}
-                    {slotRow}
-                    {trackSection}
-                </>
-            }
+            items={[
+                () => topRow,
+                () => slotRow,
+                () => trackSection,
+            ]}
         />
     )
 }

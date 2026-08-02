@@ -107,22 +107,20 @@ const statCell = (stat: QuizProgressStat, isSkeleton: boolean): StatGridCardItem
             <StackV
                 gap={2}
 
-                body={
-                    <>
+                items={[
+                    () => (
                         <StackH
                             gap={2}
                             align="center"
 
-                            body={
-                                <>
-                                    {Icon ? <Icon aria-hidden focusable="false" className="size-4 text-muted" /> : null}
-                                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={stat.label} />
-                                </>
-                            }
+                            items={[
+                                ...(Icon ? [() => <Icon aria-hidden focusable="false" className="size-4 text-muted" />] : []),
+                                () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={stat.label} />,
+                            ]}
                         />
-                        <Typography size="lg" weight="semibold" isSkeleton={isSkeleton} text={stat.value} />
-                    </>
-                }
+                    ),
+                    () => <Typography size="lg" weight="semibold" isSkeleton={isSkeleton} text={stat.value} />,
+                ]}
             />
         ),
     }
@@ -202,7 +200,7 @@ const QuizProgressPanel = ({
 
                         />
                     ) : (
-                        <StackV gap={6} body={panelBody} />
+                        <StackV gap={6} items={[() => panelBody]} />
                     )
                 }
             />

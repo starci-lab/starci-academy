@@ -75,8 +75,8 @@ export const StatPair = ({
             align="start"
 
             classNames={classNames}
-            body={
-                <>
+            items={[
+                () => (
                     <Typography
                         size={VALUE_SIZE[valueType]}
                         weight="semibold"
@@ -84,9 +84,9 @@ export const StatPair = ({
 
                         text={value}
                     />
-                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={label} />
-                </>
-            }
+                ),
+                () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={label} />,
+            ]}
         />
     )
 }

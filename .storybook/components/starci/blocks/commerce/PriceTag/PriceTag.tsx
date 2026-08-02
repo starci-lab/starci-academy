@@ -157,13 +157,13 @@ const PriceTagBase = ({
         // Two vertical rows inside a design (the eyebrow and the breakdown list) =
         // `grouped`, not `tight`. `tight` (1) is reserved for what sits INSIDE a
         // composite, e.g. the icon+label pair of `InlineIconLabel`.
-        <StackV gap={4} className="p-3" body={(
-            <>
-                <Typography size="xs" color="muted" text="Price breakdown" />
-                {/* No `gap` passed: `KeyValueList` already owns its row rhythm (its own default
-                    is the §10b `grouped` step). Passing one from here overrides the composite's
-                    spacing from OUTSIDE, which §10 forbids — a composite owns its internal
-                    spacing and must not receive it. */}
+        <StackV gap={4} className="p-3" items={[
+            () => <Typography size="xs" color="muted" text="Price breakdown" />,
+            // No `gap` passed: `KeyValueList` already owns its row rhythm (its own default
+            // is the §10b `grouped` step). Passing one from here overrides the composite's
+            // spacing from OUTSIDE, which §10 forbids — a composite owns its internal
+            // spacing and must not receive it.
+            () => (
                 <KeyValueList
 
                     items={[
@@ -204,8 +204,8 @@ const PriceTagBase = ({
                         },
                     ]}
                 />
-            </>
-        )} />
+            ),
+        ]} />
     ) : null
 
     // The price row aligns on BASELINE (big number, struck number, chip share the
@@ -305,12 +305,10 @@ const PriceTagBase = ({
             gap={4}
             className={className}
 
-            body={(
-                <>
-                    {priceRow}
-                    {savingLine}
-                </>
-            )}
+            items={[
+                () => priceRow,
+                () => savingLine,
+            ]}
         />
     )
 }

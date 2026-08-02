@@ -113,14 +113,14 @@ const KeyValueRow = ({
     // sync with this one.
     // Label column: label + hint form a TIGHT cluster (§10b `tight` = gap-1) — the
     // same "a label continuing into its hint" shape the registry names `title-subtitle`.
-    const pairContent = (
-        <>
+    const pairContent = [
+        () => (
             <StackV
                 gap={2}
                 classNames={["min-w-0"]}
                 pattern="title-subtitle"
-                body={
-                    <>
+                items={[
+                    () => (
                         <span>
                             <Typography size="sm"
                                 text={label}
@@ -130,7 +130,9 @@ const KeyValueRow = ({
                                 classNames={isSkeleton ? ["w-1/3"] : undefined}
                             />
                         </span>
-                        {hint != null ? (
+                    ),
+                    ...(hint != null
+                        ? [() => (
                             <span>
                                 <Typography size="xs"
                                     text={hint}
@@ -139,10 +141,12 @@ const KeyValueRow = ({
                                     classNames={isSkeleton ? ["w-1/4"] : undefined}
                                 />
                             </span>
-                        ) : null}
-                    </>
-                }
+                        )]
+                        : []),
+                ]}
             />
+        ),
+        () => (
             <span
                 className={cn("flex shrink-0 items-center", copyable && !isSkeleton && "gap-2")}
                 data-principles={copyable && !isSkeleton ? "flex-action" : undefined}
@@ -163,15 +167,15 @@ const KeyValueRow = ({
                     </span>
                 ) : null}
             </span>
-        </>
-    )
+        ),
+    ]
     const row = (
         <StackH
             align="start"
             justify="between"
             gap={3}
             classNames={classNames}
-            body={pairContent}
+            items={pairContent}
         />
     )
     if (!divider) {

@@ -279,7 +279,7 @@ const FlashcardReviewPage = ({
                 ariaLabel={flashcardModeAriaLabel}
 
             />
-            <StackV gap={4} body={overviewDeck} />
+            <StackV gap={4} items={[() => overviewDeck]} />
         </>
     )
 
@@ -327,16 +327,16 @@ const FlashcardReviewPage = ({
     const reviewPhases = (
         <>
             {phase === "overview" ? (
-                <StackV gap={6} body={overviewSection} />
+                <StackV gap={6} items={[() => overviewSection]} />
             ) : null}
 
             {phase === "session" ? (
-                <StackV gap={6} body={sessionSection} />
+                <StackV gap={6} items={[() => sessionSection]} />
             ) : null}
         </>
     )
 
-    const reviewBody = <StackV gap={7} body={reviewPhases} />
+    const reviewBody = <StackV gap={7} items={[() => reviewPhases]} />
 
     return <Container size="md" padding={6} body={reviewBody} />
 }

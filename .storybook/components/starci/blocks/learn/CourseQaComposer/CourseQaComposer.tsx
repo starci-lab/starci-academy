@@ -141,9 +141,9 @@ const CourseQaComposer = ({
                 <StackH
                     gap={3}
 
-                    body={
-                        <>
-                            {avatar}
+                    items={[
+                        () => avatar,
+                        () => (
                             <div className="min-w-0 flex-1">
                                 <InputButtonLike
                                     placeholder={placeholder ?? "Ask a question about this course…"}
@@ -151,8 +151,8 @@ const CourseQaComposer = ({
                                     isSkeleton={isSkeleton}
                                 />
                             </div>
-                        </>
-                    }
+                        ),
+                    ]}
                 />
             </div>
         )
@@ -197,7 +197,7 @@ const CourseQaComposer = ({
                 isSkeleton={isSkeleton}
 
             />
-            <StackH gap={3} justify="end" body={actionRow} />
+            <StackH gap={3} justify="end" items={[() => actionRow]} />
         </>
     )
 
@@ -206,12 +206,10 @@ const CourseQaComposer = ({
             <StackH
                 gap={3}
 
-                body={
-                    <>
-                        {avatar}
-                        <StackV gap={3} classNames={["min-w-0", "flex-1"]} body={form} />
-                    </>
-                }
+                items={[
+                    () => avatar,
+                    () => <StackV gap={3} classNames={["min-w-0", "flex-1"]} items={[() => form]} />,
+                ]}
             />
         </div>
     )

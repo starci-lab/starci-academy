@@ -66,8 +66,8 @@ const ConsultantCard = ({
     const { id, fullName, jobTitle, companyTitle, description, avatarUrl } = consultant
 
     const nameRow = (
-        <StackV gap={1} body={(
-            <>
+        <StackV gap={1} items={[
+            () => (
                 <Typography
                     size="sm"
                     weight="medium"
@@ -76,18 +76,18 @@ const ConsultantCard = ({
                     text={fullName}
 
                 />
-                {isSkeleton || jobTitle ? (
-                    <Typography
-                        size="xs"
-                        color="muted"
-                        truncate
-                        isSkeleton={isSkeleton}
-                        text={jobTitle}
+            ),
+            ...(isSkeleton || jobTitle ? [() => (
+                <Typography
+                    size="xs"
+                    color="muted"
+                    truncate
+                    isSkeleton={isSkeleton}
+                    text={jobTitle}
 
-                    />
-                ) : null}
-            </>
-        )} />
+                />
+            )] : []),
+        ]} />
     )
 
     const consultantInfo = (
@@ -134,7 +134,7 @@ const ConsultantCard = ({
                     onPress={() => onOpen(id)}
                     isDisabled={isSkeleton}
 
-                    body={() => <StackV gap={4} body={consultantInfo} />}
+                    body={() => <StackV gap={4} items={[() => consultantInfo]} />}
                 />
             </div>
         </div>

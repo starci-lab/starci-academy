@@ -96,14 +96,16 @@ const AiQuotaSubscriptionPanel = ({
 
 
                     body={() => (
-                        <StackV gap={4} align="start" body={
-                            <>
+                        <StackV gap={4} align="start" items={[
+                            () => (
                                 <Typography
                                     size="sm"
                                     color="muted"
                                     text="You don't have a paid plan yet. Upgrade to unlock Premium credit and get graded with premium models."
 
                                 />
+                            ),
+                            () => (
                                 <Button
                                     label="Subscribe to a paid plan"
                                     variant="primary"
@@ -112,8 +114,8 @@ const AiQuotaSubscriptionPanel = ({
                                     iconSlide
                                     onPress={onSubscribe}
                                 />
-                            </>
-                        } />
+                            ),
+                        ]} />
                     )}
                 />
             </div>
@@ -122,22 +124,24 @@ const AiQuotaSubscriptionPanel = ({
 
     return (
         <div className={className}>
-            <StackV gap={4} body={
-                <>
+            <StackV gap={4} items={[
+                () => (
                     <AiQuotaLane
                         data={premiumLane?.data}
                         isLoading={premiumLane?.isLoading ?? false}
 
 
                     />
+                ),
+                () => (
                     <Typography
                         size="sm"
                         color="muted"
                         text={`You're on the ${TIER_LABEL[tier]} plan.`}
 
                     />
-                </>
-            } />
+                ),
+            ]} />
         </div>
     )
 }

@@ -96,7 +96,7 @@ export const Default: Story = {
                         why: "Two buttons sit in a single row with a `gap={3}` seam between them, the spacing for elements that belong to the same cluster. A row this size needs nothing more than the default axis: no reflow threshold, no justify, no divider.",
                         code: "<StackH gap={3} body={<>\n  <Button label=\"Get started\" />\n  <Button label=\"View syllabus\" variant=\"secondary\" />\n</>} />",
                         render: (
-                            <StackH gap={3} body={startAndOverview} />
+                            <StackH gap={3} items={[() => startAndOverview]} />
                         ),
                     },
                 ]}
@@ -130,7 +130,7 @@ export const At: Story = {
                         code: "<StackH gap={3} at=\"sm\" body={<>…</>} />",
                         render: (
                             <Frame width="20rem" label="container 320px — below @app-sm, reflows">
-                                <StackH gap={3} at="sm" body={filterButtons} />
+                                <StackH gap={3} at="sm" items={[() => filterButtons]} />
                             </Frame>
                         ),
                     },
@@ -140,7 +140,7 @@ export const At: Story = {
                         code: "<StackH gap={3} at=\"sm\" body={<>…</>} />",
                         render: (
                             <Frame width="48rem" label="container 768px — at or above @app-sm, single line">
-                                <StackH gap={3} at="sm" body={filterButtons} />
+                                <StackH gap={3} at="sm" items={[() => filterButtons]} />
                             </Frame>
                         ),
                     },
@@ -170,7 +170,7 @@ export const Justify: Story = {
                         code: "<StackH gap={3} justify=\"start\" body={<>…</>} />",
                         render: (
                             <div data-tier="fixture" className="w-96 max-w-full rounded-3xl border border-dashed border-default p-3">
-                                <StackH gap={3} justify="start" body={cancelSaveActions} />
+                                <StackH gap={3} justify="start" items={[() => cancelSaveActions]} />
                             </div>
                         ),
                     },
@@ -180,7 +180,7 @@ export const Justify: Story = {
                         code: "<StackH gap={3} justify=\"center\" body={<>…</>} />",
                         render: (
                             <div data-tier="fixture" className="w-96 max-w-full rounded-3xl border border-dashed border-default p-3">
-                                <StackH gap={3} justify="center" body={cancelSaveActions} />
+                                <StackH gap={3} justify="center" items={[() => cancelSaveActions]} />
                             </div>
                         ),
                     },
@@ -190,7 +190,7 @@ export const Justify: Story = {
                         code: "<StackH gap={3} justify=\"end\" body={<>…</>} />",
                         render: (
                             <div data-tier="fixture" className="w-96 max-w-full rounded-3xl border border-dashed border-default p-3">
-                                <StackH gap={3} justify="end" body={cancelSaveActions} />
+                                <StackH gap={3} justify="end" items={[() => cancelSaveActions]} />
                             </div>
                         ),
                     },
@@ -200,7 +200,7 @@ export const Justify: Story = {
                         code: "<StackH gap={3} justify=\"between\" body={<>…</>} />",
                         render: (
                             <div data-tier="fixture" className="w-96 max-w-full rounded-3xl border border-dashed border-default p-3">
-                                <StackH gap={3} justify="between" body={cancelSaveActions} />
+                                <StackH gap={3} justify="between" items={[() => cancelSaveActions]} />
                             </div>
                         ),
                     },
@@ -230,11 +230,11 @@ export const WithDivider: Story = {
                         code: "<StackH gap={4} divider body={<>\n  <Typography size=\"sm\" text=\"12 lessons\" />\n  <Typography size=\"sm\" text=\"4 hours\" />\n  <Typography size=\"sm\" text=\"Intermediate\" />\n</>} />",
                         render: (
                             <div data-tier="fixture" className="w-fit rounded-3xl bg-surface p-3 shadow-surface">
-                                <StackH gap={4} divider body={<>
-                                    <Typography size="sm" text="12 lessons" color="muted" />
-                                    <Typography size="sm" text="4 hours" color="muted" />
-                                    <Typography size="sm" text="Intermediate" color="muted" />
-                                </>} />
+                                <StackH gap={4} divider items={[
+                                    () => <Typography size="sm" text="12 lessons" color="muted" />,
+                                    () => <Typography size="sm" text="4 hours" color="muted" />,
+                                    () => <Typography size="sm" text="Intermediate" color="muted" />,
+                                ]} />
                             </div>
                         ),
                     },

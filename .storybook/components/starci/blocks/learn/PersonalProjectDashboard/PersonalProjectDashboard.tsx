@@ -197,20 +197,20 @@ const Body = ({
         <StackV
             gap={4}
 
-            body={
-                <>
-                    {isSkeleton || currentTask ? (
-                        <ContinueCardHero
-                            title={currentTask ? `${currentTask.sortIndex}. ${currentTask.title}` : ""}
-                            subtitle={NEXT_TASK_SUBTITLE}
-                            isSkeleton={isSkeleton}
-                            onPress={onContinue}
+            items={[
+                () => (isSkeleton || currentTask ? (
+                    <ContinueCardHero
+                        title={currentTask ? `${currentTask.sortIndex}. ${currentTask.title}` : ""}
+                        subtitle={NEXT_TASK_SUBTITLE}
+                        isSkeleton={isSkeleton}
+                        onPress={onContinue}
 
 
-                        />
-                    ) : (
-                        <Typography weight="semibold" text={ALL_DONE_TEXT} />
-                    )}
+                    />
+                ) : (
+                    <Typography weight="semibold" text={ALL_DONE_TEXT} />
+                )),
+                () => (
                     <ProgressMeter
                         value={stats.done}
                         max={stats.total || 1}
@@ -219,6 +219,8 @@ const Body = ({
 
 
                     />
+                ),
+                () => (
                     <Typography
                         size="xs"
                         color="muted"
@@ -227,8 +229,8 @@ const Body = ({
                         text={statsLine(stats)}
 
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
@@ -236,9 +238,9 @@ const Body = ({
         <StackV
             gap={6}
 
-            body={
-                <>
-                    {heroSection}
+            items={[
+                () => heroSection,
+                () => (
                     <SurfaceCard
                         label={keepGoingLabel(milestoneLabel)}
                         isSkeleton={isSkeleton}
@@ -265,8 +267,8 @@ const Body = ({
                             />
                         )}
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 }
@@ -361,12 +363,10 @@ const PersonalProjectDashboard = ({
             <StackV
                 gap={6}
 
-                body={
-                    <>
-                        {header}
-                        {asyncBody}
-                    </>
-                }
+                items={[
+                    () => header,
+                    () => asyncBody,
+                ]}
             />
         </div>
     )

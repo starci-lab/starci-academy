@@ -127,18 +127,18 @@ export const EmptyState = ({
             {isPage ? (
                 <StackV
                     gap={3}
-                    body={
-                        <>
+                    items={[
+                        () => (
                             <div>
                                 <Typography size="h4" weight="semibold" align="center" text={title} />
                             </div>
-                            {description ? (
-                                <div>
-                                    <Typography size="sm" text={description} color="muted" />
-                                </div>
-                            ) : null}
-                        </>
-                    }
+                        ),
+                        ...(description ? [() => (
+                            <div>
+                                <Typography size="sm" text={description} color="muted" />
+                            </div>
+                        )] : []),
+                    ]}
                 />
             ) : (
                 <>

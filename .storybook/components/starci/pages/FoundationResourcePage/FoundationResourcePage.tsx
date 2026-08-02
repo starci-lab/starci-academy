@@ -148,12 +148,12 @@ const FoundationResourcePage = ({
             {isEmpty ? (
                 <FoundationResourceEmpty />
             ) : (
-                <StackV gap={6} body={resourceSection} />
+                <StackV gap={6} items={[() => resourceSection]} />
             )}
         </>
     )
 
-    const resourceBody = <StackV gap={6} body={resourceSections} />
+    const resourceBody = <StackV gap={6} items={[() => resourceSections]} />
 
     return <Container size="md" padding={6} body={resourceBody} />
 }

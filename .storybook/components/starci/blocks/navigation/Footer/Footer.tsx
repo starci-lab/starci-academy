@@ -82,11 +82,11 @@ const FooterLinkColumn = ({ title, links }: FooterLinkColumnProps) => {
     const column = (
         <>
             <Typography size="sm" weight="bold" text={title} />
-            <StackV gap={2} body={rows} />
+            <StackV gap={2} items={[() => rows]} />
         </>
     )
 
-    return <StackV gap={4} body={column} />
+    return <StackV gap={4} items={[() => column]} />
 }
 
 /**
@@ -119,7 +119,7 @@ const Footer = ({
     const brandMark = (
         <>
             <Logo size="footer" />
-            <StackV gap={1} className="hidden @app-md:flex" body={wordmark} />
+            <StackV gap={1} className="hidden @app-md:flex" items={[() => wordmark]} />
         </>
     )
 
@@ -140,14 +140,14 @@ const Footer = ({
 
     const brandColumn = (
         <>
-            <StackH gap={1} classNames={["w-fit", "self-start"]} body={brandMark} />
+            <StackH gap={1} classNames={["w-fit", "self-start"]} items={[() => brandMark]} />
             <Typography
                 size="sm"
                 color="muted"
                 text="Learn by building real systems with your own hands — ready for any technical interview."
 
             />
-            <StackH gap={3} body={socialLinks} />
+            <StackH gap={3} items={[() => socialLinks]} />
         </>
     )
 
@@ -161,8 +161,8 @@ const Footer = ({
     // top region: brand + tagline + socials (left) · two link columns (right)
     const topRegion = (
         <>
-            <StackV gap={4} className="max-w-sm" body={brandColumn} />
-            <StackH gap={7} wrap body={linkColumns} />
+            <StackV gap={4} className="max-w-sm" items={[() => brandColumn]} />
+            <StackH gap={7} wrap items={[() => linkColumns]} />
         </>
     )
 
@@ -194,7 +194,7 @@ const Footer = ({
                 text={`© ${year} StarCi Academy · Built by Nguyễn Văn Tự Cường`} // vn-ok: the author's real name
 
             />
-            <StackH gap={3} body={legalLinks} />
+            <StackH gap={3} items={[() => legalLinks]} />
         </>
     )
 
@@ -205,20 +205,20 @@ const Footer = ({
                 justify="between"
                 className="flex-col @app-md:flex-row"
 
-                body={topRegion}
+                items={[() => topRegion]}
             />
             <StackH
                 gap={3}
                 justify="between"
                 className="flex-col items-start @app-sm:flex-row @app-sm:items-center"
 
-                body={bottomBar}
+                items={[() => bottomBar]}
             />
         </>
     )
 
     const footerBody = (
-        <StackV gap={6} divider body={sections} />
+        <StackV gap={6} divider items={[() => sections]} />
     )
 
     return (

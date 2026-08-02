@@ -118,11 +118,11 @@ const ProfileTabsBar = ({
                                         gap={2}
                                         align="center"
 
-                                        body={(
-                                            <>
-                                                <Icon aria-hidden focusable="false" className={TAB_ICON_CLASS} weight={TAB_ICON_WEIGHT} />
-                                                {/* Icon-only below @app-md — label (and its marker) only
-                                                    from a tablet-wide profile strip up. */}
+                                        items={[
+                                            () => <Icon aria-hidden focusable="false" className={TAB_ICON_CLASS} weight={TAB_ICON_WEIGHT} />,
+                                            // Icon-only below @app-md — label (and its marker) only
+                                            // from a tablet-wide profile strip up.
+                                            () => (
                                                 <span className="hidden @app-md:inline">
                                                     <Typography size="sm" text={TAB_LABEL[tabId]} />
                                                     {isHidden ? (
@@ -132,8 +132,8 @@ const ProfileTabsBar = ({
                                                         </>
                                                     ) : null}
                                                 </span>
-                                            </>
-                                        )}
+                                            ),
+                                        ]}
                                     />
                                     <HeroTabs.Indicator />
                                 </HeroTabs.Tab>

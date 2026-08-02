@@ -343,8 +343,8 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
                 gap={3}
                 pattern="chip-row"
                 className="my-2"
-                body={String(items ?? "").split("|").filter(Boolean).map((keyword, index) => (
-                    <Chip key={index} tone="default" text={keyword} />
+                items={String(items ?? "").split("|").filter(Boolean).map((keyword) => () => (
+                    <Chip tone="default" text={keyword} />
                 ))}
             />
         ),
@@ -376,12 +376,10 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
                             justify="between"
                             classNames={["w-full"]}
                             className="text-start"
-                            body={
-                                <>
-                                    <span className={reading ? "text-base font-semibold" : "text-sm font-semibold"}>{title}</span>
-                                    <Accordion.Indicator />
-                                </>
-                            }
+                            items={[
+                                () => <span className={reading ? "text-base font-semibold" : "text-sm font-semibold"}>{title}</span>,
+                                () => <Accordion.Indicator />,
+                            ]}
                         />
                     </Accordion.Trigger>
                 </Accordion.Heading>

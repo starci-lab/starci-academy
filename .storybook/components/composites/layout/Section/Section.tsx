@@ -125,14 +125,12 @@ const Header = ({
             gap={4}
             classNames={classNames}
 
-            body={
-                <>
-                    <StackV gap={2} pattern="title-subtitle" classNames={["min-w-0"]} body={titleBlock} />
-                    {action != null ? (
-                        <div className="shrink-0">{action}</div>
-                    ) : null}
-                </>
-            }
+            items={[
+                () => <StackV gap={2} pattern="title-subtitle" classNames={["min-w-0"]} items={[() => titleBlock]} />,
+                ...(action != null ? [() => (
+                    <div className="shrink-0">{action}</div>
+                )] : []),
+            ]}
         />
     )
 }

@@ -112,83 +112,81 @@ export const _FlashcardQuizStats = ({
     ]
 
     const loaded = (
-        <StackV gap={6} body={
-            <>
-                {/* ZONE 1 — HERO "Coverage vs target": coverage judged against COVERAGE_TARGET (not a
-                    bare %). Null only on a course with zero tag data — nothing honest to judge, so the
-                    zone is skipped rather than faking a verdict. */}
-                {coveragePercent !== null ? (
-                    <Section header={{ title: labels.coverageZone, level: 3 }} body={
-                        <SurfaceCard
-                            body={() => (
-                                <StackV gap={3} body={
-                                    <>
-                                        <ScoreValue points={coveragePercent} unit="%" />
-                                        <Typography text={labels.coverageVerdict} />
-                                        <Typography size="sm" color="muted" text={labels.coverageSub} />
-                                        <ProgressMeter
-                                            value={coveragePercent}
-                                            max={100}
-                                            target={COVERAGE_TARGET}
-                                            color={coverageTone(coveragePercent)}
-                                        />
-                                        {untouchedTopicCount > 0 && onStartQuiz ? (
-                                            <Button
-                                                label={labels.coverageDrillCta}
-                                                variant="primary"
-                                                size="sm"
-                                                suffixIcon={ArrowRightIcon}
-                                                onPress={onStartQuiz}
-                                            />
-                                        ) : null}
-                                    </>
-                                } />
-                            )}
-                        />
-                    } />
-                ) : null}
-
-                {/* ZONE 2 — "Weak topics": every attempted tag ranked worst-first, plus ONE honest
-                    aggregate row for topics never attempted — no per-topic name exists for those
-                    server-side, so the row states the real count instead of inventing identities. */}
-                {gapRows.length > 0 ? (
-                    <Section header={{ title: labels.gapZone, level: 3 }} body={
-                        <SurfaceCardList variant="nested" items={gapRows} />
-                    } />
-                ) : null}
-
-                {/* ZONE 3 — passive RAG "Study suggestions": weakest-coverage tags → course-wide content
-                    search (self-hiding when empty / no match). Waits on the slug for deep links, so a
-                    story that omits `displayId` renders backend-free. RelatedContentList is a real block
-                    (self-fetching) — a presentational component may render a connected child (split.md). */}
-                {displayId ? (
-                    <RelatedContentList
-                        courseId={courseId}
-                        courseDisplayId={displayId}
-                        query={tags.map((tagStat) => tagStat.tag).join(" ")}
-                        label={labels.studyHeading}
-                    />
-                ) : null}
-            </>
-        } />
-    )
-
-    const skeleton = (
-        <StackV gap={6} body={
-            <>
+        <StackV gap={6} items={[
+            /* ZONE 1 — HERO "Coverage vs target": coverage judged against COVERAGE_TARGET (not a
+                bare %). Null only on a course with zero tag data — nothing honest to judge, so the
+                zone is skipped rather than faking a verdict. */
+            ...(coveragePercent !== null ? [() => (
                 <Section header={{ title: labels.coverageZone, level: 3 }} body={
                     <SurfaceCard
                         body={() => (
-                            <StackV gap={3} body={
-                                <>
-                                    <ScoreValue points={0} unit="%" isSkeleton />
-                                    <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
-                                    <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} />
-                                </>
-                            } />
+                            <StackV gap={3} items={[
+                                () => <ScoreValue points={coveragePercent} unit="%" />,
+                                () => <Typography text={labels.coverageVerdict} />,
+                                () => <Typography size="sm" color="muted" text={labels.coverageSub} />,
+                                () => (
+                                    <ProgressMeter
+                                        value={coveragePercent}
+                                        max={100}
+                                        target={COVERAGE_TARGET}
+                                        color={coverageTone(coveragePercent)}
+                                    />
+                                ),
+                                ...(untouchedTopicCount > 0 && onStartQuiz ? [() => (
+                                    <Button
+                                        label={labels.coverageDrillCta}
+                                        variant="primary"
+                                        size="sm"
+                                        suffixIcon={ArrowRightIcon}
+                                        onPress={onStartQuiz}
+                                    />
+                                )] : []),
+                            ]} />
                         )}
                     />
                 } />
+            )] : []),
+
+            /* ZONE 2 — "Weak topics": every attempted tag ranked worst-first, plus ONE honest
+                aggregate row for topics never attempted — no per-topic name exists for those
+                server-side, so the row states the real count instead of inventing identities. */
+            ...(gapRows.length > 0 ? [() => (
+                <Section header={{ title: labels.gapZone, level: 3 }} body={
+                    <SurfaceCardList variant="nested" items={gapRows} />
+                } />
+            )] : []),
+
+            /* ZONE 3 — passive RAG "Study suggestions": weakest-coverage tags → course-wide content
+                search (self-hiding when empty / no match). Waits on the slug for deep links, so a
+                story that omits `displayId` renders backend-free. RelatedContentList is a real block
+                (self-fetching) — a presentational component may render a connected child (split.md). */
+            ...(displayId ? [() => (
+                <RelatedContentList
+                    courseId={courseId}
+                    courseDisplayId={displayId}
+                    query={tags.map((tagStat) => tagStat.tag).join(" ")}
+                    label={labels.studyHeading}
+                />
+            )] : []),
+        ]} />
+    )
+
+    const skeleton = (
+        <StackV gap={6} items={[
+            () => (
+                <Section header={{ title: labels.coverageZone, level: 3 }} body={
+                    <SurfaceCard
+                        body={() => (
+                            <StackV gap={3} items={[
+                                () => <ScoreValue points={0} unit="%" isSkeleton />,
+                                () => <Typography size="sm" isSkeleton classNames={["w-3/4"]} />,
+                                () => <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} />,
+                            ]} />
+                        )}
+                    />
+                } />
+            ),
+            () => (
                 <Section header={{ title: labels.gapZone, level: 3 }} body={
                     <SurfaceCardList
                         variant="nested"
@@ -200,8 +198,8 @@ export const _FlashcardQuizStats = ({
                         }))}
                     />
                 } />
-            </>
-        } />
+            ),
+        ]} />
     )
 
     return (

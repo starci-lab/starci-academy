@@ -408,20 +408,20 @@ const MockInterviewPage = ({
     const interviewPhases = (
         <>
             {phase === "setup" ? (
-                <StackV gap={6} body={setupSection} />
+                <StackV gap={6} items={[() => setupSection]} />
             ) : null}
 
             {phase === "live" ? (
-                <StackV gap={6} body={liveSection} />
+                <StackV gap={6} items={[() => liveSection]} />
             ) : null}
 
             {phase === "result" ? (
-                <StackV gap={6} body={resultSection} />
+                <StackV gap={6} items={[() => resultSection]} />
             ) : null}
         </>
     )
 
-    const interviewBody = <StackV gap={7} body={interviewPhases} />
+    const interviewBody = <StackV gap={7} items={[() => interviewPhases]} />
 
     return <Container size="md" padding={6} body={interviewBody} />
 }

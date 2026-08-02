@@ -49,8 +49,8 @@ const SettingsLayout = ({
     expandLabel,
     storageKey,
 }: SettingsLayoutProps) => {
-    const navAndContent = (
-        <>
+    const navAndContent = [
+        () => (
             <SettingsSidebarNav
 
                 groups={groups}
@@ -61,6 +61,8 @@ const SettingsLayout = ({
                 expandLabel={expandLabel}
                 storageKey={storageKey}
             />
+        ),
+        () => (
             <Container
 
                 size="md"
@@ -68,8 +70,8 @@ const SettingsLayout = ({
                 classNames={["min-w-0", "flex-1"]}
                 body={children}
             />
-        </>
-    )
+        ),
+    ]
 
     return (
         <div>
@@ -77,7 +79,7 @@ const SettingsLayout = ({
                 gap={1}
                 className="@app-md:flex-row @app-md:items-start"
 
-                body={navAndContent}
+                items={navAndContent}
             />
         </div>
     )

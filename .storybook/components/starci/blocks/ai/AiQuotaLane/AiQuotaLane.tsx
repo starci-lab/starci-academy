@@ -58,8 +58,8 @@ const AiQuotaLane = ({ data, isLoading }: AiQuotaLaneProps) => {
 
     return (
         <div>
-            <StackV gap={4} body={
-                <>
+            <StackV gap={4} items={[
+                () => (
                     <QuotaBar
                         label="Next 5 hours"
                         used={data?.window5h.used ?? 0}
@@ -69,6 +69,8 @@ const AiQuotaLane = ({ data, isLoading }: AiQuotaLaneProps) => {
 
 
                     />
+                ),
+                () => (
                     <QuotaBar
                         label="This week"
                         used={data?.windowWeek.used ?? 0}
@@ -78,8 +80,8 @@ const AiQuotaLane = ({ data, isLoading }: AiQuotaLaneProps) => {
 
 
                     />
-                </>
-            } />
+                ),
+            ]} />
         </div>
     )
 }

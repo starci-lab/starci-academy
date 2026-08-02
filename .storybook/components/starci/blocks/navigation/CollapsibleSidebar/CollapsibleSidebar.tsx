@@ -149,7 +149,7 @@ export const CollapsibleSidebar = ({
     // owner for the same seam).
     const panel = (
         <>
-            <StackH gap={3} justify={collapsed ? "center" : "between"} body={headerRow} />
+            <StackH gap={3} justify={collapsed ? "center" : "between"} items={[() => headerRow]} />
 
             {/* pinned top slot (e.g. resume pill) — above the scroll area, always
                 visible. min-w-0: a column-flex item defaults to content-width
@@ -171,7 +171,7 @@ export const CollapsibleSidebar = ({
 
             >
                 <DragScrollArea size={40} className="flex-1">
-                    <StackV gap={4} body={children} />
+                    <StackV gap={4} items={[() => children]} />
                 </DragScrollArea>
             </nav>
         </>
@@ -194,7 +194,7 @@ export const CollapsibleSidebar = ({
                     className,
                 )}
             >
-                <StackV gap={6} classNames={["min-h-0", "flex-1"]} body={panel} />
+                <StackV gap={6} classNames={["min-h-0", "flex-1"]} items={[() => panel]} />
             </motion.aside>
         </SidebarCollapsedContext.Provider>
     )

@@ -61,7 +61,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     const readinessItems: Array<SurfaceCardListItem> = [
         {
             key: "readiness-track",
-            content: () => <StackV gap={4} body={readinessTrack} />,
+            content: () => <StackV gap={4} items={[() => readinessTrack]} />,
         },
     ]
 
@@ -74,19 +74,19 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
         )
         const courseDetails = (
             <>
-                <StackH gap={3} justify="between" body={progressHeader} />
+                <StackH gap={3} justify="between" items={[() => progressHeader]} />
                 <ProgressBar isSkeleton />
             </>
         )
         const courseRow = (
             <>
                 <IconTile isSkeleton size="sm" />
-                <StackV gap={3} classNames={["min-w-0", "flex-1"]} body={courseDetails} />
+                <StackV gap={3} classNames={["min-w-0", "flex-1"]} items={[() => courseDetails]} />
             </>
         )
         return {
             key: `course-${i}`,
-            content: () => <StackH gap={4} body={courseRow} />,
+            content: () => <StackH gap={4} items={[() => courseRow]} />,
         }
     })
 
@@ -104,13 +104,13 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
                 <SurfaceCard
                     padding={4}
 
-                    body={() => <StackV gap={3} body={statCardBody} />}
+                    body={() => <StackV gap={3} items={[() => statCardBody]} />}
                 />
             </>
         )
         return {
             key: `skill-${i}`,
-            content: <StackV gap={4} body={skillCard} />,
+            content: <StackV gap={4} items={[() => skillCard]} />,
         }
     })
 
@@ -143,7 +143,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     )
     const locationRow = (
         <>
-            <StackH gap={2} body={locationLabel} />
+            <StackH gap={2} items={[() => locationLabel]} />
             <Chip isSkeleton />
         </>
     )
@@ -172,25 +172,25 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
                 <Typography size="sm" isSkeleton classNames={["w-1/2"]} />
             </>
         )
-        return <StackH key={key} gap={2} body={metaRow} />
+        return <StackH key={key} gap={2} items={[() => metaRow]} />
     })
 
     const identityColumnBody = (
         <>
-            <StackV gap={2} align="start" body={rankAvatarRow} />
-            <StackV gap={1} body={nameBlock} />
+            <StackV gap={2} align="start" items={[() => rankAvatarRow]} />
+            <StackV gap={1} items={[() => nameBlock]} />
 
             {/* short bio */}
             <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
 
-            <StackH gap={3} wrap body={locationRow} />
-            <StackH gap={4} body={followRow} />
+            <StackH gap={3} wrap items={[() => locationRow]} />
+            <StackH gap={4} items={[() => followRow]} />
 
             {/* earned-badge medal strip — `AvatarGroup` already owns the overlap look */}
             <AvatarGroup items={MEDAL_ITEMS} size="sm" isSkeleton />
 
-            <StackV gap={3} body={actionButtons} />
-            <StackV gap={4} body={metaRows} />
+            <StackV gap={3} items={[() => actionButtons]} />
+            <StackV gap={4} items={[() => metaRows]} />
         </>
     )
 
@@ -208,7 +208,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
             <SurfaceCard
                 padding={4}
 
-                body={() => <StackV gap={3} body={readinessCard} />}
+                body={() => <StackV gap={3} items={[() => readinessCard]} />}
             />
             <SurfaceCardList
                 items={readinessItems}
@@ -220,7 +220,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     const readinessSection = (
         <>
             <Typography size="h4" isSkeleton classNames={["w-1/2"]} />
-            <StackV gap={4} body={readinessGroup} />
+            <StackV gap={4} items={[() => readinessGroup]} />
         </>
     )
 
@@ -244,22 +244,22 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     const contributionGroup = (
         <>
             <HeroSkeleton className="h-40 w-full rounded-xl" />
-            <StackH gap={3} body={contributionStreak} />
+            <StackH gap={3} items={[() => contributionStreak]} />
         </>
     )
     // contributions — heatmap grid + streak line
     const contributionsSection = (
         <>
             <Typography size="h4" isSkeleton classNames={["w-1/2"]} />
-            <StackV gap={4} body={contributionGroup} />
+            <StackV gap={4} items={[() => contributionGroup]} />
         </>
     )
 
     const overviewSections = (
         <>
-            <StackV gap={4} body={readinessSection} />
-            <StackV gap={4} body={coursesSection} />
-            <StackV gap={4} body={contributionsSection} />
+            <StackV gap={4} items={[() => readinessSection]} />
+            <StackV gap={4} items={[() => coursesSection]} />
+            <StackV gap={4} items={[() => contributionsSection]} />
             {/* skills — 2-col grid of stat cards */}
             <Grid columns={{ base: 1, md: 2 }} gap={6} items={skillItems} />
         </>
@@ -276,9 +276,9 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
                 classNames={["w-full"]}
                 className="@app-md:w-72 @app-md:shrink-0"
 
-                body={identityColumnBody}
+                items={[() => identityColumnBody]}
             />
-            <StackV gap={6} classNames={["min-w-0", "flex-1"]} body={overviewSections} />
+            <StackV gap={6} classNames={["min-w-0", "flex-1"]} items={[() => overviewSections]} />
         </>
     )
 
@@ -287,7 +287,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
             gap={6}
             className="@app-md:flex-row @app-md:items-start"
 
-            body={outerRow}
+            items={[() => outerRow]}
         />
     )
 

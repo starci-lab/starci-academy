@@ -123,7 +123,7 @@ const ContentArticle = ({
             <SurfaceCard
                 isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={6} body={lessonBody} />}
+                body={() => <StackV gap={6} items={[() => lessonBody]} />}
             />
         </div>
     )

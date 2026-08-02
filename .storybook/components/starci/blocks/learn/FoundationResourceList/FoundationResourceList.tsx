@@ -193,9 +193,9 @@ const FoundationResourceList = ({
                     <StackV
                         gap={3}
 
-                        body={
-                            <>
-                                <SurfaceCardList items={rows} />
+                        items={[
+                            () => <SurfaceCardList items={rows} />,
+                            () => (
                                 <div>
                                     <Pagination
                                         currentPage={currentPage}
@@ -204,8 +204,8 @@ const FoundationResourceList = ({
 
                                     />
                                 </div>
-                            </>
-                        }
+                            ),
+                        ]}
                     />
                 }
             />

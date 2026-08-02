@@ -110,9 +110,9 @@ export const AiQuotaHistoryPanel = ({
     const isEmpty = !isLoading && (items?.length ?? 0) === 0
 
     const chart = (
-        <StackV gap={4} body={
-            <>
-                <Typography size="sm" weight="medium" text="Credits used per day (last 7 days)" />
+        <StackV gap={4} items={[
+            () => <Typography size="sm" weight="medium" text="Credits used per day (last 7 days)" />,
+            () => (
                 <SurfaceCard
                     variant="nested"
                     padding={4}
@@ -139,14 +139,14 @@ export const AiQuotaHistoryPanel = ({
                         </div>
                     )}
                 />
-            </>
-        } />
+            ),
+        ]} />
     )
 
     const chargesList = (
-        <StackV gap={4} body={
-            <>
-                <Typography size="sm" weight="medium" text="AI usage history" />
+        <StackV gap={4} items={[
+            () => <Typography size="sm" weight="medium" text="AI usage history" />,
+            () => (
                 <div className="max-h-64 overflow-y-auto">
                     <AsyncContent
                         isLoading={isLoading}
@@ -160,13 +160,13 @@ export const AiQuotaHistoryPanel = ({
 
                     />
                 </div>
-            </>
-        } />
+            ),
+        ]} />
     )
 
     return (
         <div>
-            <StackV gap={6} className={className} body={<>{chart}{chargesList}</>} />
+            <StackV gap={6} className={className} items={[() => chart, () => chargesList]} />
         </div>
     )
 }

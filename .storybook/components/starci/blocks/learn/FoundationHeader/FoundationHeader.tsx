@@ -110,31 +110,26 @@ const FoundationHeader = ({
                 align="center"
                 wrap
 
-                body={
-                    <>
+                items={[
+                    () => (
                         <EnumChip
                             value={isSkeleton ? FoundationKind.Document : kind}
                             map={KIND_MAP}
                             isSkeleton={isSkeleton}
 
                         />
-                        {isSkeleton ? (
-                            <Chip isSkeleton />
-                        ) : isRecommended ? (
-                            <Chip tone="success" text="Recommended" />
-                        ) : null}
-                        {isSkeleton ? (
-                            <>
-                                <Chip isSkeleton />
-                                <Chip isSkeleton />
-                            </>
-                        ) : hasTags ? (
-                            (tags ?? []).map((tag) => (
-                                <Chip key={tag.key} text={tag.label} />
-                            ))
-                        ) : null}
-                    </>
-                }
+                    ),
+                    ...(isSkeleton
+                        ? [() => <Chip isSkeleton />]
+                        : isRecommended
+                            ? [() => <Chip tone="success" text="Recommended" />]
+                            : []),
+                    ...(isSkeleton
+                        ? [() => <Chip isSkeleton />, () => <Chip isSkeleton />]
+                        : hasTags
+                            ? (tags ?? []).map((tag) => () => <Chip text={tag.label} />)
+                            : []),
+                ]}
             />
             {isSkeleton ? (
                 <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} />
@@ -167,7 +162,7 @@ const FoundationHeader = ({
                 title={title}
                 description={description}
                 meta={() =>
-                    <StackV gap={4} body={metaCluster} />
+                    <StackV gap={4} items={[() => metaCluster]} />
                 }
             />
         </div>

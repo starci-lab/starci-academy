@@ -157,11 +157,11 @@ const SkeletonQuestionRow = ({  }: SkeletonQuestionRowProps) => {
             {/* asker + time line */}
             <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
             {/* two-line preview */}
-            <StackV gap={2} body={previewLines} />
+            <StackV gap={2} items={[() => previewLines]} />
             {/* chip-pill row — ONE chip (status, the classification axis) + the scope
                 as a plain shimmer bar, matching the real row's own text-inline treatment
                 (eslint `starci-fe/no-adjacent-chip`, ★7 below). */}
-            <StackH gap={3} body={chipRow} />
+            <StackH gap={3} items={[() => chipRow]} />
         </>
     )
 
@@ -170,16 +170,16 @@ const SkeletonQuestionRow = ({  }: SkeletonQuestionRowProps) => {
             gap={4}
             align="start"
 
-            body={
-                <>
+            items={[
+                () => (
                     <div className="shrink-0">
                         <Avatar isSkeleton size="sm" />
                     </div>
-                    <StackV gap={2} classNames={["min-w-0", "flex-1"]} body={textColumn} />
-                    {/* status dot — no home atom (★3), same escape hatch `Pagination` uses for its own shimmer squares */}
-                    <HeroSkeleton className="size-2 shrink-0 rounded-full" />
-                </>
-            }
+                ),
+                () => <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={[() => textColumn]} />,
+                // status dot — no home atom (★3), same escape hatch `Pagination` uses for its own shimmer squares
+                () => <HeroSkeleton className="size-2 shrink-0 rounded-full" />,
+            ]}
         />
     )
 }
@@ -248,7 +248,7 @@ const QuestionPreviewRow = ({ question, currentUserId }: QuestionPreviewRowProps
 
     const textColumn = (
         <>
-            <StackH gap={2} body={nameLine} />
+            <StackH gap={2} items={[() => nameLine]} />
             <Typography size="sm" lineClamp={2} text={question.preview} />
             <Cluster gap={3} items={chips} />
         </>
@@ -259,8 +259,8 @@ const QuestionPreviewRow = ({ question, currentUserId }: QuestionPreviewRowProps
             gap={4}
             align="start"
 
-            body={
-                <>
+            items={[
+                () => (
                     <div className="shrink-0">
                         <Avatar
                             src={question.author.avatarUrl}
@@ -270,13 +270,15 @@ const QuestionPreviewRow = ({ question, currentUserId }: QuestionPreviewRowProps
 
                         />
                     </div>
-                    <StackV gap={2} classNames={["min-w-0", "flex-1"]} body={textColumn} />
+                ),
+                () => <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={[() => textColumn]} />,
+                () => (
                     <span
                         aria-hidden
                         className={`size-2 shrink-0 rounded-full ${isAnswered ? "bg-success" : "bg-warning"}`}
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 }
@@ -358,26 +360,30 @@ const CourseQaQuestionList = ({
                     <StackV
                         gap={4}
 
-                        body={
-                            <>
+                        items={[
+                            () => (
                                 <SurfaceCardList
                                     items={questionItems(questions, currentUserId)}
 
                                 />
-                                {totalPages > 1 ? (
+                            ),
+                            ...(totalPages > 1
+                                ? [
                                     // ★4 — `Pagination` hard-codes its own aria-label; a wrapping
                                     // <nav> is how the caller's `pagerAriaLabel` still names the region.
-                                    <nav aria-label={pagerAriaLabel}>
-                                        <Pagination
-                                            currentPage={page}
-                                            totalPages={totalPages}
-                                            onPageChange={onPageChange}
+                                    () => (
+                                        <nav aria-label={pagerAriaLabel}>
+                                            <Pagination
+                                                currentPage={page}
+                                                totalPages={totalPages}
+                                                onPageChange={onPageChange}
 
-                                        />
-                                    </nav>
-                                ) : null}
-                            </>
-                        }
+                                            />
+                                        </nav>
+                                    ),
+                                ]
+                                : []),
+                        ]}
                     />
                 }
             />

@@ -79,7 +79,7 @@ const ContentReaction = ({
 
     return (
         <div>
-            <StackH gap={3} align="center" justify="between" body={row} />
+            <StackH gap={3} align="center" justify="between" items={[() => row]} />
         </div>
     )
 }

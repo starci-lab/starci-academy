@@ -125,16 +125,16 @@ const ConsultantDirectoryGrid = ({
                 emptyContent={emptyContent}
 
                 content={
-                    <StackV gap={4} body={
-                        <>
-                            {count !== undefined ? (
-                                <Typography size="sm" color="muted" text={countLabel(count)} />
-                            ) : null}
+                    <StackV gap={4} items={[
+                        ...(count !== undefined ? [() => (
+                            <Typography size="sm" color="muted" text={countLabel(count)} />
+                        )] : []),
+                        () => (
                             <div>
                                 <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={4} items={tiles} />
                             </div>
-                        </>
-                    } />
+                        ),
+                    ]} />
                 }
             />
         </div>

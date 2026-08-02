@@ -165,7 +165,7 @@ const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false}: Profile
             ) : null}
         </>
     )
-    return <StackV gap={2} align="center" body={rankBody} />
+    return <StackV gap={2} align="center" items={[() => rankBody]} />
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -198,7 +198,7 @@ const ProfileFollowers = ({ followersCount, isSkeleton = false}: ProfileFollower
             />
         </>
     )
-    return <StackV gap={1} body={followersBody} />
+    return <StackV gap={1} items={[() => followersBody]} />
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -400,7 +400,7 @@ const ProfileHero = ({
                 isSkeleton={isSkeleton}
 
             />
-            <StackV gap={1} align="center" body={nameBlock} />
+            <StackV gap={1} align="center" items={[() => nameBlock]} />
         </>
     )
 
@@ -448,7 +448,7 @@ const ProfileHero = ({
                         />
                     </>
                 )
-                return <StackH key={entry.key} gap={2} body={socialRow} />
+                return <StackH key={entry.key} gap={2} items={[() => socialRow]} />
             })}
             <InlineIconLabel
                 icon={CalendarBlankIcon}
@@ -462,13 +462,13 @@ const ProfileHero = ({
     const metaSection = hasMetaList ? (
         <>
             <Divider />
-            <StackV gap={4} body={metaList} />
+            <StackV gap={4} items={[() => metaList]} />
         </>
     ) : null
 
     const cardBody = (
         <>
-            <StackV gap={4} align="center" body={identitySection} />
+            <StackV gap={4} align="center" items={[() => identitySection]} />
 
             {isSkeleton || bio ? (
                 <Typography
@@ -522,9 +522,9 @@ const ProfileHero = ({
                 />
             ) : null}
 
-            <StackH gap={3} divider body={statsRow} />
+            <StackH gap={3} divider items={[() => statsRow]} />
 
-            <StackH gap={3} body={actionsRow} />
+            <StackH gap={3} items={[() => actionsRow]} />
 
             {metaSection}
         </>
@@ -535,7 +535,7 @@ const ProfileHero = ({
             <SurfaceCard
 
 
-                body={() => <StackV gap={6} body={cardBody} />}
+                body={() => <StackV gap={6} items={[() => cardBody]} />}
             />
         </div>
     )

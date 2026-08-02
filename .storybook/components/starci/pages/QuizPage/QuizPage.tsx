@@ -365,20 +365,20 @@ const QuizPage = ({
     const quizPhases = (
         <>
             {phase === "setup" ? (
-                <StackV gap={6} body={setupSection} />
+                <StackV gap={6} items={[() => setupSection]} />
             ) : null}
 
             {phase === "active" ? (
-                <StackV gap={6} body={activeSection} />
+                <StackV gap={6} items={[() => activeSection]} />
             ) : null}
 
             {phase === "recap" ? (
-                <StackV gap={6} body={recapSection} />
+                <StackV gap={6} items={[() => recapSection]} />
             ) : null}
         </>
     )
 
-    const quizBody = <StackV gap={7} body={quizPhases} />
+    const quizBody = <StackV gap={7} items={[() => quizPhases]} />
 
     return <Container size="md" padding={6} body={quizBody} />
 }

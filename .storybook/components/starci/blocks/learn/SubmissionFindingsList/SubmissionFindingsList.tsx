@@ -161,10 +161,10 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
             gap={2}
             align="center"
 
-            body={
-                <>
-                    <MapPinIcon aria-hidden focusable="false" weight="bold" className="size-3 shrink-0 text-muted" />
-                    {locationHref ? (
+            items={[
+                () => <MapPinIcon aria-hidden focusable="false" weight="bold" className="size-3 shrink-0 text-muted" />,
+                () =>
+                    locationHref ? (
                         <Typography
                             size="xs"
                             color="muted"
@@ -178,9 +178,8 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
                         />
                     ) : (
                         <Typography size="xs" color="muted" text={finding.location} />
-                    )}
-                </>
-            }
+                    ),
+            ]}
         />
     ) : null
     const suggestionRow = finding.suggestion ? (
@@ -188,9 +187,9 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
             gap={2}
             align="start"
 
-            body={
-                <>
-                    <LightbulbIcon aria-hidden focusable="false" weight="bold" className="size-3.5 shrink-0 text-muted" />
+            items={[
+                () => <LightbulbIcon aria-hidden focusable="false" weight="bold" className="size-3.5 shrink-0 text-muted" />,
+                () => (
                     <div className="min-w-0 flex-1 text-muted [&_p]:m-0">
                         <MarkdownContent
                             source={finding.suggestion}
@@ -198,29 +197,27 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
 
                         />
                     </div>
-                </>
-            }
+                ),
+            ]}
         />
     ) : null
     return (
         <StackV
             gap={3}
 
-            body={
-                <>
-                    {finding.detail ? (
-                        <div className="text-muted [&_p]:m-0">
-                            <MarkdownContent
-                                source={finding.detail}
-                                measure="compact"
+            items={[
+                ...(finding.detail ? [() => (
+                    <div className="text-muted [&_p]:m-0">
+                        <MarkdownContent
+                            source={finding.detail}
+                            measure="compact"
 
-                            />
-                        </div>
-                    ) : null}
-                    {locationRow}
-                    {suggestionRow}
-                </>
-            }
+                        />
+                    </div>
+                )] : []),
+                () => locationRow,
+                () => suggestionRow,
+            ]}
         />
     )
 }

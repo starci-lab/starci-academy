@@ -143,7 +143,7 @@ const DesktopNavRow = ({ item, isActive, onNavigate }: DesktopNavRowProps) => {
                 isActive ? "bg-accent-soft text-accent-soft-foreground" : "text-foreground hover:bg-default/40",
             )}
         >
-            <StackH gap={2} align="center" justify={collapsed ? "center" : "start"} body={rowContent} />
+            <StackH gap={2} align="center" justify={collapsed ? "center" : "start"} items={[() => rowContent]} />
         </button>
     )
 }
@@ -213,9 +213,8 @@ const SettingsSidebarNav = ({
                             <StackV
                                 gap={1}
 
-                                body={group.items.map((item) => (
+                                items={group.items.map((item) => () => (
                                     <DesktopNavRow
-                                        key={item.key}
                                         item={item}
                                         isActive={item.href === activeHref}
                                         onNavigate={onNavigate}
@@ -235,7 +234,7 @@ const SettingsSidebarNav = ({
                     gap={3}
                     className="overflow-x-auto border-b border-default bg-background/80 px-3 py-2 backdrop-blur-xl"
 
-                    body={flatItems.map((item) => {
+                    items={flatItems.map((item) => () => {
                         const isActive = item.href === activeHref
                         const Icon = DESTINATION_ICON[item.key]
                         const pillContent = (
@@ -246,7 +245,6 @@ const SettingsSidebarNav = ({
                         )
                         return (
                             <button
-                                key={item.key}
                                 type="button"
                                 aria-current={isActive ? "page" : undefined}
                                 onClick={() => onNavigate(item.href)}
@@ -255,7 +253,7 @@ const SettingsSidebarNav = ({
                                     isActive ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
                                 )}
                             >
-                                <StackH gap={2} align="center" body={pillContent} />
+                                <StackH gap={2} align="center" items={[() => pillContent]} />
                             </button>
                         )
                     })}

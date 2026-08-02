@@ -94,8 +94,8 @@ const ConsultantProfileBody = ({
     const { fullName, jobTitle, companyTitle, description, avatarUrl, contactUnlocked, contactLinks } = consultant
 
     const nameRow = (
-        <StackV gap={1} align="center" body={(
-            <>
+        <StackV gap={1} align="center" items={[
+            () => (
                 <Typography
                     size="h4"
                     weight="bold"
@@ -104,24 +104,24 @@ const ConsultantProfileBody = ({
                     text={fullName}
 
                 />
-                {isSkeleton || jobTitle ? (
-                    <Typography
-                        size="sm"
-                        color="muted"
-                        align="center"
-                        isSkeleton={isSkeleton}
-                        text={jobTitle}
+            ),
+            ...(isSkeleton || jobTitle ? [() => (
+                <Typography
+                    size="sm"
+                    color="muted"
+                    align="center"
+                    isSkeleton={isSkeleton}
+                    text={jobTitle}
 
-                    />
-                ) : null}
-            </>
-        )} />
+                />
+            )] : []),
+        ]} />
     )
 
     // identity: centered photo, name+role, pressable company row
     const identity = (
-        <StackV gap={4} align="center" body={(
-            <>
+        <StackV gap={4} align="center" items={[
+            () => (
                 <div className="w-28">
                     <Image
                         src={avatarUrl}
@@ -132,45 +132,40 @@ const ConsultantProfileBody = ({
 
                     />
                 </div>
-                {nameRow}
-                {isSkeleton || companyTitle ? (
-                    <Button
-                        isSkeleton={isSkeleton}
-                        variant="secondary"
-                        size="sm"
-                        label={companyTitle ?? ""}
-                        prefixIcon={BuildingsIcon}
-                        onPress={onOpenCompany}
-                        isDisabled={isSkeleton || !onOpenCompany}
+            ),
+            () => nameRow,
+            ...(isSkeleton || companyTitle ? [() => (
+                <Button
+                    isSkeleton={isSkeleton}
+                    variant="secondary"
+                    size="sm"
+                    label={companyTitle ?? ""}
+                    prefixIcon={BuildingsIcon}
+                    onPress={onOpenCompany}
+                    isDisabled={isSkeleton || !onOpenCompany}
 
-                    />
-                ) : null}
-            </>
-        )} />
+                />
+            )] : []),
+        ]} />
     )
 
     // contact fork — see file header for why loading shimmers neutrally
     const contactFork = isSkeleton ? (
-        <StackV gap={2} body={(
-            <>
-                <Typography size="sm" isSkeleton classNames={["w-1/2"]} />
-                <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
-            </>
-        )} />
+        <StackV gap={2} items={[
+            () => <Typography size="sm" isSkeleton classNames={["w-1/2"]} />,
+            () => <Typography size="sm" isSkeleton classNames={["w-1/3"]} />,
+        ]} />
     ) : contactUnlocked ? (
-        <StackV gap={2} body={
-            (contactLinks ?? []).map((link) => (
-                <Typography
-                    key={link.key}
-                    size="sm"
-                    isLink
-                    href={link.href}
-                    prefixIcon={link.icon}
-                    text={link.label}
+        <StackV gap={2} items={(contactLinks ?? []).map((link) => () => (
+            <Typography
+                size="sm"
+                isLink
+                href={link.href}
+                prefixIcon={link.icon}
+                text={link.label}
 
-                />
-            ))
-        } />
+            />
+        ))} />
     ) : (
         <Callout
             status="warning"
@@ -186,22 +181,20 @@ const ConsultantProfileBody = ({
 
     return (
         <div>
-            <StackV gap={6} body={(
-                <>
-                    {identity}
-                    {/* full bio — no clamp, unlike ConsultantCard's directory teaser */}
-                    {isSkeleton || description ? (
-                        <Typography
-                            size="sm"
-                            color="muted"
-                            isSkeleton={isSkeleton}
-                            text={description}
+            <StackV gap={6} items={[
+                () => identity,
+                // full bio — no clamp, unlike ConsultantCard's directory teaser
+                ...(isSkeleton || description ? [() => (
+                    <Typography
+                        size="sm"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        text={description}
 
-                        />
-                    ) : null}
-                    {contactFork}
-                </>
-            )} />
+                    />
+                )] : []),
+                () => contactFork,
+            ]} />
         </div>
     )
 }

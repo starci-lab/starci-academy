@@ -182,11 +182,11 @@ const LeaderboardPage = ({
                 onEnroll={onEnroll}
 
             />
-            <StackV gap={6} body={boardSection} />
+            <StackV gap={6} items={[() => boardSection]} />
         </>
     )
 
-    const leaderboardBody = <StackV gap={7} body={leaderboardSections} />
+    const leaderboardBody = <StackV gap={7} items={[() => leaderboardSections]} />
 
     return <Container size="md" padding={6} body={leaderboardBody} />
 }

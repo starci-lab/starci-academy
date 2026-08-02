@@ -193,17 +193,17 @@ const FlashcardDeckList = ({
 
         const tileBody = (
             <>
-                <StackV gap={1} body={titleAndDescription} />
+                <StackV gap={1} items={[() => titleAndDescription]} />
                 <Cluster gap={3} items={chips} />
                 {showProgress && deck.totalCount > 0 ? (
-                    <StackH gap={2} body={progressRow} />
+                    <StackH gap={2} items={[() => progressRow]} />
                 ) : null}
-                <StackH gap={2} justify="end" body={ctaRow} />
+                <StackH gap={2} justify="end" items={[() => ctaRow]} />
             </>
         )
 
         return (
-            <StackV gap={3} body={tileBody} />
+            <StackV gap={3} items={[() => tileBody]} />
         )
     }
 
@@ -298,7 +298,7 @@ const FlashcardDeckList = ({
 
     const listBody = (
         <>
-            <StackH gap={3} wrap body={searchAndView} />
+            <StackH gap={3} wrap items={[() => searchAndView]} />
             {track}
             {!isSkeleton && decks.length > 0 ? (
                 <div>
@@ -309,7 +309,7 @@ const FlashcardDeckList = ({
     )
 
     return (
-        <StackV gap={4} body={listBody} />
+        <StackV gap={4} items={[() => listBody]} />
     )
 }
 

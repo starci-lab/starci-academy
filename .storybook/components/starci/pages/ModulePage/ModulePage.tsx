@@ -231,12 +231,12 @@ const ModulePage = ({
 
                 />
             ) : (
-                <StackV gap={6} body={moduleContent} />
+                <StackV gap={6} items={[() => moduleContent]} />
             )}
         </>
     )
 
-    const moduleBody = <StackV gap={7} body={moduleSections} />
+    const moduleBody = <StackV gap={7} items={[() => moduleSections]} />
 
     return <Container size="md" padding={6} body={moduleBody} />
 }

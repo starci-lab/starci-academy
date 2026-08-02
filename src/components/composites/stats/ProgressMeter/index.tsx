@@ -107,14 +107,12 @@ export const ProgressMeter = ({
         <StackH
             gap={3}
             justify="between"
-            body={
-                <>
-                    <Typography size="xs" color="muted" truncate classNames={["min-w-0"]} isSkeleton={isSkeleton} text={label} />
-                    {showValue ? (
-                        <Typography size="xs" color="muted" classNames={["shrink-0"]} isSkeleton={isSkeleton} text={<>{percent}%</>} />
-                    ) : null}
-                </>
-            }
+            items={[
+                () => <Typography size="xs" color="muted" truncate classNames={["min-w-0"]} isSkeleton={isSkeleton} text={label} />,
+                ...(showValue ? [() => (
+                    <Typography size="xs" color="muted" classNames={["shrink-0"]} isSkeleton={isSkeleton} text={<>{percent}%</>} />
+                )] : []),
+            ]}
         />
     ) : null
     // Additive row, independent of `topRow` above: a component-based
@@ -127,20 +125,18 @@ export const ProgressMeter = ({
         <StackH
             gap={3}
             justify="between"
-            body={
-                <>
-                    {Leading ? (
-                        <div className="min-w-0">
-                            <Leading isSkeleton={isSkeleton} />
-                        </div>
-                    ) : <span />}
-                    {Trailing ? (
-                        <div className="shrink-0">
-                            <Trailing isSkeleton={isSkeleton} />
-                        </div>
-                    ) : null}
-                </>
-            }
+            items={[
+                () => (Leading ? (
+                    <div className="min-w-0">
+                        <Leading isSkeleton={isSkeleton} />
+                    </div>
+                ) : <span />),
+                ...(Trailing ? [() => (
+                    <div className="shrink-0">
+                        <Trailing isSkeleton={isSkeleton} />
+                    </div>
+                )] : []),
+            ]}
         />
     ) : null
     // Two DIFFERENT jobs, so two boxes — a fix landed 2026-07-29 after the target pill
@@ -199,13 +195,11 @@ export const ProgressMeter = ({
         <StackV
             gap={3}
             classNames={classNames}
-            body={
-                <>
-                    {topRow}
-                    {slotRow}
-                    {trackSection}
-                </>
-            }
+            items={[
+                () => topRow,
+                () => slotRow,
+                () => trackSection,
+            ]}
         />
     )
 }

@@ -110,14 +110,14 @@ const MindMapCanvasGap = ({ isLoading = false}: MindMapCanvasGapProps) => (
         justify="center"
         classNames={["h-full"]}
 
-        body={
+        items={[() => (
             <AsyncContentEmpty
 
                 icon={ShareNetworkIcon}
                 title={isLoading ? CANVAS_GAP_LOADING_TITLE : CANVAS_GAP_TITLE}
                 description={isLoading ? undefined : CANVAS_GAP_DESCRIPTION}
             />
-        }
+        )]}
     />
 )
 
@@ -133,14 +133,14 @@ const MindMapWorkspaceEmpty = () => (
         justify="center"
         className="h-[calc(100dvh-4rem)]"
 
-        body={
+        items={[() => (
             <AsyncContentEmpty
 
                 icon={MapTrifoldIcon}
                 title={WORKSPACE_EMPTY_TITLE}
                 description={WORKSPACE_EMPTY_DESCRIPTION}
             />
-        }
+        )]}
     />
 )
 
@@ -209,7 +209,7 @@ const MindMapPage = ({
                 align="center"
                 className="absolute inset-x-0 top-4 z-10"
 
-                body={
+                items={[() => (
                     <MindMapContinueButton
 
                         resumeHref={resumeHref}
@@ -218,23 +218,23 @@ const MindMapPage = ({
                         continueAriaLabel={continueAriaLabel}
 
                     />
-                }
+                )]}
             />
             <StackV
                 gap={1}
                 className="absolute bottom-4 left-4 z-10"
 
-                body={
+                items={[() => (
                     <div>
                         <Legend items={legendItems} />
                     </div>
-                }
+                )]}
             />
             <StackV
                 gap={1}
                 className="absolute bottom-4 right-4 z-10"
 
-                body={
+                items={[() => (
                     <MindMapFullscreenButton
 
                         onZoomIn={onZoomIn}
@@ -244,7 +244,7 @@ const MindMapPage = ({
                         ariaLabels={fullscreenAriaLabels}
 
                     />
-                }
+                )]}
             />
         </>
     )
@@ -273,7 +273,7 @@ const MindMapPage = ({
                 className="overflow-y-auto"
                 classNames={["h-full"]}
 
-                body={railSection}
+                items={[() => railSection]}
             />
         </ResizableRail>
     )
@@ -289,12 +289,12 @@ const MindMapPage = ({
                 className="relative"
                 classNames={["min-w-0", "flex-1"]}
 
-                body={canvasRegion}
+                items={[() => canvasRegion]}
             />
         </>
     )
 
-    return <StackH gap={1} className="h-[calc(100dvh-4rem)]" body={workspaceSections} />
+    return <StackH gap={1} className="h-[calc(100dvh-4rem)]" items={[() => workspaceSections]} />
 }
 
 export { MindMapPage }

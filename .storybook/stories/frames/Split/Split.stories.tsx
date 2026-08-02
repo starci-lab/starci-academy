@@ -99,7 +99,7 @@ export const Align: Story = {
                                 <Split
                                     gap={4}
                                     align="center"
-                                    start={<StackV gap={1} body={lessonMeta} />}
+                                    start={<StackV gap={1} items={[() => lessonMeta]} />}
                                     end={<Button label="Study" size="sm" />}
                                 />
                             </div>
@@ -119,7 +119,7 @@ export const Align: Story = {
                                 <Split
                                     gap={4}
                                     align="start"
-                                    start={<StackV gap={1} body={lessonMeta} />}
+                                    start={<StackV gap={1} items={[() => lessonMeta]} />}
                                     end={<Button label="Study" size="sm" />}
                                 />
                             </div>
@@ -139,7 +139,7 @@ export const Align: Story = {
                                 <Split
                                     gap={4}
                                     align="end"
-                                    start={<StackV gap={1} body={lessonMeta} />}
+                                    start={<StackV gap={1} items={[() => lessonMeta]} />}
                                     end={<Button label="Study" size="sm" />}
                                 />
                             </div>
@@ -159,7 +159,7 @@ export const Align: Story = {
                                 <Split
                                     gap={4}
                                     align="stretch"
-                                    start={<StackV gap={1} body={lessonMeta} />}
+                                    start={<StackV gap={1} items={[() => lessonMeta]} />}
                                     end={<Button label="Study" size="sm" />}
                                 />
                             </div>

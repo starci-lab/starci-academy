@@ -91,7 +91,7 @@ const ChallengeScoreCard = ({
 
     const scoreBody = (
         <>
-            <StackH gap={2} align="baseline" body={scoreReading} />
+            <StackH gap={2} align="baseline" items={[() => scoreReading]} />
             {isSkeleton ? (
                 <HeroSkeleton
                     className="h-1 w-full rounded-full"
@@ -117,7 +117,7 @@ const ChallengeScoreCard = ({
             isSkeleton={isSkeleton}
 
 
-            body={() => <StackV gap={4} body={scoreBody} />}
+            body={() => <StackV gap={4} items={[() => scoreBody]} />}
         />
     )
 }

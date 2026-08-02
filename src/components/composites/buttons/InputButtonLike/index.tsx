@@ -129,25 +129,23 @@ export const InputButtonLike = ({
             <StackH
                 gap={3}
                 classNames={["min-w-0"]}
-                body={
-                    <>
-                        {!isSkeleton && Icon ? (
-                            <span className="inline-flex shrink-0 items-center text-field-placeholder">
-                                <Icon />
-                            </span>
-                        ) : null}
-                        {isSkeleton ? (
-                            <Typography size={TYPOGRAPHY_SIZE[size]} isSkeleton classNames={["min-w-0", "flex-1"]} />
-                        ) : (
-                            <span className={cn("truncate text-field-placeholder", TEXT_CLS[size])}>
-                                {placeholder}
-                            </span>
-                        )}
-                    </>
-                }
+                items={[
+                    ...(!isSkeleton && Icon ? [() => (
+                        <span className="inline-flex shrink-0 items-center text-field-placeholder">
+                            <Icon />
+                        </span>
+                    )] : []),
+                    () => (isSkeleton ? (
+                        <Typography size={TYPOGRAPHY_SIZE[size]} isSkeleton classNames={["min-w-0", "flex-1"]} />
+                    ) : (
+                        <span className={cn("truncate text-field-placeholder", TEXT_CLS[size])}>
+                            {placeholder}
+                        </span>
+                    )),
+                ]}
             />
             {!isSkeleton && Suffix ? (
-                <StackH gap={3} classNames={["shrink-0"]} body={<Suffix isSkeleton={isSkeleton} />} />
+                <StackH gap={3} classNames={["shrink-0"]} items={[() => <Suffix isSkeleton={isSkeleton} />]} />
             ) : null}
         </Button>
     )

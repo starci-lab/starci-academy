@@ -244,11 +244,11 @@ export const PageRegions: Story = {
                             <Bleed>
                                 <Container
                                     body={
-                                        <StackV gap={7} body={<>
-                                            <Tile label="Header" />
-                                            <Tile label="Body" />
-                                            <Tile label="Footer" />
-                                        </>} />
+                                        <StackV gap={7} items={[
+                                            () => <Tile label="Header" />,
+                                            () => <Tile label="Body" />,
+                                            () => <Tile label="Footer" />,
+                                        ]} />
                                     }
                                 />
                             </Bleed>

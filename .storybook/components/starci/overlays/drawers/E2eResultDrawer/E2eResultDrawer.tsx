@@ -89,18 +89,16 @@ const E2eResultDrawer = ({
     // root guard below: `isSkeleton` means "still fetching", the guard means
     // "fetch finished, genuinely nothing recorded".
     if (isSkeleton) {
-        const skeletonRows = (
-            <>
-                <HeroSkeleton className="h-4 w-64 max-w-full rounded" />
-                {Array.from({ length: skeletonCount }, (_unused, index) => (
-                    <HeroSkeleton key={index} className="h-11 w-full rounded-xl" />
-                ))}
-            </>
-        )
+        const skeletonRows = [
+            () => <HeroSkeleton className="h-4 w-64 max-w-full rounded" />,
+            ...Array.from({ length: skeletonCount }, () => () => (
+                <HeroSkeleton className="h-11 w-full rounded-xl" />
+            )),
+        ]
 
         return (
             <div>
-                <DrawerShell isOpen={isOpen} onOpenChange={onOpenChange} placement={placement} title={DRAWER_TITLE} body={<StackV gap={4} body={skeletonRows} />} />
+                <DrawerShell isOpen={isOpen} onOpenChange={onOpenChange} placement={placement} title={DRAWER_TITLE} body={<StackV gap={4} items={skeletonRows} />} />
             </div>
         )
     }
@@ -118,21 +116,23 @@ const E2eResultDrawer = ({
 
     const items: Array<AccordionItem> = visible.map((flow) => {
         const isPass = flow.status === "passed"
-        const chipAndTitle = (
-            <>
+        const chipAndTitle = [
+            () => (
                 <ChipBase
                     tone={isPass ? "success" : "danger"}
                     text={isPass ? "pass" : "fail"}
 
                 />
+            ),
+            () => (
                 <Typography
                     text={flow.title}
                     size="sm"
                     weight="medium"
 
                 />
-            </>
-        )
+            ),
+        ]
         return {
             key: flow.id,
             title: (
@@ -140,7 +140,7 @@ const E2eResultDrawer = ({
                     gap={2}
 
 
-                    body={chipAndTitle}
+                    items={chipAndTitle}
                 />
             ),
             content: flow.markdown ? (
@@ -154,32 +154,34 @@ const E2eResultDrawer = ({
         }
     })
 
-    const countFilterAndAccordion = (
-        <>
+    const countFilterAndAccordion = [
+        () => (
             <Typography
                 text={`${passed}/${visible.length} flows passed — real logs recorded from an actual E2E run against the backend and UI.`}
                 size="sm"
                 color="muted"
 
             />
-            {hasLangFilter ? (
-                <div>
-                    <TabsBase
-                        items={langs.map((lang) => ({ key: lang, label: langLabel(lang) }))}
-                        selectedKey={activeLang}
-                        onSelectionChange={setActiveLang}
-                        ariaLabel="E2E language"
-                        variant="secondary"
+        ),
+        ...(hasLangFilter ? [() => (
+            <div>
+                <TabsBase
+                    items={langs.map((lang) => ({ key: lang, label: langLabel(lang) }))}
+                    selectedKey={activeLang}
+                    onSelectionChange={setActiveLang}
+                    ariaLabel="E2E language"
+                    variant="secondary"
 
-                    />
-                </div>
-            ) : null}
+                />
+            </div>
+        )] : []),
+        () => (
             <Accordion
                 items={items}
 
             />
-        </>
-    )
+        ),
+    ]
 
     return (
         <div>
@@ -188,7 +190,7 @@ const E2eResultDrawer = ({
                 onOpenChange={onOpenChange}
                 placement={placement}
                 title={DRAWER_TITLE}
-                body={<StackV gap={4} body={countFilterAndAccordion} />}
+                body={<StackV gap={4} items={countFilterAndAccordion} />}
             />
         </div>
     )

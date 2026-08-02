@@ -37,27 +37,21 @@ const Panel = ({ text }: PanelProps) => (
     <SurfaceCard body={() => <Typography size="sm" text={text} />} />
 )
 
-const threePanels = (
-    <>
-        <Panel text="Overview" />
-        <Panel text="Roadmap" />
-        <Panel text="Exercises" />
-    </>
-)
+const threePanels = [
+    () => <Panel text="Overview" />,
+    () => <Panel text="Roadmap" />,
+    () => <Panel text="Exercises" />,
+]
 
-const twoPanels = (
-    <>
-        <Panel text="One" />
-        <Panel text="Two" />
-    </>
-)
+const twoPanels = [
+    () => <Panel text="One" />,
+    () => <Panel text="Two" />,
+]
 
-const continueAndSaveButtons = (
-    <>
-        <Button label="Continue learning" variant="secondary" size="sm" />
-        <Button label="Save" variant="secondary" size="sm" />
-    </>
-)
+const continueAndSaveButtons = [
+    () => <Button label="Continue learning" variant="secondary" size="sm" />,
+    () => <Button label="Save" variant="secondary" size="sm" />,
+]
 
 // No `Flex` node here: the track's own root does not self-badge with the
 // internal box's name — `Flex` has no story of its own (it's not a public frame, see its
@@ -92,7 +86,7 @@ export const Default: Story = {
 </>} />`,
                         render: (
                             <div data-tier="fixture" className="w-96 max-w-full">
-                                <StackV gap={4} body={threePanels} />
+                                <StackV gap={4} items={threePanels} />
                             </div>
                         ),
                     },
@@ -122,7 +116,7 @@ export const Gaps: Story = {
                         why: "The two panels touch with no seam at all: one is not beside the other, it is part of it. Reach for step `1` only when a seam would be a lie about the content, as in a table body or a stack of rows sharing one border.",
                         code: "<StackV gap={1} body={<>…</>} />",
                         render: (
-                            <StackV gap={1} body={twoPanels} />
+                            <StackV gap={1} items={twoPanels} />
                         ),
                     },
                     {
@@ -130,7 +124,7 @@ export const Gaps: Story = {
                         why: "The seam is just wide enough to keep the two apart while the pair still reads as one thing, the same relationship an icon has with the word it belongs to. If either child could be read on its own, step `2` is too close.",
                         code: "<StackV gap={2} body={<>…</>} />",
                         render: (
-                            <StackV gap={2} body={twoPanels} />
+                            <StackV gap={2} items={twoPanels} />
                         ),
                     },
                     {
@@ -138,7 +132,7 @@ export const Gaps: Story = {
                         why: "The two panels read as members of the same set, each one whole but none of them standing alone — the seam a title over its subtitle, or the rows of one list, reach for first.",
                         code: "<StackV gap={3} body={<>…</>} />",
                         render: (
-                            <StackV gap={3} body={twoPanels} />
+                            <StackV gap={3} items={twoPanels} />
                         ),
                     },
                     {
@@ -146,7 +140,7 @@ export const Gaps: Story = {
                         why: "The two panels are separate rows that happen to live in the same card, the most common relationship in the whole system and the step `Default` above uses. Order matters here: if swapping the two children would confuse a reader they are peers, and peers belong at step `3` instead.",
                         code: "<StackV gap={4} body={<>…</>} />",
                         render: (
-                            <StackV gap={4} body={twoPanels} />
+                            <StackV gap={4} items={twoPanels} />
                         ),
                     },
                     {
@@ -154,7 +148,7 @@ export const Gaps: Story = {
                         why: "`gap.md` is explicit that this rung has no sentence: 56 call sites in the app chose it, which is enough to earn the step, but nobody has read those 56 yet to say what relationship it claims. Shown here so the gap in the vocabulary stays visible instead of getting papered over with an invented rule.",
                         code: "<StackV gap={5} body={<>…</>} />",
                         render: (
-                            <StackV gap={5} body={twoPanels} />
+                            <StackV gap={5} items={twoPanels} />
                         ),
                     },
                     {
@@ -162,7 +156,7 @@ export const Gaps: Story = {
                         why: "The seam is wide enough that each panel reads as its own region with its own heading, no longer rows of a shared surface. Use it between the parts of a screen a reader would name separately — one card and the next, a filter bar and the results under it.",
                         code: "<StackV gap={6} body={<>…</>} />",
                         render: (
-                            <StackV gap={6} body={twoPanels} />
+                            <StackV gap={6} items={twoPanels} />
                         ),
                     },
                     {
@@ -170,7 +164,7 @@ export const Gaps: Story = {
                         why: "A hero and the content beneath it, or the last section and the footer — wider than step `6` because the two things share only the page, not a heading. This step replaces the old `page` word: the old word rendered `gap-8` (8 real uses in the app), while `gap-10` — this step — has 55, so the renumbering moved the name to the class that actually earned it.",
                         code: "<StackV gap={7} body={<>…</>} />",
                         render: (
-                            <StackV gap={7} body={twoPanels} />
+                            <StackV gap={7} items={twoPanels} />
                         ),
                     },
                     {
@@ -178,7 +172,7 @@ export const Gaps: Story = {
                         why: "The widest rung, for full-width bands on a page that is selling rather than teaching — `Landing`, `Footer`, `TalentMarketplace`. Two panels in a card are a poor fixture for it; it is shown here only to bound the ladder, not as a realistic choice for content stacked inside a surface.",
                         code: "<StackV gap={8} body={<>…</>} />",
                         render: (
-                            <StackV gap={8} body={twoPanels} />
+                            <StackV gap={8} items={twoPanels} />
                         ),
                     },
                 ]}
@@ -212,11 +206,11 @@ export const WithDivider: Story = {
 </>} />`,
                         render: (
                             <div data-tier="fixture" className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
-                                <StackV gap={4} divider body={<>
-                                    <Typography size="sm" text="12 lessons completed" />
-                                    <Typography size="sm" text="5-day streak" />
-                                    <Typography size="sm" text="Ranked 34/120" />
-                                </>} />
+                                <StackV gap={4} divider items={[
+                                    () => <Typography size="sm" text="12 lessons completed" />,
+                                    () => <Typography size="sm" text="5-day streak" />,
+                                    () => <Typography size="sm" text="Ranked 34/120" />,
+                                ]} />
                             </div>
                         ),
                     },
@@ -245,7 +239,7 @@ export const Nested: Story = {
                         why: "A reply one level deeper than its parent comment gets a left guide + indent, so the thread's depth reads at a glance without the caller touching a single className.",
                         code: `<StackV gap={4} nested body={<Typography size="sm" text="That's right, a missing COPY --from is the most common cause." />} />`,
                         render: (
-                            <StackV gap={4} nested body={<Typography size="sm" text="That's right, a missing COPY --from is the most common cause." />} />
+                            <StackV gap={4} nested items={[() => <Typography size="sm" text="That's right, a missing COPY --from is the most common cause." />]} />
                         ),
                     },
                 ]}
@@ -274,7 +268,7 @@ export const Align: Story = {
                         code: `<StackV gap={3} align="stretch" body={<>…</>} />`,
                         render: (
                             <div data-tier="fixture" className="w-56 rounded-3xl border border-dashed border-default p-3">
-                                <StackV gap={3} align="stretch" body={continueAndSaveButtons} />
+                                <StackV gap={3} align="stretch" items={continueAndSaveButtons} />
                             </div>
                         ),
                     },
@@ -284,7 +278,7 @@ export const Align: Story = {
                         code: `<StackV gap={3} align="start" body={<>…</>} />`,
                         render: (
                             <div data-tier="fixture" className="w-56 rounded-3xl border border-dashed border-default p-3">
-                                <StackV gap={3} align="start" body={continueAndSaveButtons} />
+                                <StackV gap={3} align="start" items={continueAndSaveButtons} />
                             </div>
                         ),
                     },
@@ -294,7 +288,7 @@ export const Align: Story = {
                         code: `<StackV gap={3} align="center" body={<>…</>} />`,
                         render: (
                             <div data-tier="fixture" className="w-56 rounded-3xl border border-dashed border-default p-3">
-                                <StackV gap={3} align="center" body={continueAndSaveButtons} />
+                                <StackV gap={3} align="center" items={continueAndSaveButtons} />
                             </div>
                         ),
                     },
@@ -304,7 +298,7 @@ export const Align: Story = {
                         code: `<StackV gap={3} align="end" body={<>…</>} />`,
                         render: (
                             <div data-tier="fixture" className="w-56 rounded-3xl border border-dashed border-default p-3">
-                                <StackV gap={3} align="end" body={continueAndSaveButtons} />
+                                <StackV gap={3} align="end" items={continueAndSaveButtons} />
                             </div>
                         ),
                     },

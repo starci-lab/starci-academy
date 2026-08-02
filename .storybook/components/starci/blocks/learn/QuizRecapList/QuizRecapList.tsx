@@ -68,54 +68,60 @@ const recapCardBody = (
     <StackV
         gap={6}
 
-        body={
-            <>
+        items={[
+            () => (
                 <StackH
                     gap={3}
                     align="center"
 
-                    body={
-                        <Chip
-                            tone={card.wasCorrect ? "success" : "danger"}
-                            text={card.wasCorrect ? "Correct" : "Incorrect"}
+                    items={[
+                        () => (
+                            <Chip
+                                tone={card.wasCorrect ? "success" : "danger"}
+                                text={card.wasCorrect ? "Correct" : "Incorrect"}
 
-                        />
-                    }
+                            />
+                        ),
+                    ]}
                 />
+            ),
+            () => (
                 <MarkdownContent
                     source={card.question}
                     measure="compact"
 
                 />
-                {card.givenAnswer != null ? (
-                    <StackV
-                        gap={3}
-
-                        body={
-                            <>
-                                <Typography size="xs" color="muted" text="Your answer" />
-                                <Typography size="sm" text={card.givenAnswer} />
-                            </>
-                        }
-                    />
-                ) : null}
+            ),
+            ...(card.givenAnswer != null ? [() => (
                 <StackV
                     gap={3}
 
-                    body={
-                        <>
-                            <Typography size="xs" color="muted" text="Expected answer" />
+                    items={[
+                        () => <Typography size="xs" color="muted" text="Your answer" />,
+                        () => <Typography size="sm" text={card.givenAnswer} />,
+                    ]}
+                />
+            )] : []),
+            () => (
+                <StackV
+                    gap={3}
+
+                    items={[
+                        () => <Typography size="xs" color="muted" text="Expected answer" />,
+                        () => (
                             <MarkdownContent
                                 source={card.expectedAnswer}
                                 measure="compact"
 
                             />
-                        </>
-                    }
+                        ),
+                    ]}
                 />
-                {/* Stays put after a tap. A learner going back over a run changes
-                    their mind, and removing the control would make the first tap
-                    final without ever saying so. */}
+            ),
+            // Stays put after a tap. A learner going back over a run changes
+            // their mind, and removing the control would make the first tap
+            // final without ever saying so.
+            () => (
                 <RatingBar
                     options={ratingOptions}
                     onRate={(grade) => onRate(card.key, grade)}
@@ -123,8 +129,8 @@ const recapCardBody = (
 
 
                 />
-            </>
-        }
+            ),
+        ]}
     />
 )
 
@@ -153,7 +159,7 @@ const QuizRecapList = ({
             <SurfaceCard
                 key={index}
 
-                body={() => <StackV gap={6} body={skeletonCardBody} />}
+                body={() => <StackV gap={6} items={[() => skeletonCardBody]} />}
             />
         ))
         const loadingBody = (
@@ -164,7 +170,7 @@ const QuizRecapList = ({
         )
         return (
             <div>
-                <StackV gap={6} body={loadingBody} />
+                <StackV gap={6} items={[() => loadingBody]} />
             </div>
         )
     }
@@ -194,7 +200,7 @@ const QuizRecapList = ({
 
     return (
         <div>
-            <StackV gap={6} body={recapBody} />
+            <StackV gap={6} items={[() => recapBody]} />
         </div>
     )
 }

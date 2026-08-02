@@ -89,28 +89,32 @@ const PlaygroundExerciseGrid = ({
         const titleAndSteps = (
             <StackV
                 gap={2}
-                body={
-                    <>
+                items={[
+                    () => (
                         <div>
                             <Typography size="base" weight="bold" truncate text={exercise.title} />
                         </div>
+                    ),
+                    () => (
                         <div>
                             <Chip tone="default" icon={ListChecksIcon} text={stepCountLabel(exercise.stepCount)} classNames={["w-fit"]} />
                         </div>
-                    </>
-                }
+                    ),
+                ]}
             />
         )
 
         return (
             <StackV
                 gap={4}
-                body={
-                    <>
+                items={[
+                    () => (
                         <div>
                             <IconTile icon={TerminalWindowIcon} tone="accent" size="lg" />
                         </div>
-                        {titleAndSteps}
+                    ),
+                    () => titleAndSteps,
+                    () => (
                         <div>
                             <Typography
                                 size="sm"
@@ -121,8 +125,8 @@ const PlaygroundExerciseGrid = ({
                                 text={CUE_LABEL}
                             />
                         </div>
-                    </>
-                }
+                    ),
+                ]}
             />
         )
     }

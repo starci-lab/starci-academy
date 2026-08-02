@@ -108,8 +108,8 @@ const KeyValueRow = ({
                 gap={2}
                 classNames={["min-w-0"]}
                 pattern="title-subtitle"
-                body={
-                    <>
+                items={[
+                    () => (
                         <span>
                             <Typography size="sm"
                                 text={label}
@@ -119,18 +119,18 @@ const KeyValueRow = ({
                                 classNames={isSkeleton ? ["w-1/3"] : undefined}
                             />
                         </span>
-                        {hint != null ? (
-                            <span>
-                                <Typography size="xs"
-                                    text={hint}
-                                    color={isSkeleton ? undefined : "muted"}
-                                    isSkeleton={isSkeleton}
-                                    classNames={isSkeleton ? ["w-1/4"] : undefined}
-                                />
-                            </span>
-                        ) : null}
-                    </>
-                }
+                    ),
+                    ...(hint != null ? [() => (
+                        <span>
+                            <Typography size="xs"
+                                text={hint}
+                                color={isSkeleton ? undefined : "muted"}
+                                isSkeleton={isSkeleton}
+                                classNames={isSkeleton ? ["w-1/4"] : undefined}
+                            />
+                        </span>
+                    )] : []),
+                ]}
             />
             <span
                 className={cn("flex shrink-0 items-center", copyable && !isSkeleton && "gap-2")}
@@ -161,7 +161,7 @@ const KeyValueRow = ({
             gap={3}
             classNames={classNames}
 
-            body={pairContent}
+            items={[() => pairContent]}
         />
     )
     if (!divider) {

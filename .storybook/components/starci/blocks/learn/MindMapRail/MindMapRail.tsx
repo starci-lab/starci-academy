@@ -202,7 +202,7 @@ const MindMapRail = ({
 
     const railBody = (
         <>
-            <StackH gap={3} wrap body={searchRow} />
+            <StackH gap={3} wrap items={[() => searchRow]} />
             <AsyncContent
                 isLoading={isLoading || isSkeleton}
                 skeleton={<SurfaceCardList items={skeletonRows()} isSkeleton />}
@@ -214,7 +214,7 @@ const MindMapRail = ({
         </>
     )
 
-    return <StackV gap={3} body={railBody} />
+    return <StackV gap={3} items={[() => railBody]} />
 }
 
 export { MindMapRail }

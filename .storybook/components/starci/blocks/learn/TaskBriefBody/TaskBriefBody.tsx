@@ -135,14 +135,12 @@ const TaskBriefBody = ({
     const implementationBody = (item: TaskBriefCodeImplementationItem) => (
         <StackV
             gap={2}
-            body={
-                <>
-                    <Typography size="xs" weight="semibold" color="muted" text={IMPLEMENTATION_GUIDE_HEADING} />
-                    <MarkdownContent source={item.guide} measure="compact" />
-                    <Typography size="xs" weight="semibold" color="muted" text={IMPLEMENTATION_EXAMPLE_HEADING} />
-                    <MarkdownContent source={item.example} measure="compact" />
-                </>
-            }
+            items={[
+                () => <Typography size="xs" weight="semibold" color="muted" text={IMPLEMENTATION_GUIDE_HEADING} />,
+                () => <MarkdownContent source={item.guide} measure="compact" />,
+                () => <Typography size="xs" weight="semibold" color="muted" text={IMPLEMENTATION_EXAMPLE_HEADING} />,
+                () => <MarkdownContent source={item.example} measure="compact" />,
+            ]}
         />
     )
 
@@ -158,16 +156,14 @@ const TaskBriefBody = ({
             <StackV
                 gap={2}
 
-                body={
-                    <>
-                        <Typography size="h3" weight="bold" isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/2"] : undefined} text={title} />
-                        {isSkeleton ? (
-                            <Typography size="sm" color="muted" isSkeleton classNames={["w-2/3"]} />
-                        ) : description != null && description.trim().length > 0 ? (
-                            <Typography size="sm" color="muted" text={description} />
-                        ) : null}
-                    </>
-                }
+                items={[
+                    () => <Typography size="h3" weight="bold" isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/2"] : undefined} text={title} />,
+                    ...(isSkeleton
+                        ? [() => <Typography size="sm" color="muted" isSkeleton classNames={["w-2/3"]} />]
+                        : description != null && description.trim().length > 0
+                            ? [() => <Typography size="sm" color="muted" text={description} />]
+                            : []),
+                ]}
             />
 
             {/* LockedAlert — self-hides when unlocked; honored regardless of `isSkeleton` since
@@ -194,8 +190,8 @@ const TaskBriefBody = ({
                     <StackV
                         gap={2}
 
-                        body={BRIEF_SKELETON_LINE_WIDTHS.map((width, index) => (
-                            <Typography key={index} size="base" isSkeleton classNames={[width]} />
+                        items={BRIEF_SKELETON_LINE_WIDTHS.map((width) => () => (
+                            <Typography size="base" isSkeleton classNames={[width]} />
                         ))}
                     />
                 ) : (
@@ -208,9 +204,9 @@ const TaskBriefBody = ({
                 <StackV
                     gap={4}
 
-                    body={
-                        <>
-                            <Typography size="sm" weight="semibold" text={CRITERIA_LABEL} />
+                    items={[
+                        () => <Typography size="sm" weight="semibold" text={CRITERIA_LABEL} />,
+                        () => (
                             <SurfaceCardAccordion
                                 items={criteriaItems}
                                 allowsMultipleExpanded
@@ -218,16 +214,16 @@ const TaskBriefBody = ({
 
 
                             />
-                            {implementationItems.length > 0 ? (
-                                <SurfaceCardAccordion
-                                    items={implementationItems}
-                                    allowsMultipleExpanded
+                        ),
+                        ...(implementationItems.length > 0 ? [() => (
+                            <SurfaceCardAccordion
+                                items={implementationItems}
+                                allowsMultipleExpanded
 
 
-                                />
-                            ) : null}
-                        </>
-                    }
+                            />
+                        )] : []),
+                    ]}
                 />
             ) : null}
 
@@ -243,7 +239,7 @@ const TaskBriefBody = ({
     )
 
     return (
-        <StackV gap={6} body={readingColumn} />
+        <StackV gap={6} items={[() => readingColumn]} />
     )
 }
 

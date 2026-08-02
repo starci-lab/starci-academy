@@ -192,12 +192,10 @@ const legacyCodeBody = (item: PersonalProjectTaskLegacyCodeImplementationItem) =
         <StackV
             gap={4}
 
-            body={
-                <>
-                    <StackV gap={2} body={guideSection} />
-                    <StackV gap={2} body={exampleSection} />
-                </>
-            }
+            items={[
+                () => <StackV gap={2} items={[() => guideSection]} />,
+                () => <StackV gap={2} items={[() => exampleSection]} />,
+            ]}
         />
     )
 }
@@ -327,7 +325,7 @@ const readingColumn = (props: {
                     label="Evaluation criteria (legacy)"
                     isSkeleton={isSkeleton}
 
-                    body={() => <StackV gap={6} body={legacyAccordions} />}
+                    body={() => <StackV gap={6} items={[() => legacyAccordions]} />}
                 />
             ) : null}
 
@@ -340,7 +338,7 @@ const readingColumn = (props: {
         </>
     )
 
-    return <StackV gap={7} body={readingSections} />
+    return <StackV gap={7} items={[() => readingSections]} />
 }
 
 /**
@@ -408,7 +406,7 @@ const submissionPanel = (props: {
 
                 />
             </div>
-            <StackH gap={3} wrap body={evaluateActions} />
+            <StackH gap={3} wrap items={[() => evaluateActions]} />
         </>
     )
 
@@ -418,7 +416,7 @@ const submissionPanel = (props: {
                 label="Project GitHub"
                 isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={6} body={githubFields} />}
+                body={() => <StackV gap={6} items={[() => githubFields]} />}
             />
 
             {isSkeleton || panel.result != null ? (
@@ -440,7 +438,7 @@ const submissionPanel = (props: {
         </>
     )
 
-    return <StackV gap={6} body={panelSections} />
+    return <StackV gap={6} items={[() => panelSections]} />
 }
 
 /**

@@ -66,8 +66,8 @@ const FoundationCategorySearchBar = ({
                 justify="between"
 
 
-                body={
-                    <>
+                items={[
+                    () => (
                         <div className="min-w-0 flex-1">
                             <SearchAutocomplete
                                 items={items}
@@ -79,19 +79,23 @@ const FoundationCategorySearchBar = ({
 
                             />
                         </div>
-                        {isSkeleton ? (
-                            <Typography size="sm" color="muted" isSkeleton classNames={["shrink-0"]} />
-                        ) : count !== undefined ? (
-                            <Typography
-                                size="sm"
-                                color="muted"
-                                text={countLabel(count)}
-                                classNames={["shrink-0"]}
+                    ),
+                    ...(isSkeleton
+                        ? [() => <Typography size="sm" color="muted" isSkeleton classNames={["shrink-0"]} />]
+                        : count !== undefined
+                            ? [
+                                () => (
+                                    <Typography
+                                        size="sm"
+                                        color="muted"
+                                        text={countLabel(count)}
+                                        classNames={["shrink-0"]}
 
-                            />
-                        ) : null}
-                    </>
-                }
+                                    />
+                                ),
+                            ]
+                            : []),
+                ]}
             />
         </div>
     )

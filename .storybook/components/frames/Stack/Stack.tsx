@@ -1,6 +1,7 @@
 import React from "react"
-import type { ComponentType, ReactNode } from "react"
+import type { ReactNode } from "react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import { type AllowedGap, type LayoutAlign, type LayoutJustify, type PaddingValue, type Responsive } from "@sb-components/frames/_spacing"
 import { Flex } from "@sb-components/frames/Flex/Flex"
@@ -70,15 +71,15 @@ export interface StackBaseProps {
      * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
      * Missing this prop means the `layouts`-tier frame is used but the panel cannot see it.
      */
-    /** The stacked content. A wrapper frame takes a named slot (§13b). LEGACY — prefer `items`. */
-    body?: ReactNode
+    /** A SINGLE buildable child — an uncalled `ComponentType<{isSkeleton?}>` the track renders itself. Use `items` for several. */
+    body?: ComponentTypeWithSkeleton
     /**
      * The stacked content as BUILDABLE items — each an uncalled `ComponentType<{isSkeleton?}>`
-     * the track renders itself, so it can thread `isSkeleton` down and interleave dividers. Preferred
-     * over `body`: a frame that can BUILD its children can shimmer them (one tree, no hand-mirror).
+     * the track renders itself, so it can thread `isSkeleton` down and interleave dividers on the
+     * real children. A frame that can BUILD its children can shimmer them (one tree, no hand-mirror).
      * Wins over `body` when both are passed.
      */
-    items?: Array<ComponentType<{ isSkeleton?: boolean }>>
+    items?: Array<ComponentTypeWithSkeleton>
     /** `true` → the track passes `isSkeleton` to every `items` component so the whole column shimmers. */
     isSkeleton?: boolean
     /**
@@ -155,9 +156,9 @@ const StackV = ({
     classNames,
     pattern,
 }: StackVProps) => {
-    // `items` (buildable) wins over legacy `body`: the track renders each item itself, threading
-    // `isSkeleton`, so it can shimmer the whole column and interleave dividers on the real children.
-    const content = items ? items.map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />) : body
+    // `items` (buildable) is the preferred path — the track renders each item itself, threading
+    // `isSkeleton`; `body` (a plain node) is the simple fallback when no build/shimmer is needed.
+    const content = (items ?? (body ? [body] : [])).map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)
     return (
         <Flex
             as={Tag}
@@ -191,7 +192,7 @@ const StackH = ({
     classNames,
     pattern,
 }: StackHProps) => {
-    const content = items ? items.map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />) : body
+    const content = (items ?? (body ? [body] : [])).map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)
     return (
         <Flex
             as={Tag}

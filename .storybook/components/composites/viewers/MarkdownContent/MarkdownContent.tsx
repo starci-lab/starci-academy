@@ -361,12 +361,10 @@ const MarkdownContent = ({
                 gap={3}
                 classNames={classNames}
 
-                body={
-                    <>
-                        <Typography isSkeleton size="base" classNames={["w-full"]} />
-                        <Typography isSkeleton size="base" classNames={["w-2/3"]} />
-                    </>
-                }
+                items={[
+                    () => <Typography isSkeleton size="base" classNames={["w-full"]} />,
+                    () => <Typography isSkeleton size="base" classNames={["w-2/3"]} />,
+                ]}
             />
         )
     }

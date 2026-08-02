@@ -102,35 +102,34 @@ const LearnShell = ({
     // brief's own `isAssessmentLive` suppression.
     const showAiTriggers = !isEnrollGated && !isAssessmentLive
 
-    const railAndContent = (
-        <>
-            {RAIL_SURFACES.has(activeSurface) ? (
-                <ResizableRail
-                    storageKey={RAIL_STORAGE_KEY}
-                    defaultWidth={RAIL_DEFAULT_WIDTH}
-                    minWidth={RAIL_MIN_WIDTH}
-                    maxWidth={RAIL_MAX_WIDTH}
-                    ariaLabel={RAIL_ARIA_LABEL}
-                    handleSide="right"
-                    className="h-full shrink-0 border-r border-default"
+    const railAndContent = [
+        ...(RAIL_SURFACES.has(activeSurface) ? [() => (
+            <ResizableRail
+                storageKey={RAIL_STORAGE_KEY}
+                defaultWidth={RAIL_DEFAULT_WIDTH}
+                minWidth={RAIL_MIN_WIDTH}
+                maxWidth={RAIL_MAX_WIDTH}
+                ariaLabel={RAIL_ARIA_LABEL}
+                handleSide="right"
+                className="h-full shrink-0 border-r border-default"
 
-                >
-                    <StackV
-                        gap={1}
-                        align="center"
-                        justify="center"
-                        classNames={["h-full"]}
+            >
+                <StackV
+                    gap={1}
+                    align="center"
+                    justify="center"
+                    classNames={["h-full"]}
 
-                        body={<Spinner label={RAIL_LOADING_LABEL} />}
-                    />
-                </ResizableRail>
-            ) : null}
-
+                    items={[() => <Spinner label={RAIL_LOADING_LABEL} />]}
+                />
+            </ResizableRail>
+        )] : []),
+        () => (
             <div className="min-w-0 flex-1">
                 {children}
             </div>
-        </>
-    )
+        ),
+    ]
 
     return (
         <div>
@@ -149,7 +148,7 @@ const LearnShell = ({
                     gap={1}
                     className="min-h-[calc(100dvh-4rem)]"
 
-                    body={railAndContent}
+                    items={railAndContent}
                 />
             )}
 

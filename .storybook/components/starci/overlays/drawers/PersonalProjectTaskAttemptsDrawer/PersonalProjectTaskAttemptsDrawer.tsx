@@ -101,8 +101,8 @@ const AttemptRow = ({ attempt, isSkeleton = false}: AttemptRowProps) => {
     // reserves it so the mirror's footprint matches a typical populated row.
     const showFeedback = isSkeleton || attempt?.shortFeedback != null
 
-    const attemptLabelAndChip = (
-        <>
+    const attemptLabelAndChip = [
+        () => (
             <Typography
                 size="sm"
                 weight="medium"
@@ -111,17 +111,19 @@ const AttemptRow = ({ attempt, isSkeleton = false}: AttemptRowProps) => {
                 text={attempt != null ? `Attempt ${attempt.attemptNumber}` : undefined}
 
             />
+        ),
+        () => (
             <Chip
                 icon={SparkleIcon}
                 tone={scoreTone}
                 isSkeleton={isSkeleton}
                 text={scoreLabel}
             />
-        </>
-    )
+        ),
+    ]
 
-    const rowLines = (
-        <>
+    const rowLines = [
+        () => (
             <StackH
                 gap={4}
                 align="center"
@@ -129,18 +131,20 @@ const AttemptRow = ({ attempt, isSkeleton = false}: AttemptRowProps) => {
                 wrap
 
 
-                body={attemptLabelAndChip}
+                items={attemptLabelAndChip}
             />
-            {showFeedback ? (
-                <Typography
-                    size="sm"
-                    color="muted"
-                    isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-2/3"] : undefined}
-                    text={attempt?.shortFeedback ?? undefined}
+        ),
+        ...(showFeedback ? [() => (
+            <Typography
+                size="sm"
+                color="muted"
+                isSkeleton={isSkeleton}
+                classNames={isSkeleton ? ["w-2/3"] : undefined}
+                text={attempt?.shortFeedback ?? undefined}
 
-                />
-            ) : null}
+            />
+        )] : []),
+        () => (
             <InlineIconLabel
                 icon={ClockIcon}
                 tone="default"
@@ -148,11 +152,11 @@ const AttemptRow = ({ attempt, isSkeleton = false}: AttemptRowProps) => {
                 isSkeleton={isSkeleton}
                 label={attempt?.processedAtLabel ?? ""}
             />
-        </>
-    )
+        ),
+    ]
 
     return (
-        <StackV gap={2} body={rowLines} />
+        <StackV gap={2} items={rowLines} />
     )
 }
 

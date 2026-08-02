@@ -128,20 +128,22 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Callout": { tier: "composite", role: "the background grading job's status strip — warning while queued/processing, success once done, danger on failure with the raw server error as its body", storyId: "composites-feedback-callout-callout--with-body" },
 }
 
-const autosaveStates = (
-    <>
+const autosaveStates = [
+    () => (
         <ChallengeDeliverableList
             items={BASE_ITEMS}
             autosaveStatus="saving"
             onOpenGradingSettings={() => {}}
         />
+    ),
+    () => (
         <ChallengeDeliverableList
             items={BASE_ITEMS}
             autosaveStatus="failed"
             onOpenGradingSettings={() => {}}
         />
-    </>
-)
+    ),
+]
 
 /** LEAF — the deliverables card. */
 export const Full: Story = {
@@ -242,7 +244,7 @@ export const Full: Story = {
     onOpenGradingSettings={openSettings}
 />`,
                         render: (
-                            <StackV gap={6} body={autosaveStates} />
+                            <StackV gap={6} items={autosaveStates} />
                         ),
                     },
                 ]}

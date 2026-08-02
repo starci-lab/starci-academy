@@ -120,8 +120,8 @@ const CommandSkeleton = ({ lines = 1 }: CommandSkeletonProps) => (
         <StackV
             gap={3}
             padding={4}
-            body={Array.from({ length: lines }, (_unused, index) => (
-                <Typography key={index} size="xs" isSkeleton classNames={[index === lines - 1 ? "w-1/2" : "w-3/4"]} />
+            items={Array.from({ length: lines }, (_unused, index) => () => (
+                <Typography size="xs" isSkeleton classNames={[index === lines - 1 ? "w-1/2" : "w-3/4"]} />
             ))}
         />
     </div>
@@ -134,18 +134,16 @@ const renderOsTabSkeleton = (key: PlaygroundSetupOs) => (
         key={key}
         gap={2}
         align="center"
-        body={
-            <>
-                <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
-                <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
-            </>
-        }
+        items={[
+            () => <Typography size="sm" isSkeleton classNames={["w-1/3"]} />,
+            () => <Typography size="xs" isSkeleton classNames={["w-1/3"]} />,
+        ]}
     />
 )
 
 /** Placeholder mirror of the OS tab row — label+underline bar per OS, matching `Tabs`'s own `secondary` skeleton shape. */
 const OsTabsSkeleton = () => (
-    <StackH gap={3} body={OS_ORDER.map(renderOsTabSkeleton)} />
+    <StackH gap={3} items={OS_ORDER.map((key) => () => renderOsTabSkeleton(key))} />
 )
 
 /**
@@ -247,8 +245,8 @@ const PlaygroundSetupSteps = ({
         <StackV
             gap={3}
 
-            body={
-                <>
+            items={[
+                () => (
                     <Typography
                         size="sm"
                         color="muted"
@@ -256,23 +254,23 @@ const PlaygroundSetupSteps = ({
                         text="The local agent is the bridge that lets Playground control your machine — skip this step and every command in the following steps fails to run."
 
                     />
-                    {isSkeleton
-                        ? <CommandSkeleton />
-                        : <MarkdownContent source={bashBlock(pairCommand)} measure="compact" />}
-                    {!isSkeleton ? pairingCodeNote : null}
+                ),
+                () => (isSkeleton
+                    ? <CommandSkeleton />
+                    : <MarkdownContent source={bashBlock(pairCommand)} measure="compact" />),
+                ...(!isSkeleton ? [() => pairingCodeNote] : []),
+                () => (
                     <StackH
                         gap={3}
                         wrap
 
-                        body={
-                            <>
-                                {renderVerifyButton()}
-                                {renderRotateButton()}
-                            </>
-                        }
+                        items={[
+                            () => renderVerifyButton(),
+                            () => renderRotateButton(),
+                        ]}
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
@@ -312,8 +310,8 @@ const PlaygroundSetupSteps = ({
         <StackV
             gap={3}
 
-            body={
-                <>
+            items={[
+                () => (
                     <Typography
                         size="sm"
                         color="muted"
@@ -321,22 +319,22 @@ const PlaygroundSetupSteps = ({
                         text={`${engineLabel} is where the model actually runs on your machine — once installed, Playground can handle local AI tasks.`}
 
                     />
-                    {osTabsRow}
-                    {isSkeleton
-                        ? <CommandSkeleton lines={3} />
-                        : <MarkdownContent source={osGuides[os]} measure="compact" />}
-                    {!isSkeleton && engineReady && engineDetail ? (
-                        <Callout
-                            status="success"
-                            title={`${engineLabel} is ready`}
-                            description={engineDetail}
+                ),
+                () => osTabsRow,
+                () => (isSkeleton
+                    ? <CommandSkeleton lines={3} />
+                    : <MarkdownContent source={osGuides[os]} measure="compact" />),
+                ...(!isSkeleton && engineReady && engineDetail ? [() => (
+                    <Callout
+                        status="success"
+                        title={`${engineLabel} is ready`}
+                        description={engineDetail}
 
 
-                        />
-                    ) : null}
-                    <StackH gap={3} body={renderVerifyButton()} />
-                </>
-            }
+                    />
+                )] : []),
+                () => <StackH gap={3} items={[() => renderVerifyButton()]} />,
+            ]}
         />
     )
 
@@ -348,17 +346,17 @@ const PlaygroundSetupSteps = ({
         <StackV
             gap={2}
 
-            body={
-                <>
+            items={[
+                () => (
                     <Typography
                         size="xs"
                         color="muted"
                         text={`Model sinh — ${recommendedGenModel}`}
 
                     />
-                    <MarkdownContent source={genModelCommand} measure="compact" />
-                </>
-            }
+                ),
+                () => <MarkdownContent source={genModelCommand} measure="compact" />,
+            ]}
         />
     ) : null
 
@@ -366,17 +364,17 @@ const PlaygroundSetupSteps = ({
         <StackV
             gap={2}
 
-            body={
-                <>
+            items={[
+                () => (
                     <Typography
                         size="xs"
                         color="muted"
                         text={`Model embedding — ${EMBEDDING_MODEL_NAME}`}
 
                     />
-                    <MarkdownContent source={embedModelCommand} measure="compact" />
-                </>
-            }
+                ),
+                () => <MarkdownContent source={embedModelCommand} measure="compact" />,
+            ]}
         />
     )
 
@@ -384,24 +382,20 @@ const PlaygroundSetupSteps = ({
         <StackV
             gap={4}
 
-            body={
-                <>
-                    {genModelSection}
-                    {embedModelSection}
-                </>
-            }
+            items={[
+                () => genModelSection,
+                () => embedModelSection,
+            ]}
         />
     )
 
     const modelsSkeletonCommands = (
         <StackV
             gap={3}
-            body={
-                <>
-                    <CommandSkeleton />
-                    <CommandSkeleton />
-                </>
-            }
+            items={[
+                () => <CommandSkeleton />,
+                () => <CommandSkeleton />,
+            ]}
         />
     )
 
@@ -409,8 +403,8 @@ const PlaygroundSetupSteps = ({
         <StackV
             gap={3}
 
-            body={
-                <>
+            items={[
+                () => (
                     <Typography
                         size="sm"
                         color="muted"
@@ -418,30 +412,30 @@ const PlaygroundSetupSteps = ({
                         text="Models need to be pulled to your machine before use — the right size for your VRAM keeps things running smoothly, without freezing or running out of memory."
 
                     />
-                    {isSkeleton ? (
-                        modelsSkeletonCommands
-                    ) : deviceKnown === false ? (
-                        <Callout
-                            status="warning"
-                            title="Device configuration not detected yet"
-                            description="Finish installing the engine, then press Check again — Playground will detect your VRAM and suggest the right model size."
+                ),
+                () => (isSkeleton ? (
+                    modelsSkeletonCommands
+                ) : deviceKnown === false ? (
+                    <Callout
+                        status="warning"
+                        title="Device configuration not detected yet"
+                        description="Finish installing the engine, then press Check again — Playground will detect your VRAM and suggest the right model size."
 
 
-                        />
-                    ) : modelsReady ? (
-                        <Callout
-                            status="success"
-                            title="All models are ready"
-                            description="Both the text-generation model and the embedding model are already downloaded on your machine."
+                    />
+                ) : modelsReady ? (
+                    <Callout
+                        status="success"
+                        title="All models are ready"
+                        description="Both the text-generation model and the embedding model are already downloaded on your machine."
 
 
-                        />
-                    ) : (
-                        modelsCommandsSection
-                    )}
-                    <StackH gap={3} body={renderVerifyButton()} />
-                </>
-            }
+                    />
+                ) : (
+                    modelsCommandsSection
+                )),
+                () => <StackH gap={3} items={[() => renderVerifyButton()]} />,
+            ]}
         />
     )
 
@@ -497,12 +491,10 @@ const PlaygroundSetupSteps = ({
             gap={4}
 
 
-            body={
-                <>
-                    {steps.map(renderStep)}
-                    {rotateConfirm}
-                </>
-            }
+            items={[
+                ...steps.map((step) => () => renderStep(step)),
+                () => rotateConfirm,
+            ]}
         />
     )
 }

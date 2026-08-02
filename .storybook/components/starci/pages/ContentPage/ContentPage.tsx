@@ -284,7 +284,7 @@ const ContentPage = ({
                 things to do underneath would compete with it, so the whole footer waits
                 until the lesson is actually open. */}
             {!isLocked ? (
-                <StackV gap={6} body={lessonFooter} />
+                <StackV gap={6} items={[() => lessonFooter]} />
             ) : null}
         </>
     )
@@ -306,11 +306,11 @@ const ContentPage = ({
             {/* ModeNav↔Article↔(reaction cluster) sit CLOSER together than the identity/outcomes
                 block above: they are all "reading this lesson", one continuous
                 surface, not separate regions. */}
-            <StackV gap={4} body={readingSection} />
+            <StackV gap={4} items={[() => readingSection]} />
         </>
     )
 
-    const contentBody = <StackV gap={6} body={contentSections} />
+    const contentBody = <StackV gap={6} items={[() => contentSections]} />
 
     return <Container size="md" padding={6} body={contentBody} />
 }

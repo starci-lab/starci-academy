@@ -49,10 +49,10 @@ const InnerLayout = ({
     className,
     ...navbarProps
 }: InnerLayoutProps) => {
-    const navMainFooter = (
-        <>
-            {/* Sticky positioning is a SHELL concern (only the root scroll container knows
-                where the nav should pin) — Navbar itself owns its own border/background. */}
+    const navMainFooter = [
+        // Sticky positioning is a SHELL concern (only the root scroll container knows
+        // where the nav should pin) — Navbar itself owns its own border/background.
+        () => (
             <div className="sticky top-0 z-40">
                 <Navbar
                     {...(navbarProps as NavbarProps)}
@@ -60,26 +60,26 @@ const InnerLayout = ({
 
                 />
             </div>
-            {/* CALLER SLOT — deliberately unbadged, see file header. */}
-            <main className="min-w-0 flex-1">{children}</main>
-            {showFooter ? (
-                <Footer
-                    exploreLinks={exploreLinks}
-                    supportLinks={supportLinks}
-                    socials={socials}
-                    onTermsPress={onTermsPress}
-                    onPrivacyPress={onPrivacyPress}
+        ),
+        // CALLER SLOT — deliberately unbadged, see file header.
+        () => <main className="min-w-0 flex-1">{children}</main>,
+        ...(showFooter ? [() => (
+            <Footer
+                exploreLinks={exploreLinks}
+                supportLinks={supportLinks}
+                socials={socials}
+                onTermsPress={onTermsPress}
+                onPrivacyPress={onPrivacyPress}
 
 
-                />
-            ) : null}
-            {/* Overlay/chat-rail/provider global mount points — intentionally NOT
-                rendered here, see file header's §B3 gap note. */}
-        </>
-    )
+            />
+        )] : []),
+        // Overlay/chat-rail/provider global mount points — intentionally NOT
+        // rendered here, see file header's §B3 gap note.
+    ]
 
     return (
-        <StackV gap={1} className={cn("min-h-dvh", className)} body={navMainFooter} />
+        <StackV gap={1} className={cn("min-h-dvh", className)} items={navMainFooter} />
     )
 }
 

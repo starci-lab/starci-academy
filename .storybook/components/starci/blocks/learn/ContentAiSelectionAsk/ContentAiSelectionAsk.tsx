@@ -61,8 +61,8 @@ const ContentAiSelectionAsk = ({
         <StackH
             gap={2}
             align="center"
-            body={
-                <>
+            items={[
+                () => (
                     <Button
                         label="Ask AI"
                         variant="primary"
@@ -72,15 +72,15 @@ const ContentAiSelectionAsk = ({
                         isElevated
 
                     />
-                    {isNew ? (
-                        <Chip
-                            text="New"
-                            tone="accent"
+                ),
+                ...(isNew ? [() => (
+                    <Chip
+                        text="New"
+                        tone="accent"
 
-                        />
-                    ) : null}
-                </>
-            }
+                    />
+                )] : []),
+            ]}
         />
     </div>
 )

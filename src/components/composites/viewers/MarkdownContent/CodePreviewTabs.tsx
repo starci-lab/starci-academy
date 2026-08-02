@@ -80,7 +80,7 @@ export const CodePreviewTabs = ({ preview, code, classNames }: CodePreviewTabsPr
         <StackV
             gap={3}
             classNames={classNames}
-            body={panes}
+            items={[() => panes]}
         />
     )
 }

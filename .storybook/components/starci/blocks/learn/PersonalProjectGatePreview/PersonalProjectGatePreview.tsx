@@ -80,9 +80,9 @@ const PersonalProjectGatePreview = ({
             align="center"
 
 
-            body={
-                <>
-                    <CircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
+            items={[
+                () => <CircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />,
+                () => (
                     <Typography
                         size="sm"
                         truncate
@@ -90,8 +90,8 @@ const PersonalProjectGatePreview = ({
                         text={item.title}
 
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
@@ -100,7 +100,7 @@ const PersonalProjectGatePreview = ({
             gap={4}
 
 
-            body={items.map(renderTaskRow)}
+            items={items.map((item, index) => () => renderTaskRow(item, index))}
         />
     )
 
@@ -110,8 +110,8 @@ const PersonalProjectGatePreview = ({
             className={className}
 
 
-            body={
-                <>
+            items={[
+                () => (
                     <ContinueCardHero
                         title={heroTitle}
                         subtitle={heroSubtitle}
@@ -119,6 +119,8 @@ const PersonalProjectGatePreview = ({
 
 
                     />
+                ),
+                () => (
                     <ProgressMeter
                         value={progress.value}
                         max={progress.max}
@@ -127,6 +129,8 @@ const PersonalProjectGatePreview = ({
 
 
                     />
+                ),
+                () => (
                     <SurfaceCard
                         label={TASK_LABEL}
                         isSkeleton={isSkeleton}
@@ -134,8 +138,8 @@ const PersonalProjectGatePreview = ({
 
                         body={() => taskList}
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 }

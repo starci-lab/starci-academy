@@ -159,26 +159,30 @@ const FoundationCategoryList = ({
         <StackV
             gap={4}
 
-            body={
-                <>
+            items={[
+                () => (
                     <SurfaceCardList
 
                         isSkeleton={isSkeleton}
                         items={rows}
                         emptyState={emptyState}
                     />
-                    {showPager ? (
-                        <div>
-                            <Pagination
-                                currentPage={pagination.currentPage}
-                                totalPages={pagination.totalPages}
-                                onPageChange={pagination.onPageChange}
+                ),
+                ...(showPager
+                    ? [
+                        () => (
+                            <div>
+                                <Pagination
+                                    currentPage={pagination.currentPage}
+                                    totalPages={pagination.totalPages}
+                                    onPageChange={pagination.onPageChange}
 
-                            />
-                        </div>
-                    ) : null}
-                </>
-            }
+                                />
+                            </div>
+                        ),
+                    ]
+                    : []),
+            ]}
         />
     )
 }

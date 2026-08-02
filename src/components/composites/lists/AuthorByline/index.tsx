@@ -77,8 +77,8 @@ const AuthorByline = ({
         gap={2}
         pattern="icon-text separator-dot"
         classNames={["min-w-0", ...(classNames ?? [])]}
-        body={
-            <>
+        items={[
+            () => (
                 <Typography
                     size="sm"
                     weight="medium"
@@ -88,13 +88,19 @@ const AuthorByline = ({
                     classNames={isSkeleton ? ["w-1/3"] : undefined}
                     text={name}
                 />
-                {!isSkeleton && verified ? (
+            ),
+            ...(!isSkeleton && verified
+                ? [() => (
                     <SealCheckIcon aria-hidden focusable="false" weight="fill" className="size-4 shrink-0 text-accent" />
-                ) : null}
-                {!isSkeleton && pinned ? (
+                )]
+                : []),
+            ...(!isSkeleton && pinned
+                ? [() => (
                     <PushPinIcon aria-hidden focusable="false" weight="fill" className="size-4 shrink-0 text-accent" />
-                ) : null}
-                <Typography size="xs" color="muted" text="·" />
+                )]
+                : []),
+            () => <Typography size="xs" color="muted" text="·" />,
+            () => (
                 <Typography
                     size="xs"
                     color="muted"
@@ -103,8 +109,8 @@ const AuthorByline = ({
                     classNames={isSkeleton ? ["w-1/4"] : undefined}
                     text={timestamp}
                 />
-            </>
-        }
+            ),
+        ]}
     />
 )
 

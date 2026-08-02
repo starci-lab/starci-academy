@@ -157,7 +157,7 @@ const FlashcardDueHero = ({
 
     const heroBody = (
         <>
-            <StackV gap={2} body={dueCountLines} />
+            <StackV gap={2} items={[() => dueCountLines]} />
             <Button
                 variant="primary"
                 label="Start reviewing"
@@ -178,7 +178,7 @@ const FlashcardDueHero = ({
 
             isSkeleton={isSkeleton}
 
-            body={() => <StackV gap={4} body={heroBody} />}
+            body={() => <StackV gap={4} items={[() => heroBody]} />}
         />
     )
 }

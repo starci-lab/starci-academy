@@ -85,8 +85,8 @@ const VoiceHero = ({
                 <StackV
                     gap={4}
 
-                    body={
-                        <>
+                    items={[
+                        () => (
                             <InputTextarea
                                 value={value}
                                 onValueChange={onValueChange}
@@ -95,17 +95,17 @@ const VoiceHero = ({
                                 rows={5}
 
                             />
-                            {canToggle ? (
-                                <Typography
-                                    size="sm"
-                                    isLink
-                                    text={labels.useVoice}
-                                    onPress={() => setManualTyped(false)}
+                        ),
+                        ...(canToggle ? [() => (
+                            <Typography
+                                size="sm"
+                                isLink
+                                text={labels.useVoice}
+                                onPress={() => setManualTyped(false)}
 
-                                />
-                            ) : null}
-                        </>
-                    }
+                            />
+                        )] : []),
+                    ]}
                 />
             </div>
         )
@@ -124,8 +124,8 @@ const VoiceHero = ({
                 gap={4}
                 align="center"
 
-                body={
-                    <>
+                items={[
+                    () => (
                         <Button
                             isIconOnly
                             size="lg"
@@ -135,9 +135,10 @@ const VoiceHero = ({
                             onPress={onToggleListen}
 
                         />
-                        {/* real `src` (`VoiceHero/index.tsx:136`): `<Typography
- color="default">`
-                            declares NO `type` ⇒ defaults to base (16px), not `lg`. */}
+                    ),
+                    // real `src` (`VoiceHero/index.tsx:136`): `<Typography color="default">`
+                    // declares NO `type` ⇒ defaults to base (16px), not `lg`.
+                    () => (
                         <Typography
                             size="base"
                             align="center"
@@ -146,17 +147,17 @@ const VoiceHero = ({
                             text={transcriptText}
 
                         />
-                        {canToggle ? (
-                            <Typography
-                                size="sm"
-                                isLink
-                                text={labels.typeInstead}
-                                onPress={() => setManualTyped(true)}
+                    ),
+                    ...(canToggle ? [() => (
+                        <Typography
+                            size="sm"
+                            isLink
+                            text={labels.typeInstead}
+                            onPress={() => setManualTyped(true)}
 
-                            />
-                        ) : null}
-                    </>
-                }
+                        />
+                    )] : []),
+                ]}
             />
         </div>
     )

@@ -211,14 +211,14 @@ const ContentCommentThread = ({
             )}
 
             {!comment.isDeleted && !editing ? (
-                <StackH gap={4} wrap align="center" body={actionRow} />
+                <StackH gap={4} wrap align="center" items={[() => actionRow]} />
             ) : null}
         </>
     )
 
     const threadBody = (
         <>
-            <StackV gap={2} body={bodyAndActions} />
+            <StackV gap={2} items={[() => bodyAndActions]} />
 
             {/* reply composer — `ThreadConnector` draws the Facebook-style curved
                 guide from this comment down into the reply's own avatar;
@@ -229,9 +229,9 @@ const ContentCommentThread = ({
                     gap={2}
                     align="start"
 
-                    body={
-                        <>
-                            <ThreadConnector />
+                    items={[
+                        () => <ThreadConnector />,
+                        () => (
                             <ContentCommentComposer
                                 placeholder="Write a reply..."
                                 submitLabel="Reply"
@@ -247,8 +247,8 @@ const ContentCommentThread = ({
                                 }}
 
                             />
-                        </>
-                    }
+                        ),
+                    ]}
                 />
             ) : null}
 
@@ -270,9 +270,8 @@ const ContentCommentThread = ({
                 <StackV
                     gap={4}
 
-                    body={replies.map((reply) => (
+                    items={replies.map((reply) => () => (
                         <ContentCommentThread
-                            key={reply.id}
                             comment={reply}
                             currentUserId={currentUserId}
                             currentUser={currentUser}
@@ -310,7 +309,7 @@ const ContentCommentThread = ({
                     wrap
                     align="center"
 
-                    body={
+                    items={[() => (
                         <CommentByline
                             username={comment.author.username}
                             isFounderAuthor={comment.isFounderAuthor}
@@ -318,7 +317,7 @@ const ContentCommentThread = ({
                             isEdited={comment.isEdited}
 
                         />
-                    }
+                    )]}
                 />
             )}
             // `body` is the former `children` slot (COMPOSITE-8) — a component
@@ -332,7 +331,7 @@ const ContentCommentThread = ({
                     a reply composer appears needs more
                     room than the tight identity block above it (also where the
                     Facebook-style connector line will run). */
-                <StackV gap={4} body={threadBody} />
+                <StackV gap={4} items={[() => threadBody]} />
             )}
         />
     )

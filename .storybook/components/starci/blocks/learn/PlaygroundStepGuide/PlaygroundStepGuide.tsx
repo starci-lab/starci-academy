@@ -79,19 +79,17 @@ const PlaygroundStepGuide = ({
                 <StackV
                     gap={2}
 
-                    body={
-                        <>
-                            <HeroSkeleton className="h-4 w-full rounded" />
-                            <HeroSkeleton className="h-4 w-2/3 rounded" />
-                        </>
-                    }
+                    items={[
+                        () => <HeroSkeleton className="h-4 w-full rounded" />,
+                        () => <HeroSkeleton className="h-4 w-2/3 rounded" />,
+                    ]}
                 />
                 <HeroSkeleton className="h-9 w-36 rounded-xl" />
             </>
         )
         return (
             <div>
-                <StackV gap={6} body={loadingStep} />
+                <StackV gap={6} items={[() => loadingStep]} />
             </div>
         )
     }
@@ -122,12 +120,10 @@ const PlaygroundStepGuide = ({
         <StackH
             gap={3}
 
-            body={
-                <>
-                    <Spinner size="sm" tone="accent" />
-                    <Typography size="sm" color="muted" text="Checking…" />
-                </>
-            }
+            items={[
+                () => <Spinner size="sm" tone="accent" />,
+                () => <Typography size="sm" color="muted" text="Checking…" />,
+            ]}
         />
     )
 
@@ -135,38 +131,33 @@ const PlaygroundStepGuide = ({
         <StackV
             gap={2}
 
-            body={
-                <>
-                    {verifyState === "waitingForConnection" ? (
-                        <Typography
-                            size="sm"
-                            color="muted"
-                            text="Waiting for a connection to your learning machine…"
+            items={[
+                ...(verifyState === "waitingForConnection" ? [() => (
+                    <Typography
+                        size="sm"
+                        color="muted"
+                        text="Waiting for a connection to your learning machine…"
 
-                        />
-                    ) : null}
+                    />
+                )] : []),
+                ...(verifyState === "ready" || verifyState === "missed" ? [() => (
+                    <Button
+                        label="Verify this step"
+                        variant="primary"
+                        onPress={onVerify}
 
-                    {verifyState === "ready" || verifyState === "missed" ? (
-                        <Button
-                            label="Verify this step"
-                            variant="primary"
-                            onPress={onVerify}
+                    />
+                )] : []),
+                ...(verifyState === "pending" ? [() => verifyPendingStatus] : []),
+                ...(verifyState === "missed" ? [() => (
+                    <Typography
+                        size="xs"
+                        color="danger"
+                        text="Didn't see the expected result yet — rerun the command and verify again."
 
-                        />
-                    ) : null}
-
-                    {verifyState === "pending" ? verifyPendingStatus : null}
-
-                    {verifyState === "missed" ? (
-                        <Typography
-                            size="xs"
-                            color="danger"
-                            text="Didn't see the expected result yet — rerun the command and verify again."
-
-                        />
-                    ) : null}
-                </>
-            }
+                    />
+                )] : []),
+            ]}
         />
     )
 
@@ -174,16 +165,16 @@ const PlaygroundStepGuide = ({
         <StackV
             gap={2}
 
-            body={
-                <>
-                    <Typography size="xs" weight="medium" color="muted" text="Command to run" />
+            items={[
+                () => <Typography size="xs" weight="medium" color="muted" text="Command to run" />,
+                () => (
                     <MarkdownContent
                         source={commandFence(step.commandHint)}
                         measure="compact"
 
                     />
-                </>
-            }
+                ),
+            ]}
         />
     ) : null
 
@@ -198,7 +189,7 @@ const PlaygroundStepGuide = ({
 
     return (
         <div>
-            <StackV gap={6} body={guideBody} />
+            <StackV gap={6} items={[() => guideBody]} />
         </div>
     )
 }

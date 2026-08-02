@@ -188,18 +188,20 @@ const Section = ({
                 gap={2}
                 classNames={["min-w-0"]}
                 pattern="title-subtitle"
-                body={
-                    <>
+                items={[
+                    () => (
                         <span>
                             <Typography size="sm" text={title} weight="medium" />
                         </span>
-                        {description != null ? (
+                    ),
+                    ...(description != null
+                        ? [() => (
                             <span>
                                 <Typography size="xs" text={description} color="muted" />
                             </span>
-                        ) : null}
-                    </>
-                }
+                        )]
+                        : []),
+                ]}
             />
             {/* No `` here either: `body` is arbitrary
                 caller-supplied field content (§11a.1 CASE 3 — caller slot). */}

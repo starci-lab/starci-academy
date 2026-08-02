@@ -115,17 +115,17 @@ const outputRow = (body: string) => (
     <StackH
         gap={2}
         align="start"
-        body={
-            <>
+        items={[
+            () => (
                 <CheckCircleIcon
                     aria-hidden
                     focusable="false"
 
                     className="size-5 shrink-0 text-success-soft-foreground"
                 />
-                <Typography size="sm" text={stripMarkdown(body)} />
-            </>
-        }
+            ),
+            () => <Typography size="sm" text={stripMarkdown(body)} />,
+        ]}
     />
 )
 
@@ -269,7 +269,7 @@ const ChallengeBrief = ({
     )
 
     return (
-        <StackV gap={6} body={sections} />
+        <StackV gap={6} items={[() => sections]} />
     )
 }
 

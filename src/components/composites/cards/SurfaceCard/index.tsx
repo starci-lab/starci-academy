@@ -121,13 +121,11 @@ const composeSlots = ({ header: Header, body: Body, footer: Footer, isSkeleton }
     return (
         <StackV
             gap={4}
-            body={
-                <>
-                    {Header != null ? <div><Header isSkeleton={isSkeleton} /></div> : null}
-                    {main != null ? <div>{main}</div> : null}
-                    {Footer != null ? <div><Footer isSkeleton={isSkeleton} /></div> : null}
-                </>
-            }
+            items={[
+                ...(Header != null ? [() => <div><Header isSkeleton={isSkeleton} /></div>] : []),
+                ...(main != null ? [() => <div>{main}</div>] : []),
+                ...(Footer != null ? [() => <div><Footer isSkeleton={isSkeleton} /></div>] : []),
+            ]}
         />
     )
 }
@@ -427,12 +425,10 @@ const Base = ({
             >
                 <StackH
                     gap={4}
-                    body={
-                        <>
-                            <div className="min-w-0 flex-1">{content}</div>
-                            <StackH gap={3} classNames={["shrink-0"]} className="relative z-10" body={actions} />
-                        </>
-                    }
+                    items={[
+                        () => <div className="min-w-0 flex-1">{content}</div>,
+                        () => <StackH gap={3} classNames={["shrink-0"]} className="relative z-10" items={[() => actions]} />,
+                    ]}
                 />
                 {href && !isDisabled ? (
                     <a href={href} data-card-press aria-label={ariaLabel} aria-current={isSelected ? "true" : undefined} className={overlayCls} />
@@ -470,12 +466,7 @@ const Base = ({
     const cardWithCaption = description != null ? (
         <StackV
             gap={3}
-            body={
-                <>
-                    {highlighted}
-                    {caption}
-                </>
-            }
+            items={[() => highlighted, () => caption]}
         />
     ) : highlighted
     const labelRow = (
@@ -590,11 +581,11 @@ const NestedSection = ({ title, eyebrow, content: Content, onPress, href, classN
         <StackV
             gap={2}
             classNames={["min-w-0"]}
-            body={
-                <>
-                    {eyebrow ? (
-                        <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={eyebrow} />
-                    ) : null}
+            items={[
+                ...(eyebrow ? [() => (
+                    <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={eyebrow} />
+                )] : []),
+                () => (
                     <Typography size="sm"
                         weight="medium"
                         truncate
@@ -602,9 +593,9 @@ const NestedSection = ({ title, eyebrow, content: Content, onPress, href, classN
                         underlineOnGroupHover={interactive}
                         text={title}
                     />
-                    {Content ? <div><Content isSkeleton={isSkeleton} /></div> : null}
-                </>
-            }
+                ),
+                ...(Content ? [() => <div><Content isSkeleton={isSkeleton} /></div>] : []),
+            ]}
         />
     )
     if (href) {
@@ -690,27 +681,23 @@ const Nested = ({
                     justify="between"
                     classNames={["min-w-0"]}
                     className="border-b border-default px-3 py-2"
-                    body={
-                        <>
-                            {Header != null ? <Header isSkeleton={isSkeleton} /> : (
-                                // leading eyebrow: card owns icon size-4 (§4/§5); icon inherits muted via this row
-                                <StackH
-                                    gap={3}
-                                    classNames={["min-w-0"]}
-                                    className="text-muted [&_svg]:size-4"
-                                    body={
-                                        <>
-                                            {Icon ? <Icon aria-hidden focusable="false" /> : null}
-                                            {isSkeleton
-                                                ? <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
-                                                : <Typography size="xs" color="muted" truncate text={title} />}
-                                        </>
-                                    }
-                                />
-                            )}
-                            {Meta ? <span className="shrink-0"><Meta /></span> : null}
-                        </>
-                    }
+                    items={[
+                        () => (Header != null ? <Header isSkeleton={isSkeleton} /> : (
+                            // leading eyebrow: card owns icon size-4 (§4/§5); icon inherits muted via this row
+                            <StackH
+                                gap={3}
+                                classNames={["min-w-0"]}
+                                className="text-muted [&_svg]:size-4"
+                                items={[
+                                    ...(Icon ? [() => <Icon aria-hidden focusable="false" />] : []),
+                                    () => (isSkeleton
+                                        ? <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
+                                        : <Typography size="xs" color="muted" truncate text={title} />),
+                                ]}
+                            />
+                        )),
+                        ...(Meta ? [() => <span className="shrink-0"><Meta /></span>] : []),
+                    ]}
                 />
             ) : null}
             <div className="flex flex-col divide-y divide-default">{innerBody}</div>
@@ -917,13 +904,11 @@ const itemBody = (item: SurfaceCardPressableGroupItem) => {
     return (
         <StackH
             gap={4}
-            body={
-                <>
-                    {item.iconPosition === "trailing" ? null : iconSlot}
-                    <div className="min-w-0 flex-1"><Content /></div>
-                    {item.iconPosition === "trailing" ? iconSlot : null}
-                </>
-            }
+            items={[
+                ...(item.iconPosition === "trailing" ? [] : [() => iconSlot]),
+                () => <div className="min-w-0 flex-1"><Content /></div>,
+                ...(item.iconPosition === "trailing" ? [() => iconSlot] : []),
+            ]}
         />
     )
 }
@@ -1202,7 +1187,7 @@ const SelectableGroup = <T extends string>({
                                                 !isSelected && !isDisabled && "hover:bg-default",
                                                 isDisabled && "opacity-60")}
                                         >
-                                            <StackH gap={3} classNames={["w-full"]} body={optionRow} />
+                                            <StackH gap={3} classNames={["w-full"]} items={[() => optionRow]} />
                                         </Card>
                                     )
                                 }}
@@ -1441,8 +1426,8 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
             <StackV
                 gap={1}
                 classNames={["min-w-0"]}
-                body={
-                    <>
+                items={[
+                    () => (
                         <Typography size="sm"
                             truncate
                             isSkeleton={isSkeleton}
@@ -1450,27 +1435,25 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
                             className={titleClassName}
                             text={title}
                         />
-                        {subtitle ? (
-                            <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={subtitle} />
-                        ) : null}
-                    </>
-                }
+                    ),
+                    ...(subtitle ? [() => (
+                        <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={subtitle} />
+                    )] : []),
+                ]}
             />
             {metaSlot || trailingSlot || selected ? (
                 <StackH
                     gap={3}
                     classNames={["shrink-0"]}
                     className="ml-auto"
-                    body={
-                        <>
-                            {metaSlot}
-                            {trailingSlot}
-                            {/* Single-select indicator — trailing accent CheckCircleIcon (B). */}
-                            {selected ? (
-                                <CheckCircleIcon className="size-5 shrink-0 text-accent-soft-foreground" aria-hidden focusable="false" />
-                            ) : null}
-                        </>
-                    }
+                    items={[
+                        () => metaSlot,
+                        () => trailingSlot,
+                        // Single-select indicator — trailing accent CheckCircleIcon (B).
+                        ...(selected ? [() => (
+                            <CheckCircleIcon className="size-5 shrink-0 text-accent-soft-foreground" aria-hidden focusable="false" />
+                        )] : []),
+                    ]}
                 />
             ) : null}
         </>
@@ -1569,12 +1552,7 @@ const List = ({
     const withCaption = description != null ? (
         <StackV
             gap={3}
-            body={
-                <>
-                    {surface}
-                    <div>{caption}</div>
-                </>
-            }
+            items={[() => surface, () => <div>{caption}</div>]}
         />
     ) : surface
     return (
@@ -1715,29 +1693,27 @@ const AccordionCard = ({
             <StackH
                 gap={2}
                 classNames={["min-w-0", "flex-1"]}
-                body={
-                    <>
-                        {item.titleStart ? <item.titleStart /> : null}
+                items={[
+                    ...(item.titleStart ? [() => <item.titleStart />] : []),
+                    () => (
                         <StackV
                             gap={1}
                             classNames={["min-w-0", "flex-1"]}
                             className="text-left"
-                            body={
-                                <>
-                                    {/* AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2, instructor's
-                                        final call): reverses the 2026-07-29 decision — title does NOT render
-                                        markdown, not even backtick-only via `parseInlineCode`. Title tier is
-                                        now plain, absolutely. */}
-                                    <Typography size="sm" weight="medium" truncate text={item.title} />
-                                    {item.subtitle != null ? (
-                                        <Typography size="xs" color="muted" truncate text={item.subtitle} />
-                                    ) : null}
-                                </>
-                            }
+                            items={[
+                                /* AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2, instructor's
+                                    final call): reverses the 2026-07-29 decision — title does NOT render
+                                    markdown, not even backtick-only via `parseInlineCode`. Title tier is
+                                    now plain, absolutely. */
+                                () => <Typography size="sm" weight="medium" truncate text={item.title} />,
+                                ...(item.subtitle != null ? [() => (
+                                    <Typography size="xs" color="muted" truncate text={item.subtitle} />
+                                )] : []),
+                            ]}
                         />
-                        {item.titleEnd ? <item.titleEnd /> : null}
-                    </>
-                }
+                    ),
+                    ...(item.titleEnd ? [() => <item.titleEnd />] : []),
+                ]}
             />
         ),
         content: <item.body isSkeleton={isSkeleton} />}))
@@ -1767,12 +1743,7 @@ const AccordionCard = ({
     const withCaption = description != null ? (
         <StackV
             gap={3}
-            body={
-                <>
-                    {frame}
-                    <div>{description}</div>
-                </>
-            }
+            items={[() => frame, () => <div>{description}</div>]}
         />
     ) : frame
     return (
@@ -1918,20 +1889,20 @@ const CrossListRow = ({
         align="start"
         padding={4}
         className="relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
-        body={
-            isSkeleton ? (
-                <>
-                    <div aria-hidden className="size-5 shrink-0 rounded-full bg-default" />
-                    <div className="min-w-0 flex-1">
-                        <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
-                    </div>
-                </>
-            ) : (
-                <>
-                    {markIcon(mark, tone)}
-                    <div className="min-w-0 flex-1"><Typography size="sm" text={text ?? ""} /></div>
-                </>
-            )
+        items={
+            isSkeleton
+                ? [
+                    () => <div aria-hidden className="size-5 shrink-0 rounded-full bg-default" />,
+                    () => (
+                        <div className="min-w-0 flex-1">
+                            <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
+                        </div>
+                    ),
+                ]
+                : [
+                    () => markIcon(mark, tone),
+                    () => <div className="min-w-0 flex-1"><Typography size="sm" text={text ?? ""} /></div>,
+                ]
         }
     />
 )

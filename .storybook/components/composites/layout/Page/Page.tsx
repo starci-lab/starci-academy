@@ -160,16 +160,14 @@ const Header = ({
             align="start"
             justify="between"
             gap={4}
-            body={
-                <>
-                    <StackV gap={3} classNames={["min-w-0"]} body={titleBlock} />
-                    {/* Right slot: shrink-0 prevents action buttons from being squeezed.
-                        Omitted while loading — the shape of the action row isn't known yet. */}
-                    {!isSkeleton && Actions ? (
-                        <div className="shrink-0"><Actions isSkeleton={isSkeleton} /></div>
-                    ) : null}
-                </>
-            }
+            items={[
+                () => <StackV gap={3} classNames={["min-w-0"]} items={[() => titleBlock]} />,
+                // Right slot: shrink-0 prevents action buttons from being squeezed.
+                // Omitted while loading — the shape of the action row isn't known yet.
+                ...(!isSkeleton && Actions ? [() => (
+                    <div className="shrink-0"><Actions isSkeleton={isSkeleton} /></div>
+                )] : []),
+            ]}
         />
     )
     const headerBody = (
@@ -187,12 +185,10 @@ const Header = ({
                     <StackH
                         gap={3}
                         align="stretch"
-                        body={
-                            <>
-                                <Chip isSkeleton />
-                                <Chip isSkeleton />
-                            </>
-                        }
+                        items={[
+                            () => <Chip isSkeleton />,
+                            () => <Chip isSkeleton />,
+                        ]}
                     />
                 ) : (
                     <div>{Meta ? <Meta isSkeleton={isSkeleton} /> : null}</div>
@@ -203,7 +199,7 @@ const Header = ({
     return (
         // outer gap={4}: breadcrumb ↔ title-block ↔ meta (different header tiers);
         // title ↔ description stay a related gap={3} pair inside the title block.
-        <StackV gap={4} classNames={classNames} body={headerBody} />
+        <StackV gap={4} classNames={classNames} items={[() => headerBody]} />
     )
 }
 
@@ -284,12 +280,10 @@ const BottomBar = ({
                 justify="between"
                 gap={4}
                 pattern="content-row"
-                body={
-                    <>
-                        <div className="min-w-0"><Main isSkeleton={isSkeleton} /></div>
-                        <div className="shrink-0"><Actions isSkeleton={isSkeleton} /></div>
-                    </>
-                }
+                items={[
+                    () => <div className="min-w-0"><Main isSkeleton={isSkeleton} /></div>,
+                    () => <div className="shrink-0"><Actions isSkeleton={isSkeleton} /></div>,
+                ]}
             />
         </div>
     )

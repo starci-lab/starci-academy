@@ -285,22 +285,23 @@ const QaQuestionThread = ({
                 wrap
                 align="center"
 
-                body={
-                    isSkeleton ? (
-                        <Typography size="xs" weight="medium" isSkeleton classNames={["w-1/4"]} />
-                    ) : (
-                        <>
-                            {question.isPinned ? (
-                                <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-                            ) : null}
-                            <Typography size="xs" weight="medium" text={askerDisplayName} />
-                            {question.isFounderAuthor ? (
-                                <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-                            ) : null}
-                            <Typography size="xs" color="muted" text={`· ${question.createdTimeAgo}`} />
-                        </>
-                    )
-                }
+                items={[
+                    () =>
+                        isSkeleton ? (
+                            <Typography size="xs" weight="medium" isSkeleton classNames={["w-1/4"]} />
+                        ) : (
+                            <>
+                                {question.isPinned ? (
+                                    <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+                                ) : null}
+                                <Typography size="xs" weight="medium" text={askerDisplayName} />
+                                {question.isFounderAuthor ? (
+                                    <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+                                ) : null}
+                                <Typography size="xs" color="muted" text={`· ${question.createdTimeAgo}`} />
+                            </>
+                        ),
+                ]}
             />
         )
 
@@ -308,12 +309,10 @@ const QaQuestionThread = ({
             <StackV
                 gap={2}
 
-                body={
-                    <>
-                        <Typography size="sm" isSkeleton classNames={["w-full"]} />
-                        <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
-                    </>
-                }
+                items={[
+                    () => <Typography size="sm" isSkeleton classNames={["w-full"]} />,
+                    () => <Typography size="sm" isSkeleton classNames={["w-2/3"]} />,
+                ]}
             />
         ) : (
             <div className="[&_p]:m-0 [&_p]:line-clamp-2">
@@ -330,17 +329,17 @@ const QaQuestionThread = ({
                 gap={2}
                 classNames={["min-w-0", "flex-1"]}
 
-                body={
-                    <>
-                        {askerNameRow}
-                        {questionPreview}
+                items={[
+                    () => askerNameRow,
+                    () => questionPreview,
+                    () => (
                         <Cluster
                             gap={3}
                             items={buildQuestionChips(question, { isSkeleton, includeReplyCount: true })}
 
                         />
-                    </>
-                }
+                    ),
+                ]}
             />
         )
 
@@ -349,8 +348,8 @@ const QaQuestionThread = ({
                 gap={4}
                 align="start"
 
-                body={
-                    <>
+                items={[
+                    () => (
                         <div>
                             <Avatar
                                 src={question.author.avatarUrl}
@@ -361,17 +360,15 @@ const QaQuestionThread = ({
 
                             />
                         </div>
-
-                        {previewColumn}
-
-                        {!isSkeleton ? (
-                            <span
-                                aria-hidden
-                                className={cn("size-2 shrink-0 rounded-full", question.replyCount > 0 ? "bg-success" : "bg-warning")}
-                            />
-                        ) : null}
-                    </>
-                }
+                    ),
+                    () => previewColumn,
+                    ...(!isSkeleton ? [() => (
+                        <span
+                            aria-hidden
+                            className={cn("size-2 shrink-0 rounded-full", question.replyCount > 0 ? "bg-success" : "bg-warning")}
+                        />
+                    )] : []),
+                ]}
             />
         )
 
@@ -396,18 +393,16 @@ const QaQuestionThread = ({
             wrap
             align="center"
 
-            body={
-                <>
-                    <Typography size="xs" weight="medium" text={askerDisplayName} />
-                    {question.isFounderAuthor ? (
-                        <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-                    ) : null}
-                    {question.isPinned ? (
-                        <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-                    ) : null}
-                    <Typography size="xs" color="muted" text={question.createdTimeAgo} />
-                </>
-            }
+            items={[
+                () => <Typography size="xs" weight="medium" text={askerDisplayName} />,
+                ...(question.isFounderAuthor ? [() => (
+                    <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+                )] : []),
+                ...(question.isPinned ? [() => (
+                    <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+                )] : []),
+                () => <Typography size="xs" color="muted" text={question.createdTimeAgo} />,
+            ]}
         />
     )
 
@@ -417,21 +412,23 @@ const QaQuestionThread = ({
             wrap
             align="center"
 
-            body={
-                <>
+            items={[
+                () => (
                     <Cluster
                         gap={3}
                         items={buildQuestionChips(question, { isSkeleton: false, includeReplyCount: false })}
 
                     />
+                ),
+                () => (
                     <QaReactionBar
                         count={questionReaction.count}
                         myReaction={questionReaction.myReaction}
                         onReact={onReactQuestion}
 
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
@@ -442,10 +439,9 @@ const QaQuestionThread = ({
                 gap={2}
                 className={cn("min-w-0 max-w-[92%]", isMineQuestion && "items-end")}
 
-                body={
-                    <>
-                        {questionMetaRow}
-
+                items={[
+                    () => questionMetaRow,
+                    () => (
                         <QaChatBubble role={isMineQuestion ? "user" : "assistant"}>
                             <div className="[&_p]:m-0">
                                 <MarkdownContent
@@ -455,10 +451,9 @@ const QaQuestionThread = ({
                                 />
                             </div>
                         </QaChatBubble>
-
-                        {questionFooterRow}
-                    </>
-                }
+                    ),
+                    () => questionFooterRow,
+                ]}
             />
         </div>
     )
@@ -489,12 +484,10 @@ const QaQuestionThread = ({
         <StackV
             gap={4}
 
-            body={
-                <>
-                    {questionBubble}
-                    {answerRows}
-                </>
-            }
+            items={[
+                () => questionBubble,
+                () => answerRows,
+            ]}
         />
     )
 
@@ -502,8 +495,8 @@ const QaQuestionThread = ({
         <StackV
             gap={6}
 
-            body={
-                <>
+            items={[
+                () => (
                     <QaConversationHeader
                         asker={{
                             id: question.author.id,
@@ -516,10 +509,10 @@ const QaQuestionThread = ({
                         onCollapse={() => setIsExpanded(false)}
 
                     />
-
-                    {conversationBody}
-
-                    {/* bottom composer — the only way to answer a course-general question */}
+                ),
+                () => conversationBody,
+                // bottom composer — the only way to answer a course-general question
+                () => (
                     <CourseQaComposer
                         mode="plain"
                         currentUser={currentUser ? { name: currentUser.username, avatarSrc: currentUser.avatar } : undefined}
@@ -531,8 +524,8 @@ const QaQuestionThread = ({
 
 
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 

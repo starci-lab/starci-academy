@@ -103,11 +103,11 @@ const ContentCommentComposer = ({
                 gap={4}
                 align="center"
 
-                body={
-                    <>
-                        {currentUser ? (
-                            <Avatar src={currentUser.avatarUrl} name={currentUser.username} seed={currentUser.username} size="sm" />
-                        ) : null}
+                items={[
+                    ...(currentUser ? [() => (
+                        <Avatar src={currentUser.avatarUrl} name={currentUser.username} seed={currentUser.username} size="sm" />
+                    )] : []),
+                    () => (
                         <div className="min-w-0 flex-1">
                             <InputButtonLike
                                 placeholder={placeholder}
@@ -115,8 +115,8 @@ const ContentCommentComposer = ({
                                 onPress={() => setExpanded(true)}
                             />
                         </div>
-                    </>
-                }
+                    ),
+                ]}
             />
         )
     }
@@ -155,7 +155,7 @@ const ContentCommentComposer = ({
                 variant="primary"
 
             />
-            <StackH gap={3} body={buttonRow} />
+            <StackH gap={3} items={[() => buttonRow]} />
         </>
     )
 
@@ -164,12 +164,12 @@ const ContentCommentComposer = ({
             {currentUser ? (
                 <Avatar src={currentUser.avatarUrl} name={currentUser.username} seed={currentUser.username} size="sm" />
             ) : null}
-            <StackV gap={3} classNames={["min-w-0", "flex-1"]} body={fieldColumn} />
+            <StackV gap={3} classNames={["min-w-0", "flex-1"]} items={[() => fieldColumn]} />
         </>
     )
 
     return (
-        <StackH gap={4} align="start" className={className} body={composerRow} />
+        <StackH gap={4} align="start" className={className} items={[() => composerRow]} />
     )
 }
 

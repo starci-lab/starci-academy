@@ -96,8 +96,8 @@ const FlashcardMasteryStrip = ({
                 gap={2}
                 align="baseline"
 
-                body={
-                    <>
+                items={[
+                    () => (
                         <Typography
                             size="h3"
                             weight="bold"
@@ -105,6 +105,8 @@ const FlashcardMasteryStrip = ({
                             text={`${mastered}/${total}`}
 
                         />
+                    ),
+                    () => (
                         <Typography
                             size="sm"
                             color="muted"
@@ -112,8 +114,8 @@ const FlashcardMasteryStrip = ({
                             text={`${pct}%`}
 
                         />
-                    </>
-                }
+                    ),
+                ]}
             />
             <SegmentBar
                 segments={isSkeleton ? SKELETON_SEGMENTS : segments}
@@ -145,7 +147,7 @@ const FlashcardMasteryStrip = ({
                 isSkeleton={isSkeleton}
 
 
-                body={() => <StackV gap={4} body={masteryReadout} />}
+                body={() => <StackV gap={4} items={[() => masteryReadout]} />}
             />
         </div>
     )

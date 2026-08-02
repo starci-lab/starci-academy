@@ -153,8 +153,8 @@ const MockInterviewSetup = ({
         <StackH
             gap={3}
 
-            body={
-                <>
+            items={[
+                () => (
                     <div>
                         <Avatar
                             name={persona.name}
@@ -165,9 +165,9 @@ const MockInterviewSetup = ({
 
                         />
                     </div>
-                    <StackV gap={1} body={personaDetails} />
-                </>
-            }
+                ),
+                () => <StackV gap={1} items={[() => personaDetails]} />,
+            ]}
         />
     )
 
@@ -175,9 +175,9 @@ const MockInterviewSetup = ({
         <StackV
             gap={3}
 
-            body={
-                <>
-                    <Typography size="sm" weight="medium" text="Session name" />
+            items={[
+                () => <Typography size="sm" weight="medium" text="Session name" />,
+                () => (
                     <InputText
                         value={sessionName}
                         onValueChange={onSessionNameChange}
@@ -186,8 +186,8 @@ const MockInterviewSetup = ({
                         isSkeleton={isSkeleton}
 
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
@@ -195,9 +195,9 @@ const MockInterviewSetup = ({
         <StackV
             gap={3}
 
-            body={
-                <>
-                    <Typography size="sm" weight="medium" text="Level" />
+            items={[
+                () => <Typography size="sm" weight="medium" text="Level" />,
+                () => (
                     <ButtonRadioGroup
                         ariaLabel="Interview level"
                         value={tier}
@@ -208,8 +208,8 @@ const MockInterviewSetup = ({
                             content: TIER_LABEL[key],
                         }))}
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
@@ -218,19 +218,19 @@ const MockInterviewSetup = ({
             gap={3}
             justify="end"
 
-            body={
-                <>
-                    {showDesignStart ? (
-                        <Button
-                            label="Start Design"
-                            variant="secondary"
-                            prefixIcon={FlowArrowIcon}
-                            onPress={onStartDesign}
-                            isPending={isPending && startingMode === "design"}
-                            isDisabled={isPending && startingMode !== "design"}
+            items={[
+                ...(showDesignStart ? [() => (
+                    <Button
+                        label="Start Design"
+                        variant="secondary"
+                        prefixIcon={FlowArrowIcon}
+                        onPress={onStartDesign}
+                        isPending={isPending && startingMode === "design"}
+                        isDisabled={isPending && startingMode !== "design"}
 
-                        />
-                    ) : null}
+                    />
+                )] : []),
+                () => (
                     <Button
                         label="Start Q&A"
                         variant="primary"
@@ -240,8 +240,8 @@ const MockInterviewSetup = ({
                         isDisabled={isPending && startingMode !== "qna"}
 
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
@@ -251,18 +251,16 @@ const MockInterviewSetup = ({
         <StackV
             gap={3}
 
-            body={
-                <>
-                    {errorMessage != null ? (
-                        <Callout
-                            status="danger"
-                            title={errorMessage}
+            items={[
+                ...(errorMessage != null ? [() => (
+                    <Callout
+                        status="danger"
+                        title={errorMessage}
 
-                        />
-                    ) : null}
-                    {actionsRow}
-                </>
-            }
+                    />
+                )] : []),
+                () => actionsRow,
+            ]}
         />
     )
 
@@ -282,7 +280,7 @@ const MockInterviewSetup = ({
                 label={label}
                 isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={6} body={setupBody} />}
+                body={() => <StackV gap={6} items={[() => setupBody]} />}
             />
         </div>
     )

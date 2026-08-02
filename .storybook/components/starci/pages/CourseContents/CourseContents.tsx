@@ -131,13 +131,11 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
     const MetaChips: ComponentTypeWithSkeleton = () => (
         <StackH
             gap={3}
-            body={
-                <>
-                    <HighlightChip icon={StackIcon} value={8} label="chapters" />
-                    <HighlightChip icon={ClockIcon} value="~14" label="hours" />
-                    <HighlightChip icon={UsersIcon} value="2,481" label="learners" />
-                </>
-            }
+            items={[
+                () => <HighlightChip icon={StackIcon} value={8} label="chapters" />,
+                () => <HighlightChip icon={ClockIcon} value="~14" label="hours" />,
+                () => <HighlightChip icon={UsersIcon} value="2,481" label="learners" />,
+            ]}
         />
     )
 
@@ -148,16 +146,10 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
             ? () => (
                 <StackH
                     gap={3}
-                    body={
-                        <>
-                            {difficulty != null ? (
-                                <ChipBase tone={DIFFICULTY_TONE[difficulty]} text={difficulty} />
-                            ) : null}
-                            {isPremium ? (
-                                <LockIcon aria-label="Premium lesson" focusable="false" className="size-5 text-muted" />
-                            ) : null}
-                        </>
-                    }
+                    items={[
+                        ...(difficulty != null ? [() => <ChipBase tone={DIFFICULTY_TONE[difficulty]} text={difficulty} />] : []),
+                        ...(isPremium ? [() => <LockIcon aria-label="Premium lesson" focusable="false" className="size-5 text-muted" />] : []),
+                    ]}
                 />
             )
             : undefined
@@ -175,78 +167,71 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
     const contentCluster = (
         <StackV
             gap={6}
-            body={
-                <>
-                    {/* Gate is for people who ALREADY BOUGHT; the block self-hides when it doesn't apply. */}
-                    <CourseTeamGate isEnrolled={viewer === "paid"} isInTeam={false} onJoin={() => {}} isSkeleton={isSkeleton} />
-                    {viewer === "trial" ? (
-                        <TrialConversionStrip freeLessonsRemaining={9} price={SAMPLE_PRICE} onEnroll={() => {}} isSkeleton={isSkeleton} />
-                    ) : null}
-
-                    {/* Continue + progress — flat (no card face), the honest unified meter. */}
+            items={[
+                // Gate is for people who ALREADY BOUGHT; the block self-hides when it doesn't apply.
+                () => <CourseTeamGate isEnrolled={viewer === "paid"} isInTeam={false} onJoin={() => {}} isSkeleton={isSkeleton} />,
+                ...(viewer === "trial" ? [() => <TrialConversionStrip freeLessonsRemaining={9} price={SAMPLE_PRICE} onEnroll={() => {}} isSkeleton={isSkeleton} />] : []),
+                // Continue + progress — flat (no card face), the honest unified meter.
+                () => (
                     <StackV
                         gap={4}
-                        body={
-                            <>
+                        items={[
+                            () => (
                                 <StackH
                                     align="start"
                                     justify="between"
                                     gap={4}
-                                    body={
-                                        <>
+                                    items={[
+                                        () => (
                                             <StackV
                                                 gap={1}
                                                 classNames={["min-w-0"]}
-                                                body={
-                                                    <>
-                                                        <Typography size="xs" color="muted" isSkeleton={isSkeleton} text="Continue where you left off" />
-                                                        <Typography size="base" weight="semibold" truncate isSkeleton={isSkeleton} text="Writing an optimized Dockerfile" />
-                                                    </>
-                                                }
+                                                items={[
+                                                    () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text="Continue where you left off" />,
+                                                    () => <Typography size="base" weight="semibold" truncate isSkeleton={isSkeleton} text="Writing an optimized Dockerfile" />,
+                                                ]}
                                             />
-                                            {!isSkeleton ? (
-                                                <Button
-                                                    label="Resume"
-                                                    variant="primary"
-                                                    size="lg"
-                                                    suffixIcon={ArrowRightIcon}
-                                                    iconSlide
-                                                    onPress={() => {}}
-                                                    classNames={["shrink-0"]}
-                                                />
-                                            ) : null}
-                                        </>
-                                    }
+                                        ),
+                                        ...(!isSkeleton ? [() => (
+                                            <Button
+                                                label="Resume"
+                                                variant="primary"
+                                                size="lg"
+                                                suffixIcon={ArrowRightIcon}
+                                                iconSlide
+                                                onPress={() => {}}
+                                                classNames={["shrink-0"]}
+                                            />
+                                        )] : []),
+                                    ]}
                                 />
-                                <ProgressMeter value={34} max={100} label="Completion" showValue isSkeleton={isSkeleton} />
-                                <Typography size="xs" color="muted" isSkeleton={isSkeleton} text="8 / 23 lessons · 2 / 9 challenges" />
-                            </>
-                        }
+                            ),
+                            () => <ProgressMeter value={34} max={100} label="Completion" showValue isSkeleton={isSkeleton} />,
+                            () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text="8 / 23 lessons · 2 / 9 challenges" />,
+                        ]}
                     />
-
-                    {/* Contextual nudges — aids that orbit the spine; each self-hides at 0. */}
-                    <LearnNudges items={NUDGES} isSkeleton={isSkeleton} />
-
-                    {/* Keep-going path — the current module's lessons as rows. */}
+                ),
+                // Contextual nudges — aids that orbit the spine; each self-hides at 0.
+                () => <LearnNudges items={NUDGES} isSkeleton={isSkeleton} />,
+                // Keep-going path — the current module's lessons as rows.
+                () => (
                     <StackV
                         gap={4}
-                        body={
-                            <>
-                                <Typography size="sm" weight="semibold" color="muted" isSkeleton={isSkeleton} text="Keep going · Containerization" />
-                                <SurfaceCardList items={lessonRows} isSkeleton={isSkeleton} />
-                            </>
-                        }
+                        items={[
+                            () => <Typography size="sm" weight="semibold" color="muted" isSkeleton={isSkeleton} text="Keep going · Containerization" />,
+                            () => <SurfaceCardList items={lessonRows} isSkeleton={isSkeleton} />,
+                        ]}
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
     const body = (
         <StackV
             gap={7}
-            body={
-                <>
+            items={[
+                () => (
                     <PageHeader
                         breadcrumb={BreadcrumbSlot}
                         title="DevOps Mastery"
@@ -254,9 +239,9 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                         meta={MetaChips}
                         isSkeleton={isSkeleton}
                     />
-                    {contentCluster}
-                </>
-            }
+                ),
+                () => contentCluster,
+            ]}
         />
     )
 

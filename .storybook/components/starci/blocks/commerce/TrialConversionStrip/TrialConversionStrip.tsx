@@ -86,20 +86,22 @@ const TrialConversionStripBase = ({
         : undefined
 
     const headerRow = (
-        <StackH gap={4} align="center" body={(
-            <>
+        <StackH gap={4} align="center" items={[
+            () => (
                 <IconTile
                     icon={LockIcon}
                     tone="accent"
                     size="sm"
 
                 />
-                {/* The "title + description" cluster is ONE SEMANTIC UNIT ⇒ goes through
-                ONE frame, not two separate `Typography`.
-                `TitledText size="row"` (default) already OWNS exactly this scale:
-                title `sm` medium · subtitle `xs` muted. Hand-building two atoms means
-                the block decides its own font sizes — one style per spot, with
-                nothing keeping them in sync. */}
+            ),
+            // The "title + description" cluster is ONE SEMANTIC UNIT ⇒ goes through
+            // ONE frame, not two separate `Typography`.
+            // `TitledText size="row"` (default) already OWNS exactly this scale:
+            // title `sm` medium · subtitle `xs` muted. Hand-building two atoms means
+            // the block decides its own font sizes — one style per spot, with
+            // nothing keeping them in sync.
+            () => (
                 <TitledText
                     classNames={["flex-1"]}
 
@@ -111,8 +113,8 @@ const TrialConversionStripBase = ({
                             : "You've read every free lesson — unlock the full course to keep going."
                     }
                 />
-            </>
-        )} />
+            ),
+        ]} />
     )
 
     // `grouped`. Read the seam by RELATIONSHIP, not by tier: the
@@ -125,31 +127,31 @@ const TrialConversionStripBase = ({
     // rhythm stops reading as groups. With 3 the
     // card reads 24/12/12/24 — two groups, which is what it is.
     const priceColumn = (
-        <StackV gap={4} body={
-            isSkeleton && !price ? (
+        <StackV gap={4} items={
+            isSkeleton && !price ? [
                 // The CTA card renders instantly once the outline
                 // resolves, but the price is a second fetch — mirror the price
                 // line instead of showing an empty gap until it lands.
-                <>
-                    <Typography size="h4" isSkeleton classNames={["w-1/3"]} />
-                    <Typography size="xs" isSkeleton classNames={["w-1/2"]} />
-                </>
-            ) : price?.discountedPriceVnd != null ? (
-                <>
+                () => <Typography size="h4" isSkeleton classNames={["w-1/3"]} />,
+                () => <Typography size="xs" isSkeleton classNames={["w-1/2"]} />,
+            ] : price?.discountedPriceVnd != null ? [
+                () => (
                     <PriceTagProminent
                         discounted={price.discountedPriceVnd}
                         original={price.originalPriceVnd}
                         breakdown={breakdown}
 
                     />
+                ),
+                () => (
                     <PhaseScarcityNote
 
                         currentPhase={price.currentPhase}
                         seatsRemaining={price.seatsRemainingInCurrentPhase}
                         nextPhasePriceVnd={price.nextPhasePriceVnd}
                     />
-                </>
-            ) : null
+                ),
+            ] : []
         } />
     )
 
@@ -167,12 +169,12 @@ const TrialConversionStripBase = ({
             justify="between"
             wrap
 
-            body={(
-                <>
-                    {priceColumn}
-                    {/* ATOM `Button`, NOT the `_legacy` version: going around the port is drift —
-                        fixing the atom in one place won't propagate here.
-                        `suffixIcon` takes a COMPONENT REF, the atom forces scale + weight. */}
+            items={[
+                () => priceColumn,
+                // ATOM `Button`, NOT the `_legacy` version: going around the port is drift —
+                // fixing the atom in one place won't propagate here.
+                // `suffixIcon` takes a COMPONENT REF, the atom forces scale + weight.
+                () => (
                     <Button
                         variant="primary"
                         size="lg"
@@ -183,8 +185,8 @@ const TrialConversionStripBase = ({
                         onPress={onEnroll}
 
                     />
-                </>
-            )}
+                ),
+            ]}
         />
     )
 
@@ -194,12 +196,10 @@ const TrialConversionStripBase = ({
         <SurfaceCard
             classNames={classNames}
             body={() => (
-                <StackV gap={6} body={(
-                    <>
-                        {headerRow}
-                        {footerRow}
-                    </>
-                )} />
+                <StackV gap={6} items={[
+                    () => headerRow,
+                    () => footerRow,
+                ]} />
             )}
         />
     )

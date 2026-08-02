@@ -171,10 +171,10 @@ const StepperBase = ({
                                     onClick={() => onStepPress(index)}
                                     className="rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                                 >
-                                    <StackV gap={3} align="center" body={indicatorAndCopy} />
+                                    <StackV gap={3} align="center" items={[() => indicatorAndCopy]} />
                                 </button>
                             ) : (
-                                <StackV gap={3} align="center" body={indicatorAndCopy} />
+                                <StackV gap={3} align="center" items={[() => indicatorAndCopy]} />
                             )}
                         </React.Fragment>
                     )
@@ -230,24 +230,22 @@ const StepperBase = ({
                         key={step.id}
                         gap={4}
                         align="stretch"
-                        body={
-                            <>
-                                <StackV gap={2} align="center" body={railAndConnector} />
-                                {isClickable ? (
+                        items={[
+                            () => <StackV gap={2} align="center" items={[() => railAndConnector]} />,
+                            () => isClickable ? (
                                     <button
                                         type="button"
                                         onClick={() => onStepPress(index)}
                                         // inset-exception: optical nudge lining the label up with the step dot, not a surface inset
                                         className="pt-1 text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                                     >
-                                        <StackV gap={1} body={clickableCopy} />
+                                        <StackV gap={1} items={[() => clickableCopy]} />
                                     </button>
                                 ) : (
                                     // inset-exception: optical nudge lining the label up with the step dot
-                                    <StackV gap={1} className="pt-1" body={staticCopy} />
-                                )}
-                            </>
-                        }
+                                    <StackV gap={1} className="pt-1" items={[() => staticCopy]} />
+                                ),
+                        ]}
                     />
                 )
             })}

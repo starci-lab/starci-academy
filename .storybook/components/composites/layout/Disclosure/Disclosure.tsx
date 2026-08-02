@@ -108,8 +108,8 @@ const Base = ({
         <StackV
             gap={4}
             classNames={classNames}
-            body={
-                <>
+            items={[
+                () => (
                     <button
                         type="button"
                         onClick={toggle}
@@ -133,11 +133,11 @@ const Base = ({
                         />
                         <Typography size="sm" color="muted" isSkeleton={isSkeleton} text={title} />
                     </button>
-                    {open && !isSkeleton && Content ? (
-                        <StackV gap={4} body={<Content isSkeleton={isSkeleton} />} />
-                    ) : null}
-                </>
-            }
+                ),
+                ...(open && !isSkeleton && Content ? [() => (
+                    <StackV gap={4} items={[() => <Content isSkeleton={isSkeleton} />]} />
+                )] : []),
+            ]}
         />
     )
 }

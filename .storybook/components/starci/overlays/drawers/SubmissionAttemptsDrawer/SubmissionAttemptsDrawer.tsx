@@ -101,70 +101,68 @@ const scoreChipFor = (attempt: SubmissionAttemptRecord): { tone: "success" | "da
 const attemptRowContent = (attempt: SubmissionAttemptRecord) => {
     const chip = scoreChipFor(attempt)
 
-    const attemptLabelAndChip = (
-        <>
+    const attemptLabelAndChip = [
+        () => (
             <Typography
                 text={`Attempt ${attempt.attemptNumber}`}
                 size="sm"
                 weight="medium"
 
             />
-            <Chip tone={chip.tone} icon={chip.icon} text={chip.text} />
-        </>
-    )
+        ),
+        () => <Chip tone={chip.tone} icon={chip.icon} text={chip.text} />,
+    ]
 
     // justify="between" pushes the timeago to the far edge — the PARENT does the
     // pushing, not a child margin; the label+chip stay grouped in their own inner track
     // so `between` only ever splits two things, not three.
-    const attemptLineContent = (
-        <>
-            <StackH gap={3} align="center" body={attemptLabelAndChip} />
-            {attempt.processedTimeAgo != null ? (
-                <Typography
-                    text={attempt.processedTimeAgo}
-                    size="xs"
-                    color="muted"
+    const attemptLineContent = [
+        () => <StackH gap={3} align="center" items={attemptLabelAndChip} />,
+        ...(attempt.processedTimeAgo != null ? [() => (
+            <Typography
+                text={attempt.processedTimeAgo}
+                size="xs"
+                color="muted"
 
-                />
-            ) : null}
-        </>
-    )
+            />
+        )] : []),
+    ]
 
-    const bylineContent = (
-        <>
+    const bylineContent = [
+        () => (
             <InlineIconLabel
                 icon={SparkleIcon}
                 tone="default"
                 size="xs"
                 label={`Graded by ${attempt.gradedByModel}`}
             />
-            {attempt.modelCategory != null ? (
-                <EnumChip
-                    value={attempt.modelCategory}
-                    map={MODEL_CATEGORY_MAP}
+        ),
+        ...(attempt.modelCategory != null ? [() => (
+            <EnumChip
+                value={attempt.modelCategory}
+                map={MODEL_CATEGORY_MAP}
 
-                />
-            ) : null}
-        </>
-    )
+            />
+        )] : []),
+    ]
 
-    const rowContent = (
-        <>
+    const rowContent = [
+        () => (
             <StackH
                 gap={3}
                 align="center"
                 justify="between"
 
-                body={attemptLineContent}
+                items={attemptLineContent}
             />
-            {attempt.gradedByModel != null ? (
-                <StackH gap={3} align="center" wrap body={bylineContent} />
-            ) : null}
-        </>
-    )
+        ),
+        ...(attempt.gradedByModel != null ? [() => (
+            <StackH gap={3} align="center" wrap items={bylineContent} />
+        )] : []),
+    ]
 
     return (
-        <StackV gap={2} body={rowContent} />
+        <StackV gap={2} items={rowContent} />
     )
 }
 
@@ -214,8 +212,8 @@ const SubmissionAttemptsDrawer = ({
 
     }
 
-    const skeletonRows = Array.from({ length: SKELETON_ATTEMPT_COUNT }, (_, index) => (
-        <div key={index} className="h-16 w-full rounded-2xl bg-default/40" />
+    const skeletonRows = Array.from({ length: SKELETON_ATTEMPT_COUNT }, () => () => (
+        <div className="h-16 w-full rounded-2xl bg-default/40" />
     ))
 
     // `selected` (a trailing check) is only wired for the FIXED title/subtitle row
@@ -232,28 +230,28 @@ const SubmissionAttemptsDrawer = ({
         },
     }))
 
-    const listAndPager = (
-        <>
+    const listAndPager = [
+        () => (
             <SurfaceCardList
                 items={items}
 
 
             />
-            {totalPages > 1 ? (
-                // `Pagination` hard-codes its own internal `aria-label` (§4) — the
-                // wrapping `<nav>` is how this block's own accessible name still
-                // gets attached, same convention `CourseQaQuestionList` uses.
-                <nav aria-label={PAGER_ARIA_LABEL}>
-                    <Pagination
-                        currentPage={page}
-                        totalPages={totalPages}
-                        onPageChange={setPage}
+        ),
+        ...(totalPages > 1 ? [() => (
+            // `Pagination` hard-codes its own internal `aria-label` (§4) — the
+            // wrapping `<nav>` is how this block's own accessible name still
+            // gets attached, same convention `CourseQaQuestionList` uses.
+            <nav aria-label={PAGER_ARIA_LABEL}>
+                <Pagination
+                    currentPage={page}
+                    totalPages={totalPages}
+                    onPageChange={setPage}
 
-                    />
-                </nav>
-            ) : null}
-        </>
-    )
+                />
+            </nav>
+        )] : []),
+    ]
 
     return (
         <div>
@@ -269,7 +267,7 @@ const SubmissionAttemptsDrawer = ({
                             <StackV
                                 gap={3}
 
-                                body={skeletonRows}
+                                items={skeletonRows}
                             />
                         }
                         isEmpty={isEmpty}
@@ -282,7 +280,7 @@ const SubmissionAttemptsDrawer = ({
                                 gap={4}
 
 
-                                body={listAndPager}
+                                items={listAndPager}
                             />
                         }
                     />

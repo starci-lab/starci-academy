@@ -92,12 +92,14 @@ export const RemovableToken = ({
         <StackH
             gap={3}
             classNames={["shrink-0"]}
-            body={
-                <>
-                    {onEdit ? (
+            items={[
+                ...(onEdit
+                    ? [() => (
                         <Button variant="tertiary" size="sm" isDisabled={isDisabled} onPress={onEdit} prefixIcon={XIcon} label={editLabel} />
-                    ) : null}
-                    {onRemove ? (
+                    )]
+                    : []),
+                ...(onRemove
+                    ? [() => (
                         // Compact chip-scale close × (NOT the button-scale edit
                         // affordance above) — a real <button> for a11y.
                         <button
@@ -109,9 +111,9 @@ export const RemovableToken = ({
                         >
                             <XIcon aria-hidden focusable="false" />
                         </button>
-                    ) : null}
-                </>
-            }
+                    )]
+                    : []),
+            ]}
         />
     ) : null
 
@@ -129,9 +131,9 @@ export const RemovableToken = ({
             <StackH
                 gap={3}
                 classNames={["min-w-0"]}
-                body={
-                    <>
-                        {Icon ? (
+                items={[
+                    ...(Icon
+                        ? [() => (
                             // COMPOSITE owns the size (§4) — the atom's own scale, not the
                             // caller's. A component reference can still be called during
                             // `isSkeleton` (it's static chrome, not loaded data), so it
@@ -139,7 +141,9 @@ export const RemovableToken = ({
                             <span aria-hidden className="inline-flex shrink-0 [&_svg]:size-4">
                                 <Icon />
                             </span>
-                        ) : null}
+                        )]
+                        : []),
+                    () => (
                         <Typography
                             size="sm"
                             weight="medium"
@@ -148,8 +152,8 @@ export const RemovableToken = ({
                             classNames={isSkeleton ? ["w-1/3"] : undefined}
                             text={label}
                         />
-                    </>
-                }
+                    ),
+                ]}
             />
             {trailing}
         </div>

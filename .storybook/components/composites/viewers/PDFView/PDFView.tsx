@@ -284,9 +284,8 @@ export const PDFView = ({
                 // into view, each one handed `isSkeleton` `Typography` lines.
                 <StackV
                     gap={4}
-                    body={Array.from({ length: SKELETON_PAGE_COUNT }, (_, index) => (
+                    items={Array.from({ length: SKELETON_PAGE_COUNT }, () => () => (
                         <div
-                            key={index}
                             className="flex w-full flex-col items-center justify-center gap-2 rounded-medium border border-default"
                             style={{ minHeight: 320 }}
                             aria-hidden
@@ -307,12 +306,11 @@ export const PDFView = ({
                 >
                     <StackV
                         gap={4}
-                        body={Array.from({ length: pageCount }, (_, index) => {
+                        items={Array.from({ length: pageCount }, (_, index) => {
                             const pageNumber = index + 1
                             const eager = !showAllPages || pageNumber <= 2
-                            return (
+                            return () => (
                                 <PdfViewportPage
-                                    key={`pdf-page-${pageNumber}-${src}`}
                                     eager={eager}
                                     pageNumber={pageNumber}
                                     scrollRootRef={scrollRootRef}

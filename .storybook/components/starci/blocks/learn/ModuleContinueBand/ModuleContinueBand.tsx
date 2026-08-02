@@ -74,8 +74,8 @@ const ModuleContinueBand = ({
             gap={1}
             classNames={["min-w-0"]}
 
-            body={
-                <>
+            items={[
+                () => (
                     <Typography
                         size="xs"
                         color="muted"
@@ -83,18 +83,18 @@ const ModuleContinueBand = ({
                         text={showResumeRow ? EYEBROW_CONTINUE : EYEBROW_ALL_DONE}
 
                     />
-                    {showResumeRow ? (
-                        <Typography
-                            size="base"
-                            weight="semibold"
-                            truncate
-                            isSkeleton={isSkeleton}
-                            text={resumeLessonTitle}
+                ),
+                ...(showResumeRow ? [() => (
+                    <Typography
+                        size="base"
+                        weight="semibold"
+                        truncate
+                        isSkeleton={isSkeleton}
+                        text={resumeLessonTitle}
 
-                        />
-                    ) : null}
-                </>
-            }
+                    />
+                )] : []),
+            ]}
         />
     )
 
@@ -104,23 +104,21 @@ const ModuleContinueBand = ({
             justify="between"
             align="start"
 
-            body={
-                <>
-                    {eyebrowAndTitle}
-                    {showResumeRow ? (
-                        <Button
-                            isSkeleton={isSkeleton}
-                            variant="primary"
-                            size="lg"
-                            label={RESUME_LABEL}
-                            suffixIcon={ArrowRightIcon}
-                            onPress={onResume}
-                            classNames={["shrink-0"]}
+            items={[
+                () => eyebrowAndTitle,
+                ...(showResumeRow ? [() => (
+                    <Button
+                        isSkeleton={isSkeleton}
+                        variant="primary"
+                        size="lg"
+                        label={RESUME_LABEL}
+                        suffixIcon={ArrowRightIcon}
+                        onPress={onResume}
+                        classNames={["shrink-0"]}
 
-                        />
-                    ) : null}
-                </>
-            }
+                    />
+                )] : []),
+            ]}
         />
     )
 
@@ -152,13 +150,11 @@ const ModuleContinueBand = ({
         <StackV
             gap={4}
 
-            body={
-                <>
-                    {headerRow}
-                    {progress}
-                    {statLine}
-                </>
-            }
+            items={[
+                () => headerRow,
+                () => progress,
+                () => statLine,
+            ]}
         />
     )
 }

@@ -130,13 +130,11 @@ const ScoreRow = ({
         gap={4}
         align="center"
 
-        body={
-            <>
-                <Typography size="sm" truncate classNames={["shrink-0"]} text={label} />
-                <ProgressMeter value={score} max={max} color={scoreColorOf(score, max)} classNames={["flex-1"]} />
-                <Typography size="xs" color="muted" tabularNums classNames={["shrink-0"]} text={`${score}/${max}`} />
-            </>
-        }
+        items={[
+            () => <Typography size="sm" truncate classNames={["shrink-0"]} text={label} />,
+            () => <ProgressMeter value={score} max={max} color={scoreColorOf(score, max)} classNames={["flex-1"]} />,
+            () => <Typography size="xs" color="muted" tabularNums classNames={["shrink-0"]} text={`${score}/${max}`} />,
+        ]}
     />
 )
 
@@ -145,13 +143,11 @@ const ScoreRowSkeleton = () => (
     <StackH
         gap={4}
         align="center"
-        body={
-            <>
-                <Typography size="sm" isSkeleton classNames={["shrink-0", "w-1/4"]} />
-                <HeroSkeleton className="h-1 flex-1 rounded-full" />
-                <Typography size="xs" isSkeleton classNames={["shrink-0", "w-1/4"]} />
-            </>
-        }
+        items={[
+            () => <Typography size="sm" isSkeleton classNames={["shrink-0", "w-1/4"]} />,
+            () => <HeroSkeleton className="h-1 flex-1 rounded-full" />,
+            () => <Typography size="xs" isSkeleton classNames={["shrink-0", "w-1/4"]} />,
+        ]}
     />
 )
 
@@ -215,20 +211,18 @@ const MockInterviewScorecard = ({
             justify="between"
             wrap
 
-            body={
-                <>
-                    {isSkeleton ? (
-                        <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/2"]} />
-                    ) : promptTitle != null ? (
-                        <Typography size="sm" weight="medium" text={promptTitle} />
-                    ) : null}
-                    {isSkeleton ? (
-                        <Typography size="xs" color="muted" isSkeleton classNames={["w-1/3"]} />
-                    ) : createdAt != null ? (
-                        <Typography size="xs" color="muted" text={createdAt} />
-                    ) : null}
-                </>
-            }
+            items={[
+                () => (isSkeleton ? (
+                    <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/2"]} />
+                ) : promptTitle != null ? (
+                    <Typography size="sm" weight="medium" text={promptTitle} />
+                ) : null),
+                () => (isSkeleton ? (
+                    <Typography size="xs" color="muted" isSkeleton classNames={["w-1/3"]} />
+                ) : createdAt != null ? (
+                    <Typography size="xs" color="muted" text={createdAt} />
+                ) : null),
+            ]}
         />
     ) : null
 
@@ -275,12 +269,10 @@ const MockInterviewScorecard = ({
             gap={2}
             align="center"
 
-            body={
-                <>
-                    <Typography size="xs" color="muted" text="Weakest:" />
-                    <Chip tone="warning" text={weakAreaLabel} />
-                </>
-            }
+            items={[
+                () => <Typography size="xs" color="muted" text="Weakest:" />,
+                () => <Chip tone="warning" text={weakAreaLabel} />,
+            ]}
         />
     ) : null
 
@@ -289,8 +281,8 @@ const MockInterviewScorecard = ({
             gap={4}
             wrap
 
-            body={
-                <>
+            items={[
+                () => (
                     <Button
                         isSkeleton={isSkeleton}
                         variant="primary"
@@ -301,6 +293,8 @@ const MockInterviewScorecard = ({
                         onPress={onStudyWeakArea}
 
                     />
+                ),
+                () => (
                     <Button
                         isSkeleton={isSkeleton}
                         variant="secondary"
@@ -309,18 +303,18 @@ const MockInterviewScorecard = ({
                         onPress={onCapstone}
 
                     />
-                    {onRetry != null || isSkeleton ? (
-                        <Button
-                            isSkeleton={isSkeleton}
-                            variant="ghost"
-                            size="lg"
-                            label="Retry interview"
-                            onPress={onRetry}
+                ),
+                ...(onRetry != null || isSkeleton ? [() => (
+                    <Button
+                        isSkeleton={isSkeleton}
+                        variant="ghost"
+                        size="lg"
+                        label="Retry interview"
+                        onPress={onRetry}
 
-                        />
-                    ) : null}
-                </>
-            }
+                    />
+                )] : []),
+            ]}
         />
     )
 
@@ -353,7 +347,7 @@ const MockInterviewScorecard = ({
                     label="Score by section"
 
 
-                    body={() => <StackV gap={4} body={scoreBreakdownBody} />}
+                    body={() => <StackV gap={4} items={[() => scoreBreakdownBody]} />}
                 />
             ) : null}
 
@@ -362,16 +356,16 @@ const MockInterviewScorecard = ({
                     label="Score by criterion"
 
 
-                    body={() => <StackV gap={4} body={attributeBreakdownBody} />}
+                    body={() => <StackV gap={4} items={[() => attributeBreakdownBody]} />}
                 />
             ) : null}
 
             {hasStrengths ? (
-                <StackV gap={3} body={strengthsBody} />
+                <StackV gap={3} items={[() => strengthsBody]} />
             ) : null}
 
             {hasGaps ? (
-                <StackV gap={3} body={gapsBody} />
+                <StackV gap={3} items={[() => gapsBody]} />
             ) : null}
 
             {/* no icon here — §5a.2: a chat-bubble needs an ASSOCIATION step to read as
@@ -395,13 +389,13 @@ const MockInterviewScorecard = ({
                 />
             ) : null}
 
-            <StackV gap={3} body={ctaSection} />
+            <StackV gap={3} items={[() => ctaSection]} />
         </>
     )
 
     return (
         <div>
-            <StackV gap={6} body={scorecardBody} />
+            <StackV gap={6} items={[() => scorecardBody]} />
         </div>
     )
 }

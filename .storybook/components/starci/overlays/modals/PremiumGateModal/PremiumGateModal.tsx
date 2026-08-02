@@ -150,9 +150,8 @@ const PremiumGateModal = ({
         }
         : undefined
 
-    const unlockItems = GATE_UNLOCKS.map((item) => (
+    const unlockItems = GATE_UNLOCKS.map((item) => () => (
         <Cluster
-            key={item.key}
             gap={3}
             align="center"
 
@@ -185,47 +184,47 @@ const PremiumGateModal = ({
         />
     ))
 
-    const skeletonPrice = (
-        <>
-            <Typography size="h4" isSkeleton classNames={["w-1/3"]} />
-            <Typography size="xs" isSkeleton classNames={["w-1/2"]} />
-        </>
-    )
+    const skeletonPrice = [
+        () => <Typography size="h4" isSkeleton classNames={["w-1/3"]} />,
+        () => <Typography size="xs" isSkeleton classNames={["w-1/2"]} />,
+    ]
 
-    const gateBody = (
-        <>
-            {/* "What unlocks" — static chrome, never skeletonised: known before
-                any price data lands, exactly like `ContentModeNav`'s own row. */}
-            <StackV gap={3} body={unlockItems} />
+    const gateBody = [
+        // "What unlocks" — static chrome, never skeletonised: known before
+        // any price data lands, exactly like `ContentModeNav`'s own row.
+        () => <StackV gap={3} items={unlockItems} />,
 
-            {/* Price + scarcity — the ONLY region `isSkeleton` reaches, same
-                `isSkeleton && !price` / `price?.discountedPriceVnd != null` split
-                `TrialConversionStrip` uses for its own price region. */}
-            {isSkeleton && !price ? (
-                <StackV gap={4} body={skeletonPrice} />
-            ) : price?.discountedPriceVnd != null ? (
-                <StackV
-                    gap={4}
-                    body={
-                        <>
-                            <PriceTagProminent
-                                discounted={price.discountedPriceVnd}
-                                original={price.originalPriceVnd}
-                                breakdown={breakdown}
+        // Price + scarcity — the ONLY region `isSkeleton` reaches, same
+        // `isSkeleton && !price` / `price?.discountedPriceVnd != null` split
+        // `TrialConversionStrip` uses for its own price region.
+        ...(isSkeleton && !price
+            ? [() => <StackV gap={4} items={skeletonPrice} />]
+            : price?.discountedPriceVnd != null
+                ? [() => (
+                    <StackV
+                        gap={4}
+                        items={[
+                            () => (
+                                <PriceTagProminent
+                                    discounted={price.discountedPriceVnd}
+                                    original={price.originalPriceVnd}
+                                    breakdown={breakdown}
 
-                            />
-                            <PhaseScarcityNote
+                                />
+                            ),
+                            () => (
+                                <PhaseScarcityNote
 
-                                currentPhase={price.currentPhase}
-                                seatsRemaining={price.seatsRemaining}
-                                nextPhasePriceVnd={price.nextPhasePriceVnd}
-                            />
-                        </>
-                    }
-                />
-            ) : null}
-        </>
-    )
+                                    currentPhase={price.currentPhase}
+                                    seatsRemaining={price.seatsRemaining}
+                                    nextPhasePriceVnd={price.nextPhasePriceVnd}
+                                />
+                            ),
+                        ]}
+                    />
+                )]
+                : []),
+    ]
 
     return (
         <div className={className}>
@@ -246,7 +245,7 @@ const PremiumGateModal = ({
 
                     />
                 }
-                body={<StackV gap={6} body={gateBody} />}
+                body={<StackV gap={6} items={gateBody} />}
             />
         </div>
     )

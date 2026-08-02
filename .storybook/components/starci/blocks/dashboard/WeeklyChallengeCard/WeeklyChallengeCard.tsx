@@ -172,27 +172,25 @@ interface ContentProps {
 
 const Content = ({ data, isSkeleton }: ContentProps) => {
     const statusRow = (
-        <StackH gap={4} justify="between" align="center" body={(
-            <>
-                {data.endsInLabel != null || isSkeleton ? (
-                    <Typography
-                        size="xs"
-                        color="muted"
-                        isSkeleton={isSkeleton}
-                        text={isSkeleton ? undefined : data.endsInLabel}
+        <StackH gap={4} justify="between" align="center" items={[
+            () => (data.endsInLabel != null || isSkeleton ? (
+                <Typography
+                    size="xs"
+                    color="muted"
+                    isSkeleton={isSkeleton}
+                    text={isSkeleton ? undefined : data.endsInLabel}
 
-                    />
-                ) : <span />}
-                {statusSlot(data, isSkeleton)}
-            </>
-        )} />
+                />
+            ) : <span />),
+            () => statusSlot(data, isSkeleton),
+        ]} />
     )
 
     return (
-        <StackV gap={4} body={(
-            <>
-                {titleText(data, isSkeleton)}
-                {statusRow}
+        <StackV gap={4} items={[
+            () => titleText(data, isSkeleton),
+            () => statusRow,
+            () => (
                 <Typography
                     size="xs"
                     color="muted"
@@ -200,17 +198,17 @@ const Content = ({ data, isSkeleton }: ContentProps) => {
                     text={isSkeleton ? undefined : `${data.passedCount} people have passed`}
 
                 />
-                {data.leaderboard.length > 0 ? (
-                    <div>
-                        <SurfaceCardList
-                            variant="nested"
-                            items={data.leaderboard.map((entry) => finisherItem(entry, isSkeleton))}
+            ),
+            ...(data.leaderboard.length > 0 ? [() => (
+                <div>
+                    <SurfaceCardList
+                        variant="nested"
+                        items={data.leaderboard.map((entry) => finisherItem(entry, isSkeleton))}
 
-                        />
-                    </div>
-                ) : null}
-            </>
-        )} />
+                    />
+                </div>
+            )] : []),
+        ]} />
     )
 }
 

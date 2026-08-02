@@ -105,7 +105,7 @@ const ContentPaywall = ({
 
     return (
         <div>
-            <StackV gap={4} align="center" body={offer} />
+            <StackV gap={4} align="center" items={[() => offer]} />
         </div>
     )
 }

@@ -248,7 +248,7 @@ const ChallengeResultPage = ({
 
             />
             {hasSelection ? (
-                <StackV gap={6} body={scoreSection} />
+                <StackV gap={6} items={[() => scoreSection]} />
             ) : null}
         </>
     )
@@ -264,11 +264,11 @@ const ChallengeResultPage = ({
                 isSkeleton={isSkeleton}
 
             />
-            <StackV gap={6} body={attemptsSection} />
+            <StackV gap={6} items={[() => attemptsSection]} />
         </>
     )
 
-    const resultBody = <StackV gap={7} body={pageSections} />
+    const resultBody = <StackV gap={7} items={[() => pageSections]} />
 
     return (
         <>

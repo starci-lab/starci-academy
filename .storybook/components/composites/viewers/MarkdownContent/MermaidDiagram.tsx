@@ -124,19 +124,21 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                                             align="center"
                                             justify="center"
                                             classNames={["h-full"]}
-                                            body={
-                                                <>
+                                            items={[
+                                                () => (
                                                     <div className="flex w-full flex-1 items-center justify-center overflow-auto">
                                                         <div
                                                             className="[&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full"
                                                             dangerouslySetInnerHTML={{ __html: data }}
                                                         />
                                                     </div>
+                                                ),
+                                                () => (
                                                     <figcaption className="text-center text-sm italic text-muted">
                                                         {figureCaption}
                                                     </figcaption>
-                                                </>
-                                            }
+                                                ),
+                                            ]}
                                         />
                                     </Modal.Body>
                                 </Modal.Dialog>

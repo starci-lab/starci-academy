@@ -143,22 +143,22 @@ const Base = ({
                                     <StackV
                                         gap={2}
                                         pattern="title-subtitle"
-                                        body={
-                                            <>
+                                        items={[
+                                            () => (
                                                 <Typography
                                                     weight="bold"
 
                                                     text={title}
                                                 />
-                                                {description != null ? (
-                                                    <Typography size="sm"
-                                                        color="muted"
+                                            ),
+                                            ...(description != null ? [() => (
+                                                <Typography size="sm"
+                                                    color="muted"
 
-                                                        text={description}
-                                                    />
-                                                ) : null}
-                                            </>
-                                        }
+                                                    text={description}
+                                                />
+                                            )] : []),
+                                        ]}
                                     />
                                 </div>
                             </Modal.Header>

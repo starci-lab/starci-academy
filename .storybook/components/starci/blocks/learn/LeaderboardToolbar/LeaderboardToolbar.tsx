@@ -66,27 +66,29 @@ const LeaderboardToolbar = ({
         align="center"
         classNames={classNames}
 
-        body={
-            <>
+        items={[
+            () => (
                 <Typography
                     size="sm"
                     weight="medium"
                     text={`Ranked by ${categoryLabel}`}
 
                 />
-                {/* no icon here — §5a.2: a clock needs an ASSOCIATION step to read as "time"
-                    (not a universal symbol like ✓/🔒), and the text already carries the fact. */}
-                {updatedAt != null ? (
-                    <Typography
-                        size="xs"
-                        color="muted"
-                        text={formatUpdatedAt(updatedAt)}
+            ),
+            // no icon here — §5a.2: a clock needs an ASSOCIATION step to read as "time"
+            // (not a universal symbol like ✓/🔒), and the text already carries the fact.
+            ...(updatedAt != null ? [() => (
+                <Typography
+                    size="xs"
+                    color="muted"
+                    text={formatUpdatedAt(updatedAt)}
 
-                    />
-                ) : null}
-                {/* Pushes the refresh button to the row's trailing edge without a second
-                    nested track — same spacer idiom `WorkSessionHeader` already uses. */}
-                <span aria-hidden className="flex-1" />
+                />
+            )] : []),
+            // Pushes the refresh button to the row's trailing edge without a second
+            // nested track — same spacer idiom `WorkSessionHeader` already uses.
+            () => <span aria-hidden className="flex-1" />,
+            () => (
                 <Button
                     label={refreshLabel}
                     variant="secondary"
@@ -95,8 +97,8 @@ const LeaderboardToolbar = ({
                     isPending={isRefreshing}
                     onPress={onRefresh}
                 />
-            </>
-        }
+            ),
+        ]}
     />
 )
 

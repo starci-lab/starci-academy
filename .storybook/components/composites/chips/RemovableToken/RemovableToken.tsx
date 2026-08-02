@@ -93,26 +93,24 @@ export const RemovableToken = ({
         <StackH
             gap={3}
             classNames={["shrink-0"]}
-            body={
-                <>
-                    {onEdit ? (
-                        <Button variant="tertiary" size="sm" isDisabled={isDisabled} onPress={onEdit} prefixIcon={XIcon} label={editLabel} />
-                    ) : null}
-                    {onRemove ? (
-                        // Compact chip-scale close × (NOT the button-scale edit
-                        // affordance above) — a real <button> for a11y.
-                        <button
-                            type="button"
-                            aria-label={removeLabel}
-                            disabled={isDisabled}
-                            onClick={onRemove}
-                            className="inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-full text-muted outline-none transition hover:bg-default hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed [&_svg]:size-4"
-                        >
-                            <XIcon aria-hidden focusable="false" />
-                        </button>
-                    ) : null}
-                </>
-            }
+            items={[
+                ...(onEdit ? [() => (
+                    <Button variant="tertiary" size="sm" isDisabled={isDisabled} onPress={onEdit} prefixIcon={XIcon} label={editLabel} />
+                )] : []),
+                ...(onRemove ? [() => (
+                    // Compact chip-scale close × (NOT the button-scale edit
+                    // affordance above) — a real <button> for a11y.
+                    <button
+                        type="button"
+                        aria-label={removeLabel}
+                        disabled={isDisabled}
+                        onClick={onRemove}
+                        className="inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-full text-muted outline-none transition hover:bg-default hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed [&_svg]:size-4"
+                    >
+                        <XIcon aria-hidden focusable="false" />
+                    </button>
+                )] : []),
+            ]}
         />
     ) : null
 
@@ -131,17 +129,17 @@ export const RemovableToken = ({
             <StackH
                 gap={3}
                 classNames={["min-w-0"]}
-                body={
-                    <>
-                        {Icon ? (
-                            // COMPOSITE owns the size (§4) — the atom's own scale, not the
-                            // caller's. A component reference can still be called during
-                            // `isSkeleton` (it's static chrome, not loaded data), so it
-                            // always renders — no shimmer needed for it either way.
-                            <span aria-hidden className="inline-flex shrink-0 [&_svg]:size-4">
-                                <Icon />
-                            </span>
-                        ) : null}
+                items={[
+                    ...(Icon ? [() => (
+                        // COMPOSITE owns the size (§4) — the atom's own scale, not the
+                        // caller's. A component reference can still be called during
+                        // `isSkeleton` (it's static chrome, not loaded data), so it
+                        // always renders — no shimmer needed for it either way.
+                        <span aria-hidden className="inline-flex shrink-0 [&_svg]:size-4">
+                            <Icon />
+                        </span>
+                    )] : []),
+                    () => (
                         <Typography
                             size="sm"
                             weight="medium"
@@ -150,8 +148,8 @@ export const RemovableToken = ({
                             classNames={isSkeleton ? ["w-1/3"] : undefined}
                             text={label}
                         />
-                    </>
-                }
+                    ),
+                ]}
             />
             {trailing}
         </div>

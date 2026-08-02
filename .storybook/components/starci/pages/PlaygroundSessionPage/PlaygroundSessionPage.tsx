@@ -132,16 +132,18 @@ const PlaygroundSessionPage = ({
             className="overflow-y-auto"
             classNames={["min-w-0", "flex-1"]}
 
-            body={
-                <PlaygroundStepGuide
+            items={[
+                () => (
+                    <PlaygroundStepGuide
 
-                    step={step}
-                    verifyState={verifyState}
-                    onVerify={onVerify}
-                    onLeaveComplete={onLeaveGuideComplete}
+                        step={step}
+                        verifyState={verifyState}
+                        onVerify={onVerify}
+                        onLeaveComplete={onLeaveGuideComplete}
 
-                />
-            }
+                    />
+                ),
+            ]}
         />
     )
 
@@ -152,14 +154,16 @@ const PlaygroundSessionPage = ({
             className="overflow-y-auto @app-xl:w-[24rem]"
             classNames={["w-full", "shrink-0"]}
 
-            body={
-                <PlaygroundResourcePanel
+            items={[
+                () => (
+                    <PlaygroundResourcePanel
 
-                    connection={resourcePanelConnection}
-                    resources={resources}
+                        connection={resourcePanelConnection}
+                        resources={resources}
 
-                />
-            }
+                    />
+                ),
+            ]}
         />
     )
 
@@ -174,30 +178,30 @@ const PlaygroundSessionPage = ({
                 className="overflow-hidden"
                 classNames={["h-full", "min-h-0"]}
 
-                body={
-                    <>
-                        {guidePane}
-                        {resourcePane}
-                    </>
-                }
+                items={[
+                    () => guidePane,
+                    () => resourcePane,
+                ]}
             />
             <StackV
                 gap={1}
                 className="absolute inset-x-0 bottom-0 z-10"
 
-                body={
-                    <PlaygroundConnectSheet
+                items={[
+                    () => (
+                        <PlaygroundConnectSheet
 
-                        connection={connection}
-                        latencyMs={latencyMs}
-                        device={device}
-                        agentLog={agentLog}
-                        onReconnect={onReconnect}
-                        open={isConnectSheetOpen}
-                        onOpenChange={onConnectSheetOpenChange}
+                            connection={connection}
+                            latencyMs={latencyMs}
+                            device={device}
+                            agentLog={agentLog}
+                            onReconnect={onReconnect}
+                            open={isConnectSheetOpen}
+                            onOpenChange={onConnectSheetOpenChange}
 
-                    />
-                }
+                        />
+                    ),
+                ]}
             />
         </>
     )
@@ -223,12 +227,12 @@ const PlaygroundSessionPage = ({
                 className="relative"
                 classNames={["min-h-0", "flex-1"]}
 
-                body={workspaceRegion}
+                items={[() => workspaceRegion]}
             />
         </>
     )
 
-    return <StackV gap={1} className="h-[calc(100vh-4rem)]" body={sessionSections} />
+    return <StackV gap={1} className="h-[calc(100vh-4rem)]" items={[() => sessionSections]} />
 }
 
 export { PlaygroundSessionPage }

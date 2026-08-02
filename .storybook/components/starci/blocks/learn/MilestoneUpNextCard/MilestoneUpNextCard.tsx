@@ -65,11 +65,11 @@ const MilestoneUpNextCard = ({
             <StackV
                 gap={4}
 
-                body={
-                    <>
-                        {/* Back INSIDE the card face (not `SurfaceCard.label`,
-                            which sits OUTSIDE/above it) — a plain atom call, not raw CSS, so no
-                            shape-tier violation either way; this is a visual placement call. */}
+                items={[
+                    // Back INSIDE the card face (not `SurfaceCard.label`,
+                    // which sits OUTSIDE/above it) — a plain atom call, not raw CSS, so no
+                    // shape-tier violation either way; this is a visual placement call.
+                    () => (
                         <Typography
                             size="xs"
                             color="muted"
@@ -78,11 +78,13 @@ const MilestoneUpNextCard = ({
                             text={eyebrow}
 
                         />
-                        {/* Real `UpNextCard` leaves `type` unset on its title
-                            Typography, which defaults to HeroUI's `type="body"` = `text-base`
-                            (verify `typography.css` `.typography--body`). `weight="semibold"`
-                            folds to `"medium"` at body
-                            scale, not `"bold"`. */}
+                    ),
+                    // Real `UpNextCard` leaves `type` unset on its title
+                    // Typography, which defaults to HeroUI's `type="body"` = `text-base`
+                    // (verify `typography.css` `.typography--body`). `weight="semibold"`
+                    // folds to `"medium"` at body
+                    // scale, not `"bold"`.
+                    () => (
                         <Typography
                             size="base"
                             weight="medium"
@@ -90,6 +92,8 @@ const MilestoneUpNextCard = ({
                             text={title}
 
                         />
+                    ),
+                    () => (
                         <Typography
                             size="sm"
                             color="muted"
@@ -97,6 +101,8 @@ const MilestoneUpNextCard = ({
                             text={description}
 
                         />
+                    ),
+                    () => (
                         <Button
                             isSkeleton={isSkeleton}
                             variant="primary"
@@ -108,8 +114,8 @@ const MilestoneUpNextCard = ({
                             classNames={["w-fit", "shrink-0"]}
 
                         />
-                    </>
-                }
+                    ),
+                ]}
             />
         )}
     />

@@ -163,12 +163,11 @@ const LessonVideoModal = ({
     video,
     isLoading = false,
 }: LessonVideoModalProps) => {
-    const playerAndLink = (
-        <>
-            <PlayerGap />
-            {isLoading ? (
-                <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
-            ) : (
+    const playerAndLink = [
+        () => <PlayerGap />,
+        ...(isLoading
+            ? [() => <Typography size="sm" isSkeleton classNames={["w-3/4"]} />]
+            : [() => (
                 <Typography
                     size="sm"
                     isLink
@@ -176,33 +175,30 @@ const LessonVideoModal = ({
                     text={video?.url ?? ""}
 
                 />
-            )}
-        </>
-    )
+            )]),
+    ]
 
-    const descriptionAndCaption = (
-        <>
-            {video?.description?.trim() ? (
-                <MarkdownContent
-                    source={video.description}
-                    measure="compact"
+    const descriptionAndCaption = [
+        ...(video?.description?.trim() ? [() => (
+            <MarkdownContent
+                source={video.description}
+                measure="compact"
 
 
-                />
-            ) : null}
-            {video?.caption?.trim() ? (
-                <MarkdownContent
-                    source={video.caption}
-                    measure="compact"
+            />
+        )] : []),
+        ...(video?.caption?.trim() ? [() => (
+            <MarkdownContent
+                source={video.caption}
+                measure="compact"
 
 
-                />
-            ) : null}
-        </>
-    )
+            />
+        )] : []),
+    ]
 
-    const metaAndPlayer = (
-        <>
+    const metaAndPlayer = [
+        () => (
             <Cluster
                 gap={3}
                 justify="center"
@@ -252,20 +248,20 @@ const LessonVideoModal = ({
                     },
                 ]}
             />
-            <StackV gap={4} align="center" body={playerAndLink} />
-            {!isLoading && (video?.description?.trim() || video?.caption?.trim()) ? (
-                // ⚠️ Source renders description/caption `text-sm text-muted` (caption also
-                // `italic`). `MarkdownContent`'s `className` only reaches its ARTICLE
-                // WRAPPER — every child element (`p`, `em`…) hardcodes `text-foreground`
-                // inside the viewer itself (§13z: the viewer owns its own tree, out of a
-                // caller's reach), so a wrapper-level color/italic class here would be dead
-                // code. Left at the composite's default tone rather than shipping a
-                // className that silently does nothing — a real, marked gap, not this
-                // port's to close (`MarkdownContent` is composite tier, out of scope here).
-                <StackV gap={4} body={descriptionAndCaption} />
-            ) : null}
-        </>
-    )
+        ),
+        () => <StackV gap={4} align="center" items={playerAndLink} />,
+        // ⚠️ Source renders description/caption `text-sm text-muted` (caption also
+        // `italic`). `MarkdownContent`'s `className` only reaches its ARTICLE
+        // WRAPPER — every child element (`p`, `em`…) hardcodes `text-foreground`
+        // inside the viewer itself (§13z: the viewer owns its own tree, out of a
+        // caller's reach), so a wrapper-level color/italic class here would be dead
+        // code. Left at the composite's default tone rather than shipping a
+        // className that silently does nothing — a real, marked gap, not this
+        // port's to close (`MarkdownContent` is composite tier, out of scope here).
+        ...(!isLoading && (video?.description?.trim() || video?.caption?.trim()) ? [() => (
+            <StackV gap={4} items={descriptionAndCaption} />
+        )] : []),
+    ]
 
     return (
         <div>
@@ -285,7 +281,7 @@ const LessonVideoModal = ({
                         video?.title ?? ""
                     )
                 }
-                body={<StackV gap={6} body={metaAndPlayer} />}
+                body={<StackV gap={6} items={metaAndPlayer} />}
             />
         </div>
     )

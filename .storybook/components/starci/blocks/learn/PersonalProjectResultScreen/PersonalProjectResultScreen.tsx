@@ -69,8 +69,8 @@ const MilestoneUpNextCard = ({
             gap={1}
             classNames={["min-w-0"]}
 
-            body={
-                <>
+            items={[
+                () => (
                     <Typography
                         size="xs"
                         color="muted"
@@ -78,6 +78,8 @@ const MilestoneUpNextCard = ({
                         text={NEXT_TASK_EYEBROW}
 
                     />
+                ),
+                () => (
                     <Typography
                         size="base"
                         weight="semibold"
@@ -86,8 +88,8 @@ const MilestoneUpNextCard = ({
                         text={task.title}
 
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
@@ -103,9 +105,9 @@ const MilestoneUpNextCard = ({
                     align="center"
                     wrap
 
-                    body={
-                        <>
-                            {titleColumn}
+                    items={[
+                        () => titleColumn,
+                        () => (
                             <Button
                                 isSkeleton={isSkeleton}
                                 variant="primary"
@@ -116,8 +118,8 @@ const MilestoneUpNextCard = ({
                                 onPress={onGoToNextTask}
                                 classNames={["w-fit", "shrink-0"]}
                             />
-                        </>
-                    }
+                        ),
+                    ]}
                 />
             )}
         />
@@ -247,8 +249,8 @@ const PersonalProjectResultScreen = ({
         <StackV
             gap={6}
 
-            body={
-                <>
+            items={[
+                () => (
                     <SubmissionScoreCard
 
                         label={scoreLabel}
@@ -264,6 +266,8 @@ const PersonalProjectResultScreen = ({
                         isSkeleton={isSkeleton}
 
                     />
+                ),
+                () => (
                     <SubmissionFindingsList
 
                         label={findingsLabel}
@@ -272,27 +276,27 @@ const PersonalProjectResultScreen = ({
                         isSkeleton={isSkeleton}
 
                     />
-                    {/* Nothing left to fix on a passing attempt — see file header. */}
-                    {!isPassing ? (
-                        <ContentRelatedList
+                ),
+                // Nothing left to fix on a passing attempt — see file header.
+                ...(!isPassing ? [() => (
+                    <ContentRelatedList
 
-                            items={relatedItems}
-                            label={relatedLabel}
-                            isSkeleton={isSkeleton}
+                        items={relatedItems}
+                        label={relatedLabel}
+                        isSkeleton={isSkeleton}
 
-                        />
-                    ) : null}
-                    {/* Forward handoff to the next milestone task — only once this one passed. */}
-                    {showNextTaskHandoff ? (
-                        <MilestoneUpNextCard
-                            task={nextTask as PersonalProjectNextTask}
-                            onGoToNextTask={onGoToNextTask}
-                            isSkeleton={isSkeleton}
+                    />
+                )] : []),
+                // Forward handoff to the next milestone task — only once this one passed.
+                ...(showNextTaskHandoff ? [() => (
+                    <MilestoneUpNextCard
+                        task={nextTask as PersonalProjectNextTask}
+                        onGoToNextTask={onGoToNextTask}
+                        isSkeleton={isSkeleton}
 
-                        />
-                    ) : null}
-                </>
-            }
+                    />
+                )] : []),
+            ]}
         />
     ) : null
 
@@ -300,8 +304,8 @@ const PersonalProjectResultScreen = ({
         <StackV
             gap={6}
 
-            body={
-                <>
+            items={[
+                () => (
                     <SubmissionResultHeader
 
                         backLabel={backLabel}
@@ -311,6 +315,8 @@ const PersonalProjectResultScreen = ({
                         isSkeleton={isSkeleton}
 
                     />
+                ),
+                () => (
                     <SubmissionAttemptSelector
 
                         attempts={attempts}
@@ -322,9 +328,9 @@ const PersonalProjectResultScreen = ({
                         isSkeleton={isSkeleton}
 
                     />
-                    {scoreCluster}
-                </>
-            }
+                ),
+                () => scoreCluster,
+            ]}
         />
     )
 

@@ -84,13 +84,13 @@ export const CourseProgressBar = ({
         <StackV
             gap={3}
             classNames={classNames}
-            body={
-                <>
-                    {/* ATOM GAP: equal-width multi-lane track has no atom counterpart (see
+            items={[
+                    /* ATOM GAP: equal-width multi-lane track has no atom counterpart (see
                         file header note), so it stays a hand-drawn real element — the SAME
                         track renders in both states; isSkeleton hides the lanes for a flat
                         neutral fill instead of reaching for a vendor Skeleton or hand-rolling
-                        a bespoke `animate-pulse` shimmer (COMPOSITE-10). */}
+                        a bespoke `animate-pulse` shimmer (COMPOSITE-10). */
+                    () => (
                     <div
                         role="img"
                         aria-label={ariaLabel}
@@ -110,7 +110,8 @@ export const CourseProgressBar = ({
                                 </div>
                             ))}
                     </div>
-                    {!hideLegend ? (
+                    ),
+                    ...(!hideLegend ? [() => (
                         <Legend
                             isSkeleton={isSkeleton}
                             items={isSkeleton ? undefined : lanes.map((lane) => ({
@@ -120,9 +121,8 @@ export const CourseProgressBar = ({
                                 suffix: ` · ${lane.completed}`,
                             }))}
                         />
-                    ) : null}
-                </>
-            }
+                    )] : []),
+            ]}
         />
     )
 }

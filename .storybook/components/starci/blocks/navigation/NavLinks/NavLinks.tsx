@@ -45,9 +45,8 @@ const NavLinks = ({ items, onNavigate, className }: NavLinksProps) => (
             justify="center"
             className={cn("hidden @app-md:flex", className)}
 
-            body={items.map((item) => (
+            items={items.map((item) => () => (
                 <HeroUILink
-                    key={item.path}
                     onPress={() => onNavigate(item.path)}
                     aria-current={item.isActive ? "page" : undefined}
 

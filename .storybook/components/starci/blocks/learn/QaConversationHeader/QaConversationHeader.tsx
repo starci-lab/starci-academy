@@ -74,18 +74,14 @@ const QaConversationHeader = ({
             gap={2}
             align="center"
 
-            body={
-                isSkeleton ? (
-                    <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/3"]} />
-                ) : (
-                    <>
-                        <Typography size="sm" weight="medium" text={asker.displayName} />
-                        {isFounderAsker ? (
-                            <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-                        ) : null}
-                    </>
-                )
-            }
+            items={isSkeleton
+                ? [() => <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/3"]} />]
+                : [
+                    () => <Typography size="sm" weight="medium" text={asker.displayName} />,
+                    ...(isFounderAsker ? [() => (
+                        <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+                    )] : []),
+                ]}
         />
     )
 
@@ -94,16 +90,14 @@ const QaConversationHeader = ({
             gap={1}
             classNames={["min-w-0", "flex-1"]}
 
-            body={
-                <>
-                    {nameRow}
-                    {isSkeleton ? (
-                        <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} />
-                    ) : (
-                        <Typography size="xs" color="muted" text={replyLabel(replyCount)} />
-                    )}
-                </>
-            }
+            items={[
+                () => nameRow,
+                () => (isSkeleton ? (
+                    <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} />
+                ) : (
+                    <Typography size="xs" color="muted" text={replyLabel(replyCount)} />
+                )),
+            ]}
         />
     )
 
@@ -155,7 +149,7 @@ const QaConversationHeader = ({
 
     return (
         <div>
-            <StackH gap={4} align="center" body={headerRow} />
+            <StackH gap={4} align="center" items={[() => headerRow]} />
         </div>
     )
 }

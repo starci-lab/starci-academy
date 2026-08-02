@@ -177,5 +177,5 @@ export const SegmentBar = ({
             ) : null}
         </>
     )
-    return <StackV gap={3} classNames={classNames} body={barContent} />
+    return <StackV gap={3} classNames={classNames} items={[() => barContent]} />
 }

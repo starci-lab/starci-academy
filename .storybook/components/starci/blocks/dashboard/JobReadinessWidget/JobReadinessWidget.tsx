@@ -92,12 +92,10 @@ const pillarMeter = (label: string, score: number | null, isSkeleton: boolean) =
         <StackV
             gap={3}
 
-            body={
-                <>
-                    <Typography size="xs" color="muted" isSkeleton />
-                    <HeroSkeleton className="h-1 w-full rounded-full" />
-                </>
-            }
+            items={[
+                () => <Typography size="xs" color="muted" isSkeleton />,
+                () => <HeroSkeleton className="h-1 w-full rounded-full" />,
+            ]}
         />
     ) : (
         <ProgressMeter
@@ -125,17 +123,17 @@ const Content = ({ codingPercentile, track, isSkeleton }: ContentProps) => {
                 wrap
                 align="center"
 
-                body={
-                    <>
+                items={[
+                    () => (
                         <StatPair
                             value={isSkeleton ? undefined : String(track.depthScore ?? 0)}
                             label={isSkeleton ? undefined : track.courseTitle}
                             isSkeleton={isSkeleton}
 
                         />
-                        <EnumChip value={track.band} map={BAND_MAP} isSkeleton={isSkeleton} />
-                    </>
-                }
+                    ),
+                    () => <EnumChip value={track.band} map={BAND_MAP} isSkeleton={isSkeleton} />,
+                ]}
             />
             {!isSkeleton && codingPercentile != null ? (
                 <Typography
@@ -161,7 +159,7 @@ const Content = ({ codingPercentile, track, isSkeleton }: ContentProps) => {
             ) : null}
         </>
     )
-    return <StackV gap={4} body={trackSummary} />
+    return <StackV gap={4} items={[() => trackSummary]} />
 }
 
 /** Fixed-shape placeholder rendered while {@link JobReadinessWidgetProps.isLoading} — no real track exists yet. */

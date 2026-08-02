@@ -101,59 +101,57 @@ const ModuleHeader = ({
             align="center"
             wrap
 
-            body={
-                <>
-                    {isSkeleton ? (
-                        <EnumChip
-                            value={CourseContentTier.Foundation}
-                            map={TIER_MAP}
-                            isSkeleton
+            items={[
+                () => (isSkeleton ? (
+                    <EnumChip
+                        value={CourseContentTier.Foundation}
+                        map={TIER_MAP}
+                        isSkeleton
 
+                    />
+                ) : tier != null ? (
+                    <EnumChip value={tier} map={TIER_MAP} />
+                ) : null),
+                () => (isSkeleton ? (
+                    <span>
+                        <Chip isSkeleton icon={StackIcon} />
+                    </span>
+                ) : hasLessons ? (
+                    <span>
+                        <HighlightChip
+                            icon={<StackIcon aria-hidden focusable="false" className="size-4" />}
+                            value={lessonCount}
+                            label="lessons"
                         />
-                    ) : tier != null ? (
-                        <EnumChip value={tier} map={TIER_MAP} />
-                    ) : null}
-                    {isSkeleton ? (
-                        <span>
-                            <Chip isSkeleton icon={StackIcon} />
-                        </span>
-                    ) : hasLessons ? (
-                        <span>
-                            <HighlightChip
-                                icon={<StackIcon aria-hidden focusable="false" className="size-4" />}
-                                value={lessonCount}
-                                label="lessons"
-                            />
-                        </span>
-                    ) : null}
-                    {isSkeleton ? (
-                        <span>
-                            <Chip isSkeleton icon={ClockIcon} />
-                        </span>
-                    ) : hasMinutes ? (
-                        <span>
-                            <HighlightChip
-                                icon={<ClockIcon aria-hidden focusable="false" className="size-4" />}
-                                value={minutesTotal}
-                                label="minutes"
-                            />
-                        </span>
-                    ) : null}
-                    {isSkeleton ? (
-                        <span>
-                            <Chip isSkeleton icon={PuzzlePieceIcon} />
-                        </span>
-                    ) : hasChallenges ? (
-                        <span>
-                            <HighlightChip
-                                icon={<PuzzlePieceIcon aria-hidden focusable="false" className="size-4" />}
-                                value={challengeCount}
-                                label="challenges"
-                            />
-                        </span>
-                    ) : null}
-                </>
-            }
+                    </span>
+                ) : null),
+                () => (isSkeleton ? (
+                    <span>
+                        <Chip isSkeleton icon={ClockIcon} />
+                    </span>
+                ) : hasMinutes ? (
+                    <span>
+                        <HighlightChip
+                            icon={<ClockIcon aria-hidden focusable="false" className="size-4" />}
+                            value={minutesTotal}
+                            label="minutes"
+                        />
+                    </span>
+                ) : null),
+                () => (isSkeleton ? (
+                    <span>
+                        <Chip isSkeleton icon={PuzzlePieceIcon} />
+                    </span>
+                ) : hasChallenges ? (
+                    <span>
+                        <HighlightChip
+                            icon={<PuzzlePieceIcon aria-hidden focusable="false" className="size-4" />}
+                            value={challengeCount}
+                            label="challenges"
+                        />
+                    </span>
+                ) : null),
+            ]}
         />
     ) : undefined
 

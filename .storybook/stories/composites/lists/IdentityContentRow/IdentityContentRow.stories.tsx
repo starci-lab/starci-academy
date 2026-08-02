@@ -38,8 +38,8 @@ const Byline = ({ isSkeleton }: { isSkeleton?: boolean }) => (
         gap={2}
         align="center"
 
-        body={
-            <>
+        items={[
+            () => (
                 <Typography
                     size="sm"
                     weight="medium"
@@ -47,9 +47,11 @@ const Byline = ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     isSkeleton={isSkeleton}
                     classNames={isSkeleton ? ["w-20"] : undefined}
                 />
-                {!isSkeleton ? (
-                    <SealCheckIcon data-tier="fixture" weight="fill" aria-label="Founder" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-                ) : null}
+            ),
+            ...(!isSkeleton ? [
+                () => <SealCheckIcon data-tier="fixture" weight="fill" aria-label="Founder" className="size-3.5 shrink-0 text-accent-soft-foreground" />,
+            ] : []),
+            () => (
                 <Typography
                     size="xs"
                     color="muted"
@@ -57,8 +59,8 @@ const Byline = ({ isSkeleton }: { isSkeleton?: boolean }) => (
                     isSkeleton={isSkeleton}
                     classNames={isSkeleton ? ["w-16"] : undefined}
                 />
-            </>
-        }
+            ),
+        ]}
     />
 )
 

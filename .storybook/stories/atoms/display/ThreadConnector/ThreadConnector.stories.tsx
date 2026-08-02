@@ -44,10 +44,10 @@ export const Default: Story = {
     <Avatar name="You" seed="viewer-1" size="sm" />
 </>} />`,
                         render: (
-                            <StackH gap={2} align="stretch" body={<>
-                                <ThreadConnector />
-                                <Avatar name="You" seed="viewer-1" size="sm" />
-                            </>} />
+                            <StackH gap={2} align="stretch" items={[
+                                () => <ThreadConnector />,
+                                () => <Avatar name="You" seed="viewer-1" size="sm" />,
+                            ]} />
                         ),
                     },
                 ]}

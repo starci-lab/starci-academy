@@ -98,20 +98,20 @@ const FlashcardStudyCard = ({
             wrap
             align="center"
 
-            body={
-                <>
-                    {levelLabel != null ? (
-                        <Chip tone="default" text={levelLabel} />
-                    ) : null}
-                    {tagItems.length > 0 ? (
-                        <ChipGroup
-                            items={tagItems}
+            items={[
+                ...(levelLabel != null ? [() => <Chip tone="default" text={levelLabel} />] : []),
+                ...(tagItems.length > 0
+                    ? [
+                        () => (
+                            <ChipGroup
+                                items={tagItems}
 
 
-                        />
-                    ) : null}
-                </>
-            }
+                            />
+                        ),
+                    ]
+                    : []),
+            ]}
         />
     ) : null
 
@@ -123,31 +123,29 @@ const FlashcardStudyCard = ({
         <StackV
             gap={3}
 
-            body={
-                <>
+            items={[
+                () => (
                     <StackH
                         gap={3}
                         align="center"
 
-                        body={
-                            <>
-                                <LockIcon aria-hidden focusable="false" weight="bold" className="size-5 shrink-0 text-muted" />
+                        items={[
+                            () => <LockIcon aria-hidden focusable="false" weight="bold" className="size-5 shrink-0 text-muted" />,
+                            () => (
                                 <StackV
                                     gap={1}
 
-                                    body={
-                                        <>
-                                            <Typography size="sm" weight="medium" text="Answer locked" />
-                                            <Typography size="xs" color="muted" text="Upgrade to Premium to see this card's answer and explanation" />
-                                        </>
-                                    }
+                                    items={[
+                                        () => <Typography size="sm" weight="medium" text="Answer locked" />,
+                                        () => <Typography size="xs" color="muted" text="Upgrade to Premium to see this card's answer and explanation" />,
+                                    ]}
                                 />
-                            </>
-                        }
+                            ),
+                        ]}
                     />
-                    <Button label="Unlock this card" variant="primary" onPress={onUnlock} />
-                </>
-            }
+                ),
+                () => <Button label="Unlock this card" variant="primary" onPress={onUnlock} />,
+            ]}
         />
     )
 
@@ -155,40 +153,46 @@ const FlashcardStudyCard = ({
         <StackV
             gap={6}
 
-            body={
-                <>
+            items={[
+                () => (
                     <StackV
                         gap={3}
 
-                        body={
-                            <>
-                                <Typography size="xs" color="muted" text="Answer" />
+                        items={[
+                            () => <Typography size="xs" color="muted" text="Answer" />,
+                            () => (
                                 <MarkdownContent
                                     source={answer ?? ""}
                                     measure="compact"
 
                                 />
-                            </>
-                        }
+                            ),
+                        ]}
                     />
-                    {explanation != null ? (
-                        <StackV
-                            gap={3}
+                ),
+                ...(explanation != null
+                    ? [
+                        () => (
+                            <StackV
+                                gap={3}
 
-                            body={
-                                <>
-                                    <Typography size="xs" color="muted" text="Explanation" />
-                                    <MarkdownContent
-                                        source={explanation}
-                                        measure="compact"
+                                items={[
+                                    () => <Typography size="xs" color="muted" text="Explanation" />,
+                                    () => (
+                                        <MarkdownContent
+                                            source={explanation}
+                                            measure="compact"
 
-                                    />
-                                </>
-                            }
-                        />
-                    ) : null}
-                    {/* The recall grade, not the run's right/wrong — same shared block
-                        and same reasoning as `QuizRecapList`'s use of it. */}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]
+                    : []),
+                // The recall grade, not the run's right/wrong — same shared block
+                // and same reasoning as `QuizRecapList`'s use of it.
+                () => (
                     <RatingBar
                         options={ratingOptions}
                         onRate={onRate}
@@ -197,8 +201,8 @@ const FlashcardStudyCard = ({
 
 
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
@@ -209,8 +213,8 @@ const FlashcardStudyCard = ({
             justify="between"
             align="center"
 
-            body={
-                <>
+            items={[
+                () => (
                     <Button
                         isIconOnly
                         prefixIcon={CaretLeftIcon}
@@ -220,9 +224,9 @@ const FlashcardStudyCard = ({
                         onPress={onPrev}
 
                     />
-                    {!revealed ? (
-                        <Button label="Show answer" variant="primary" onPress={onReveal} />
-                    ) : null}
+                ),
+                ...(!revealed ? [() => <Button label="Show answer" variant="primary" onPress={onReveal} />] : []),
+                () => (
                     <Button
                         isIconOnly
                         prefixIcon={CaretRightIcon}
@@ -232,8 +236,8 @@ const FlashcardStudyCard = ({
                         onPress={onNext}
 
                     />
-                </>
-            }
+                ),
+            ]}
         />
     )
 
@@ -255,7 +259,7 @@ const FlashcardStudyCard = ({
             <SurfaceCard
                 isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={6} body={cardBody} />}
+                body={() => <StackV gap={6} items={[() => cardBody]} />}
             />
         </div>
     )

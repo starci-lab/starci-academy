@@ -104,21 +104,21 @@ export const Legend = ({
                     <StackH
                         key={index}
                         gap={3}
-                        body={
-                            <>
-                                {/* ATOM GAP: no swatch/dot atom exists yet, so the dot stays a
+                        items={[
+                                    /* ATOM GAP: no swatch/dot atom exists yet, so the dot stays a
                                     real plain span in both states — a neutral flat fill (no
                                     hand-drawn `animate-pulse`, COMPOSITE-10) instead of reaching
                                     for a vendor Skeleton (the same span shape the loaded entry
-                                    below draws, just without a real color). */}
+                                    below draws, just without a real color). */
+                                () => (
                                 <span
                                     aria-hidden
                                     className="size-2.5 shrink-0 rounded-full bg-default"
 
                                 />
-                                <Typography size="xs" isSkeleton />
-                            </>
-                        }
+                                ),
+                                () => <Typography size="xs" isSkeleton />,
+                            ]}
                     />
                 ))
                 : (items ?? []).map((item) => {
@@ -127,16 +127,16 @@ export const Legend = ({
                         <StackH
                             key={item.key}
                             gap={3}
-                            body={
-                                <>
+                            items={[
+                                () => (
                                     <span
                                         aria-hidden
                                         style={dot.style}
                                         className={cn("size-2.5 shrink-0 rounded-full", dot.className)}
                                     />
-                                    <Typography size="xs" color="muted" text={`${item.label}${item.suffix ?? ""}`} />
-                                </>
-                            }
+                                ),
+                                () => <Typography size="xs" color="muted" text={`${item.label}${item.suffix ?? ""}`} />,
+                            ]}
                         />
                     )
                 })}

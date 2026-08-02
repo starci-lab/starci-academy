@@ -54,7 +54,7 @@ const HeadhuntingCompaniesLayout = ({
     )
 
     return (
-        <StackH gap={6} align="start" className={className} body={navAndContent} />
+        <StackH gap={6} align="start" className={className} items={[() => navAndContent]} />
     )
 }
 

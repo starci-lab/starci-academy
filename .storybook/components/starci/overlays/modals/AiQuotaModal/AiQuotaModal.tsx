@@ -131,19 +131,19 @@ const AiQuotaModal = ({
     // Typography node, so a second element beside it (the chip) has to compose its own
     // wrapper — which then owns its own `pr-8` for the close button, per ModalShell's
     // caller-built-header contract.
-    const titleAndTierChip = (
-        <>
+    const titleAndTierChip = [
+        () => (
             <Typography
                 size="base"
                 weight="bold"
                 text="AI usage"
 
             />
-            {tier != null ? (
-                <Chip tone="accent" text={TIER_LABEL[tier]} />
-            ) : null}
-        </>
-    )
+        ),
+        ...(tier != null ? [() => (
+            <Chip tone="accent" text={TIER_LABEL[tier]} />
+        )] : []),
+    ]
 
     const header = (
         <StackH
@@ -151,7 +151,7 @@ const AiQuotaModal = ({
             align="center"
             className="pr-8"
 
-            body={titleAndTierChip}
+            items={titleAndTierChip}
         />
     )
 
@@ -183,8 +183,8 @@ const AiQuotaModal = ({
             />
         )
 
-    const tabsAndPanel = (
-        <>
+    const tabsAndPanel = [
+        () => (
             <div>
                 <Tabs
                     items={TAB_ITEMS}
@@ -193,9 +193,9 @@ const AiQuotaModal = ({
                     ariaLabel="AI usage"
                 />
             </div>
-            {panel}
-        </>
-    )
+        ),
+        () => panel,
+    ]
 
     return (
         <div>
@@ -214,7 +214,7 @@ const AiQuotaModal = ({
 
                     />
                 }
-                body={<StackV gap={6} body={tabsAndPanel} />}
+                body={<StackV gap={6} items={tabsAndPanel} />}
             />
         </div>
     )

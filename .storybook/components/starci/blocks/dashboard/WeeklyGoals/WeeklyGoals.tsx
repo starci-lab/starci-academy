@@ -110,30 +110,30 @@ const goalCellContent = (
     const effectiveTarget = item.target ?? defaultTargets[item.key]
 
     const iconLabel = (
-        <StackH gap={2} body={(
-            <>
-                {isSkeleton ? (
-                    <HeroSkeleton
-                        className="size-5 shrink-0 rounded-full"
+        <StackH gap={2} items={[
+            () => (isSkeleton ? (
+                <HeroSkeleton
+                    className="size-5 shrink-0 rounded-full"
 
-                    />
-                ) : (
-                    <Icon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                )}
+                />
+            ) : (
+                <Icon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+            )),
+            () => (
                 <Typography
                     size="sm"
                     isSkeleton={isSkeleton}
                     text={item.label}
 
                 />
-            </>
-        )} />
+            ),
+        ]} />
     )
 
     const labelRow = (
-        <StackH gap={3} justify="between" body={(
-            <>
-                {iconLabel}
+        <StackH gap={3} justify="between" items={[
+            () => iconLabel,
+            () => (
                 <Typography
                     size="xs"
                     color="muted"
@@ -142,36 +142,34 @@ const goalCellContent = (
                     text={isSkeleton ? undefined : `${item.current}/${effectiveTarget}`}
 
                 />
-            </>
-        )} />
+            ),
+        ]} />
     )
 
     return (
-        <StackV gap={3} body={(
-            <>
-                {labelRow}
-                {isSkeleton ? (
-                    <HeroSkeleton
-                        className="h-1 w-full rounded-full"
+        <StackV gap={3} items={[
+            () => labelRow,
+            () => (isSkeleton ? (
+                <HeroSkeleton
+                    className="h-1 w-full rounded-full"
 
-                    />
-                ) : (
-                    <ProgressMeter
-                        value={item.current}
-                        max={effectiveTarget > 0 ? effectiveTarget : 1}
+                />
+            ) : (
+                <ProgressMeter
+                    value={item.current}
+                    max={effectiveTarget > 0 ? effectiveTarget : 1}
 
-                    />
-                )}
-                {!isSkeleton && item.coinReward != null ? (
-                    <Typography
-                        size="xs"
-                        color={item.canClaim ? "accent" : "muted"}
-                        text={`+${item.coinReward} coins when met`}
+                />
+            )),
+            ...(!isSkeleton && item.coinReward != null ? [() => (
+                <Typography
+                    size="xs"
+                    color={item.canClaim ? "accent" : "muted"}
+                    text={`+${item.coinReward} coins when met`}
 
-                    />
-                ) : null}
-            </>
-        )} />
+                />
+            )] : []),
+        ]} />
     )
 }
 
@@ -204,8 +202,8 @@ const Content = ({ items, composite, resetInLabel, defaultTargets, isSkeleton }:
         content: goalCellContent(item, defaultTargets, isSkeleton),
     }))
     return (
-        <StackV gap={4} body={(
-            <>
+        <StackV gap={4} items={[
+            () => (
                 <Typography
                     size="sm"
                     weight="medium"
@@ -213,11 +211,13 @@ const Content = ({ items, composite, resetInLabel, defaultTargets, isSkeleton }:
                     text={summary}
 
                 />
+            ),
+            () => (
                 <div>
                     <StatGridCard items={gridItems} />
                 </div>
-            </>
-        )} />
+            ),
+        ]} />
     )
 }
 

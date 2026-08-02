@@ -163,12 +163,10 @@ const Row = ({
                     gap={3}
                     classNames={["shrink-0"]}
                     className="ml-auto"
-                    body={
-                        <>
-                            {MetaSlot ? <MetaSlot /> : null}
-                            {TrailingSlot ? <TrailingSlot /> : null}
-                        </>
-                    }
+                    items={[
+                        ...(MetaSlot ? [() => <MetaSlot />] : []),
+                        ...(TrailingSlot ? [() => <TrailingSlot />] : []),
+                    ]}
                 />
             ) : null}
         </>
@@ -300,23 +298,21 @@ const Labeled = ({
             as="section"
             gap={4}
             classNames={classNames}
-            body={
-                <>
+            items={[
+                () => (
                     <StackH
                         gap={3}
-                        body={
-                            <>
-                                {Icon ? <Icon /> : null}
-                                <Label>{label}</Label>
-                            </>
-                        }
+                        items={[
+                            ...(Icon ? [() => <Icon />] : []),
+                            () => <Label>{label}</Label>,
+                        ]}
                     />
-                    <StackV gap={3} body={rows} />
-                    {/* `isSkeleton`-gated: while loading there is no data behind the CTA yet,
-                        same reasoning as the `meta`/`trailing` omission on `Row` above. */}
-                    {!isSkeleton && Action ? <div><Action /></div> : null}
-                </>
-            }
+                ),
+                () => <StackV gap={3} items={[() => rows]} />,
+                // `isSkeleton`-gated: while loading there is no data behind the CTA yet,
+                // same reasoning as the `meta`/`trailing` omission on `Row` above.
+                ...(!isSkeleton && Action ? [() => <div><Action /></div>] : []),
+            ]}
         />
     )
 }
@@ -361,32 +357,30 @@ const Meta = ({ chip: Chip, items, classNames}: ListMetaProps) => (
     <StackH
         gap={3}
         classNames={["min-w-0", ...(classNames ?? [])]}
-        body={
-            <>
-                {Chip ? <span className="shrink-0"><Chip /></span> : null}
-                {items.length > 0 ? (
-                    <Typography size="xs"
-                        text={(
-                            <>
-                                {items.map((item, index) => (
-                                    <React.Fragment key={index}>
-                                        {/* The breathing room around the `·` comes from the whitespace
-                                            IN the string itself, NOT a hand-typed `mx-1`: a child's own
-                                            margin is a two-owner seam (§10a), and the `check-padding`
-                                            gate catches exactly this spot (caught 2026-07-27). */}
-                                        {index > 0 ? <span aria-hidden>{" · "}</span> : null}
-                                        {item}
-                                    </React.Fragment>
-                                ))}
-                            </>
-                        )}
-                        color="muted"
-                        truncate
-                        classNames={["min-w-0"]}
-                    />
-                ) : null}
-            </>
-        }
+        items={[
+            ...(Chip ? [() => <span className="shrink-0"><Chip /></span>] : []),
+            ...(items.length > 0 ? [() => (
+                <Typography size="xs"
+                    text={(
+                        <>
+                            {items.map((item, index) => (
+                                <React.Fragment key={index}>
+                                    {/* The breathing room around the `·` comes from the whitespace
+                                        IN the string itself, NOT a hand-typed `mx-1`: a child's own
+                                        margin is a two-owner seam (§10a), and the `check-padding`
+                                        gate catches exactly this spot (caught 2026-07-27). */}
+                                    {index > 0 ? <span aria-hidden>{" · "}</span> : null}
+                                    {item}
+                                </React.Fragment>
+                            ))}
+                        </>
+                    )}
+                    color="muted"
+                    truncate
+                    classNames={["min-w-0"]}
+                />
+            )] : []),
+        ]}
     />
 )
 
@@ -459,38 +453,38 @@ const ToggleRow = ({
             gap={4}
             classNames={classNames}
             pattern="label-field"
-            body={
-                <>
+            items={[
+                () => (
                     <TitledText
                         title={label}
                         subtitle={description}
                         isSkeleton={isSkeleton}
                         classNames={["flex-1"]}
                     />
-                    {isSkeleton ? (
-                        <ChoiceSwitch
-                            isSkeleton
-                            isSelected={false}
-                            onValueChange={() => undefined}
-                            classNames={["shrink-0"]}
-                        />
-                    ) : (
-                        <Switch
-                            className="shrink-0"
-                            isSelected={checked}
-                            isDisabled={isDisabled}
-                            onChange={onCheckedChange}
-                            aria-label={label}
-                        >
-                            <Switch.Content>
-                                <Switch.Control>
-                                    <Switch.Thumb />
-                                </Switch.Control>
-                            </Switch.Content>
-                        </Switch>
-                    )}
-                </>
-            }
+                ),
+                () => (isSkeleton ? (
+                    <ChoiceSwitch
+                        isSkeleton
+                        isSelected={false}
+                        onValueChange={() => undefined}
+                        classNames={["shrink-0"]}
+                    />
+                ) : (
+                    <Switch
+                        className="shrink-0"
+                        isSelected={checked}
+                        isDisabled={isDisabled}
+                        onChange={onCheckedChange}
+                        aria-label={label}
+                    >
+                        <Switch.Content>
+                            <Switch.Control>
+                                <Switch.Thumb />
+                            </Switch.Control>
+                        </Switch.Content>
+                    </Switch>
+                )),
+            ]}
         />
     </div>
 )

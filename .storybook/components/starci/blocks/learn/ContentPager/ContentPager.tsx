@@ -78,18 +78,16 @@ const ContentPager = ({
                 gap={4}
                 align="center"
 
-                body={
-                    <>
-                        {/* DIV position: this card is a control with its own FIXED padding
-                            (`SurfaceCardPressableGroup` tile, `cozy` inset) — not hug-content —
-                            so size tracks line-height, not font-size. Title is `text-sm` ⇒ `size-5`,
-                            matching the sibling `ITEM_ICON_CLS` convention this same file's parent
-                            (`SurfaceCard.tsx`) already forces for icons in this exact tile shape.
-                            Weight omitted → Phosphor default `regular`, correct at `size-5`. */}
-                        <CaretLeftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                        <StackV gap={1} body={previousLabel} />
-                    </>
-                }
+                items={[
+                    // DIV position: this card is a control with its own FIXED padding
+                    // (`SurfaceCardPressableGroup` tile, `cozy` inset) — not hug-content —
+                    // so size tracks line-height, not font-size. Title is `text-sm` ⇒ `size-5`,
+                    // matching the sibling `ITEM_ICON_CLS` convention this same file's parent
+                    // (`SurfaceCard.tsx`) already forces for icons in this exact tile shape.
+                    // Weight omitted → Phosphor default `regular`, correct at `size-5`.
+                    () => <CaretLeftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />,
+                    () => <StackV gap={1} items={[() => previousLabel]} />,
+                ]}
             />
         )
         items.push({
@@ -111,13 +109,11 @@ const ContentPager = ({
                 align="center"
                 justify="end"
 
-                body={
-                    <>
-                        <StackV gap={1} align="end" body={nextLabel} />
-                        {/* Same DIV position/size reasoning as the mirrored left caret above. */}
-                        <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                    </>
-                }
+                items={[
+                    () => <StackV gap={1} align="end" items={[() => nextLabel]} />,
+                    // Same DIV position/size reasoning as the mirrored left caret above.
+                    () => <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />,
+                ]}
             />
         )
         items.push({

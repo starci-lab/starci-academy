@@ -74,8 +74,8 @@ const IdentityContentRow = ({
         nested={nested}
         classNames={classNames}
 
-        body={
-            <>
+        items={[
+            () => (
                 <Avatar
                     src={avatarSrc}
                     name={avatarName}
@@ -84,19 +84,19 @@ const IdentityContentRow = ({
                     isSkeleton={isSkeleton}
 
                 />
+            ),
+            () => (
                 <StackV
                     gap={2}
                     classNames={["min-w-0", "flex-1"]}
 
-                    body={
-                        <>
-                            <Byline isSkeleton={isSkeleton} />
-                            <Body isSkeleton={isSkeleton} />
-                        </>
-                    }
+                    items={[
+                        () => <Byline isSkeleton={isSkeleton} />,
+                        () => <Body isSkeleton={isSkeleton} />,
+                    ]}
                 />
-            </>
-        }
+            ),
+        ]}
     />
 )
 

@@ -330,52 +330,50 @@ const deliverableBody = (item: ChallengeDeliverableItem) => {
     // `Disclosure` here is a PRESENTATION decision, not an invented field: the content
     // inside is still exactly one real field, just placed behind a click because it's
     // secondary detail.
-    const gradedSection = item.graded != null ? (
+    const graded = item.graded
+    const gradedSection = graded != null ? (
         <StackV
             gap={4}
 
-            body={
-                <>
-                    {/* ONE single meta row — verdict chip + "attempt #N · HH:mm dd/MM" — rather than
-                        three stacked layers. No "Your latest attempt scored N/M. Minimum required: R."
-                        sentence: the N/M figure already sits in the accordion row's own `titleEnd`
-                        right above (see `scoreEnd`), and the chip already answers "passed or not" —
-                        that sentence would restate the same fact a second time across both lines.
-                        `earnedScore`/`requiredScore` are real fields and render, just in exactly ONE
-                        place. */}
+            items={[
+                /* ONE single meta row — verdict chip + "attempt #N · HH:mm dd/MM" — rather than
+                    three stacked layers. No "Your latest attempt scored N/M. Minimum required: R."
+                    sentence: the N/M figure already sits in the accordion row's own `titleEnd`
+                    right above (see `scoreEnd`), and the chip already answers "passed or not" —
+                    that sentence would restate the same fact a second time across both lines.
+                    `earnedScore`/`requiredScore` are real fields and render, just in exactly ONE
+                    place. */
+                () => (
                     <StackH
                         gap={3}
                         align="center"
                         wrap
 
-                        body={
-                            <>
-                                <EnumChip value={item.graded.verdict} map={VERDICT_MAP} />
-                                {item.graded.attemptNumber != null ? (
-                                    <Typography
-                                        size="xs"
-                                        color="muted"
-                                        text={item.graded.processedAt != null
-                                            ? `attempt #${item.graded.attemptNumber} · ${item.graded.processedAt}`
-                                            : `attempt #${item.graded.attemptNumber}`}
+                        items={[
+                            () => <EnumChip value={graded.verdict} map={VERDICT_MAP} />,
+                            ...(graded.attemptNumber != null ? [() => (
+                                <Typography
+                                    size="xs"
+                                    color="muted"
+                                    text={graded.processedAt != null
+                                        ? `attempt #${graded.attemptNumber} · ${graded.processedAt}`
+                                        : `attempt #${graded.attemptNumber}`}
 
-                                    />
-                                ) : null}
-                            </>
-                        }
+                                />
+                            )] : []),
+                        ]}
                     />
+                ),
+                ...(graded.shortFeedback != null ? [() => (
+                    <Disclosure
+                        title="Latest feedback"
 
-                    {item.graded.shortFeedback != null ? (
-                        <Disclosure
-                            title="Latest feedback"
-
-                            body={() => (
-                                <Typography size="sm" text={item.graded?.shortFeedback} />
-                            )}
-                        />
-                    ) : null}
-                </>
-            }
+                        body={() => (
+                            <Typography size="sm" text={graded.shortFeedback} />
+                        )}
+                    />
+                )] : []),
+            ]}
         />
     ) : null
 
@@ -416,13 +414,13 @@ const deliverableBody = (item: ChallengeDeliverableItem) => {
                 />
             ) : null}
 
-            <StackH gap={3} body={actions} />
+            <StackH gap={3} items={[() => actions]} />
 
             {gradedSection}
         </>
     )
 
-    return <StackV gap={4} body={panel} />
+    return <StackV gap={4} items={[() => panel]} />
 }
 
 /**
@@ -495,7 +493,7 @@ const ChallengeDeliverableList = ({
     )
 
     return (
-        <StackV gap={3} body={listBody} />
+        <StackV gap={3} items={[() => listBody]} />
     )
 }
 

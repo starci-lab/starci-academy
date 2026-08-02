@@ -395,10 +395,10 @@ const Navbar = ({
     // notification popover body: header row → async list → footer link
     const notificationPanel = (
         <>
-            <StackH gap={3} justify="between" body={notificationHeader} />
+            <StackH gap={3} justify="between" items={[() => notificationHeader]} />
             <AsyncContent
                 isLoading={notifications.isLoading && notifications.items.length === 0}
-                skeleton={<StackV gap={1} body={notificationSkeletonRows} />}
+                skeleton={<StackV gap={1} items={[() => notificationSkeletonRows]} />}
                 isEmpty={notifications.items.length === 0}
                 emptyContent={{ title: "No notifications yet" }}
                 error={notifications.error}
@@ -407,7 +407,7 @@ const Navbar = ({
                     onRetry: notifications.onRetry,
                     retryLabel: "Try again",
                 }}
-                content={<StackV gap={1} className="max-h-[420px] overflow-y-auto" body={notificationRows} />}
+                content={<StackV gap={1} className="max-h-[420px] overflow-y-auto" items={[() => notificationRows]} />}
             />
             <Button
                 variant="ghost"
@@ -438,7 +438,7 @@ const Navbar = ({
                     handle={account.user.email}
                 />
             ) : (
-                <StackH gap={3} body={guestAccountRow} />
+                <StackH gap={3} items={[() => guestAccountRow]} />
             )}
         />
     )
@@ -475,7 +475,7 @@ const Navbar = ({
                 />
             </span>
 
-            <StackH gap={3} className="hidden @app-md:flex" body={quickControls} />
+            <StackH gap={3} className="hidden @app-md:flex" items={[() => quickControls]} />
 
             {/* cart — always shown (guests included), count badge only when non-empty.
                 Raw HeroUI `Button` (not our atom, see file header): the atom's
@@ -513,7 +513,7 @@ const Navbar = ({
                     </HeroButton>
                     <PopoverContent placement="bottom right" className="w-[360px]">
                         {/* inset-exception: vendor popover body padding, wider than tall, not a surface inset */}
-                        <StackV gap={2} className="px-2 py-1" body={notificationPanel} />
+                        <StackV gap={2} className="px-2 py-1" items={[() => notificationPanel]} />
                     </PopoverContent>
                 </Popover>
             ) : null}
@@ -586,8 +586,8 @@ const Navbar = ({
     // primary row — fixed 4rem tall, matching the real bar's height contract
     const primaryRow = (
         <>
-            <StackH gap={6} body={logoAndNavPills} />
-            <StackH gap={3} body={barActions} />
+            <StackH gap={6} items={[() => logoAndNavPills]} />
+            <StackH gap={3} items={[() => barActions]} />
         </>
     )
 
@@ -628,16 +628,16 @@ const Navbar = ({
     // controls hidden from the mobile bar live here: language + theme
     const drawerControls = (
         <>
-            <StackH gap={3} justify="between" body={languageRow} />
-            <StackH gap={3} justify="between" body={themeRow} />
+            <StackH gap={3} justify="between" items={[() => languageRow]} />
+            <StackH gap={3} justify="between" items={[() => themeRow]} />
         </>
     )
 
     const drawerNav = (
         <>
-            <StackV gap={2} body={mobileNavRows} />
+            <StackV gap={2} items={[() => mobileNavRows]} />
             <Divider />
-            <StackV gap={4} body={drawerControls} />
+            <StackV gap={4} items={[() => drawerControls]} />
         </>
     )
 
@@ -652,7 +652,7 @@ const Navbar = ({
                 justify="between"
                 className="h-16 min-h-16 px-3"
 
-                body={primaryRow}
+                items={[() => primaryRow]}
             />
 
             {/* mobile navigation drawer — the ONE local (non-overlay-store) drawer this run's
@@ -664,7 +664,7 @@ const Navbar = ({
                 placement="right"
                 title="Mobile menu"
 
-                body={<StackV gap={6} body={drawerNav} />}
+                body={<StackV gap={6} items={[() => drawerNav]} />}
             />
         </nav>
     )

@@ -183,8 +183,8 @@ const PublicProfileLayout = ({
     const canHire = !isSelf && Boolean(user.openToWork) && Boolean(user.social?.github)
 
     // aside + routed panel — the pair the identity/content two-column body composes
-    const asideAndPanel = (
-        <>
+    const asideAndPanel = [
+        () => (
             <aside className="w-full @app-md:w-72 @app-md:shrink-0">
                 <ProfileHero
                     user={user}
@@ -199,12 +199,13 @@ const PublicProfileLayout = ({
 
                 />
             </aside>
-
+        ),
+        () => (
             <main className="min-w-0 flex-1">
                 {children}
             </main>
-        </>
-    )
+        ),
+    ]
 
     // column-first, becomes a row from @app-md — same technique SettingsLayout uses for its own outer switch (see file header)
     const profileBody = (
@@ -212,13 +213,13 @@ const PublicProfileLayout = ({
             gap={7}
             className="@app-md:flex-row @app-md:items-start"
 
-            body={asideAndPanel}
+            items={asideAndPanel}
         />
     )
 
     // chrome above the body — mirrors the real Navbar bottom-layer position; see file header
-    const tabsAndBody = (
-        <>
+    const tabsAndBody = [
+        () => (
             <ProfileTabsBar
                 activeTab={activeTab}
                 visibleTabs={visibleTabs}
@@ -227,22 +228,23 @@ const PublicProfileLayout = ({
                 ariaLabel={PROFILE_TABS_ARIA_LABEL}
 
             />
-
+        ),
+        () => (
             <Container
                 size="xl"
                 padding={6}
 
                 body={profileBody}
             />
-        </>
-    )
+        ),
+    ]
 
     return (
         <div>
             <StackV
                 gap={1}
 
-                body={tabsAndBody}
+                items={tabsAndBody}
             />
         </div>
     )

@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main, mtp]
+  pull_request:
+
+# Đây là chỗ chạy phần NẶNG (tsc, rendered-tree runner) + phần GIÁ TRỊ (runner đo
+# computed-style khớp registry) mà pre-commit không kham. Vibe-code chỉ "strict" khi
+# job này xanh trên mỗi PR/push.
+jobs:
+  gates:
+    name: gates (tsc + source checks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+
+      # Type safety — bao gom type-guard PrincipleToken (token principles bia = do).
+      - name: tsc --noEmit
+        run: npx tsc --noEmit
+
+      # ── XANH: bat buoc pass (cung bo voi pre-commit) ──
+      - name: source gates (blocking)
+        run: |
+          node scripts/check-doc-parity.mjs
+          node scripts/check-skeleton-prop.mjs
+          node scripts/check-src-sb-import.mjs
+          node scripts/check-pattern-coverage.mjs
+          node scripts/check-one-instance-per-state.mjs
+          node scripts/check-no-namespace.mjs
+          node scripts/check-orphan-parts.mjs
+          node scripts/check-deps-coverage.mjs
+          node scripts/check-member-as-state.mjs
+          node scripts/check-passthrough-block.mjs
+
+      # ── TRACKING: debt cu, chua xanh — surface nhung chua chan (bo continue-on-error khi da fix) ──
+      - name: debt gates (tracking, non-blocking)
+        continue-on-error: true
+        run: |
+          echo "::group::check-story-ids (182 dead-link storyId)"; node scripts/check-story-ids.mjs || true; echo "::endgroup::"
+          echo "::group::check-padding"; node scripts/check-padding.mjs || true; echo "::endgroup::"
+          echo "::group::check-seams"; node scripts/check-seams.mjs || true; echo "::endgroup::"
+          echo "::group::check-inline-types"; node scripts/check-inline-types.mjs || true; echo "::endgroup::"
+          echo "::group::check-story-coverage (nghi HONG/stale sau split)"; node scripts/check-story-coverage.mjs || true; echo "::endgroup::"
+
+  rendered-tree:
+    name: rendered-tree runner (test-storybook)
+    runs-on: ubuntu-latest
+    # Nang (mount 301 story qua Playwright) + lan dau nhieu debt -> tracking truoc, bo
+    # continue-on-error khi da xanh de bien thanh chan that.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: build storybook
+        run: npm run build-storybook -- --quiet
+      - name: serve + test-storybook (rendered-tree audit)
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" \
+            "npx http-server storybook-static --port 6006 --silent" \
+            "npx wait-on tcp:127.0.0.1:6006 && npx test-storybook --url http://127.0.0.1:6006"

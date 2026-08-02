@@ -71,9 +71,9 @@ export const LearnNudges = () => {
     // while they're still in flight, `dueCount`/`rank` default to 0/null, so the strip would
     // self-hide (indistinguishable from "genuinely nothing") then pop in a beat later. Shimmer
     // while either is pending; only self-hide once BOTH resolve and there's truly nothing.
-    const isPending = (dueSwr.isLoading && !dueSwr.data) || (leaderboardSwr.isLoading && !leaderboardSwr.data)
+    const isLoading = (dueSwr.isLoading && !dueSwr.data) || (leaderboardSwr.isLoading && !leaderboardSwr.data)
 
     // The connected file owns WHEN to shimmer (counts still loading); it hands that
     // condition to the presentational leaf as the universal `isSkeleton`.
-    return <_LearnNudges items={items} isSkeleton={isPending} />
+    return <_LearnNudges items={items} isSkeleton={isLoading} />
 }

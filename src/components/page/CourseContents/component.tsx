@@ -166,15 +166,13 @@ export const _CourseContents = ({
         MetaChips = () => (
             <StackH
                 gap={3}
-                body={
-                    <>
-                        <HighlightChip icon={StackIcon} value={catalog.moduleCount} label={labels.metaModulesLabel} />
-                        <HighlightChip icon={ClockIcon} value={catalog.hoursText} label={labels.metaHoursLabel} />
-                        {catalog.learnersText ? (
-                            <HighlightChip icon={UsersIcon} value={catalog.learnersText} label={labels.metaLearnersLabel} />
-                        ) : null}
-                    </>
-                }
+                items={[
+                    () => <HighlightChip icon={StackIcon} value={catalog.moduleCount} label={labels.metaModulesLabel} />,
+                    () => <HighlightChip icon={ClockIcon} value={catalog.hoursText} label={labels.metaHoursLabel} />,
+                    ...(catalog.learnersText
+                        ? [() => <HighlightChip icon={UsersIcon} value={catalog.learnersText!} label={labels.metaLearnersLabel} />]
+                        : []),
+                ]}
             />
         )
     }

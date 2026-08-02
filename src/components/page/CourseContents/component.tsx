@@ -22,7 +22,6 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { DifficultyChip, type Difficulty } from "@/components/blocks/chips/DifficultyChip"
 import { GithubTeamGate } from "@/components/features/auth/GithubTeamGate"
 import { LearnBreadcrumb } from "@/components/features/learn/shared/LearnBreadcrumb"
-import { CourseContentsSkeleton } from "./CourseContentsSkeleton"
 import { LearnNudges } from "@/components/blockv2/LearnNudges"
 import { TrialConversionStrip } from "@/components/blockv2/TrialConversionStrip"
 
@@ -116,6 +115,17 @@ const STATE_ICON = {
     unread: CircleIcon,
 } as const
 
+/**
+ * Placeholder rows for the keep-going path while loading. ONE tree — the resting
+ * state is the SAME `SurfaceCardList` shimmered, never a hand-mirrored copy that drifts.
+ */
+const SKELETON_LESSON_ROWS: Array<SurfaceCardListItem> = Array.from({ length: 4 }, (_unused, index) => ({
+    key: `skeleton-lesson-${index}`,
+    title: "Lesson",
+    subtitle: "min read",
+    leadingIcon: CircleIcon,
+}))
+
 /** Breadcrumb slot for the header — a connected child that self-fetches its crumbs (split.md). */
 const BreadcrumbSlot: ComponentTypeWithSkeleton = () => <LearnBreadcrumb />
 
@@ -203,7 +213,10 @@ export const _CourseContents = ({
         }
     })
 
-    const loaded = (
+    // ONE tree — the resting state is this SAME spine with `isSkeleton` threaded into every
+    // shimmer-capable part, never a hand-mirrored copy. `spine(true)` is the loading branch,
+    // `spine(false)` the content branch; they cannot drift because they are the same code.
+    const spine = (isSkeleton: boolean) => (
         <Container
             size="md"
             body={
@@ -217,9 +230,12 @@ export const _CourseContents = ({
                                 title={title}
                                 description={description}
                                 meta={MetaChips}
+                                isSkeleton={isSkeleton}
                             />
 
-                            {/* Content cluster: GitHub-team warning · trial strip · continue · nudges · path. */}
+                            {/* Content cluster: GitHub-team warning · trial strip · continue · nudges · path.
+                                The connected children (GithubTeamGate · TrialConversionStrip · LearnNudges)
+                                own THEIR resting shape — they self-fetch and shimmer themselves. */}
                             <StackV
                                 gap={6}
                                 body={
@@ -248,14 +264,15 @@ export const _CourseContents = ({
                                                                     classNames={["min-w-0"]}
                                                                     body={
                                                                         <>
-                                                                            <Typography size="xs" color="muted" text={labels.eyebrow} />
-                                                                            {resumeTitle ? (
-                                                                                <Typography size="base" weight="semibold" truncate text={resumeTitle} />
+                                                                            <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.eyebrow} />
+                                                                            {isSkeleton || resumeTitle ? (
+                                                                                <Typography size="base" weight="semibold" truncate isSkeleton={isSkeleton} text={resumeTitle} />
                                                                             ) : null}
                                                                         </>
                                                                     }
                                                                 />
-                                                                {onResume ? (
+                                                                {/* Button carries no `isSkeleton` — a resting screen shows no CTA yet. */}
+                                                                {!isSkeleton && onResume ? (
                                                                     <Button
                                                                         label={labels.resumeButton}
                                                                         variant="primary"
@@ -274,8 +291,9 @@ export const _CourseContents = ({
                                                         max={100}
                                                         label={labels.completion}
                                                         showValue
+                                                        isSkeleton={isSkeleton}
                                                     />
-                                                    <Typography size="xs" color="muted" text={labels.progressStat} />
+                                                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.progressStat} />
                                                 </>
                                             }
                                         />
@@ -284,8 +302,9 @@ export const _CourseContents = ({
                                         <LearnNudges />
 
                                         {/* Keep-going path — the current module's lessons (the full tree lives
-                                            in the left content-map rail, so the body never re-draws it). */}
-                                        {lessons.length > 0 ? (
+                                            in the left content-map rail, so the body never re-draws it).
+                                            While loading it shimmers the SAME list with placeholder rows. */}
+                                        {isSkeleton || lessons.length > 0 ? (
                                             <StackV
                                                 gap={4}
                                                 body={
@@ -294,9 +313,10 @@ export const _CourseContents = ({
                                                             size="sm"
                                                             weight="semibold"
                                                             color="muted"
+                                                            isSkeleton={isSkeleton}
                                                             text={`${labels.keepGoing} · ${moduleTitle ?? ""}`}
                                                         />
-                                                        <SurfaceCardList items={lessonRows} />
+                                                        <SurfaceCardList items={isSkeleton ? SKELETON_LESSON_ROWS : lessonRows} isSkeleton={isSkeleton} />
                                                     </>
                                                 }
                                             />
@@ -315,7 +335,7 @@ export const _CourseContents = ({
         <div data-principles="CourseContents">
             <AsyncContent
                 isLoading={isLoading}
-                skeleton={<Container size="md" body={<CourseContentsSkeleton />} />}
+                skeleton={spine(true)}
                 isEmpty={isEmpty}
                 emptyContent={{ title: labels.emptyTitle }}
                 error={error}
@@ -324,7 +344,7 @@ export const _CourseContents = ({
                     onRetry: () => { onRetry?.() },
                     retryLabel: labels.retry,
                 }}
-                content={loaded}
+                content={spine(false)}
             />
         </div>
     )

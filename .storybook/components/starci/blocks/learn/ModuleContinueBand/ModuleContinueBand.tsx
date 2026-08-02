@@ -80,7 +80,6 @@ export interface ModuleContinueBandProps {
     onResume?: () => void
     /** `true` → every composed atom swaps to its own shimmer. */
     isSkeleton?: boolean
-    /** `true` → tag each composed part with `data-anat-part` for a BlockAnatomy panel. */
     /** Anatomy tag for THIS block itself — lets the screen badge it as ONE node (§11a.1). */
 }
 

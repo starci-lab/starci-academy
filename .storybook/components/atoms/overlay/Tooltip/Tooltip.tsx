@@ -53,7 +53,6 @@ export interface TooltipBaseProps {
     isOpen?: boolean
     /** Uncontrolled initial-open — panel starts open then follows hover. */
     defaultOpen?: boolean
-    /** Dev/spec: emit `data-anat-part` (real HeroUI import names — `Tooltip.Trigger`/`Tooltip.Content`/`Tooltip.Arrow`) so a BlockAnatomy panel can badge it. */
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
 }

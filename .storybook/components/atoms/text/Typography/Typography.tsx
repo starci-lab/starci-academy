@@ -277,7 +277,6 @@ interface TypographyOwnProps {
     align?: TypographyAlign
     /** `tabular-nums` for numbers/prices/counts, so digits line up in straight columns. */
     tabularNums?: boolean
-    /** `true` → tag each part with `data-anat-part` for BlockAnatomy. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */

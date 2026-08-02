@@ -53,7 +53,6 @@ export interface PopoverBaseProps {
     defaultOpen?: boolean
     /** Open-state change handler (uncontrolled/controlled). */
     onOpenChange?: (isOpen: boolean) => void
-    /** Dev/spec: emit `data-anat-part` (real HeroUI import names — `Button`/`Popover.Content`/`Popover.Arrow`/`Popover.Heading`) so a BlockAnatomy panel can badge it. */
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
 }
@@ -100,7 +99,6 @@ const PopoverBase = ({
                         {heading}
                     </HeroPopover.Heading>
                 ) : null}
-                {/* Plain div wrapping caller-supplied `content`; not a named component, so no `data-anat-part`. */}
                 <div className="text-sm text-muted">
                     {content}
                 </div>

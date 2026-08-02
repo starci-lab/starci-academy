@@ -123,7 +123,6 @@ export interface ModulePageProps {
     isSkeleton?: boolean
     /** `true` → the module has no lessons yet; `AsyncContentEmpty` replaces the ENTIRE spine. */
     isEmpty?: boolean
-    /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

@@ -219,7 +219,6 @@ export interface QuizPageProps {
     /** Accessible name for each card's rating group. */
     recapRatingAriaLabel: string
 
-    /** When on, every composed block emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

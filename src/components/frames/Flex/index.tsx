@@ -106,13 +106,12 @@ export interface FlexBaseProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Name this box in a BlockAnatomy panel. */
     /**
      * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
      * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the
      * element that carries the gap, so the rendered-tree test can assert the seam is the step
-     * the pattern names. A frame does not KNOW its pattern — the caller does, exactly like
-     * `anatPart` — so it is passed in.
+     * the pattern names. A frame does not KNOW its pattern — the caller does — so it is
+     * passed in.
      */
     pattern?: string
 }

@@ -85,12 +85,8 @@ const SplitBase = ({
             classNames,
         )}
     >
-        {/* No `data-anat-part` on these two wrappers (2026-07-28): `start`/`end` are CALLER
-            slots — whatever they render (a `Typography`, a `Button`, a `StackV`)
-            belongs to the caller's own anatomy, not to this khung's. Badging the wrapper as
-            "Start"/"End" would claim the caller's content as this frame's own part, and no
-            story ever declared either name (no component sits behind them to link to), so
-            the badge only ever rendered into the DOM invisibly. */}
+        {/* `start`/`end` are CALLER slots — whatever they render (a `Typography`, a
+            `Button`, a `StackV`) belongs to the caller, not to this frame. */}
         <div className="min-w-0">
             {start}
         </div>

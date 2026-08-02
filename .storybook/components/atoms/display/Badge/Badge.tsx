@@ -43,7 +43,6 @@ export interface BadgeBaseProps {
     placement?: BadgePlacement
     /** Render the leaf skeleton (a small pill/dot shimmer) instead of the badge. */
     isSkeleton?: boolean
-    /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.

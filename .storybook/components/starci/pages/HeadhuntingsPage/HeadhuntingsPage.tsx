@@ -95,7 +95,6 @@ export interface HeadhuntingsPageProps {
 
     /** `true` → every block that can mirror itself does. */
     isSkeleton?: boolean
-    /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

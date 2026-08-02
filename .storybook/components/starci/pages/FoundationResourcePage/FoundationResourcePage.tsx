@@ -108,7 +108,6 @@ export interface FoundationResourcePageProps {
      * of its own.
      */
     isSkeleton?: boolean
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

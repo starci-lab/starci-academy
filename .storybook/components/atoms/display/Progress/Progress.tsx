@@ -45,7 +45,6 @@ interface ProgressTrackProps {
     ariaLabel?: string
     /** Render the leaf skeleton instead of the indicator. */
     isSkeleton?: boolean
-    /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
@@ -155,7 +154,6 @@ interface MeterOwnProps {
     size?: ProgressSize
     /** Accessible name (announced by screen readers). */
     ariaLabel?: string
-    /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.

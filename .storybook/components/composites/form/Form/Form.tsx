@@ -85,7 +85,6 @@ export interface FormBaseProps {
     isDisabled?: boolean
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
-    /** `true` → attach `data-anat-part` to each part for a BlockAnatomy panel. */
 }
 /**
  * The composite tier's `<form>` shell: a real `<form>` tag (ENTER submits, a11y),
@@ -164,7 +163,6 @@ export interface FormSectionProps {
     gap?: AllowedGap
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
-    /** `true` → attach `data-anat-part` to each part for a BlockAnatomy panel. */
 }
 /**
  * A titled group of fields: a `header` block (title + optional description,
@@ -248,7 +246,6 @@ export interface FormActionsProps {
     sticky?: boolean
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
-    /** `true` → attach `data-anat-part` to each part for a BlockAnatomy panel. */
 }
 /** Horizontal alignment → class. `between` needs the button row to OCCUPY the full width for the two edges to actually separate. */
 const ALIGN_CLASS: Record<FormActionsAlign, string> = {

@@ -143,7 +143,6 @@ export interface PlaygroundSessionPageProps {
     /** Fired with the next expanded state when the learner presses the sheet's toggle. */
     onConnectSheetOpenChange: (open: boolean) => void
 
-    /** When on, every composed block emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

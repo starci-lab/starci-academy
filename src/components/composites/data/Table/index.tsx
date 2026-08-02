@@ -83,7 +83,6 @@ export interface TableBaseProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** `true` → attach `data-anat-part` to each part for the BlockAnatomy badge. */
 }
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */

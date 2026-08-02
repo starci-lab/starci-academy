@@ -94,7 +94,6 @@ interface ContinueCardDataProps {
      * parallel skeleton tree for the whole `ContinueCard`.
      */
     isSkeleton?: boolean
-    /** `true` → every part emits `data-anat-part` for the BlockAnatomy panel. */
     /** The part name of THIS card itself (§11a). */
 }
 /** Props for {@link ContinueCardHero}. */

@@ -77,7 +77,6 @@ interface KeyValueRowOwnProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** `true` → attach `data-anat-part` to each part for the BlockAnatomy badge. */
 }
 
 /**
@@ -234,7 +233,6 @@ export interface KeyValueListProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** `true` → attach `data-anat-part` to each part for the BlockAnatomy badge. */
 }
 
 /**

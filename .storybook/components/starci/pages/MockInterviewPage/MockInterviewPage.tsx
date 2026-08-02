@@ -285,7 +285,6 @@ export interface MockInterviewPageProps {
     /** `true` → `SubmissionResultHeader` and `MockInterviewScorecard` mirror themselves while the debrief loads. */
     isResultSkeleton?: boolean
 
-    /** When on, every composed block emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

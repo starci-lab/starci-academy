@@ -71,7 +71,6 @@ export interface SearchAutocompleteProps {
     isRequired?: boolean
     /** Where this sits inside its parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
-    /** When on, emit `data-anat-part` on this block's parts for a BlockAnatomy panel to badge on-render. */
 }
 
 /**

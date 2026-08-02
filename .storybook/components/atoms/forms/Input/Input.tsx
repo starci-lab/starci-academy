@@ -73,7 +73,6 @@ export interface FieldSkeletonProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Emit `data-anat-part` so a BlockAnatomy panel can badge the mirror. */
 }
 
 export const FieldSkeleton = ({ heightCls = "h-9", classNames }: FieldSkeletonProps) => (

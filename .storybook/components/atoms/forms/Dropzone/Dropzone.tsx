@@ -33,7 +33,6 @@ export interface DropzoneProps {
      * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /** When true, the loading `Skeleton` emits a `data-anat-part` so the anatomy panel can anchor its badge. */
 }
 
 /**

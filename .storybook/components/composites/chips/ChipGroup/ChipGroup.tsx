@@ -38,7 +38,6 @@ export interface ChipGroupProps {
     tone?: ChipTone
     /** `true` → skeleton mirrors the resting-state cell count (each cell is its own `Chip`). */
     isSkeleton?: boolean
-    /** `data-anat-part` name on the row's root, so a wrapping component can name this cluster. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.

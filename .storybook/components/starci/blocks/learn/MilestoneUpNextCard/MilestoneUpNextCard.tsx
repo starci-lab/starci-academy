@@ -60,7 +60,6 @@ export interface MilestoneUpNextCardProps {
     isHighlight?: boolean
     /** `true` → every composed atom mirrors as shimmer. */
     isSkeleton?: boolean
-    /** `true` → tag each composed part with `data-anat-part` for a BlockAnatomy panel. */
     /** Anatomy tag for THIS block itself (§11a.1) — lets the caller badge it as ONE node. */
     /** Placement class only (§14d.1), forwarded to the card face. */
     className?: string

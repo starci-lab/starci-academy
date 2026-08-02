@@ -90,8 +90,7 @@ export interface ClusterBaseProps {
 
 /**
  * The wrapping row. Items render RAW (no per-item wrapper) so an item keeps its
- * own intrinsic width; only under `showAnatomy` is each one wrapped in a
- * badge anchor — a shrink-to-fit `<div>`, layout-neutral on a flex line.
+ * own intrinsic width on the flex line.
  *
  * @param props - {@link ClusterBaseProps}
  */

@@ -87,7 +87,6 @@ export interface StackBaseProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** `true` → tag this frame's parts with `data-anat-part` for a BlockAnatomy panel. */
     /**
      * The layout pattern this track's seam realises — forwarded straight to the `Flex` this
      * track renders through, the same way `gap`/`align`/`justify` are. See `Flex`'s own

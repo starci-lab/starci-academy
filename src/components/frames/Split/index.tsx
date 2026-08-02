@@ -43,11 +43,6 @@ export interface SplitBaseProps {
     gap: Responsive<AllowedGap>
     /** Cross-axis alignment of the two sides. Default `center` (the split row's normal). */
     align?: LayoutAlign
-    /**
-     * Anatomy tag for THIS frame ITSELF — so the PARENT can badge it as ONE node (§11a.1).
-     * Missing this prop means the frame can't enter the Deps tree: using a frame at the
-     * `layouts` tier that the panel can't see counts as not being used at all.
-     */
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
@@ -82,12 +77,8 @@ const SplitBase = ({
             ALIGN_CLASS[align],
             classNames)}
     >
-        {/* No `data-anat-part` on these two wrappers (2026-07-28): `start`/`end` are CALLER
-            slots — whatever they render (a `Typography`, a `Button`, a `StackV`)
-            belongs to the caller's own anatomy, not to this frame's. Badging the wrapper as
-            "Start"/"End" would claim the caller's content as this frame's own part, and no
-            story ever declared either name (no component sits behind them to link to), so
-            the badge only ever rendered into the DOM invisibly. */}
+        {/* `start`/`end` are CALLER slots — whatever they render (a `Typography`, a
+            `Button`, a `StackV`) belongs to the caller, not to this frame. */}
         <div className="min-w-0">
             {start}
         </div>

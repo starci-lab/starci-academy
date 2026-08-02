@@ -31,8 +31,7 @@ import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/Re
  * built to satisfy one call site (`ButtonGroup`) inside this same change. It
  * takes `data-tier`/`data-component` as literal pass-through attributes rather
  * than asserting its own — it has no public identity of its own yet, so the
- * composite calling it supplies one, exactly the way `Flex` takes `anatPart`
- * from `Stack` instead of badging itself. Promote it (a name, a story, its own
+ * composite calling it supplies one. Promote it (a name, a story, its own
  * `data-tier="frame"`) the day a second caller needs it verified independently.
  *
  * FRAME API LAW ⇒ REPEATING LIST ⇒ `items` DATA, `children` FORBIDDEN, same

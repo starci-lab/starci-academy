@@ -45,7 +45,6 @@ export interface AvatarGroupProps {
     size?: AvatarSize
     /** Render the row skeleton — each visible slot mirrors as a circle shimmer. */
     isSkeleton?: boolean
-    /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.

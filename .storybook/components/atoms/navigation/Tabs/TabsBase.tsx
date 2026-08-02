@@ -69,7 +69,6 @@ export interface TabsBaseProps {
      * loading shape matches what the real strip is about to become.
      */
     isSkeleton?: boolean
-    /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     /** Position within the parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
 }

@@ -155,18 +155,9 @@ const GridBase = ({ items, columns, gap, classNames, pattern }: GridBaseProps) =
     >
         {items.map((item) => {
             const spanClass = item.span === 2 ? SPAN_CLASS[2] : undefined
-            // A spanning cell needs a real wrapper to hang `col-span-2` on, even
-            // when `showAnatomy` is off — a `Fragment` cannot carry a class. A
-            // plain (non-spanning) cell keeps the old behaviour untouched.
-            //
-            // ⚠️ 2026-07-28: this wrapper used to ALSO grow under `showAnatomy` alone (not
-            // just `spanClass`) so it could carry ``. Dropped: "Cell"
-            // had no component or story of its own — it is just this `min-w-0`/`col-span`
-            // box, the frame's own geometry (§13z's logic one tier up), not a separate part
-            // a reader could click through to. No story ever declared it, so the badge only
-            // ever rendered into the DOM invisibly — a name with nowhere to send the reader
-            // is worse than no name, so the wrapper now only grows for the reason it
-            // actually needs to: hanging `col-span-2` on a spanning cell.
+            // A spanning cell needs a real wrapper to hang `col-span-2` on — a
+            // `Fragment` cannot carry a class. A plain (non-spanning) cell keeps the
+            // old behaviour untouched.
             if (spanClass) {
                 return (
                     // `min-w-0` keeps a long-text cell from blowing out its track

@@ -105,7 +105,6 @@ interface AlertBaseOwnProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

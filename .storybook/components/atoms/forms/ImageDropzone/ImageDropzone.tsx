@@ -58,7 +58,6 @@ export interface ImageDropzoneProps {
      * line on.
      */
     isSkeleton?: boolean
-    /** When `true`, each composed part emits `data-anat-part` so a BlockAnatomy panel can badge it. Off by default. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.

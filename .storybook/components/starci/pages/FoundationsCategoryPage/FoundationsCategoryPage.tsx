@@ -103,7 +103,6 @@ export interface FoundationsCategoryPageProps {
      * (see file header for both non-direct cases).
      */
     isSkeleton?: boolean
-    /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

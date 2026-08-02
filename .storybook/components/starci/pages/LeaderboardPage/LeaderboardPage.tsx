@@ -131,7 +131,6 @@ export interface LeaderboardPageProps {
      * row and toolbar never skeletonise — see the file header for why.
      */
     isSkeleton?: boolean
-    /** When on, every composed block emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

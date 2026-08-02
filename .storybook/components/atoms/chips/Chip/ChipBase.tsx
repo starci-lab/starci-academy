@@ -59,7 +59,6 @@ interface ChipBaseOwnProps {
     onRemove?: () => void
     /** Accessibility label for the × button (caller supplies the translated string). */
     removeLabel?: string
-    /** `true` → tags each part with `data-anat-part` for the BlockAnatomy badge. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */

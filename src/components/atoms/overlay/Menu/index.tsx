@@ -96,7 +96,6 @@ export interface MenuBaseProps {
     defaultOpen?: boolean
     /** Open-state change handler. */
     onOpenChange?: (isOpen: boolean) => void
-    /** Dev/spec: emit `data-anat-part` (real HeroUI import names — `DropdownTrigger`/`DropdownPopover`/`DropdownMenu`/`DropdownSection`/`Header`/`DropdownItem`/`Skeleton`) so a BlockAnatomy panel can badge it. */
     /** Render the leaf skeleton (rows of icon + label bars) instead of the real dropdown; the atom owns its own skeleton. */
     isSkeleton?: boolean
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */

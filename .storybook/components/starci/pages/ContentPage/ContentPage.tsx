@@ -174,7 +174,6 @@ export interface ContentPageProps {
      * one control that was ready.
      */
     isSkeleton?: boolean
-    /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

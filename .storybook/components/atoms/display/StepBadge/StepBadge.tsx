@@ -26,7 +26,6 @@ interface StepBadgeOwnProps {
      * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /** `true` → tag each part with `data-anat-part` so a `BlockAnatomy` panel can badge it. */
 }
 
 /**

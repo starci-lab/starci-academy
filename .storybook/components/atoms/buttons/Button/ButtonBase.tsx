@@ -68,7 +68,6 @@ interface ButtonBaseOwnProps {
     isDisabled?: boolean
     /** `true` marks the button busy: a spinner replaces the leading glyph and the press handler locks. */
     isPending?: boolean
-    /** `true` tags the rendered part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */

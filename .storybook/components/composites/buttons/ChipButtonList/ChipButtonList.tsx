@@ -60,7 +60,6 @@ export interface ChipButtonListProps {
     isSkeleton?: boolean
     /** How many skeleton items to render when `isSkeleton` (the real `items` count isn't known yet). Defaults to 3. */
     skeletonCount?: number
-    /** `true` → emit `data-anat-part` on every part (Button/icon/Typography) for {@link BlockAnatomy}. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */

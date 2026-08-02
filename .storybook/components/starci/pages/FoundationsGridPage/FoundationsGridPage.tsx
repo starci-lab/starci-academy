@@ -81,7 +81,6 @@ export interface FoundationsGridPageProps {
      * banner (see file header on why it wins over `isTrialBannerVisible`).
      */
     isSkeleton?: boolean
-    /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

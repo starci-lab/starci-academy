@@ -67,7 +67,6 @@ interface ToastOwnProps {
     onClose?: () => void
     /** Accessible label for the × (caller passes a localised string). */
     closeLabel?: string
-    /** Dev/spec: emit `data-anat-part` on Icon/Title/Description/Action/Close so a BlockAnatomy panel can badge it. */
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
 }

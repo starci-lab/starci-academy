@@ -46,7 +46,6 @@ interface ButtonRadioGroupBaseProps<T extends string> {
      * `key`s) so each is an individual segment. Omit for a plain single-select row.
      */
     itemAction?: (item: ButtonRadioGroupItem<T>) => ReactNode
-    /** `true` → tag this row's own HeroUI renders (`Button`/`ButtonGroup`/`ButtonGroup.Separator`) with `data-anat-part` so a BlockAnatomy panel can badge them. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */

@@ -112,8 +112,7 @@ export interface StackHProps extends StackBaseProps {
 
 /**
  * Interleaves `Divider` between children — NOT around them: N children get
- * N−1 rules. The atom carries its own `showAnatomy` (part name `Line`), so the
- * frame adds no wrapper element and the DOM is identical with badges on or off.
+ * N−1 rules. The atom renders the rule itself, so the frame adds no wrapper element.
  *
  * On a ROW the rule is vertical and gets `self-stretch`: `align-self` overrides
  * the track's `items-*`, so the line spans the row's full height even when the

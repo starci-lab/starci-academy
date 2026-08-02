@@ -156,7 +156,6 @@ export interface CourseQaPageProps {
      * branch is skipped in favour of the populated shape (see file header).
      */
     isSkeleton?: boolean
-    /** When on, every composed block emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

@@ -56,7 +56,6 @@ export interface SelectOption {
 interface TriggerSkeletonProps {
     /** Where this sits inside its parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
-    /** Emit `data-anat-part` so a BlockAnatomy panel can badge the mirror. */
 }
 
 const TriggerSkeleton = ({ classNames }: TriggerSkeletonProps) => (
@@ -77,7 +76,6 @@ interface BaseSelectProps extends FrameProps {
     ariaLabel?: string
     /** Renders the trigger-box skeleton instead of the control. */
     isSkeleton?: boolean
-    /** `true` tags `data-anat-part` for a BlockAnatomy panel to badge. */
     /** Where this sits inside its parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
 }

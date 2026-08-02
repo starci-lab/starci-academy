@@ -158,7 +158,6 @@ export interface ChallengeResultPageProps {
      * same reasoning `ContentPage` documents for its own footer.
      */
     isSkeleton?: boolean
-    /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

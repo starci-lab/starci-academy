@@ -36,7 +36,6 @@ export interface PaginationBaseProps {
     siblings?: number
     /** Render the control skeleton (a row of square shimmers) instead of the pager. */
     isSkeleton?: boolean
-    /** When on, emit `data-anat-part` on this control's own sub-parts (`Pagination.Previous` · `Pagination.Link` · `Pagination.Ellipsis` · `Pagination.Next`). */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.

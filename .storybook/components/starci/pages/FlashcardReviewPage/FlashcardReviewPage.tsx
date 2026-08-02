@@ -209,7 +209,6 @@ export interface FlashcardReviewPageProps {
     /** `true` → the card draws its own mirror instead of the real content. */
     isSessionSkeleton?: boolean
 
-    /** When on, every composed block emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

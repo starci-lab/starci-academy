@@ -49,7 +49,6 @@ export interface ImageBaseProps {
     loading?: "lazy" | "eager"
     /** Forces the skeleton state from outside, in addition to internal loading. */
     isSkeleton?: boolean
-    /** `true` → tags `data-anat-part` for the BlockAnatomy panel. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.

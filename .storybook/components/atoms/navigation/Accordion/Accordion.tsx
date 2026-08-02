@@ -44,7 +44,6 @@ export interface AccordionBaseProps {
     defaultExpandedKeys?: Array<string>
     /** Render the collapsed-row skeleton (stacked trigger bars) instead of the panels. */
     isSkeleton?: boolean
-    /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.

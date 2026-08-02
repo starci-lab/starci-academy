@@ -106,7 +106,6 @@ export interface ChallengePageProps {
      * into each block rather than building a parallel skeleton tree here.
      */
     isSkeleton?: boolean
-    /** When on, each block emits `data-anat-part` for a BlockAnatomy panel. */
 }
 
 /**

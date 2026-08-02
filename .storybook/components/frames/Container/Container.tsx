@@ -105,16 +105,6 @@ export interface ContainerBaseProps {
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
-     * Name THIS measure itself in the BlockAnatomy panel, so a PARENT composition can badge
-     * it as one node (§11a.1) — exactly `SurfaceCard.*`'s own contract: no default guess, the
-     * caller states the name explicitly and declares it (with a real `storyId`) wherever it
-     * nests this measure. ⚠️ 2026-07-28: this used to fall back to a hardcoded default name
-     * `"Container"` whenever `showAnatomy` was on, even with no caller in sight — nobody
-     * ever nested this measure as a badged part, so every one of THIS file's own stories kept
-     * emitting an undeclared "Container" node the panel could never show, exactly the
-     * "badge that leads nowhere" the anatomy gate exists to catch.
-     */
-    /**
      * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
      * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.

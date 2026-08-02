@@ -68,7 +68,6 @@ export interface BreadcrumbsBaseProps {
      * the loading shape matches what the real trail is about to become.
      */
     isSkeleton?: boolean
-    /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */

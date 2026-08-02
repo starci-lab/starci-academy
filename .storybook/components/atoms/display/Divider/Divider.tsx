@@ -49,7 +49,6 @@ export interface DividerBaseProps {
      * two pieces of text rather than a track spanning a container.
      */
     shape?: DividerShape
-    /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.

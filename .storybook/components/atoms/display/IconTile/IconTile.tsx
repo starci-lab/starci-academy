@@ -47,7 +47,6 @@ interface IconTileOwnProps {
     tone?: IconTileTone
     /** Tile size. Defaults to "md" (64px). */
     size?: IconTileSize
-    /** `true` → attaches `data-anat-part` to each part for the BlockAnatomy badge. */
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.

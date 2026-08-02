@@ -51,7 +51,6 @@ interface LinkSeeMoreOwnProps {
     skeletonWidth?: SkeletonWidth
     /** Position within the parent. Everything about appearance is a prop of its own. */
     classNames?: Array<AllowedClassName>
-    /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
 }
 
 /**

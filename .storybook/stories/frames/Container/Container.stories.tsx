@@ -62,7 +62,7 @@ export const Default: Story = {
                         code: "<Container body={<Tile label=\"Body\" />} />",
                         render: (
                             <Bleed>
-                                <Container body={<Tile label="Body — max-w-app-md, centred" />} />
+                                <Container body={() => <Tile label="Body — max-w-app-md, centred" />} />
                             </Bleed>
                         ),
                     },
@@ -88,7 +88,7 @@ export const Sizes: Story = {
                         code: "<Container size=\"sm\" body={<Tile label='size=\"sm\" · 40rem' />} />",
                         render: (
                             <Bleed>
-                                <Container size="sm" padding={4} body={<Tile label='size="sm" · 40rem' />} />
+                                <Container size="sm" padding={4} body={() => <Tile label='size="sm" · 40rem' />} />
                             </Bleed>
                         ),
                     },
@@ -98,7 +98,7 @@ export const Sizes: Story = {
                         code: "<Container size=\"md\" body={<Tile label='size=\"md\" · 48rem — default' />} />",
                         render: (
                             <Bleed>
-                                <Container size="md" padding={4} body={<Tile label='size="md" · 48rem — default' />} />
+                                <Container size="md" padding={4} body={() => <Tile label='size="md" · 48rem — default' />} />
                             </Bleed>
                         ),
                     },
@@ -108,7 +108,7 @@ export const Sizes: Story = {
                         code: "<Container size=\"lg\" body={<Tile label='size=\"lg\" · 64rem' />} />",
                         render: (
                             <Bleed>
-                                <Container size="lg" padding={4} body={<Tile label='size="lg" · 64rem' />} />
+                                <Container size="lg" padding={4} body={() => <Tile label='size="lg" · 64rem' />} />
                             </Bleed>
                         ),
                     },
@@ -118,7 +118,7 @@ export const Sizes: Story = {
                         code: "<Container size=\"xl\" body={<Tile label='size=\"xl\" · 80rem' />} />",
                         render: (
                             <Bleed>
-                                <Container size="xl" padding={4} body={<Tile label='size="xl" · 80rem' />} />
+                                <Container size="xl" padding={4} body={() => <Tile label='size="xl" · 80rem' />} />
                             </Bleed>
                         ),
                     },
@@ -128,7 +128,7 @@ export const Sizes: Story = {
                         code: "<Container size=\"full\" body={<Tile label='size=\"full\" · no cap' />} />",
                         render: (
                             <Bleed>
-                                <Container size="full" padding={4} body={<Tile label='size="full" · no cap' />} />
+                                <Container size="full" padding={4} body={() => <Tile label='size="full" · no cap' />} />
                             </Bleed>
                         ),
                     },
@@ -156,7 +156,7 @@ export const Padding: Story = {
                         code: "<Container padding={1} body={<Tile label=\"padding step 1\" />} />",
                         render: (
                             <Bleed>
-                                <Container padding={1} body={<Tile label="padding step 1" />} />
+                                <Container padding={1} body={() => <Tile label="padding step 1" />} />
                             </Bleed>
                         ),
                     },
@@ -166,7 +166,7 @@ export const Padding: Story = {
                         code: "<Container padding={2} body={<Tile label=\"padding step 2\" />} />",
                         render: (
                             <Bleed>
-                                <Container padding={2} body={<Tile label="padding step 2" />} />
+                                <Container padding={2} body={() => <Tile label="padding step 2" />} />
                             </Bleed>
                         ),
                     },
@@ -176,7 +176,7 @@ export const Padding: Story = {
                         code: "<Container padding={3} body={<Tile label=\"padding step 3\" />} />",
                         render: (
                             <Bleed>
-                                <Container padding={3} body={<Tile label="padding step 3" />} />
+                                <Container padding={3} body={() => <Tile label="padding step 3" />} />
                             </Bleed>
                         ),
                     },
@@ -186,7 +186,7 @@ export const Padding: Story = {
                         code: "<Container padding={4} body={<Tile label=\"padding step 4\" />} />",
                         render: (
                             <Bleed>
-                                <Container padding={4} body={<Tile label="padding step 4" />} />
+                                <Container padding={4} body={() => <Tile label="padding step 4" />} />
                             </Bleed>
                         ),
                     },
@@ -196,7 +196,7 @@ export const Padding: Story = {
                         code: "<Container padding={5} body={<Tile label=\"padding step 5\" />} />",
                         render: (
                             <Bleed>
-                                <Container padding={5} body={<Tile label="padding step 5" />} />
+                                <Container padding={5} body={() => <Tile label="padding step 5" />} />
                             </Bleed>
                         ),
                     },
@@ -206,7 +206,7 @@ export const Padding: Story = {
                         code: "<Container body={<Tile label=\"padding step 6 — default\" />} />",
                         render: (
                             <Bleed>
-                                <Container body={<Tile label="padding step 6 — default" />} />
+                                <Container body={() => <Tile label="padding step 6 — default" />} />
                             </Bleed>
                         ),
                     },
@@ -243,13 +243,13 @@ export const PageRegions: Story = {
                         render: (
                             <Bleed>
                                 <Container
-                                    body={
+                                    body={() => (
                                         <StackV gap={7} items={[
                                             () => <Tile label="Header" />,
                                             () => <Tile label="Body" />,
                                             () => <Tile label="Footer" />,
                                         ]} />
-                                    }
+                                    )}
                                 />
                             </Bleed>
                         ),
@@ -285,7 +285,7 @@ export const ContainerQuery: Story = {
     render: () => {
         const cells = ["Alpha", "Beta", "Gamma", "Delta"].map((label) => ({
             key: label,
-            content: <Tile label={label} />,
+            content: () => <Tile label={label} />,
         }))
         const columns = { base: 1, sm: 2, md: 2, lg: 4 } as const
         return (
@@ -308,11 +308,11 @@ export const ContainerQuery: Story = {
                                     <Container
                                         size="md"
                                         padding={4}
-                                        body={
+                                        body={() => (
                                             <span data-tier="fixture" className="block">
                                                 <Grid columns={columns} gap={4} items={cells} />
                                             </span>
-                                        }
+                                        )}
                                     />
                                 </Bleed>
                             ),
@@ -328,11 +328,11 @@ export const ContainerQuery: Story = {
                                     <Container
                                         size="xl"
                                         padding={4}
-                                        body={
+                                        body={() => (
                                             <span data-tier="fixture" className="block">
                                                 <Grid columns={columns} gap={4} items={cells} />
                                             </span>
-                                        }
+                                        )}
                                     />
                                 </Bleed>
                             ),

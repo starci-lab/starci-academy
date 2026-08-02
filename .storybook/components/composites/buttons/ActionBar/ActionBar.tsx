@@ -78,7 +78,7 @@ const renderSlot = (
     if (!slot) return null
     return {
         key,
-        content: (
+        content: () => (
             <Button
                 label={slot.label}
                 prefixIcon={slot.prefixIcon}

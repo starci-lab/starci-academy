@@ -1,7 +1,7 @@
-import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
+import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -61,13 +61,13 @@ export interface RailShellProps {
      * above `body` under `@app-md`; a fixed `288px` column beside it from `@app-md` up.
      * Never shrinks.
      */
-    rail: ReactNode
+    rail: ComponentTypeWithSkeleton
     /**
      * The FOLLOWING column — the content the reader came for. Grows into whatever
      * the rail leaves, and shrinks without limit (`min-w-0`) so long content
      * truncates inside it rather than pushing the rail away.
      */
-    body: ReactNode
+    body: ComponentTypeWithSkeleton
     /**
      * Container step the rail drops below `body` and becomes a side-by-side row at.
      * Defaults to `md` — the step both real sources agree on.
@@ -79,6 +79,8 @@ export interface RailShellProps {
      * the reader returns to while the body scrolls past it.
      */
     isRailSticky?: boolean
+    /** Renders `rail`/`body` in their skeleton state. */
+    isSkeleton?: boolean
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
@@ -122,10 +124,11 @@ const RAIL_STICKY_CLASS: Record<ResponsiveRowSwitch, string> = {
  * @param props - {@link RailShellProps}
  */
 const RailShell = ({
-    rail,
-    body,
+    rail: Rail,
+    body: Body,
     at = "md",
     isRailSticky = false,
+    isSkeleton,
     classNames,
     pattern}: RailShellProps) => (
     <div
@@ -143,10 +146,10 @@ const RailShell = ({
                 RAIL_WIDTH_CLASS[at],
                 isRailSticky && RAIL_STICKY_CLASS[at])}
         >
-            {rail}
+            <Rail isSkeleton={isSkeleton} />
         </aside>
         <main className="flex min-w-0 flex-1 flex-col">
-            {body}
+            <Body isSkeleton={isSkeleton} />
         </main>
     </div>
 )

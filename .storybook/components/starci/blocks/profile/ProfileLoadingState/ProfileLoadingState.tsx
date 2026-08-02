@@ -110,7 +110,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
         )
         return {
             key: `skill-${i}`,
-            content: <StackV gap={4} items={[() => skillCard]} />,
+            content: () => <StackV gap={4} items={[() => skillCard]} />,
         }
     })
 
@@ -313,7 +313,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
                 />
             </div>
 
-            <Container size="lg" padding={6} body={overviewBody} />
+            <Container size="lg" padding={6} body={() => overviewBody} />
         </div>
     )
 }

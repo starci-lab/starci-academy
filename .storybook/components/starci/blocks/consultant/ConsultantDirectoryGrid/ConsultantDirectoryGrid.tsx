@@ -84,7 +84,7 @@ const ConsultantDirectoryGrid = ({
 
     const skeletonTiles: Array<GridItem> = Array.from({ length: SKELETON_TILE_COUNT }, (_unused, index) => ({
         key: `skeleton-${index}`,
-        content: (
+        content: () => (
             <ConsultantCard
                 consultant={{ id: `skeleton-${index}`, fullName: "" }}
                 onOpen={NOOP}
@@ -97,7 +97,7 @@ const ConsultantDirectoryGrid = ({
 
     const tiles: Array<GridItem> = (consultants ?? []).map((consultant) => ({
         key: consultant.id,
-        content: (
+        content: () => (
             <ConsultantCard
                 consultant={consultant}
                 onOpen={onOpenConsultant}

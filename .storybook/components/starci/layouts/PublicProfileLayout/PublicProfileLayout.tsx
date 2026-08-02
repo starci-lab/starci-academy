@@ -234,7 +234,7 @@ const PublicProfileLayout = ({
                 size="xl"
                 padding={6}
 
-                body={profileBody}
+                body={() => profileBody}
             />
         ),
     ]

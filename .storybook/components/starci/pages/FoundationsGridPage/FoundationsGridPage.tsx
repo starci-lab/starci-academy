@@ -126,7 +126,7 @@ const FoundationsGridPage = ({
 
     const gridBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => gridSections]} />
 
-    return <Container size="md" padding={6} body={gridBody} />
+    return <Container size="md" padding={6} body={() => gridBody} />
 }
 
 export { FoundationsGridPage }

@@ -462,10 +462,10 @@ const PersonalProjectTaskPage = ({
     <Container
         size="xl"
         padding={6}
-        body={
+        body={() => (
             <SplitWorkspace
 
-                main={readingColumn({
+                main={() => readingColumn({
                     breadcrumbItems,
                     task,
                     isLocked,
@@ -476,9 +476,9 @@ const PersonalProjectTaskPage = ({
                     relatedLabel,
                     isSkeleton,
                 })}
-                aside={submissionPanel({ panel: submissionPanelProps, isSkeleton })}
+                aside={() => submissionPanel({ panel: submissionPanelProps, isSkeleton })}
             />
-        }
+        )}
     />
 )
 

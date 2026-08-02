@@ -1,7 +1,7 @@
-import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
+import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -54,12 +54,14 @@ import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
 /** Props for {@link SplitWorkspace}. */
 export interface SplitWorkspaceProps {
     /** The reading column — grows, shrinks without limit (`min-w-0 flex-1`). */
-    main: ReactNode
+    main: ComponentTypeWithSkeleton
     /**
      * The action column — full width and stacked below `main` under `@app-xl`;
      * pins to a `360px` sticky rail beside it from `@app-xl` up.
      */
-    aside: ReactNode
+    aside: ComponentTypeWithSkeleton
+    /** Renders `main`/`aside` in their skeleton state. */
+    isSkeleton?: boolean
     /**
      * Container step `aside` drops below `main` and pins beside it at.
      * Defaults to `xl` — the step both real sources agree on.
@@ -101,9 +103,10 @@ const ASIDE_SWITCH_CLASS: Record<ResponsiveRowSwitch, string> = {
  * @param props - {@link SplitWorkspaceProps}
  */
 const SplitWorkspace = ({
-    main,
-    aside,
+    main: Main,
+    aside: Aside,
     at = "xl",
+    isSkeleton,
     classNames,
     pattern}: SplitWorkspaceProps) => (
     <div
@@ -117,10 +120,10 @@ const SplitWorkspace = ({
             render — a badge here would be "declare it or stop badging it" with nothing to
             declare, since there is no `SplitWorkspace`-owned content at either position). */}
         <div className="min-w-0 flex-1">
-            {main}
+            <Main isSkeleton={isSkeleton} />
         </div>
         <aside className={cn("w-full shrink-0", ASIDE_SWITCH_CLASS[at])}>
-            {aside}
+            <Aside isSkeleton={isSkeleton} />
         </aside>
     </div>
 )

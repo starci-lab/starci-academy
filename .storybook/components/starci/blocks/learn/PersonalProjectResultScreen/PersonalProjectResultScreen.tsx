@@ -334,7 +334,7 @@ const PersonalProjectResultScreen = ({
         />
     )
 
-    return <Container size="md" padding={6} body={screenBody} />
+    return <Container size="md" padding={6} body={() => screenBody} />
 }
 
 export { PersonalProjectResultScreen }

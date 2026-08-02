@@ -1,7 +1,6 @@
-import React from "react"
-import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { gapClassNames, type AllowedGap, type Responsive } from "@sb-components/frames/_spacing"
 
 /**
@@ -22,14 +21,6 @@ import { gapClassNames, type AllowedGap, type Responsive } from "@sb-components/
  * `@container` (see `Grid`).
  */
 
-/** One cell of a {@link ResponsiveRow}. */
-export interface ResponsiveRowItem {
-    /** Stable React key. */
-    key: string
-    /** The cell's content, fully built by the caller (§13b: the frame places, never styles). */
-    content: ReactNode
-}
-
 /**
  * Container step the row leaves the grid for the flex row at.
  *
@@ -42,9 +33,13 @@ export type ResponsiveRowSwitch = "sm" | "md" | "lg" | "xl"
 /** Props for {@link ResponsiveRow}. */
 export interface ResponsiveRowProps {
     /**
-     * The cells, in reading order. REQUIRED — repeat list = DATA, never children (§13b).
+     * The cells, in reading order — each an uncalled `ComponentType<{isSkeleton?}>` the row
+     * renders itself (`<Item isSkeleton={isSkeleton} />`), so it can build both the real and
+     * shimmer state from one source. REQUIRED — repeat list = DATA, never children (§13b).
      */
-    items: ReadonlyArray<ResponsiveRowItem>
+    items: ReadonlyArray<ComponentTypeWithSkeleton>
+    /** `true` → passes `isSkeleton` down to every `items` component so the whole row shimmers. */
+    isSkeleton?: boolean
     /**
      * Grid column count BELOW `at`. Capped at `1 | 2` — a narrow shell wide enough for a
      * 3+ column grid is wide enough for the flex row instead, so a caller needing more
@@ -101,6 +96,7 @@ const ResponsiveRowBase = ({
     columns,
     at,
     gap,
+    isSkeleton,
     classNames,
     pattern,
 }: ResponsiveRowProps) => (
@@ -117,8 +113,8 @@ const ResponsiveRowBase = ({
             classNames,
         )}
     >
-        {items.map((item) => (
-            <React.Fragment key={item.key}>{item.content}</React.Fragment>
+        {items.map((Item, index) => (
+            <Item key={index} isSkeleton={isSkeleton} />
         ))}
     </div>
 )

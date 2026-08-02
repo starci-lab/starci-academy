@@ -30,7 +30,7 @@ const ITEM_PARTS: Array<AnatomyNode> = [
 const TAGS = ["Docker", "Kubernetes", "CI/CD", "Terraform", "Observability", "GitOps", "Helm"]
 
 const tagItems = (tags: ReadonlyArray<string>) =>
-    tags.map((tag) => ({ key: tag, content: <Chip text={tag} /> }))
+    tags.map((tag) => () => <Chip text={tag} />)
 
 /** The wrapping surface every state below renders inside, so the wrap boundary reads the same across all of them. */
 const surface = (node: React.ReactNode) => (

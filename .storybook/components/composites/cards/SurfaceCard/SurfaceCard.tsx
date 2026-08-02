@@ -958,7 +958,7 @@ const PressableGroup = ({
                     gap={gap}
                     items={items.map((item) => ({
                         key: item.key,
-                        content: <PressableGroupSkeletonTile classNames={item.classNames} />,
+                        content: () => <PressableGroupSkeletonTile classNames={item.classNames} />,
                     }))}
                 />
             </div>
@@ -1001,7 +1001,7 @@ const PressableGroup = ({
                     )
                     return {
                         key: item.key,
-                        content: tile,
+                        content: () => tile,
                     }
                 })}
             />
@@ -1101,7 +1101,7 @@ const SelectableGroup = <T extends string>({
             classNames={classNames}
             items={items.map((item) => ({
                 key: item.value,
-                content: (
+                content: () => (
                     <Radio value={item.value} isDisabled={item.isDisabled} className="w-full">
                         <Radio.Content className="block w-full">
                             {({ isSelected, isDisabled, isFocusVisible }) => {

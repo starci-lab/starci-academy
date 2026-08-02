@@ -65,24 +65,24 @@ export interface ActionBarProps {
 
 export const meta = { tier: "composite", name: "ActionBar" } as const
 
-/** A slot → its rendered `Button`, or `null` when the slot was not passed. */
+/** A slot → its buildable `Button`, or `null` when the slot was not passed. */
 const renderSlot = (
     key: string,
     slot: ActionBarSlot | undefined,
     variant: ActionBarVariant,
-    isSkeleton: boolean,
 ): ResponsiveClusterItem | null => {
     if (!slot) return null
+    const { label, prefixIcon, onPress, isDisabled, isPending } = slot
     return {
         key,
-        content: (
+        content: ({ isSkeleton }: { isSkeleton?: boolean }) => (
             <Button
-                label={slot.label}
-                prefixIcon={slot.prefixIcon}
+                label={label}
+                prefixIcon={prefixIcon}
                 variant={variant}
-                onPress={slot.onPress}
-                isDisabled={slot.isDisabled}
-                isPending={slot.isPending}
+                onPress={onPress}
+                isDisabled={isDisabled}
+                isPending={isPending}
                 isSkeleton={isSkeleton}
             />
         ),
@@ -103,9 +103,9 @@ export const ActionBar = ({
     classNames,
 }: ActionBarProps) => {
     const items = [
-        renderSlot("dismiss", dismiss, "ghost", isSkeleton),
-        renderSlot("secondary", secondary, "secondary", isSkeleton),
-        renderSlot("primary", primary, "primary", isSkeleton),
+        renderSlot("dismiss", dismiss, "ghost"),
+        renderSlot("secondary", secondary, "secondary"),
+        renderSlot("primary", primary, "primary"),
     ].filter((item): item is ResponsiveClusterItem => item != null)
 
     return (
@@ -116,6 +116,7 @@ export const ActionBar = ({
             gap={3}
             justify="end"
             classNames={classNames}
+            isSkeleton={isSkeleton}
             items={items}
         />
     )

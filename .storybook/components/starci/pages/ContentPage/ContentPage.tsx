@@ -312,7 +312,7 @@ const ContentPage = ({
 
     const contentBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => contentSections]} />
 
-    return <Container size="md" padding={6} body={contentBody} />
+    return <Container size="md" padding={6} body={() => contentBody} />
 }
 
 export { ContentPage }

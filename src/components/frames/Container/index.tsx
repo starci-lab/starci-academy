@@ -1,6 +1,6 @@
-import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { paddingClassNames, type PaddingValue, type Responsive } from "@/components/frames/_spacing"
 
 /**
@@ -99,8 +99,14 @@ export interface ContainerBaseProps {
      * `gap="page"` and MEASURED 0px. The fix in the field was `Container > StackV` —
      * i.e. the slots were a weaker copy of `StackV`, and reality already voted.
      * A measure now owns exactly one thing: how wide the reading column is.
+     *
+     * BUILDABLE — an uncalled `ComponentType<{isSkeleton?}>` the measure renders itself
+     * (`<Body isSkeleton={isSkeleton} />`), so it can build both the real and shimmer state
+     * from one source instead of a caller hand-mirroring a skeleton beside the real content.
      */
-    body?: ReactNode
+    body?: ComponentTypeWithSkeleton
+    /** `true` → passes `isSkeleton` down to `body` so the measure's content shimmers. */
+    isSkeleton?: boolean
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
@@ -137,7 +143,8 @@ export interface ContainerBaseProps {
 const ContainerBase = ({
     size = "md",
     padding = 6,
-    body,
+    body: Body,
+    isSkeleton,
     classNames,
     pattern}: ContainerBaseProps) => {
     return (
@@ -163,7 +170,7 @@ const ContainerBase = ({
                 classNames)}
         >
             <div data-principles={pattern} className={cn(...paddingClassNames(padding))}>
-                {body}
+                {Body && <Body isSkeleton={isSkeleton} />}
             </div>
         </div>
     )

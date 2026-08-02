@@ -106,47 +106,38 @@ const PhaseScarcityNoteBase = ({
             separator
             className={cn("text-warning-soft-foreground", className)}
             items={[
-                {
-                    key: "icon",
-                    content: (
-                        // §5a: icon matches the FONT-SIZE of the text beside it — `sm`
-                        // (14px) ⇒ `size-3.5`. §5.0a: below `size-5` ⇒ force
-                        // `weight="bold"` to compensate for the thin strokes.
-                        <WarningCircleIcon
-                            aria-hidden
-                            focusable="false"
-                            weight="bold"
-                            className="size-3.5 shrink-0"
-                        />
-                    ),
-                },
-                {
-                    key: "seats",
-                    content: (
-                        <Typography
-                            size="sm"
-                            weight="medium"
-                            text={`${seatsRemaining} seats left at the ${currentPhase != null ? PHASE_LABEL[currentPhase] : ""} price`}
+                () => (
+                    // §5a: icon matches the FONT-SIZE of the text beside it — `sm`
+                    // (14px) ⇒ `size-3.5`. §5.0a: below `size-5` ⇒ force
+                    // `weight="bold"` to compensate for the thin strokes.
+                    <WarningCircleIcon
+                        aria-hidden
+                        focusable="false"
+                        weight="bold"
+                        className="size-3.5 shrink-0"
+                    />
+                ),
+                () => (
+                    <Typography
+                        size="sm"
+                        weight="medium"
+                        text={`${seatsRemaining} seats left at the ${currentPhase != null ? PHASE_LABEL[currentPhase] : ""} price`}
 
-                        />
-                    ),
-                },
+                    />
+                ),
                 // The next two pieces go TOGETHER (no rise means nothing to separate
                 // it from) — but they're still TWO SEPARATE cluster items, since the
                 // `·` mark must be allowed to wrap onto the line with the piece after
                 // it when the row runs tight.
                 ...(nextPhasePriceVnd != null
                     ? [
-                        {
-                            key: "rise",
-                            content: (
-                                <Typography
-                                    size="sm"
-                                    text={`price rises to ${nextPhasePriceVnd.toLocaleString("vi-VN")}₫ after that`}
+                        () => (
+                            <Typography
+                                size="sm"
+                                text={`price rises to ${nextPhasePriceVnd.toLocaleString("vi-VN")}₫ after that`}
 
-                                />
-                            ),
-                        },
+                            />
+                        ),
                     ]
                     : []),
             ]}

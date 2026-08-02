@@ -83,14 +83,12 @@ const ContinueLearning = ({
 
     const tiles: Array<GridItem> = source.map((item) => ({
         key: item.id,
-        content: (
+        content: () => (
             <ContinueCardItem
                 isSkeleton={usingPlaceholders}
                 title={item.title}
                 subtitle={KIND_LABEL[item.kind]}
                 onPress={usingPlaceholders ? undefined : () => onSelectItem(item.id)}
-
-
             />
         ),
     }))

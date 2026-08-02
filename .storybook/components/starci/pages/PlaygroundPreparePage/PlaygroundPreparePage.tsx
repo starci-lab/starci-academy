@@ -109,14 +109,14 @@ const PlaygroundPreparePageEmpty = () => (
 
         size="md"
         padding={6}
-        body={
+        body={() => (
             <AsyncContentEmpty
 
                 icon={TerminalWindowIcon}
                 title="Exercise not found"
                 description="This exercise may have been removed, or the link is no longer valid — go back to Playground to pick another one."
             />
-        }
+        )}
     />
 )
 
@@ -221,7 +221,7 @@ const PlaygroundPreparePage = ({
 
     const prepareBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => prepareSections]} />
 
-    return <Container size="md" padding={6} body={prepareBody} />
+    return <Container size="md" padding={6} body={() => prepareBody} />
 }
 
 export { PlaygroundPreparePage }

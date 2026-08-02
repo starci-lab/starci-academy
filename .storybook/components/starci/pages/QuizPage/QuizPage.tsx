@@ -380,7 +380,7 @@ const QuizPage = ({
 
     const quizBody = <StackV gap={7} isSkeleton={isSkeleton} items={[() => quizPhases]} />
 
-    return <Container size="md" padding={6} body={quizBody} />
+    return <Container size="md" padding={6} body={() => quizBody} />
 }
 
 export { QuizPage }

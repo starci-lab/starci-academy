@@ -157,15 +157,15 @@ const ChallengePage = ({
         ),
     ]
 
-    const challengeBody = (
+    const challengeBody = ({ isSkeleton }: { isSkeleton?: boolean }) => (
         <SplitWorkspace
-
-            main={<StackV gap={7} isSkeleton={isSkeleton} items={readColumn} />}
-            aside={<StackV gap={6} isSkeleton={isSkeleton} items={actColumn} />}
+            isSkeleton={isSkeleton}
+            main={({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={7} isSkeleton={isSkeleton} items={readColumn} />}
+            aside={({ isSkeleton }: { isSkeleton?: boolean }) => <StackV gap={6} isSkeleton={isSkeleton} items={actColumn} />}
         />
     )
 
-    return <Container size="xl" padding={6} body={challengeBody} />
+    return <Container size="xl" padding={6} isSkeleton={isSkeleton} body={challengeBody} />
 }
 
 export { ChallengePage }

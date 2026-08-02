@@ -223,7 +223,7 @@ const Footer = ({
 
     return (
         <footer className={cn("border-t border-default bg-surface", className)}>
-            <Container size="xl" padding={6} body={footerBody} />
+            <Container size="xl" padding={6} body={() => footerBody} />
         </footer>
     )
 }

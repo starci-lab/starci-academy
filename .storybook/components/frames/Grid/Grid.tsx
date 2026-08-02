@@ -1,8 +1,7 @@
-import React from "react"
-import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { gapClassNames, type AllowedGap, type Responsive } from "@sb-components/frames/_spacing"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
  * `Grid` — a LAYOUT frame: the responsive grid of equal cells. One member;
@@ -24,8 +23,11 @@ import { gapClassNames, type AllowedGap, type Responsive } from "@sb-components/
 export interface GridItem {
     /** Stable React key. */
     key: string
-    /** The cell's content — a card, a tile, a stat. */
-    content: ReactNode
+    /**
+     * The cell's content — a card, a tile, a stat. Received UNCALLED (a component
+     * reference, never a built element) so the frame can render it with `isSkeleton`.
+     */
+    content: ComponentTypeWithSkeleton
     /**
      * Columns this cell spans. Default `1` (no class set — the cell stays a
      * normal one-column track). Capped at `2`: an app-wide scan found only 7
@@ -119,6 +121,8 @@ export interface GridBaseProps {
      * A frame does not KNOW its pattern — the caller does — so it is passed in.
      */
     pattern?: string
+    /** Renders every cell's skeleton form instead of its content form. */
+    isSkeleton?: boolean
 }
 
 /**
@@ -127,7 +131,7 @@ export interface GridBaseProps {
  *
  * @param props - {@link GridBaseProps}
  */
-const GridBase = ({ items, columns, gap, classNames, pattern }: GridBaseProps) => (
+const GridBase = ({ items, columns, gap, classNames, pattern, isSkeleton }: GridBaseProps) => (
     <div
         data-tier="frame"
         data-component="Grid"
@@ -145,6 +149,7 @@ const GridBase = ({ items, columns, gap, classNames, pattern }: GridBaseProps) =
         )}
     >
         {items.map((item) => {
+            const Content = item.content
             const spanClass = item.span === 2 ? SPAN_CLASS[2] : undefined
             // A spanning cell needs a real wrapper to hang `col-span-2` on — a
             // `Fragment` cannot carry a class. A plain (non-spanning) cell keeps the
@@ -154,11 +159,11 @@ const GridBase = ({ items, columns, gap, classNames, pattern }: GridBaseProps) =
                     // `min-w-0` keeps a long-text cell from blowing out its track
                     // (grid items default to `min-width:auto`).
                     <div key={item.key} className={cn("min-w-0", spanClass)}>
-                        {item.content}
+                        <Content isSkeleton={isSkeleton} />
                     </div>
                 )
             }
-            return <React.Fragment key={item.key}>{item.content}</React.Fragment>
+            return <Content key={item.key} isSkeleton={isSkeleton} />
         })}
     </div>
 )

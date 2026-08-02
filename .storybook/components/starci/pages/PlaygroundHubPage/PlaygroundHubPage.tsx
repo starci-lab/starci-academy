@@ -70,7 +70,7 @@ const PlaygroundHubPage = ({
         <Container
             size="md"
             padding={6}
-            body={<StackV gap={6} isSkeleton={isSkeleton} items={[() => hubSection]} />}
+            body={() => <StackV gap={6} isSkeleton={isSkeleton} items={[() => hubSection]} />}
         />
     )
 }

@@ -272,7 +272,7 @@ const ChallengeResultPage = ({
 
     return (
         <>
-            <Container size="xl" padding={6} body={resultBody} />
+            <Container size="xl" padding={6} body={() => resultBody} />
             <SubmissionAttemptsDrawer
 
                 isOpen={isHistoryOpen}

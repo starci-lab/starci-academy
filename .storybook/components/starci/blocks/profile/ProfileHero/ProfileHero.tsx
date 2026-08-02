@@ -216,21 +216,14 @@ const SKELETON_BADGE_KEYS = ["skeleton-badge-1", "skeleton-badge-2"] as const
 /** A wrapping row of earned-achievement chips. */
 const ProfileBadges = ({ badges, isSkeleton = false}: ProfileBadgesProps) => {
     const items = isSkeleton
-        ? SKELETON_BADGE_KEYS.map((key) => ({
-            key,
-            content: <Chip isSkeleton />,
-        }))
-        : (badges ?? []).map((badge) => ({
-            key: badge.id,
-            content: (
-                <Chip
-                    tone="accent"
-                    icon={badge.icon}
-                    text={badge.label}
-
-                />
-            ),
-        }))
+        ? SKELETON_BADGE_KEYS.map(() => () => <Chip isSkeleton />)
+        : (badges ?? []).map((badge) => () => (
+            <Chip
+                tone="accent"
+                icon={badge.icon}
+                text={badge.label}
+            />
+        ))
     return <Cluster items={items} gap={2} />
 }
 
@@ -486,36 +479,27 @@ const ProfileHero = ({
                 <Cluster
                     gap={3}
                     justify="center"
-
-
                     items={[
                         ...(isSkeleton || location
                             ? [
-                                {
-                                    key: "location",
-                                    content: (
-                                        <InlineIconLabel
-                                            icon={MapPinIcon}
-                                            isSkeleton={isSkeleton}
-                                            label={location}
-                                        />
-                                    ),
-                                },
+                                () => (
+                                    <InlineIconLabel
+                                        icon={MapPinIcon}
+                                        isSkeleton={isSkeleton}
+                                        label={location}
+                                    />
+                                ),
                             ]
                             : []),
                         ...(isSkeleton || workMode
                             ? [
-                                {
-                                    key: "workMode",
-                                    content: (
-                                        <EnumChip
-                                            value={(workMode ?? "remote") as ProfileWorkMode}
-                                            map={WORK_MODE_MAP}
-                                            isSkeleton={isSkeleton}
-
-                                        />
-                                    ),
-                                },
+                                () => (
+                                    <EnumChip
+                                        value={(workMode ?? "remote") as ProfileWorkMode}
+                                        map={WORK_MODE_MAP}
+                                        isSkeleton={isSkeleton}
+                                    />
+                                ),
                             ]
                             : []),
                     ]}

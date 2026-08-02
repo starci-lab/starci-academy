@@ -338,7 +338,7 @@ const FlashcardReviewPage = ({
 
     const reviewBody = <StackV gap={7} isSkeleton={isSkeleton} items={[() => reviewPhases]} />
 
-    return <Container size="md" padding={6} body={reviewBody} />
+    return <Container size="md" padding={6} body={() => reviewBody} />
 }
 
 export { FlashcardReviewPage }

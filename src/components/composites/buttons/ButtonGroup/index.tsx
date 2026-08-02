@@ -1,4 +1,3 @@
-import type { ReactNode } from "react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Button } from "@/components/atoms/buttons/Button"
 import { type ButtonAlign, type ButtonSize, type ButtonVariant, type IconComponent } from "@/components/atoms/buttons/Button/button-tokens"
@@ -75,6 +74,7 @@ export const ButtonGroup = ({
         gap={3}
         justify={align}
         classNames={classNames}
+        isSkeleton={isSkeleton}
         items={items.map((item): ResponsiveClusterItem => {
             const shared = {
                 variant: item.variant,
@@ -83,23 +83,30 @@ export const ButtonGroup = ({
                 isDisabled: item.isDisabled,
                 isPending: item.isPending,
             } as const
-            let content: ReactNode
-            if (item.label != null) {
-                content = <Button label={item.label} prefixIcon={item.prefixIcon} isSkeleton={isSkeleton} {...shared} />
-            } else if (item.prefixIcon != null) {
-                content = (
-                    <Button
-                        isIconOnly
-                        prefixIcon={item.prefixIcon}
-                        ariaLabel={item.ariaLabel ?? ""}
-                        isSkeleton={isSkeleton}
-                        {...shared}
-                    />
-                )
-            } else {
-                content = null
+            const { label, prefixIcon, ariaLabel } = item
+            if (label != null) {
+                return {
+                    key: item.key,
+                    content: ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                        <Button label={label} prefixIcon={prefixIcon} isSkeleton={isSkeleton} {...shared} />
+                    ),
+                }
             }
-            return { key: item.key, content }
+            if (prefixIcon != null) {
+                return {
+                    key: item.key,
+                    content: ({ isSkeleton }: { isSkeleton?: boolean }) => (
+                        <Button
+                            isIconOnly
+                            prefixIcon={prefixIcon}
+                            ariaLabel={ariaLabel ?? ""}
+                            isSkeleton={isSkeleton}
+                            {...shared}
+                        />
+                    ),
+                }
+            }
+            return { key: item.key, content: () => null }
         })}
     />
 )

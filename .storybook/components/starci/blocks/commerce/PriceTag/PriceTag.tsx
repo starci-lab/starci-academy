@@ -218,67 +218,55 @@ const PriceTagBase = ({
             align="baseline"
 
             items={[
-                {
-                    key: "amount",
-                    // The amount goes through the ATOM `Typography` (§9c), NOT raw
-                    // HeroUI — thanks to that, `isSkeleton` flows straight into it instead
-                    // of branching off to build a separate shimmer bar.
-                    content: (
-                        <Typography
-                            size={AMOUNT_TYPE[emphasis]}
-                            weight="bold"
-                            isSkeleton={isSkeleton}
-                            classNames={isSkeleton ? ["w-2/3"] : undefined}
+                // The amount goes through the ATOM `Typography` (§9c), NOT raw
+                // HeroUI — thanks to that, `isSkeleton` flows straight into it instead
+                // of branching off to build a separate shimmer bar.
+                () => (
+                    <Typography
+                        size={AMOUNT_TYPE[emphasis]}
+                        weight="bold"
+                        isSkeleton={isSkeleton}
+                        classNames={isSkeleton ? ["w-2/3"] : undefined}
 
-                            text={formatPrice(discounted, currency)}
-                        />
-                    ),
-                },
+                        text={formatPrice(discounted, currency)}
+                    />
+                ),
                 ...(hasSaving
-                    ? [{
-                        key: "original",
-                        content: (
-                            <Typography
-                                size={ORIGINAL_TYPE[emphasis]}
-                                color="muted"
-                                isSkeleton={isSkeleton}
-                                isStruck
-                                classNames={isSkeleton ? ["w-1/3"] : undefined}
+                    ? [() => (
+                        <Typography
+                            size={ORIGINAL_TYPE[emphasis]}
+                            color="muted"
+                            isSkeleton={isSkeleton}
+                            isStruck
+                            classNames={isSkeleton ? ["w-1/3"] : undefined}
 
-                                text={formatPrice(original, currency)}
-                            />
-                        ),
-                    }]
+                            text={formatPrice(original, currency)}
+                        />
+                    )]
                     : []),
                 // While resting: the chip still holds its place but is NOT wrapped in a
                 // Popover — there's no data yet to open, and a pressable control while
                 // loading is a false promise.
                 ...(isSkeleton
-                    ? [{
-                        key: "chip",
-                        content: <Chip isSkeleton />,
-                    }]
+                    ? [() => <Chip isSkeleton />]
                     : savePercent > 0
-                        ? [{
-                            key: "chip",
-                            content: (
-                                <Popover>
-                                    <Popover.Trigger
-                                        aria-label="Price breakdown"
-                                        className="cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        ? [() => (
+                            <Popover>
+                                <Popover.Trigger
+                                    aria-label="Price breakdown"
+                                    className="cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
 
-                                    >
-                                        {chip}
-                                    </Popover.Trigger>
-                                    <Popover.Content
-                                        className="max-w-xs"
+                                >
+                                    {chip}
+                                </Popover.Trigger>
+                                <Popover.Content
+                                    className="max-w-xs"
 
-                                    >
-                                        {breakdownContent}
-                                    </Popover.Content>
-                                </Popover>
-                            ),
-                        }]
+                                >
+                                    {breakdownContent}
+                                </Popover.Content>
+                            </Popover>
+                        )]
                         : []),
             ]}
         />

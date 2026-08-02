@@ -423,7 +423,7 @@ const MockInterviewPage = ({
 
     const interviewBody = <StackV gap={7} items={[() => interviewPhases]} />
 
-    return <Container size="md" padding={6} body={interviewBody} />
+    return <Container size="md" padding={6} body={() => interviewBody} />
 }
 
 export { MockInterviewPage }

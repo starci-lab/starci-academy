@@ -112,14 +112,14 @@ const ModulePageEmpty = () => (
 
         size="md"
         padding={6}
-        body={
+        body={() => (
             <AsyncContentEmpty
 
                 icon={StackIcon}
                 title="This module has no lessons yet"
                 description="Content is still being written — check back later."
             />
-        }
+        )}
     />
 )
 
@@ -236,9 +236,11 @@ const ModulePage = ({
         </>
     )
 
-    const moduleBody = <StackV gap={7} isSkeleton={isSkeleton} items={[() => moduleSections]} />
+    const moduleBody = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+        <StackV gap={7} isSkeleton={isSkeleton} items={[() => moduleSections]} />
+    )
 
-    return <Container size="md" padding={6} body={moduleBody} />
+    return <Container size="md" padding={6} isSkeleton={isSkeleton} body={moduleBody} />
 }
 
 export { ModulePage }

@@ -255,7 +255,7 @@ const Body = ({
 
                                 items={tasks.map((task) => ({
                                     key: task.id,
-                                    content: (
+                                    content: () => (
                                         <ContinueCardItem
                                             title={`${task.sortIndex}. ${task.title}`}
                                             subtitle={TASK_SUBTITLE[task.subtitleState]}

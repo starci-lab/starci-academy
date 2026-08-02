@@ -204,48 +204,39 @@ const LessonVideoModal = ({
                 justify="center"
 
                 items={[
-                    {
-                        key: "kind",
-                        content: (
-                            <EnumChip
-                                value={video?.kind ?? LessonVideoKind.RawStream}
-                                map={KIND_MAP}
-                                isSkeleton={isLoading}
+                    () => (
+                        <EnumChip
+                            value={video?.kind ?? LessonVideoKind.RawStream}
+                            map={KIND_MAP}
+                            isSkeleton={isLoading}
 
-                            />
-                        ),
-                    },
-                    {
-                        key: "duration",
-                        content: (
-                            <InlineIconLabel
-                                icon={ClockIcon}
-                                tone="default"
-                                size="sm"
-                                isSkeleton={isLoading}
-                                label={formatDuration(video?.durationMs ?? 0)}
-                            />
-                        ),
-                    },
-                    {
-                        key: "hostPlatform",
-                        content: isLoading ? (
-                            <Typography
-                                size="sm"
-                                color="muted"
-                                isSkeleton
-                                classNames={["w-1/3"]}
+                        />
+                    ),
+                    () => (
+                        <InlineIconLabel
+                            icon={ClockIcon}
+                            tone="default"
+                            size="sm"
+                            isSkeleton={isLoading}
+                            label={formatDuration(video?.durationMs ?? 0)}
+                        />
+                    ),
+                    () => (isLoading ? (
+                        <Typography
+                            size="sm"
+                            color="muted"
+                            isSkeleton
+                            classNames={["w-1/3"]}
 
-                            />
-                        ) : (
-                            <Typography
-                                size="sm"
-                                color="muted"
-                                text={HOST_PLATFORM_LABEL[video?.hostPlatform ?? VideoHostPlatform.Youtube]}
+                        />
+                    ) : (
+                        <Typography
+                            size="sm"
+                            color="muted"
+                            text={HOST_PLATFORM_LABEL[video?.hostPlatform ?? VideoHostPlatform.Youtube]}
 
-                            />
-                        ),
-                    },
+                        />
+                    )),
                 ]}
             />
         ),

@@ -11,8 +11,9 @@ import {
     type AsyncContentErrorProps,
 } from "@sb-components/composites/async/AsyncContent/AsyncContent"
 import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
-import { Cluster, type ClusterItem } from "@sb-components/frames/Cluster/Cluster"
+import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 
 /**
  * `CourseQaQuestionList` — the course-wide Q&A roll-up region: the async lifecycle
@@ -205,32 +206,23 @@ const QuestionPreviewRow = ({ question, currentUserId }: QuestionPreviewRowProps
     // ONE chip for the row's classification axis (status — the thing worth scanning
     // the list for); the scope rides as plain muted text beside it instead of a
     // second chip (eslint `starci-fe/no-adjacent-chip`, ★7).
-    const chips: Array<ClusterItem> = [
-        {
-            key: "scope",
-            content: <Typography size="xs" color="muted" text={scopeLabel(question.scope)} />,
-        },
-        {
-            key: "status",
-            content: (
-                <Chip
-                    tone={isAnswered ? "success" : "default"}
-                    text={statusLabel(question.replyCount, question.answeredByFounder)}
+    const chips: Array<ComponentTypeWithSkeleton> = [
+        () => <Typography size="xs" color="muted" text={scopeLabel(question.scope)} />,
+        () => (
+            <Chip
+                tone={isAnswered ? "success" : "default"}
+                text={statusLabel(question.replyCount, question.answeredByFounder)}
 
-                />
-            ),
-        },
+            />
+        ),
     ]
     if (isAnswered) {
         // no icon here — §5a.2: a chat-bubble needs an ASSOCIATION step to read as
         // "replies" (not a universal symbol like ✓/🔒), and the text already carries
         // the fact on its own (same fix already applied to QaQuestionThread/QaConversationHeader).
-        chips.push({
-            key: "replyCount",
-            content: (
-                <Typography size="xs" color="muted" text={`${question.replyCount} replies`} />
-            ),
-        })
+        chips.push(() => (
+            <Typography size="xs" color="muted" text={`${question.replyCount} replies`} />
+        ))
     }
 
     const nameLine = (

@@ -156,30 +156,24 @@ const PremiumGateModal = ({
             align="center"
 
             items={[
-                {
-                    key: "icon",
-                    content: (
-                        <CheckCircleIcon
-                            aria-hidden
-                            focusable="false"
-                            weight="bold"
-                            // No `data-anat-part`: a bare Phosphor glyph has no
-                            // story to jump to (`PhaseScarcityNote`'s own
-                            // convention) — badging it would dead-end the tree.
-                            className="size-3.5 shrink-0 text-success-soft-foreground"
-                        />
-                    ),
-                },
-                {
-                    key: "label",
-                    content: (
-                        <Typography
-                            size="sm"
-                            text={item.label}
+                () => (
+                    <CheckCircleIcon
+                        aria-hidden
+                        focusable="false"
+                        weight="bold"
+                        // No `data-anat-part`: a bare Phosphor glyph has no
+                        // story to jump to (`PhaseScarcityNote`'s own
+                        // convention) — badging it would dead-end the tree.
+                        className="size-3.5 shrink-0 text-success-soft-foreground"
+                    />
+                ),
+                () => (
+                    <Typography
+                        size="sm"
+                        text={item.label}
 
-                        />
-                    ),
-                },
+                    />
+                ),
             ]}
         />
     ))

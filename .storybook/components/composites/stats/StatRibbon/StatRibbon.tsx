@@ -94,24 +94,21 @@ export const StatRibbon = ({
                 at="sm"
                 gap={4}
                 className="@app-sm:-m-3"
-                items={cells.map((item, index) => ({
-                    key: item.key,
-                    content: (
-                        <div
+                items={cells.map((item, index) => () => (
+                    <div
 
-                            className={cn(
-                                "min-w-0 @app-sm:flex-1 @app-sm:px-6 @app-sm:py-3 @app-sm:first:pl-3 @app-sm:last:pr-3",
-                                index > 0 && "@app-sm:border-l @app-sm:border-default",
-                            )}
-                        >
-                            {isSkeleton ? (
-                                <StatPair isSkeleton valueType={valueType} />
-                            ) : (
-                                <StatPair value={(item as StatRibbonItem).value} label={(item as StatRibbonItem).label} valueType={valueType} />
-                            )}
-                        </div>
-                    ),
-                }))}
+                        className={cn(
+                            "min-w-0 @app-sm:flex-1 @app-sm:px-6 @app-sm:py-3 @app-sm:first:pl-3 @app-sm:last:pr-3",
+                            index > 0 && "@app-sm:border-l @app-sm:border-default",
+                        )}
+                    >
+                        {isSkeleton ? (
+                            <StatPair isSkeleton valueType={valueType} />
+                        ) : (
+                            <StatPair value={(item as StatRibbonItem).value} label={(item as StatRibbonItem).label} valueType={valueType} />
+                        )}
+                    </div>
+                ))}
             />
         </Card>
     )

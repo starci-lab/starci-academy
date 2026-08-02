@@ -30,8 +30,8 @@ type Story = StoryObj<typeof Grid>
 const cellItems = (labels: ReadonlyArray<string>) =>
     labels.map((label) => ({
         key: label,
-        content: (
-            <SurfaceCard body={() => <Typography size="sm" text={label} />} />
+        content: ({ isSkeleton }: { isSkeleton?: boolean }) => (
+            <SurfaceCard isSkeleton={isSkeleton} body={() => <Typography size="sm" text={label} />} />
         ),
     }))
 

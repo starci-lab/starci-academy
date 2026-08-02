@@ -216,7 +216,7 @@ export const _CourseContents = ({
         <Container
             size="md"
             pattern="center-measure"
-            body={
+            body={() => (
                 <StackV
                     gap={7}
                     items={[
@@ -322,7 +322,7 @@ export const _CourseContents = ({
                         ),
                     ]}
                 />
-            }
+            )}
         />
     )
 

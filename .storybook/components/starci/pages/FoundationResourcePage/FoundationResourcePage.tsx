@@ -153,9 +153,11 @@ const FoundationResourcePage = ({
         </>
     )
 
-    const resourceBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => resourceSections]} />
+    const resourceBody = ({ isSkeleton }: { isSkeleton?: boolean }) => (
+        <StackV gap={6} isSkeleton={isSkeleton} items={[() => resourceSections]} />
+    )
 
-    return <Container size="md" padding={6} body={resourceBody} />
+    return <Container size="md" padding={6} isSkeleton={isSkeleton} body={resourceBody} />
 }
 
 export { FoundationResourcePage }

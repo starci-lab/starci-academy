@@ -83,8 +83,8 @@ export const Default: Story = {
                             <Frame width="60rem" label="container 960px, at or above @app-md, two columns">
                                 <RailShell
 
-                                    rail={<Box label="rail — identity, 288px, never shrinks" lines={2} />}
-                                    body={<Box label="body — the open tab, absorbs the rest" lines={4} />}
+                                    rail={() => <Box label="rail — identity, 288px, never shrinks" lines={2} />}
+                                    body={() => <Box label="body — the open tab, absorbs the rest" lines={4} />}
                                 />
                             </Frame>
                         ),
@@ -117,8 +117,8 @@ export const Breakpoint: Story = {
                             <Frame width="40rem" label="container 640px, below @app-md, stacks">
                                 <RailShell
 
-                                    rail={<Box label="rail on top, full width" lines={1} />}
-                                    body={<Box label="body below" lines={3} />}
+                                    rail={() => <Box label="rail on top, full width" lines={1} />}
+                                    body={() => <Box label="body below" lines={3} />}
                                 />
                             </Frame>
                         ),
@@ -131,8 +131,8 @@ export const Breakpoint: Story = {
                             <Frame width="60rem" label="container 960px, at or above @app-md, two columns">
                                 <RailShell
 
-                                    rail={<Box label="rail — 288px" lines={1} />}
-                                    body={<Box label="body — the rest" lines={3} />}
+                                    rail={() => <Box label="rail — 288px" lines={1} />}
+                                    body={() => <Box label="body — the rest" lines={3} />}
                                 />
                             </Frame>
                         ),
@@ -168,8 +168,8 @@ export const IsRailSticky: Story = {
                             <Frame width="60rem" label="rail scrolls with the page">
                                 <RailShell
 
-                                    rail={<Box label="rail — scrolls away" lines={1} />}
-                                    body={<Box label="body" lines={3} />}
+                                    rail={() => <Box label="rail — scrolls away" lines={1} />}
+                                    body={() => <Box label="body" lines={3} />}
                                 />
                             </Frame>
                         ),
@@ -187,8 +187,8 @@ export const IsRailSticky: Story = {
                                 <RailShell
 
                                     isRailSticky
-                                    rail={<Box label="rail — pinned" lines={1} />}
-                                    body={<Box label="body" lines={3} />}
+                                    rail={() => <Box label="rail — pinned" lines={1} />}
+                                    body={() => <Box label="body" lines={3} />}
                                 />
                             </Frame>
                         ),

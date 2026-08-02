@@ -11,8 +11,9 @@ import { QaConversationHeader } from "@sb-components/starci/blocks/learn/QaConve
 import { QaChatBubble } from "@sb-components/starci/blocks/learn/QaChatBubble/QaChatBubble"
 import { QaReactionBar } from "@sb-components/starci/blocks/learn/QaReactionBar/QaReactionBar"
 import { QaMessageBubble } from "@sb-components/starci/blocks/learn/QaMessageBubble/QaMessageBubble"
-import { Cluster, type ClusterItem } from "@sb-components/frames/Cluster/Cluster"
+import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
  * `QaQuestionThread` — one course-Q&A conversation. Collapsed, it is a
@@ -146,42 +147,36 @@ interface QaQuestionChipsOptions {
  * The scope + status chip pair shared by the collapsed row and the expanded
  * question bubble — built ONCE so the two never drift on wording.
  */
-const buildQuestionChips = (question: QaQuestionThreadQuestion, options: QaQuestionChipsOptions): Array<ClusterItem> => {
+const buildQuestionChips = (question: QaQuestionThreadQuestion, options: QaQuestionChipsOptions): Array<ComponentTypeWithSkeleton> => {
     const { isSkeleton, includeReplyCount } = options
 
     if (isSkeleton) {
         return [
-            { key: "scope", content: <Chip isSkeleton /> },
-            { key: "status", content: <Chip isSkeleton /> },
+            () => <Chip isSkeleton />,
+            () => <Chip isSkeleton />,
         ]
     }
 
-    const items: Array<ClusterItem> = [
-        { key: "scope", content: <Chip tone="default" text={scopeLabel(question.scope)} /> },
-        {
-            key: "status",
-            content: (
-                <Chip
-                    tone={question.replyCount > 0 ? "success" : "default"}
-                    text={statusLabel(question.replyCount, question.answeredByFounder)}
+    const items: Array<ComponentTypeWithSkeleton> = [
+        () => <Chip tone="default" text={scopeLabel(question.scope)} />,
+        () => (
+            <Chip
+                tone={question.replyCount > 0 ? "success" : "default"}
+                text={statusLabel(question.replyCount, question.answeredByFounder)}
 
-                />
-            ),
-        },
+            />
+        ),
     ]
 
     if (includeReplyCount && question.replyCount > 0) {
-        items.push({
-            key: "replyCount",
-            content: (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    text={`${question.replyCount} replies`}
+        items.push(() => (
+            <Typography
+                size="xs"
+                color="muted"
+                text={`${question.replyCount} replies`}
 
-                />
-            ),
-        })
+            />
+        ))
     }
 
     return items

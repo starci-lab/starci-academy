@@ -13,8 +13,9 @@ import {
 } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { AsyncContentEmpty } from "@sb-components/composites/async/AsyncContent/AsyncContent"
 import { Grid, type GridItem } from "@sb-components/frames/Grid/Grid"
-import { Cluster, type ClusterItem } from "@sb-components/frames/Cluster/Cluster"
+import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/blocks/learn/VariantChip/VariantChip"
 
 /**
@@ -138,17 +139,11 @@ const FlashcardDeckList = ({
 
     /** One grid tile's content — computed only when it will actually render (skeleton tiles never see it). */
     const deckTileBody = (deck: FlashcardDeckListDeck) => {
-        const chips: Array<ClusterItem> = [
-            {
-                key: "difficulty",
-                content: <VariantChipDifficulty difficulty={deck.difficulty} />,
-            },
+        const chips: Array<ComponentTypeWithSkeleton> = [
+            () => <VariantChipDifficulty difficulty={deck.difficulty} />,
         ]
         if (deck.dueCount) {
-            chips.push({
-                key: "due",
-                content: <Chip tone="warning" text={`${deck.dueCount} due`} />,
-            })
+            chips.push(() => <Chip tone="warning" text={`${deck.dueCount} due`} />)
         }
         const titleAndDescription = (
             <>
@@ -209,7 +204,7 @@ const FlashcardDeckList = ({
 
     const tiles: Array<GridItem> = source.map((deck) => ({
         key: deck.id,
-        content: (
+        content: () => (
             <div>
                 <SurfaceCard
                     isSkeleton={isSkeleton}
@@ -228,17 +223,11 @@ const FlashcardDeckList = ({
     }))
 
     const rows: Array<SurfaceCardListItem> = source.map((deck) => {
-        const metaChips: Array<ClusterItem> = []
+        const metaChips: Array<ComponentTypeWithSkeleton> = []
         if (!isSkeleton) {
-            metaChips.push({
-                key: "difficulty",
-                content: <VariantChipDifficulty difficulty={deck.difficulty} />,
-            })
+            metaChips.push(() => <VariantChipDifficulty difficulty={deck.difficulty} />)
             if (deck.dueCount) {
-                metaChips.push({
-                    key: "due",
-                    content: <Chip tone="warning" text={`${deck.dueCount} due`} />,
-                })
+                metaChips.push(() => <Chip tone="warning" text={`${deck.dueCount} due`} />)
             }
         }
         return {

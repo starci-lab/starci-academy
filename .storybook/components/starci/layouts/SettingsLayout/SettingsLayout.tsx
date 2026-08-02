@@ -68,7 +68,7 @@ const SettingsLayout = ({
                 size="md"
                 padding={6}
                 classNames={["min-w-0", "flex-1"]}
-                body={children}
+                body={() => children}
             />
         ),
     ]

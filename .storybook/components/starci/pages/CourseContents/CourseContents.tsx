@@ -106,13 +106,13 @@ const CourseContentsEmpty = () => (
     <Container
         size="md"
         padding={6}
-        body={
+        body={() => (
             <AsyncContentEmpty
                 icon={StackIcon}
                 title="This course has no lessons yet"
                 description="Content is still being written — check back later."
             />
-        }
+        )}
     />
 )
 
@@ -254,5 +254,5 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
         />
     )
 
-    return <Container size="md" padding={6} body={body} />
+    return <Container size="md" padding={6} body={() => body} />
 }

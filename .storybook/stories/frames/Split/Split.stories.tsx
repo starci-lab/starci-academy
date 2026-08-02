@@ -59,8 +59,8 @@ export const Default: Story = {
                             <div data-tier="fixture" className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
                                 <Split
                                     gap={4}
-                                    start={<Typography size="sm" text="System Design course" weight="medium" truncate />}
-                                    end={<Button label="Continue" size="sm" />}
+                                    start={() => <Typography size="sm" text="System Design course" weight="medium" truncate />}
+                                    end={() => <Button label="Continue" size="sm" />}
                                 />
                             </div>
                         ),
@@ -99,8 +99,8 @@ export const Align: Story = {
                                 <Split
                                     gap={4}
                                     align="center"
-                                    start={<StackV gap={1} items={[() => lessonMeta]} />}
-                                    end={<Button label="Study" size="sm" />}
+                                    start={() => <StackV gap={1} items={[() => lessonMeta]} />}
+                                    end={() => <Button label="Study" size="sm" />}
                                 />
                             </div>
                         ),
@@ -119,8 +119,8 @@ export const Align: Story = {
                                 <Split
                                     gap={4}
                                     align="start"
-                                    start={<StackV gap={1} items={[() => lessonMeta]} />}
-                                    end={<Button label="Study" size="sm" />}
+                                    start={() => <StackV gap={1} items={[() => lessonMeta]} />}
+                                    end={() => <Button label="Study" size="sm" />}
                                 />
                             </div>
                         ),
@@ -139,8 +139,8 @@ export const Align: Story = {
                                 <Split
                                     gap={4}
                                     align="end"
-                                    start={<StackV gap={1} items={[() => lessonMeta]} />}
-                                    end={<Button label="Study" size="sm" />}
+                                    start={() => <StackV gap={1} items={[() => lessonMeta]} />}
+                                    end={() => <Button label="Study" size="sm" />}
                                 />
                             </div>
                         ),
@@ -159,8 +159,8 @@ export const Align: Story = {
                                 <Split
                                     gap={4}
                                     align="stretch"
-                                    start={<StackV gap={1} items={[() => lessonMeta]} />}
-                                    end={<Button label="Study" size="sm" />}
+                                    start={() => <StackV gap={1} items={[() => lessonMeta]} />}
+                                    end={() => <Button label="Study" size="sm" />}
                                 />
                             </div>
                         ),

@@ -16,4 +16,13 @@ import type { ComponentType } from "react"
  * as a component hands rendering to the caller; a `string` keeps the tone with the composite, which
  * is where the no-guess colour rule requires it.
  */
-export type ComponentTypeWithSkeleton<P = Record<never, never>> = ComponentType<P & { isSkeleton?: boolean }>
+export type ComponentTypeWithSkeleton<P = Record<never, never>> = ComponentType<SkeletonProps<P>>
+
+/**
+ * The props a slot/item component receives — the skeleton flag, plus any extra `P`. Use it to type
+ * the destructured param of an INLINE item so it stays assignable to `ComponentTypeWithSkeleton`
+ * (an untyped `({ isSkeleton }: { isSkeleton?: boolean }) =>` infers implicit-any and fails):
+ *
+ *   items={[({ isSkeleton }: SkeletonProps) => <A isSkeleton={isSkeleton} />]}
+ */
+export type SkeletonProps<P = Record<never, never>> = P & { isSkeleton?: boolean }

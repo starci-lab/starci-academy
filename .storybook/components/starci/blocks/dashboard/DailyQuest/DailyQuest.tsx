@@ -79,8 +79,8 @@ const TASK_LABEL: Record<DailyQuestTaskKey, string> = {
 const rowBody = (task: DailyQuestTask) => (
     <Split
         gap={3}
-        start={<Typography size="sm" text={TASK_LABEL[task.key]} />}
-        end={<Typography size="xs" color="muted" text={`${task.current}/${task.target}`} />}
+        start={() => <Typography size="sm" text={TASK_LABEL[task.key]} />}
+        end={() => <Typography size="xs" color="muted" text={`${task.current}/${task.target}`} />}
 
     />
 )

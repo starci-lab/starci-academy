@@ -1,4 +1,3 @@
-import type { ReactNode } from "react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { type ButtonAlign, type ButtonSize, type ButtonVariant, type IconComponent } from "@sb-components/atoms/buttons/Button/button-tokens"
@@ -84,21 +83,22 @@ export const ButtonGroup = ({
                 isDisabled: item.isDisabled,
                 isPending: item.isPending,
             } as const
-            let content: ReactNode
-            if (item.label != null) {
-                content = <Button label={item.label} prefixIcon={item.prefixIcon} isSkeleton={isSkeleton} {...shared} />
-            } else if (item.prefixIcon != null) {
-                content = (
-                    <Button
-                        isIconOnly
-                        prefixIcon={item.prefixIcon}
-                        ariaLabel={item.ariaLabel ?? ""}
-                        isSkeleton={isSkeleton}
-                        {...shared}
-                    />
-                )
-            } else {
-                content = null
+            const content = () => {
+                if (item.label != null) {
+                    return <Button label={item.label} prefixIcon={item.prefixIcon} isSkeleton={isSkeleton} {...shared} />
+                }
+                if (item.prefixIcon != null) {
+                    return (
+                        <Button
+                            isIconOnly
+                            prefixIcon={item.prefixIcon}
+                            ariaLabel={item.ariaLabel ?? ""}
+                            isSkeleton={isSkeleton}
+                            {...shared}
+                        />
+                    )
+                }
+                return null
             }
             return { key: item.key, content }
         })}

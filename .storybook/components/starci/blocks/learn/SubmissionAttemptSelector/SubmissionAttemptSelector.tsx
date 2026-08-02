@@ -98,10 +98,7 @@ const AttemptRowSkeleton = ({  }: AttemptRowSkeletonProps) => (
     <Cluster
         gap={3}
 
-        items={Array.from({ length: SKELETON_ITEM_COUNT }, (_, index) => ({
-            key: `skeleton-${index}`,
-            content: <Button isSkeleton size="sm" />,
-        }))}
+        items={Array.from({ length: SKELETON_ITEM_COUNT }, () => () => <Button isSkeleton size="sm" />)}
     />
 )
 

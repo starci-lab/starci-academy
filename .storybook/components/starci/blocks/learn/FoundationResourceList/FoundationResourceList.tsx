@@ -10,7 +10,8 @@ import {
 } from "@sb-components/composites/async/AsyncContent/AsyncContent"
 import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Pagination } from "@sb-components/atoms/navigation/Pagination/Pagination"
-import { Cluster, type ClusterItem } from "@sb-components/frames/Cluster/Cluster"
+import { Cluster } from "@sb-components/frames/Cluster/Cluster"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -91,18 +92,10 @@ const SKELETON_ROW_COUNT = 4
 
 /** One row's kind chip + optional recommended chip, in that order. */
 const resourceMeta = (resource: FoundationResourceItem) => {
-    const chips: Array<ClusterItem> = [
-        {
-            key: "kind",
-            content: <EnumChip value={resource.kind} map={KIND_CHIP_MAP} />,
-        },
+    const chips: Array<ComponentTypeWithSkeleton> = [
+        () => <EnumChip value={resource.kind} map={KIND_CHIP_MAP} />,
+        ...(resource.isRecommended ? [() => <Chip tone="accent" text={RECOMMENDED_LABEL} />] : []),
     ]
-    if (resource.isRecommended) {
-        chips.push({
-            key: "recommended",
-            content: <Chip tone="accent" text={RECOMMENDED_LABEL} />,
-        })
-    }
     return <Cluster gap={3} items={chips} />
 }
 

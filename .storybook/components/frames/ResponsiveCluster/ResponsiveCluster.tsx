@@ -1,8 +1,8 @@
-import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { GAP_CLASS, JUSTIFY_CLASS, type AllowedGap, type LayoutJustify } from "@sb-components/frames/_spacing"
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 
 /**
  * `ResponsiveCluster` — a FRAME: a repeat-list track that is a full-width COLUMN
@@ -30,8 +30,12 @@ import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/Re
 export interface ResponsiveClusterItem {
     /** Stable React key. */
     key: string
-    /** The cell's content, fully built by the caller (the frame places, never styles). */
-    content: ReactNode
+    /**
+     * The cell's content, fully built by the caller (the frame places, never styles).
+     * Received UNCALLED (a component reference, never a built element) so the frame
+     * can render it with `isSkeleton`.
+     */
+    content: ComponentTypeWithSkeleton
 }
 
 /** Props for {@link ResponsiveCluster}. */
@@ -64,6 +68,8 @@ export interface ResponsiveClusterProps {
      * `pattern` doc for the full contract.
      */
     pattern?: string
+    /** Renders every cell's skeleton form instead of its content form. */
+    isSkeleton?: boolean
 }
 
 /** Switch step → the class that flips the track from a column to a row from that step up. */
@@ -97,6 +103,7 @@ const ResponsiveClusterBase = ({
     "data-tier": dataTier,
     "data-component": dataComponent,
     pattern,
+    isSkeleton,
 }: ResponsiveClusterProps) => (
     <div
         data-tier={dataTier}
@@ -111,11 +118,14 @@ const ResponsiveClusterBase = ({
             classNames,
         )}
     >
-        {items.map((item) => (
-            <div key={item.key} className={cn("w-full", ITEM_WIDTH_SWITCH_CLASS[at])}>
-                {item.content}
-            </div>
-        ))}
+        {items.map((item) => {
+            const Content = item.content
+            return (
+                <div key={item.key} className={cn("w-full", ITEM_WIDTH_SWITCH_CLASS[at])}>
+                    <Content isSkeleton={isSkeleton} />
+                </div>
+            )
+        })}
     </div>
 )
 

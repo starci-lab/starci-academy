@@ -1,6 +1,6 @@
-import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { ALIGN_CLASS, gapClassNames, type AllowedGap, type LayoutAlign, type Responsive } from "@sb-components/frames/_spacing"
 
 /**
@@ -21,13 +21,16 @@ export interface SplitBaseProps {
     /**
      * LEADING side (the reading-flow anchor: title, label, primary text). Rendered
      * `min-w-0` so long text truncates INSIDE this side instead of pushing `end` out.
+     * An UNCALLED component reference — the frame mounts it itself
+     * (`<Start isSkeleton={isSkeleton} />`), never a built `ReactNode`.
      */
-    start: ReactNode
+    start: ComponentTypeWithSkeleton
     /**
      * TRAILING side (action, value, meta). Rendered `shrink-0` — the trailing
-     * control keeps its size and the leading side gives way first.
+     * control keeps its size and the leading side gives way first. An UNCALLED
+     * component reference, mounted the same way as `start`.
      */
-    end: ReactNode
+    end: ComponentTypeWithSkeleton
     /**
      * Seam between the two sides on the house gap scale — REQUIRED. It is the MINIMUM
      * distance: `justify-between` pushes the sides apart beyond it.
@@ -49,6 +52,8 @@ export interface SplitBaseProps {
      * A frame does not KNOW its pattern — the caller does — so it is passed in.
      */
     pattern?: string
+    /** `true` mounts both sides in their loading state. */
+    isSkeleton?: boolean
 }
 
 /**
@@ -63,30 +68,35 @@ const SplitBase = ({
     align = "center",
     classNames,
     pattern,
-}: SplitBaseProps) => (
-    <div
-        data-tier="frame"
-        data-component="Split"
+    isSkeleton,
+}: SplitBaseProps) => {
+    const Start = start
+    const End = end
+    return (
+        <div
+            data-tier="frame"
+            data-component="Split"
 
-        data-principles={pattern}
-        className={cn(
-            "flex w-full",
-            ...gapClassNames(gap),
-            "flex-row justify-between",
-            ALIGN_CLASS[align],
-            classNames,
-        )}
-    >
-        {/* `start`/`end` are CALLER slots — whatever they render (a `Typography`, a
-            `Button`, a `StackV`) belongs to the caller, not to this frame. */}
-        <div className="min-w-0">
-            {start}
+            data-principles={pattern}
+            className={cn(
+                "flex w-full",
+                ...gapClassNames(gap),
+                "flex-row justify-between",
+                ALIGN_CLASS[align],
+                classNames,
+            )}
+        >
+            {/* `start`/`end` are CALLER slots — whatever they render (a `Typography`, a
+                `Button`, a `StackV`) belongs to the caller, not to this frame. */}
+            <div className="min-w-0">
+                <Start isSkeleton={isSkeleton} />
+            </div>
+            <div className="shrink-0">
+                <End isSkeleton={isSkeleton} />
+            </div>
         </div>
-        <div className="shrink-0">
-            {end}
-        </div>
-    </div>
-)
+    )
+}
 
 /**
  * `Split.*` — the left↔right row khung namespace. Namespace only — no bare

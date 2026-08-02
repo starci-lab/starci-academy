@@ -53,8 +53,8 @@ export const Default: Story = {
                             <div data-tier="fixture" className="@container" style={{ width: 375 }}>
                                 <SplitWorkspace
 
-                                    main={<Tile label="main — reading column" tall />}
-                                    aside={<Tile label="aside — action column" />}
+                                    main={() => <Tile label="main — reading column" tall />}
+                                    aside={() => <Tile label="aside — action column" />}
                                 />
                             </div>
                         ),
@@ -68,8 +68,8 @@ export const Default: Story = {
                         render: (
                             <div data-tier="fixture" className="@container" style={{ width: 768 }}>
                                 <SplitWorkspace
-                                    main={<Tile label="main — reading column" tall />}
-                                    aside={<Tile label="aside — action column" />}
+                                    main={() => <Tile label="main — reading column" tall />}
+                                    aside={() => <Tile label="aside — action column" />}
                                 />
                             </div>
                         ),
@@ -83,8 +83,8 @@ export const Default: Story = {
                         render: (
                             <div data-tier="fixture" className="@container" style={{ width: 1280 }}>
                                 <SplitWorkspace
-                                    main={<Tile label="main — reading column" tall />}
-                                    aside={<Tile label="aside — action column" />}
+                                    main={() => <Tile label="main — reading column" tall />}
+                                    aside={() => <Tile label="aside — action column" />}
                                 />
                             </div>
                         ),

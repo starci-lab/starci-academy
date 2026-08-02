@@ -1,8 +1,8 @@
 import React from "react"
-import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Divider } from "@/components/atoms/display/Divider"
+import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { ALIGN_CLASS, gapClassNames, JUSTIFY_CLASS, type AllowedGap, type LayoutAlign, type LayoutJustify, type Responsive } from "@/components/frames/_spacing"
 
 /**
@@ -26,22 +26,16 @@ import { ALIGN_CLASS, gapClassNames, JUSTIFY_CLASS, type AllowedGap, type Layout
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** One repeated element of a {@link Cluster}. */
-export interface ClusterItem {
-    /** Stable React key. */
-    key: string
-    /** The element itself — a `Chip`, a `Button`, a tag. */
-    content: ReactNode
-}
-
 /** Props for {@link Cluster}. */
 export interface ClusterBaseProps {
     /**
-     * The repeated elements, in reading order. REQUIRED — repeat list = DATA,
-     * never children (§13b). An empty array renders an empty (zero-height) track:
-     * "nothing to show" is the CALLER's state to phrase, not the khung's.
+     * The repeated elements, in reading order — each an UNCALLED component reference
+     * the frame mounts itself (`<Item isSkeleton={isSkeleton} />`), never a built
+     * `ReactNode` (§ content must be buildable). Repeat list = DATA, never children
+     * (§13b). An empty/omitted array renders an empty (zero-height) track: "nothing
+     * to show" is the CALLER's state to phrase, not the khung's.
      */
-    items: ReadonlyArray<ClusterItem>
+    items?: Array<ComponentTypeWithSkeleton>
     /**
      * Seam between items on the house gap scale (`gap.md`) — REQUIRED. Applies to BOTH axes
      * (row gap and column gap), so wrapped lines breathe the same. `3` (`gap-2`) is the
@@ -78,6 +72,8 @@ export interface ClusterBaseProps {
      * `pattern` doc for the full contract.
      */
     pattern?: string
+    /** `true` mounts every item in its loading state. */
+    isSkeleton?: boolean
 }
 
 /**
@@ -94,7 +90,8 @@ const ClusterBase = ({
     justify = "start",
     separator = false,
     classNames,
-    pattern}: ClusterBaseProps) => (
+    pattern,
+    isSkeleton}: ClusterBaseProps) => (
     <div
         data-tier="frame"
         data-component="Cluster"
@@ -106,13 +103,13 @@ const ClusterBase = ({
             JUSTIFY_CLASS[justify],
             classNames)}
     >
-        {items.map((item, index) => {
+        {(items ?? []).map((Item, index) => {
             // The wrapper is unconditional; only the badge on it is not. Rendering it only when
             // the overlay is on made the overlay change what it was measuring — the wrapper is a
             // flex child, so turning inspection on moved the row it was meant to describe.
-            const body = <div>{item.content}</div>
+            const body = <div><Item isSkeleton={isSkeleton} /></div>
             return (
-                <React.Fragment key={item.key}>
+                <React.Fragment key={index}>
                     {/* The mark carries no margin of its own — the track's `gap` already
                         spaces it — so `Divider`'s inline shape reproduces it exactly. */}
                     {separator && index > 0 ? <Divider shape="inline" /> : null}

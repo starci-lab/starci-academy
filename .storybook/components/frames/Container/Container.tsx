@@ -1,6 +1,6 @@
-import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { paddingClassNames, type PaddingValue, type Responsive } from "@sb-components/frames/_spacing"
 
 /**
@@ -70,8 +70,14 @@ export interface ContainerBaseProps {
     /**
      * The content this measure wraps. ONE region — a measure has no second one.
      * A measure owns exactly one thing: how wide the reading column is.
+     *
+     * BUILDABLE — an uncalled `ComponentType<{isSkeleton?}>` the measure renders itself
+     * (`<Body isSkeleton={isSkeleton} />`), so it can build both the real and shimmer state
+     * from one source instead of a caller hand-mirroring a skeleton beside the real content.
      */
-    body?: ReactNode
+    body?: ComponentTypeWithSkeleton
+    /** `true` → passes `isSkeleton` down to `body` so the measure's content shimmers. */
+    isSkeleton?: boolean
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
@@ -100,7 +106,8 @@ export interface ContainerBaseProps {
 const ContainerBase = ({
     size = "md",
     padding = 6,
-    body,
+    body: Body,
+    isSkeleton,
     classNames,
     pattern,
 }: ContainerBaseProps) => {
@@ -127,7 +134,7 @@ const ContainerBase = ({
             )}
         >
             <div data-principles={pattern} className={cn(...paddingClassNames(padding))}>
-                {body}
+                {Body && <Body isSkeleton={isSkeleton} />}
             </div>
         </div>
     )

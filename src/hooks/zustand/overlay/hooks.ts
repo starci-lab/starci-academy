@@ -83,14 +83,10 @@ export const useCvReviewLevelDetailsOverlayState = () => useOverlayHandle("cvRev
 export const useE2eResultOverlayState = () => useOverlayHandle("e2eResult")
 /** Feedback details overlay state. */
 export const useFeedbackDetailsOverlayState = () => useOverlayHandle("feedbackDetails")
-/** Foundation overlay state. */
-export const useFoundationOverlayState = () => useOverlayHandle("foundation")
 /** Headhunter overlay state. */
 export const useHeadhunterOverlayState = () => useOverlayHandle("headhunter")
 /** Language overlay state. */
 export const useLanguageOverlayState = () => useOverlayHandle("language")
-/** Lesson video overlay state. */
-export const useLessonVideoOverlayState = () => useOverlayHandle("lessonVideo")
 /** Link GitHub overlay state. */
 export const useLinkGithubOverlayState = () => useOverlayHandle("linkGithub")
 /** Livestream calendar overlay state. */

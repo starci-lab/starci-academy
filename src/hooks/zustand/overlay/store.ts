@@ -41,12 +41,8 @@ export type OverlayKey =
     | "cvReviewLevelDetails"
     | "e2eResult"
     | "feedbackDetails"
-    | "followList"
-    | "foundation"
-    | "headhunter"
-    | "language"
-    | "lessonVideo"
-    | "linkGithub"
+    | "followList"    | "headhunter"
+    | "language"    | "linkGithub"
     | "livestreamCalendar"
     | "maintenance"
     | "miniCart"
@@ -73,12 +69,8 @@ const OVERLAY_KEYS: ReadonlyArray<OverlayKey> = [
     "cvReviewLevelDetails",
     "e2eResult",
     "feedbackDetails",
-    "followList",
-    "foundation",
-    "headhunter",
-    "language",
-    "lessonVideo",
-    "linkGithub",
+    "followList",    "headhunter",
+    "language",    "linkGithub",
     "livestreamCalendar",
     "maintenance",
     "miniCart",

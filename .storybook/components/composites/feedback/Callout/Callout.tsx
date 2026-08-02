@@ -83,16 +83,6 @@ export interface CalloutProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /**
-     * Story-only: when on, the frame names ITSELF `"Callout"` so a panel can badge it
-     * without the story wrapping an extra div.
-     *
-     * Until 2026-07-27 this prop was declared and destructured but NEVER USED — six story
-     * leaves passed it and got NO badge at all, while the JSDoc claimed "each composed part
-     * emits data-anat-part". A frame that promises anatomy and emits nothing is invisible in
-     * the panel with no error anywhere, which is exactly why 11a.1 pins the idiom
-     * `anatPart ?? (showAnatomy ? "<name>" : undefined)`.
-     */
 }
 
 /**
@@ -137,11 +127,5 @@ export const Callout = ({
         onClose={onClose}
         closeAriaLabel={closeAriaLabel}
         classNames={classNames}
-        // Self-names as the thing it COMPOSES, not as itself. The parent already gives it a
-        // name through `anatPart`; running inside its own story the useful answer is "this is
-        // an Alert wearing a callout skin", which is what a Deps tab is for. Naming it
-        // `Callout` here made the subject label itself and left the tree empty, because the
-        // only frame this composite is built on never appeared (caught 2026-07-27).
-
     />
 )

@@ -23,9 +23,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  *
  * There is no `children` prop: the label goes via the `label` prop. `isSkeleton`
  * renders a control-shaped skeleton sized to match, without importing the
- * `Skeleton.*` compound. Each composed HeroUI part badges under its own real
- * name (`Checkbox.Control`/`Checkbox.Content`, `Radio.Control`/`Radio.Content`,
- * `Switch`, `Label`) when `showAnatomy` is set.
+ * `Skeleton.*` compound.
  *
  * `ChoiceRadio` is one option row and stops here — the group that rebuilds one
  * `ChoiceRadio` per entry moved to `composites/form/ChoiceRadioGroup` (ATOM-8:

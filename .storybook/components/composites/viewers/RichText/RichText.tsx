@@ -194,9 +194,7 @@ export const RichText = ({
     classNames,
 }: RichTextProps) => {
     // One render path (COMPOSITE-10): the atom decides its own shimmer shape via
-    // `isSkeleton`; this composite only decides size/color and — since it has no
-    // frame of its own — a thin `<span>` carrying its OWN root anatomy tag (the
-    // atom's `showAnatomy` tags its own internal parts separately).
+    // `isSkeleton`; this composite only decides size/color and renders a thin `<span>`.
     return (
         <span
 

@@ -309,11 +309,6 @@ const ToolbarBase = ({
 
             body={
                 <>
-                    {/* Self-tag: lets a PARENT composite (e.g. FlashcardDeckList) cascade
-                        `showAnatomy` down and badge Toolbar as ONE opaque part in ITS OWN
-                        tree, without drilling into left/right groups (§11a). Harmless when
-                        Toolbar is the anatomy SUBJECT itself (below): the name "Toolbar" is
-                        absent from that leaf's own `parts`, so it's measured then filtered out. */}
                     {leftGroup}
                     {rightGroup}
                 </>

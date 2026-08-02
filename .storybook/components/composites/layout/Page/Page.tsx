@@ -52,15 +52,6 @@ export const meta = { tier: "composite", name: "Page" } as const
 /** Props {@link PageHeader} carries regardless of loading state. */
 interface PageHeaderOwnProps {
     /**
-     * Anatomy tag for THIS component itself — so the PARENT can badge it as ONE node (§11a.1).
-     *
-     * ⭐ 2026-07-27 (deep-scan): without this prop the parent can't name it, so the parent
-     * is forced to pass `showAnatomy` down — and that OPENS UP the child's guts, leaking
-     * grandchildren out as if they were siblings. This is the ROOT cause of that whole
-     * class of bugs, not a symptom.
-     */
-
-    /**
      * Optional supporting description placed directly below the title. The
      * frame renders it through `Typography` itself (`text-sm`, muted tone) and
      * forwards `isSkeleton`, so this is plain text (COMPOSITE-8), not a

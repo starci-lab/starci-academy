@@ -106,8 +106,6 @@ export const ConfirmDialog = ({
                             </AlertDialog.Body>
                         ) : null}
                         <AlertDialog.Footer className="w-full">
-                            {/* Footer forwards showAnatomy so the REAL nodes (Button × 2) show up, instead of
-                                mislabeling this heroui Footer wrapper as if it were ButtonGroup itself. */}
                             <ButtonGroup
                                 align="end"
                                 classNames={["w-full"]}

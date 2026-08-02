@@ -97,15 +97,6 @@ export interface TitledTextProps {
     /** `true` → render the skeleton mirror (bars sized per line). */
     isSkeleton?: boolean
     /**
-     * `true` → EACH inner line also emits `data-anat-part` (`Title` · `Subtitle` ·
-     * `Hint`), so the deps tree can go DOWN TO THE ATOM instead of stopping at the frame.
-     *
-     * ⭐ 2026-07-27 (teacher: "render all the way down to the atom level, including
-     * typography, don't skip any component"): the tree ABOVE depends on the tree BELOW,
-     * so the frame has to clear the way for its children to show. A frame that swallows
-     * its children makes the panel lie about what it actually builds.
-     */
-    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>

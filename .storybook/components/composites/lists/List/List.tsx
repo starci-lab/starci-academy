@@ -434,11 +434,6 @@ export interface ListToggleRowProps {
     classNames?: Array<AllowedClassName>
     /** `true` → render the skeleton mirror (label + desc bars, switch pill). Consumer just flips the flag. */
     isSkeleton?: boolean
-    /**
-     * Storybook-only: when true, each composed part (`TitledText` / `Switch`)
-     * emits a `data-anat-part` so the anatomy panel can anchor badges. No
-     * visual effect.
-     */
 }
 
 /**

@@ -74,16 +74,6 @@ export interface EmptyStateProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /**
-     * When on, each composed part with a FIXED identity emits `data-anat-part`
-     * (`Code`/`Title`/`Description`, all as `Typography`/`Typography`) for a
-     * BlockAnatomy panel.
-     *
-     * ⚠️ `Icon`/`Body`/`Action` do NOT badge (2026-07-28, §11a.1 CASE 3): each is an
-     * arbitrary node the CALLER supplies (a different icon component every call, a
-     * hint list, one or two buttons), so there is no single fixed component for a
-     * panel link to point to — a badge with nowhere to link is worse than no badge.
-     */
 }
 
 /**

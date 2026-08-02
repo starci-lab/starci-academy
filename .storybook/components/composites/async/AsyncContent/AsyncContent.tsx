@@ -76,15 +76,6 @@ interface MessageProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /**
-     * Name THIS frame in the BlockAnatomy panel, overriding the internal default
-     * (`"EmptyState"` / `"Feedback.Error"`).
-     *
-     * Required by 11a.1: a caller badges its direct child by passing `anatPart` DOWN,
-     * never by passing `showAnatomy` down. Without this prop, a screen that uses the
-     * frame directly had to name its wrapping Container after the frame — which put the
-     * frame's name and its story link on an element that is not the frame at all.
-     */
 }
 
 /**

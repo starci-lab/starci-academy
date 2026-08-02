@@ -21,10 +21,6 @@ interface StatPairOwnProps {
      * Prefer this over `className`; the string form is going away.
      */
     classNames?: Array<AllowedClassName>
-    /**
-     * Storybook-only: when true, the value/label `Typography` each emit a
-     * `data-anat-part` so the anatomy panel can anchor badges. No visual effect.
-     */
 }
 
 /**

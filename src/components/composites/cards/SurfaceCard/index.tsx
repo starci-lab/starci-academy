@@ -294,11 +294,6 @@ interface SurfaceCardBaseOwnProps extends SurfaceLabelProps, SlotProps {
     classNames?: Array<AllowedClassName>
     /** Extra classes on the surface (content) wrapper. */
     contentClassName?: string
-    /**
-     * Storybook-only: when true, each composed part (`SurfaceCardHeader` / the
-     * surface content wrapper / `description`) emits a `data-anat-part` so the
-     * anatomy panel can anchor badges. No visual effect.
-     */
 }
 export type SurfaceCardBaseProps = SurfaceCardBaseOwnProps & PressableActionsProps
 /**

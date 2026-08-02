@@ -79,11 +79,6 @@ export interface DisclosureBaseProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /**
-     * Storybook-only: when true, each composed part (`Trigger` / `Content` /
-     * loading `Skeleton`) emits a `data-anat-part` so the anatomy panel can
-     * anchor badges. No visual effect.
-     */
 }
 
 /**

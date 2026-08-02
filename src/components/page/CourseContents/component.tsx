@@ -219,6 +219,7 @@ export const _CourseContents = ({
     const spine = (isSkeleton: boolean) => (
         <Container
             size="md"
+            pattern="center-measure"
             body={
                 <StackV
                     gap={7}
@@ -332,7 +333,7 @@ export const _CourseContents = ({
     )
 
     return (
-        <div data-principles="CourseContents">
+        <div data-tier="page" data-component="CourseContents">
             <AsyncContent
                 isLoading={isLoading}
                 skeleton={spine(true)}

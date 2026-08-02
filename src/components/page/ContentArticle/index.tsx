@@ -1,0 +1,549 @@
+"use client"
+
+import React, {
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react"
+import {
+    useLocale,
+    useTranslations,
+} from "next-intl"
+import {
+    useParams,
+    useRouter,
+} from "next/navigation"
+import useSWR from "swr"
+import useSWRInfinite from "swr/infinite"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { useQueryContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentSwr"
+import { useQueryContentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentStatusSwr"
+import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
+import { useQueryAiLabPlaygroundSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiLabPlaygroundSwr"
+import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/useQuerySearchCourseContentSwr"
+import { useLessonNavigation } from "@/components/features/learn/LessonReader/hooks/useLessonNavigation"
+import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useContentDiscussionSocketIo } from "@/hooks/socketio/useContentDiscussionSocketIo"
+import { contentDiscussionSocketIoEventEmitter } from "@/hooks/socketio/useContentDiscussionSocketIoLifecycle"
+import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
+import { SubscriptionEvent } from "@/hooks/socketio/enums/subscription-event"
+import { type SubscribeContentDiscussionSocketIoPayload } from "@/hooks/socketio/types/content-discussion"
+import { mutateCreateComment } from "@/modules/api/graphql/mutations/mutation-create-comment"
+import { mutateUpdateComment } from "@/modules/api/graphql/mutations/mutation-update-comment"
+import { mutateDeleteComment } from "@/modules/api/graphql/mutations/mutation-delete-comment"
+import { mutateReactToComment } from "@/modules/api/graphql/mutations/mutation-react-to-comment"
+import { mutateReactToContent } from "@/modules/api/graphql/mutations/mutation-react-to-content"
+import { queryContentComments } from "@/modules/api/graphql/queries/query-content-comments"
+import { queryContentReactions } from "@/modules/api/graphql/queries/query-content-reactions"
+import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/types"
+import type { CommentNode } from "@/modules/api/graphql/queries/types/discussion"
+import { PaymentFlow } from "@/modules/types/payment"
+import { pathConfig } from "@/resources/path"
+import { ContentTab, setContentTab } from "@/redux/slices/tabs"
+import { setContentSelectedProgrammingLang } from "@/redux/slices/content"
+import { listContentBodyLangs, pickContentBodyByLang, resolveContentBody } from "@/modules/types/entities/content-body"
+import {
+    DEFAULT_PROGRAMMING_LANGUAGES,
+    isProgrammingLangAvailable,
+    resolveActiveProgrammingLang,
+} from "@/modules/types/utils/programming-language"
+import { getContentChallengeCount } from "@/modules/types/entities/content"
+import { resolveSearchResultHref } from "@/modules/learn/resolve-search-result-href"
+import {
+    _ContentArticle,
+    type ContentArticleUpNext,
+    type ContentHeaderCrumb,
+    type ContentHeaderOutcome,
+    type ContentLanguage,
+    type ContentMode,
+    type ContentModeOption,
+    type ContentReactionType,
+    type ContentRelatedItem,
+} from "./component"
+import {
+    toArticleComment,
+    toArticlePricingPhase,
+    toArticleReactionCounts,
+    toArticleReactionType,
+    toRealReactionType,
+} from "./map"
+
+/** Page size for a parent's replies (loaded in one shot per parent). */
+const REPLIES_LIMIT = 50
+/** Page size for the paginated top-level comment list ("load more"). */
+const COMMENTS_PAGE_SIZE = 10
+/** Max related-lesson rows shown (mirrors `RelatedContentList`'s own default). */
+const RELATED_LIMIT = 3
+
+/** Server -> client discussion events this page reacts to (revalidate on any). */
+const DISCUSSION_EVENTS: ReadonlyArray<SubscriptionEvent> = [
+    SubscriptionEvent.CommentCreated,
+    SubscriptionEvent.CommentUpdated,
+    SubscriptionEvent.CommentDeleted,
+    SubscriptionEvent.ContentReactionChanged,
+    SubscriptionEvent.CommentReactionChanged,
+]
+
+/** `ContentTab` (redux) <-> `ContentMode` (the `ContentModeNav` block's own vocabulary) — the four
+ *  reader-facing tabs share the exact same string values; the extra `ContentTab` members
+ *  (`codeExplainings`/`lessonVideos`/`codeImplementation`/`e2e`) have no `ContentMode` counterpart yet. */
+const MODE_TO_TAB: Record<ContentMode, ContentTab> = {
+    content: ContentTab.Content,
+    sandbox: ContentTab.Sandbox,
+    challenges: ContentTab.Challenges,
+    aiLab: ContentTab.AILab,
+}
+const TAB_TO_MODE: Partial<Record<ContentTab, ContentMode>> = {
+    [ContentTab.Content]: "content",
+    [ContentTab.Sandbox]: "sandbox",
+    [ContentTab.Challenges]: "challenges",
+    [ContentTab.AILab]: "aiLab",
+}
+
+/**
+ * Lesson reading screen — the CONNECTED half of `ContentArticle`. Reads the active content
+ * (SWR + the redux snapshot `LessonReader`/the content-map rail keep warm), the reader's own
+ * read/reaction/comment state, and the linear pager, resolves every label, and hands fully-typed
+ * data to the presentational {@link _ContentArticle}.
+ *
+ * Ports the hook shapes already proven in `LessonReader`, `LessonReader/ContentBody/ContentBodyV2`,
+ * `.../Discussion`, `.../Discussion/ContentReactionBar`, and `LessonReader/hooks/useLessonNavigation` —
+ * this page recomposes them onto the storybook-driven block tree instead of `LessonReader`'s
+ * hand-built layout.
+ */
+export const ContentArticle = () => {
+    const t = useTranslations()
+    const locale = useLocale()
+    const params = useParams()
+    const router = useRouter()
+    const dispatch = useAppDispatch()
+
+    const routeContentId = params.contentId as string | undefined
+    const routeModuleId = params.moduleId as string | undefined
+
+    const contentFromRedux = useAppSelector((state) => state.content.entity)
+    const contentTab = useAppSelector((state) => state.tabs.contentTab)
+    const selectedLang = useAppSelector((state) => state.content.selectedProgrammingLang)
+    const course = useAppSelector((state) => state.course.entity)
+    const courseId = course?.id
+    const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    const currentUser = useAppSelector((state) => state.user.user)
+    const currentUserId = currentUser?.id ?? null
+
+    const queryContentSwr = useQueryContentSwr()
+    /** Prefer redux (kept warm by the reader shell / content-map rail); fall back to the SWR cache. */
+    const contentSnapshot = contentFromRedux ?? queryContentSwr.data
+    /** Ignore a stale entity left over after `contentId` changes until fetch/cache catches up. */
+    const content =
+        contentSnapshot?.id && routeContentId && contentSnapshot.id === routeContentId
+            ? contentSnapshot
+            : undefined
+    const isLoading = queryContentSwr.isLoading && !content
+
+    const contentStatusSwr = useQueryContentStatusSwr()
+    /** AI Lab playground bound to this lesson, if any (drives the AI Lab mode). */
+    const playgroundSwr = useQueryAiLabPlaygroundSwr(content?.id)
+
+    const isLocked = content?.isPremium === true
+    const isSandbox = Boolean(content?.isSandbox) && Boolean(content?.githubBaseUrl) && Boolean(content?.githubDir)
+    const challengeCount = useMemo(() => getContentChallengeCount(content ?? {}), [content])
+
+    // ---- mode (content / sandbox / challenges / AI lab) ----
+
+    const mode: ContentMode = TAB_TO_MODE[contentTab] ?? "content"
+    const modes = useMemo<Array<ContentModeOption>>(() => {
+        const entries: Array<ContentModeOption> = [{ mode: "content" }]
+        if (isSandbox) {
+            entries.push({ mode: "sandbox" })
+        }
+        entries.push({ mode: "challenges", isLocked })
+        if (playgroundSwr.data) {
+            entries.push({ mode: "aiLab" })
+        }
+        return entries
+    }, [isSandbox, isLocked, playgroundSwr.data])
+
+    const onModeChange = useCallback((next: ContentMode) => {
+        dispatch(setContentTab(MODE_TO_TAB[next]))
+        // TODO(connect): `LessonReader`'s own `onTabChange` intercepts a locked mode and opens
+        // the premium gate instead of switching (see `usePremiumGateOverlayState`) — port that
+        // guard here once this page replaces `LessonReader` on the route.
+        router.push(
+            `${pathConfig().locale(locale).course(courseDisplayId ?? "").learn()
+                .module(routeModuleId ?? "").content(routeContentId ?? "").build()}?tab=${next}`,
+        )
+    }, [dispatch, router, locale, courseDisplayId, routeModuleId, routeContentId])
+
+    // ---- language (SCHEMA V2 bodies) ----
+
+    const langs = useMemo(() => listContentBodyLangs(content?.bodies), [content?.bodies])
+    const activeLang = useMemo(() => resolveActiveProgrammingLang(selectedLang, langs), [selectedLang, langs])
+    const onLanguageChange = useCallback(
+        (lang: string) => dispatch(setContentSelectedProgrammingLang(lang)),
+        [dispatch],
+    )
+    const languages = useMemo<Array<ContentLanguage>>(
+        () => DEFAULT_PROGRAMMING_LANGUAGES.map((lang) => ({
+            key: lang,
+            label: t(`programmingLanguage.${lang}`),
+            isDisabled: !isProgrammingLangAvailable(lang, langs),
+        })),
+        [langs, t],
+    )
+    const activeBody = useMemo(
+        () => resolveContentBody(pickContentBodyByLang(content?.bodies, activeLang), locale),
+        [content?.bodies, activeLang, locale],
+    )
+
+    // ---- header (breadcrumb + outcomes) ----
+
+    const breadcrumbItems = useMemo<Array<ContentHeaderCrumb>>(() => [
+        { key: "home", label: t("nav.home"), onPress: () => router.push(pathConfig().locale().build()) },
+        { key: "courses", label: t("nav.courses"), onPress: () => router.push(pathConfig().locale(locale).course().build()) },
+        {
+            key: "course",
+            label: course?.title || t("nav.courses"),
+            onPress: () => router.push(pathConfig().locale(locale).course(courseDisplayId ?? "").build()),
+        },
+        {
+            key: "modules",
+            label: t("modules.title"),
+            onPress: () => router.push(pathConfig().locale(locale).course(courseDisplayId ?? "").learn().content().build()),
+        },
+    ], [t, locale, router, course?.title, courseDisplayId])
+
+    const outcomes = useMemo<Array<ContentHeaderOutcome>>(
+        () => [...(content?.outcomes ?? [])]
+            .sort((left, right) => left.sortIndex - right.sortIndex)
+            .map((outcome) => ({ key: outcome.id, text: outcome.text })),
+        [content?.outcomes],
+    )
+
+    // ---- premium offer (loyalty-aware price preview, same source as `PremiumPaywall`) ----
+
+    const priceSwr = useQueryCoursePricePreviewSwr(isLocked ? courseId : undefined)
+    const { open: openPaymentModal } = usePaymentOverlayState()
+    const onPurchase = useCallback(
+        () => openPaymentModal({ flow: PaymentFlow.CourseEnroll }),
+        [openPaymentModal],
+    )
+    const offer = useMemo(() => {
+        if (!isLocked || !priceSwr.data) {
+            return undefined
+        }
+        const price = priceSwr.data
+        return {
+            title: t("course.paywall.title"),
+            description: t("course.paywall.description"),
+            discountedPriceVnd: price.discountedPriceVnd,
+            originalPriceVnd: price.originalPriceVnd,
+            currentPhase: toArticlePricingPhase(price.currentPhase),
+            seatsRemaining: price.seatsRemainingInCurrentPhase,
+            nextPhasePriceVnd: price.nextPhasePriceVnd,
+            ctaLabel: t("course.paywall.buy"),
+            onPurchase,
+        }
+    }, [isLocked, priceSwr.data, t, onPurchase])
+
+    // ---- reaction (content-level) — shared SWR key with the discussion realtime refresh below ----
+
+    const contentId = content?.id
+    const courseHeaders: GraphQLHeaders | undefined = courseId
+        ? { [GraphQLHeadersKey.XCourseId]: courseId }
+        : undefined
+
+    const reactionsSwr = useSWR(
+        contentId && courseId ? ["content-discussion-reactions", contentId] : null,
+        async () => {
+            const response = await queryContentReactions({
+                request: { contentId: contentId as string },
+                headers: courseHeaders,
+            })
+            return response.data?.contentReactions.data
+        },
+    )
+
+    const onReact = useCallback(async (type: ContentReactionType | null) => {
+        if (!contentId || !courseId) {
+            return
+        }
+        await mutateReactToContent({
+            request: { contentId, type: toRealReactionType(type) },
+            headers: courseHeaders,
+        })
+        void reactionsSwr.mutate()
+    }, [contentId, courseId, courseHeaders, reactionsSwr])
+
+    // ---- discussion (comments + replies + realtime) ----
+
+    const socket = useContentDiscussionSocketIo()
+    const [repliesByParentRaw, setRepliesByParentRaw] = useState<Record<string, Array<CommentNode>>>({})
+    const loadedParentsRef = useRef<Set<string>>(new Set())
+
+    const commentsSwr = useSWRInfinite(
+        (pageIndex, previousPageData) => {
+            if (!contentId || !courseId) {
+                return null
+            }
+            if (previousPageData && (previousPageData.comments?.length ?? 0) === 0) {
+                return null
+            }
+            return ["content-discussion-comments", contentId, pageIndex + 1] as const
+        },
+        async ([, , page]) => {
+            const response = await queryContentComments({
+                request: { contentId: contentId as string, page, limit: COMMENTS_PAGE_SIZE },
+                headers: courseHeaders,
+            })
+            return response.data?.contentComments.data
+        },
+    )
+
+    const commentPages = commentsSwr.data ?? []
+    const rawComments = commentPages.flatMap((page) => page?.comments ?? [])
+    const commentsTotal = commentPages[0]?.total ?? 0
+    const hasMoreComments = rawComments.length < commentsTotal
+    const isLoadingMoreComments = commentsSwr.isValidating
+        && commentsSwr.data !== undefined
+        && typeof commentsSwr.data[commentsSwr.size - 1] === "undefined"
+
+    const loadReplies = useCallback(async (parentId: string) => {
+        if (!contentId || !courseId) {
+            return
+        }
+        const response = await queryContentComments({
+            request: { contentId, parentCommentId: parentId, limit: REPLIES_LIMIT },
+            headers: courseHeaders,
+        })
+        const replies = response.data?.contentComments.data?.comments ?? []
+        loadedParentsRef.current.add(parentId)
+        setRepliesByParentRaw((prev) => ({ ...prev, [parentId]: replies }))
+    }, [contentId, courseId, courseHeaders])
+
+    const reloadLoadedReplies = useCallback(() => {
+        loadedParentsRef.current.forEach((parentId) => { void loadReplies(parentId) })
+    }, [loadReplies])
+
+    const revalidateAll = useCallback(() => {
+        void reactionsSwr.mutate()
+        void commentsSwr.mutate()
+        reloadLoadedReplies()
+    }, [reactionsSwr, commentsSwr, reloadLoadedReplies])
+
+    // join the content's discussion room (and re-join on reconnect)
+    useEffect(() => {
+        if (!contentId || !courseId) {
+            return
+        }
+        const subscribe = () => {
+            const payload: SubscribeContentDiscussionSocketIoPayload = { data: { contentId }, locale }
+            socket.emit(PublicationEvent.SubscribeContentDiscussion, payload)
+        }
+        if (socket.connected) {
+            subscribe()
+        }
+        socket.on("connect", subscribe)
+        return () => { socket.off("connect", subscribe) }
+    }, [socket, contentId, courseId, locale])
+
+    // refetch affected data whenever a realtime event arrives for this content
+    useEffect(() => {
+        if (!contentId || !courseId) {
+            return
+        }
+        const handler = (message: { data?: { contentId?: string } }) => {
+            if (message?.data?.contentId !== contentId) {
+                return
+            }
+            revalidateAll()
+        }
+        DISCUSSION_EVENTS.forEach((event) => contentDiscussionSocketIoEventEmitter.on(event, handler))
+        return () => {
+            DISCUSSION_EVENTS.forEach((event) => contentDiscussionSocketIoEventEmitter.off(event, handler))
+        }
+    }, [contentId, courseId, revalidateAll])
+
+    const onSubmitComment = useCallback(async (bodyText: string) => {
+        if (!contentId || !courseId) {
+            return
+        }
+        await mutateCreateComment({ request: { contentId, body: bodyText }, headers: courseHeaders })
+        void commentsSwr.mutate()
+    }, [contentId, courseId, courseHeaders, commentsSwr])
+
+    const onReply = useCallback(async (parentId: string, bodyText: string) => {
+        if (!contentId || !courseId) {
+            return
+        }
+        await mutateCreateComment({
+            request: { contentId, parentCommentId: parentId, body: bodyText },
+            headers: courseHeaders,
+        })
+        void commentsSwr.mutate()
+        void loadReplies(parentId)
+    }, [contentId, courseId, courseHeaders, commentsSwr, loadReplies])
+
+    const onEditComment = useCallback(async (commentId: string, bodyText: string) => {
+        if (!courseId) {
+            return
+        }
+        await mutateUpdateComment({ request: { commentId, body: bodyText }, headers: courseHeaders })
+        revalidateAll()
+    }, [courseId, courseHeaders, revalidateAll])
+
+    const onDeleteComment = useCallback(async (commentId: string) => {
+        if (!courseId) {
+            return
+        }
+        await mutateDeleteComment({ request: { commentId }, headers: courseHeaders })
+        revalidateAll()
+    }, [courseId, courseHeaders, revalidateAll])
+
+    const onReactComment = useCallback(async (commentId: string, type: ContentReactionType | null) => {
+        if (!courseId) {
+            return
+        }
+        await mutateReactToComment({
+            request: { commentId, type: toRealReactionType(type) },
+            headers: courseHeaders,
+        })
+        revalidateAll()
+    }, [courseId, courseHeaders, revalidateAll])
+
+    const onLoadReplies = useCallback((parentId: string) => { void loadReplies(parentId) }, [loadReplies])
+
+    const comments = useMemo(
+        () => rawComments.map((comment) => toArticleComment(comment, t)),
+        [rawComments, t],
+    )
+    const repliesByParent = useMemo(
+        () => Object.fromEntries(
+            Object.entries(repliesByParentRaw).map(
+                ([parentId, replies]) => [parentId, replies.map((reply) => toArticleComment(reply, t))],
+            ),
+        ),
+        [repliesByParentRaw, t],
+    )
+
+    /**
+     * `ContentDiscussion` appends "· {total}" to whatever `label` it is given; the app's own
+     * `discussion.title` key instead bakes the count into one ICU string ("Discussion · {count}").
+     * TODO(connect): add a bare `discussion.label` key (no count) so this doesn't need to strip
+     * the trailing count back off the already-interpolated string.
+     */
+    const discussionLabel = useMemo(
+        () => t("discussion.title", { count: commentsTotal }).replace(/[\s·-]*[\d,]+\s*$/u, "").trim(),
+        [t, commentsTotal],
+    )
+
+    // ---- related lessons (course-wide RAG search on this lesson's own title) ----
+
+    const relatedSwr = useQuerySearchCourseContentSwr(
+        courseId ?? null,
+        content?.title ?? "",
+        Boolean(content?.title && courseId),
+    )
+    const relatedItems = useMemo<Array<ContentRelatedItem>>(() => {
+        if (!courseDisplayId) {
+            return []
+        }
+        const excludeId = content?.id
+        return (relatedSwr.data ?? [])
+            .filter((item) => !excludeId
+                || (item.contentId !== excludeId && item.deckId !== excludeId && item.taskId !== excludeId))
+            .slice(0, RELATED_LIMIT)
+            .flatMap((item, index) => {
+                const href = resolveSearchResultHref(item, locale, courseDisplayId)
+                if (!href) {
+                    return []
+                }
+                return [{
+                    key: `${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`,
+                    title: item.title,
+                    breadcrumb: item.breadcrumb ?? undefined,
+                    isLocked: item.isLocked,
+                    href,
+                }]
+            })
+    }, [relatedSwr.data, content?.id, courseDisplayId, locale])
+
+    // ---- pager (linear course order; SWR-shared with the content-map rail) ----
+
+    const { previous, next } = useLessonNavigation()
+
+    // ---- mobile/tablet "practice this lesson" nudge ----
+
+    const upNext = useMemo<ContentArticleUpNext | undefined>(() => {
+        if (challengeCount <= 0) {
+            return undefined
+        }
+        return {
+            eyebrow: t("content.upNext.eyebrow"),
+            title: t("content.upNext.challengesTitle", { count: challengeCount }),
+            description: t("content.upNext.challengesDesc"),
+            ctaLabel: t("content.upNext.challengesCta"),
+            onPress: () => onModeChange("challenges"),
+        }
+    }, [challengeCount, t, onModeChange])
+
+    return (
+        <_ContentArticle
+            isLoading={isLoading}
+            error={!content ? queryContentSwr.error : undefined}
+            onRetry={() => { void queryContentSwr.mutate() }}
+            isEmpty={!isLoading && !content}
+            emptyTitle={t("content.empty")}
+            // TODO(connect): reuses `modulePage.error`/`courseContents.retry` — add a dedicated
+            // `content.loadError`/`content.retry` pair once this page is wired to a real route.
+            errorTitle={t("modulePage.error")}
+            retryLabel={t("courseContents.retry")}
+            breadcrumbItems={breadcrumbItems}
+            title={content?.title ?? ""}
+            description={content?.description || undefined}
+            isRead={contentStatusSwr.data?.isRead}
+            minutesRead={content?.minutesRead}
+            challengeCount={challengeCount}
+            outcomes={outcomes}
+            modes={modes}
+            mode={mode}
+            onModeChange={onModeChange}
+            languages={languages}
+            language={activeLang}
+            onLanguageChange={onLanguageChange}
+            languageAriaLabel={t("content.language")}
+            tabsAriaLabel={t("module.tabListAria")}
+            body={activeBody || t("content.empty")}
+            isLocked={isLocked}
+            offer={offer}
+            // TODO(connect): `SelectionHintCallout` (ask-AI-about-a-selection) owns its own
+            // localStorage "shown once" gate today; port that into a `hintText` here.
+            myReaction={reactionsSwr.data?.myReaction != null ? toArticleReactionType(reactionsSwr.data.myReaction) : null}
+            reactionCounts={toArticleReactionCounts(reactionsSwr.data?.counts)}
+            viewCount={reactionsSwr.data?.viewCount}
+            onReact={onReact}
+            upNext={upNext}
+            relatedItems={relatedItems}
+            relatedLabel={t("content.relatedContent.label")}
+            discussionLabel={discussionLabel}
+            currentUserId={currentUserId}
+            currentUser={currentUser ? { username: currentUser.username, avatarUrl: currentUser.avatar } : null}
+            comments={comments}
+            commentsTotal={commentsTotal}
+            repliesByParent={repliesByParent}
+            onSubmitComment={onSubmitComment}
+            onReply={onReply}
+            onEditComment={onEditComment}
+            onDeleteComment={onDeleteComment}
+            onReactComment={onReactComment}
+            onLoadReplies={onLoadReplies}
+            hasMoreComments={hasMoreComments}
+            isLoadingMoreComments={isLoadingMoreComments}
+            onLoadMoreComments={() => void commentsSwr.setSize(commentsSwr.size + 1)}
+            previous={previous}
+            next={next}
+            pagerAriaLabel={t("content.pagerAria")}
+        />
+    )
+}

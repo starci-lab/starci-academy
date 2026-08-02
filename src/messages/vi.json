@@ -1398,7 +1398,9 @@
       "statsLine": "{done}/{total} nhiệm vụ · {attempts} lần nộp · {avg} điểm TB",
       "taskDone": "Đã hoàn thành",
       "taskTodo": "Chưa làm",
-      "empty": "Chưa có chặng nào trong dự án."
+      "empty": "Chưa có chặng nào trong dự án.",
+      "error": "Không tải được dự án của bạn.",
+      "retry": "Thử lại"
     },
     "title": "Dự án cá nhân",
     "aria": "Cột mốc {index}",

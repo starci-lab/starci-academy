@@ -1389,7 +1389,9 @@
       "statsLine": "{done}/{total} tasks · {attempts} submissions · {avg} avg",
       "taskDone": "Completed",
       "taskTodo": "Not started",
-      "empty": "No milestones in this project yet."
+      "empty": "No milestones in this project yet.",
+      "error": "Couldn't load your project.",
+      "retry": "Try again"
     },
     "title": "Personal project",
     "aria": "Milestone {index}",

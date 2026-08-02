@@ -171,12 +171,10 @@ export interface SectionBaseProps {
      * rendered as-is.
      */
     header?: SectionHeaderSlot
-    /** Main region. Equivalent to `children`; wins over it when both are passed. */
+    /** Main region. */
     body?: ReactNode
     /** Bottom region (a closing CTA row, a caption, a "see more" link). */
     footer?: ReactNode
-    /** Shorthand for {@link SectionBaseProps.body} — a wrapper frame wraps anything. */
-    children?: ReactNode
     /**
      * Vertical rhythm between header ↔ body ↔ footer, on the §10c scale ONLY.
      * Default `{6}` (`gap-6`) — the rhythm between regions of a page. Drop to
@@ -208,10 +206,9 @@ const Base = ({
     header,
     body,
     footer,
-    children,
     gap = 6,
     classNames}: SectionBaseProps) => {
-    const main = body ?? children
+    const main = body
     const headerNode = header == null
         ? null
         : isHeaderProps(header)

@@ -42,10 +42,8 @@ export interface FormBaseProps {
      * Omit → the form never submits (page reload is still blocked).
      */
     onSubmit?: () => void
-    /** Main content region (the `FormSection`s / fields). Wins over `children` when both are passed. */
+    /** Main content region (the `FormSection`s / fields). */
     body?: ReactNode
-    /** Shorthand for {@link FormBaseProps.body} — a WRAPPING shell accepts arbitrary content (§13b). */
-    children?: ReactNode
     /**
      * The closing button row — usually a {@link FormActions}. A NAMED slot
      * (rather than the last node in `body`) so the shell knows where the
@@ -82,13 +80,12 @@ export interface FormBaseProps {
 const Base = ({
     onSubmit,
     body,
-    children,
     actions,
     gap = 6,
     isDisabled = false,
     classNames,
 }: FormBaseProps) => {
-    const main = body ?? children
+    const main = body
     const submit = (event: FormEvent<HTMLFormElement>) => {
         // Always block the form's default navigation, even when there's no handler.
         event.preventDefault()
@@ -128,10 +125,8 @@ export interface FormSectionProps {
     title: ReactNode
     /** Description line under the title — `Typography.Xs` muted (§9a). Omit → title only. */
     description?: ReactNode
-    /** The group's fields. Wins over `children` when both are passed. */
+    /** The group's fields. */
     body?: ReactNode
-    /** Shorthand for {@link FormSectionProps.body} — a WRAPPING shell (§13b). */
-    children?: ReactNode
     /**
      * Vertical rhythm: used for BOTH of the section's seams (header ↔ body, and
      * field ↔ field). Default `{4}` (`gap-3`, §10b: rows/blocks stacked within
@@ -157,11 +152,10 @@ const Section = ({
     title,
     description,
     body,
-    children,
     gap = 4,
     classNames,
 }: FormSectionProps) => {
-    const main = body ?? children
+    const main = body
     return (
         <section
             className={cn("flex min-w-0 flex-col", GAP_CLASS[gap], classNames)}

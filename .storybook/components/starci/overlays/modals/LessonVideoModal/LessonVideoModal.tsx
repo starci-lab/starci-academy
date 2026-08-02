@@ -287,10 +287,8 @@ const LessonVideoModal = ({
                         video?.title ?? ""
                     )
                 }
-
-            >
-                <StackV gap={6} body={metaAndPlayer} />
-            </ModalShell>
+                body={<StackV gap={6} body={metaAndPlayer} />}
+            />
         </div>
     )
 }

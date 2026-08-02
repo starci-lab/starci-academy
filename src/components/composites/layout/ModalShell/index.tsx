@@ -58,7 +58,7 @@ export interface ModalShellBaseProps {
      * for a non-standard header. Takes precedence over both.
      */
     header?: ReactNode
-    /** Body content of the modal. Equivalent to `children`; wins over it when both are passed. */
+    /** Body content of the modal. */
     body?: ReactNode
     /**
      * Bottom action row of the dialog (the CTA cluster). Rendered as HeroUI
@@ -67,8 +67,6 @@ export interface ModalShellBaseProps {
      * flex row.
      */
     footer?: ReactNode
-    /** Shorthand for {@link ModalShellBaseProps.body} — a wrapper frame wraps anything. */
-    children?: ReactNode
     /** Size of the underlying `Modal.Container` (dialog width). */
     size?: React.ComponentProps<typeof Modal.Container>["size"]
     /**
@@ -89,11 +87,6 @@ export interface ModalShellBaseProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /**
-     * When `true`, each composed part (close trigger / header / body / footer)
-     * emits `` so a BlockAnatomy panel can badge it
-     * on-render. Off by default (production).
-     */
 }
 
 /**
@@ -118,10 +111,9 @@ const Base = ({
     dialogClassName,
     bodyClassName,
     footerClassName,
-    classNames,
-    children}: ModalShellBaseProps) => {
+    classNames}: ModalShellBaseProps) => {
     const hasHeader = header != null || title != null
-    const main = body ?? children
+    const main = body
     return (
         <Modal
             isOpen={isOpen}

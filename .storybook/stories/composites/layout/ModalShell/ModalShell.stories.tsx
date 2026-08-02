@@ -100,9 +100,7 @@ const ControlledModal = ({
                         why,
                         code,
                         render: (
-                            <ModalShell isOpen={isOpen} onOpenChange={setIsOpen} {...rest}>
-                                {children}
-                            </ModalShell>
+                            <ModalShell isOpen={isOpen} onOpenChange={setIsOpen} {...rest} body={children} />
                         ),
                     },
                 ]}

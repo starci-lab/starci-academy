@@ -72,9 +72,7 @@ export const Default: Story = {
                         why: "Only the body region renders: a SurfaceCard profile row sits directly inside the frame with no header above it. `children` is accepted here as the shorthand for `body`, since the frame is a pure wrapper with nothing of its own to draw around the content.",
                         code: "<Section>\n  <SurfaceCard body={() => <ProfileRow />} />\n</Section>",
                         render: (
-                            <Section>
-                                <CardBody />
-                            </Section>
+                            <Section body={<CardBody />} />
                         ),
                     },
                 ]}
@@ -108,15 +106,14 @@ export const HeaderProps: Story = {
 </Section>`,
                         render: (
                             <Section
-                               
+
                                 header={{
                                     title: "My courses",
                                     description: "Sorted by most recently studied.",
                                     action: <Button label="View all" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />,
                                 }}
-                            >
-                                <CardBody />
-                            </Section>
+                                body={<CardBody />}
+                            />
                         ),
                     },
                 ]}

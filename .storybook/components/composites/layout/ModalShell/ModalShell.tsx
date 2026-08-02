@@ -49,7 +49,7 @@ export interface ModalShellBaseProps {
      * for a non-standard header. Takes precedence over both.
      */
     header?: ReactNode
-    /** Body content of the modal. Equivalent to `children`; wins over it when both are passed. */
+    /** Body content of the modal. */
     body?: ReactNode
     /**
      * Bottom action row of the dialog (the CTA cluster). Rendered as HeroUI
@@ -58,8 +58,6 @@ export interface ModalShellBaseProps {
      * flex row.
      */
     footer?: ReactNode
-    /** Shorthand for {@link ModalShellBaseProps.body} — a wrapper frame wraps anything. */
-    children?: ReactNode
     /** Size of the underlying `Modal.Container` (dialog width). */
     size?: React.ComponentProps<typeof Modal.Container>["size"]
     /**
@@ -110,10 +108,9 @@ const Base = ({
     bodyClassName,
     footerClassName,
     classNames,
-    children,
 }: ModalShellBaseProps) => {
     const hasHeader = header != null || title != null
-    const main = body ?? children
+    const main = body
     return (
         <Modal
             isOpen={isOpen}

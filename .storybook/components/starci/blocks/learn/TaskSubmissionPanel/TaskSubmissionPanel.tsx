@@ -472,9 +472,8 @@ const TaskSubmissionPanel = ({
                 />
             }
 
-        >
-            <GithubGradingSettingsBody form={settingsFormProps} />
-        </DrawerShell>
+            body={<GithubGradingSettingsBody form={settingsFormProps} />}
+        />
     </div>
 )
 

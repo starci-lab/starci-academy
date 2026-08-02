@@ -63,8 +63,6 @@ export interface CalloutProps {
      * Equivalent to `children`; wins over it when both are passed.
      */
     body?: ReactNode
-    /** Shorthand for {@link CalloutProps.body}. */
-    children?: ReactNode
     /** Optional custom indicator icon as a COMPONENT; omit for the status default. */
     icon?: CalloutIcon
     /**
@@ -103,7 +101,6 @@ export const Callout = ({
     title,
     description,
     body,
-    children,
     icon,
     actionLabel,
     onAction,
@@ -116,7 +113,7 @@ export const Callout = ({
         tone="soft"
         title={title}
         description={description}
-        body={body ?? children}
+        body={body}
         icon={icon}
         action={
             actionLabel ? (

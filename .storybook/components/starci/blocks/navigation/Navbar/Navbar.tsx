@@ -666,9 +666,8 @@ const Navbar = ({
                 placement="right"
                 title="Mobile menu"
 
-            >
-                <StackV gap={6} body={drawerNav} />
-            </DrawerShell>
+                body={<StackV gap={6} body={drawerNav} />}
+            />
         </nav>
     )
 }

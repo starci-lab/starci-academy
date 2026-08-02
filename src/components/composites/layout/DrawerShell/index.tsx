@@ -55,7 +55,7 @@ export interface DrawerShellBaseProps {
      * for a non-standard header. Takes precedence over both.
      */
     header?: ReactNode
-    /** Body content of the drawer. Equivalent to `children`; wins over it when both are passed. */
+    /** Body content of the drawer. */
     body?: ReactNode
     /**
      * Bottom action row of the panel (the CTA cluster). Rendered as HeroUI
@@ -64,8 +64,6 @@ export interface DrawerShellBaseProps {
      * flex row.
      */
     footer?: ReactNode
-    /** Shorthand for {@link DrawerShellBaseProps.body} — a wrapper frame wraps anything. */
-    children?: ReactNode
     /** Extra classes merged onto `Drawer.Content` (the sliding panel itself — width/height). */
     contentClassName?: string
     /** Extra classes merged onto `Drawer.Dialog`, in addition to {@link DrawerShellBaseProps.classNames}. */
@@ -78,11 +76,6 @@ export interface DrawerShellBaseProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /**
-     * When `true`, each composed part (close trigger / header / body / footer)
-     * emits `` so a BlockAnatomy panel can badge it
-     * on-render. Off by default (production).
-     */
 }
 
 /**
@@ -106,10 +99,9 @@ const Base = ({
     dialogClassName,
     bodyClassName,
     footerClassName,
-    classNames,
-    children}: DrawerShellBaseProps) => {
+    classNames}: DrawerShellBaseProps) => {
     const hasHeader = header != null || title != null
-    const main = body ?? children
+    const main = body
     return (
         <Drawer
             isOpen={isOpen}

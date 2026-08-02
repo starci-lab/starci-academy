@@ -214,10 +214,8 @@ const AiQuotaModal = ({
 
                     />
                 }
-
-            >
-                <StackV gap={6} body={tabsAndPanel} />
-            </ModalShell>
+                body={<StackV gap={6} body={tabsAndPanel} />}
+            />
         </div>
     )
 }

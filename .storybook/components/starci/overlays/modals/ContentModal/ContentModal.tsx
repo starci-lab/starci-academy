@@ -77,21 +77,21 @@ const ContentModal = ({
                     />
                 </div>
             ) : null}
+            body={
+                <ScrollShadow hideScrollBar>
+                    {isSkeleton ? (
+                        <MarkdownContent source="" isSkeleton />
+                    ) : (
+                        <MarkdownContent
+                            source={content?.body ?? ""}
+                            measure="reading"
 
-        >
-            <ScrollShadow hideScrollBar>
-                {isSkeleton ? (
-                    <MarkdownContent source="" isSkeleton />
-                ) : (
-                    <MarkdownContent
-                        source={content?.body ?? ""}
-                        measure="reading"
 
-
-                    />
-                )}
-            </ScrollShadow>
-        </ModalShell>
+                        />
+                    )}
+                </ScrollShadow>
+            }
+        />
     </div>
 )
 

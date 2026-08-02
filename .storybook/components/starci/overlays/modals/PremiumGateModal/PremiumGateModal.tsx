@@ -246,9 +246,8 @@ const PremiumGateModal = ({
 
                     />
                 }
-            >
-                <StackV gap={6} body={gateBody} />
-            </ModalShell>
+                body={<StackV gap={6} body={gateBody} />}
+            />
         </div>
     )
 }

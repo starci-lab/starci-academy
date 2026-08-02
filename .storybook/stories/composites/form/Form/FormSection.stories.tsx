@@ -85,9 +85,7 @@ export const Default: Story = {
 </FormSection>`,
                         render: (
                             <div data-tier="fixture" className="w-96">
-                                <FormSection title="Billing details">
-                                    <BillingFields />
-                                </FormSection>
+                                <FormSection title="Billing details" body={<BillingFields />} />
                             </div>
                         ),
                     },
@@ -118,12 +116,11 @@ export const WithDescription: Story = {
                         render: (
                             <div data-tier="fixture" className="w-96">
                                 <FormSection
-                                   
+
                                     title="Billing details"
                                     description="These details are printed on the e-invoice; changing them later means requesting a reissue."
-                                >
-                                    <BillingFields />
-                                </FormSection>
+                                    body={<BillingFields />}
+                                />
                             </div>
                         ),
                     },

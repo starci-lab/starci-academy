@@ -77,7 +77,7 @@ export const Default: Story = {
                         render: (
                             <div data-tier="fixture" className="w-96">
                                 <Form
-                                   
+
                                     onSubmit={() => {}}
                                     actions={(
                                         <FormActions
@@ -87,11 +87,8 @@ export const Default: Story = {
                                             ]}
                                         />
                                     )}
-                                >
-                                    <FormSection title="Account">
-                                        <AccountFields />
-                                    </FormSection>
-                                </Form>
+                                    body={<FormSection title="Account" body={<AccountFields />} />}
+                                />
                             </div>
                         ),
                     },
@@ -127,7 +124,7 @@ export const Submitting: Story = {
                         render: (
                             <div data-tier="fixture" className="w-96">
                                 <Form
-                                   
+
                                     isDisabled
                                     onSubmit={() => {}}
                                     actions={(
@@ -138,11 +135,8 @@ export const Submitting: Story = {
                                             ]}
                                         />
                                     )}
-                                >
-                                    <FormSection title="Account">
-                                        <AccountFields />
-                                    </FormSection>
-                                </Form>
+                                    body={<FormSection title="Account" body={<AccountFields />} />}
+                                />
                             </div>
                         ),
                     },
@@ -175,7 +169,7 @@ export const Disabled: Story = {
                         render: (
                             <div data-tier="fixture" className="w-96">
                                 <Form
-                                   
+
                                     isDisabled
                                     onSubmit={() => {}}
                                     actions={(
@@ -186,11 +180,8 @@ export const Disabled: Story = {
                                             ]}
                                         />
                                     )}
-                                >
-                                    <FormSection title="Account" description="Only an administrator can edit this profile.">
-                                        <AccountFields />
-                                    </FormSection>
-                                </Form>
+                                    body={<FormSection title="Account" description="Only an administrator can edit this profile." body={<AccountFields />} />}
+                                />
                             </div>
                         ),
                     },

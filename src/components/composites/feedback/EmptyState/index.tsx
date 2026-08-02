@@ -49,8 +49,6 @@ export interface EmptyStateProps {
      * Equivalent to `children`; wins over it. Ignored in `size="compact"`.
      */
     body?: ReactNode
-    /** Shorthand for {@link EmptyStateProps.body}. */
-    children?: ReactNode
     /**
      * Optional call-to-action (typically a Button) below the body. Ignored in
      * `size="compact"`. In `size="page"`, multiple actions are centered and wrap.
@@ -91,7 +89,6 @@ export const EmptyState = ({
     title,
     description,
     body,
-    children,
     action,
     tone = "neutral",
     size = "default",
@@ -112,7 +109,7 @@ export const EmptyState = ({
     }
 
     const isPage = size === "page"
-    const main = body ?? children
+    const main = body
 
     return (
         <div

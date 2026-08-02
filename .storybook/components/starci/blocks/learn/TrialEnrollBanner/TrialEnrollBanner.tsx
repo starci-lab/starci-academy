@@ -79,17 +79,18 @@ const TrialEnrollBanner = ({
                 title="You're on a trial"
                 description="Unlock the full course and build proof of work employers can see on your profile."
 
-            >
-                <Button
-                    label="Unlock the course"
-                    variant="primary"
-                    size="sm"
-                    suffixIcon={ArrowRightIcon}
-                    iconSlide
-                    onPress={onEnroll}
+                body={
+                    <Button
+                        label="Unlock the course"
+                        variant="primary"
+                        size="sm"
+                        suffixIcon={ArrowRightIcon}
+                        iconSlide
+                        onPress={onEnroll}
 
-                />
-            </Callout>
+                    />
+                }
+            />
         </div>
     )
 }

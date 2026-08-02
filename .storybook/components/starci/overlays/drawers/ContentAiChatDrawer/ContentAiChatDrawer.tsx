@@ -129,21 +129,21 @@ const ContentAiChatDrawer = ({
                 onOpenChange={onOpenChange}
                 placement={placement}
                 header={header}
+                body={
+                    <SurfaceCard
 
-            >
-                <SurfaceCard
 
+                        body={() => (
+                            <EmptyState
+                                icon={ChatsCircleIcon}
+                                title={BODY_GAP_TITLE}
+                                description={BODY_GAP_DESCRIPTION}
 
-                    body={() => (
-                        <EmptyState
-                            icon={ChatsCircleIcon}
-                            title={BODY_GAP_TITLE}
-                            description={BODY_GAP_DESCRIPTION}
-
-                        />
-                    )}
-                />
-            </DrawerShell>
+                            />
+                        )}
+                    />
+                }
+            />
         </div>
     )
 }

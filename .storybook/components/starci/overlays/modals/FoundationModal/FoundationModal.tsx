@@ -69,19 +69,19 @@ const FoundationModal = ({
                 size="full"
                 containerClassName={isVideo ? "modal__container--narrow" : undefined}
                 scroll={isVideo ? undefined : "inside"}
+                body={
+                    <FoundationResourceBody
+                        kind={kind}
+                        markdownBody={markdownBody}
+                        linkTitle={linkTitle}
+                        linkUrl={linkUrl}
+                        onOpenLink={onOpenLink}
+                        isSkeleton={isSkeleton}
 
-            >
-                <FoundationResourceBody
-                    kind={kind}
-                    markdownBody={markdownBody}
-                    linkTitle={linkTitle}
-                    linkUrl={linkUrl}
-                    onOpenLink={onOpenLink}
-                    isSkeleton={isSkeleton}
 
-
-                />
-            </ModalShell>
+                    />
+                }
+            />
         </div>
     )
 }

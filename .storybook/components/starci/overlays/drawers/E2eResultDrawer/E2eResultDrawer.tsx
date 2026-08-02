@@ -100,9 +100,7 @@ const E2eResultDrawer = ({
 
         return (
             <div>
-                <DrawerShell isOpen={isOpen} onOpenChange={onOpenChange} placement={placement} title={DRAWER_TITLE}>
-                    <StackV gap={4} body={skeletonRows} />
-                </DrawerShell>
+                <DrawerShell isOpen={isOpen} onOpenChange={onOpenChange} placement={placement} title={DRAWER_TITLE} body={<StackV gap={4} body={skeletonRows} />} />
             </div>
         )
     }
@@ -190,15 +188,8 @@ const E2eResultDrawer = ({
                 onOpenChange={onOpenChange}
                 placement={placement}
                 title={DRAWER_TITLE}
-
-            >
-                <StackV
-                    gap={4}
-
-
-                    body={countFilterAndAccordion}
-                />
-            </DrawerShell>
+                body={<StackV gap={4} body={countFilterAndAccordion} />}
+            />
         </div>
     )
 }

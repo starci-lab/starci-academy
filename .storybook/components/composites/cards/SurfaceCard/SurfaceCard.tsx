@@ -433,12 +433,10 @@ const Base = ({
             action={action}
             subtleLabel={subtleLabel}
             isSkeleton={isSkeleton}
-
         />
     )
     return (
         <section
-
             data-principles={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames)}
             data-tier="composite"
@@ -1096,68 +1094,68 @@ const SelectableGroup = <T extends string>({
     columns = 2,
     classNames,
 }: SurfaceCardSelectableGroupProps<T>) => (
-        <RadioGroup
-            aria-label={ariaLabel}
-            value={value}
-            onChange={(next) => onChange(next as T)}
-            data-tier="composite"
-            data-component="SurfaceCardSelectableGroup"
-        >
-            <Grid
-                gap={3}
-                columns={SELECTABLE_GROUP_COLUMNS[columns]}
-                classNames={classNames}
-                items={items.map((item) => ({
-                    key: item.value,
-                    content: (
-                        <Radio value={item.value} isDisabled={item.isDisabled} className="w-full">
-                            <Radio.Content className="block w-full">
-                                {({ isSelected, isDisabled, isFocusVisible }) => {
-                                    const optionRow = (
-                                        <>
-                                            {item.icon ? (
-                                                <span className="shrink-0" aria-hidden>
-                                                    <item.icon />
-                                                </span>
-                                            ) : null}
-                                            <span className="flex min-w-0 flex-col">
-                                                <Typography size="sm" truncate text={item.label} />
-                                                {item.description != null ? (
-                                                    <Typography size="xs" color="muted" truncate text={item.description} />
-                                                ) : null}
+    <RadioGroup
+        aria-label={ariaLabel}
+        value={value}
+        onChange={(next) => onChange(next as T)}
+        data-tier="composite"
+        data-component="SurfaceCardSelectableGroup"
+    >
+        <Grid
+            gap={3}
+            columns={SELECTABLE_GROUP_COLUMNS[columns]}
+            classNames={classNames}
+            items={items.map((item) => ({
+                key: item.value,
+                content: (
+                    <Radio value={item.value} isDisabled={item.isDisabled} className="w-full">
+                        <Radio.Content className="block w-full">
+                            {({ isSelected, isDisabled, isFocusVisible }) => {
+                                const optionRow = (
+                                    <>
+                                        {item.icon ? (
+                                            <span className="shrink-0" aria-hidden>
+                                                <item.icon />
                                             </span>
-                                            {item.badge ? (
-                                                <span className="ml-auto shrink-0">
-                                                    <item.badge />
-                                                </span>
+                                        ) : null}
+                                        <span className="flex min-w-0 flex-col">
+                                            <Typography size="sm" truncate text={item.label} />
+                                            {item.description != null ? (
+                                                <Typography size="xs" color="muted" truncate text={item.description} />
                                             ) : null}
-                                        </>
-                                    )
-                                    return (
-                                        <Card
-                                            variant="default"
-                                            className={cn(
-                                                "w-full text-sm text-foreground transition-colors",
-                                                // selection & keyboard focus = an accent OUTLINE ring, NO
-                                                // fill / colour change. Drop the card's `shadow-surface`
-                                                // while the ring is up so the two elevations don't stack.
-                                                (isSelected || isFocusVisible) &&
-                                                "outline outline-2 outline-accent outline-offset-0 !shadow-none",
-                                                !isSelected && !isDisabled && "hover:bg-default",
-                                                isDisabled && "opacity-60",
-                                            )}
-                                        >
-                                            <StackH gap={3} classNames={["w-full"]} body={optionRow} />
-                                        </Card>
-                                    )
-                                }}
-                            </Radio.Content>
-                        </Radio>
-                    ),
-                }))}
-            />
-        </RadioGroup>
-    )
+                                        </span>
+                                        {item.badge ? (
+                                            <span className="ml-auto shrink-0">
+                                                <item.badge />
+                                            </span>
+                                        ) : null}
+                                    </>
+                                )
+                                return (
+                                    <Card
+                                        variant="default"
+                                        className={cn(
+                                            "w-full text-sm text-foreground transition-colors",
+                                            // selection & keyboard focus = an accent OUTLINE ring, NO
+                                            // fill / colour change. Drop the card's `shadow-surface`
+                                            // while the ring is up so the two elevations don't stack.
+                                            (isSelected || isFocusVisible) &&
+                                            "outline outline-2 outline-accent outline-offset-0 !shadow-none",
+                                            !isSelected && !isDisabled && "hover:bg-default",
+                                            isDisabled && "opacity-60",
+                                        )}
+                                    >
+                                        <StackH gap={3} classNames={["w-full"]} body={optionRow} />
+                                    </Card>
+                                )
+                            }}
+                        </Radio.Content>
+                    </Radio>
+                ),
+            }))}
+        />
+    </RadioGroup>
+)
 // ─────────────────────────────────────────────────────────────────────────────
 // .List — bounded surface list of rows (was `SurfaceListCard` + its two rows)
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1371,7 +1369,7 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
     ) : null)
     const metaSlot = Meta ? <Meta /> : (metaText != null
         ? <Typography size="sm" weight="medium"
- color="accent-soft" text={metaText} />
+            color="accent-soft" text={metaText} />
         : null)
     // DIV position (icon): the row is a control with FIXED `p-3` padding (not
     // hug-content), and its title is `text-sm` ⇒ line-height size = `size-5` — the

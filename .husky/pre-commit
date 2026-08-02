@@ -24,3 +24,8 @@ node scripts/check-skeleton-prop.mjs
 # twin @/components/*; thieu twin thi tao (mirror file storybook, doi @sb-components/ ->
 # @/components/, collapse /X/X -> /X).
 node scripts/check-src-sb-import.mjs
+
+# Pattern-coverage: frame realise seam (gap + justify/align/wrap/padding…) PHAI khai
+# pattern="<token>" (patterns.mjs) -> phat data-principles -> test-runner do duoc. Frame
+# thieu = seam ho, khong test duoc. Vibe-code moi PHAI dat pattern cho seam moi.
+node scripts/check-pattern-coverage.mjs

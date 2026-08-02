@@ -517,7 +517,7 @@ const Navbar = ({
                     </HeroButton>
                     <PopoverContent placement="bottom right" className="w-[360px]">
                         {/* inset-exception: vendor popover body padding, wider than tall, not a surface inset */}
-                        <StackV gap={2} padding={{ x: 3, y: 2 }} items={[() => notificationPanel]} />
+                        <StackV gap={2} pattern="control-pad" padding={{ x: 3, y: 2 }} items={[() => notificationPanel]} />
                     </PopoverContent>
                 </Popover>
             ) : null}

@@ -119,6 +119,7 @@ const _LearnShell = ({
             >
                 <StackV
                     gap={1}
+                    pattern="sibling-stack"
                     align="center"
                     justify="center"
                     classNames={["h-full"]}

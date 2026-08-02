@@ -208,6 +208,7 @@ const InterviewerPresence = ({
     const typingDots = isAsking ? (
         <StackH
             gap={2}
+            pattern="separator-dot"
             align="center"
 
             items={[

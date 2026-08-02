@@ -131,6 +131,7 @@ const CardBody = ({
             <div className="relative">
                 <StackH
                     gap={4}
+                    pattern="content-row"
                     align="center"
                     isSkeleton={isSkeleton}
                     items={[

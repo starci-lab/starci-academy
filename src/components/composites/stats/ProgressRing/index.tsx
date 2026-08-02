@@ -89,6 +89,7 @@ export const ProgressRing = ({
     return (
         <StackV
             gap={3}
+            pattern="sibling-stack"
             align="center"
             classNames={classNames}
             items={[

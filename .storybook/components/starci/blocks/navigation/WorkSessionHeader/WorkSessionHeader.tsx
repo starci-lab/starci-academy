@@ -151,7 +151,7 @@ const WorkSessionHeader = ({
             <StackH gap={4} pattern="content-row" align="center" isSkeleton={isSkeleton} items={[() => headerRow]} />
             {/* The rail. Segments are laid out by a frame so the seam stays on scale; each
                 segment carries its own hit zone, because a 4px bar is not a touch target. */}
-            <StackH gap={2} align="center" isSkeleton={isSkeleton} items={[() => railSegments]} />
+            <StackH gap={2} pattern="chip-row" align="center" isSkeleton={isSkeleton} items={[() => railSegments]} />
         </div>
     )
 }

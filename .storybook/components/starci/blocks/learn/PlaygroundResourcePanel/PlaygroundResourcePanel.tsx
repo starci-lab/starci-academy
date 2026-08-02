@@ -101,6 +101,7 @@ const groupToAccordionItem = (group: PlaygroundResourceGroup): SurfaceCardAccord
     body: () => (
         <StackV
             gap={1}
+            pattern="sibling-stack"
 
             items={group.resources.map((resource, index) => () => (
                 <ListRow

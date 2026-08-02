@@ -1,5 +1,5 @@
 import React from "react"
-import type { ReactNode } from "react"
+import type { ComponentType, ReactNode } from "react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Divider } from "@/components/atoms/display/Divider"
 import { type AllowedGap, type LayoutAlign, type LayoutJustify, type PaddingValue, type Responsive } from "@/components/frames/_spacing"
@@ -81,8 +81,17 @@ export interface StackBaseProps {
      * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
      * Missing this prop means the `layouts`-tier frame is used but the panel cannot see it.
      */
-    /** The stacked content. A wrapper frame takes a named slot (§13b). */
+    /** The stacked content. A wrapper frame takes a named slot (§13b). LEGACY — prefer `items`. */
     body?: ReactNode
+    /**
+     * The stacked content as BUILDABLE items — each an uncalled `ComponentType<{isSkeleton?}>`
+     * the track renders itself, so it can thread `isSkeleton` down and interleave dividers. Preferred
+     * over `body`: a frame that can BUILD its children can shimmer them (one tree, no hand-mirror).
+     * Wins over `body` when both are passed.
+     */
+    items?: Array<ComponentType<{ isSkeleton?: boolean }>>
+    /** `true` → the track passes `isSkeleton` to every `items` component so the whole column shimmers. */
+    isSkeleton?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -151,23 +160,30 @@ const StackV = ({
     divider = false,
     nested = false,
     body,
+    items,
+    isSkeleton,
     padding,
     classNames,
-    pattern}: StackVProps) => (
-    <Flex
-        as={Tag}
-        inline={inline}
-        direction="col"
-        gap={gap}
-        padding={padding}
-        align={align}
-        justify={justify}
-        nested={nested}
-        classNames={classNames}
-        pattern={pattern}
-        body={divider ? interleaveDividers(body, "vertical") : body}
-    />
-)
+    pattern}: StackVProps) => {
+    // `items` (buildable) wins over legacy `body`: the track renders each item itself, threading
+    // `isSkeleton`, so it can shimmer the whole column and interleave dividers on the real children.
+    const content = items ? items.map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />) : body
+    return (
+        <Flex
+            as={Tag}
+            inline={inline}
+            direction="col"
+            gap={gap}
+            padding={padding}
+            align={align}
+            justify={justify}
+            nested={nested}
+            classNames={classNames}
+            pattern={pattern}
+            body={divider ? interleaveDividers(content, "vertical") : content}
+        />
+    )
+}
 
 const StackH = ({
     as: Tag,
@@ -179,24 +195,29 @@ const StackH = ({
     divider = false,
     nested = false,
     body,
+    items,
+    isSkeleton,
     padding,
     classNames,
-    pattern}: StackHProps) => (
-    <Flex
-        as={Tag}
-        inline={inline}
-        direction="row"
-        gap={gap}
-        padding={padding}
-        align={align}
-        justify={justify}
-        at={at}
-        nested={nested}
-        classNames={classNames}
-        pattern={pattern}
-        body={divider ? interleaveDividers(body, "horizontal") : body}
-    />
-)
+    pattern}: StackHProps) => {
+    const content = items ? items.map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />) : body
+    return (
+        <Flex
+            as={Tag}
+            inline={inline}
+            direction="row"
+            gap={gap}
+            padding={padding}
+            align={align}
+            justify={justify}
+            at={at}
+            nested={nested}
+            classNames={classNames}
+            pattern={pattern}
+            body={divider ? interleaveDividers(content, "horizontal") : content}
+        />
+    )
+}
 
 export { StackV, StackH }
 

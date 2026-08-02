@@ -1576,6 +1576,9 @@
     "videoUnavailable": "Không thể phát video này."
   },
   "content": {
+    "discussionLabel": "Thảo luận",
+    "loadError": "Không tải được bài học này.",
+    "retry": "Thử lại",
     "title": "Nội dung",
     "relatedContent": {
       "label": "Có thể bạn muốn đọc thêm"

@@ -24,7 +24,7 @@ import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/u
 import { useQueryAiLabPlaygroundSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiLabPlaygroundSwr"
 import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/useQuerySearchCourseContentSwr"
 import { useLessonNavigation } from "@/components/features/learn/LessonReader/hooks/useLessonNavigation"
-import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { usePaymentOverlayState, usePremiumGateOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useContentDiscussionSocketIo } from "@/hooks/socketio/useContentDiscussionSocketIo"
 import { contentDiscussionSocketIoEventEmitter } from "@/hooks/socketio/useContentDiscussionSocketIoLifecycle"
 import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
@@ -119,6 +119,7 @@ export const ContentArticle = () => {
     const params = useParams()
     const router = useRouter()
     const dispatch = useAppDispatch()
+    const { open: openPremiumGate } = usePremiumGateOverlayState()
 
     const routeContentId = params.contentId as string | undefined
     const routeModuleId = params.moduleId as string | undefined
@@ -166,15 +167,18 @@ export const ContentArticle = () => {
     }, [isSandbox, isLocked, playgroundSwr.data])
 
     const onModeChange = useCallback((next: ContentMode) => {
+        // A locked mode (premium `challenges`/`aiLab` for a trial viewer) opens the paywall
+        // gate instead of switching — same guard `LessonReader.onTabChange` applies.
+        if (modes.find((option) => option.mode === next)?.isLocked) {
+            openPremiumGate()
+            return
+        }
         dispatch(setContentTab(MODE_TO_TAB[next]))
-        // TODO(connect): `LessonReader`'s own `onTabChange` intercepts a locked mode and opens
-        // the premium gate instead of switching (see `usePremiumGateOverlayState`) — port that
-        // guard here once this page replaces `LessonReader` on the route.
         router.push(
             `${pathConfig().locale(locale).course(courseDisplayId ?? "").learn()
                 .module(routeModuleId ?? "").content(routeContentId ?? "").build()}?tab=${next}`,
         )
-    }, [dispatch, router, locale, courseDisplayId, routeModuleId, routeContentId])
+    }, [modes, openPremiumGate, dispatch, router, locale, courseDisplayId, routeModuleId, routeContentId])
 
     // ---- language (SCHEMA V2 bodies) ----
 
@@ -427,16 +431,8 @@ export const ContentArticle = () => {
         [repliesByParentRaw, t],
     )
 
-    /**
-     * `ContentDiscussion` appends "· {total}" to whatever `label` it is given; the app's own
-     * `discussion.title` key instead bakes the count into one ICU string ("Discussion · {count}").
-     * TODO(connect): add a bare `discussion.label` key (no count) so this doesn't need to strip
-     * the trailing count back off the already-interpolated string.
-     */
-    const discussionLabel = useMemo(
-        () => t("discussion.title", { count: commentsTotal }).replace(/[\s·-]*[\d,]+\s*$/u, "").trim(),
-        [t, commentsTotal],
-    )
+    // `ContentDiscussion` appends "· {total}" itself, so it takes a bare label (no count).
+    const discussionLabel = t("content.discussionLabel")
 
     // ---- related lessons (course-wide RAG search on this lesson's own title) ----
 
@@ -495,10 +491,8 @@ export const ContentArticle = () => {
             onRetry={() => { void queryContentSwr.mutate() }}
             isEmpty={!isLoading && !content}
             emptyTitle={t("content.empty")}
-            // TODO(connect): reuses `modulePage.error`/`courseContents.retry` — add a dedicated
-            // `content.loadError`/`content.retry` pair once this page is wired to a real route.
-            errorTitle={t("modulePage.error")}
-            retryLabel={t("courseContents.retry")}
+            errorTitle={t("content.loadError")}
+            retryLabel={t("content.retry")}
             breadcrumbItems={breadcrumbItems}
             title={content?.title ?? ""}
             description={content?.description || undefined}
@@ -517,8 +511,11 @@ export const ContentArticle = () => {
             body={activeBody || t("content.empty")}
             isLocked={isLocked}
             offer={offer}
-            // TODO(connect): `SelectionHintCallout` (ask-AI-about-a-selection) owns its own
-            // localStorage "shown once" gate today; port that into a `hintText` here.
+            // NOTE: `hintText` is intentionally unset. The ask-AI-about-a-selection hint is NOT a
+            // static string — it's the connected `SelectionHintCallout` (its own localStorage
+            // "shown once" gate + `data-ai-selectable` article), rendered as a self-fetching child
+            // when this page takes over the route, the same way `CourseContents` renders
+            // `GithubTeamGate`. It is not part of this presentational blueprint's prop surface.
             myReaction={reactionsSwr.data?.myReaction != null ? toArticleReactionType(reactionsSwr.data.myReaction) : null}
             reactionCounts={toArticleReactionCounts(reactionsSwr.data?.counts)}
             viewCount={reactionsSwr.data?.viewCount}

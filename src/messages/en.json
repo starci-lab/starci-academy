@@ -1567,6 +1567,9 @@
     "videoUnavailable": "This video is not available."
   },
   "content": {
+    "discussionLabel": "Discussion",
+    "loadError": "Couldn't load this lesson.",
+    "retry": "Try again",
     "title": "Content",
     "relatedContent": {
       "label": "You might also want to read"

@@ -122,7 +122,7 @@ export const CourseProgressBar = ({
                                 key: lane.key,
                                 label: lane.label,
                                 color: lane.color,
-                                suffix: ` · ${lane.completed}`,
+                                suffix: `\u00A0·\u00A0${lane.completed}`,
                             }))}
                         />
                     )

@@ -5,6 +5,7 @@ import { Typography } from "@/components/atoms/text/Typography"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { LinkSeeMore } from "@/components/atoms/navigation/Link"
 import { StackH, StackV } from "@/components/frames/Stack"
+import { ModalRoot } from "@/components/frames/ModalRoot"
 import { AiQuotaLane, type AiQuotaLaneData } from "@/components/starci/blocks/ai/AiQuotaLane"
 import { AiQuotaSubscriptionPanel } from "@/components/starci/blocks/ai/AiQuotaSubscriptionPanel"
 import {
@@ -200,7 +201,7 @@ const _AiQuotaModal = ({
     ]
 
     return (
-        <div data-tier="modal" data-component="AiQuotaModal">
+        <ModalRoot data-component="AiQuotaModal">
             <ModalShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
@@ -218,7 +219,7 @@ const _AiQuotaModal = ({
                 )}
                 body={() => <StackV gap={6} items={tabsAndPanel} />}
             />
-        </div>
+        </ModalRoot>
     )
 }
 

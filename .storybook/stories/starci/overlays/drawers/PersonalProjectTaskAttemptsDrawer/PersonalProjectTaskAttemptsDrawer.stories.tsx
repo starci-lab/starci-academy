@@ -92,7 +92,6 @@ const ATTEMPTS: Array<PersonalProjectTaskAttempt> = [
 interface ControlledDrawerProps {
     attempts?: Array<PersonalProjectTaskAttempt>
     isLoading?: boolean
-    isEmpty?: boolean
     error?: unknown
     annotate: Record<string, AnatomyAnnotation>
     leaf: string
@@ -106,7 +105,6 @@ interface ControlledDrawerProps {
 const ControlledDrawer = ({
     attempts = [],
     isLoading = false,
-    isEmpty = false,
     error,
     annotate,
     leaf,
@@ -143,7 +141,6 @@ const ControlledDrawer = ({
                                 onOpenChange={setIsOpen}
                                 attempts={attempts}
                                 isLoading={isLoading}
-                                isEmpty={isEmpty}
                                 error={error}
                                 onRetry={() => {}}
                                 retryLabel="Retry"
@@ -204,17 +201,16 @@ export const Loading: Story = {
 export const Empty: Story = {
     render: () => (
         <ControlledDrawer
-            isEmpty
+            attempts={[]}
             annotate={ANNOTATE_EMPTY}
             leaf="AttemptsDrawer"
-            reason="isEmpty=true (once loading has finished) falls to AsyncContent's empty message — a real, named state for a milestone task that has never been submitted for, not a blank list."
+            reason="An empty attempts list — a milestone task never submitted for — falls to the list's own empty message. Empty is derived from items.length, not a separate flag, so there is nothing to pass but the empty array."
             stateName="empty — no attempts yet"
-            stateWhy="attempts=[] with isEmpty=true, loading already finished, so the drawer shows the standard empty message instead of a bare list."
+            stateWhy="attempts=[] with loading finished, so SurfaceCardList shows its standard empty message instead of a bare list."
             stateCode={`<PersonalProjectTaskAttemptsDrawer
   isOpen={isOpen}
   onOpenChange={setIsOpen}
   attempts={[]}
-  isEmpty
 />`}
         />
     ),

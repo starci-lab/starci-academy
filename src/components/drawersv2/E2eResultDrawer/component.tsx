@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react"
 import { type SkeletonProps } from "@/components/composites/_slot"
 import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { DrawerShell } from "@/components/composites/layout/DrawerShell"
+import { DrawerRoot } from "@/components/frames/DrawerRoot"
 import { StackV, StackH } from "@/components/frames/Stack"
 import { Typography } from "@/components/atoms/text/Typography"
 import { TabsBase } from "@/components/atoms/navigation/Tabs/TabsBase"
@@ -99,9 +100,9 @@ export const _E2eResultDrawer = ({
         ]
 
         return (
-            <div data-tier="drawer" data-component="E2eResultDrawer">
+            <DrawerRoot data-component="E2eResultDrawer">
                 <DrawerShell isOpen={isOpen} onOpenChange={onOpenChange} placement={placement} title={DRAWER_TITLE} body={() => <StackV gap={4} isSkeleton={isSkeleton} items={skeletonRows} />} />
-            </div>
+            </DrawerRoot>
         )
     }
 
@@ -190,7 +191,7 @@ export const _E2eResultDrawer = ({
     ]
 
     return (
-        <div data-tier="drawer" data-component="E2eResultDrawer">
+        <DrawerRoot data-component="E2eResultDrawer">
             <DrawerShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
@@ -198,6 +199,6 @@ export const _E2eResultDrawer = ({
                 title={DRAWER_TITLE}
                 body={() => <StackV gap={4} isSkeleton={isSkeleton} items={countFilterAndAccordion} />}
             />
-        </div>
+        </DrawerRoot>
     )
 }

@@ -61,7 +61,6 @@ export const PersonalProjectTaskAttemptsDrawer = () => {
             placement={isMobile ? "bottom" : "right"}
             attempts={attempts}
             isLoading={swr.isLoading && !(attemptList?.length)}
-            isEmpty={Boolean(attemptList) && attempts.length === 0}
             emptyLabel={t("finalProject.page.attemptsDrawer.empty")}
             error={attemptList ? undefined : swr.error}
         />

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { CheckCircleIcon, SparkleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { DrawerShell } from "@/components/composites/layout/DrawerShell"
+import { DrawerRoot } from "@/components/frames/DrawerRoot"
 import {
     AsyncContent,
     type AsyncContentEmptyProps,
@@ -263,7 +264,7 @@ const _SubmissionAttemptsDrawer = ({
     ]
 
     return (
-        <div data-tier="drawer" data-component="SubmissionAttemptsDrawer">
+        <DrawerRoot data-component="SubmissionAttemptsDrawer">
             <DrawerShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
@@ -295,7 +296,7 @@ const _SubmissionAttemptsDrawer = ({
                     />
                 )}
             />
-        </div>
+        </DrawerRoot>
     )
 }
 

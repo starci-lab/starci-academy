@@ -1234,6 +1234,20 @@ export interface SurfaceCardListProps extends SurfaceLabelProps {
      */
     emptyState?: ComponentType
     /**
+     * Truthy → the frame falls to the ERROR branch, which OUTRANKS every other
+     * (it beats the loading skeleton too). Pass the fetch error, and only once
+     * there is no cached list left to show. Left empty — or with no `errorState`
+     * — the frame falls through to skeleton/empty/content, the same fall-through
+     * `AsyncContent` keeps.
+     */
+    error?: unknown
+    /**
+     * The ERROR branch slot — a COMPONENT reference (COMPOSITE-8), the shared
+     * `AsyncContentError` frame or another, rendered padded inside the surface the
+     * exact way `emptyState` is. Only ever called when `error` is truthy.
+     */
+    errorState?: ComponentType
+    /**
      * `"surface"` (default) `shadow-surface`, or `"nested"` — border INSTEAD OF
      * shadow when this face sits INSIDE another face (§1a).
      *     */
@@ -1452,6 +1466,8 @@ const ListFreeRow = ({ item }: ListFreeRowProps) => {
 const List = ({
     items,
     emptyState: EmptyState,
+    error,
+    errorState: ErrorState,
     variant = "surface",
     description,
     isSkeleton = false,
@@ -1472,7 +1488,12 @@ const List = ({
             ? <ListFreeRow key={item.key} item={item} />
             : <ListRow key={item.key} item={item} isSkeleton={isSkeleton} />
     ))
-    const inner = !isSkeleton && isEmpty && EmptyState != null ? <Box principles={["page-pad"]}><EmptyState /></Box> : rows
+    // Priority mirrors `AsyncContent`: error → skeleton → empty → content. Error
+    // outranks the skeleton (a failed fetch is not a loading state); empty only
+    // reads once loading is done.
+    const inner = error && ErrorState != null
+        ? <Box principles={["page-pad"]}><ErrorState /></Box>
+        : !isSkeleton && isEmpty && EmptyState != null ? <Box principles={["page-pad"]}><EmptyState /></Box> : rows
     const bare = label == null && description == null
     const surface = (
         <div

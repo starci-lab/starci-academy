@@ -11,6 +11,7 @@ import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
 import { Cluster } from "@/components/frames/Cluster"
+import { ModalRoot } from "@/components/frames/ModalRoot"
 
 /**
  * `PremiumGateModal` — the dismissable, value-first buy/register prompt shown when a
@@ -225,7 +226,7 @@ export const _PremiumGateModal = ({
     ]
 
     return (
-        <div data-tier="modal" data-component="PremiumGateModal" className={className}>
+        <ModalRoot data-component="PremiumGateModal" className={className}>
             <ModalShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
@@ -245,7 +246,7 @@ export const _PremiumGateModal = ({
                 )}
                 body={() => <StackV gap={6} isSkeleton={isSkeleton} items={gateBody} />}
             />
-        </div>
+        </ModalRoot>
     )
 }
 

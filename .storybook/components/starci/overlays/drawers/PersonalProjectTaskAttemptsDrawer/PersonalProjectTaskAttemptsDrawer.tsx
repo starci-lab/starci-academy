@@ -3,7 +3,8 @@ import { ClockIcon, SparkleIcon } from "@phosphor-icons/react"
 import { Chip, type ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import {
-    AsyncContent,
+    AsyncContentEmpty,
+    AsyncContentError,
     type AsyncContentEmptyProps,
     type AsyncContentErrorProps,
 } from "@sb-components/composites/async/AsyncContent/AsyncContent"
@@ -52,8 +53,6 @@ export interface PersonalProjectTaskAttemptsDrawerProps {
     attempts: Array<PersonalProjectTaskAttempt>
     /** `true` → this drawer's own fetch is in flight; the list shows its skeleton mirror. */
     isLoading?: boolean
-    /** `true` (once loading has finished) → the list falls to its empty message. */
-    isEmpty?: boolean
     /** Empty-state message. Defaults to a standard "no attempts yet" line. */
     emptyLabel?: string
     /** Truthy → the list falls to its error message (beats loading, per `AsyncContent`). */
@@ -170,7 +169,6 @@ const PersonalProjectTaskAttemptsDrawer = ({
     placement = "right",
     attempts,
     isLoading = false,
-    isEmpty = false,
     emptyLabel,
     error,
     onRetry,
@@ -200,6 +198,9 @@ const PersonalProjectTaskAttemptsDrawer = ({
         content: () => <AttemptRow attempt={attempt} />,
     }))
 
+    // A parent-forced skeleton and this drawer's own in-flight fetch share one flag.
+    const loading = isLoading || isSkeleton
+
     return (
         <div>
             <DrawerShell
@@ -209,29 +210,16 @@ const PersonalProjectTaskAttemptsDrawer = ({
                 title={DRAWER_TITLE}
                 dialogClassName={className}
                 body={() => (
-                    <AsyncContent
-                        // A parent-forced skeleton and this drawer's own in-flight fetch share
-                        // the one loading branch `AsyncContent` exposes (see file header).
-                        isLoading={isLoading || isSkeleton}
-                        skeleton={() => (
-                            <SurfaceCardList
-                                items={skeletonItems}
-
-
-                            />
-                        )}
-                        isEmpty={isEmpty}
-                        emptyContent={emptyContent}
+                    // One list owns all four states — error → skeleton → empty → content.
+                    // While loading it renders placeholder rows (the real items are still
+                    // empty) with the shimmer flowing down through `isSkeleton`; empty and
+                    // error are the shared `AsyncContent*` frames dropped in as its own slots.
+                    <SurfaceCardList
+                        items={loading ? skeletonItems : items}
+                        isSkeleton={loading}
                         error={error}
-                        errorContent={errorContent}
-
-                        content={() => (
-                            <SurfaceCardList
-                                items={items}
-
-
-                            />
-                        )}
+                        errorState={() => <AsyncContentError {...errorContent} />}
+                        emptyState={() => <AsyncContentEmpty {...emptyContent} />}
                     />
                 )}
             />

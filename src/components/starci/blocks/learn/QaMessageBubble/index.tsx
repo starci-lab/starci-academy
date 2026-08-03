@@ -1,0 +1,206 @@
+import { CheckCircleIcon } from "@phosphor-icons/react"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { Avatar } from "@/components/atoms/display/Avatar"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Typography } from "@/components/atoms/text/Typography"
+import { MarkdownContent } from "@/components/composites/viewers/MarkdownContent"
+import { StackH, StackV } from "@/components/frames/Stack"
+import { QaChatBubble } from "@/components/starci/blocks/learn/QaChatBubble"
+import { QaReactionBar, type QaReactionType } from "@/components/starci/blocks/learn/QaReactionBar"
+
+/**
+ * BLOCK — `QaMessageBubble`: one answer (plus its flattened replies) in a Q&A
+ * conversation — author line, chat bubble body, an accept toggle (asker
+ * only, top-level only), a reaction bar, and every reply beneath it,
+ * read-only (see the component's own file header for why).
+ */
+
+/** Minimal identity carried by whoever wrote an answer. */
+export interface QaMessageBubbleAuthor {
+    id: string
+    displayName: string
+    avatarUrl?: string
+}
+
+/** One answer — or, flattened, one reply-to-a-reply. Mirrors `QaQuestionThread`'s `QaThreadAnswer` (kept local, see that file's ASSUMED CONTRACTS note). */
+export interface QaMessageBubbleAnswer {
+    id: string
+    body: string
+    author: QaMessageBubbleAuthor
+    createdTimeAgo: string
+    isAcceptedAnswer?: boolean
+    reactionCount: number
+    myReaction: QaReactionType | null
+    replies?: ReadonlyArray<QaMessageBubbleAnswer>
+}
+
+/** Props {@link QaMessageBubble} carries regardless of loading state. */
+interface QaMessageBubbleOwnProps {
+    /** Current viewer id — drives own-bubble alignment (`null` when signed out). */
+    currentUserId: string | null
+    /** `true` → the viewer is the question's asker, so the accept toggle can render. Ignored on a reply (replies are never acceptable). */
+    canAccept: boolean
+    /** Accept/un-accept THIS answer. Only called from the top-level bubble — see file header. */
+    onAcceptAnswer: (accepted: boolean) => void
+    /** React/un-react to THIS answer. Only called from the top-level bubble — see file header. */
+    onReact: (type: QaReactionType | null) => void
+}
+
+/**
+ * Props for {@link QaMessageBubble}. `answer` is REQUIRED unless `isSkeleton`
+ * (§12b) — a shimmer bubble has no real answer to show yet.
+ */
+export type QaMessageBubbleProps = QaMessageBubbleOwnProps &
+    (
+        | { isSkeleton: true; answer?: QaMessageBubbleAnswer }
+        | { isSkeleton?: false; answer: QaMessageBubbleAnswer }
+    )
+
+/** One bubble + author line, with no interactive controls — used for the top answer's OWN rendering and for every read-only reply beneath it. */
+const MessageRow = ({
+    answer,
+    currentUserId,
+    interactive,
+}: {
+    answer: QaMessageBubbleAnswer
+    currentUserId: string | null
+    interactive: { canAccept: boolean, onAcceptAnswer: (accepted: boolean) => void, onReact: (type: QaReactionType | null) => void } | null
+}) => {
+    const isMine = currentUserId != null && currentUserId === answer.author.id
+    const displayName = isMine ? "You" : answer.author.displayName
+
+    const authorRow = (
+        <StackH
+            gap={2}
+            principles={["icon-text", "separator-dot"]}
+            align="center"
+
+            items={[
+                () => <Avatar src={answer.author.avatarUrl} name={answer.author.displayName} seed={answer.author.id} size="sm" />,
+                () => <Typography size="xs" weight="medium" text={displayName} />,
+                () => <Typography size="xs" color="muted" text={answer.createdTimeAgo} />,
+                ...(answer.isAcceptedAnswer ? [() => <Chip tone="success" text="Accepted answer" />] : []),
+            ]}
+        />
+    )
+
+    const reactionRow = interactive ? (
+        <StackH
+            gap={3}
+            principles={["flex-action"]}
+            align="center"
+
+            items={[
+                () => (
+                    <QaReactionBar
+                        count={answer.reactionCount}
+                        myReaction={answer.myReaction}
+                        onReact={interactive.onReact}
+
+                    />
+                ),
+                ...(interactive.canAccept ? [() => (
+                    <Button
+                        variant={answer.isAcceptedAnswer ? "secondary" : "ghost"}
+                        size="sm"
+                        prefixIcon={CheckCircleIcon}
+                        label={answer.isAcceptedAnswer ? "Unaccept" : "Mark as the correct answer"}
+                        onPress={() => interactive.onAcceptAnswer(!answer.isAcceptedAnswer)}
+
+                    />
+                )] : []),
+            ]}
+        />
+    ) : null
+
+    const bubbleBody = (
+        <>
+            {authorRow}
+
+            <QaChatBubble role={isMine ? "user" : "assistant"}>
+                <div className="[&_p]:m-0">
+                    <MarkdownContent source={answer.body} measure="compact" />
+                </div>
+            </QaChatBubble>
+
+            {reactionRow}
+        </>
+    )
+
+    return (
+        <div className={cn("flex w-full", isMine ? "justify-end" : "justify-start")}>
+            <div className="max-w-[92%]">
+                <StackV gap={2} principles={["title-subtitle"]} align={isMine ? "end" : undefined} classNames={["min-w-0"]} items={[() => bubbleBody]} />
+            </div>
+        </div>
+    )
+}
+
+/**
+ * One answer (plus its flattened replies) in a `QaQuestionThread` conversation.
+ *
+ * @param props - {@link QaMessageBubbleProps}
+ */
+const QaMessageBubble = ({
+    answer,
+    currentUserId,
+    canAccept,
+    onAcceptAnswer,
+    onReact,
+    isSkeleton = false,
+}: QaMessageBubbleProps) => {
+    if (isSkeleton) {
+        const skeletonBody = (
+            <>
+                <StackH
+                    gap={2}
+                    principles={["icon-text", "separator-dot"]}
+                    align="center"
+
+                    items={[
+                        () => <Avatar isSkeleton size="sm" />,
+                        () => <HeroSkeleton className="h-3 w-16 rounded" />,
+                        () => <HeroSkeleton className="h-3 w-10 rounded" />,
+                    ]}
+                />
+                <HeroSkeleton className="h-16 w-full rounded-2xl" />
+            </>
+        )
+        return (
+            <div className="max-w-[92%]">
+                <StackV gap={2} isSkeleton={isSkeleton} items={[() => skeletonBody]} />
+            </div>
+        )
+    }
+    // `answer` is REQUIRED whenever `isSkeleton` is false (the discriminated union
+    // above, already guaranteed by the early return) — `!` only satisfies narrowing
+    // across the destructure, it never actually fires.
+    const realAnswer = answer!
+
+    const replyRows = (realAnswer.replies ?? []).map((reply) => (
+        <div key={reply.id} className="pl-8">
+            <MessageRow answer={reply} currentUserId={currentUserId} interactive={null} />
+        </div>
+    ))
+
+    const threadBody = (
+        <>
+            <MessageRow
+                answer={realAnswer}
+                currentUserId={currentUserId}
+
+                interactive={{ canAccept, onAcceptAnswer, onReact }}
+            />
+            {replyRows}
+        </>
+    )
+
+    return (
+        <div>
+            <StackV gap={2} isSkeleton={isSkeleton} items={[() => threadBody]} />
+        </div>
+    )
+}
+
+export { QaMessageBubble }

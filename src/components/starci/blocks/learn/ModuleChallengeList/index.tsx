@@ -1,0 +1,127 @@
+import React from "react"
+import { Skeleton as HeroSkeleton } from "@heroui/react"
+import { PuzzlePieceIcon } from "@phosphor-icons/react"
+import { SurfaceCardList } from "@/components/composites/cards/SurfaceCard"
+import { VariantChipDifficulty, type Difficulty } from "@/components/starci/blocks/learn/VariantChip"
+
+/**
+ * `ModuleChallengeList` — every challenge across this module's lessons, flattened
+ * into one solve-me list. Distinct from a lesson list: a challenge row means "go
+ * solve", shows the same `PuzzlePieceIcon` recoloured by solved state (no
+ * in-progress state), and a press opens the owning lesson's Challenges tab (there
+ * is no standalone challenge route). Solved/unsolved and all four difficulty steps
+ * are states of one `SurfaceCardList` → rows tree.
+ */
+
+/** One challenge row — plain DATA, the block builds the row shape itself. */
+export interface ModuleChallengeItem {
+    /** Stable React key — the challenge's own id. */
+    id: string
+    /** Challenge title. */
+    title: string
+    /** Difficulty tier — the block builds `VariantChipDifficulty` itself. */
+    difficulty: Difficulty
+    /** Whether this challenge has been solved — decides the icon color and the subtitle. */
+    completed: boolean
+    /** The LESSON this challenge belongs to — where a press actually navigates. */
+    lessonId: string
+}
+
+/** Props for {@link ModuleChallengeList}. */
+export interface ModuleChallengeListProps {
+    /** The challenges, flattened across every lesson in the module. */
+    challenges: Array<ModuleChallengeItem>
+    /**
+     * Fired with the OWNING LESSON's id (not the challenge id) — a challenge is
+     * solved inside its lesson's Challenges tab, there is no standalone
+     * challenge route to send the learner to.
+     */
+    onSelectChallenge: (lessonId: string) => void
+    /**
+     * `true` → mirror shimmer instead of waiting on `challenges`. The flag flows
+     * straight into `SurfaceCardList` (keeps the row box/divider, only the text
+     * shimmers) and into `VariantChipDifficulty`. The leading icon color is
+     * chosen directly by this block (no atom in between, see the file header),
+     * so — same as `KeepGoingPath` — it hand-rolls a single shimmer dot in its
+     * place rather than branching off a second row shape.
+     *
+     * Empty while loading (`challenges.length === 0`) guesses **3** rows,
+     * matching this pass's convention for repeating lists.
+     */
+    isSkeleton?: boolean
+}
+
+/**
+ * Icon color by solved state — the block owns this table (mirrors
+ * `KeepGoingPath`'s `CONTENT_LEADING`, one entry instead of three because a
+ * challenge has no "in progress" state, only solved / not yet).
+ */
+const CHALLENGE_LEADING_CLASS: Record<"completed" | "todo", string> = {
+    completed: "size-5 text-success-soft-foreground",
+    todo: "size-5 text-foreground",
+}
+
+/** Placeholder DATA for the 3 guessed rows when `challenges` is empty while loading (§12c). */
+const SKELETON_CHALLENGES: Array<ModuleChallengeItem> = Array.from({ length: 3 }, (_unused, index) => ({
+    id: `skeleton-${index}`,
+    title: "",
+    difficulty: "beginner",
+    completed: false,
+    lessonId: "",
+}))
+
+/**
+ * Every challenge across this module's lessons, flattened into one solve-me
+ * list. See the file header for the full contract and why this is not merged
+ * with a lesson list.
+ *
+ * @param props - {@link ModuleChallengeListProps}
+ */
+const ModuleChallengeList = ({
+    challenges,
+    onSelectChallenge,
+    isSkeleton = false,
+}: ModuleChallengeListProps) => {
+    // Empty while loading (no real challenges yet) → guess 3 rows, keeping the
+    // right shape for when real data arrives (§8). Once real `challenges` exist,
+    // keep the EXACT row count already there.
+    const rows = isSkeleton && challenges.length === 0 ? SKELETON_CHALLENGES : challenges
+
+    return (
+        <SurfaceCardList
+
+            isSkeleton={isSkeleton}
+            items={rows.map((challenge) => ({
+                key: challenge.id,
+                leading: () => (isSkeleton ? (
+                    // The color is chosen DIRECTLY by this block (no atom in between) —
+                    // hand-roll a single shimmer dot in place of the puzzle icon.
+                    <HeroSkeleton className="size-5 shrink-0 rounded-full" />
+                ) : (
+                    <PuzzlePieceIcon
+                        aria-hidden
+                        focusable="false"
+                        className={CHALLENGE_LEADING_CLASS[challenge.completed ? "completed" : "todo"]}
+                    />
+                )),
+                title: challenge.title,
+                // Only a SOLVED challenge earns the subtitle — an unsolved row says
+                // nothing extra, the difficulty chip is already the row's other fact.
+                subtitle: challenge.completed ? "Completed" : undefined,
+                onPress: () => onSelectChallenge(challenge.lessonId),
+                // Meta holds EXACTLY ONE thing: difficulty. The shape is owned by
+                // DESIGN — this block doesn't reshape the chip (§14d.1). The flag
+                // flows straight down into the `VariantChipDifficulty` atom.
+                meta: () => (
+                    <VariantChipDifficulty
+                        difficulty={challenge.difficulty}
+                        isSkeleton={isSkeleton}
+
+                    />
+                ),
+            }))}
+        />
+    )
+}
+
+export { ModuleChallengeList }

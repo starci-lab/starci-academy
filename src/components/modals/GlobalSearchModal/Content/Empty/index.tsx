@@ -3,16 +3,15 @@
 import React from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { cn, ListBox, Typography } from "@heroui/react"
+import { ListBox, Typography } from "@heroui/react"
 import { FlameIcon } from "@phosphor-icons/react"
 import { pathConfig } from "@/resources/path"
 import { useQueryRecommendedCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryRecommendedCoursesSwr"
 import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
-import { WithClassNames } from "@/modules/types/base/class-name"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 
 /** Props for {@link GlobalSearchEmpty}. */
-export interface GlobalSearchEmptyProps extends WithClassNames<undefined> {
+export interface GlobalSearchEmptyProps {
     /** Whether the user has typed a (trimmed) query yet — switches idle hint vs no-match copy. */
     hasQuery: boolean
 }
@@ -26,7 +25,7 @@ export interface GlobalSearchEmptyProps extends WithClassNames<undefined> {
  *
  * @param props.hasQuery — `true` when a non-empty query is active.
  */
-export const GlobalSearchEmpty = ({ hasQuery, className }: GlobalSearchEmptyProps) => {
+export const GlobalSearchEmpty = ({ hasQuery }: GlobalSearchEmptyProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -37,14 +36,14 @@ export const GlobalSearchEmpty = ({ hasQuery, className }: GlobalSearchEmptyProp
     // No popular courses to fall back on → just the appropriate hint line (never a blank).
     if (popular.length === 0) {
         return (
-            <div className={cn("flex flex-col items-center justify-center px-4 py-9 text-center", className)}>
+            <div className="flex flex-col items-center justify-center px-4 py-9 text-center">
                 <Typography type="body-sm" color="muted">{t(hasQuery ? "search.noResults" : "search.idleHint")}</Typography>
             </div>
         )
     }
 
     return (
-        <div className={cn("flex flex-col gap-2 px-2", className)}>
+        <div className="flex flex-col gap-2 px-2">
             {/* query typed but no hits → keep the "not found" line, then fall through to Popular
                 so the palette is never a dead-end */}
             {hasQuery ? (

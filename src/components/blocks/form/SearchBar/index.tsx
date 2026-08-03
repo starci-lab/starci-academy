@@ -5,7 +5,6 @@ import React, { useMemo } from "react"
 import {
     Autocomplete,
     Button,
-    cn,
     InputGroup,
     Label,
     ListBox,
@@ -14,7 +13,6 @@ import {
 } from "@heroui/react"
 
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 
 /** One selectable row in the autocomplete list (demo data until search is API-driven). */
@@ -26,20 +24,10 @@ interface SearchSuggestionItem {
 }
 
 /**
- * Props for the search bar.
- */
-export interface SearchBarProps extends WithClassNames<undefined> {
-    /** Optional class names on the root `TextField` wrapper. */
-    className?: string
-}
-
-/**
  * Search field using HeroUI `TextField` + `InputGroup` with an `Autocomplete` on the left
  * and a filters icon button in the suffix (same composition pattern as InputGroup + suffix).
- *
- * @param props.className — Merged onto the root `TextField`.
  */
-export const SearchBar = ({ className }: SearchBarProps) => {
+export const SearchBar = () => {
     const t = useTranslations()
 
     const suggestionItems = useMemo<Array<SearchSuggestionItem>>(
@@ -52,7 +40,7 @@ export const SearchBar = ({ className }: SearchBarProps) => {
     )
 
     return (
-        <TextField className={cn("w-full", className)} fullWidth variant="secondary">
+        <TextField className="w-full" fullWidth variant="secondary">
             <Label className="sr-only">{t("search.label")}</Label>
             <InputGroup className="w-full" variant="secondary">
                 <div className="min-w-0 flex-1">

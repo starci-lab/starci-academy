@@ -1,9 +1,6 @@
 "use client"
 
 import React from "react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 
@@ -17,9 +14,9 @@ const SKELETON_ROW_COUNT = 4
  *
  * @param props - {@link ChangelogListSkeleton}
  */
-export const ChangelogListSkeleton = ({ className }: WithClassNames<undefined>) => {
+export const ChangelogListSkeleton = () => {
     return (
-        <SurfaceListCard className={className}>
+        <SurfaceListCard>
             {Array.from({ length: SKELETON_ROW_COUNT }).map((_, index) => (
                 <SurfaceListCardItem key={index}>
                     <div className="flex flex-col gap-2">

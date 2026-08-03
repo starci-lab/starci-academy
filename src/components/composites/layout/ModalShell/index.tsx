@@ -55,8 +55,6 @@ export interface ModalShellBaseProps {
      * Ignored when {@link header} is provided, or when {@link title} is omitted.
      */
     description?: string
-    /** Extra classes on the default title/description wrapper (only with {@link title}). */
-    titleClassName?: string
     /**
      * Full custom header content — use instead of {@link title}/{@link description}
      * for a non-standard header. Takes precedence over both. A COMPONENT
@@ -81,18 +79,20 @@ export interface ModalShellBaseProps {
      * When set, the container also gets `max-h-[85vh]`.
      */
     scroll?: React.ComponentProps<typeof Modal.Container>["scroll"]
-    /** Extra classes merged onto `Modal.Container` (merged after the `scroll="inside"` max-height default). */
-    containerClassName?: string
-    /** Extra classes merged onto `Modal.Dialog`, in addition to {@link ModalShellBaseProps.classNames}. */
-    dialogClassName?: string
-    /** Extra classes merged onto `Modal.Body`. */
-    bodyClassName?: string
-    /** Extra classes merged onto `Modal.Footer`. */
-    footerClassName?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
+    /**
+     * Anatomy tag for this frame's own root — OVERRIDABLE (unlike `ResponsiveCluster`,
+     * this shell has a public identity of its own: `meta` above). Defaults to
+     * `"composite"` so an unstyled `<ModalShell>` still badges itself correctly;
+     * a concrete overlay built ON this shell (e.g. a confirm modal) stamps its own
+     * name here instead of wrapping the root in another element just to relabel it.
+     */
+    "data-tier"?: string
+    /** Paired with `data-tier` — defaults to `"ModalShell"`. See that prop's doc. */
+    "data-component"?: string
     /**
      * `true` → the `title`/`description` text this frame owns switches to
      * shimmer, AND every content-region slot it mounts (`header` / `body` /
@@ -115,17 +115,14 @@ const Base = ({
     onOpenChange,
     title,
     description,
-    titleClassName,
     header: Header,
     body: Body,
     footer: Footer,
     size,
     scroll,
-    containerClassName,
-    dialogClassName,
-    bodyClassName,
-    footerClassName,
     classNames,
+    "data-tier": dataTier = "composite",
+    "data-component": dataComponent = "ModalShell",
     isSkeleton = false,
 }: ModalShellBaseProps) => {
     const hasHeader = Header != null || title != null
@@ -134,12 +131,12 @@ const Base = ({
         <Modal
             isOpen={isOpen}
             onOpenChange={onOpenChange}
-            data-tier="composite"
-            data-component="ModalShell"
+            data-tier={dataTier}
+            data-component={dataComponent}
         >
             <Modal.Backdrop>
                 <Modal.Container
-                    className={cn(scroll === "inside" && "max-h-[85vh]", containerClassName)}
+                    className={cn(scroll === "inside" && "max-h-[85vh]")}
                     scroll={scroll}
                     size={size}
                 >
@@ -149,13 +146,13 @@ const Base = ({
                         (`.modal__header + .modal__body { mt-2 }`, `mt-5` before the footer), not to
                         compete with the parent.
                         Now `gap-4` here + `mt-0!` on the child: ONE seam, ONE owner (§10a). */}
-                    <Modal.Dialog className={cn("gap-3", dialogClassName, classNames)}>
+                    <Modal.Dialog className={cn("gap-3", classNames)}>
                         <Modal.CloseTrigger />
                         {Header ? (
                             <Modal.Header><Header isSkeleton={isSkeleton} /></Modal.Header>
                         ) : title != null ? (
                             <Modal.Header>
-                                <div className={cn("pr-8", titleClassName)}>
+                                <div className="pr-8">
                                     <StackV
                                         gap={2}
                                         principles={["title-subtitle"]}
@@ -195,8 +192,7 @@ const Base = ({
                                 // `mt-0!` only TURNS OFF the margin HeroUI ships with; the rhythm is
                                 // decided by the Dialog's own `gap-4`. The 0 sits on the scale, so it
                                 // is not an exception.
-                                hasHeader && "mt-0!",
-                                bodyClassName)}
+                                hasHeader && "mt-0!")}
                         >
                             {main}
                         </Modal.Body>
@@ -205,7 +201,7 @@ const Base = ({
                             header→body and body→footer read as the SAME gap. */}
                         {Footer != null ? (
                             <Modal.Footer
-                                className={cn("mt-0!", footerClassName)}
+                                className="mt-0!"
                             >
                                 <Footer isSkeleton={isSkeleton} />
                             </Modal.Footer>

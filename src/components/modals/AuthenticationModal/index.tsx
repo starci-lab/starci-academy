@@ -3,17 +3,13 @@
 import React, { useEffect } from "react"
 import { SignInSection } from "./SignInSection"
 import { SignUpSection } from "./SignUpSection"
-import { cn, Modal } from "@heroui/react"
+import { Modal } from "@heroui/react"
 import { useAuthenticationOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { AuthenticationModalTab } from "@/redux/slices/tabs"
 import { resetSignInState, resetSignUpState } from "@/redux/slices/state"
-import { WithClassNames } from "@/modules/types/base/class-name"
 
-/** Props for {@link AuthenticationModal}. */
-type AuthenticationModalProps = WithClassNames<undefined>
-
-export const AuthenticationModal = ({ className }: AuthenticationModalProps = {}) => {
+export const AuthenticationModal = () => {
     const { isOpen, setOpen } = useAuthenticationOverlayState()
     const dispatch = useAppDispatch()
     const authenticationModalTab = useAppSelector((state) => state.tabs.authenticationModalTab)
@@ -39,7 +35,7 @@ export const AuthenticationModal = ({ className }: AuthenticationModalProps = {}
         >
             <Modal.Backdrop>
                 <Modal.Container size="xs">
-                    <Modal.Dialog className={cn(className)}>
+                    <Modal.Dialog>
                         {renderSection()}
                     </Modal.Dialog>
                 </Modal.Container>

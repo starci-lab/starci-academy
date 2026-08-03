@@ -3,7 +3,6 @@
 import React, { useMemo } from "react"
 import { cn } from "@heroui/react"
 import { useFormatter, useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Color of the score based on the ratio compared to the threshold.
@@ -35,7 +34,7 @@ const resolveTone = (
     return "success"
 }
 
-export interface ScoreProps extends WithClassNames<undefined> {
+export interface ScoreProps {
     /** Current score (numerator). */
     current: number
     /** Maximum score (denominator). */
@@ -45,8 +44,6 @@ export interface ScoreProps extends WithClassNames<undefined> {
      * Below `threshold / 2`: danger; from half to below `threshold`: warning; at or above `threshold`: success.
      */
     threshold?: number
-    /** Extra classes on the root element (typography, spacing). */
-    className?: string
 }
 
 /**
@@ -58,7 +55,6 @@ export const Score = (props: ScoreProps) => {
         current,
         max,
         threshold = 0.7,
-        className,
     } = props
     const t = useTranslations()
     const format = useFormatter()
@@ -89,13 +85,7 @@ export const Score = (props: ScoreProps) => {
 
     return (
         <div
-            className={
-                cn(
-                    "font-medium tabular-nums text-4xl font-bold", 
-                    toneTextClass[tone]
-                    , className
-                )
-            }
+            className={cn("font-medium tabular-nums text-4xl font-bold", toneTextClass[tone])}
             aria-label={ariaLabel}
         >
             {label}

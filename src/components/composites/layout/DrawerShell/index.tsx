@@ -53,8 +53,6 @@ export interface DrawerShellBaseProps {
      * Ignored when {@link header} is provided, or when {@link title} is omitted.
      */
     description?: string
-    /** Extra classes on the default title/description wrapper (only with {@link title}). */
-    titleClassName?: string
     /**
      * Full custom header content — use instead of {@link title}/{@link description}
      * for a non-standard header. Takes precedence over both. A COMPONENT
@@ -71,18 +69,20 @@ export interface DrawerShellBaseProps {
      * flex row. A COMPONENT reference (COMPOSITE-8) the frame mounts itself.
      */
     footer?: ComponentTypeWithSkeleton
-    /** Extra classes merged onto `Drawer.Content` (the sliding panel itself — width/height). */
-    contentClassName?: string
-    /** Extra classes merged onto `Drawer.Dialog`, in addition to {@link DrawerShellBaseProps.classNames}. */
-    dialogClassName?: string
-    /** Extra classes merged onto `Drawer.Body`. */
-    bodyClassName?: string
-    /** Extra classes merged onto `Drawer.Footer`. */
-    footerClassName?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
+    /**
+     * Anatomy tag for this frame's own root — OVERRIDABLE (unlike `ResponsiveCluster`,
+     * this shell has a public identity of its own: `meta` above). Defaults to
+     * `"composite"` so an unstyled `<DrawerShell>` still badges itself correctly;
+     * a concrete overlay built ON this shell (e.g. a confirm drawer) stamps its own
+     * name here instead of wrapping the root in another element just to relabel it.
+     */
+    "data-tier"?: string
+    /** Paired with `data-tier` — defaults to `"DrawerShell"`. See that prop's doc. */
+    "data-component"?: string
     /**
      * `true` → the `title`/`description` text this frame owns switches to
      * shimmer, AND every content-region slot it mounts (`header` / `body` /
@@ -106,15 +106,12 @@ const Base = ({
     placement = "right",
     title,
     description,
-    titleClassName,
     header: Header,
     body: Body,
     footer: Footer,
-    contentClassName,
-    dialogClassName,
-    bodyClassName,
-    footerClassName,
     classNames,
+    "data-tier": dataTier = "composite",
+    "data-component": dataComponent = "DrawerShell",
     isSkeleton = false,
 }: DrawerShellBaseProps) => {
     const hasHeader = Header != null || title != null
@@ -123,18 +120,18 @@ const Base = ({
         <Drawer
             isOpen={isOpen}
             onOpenChange={onOpenChange}
-            data-tier="composite"
-            data-component="DrawerShell"
+            data-tier={dataTier}
+            data-component={dataComponent}
         >
             <Drawer.Backdrop>
-                <Drawer.Content className={contentClassName} placement={placement}>
-                    <Drawer.Dialog className={cn("gap-3", dialogClassName, classNames)}>
+                <Drawer.Content placement={placement}>
+                    <Drawer.Dialog className={cn("gap-3", classNames)}>
                         <Drawer.CloseTrigger />
                         {Header ? (
                             <Drawer.Header><Header isSkeleton={isSkeleton} /></Drawer.Header>
                         ) : title != null ? (
                             <Drawer.Header>
-                                <div className={cn("pr-8", titleClassName)}>
+                                <div className="pr-8">
                                     <StackV
                                         gap={2}
                                         principles={["title-subtitle"]}
@@ -167,14 +164,13 @@ const Base = ({
                                 // reader sees comes from the Dialog's own `gap-3` (same rule
                                 // as ModalShell — one seam, one owner, §10a).
                                 hasHeader && "mt-0!",
-                                "overflow-y-auto",
-                                bodyClassName)}
+                                "overflow-y-auto")}
                         >
                             {main}
                         </Drawer.Body>
                         {Footer != null ? (
                             <Drawer.Footer
-                                className={cn("mt-0!", footerClassName)}
+                                className="mt-0!"
                             >
                                 <Footer isSkeleton={isSkeleton} />
                             </Drawer.Footer>

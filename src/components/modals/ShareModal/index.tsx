@@ -5,14 +5,13 @@ import { FaLinkedin as LinkedinLogoIcon } from "react-icons/fa6"
 import React, { useMemo } from "react"
 import { pathConfig } from "@/resources/path"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useShareOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useAppSelector } from "@/redux/hooks"
 import { QRCode } from "@/components/blocks/media/QRCode"
 import { SnippetIcon } from "@/components/blocks/identity/SnippetIcon"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
-export const ShareModal = ({ className }: WithClassNames<undefined>) => {
+export const ShareModal = () => {
     const t = useTranslations()
     const { isOpen, setOpen } = useShareOverlayState()
     const content = useAppSelector((state) => state.content.entity)
@@ -51,7 +50,6 @@ export const ShareModal = ({ className }: WithClassNames<undefined>) => {
         <ModalShell
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
             size="md"
             title={t("content.share")}
         >

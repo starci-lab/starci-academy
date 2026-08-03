@@ -73,8 +73,6 @@ export interface PremiumGateModalProps {
      * handoff shape as `TrialConversionStrip`'s `onEnroll`.
      */
     onUpgrade: () => void
-    /** Extra classes on the root. */
-    className?: string
 }
 
 /** Whether the caller named a specific course, or this is a generic gate. */
@@ -138,7 +136,6 @@ const PremiumGateModal = ({
     price,
     isSkeleton = false,
     onUpgrade,
-    className,
 }: PremiumGateModalProps) => {
     const headerVariant: GateHeaderVariant = courseTitle ? "named" : "generic"
     const header = GATE_HEADER[headerVariant]
@@ -224,27 +221,25 @@ const PremiumGateModal = ({
     ]
 
     return (
-        <div className={className}>
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                title={header.title(courseTitle)}
-                description={header.description}
-                size="md"
+        <ModalShell
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            title={header.title(courseTitle)}
+            description={header.description}
+            size="md"
 
-                footer={() => (
-                    <Button
-                        variant="primary"
-                        size="lg"
-                        classNames={["w-full"]}
-                        label="Unlock now"
-                        onPress={onUpgrade}
+            footer={() => (
+                <Button
+                    variant="primary"
+                    size="lg"
+                    classNames={["w-full"]}
+                    label="Unlock now"
+                    onPress={onUpgrade}
 
-                    />
-                )}
-                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={gateBody} />}
-            />
-        </div>
+                />
+            )}
+            body={() => <StackV gap={6} isSkeleton={isSkeleton} items={gateBody} />}
+        />
     )
 }
 

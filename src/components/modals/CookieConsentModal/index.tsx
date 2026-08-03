@@ -7,7 +7,6 @@ import {
     Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useCookieConsentStore } from "@/hooks/zustand/cookieConsent/store"
 import { useCookiePreferencesOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
@@ -17,10 +16,8 @@ import { ModalShell } from "@/components/blocks/layout/ModalShell"
  * with Save / Reject / Accept all. Holds its OWN draft toggle (seeded from the committed
  * {@link useCookieConsentStore} value each time it opens); Save commits the choice. Mounted once in
  * `ModalContainer`, opened via {@link useCookiePreferencesOverlayState}.
- *
- * @param props - optional className for the dialog
  */
-export const CookieConsentModal = ({ className }: WithClassNames<undefined>) => {
+export const CookieConsentModal = () => {
     const t = useTranslations()
     const { isOpen, setOpen, close } = useCookiePreferencesOverlayState()
     const analyticsAllowed = useCookieConsentStore((state) => state.analyticsAllowed)
@@ -40,7 +37,6 @@ export const CookieConsentModal = ({ className }: WithClassNames<undefined>) => 
         <ModalShell
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
             header={(
                 <Typography type="body" weight="semibold" className="pr-8">
                     {t("cookieConsent.modalTitle")}

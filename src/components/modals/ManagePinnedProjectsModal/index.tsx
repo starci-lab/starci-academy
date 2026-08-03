@@ -13,7 +13,6 @@ import {
     usePinnedProjectsManager,
 } from "./hooks/usePinnedProjectsManager"
 import { PinnedProjectCard } from "./PinnedProjectCard"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ExternalProjectForm } from "./ExternalProjectForm"
 import { CourseProjectForm } from "./CourseProjectForm"
 import { usePinnedProjectsOverlayState } from "@/hooks/zustand/overlay/hooks"
@@ -32,11 +31,8 @@ type ManagePinsTab = "manage" | "external" | "course"
  * owned by {@link usePinnedProjectsManager} (the form owns its own mutation).
  * Mounted once in `ModalContainer`.
  *
- * @param props - optional className threaded to the dialog.
  */
-export const ManagePinnedProjectsModal = ({
-    className,
-}: WithClassNames<undefined>) => {
+export const ManagePinnedProjectsModal = () => {
     const t = useTranslations()
     const { isOpen, setOpen } = usePinnedProjectsOverlayState()
     const {
@@ -54,7 +50,6 @@ export const ManagePinnedProjectsModal = ({
         <ModalShell
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
             size="lg"
             bodyStartsWithTabs
             header={(

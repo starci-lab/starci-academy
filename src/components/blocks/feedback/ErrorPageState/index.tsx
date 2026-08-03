@@ -1,10 +1,9 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { cn, Typography } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Typography } from "@heroui/react"
 
 /** Props for the {@link ErrorPageState} block. */
-export interface ErrorPageStateProps extends WithClassNames<undefined> {
+export interface ErrorPageStateProps {
     /** Large status numeral (e.g. `"404"`, `"500"`) shown at the top. */
     code: ReactNode
     /** Headline (e.g. "Page not found"). */
@@ -31,14 +30,10 @@ export const ErrorPageState = ({
     title,
     description,
     actions,
-    className,
 }: ErrorPageStateProps) => {
     return (
         <div
-            className={cn(
-                "mx-auto flex min-h-[70vh] max-w-xl flex-col items-center justify-center gap-6 px-6 py-16 text-center",
-                className,
-            )}
+            className="mx-auto flex min-h-[70vh] max-w-xl flex-col items-center justify-center gap-6 px-6 py-16 text-center"
         >
             <Typography type="h1" weight="bold" color="muted">{code}</Typography>
             <div className="flex flex-col gap-2">

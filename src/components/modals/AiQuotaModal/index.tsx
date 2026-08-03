@@ -18,17 +18,13 @@ import {
 import { useAiQuotaOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useAppDispatch } from "@/redux/hooks"
 import { resetAiQuotaTab } from "@/redux/slices/tabs"
-import { WithClassNames } from "@/modules/types/base/class-name"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
-
-/** Props for {@link AiQuotaModal}. */
-type AiQuotaModalProps = WithClassNames<undefined>
 
 /**
  * AI quota modal shell — overlay state, Redux tabs, nested tab panels own SWR.
  * Opened via {@link useAiQuotaOverlayState}.
  */
-export const AiQuotaModal = ({ className }: AiQuotaModalProps = {}) => {
+export const AiQuotaModal = () => {
     const dispatch = useAppDispatch()
     const { isOpen, setOpen } = useAiQuotaOverlayState()
 
@@ -45,7 +41,6 @@ export const AiQuotaModal = ({ className }: AiQuotaModalProps = {}) => {
         <ModalShell
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
             bodyStartsWithTabs
             bodyClassName="flex flex-col gap-6"
             header={<AiQuotaHeader />}

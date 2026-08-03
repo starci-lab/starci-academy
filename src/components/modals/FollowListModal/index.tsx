@@ -18,9 +18,6 @@ import {
 import type {
     FollowListTab,
 } from "@/hooks/zustand/overlay/store"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useFollowListOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 import { useQueryUserFollowersInfiniteSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserFollowersInfiniteSwr"
@@ -45,7 +42,7 @@ const TABS: ReadonlyArray<FollowListTab> = ["followers", "following"]
  * context, drives a `useSWRInfinite` hook per direction (only the active tab
  * fetches), and navigates to a user's profile on click (closing the modal).
  */
-export const FollowListModal = ({ className }: WithClassNames<undefined>) => {
+export const FollowListModal = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -88,7 +85,6 @@ export const FollowListModal = ({ className }: WithClassNames<undefined>) => {
         <ModalShell
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
             size="sm"
             bodyStartsWithTabs
             header={(

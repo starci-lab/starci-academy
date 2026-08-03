@@ -4,7 +4,6 @@ import React, {
     useMemo,
 } from "react"
 import {
-    cn,
     Chip,
     ScrollShadow,
     Typography,
@@ -30,7 +29,6 @@ import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { AiCeilSurface } from "@/modules/api/graphql/mutations/types/set-ai-ceil"
 import type { QueryMyCreditUsageHistoryItem } from "@/modules/api/graphql/queries/types/my-credit-usage-history"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One day bucket for the usage history chart. */
 interface AiQuotaHistoryChartPoint {
@@ -41,7 +39,7 @@ interface AiQuotaHistoryChartPoint {
 }
 
 /** Props for {@link AiQuotaHistoryTab}. */
-export interface AiQuotaHistoryTabProps extends WithClassNames<undefined> {
+export interface AiQuotaHistoryTabProps {
     /** When true, load history even outside the modal (full usage page). */
     alwaysLoad?: boolean
 }
@@ -72,7 +70,6 @@ const purposeLabel = (
  */
 export const AiQuotaHistoryTab = ({
     alwaysLoad = false,
-    className,
 }: AiQuotaHistoryTabProps) => {
     const t = useTranslations()
     const { data: history, isLoading } = useAiQuotaHistorySwr({
@@ -98,7 +95,7 @@ export const AiQuotaHistoryTab = ({
     }, [history])
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
+        <div className="flex flex-col gap-6">
             {/* Chart — surface-in-surface: border only, no fill */}
             <div className="flex flex-col gap-2">
                 <Typography type="body-sm" weight="semibold">

@@ -38,12 +38,11 @@ import { SessionStorageId } from "@/modules/storage/session/enums/id"
 import { type SessionStorageOauthIdpHint } from "@/modules/storage/session/types/oauth-idp-hint"
 import { type SessionStoragePostLoginRedirect } from "@/modules/storage/session/types/post-login-redirect"
 import { useSearchParams } from "next/navigation"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Turnstile } from "@/components/features/auth/Turnstile"
 import { publicEnv } from "@/resources/env/public"
 
 /** Props for {@link CredentialsState}. */
-export interface CredentialsStateProps extends WithClassNames<undefined> {
+export interface CredentialsStateProps {
     /** Hides `Modal.CloseTrigger` when hosted outside a dismissible modal (the `/login` page). */
     hideCloseButton?: boolean
 }

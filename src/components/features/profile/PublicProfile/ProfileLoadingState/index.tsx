@@ -4,17 +4,13 @@ import React from "react"
 import {
     Card,
     CardContent,
-    cn,
 } from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { ProfileHeroSkeleton } from "../ProfileHero/ProfileHeroSkeleton"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Props for {@link ProfileLoadingState}. */
-export type ProfileLoadingStateProps = WithClassNames<undefined>
+export type ProfileLoadingStateProps = Record<string, never>
 
 /**
  * First-load skeleton for the public profile, shaped to MIRROR the real shell so
@@ -29,14 +25,12 @@ export type ProfileLoadingStateProps = WithClassNames<undefined>
  *
  * @param props - {@link ProfileLoadingStateProps}
  */
-export const ProfileLoadingState = ({
-    className,
-}: ProfileLoadingStateProps) => {
+export const ProfileLoadingState = (_props: ProfileLoadingStateProps) => {
     return (
         <div
             aria-busy="true"
             aria-label="Loading profile"
-            className={cn("flex w-full flex-col", className)}
+            className="flex w-full flex-col"
         >
             {/* tab strip (full-width, under the navbar) */}
             <div className="w-full px-6 py-3">

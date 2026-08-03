@@ -63,8 +63,6 @@ export interface PersonalProjectTaskAttemptsDrawerProps {
     retryLabel?: string
     /** `true` → a parent-forced skeleton paint, same branch as `isLoading` (see file header). */
     isSkeleton?: boolean
-    /** Extra classes merged onto the drawer's dialog surface. */
-    className?: string
 }
 
 /** Fixed, block-owned title — this drawer's whole reason to exist is this one list. */
@@ -174,7 +172,6 @@ const PersonalProjectTaskAttemptsDrawer = ({
     onRetry,
     retryLabel,
     isSkeleton = false,
-    className,
 }: PersonalProjectTaskAttemptsDrawerProps) => {
     const emptyContent: AsyncContentEmptyProps = {
         title: emptyLabel ?? EMPTY_LABEL_DEFAULT,
@@ -208,7 +205,6 @@ const PersonalProjectTaskAttemptsDrawer = ({
                 onOpenChange={onOpenChange}
                 placement={placement}
                 title={DRAWER_TITLE}
-                dialogClassName={className}
                 body={() => (
                     // One list owns all four states — error → skeleton → empty → content.
                     // While loading it renders placeholder rows (the real items are still

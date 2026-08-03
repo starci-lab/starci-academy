@@ -12,12 +12,11 @@ import { Document, pdfjs } from "react-pdf"
 import { cn } from "@heroui/react"
 import { RESIZE_DEBOUNCE_MS } from "./constants"
 import { PdfViewportPage } from "./PdfViewportPage"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
 
 /** Props for {@link PDFView}. */
-export interface PDFViewProps extends WithClassNames<undefined> {
+export interface PDFViewProps {
     /** Source URL of the PDF file to preview. */
     src: string
     /** Accessible title for the iframe viewer. */
@@ -50,7 +49,6 @@ export const PDFView = ({
     showAllPages = true,
     allowVerticalScroll = false,
     fitToContainer = false,
-    className,
 }: PDFViewProps) => {
     const file = useMemo(() => (src ? src : undefined), [src])
     const [numPages, setNumPages] = useState(0)
@@ -123,7 +121,6 @@ export const PDFView = ({
                 heightClassName,
                 "overflow-x-auto bg-surface scrollbar-thin scrollbar-thumb-accent scrollbar-track-surface-secondary",
                 allowVerticalScroll ? "overflow-y-auto" : "overflow-y-hidden",
-                className,
             )}
         >
             {file ? (

@@ -11,7 +11,6 @@ import {
 import { InlineIconLabel } from "@/components/composites/text/InlineIconLabel"
 import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { DrawerShell } from "@/components/composites/layout/DrawerShell"
-import { DrawerRoot } from "@/components/frames/DrawerRoot"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /**
@@ -67,8 +66,6 @@ export interface PersonalProjectTaskAttemptsDrawerProps {
     retryLabel?: string
     /** `true` → a parent-forced skeleton paint, same branch as `isLoading` (see file header). */
     isSkeleton?: boolean
-    /** Extra classes merged onto the drawer's dialog surface. */
-    className?: string
 }
 
 /** Fixed, block-owned title — this drawer's whole reason to exist is this one list. */
@@ -175,7 +172,6 @@ const _PersonalProjectTaskAttemptsDrawer = ({
     onRetry,
     retryLabel,
     isSkeleton = false,
-    className,
 }: PersonalProjectTaskAttemptsDrawerProps) => {
     const emptyContent: AsyncContentEmptyProps = {
         title: emptyLabel ?? EMPTY_LABEL_DEFAULT,
@@ -201,28 +197,27 @@ const _PersonalProjectTaskAttemptsDrawer = ({
     const loading = isLoading || isSkeleton
 
     return (
-        <DrawerRoot data-component="PersonalProjectTaskAttemptsDrawer">
-            <DrawerShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                placement={placement}
-                title={DRAWER_TITLE}
-                dialogClassName={className}
-                body={() => (
-                    // One list owns all four states — error → skeleton → empty → content.
-                    // While loading it renders placeholder rows (the real items are still
-                    // empty) with the shimmer flowing down through `isSkeleton`; empty and
-                    // error are the shared `AsyncContent*` frames dropped in as its own slots.
-                    <SurfaceCardList
-                        items={loading ? skeletonItems : items}
-                        isSkeleton={loading}
-                        error={error}
-                        errorState={() => <AsyncContentError {...errorContent} />}
-                        emptyState={() => <AsyncContentEmpty {...emptyContent} />}
-                    />
-                )}
-            />
-        </DrawerRoot>
+        <DrawerShell
+            data-tier="overlay"
+            data-component="PersonalProjectTaskAttemptsDrawer"
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            placement={placement}
+            title={DRAWER_TITLE}
+            body={() => (
+                // One list owns all four states — error → skeleton → empty → content.
+                // While loading it renders placeholder rows (the real items are still
+                // empty) with the shimmer flowing down through `isSkeleton`; empty and
+                // error are the shared `AsyncContent*` frames dropped in as its own slots.
+                <SurfaceCardList
+                    items={loading ? skeletonItems : items}
+                    isSkeleton={loading}
+                    error={error}
+                    errorState={() => <AsyncContentError {...errorContent} />}
+                    emptyState={() => <AsyncContentEmpty {...emptyContent} />}
+                />
+            )}
+        />
     )
 }
 

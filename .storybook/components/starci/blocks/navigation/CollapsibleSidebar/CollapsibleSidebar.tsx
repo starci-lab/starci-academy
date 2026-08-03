@@ -64,7 +64,6 @@ export interface CollapsibleSidebarProps {
     topSlot?: ReactNode
     /** The panel body — nav rows/groups; content-agnostic, this shell never inspects them. */
     children: ReactNode
-    className?: string
 }
 
 /**
@@ -83,7 +82,6 @@ export const CollapsibleSidebar = ({
     storageKey,
     topSlot,
     children,
-    className,
 }: CollapsibleSidebarProps) => {
     const reduceMotion = useReducedMotion()
     const [collapsed, setCollapsed] = useState(false)
@@ -188,7 +186,6 @@ export const CollapsibleSidebar = ({
                     // Toolbar/ModalShell/DrawerShell do the same on theirs).
                     "flex h-full shrink-0 overflow-hidden border-r border-default",
                     collapsed ? "px-3 py-6" : "p-6",
-                    className,
                 )}
             >
                 <StackV gap={6} classNames={["min-h-0", "flex-1"]} items={[() => panel]} />

@@ -14,7 +14,6 @@ import {
 import { useTranslations } from "next-intl"
 import { useSWRConfig } from "swr"
 import { CheckCircleIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { QUERY_USER_PINNED_PROJECTS_SWR } from "@/hooks/swr/api/graphql/queries/useQueryUserPinnedProjectsSwr"
 import { useMutatePinCourseProjectSwr } from "@/hooks/swr/api/graphql/mutations/useMutatePinCourseProjectSwr"
 import { useQueryMyPinnableCapstonesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyPinnableCapstonesSwr"
@@ -24,7 +23,7 @@ import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link CourseProjectForm}. */
-export interface CourseProjectFormProps extends WithClassNames<undefined> {
+export interface CourseProjectFormProps {
     /** Called after a successful pin (close the modal / switch to the list). */
     onSuccess?: () => void
 }
@@ -41,7 +40,6 @@ export interface CourseProjectFormProps extends WithClassNames<undefined> {
  * @param props - {@link CourseProjectFormProps}
  */
 export const CourseProjectForm = ({
-    className,
     onSuccess,
 }: CourseProjectFormProps) => {
     const t = useTranslations()
@@ -107,7 +105,6 @@ export const CourseProjectForm = ({
 
     return (
         <form
-            className={className}
             onSubmit={onSubmit}
         >
             <div className="flex flex-col gap-3">

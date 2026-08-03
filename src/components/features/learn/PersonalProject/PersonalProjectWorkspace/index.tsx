@@ -11,8 +11,8 @@ import {
     TaskSubmissionPanel,
 } from "../TaskSubmissionPanel"
 import {
-    PersonalProjectDashboard,
-} from "../PersonalProjectDashboard"
+    PersonalProject,
+} from "@/components/page/PersonalProject"
 import {
     PersonalProjectTaskResult,
 } from "../TaskResult"
@@ -47,8 +47,12 @@ export const PersonalProjectWorkspace = ({
 
     // no task in the URL (`/personal-project` index) → the project dashboard
     // (overview), not an empty column; a task route → the read-left / act-right split.
+    // v2 twin (`@/components/page/PersonalProject`, mirroring the `PersonalProjectDashboard`
+    // blueprint) takes no props of its own — it owns its root wrapper and reads `className`
+    // for nothing the v1 branch below does, so `className` is intentionally not forwarded
+    // here (this call site never actually passes one — see `personal-project/layout.tsx`).
     if (!taskId) {
-        return <PersonalProjectDashboard className={className} />
+        return <PersonalProject />
     }
 
     // `…/tasks/[taskId]/result` → the grading result page (full content column; the

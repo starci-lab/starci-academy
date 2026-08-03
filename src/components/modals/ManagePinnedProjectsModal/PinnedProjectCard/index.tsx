@@ -13,13 +13,12 @@ import {
     SealCheckIcon as VerifiedIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { MediaCard } from "@/components/blocks/cards/MediaCard"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import type { QueryUserPinnedProjectItem } from "@/modules/api/graphql/queries/types/user-pinned-projects"
 
 /** Props for {@link PinnedProjectCard}. */
-export interface PinnedProjectCardProps extends WithClassNames<undefined> {
+export interface PinnedProjectCardProps {
     /** The pinned project to render (list-item data prop — store can't index it). */
     pin: QueryUserPinnedProjectItem
     /**
@@ -61,7 +60,6 @@ export const PinnedProjectCard = ({
     onMoveUp,
     onMoveDown,
     onRemove,
-    className,
 }: PinnedProjectCardProps) => {
     const t = useTranslations()
 
@@ -133,7 +131,6 @@ export const PinnedProjectCard = ({
 
     return (
         <MediaCard
-            className={className}
             title={pin.title ?? t("pinnedProjects.untitled")}
             meta={pin.isVerified || (pin.techStack?.length ?? 0) > 0 ? meta : undefined}
             description={pin.description ?? undefined}

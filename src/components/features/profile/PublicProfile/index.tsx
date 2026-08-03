@@ -5,9 +5,6 @@ import React, {
     useMemo,
 } from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     useLocale,
 } from "next-intl"
 import {
@@ -18,9 +15,6 @@ import {
 import {
     pathConfig,
 } from "@/resources/path"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import {
     useProfileUsername,
 } from "./hooks/useProfileUsername"
@@ -45,7 +39,7 @@ import { useQueryPublicUserCvSwr } from "@/hooks/swr/api/graphql/queries/useQuer
 import { useRegisterNavbarBottomLayer } from "@/hooks/zustand/navbarBottomLayer/store"
 
 /** Props for {@link PublicProfile}. */
-export interface PublicProfileProps extends WithClassNames<undefined> {
+export interface PublicProfileProps {
     /** The active tab's panel — rendered by that tab's own route `page.tsx`. */
     children: React.ReactNode
 }
@@ -68,7 +62,6 @@ export interface PublicProfileProps extends WithClassNames<undefined> {
  * @param props - {@link PublicProfileProps}
  */
 export const PublicProfile = ({
-    className,
     children,
 }: PublicProfileProps) => {
     const username = useProfileUsername()
@@ -133,7 +126,7 @@ export const PublicProfile = ({
     // attached on a cold load). Otherwise the not-found flashes for the retry
     // window before the profile actually resolves.
     if (isLoading || (isValidating && !user) || (authenticated && !username)) {
-        return <ProfileLoadingState className={className} />
+        return <ProfileLoadingState />
     }
 
     // SETTLED with no user (query done, not validating) → a proper 404-style page.
@@ -141,15 +134,15 @@ export const PublicProfile = ({
     // validating above; only a definitively-empty read (or an error that has
     // stopped retrying) lands here.
     if (!user) {
-        return <ProfileNotFoundState className={className} />
+        return <ProfileNotFoundState />
     }
 
     if (isLocked) {
-        return <ProfileLockedState className={className} />
+        return <ProfileLockedState />
     }
 
     return (
-        <div className={cn("flex w-full flex-col", className)}>
+        <div className="flex w-full flex-col">
             {/* the profile tab strip is registered as the Navbar's bottom layer
                 above (useRegisterNavbarBottomLayer), so it is NOT rendered here. */}
 

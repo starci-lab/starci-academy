@@ -11,7 +11,6 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePaymentOverlayState, usePremiumGateOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
 import { useAppSelector } from "@/redux/hooks"
@@ -33,7 +32,7 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
  * so the user can keep browsing the teaser. "Buy" closes this modal and opens the
  * shared payment modal (course-enroll flow). Opened via {@link usePremiumGateOverlayState}.
  */
-export const PremiumGateModal = ({ className }: WithClassNames<undefined>) => {
+export const PremiumGateModal = () => {
     const t = useTranslations()
     const { isOpen, setOpen, close } = usePremiumGateOverlayState()
     const { open: openPayment } = usePaymentOverlayState()
@@ -65,7 +64,6 @@ export const PremiumGateModal = ({ className }: WithClassNames<undefined>) => {
         <ModalShell
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
             title={
                 course?.title
                     ? t("course.paywall.titleNamed", { course: course.title })

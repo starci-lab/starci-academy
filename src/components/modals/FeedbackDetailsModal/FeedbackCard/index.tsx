@@ -1,19 +1,18 @@
 "use client"
 
 import { CheckCircleIcon, LightbulbIcon, MapPinIcon, WarningCircleIcon } from "@phosphor-icons/react"
-import { Chip, cn, Link } from "@heroui/react"
+import { Chip, Link } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import React, { useMemo } from "react"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import type { SubmissionFeedbackEntity } from "@/modules/types/entities/submission-feedback"
 import { SubmissionFeedbackSeverity } from "@/modules/types/enums/submission-feedback-severity"
 import { buildGithubFileUrl } from "@/modules/utils/github-file-url"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link FeedbackCard}.
  */
-interface FeedbackCardProps extends WithClassNames<undefined> {
+interface FeedbackCardProps {
     /** One feedback row from the grader. */
     submissionFeedback: SubmissionFeedbackEntity
     /** GitHub repo URL for the selected submission attempt (used for file links). */
@@ -32,7 +31,7 @@ interface FeedbackCardProps extends WithClassNames<undefined> {
  * @param props - Feedback row.
  */
 export const FeedbackCard = (props: FeedbackCardProps) => {
-    const { submissionFeedback, repositoryUrl, frameless = false, className } = props
+    const { submissionFeedback, repositoryUrl, frameless = false } = props
     const {
         message,
         detail,
@@ -151,11 +150,11 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
 
     // frameless → inner row only (inset into a parent surface card); else standalone bordered card
     if (frameless) {
-        return <div className={className}>{inner}</div>
+        return inner
     }
 
     return (
-        <div className={cn("rounded-medium border border-default", className)}>
+        <div className="rounded-medium border border-default">
             {inner}
         </div>
     )

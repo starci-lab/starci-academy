@@ -25,12 +25,11 @@ import { useAppDispatch } from "@/redux/hooks"
 import { AuthenticationModalTab, setAuthenticationModalTab } from "@/redux/slices/tabs"
 import { resetSignUpState } from "@/redux/slices/state"
 import { useSignUpForm } from "@/hooks/zustand/signUp/useSignUpForm"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Turnstile } from "@/components/features/auth/Turnstile"
 import { publicEnv } from "@/resources/env/public"
 
 /** Props for {@link RegistrationState}. */
-export interface RegistrationStateProps extends WithClassNames<undefined> {
+export interface RegistrationStateProps {
     /** Hides `Modal.CloseTrigger` when hosted outside a dismissible modal (the `/login` page). */
     hideCloseButton?: boolean
 }

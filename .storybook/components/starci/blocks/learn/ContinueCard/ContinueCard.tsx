@@ -1,6 +1,6 @@
 import React from "react"
 import { type SkeletonProps } from "@sb-components/composites/_slot"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { LinkSeeMore } from "@sb-components/atoms/navigation/Link/Link"
@@ -48,10 +48,6 @@ interface ContinueCardDataProps {
      * tier, not a patch here.
      */
     href?: string
-    /**
-     * PLACEMENT class (`mb-4`, `flex-1`) — NOT for restyling (§14d.1).
-     */
-    className?: string
     /**
      * `true` → mirror shimmer INSTEAD of waiting for data. Applies to BOTH members
      * (`.Hero`/`.Item`) since both share `ContinueCardDataProps`.
@@ -161,13 +157,13 @@ const CardBody = ({
  * a surface; two side by side and both lose their emphasis.
  */
 const ContinueCardHero = (props: ContinueCardHeroProps) => {
-    const { onPress, className, isSkeleton = false } = props
+    const { onPress, isSkeleton = false } = props
     return (
         <SurfaceCard
             isHighlight
             isSkeleton={isSkeleton}
 
-            contentClassName={cn("relative flex flex-col gap-3 overflow-hidden", className)}
+            contentClassName="relative flex flex-col gap-3 overflow-hidden"
             body={() => (
                 <CardBody
                     {...props}
@@ -201,12 +197,12 @@ const ContinueCardHero = (props: ContinueCardHeroProps) => {
  * control and hijack hover).
  */
 const ContinueCardItem = (props: ContinueCardItemProps) => {
-    const { href, onPress, className, isSkeleton = false } = props
+    const { href, onPress, isSkeleton = false } = props
     return (
         <SurfaceCard
             isSkeleton={isSkeleton}
 
-            contentClassName={cn("relative flex flex-col gap-3 overflow-hidden", className)}
+            contentClassName="relative flex flex-col gap-3 overflow-hidden"
             body={() => (
                 <CardBody
                     {...props}

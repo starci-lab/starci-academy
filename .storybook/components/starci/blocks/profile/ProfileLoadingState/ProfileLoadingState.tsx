@@ -1,4 +1,4 @@
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { Tabs, type TabItem } from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
@@ -26,7 +26,6 @@ import { Grid, type GridItem } from "@sb-components/frames/Grid/Grid"
 
 /** Props for {@link ProfileLoadingState}. Pure skeleton — no data props (see file header). */
 export interface ProfileLoadingStateProps {
-    className?: string
     /** Anatomy tag for this block's own root. */
 }
 
@@ -46,7 +45,7 @@ const META_ROWS: Array<string> = ["meta-0", "meta-1", "meta-2"]
  *
  * @param props - {@link ProfileLoadingStateProps}
  */
-export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => {
+export const ProfileLoadingState = (_props: ProfileLoadingStateProps) => {
     // Free-form rows built here (not by `SurfaceCardList`'s own `isSkeleton`, §12c):
     // the courses/readiness rows carry BESPOKE content (an IconTile, a progress
     // bar), not the composite's fixed leading/title/subtitle slots, so each row
@@ -297,7 +296,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
             aria-busy="true"
             aria-label="Loading profile"
 
-            className={cn("flex w-full flex-col", className)}
+            className="flex w-full flex-col"
         >
             {/* tab strip — full-bleed row under the navbar, same footprint as `ProfileTabsBar`.
                 `px-6 py-3` is a one-off placement wrapper (a full-width strip flush under a sticky

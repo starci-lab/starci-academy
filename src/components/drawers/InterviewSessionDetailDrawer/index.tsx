@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Chip, Drawer, ScrollShadow, Typography, cn } from "@heroui/react"
+import { Chip, Drawer, ScrollShadow, Typography } from "@heroui/react"
 import { TagIcon } from "@phosphor-icons/react"
 import { useTranslations, useLocale } from "next-intl"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
@@ -11,10 +11,9 @@ import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import { useQueryInterviewSessionAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryInterviewSessionAttemptsSwr"
 import type { InterviewSessionItem } from "@/modules/api/graphql/queries/types/interview-sessions"
 import type { InterviewSessionAttemptItem } from "@/modules/api/graphql/queries/types/interview-session-attempts"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link InterviewSessionDetailDrawer}. */
-export interface InterviewSessionDetailDrawerProps extends WithClassNames<undefined> {
+export interface InterviewSessionDetailDrawerProps {
     /** Whether the drawer is open. */
     isOpen: boolean
     /** Open-state change handler. */
@@ -127,7 +126,6 @@ export const InterviewSessionDetailDrawer = ({
     onOpenChange,
     courseId,
     session,
-    className,
 }: InterviewSessionDetailDrawerProps) => {
     const t = useTranslations()
     const locale = useLocale()
@@ -166,7 +164,7 @@ export const InterviewSessionDetailDrawer = ({
         <Drawer>
             <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange}>
                 <Drawer.Content placement={isMobile ? "bottom" : "right"}>
-                    <Drawer.Dialog className={cn("p-0", className)}>
+                    <Drawer.Dialog className="p-0">
                         <div className="p-3">
                             <Drawer.CloseTrigger />
                             <Drawer.Header>

@@ -3,13 +3,12 @@ import { ArrowRightIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import React from "react"
 import { useRouter } from "next/navigation"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { GithubIcon } from "@/components/svg/GithubIcon"
 import { useLinkGithubOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { githubRedirect } from "@/modules/api/redirect/github"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
-export const LinkGithubModal = ({ className }: WithClassNames<undefined>) => {
+export const LinkGithubModal = () => {
     const { isOpen, setOpen } = useLinkGithubOverlayState()
     const t = useTranslations()
     const router = useRouter()
@@ -17,7 +16,6 @@ export const LinkGithubModal = ({ className }: WithClassNames<undefined>) => {
         <ModalShell
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
             size="xs"
             title={t("linkGithub.title")}
         >

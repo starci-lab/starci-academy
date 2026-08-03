@@ -9,21 +9,12 @@ import { FeedbackCardSkeleton } from "./FeedbackCardSkeleton"
 import { useFeedbackDetailsOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useQuerySubmissionFeedbacksSwr } from "@/hooks/swr/api/graphql/queries/useQuerySubmissionFeedbacksSwr"
 import { useAppSelector } from "@/redux/hooks"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
 /**
- * Props for {@link FeedbackDetailsModal}.
- */
-export type FeedbackDetailsModalProps = WithClassNames<undefined>
-
-/**
  * Modal listing feedback entries for the current submission attempt.
- *
- * @param props - Optional styling props.
  */
-export const FeedbackDetailsModal = (props: FeedbackDetailsModalProps) => {
-    const { className } = props
+export const FeedbackDetailsModal = () => {
     const { isOpen, setOpen } = useFeedbackDetailsOverlayState()
     const querySubmissionFeedbacksSwr = useQuerySubmissionFeedbacksSwr()
     const submissionFeedbacks = useAppSelector((state) => state.submissionFeedback.submissionFeedbacks)
@@ -42,7 +33,6 @@ export const FeedbackDetailsModal = (props: FeedbackDetailsModalProps) => {
         <ModalShell
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
             size="lg"
             title={t("feedback.detailsTitle")}
         >

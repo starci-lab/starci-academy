@@ -5,18 +5,16 @@ import useSWR from "swr"
 import { evaluate } from "@mdx-js/mdx"
 import * as runtime from "react/jsx-runtime"
 import remarkGfm from "remark-gfm"
-import { cn, Spinner } from "@heroui/react"
+import { Spinner } from "@heroui/react"
 import { heroUiMdxComponents } from "../mdxComponents"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Compiled MDX module exposes its content as the default export. */
 type MdxContentComponent = React.ComponentType<{
     components?: Record<string, React.ElementType>
-    className?: string
 }>
 
 /** Props for {@link RenderReactComponent}. */
-export interface RenderReactComponentProps extends WithClassNames<undefined> {
+export interface RenderReactComponentProps {
     /** JSX/MDX source (a self-contained renderable expression, no imports/logic). */
     code: string
 }
@@ -33,7 +31,7 @@ export interface RenderReactComponentProps extends WithClassNames<undefined> {
  * On a compile error the raw snippet is shown verbatim (safe fallback) instead of crashing.
  * @param props - {@link RenderReactComponentProps}
  */
-export const RenderReactComponent = ({ code, className }: RenderReactComponentProps) => {
+export const RenderReactComponent = ({ code }: RenderReactComponentProps) => {
     const { data: Content, error } = useSWR(
         `mdx:${code}`,
         async () => {
@@ -51,13 +49,13 @@ export const RenderReactComponent = ({ code, className }: RenderReactComponentPr
 
     if (error) {
         return (
-            <pre className={cn("not-prose overflow-auto rounded-xl border border-danger/40 bg-default/40 p-3 font-mono text-xs text-muted", className)}>
+            <pre className="not-prose overflow-auto rounded-xl border border-danger/40 bg-default/40 p-3 font-mono text-xs text-muted">
                 {code}
             </pre>
         )
     }
     if (!Content) {
-        return <Spinner size="sm" aria-label="Rendering" className={cn(className)} />
+        return <Spinner size="sm" aria-label="Rendering" />
     }
-    return <Content components={heroUiMdxComponents} className={className} />
+    return <Content components={heroUiMdxComponents} />
 }

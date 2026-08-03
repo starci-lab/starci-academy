@@ -11,11 +11,10 @@ import {
     Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePinExternalProjectForm } from "@/hooks/rhf/usePinExternalProjectForm"
 
 /** Props for {@link ExternalProjectForm}. */
-export interface ExternalProjectFormProps extends WithClassNames<undefined> {
+export interface ExternalProjectFormProps {
     /** Called after a pin succeeds (close the modal / switch to the list). */
     onSuccess?: () => void
 }
@@ -31,7 +30,6 @@ export interface ExternalProjectFormProps extends WithClassNames<undefined> {
  */
 export const ExternalProjectForm = ({
     onSuccess,
-    className,
 }: ExternalProjectFormProps) => {
     const t = useTranslations()
     const {
@@ -45,7 +43,6 @@ export const ExternalProjectForm = ({
 
     return (
         <form
-            className={className}
             onSubmit={onSubmit}
         >
             <div className="flex flex-col gap-3">

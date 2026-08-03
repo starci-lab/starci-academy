@@ -31,15 +31,16 @@ export const SelectionHintCallout = () => {
     }
 
     return (
-        <Callout
-            status="accent"
-            className="mb-4"
-            icon={<CursorClickIcon className="size-5" />}
-            title={t("contentAi.selectionHintTitle")}
-            description={t("contentAi.selectionHint")}
-            onClose={markSeen}
-            closeAriaLabel={t("contentAi.dismissHint")}
-        />
+        <div className="mb-4">
+            <Callout
+                status="accent"
+                icon={<CursorClickIcon className="size-5" />}
+                title={t("contentAi.selectionHintTitle")}
+                description={t("contentAi.selectionHint")}
+                onClose={markSeen}
+                closeAriaLabel={t("contentAi.dismissHint")}
+            />
+        </div>
     )
 }
 

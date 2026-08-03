@@ -9,14 +9,11 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { ErrorPageState } from "@/components/blocks/feedback/ErrorPageState"
 import { pathConfig } from "@/resources/path"
 
 /** Props for {@link ProfileNotFoundState}. */
-export type ProfileNotFoundStateProps = WithClassNames<undefined>
+export type ProfileNotFoundStateProps = Record<string, never>
 
 /**
  * 404-style page shown when the requested profile cannot be read — not found,
@@ -26,16 +23,13 @@ export type ProfileNotFoundStateProps = WithClassNames<undefined>
  *
  * @param props - {@link ProfileNotFoundStateProps}
  */
-export const ProfileNotFoundState = ({
-    className,
-}: ProfileNotFoundStateProps) => {
+export const ProfileNotFoundState = (_props: ProfileNotFoundStateProps) => {
     const t = useTranslations()
     const router = useRouter()
     const locale = useLocale()
 
     return (
         <ErrorPageState
-            className={className}
             code="404"
             title={t("publicProfile.notFound")}
             description={t("publicProfile.notFoundDescription")}

@@ -12,7 +12,6 @@ import {
 import { useCvReviewLevelDetailsOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { setSelectedCvReviewTemplateId } from "@/redux/slices/cv-review-level"
-import { WithClassNames } from "@/modules/types/base/class-name"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
 import { SelectableCardGroup, SelectableCardItem } from "@/components/blocks/navigation/SelectableCardGroup"
 
@@ -28,13 +27,10 @@ interface CvReviewLevelOption {
     description?: string | null
 }
 
-/** Props for {@link CvReviewLevelDetailsModal}. */
-type CvReviewLevelDetailsModalProps = WithClassNames<undefined>
-
 /**
  * Lets the learner choose a CV review level from template title and description.
  */
-export const CvReviewLevelDetailsModal = ({ className }: CvReviewLevelDetailsModalProps = {}) => {
+export const CvReviewLevelDetailsModal = () => {
     const {
         isOpen,
         setOpen,
@@ -77,7 +73,6 @@ export const CvReviewLevelDetailsModal = ({ className }: CvReviewLevelDetailsMod
         <ModalShell
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
             size="md"
             header={(
                 <>

@@ -1,5 +1,5 @@
 "use client"
-import { Chip, cn, ListBox, Typography } from "@heroui/react"
+import { Chip, ListBox, Typography } from "@heroui/react"
 import {
     CaretRightIcon,
     CardsIcon,
@@ -19,10 +19,9 @@ import React, { useCallback } from "react"
 import { AutocompleteGlobalSearchItem } from "@/modules/api/graphql/queries/types/autocomplete-global-search"
 import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
 import type { GlobalSearchKind } from "../index"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link GlobalSearchContentBlock}. */
-interface GlobalSearchContentBlockProps extends WithClassNames<undefined> {
+interface GlobalSearchContentBlockProps {
     /** Bucket kind of these rows — drives the leading icon + course/content state affordances. */
     kind: GlobalSearchKind
     /** Result rows for this bucket section. */
@@ -52,7 +51,7 @@ const KIND_ICON: Record<GlobalSearchKind, Icon> = {
  * react-aria forbids nested interactives inside a ListBox.Item).
  */
 export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) => {
-    const { kind, items, className } = props
+    const { kind, items } = props
     const locale = useLocale()
     const router = useRouter()
     const t = useTranslations()
@@ -112,7 +111,7 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
     const Icon = KIND_ICON[kind]
 
     return (
-        <ListBox aria-label="search results" className={cn("gap-0", className)}>
+        <ListBox aria-label="search results" className="gap-0">
             {items.map((item) => {
                 const titleLine = item.title ?? item.texts?.[0] ?? item.displayId
                 const textLines = item.texts ?? []

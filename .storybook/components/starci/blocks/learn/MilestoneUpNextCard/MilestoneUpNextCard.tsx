@@ -37,9 +37,6 @@ export interface MilestoneUpNextCardProps {
     isHighlight?: boolean
     /** `true` → every composed atom mirrors as shimmer. */
     isSkeleton?: boolean
-    /** Anatomy tag for THIS block itself (§11a.1) — lets the caller badge it as ONE node. */
-    /** Placement class only (§14d.1), forwarded to the card face. */
-    className?: string
 }
 
 /**
@@ -57,13 +54,11 @@ const MilestoneUpNextCard = ({
     onPress,
     isHighlight = true,
     isSkeleton = false,
-    className,
 }: MilestoneUpNextCardProps) => (
     <SurfaceCard
         isHighlight={isHighlight}
         isSkeleton={isSkeleton}
 
-        contentClassName={className}
         body={() => (
             <StackV
                 gap={4}

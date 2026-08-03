@@ -1,14 +1,13 @@
 "use client"
 
 import React, { useEffect, useMemo, useState } from "react"
-import { Button, Label, Modal, Spinner, Tabs, Typography, cn } from "@heroui/react"
+import { Button, Label, Modal, Spinner, Tabs, Typography } from "@heroui/react"
 import { toast } from "@/modules/toast/toast"
 import useSWR from "swr"
 import { CombinedGraphQLErrors } from "@apollo/client"
 import { ArrowRightIcon, FlameIcon, GraduationCapIcon, LockIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { pathConfig } from "@/resources/path"
 import { useMutateCourseEnrollSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCourseEnrollSwr"
 import { useMutateCoursesCheckoutSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCoursesCheckoutSwr"
@@ -84,7 +83,7 @@ interface PaymentOrder {
  * {@link import("@/modules/types").PaymentContext}; this modal reads it to decide which
  * price to preview and which mutation to run on pick.
  */
-export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
+export const PaymentModal = () => {
     const { isOpen, setOpen, context } = usePaymentOverlayState()
     const courseEnrollSwr = useMutateCourseEnrollSwr()
     const coursesCheckoutSwr = useMutateCoursesCheckoutSwr()
@@ -454,7 +453,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container size="sm">
-                    <Modal.Dialog className={cn(className)}>
+                    <Modal.Dialog>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <Typography type="body" weight="semibold">{t("payment.title")}</Typography>

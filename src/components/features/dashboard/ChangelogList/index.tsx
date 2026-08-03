@@ -12,9 +12,6 @@ import {
 import {
     ChangelogListSkeleton,
 } from "./ChangelogListSkeleton"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryChangelogEntriesSwr } from "@/hooks/swr/api/graphql/queries/useQueryChangelogEntriesSwr"
 import { ChangelogCategory } from "@/modules/api/graphql/queries/types/changelog-entries"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
@@ -22,7 +19,7 @@ import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Props for {@link ChangelogList}. */
-export interface ChangelogListProps extends WithClassNames<undefined> {
+export interface ChangelogListProps {
     /**
      * When true, render inside a `LabeledCard` (title as a Label OUTSIDE the card) —
      * used on the dashboard Overview tab. Defaults to the flat heading + list.
@@ -42,10 +39,9 @@ const CATEGORY_CLASS: Record<ChangelogCategory, string> = {
  * Each row shows the published date, an optional colored category chip and the
  * title (linked when the entry has a destination). Self-fetches the recent
  * changelog entries (newest first) like every other sidebar block.
- * @param props - optional className for the root element
+ * @param props - {@link ChangelogListProps}
  */
 export const ChangelogList = ({
-    className,
     framed = false,
 }: ChangelogListProps = {}) => {
     const t = useTranslations()
@@ -124,7 +120,7 @@ export const ChangelogList = ({
     // content is itself a card → `frameless` (no LabeledCard frame) avoids card-in-card.
     if (framed) {
         return (
-            <LabeledCard frameless label={t("dashboard.changelog")} className={className}>
+            <LabeledCard frameless label={t("dashboard.changelog")}>
                 {body}
             </LabeledCard>
         )
@@ -132,7 +128,7 @@ export const ChangelogList = ({
 
     // flat: inline heading + list (legacy placement)
     return (
-        <div className={cn("flex w-full flex-col gap-3", className)}>
+        <div className="flex w-full flex-col gap-3">
             <span className="text-base font-semibold text-foreground">
                 {t("dashboard.changelog")}
             </span>

@@ -2,19 +2,13 @@
 
 import { MagnifyingGlassIcon } from "@phosphor-icons/react"
 import React, { useEffect, useRef, useState } from "react"
-import { cn, Input, Kbd, Modal, TextField, Typography } from "@heroui/react"
+import { Input, Kbd, Modal, TextField, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import debounce from "lodash/debounce"
 import { GlobalSearchContent } from "./Content"
 import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { setSearchQuery } from "@/redux/slices/search"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
-/**
- * Props for {@link GlobalSearchModal}.
- */
-export type GlobalSearchModalProps = WithClassNames<undefined>
 
 /**
  * Global search command palette opened by Navbar (Ctrl/Cmd+K).
@@ -23,11 +17,8 @@ export type GlobalSearchModalProps = WithClassNames<undefined>
  * list (a React-Aria ListBox → ↑↓ to move, ↵ to open), Esc to close. A footer hint
  * bar spells the shortcuts out. Results render as a flat grouped list (no accordion);
  * the empty state surfaces popular courses.
- *
- * @param props - Optional styling props.
  */
-export const GlobalSearchModal = (props: GlobalSearchModalProps) => {
-    const { className } = props
+export const GlobalSearchModal = () => {
     const t = useTranslations()
     const { isOpen, setOpen } = useSearchOverlayState()
     const dispatch = useAppDispatch()
@@ -71,7 +62,7 @@ export const GlobalSearchModal = (props: GlobalSearchModalProps) => {
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container className="p-0" size="lg">
-                    <Modal.Dialog className={cn("p-0 rounded-2xl modal__dialog--flush", className)}>
+                    <Modal.Dialog className="p-0 rounded-2xl modal__dialog--flush">
                         <Modal.Body className="p-0 w-full overflow-hidden">
                             <TextField variant="secondary" className="w-full">
                                 <div className="flex w-full items-center gap-2 p-3 border-b border-default">

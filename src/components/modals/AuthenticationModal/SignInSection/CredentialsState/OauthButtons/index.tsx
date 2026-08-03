@@ -3,11 +3,7 @@
 import React from "react"
 import {
     Button,
-    cn,
 } from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import {
     useTranslations,
 } from "next-intl"
@@ -17,7 +13,7 @@ import type {
 import type { KeycloakIdentityProvider } from "@/modules/api/graphql/mutations/types/exchange-code-for-token"
 
 /** Props for {@link OauthButtons}. */
-export interface OauthButtonsProps extends WithClassNames<undefined> {
+export interface OauthButtonsProps {
     /** OAuth provider buttons to render, in display order. */
     items: Array<OauthButtonItem>
     /** Fired with the chosen provider when a button is pressed. */
@@ -34,11 +30,10 @@ export interface OauthButtonsProps extends WithClassNames<undefined> {
 export const OauthButtons = ({
     items,
     onOauthPress,
-    className,
 }: OauthButtonsProps) => {
     const t = useTranslations()
     return (
-        <div className={cn("flex flex-col gap-2", className)}>
+        <div className="flex flex-col gap-2">
             {items.map((item) => (
                 <Button
                     key={item.provider}

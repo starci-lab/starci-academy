@@ -41,8 +41,6 @@ export interface ChangelogListProps {
     error?: unknown
     /** Fired when the reader presses "Retry" on the error branch. Omit to render the error with no action. */
     onRetry?: () => void
-    /** Extra classes on the root. */
-    className?: string
 }
 
 /** The block's own section label — matches `dashboard.changelog` in `vi.json`. */
@@ -100,7 +98,6 @@ const ChangelogList = ({
     isLoading,
     error,
     onRetry,
-    className,
 }: ChangelogListProps) => {
     const errorContent: AsyncContentErrorProps = {
         title: ERROR_TITLE,
@@ -110,7 +107,7 @@ const ChangelogList = ({
     }
 
     return (
-        <div className={className}>
+        <div>
             <AsyncContent
                 isLoading={isLoading}
                 skeleton={() => (

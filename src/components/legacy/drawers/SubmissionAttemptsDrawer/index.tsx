@@ -1,26 +1,21 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { cn, Drawer, Pagination, ScrollShadow } from "@heroui/react"
+import { Drawer, Pagination, ScrollShadow } from "@heroui/react"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import { useTranslations } from "next-intl"
 import { SubmissionAttemptCard } from "./SubmissionAttemptCard"
 import { SubmissionAttemptCardSkeleton } from "./SubmissionAttempCardSkeleton"
 import { Empty } from "./Empty"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useSubmissionAttemptsOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { setActiveChallengeSubmissionId, setSubmissionAttemptsPageNumber } from "@/redux/slices/submission-attempt"
 import { useQuerySubmissionAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQuerySubmissionAttemptsSwr"
 
-/** Props for {@link SubmissionAttemptsDrawer}. Container — only layout className. */
-export type SubmissionAttemptsDrawerProps = WithClassNames<undefined>
-
 /**
  * Drawer listing submission attempts for the active challenge submission.
  */
-export const SubmissionAttemptsDrawer = (props: SubmissionAttemptsDrawerProps = {}) => {
-    const { className } = props
+export const SubmissionAttemptsDrawer = () => {
     const dispatch = useAppDispatch()
     const t = useTranslations()
     const { isOpen, setOpen } = useSubmissionAttemptsOverlayState()
@@ -68,7 +63,7 @@ export const SubmissionAttemptsDrawer = (props: SubmissionAttemptsDrawerProps = 
                 }}
             >
                 <Drawer.Content placement={isMobile ? "bottom" : "right"}>
-                    <Drawer.Dialog className={cn("p-0", className)}>
+                    <Drawer.Dialog className="p-0">
                         <div className="p-3">
                             <Drawer.CloseTrigger />
                             <Drawer.Header>

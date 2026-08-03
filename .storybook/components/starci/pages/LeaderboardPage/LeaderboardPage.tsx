@@ -127,15 +127,14 @@ const LeaderboardPage = ({
 }: LeaderboardPageProps) => {
     const boardSection = (
         <>
-            <LeaderboardCategoryNav
-
-                className="@app-lg:hidden"
-                items={categoryItems}
-                selected={selectedCategory}
-                onSelect={onCategorySelect}
-                ariaLabel={categoryAriaLabel}
-
-            />
+            <div className="@app-lg:hidden">
+                <LeaderboardCategoryNav
+                    items={categoryItems}
+                    selected={selectedCategory}
+                    onSelect={onCategorySelect}
+                    ariaLabel={categoryAriaLabel}
+                />
+            </div>
             <LeaderboardToolbar
 
                 categoryLabel={categoryLabel}

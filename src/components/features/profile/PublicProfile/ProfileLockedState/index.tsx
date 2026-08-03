@@ -5,7 +5,6 @@ import {
     Button,
     Card,
     CardContent,
-    cn,
 } from "@heroui/react"
 import {
     useLocale,
@@ -17,9 +16,6 @@ import {
 import {
     LockIcon,
 } from "@phosphor-icons/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import {
     ProfileHero,
 } from "../ProfileHero"
@@ -27,7 +23,7 @@ import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { pathConfig } from "@/resources/path"
 
 /** Props for {@link ProfileLockedState}. */
-export type ProfileLockedStateProps = WithClassNames<undefined>
+export type ProfileLockedStateProps = Record<string, never>
 
 /**
  * Shown when a non-owner views a profile whose owner has locked it: the public
@@ -38,15 +34,13 @@ export type ProfileLockedStateProps = WithClassNames<undefined>
  *
  * @param props - {@link ProfileLockedStateProps}
  */
-export const ProfileLockedState = ({
-    className,
-}: ProfileLockedStateProps) => {
+export const ProfileLockedState = (_props: ProfileLockedStateProps) => {
     const t = useTranslations()
     const router = useRouter()
     const locale = useLocale()
 
     return (
-        <div className={cn("mx-auto flex w-full max-w-4xl flex-col gap-6 px-6 py-6", className)}>
+        <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-6 py-6">
             <ProfileHero />
             <Card>
                 <CardContent>

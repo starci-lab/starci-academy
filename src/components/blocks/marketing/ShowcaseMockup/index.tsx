@@ -45,8 +45,6 @@ export interface ShowcaseMockupProps {
     aspect?: "video"
     /** The mockup content (rendered under the window chrome). */
     children: ReactNode
-    /** Class on the outer wrapper (sizing / placement). */
-    className?: string
     /** Class on the content area (padding / inner background). */
     contentClassName?: string
 }
@@ -86,11 +84,10 @@ export const ShowcaseMockup = ({
     backdrop = "glow",
     aspect,
     children,
-    className,
     contentClassName,
 }: ShowcaseMockupProps) => (
     <div
-        className={cn("relative w-full", className)}
+        className="relative w-full"
         style={{ "--sc-1": theme.c1, "--sc-2": theme.c2, "--sc-3": theme.c3 } as CSSProperties}
     >
         {/* decorative layer behind the card */}

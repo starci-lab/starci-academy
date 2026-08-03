@@ -329,15 +329,16 @@ export const _ContentArticle = ({
                                     // "Practice this lesson" already surfaces this, so `@app-lg:hidden`
                                     // removes it above that width rather than mounting a 2nd tree.
                                     ...(!isSkeleton && mode === "content" && upNext ? [() => (
-                                        <MilestoneUpNextCard
-                                            className="@app-lg:hidden"
-                                            isHighlight
-                                            eyebrow={upNext.eyebrow}
-                                            title={upNext.title}
-                                            description={upNext.description}
-                                            ctaLabel={upNext.ctaLabel}
-                                            onPress={upNext.onPress}
-                                        />
+                                        <div className="@app-lg:hidden">
+                                            <MilestoneUpNextCard
+                                                isHighlight
+                                                eyebrow={upNext.eyebrow}
+                                                title={upNext.title}
+                                                description={upNext.description}
+                                                ctaLabel={upNext.ctaLabel}
+                                                onPress={upNext.onPress}
+                                            />
+                                        </div>
                                     )] : []),
                                     () => (
                                         <ContentRelatedList

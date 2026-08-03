@@ -50,14 +50,7 @@ export interface LeaderboardCategoryNavProps {
     onSelect: (key: LeaderboardCategoryKey) => void
     /** Accessible name for the row, localized by the caller (blocks carry no i18n). */
     ariaLabel: string
-    /**
-     * @deprecated pass `classNames` instead — a free string cannot be constrained.
-     * Kept only for `LeaderboardPage`'s `@app-lg:hidden`: a responsive visibility
-     * toggle, not a positioning class, so it falls outside `AllowedClassName`
-     * and could not be converted.
-     */
-    className?: string
-    /** Extra classes on the row. Prefer this over `className`; the string form is going away. */
+    /** Extra classes on the row. */
     classNames?: Array<AllowedClassName>
 }
 
@@ -73,10 +66,9 @@ const LeaderboardCategoryNav = ({
     selected,
     onSelect,
     ariaLabel,
-    className,
     classNames,
 }: LeaderboardCategoryNavProps) => (
-    <div className={className}>
+    <div>
         <div>
             <ButtonRadioGroup
                 ariaLabel={ariaLabel}

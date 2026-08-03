@@ -5,7 +5,6 @@ import { Typography } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
 import { usePathname } from "@/i18n/navigation"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useLanguageOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { languages } from "@/resources/constants/lang"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
@@ -14,7 +13,7 @@ import { SelectableCardGroup } from "@/components/blocks/navigation/SelectableCa
 /**
  * LanguageModal is a modal component that is used to display the language selection.
  */
-export const LanguageModal = ({ className }: WithClassNames<undefined>) => {
+export const LanguageModal = () => {
     const { isOpen, setOpen } = useLanguageOverlayState()
     const t = useTranslations()
     const locale = useLocale()
@@ -29,7 +28,6 @@ export const LanguageModal = ({ className }: WithClassNames<undefined>) => {
         <ModalShell
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
             title={t("settings.language.title")}
         >
             <div className="flex flex-col gap-6">

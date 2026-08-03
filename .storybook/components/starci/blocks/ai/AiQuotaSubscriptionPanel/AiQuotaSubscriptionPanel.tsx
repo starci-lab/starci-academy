@@ -35,8 +35,6 @@ export interface AiQuotaSubscriptionPanelPremiumLane {
 interface AiQuotaSubscriptionPanelOwnProps {
     /** Fired when the reader taps the CTA on the no-tier leaf. */
     onSubscribe: () => void
-    /** Extra classes on the root. */
-    className?: string
 }
 
 /**
@@ -67,18 +65,17 @@ const AiQuotaSubscriptionPanel = ({
     premiumLane,
     onSubscribe,
     isSkeleton = false,
-    className,
 }: AiQuotaSubscriptionPanelProps) => {
     if (isSkeleton) {
         return (
-            <div className={className}>
+            <div>
                 <AiQuotaLane isLoading />
             </div>
         )
     }
     if (tier == null) {
         return (
-            <div className={className}>
+            <div>
                 <SurfaceCard
                     variant="nested"
                     padding={4}
@@ -114,7 +111,7 @@ const AiQuotaSubscriptionPanel = ({
     }
 
     return (
-        <div className={className}>
+        <div>
             <StackV gap={4} isSkeleton={isSkeleton} items={[
                 () => (
                     <AiQuotaLane

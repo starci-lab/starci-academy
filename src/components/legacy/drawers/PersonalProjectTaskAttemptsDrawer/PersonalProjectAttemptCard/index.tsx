@@ -2,12 +2,11 @@
 
 import React from "react"
 import { ClockIcon, SparkleIcon } from "@phosphor-icons/react"
-import { Chip, Typography, cn } from "@heroui/react"
+import { Chip, Typography } from "@heroui/react"
 
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
-export interface PersonalProjectAttemptCardProps extends WithClassNames<undefined> {
+export interface PersonalProjectAttemptCardProps {
     /** Attempt sequence from API. */
     attemptNumber: number
     /** Numeric score when present. */
@@ -32,7 +31,6 @@ export const PersonalProjectAttemptCard = (props: PersonalProjectAttemptCardProp
         score,
         shortFeedback,
         processedAtLabel,
-        className,
     } = props
     const t = useTranslations()
     const feedbackText = shortFeedback?.trim() || t("finalProject.page.attemptsDrawer.feedbackEmpty")
@@ -48,7 +46,7 @@ export const PersonalProjectAttemptCard = (props: PersonalProjectAttemptCardProp
         ) : null
 
     return (
-        <div className={cn("flex min-w-0 flex-1 flex-col", className)}>
+        <div className="flex min-w-0 flex-1 flex-col">
             <Typography type="body-xs" color="muted">
                 {t("task.attemptNumber", { number: attemptNumber })}
             </Typography>

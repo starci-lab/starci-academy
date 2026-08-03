@@ -1,25 +1,17 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
-/**
- * Props for {@link FeedbackCardSkeleton}.
- */
-type FeedbackCardSkeletonProps = WithClassNames<undefined>
 /**
  * Loading placeholders for feedback cards. Mirrors {@link FeedbackCard}'s real
  * layout — chip on its own line, message/detail stack, conditional footer
  * divider, then the location + suggestion rows — so swapping skeleton → real
  * content never shifts the layout.
- *
- * @param props - Skeleton config.
  */
-export const FeedbackCardSkeleton = ({ className }: FeedbackCardSkeletonProps) => {
+export const FeedbackCardSkeleton = () => {
     return (
-        <div className={cn("flex flex-col gap-3 rounded-medium border border-default px-4 py-3", className)}>
+        <div className="flex flex-col gap-3 rounded-medium border border-default px-4 py-3">
             <div>
                 <Skeleton.Chip />
             </div>

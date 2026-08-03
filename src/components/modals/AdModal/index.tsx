@@ -7,7 +7,6 @@ import {
 import {
     AdBanner,
 } from "@/components/features/dashboard/AdBanner"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAdModalOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
@@ -21,7 +20,7 @@ import { ModalShell } from "@/components/blocks/layout/ModalShell"
  * the lesson reader). The ad is already null-filtered server-side (members and
  * enrolled viewers never reach here), so this only mounts when there is an ad.
  */
-export const AdModal = ({ className }: WithClassNames<undefined>) => {
+export const AdModal = () => {
     const t = useTranslations()
     const { isOpen, setOpen, context } = useAdModalOverlayState()
 
@@ -34,7 +33,6 @@ export const AdModal = ({ className }: WithClassNames<undefined>) => {
         <ModalShell
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
             title={t("dashboard.adModalTitle")}
         >
             <AdBanner ad={context} />

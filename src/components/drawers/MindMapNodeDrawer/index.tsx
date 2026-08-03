@@ -1,10 +1,9 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { Drawer, Label, ScrollShadow, Typography, cn } from "@heroui/react"
+import { Drawer, Label, ScrollShadow, Typography } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/types/search-course-content"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/useQuerySearchCourseContentSwr"
@@ -27,7 +26,7 @@ const GROUPS: ReadonlyArray<{ key: string, kinds: ReadonlyArray<string> }> = [
 ]
 
 /** Presentational props — the pure view (no SWR); the container feeds these. */
-export interface MindMapNodeDrawerViewProps extends WithClassNames<undefined> {
+export interface MindMapNodeDrawerViewProps {
     /** The clicked concept's keyword (header title + the query that produced results). */
     keyword: string | null
     /** The keyword's authored explainer (localized) — renders above the RAG results as context. */
@@ -67,7 +66,6 @@ export const MindMapNodeDrawerView = ({
     isLoading,
     isError,
     onRetry,
-    className,
 }: MindMapNodeDrawerViewProps) => {
     const t = useTranslations()
     const locale = useLocale()
@@ -97,7 +95,7 @@ export const MindMapNodeDrawerView = ({
                 }}
             >
                 <Drawer.Content placement={isMobile ? "bottom" : "right"}>
-                    <Drawer.Dialog className={cn("p-0", className)}>
+                    <Drawer.Dialog className="p-0">
                         <div className="flex flex-col gap-2 p-4">
                             <Drawer.CloseTrigger />
                             <Drawer.Header className="flex flex-col gap-1 p-0">
@@ -196,7 +194,7 @@ export const MindMapNodeDrawerView = ({
 }
 
 /** Props for {@link MindMapNodeDrawer} (the SWR container). */
-export interface MindMapNodeDrawerProps extends WithClassNames<undefined> {
+export interface MindMapNodeDrawerProps {
     /** The clicked concept's keyword — the RAG query. `null` closes the drawer. */
     keyword: string | null
     /** The keyword's authored explainer (localized) — shown above the RAG results. */
@@ -230,13 +228,11 @@ export const MindMapNodeDrawer = ({
     courseDisplayId,
     isOpen,
     onClose,
-    className,
 }: MindMapNodeDrawerProps) => {
     const swr = useQuerySearchCourseContentSwr(courseId, keyword ?? "", isOpen && Boolean(keyword))
 
     return (
         <MindMapNodeDrawerView
-            className={className}
             keyword={keyword}
             desc={desc}
             courseDisplayId={courseDisplayId}

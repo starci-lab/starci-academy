@@ -2,18 +2,14 @@
 
 import React from "react"
 import {
-    cn,
     Link,
 } from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import {
     useTranslations,
 } from "next-intl"
 
 /** Props for {@link SignUpPrompt}. */
-export interface SignUpPromptProps extends WithClassNames<undefined> {
+export interface SignUpPromptProps {
     /** Fired when the user chooses to switch to the sign-up tab. */
     onSwitchToSignUp: () => void
 }
@@ -26,11 +22,10 @@ export interface SignUpPromptProps extends WithClassNames<undefined> {
  */
 export const SignUpPrompt = ({
     onSwitchToSignUp,
-    className,
 }: SignUpPromptProps) => {
     const t = useTranslations()
     return (
-        <div className={cn("flex justify-center items-center gap-2", className)}>
+        <div className="flex justify-center items-center gap-2">
             <div className="text-xs text-muted">
                 {t("auth.signIn.noAccount")}
             </div>

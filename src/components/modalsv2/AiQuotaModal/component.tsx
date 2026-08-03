@@ -5,7 +5,6 @@ import { Typography } from "@/components/atoms/text/Typography"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { LinkSeeMore } from "@/components/atoms/navigation/Link"
 import { StackH, StackV } from "@/components/frames/Stack"
-import { ModalRoot } from "@/components/frames/ModalRoot"
 import { AiQuotaLane, type AiQuotaLaneData } from "@/components/starci/blocks/ai/AiQuotaLane"
 import { AiQuotaSubscriptionPanel } from "@/components/starci/blocks/ai/AiQuotaSubscriptionPanel"
 import {
@@ -13,7 +12,6 @@ import {
     type AiQuotaHistoryChartPoint,
     type AiQuotaHistoryChargeItem,
 } from "@/components/starci/blocks/ai/AiQuotaHistoryPanel"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * `AiQuotaModal` — the root overlay for "how much AI have I used": a dialog with the
@@ -85,8 +83,6 @@ export interface AiQuotaModalProps {
     onSubscribe: () => void
     /** Fired when the "view full usage" link is pressed. */
     onViewDetails: () => void
-    /** Extra classes merged onto the dialog. */
-    classNames?: Array<AllowedClassName>
 }
 
 /** Tab → label. The block's own vocabulary (§14d.1), same pattern as `ContentModeNav`'s `MODE_LABEL`. */
@@ -127,7 +123,6 @@ const _AiQuotaModal = ({
     history,
     onSubscribe,
     onViewDetails,
-    classNames,
 }: AiQuotaModalProps) => {
     // Caller-built header (title + optional tier chip): `ModalShell.title` only carries ONE
     // Typography node, so a second element beside it (the chip) has to compose its own
@@ -201,25 +196,24 @@ const _AiQuotaModal = ({
     ]
 
     return (
-        <ModalRoot data-component="AiQuotaModal">
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                header={() => header}
-                size="lg"
-                scroll="inside"
-                classNames={classNames}
-                footer={() => (
-                    <LinkSeeMore
-                        label="View full usage"
-                        onPress={onViewDetails}
-                        size="sm"
+        <ModalShell
+            data-tier="overlay"
+            data-component="AiQuotaModal"
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            header={() => header}
+            size="lg"
+            scroll="inside"
+            footer={() => (
+                <LinkSeeMore
+                    label="View full usage"
+                    onPress={onViewDetails}
+                    size="sm"
 
-                    />
-                )}
-                body={() => <StackV gap={6} items={tabsAndPanel} />}
-            />
-        </ModalRoot>
+                />
+            )}
+            body={() => <StackV gap={6} items={tabsAndPanel} />}
+        />
     )
 }
 

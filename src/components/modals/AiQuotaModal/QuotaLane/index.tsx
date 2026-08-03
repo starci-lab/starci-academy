@@ -3,12 +3,6 @@
 import React, {
     useMemo,
 } from "react"
-import {
-    cn,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import {
     useTranslations,
@@ -29,7 +23,7 @@ import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMy
 import { useQueryMyCreditUsageSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCreditUsageSwr"
 
 /** Props for {@link QuotaLane}. */
-export interface QuotaLaneProps extends WithClassNames<undefined> {
+export interface QuotaLaneProps {
     /** Which lane to load from SWR (`myCreditUsage` vs `myAiQuota`). */
     variant: QuotaLaneVariant
 }
@@ -41,7 +35,6 @@ export interface QuotaLaneProps extends WithClassNames<undefined> {
  */
 export const QuotaLane = ({
     variant,
-    className,
 }: QuotaLaneProps) => {
     const t = useTranslations()
     const buildResetLabel = useWindowResetLabel()
@@ -104,7 +97,7 @@ export const QuotaLane = ({
     ])
 
     const laneSkeleton = (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className="flex flex-col gap-3">
             {[0, 1].map((row) => (
                 <div key={row} className="flex flex-col gap-2">
                     <div className="flex items-center justify-between gap-2">
@@ -128,7 +121,7 @@ export const QuotaLane = ({
     }
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className="flex flex-col gap-3">
             <QuotaBar
                 label={t("aiQuota.window5h")}
                 used={window5h!.used}

@@ -7,16 +7,14 @@ import React, {
 } from "react"
 import {
     Button,
-    cn,
     FieldError,
     Input,
     Label,
     TextField,
 } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link PasswordField}. */
-export interface PasswordFieldProps extends WithClassNames<undefined> {
+export interface PasswordFieldProps {
     /** DOM id / `name` for the input (e.g. `sign-up-password`). */
     fieldId: string
     /** Form field name passed to the underlying input. */
@@ -59,7 +57,6 @@ export const PasswordField = ({
     touched,
     onChangeValue,
     onBlurField,
-    className,
     hideLabel,
     showLabel,
 }: PasswordFieldProps) => {
@@ -71,7 +68,7 @@ export const PasswordField = ({
     )
 
     return (
-        <TextField variant="secondary" className={cn(className)} isInvalid={!!(touched && error)}>
+        <TextField variant="secondary" isInvalid={!!(touched && error)}>
             <Label htmlFor={fieldId} className="text-sm">
                 {label}
             </Label>

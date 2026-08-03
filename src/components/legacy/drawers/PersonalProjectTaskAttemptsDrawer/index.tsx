@@ -5,7 +5,6 @@ import React, {
     useMemo,
 } from "react"
 import {
-    cn,
     Drawer,
     ScrollShadow,
 } from "@heroui/react"
@@ -17,7 +16,6 @@ import {
 } from "next-intl"
 import { PersonalProjectAttemptCard } from "./PersonalProjectAttemptCard"
 import { PersonalProjectAttemptsSkeleton } from "./PersonalProjectAttemptsSkeleton"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePersonalProjectTaskAttemptsDrawerOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useQueryUserPersonalTaskAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptsSwr"
 import type { UserMilestoneTaskAttemptEntity } from "@/modules/types/entities/user-milestone-task"
@@ -33,15 +31,11 @@ type AttemptRow = {
     processedAtLabel: string
 }
 
-/** Props for {@link PersonalProjectTaskAttemptsDrawer}. Container — only layout className. */
-export type PersonalProjectTaskAttemptsDrawerProps = WithClassNames<undefined>
-
 /**
  * Drawer listing AI review attempts for the selected personal-project milestone task,
  * without server pagination.
  */
-export const PersonalProjectTaskAttemptsDrawer = (props: PersonalProjectTaskAttemptsDrawerProps = {}) => {
-    const { className } = props
+export const PersonalProjectTaskAttemptsDrawer = () => {
     const t = useTranslations()
     const locale = useLocale()
     const {
@@ -97,7 +91,7 @@ export const PersonalProjectTaskAttemptsDrawer = (props: PersonalProjectTaskAtte
                 onOpenChange={setOpen}
             >
                 <Drawer.Content placement={isMobile ? "bottom" : "right"}>
-                    <Drawer.Dialog className={cn("flex h-full flex-col p-0", className)}>
+                    <Drawer.Dialog className="flex h-full flex-col p-0">
                         <div className="shrink-0 p-4">
                             <Drawer.CloseTrigger />
                             <Drawer.Header>

@@ -206,17 +206,16 @@ const ContentPage = ({
             card is unaccented here, but this nudge is
             the one focal action a mobile reader sees after the reaction bar. */}
             {!isSkeleton && mode === "content" && (challengeCount ?? 0) > 0 ? (
-                <MilestoneUpNextCard
-
-                    className="@app-lg:hidden"
-                    isHighlight
-                    eyebrow="Up next · Practice this lesson"
-                    title={`Do this lesson's ${challengeCount} challenges`}
-                    description="Apply what you just learned. Challenges are graded automatically and count toward your progress."
-                    ctaLabel="Start challenges"
-                    onPress={() => onModeChange("challenges")}
-
-                />
+                <div className="@app-lg:hidden">
+                    <MilestoneUpNextCard
+                        isHighlight
+                        eyebrow="Up next · Practice this lesson"
+                        title={`Do this lesson's ${challengeCount} challenges`}
+                        description="Apply what you just learned. Challenges are graded automatically and count toward your progress."
+                        ctaLabel="Start challenges"
+                        onPress={() => onModeChange("challenges")}
+                    />
+                </div>
             ) : null}
             <ContentRelatedList
 

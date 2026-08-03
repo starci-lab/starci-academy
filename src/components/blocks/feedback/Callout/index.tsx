@@ -68,8 +68,6 @@ export interface CalloutProps {
     onClose?: () => void
     /** Accessible label for the close button. */
     closeAriaLabel?: string
-    /** Placement utilities only (e.g. `mb-4`) — NOT for restyling the callout. */
-    className?: string
 }
 
 /**
@@ -90,10 +88,9 @@ export const Callout = ({
     action,
     onClose,
     closeAriaLabel,
-    className,
 }: CalloutProps) => {
     return (
-        <Alert status={status} className={cn("shadow-none", STATUS_TINT[status], className)}>
+        <Alert status={status} className={cn("shadow-none", STATUS_TINT[status])}>
             {/* Always pass an explicit icon (caller's `icon`, else the Phosphor
                 STATUS_ICON default) so HeroUI's own internal icon-family
                 fallback (`Alert`'s `getDefaultIcon()`) never renders — keeps

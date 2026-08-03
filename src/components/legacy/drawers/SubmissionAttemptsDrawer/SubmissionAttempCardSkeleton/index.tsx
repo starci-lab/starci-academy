@@ -1,18 +1,14 @@
-import { cn } from "@heroui/react"
 import React from "react"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Skeleton for a submission attempt card — mirrors {@link import("../SubmissionAttemptCard").SubmissionAttemptCard}'s
  * bordered (not filled) shape via the {@link Skeleton} block, so loading never nests
  * a filled surface inside the drawer's own surface.
  */
-export type SubmissionAttemptCardSkeletonProps = WithClassNames<undefined>
-export const SubmissionAttemptCardSkeleton = (props: SubmissionAttemptCardSkeletonProps) => {
-    const { className } = props
+export const SubmissionAttemptCardSkeleton = () => {
     return (
-        <div className={cn("rounded-2xl border border-default p-4", className)}>
+        <div className="rounded-2xl border border-default p-4">
             <div className="flex items-center justify-between gap-3">
                 <Skeleton.Typography type="body" width="1/3" />
                 <Skeleton.Chip className="w-14" />

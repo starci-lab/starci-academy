@@ -11,7 +11,6 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import {
     PROGRAMMING_LANGUAGE_TABS_INDICATOR_CLASS_NAME,
     PROGRAMMING_LANGUAGE_TABS_LIST_CLASS_NAME,
@@ -31,7 +30,7 @@ import { DEFAULT_PROGRAMMING_LANGUAGES, isProgrammingLangAvailable, resolveActiv
 /**
  * Props for {@link ProgrammingLanguageTabs}.
  */
-export interface ProgrammingLanguageTabsProps extends WithClassNames<undefined> {
+export interface ProgrammingLanguageTabsProps {
     /** Language keys returned by the backend (subset of the default four). */
     availableLangs: Array<string>
     /** Controlled selected language key (normalized by {@link resolveActiveProgrammingLang}). */
@@ -40,8 +39,6 @@ export interface ProgrammingLanguageTabsProps extends WithClassNames<undefined> 
     onSelectLang: (lang: string) => void
     /** Accessible name for the tab list. */
     ariaLabel: string
-    /** Optional wrapper class on the root `Tabs`. */
-    className?: string
     /** When true, always render four tabs even if `availableLangs` is empty (all disabled). */
     alwaysShow?: boolean
     /**
@@ -68,7 +65,6 @@ export const ProgrammingLanguageTabs = ({
     selectedLang,
     onSelectLang,
     ariaLabel,
-    className,
     alwaysShow = false,
     variant = ProgrammingLanguageTabsVariant.Pill,
     surfaceBorder = true,
@@ -100,12 +96,11 @@ export const ProgrammingLanguageTabs = ({
 
     const tabs = (
         <Tabs
-            className={cn(
+            className={
                 isSecondary
                     ? PROGRAMMING_LANGUAGE_TABS_SECONDARY_ROOT_CLASS_NAME
-                    : PROGRAMMING_LANGUAGE_TABS_ROOT_CLASS_NAME,
-                className,
-            )}
+                    : PROGRAMMING_LANGUAGE_TABS_ROOT_CLASS_NAME
+            }
             selectedKey={activeKey}
             variant={isSecondary ? "secondary" : undefined}
             onSelectionChange={onSelectionChange}

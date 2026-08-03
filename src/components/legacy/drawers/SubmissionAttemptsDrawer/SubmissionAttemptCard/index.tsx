@@ -1,13 +1,12 @@
 "use client"
 
 import React, { useCallback, useMemo } from "react"
-import { Button, Chip, Typography, cn } from "@heroui/react"
+import { Button, Chip, Typography } from "@heroui/react"
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { dayjs, getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { Spacer } from "@/components/blocks/layout/Spacer"
 import type { SubmissionAttemptEntity } from "@/modules/types/entities/submission-attempt"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { setSubmissionAttemptId } from "@/redux/slices/submission-attempt"
 import { useFeedbackDetailsOverlayState } from "@/hooks/zustand/overlay/hooks"
@@ -15,7 +14,7 @@ import { useFeedbackDetailsOverlayState } from "@/hooks/zustand/overlay/hooks"
 /**
  * Props for a single submission-attempt card.
  */
-export interface SubmissionAttemptCardProps extends WithClassNames<undefined> {
+export interface SubmissionAttemptCardProps {
     /** The grading / attempt record to display. */
     submissionAttempt: SubmissionAttemptEntity
     /** Max points for the requirement (challenge submission), used for `score/max` display. */
@@ -29,7 +28,7 @@ export interface SubmissionAttemptCardProps extends WithClassNames<undefined> {
  * @param props - Attempt row and max score.
  */
 export const SubmissionAttemptCard = (props: SubmissionAttemptCardProps) => {
-    const { submissionAttempt, maxScore, className } = props
+    const { submissionAttempt, maxScore } = props
     const t = useTranslations()
     const dispatch = useAppDispatch()
     const { open: openFeedbackDetails } = useFeedbackDetailsOverlayState()
@@ -72,7 +71,7 @@ export const SubmissionAttemptCard = (props: SubmissionAttemptCardProps) => {
     }, [submissionAttempt.submissionUrl])
 
     return (
-        <div className={cn("rounded-2xl border border-default p-4", className)}>
+        <div className="rounded-2xl border border-default p-4">
             <div className="flex items-center justify-between gap-3">
                 <Typography type="body" className="font-semibold">
                     {t("submissionAttempts.attemptLine", {

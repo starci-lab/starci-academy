@@ -30,8 +30,6 @@ export interface TrackCardProps {
     viewLabel: string
     /** CTA handler → navigate to the course. */
     onView: () => void
-    /** Class on the outer card (sizing / placement). */
-    className?: string
 }
 
 const DOT: Record<TrackColor, string> = { accent: "bg-accent", success: "bg-success", warning: "bg-warning" }
@@ -53,8 +51,8 @@ const CTA: Record<TrackColor, string> = { accent: "text-accent-soft-foreground",
  *
  * @param props - {@link TrackCardProps}
  */
-export const TrackCard = ({ icon, title, meta, color, tiers, viewLabel, onView, className }: TrackCardProps) => (
-    <Card className={cn("h-full", className)}>
+export const TrackCard = ({ icon, title, meta, color, tiers, viewLabel, onView }: TrackCardProps) => (
+    <Card className="h-full">
         <CardContent className="flex h-full flex-col gap-6">
             <div className="flex items-center gap-3">
                 <span className={cn("flex size-10 shrink-0 items-center justify-center rounded-xl [&>svg]:size-5", TILE[color])}>

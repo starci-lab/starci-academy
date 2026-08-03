@@ -7,7 +7,6 @@ import type { DateValue } from "@heroui/react/rac"
 import { useFormatter, useTranslations } from "next-intl"
 import React, { useMemo } from "react"
 import dayjs from "dayjs"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useLivestreamCalendarOverlayState } from "@/hooks/zustand/overlay/hooks"
 import type { LivestreamSessionEntity } from "@/modules/types/entities/livestream-session"
 import { DayOfWeek } from "@/modules/types/enums/day-of-week"
@@ -69,7 +68,7 @@ const useSessionWeekdaySet = (sessions: Array<LivestreamSessionEntity> | undefin
 
 const formatTime = (hhmmss: string) => hhmmss.slice(0, 5)
 
-export const LivestreamCalendarModal = ({ className }: WithClassNames<undefined>) => {
+export const LivestreamCalendarModal = () => {
     const t = useTranslations()
     const format = useFormatter()
     const { isOpen, setOpen } = useLivestreamCalendarOverlayState()
@@ -108,7 +107,6 @@ export const LivestreamCalendarModal = ({ className }: WithClassNames<undefined>
         <ModalShell
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
             containerClassName="max-w-lg"
             size="lg"
             title={t("livestream.calendar.modalTitle")}

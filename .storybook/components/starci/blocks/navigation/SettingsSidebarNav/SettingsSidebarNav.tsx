@@ -195,9 +195,6 @@ const SettingsSidebarNav = ({
                     collapseLabel={collapseLabel}
                     expandLabel={expandLabel}
                     storageKey={storageKey}
-                    className="h-full"
-
-
                 >
                     {groups.map((group, index) => (
                         <React.Fragment key={group.key}>

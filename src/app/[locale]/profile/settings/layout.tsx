@@ -1,7 +1,7 @@
 import React from "react"
 import {
     SettingsLayout,
-} from "@/components/features/profile/Settings/SettingsLayout"
+} from "@/components/layoutsv2/SettingsLayout"
 
 /**
  * Layout for the `/[locale]/profile/(settings)` route group — wraps every private

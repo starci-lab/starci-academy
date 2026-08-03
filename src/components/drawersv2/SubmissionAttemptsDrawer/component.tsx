@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { CheckCircleIcon, SparkleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { DrawerShell } from "@/components/composites/layout/DrawerShell"
-import { DrawerRoot } from "@/components/frames/DrawerRoot"
 import {
     AsyncContent,
     type AsyncContentEmptyProps,
@@ -264,39 +263,39 @@ const _SubmissionAttemptsDrawer = ({
     ]
 
     return (
-        <DrawerRoot data-component="SubmissionAttemptsDrawer">
-            <DrawerShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                placement={placement}
-                title={`${DRAWER_TITLE} · ${attempts.length}`}
-                body={() => (
-                    <AsyncContent
-                        isLoading={isLoading}
-                        skeleton={() => (
-                            <StackV
-                                gap={3}
+        <DrawerShell
+            data-tier="overlay"
+            data-component="SubmissionAttemptsDrawer"
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            placement={placement}
+            title={`${DRAWER_TITLE} · ${attempts.length}`}
+            body={() => (
+                <AsyncContent
+                    isLoading={isLoading}
+                    skeleton={() => (
+                        <StackV
+                            gap={3}
 
-                                items={skeletonRows}
-                            />
-                        )}
-                        isEmpty={isEmpty}
-                        emptyContent={emptyContent}
-                        error={error}
-                        errorContent={errorContent}
+                            items={skeletonRows}
+                        />
+                    )}
+                    isEmpty={isEmpty}
+                    emptyContent={emptyContent}
+                    error={error}
+                    errorContent={errorContent}
 
-                        content={() => (
-                            <StackV
-                                gap={4}
+                    content={() => (
+                        <StackV
+                            gap={4}
 
 
-                                items={listAndPager}
-                            />
-                        )}
-                    />
-                )}
-            />
-        </DrawerRoot>
+                            items={listAndPager}
+                        />
+                    )}
+                />
+            )}
+        />
     )
 }
 

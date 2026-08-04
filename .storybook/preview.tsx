@@ -6,6 +6,9 @@ import "../src/app/globals.css"
 // Neo-brutalist `--nb-*` tokens + motion for the mia-mia MARKETING stories (owned by
 // apps/landing/app/globals.css; mirrored here so those stories render in real colour).
 import "./mia-mia.css"
+// `--nivo-*` runtime tokens for the nivoexpert (plain-CSS, no HeroUI) landing components —
+// owned by nivo/apps/expert/app/globals.css; mirrored here for the same reason as above.
+import "./nivoexpert.css"
 
 /**
  * Global decorator: HeroUI provider + Tailwind/HeroUI CSS + theme wrapper.

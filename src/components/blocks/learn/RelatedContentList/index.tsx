@@ -1,20 +1,18 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
 import { useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
 import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/useQuerySearchCourseContentSwr"
 import { resolveSearchResultHref } from "@/modules/learn/resolve-search-result-href"
+import { _RelatedContentList } from "./component"
 
-/** Props for the {@link RelatedContentList} block. */
-export interface RelatedContentListProps extends WithClassNames<undefined> {
+/** How many skeleton rows mirror the list while the first load is in flight. */
+const SKELETON_ROW_COUNT_CAP = 2
+
+/** Props the connected {@link RelatedContentList} takes from its caller. */
+export interface RelatedContentListConnectedProps extends WithClassNames<undefined> {
     /** Course to search within (RAG query scope). */
     courseId: string
     /** The course's `displayId` (slug) — needed to build result URLs. */
@@ -40,14 +38,13 @@ export interface RelatedContentListProps extends WithClassNames<undefined> {
 }
 
 /**
- * Passive, self-hiding "related content" list — course-wide RAG search
- * (`searchCourseContent`) rendered as clickable rows (kind chip + breadcrumb +
- * title + snippet), reusing the exact row shape `ContentAiChat`'s search view
- * established. Auto-triggered from a CONTEXT query (no typing), so it is never
- * a competing CTA — just a quiet, optional aid a learner can click into or
- * ignore. Silently renders nothing when the query is blank, still loading, or
- * came back empty/errored (a passive recommendation degrading to invisible is
- * better than an apologetic "no suggestions found" box).
+ * Passive, self-hiding "related content" list — the CONNECTED half: fetches
+ * `searchCourseContent`, filters out the current surface's own source, and
+ * folds every hide condition (blank query, error, genuinely empty) into ONE
+ * empty `results` array so the presentational half keeps a single render
+ * path. See `design/storybook/architecture/split.md`.
+ *
+ * @param props - {@link RelatedContentListConnectedProps}
  */
 export const RelatedContentList = ({
     courseId,
@@ -57,54 +54,38 @@ export const RelatedContentList = ({
     excludeId,
     limit = 3,
     className,
-}: RelatedContentListProps) => {
+}: RelatedContentListConnectedProps) => {
     const locale = useLocale()
     const router = useRouter()
-    const swr = useQuerySearchCourseContentSwr(courseId, query, Boolean(query.trim()))
+    const hasQuery = query.trim().length > 0
+    const swr = useQuerySearchCourseContentSwr(courseId, query, hasQuery)
+
     // drop the current surface's own source — a title-derived query always returns
     // itself as the top hit, and suggesting the page you're on reads as a bug.
-    const results = (swr.data ?? [])
+    const filtered = (swr.data ?? [])
         .filter((item) => !excludeId
             || (item.contentId !== excludeId && item.deckId !== excludeId && item.taskId !== excludeId))
         .slice(0, limit)
 
-    if (!query.trim() || swr.error || (!swr.isLoading && results.length === 0)) {
-        return null
-    }
+    // first load, nothing in hand yet → skeleton. Every other hide condition
+    // (blank query, error, genuinely empty) folds into an EMPTY results array —
+    // the presentational half renders nothing for all of them alike.
+    const isSkeleton = hasQuery && swr.isLoading && !swr.error
+    const results = hasQuery && !swr.error ? filtered : []
 
     return (
-        <LabeledCard label={label} frameless className={cn(className)}>
-            <AsyncContent
-                isLoading={swr.isLoading}
-                skeleton={
-                    <SurfaceListCard bordered>
-                        {Array.from({ length: Math.min(limit, 2) }).map((_, index) => (
-                            <SurfaceListCardItem key={index}>
-                                <div className="flex flex-col gap-2">
-                                    <Skeleton.Typography type="body-xs" width="1/3" />
-                                    <Skeleton.Typography type="body-sm" width="3/4" />
-                                    <Skeleton.Typography type="body-xs" width="full" />
-                                </div>
-                            </SurfaceListCardItem>
-                        ))}
-                    </SurfaceListCard>
+        <_RelatedContentList
+            label={label}
+            results={results}
+            isSkeleton={isSkeleton}
+            skeletonRowCount={Math.min(limit, SKELETON_ROW_COUNT_CAP)}
+            onSelectItem={(picked) => {
+                const href = resolveSearchResultHref(picked, locale, courseDisplayId)
+                if (href) {
+                    router.push(href)
                 }
-            >
-                <SurfaceListCard bordered>
-                    {results.map((item, index) => (
-                        <EntityResultRow
-                            key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
-                            item={item}
-                            onSelect={(picked) => {
-                                const href = resolveSearchResultHref(picked, locale, courseDisplayId)
-                                if (href) {
-                                    router.push(href)
-                                }
-                            }}
-                        />
-                    ))}
-                </SurfaceListCard>
-            </AsyncContent>
-        </LabeledCard>
+            }}
+            className={className}
+        />
     )
 }

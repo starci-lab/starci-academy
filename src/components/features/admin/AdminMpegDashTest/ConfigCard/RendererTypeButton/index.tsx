@@ -7,6 +7,7 @@ import type { RendererTypeOption } from "../../types"
 import type { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link RendererTypeButton}. */
 export interface RendererTypeButtonProps extends WithClassNames<undefined> {
     /** Option metadata to render. */
     option: RendererTypeOption

@@ -5,7 +5,7 @@ import tseslint from "typescript-eslint"
 import pluginReact from "eslint-plugin-react"
 import pluginReactHooks from "eslint-plugin-react-hooks"
 import { defineConfig } from "eslint/config"
-import starciFe from "./eslint-plugin-starci-fe/index.mjs"
+import starciFe from "./plugins/eslint/index.mjs"
 import jsxA11y from "eslint-plugin-jsx-a11y"
 
 export default defineConfig([
@@ -52,6 +52,20 @@ export default defineConfig([
         },
     },
     {
+        // `nivoexpert/**` components are deliberately PLAIN CSS (styled-jsx reading
+        // `--nivo-*` runtime tokens), not HeroUI/Tailwind — see
+        // canon/fe/enforce/tiers/split.md, "Sync precondition" (nivo-expert-app
+        // re-themes per tenant at runtime, so its twins read its OWN tokens, never
+        // the vendor-wrapping atoms). `react/no-unknown-property` does not know the
+        // Next.js styled-jsx `<style jsx>` convention out of the box (unlike
+        // `eslint-config-next`, which this book does not extend) — allow just the
+        // two props styled-jsx adds, scoped to the one namespace that uses it.
+        files: [".storybook/components/nivoexpert/**/*.{ts,tsx}"],
+        rules: {
+            "react/no-unknown-property": ["error", { ignore: ["jsx", "global"] }],
+        },
+    },
+    {
         // ── StarCi FE canon — tầng ENFORCEMENT trục-1 cơ học (.claude/fe/enforcement) ──
         // Rule máy giết dần lint-candidates L1–L4/L6. Rollout: 'warn' cho luật còn nhiều
         // vi phạm cũ (gravity 60 file) → nâng 'error' khi codebase xanh; 'error' cho luật hiếm.
@@ -67,6 +81,12 @@ export default defineConfig([
             "starci-fe/no-modal-title-classname": "error", // L2 · BURNED 2026-07-14 (nợ=0) → make-illegal
             "starci-fe/no-hero-heading-class": "warn", // L2b · heuristic, 13 nợ (landing/marketing hợp lệ) — giữ warn
             "starci-fe/no-arbitrary-token": "warn", // token · arbitrary spacing/hex (v4 không prune được) — advisory
+            // authoring convention (2026-08) — 'warn' repo-wide (nợ cũ nhiều); pre-commit --max-warnings=0
+            // trên file STAGED chặn vi phạm MỚI. Nâng 'error' khi từng luật về nợ 0.
+            "starci-fe/prefer-arrow-export": "warn", // structure-and-naming §5 · hàm module-level = arrow const
+            "starci-fe/require-export-jsdoc": "warn", // comments §3 · export mở đầu bằng JSDoc
+            "starci-fe/handler-on-prefix": "warn", // react-idioms §7 · handler `onXxx` không `handleXxx`
+            "starci-fe/export-matches-folder": "warn", // structure-and-naming §1/§5 · index.tsx export trùng tên folder
             // L12 (modal-body-padding) KHÔNG bật: quá nhiều ngoại lệ hợp lệ (Drawer.Body p-0 dialog · p-0 full-bleed
             // · command-palette) → false-positive. Để cho constrained-primitive (ModalShell từ chối bodyClassName p-*), không phải lint.
         },

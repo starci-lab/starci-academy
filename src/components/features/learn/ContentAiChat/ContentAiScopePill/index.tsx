@@ -2,7 +2,7 @@
 
 import React from "react"
 import { Link, Typography, cn } from "@heroui/react"
-import { BookOpenIcon, CardsIcon, PuzzlePieceIcon, QuotesIcon, SparkleIcon, TargetIcon } from "@phosphor-icons/react"
+import { BookOpenIcon, CardsIcon, GlobeIcon, PuzzlePieceIcon, QuotesIcon, SparkleIcon, TargetIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux/hooks"
 import { useContentAiChatScopeStore } from "@/hooks/zustand/contentAiChatScope/store"
@@ -43,6 +43,7 @@ export const ContentAiScopePill = ({ className }: ContentAiScopePillProps) => {
     const quizTitle: string | undefined = undefined
     const foundationId = useAppSelector((state) => state.foundation.foundationId)
     const foundationTitle = useAppSelector((state) => state.foundation.entity?.title)
+    const courseId = useAppSelector((state) => state.course.entity?.id)
     const courseTitle = useAppSelector((state) => state.course.entity?.title)
     const { prefersCourseScope, setPrefersCourseScope } = useContentAiChatScopeStore()
     // a highlighted passage overrides every scope: the next answer is about THAT
@@ -52,7 +53,8 @@ export const ContentAiScopePill = ({ className }: ContentAiScopePillProps) => {
 
     // mirrors the scope rule in `ContentAiChat`: a lesson grounds on itself unless
     // widened; with no lesson open the surface falls to its next grounding
-    // (capstone task → challenge → quiz → foundation → whole course)
+    // (capstone task → challenge → quiz → foundation → whole course → `global`,
+    // when there is no course at all — e.g. the chat opened from the dashboard)
     const scope = prefersCourseScope
         ? "course"
         : contentId
@@ -65,8 +67,11 @@ export const ContentAiScopePill = ({ className }: ContentAiScopePillProps) => {
                         ? "quiz"
                         : foundationId
                             ? "foundation"
-                            : "course"
+                            : courseId
+                                ? "course"
+                                : "global"
     const isCourseScope = scope === "course"
+    const isGlobalScope = scope === "global"
     // a task uses a distinct 🎯 icon; a challenge its 🧩 puzzle piece and a quiz its
     // 🃏 cards (matching their retrieval-skill icons); a lesson and a foundation
     // (which reads like a single lesson) share the 📖 book
@@ -80,15 +85,17 @@ export const ContentAiScopePill = ({ className }: ContentAiScopePillProps) => {
     // what the next answer grounds on, worded per scope
     const scopeTitle = scope === "course"
         ? t("contentAi.context.wholeCourse", { course: courseTitle ?? "" })
-        : scope === "task"
-            ? taskTitle
-            : scope === "challenge"
-                ? challengeTitle
-                : scope === "quiz"
-                    ? quizTitle
-                    : scope === "foundation"
-                        ? foundationTitle
-                        : contentTitle
+        : scope === "global"
+            ? t("contentAi.context.global")
+            : scope === "task"
+                ? taskTitle
+                : scope === "challenge"
+                    ? challengeTitle
+                    : scope === "quiz"
+                        ? quizTitle
+                        : scope === "foundation"
+                            ? foundationTitle
+                            : contentTitle
 
     return (
         <div
@@ -96,7 +103,7 @@ export const ContentAiScopePill = ({ className }: ContentAiScopePillProps) => {
                 "flex min-w-0 items-center gap-2 rounded-xl border px-3 py-1.5",
                 isSelection
                     ? "border-warning bg-warning-soft"
-                    : isCourseScope
+                    : isCourseScope || isGlobalScope
                         ? "border-info bg-info-soft"
                         : "border-accent bg-accent-soft",
                 className,
@@ -104,6 +111,8 @@ export const ContentAiScopePill = ({ className }: ContentAiScopePillProps) => {
         >
             {isSelection ? (
                 <QuotesIcon aria-hidden focusable="false" className="size-4 shrink-0 text-warning-soft-foreground" />
+            ) : isGlobalScope ? (
+                <GlobeIcon aria-hidden focusable="false" className="size-4 shrink-0 text-info-soft-foreground" />
             ) : isCourseScope ? (
                 <SparkleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-info-soft-foreground" />
             ) : (

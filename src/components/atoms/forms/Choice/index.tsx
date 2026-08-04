@@ -225,6 +225,10 @@ const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid,
  */
 export { ChoiceCheckbox, ChoiceRadio, ChoiceSwitch }
 
+/** `Choice.*` namespace — folder-matching handle grouping the choice-control atom members. */
+export const Choice = { Checkbox: ChoiceCheckbox, Radio: ChoiceRadio, Switch: ChoiceSwitch }
+
+/** Tier metadata for each `Choice.*` member, used by the component registry/Storybook lookup. */
 export const meta = [
     { tier: "atom", name: "ChoiceCheckbox" },
     { tier: "atom", name: "ChoiceRadio" },

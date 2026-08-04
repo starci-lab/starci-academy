@@ -54,9 +54,12 @@ export const FlashcardQuizStats = ({ courseId, onStartQuiz }: FlashcardQuizStats
 
     return (
         <_FlashcardQuizStats
-            isLoading={statsSwr.isLoading && !stats}
+            // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
+            isSkeleton={!statsSwr.data && !statsSwr.error}
+            // error beats loading + empty; only a settled fetch error (nothing in hand) reaches the block
             error={!stats ? statsSwr.error : undefined}
             onRetry={() => { void statsSwr.mutate() }}
+            // settled with no honest aggregate
             isEmpty={!stats || stats.insufficientData}
             coveragePercent={coveragePercent}
             untouchedTopicCount={untouchedTopicCount}

@@ -5,6 +5,7 @@ import { cn } from "@heroui/react"
 import { VideoControls } from "../VideoControls"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link Standard}. */
 export interface StandardPlayerProps extends WithClassNames<undefined> {
     /** Direct video URL (mp4, webm, ogg). */
     src: string
@@ -14,7 +15,7 @@ export interface StandardPlayerProps extends WithClassNames<undefined> {
  * Standard (MP4) video player with custom HeroUI controls.
  * Uses native `<video>` element for playback.
  */
-export const StandardPlayer = ({ src, className }: StandardPlayerProps) => {
+export const Standard = ({ src, className }: StandardPlayerProps) => {
     const videoRef = useRef<HTMLVideoElement | null>(null)
     const containerRef = useRef<HTMLDivElement | null>(null)
 
@@ -46,7 +47,7 @@ export const StandardPlayer = ({ src, className }: StandardPlayerProps) => {
     }, [])
 
     // ── Handlers ──────────────────────────────────────────────────────────
-    const handlePlayPause = useCallback(() => {
+    const onPlayPause = useCallback(() => {
         const video = videoRef.current
         if (!video) return
         if (video.paused) {
@@ -58,14 +59,14 @@ export const StandardPlayer = ({ src, className }: StandardPlayerProps) => {
         }
     }, [])
 
-    const handleSeek = useCallback((time: number) => {
+    const onSeek = useCallback((time: number) => {
         const video = videoRef.current
         if (!video) return
         video.currentTime = time
         setCurrentTime(time)
     }, [])
 
-    const handleVolumeChange = useCallback((vol: number) => {
+    const onVolumeChange = useCallback((vol: number) => {
         const video = videoRef.current
         if (!video) return
         video.volume = vol
@@ -73,14 +74,14 @@ export const StandardPlayer = ({ src, className }: StandardPlayerProps) => {
         if (vol > 0) setIsMuted(false)
     }, [])
 
-    const handleMuteToggle = useCallback(() => {
+    const onMuteToggle = useCallback(() => {
         const video = videoRef.current
         if (!video) return
         video.muted = !video.muted
         setIsMuted(video.muted)
     }, [])
 
-    const handleFullscreen = useCallback(() => {
+    const onFullscreen = useCallback(() => {
         const el = containerRef.current
         if (!el) return
         if (document.fullscreenElement) {
@@ -91,19 +92,21 @@ export const StandardPlayer = ({ src, className }: StandardPlayerProps) => {
     }, [])
 
     return (
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- hover/focus only toggles the visibility of the control bar; every control is a real, independently keyboard-focusable button inside VideoControls
         <div
             ref={containerRef}
             className={cn("relative aspect-video overflow-hidden rounded-large bg-black", className)}
             onMouseEnter={() => setHideControls(false)}
             onMouseLeave={() => setHideControls(true)}
+            onFocus={() => setHideControls(false)}
+            onBlur={() => setHideControls(true)}
         >
-            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- click here is a convenience duplicate of the accessible play/pause button in VideoControls, which is already keyboard-operable */}
             <video
                 ref={videoRef}
                 className="h-full w-full object-contain"
                 src={src}
                 playsInline
-                onClick={handlePlayPause}
+                onClick={onPlayPause}
                 aria-label="Standard video playback"
             />
             <VideoControls
@@ -112,11 +115,11 @@ export const StandardPlayer = ({ src, className }: StandardPlayerProps) => {
                 duration={duration}
                 volume={volume}
                 isMuted={isMuted}
-                onPlayPause={handlePlayPause}
-                onSeek={handleSeek}
-                onVolumeChange={handleVolumeChange}
-                onMuteToggle={handleMuteToggle}
-                onFullscreen={handleFullscreen}
+                onPlayPause={onPlayPause}
+                onSeek={onSeek}
+                onVolumeChange={onVolumeChange}
+                onMuteToggle={onMuteToggle}
+                onFullscreen={onFullscreen}
                 hidden={hideControls}
             />
         </div>

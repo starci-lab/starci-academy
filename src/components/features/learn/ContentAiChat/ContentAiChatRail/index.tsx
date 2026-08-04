@@ -51,6 +51,7 @@ const MAX_WINDOW_SHARE = 0.5
 /** Cap used before the window has been measured (SSR + first paint). */
 const PRE_MEASURE_MAX_WIDTH = 640
 
+/** The Content AI chat overlay rail — width-clamped panel hosting the chat UI. */
 export const ContentAiChatRail = () => {
     const t = useTranslations()
     const { setOpen } = useContentAiChatOverlayState()
@@ -82,6 +83,7 @@ export const ContentAiChatRail = () => {
             defaultWidth={400}
             minWidth={RAIL_MIN_WIDTH}
             maxWidth={maxWidth}
+            // eslint-disable-next-line starci-fe/handler-on-prefix -- `handleSide` is a ResizableRail layout prop (which edge the resize handle sits on), a noun not an onXxx event handler
             handleSide="left"
             ariaLabel={t("contentAi.mode.rail")}
             // exports the live width as `--app-rail-w` so the app column's fixed

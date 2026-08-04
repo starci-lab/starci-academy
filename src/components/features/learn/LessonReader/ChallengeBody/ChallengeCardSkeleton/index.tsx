@@ -5,6 +5,7 @@ import { Card, CardContent, Skeleton } from "@heroui/react"
 import { cn } from "@heroui/react"
 import { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for the challenge-card skeleton. */
 export type ChallengeCardSkeletonProps = WithClassNames<undefined>
 
 /**
@@ -23,10 +24,10 @@ export const ChallengeCardSkeleton = ({ className }: ChallengeCardSkeletonProps)
                             <Skeleton className="h-6 w-20 rounded-full" />
                         </div>
                     </div>
-                    <div className="flex flex-col">
-                        <Skeleton className="h-3 my-[2px] w-full rounded-sm" />
-                        <Skeleton className="h-3 my-[2px] w-5/6 rounded-sm" />
-                        <Skeleton className="h-3 my-[2px] w-4/6 rounded-sm" />
+                    <div className="flex flex-col gap-1">
+                        <Skeleton className="h-3 w-full rounded-sm" />
+                        <Skeleton className="h-3 w-5/6 rounded-sm" />
+                        <Skeleton className="h-3 w-4/6 rounded-sm" />
                     </div>
                     <div className="flex gap-2">
                         <Skeleton className="h-9 w-24 rounded-full" />

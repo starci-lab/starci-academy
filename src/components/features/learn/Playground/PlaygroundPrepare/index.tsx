@@ -128,7 +128,7 @@ const GEN_MODEL_TIERS = [
  * @param vramFreeMb - Free GPU VRAM in MiB, or `undefined` when no GPU detected.
  * @returns The `ollama` model tag to pull for generation.
  */
-export function recommendGenModel(vramFreeMb?: number): string {
+export const recommendGenModel = (vramFreeMb?: number): string => {
     if (vramFreeMb == null) {
         return GEN_MODEL_TIERS[0].model
     }

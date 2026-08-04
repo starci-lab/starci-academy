@@ -59,8 +59,18 @@ const TONE_TO_TYPOGRAPHY: Record<DotLabelTone, TypographyColor> = {
  * inline `backgroundColor`, so a caller can pass either a token or a value
  * outside the Tailwind palette (e.g. a GitHub language colour) through one prop.
  */
-const resolveDotColor = (color: string): { className?: string; style?: React.CSSProperties } =>
-    color.startsWith("bg-") ? { className: color } : { style: { backgroundColor: color } }
+/** The resolved dot paint channel — a Tailwind `bg-*` className, or a raw-colour inline style, never both. */
+interface ResolvedDotColor {
+    className?: string
+    style?: React.CSSProperties
+}
+
+const resolveDotColor = (color: string): ResolvedDotColor => {
+    if (color.startsWith("bg-")) {
+        return { className: color }
+    }
+    return { style: { backgroundColor: color } }
+}
 
 /** Props shared regardless of loading state — see {@link DotLabelProps} for the `color`/`label`/`isSkeleton` union. */
 interface DotLabelOwnProps {
@@ -105,6 +115,7 @@ export type DotLabelProps = DotLabelOwnProps &
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "DotLabel" } as const
 
+/** A colour dot beside an inline text label, with no chip/pill shell around it. */
 export const DotLabel = ({
     color,
     label,

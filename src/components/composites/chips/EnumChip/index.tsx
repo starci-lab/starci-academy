@@ -102,6 +102,7 @@ export interface EnumChipProps<E extends string> {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "EnumChip" } as const
 
+/** Renders a `Chip` whose tone, label, icon and tooltip come from a per-enum-value map. */
 export const EnumChip = <E extends string>({ value, map, className, classNames, isSkeleton}: EnumChipProps<E>) => {
     if (isSkeleton) {
         // NO LONGER patching on a `h-6` here: the atom's shimmer used to be `h-7` tall,

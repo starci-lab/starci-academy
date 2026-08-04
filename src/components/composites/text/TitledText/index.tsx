@@ -1,5 +1,4 @@
 import React from "react"
-import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
@@ -109,6 +108,7 @@ export interface TitledTextProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "TitledText" } as const
 
+/** Renders a primary line over an optional muted subtitle and hint as one vertical unit. */
 export const TitledText = ({
     title,
     subtitle,

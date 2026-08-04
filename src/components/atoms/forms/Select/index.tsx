@@ -325,6 +325,10 @@ const SelectCombobox = ({
  */
 export { SelectSingle, SelectMulti, SelectCombobox }
 
+/** `Select.*` namespace — folder-matching handle grouping the select-control atom members. */
+export const Select = { Single: SelectSingle, Multi: SelectMulti, Combobox: SelectCombobox }
+
+/** Tier metadata for each `Select.*` member, used by the component registry/Storybook lookup. */
 export const meta = [
     { tier: "atom", name: "SelectSingle" },
     { tier: "atom", name: "SelectMulti" },

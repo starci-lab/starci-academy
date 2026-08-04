@@ -124,4 +124,5 @@ export const PricePeriod = ({
     )
 }
 
+/** Component-tier metadata for `PricePeriod` — registers it as a composite named `PricePeriod`. */
 export const meta = { tier: "composite", name: "PricePeriod" } as const

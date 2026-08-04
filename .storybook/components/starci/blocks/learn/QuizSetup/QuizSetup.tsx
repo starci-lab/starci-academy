@@ -10,12 +10,11 @@ import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `QuizSetup` — choose the shape of a drill (length, seniority, name), then
- * start it. The block owns the domain wording and the lengths behind it: the
- * learner picks "quick" or "deep" and the block turns that into 5 or 10 cards,
- * saying so on the button. A run already in progress takes priority — the resume
- * strip leads the card above the form. A failed draw is reported next to the
- * button that failed.
+ * `QuizSetup` — choose the shape of a drill (length, seniority, name), then start
+ * it. The block owns the domain wording and the lengths behind it: the learner
+ * picks "quick" or "deep" and the block turns that into 5 or 10 cards, saying so on
+ * the button. A run already in progress takes priority — the resume strip leads the
+ * card above the form. A failed draw is reported next to the button that failed.
  */
 
 /** How long a drill runs. */

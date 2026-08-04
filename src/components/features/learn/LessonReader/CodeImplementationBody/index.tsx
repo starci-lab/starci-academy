@@ -4,13 +4,14 @@ import React, { useMemo } from "react"
 import { cn } from "@heroui/react"
 import { CodeBodySkeleton } from "../CodeBodySkeleton"
 import { ImplementationCard } from "./ImplementationCard"
-import { CodeImplementationEmpty } from "./Empty"
+import { Empty } from "./Empty"
 import { useAppSelector } from "@/redux/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { getContentCodeImplementations } from "@/modules/types/entities/content"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { useQueryContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentSwr"
 
+/** Props for the code-implementation tab body. */
 export type CodeImplementationBodyProps = WithClassNames<undefined>
 
 /**
@@ -36,7 +37,7 @@ export const CodeImplementationBody = ({ className }: CodeImplementationBodyProp
 
     const body = !items.length ? (
         <div className={cn("", className)}>
-            <CodeImplementationEmpty />
+            <Empty />
         </div>
     ) : (
         <div className={cn("flex flex-col gap-6", className)}>

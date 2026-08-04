@@ -113,4 +113,5 @@ const DropzoneBase = ({
  */
 export { DropzoneBase as Dropzone }
 
+/** Tier metadata for `Dropzone`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Dropzone" } as const

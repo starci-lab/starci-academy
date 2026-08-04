@@ -49,6 +49,7 @@ export interface StatGridCardProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "StatGridCard" } as const
 
+/** A bordered card whose stat cells sit in a seam-divided 2-column grid. */
 export const StatGridCard = ({ items, isSkeleton = false, classNames}: StatGridCardProps) => {
     const total = items.length
     const isOddTotal = total % 2 === 1

@@ -191,4 +191,5 @@ const IconTileBase = ({
 /** `IconTile.*` — framed icon-tile namespace. */
 export { IconTileBase as IconTile }
 
+/** Tier metadata for `IconTile`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "IconTile" } as const

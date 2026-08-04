@@ -19,6 +19,7 @@ import { ReduxProvider } from "@/redux/ReduxProvider"
 import { ModalContainer } from "@/components/modals/ModalContainer"
 import { UseEffects } from "@/hooks/effects/UseEffects"
 import { ContentAiChatRail } from "@/components/features/learn/ContentAiChat/ContentAiChatRail"
+import { ContentAiFab } from "@/components/features/learn/ContentAiFab"
 import { useContentAiChatOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useContentAiChatModeStore } from "@/hooks/zustand/contentAiChatMode/store"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
@@ -104,6 +105,15 @@ export const InnerLayout = ({ children }: PropsWithChildren) => {
                             </div>
                             {/* Overlays live OUTSIDE the split: they cover the screen,
                                 so they size against the viewport, not the app column. */}
+                            {/* floating "ask StarCi AI" trigger — mounted ONCE, here,
+                                so the app-wide chat is reachable from EVERY route (not
+                                just a course's learn surface): with a lesson/course
+                                open it grounds on that, otherwise it opens a `global`
+                                anchorless conversation (see ContentAiChat's scope
+                                ladder). Suppressed during a live quiz / mock-interview
+                                for the same reason the rail is (assessment-surface
+                                integrity — see `isAssessmentLive` above). */}
+                            {!isAssessmentLive ? <ContentAiFab /> : null}
                             <SocketConnectionStatus />
                             <ModalContainer />
                             <DrawerContainer />

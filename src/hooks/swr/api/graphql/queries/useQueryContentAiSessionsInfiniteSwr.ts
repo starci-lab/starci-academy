@@ -12,9 +12,9 @@ export const CONTENT_AI_SESSIONS_PAGE_LIMIT = 20
  * ends the list. Re-keys on `(scope, contentId, taskId, challengeId, quizId,
  * foundationId, courseId, search)` so a new search or surface switch resets to
  * page 0. Pass `enabled = false` (e.g. while the conversations view is hidden) to
- * suspend fetching. Runs only when authenticated and at least one anchor
+ * suspend fetching. Runs when authenticated and EITHER at least one anchor
  * (`contentId` / `taskId` / `challengeId` / `quizId` / `foundationId` / `courseId`)
- * is present.
+ * is present, OR `scope` is `"global"` (which has no anchor by definition).
  *
  * @param contentId - the current content (anchors the list / scopes search); omit with another anchor for a task/challenge/quiz/foundation/course list.
  * @param search - optional search query (searches the whole course).
@@ -46,7 +46,7 @@ export const useQueryContentAiSessionsInfiniteSwr = (
         index: number,
         previous: ReadonlyArray<ContentAiSessionSummary> | null,
     ): readonly [string, string, string, string, string, string, string, string, string, boolean, number] | null => {
-        if (!enabled || !authenticated || !(contentId || taskId || challengeId || quizId || foundationId || courseId)) {
+        if (!enabled || !authenticated || !(scope === "global" || contentId || taskId || challengeId || quizId || foundationId || courseId)) {
             return null
         }
         if (previous && previous.length < CONTENT_AI_SESSIONS_PAGE_LIMIT) {

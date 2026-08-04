@@ -9,12 +9,11 @@ import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownConte
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `QuizQuestion` — one question, the learner's answer, and the verdict. The
- * answer field turns read-only after grading rather than emptying (the value of
- * a drill is comparing what you said with what was expected). The expected
- * answer appears only after grading. The verdict is a chip; the reasoning rides
- * as a document below it. No score number — the running total lives in
- * `WorkSessionHeader`.
+ * `QuizQuestion` — one question, the learner's answer, and the verdict. The answer
+ * field turns read-only after grading rather than emptying (the value of a drill is
+ * comparing what you said with what was expected). The expected answer appears only
+ * after grading. The verdict is a chip; the reasoning rides as a document below it.
+ * No score number — the running total lives in `WorkSessionHeader`.
  */
 
 /** How the answer was judged. */

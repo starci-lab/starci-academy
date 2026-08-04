@@ -80,6 +80,7 @@ export type ProgressMeterProps = ProgressMeterOwnProps &
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "ProgressMeter" } as const
 
+/** A labelled progress bar with an optional percentage readout and target marker. */
 export const ProgressMeter = ({
     value,
     max = 100,

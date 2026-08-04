@@ -145,6 +145,9 @@ const EMPTY_STATE_SKILLS: Record<ChatContextScope, ReadonlyArray<string>> = {
     challenge: ["challenges", "flashcards"],
     quiz: ["challenges", "flashcards"],
     foundation: ["challenges", "flashcards"],
+    // no course at all (e.g. opened from the dashboard) → every retrieval skill
+    // here searches a COURSE's content, so there is nothing to offer
+    global: [],
 }
 
 /**
@@ -162,6 +165,10 @@ const SCOPE_LABEL_SUFFIX: Record<ChatContextScope, string> = {
     challenge: "OfChallenge",
     quiz: "OfQuiz",
     foundation: "OfFoundation",
+    // never actually resolved: EMPTY_STATE_SKILLS.global is empty and the
+    // mid-conversation skill menu hides itself in global scope (no course to
+    // search) — present only so this Record stays exhaustive over ChatContextScope.
+    global: "InCourse",
 }
 const retrievalLabelKey = (token: string, scope: ChatContextScope): string =>
     `contentAi.commands.${token}${SCOPE_LABEL_SUFFIX[scope]}`
@@ -171,9 +178,13 @@ const retrievalLabelKey = (token: string, scope: ChatContextScope): string =>
  * context pill above the composer so it is never a mystery what the AI is reading.
  * `content` is the DEFAULT whenever a lesson is open; `course` is both the
  * automatic fallback on a lesson-less surface (flashcards, mind-map, leaderboard)
- * and an explicit widening the learner can pick while reading.
+ * and an explicit widening the learner can pick while reading. `global` is the
+ * NEW fallback when there is no anchor at all — no lesson, task, challenge,
+ * quiz, foundation, OR course (e.g. the chat opened from the dashboard): the
+ * next question is sent anchorless, and the backend treats that as a
+ * course-less, app-wide conversation.
  */
-type ChatContextScope = "content" | "course" | "task" | "challenge" | "quiz" | "foundation"
+type ChatContextScope = "content" | "course" | "task" | "challenge" | "quiz" | "foundation" | "global"
 
 /** A find-verb that signals the learner wants a LIST of course content, not a chat answer. */
 const CONTENT_INTENT_VERB_RE = /(tìm|find|gợi ý|liệt kê|list|show|kiếm)/i // vn-ok: matches what the learner types, in either app locale
@@ -339,8 +350,10 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     // does not use.
     const { prefersCourseScope, resetScope } = useContentAiChatScopeStore()
     const [isStreaming, setIsStreaming] = useState(false)
-    // lesson passage the learner highlighted to ask about (set by ContentAiSelectionAsk)
-    const { selection, selectionContext, setSelection } = useContentAiSelection()
+    // lesson passage the learner highlighted to ask about (set by ContentAiSelectionAsk).
+    // `forceNewThread` is that same component's explicit "New thread" pick (vs.
+    // its default "Ask in this chat") — consumed once by `onSend` below, then reset.
+    const { selection, selectionContext, forceNewThread, setSelection, setForceNewThread } = useContentAiSelection()
 
     // which conversation (session) is open + which in-panel view is showing
     const [currentSessionId, setCurrentSessionId] = useState<string | null>(null)
@@ -394,11 +407,13 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         }
     }, [selectedModel, models])
 
-    // ACTIVE SCOPE — one session per scope. A lesson grounds on itself unless the
-    // learner widened to the course; with no lesson open the surface picks the
-    // next grounding it has (capstone task → foundation → whole course).
-    // Everything downstream (what we send, which chips show, what the pill says)
-    // reads this one value.
+    // ACTIVE SCOPE — what the NEXT question grounds on. A lesson grounds on itself
+    // unless the learner widened to the course; with no lesson open the surface
+    // picks the next grounding it has (capstone task → foundation → whole course
+    // → `global`, when there is no course at all). This is now a PER-ASK value,
+    // not a thread identity: the chat is app-wide, so navigating to a different
+    // surface changes what the NEXT question sends, but never resets or switches
+    // the conversation itself (see the mount-once init effect below).
     const scope: ChatContextScope = prefersCourseScope
         ? "course"
         : contentId
@@ -411,37 +426,18 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                         ? "quiz"
                         : foundationId
                             ? "foundation"
-                            : "course"
+                            : course?.id
+                                ? "course"
+                                : "global"
     const isContentScope = scope === "content"
     // what the next question actually grounds on — exactly one id per scope
+    // (all undefined in `global` scope: an intentionally anchorless ask)
     const askContentId = scope === "content" ? contentId : undefined
     const askTaskId = scope === "task" ? taskId : undefined
     const askChallengeId = scope === "challenge" ? challengeId : undefined
     const askQuizId = scope === "quiz" ? quizId : undefined
     const askFoundationId = scope === "foundation" ? foundationId : undefined
     const askCourseId = scope === "course" ? course?.id : undefined
-    // the raw SURFACE key — changes when the learner moves to a different
-    // lesson/task/challenge/quiz/foundation/course, but NOT when they widen a lesson
-    // to course (a widen is an overlay on the same surface → same session). Drives
-    // the reset + auto-select effects so each scope keeps its own thread.
-    const baseSurfaceKey = contentId
-        ? `content:${contentId}`
-        : taskId
-            ? `task:${taskId}`
-            : challengeId
-                ? `challenge:${challengeId}`
-                : quizId
-                    ? `quiz:${quizId}`
-                    : foundationId
-                        ? `foundation:${foundationId}`
-                        : `course:${course?.id ?? ""}`
-    // a SELECTED PASSAGE is its own scope-key → its own born-archived side-thread
-    // (inherits the surface grounding + the passage). Selecting or changing the
-    // highlight resets to a fresh thread; clearing it (✕ / navigating) reverts to
-    // the surface's own conversation.
-    const surfaceScopeKey = selection
-        ? `${baseSurfaceKey}|sel:${selection}`
-        : baseSurfaceKey
 
     // recent conversations for the header (auto-select most recent + current title).
     // Each surface lists ITS OWN sessions: the active scope + its single anchor go
@@ -481,7 +477,13 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const hydratedRef = useRef<string | undefined>(undefined)
     // which surface-scope the auto-select effect has already resumed a session for
     // (guards it from re-firing on unrelated re-renders / streamed tokens)
-    const scopeSelectedRef = useRef<string | undefined>(undefined)
+    // whether the initial-conversation resolution (deep link > challenge/task's
+    // remembered session > this surface's most-recent one) has already run for
+    // this mount — guards the two effects below from re-firing on navigation or
+    // on unrelated re-renders. Replaces the old per-surface-key ref: the chat is
+    // now APP-WIDE, so there is no longer a "which surface resumed" question,
+    // only a one-time "has THIS mount resolved its starting conversation yet".
+    const initializedRef = useRef(false)
     const prevContentIdRef = useRef<string | undefined>(undefined)
     // thread scroll container — auto-follow the answer to the bottom as it
     // streams, scrolling ONLY this region (never the page)
@@ -490,12 +492,19 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     // re-read, so streaming does not drag them back down
     const stickToBottomRef = useRef<boolean>(true)
 
-    // One session per scope, NO carry-thread. Moving to a different surface
-    // (lesson → task → foundation → course) RESETS the thread; the auto-select
-    // effect below then resumes THAT surface's own most-recent session (or leaves
-    // an empty thread until the first question). Continuity between scopes comes
-    // from the conversations history list — never from carrying turns across, so
-    // there is no context divider either.
+    // ── APP-WIDE CHAT: mount-once initialization ─────────────────────────────
+    // This used to reset the WHOLE thread on every surface change (a new lesson,
+    // task, challenge, quiz, foundation, or course — even just widening a lesson
+    // to the course) or on a changed passage selection: one session PER SURFACE,
+    // so moving pages wiped the thread and the effect below resumed that
+    // surface's own most-recent session. The chat is now APP-WIDE — the active
+    // conversation follows the learner across pages — so none of that resetting
+    // may run on navigation any more. What is left below runs exactly ONCE, when
+    // the panel first mounts (each open of the rail/drawer is a fresh mount:
+    // there is no cross-open persistence here, only cross-PAGE continuity while
+    // the panel stays open). Switching or starting a conversation afterward is
+    // entirely the learner's own call, via the conversations list / "New
+    // conversation" / the selection quote's explicit "New thread" action.
     useEffect(() => {
         abort()
         setInput("")
@@ -504,15 +513,16 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         setSearchTerm("")
         setContentSearchQuery("")
         setDebouncedContentSearchQuery("")
-        // a widening belongs to the surface it was made on — landing on a new one
-        // starts from that surface's natural scope again
         resetScope()
         setSkillMenuOpen(false)
         hydratedRef.current = undefined
         setMessages([])
         setCurrentSessionId(null)
-        scopeSelectedRef.current = undefined
-    }, [surfaceScopeKey, abort, resetScope])
+        initializedRef.current = false
+        // mount-only, deliberately: see the note above — this must NOT re-run
+        // when the learner navigates to a different surface.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     /** Jump to a search result's real surface (content/challenge/flashcard/milestone), then close the panel. */
     const onSelectSearchResult = useCallback(
@@ -539,9 +549,11 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     )
 
     // DEEP-LINK: `?chatSession=<uuid>` (paired with `?openChat=true`, opened by
-    // InnerLayout) restores that exact conversation on load — read ONCE from the URL
-    // and pinned so the auto-select-most-recent below does not override it. One-shot:
-    // a later surface navigation clears it and normal resume takes over.
+    // InnerLayout) restores that exact conversation on load — read ONCE from the
+    // URL and pinned so the initial-resolution effect below does not override it.
+    // One-shot for the WHOLE mount now (not per-surface): the chat is app-wide, so
+    // a deep-linked conversation stays active across later navigation instead of
+    // being replaced the moment the learner moves to a different surface.
     const deepLinkAppliedRef = useRef(false)
     useEffect(() => {
         if (deepLinkAppliedRef.current) {
@@ -553,34 +565,60 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             return
         }
         setCurrentSessionId(deepLinkSessionId)
-        // mark this surface as resumed so the auto-select effect skips it, and let
-        // the deep-linked conversation's turns hydrate from the server
-        scopeSelectedRef.current = surfaceScopeKey
+        // mark this mount as resolved so the effect below skips it, and let the
+        // deep-linked conversation's turns hydrate from the server
+        initializedRef.current = true
         hydratedRef.current = undefined
-    }, [surfaceScopeKey])
+    }, [])
 
-    // once this scope's conversations load, reopen the most recent one — opening a
-    // chat bumps its recency server-side (touchSession), so "most recent" = the
-    // last conversation the user read in this scope (persisted in the DB, not the
-    // browser). Runs for EVERY scope now, so task/foundation/course resume too.
+    // Resolve the INITIAL conversation once per mount (see the mount-once init
+    // effect above): the current challenge/task's REMEMBERED conversation, if it
+    // has one > this surface's most-recent conversation (the old per-scope
+    // default — still how the panel resumes on a normal first open) > nothing.
+    // Guarded by `initializedRef` so it runs exactly once; a later navigation or
+    // a later passage selection must NOT re-trigger it — that would be the old
+    // per-surface locking behavior this feature removes.
     useEffect(() => {
-        if (scopeSelectedRef.current === surfaceScopeKey) {
+        if (initializedRef.current) {
             return
         }
-        // a selected-passage thread is a fresh born-archived side-chat — it is NOT
-        // in the surface list, so never resume a surface session into it. Start
-        // empty; the born-archived session is created on the first ask.
-        if (selection) {
-            setCurrentSessionId(null)
-            scopeSelectedRef.current = surfaceScopeKey
+        // an explicit "New thread" pick (ContentAiSelectionAsk) starts its own
+        // fresh side-thread on purpose — never auto-resume a surface session into
+        // it. Plain "Ask in this chat" (the default) falls through to the SAME
+        // most-recent-conversation lookup as a normal open, so opening the chat
+        // fresh from a quote still lands in the conversation the learner was
+        // actually having, not an empty one.
+        if (selection && forceNewThread) {
+            initializedRef.current = true
             return
         }
+        // TODO(BE contentAiSessionId): once the backend adds `contentAiSessionId`
+        // to ChallengeEntity / MilestoneTaskEntity, read it here, e.g.:
+        //   const challengeEntity = useAppSelector((state) => state.challenge.entity)
+        //   const taskDetail = useAppSelector((state) => state.milestone.selectedTaskDetail)
+        //   const rememberedSessionId = scope === "challenge"
+        //       ? challengeEntity?.contentAiSessionId
+        //       : scope === "task"
+        //           ? taskDetail?.contentAiSessionId
+        //           : undefined
+        // so landing on a challenge/task that already has a remembered
+        // conversation resumes THAT one, instead of falling through to the
+        // most-recent lookup below.
+        const rememberedSessionId: string | undefined = undefined
+        if (rememberedSessionId) {
+            setCurrentSessionId(rememberedSessionId)
+            initializedRef.current = true
+            return
+        }
+        // opening a chat bumps its recency server-side (touchSession), so
+        // "most recent" = the last conversation the user read in this scope
+        // (persisted in the DB, not the browser).
         if (sessionsSwr.data === undefined) {
             return
         }
         setCurrentSessionId(sessionsSwr.data[0]?.id ?? null)
-        scopeSelectedRef.current = surfaceScopeKey
-    }, [surfaceScopeKey, sessionsSwr.data, selection])
+        initializedRef.current = true
+    }, [selection, forceNewThread, sessionsSwr.data])
 
     // clear a stale selected passage only when the content ACTUALLY changes
     useEffect(() => {
@@ -708,10 +746,10 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     /** Send a question, creating a conversation lazily on the first message. */
     const onSend = useCallback(async (preset?: string) => {
         const raw = (preset ?? input).trim()
-        // a question needs SOME grounding scope — a lesson, capstone task,
-        // challenge, quiz, foundation, or the whole course (a missing id must not
-        // silently swallow the send)
-        if (!raw || (!askContentId && !askTaskId && !askChallengeId && !askQuizId && !askFoundationId && !askCourseId) || isStreaming) {
+        // `global` scope is a legitimate ANCHORLESS ask (no lesson, task,
+        // challenge, quiz, foundation, or course) — it is no longer treated as a
+        // "missing grounding" that silently swallows the send.
+        if (!raw || isStreaming) {
             return
         }
         // an in-chat "find <kind>" ask renders a pickable list, not a streamed
@@ -721,7 +759,12 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             void runContentIntent(raw, intentKind)
             return
         }
-        let sessionId = currentSessionId
+        // an explicit "New thread" pick on a quoted passage (ContentAiSelectionAsk)
+        // always forks a fresh conversation, even while another one is already
+        // active. Everything else — including the default "Ask in this chat" pick
+        // — appends into whatever conversation is currently open, lazily starting
+        // one (a plain, non-archived conversation) only if none is.
+        let sessionId = forceNewThread ? null : currentSessionId
         if (!sessionId) {
             const created = await createSwr
                 .trigger({
@@ -731,8 +774,10 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                     quizId: askQuizId,
                     foundationId: askFoundationId,
                     courseId: askCourseId,
-                    // a selection-passage ask is a born-archived side-thread
-                    archived: selection ? true : undefined,
+                    // born-archived ONLY for an explicit fork — the old "every
+                    // selection starts its own hidden side-thread" default is gone
+                    // now that a quote appends into the active conversation instead.
+                    archived: forceNewThread ? true : undefined,
                 })
                 .catch(() => undefined)
             sessionId = created?.data?.id ?? null
@@ -750,6 +795,11 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             }
             setCurrentSessionId(sessionId)
             hydratedRef.current = sessionId
+        }
+        if (forceNewThread) {
+            // consumed — later turns in this now-active thread must not keep
+            // forking a new one each time
+            setForceNewThread(false)
         }
         // when a passage is selected, wrap the turn so the UI shows only the
         // question (<display>) while the model also gets the hidden <context>: the
@@ -770,12 +820,10 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             { role: "assistant", content: "" },
         ])
         setInput("")
-        // KEEP the selection sticky: it is part of the scope-key, so clearing it
-        // here would revert the key and reset the thread — wiping the answer that
-        // is about to stream. The passage stays (its input + quick-asks remain) so
-        // follow-ups accumulate in the SAME born-archived side-thread; the learner
-        // dismisses it with the quote's ✕ (or by navigating) to return to the
-        // surface's own conversation.
+        // KEEP the selection sticky: clearing it here would hide the quoted
+        // passage before the answer even streams back. It stays pinned (its input
+        // + quick-asks remain) so a follow-up can still reference it; the learner
+        // dismisses it explicitly with the quote's ✕ when they are done with it.
         setIsStreaming(true)
         ask({
             sessionId,
@@ -811,7 +859,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 })
             },
         })
-    }, [t, input, askContentId, askTaskId, askChallengeId, askQuizId, askFoundationId, askCourseId, isStreaming, currentSessionId, createSwr, selection, selectionContext, messages, ask, appendToAssistant, setSelection, sessionsSwr, sessionsInfinite, modelSelection, runContentIntent, course?.id])
+    }, [t, input, askContentId, askTaskId, askChallengeId, askQuizId, askFoundationId, askCourseId, isStreaming, currentSessionId, createSwr, selection, selectionContext, forceNewThread, setForceNewThread, messages, ask, appendToAssistant, setSelection, sessionsSwr, sessionsInfinite, modelSelection, runContentIntent, course?.id])
 
     /** Start a fresh conversation (created lazily on the first message). */
     const onNewConversation = useCallback(() => {
@@ -1307,7 +1355,12 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                         />
                     </div>
                     <Typography type="body-xs" color="muted">
-                        {t("contentAi.selectionArchivedNote")}
+                        {/* the note follows which action ContentAiSelectionAsk's
+                            learner picked: "New thread" still forks a hidden
+                            born-archived side-conversation (the old default); the
+                            new default, "Ask in this chat", just appends into
+                            whatever conversation is already open. */}
+                        {forceNewThread ? t("contentAi.selectionArchivedNote") : t("contentAi.selectionAppendedNote")}
                     </Typography>
                 </div>
             ) : null}
@@ -1321,7 +1374,9 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                             <Typography type="body-sm" color="muted">
                                 {isContentScope
                                     ? t("contentAi.hint")
-                                    : t("contentAi.courseHint")}
+                                    : scope === "global"
+                                        ? t("contentAi.globalHint")
+                                        : t("contentAi.courseHint")}
                             </Typography>
                             {/* summarize / hardest / example only make sense against an
                                 OPEN lesson — there is no "this lesson" to summarise for a
@@ -1422,8 +1477,10 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
 
             {/* retrieval-skill menu — the ⌥ composer button opens it. This replaces the
                 old "/" grammar: same capabilities, but TAPPABLE (works on a phone) and
-                reachable MID-conversation, once the empty-state chips are gone. */}
-            {isSkillMenuOpen ? (
+                reachable MID-conversation, once the empty-state chips are gone. Hidden
+                in `global` scope: every skill here searches a COURSE's content, and a
+                global conversation has none. */}
+            {isSkillMenuOpen && scope !== "global" ? (
                 <div
                     role="listbox"
                     aria-label={t("contentAi.commands.aria")}
@@ -1467,17 +1524,20 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                     </div>
                     <div className="flex shrink-0 items-center gap-2">
                         {/* retrieval skills, mid-conversation — the tappable replacement
-                            for the removed "/" grammar */}
-                        <Button
-                            isIconOnly
-                            size="sm"
-                            variant="tertiary"
-                            aria-label={t("contentAi.commands.aria")}
-                            aria-expanded={isSkillMenuOpen}
-                            onPress={() => setSkillMenuOpen((previous) => !previous)}
-                        >
-                            <MagnifyingGlassIcon className="size-5" />
-                        </Button>
+                            for the removed "/" grammar. Hidden in `global` scope (no
+                            course to search — see the menu above). */}
+                        {scope !== "global" ? (
+                            <Button
+                                isIconOnly
+                                size="sm"
+                                variant="tertiary"
+                                aria-label={t("contentAi.commands.aria")}
+                                aria-expanded={isSkillMenuOpen}
+                                onPress={() => setSkillMenuOpen((previous) => !previous)}
+                            >
+                                <MagnifyingGlassIcon className="size-5" />
+                            </Button>
+                        ) : null}
                         <Button
                             isIconOnly
                             size="sm"

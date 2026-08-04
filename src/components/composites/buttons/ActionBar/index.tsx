@@ -64,6 +64,7 @@ export interface ActionBarProps {
     classNames?: Array<AllowedClassName>
 }
 
+/** Component-tier metadata for `ActionBar` — registers it as a composite named `ActionBar`. */
 export const meta = { tier: "composite", name: "ActionBar" } as const
 
 /** A slot → its buildable `Button`, or `null` when the slot was not passed. */

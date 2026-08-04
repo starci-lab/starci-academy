@@ -15,6 +15,7 @@ import { setFoundation, setFoundationId } from "@/redux/slices/foundation"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 
+/** Props for {@link FoundationCard}. */
 export interface FoundationCardProps extends WithClassNames<undefined> {
     /** Foundation resource row from API. */
     foundation: FoundationEntity

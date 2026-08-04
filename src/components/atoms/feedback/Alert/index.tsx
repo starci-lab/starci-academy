@@ -209,4 +209,5 @@ const AlertBase = ({
  */
 export { AlertBase as Alert }
 
+/** Tier metadata for `Alert`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Alert" } as const

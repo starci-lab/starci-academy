@@ -4,6 +4,7 @@ import React from "react"
 import { Skeleton, cn } from "@heroui/react"
 import { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link LessonCardSkeleton}. */
 export type LessonCardSkeletonProps = WithClassNames<undefined>
 
 /**

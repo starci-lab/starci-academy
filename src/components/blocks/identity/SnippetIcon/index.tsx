@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@heroui/react"
 import { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link SnippetIcon}. */
 export interface SnippetIconProps extends WithClassNames<{
   copyIcon?: string
   checkIcon?: string
@@ -14,10 +15,11 @@ export interface SnippetIconProps extends WithClassNames<{
   copyString: string
 }
 
+/** Copy-to-clipboard icon that swaps to a checkmark briefly after a successful copy. */
 export const SnippetIcon = ({ copyString, classNames = {}, className }: SnippetIconProps) => {
     const [copied, setCopied] = useState(false)
 
-    const handleCopy = async () => {
+    const onCopy = async () => {
         await navigator.clipboard.writeText(copyString)
         setCopied(true)
         setTimeout(() => setCopied(false), 350)
@@ -25,7 +27,7 @@ export const SnippetIcon = ({ copyString, classNames = {}, className }: SnippetI
 
     return (
         <motion.div
-            onClick={handleCopy}
+            onClick={onCopy}
             className={cn("cursor-pointer", className)}
             whileTap={{ scale: 0.9 }}
         >

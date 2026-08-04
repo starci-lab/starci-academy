@@ -1,32 +1,26 @@
 "use client"
 
 import React from "react"
-import { Tooltip, cn } from "@heroui/react"
-import { CpuIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { _SelfHostGpuMark } from "./component"
 
-/** Props for {@link SelfHostGpuMark}. */
-export type SelfHostGpuMarkProps = WithClassNames<undefined>
+/** Props the connected {@link SelfHostGpuMark} takes from its caller. */
+export type SelfHostGpuMarkConnectedProps = WithClassNames<undefined>
 
 /**
- * Accent GPU icon with a tooltip — marks models self-hosted on StarCi hardware
- * (e.g. RTX 5060). Icon only on the row; detail lives in the tooltip (no extra chip).
+ * Accent GPU icon with a tooltip — the CONNECTED half: resolves the aria/tooltip
+ * labels via `t()`. See `design/storybook/architecture/split.md`.
+ *
+ * @param props - {@link SelfHostGpuMarkConnectedProps}
  */
-export const SelfHostGpuMark = ({ className }: SelfHostGpuMarkProps) => {
+export const SelfHostGpuMark = ({ className }: SelfHostGpuMarkConnectedProps) => {
     const t = useTranslations("aiSettings")
-
     return (
-        <Tooltip>
-            <Tooltip.Trigger
-                aria-label={t("selfHostGpuAria")}
-                className={cn("inline-flex shrink-0 cursor-default", className)}
-            >
-                <CpuIcon aria-hidden focusable="false" className="size-4 text-accent-soft-foreground" />
-            </Tooltip.Trigger>
-            <Tooltip.Content>
-                <span className="text-sm">{t("selfHostGpuTooltip")}</span>
-            </Tooltip.Content>
-        </Tooltip>
+        <_SelfHostGpuMark
+            className={className}
+            ariaLabel={t("selfHostGpuAria")}
+            tooltipLabel={t("selfHostGpuTooltip")}
+        />
     )
 }

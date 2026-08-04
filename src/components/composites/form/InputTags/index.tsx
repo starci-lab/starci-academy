@@ -4,6 +4,7 @@ import { Chip } from "@/components/atoms/chips/Chip"
 import { FieldFrame, fieldName } from "@/components/atoms/forms/_field/FieldFrame"
 import { FieldSkeleton, type FrameProps } from "@/components/atoms/forms/Input"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import { Box } from "@/components/frames/Box"
 
 /**
  * `InputTags` — token input row: `value` a string[], add with Enter, remove with ×.
@@ -49,7 +50,7 @@ export const InputTags = ({
     ariaLabel = "Tags",
     removeLabel = "Remove tag",
     isSkeleton,
-        classNames,
+    classNames,
     label,
     hint,
     errorMessage,
@@ -77,10 +78,10 @@ export const InputTags = ({
             id={controlId}
             skeletonControl={<FieldSkeleton classNames={classNames} />}
         >
-            <div
-                data-principles="sibling-stack"
+            <Box
+                principles={["control-pad", "sibling-stack"]}
                 className={cn(
-                    "bg-default-100 flex w-full flex-wrap items-center gap-2 rounded-xl border px-2 py-1.5",
+                    "bg-default-100 flex w-full flex-wrap items-center gap-2 rounded-xl border px-3 py-2",
                     invalid ? "border-danger" : "border-default-200",
                     isDisabled && "pointer-events-none opacity-50",
                     classNames)}
@@ -114,9 +115,11 @@ export const InputTags = ({
                             removeAt(value.length - 1)
                         }
                     }}
+                    // not a wrappable layout div (see the comment above this element) —
+                    // inset-exception: native <input> text-inset, a form control's own attribute
                     data-principles="control-pad" className="min-w-24 flex-1 bg-transparent px-1 py-0 text-sm outline-none"
                 />
-            </div>
+            </Box>
         </FieldFrame>
     )
 }

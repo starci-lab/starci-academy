@@ -114,7 +114,17 @@ export const Skeleton: Story = {
  * demoing the switch means opening a `@container` at a real width, same as
  * `ButtonGroup`'s own `Responsive` story does.
  */
-const ResponsiveFrame = ({ width, label, children }: { width: string; label: string; children: ReactNode }) => (
+/** Props for the {@link ResponsiveFrame} fixture — a simulated `@container` at a fixed width. */
+interface ResponsiveFrameProps {
+    /** width of the simulated `@container`, e.g. `"48rem"` */
+    width: string
+    /** label rendered above the frame to name the width being demoed */
+    label: string
+    /** content rendered inside the simulated container */
+    children: ReactNode
+}
+
+const ResponsiveFrame = ({ width, label, children }: ResponsiveFrameProps) => (
     <div className="flex flex-col gap-2">
         <Typography size="xs" text={label} color="muted" />
         <div className="@container rounded-3xl border border-dashed border-default p-3" style={{ width, maxWidth: "100%" }}>

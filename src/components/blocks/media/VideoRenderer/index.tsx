@@ -1,9 +1,9 @@
 "use client"
 import { cn } from "@heroui/react"
 import React, { useMemo } from "react"
-import { StandardPlayer } from "./Standard"
-import { MpegDashPlayer } from "./MpegDash"
-import { YoutubePlayer } from "./Youtube"
+import { Standard } from "./Standard"
+import { MpegDash } from "./MpegDash"
+import { Youtube } from "./Youtube"
 import { LessonVideoType } from "@/modules/types/enums/lesson-video-type"
 import { VideoHostPlatform } from "@/modules/types/enums/video-host-platform"
 import { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
@@ -41,6 +41,7 @@ const resolveRendererType = (
 // Public API
 // ---------------------------------------------------------------------------
 
+/** Props for {@link VideoRenderer}. */
 export interface VideoRendererProps
     extends WithClassNames<{
         content?: string
@@ -88,14 +89,14 @@ export const VideoRenderer = ({
         switch (type) {
         case VideoRendererType.MpegDash:
             return (
-                <MpegDashPlayer
+                <MpegDash
                     src={url}
                     className={classNames?.content}
                 />
             )
         case VideoRendererType.Youtube:
             return (
-                <YoutubePlayer
+                <Youtube
                     url={url}
                     title={title}
                     className={classNames?.content}
@@ -104,7 +105,7 @@ export const VideoRenderer = ({
         case VideoRendererType.Standard:
         default:
             return (
-                <StandardPlayer
+                <Standard
                     src={url}
                     className={classNames?.content}
                 />

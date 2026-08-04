@@ -33,6 +33,7 @@ export type CourseModuleContentItem = {
     isRead: boolean
 }
 
+/** React Flow node data for a `courseModule` node. */
 export type CourseModuleNodeData = {
     /** Module title line (order + title). */
     label: string
@@ -67,6 +68,7 @@ const STATUS_TINT: Record<MindMapModuleStatus, string> = {
     notStarted: "bg-surface border-separator",
 }
 
+/** React Flow node type for a `courseModule` node. */
 export type CourseModuleFlowNode = Node<CourseModuleNodeData, typeof COURSE_MODULE_NODE_TYPE>
 
 /**
@@ -236,3 +238,6 @@ export const CourseModuleNode = (props: NodeProps<CourseModuleFlowNode>) => {
         </div>
     )
 }
+
+/** Folder-matching handle for the module node — an alias of {@link CourseModuleNode}. */
+export const ModuleNode = CourseModuleNode

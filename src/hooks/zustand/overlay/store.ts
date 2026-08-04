@@ -101,6 +101,14 @@ interface OverlayStoreState {
      * sent to the model as HIDDEN grounding so it can reason about a short selection,
      * NOT shown in the chat thread. */
     contentAiSelectionContext: string | null
+    /**
+     * The learner's explicit choice on {@link import("@/components/features/learn/ContentAiSelectionAsk").ContentAiSelectionAsk}
+     * when a chat is already active: `true` = "New thread" (forks a fresh
+     * born-archived side-conversation, the old default); `false` = "Ask in this
+     * chat" (the new default — appends into whichever conversation is already
+     * open). Consumed once by `ContentAiChat`'s `onSend`, then reset to `false`.
+     */
+    contentAiSelectionForceNewThread: boolean
     /** Set the open state of an overlay (used by `onOpenChange`). */
     setOpenFor: (key: OverlayKey, isOpen: boolean) => void
     /** Open an overlay. */
@@ -123,8 +131,16 @@ interface OverlayStoreState {
     setContentAiSelectedModel: (model: string | null) => void
     /** Signal the chat thread to reset (after the settings modal clears the saved history). */
     signalContentAiCleared: () => void
-    /** Set (or clear) the highlighted passage + its surrounding context (hidden grounding). */
-    setContentAiSelection: (passage: string | null, context?: string | null) => void
+    /**
+     * Set (or clear) the highlighted passage + its surrounding context (hidden
+     * grounding) + whether it should fork a new thread (`forceNewThread`,
+     * defaults `false` — "Ask in this chat"). Clearing the passage (`null`)
+     * always clears `forceNewThread` too.
+     */
+    setContentAiSelection: (passage: string | null, context?: string | null, forceNewThread?: boolean) => void
+    /** Set (or clear, once consumed) the "New thread" choice on its own — used by
+     *  `ContentAiChat` to reset it after the forked conversation is created. */
+    setContentAiSelectionForceNewThread: (forceNewThread: boolean) => void
 }
 
 /** Initial open map — every overlay closed. */
@@ -156,6 +172,7 @@ export const useOverlayStore = create<OverlayStoreState>((set) => ({
     contentAiClearNonce: 0,
     contentAiSelection: null,
     contentAiSelectionContext: null,
+    contentAiSelectionForceNewThread: false,
     setOpenFor: (key, isOpen) =>
         set((state) => ({ openMap: { ...state.openMap, [key]: isOpen } })),
     openOverlay: (key) =>
@@ -172,8 +189,10 @@ export const useOverlayStore = create<OverlayStoreState>((set) => ({
     setContentAiSelectedModel: (model) => set({ contentAiSelectedModel: model }),
     signalContentAiCleared: () =>
         set((state) => ({ contentAiClearNonce: state.contentAiClearNonce + 1 })),
-    setContentAiSelection: (passage, context) => set({
+    setContentAiSelection: (passage, context, forceNewThread) => set({
         contentAiSelection: passage,
         contentAiSelectionContext: passage ? (context ?? null) : null,
+        contentAiSelectionForceNewThread: passage ? Boolean(forceNewThread) : false,
     }),
+    setContentAiSelectionForceNewThread: (forceNewThread) => set({ contentAiSelectionForceNewThread: forceNewThread }),
 }))

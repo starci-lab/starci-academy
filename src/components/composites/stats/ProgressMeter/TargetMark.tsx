@@ -64,6 +64,7 @@ export interface ProgressMeterTargetMarkProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "ProgressMeterTargetMark" } as const
 
+/** A tick + directly-attached label marking a target position on a `ProgressMeter` track. */
 export const ProgressMeterTargetMark = ({ percent, label, classNames }: ProgressMeterTargetMarkProps) => (
     <div
         className={cn("pointer-events-none absolute top-1/2 -translate-x-1/2 -translate-y-1/2", classNames)}

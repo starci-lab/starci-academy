@@ -182,6 +182,7 @@ export type PDFViewProps = PDFViewOwnProps &
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "PDFView" } as const
 
+/** A reusable, presentational PDF preview viewer built on react-pdf. */
 export const PDFView = ({
     src,
     title,

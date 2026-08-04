@@ -6,25 +6,11 @@ import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
 import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
 
 /**
- * `ResponsiveCluster` — a FRAME: a repeat-list track that is a full-width COLUMN
- * below a named container step and a packed ROW from it up, with one shared gap on
- * both sides. One member.
- *
- * Fills the gap between `Cluster` (wraps but never commits to a full column and
- * never stops being a row) and `ResponsiveRow` (switches shape but goes flush
- * `gap-0` as a row) — this one keeps one real gap in both forms, for a
- * homogeneous row like a filter bar or icon toolbar (its caller is `ButtonGroup`).
- *
- * A repeating list ⇒ `items` DATA, `children` forbidden. Below the switch each
- * item is wrapped in `w-full`, released to `w-auto` at the switch step, so a
- * caller's `Button` never has to know which form it is in.
- *
- * Container queries, not viewport: `@app-sm/md/lg/xl` answer the nearest
- * `@container`.
- *
- * Internal-only for now (no story of its own): it takes `data-tier`/
- * `data-component` as literal pass-through attributes rather than asserting its
- * own identity; the composite calling it supplies one.
+ * `ResponsiveCluster` — a repeat-list FRAME: a full-width COLUMN below its switch
+ * step, a packed ROW from it up, with ONE shared gap on both sides (unlike
+ * `ResponsiveRow`, which goes flush once it becomes a row). Below the switch every
+ * item is stretched `w-full`, released to `w-auto` at the switch step, so a caller's
+ * `Button` never has to know which form it is in. Real caller: `ButtonGroup`.
  */
 
 /** One cell of a {@link ResponsiveCluster}. */

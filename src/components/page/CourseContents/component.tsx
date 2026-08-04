@@ -9,7 +9,7 @@ import {
     StackIcon,
     UsersIcon,
 } from "@phosphor-icons/react"
-import { AsyncContent } from "@/components/composites/async/AsyncContent"
+import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { HighlightChip } from "@/components/composites/chips/HighlightChip"
 import { PageHeader } from "@/components/composites/layout/Page"
@@ -305,21 +305,21 @@ export const _CourseContents = ({
                                     // in the left content-map rail, so the body never re-draws it).
                                     // While loading it shimmers the SAME list with placeholder rows.
                                     ...((isSkeleton || lessons.length > 0) ? [() => (
-                                            <StackV
-                                                gap={4}
-                                                items={[
-                                                    () => (
-                                                        <Typography
-                                                            size="sm"
-                                                            weight="semibold"
-                                                            color="muted"
-                                                            isSkeleton={isSkeleton}
-                                                            text={`${labels.keepGoing} · ${moduleTitle ?? ""}`}
-                                                        />
-                                                    ),
-                                                    () => <SurfaceCardList items={isSkeleton ? SKELETON_LESSON_ROWS : lessonRows} isSkeleton={isSkeleton} />,
-                                                ]}
-                                            />
+                                        <StackV
+                                            gap={4}
+                                            items={[
+                                                () => (
+                                                    <Typography
+                                                        size="sm"
+                                                        weight="semibold"
+                                                        color="muted"
+                                                        isSkeleton={isSkeleton}
+                                                        text={`${labels.keepGoing} · ${moduleTitle ?? ""}`}
+                                                    />
+                                                ),
+                                                () => <SurfaceCardList items={isSkeleton ? SKELETON_LESSON_ROWS : lessonRows} isSkeleton={isSkeleton} />,
+                                            ]}
+                                        />
                                     )] : []),
                                 ]}
                             />
@@ -330,21 +330,18 @@ export const _CourseContents = ({
         />
     )
 
+    // error → skeleton → empty → content (BLOCK-8): the empty and error surfaces are the shared
+    // `AsyncContent*` frames dropped in as their own states; otherwise the ONE spine renders, with
+    // `isLoading` flowing in as the co-located shimmer flag (loading-and-skeleton.md §6).
+    const inner = error
+        ? <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retry} />
+        : (!isLoading && isEmpty)
+            ? <AsyncContentEmpty title={labels.emptyTitle} />
+            : spine(isLoading)
+
     return (
         <div data-tier="page" data-component="CourseContents">
-            <AsyncContent
-                isLoading={isLoading}
-                skeleton={() => spine(true)}
-                isEmpty={isEmpty}
-                emptyContent={{ title: labels.emptyTitle }}
-                error={error}
-                errorContent={{
-                    title: labels.errorTitle,
-                    onRetry: () => { onRetry?.() },
-                    retryLabel: labels.retry,
-                }}
-                content={() => spine(false)}
-            />
+            {inner}
         </div>
     )
 }

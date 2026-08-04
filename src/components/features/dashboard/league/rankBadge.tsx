@@ -12,6 +12,7 @@ const PLACE_MEDAL: Record<number, string> = {
     3: "fluent-emoji-flat:3rd-place-medal",
 }
 
+/** Iconify id for the place medal/trophy art matching a 1-based leaderboard rank. */
 export const rankBadgeIconId = (rank: number): string =>
     PLACE_MEDAL[rank] ?? "fluent-emoji-flat:trophy"
 

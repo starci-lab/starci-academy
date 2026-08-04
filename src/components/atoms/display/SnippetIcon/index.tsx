@@ -69,7 +69,7 @@ const SnippetIconBase = ({
     // `isCopied` passed from outside wins over internal state (used for previews).
     const copied = isCopied ?? copiedState
 
-    const handleCopy = async () => {
+    const onCopy = async () => {
         // `copyString` is `string | undefined` here because it's optional in the
         // `isSkeleton` branch of the union — a skeleton is never clicked, but the
         // guard also keeps this call type-safe without narrowing on `isSkeleton`.
@@ -100,7 +100,7 @@ const SnippetIconBase = ({
         <motion.div
             data-tier="atom"
             data-component="SnippetIcon"
-            onClick={handleCopy}
+            onClick={onCopy}
             className={cn("cursor-pointer", classNames)}
             whileTap={{ scale: 0.9 }}
         >
@@ -134,4 +134,5 @@ const SnippetIconBase = ({
 /** `SnippetIcon.*` — one-tap copy affordance namespace. */
 export { SnippetIconBase as SnippetIcon }
 
+/** Tier metadata for `SnippetIcon`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "SnippetIcon" } as const

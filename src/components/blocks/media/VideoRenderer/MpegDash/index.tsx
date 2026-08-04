@@ -6,6 +6,7 @@ import { VideoControls, type QualityLevel } from "../VideoControls"
 import type { MediaPlayerClass } from "dashjs"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link MpegDash}. */
 export interface MpegDashPlayerProps extends WithClassNames<undefined> {
     /** URL pointing to an MPEG-DASH .mpd manifest. */
     src: string
@@ -46,7 +47,7 @@ interface DashLegacyQualityApi {
  *
  * Pattern based on cistudy-client-2 DashVideoPlayer.
  */
-export const MpegDashPlayer = ({ src, className }: MpegDashPlayerProps) => {
+export const MpegDash = ({ src, className }: MpegDashPlayerProps) => {
     const videoRef = useRef<HTMLVideoElement | null>(null)
     const containerRef = useRef<HTMLDivElement | null>(null)
     const playerRef = useRef<MediaPlayerClass | null>(null)
@@ -133,7 +134,7 @@ export const MpegDashPlayer = ({ src, className }: MpegDashPlayerProps) => {
     }, [selectedQuality])
 
     // ── Handlers ──────────────────────────────────────────────────────────
-    const handlePlayPause = useCallback(() => {
+    const onPlayPause = useCallback(() => {
         const player = playerRef.current
         if (!player) return
         if (isPlaying) {
@@ -145,14 +146,14 @@ export const MpegDashPlayer = ({ src, className }: MpegDashPlayerProps) => {
         }
     }, [isPlaying])
 
-    const handleSeek = useCallback((time: number) => {
+    const onSeek = useCallback((time: number) => {
         const player = playerRef.current
         if (!player) return
         player.seek(time)
         setCurrentTime(time)
     }, [])
 
-    const handleVolumeChange = useCallback((vol: number) => {
+    const onVolumeChange = useCallback((vol: number) => {
         const player = playerRef.current
         if (!player) return
         player.setVolume(vol)
@@ -160,7 +161,7 @@ export const MpegDashPlayer = ({ src, className }: MpegDashPlayerProps) => {
         if (vol > 0) setIsMuted(false)
     }, [])
 
-    const handleMuteToggle = useCallback(() => {
+    const onMuteToggle = useCallback(() => {
         const player = playerRef.current
         if (!player) return
         const next = !isMuted
@@ -168,11 +169,11 @@ export const MpegDashPlayer = ({ src, className }: MpegDashPlayerProps) => {
         setIsMuted(next)
     }, [isMuted])
 
-    const handleQualityChange = useCallback((index: number) => {
+    const onQualityChange = useCallback((index: number) => {
         setSelectedQuality(index)
     }, [])
 
-    const handleFullscreen = useCallback(() => {
+    const onFullscreen = useCallback(() => {
         const el = containerRef.current
         if (!el) return
         if (document.fullscreenElement) {
@@ -183,18 +184,20 @@ export const MpegDashPlayer = ({ src, className }: MpegDashPlayerProps) => {
     }, [])
 
     return (
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- hover/focus only toggles the visibility of the control bar; every control is a real, independently keyboard-focusable button inside VideoControls
         <div
             ref={containerRef}
             className={cn("relative aspect-video overflow-hidden rounded-large bg-black", className)}
             onMouseEnter={() => setHideControls(false)}
             onMouseLeave={() => setHideControls(true)}
+            onFocus={() => setHideControls(false)}
+            onBlur={() => setHideControls(true)}
         >
-            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- convenience click-to-toggle duplicate; play/pause is already keyboard-accessible via the VideoControls button below */}
             <video
                 ref={videoRef}
                 className="h-full w-full object-contain"
                 playsInline
-                onClick={handlePlayPause}
+                onClick={onPlayPause}
                 aria-label="MPEG-DASH playback"
             />
             <VideoControls
@@ -203,14 +206,14 @@ export const MpegDashPlayer = ({ src, className }: MpegDashPlayerProps) => {
                 duration={duration}
                 volume={volume}
                 isMuted={isMuted}
-                onPlayPause={handlePlayPause}
-                onSeek={handleSeek}
-                onVolumeChange={handleVolumeChange}
-                onMuteToggle={handleMuteToggle}
-                onFullscreen={handleFullscreen}
+                onPlayPause={onPlayPause}
+                onSeek={onSeek}
+                onVolumeChange={onVolumeChange}
+                onMuteToggle={onMuteToggle}
+                onFullscreen={onFullscreen}
                 qualityLevels={qualityLevels}
                 selectedQuality={selectedQuality}
-                onQualityChange={handleQualityChange}
+                onQualityChange={onQualityChange}
                 hidden={hideControls}
             />
         </div>

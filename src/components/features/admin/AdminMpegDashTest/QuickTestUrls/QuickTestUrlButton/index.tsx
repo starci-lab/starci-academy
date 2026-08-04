@@ -5,6 +5,7 @@ import { cn } from "@heroui/react"
 import type { QuickTestUrl } from "../../types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link QuickTestUrlButton}. */
 export interface QuickTestUrlButtonProps extends WithClassNames<undefined> {
     /** Preset to render. */
     item: QuickTestUrl

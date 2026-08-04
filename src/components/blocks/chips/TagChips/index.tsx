@@ -1,68 +1,30 @@
 "use client"
 
-import { Chip, ScrollShadow, Tooltip } from "@heroui/react"
+import React from "react"
 import { useTranslations } from "next-intl"
-import React, { useMemo, useState } from "react"
-import { WithClassNames } from "@/modules/types/base/class-name"
+import { _TagChips, type TagChipsProps } from "./component"
+
+/** Props the connected {@link TagChips} takes from its caller. */
+export type TagChipsConnectedProps = Omit<TagChipsProps, "overflowLabel">
+
+const DEFAULT_MAX_VISIBLE = 3
 
 /**
- * Props for {@link TagChips}.
- */
-export interface TagChipsProps extends WithClassNames<{
-    trigger: string
-    content: string
-}> {
-    /** Tag labels to render (e.g. hashtags). */
-    tags: Array<string>
-    /**
-     * Maximum number of tag chips to show before collapsing the rest into a +N chip.
-     * @default 3
-     */
-    maxVisible?: number
-
-    /** Visual variant passed to each `Chip`. */
-    variant?: React.ComponentProps<typeof Chip>["variant"]
-}
-
-/**
- * Renders tags as `Chip`s; if there are more than `maxVisible` tags, shows only the first
- * `maxVisible` and a +N chip. Hovering the row opens a HeroUI `Dropdown` listing every tag
- * (controlled open + short close delay so the pointer can move into the menu).
+ * Renders tags as `Chip`s, collapsing overflow into a +N chip — the CONNECTED
+ * half: resolves the "+N more" overflow label via `t()`. See
+ * `design/storybook/architecture/split.md`.
  *
- * @param props.tags — Full list of tag strings.
- * @param props.maxVisible — Cut-off before overflow (default 3).
+ * @param props - {@link TagChipsConnectedProps}
  */
-export const TagChips = ({ tags, maxVisible = 3, variant = "soft", classNames }: TagChipsProps) => {
+export const TagChips = ({ tags, maxVisible = DEFAULT_MAX_VISIBLE, ...props }: TagChipsConnectedProps) => {
     const t = useTranslations()
-    const [menuOpen, setMenuOpen] = useState(false)
-    const visibleTags = useMemo(() => tags.slice(0, maxVisible), [tags, maxVisible])
-    // How many tags were folded away; only when > 0 is there a real "overflow" worth a +N chip (avoids a negative/zero count when empty or not overflowing).
     const overflowCount = Math.max(0, tags.length - maxVisible)
     return (
-        <div className="flex items-center gap-2">
-            {visibleTags.map((tag, index) => (
-                <Chip key={`${String(tag)}-${index}`} variant={variant}>
-                    <Chip.Label>{tag}</Chip.Label>
-                </Chip>
-            ))}
-            {overflowCount > 0 && (
-                <Tooltip isOpen={menuOpen} onOpenChange={setMenuOpen}>
-                    <Tooltip.Trigger className={classNames?.trigger}>
-                        <Chip color="default" variant={variant}>
-                            <Chip.Label>{t("common.tagsMore", { count: overflowCount })}</Chip.Label>
-                        </Chip>
-                    </Tooltip.Trigger>
-                    <Tooltip.Content className={classNames?.content}>
-                        <ScrollShadow className="max-h-[200px]" hideScrollBar={true} orientation="horizontal">
-                            <div className="flex flex-col gap-2 text-sm">
-                                {tags.map((tag) => (
-                                    <div key={tag}>{tag}</div>
-                                ))}
-                            </div>
-                        </ScrollShadow>
-                    </Tooltip.Content>
-                </Tooltip>
-            )}
-        </div>
+        <_TagChips
+            {...props}
+            tags={tags}
+            maxVisible={maxVisible}
+            overflowLabel={t("common.tagsMore", { count: overflowCount })}
+        />
     )
 }

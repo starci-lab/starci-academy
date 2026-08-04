@@ -2,7 +2,7 @@ import type { GraphQLResponse } from "../../types"
 
 /** GraphQL `ContentAiSessionsRequest` body. */
 export interface ContentAiSessionsRequest {
-    /** Which grounding surface to list: "content" | "task" | "challenge" | "quiz" | "foundation" | "course". The BE derives it from whichever anchor id is present (content > task > challenge > quiz > foundation > course) when omitted, but the FE sends it explicitly. */
+    /** Which grounding surface to list: "content" | "task" | "challenge" | "quiz" | "foundation" | "course" | "global". The BE derives it from whichever anchor id is present (content > task > challenge > quiz > foundation > course > global, when no anchor at all — a course-less, app-wide conversation) when omitted, but the FE sends it explicitly. */
     scope?: string
     /** Current content — lists THAT lesson's conversations. Omit it and pass `courseId` to list every conversation of the course (lesson-anchored + course-general mixed). */
     contentId?: string
@@ -36,7 +36,7 @@ export interface ContentAiSessionSummary {
     updatedAt: string
     /** Number of turns in the conversation. */
     messageCount: number
-    /** Grounding surface of the conversation: "content" | "task" | "challenge" | "quiz" | "foundation" | "course". */
+    /** Grounding surface of the conversation: "content" | "task" | "challenge" | "quiz" | "foundation" | "course" | "global". */
     scope: string
     /** Content the conversation is anchored to; null for task/foundation/course-general conversations. */
     originContentId: string | null

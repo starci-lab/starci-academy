@@ -321,7 +321,7 @@ const TypographyBase = ({
     align,
     tabularNums = false,
     isSkeleton = false,
-        classNames,
+    classNames,
     size = "base",
 }: TypographyProps) => {
     // Node name = the REAL component being rendered in that branch (not a role word):
@@ -525,4 +525,5 @@ const TypographyBase = ({
 /** `Typography` — text atom: one component, one `size` prop spanning body, heading, and code scales. */
 export { TypographyBase as Typography }
 
+/** Tier metadata for `Typography`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Typography" } as const

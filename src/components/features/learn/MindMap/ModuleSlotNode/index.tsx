@@ -12,6 +12,7 @@ import { pathConfig } from "@/resources/path"
 import { useAppSelector } from "@/redux/hooks"
 import { useAuthenticationOverlayState } from "@/hooks/zustand/overlay/hooks"
 
+/** React Flow node data for a `courseModuleContent` (lesson) node. */
 export type CourseModuleSlotNodeData = {
     /** Parent `courseModule` node id this lesson belongs to. */
     parentModuleId: string
@@ -29,6 +30,7 @@ export type CourseModuleSlotNodeData = {
     isRead: boolean
 }
 
+/** React Flow node type for a `courseModuleContent` (lesson) node. */
 export type CourseModuleSlotFlowNode = Node<CourseModuleSlotNodeData, typeof COURSE_MODULE_SLOT_NODE_TYPE>
 
 /**
@@ -103,3 +105,6 @@ export const CourseModuleSlotNode = (props: NodeProps<CourseModuleSlotFlowNode>)
         </button>
     )
 }
+
+/** Folder-matching handle for the module-slot node — an alias of {@link CourseModuleSlotNode}. */
+export const ModuleSlotNode = CourseModuleSlotNode

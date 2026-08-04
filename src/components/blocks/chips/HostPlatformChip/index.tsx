@@ -1,42 +1,26 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import {
-    SiGoogledrive,
-    SiYoutube,
-    SiVimeo,
-    SiCloudflare,
-} from "@icons-pack/react-simple-icons"
 import { VideoHostPlatform } from "@/modules/types/enums/video-host-platform"
-import { EnumChip } from "@/components/blocks/chips/EnumChip"
-import type { EnumChipEntry } from "@/components/blocks/chips/EnumChip"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { _HostPlatformChip, type HostPlatformChipProps } from "./component"
+
+/** Props the connected {@link HostPlatformChip} takes from its caller. */
+export type HostPlatformChipConnectedProps = Omit<HostPlatformChipProps, "labels">
 
 /**
- * The props for the HostPlatformChip component.
- * @param hostPlatform - The host platform of the lesson video.
+ * A chip that displays the host platform of a lesson video — the CONNECTED
+ * half: resolves each platform's label via `t()`. See `design/storybook/architecture/split.md`.
+ *
+ * @param props - {@link HostPlatformChipConnectedProps}
  */
-export interface HostPlatformChipProps extends WithClassNames<undefined> {
-    /** Host platform of the lesson video. */
-    hostPlatform: VideoHostPlatform
-}
-
-/**
- * A chip that displays the host platform of a lesson video (accent, brand icon +
- * label). Thin domain map over the shared {@link EnumChip} primitive.
- * @param hostPlatform - The host platform of the lesson video.
- */
-export const HostPlatformChip = ({ hostPlatform, className }: HostPlatformChipProps) => {
+export const HostPlatformChip = ({ hostPlatform, className }: HostPlatformChipConnectedProps) => {
     const t = useTranslations()
-    // `Other` is intentionally unhandled — EnumChip throws on it, matching the
-    // original switch `default` throw. Hence Partial rather than a full Record.
-    const map: Partial<Record<VideoHostPlatform, EnumChipEntry>> = {
-        [VideoHostPlatform.Youtube]: { color: "accent", icon: <SiYoutube size={16} />, label: t("videoHostPlatform.youtube") },
-        [VideoHostPlatform.GoogleDrive]: { color: "accent", icon: <SiGoogledrive size={16} />, label: t("videoHostPlatform.googleDrive") },
-        [VideoHostPlatform.Vimeo]: { color: "accent", icon: <SiVimeo size={16} />, label: t("videoHostPlatform.vimeo") },
-        [VideoHostPlatform.CloudflareStream]: { color: "accent", icon: <SiCloudflare size={16} />, label: t("videoHostPlatform.cloudflareStream") },
+    const labels: Partial<Record<VideoHostPlatform, string>> = {
+        [VideoHostPlatform.Youtube]: t("videoHostPlatform.youtube"),
+        [VideoHostPlatform.GoogleDrive]: t("videoHostPlatform.googleDrive"),
+        [VideoHostPlatform.Vimeo]: t("videoHostPlatform.vimeo"),
+        [VideoHostPlatform.CloudflareStream]: t("videoHostPlatform.cloudflareStream"),
     }
-    return <EnumChip value={hostPlatform} map={map} className={cn(className)} />
+    return <_HostPlatformChip hostPlatform={hostPlatform} labels={labels} className={className} />
 }

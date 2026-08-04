@@ -22,6 +22,7 @@ interface SelectionHintState {
     markSeen: () => void
 }
 
+/** Zustand store tracking whether the learner has discovered the selection-ask hint. */
 export const useSelectionHintStore = create<SelectionHintState>((set, get) => ({
     seen: false,
     hydrate: () => {

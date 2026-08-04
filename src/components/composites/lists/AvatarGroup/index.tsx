@@ -63,6 +63,7 @@ const GROUP_RING = "rounded-full ring-2 ring-background"
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "AvatarGroup" } as const
 
+/** Renders an overlapping row of avatars with an optional "+N" overflow chip. */
 export const AvatarGroup = ({
     items,
     max = 5,

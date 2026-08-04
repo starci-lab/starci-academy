@@ -1,14 +1,6 @@
 "use client"
 
-import { BookmarkSimpleIcon, CaretRightIcon } from "@phosphor-icons/react"
-import { FaGithub } from "react-icons/fa6"
 import React, { useCallback, useMemo } from "react"
-import {
-    DropdownItem,
-    DropdownMenu,
-    DropdownSection,
-    cn,
-} from "@heroui/react"
 import {
     useLocale,
     useTranslations,
@@ -19,19 +11,15 @@ import { useAppSelector } from "@/redux/hooks"
 import { languages } from "@/resources/constants/lang"
 import { useAccountMenuOverlayState, useLanguageOverlayState, useLinkGithubOverlayState } from "@/hooks/zustand/overlay/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { _MenuList } from "./component"
 
-/**
- * Props for {@link MenuList}.
- */
+/** Props for {@link MenuList}. */
 export type MenuListProps = WithClassNames<undefined>
 
 /**
- * Dropdown body menu: an authenticated-only bookmarks section plus the
- * language switcher row.
- *
- * Container: reads auth state from Redux, derives current language from locale,
- * and self-dispatches navigation + overlay actions on press.
- * `"use client"` for hooks + press handlers.
+ * Dropdown body menu — the CONNECTED half: reads auth state from Redux,
+ * derives current language from locale, and self-dispatches navigation +
+ * overlay actions on press. See `design/storybook/architecture/split.md`.
  * @param props - optional root class name
  */
 export const MenuList = ({ className }: MenuListProps) => {
@@ -77,51 +65,17 @@ export const MenuList = ({ className }: MenuListProps) => {
     )
 
     return (
-        <DropdownMenu className={cn(className)}>
-            {/** Settings block */}
-            {!!user && (
-                <DropdownSection className="border-b border-divider pb-2 mb-2">
-                    {/* manual GitHub-link entry point — self-hides once the account is linked
-                        (githubUsername set after the modal succeeds + the `me` query refreshes) */}
-                    {!user.githubUsername ? (
-                        <DropdownItem
-                            key="link-github"
-                            onPress={onLinkGithub}
-                            className="py-3"
-                        >
-                            <div className="flex items-center gap-3 w-full">
-                                <FaGithub className="size-5" />
-                                <div className="text-sm">{t("linkGithub.title")}</div>
-                            </div>
-                        </DropdownItem>
-                    ) : null}
-                    <DropdownItem
-                        key="bookmarks"
-                        onPress={onOpenBookmarks}
-                        className="py-3"
-                    >
-                        <div className="flex items-center gap-3 w-full">
-                            <BookmarkSimpleIcon className="size-5" />
-                            <div className="text-sm">{t("content.saved")}</div>
-                        </div>
-                    </DropdownItem>
-                </DropdownSection>
-            )}
-            <DropdownSection>
-                <DropdownItem
-                    key="language"
-                    onPress={onOpenLanguage}
-                    className="py-3"
-                >
-                    <div className="flex items-center justify-between gap-3 w-full">
-                        <div className="text-sm">{t("nav.toggleLanguage")}</div>
-                        <div className="flex items-center gap-2 text-sm text-muted">
-                            {currentLanguageLabel}
-                            <CaretRightIcon weight="bold" className="size-4" />
-                        </div>
-                    </div>
-                </DropdownItem>
-            </DropdownSection>
-        </DropdownMenu>
+        <_MenuList
+            isAuthenticated={Boolean(user)}
+            showLinkGithub={Boolean(user) && !user?.githubUsername}
+            linkGithubLabel={t("linkGithub.title")}
+            bookmarksLabel={t("content.saved")}
+            toggleLanguageLabel={t("nav.toggleLanguage")}
+            currentLanguageLabel={currentLanguageLabel}
+            onLinkGithub={onLinkGithub}
+            onOpenBookmarks={onOpenBookmarks}
+            onOpenLanguage={onOpenLanguage}
+            className={className}
+        />
     )
 }

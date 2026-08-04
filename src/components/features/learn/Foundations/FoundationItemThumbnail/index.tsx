@@ -5,6 +5,7 @@ import { cn } from "@heroui/react"
 import React, { useMemo } from "react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link FoundationItemThumbnail}. */
 export interface FoundationItemThumbnailProps extends WithClassNames<undefined> {
     /** Foundation-specific cover image URL (full-bleed when set). */
     thumbnailUrl?: string | null

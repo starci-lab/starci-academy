@@ -62,6 +62,7 @@ export const meta = { tier: "composite", name: "StatPair" } as const
 /** `StatPair`'s `valueType` mapped onto the `Typography` atom's own size axis. */
 const VALUE_SIZE: Record<StatPairValueType, "h4" | "h5" | "base"> = { h4: "h4", h5: "h5", body: "base" }
 
+/** A frameless, vertically-stacked count + label statistic for use inside a card or stat row. */
 export const StatPair = ({
     value,
     label,

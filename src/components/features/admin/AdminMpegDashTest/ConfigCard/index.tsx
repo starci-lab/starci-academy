@@ -7,6 +7,7 @@ import { RendererTypeButton } from "./RendererTypeButton"
 import type { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link ConfigCard}. */
 export interface ConfigCardProps extends WithClassNames<undefined> {
     /** Current URL value. */
     url: string

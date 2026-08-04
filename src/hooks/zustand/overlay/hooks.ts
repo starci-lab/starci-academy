@@ -205,17 +205,27 @@ export const useContentAiClearSignal = (): {
  * Highlighted lesson passage the learner wants to ask about — set by the
  * "ask AI about this passage" floating button, read by the chat composer to
  * scope the next question. Cleared after the question is sent or the chat closes.
- * @returns the selected passage and its setter.
+ *
+ * `forceNewThread` is the learner's explicit "New thread" pick on
+ * {@link import("@/components/features/learn/ContentAiSelectionAsk").ContentAiSelectionAsk}
+ * (vs. its default "Ask in this chat") — `ContentAiChat`'s `onSend` consumes it
+ * once (forking a fresh born-archived session) then resets it via `setForceNewThread(false)`.
+ *
+ * @returns the selected passage, its hidden context, the fork choice, and their setters.
  */
 export const useContentAiSelection = (): {
     readonly selection: string | null
     readonly selectionContext: string | null
-    setSelection: (passage: string | null, context?: string | null) => void
+    readonly forceNewThread: boolean
+    setSelection: (passage: string | null, context?: string | null, forceNewThread?: boolean) => void
+    setForceNewThread: (forceNewThread: boolean) => void
 } => {
     const selection = useOverlayStore((state) => state.contentAiSelection)
     const selectionContext = useOverlayStore((state) => state.contentAiSelectionContext)
+    const forceNewThread = useOverlayStore((state) => state.contentAiSelectionForceNewThread)
     const setSelection = useOverlayStore((state) => state.setContentAiSelection)
-    return { selection, selectionContext, setSelection }
+    const setForceNewThread = useOverlayStore((state) => state.setContentAiSelectionForceNewThread)
+    return { selection, selectionContext, forceNewThread, setSelection, setForceNewThread }
 }
 
 /**

@@ -70,6 +70,7 @@ export type ProgressRingProps = ProgressRingOwnProps &
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "ProgressRing" } as const
 
+/** A circular progress indicator with a value label centered inside and an optional caption. */
 export const ProgressRing = ({
     value,
     label,

@@ -294,6 +294,7 @@ interface SurfaceCardBaseOwnProps extends SurfaceLabelProps, SlotProps {
     /** Extra classes on the surface (content) wrapper. */
     contentClassName?: string
 }
+/** Full prop shape of `SurfaceCard`'s base — its own props plus the shared pressable-action props. */
 export type SurfaceCardBaseProps = SurfaceCardBaseOwnProps & PressableActionsProps
 /**
  * The generic `bg-surface` content card of the namespace, with an OPTIONAL section

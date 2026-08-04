@@ -13,6 +13,7 @@ export const ROOT_HANDLE_LEFT = "root-left" as const
 /** Handle id: edges to right-column modules attach here. */
 export const ROOT_HANDLE_RIGHT = "root-right" as const
 
+/** React Flow node data for the `courseRoot` node. */
 export type CourseRootNodeData = {
     /** Course title shown in the card. */
     label: string
@@ -22,6 +23,7 @@ export type CourseRootNodeData = {
     completionPercent?: number
 }
 
+/** React Flow node type for the `courseRoot` node. */
 export type CourseRootFlowNode = Node<CourseRootNodeData, typeof COURSE_ROOT_NODE_TYPE>
 
 /** Diameter / stroke of the completion ring (px). */
@@ -117,3 +119,6 @@ export const CourseRootNode = (props: NodeProps<CourseRootFlowNode>) => {
         </div>
     )
 }
+
+/** Folder-matching handle for the root node — an alias of {@link CourseRootNode}. */
+export const RootNode = CourseRootNode

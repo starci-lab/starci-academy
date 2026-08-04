@@ -66,6 +66,7 @@ export type StatRibbonProps = StatRibbonOwnProps &
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "StatRibbon" } as const
 
+/** A framed row of `StatPair`s in one card, dividing horizontally or wrapping to a mobile grid. */
 export const StatRibbon = ({
     items,
     valueType,

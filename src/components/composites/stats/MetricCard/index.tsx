@@ -88,6 +88,7 @@ export type MetricCardProps = MetricCardOwnProps &
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "MetricCard" } as const
 
+/** A framed card wrapping a single value, label and optional hint, built on `SectionCard`. */
 export const MetricCard = ({
     value,
     label,

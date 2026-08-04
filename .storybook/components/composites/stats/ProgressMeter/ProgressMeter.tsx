@@ -106,7 +106,7 @@ export const ProgressMeter = ({
             items={[
                 () => <Typography size="xs" color="muted" truncate classNames={["min-w-0"]} isSkeleton={isSkeleton} text={label} />,
                 ...(showValue ? [() => (
-                        <Typography size="xs" color="muted" classNames={["shrink-0"]} isSkeleton={isSkeleton} text={<>{percent}%</>} />
+                    <Typography size="xs" color="muted" classNames={["shrink-0"]} isSkeleton={isSkeleton} text={<>{percent}%</>} />
                 )] : []),
             ]}
         />
@@ -125,14 +125,14 @@ export const ProgressMeter = ({
             isSkeleton={isSkeleton}
             items={[
                 () => Leading ? (
-                        <div className="min-w-0">
-                            <Leading isSkeleton={isSkeleton} />
-                        </div>
-                    ) : <span />,
+                    <div className="min-w-0">
+                        <Leading isSkeleton={isSkeleton} />
+                    </div>
+                ) : <span />,
                 ...(Trailing ? [() => (
-                        <div className="shrink-0">
-                            <Trailing isSkeleton={isSkeleton} />
-                        </div>
+                    <div className="shrink-0">
+                        <Trailing isSkeleton={isSkeleton} />
+                    </div>
                 )] : []),
             ]}
         />

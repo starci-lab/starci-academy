@@ -65,6 +65,7 @@ const PALETTE = ["var(--accent)", "var(--success)", "var(--warning)", "var(--dan
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "CourseProgressBar" } as const
 
+/** Renders course progress as equal-width lanes, one per dimension, each filled to its own ratio. */
 export const CourseProgressBar = ({
     dims,
     ariaLabel,

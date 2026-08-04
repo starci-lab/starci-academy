@@ -5,6 +5,7 @@ import { cn } from "@heroui/react"
 import React from "react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link FoundationCategoryThumbnail}. */
 export interface FoundationCategoryThumbnailProps extends WithClassNames<undefined> {
     /**
      * Local square brand logo (e.g. `/foundations/docker.svg`). When set it wins

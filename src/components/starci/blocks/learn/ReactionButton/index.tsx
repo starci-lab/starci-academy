@@ -110,7 +110,7 @@ const ReactionButton = ({
         .slice(0, 3)
         .map((entry) => REACTION_BY_TYPE[entry.type])
 
-    const handlePick = (type: ReactionType) => {
+    const onPick = (type: ReactionType) => {
         setIsOpen(false)
         onReact(myReaction === type ? null : type)
     }
@@ -163,12 +163,14 @@ const ReactionButton = ({
                     Box would leave the real popover surface with its default non-pill radius showing
                     behind it — a visible shape regression). `data-principles` on `Content` directly is
                     type-safe (forwarded through `DOMAttributes`), so tagged in place instead. Needs a
-                    dedicated pill-popover atom/composite to own this shape. */}
+                    dedicated pill-popover atom/composite to own this shape. Same declared shape
+                    as `QaReactionBar.tsx`'s trigger.
+                    inset-exception: pill geometry, the same px-2 py-1 HeroUI ships in chip.css. */}
                 <HeroPopover.Content data-principles="pill-pad" className="overflow-visible rounded-full px-2 py-1">
                     <ReactionPicker
                         items={REACTIONS.map((reaction) => ({ key: reaction.type, imgSrc: `/reactions/${reaction.type}.svg`, label: reaction.label }))}
                         activeKey={myReaction}
-                        onSelect={(key) => handlePick(key as ReactionType)}
+                        onSelect={(key) => onPick(key as ReactionType)}
                     />
                 </HeroPopover.Content>
             </HeroPopover>

@@ -12,6 +12,7 @@ import { SkeletonText } from "@/components/blocks/skeleton/SkeletonText"
 /** Layout variant mirrored from {@link ContentBody} (V2 vs legacy). */
 export type ContentBodySkeletonVariant = "v2" | "legacy"
 
+/** Props for {@link ContentBodySkeleton}. */
 export type ContentBodySkeletonProps = WithClassNames<undefined> & {
     /** `v2` — article only; `legacy` — toolbar + article. */
     variant?: ContentBodySkeletonVariant

@@ -97,6 +97,7 @@ export type ChipBaseProps = ChipBaseOwnProps &
     ChipLeadingProps &
     ({ isSkeleton: true; text?: ReactNode } | { isSkeleton?: false; text: ReactNode })
 
+/** `ChipBase` — the pill atom: tone, dot/leading icon, and skeleton, wrapping HeroUI's `Chip`. */
 export const ChipBase = ({
     tone = "default",
     text,
@@ -200,4 +201,5 @@ export const ChipBase = ({
     )
 }
 
+/** Tier metadata for `Chip` — `index.tsx` also re-exports its own copy. */
 export const meta = { tier: "atom", name: "Chip" } as const

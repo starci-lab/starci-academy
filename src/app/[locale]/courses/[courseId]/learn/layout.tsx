@@ -8,7 +8,6 @@ import { ContentMap } from "@/components/features/learn/ContentMap"
 import { MilestoneOutline } from "@/components/features/learn/MilestoneOutline"
 import { LeaderboardCategoryRail } from "@/components/features/learn/Leaderboard/LeaderboardCategoryRail"
 import { OnThisPage } from "@/components/features/learn/OnThisPage"
-import { ContentAiFab } from "@/components/features/learn/ContentAiFab"
 import { ContentAiSelectionAsk } from "@/components/features/learn/ContentAiSelectionAsk"
 import { EnrollGate } from "@/components/features/learn/shared/EnrollGate"
 import { PersonalProjectGatePreview } from "@/components/features/learn/PersonalProject/PersonalProjectGatePreview"
@@ -212,13 +211,12 @@ const Layout = ({ children }: PropsWithChildren) => {
         <>
             {/* soft prompt: nudge learners with no linked GitHub to connect once per session */}
             <GithubLinkGate />
-            {/* floating "ask StarCi AI" mascot button — available on EVERY learn tab
-                (grounds on the open lesson, or on the whole course when there is none)
-                EXCEPT a live quiz / mock-interview: those grade a recruiter-facing
-                signal, so a course-grounded AI beside them is a cheat channel that
-                inflates the score (assessment-surface-integrity). Chat returns after
-                the session, on the scorecard, for "ôn tag yếu". */}
-            {!isAssessmentLive ? <ContentAiFab /> : null}
+            {/* The floating "ask StarCi AI" mascot button now mounts ONCE, globally,
+                from `InnerLayout` (app-wide chat, reachable outside a course too) —
+                `InnerLayout` applies the same `isAssessmentLive` suppression during a
+                live quiz / mock-interview (a course-grounded AI beside a
+                recruiter-facing signal is a cheat channel). Chat returns after the
+                session, on the scorecard, for "ôn tag yếu". */}
             {/* "ask AI about this passage" button on lesson-article text selection */}
             {!isAssessmentLive ? <ContentAiSelectionAsk /> : null}
             <LearnShell

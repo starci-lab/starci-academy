@@ -28,7 +28,7 @@ export interface MarkdownTableRowElement {
  * @param children - Rendered children of the markdown `thead` element.
  * @returns A flat array of column or cell nodes.
  */
-export function flattenMarkdownTableHeaderChildren(children: React.ReactNode): Array<React.ReactNode> {
+export const flattenMarkdownTableHeaderChildren = (children: React.ReactNode): Array<React.ReactNode> => {
     const flattened: Array<React.ReactNode> = []
 
     const pushRowCells = (rowChildren: React.ReactNode): void => {
@@ -60,7 +60,7 @@ export function flattenMarkdownTableHeaderChildren(children: React.ReactNode): A
  * @param node - The HAST node backing the markdown `tr` element.
  * @returns True when every child cell is a `th` element (i.e. a header row).
  */
-export function isMarkdownHeaderTableRowNode(node: unknown): boolean {
+export const isMarkdownHeaderTableRowNode = (node: unknown): boolean => {
     if (!node || typeof node !== "object") {
         return false
     }

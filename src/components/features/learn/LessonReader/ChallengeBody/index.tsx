@@ -16,8 +16,10 @@ import { useQueryChallengesSwr } from "@/hooks/swr/api/graphql/queries/useQueryC
 import { setChallengePageNumber } from "@/redux/slices/challenge"
 import { useLessonNavigation } from "../hooks/useLessonNavigation"
 
+/** Props for {@link ChallengeBody}. */
 export type ChallengeBodyProps = WithClassNames<undefined>
 
+/** Content tab body listing the lesson's challenges, paginated. */
 export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
     const t = useTranslations()
     const router = useRouter()

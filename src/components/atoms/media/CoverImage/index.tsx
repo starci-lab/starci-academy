@@ -67,4 +67,5 @@ const CoverImageBase = ({
 /** `CoverImage.*` — framed cover/thumbnail image. */
 export { CoverImageBase as CoverImage }
 
+/** Tier metadata for `CoverImage`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "CoverImage" } as const

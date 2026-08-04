@@ -47,19 +47,22 @@ export interface WeeklyGoalItem {
     canClaim: boolean
 }
 
+/** Server-computed composite score across every metric — read straight, never recomputed. */
+export interface WeeklyGoalsComposite {
+    /** Average completion across the six metrics, 0–100. */
+    percent: number
+    /** Number of metrics already met (current >= effective target). */
+    completed: number
+    /** Always 6 — the fixed metric count. */
+    total: number
+}
+
 /** The viewer's weekly-goals snapshot (real shape of `myKpis`). */
 export interface WeeklyGoalsData {
     /** All six metrics, in display order. */
     items: Array<WeeklyGoalItem>
     /** Server-computed composite score across every metric — read straight, never recomputed. */
-    composite: {
-        /** Average completion across the six metrics, 0–100. */
-        percent: number
-        /** Number of metrics already met (current >= effective target). */
-        completed: number
-        /** Always 6 — the fixed metric count. */
-        total: number
-    }
+    composite: WeeklyGoalsComposite
     /** Already-worded countdown to the weekly reset (e.g. "3 days 12 hours left"). Omit while unknown. */
     resetInLabel?: string
 }
@@ -178,7 +181,7 @@ const loadingItems = (defaultTargets: Record<WeeklyGoalKey, number>): Array<Week
 /** Props for the internal {@link Content} tree — reused for both the real render and the loading skeleton. */
 interface ContentProps {
     items: Array<WeeklyGoalItem>
-    composite: WeeklyGoalsData["composite"]
+    composite: WeeklyGoalsComposite
     resetInLabel?: string
     defaultTargets: Record<WeeklyGoalKey, number>
     isSkeleton: boolean

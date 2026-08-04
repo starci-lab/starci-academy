@@ -13,6 +13,7 @@ export type MockInterviewBoxNodeData = {
     label: string
 }
 
+/** React Flow node type for the mock-interview diagram's box node. */
 export type MockInterviewBoxNode = Node<MockInterviewBoxNodeData, typeof MOCK_INTERVIEW_BOX_NODE_TYPE>
 
 /**
@@ -50,7 +51,7 @@ export const BoxNode = ({ id, data, selected }: NodeProps<MockInterviewBoxNode>)
         setIsEditing(false)
     }, [draft, id, data.label, updateNodeData])
 
-    const handleKeyDown = useCallback(
+    const onKeyDown = useCallback(
         (event: React.KeyboardEvent<HTMLInputElement>) => {
             if (event.key === "Enter") {
                 event.preventDefault()
@@ -64,7 +65,7 @@ export const BoxNode = ({ id, data, selected }: NodeProps<MockInterviewBoxNode>)
         [commit, data.label],
     )
 
-    const handleContainerKeyDown = useCallback(
+    const onContainerKeyDown = useCallback(
         (event: React.KeyboardEvent<HTMLDivElement>) => {
             if (!isEditing && (event.key === "Enter" || event.key === " ")) {
                 event.preventDefault()
@@ -75,13 +76,14 @@ export const BoxNode = ({ id, data, selected }: NodeProps<MockInterviewBoxNode>)
     )
 
     return (
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- react-flow node container; double-click/Enter-to-rename is keyboard-reachable via tabIndex + onKeyDown, role is intentionally dropped in edit mode so the inner input owns focus
         <div
             className={cn(
                 "relative flex min-h-[56px] min-w-[140px] items-center justify-center rounded-xl border bg-surface px-4 py-2 text-center shadow-sm transition-colors",
                 selected ? "border-accent ring-2 ring-accent/40" : "border-divider",
             )}
             onDoubleClick={() => setIsEditing(true)}
-            onKeyDown={handleContainerKeyDown}
+            onKeyDown={onContainerKeyDown}
             role={isEditing ? undefined : "button"}
             tabIndex={isEditing ? -1 : 0}
             aria-label={isEditing ? undefined : `${data.label}. Press Enter to rename.`}
@@ -101,7 +103,7 @@ export const BoxNode = ({ id, data, selected }: NodeProps<MockInterviewBoxNode>)
                     className="nodrag w-full bg-transparent text-center text-sm text-foreground outline-none"
                     onBlur={commit}
                     onChange={(event) => setDraft(event.target.value)}
-                    onKeyDown={handleKeyDown}
+                    onKeyDown={onKeyDown}
                     value={draft}
                 />
             ) : (

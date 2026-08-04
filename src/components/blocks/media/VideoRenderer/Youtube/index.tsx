@@ -4,6 +4,7 @@ import React, { useMemo } from "react"
 import { cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link Youtube}. */
 export interface YoutubePlayerProps extends WithClassNames<undefined> {
     /** YouTube video URL (watch, short, embed, youtu.be). */
     url: string
@@ -56,7 +57,7 @@ const toYoutubeEmbedUrl = (raw: string): string | null => {
 /**
  * YouTube embed player — renders an iframe with no custom controls.
  */
-export const YoutubePlayer = ({
+export const Youtube = ({
     url,
     title = "YouTube video",
     className,

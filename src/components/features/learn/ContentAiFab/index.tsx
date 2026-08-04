@@ -9,7 +9,6 @@ import { SparkleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { useAppSelector } from "@/redux/hooks"
 import { useContentAiChatOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useContentAiChatModeStore } from "@/hooks/zustand/contentAiChatMode/store"
 import { FloatingActionButton } from "@/components/blocks/buttons/FloatingActionButton"
@@ -29,12 +28,17 @@ const TOP_GUARD = 80
 export type ContentAiFabProps = WithClassNames<undefined>
 
 /**
- * Floating "ask StarCi AI" button shown anywhere inside a course — the TRIGGER for
- * the chat, whose panel is presented per the learner's persisted choice
+ * Floating "ask StarCi AI" button — the TRIGGER for the app-wide chat, mounted
+ * ONCE by `InnerLayout` so it is reachable from EVERY route, not just a course's
+ * learn surface: with a lesson open it grounds on that lesson, with a course but
+ * no lesson it grounds on the course, and with no course at all (e.g. the
+ * dashboard) it opens a `global`, anchorless conversation — see the scope ladder
+ * in {@link import("@/components/features/learn/ContentAiChat").ContentAiChat}.
+ * The panel is presented per the learner's persisted choice
  * ({@link useContentAiChatModeStore}), switchable in the panel header:
- * - **rail** — a resizable right-edge side panel that reflows the lesson, rendered
- *   as the learn shell's `rightRail` (see the learn `layout`); the FAB here is only
- *   the draggable toggle, hidden while the rail is open (the rail carries its close).
+ * - **rail** — a resizable right-edge side panel that reflows the app column
+ *   (see `InnerLayout`'s split); the FAB here is only the draggable toggle,
+ *   hidden while the rail is open (the rail carries its close).
  * - **drawer** — the slide-in {@link import("@/components/drawers/ContentAiChatDrawer").ContentAiChatDrawer}
  *   (rendered globally); the FAB is its trigger.
  *
@@ -45,9 +49,6 @@ export type ContentAiFabProps = WithClassNames<undefined>
  */
 export const ContentAiFab = ({ className }: ContentAiFabProps) => {
     const t = useTranslations()
-    // the chat is available across the whole COURSE, not just the lesson reader —
-    // with a lesson open it grounds on that lesson, otherwise on the course.
-    const courseId = useAppSelector((state) => state.course.entity?.id)
     const { isOpen, setOpen, open } = useContentAiChatOverlayState()
     const { mode } = useContentAiChatModeStore()
     const { isMobile } = useSmViewpoint()
@@ -115,12 +116,9 @@ export const ContentAiFab = ({ className }: ContentAiFabProps) => {
         setOpen(true)
     }, [setOpen])
 
-    // the FAB needs a COURSE to scope the conversation to (its enrollment owns the
-    // session). A lesson is NOT required: on flashcards / mind-map / leaderboard
-    // the chat opens course-general instead of hiding itself.
-    if (!courseId) {
-        return null
-    }
+    // No course-required gate any more: with no course at all (dashboard,
+    // profile, …) the chat just opens `global`-scoped instead of hiding itself —
+    // see the scope ladder in `ContentAiChat`.
 
     // DRAWER — the panel is the global ContentAiChatDrawer; here just the FAB trigger.
     if (effectiveMode === "drawer") {

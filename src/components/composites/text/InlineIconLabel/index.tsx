@@ -112,6 +112,7 @@ export interface InlineIconLabelProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "InlineIconLabel" } as const
 
+/** Renders a leading icon beside an inline text label as one sized, toned unit. */
 export const InlineIconLabel = ({
     icon: Icon,
     label,

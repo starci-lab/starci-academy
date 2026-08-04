@@ -14,6 +14,7 @@ export interface ReferenceLinkItem {
     alias: string
 }
 
+/** Props for {@link ReferenceLinks}. */
 export interface ReferenceLinksProps extends WithClassNames<undefined> {
     references: Array<ReferenceLinkItem>
     /** i18n key for section title (e.g. reference.title). */

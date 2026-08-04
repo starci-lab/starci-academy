@@ -1,29 +1,18 @@
 "use client"
 
-import { UserIcon } from "@phosphor-icons/react"
 import React, { useCallback } from "react"
-import {
-    Badge,
-    Button,
-    cn,
-} from "@heroui/react"
-import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { useAppSelector } from "@/redux/hooks"
 import { useAccountMenuOverlayState } from "@/hooks/zustand/overlay/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { _AccountTrigger } from "./component"
 
-/**
- * Props for {@link AccountTrigger}.
- */
+/** Props for {@link AccountTrigger}. */
 export type AccountTriggerProps = WithClassNames<undefined>
 
 /**
- * Dropdown trigger button shown in the navbar.
- *
- * Container: reads auth state + user from Redux and opens the account-menu
- * overlay itself. Renders a generic user icon for guests or an avatar badge
- * for authenticated users.
- * `"use client"` for store selectors + press handler.
+ * Dropdown trigger button shown in the navbar — the CONNECTED half: reads
+ * auth state + user from Redux and opens the account-menu overlay itself. See
+ * `design/storybook/architecture/split.md`.
  * @param props - optional root class name
  */
 export const AccountTrigger = ({ className }: AccountTriggerProps) => {
@@ -34,35 +23,14 @@ export const AccountTrigger = ({ className }: AccountTriggerProps) => {
     /** Open the account dropdown. */
     const onOpen = useCallback(() => open(), [open])
 
-    if (!isAuthenticated) {
-        return (
-            <Button
-                onPress={onOpen}
-                isIconOnly
-                className={cn("rounded-full", className)}
-                variant="tertiary"
-            >
-                <UserIcon className="size-5" />
-            </Button>
-        )
-    }
     return (
-        <Button
-            onPress={onOpen}
-            isIconOnly
-            className={cn("rounded-full", className)}
-            variant="tertiary"
-        >
-            <Badge.Anchor>
-                <UserAvatar
-                    size="sm"
-                    className="cursor-pointer"
-                    username={user?.username}
-                    avatar={user?.avatar}
-                    seed={user?.email ?? user?.username}
-                />
-                <Badge size="sm" color="accent">5</Badge>
-            </Badge.Anchor>
-        </Button>
+        <_AccountTrigger
+            isAuthenticated={Boolean(isAuthenticated)}
+            username={user?.username}
+            avatar={user?.avatar}
+            email={user?.email}
+            onOpen={onOpen}
+            className={className}
+        />
     )
 }

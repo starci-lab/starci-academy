@@ -7,6 +7,7 @@ import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import type { CodeExplainingEntity } from "@/modules/types/entities/code-explaining"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link ExplainingCard}. */
 export interface ExplainingCardProps extends WithClassNames<undefined> {
     /** One code explaining row from `content.codeExplainings`. */
     item: CodeExplainingEntity

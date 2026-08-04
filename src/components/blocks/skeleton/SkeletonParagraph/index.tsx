@@ -14,6 +14,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
  */
 const stepWidths = ["w-full", "w-3/4", "w-1/2"] as const
 
+/** Props for {@link SkeletonParagraph}. */
 export interface SkeletonParagraphProps extends WithClassNames<undefined> {
     /** Typography token shared by every line; drives each bar's height. */
     size: SkeletonTextSize

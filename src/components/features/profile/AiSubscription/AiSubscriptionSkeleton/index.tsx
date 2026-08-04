@@ -12,6 +12,7 @@ import {
 } from "../TierGrid/TierCardSkeleton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link AiSubscriptionSkeleton}. */
 export type AiSubscriptionSkeletonProps = WithClassNames<undefined>
 
 /**

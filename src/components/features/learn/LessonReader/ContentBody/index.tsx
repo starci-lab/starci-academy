@@ -4,6 +4,7 @@ import React from "react"
 import { ContentBodyV2 } from "./ContentBodyV2"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link ContentBody}. */
 export type ContentBodyProps = WithClassNames<undefined>
 
 /**

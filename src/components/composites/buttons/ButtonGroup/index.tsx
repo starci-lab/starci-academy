@@ -58,8 +58,10 @@ export interface ButtonGroupProps {
     classNames?: Array<AllowedClassName>
 }
 
+/** Component-tier metadata for `ButtonGroup` — registers it as a composite named `ButtonGroup`. */
 export const meta = { tier: "composite", name: "ButtonGroup" } as const
 
+/** A responsive row of same-size buttons that packs into a cluster below the given breakpoint. */
 export const ButtonGroup = ({
     items,
     size = "md",

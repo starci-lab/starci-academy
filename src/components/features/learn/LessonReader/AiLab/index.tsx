@@ -11,6 +11,7 @@ import { useAppSelector } from "@/redux/hooks"
 import { useQueryAiLabPlaygroundSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiLabPlaygroundSwr"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for the AI Lab tab body. */
 export type AiLabBodyProps = WithClassNames<undefined>
 
 /** Known AI Lab playground kinds (mirrors backend `AiLabPlaygroundKind`). */
@@ -26,7 +27,7 @@ const PLAYGROUND_KIND = {
  * Reads `content` from Redux to scope the playground query.
  * @param props - Optional wrapper styling props.
  */
-export const AiLabBody = ({ className }: AiLabBodyProps) => {
+export const AiLab = ({ className }: AiLabBodyProps) => {
     const content = useAppSelector((state) => state.content.entity)
     const playgroundSwr = useQueryAiLabPlaygroundSwr(content?.id)
     const playground = playgroundSwr.data

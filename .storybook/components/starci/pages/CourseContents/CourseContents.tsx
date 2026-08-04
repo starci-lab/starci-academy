@@ -27,14 +27,12 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `CourseContents` — the `/learn/content` dashboard screen, rendered as a static
- * presentational leaf that mirrors the real `_CourseContents` (src) layout with demo
- * data. Same spine, same tier-correct vocabulary: breadcrumb → header (title +
- * description + catalog meta) → GitHub-team gate → trial conversion strip → continue
- * cluster (eyebrow + resume title + Resume button, one completion meter, the
- * lessons·challenges stat line) → contextual nudges → keep-going path (the current
- * module's lessons as rows). A screen arranges blocks in frames and hands them typed
- * data only.
+ * `CourseContents` — the `/learn/content` dashboard screen, the CANONICAL entry
+ * point for the whole family. The per-device × per-state breakdown (desktop /
+ * tablet / mobile, each empty / unpaid / paid / skeleton) lives one level down in
+ * `Desktop/` · `Tablet/` · `Mobile/`; this leaf is the one every OTHER story in this
+ * catalog links to when it needs to point at "the CourseContents screen" without
+ * committing to one particular device or viewer.
  */
 
 /** Difficulty → chip tone, so the keep-going rows read their level at a glance. */

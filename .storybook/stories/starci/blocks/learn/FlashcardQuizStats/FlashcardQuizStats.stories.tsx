@@ -52,26 +52,26 @@ export const Status: Story = {
             <BlockAnatomy
                 name="FlashcardQuizStats"
                 tier="block"
-                leaf="The async switch"
-                reason="The connected file hands the presentational block a status (`isLoading` / `error` / `isEmpty`) plus the resolved data. The block renders the fixed error → loading → empty → content order through `AsyncContent` — so every state is reachable from props alone, with no live request."
+                leaf="The async state"
+                reason="The connected file hands the block `isSkeleton` + `isEmpty` + `error` + resolved data, in the fixed order error → loading → empty → content. `error` falls to the shared `AsyncContentError` frame, `isEmpty` to `AsyncContentEmpty`, and otherwise `isSkeleton` threads down so the whole tree shimmers in place mirroring the loaded shape (loading-and-skeleton.md)."
                 states={[
                     {
-                        name: "loading",
-                        why: "First load, before any stats resolve. The block shows a skeleton that mirrors the loaded two-zone tree so switching into the tab does not collapse then jump on resolve.",
-                        code: "<_FlashcardQuizStats isLoading courseId=\"…\" labels={…} />",
-                        render: <_FlashcardQuizStats isLoading courseId="demo-course" labels={LABELS} />,
-                    },
-                    {
-                        name: "empty (insufficient data)",
-                        why: "The learner has not completed enough quiz sessions for an honest aggregate, so the block shows an empty state whose action jumps back to the Start tab.",
-                        code: "<_FlashcardQuizStats isEmpty onStartQuiz={fn} courseId=\"…\" labels={…} />",
-                        render: <_FlashcardQuizStats isEmpty onStartQuiz={() => {}} courseId="demo-course" labels={LABELS} />,
+                        name: "skeleton (first load)",
+                        why: "First load, nothing in hand. `isSkeleton` threads down to every leaf so the two-zone tree shimmers in its real shape — nothing collapses or jumps when the data arrives.",
+                        code: "<_FlashcardQuizStats isSkeleton courseId=\"…\" labels={…} />",
+                        render: <_FlashcardQuizStats isSkeleton courseId="demo-course" labels={LABELS} />,
                     },
                     {
                         name: "error",
-                        why: "The stats request failed. Error outranks a stale loading flag, so the block shows a retry message rather than a spinner over old data.",
+                        why: "The stats fetch failed. Error outranks a stale loading flag, so the block shows the shared `AsyncContentError` frame with a retry button rather than a spinner over old data.",
                         code: "<_FlashcardQuizStats error={err} onRetry={fn} courseId=\"…\" labels={…} />",
                         render: <_FlashcardQuizStats error={new Error("failed")} onRetry={() => {}} courseId="demo-course" labels={LABELS} />,
+                    },
+                    {
+                        name: "empty (insufficient data)",
+                        why: "Settled with no honest aggregate — too few completed sessions. The block shows the shared `AsyncContentEmpty` frame whose action jumps back to the Start tab.",
+                        code: "<_FlashcardQuizStats isEmpty onStartQuiz={fn} courseId=\"…\" labels={…} />",
+                        render: <_FlashcardQuizStats isEmpty onStartQuiz={() => {}} courseId="demo-course" labels={LABELS} />,
                     },
                     {
                         name: "content",

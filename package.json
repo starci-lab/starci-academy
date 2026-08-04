@@ -11,15 +11,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test-storybook": "test-storybook --url http://localhost:6006",
-    "flowbook": "vite --config .flowbook/vite.config.ts",
-    "flowbook:build": "vite build --config .flowbook/vite.config.ts",
-    "chromatic": "npx chromatic --exit-zero-on-changes",
-    "check:stories": "node scripts/check-story-coverage.mjs",
-    "check:story-ids": "node scripts/check-story-ids.mjs",
-    "check:doc-parity": "node scripts/check-doc-parity.mjs",
-    "check:skeleton-prop": "node scripts/check-skeleton-prop.mjs",
-    "check:src-sb-import": "node scripts/check-src-sb-import.mjs",
-    "check:pattern-coverage": "node scripts/check-pattern-coverage.mjs"
+    "chromatic": "npx chromatic --exit-zero-on-changes"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": "eslint"

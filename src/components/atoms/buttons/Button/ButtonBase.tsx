@@ -87,6 +87,7 @@ export type ButtonBaseProps = ButtonBaseOwnProps &
         | { isSkeleton?: false; isIconOnly?: false; label: ReactNode; ariaLabel?: string }
     )
 
+/** `ButtonBase` — the trigger atom: label/icon-only/skeleton, wrapping HeroUI's `Button`. */
 export const ButtonBase = ({
     label,
     prefixIcon: PrefixIcon,
@@ -188,4 +189,5 @@ export const ButtonBase = ({
     )
 }
 
+/** Tier metadata for `Button` — `index.tsx` also re-exports its own copy. */
 export const meta = { tier: "atom", name: "Button" } as const

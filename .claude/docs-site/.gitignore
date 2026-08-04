@@ -1,6 +1,0 @@
-# Docusaurus build output + deps — the docs SOURCE is .claude/**, not these.
-/node_modules
-/build
-/.docusaurus
-/.cache-loader
-npm-debug.log*

@@ -9,7 +9,9 @@ export const CONTACT_PHONE_TEL = "+84828678897"
 
 /** Founder social links (static — UserEntity has no facebookUrl). */
 export const FOUNDER_FACEBOOK = "https://www.facebook.com/starci183/"
+/** Founder LinkedIn profile URL. */
 export const FOUNDER_LINKEDIN = "https://www.linkedin.com/in/stacy-nguyen-375b41324/"
+/** Founder GitHub profile URL. */
 export const FOUNDER_GITHUB = "https://github.com/starci183"
 
 /** Contact-form reasons, in display order (wire value === i18n key). */

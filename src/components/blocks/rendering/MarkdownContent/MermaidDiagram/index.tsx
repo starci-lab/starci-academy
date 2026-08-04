@@ -1,14 +1,13 @@
 "use client"
 
-import { MagnifyingGlassPlusIcon } from "@phosphor-icons/react"
-import React, { useId, useState } from "react"
+import React, { useId } from "react"
 import mermaid from "mermaid"
 import useSWR from "swr"
-import { Modal, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { _MermaidDiagram } from "./component"
 
-/** Props for {@link MermaidDiagram}. */
-export interface MermaidDiagramProps extends WithClassNames<undefined> {
+/** Props the connected {@link MermaidDiagram} takes from its caller. */
+export interface MermaidDiagramConnectedProps extends WithClassNames<undefined> {
     /** Mermaid source string. */
     code: string
     /** Mermaid theme key resolved from the app theme. */
@@ -24,20 +23,15 @@ export interface MermaidDiagramProps extends WithClassNames<undefined> {
 }
 
 /**
- * Renders mermaid code blocks to SVG, cached per theme + source via SWR.
- *
- * Presentational: uses only UI-local hooks (`useId`, `useState`) plus SWR's local cache to
- * render the diagram and toggle a full-screen preview; no business logic. Marked
- * `"use client"` for the browser-side mermaid renderer.
- * @param props - {@link MermaidDiagramProps}
+ * Renders mermaid code blocks to SVG, cached per theme + source via SWR — the
+ * CONNECTED half: owns the (browser-only) `mermaid.render()` call, keyed by
+ * theme + source so it's computed once per diagram and cached across
+ * re-renders. See `design/storybook/architecture/split.md`.
+ * @param props - {@link MermaidDiagramConnectedProps}
  */
-export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption, fallbackLabel, className }: MermaidDiagramProps) => {
+export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption, fallbackLabel, className }: MermaidDiagramConnectedProps) => {
     // Stable id so concurrent diagrams never collide on mermaid's render target id.
     const renderId = useId().replace(/:/g, "-")
-    // Local open flag for the full-screen preview dialog (per-diagram, not a global modal).
-    const [isOpen, setOpen] = useState(false)
-    // Authored caption wins; otherwise show a generic figure label.
-    const figureCaption = caption ?? fallbackLabel
     const { data } = useSWR(
         `mermaid:${theme}:${code}`,
         async () => {
@@ -56,65 +50,13 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
     )
 
     return (
-        <figure className={cn("rounded-xl border border-default bg-background p-3", className)}>
-            {data ? (
-                <>
-                    {/* Clickable inline diagram — opens the full-screen preview on press. */}
-                    <button
-                        type="button"
-                        aria-label={expandLabel}
-                        title={expandLabel}
-                        onClick={() => setOpen(true)}
-                        className="group relative block w-full cursor-zoom-in"
-                    >
-                        {/* mermaid stamps an inline `style="max-width:Npx"` on the <svg> that
-                            outranks our `max-w-full` class, so a wide diagram would otherwise push
-                            the reading column past the viewport (the page stops shrinking). Wrap it
-                            in an x-scroll box: it scales to fit when it can, and scrolls inside the
-                            figure when it can't — never blocking the layout. */}
-                        <div
-                            className="overflow-x-auto [&_svg]:h-auto [&_svg]:!w-auto [&_svg]:!max-w-none"
-                            dangerouslySetInnerHTML={{ __html: data }}
-                        />
-                        {/* Hover affordance hinting the diagram can be enlarged. */}
-                        <span className="pointer-events-none absolute right-2 top-2 rounded-medium bg-default/60 p-2 text-muted opacity-0 transition-opacity group-hover:opacity-100">
-                            <MagnifyingGlassPlusIcon className="size-5" />
-                        </span>
-                    </button>
-                    {/* Authored caption ("Figure N: …") as a real figcaption — the source paragraph
-                        is stripped upstream so it isn't shown twice. Generic fallback stays modal-only. */}
-                    {caption ? (
-                        <figcaption className="mt-2 text-center text-sm italic text-muted">
-                            {caption}
-                        </figcaption>
-                    ) : null}
-                    <Modal isOpen={isOpen} onOpenChange={setOpen}>
-                        <Modal.Backdrop>
-                            <Modal.Container size="full">
-                                <Modal.Dialog>
-                                    <Modal.CloseTrigger />
-                                    <Modal.Body data-principles="card-padding" className="p-4">
-                                        {/* Full-screen figure: diagram scaled to fill, caption beneath. */}
-                                        <figure className="flex h-full flex-col items-center justify-center gap-2">
-                                            <div className="flex w-full flex-1 items-center justify-center overflow-auto">
-                                                <div
-                                                    className="[&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full"
-                                                    dangerouslySetInnerHTML={{ __html: data }}
-                                                />
-                                            </div>
-                                            <figcaption className="text-center text-sm italic text-muted">
-                                                {figureCaption}
-                                            </figcaption>
-                                        </figure>
-                                    </Modal.Body>
-                                </Modal.Dialog>
-                            </Modal.Container>
-                        </Modal.Backdrop>
-                    </Modal>
-                </>
-            ) : (
-                <div className="text-sm text-muted">{loadingLabel}</div>
-            )}
-        </figure>
+        <_MermaidDiagram
+            svg={data ?? null}
+            loadingLabel={loadingLabel}
+            expandLabel={expandLabel}
+            caption={caption}
+            fallbackLabel={fallbackLabel}
+            className={className}
+        />
     )
 }

@@ -13,6 +13,7 @@ import { JobStatus } from "@/modules/types/enums/job-status"
 import { WithClassNames } from "@/modules/types/base/class-name"
 import { resolveAiProcessingCopy } from "@/components/utils/ai"
 
+/** Props for {@link AIProcessingText}. */
 export interface AIProcessingTextProps extends WithClassNames<{
     innerPanel?: string
     icon?: string

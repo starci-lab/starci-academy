@@ -37,7 +37,7 @@ import {
     SandboxBody,
 } from "./SandboxBody"
 import {
-    AiLabBody,
+    AiLab,
 } from "./AiLab"
 import {
     E2eResultButton,
@@ -85,6 +85,7 @@ import { ContentTab, setContentTab } from "@/redux/slices/tabs"
 import { UpNextCard } from "@/components/blocks/learn/UpNextCard"
 import { setContentSelectedProgrammingLang } from "@/redux/slices/content"
 
+/** Props for {@link LessonReader}. */
 export type LessonReaderProps = WithClassNames<undefined>
 
 /**
@@ -187,7 +188,7 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                 items.push({
                     key: ContentTab.AILab,
                     label: t("aiLab.tabs.aiLab"),
-                    component: <AiLabBody />,
+                    component: <AiLab />,
                 })
             }
             return items

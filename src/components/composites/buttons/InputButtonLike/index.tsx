@@ -85,6 +85,7 @@ export interface InputButtonLikeProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "InputButtonLike" } as const
 
+/** A press-only button styled as a native field, used to trigger overlays like a command palette. */
 export const InputButtonLike = ({
     placeholder,
     icon: Icon,

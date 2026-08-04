@@ -20,6 +20,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
  * Phosphor's `Icon` type, so this atom isn't locked to one icon library.
  */
 export type IconWeight = "regular" | "bold"
+/** Icon passed as a component reference, rendered by `ImageDropzone` at its own size. */
 export type IconComponent = ComponentType<SVGProps<SVGSVGElement> & { weight?: IconWeight }>
 
 /** Max image size in bytes (5 MB — mirrors the BE avatar limit). */
@@ -171,4 +172,5 @@ const ImageDropzoneBase = ({
 /** `ImageDropzone.*` — single-image dropzone namespace. */
 export { ImageDropzoneBase as ImageDropzone }
 
+/** Tier metadata for `ImageDropzone`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "ImageDropzone" } as const

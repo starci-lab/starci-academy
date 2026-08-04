@@ -1,57 +1,39 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { CheckCircleIcon, SparkleIcon, XCircleIcon } from "@phosphor-icons/react"
-import { AiCategoryChip } from "@/components/blocks/chips/AiCategoryChip"
 import type { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
+import { VerdictIcon, _ModelByline } from "./component"
 
-/**
- * Pass/fail verdict glyph (green check / red x). Shared by the result selector
- * chips, the drawer trigger, the verdict chip, and the history rows.
- *
- * @param props - whether the attempt passed + an optional className override.
- */
-export const VerdictIcon = ({ pass, className }: { pass: boolean, className?: string }) =>
-    pass ? (
-        <CheckCircleIcon aria-hidden focusable="false" className={cn("size-4 shrink-0 text-success-soft-foreground", className)} />
-    ) : (
-        <XCircleIcon aria-hidden focusable="false" className={cn("size-4 shrink-0 text-danger-soft-foreground", className)} />
-    )
+export { VerdictIcon }
 
-/**
- * Grading-model attribution: an accent sparkle + plain "graded by `<model>`" text,
- * followed by the model's tier chip. The model name is PLAIN TEXT (not a chip, not
- * mono) so it never sits chip-beside-chip with the tier chip — the rule is "text,
- * then a chip beside it". Renders nothing when the served model wasn't recorded.
- *
- * @param props - the served model id, its resolved tier category, and whether to
- *   prefix with the "graded by" label (the result card does; the drawer rows don't).
- */
-export const ModelByline = ({
-    model,
-    category,
-    withLabel = false,
-}: {
+/** Props the connected {@link ModelByline} takes from its caller. */
+export interface ModelBylineConnectedProps {
+    /** The served model id. `null` → renders nothing (model not recorded). */
     model: string | null
+    /** The model's resolved tier category. */
     category?: AiModelCategory
+    /** Whether to prefix with the "graded by" label (the result card does; the drawer rows don't). */
     withLabel?: boolean
-}) => {
+}
+
+/**
+ * Grading-model attribution — the CONNECTED half: resolves the "graded by "
+ * prefix via `t()` when {@link ModelBylineConnectedProps.withLabel} is set.
+ * See `design/storybook/architecture/split.md`.
+ *
+ * @param props - {@link ModelBylineConnectedProps}
+ */
+export const ModelByline = ({ model, category, withLabel = false }: ModelBylineConnectedProps) => {
     const t = useTranslations()
-    if (!model) {
-        return null
-    }
     return (
-        <>
-            <span className="flex items-center gap-2 text-sm text-muted">
-                <SparkleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-accent-soft-foreground" />
-                <span>
-                    {withLabel ? `${t("submissionResult.gradedBy")} ` : null}
-                    <span className="text-foreground">{model}</span>
-                </span>
-            </span>
-            {category ? <AiCategoryChip category={category} /> : null}
-        </>
+        <_ModelByline
+            model={model}
+            category={category}
+            gradedByPrefix={withLabel ? `${t("submissionResult.gradedBy")} ` : undefined}
+        />
     )
 }
+
+/** Folder-matching handle for the grading-byline block — an alias of {@link ModelByline}. */
+export const GradingByline = ModelByline

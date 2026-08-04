@@ -8,6 +8,7 @@ import { VideoRenderer } from "@/components/blocks/media/VideoRenderer"
 import type { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link PreviewCard}. */
 export interface PreviewCardProps extends WithClassNames<undefined> {
     /** URL to preview. */
     url: string

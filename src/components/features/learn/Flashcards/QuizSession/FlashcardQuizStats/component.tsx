@@ -1,6 +1,6 @@
 import React from "react"
 import { ArrowRightIcon, ChartLineUpIcon } from "@phosphor-icons/react"
-import { AsyncContent } from "@/components/composites/async/AsyncContent"
+import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { SurfaceCard, SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { Section } from "@/components/composites/layout/Section"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
@@ -17,6 +17,9 @@ export const COVERAGE_TARGET = 80
 /** Chip/meter severity BY coverage value (0..100). */
 const coverageTone = (percent: number): "success" | "warning" | "danger" =>
     percent < 50 ? "danger" : percent < 70 ? "warning" : "success"
+
+/** How many placeholder rows the co-located skeleton shows for zone 2. */
+const SKELETON_ROW_COUNT = 4
 
 /** One attempted tag with its coverage fraction (0..1) — the block turns it into a %. */
 export interface FlashcardQuizStatsTag {
@@ -48,12 +51,14 @@ export interface FlashcardQuizStatsLabels {
 
 /** Props for {@link _FlashcardQuizStats} — presentational; all data resolved, no fetch/store/i18n. */
 export interface FlashcardQuizStatsProps {
-    /** Async status, owned by the connected file. */
-    isLoading?: boolean
-    error?: unknown
-    onRetry?: () => void
-    /** `true` → no stats / insufficient data → the empty state. */
+    /** First load, nothing in hand → the whole tree shimmers in place (co-located). Owned by the connected file. */
+    isSkeleton?: boolean
+    /** Settled with no honest aggregate (insufficient data / no stats) → the empty message. */
     isEmpty?: boolean
+    /** Truthy → the error message (beats loading + empty). The connected file passes its settled fetch error. */
+    error?: unknown
+    /** Retry handler — paired with `labels.retry` to show a retry button on the error branch. */
+    onRetry?: () => void
     /** Coverage % vs the target; `null` on a course with zero tag data → zone 1 skipped. */
     coveragePercent?: number | null
     /** Attempted topics that were never covered — one honest aggregate row. */
@@ -70,18 +75,19 @@ export interface FlashcardQuizStatsProps {
 
 /**
  * "Quick quiz" aggregate stats — the presentational half of {@link FlashcardQuizStats}, composed on the
- * tier-correct storybook vocabulary (`Section` / `SurfaceCard` / `SurfaceCardList` / `ProgressMeter` /
- * `ScoreValue`). ZONE 1 judges COVERAGE against a target; ZONE 2 ranks every attempted tag worst-first
- * plus one honest aggregate row for topics never attempted; ZONE 3 is the passive RAG study block.
- * See `design/storybook/architecture/split.md` — the connected `index.tsx` owns the fetch and i18n.
+ * tier-correct vocabulary (`Section` / `SurfaceCard` / `SurfaceCardList` / `ProgressMeter` / `ScoreValue`).
+ * Four states in the fixed order error → loading → empty → content: `error` falls to the shared
+ * `AsyncContentError` frame, `isEmpty` to `AsyncContentEmpty`, and otherwise the two-zone tree renders
+ * with `isSkeleton` threaded to every leaf so the shimmer mirrors the loaded shape (loading-and-skeleton.md).
+ * See `tiers/split.md` — the connected `index.tsx` owns the fetch and i18n.
  *
  * @param props - {@link FlashcardQuizStatsProps}
  */
 export const _FlashcardQuizStats = ({
-    isLoading = false,
+    isSkeleton = false,
+    isEmpty = false,
     error,
     onRetry,
-    isEmpty = false,
     coveragePercent = null,
     untouchedTopicCount = 0,
     tags = [],
@@ -90,77 +96,89 @@ export const _FlashcardQuizStats = ({
     onStartQuiz,
     labels,
 }: FlashcardQuizStatsProps) => {
-    // ZONE 2 rows — each attempted tag worst-first, then one honest aggregate row for the never-tried topics.
-    const gapRows: Array<SurfaceCardListItem> = [
-        ...tags.map((tagStat, index) => {
-            const percent = Math.round(tagStat.coverage * 100)
-            return {
-                key: tagStat.tag,
-                title: tagStat.tag,
-                // only flag the single worst tag — the ranked chips already speak for the rest
-                subtitle: index === 0 && percent < 70 ? labels.topicOftenWrong : undefined,
-                meta: () => <Chip tone={coverageTone(percent)} text={`${percent}%`} />,
-            }
-        }),
-        ...(untouchedTopicCount > 0
-            ? [{
-                key: "__never-tried",
-                title: labels.topicNeverTried,
-                meta: () => <Chip text={`${untouchedTopicCount} ${labels.topicEmptyChip}`} />,
-            }]
-            : []),
-    ]
+    // error → skeleton → empty → content (BLOCK-8): error beats a stale loading flag; the empty and
+    // error surfaces are the shared `AsyncContent*` frames, not hand-written JSX (loading-and-skeleton.md §6).
+    if (error) {
+        return <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retry} />
+    }
+    if (!isSkeleton && isEmpty) {
+        return (
+            <AsyncContentEmpty
+                icon={ChartLineUpIcon}
+                title={labels.emptyTitle}
+                description={labels.emptyDescription}
+                action={onStartQuiz ? () => (
+                    <Button label={labels.emptyAction} variant="secondary" size="sm" onPress={onStartQuiz} />
+                ) : undefined}
+            />
+        )
+    }
 
-    const loaded = (
+    // ZONE 2 rows — while shimmering, placeholder rows keep the SAME `SurfaceCardList` shape; otherwise
+    // every attempted tag worst-first, then one honest aggregate row for the never-tried topics.
+    const gapRows: Array<SurfaceCardListItem> = isSkeleton
+        ? Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
+            key: `pending-${index}`,
+            title: "Topic",
+            meta: () => <Chip isSkeleton />,
+        }))
+        : [
+            ...tags.map((tagStat, index) => {
+                const percent = Math.round(tagStat.coverage * 100)
+                return {
+                    key: tagStat.tag,
+                    title: tagStat.tag,
+                    // only flag the single worst tag — the ranked chips already speak for the rest
+                    subtitle: index === 0 && percent < 70 ? labels.topicOftenWrong : undefined,
+                    meta: () => <Chip tone={coverageTone(percent)} text={`${percent}%`} />,
+                }
+            }),
+            ...(untouchedTopicCount > 0
+                ? [{
+                    key: "__never-tried",
+                    title: labels.topicNeverTried,
+                    meta: () => <Chip text={`${untouchedTopicCount} ${labels.topicEmptyChip}`} />,
+                }]
+                : []),
+        ]
+
+    // Zones render while shimmering too (placeholder values) so the skeleton mirrors the loaded shape.
+    const showCoverage = isSkeleton || coveragePercent !== null
+    const showGap = isSkeleton || gapRows.length > 0
+
+    return (
         <StackV gap={6} items={[
-            /* ZONE 1 — HERO "Coverage vs target": coverage judged against COVERAGE_TARGET (not a
-                bare %). Null only on a course with zero tag data — nothing honest to judge, so the
-                zone is skipped rather than faking a verdict. */
-            ...(coveragePercent !== null ? [() => (
-                <Section header={{ title: labels.coverageZone, level: 3 }} body={() => (
-                    <SurfaceCard
-                        body={() => (
-                            <StackV gap={3} items={[
-                                () => <ScoreValue points={coveragePercent} unit="%" />,
-                                () => <Typography text={labels.coverageVerdict} />,
-                                () => <Typography size="sm" color="muted" text={labels.coverageSub} />,
-                                () => (
-                                    <ProgressMeter
-                                        value={coveragePercent}
-                                        max={100}
-                                        target={COVERAGE_TARGET}
-                                        color={coverageTone(coveragePercent)}
-                                    />
-                                ),
-                                ...(untouchedTopicCount > 0 && onStartQuiz ? [() => (
-                                    <Button
-                                        label={labels.coverageDrillCta}
-                                        variant="primary"
-                                        size="sm"
-                                        suffixIcon={ArrowRightIcon}
-                                        onPress={onStartQuiz}
-                                    />
-                                )] : []),
-                            ]} />
-                        )}
-                    />
+            // ZONE 1 — HERO "Coverage vs target": coverage judged against COVERAGE_TARGET (not a bare %).
+            ...(showCoverage ? [() => (
+                <Section header={{ title: labels.coverageZone, level: 3 }} isSkeleton={isSkeleton} body={() => (
+                    <SurfaceCard isSkeleton={isSkeleton} body={() => (
+                        <StackV gap={3} items={[
+                            () => <ScoreValue points={coveragePercent ?? 0} unit="%" isSkeleton={isSkeleton} />,
+                            () => <Typography text={labels.coverageVerdict} isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-3/4"] : undefined} />,
+                            () => <Typography size="sm" color="muted" text={labels.coverageSub} isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/2"] : undefined} />,
+                            () => (isSkeleton
+                                ? <ProgressMeter isSkeleton />
+                                : <ProgressMeter value={coveragePercent ?? 0} max={100} target={COVERAGE_TARGET} color={coverageTone(coveragePercent ?? 0)} />),
+                            ...(!isSkeleton && untouchedTopicCount > 0 && onStartQuiz ? [() => (
+                                <Button label={labels.coverageDrillCta} variant="primary" size="sm" suffixIcon={ArrowRightIcon} onPress={onStartQuiz} />
+                            )] : []),
+                        ]} />
+                    )} />
                 )} />
             )] : []),
 
-            /* ZONE 2 — "Weak topics": every attempted tag ranked worst-first, plus ONE honest
-                aggregate row for topics never attempted — no per-topic name exists for those
-                server-side, so the row states the real count instead of inventing identities. */
-            ...(gapRows.length > 0 ? [() => (
-                <Section header={{ title: labels.gapZone, level: 3 }} body={() => (
-                    <SurfaceCardList variant="nested" items={gapRows} />
+            // ZONE 2 — "Weak topics": attempted tags ranked worst-first + one honest never-tried row.
+            ...(showGap ? [() => (
+                <Section header={{ title: labels.gapZone, level: 3 }} isSkeleton={isSkeleton} body={() => (
+                    <SurfaceCardList variant="nested" isSkeleton={isSkeleton} items={gapRows} />
                 )} />
             )] : []),
 
-            /* ZONE 3 — passive RAG "Study suggestions": weakest-coverage tags → course-wide content
-                search (self-hiding when empty / no match). Waits on the slug for deep links, so a
-                story that omits `displayId` renders backend-free. RelatedContentList is a real block
-                (self-fetching) — a presentational component may render a connected child (split.md). */
-            ...(displayId ? [() => (
+            // ZONE 3 — passive RAG "Study suggestions": weakest-coverage tags → course-wide content search.
+            // Waits on the slug for deep links, so a story that omits `displayId` renders backend-free.
+            // RelatedContentList is a real block (self-fetching) — a presentational component may render a
+            // connected child (split.md). Hidden while shimmering (it fetches its own state).
+            ...(!isSkeleton && displayId ? [() => (
                 <RelatedContentList
                     courseId={courseId}
                     courseDisplayId={displayId}
@@ -169,57 +187,5 @@ export const _FlashcardQuizStats = ({
                 />
             )] : []),
         ]} />
-    )
-
-    const skeleton = (
-        <StackV gap={6} items={[
-            () => (
-                <Section header={{ title: labels.coverageZone, level: 3 }} body={() => (
-                    <SurfaceCard
-                        body={() => (
-                            <StackV gap={3} items={[
-                                () => <ScoreValue points={0} unit="%" isSkeleton />,
-                                () => <Typography size="sm" isSkeleton classNames={["w-3/4"]} />,
-                                () => <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} />,
-                            ]} />
-                        )}
-                    />
-                )} />
-            ),
-            () => (
-                <Section header={{ title: labels.gapZone, level: 3 }} body={() => (
-                    <SurfaceCardList
-                        variant="nested"
-                        isSkeleton
-                        items={Array.from({ length: 4 }, (_unused, index) => ({
-                            key: `skeleton-${index}`,
-                            title: "Topic",
-                            meta: () => <Chip isSkeleton />,
-                        }))}
-                    />
-                )} />
-            ),
-        ]} />
-    )
-
-    return (
-        <div data-principles="FlashcardQuizStats">
-            <AsyncContent
-                isLoading={isLoading}
-                skeleton={() => skeleton}
-                error={error}
-                errorContent={{ title: labels.errorTitle, onRetry: () => { onRetry?.() }, retryLabel: labels.retry }}
-                isEmpty={isEmpty}
-                emptyContent={{
-                    icon: ChartLineUpIcon,
-                    title: labels.emptyTitle,
-                    description: labels.emptyDescription,
-                    action: onStartQuiz ? () => (
-                        <Button label={labels.emptyAction} variant="secondary" size="sm" onPress={onStartQuiz} />
-                    ) : undefined,
-                }}
-                content={() => loaded}
-            />
-        </div>
     )
 }

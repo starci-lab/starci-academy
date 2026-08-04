@@ -212,6 +212,10 @@ const Meter = ({
  */
 export { ProgressBar, ProgressCircle, Meter as ProgressGauge }
 
+/** `Progress.*` namespace — folder-matching handle grouping the progress-indicator atom members. */
+export const Progress = { Bar: ProgressBar, Circle: ProgressCircle, Gauge: Meter }
+
+/** Tier metadata for each `Progress.*` member, used by the component registry/Storybook lookup. */
 export const meta = [
     { tier: "atom", name: "ProgressBar" },
     { tier: "atom", name: "ProgressCircle" },

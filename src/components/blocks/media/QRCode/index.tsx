@@ -2,12 +2,14 @@ import React from "react"
 import { cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link QRCode}. */
 export interface QRCodeProps extends WithClassNames<undefined> {
     size: number
     data: string
     icon?: React.ReactNode
 }
 
+/** Renders a QR code image for `data`, with an optional overlay icon in the center. */
 export const QRCode = ({ size, data, icon, className }: QRCodeProps) => {
     const src = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(data)}`
     return (

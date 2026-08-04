@@ -51,6 +51,7 @@ const CTA_META: Record<ChallengeProgressStatus, { labelKey: string; icon: Icon }
     completed: { labelKey: "challenge.cta.review", icon: EyeIcon },
 }
 
+/** Props for {@link ChallengeCard}. */
 export interface ChallengeCardProps extends WithClassNames<undefined> {
     /** Challenge row displayed in content tab. */
     challenge: ChallengeEntity

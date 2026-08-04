@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { setFoundation, setFoundationCategory, setFoundationCategoryId, setFoundationId, setFoundations } from "@/redux/slices/foundation"
 import { SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 
+/** Props for {@link FoundationCategoryCard}. */
 export interface FoundationCategoryCardProps extends WithClassNames<undefined> {
     /** Foundation category from API. */
     category: FoundationCategoryEntity

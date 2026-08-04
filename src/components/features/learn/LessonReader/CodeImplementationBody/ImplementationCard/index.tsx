@@ -7,6 +7,7 @@ import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import type { CodeImplementationEntity } from "@/modules/types/entities/code-implementation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link ImplementationCard}. */
 export interface ImplementationCardProps extends WithClassNames<undefined> {
     /** One implementation guide row from `content.codeImplementations`. */
     item: CodeImplementationEntity

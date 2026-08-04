@@ -126,4 +126,5 @@ const DividerBase = ({
  */
 export { DividerBase as Divider }
 
+/** Tier metadata for `Divider`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Divider" } as const

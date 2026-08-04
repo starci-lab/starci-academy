@@ -65,6 +65,7 @@ export type AvatarColor = "accent" | "danger" | "default" | "success" | "warning
  */
 export type AvatarFallback = "generated" | "initials" | "icon"
 
+/** Background colour utility for each avatar status dot. */
 export const STATUS_TONE: Record<AvatarStatus, string> = {
     online: "bg-success",
     offline: "bg-default-400",
@@ -96,6 +97,7 @@ export interface AvatarSizeStyle {
     glyphWeight?: IconWeight
 }
 
+/** Per-size chrome (box, status-dot, fallback glyph) that `AvatarSize` resolves to. */
 export const SIZE_MAP: Record<AvatarSize, AvatarSizeStyle> = {
     sm: { box: "size-8", dot: "size-2", glyph: "size-4", glyphWeight: "bold" },
     md: { box: "size-10", dot: "size-2.5", glyph: "size-5" },
@@ -256,4 +258,5 @@ export const AvatarBase = ({
     )
 }
 
+/** Tier metadata for `Avatar` — `index.tsx` also re-exports its own copy. */
 export const meta = { tier: "atom", name: "Avatar" } as const

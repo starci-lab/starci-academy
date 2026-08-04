@@ -25,6 +25,7 @@ import { type WithClassNames } from "@/modules/types/base/class-name"
 import { useQueryContentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentStatusSwr"
 import { useQueryContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentSwr"
 
+/** Props for {@link ContentBodyV2}. */
 export type ContentBodyV2Props = WithClassNames<undefined>
 
 /**

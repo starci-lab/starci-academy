@@ -51,4 +51,5 @@ const SpinnerBase = ({
 
 export { SpinnerBase as Spinner }
 
+/** Tier metadata for `Spinner`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Spinner" } as const

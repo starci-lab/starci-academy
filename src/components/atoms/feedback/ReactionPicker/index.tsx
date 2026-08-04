@@ -81,4 +81,5 @@ const ReactionPicker = ({ items, activeKey = null, onSelect, classNames }: React
 
 export { ReactionPicker }
 
+/** Tier metadata for `ReactionPicker`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "ReactionPicker" } as const

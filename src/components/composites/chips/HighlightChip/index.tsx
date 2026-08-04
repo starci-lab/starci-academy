@@ -58,6 +58,7 @@ export type HighlightChipProps = HighlightChipOwnProps &
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "HighlightChip" } as const
 
+/** A soft-tinted pill pairing a bold `value` with a `label`, e.g. "24 Modules". */
 export const HighlightChip = ({ tone = "default", icon, value, label, isSkeleton = false, classNames }: HighlightChipProps) => (
     // Wrapping span exists only to carry the composite's own position (`classNames`)
     // and its tier tags — `Chip` (the house atom) is the one real element rendered,

@@ -196,4 +196,5 @@ const SearchAutocompleteBase = ({
 /** `SearchAutocomplete.*` — suggest-as-you-type search field on HeroUI `ComboBox`. */
 export { SearchAutocompleteBase as SearchAutocomplete }
 
+/** Tier metadata for `SearchAutocomplete`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "SearchAutocomplete" } as const

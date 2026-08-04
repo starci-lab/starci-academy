@@ -12,6 +12,7 @@ import { SkeletonParagraph } from "@/components/blocks/skeleton/SkeletonParagrap
 import { SkeletonText } from "@/components/blocks/skeleton/SkeletonText"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link FreeTierCardSkeleton}. */
 export type FreeTierCardSkeletonProps = WithClassNames<undefined>
 
 /**

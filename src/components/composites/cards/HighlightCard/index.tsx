@@ -35,6 +35,7 @@ export interface HighlightCardProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "HighlightCard" } as const
 
+/** Wraps a card body with a decorative accent-arc sweep sitting behind it. */
 export const HighlightCard = ({ body, isSkeleton = false, classNames}: HighlightCardProps) => (
     <div
         className={cn("relative", classNames)}

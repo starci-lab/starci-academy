@@ -61,6 +61,7 @@ export type MetaDotRowProps = MetaDotRowOwnProps &
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "MetaDotRow" } as const
 
+/** A wrapping row of muted text fragments joined by a `·` divider mark. */
 export const MetaDotRow = ({
     items,
     isSkeleton = false,

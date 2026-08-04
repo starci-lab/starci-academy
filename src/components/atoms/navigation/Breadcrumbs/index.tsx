@@ -206,4 +206,5 @@ const BreadcrumbsBase = ({
  */
 export { BreadcrumbsBase as Breadcrumbs }
 
+/** Tier metadata for `Breadcrumbs`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Breadcrumbs" } as const

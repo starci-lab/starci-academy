@@ -117,4 +117,5 @@ const BadgeBase = ({
  */
 export { BadgeBase as Badge }
 
+/** Tier metadata for `Badge`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Badge" } as const

@@ -4,17 +4,5 @@ npx lint-staged
 # type sai bi bat truoc CI. Bao gom type-guard PrincipleToken (token principles bia = do).
 npx tsc --noEmit
 
-# ── source gates (nhanh, PHAI xanh — pre-commit do = dan quen --no-verify, vo hieu MOI cong) ──
-node scripts/check-doc-parity.mjs
-node scripts/check-skeleton-prop.mjs
-node scripts/check-src-sb-import.mjs
-node scripts/check-pattern-coverage.mjs
-node scripts/check-one-instance-per-state.mjs
-node scripts/check-no-namespace.mjs
-node scripts/check-orphan-parts.mjs
-node scripts/check-deps-coverage.mjs
-node scripts/check-member-as-state.mjs
-node scripts/check-passthrough-block.mjs
-
-# check-story-ids / -padding / -seams / -inline-types / -story-coverage: CHUA xanh (debt cu),
-# chay o CI (continue-on-error, tracking) toi khi fix xong roi moi keo ve day.
+# design gates removed from FE: they duplicated the backend canon SSOT (.claude/scripts/gates).
+# pre-commit keeps only lint-staged (eslint) + tsc; run the canon gates from the backend repo.

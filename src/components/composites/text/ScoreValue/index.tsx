@@ -47,6 +47,7 @@ export interface ScoreValueProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "ScoreValue" } as const
 
+/** Renders a "N points"-style score as accent, tabular-nums text. */
 export const ScoreValue = ({ points, unit = "points", isSkeleton = false}: ScoreValueProps) => (
     <Typography
         size="xs"

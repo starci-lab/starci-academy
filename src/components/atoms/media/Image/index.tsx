@@ -128,4 +128,5 @@ const ImageBase = ({
  */
 export { ImageBase as Image }
 
+/** Tier metadata for `Image`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Image" } as const

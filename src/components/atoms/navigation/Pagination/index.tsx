@@ -121,7 +121,7 @@ const PaginationBase = ({
                         slot === "ellipsis" ? (
                             <HeroPagination.Item key={`ellipsis-${index}`}>
                                 <HeroPagination.Ellipsis
-                            />
+                                />
                             </HeroPagination.Item>
                         ) : (
                             <PaginationLink
@@ -182,4 +182,5 @@ const PaginationLink = ({ pageNumber, isActive, onPageChange }: PaginationLinkPr
  */
 export { PaginationBase as Pagination }
 
+/** Tier metadata for `Pagination`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Pagination" } as const

@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 import { Button } from "@heroui/react"
-import { SparkleIcon } from "@phosphor-icons/react"
+import { ChatCircleIcon, SparkleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import {
     useContentAiChatOverlayState,
@@ -173,17 +173,20 @@ export const ContentAiSelectionAsk = () => {
         }
     }, [onSettle])
 
-    const onAsk = useCallback(() => {
+    /**
+     * Stash the passage + the learner's choice, then open the chat.
+     * `forceNewThread=false` ("Ask in this chat", the default/primary action) —
+     * `ContentAiChat` appends the quoted question into whichever conversation is
+     * already active (or starts a plain new one if none is). `forceNewThread=true`
+     * ("New thread") always forks a fresh born-archived side-conversation, even
+     * over an already-active one — the app-wide chat's escape hatch for "this is
+     * a quick tangent, don't drop it into my real conversation".
+     */
+    const onAsk = useCallback((forceNewThread: boolean) => {
         if (!anchor) {
             return
         }
-        // TODO(slice-4e born-archived): a session started FROM a selection should be
-        // created born-archived (archived_at = now) so it never clutters the history
-        // list yet stays search-reachable (proposal §4d). Not wired here yet — the FE
-        // has no `setContentAiSessionArchived` mutation/hook and session creation lives
-        // in ContentAiChat, not this component. Once slice 4e lands the archive
-        // mutation, flag this selection-originated session as archived on first send.
-        setSelection(anchor.text, anchor.context)
+        setSelection(anchor.text, anchor.context, forceNewThread)
         markSeen()
         open()
         window.getSelection()?.removeAllRanges()
@@ -195,14 +198,14 @@ export const ContentAiSelectionAsk = () => {
     }
 
     return createPortal(
-        // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- non-interactive
-        // positioning wrapper; onMouseDown only prevents the browser from collapsing the text
-        // selection before the real (keyboard-accessible) Button's press fires
+        // non-interactive positioning wrapper; onMouseDown only prevents the browser from collapsing
+        // the text selection before the real (keyboard-accessible) Buttons' press fires
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- see reason above
         <div
-            // keep the selection alive when pressing the button (mousedown would
+            // keep the selection alive when pressing a button (mousedown would
             // otherwise collapse it before the click fires)
             onMouseDown={(event) => event.preventDefault()}
-            className="z-[70]"
+            className="z-[70] flex flex-col gap-1"
             style={{
                 position: "fixed",
                 left: anchor.x,
@@ -210,14 +213,21 @@ export const ContentAiSelectionAsk = () => {
                 transform: "translate(-50%, -100%)",
             }}
         >
-            <Button size="sm" variant="primary" onPress={onAsk} className="shadow-lg">
+            {/* PRIMARY — appends into whatever conversation is already active (the
+                app-wide default); SECONDARY — explicitly forks a fresh, hidden
+                side-thread for this quote instead. */}
+            <Button size="sm" variant="primary" onPress={() => onAsk(false)} className="shadow-lg">
                 <SparkleIcon className="size-4" />
-                {t("contentAi.askAboutSelection")}
+                {t("contentAi.askInThisChat")}
                 {!seen ? (
                     <span className="rounded-full bg-surface px-2 py-0 text-[11px] font-medium text-accent-soft-foreground">
                         {t("contentAi.new")}
                     </span>
                 ) : null}
+            </Button>
+            <Button size="sm" variant="secondary" onPress={() => onAsk(true)} className="shadow-lg">
+                <ChatCircleIcon className="size-4" />
+                {t("contentAi.newThread")}
             </Button>
         </div>,
         document.body,

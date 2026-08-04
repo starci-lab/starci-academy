@@ -176,4 +176,5 @@ export const TabsBase = ({
     )
 }
 
+/** Tier metadata for `Tabs`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Tabs" } as const

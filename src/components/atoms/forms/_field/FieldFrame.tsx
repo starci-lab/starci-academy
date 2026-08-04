@@ -140,4 +140,5 @@ const FieldFrameBase = ({
 /** `FieldFrame.*` — label/hint/control/error scaffold namespace. */
 export { FieldFrameBase as FieldFrame }
 
+/** Tier metadata for `FieldFrame`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "FieldFrame" } as const

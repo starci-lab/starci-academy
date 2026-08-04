@@ -25,6 +25,7 @@ import type {
  */
 export type CommunityTabProps = WithClassNames<undefined>
 
+/** Dashboard "Community" tab — see module doc above for what it renders. */
 export const CommunityTab = ({
     className,
 }: CommunityTabProps) => {

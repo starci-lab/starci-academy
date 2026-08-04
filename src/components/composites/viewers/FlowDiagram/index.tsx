@@ -120,6 +120,7 @@ export type FlowDiagramProps = FlowDiagramOwnProps &
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "FlowDiagram" } as const
 
+/** A self-contained, presentational `@xyflow/react` canvas that fits its graph into view on mount. */
 export const FlowDiagram = ({ nodes, edges, isSkeleton = false, classNames}: FlowDiagramProps) => {
     const nodeTypes = useMemo(() => NODE_TYPES, [])
 

@@ -6,6 +6,7 @@ import React, { useMemo } from "react"
 import type { FoundationEntity } from "@/modules/types/entities/foundation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link FoundationMeta}. */
 export interface FoundationMetaProps extends WithClassNames<undefined> {
     /** Foundation row to render metadata chips for. */
     foundation: FoundationEntity

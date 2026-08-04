@@ -88,6 +88,7 @@ const PALETTE = [
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "SegmentBar" } as const
 
+/** A single track split into colour slices sized by each segment's share of the total. */
 export const SegmentBar = ({
     segments,
     ariaLabel,

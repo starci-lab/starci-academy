@@ -38,6 +38,7 @@ export type SkeletonTextSize =
     /** Mirrors `text-6xl` (60px). */
     | "6xl"
 
+/** Props for {@link SkeletonText}. */
 export interface SkeletonTextProps extends WithClassNames<undefined> {
     /** Typography token of the text being replaced; drives the bar's height. */
     size: SkeletonTextSize

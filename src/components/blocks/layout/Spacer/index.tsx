@@ -32,6 +32,7 @@ interface SpacerProps extends WithClassNames<undefined> {
     y?: number
 }
 
+/** Invisible fixed-size box that reserves horizontal (`x`) and/or vertical (`y`) space using the spacing scale. */
 export const Spacer: React.FC<SpacerProps> = ({ x, y, className }) => {
     const width = x ? spacingScale[x] ?? `${x * 0.25}rem` : undefined
     const height = y ? spacingScale[y] ?? `${y * 0.25}rem` : undefined

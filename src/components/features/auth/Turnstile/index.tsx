@@ -5,6 +5,7 @@ import { cn } from "@heroui/react"
 import { publicEnv } from "@/resources/env/public"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link Turnstile}. */
 export interface TurnstileProps extends WithClassNames<undefined> {
     /** Callback triggered when Turnstile successfully validates the visitor. */
     onVerify: (token: string) => void
@@ -90,13 +91,13 @@ export const Turnstile = ({ onVerify, onExpire, onError, className }: TurnstileP
         if (turnstile) {
             renderWidget()
         } else {
-            const handleLoad = () => {
+            const onLoad = () => {
                 renderWidget()
             }
-            script.addEventListener("load", handleLoad)
+            script.addEventListener("load", onLoad)
             return () => {
                 isMounted = false
-                script?.removeEventListener("load", handleLoad)
+                script?.removeEventListener("load", onLoad)
                 const activeTurnstile = (window as WindowWithTurnstile).turnstile
                 if (widgetIdRef.current !== null && activeTurnstile) {
                     activeTurnstile.remove(widgetIdRef.current)

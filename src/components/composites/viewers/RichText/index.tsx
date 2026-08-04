@@ -180,6 +180,7 @@ const renderInline = (text: string): ReactNode => {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "RichText" } as const
 
+/** Renders a small inline markdown subset (code/bold/italic/link) through the `Typography` atom. */
 export const RichText = ({
     text,
     size = "body-sm",

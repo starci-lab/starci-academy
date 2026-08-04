@@ -1,23 +1,9 @@
 "use client"
 
-import {
-    BellIcon,
-    ChecksIcon as CheckDoubleIcon,
-} from "@phosphor-icons/react"
 import React, {
     useCallback,
     useMemo,
-    useState,
 } from "react"
-import {
-    Badge,
-    Button,
-    Popover,
-    PopoverContent,
-    Separator,
-    Spinner,
-    cn,
-} from "@heroui/react"
 import {
     useLocale,
     useTranslations,
@@ -35,9 +21,7 @@ import type { QueryNotificationData, QueryNotificationTargetData } from "@/modul
 import { useQueryMyNotificationsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyNotificationsSwr"
 import { useAppSelector } from "@/redux/hooks"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
-
-/** Largest unread count rendered verbatim on the badge before showing "9+". */
-const MAX_BADGE = 9
+import { _NotificationBell, type NotificationBellItem } from "./component"
 
 /** Props for {@link NotificationBell}. */
 export type NotificationBellProps = WithClassNames<undefined>
@@ -56,13 +40,10 @@ const encodeGlobalId = (target: QueryNotificationTargetData): string => {
 }
 
 /**
- * NotificationBell — navbar bell with an unread-count badge and a popover list.
- *
- * Self-contained container: fetches its own notification page (newest first)
- * + unread count, renders the badge (hidden when zero), and on open shows the
- * recent items with an i18n title and relative time. Clicking an item marks it
- * read and routes to its resolved target; the header action marks all read.
- * `"use client"` for the SWR hook, overlay state and navigation.
+ * NotificationBell — the CONNECTED half: fetches its own notification page
+ * (newest first) + unread count, resolves each item's title/body/relative-time
+ * via `t()`, and wires the mark-read + navigate-on-press behavior. See
+ * `design/storybook/architecture/split.md`.
  * @param props - optional root class name
  */
 export const NotificationBell = ({ className }: NotificationBellProps) => {
@@ -72,9 +53,8 @@ export const NotificationBell = ({ className }: NotificationBellProps) => {
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const { data, isLoading, mutate } = useQueryMyNotificationsSwr()
     const runGraphQL = useGraphQLWithToast()
-    const [isOpen, setOpen] = useState(false)
 
-    const items = data?.items ?? []
+    const rawItems = data?.items ?? []
     const unreadCount = data?.unreadCount ?? 0
 
     /** Locale-aware relative-time formatter for the item timestamps. */
@@ -105,7 +85,6 @@ export const NotificationBell = ({ className }: NotificationBellProps) => {
     /** Mark a single notification read and navigate to its resolved target. */
     const onPressItem = useCallback(
         async (notification: QueryNotificationData) => {
-            setOpen(false)
             // optimistically mark read in the local cache, then persist
             if (!notification.isRead) {
                 await runGraphQL(
@@ -152,99 +131,36 @@ export const NotificationBell = ({ className }: NotificationBellProps) => {
         [mutate, runGraphQL],
     )
 
-    // the bell is only meaningful for an authenticated viewer
-    if (!authenticated) {
-        return null
-    }
-
-    /** Badge label, capped at {@link MAX_BADGE} (e.g. "9+"). */
-    const badgeLabel = unreadCount > MAX_BADGE ? `${MAX_BADGE}+` : `${unreadCount}`
+    const items = useMemo<Array<NotificationBellItem>>(
+        () => rawItems.map((notification) => ({
+            id: notification.id,
+            isRead: notification.isRead,
+            titleText: t(notification.title.key, notification.title.params ?? undefined),
+            bodyText: notification.body
+                ? t(notification.body.key, notification.body.params ?? undefined)
+                : null,
+            relativeLabel: formatRelative(notification.createdAt),
+            onPress: () => {
+                void onPressItem(notification)
+            },
+        })),
+        [rawItems, t, formatRelative, onPressItem],
+    )
 
     return (
-        <Popover isOpen={isOpen} onOpenChange={setOpen}>
-            <Button
-                isIconOnly
-                variant="tertiary"
-                className={cn("rounded-full", className)}
-                aria-label={t("notifications.title")}
-            >
-                {unreadCount > 0 ? (
-                    <Badge.Anchor>
-                        <BellIcon className="size-5" />
-                        <Badge size="sm" color="danger">{badgeLabel}</Badge>
-                    </Badge.Anchor>
-                ) : (
-                    <BellIcon className="size-5" />
-                )}
-            </Button>
-            <PopoverContent placement="bottom right" className="w-[360px] overflow-hidden p-0">
-                {/* header: title + mark-all-read action */}
-                <div className="flex items-center justify-between gap-3 p-3">
-                    <span className="text-sm font-semibold text-foreground">
-                        {t("notifications.title")}
-                    </span>
-                    {unreadCount > 0 ? (
-                        <Button
-                            size="sm"
-                            variant="tertiary"
-                            onPress={onMarkAllRead}
-                            className="gap-2"
-                        >
-                            <CheckDoubleIcon className="size-5" />
-                            <span className="text-xs">{t("notifications.markAllRead")}</span>
-                        </Button>
-                    ) : null}
-                </div>
-                <Separator />
-
-                {/* body: loading / empty / list */}
-                {isLoading && items.length === 0 ? (
-                    <div className="flex items-center justify-center p-6">
-                        <Spinner size="sm" />
-                    </div>
-                ) : items.length === 0 ? (
-                    <div className="p-6 text-center text-sm text-muted">
-                        {t("notifications.empty")}
-                    </div>
-                ) : (
-                    <div className="flex max-h-[420px] flex-col overflow-y-auto">
-                        {items.map((notification) => (
-                            <button
-                                key={notification.id}
-                                type="button"
-                                onClick={() => onPressItem(notification)}
-                                className={cn(
-                                    "flex flex-col gap-2 px-3 py-3 text-left hover:bg-default/40",
-                                    !notification.isRead && "bg-primary/5",
-                                )}
-                            >
-                                <div className="flex items-center gap-2">
-                                    {!notification.isRead ? (
-                                        <span className="size-2 shrink-0 rounded-full bg-primary" />
-                                    ) : null}
-                                    <span className="flex-1 text-sm font-medium text-foreground">
-                                        {t(
-                                            notification.title.key,
-                                            notification.title.params ?? undefined,
-                                        )}
-                                    </span>
-                                </div>
-                                {notification.body ? (
-                                    <span className="text-xs text-muted">
-                                        {t(
-                                            notification.body.key,
-                                            notification.body.params ?? undefined,
-                                        )}
-                                    </span>
-                                ) : null}
-                                <span className="text-[11px] text-muted">
-                                    {formatRelative(notification.createdAt)}
-                                </span>
-                            </button>
-                        ))}
-                    </div>
-                )}
-            </PopoverContent>
-        </Popover>
+        <_NotificationBell
+            isAuthenticated={Boolean(authenticated)}
+            items={items}
+            unreadCount={unreadCount}
+            isLoading={isLoading}
+            bellAriaLabel={t("notifications.title")}
+            titleLabel={t("notifications.title")}
+            markAllReadLabel={t("notifications.markAllRead")}
+            emptyLabel={t("notifications.empty")}
+            onMarkAllRead={() => {
+                void onMarkAllRead()
+            }}
+            className={className}
+        />
     )
 }

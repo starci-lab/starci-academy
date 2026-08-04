@@ -79,6 +79,7 @@ export type LegendProps = LegendOwnProps &
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "Legend" } as const
 
+/** A standalone dot + label (+ optional value) legend row matching a chart's own legend. */
 export const Legend = ({
     items,
     direction = "row",

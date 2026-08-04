@@ -12,6 +12,7 @@ import {
 } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link StarCiAIBadge}. */
 export type StarCiAIBadgeProps = WithClassNames<{
     /** Extra classes on the sparkle icon (default `size-5`). */
     icon?: string

@@ -75,6 +75,7 @@ const lightTheme: SandpackTheme = {
     font: sharedFont,
 }
 
+/** Props for {@link SandpackPanel}. */
 export interface SandpackPanelProps extends WithClassNames<undefined> {
     /** Assembled files map (stubs + github files + dynamic overrides). */
     files: SandpackFiles
@@ -94,6 +95,7 @@ const EXTERNAL_RESOURCES = [
     "https://cdn.jsdelivr.net/npm/@heroui/styles@3/dist/heroui.min.css",
 ]
 
+/** Live in-browser React sandbox (Sandpack) previewing the lesson's code files. */
 export const SandpackPanel = ({ files, dependencies = {}, isDark = true, className }: SandpackPanelProps) => (
     <div className={cn(className)}>
         <SandpackProvider

@@ -119,7 +119,17 @@ export const Skeleton: Story = {
  * `@app-sm` (the default `at`) reads the nearest `@container`, not the viewport — demoing
  * the switch means opening a `@container` at a real width, same as `RailShell`'s story does.
  */
-const ResponsiveFrame = ({ width, label, children }: { width: string; label: string; children: ReactNode }) => (
+/** Props for the {@link ResponsiveFrame} fixture — a simulated `@container` at a fixed width. */
+interface ResponsiveFrameProps {
+    /** width of the simulated `@container`, e.g. `"48rem"` */
+    width: string
+    /** label rendered above the frame to name the width being demoed */
+    label: string
+    /** content rendered inside the simulated container */
+    children: ReactNode
+}
+
+const ResponsiveFrame = ({ width, label, children }: ResponsiveFrameProps) => (
     <div data-tier="fixture" className="flex flex-col gap-2">
         <Typography size="xs" text={label} color="muted" />
         <div className="@container rounded-3xl border border-dashed border-default p-3" style={{ width, maxWidth: "100%" }}>

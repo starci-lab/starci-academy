@@ -2,27 +2,19 @@
 
 import React, { useCallback } from "react"
 import {
-    DropdownItem,
-    DropdownMenu,
-    DropdownSection,
-    cn,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
 import { useMutateSignOutSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSignOutSwr"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { _LogoutMenu } from "./component"
 
-/**
- * Props for {@link LogoutMenu}.
- */
+/** Props for {@link LogoutMenu}. */
 export type LogoutMenuProps = WithClassNames<undefined>
 
 /**
- * Logout section of the account dropdown.
- *
- * Container: owns the sign-out mutation and triggers it directly on press.
- * `"use client"` for hooks + press handler.
+ * Logout section of the account dropdown — the CONNECTED half: owns the
+ * sign-out mutation and resolves the label via `t()`. See
+ * `design/storybook/architecture/split.md`.
  * @param props - optional root class name
  */
 export const LogoutMenu = ({ className }: LogoutMenuProps) => {
@@ -37,18 +29,5 @@ export const LogoutMenu = ({ className }: LogoutMenuProps) => {
         [mutateSignOutSwr],
     )
 
-    return (
-        <DropdownMenu className={cn(className)}>
-            {/** Logout block */}
-            <DropdownSection>
-                <DropdownItem
-                    key="logout"
-                    className="py-3 text-danger-soft-foreground"
-                    onPress={onLogout}
-                >
-                    {t("nav.logout")}
-                </DropdownItem>
-            </DropdownSection>
-        </DropdownMenu>
-    )
+    return <_LogoutMenu label={t("nav.logout")} onLogout={onLogout} className={className} />
 }

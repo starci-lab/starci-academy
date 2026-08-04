@@ -5,21 +5,11 @@ import { gapClassNames, type AllowedGap, type Responsive } from "@sb-components/
 import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
 
 /**
- * `ResponsiveRow` — a LAYOUT frame: a repeat-list row that is a FIXED grid below a
- * container step and an EQUAL-SHARE flex row from it up. One member. Built for
- * `StatRibbon`: a padded 2-column grid on a narrow shell, and from `@app-sm` one
- * un-padded row where N cells share the width evenly with a `border-l` marking the
- * seam.
- *
- * A repeating list ⇒ `items` DATA, `children` forbidden (every cell is the same
- * kind of thing).
- *
- * No gap above the switch step: a divided row has one seam mechanism, not two, so
- * it goes flush (`gap-0`) once flex takes over and the caller marks the seam with
- * a border on its own cell content.
- *
- * Container queries, not viewport: `@app-sm/md/lg` answer the nearest
- * `@container` (see `Grid`).
+ * `ResponsiveRow` — a repeat-list FRAME: a fixed grid below its switch step, an
+ * equal-share flex row from it up, going flush (`gap-0`) the moment it becomes a row
+ * (the caller marks the seam itself, e.g. `StatRibbon`'s per-cell `border-l`). Built
+ * for `StatRibbon`, which is exactly the fixture below — a padded 2-column grid on a
+ * narrow shell, one un-padded divided row from `@app-sm` up.
  */
 
 /**

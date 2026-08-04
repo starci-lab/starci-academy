@@ -5,9 +5,9 @@ import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyS
 
 /**
  * `QuizEnrollGate` — shown in place of the whole quiz pane to a trial learner:
- * drilling is for enrolled learners. Replaces the pane rather than disabling it
- * (a drill has no previewable part). Not a paywall — it asks for enrolment, not
- * money, so there is no price or scarcity line, just one plain action through.
+ * drilling is for enrolled learners. Replaces the pane rather than disabling it (a
+ * drill has no previewable part). Not a paywall — one plain action through, no price
+ * or scarcity line.
  */
 
 /** Props for {@link QuizEnrollGate}. */

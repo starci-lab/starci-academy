@@ -89,4 +89,5 @@ const LogoBase = ({ size = "navbar", classNames }: LogoProps) => {
 /** `Logo.*` — StarCi brand-mark namespace. */
 export { LogoBase as Logo }
 
+/** Tier metadata for `Logo`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Logo" } as const

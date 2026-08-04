@@ -4,13 +4,14 @@ import React, { useMemo } from "react"
 import { cn } from "@heroui/react"
 import { CodeBodySkeleton } from "../CodeBodySkeleton"
 import { ExplainingCard } from "./ExplainingCard"
-import { CodeExplainingEmpty } from "./Empty"
+import { Empty } from "./Empty"
 import { useAppSelector } from "@/redux/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { getContentCodeExplainings } from "@/modules/types/entities/content"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { useQueryContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentSwr"
 
+/** Props for the code-explaining tab body. */
 export type CodeExplainingBodyProps = WithClassNames<undefined>
 
 /**
@@ -36,7 +37,7 @@ export const CodeExplainingBody = ({ className }: CodeExplainingBodyProps) => {
 
     const body = !items.length ? (
         <div className={cn("", className)}>
-            <CodeExplainingEmpty />
+            <Empty />
         </div>
     ) : (
         <div className={cn("flex flex-col gap-6", className)}>

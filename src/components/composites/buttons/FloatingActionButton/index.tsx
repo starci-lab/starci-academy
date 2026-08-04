@@ -43,6 +43,7 @@ export interface FloatingActionButtonProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "FloatingActionButton" } as const
 
+/** A bottom-right floating action button that composes the icon-only `Button` atom. */
 export const FloatingActionButton = ({
     onPress,
     ariaLabel,

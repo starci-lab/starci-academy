@@ -4,10 +4,6 @@ import React, {
     useMemo,
 } from "react"
 import {
-    Link,
-    cn,
-} from "@heroui/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -18,10 +14,8 @@ import {
 import {
     pathConfig,
 } from "@/resources/path"
-import type {
-    NavbarItem,
-} from "../types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { _NavLinks, type NavLinkItem } from "./component"
 
 /**
  * Props for {@link NavLinks}.
@@ -29,11 +23,9 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 export type NavLinksProps = WithClassNames<undefined>
 
 /**
- * Desktop navbar link group (hidden on small screens).
- *
- * Container: derives its entries + active-route state from the router/locale
- * itself and self-navigates on press. `"use client"` for the hooks + press
- * handlers.
+ * Desktop navbar link group — the CONNECTED half: derives its entries +
+ * active-route state from the router/locale itself and self-navigates on
+ * press. See `design/storybook/architecture/split.md`.
  * @param props - optional root class name
  */
 export const NavLinks = ({ className }: NavLinksProps) => {
@@ -42,7 +34,7 @@ export const NavLinks = ({ className }: NavLinksProps) => {
     const pathname = usePathname()
     const locale = useLocale()
 
-    const items = useMemo<Array<NavbarItem>>(
+    const items = useMemo<Array<NavLinkItem>>(
         () => [
             {
                 label: t("nav.home"),
@@ -72,22 +64,5 @@ export const NavLinks = ({ className }: NavLinksProps) => {
         ],
     )
 
-    return (
-        <div className={cn("hidden flex-1 items-center justify-center gap-2 @app-md:flex", className)}>
-            {items.map((item) => (
-                <Link key={item.path} onPress={() => router.push(item.path)}>
-                    <span
-                        className={cn(
-                            "whitespace-nowrap rounded-full px-3 py-2 text-sm transition-colors",
-                            item.isActive
-                                ? "bg-accent-soft text-accent-soft-foreground"
-                                : "text-muted hover:text-foreground",
-                        )}
-                    >
-                        {item.label}
-                    </span>
-                </Link>
-            ))}
-        </div>
-    )
+    return <_NavLinks items={items} onNavigate={(path) => router.push(path)} className={className} />
 }

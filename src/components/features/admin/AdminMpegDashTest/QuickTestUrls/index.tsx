@@ -7,6 +7,7 @@ import { QuickTestUrlButton } from "./QuickTestUrlButton"
 import type { QuickTestUrl } from "../types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link QuickTestUrls}. */
 export interface QuickTestUrlsProps extends WithClassNames<undefined> {
     /** Loads a preset's URL + renderer type into the tool. */
     onSelect: (item: QuickTestUrl) => void

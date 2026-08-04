@@ -72,6 +72,7 @@ export interface RemovableTokenProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "RemovableToken" } as const
 
+/** A bordered row token showing a label with optional remove (x) and edit affordances. */
 export const RemovableToken = ({
     label,
     icon: Icon,

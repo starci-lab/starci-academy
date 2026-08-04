@@ -1,48 +1,23 @@
 "use client"
 
-import { MagnifyingGlassIcon } from "@phosphor-icons/react"
 import React from "react"
-import {
-    Button,
-    Kbd,
-    cn,
-} from "@heroui/react"
-import {
-    useTranslations,
-} from "next-intl"
+import { useTranslations } from "next-intl"
 import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { _SearchButton } from "./component"
+
+/** Props the connected {@link SearchButton} takes from its caller. */
+export type SearchButtonConnectedProps = WithClassNames<undefined>
 
 /**
- * Props for {@link SearchButton}.
- */
-export type SearchButtonProps = WithClassNames<undefined>
-
-/**
- * Navbar search trigger showing the label and the Ctrl/Cmd+K shortcut hint.
+ * Navbar search trigger — the CONNECTED half: resolves the label via `t()`
+ * and opens the search overlay singleton on press. See
+ * `design/storybook/architecture/split.md`.
  *
- * Self-contained section (single-use): reads the search overlay singleton
- * itself and opens it on press, so the navbar just renders `<SearchButton />`.
- * `"use client"` for the singleton hook + press handler.
- * @param props - optional root class name
+ * @param props - {@link SearchButtonConnectedProps}
  */
-export const SearchButton = ({ className }: SearchButtonProps) => {
+export const SearchButton = ({ className }: SearchButtonConnectedProps) => {
     const t = useTranslations()
     const { open: onOpenSearch } = useSearchOverlayState()
-    return (
-        <Button className={cn("w-[300px] justify-between px-3", className)} variant="outline" onPress={onOpenSearch}>
-            <span className="inline-flex items-center gap-2">
-                <MagnifyingGlassIcon className="h-5 w-5" />
-                <span className="text-sm">{t("search.label")}</span>
-            </span>
-            <div className="flex items-center gap-2 hidden @app-md:inline-flex">
-                <Kbd>
-                    <Kbd.Content>Ctrl</Kbd.Content>
-                </Kbd>
-                <Kbd>
-                    <Kbd.Content>K</Kbd.Content>
-                </Kbd>
-            </div>
-        </Button>
-    )
+    return <_SearchButton label={t("search.label")} onPress={onOpenSearch} className={className} />
 }

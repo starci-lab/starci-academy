@@ -68,7 +68,7 @@ import {
     toArticleReactionCounts,
     toArticleReactionType,
     toRealReactionType,
-} from "@/components/page/ContentArticle/map"
+} from "@/components/page/_map"
 
 /** Page size for a parent's replies (loaded in one shot per parent). */
 const REPLIES_LIMIT = 50

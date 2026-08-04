@@ -36,7 +36,7 @@ import type {
 } from "@/modules/types/base/class-name"
 import {
     toDifficulty,
-} from "@/components/page/CourseContents/map"
+} from "@/components/page/_map"
 import {
     ModulePageSkeleton,
 } from "./ModulePageSkeleton"

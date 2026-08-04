@@ -29,7 +29,7 @@ import { ScrollArea } from "@/components/frames/ScrollArea"
  * wrapper, no `component.tsx` split).
  *
  * Emits its own identity (`data-tier="page"` / `data-component="MindMapPage"`)
- * unconditionally on its root, same as `_ModulePage`/`_ContentArticle` — see
+ * unconditionally on its root, same as `_ModulePage`/`_ContentPage` — see
  * `split.md`'s "Identity is data-tier + data-component" section.
  *
  * The viewport-relative full-bleed height, the canvas's floating-chrome

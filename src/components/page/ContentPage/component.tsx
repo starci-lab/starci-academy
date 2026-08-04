@@ -52,7 +52,7 @@ import {
  *
  * On top of the pure blueprint composition, this presentational file also
  * carries the real async lifecycle (error → skeleton → empty → content) —
- * the same extension `_ModulePage`/`_ContentArticle` already make, since a
+ * the same extension `_ModulePage`/`_ContentPage` already make, since a
  * static storybook blueprint has no fetch to fail but a real page does.
  */
 

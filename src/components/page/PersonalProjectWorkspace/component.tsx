@@ -46,13 +46,17 @@ export type PersonalProjectWorkspaceProps =
  * @param props - {@link PersonalProjectWorkspaceProps}
  */
 const _PersonalProjectWorkspace = (props: PersonalProjectWorkspaceProps) => {
-    if (props.view === "dashboard") {
-        return <PersonalProjectDashboard {...props} />
-    }
-    if (props.view === "task") {
-        return <PersonalProjectTaskPage {...props} />
-    }
-    return <PersonalProjectResultScreen {...props} />
+    const inner = props.view === "dashboard"
+        ? <PersonalProjectDashboard {...props} />
+        : props.view === "task"
+            ? <PersonalProjectTaskPage {...props} />
+            : <PersonalProjectResultScreen {...props} />
+
+    return (
+        <div data-tier="page" data-component="PersonalProjectWorkspace">
+            {inner}
+        </div>
+    )
 }
 
 export { _PersonalProjectWorkspace }

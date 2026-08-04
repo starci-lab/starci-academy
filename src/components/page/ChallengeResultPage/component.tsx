@@ -268,7 +268,9 @@ const _ChallengeResultPage = ({
     const resultBody = <StackV gap={7} items={[() => pageSections]} />
 
     return (
-        <Container size="xl" padding={6} body={() => resultBody} />
+        <div data-tier="page" data-component="ChallengeResultPage">
+            <Container size="xl" padding={6} body={() => resultBody} />
+        </div>
     )
 }
 

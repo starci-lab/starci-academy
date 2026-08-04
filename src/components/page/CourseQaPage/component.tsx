@@ -218,7 +218,11 @@ const _CourseQaPage = ({
 
     const courseQaBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => courseQaSections]} />
 
-    return <Container size="md" padding={6} body={() => courseQaBody} />
+    return (
+        <div data-tier="page" data-component="CourseQaPage">
+            <Container size="md" padding={6} body={() => courseQaBody} />
+        </div>
+    )
 }
 
 export { _CourseQaPage }

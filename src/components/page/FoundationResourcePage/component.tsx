@@ -171,7 +171,11 @@ const _FoundationResourcePage = ({
         <StackV gap={6} isSkeleton={isSkeleton} items={[() => resourceSections]} />
     )
 
-    return <Container size="md" padding={6} isSkeleton={isSkeleton} body={resourceBody} />
+    return (
+        <div data-tier="page" data-component="FoundationResourcePage">
+            <Container size="md" padding={6} isSkeleton={isSkeleton} body={resourceBody} />
+        </div>
+    )
 }
 
 export { _FoundationResourcePage }

@@ -190,7 +190,11 @@ const _LeaderboardPage = ({
 
     const leaderboardBody = <StackV gap={7} isSkeleton={isSkeleton} items={[() => leaderboardSections]} />
 
-    return <Container size="md" padding={6} body={() => leaderboardBody} />
+    return (
+        <div data-tier="page" data-component="LeaderboardPage">
+            <Container size="md" padding={6} body={() => leaderboardBody} />
+        </div>
+    )
 }
 
 export { _LeaderboardPage }

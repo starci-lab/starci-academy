@@ -73,11 +73,13 @@ const _PlaygroundHubPage = ({
     )
 
     return (
-        <Container
-            size="md"
-            padding={6}
-            body={() => <StackV gap={6} isSkeleton={isSkeleton} items={[() => hubSection]} />}
-        />
+        <div data-tier="page" data-component="PlaygroundHubPage">
+            <Container
+                size="md"
+                padding={6}
+                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={[() => hubSection]} />}
+            />
+        </div>
     )
 }
 

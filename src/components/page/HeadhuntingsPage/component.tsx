@@ -137,7 +137,11 @@ const _HeadhuntingsPage = ({
 
     const headhuntingsBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => headhuntingsSections]} />
 
-    return <Container size="md" padding={6} body={() => headhuntingsBody} />
+    return (
+        <div data-tier="page" data-component="HeadhuntingsPage">
+            <Container size="md" padding={6} body={() => headhuntingsBody} />
+        </div>
+    )
 }
 
 export { _HeadhuntingsPage }

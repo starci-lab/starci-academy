@@ -42,6 +42,13 @@ import {
  * PRESENTATIONAL — every input arrives as a prop; this twin owns no data of
  * its own, so `index.tsx` IS the presentational file (no separate connected
  * wrapper, no `component.tsx` split) — mirrors `MindMapPage`'s convention.
+ *
+ * Emits its own identity (`data-tier="page"` / `data-component="PersonalProjectTaskPage"`)
+ * unconditionally on its root, same as `MindMapPage`/`ModulePage` — see
+ * `split.md`'s "Identity is data-tier + data-component" section. One raw
+ * `className="w-fit"` spot remains around the breadcrumb (shrink-to-content
+ * sizing, no frame in the current set carries it) — a vocabulary gap, not a
+ * style miss.
  */
 
 /** One personal-project schema-v1 evaluation criterion — the legacy rubric row. */
@@ -466,27 +473,29 @@ const PersonalProjectTaskPage = ({
     submissionPanelProps,
     isSkeleton = false,
 }: PersonalProjectTaskPageProps) => (
-    <Container
-        size="xl"
-        padding={6}
-        body={() => (
-            <SplitWorkspace
+    <div data-tier="page" data-component="PersonalProjectTaskPage">
+        <Container
+            size="xl"
+            padding={6}
+            body={() => (
+                <SplitWorkspace
 
-                main={() => readingColumn({
-                    breadcrumbItems,
-                    task,
-                    isLocked,
-                    brief,
-                    legacyCriteria,
-                    legacyCodeImplementations,
-                    relatedItems,
-                    relatedLabel,
-                    isSkeleton,
-                })}
-                aside={() => submissionPanel({ panel: submissionPanelProps, isSkeleton })}
-            />
-        )}
-    />
+                    main={() => readingColumn({
+                        breadcrumbItems,
+                        task,
+                        isLocked,
+                        brief,
+                        legacyCriteria,
+                        legacyCodeImplementations,
+                        relatedItems,
+                        relatedLabel,
+                        isSkeleton,
+                    })}
+                    aside={() => submissionPanel({ panel: submissionPanelProps, isSkeleton })}
+                />
+            )}
+        />
+    </div>
 )
 
 export { PersonalProjectTaskPage }

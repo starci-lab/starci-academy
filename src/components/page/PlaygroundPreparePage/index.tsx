@@ -158,7 +158,11 @@ const PlaygroundPreparePage = ({
     isSkeleton = false,
 }: PlaygroundPreparePageProps) => {
     if (isEmpty) {
-        return <PlaygroundPreparePageEmpty />
+        return (
+            <div data-tier="page" data-component="PlaygroundPreparePage">
+                <PlaygroundPreparePageEmpty />
+            </div>
+        )
     }
 
     const allReady = checklistItems.length > 0 && checklistItems.every((item) => item.ready)
@@ -229,7 +233,11 @@ const PlaygroundPreparePage = ({
 
     const prepareBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => prepareSections]} />
 
-    return <Container size="md" padding={6} body={() => prepareBody} />
+    return (
+        <div data-tier="page" data-component="PlaygroundPreparePage">
+            <Container size="md" padding={6} body={() => prepareBody} />
+        </div>
+    )
 }
 
 export { PlaygroundPreparePage }

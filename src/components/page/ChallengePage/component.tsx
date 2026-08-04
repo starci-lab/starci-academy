@@ -184,7 +184,11 @@ const _ChallengePage = ({
         />
     )
 
-    return <Container size="xl" padding={6} isSkeleton={isSkeleton} body={challengeBody} />
+    return (
+        <div data-tier="page" data-component="ChallengePage">
+            <Container size="xl" padding={6} isSkeleton={isSkeleton} body={challengeBody} />
+        </div>
+    )
 }
 
 export { _ChallengePage }

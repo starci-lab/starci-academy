@@ -17,6 +17,7 @@ import { useMutatePurchaseMembershipSwr } from "@/hooks/swr/api/graphql/mutation
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
 import { useQueryCoursesCheckoutPreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursesCheckoutPreviewSwr"
+import { useQueryMyVouchersSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr"
 import { useAppSelector } from "@/redux/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 import { PaymentType } from "@/modules/types/enums/payment-type"
@@ -33,10 +34,28 @@ import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/S
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { SelectSingle } from "@/components/atoms/forms/Select"
 import type { PriceCurrency } from "@/components/blocks/commerce/PriceTag"
 
 /** GraphQL extension code the BE raises when the viewer already has an enrollment (`CourseAlreadyEnrolledError`). */
 const COURSE_ALREADY_ENROLLED_CODE = "COURSE_ALREADY_ENROLLED_ERROR"
+
+/**
+ * GraphQL extension codes for the BE's typed checkout rejections, raised LOUD
+ * before any transaction row is created (`course-enroll.handler.ts`). Each maps
+ * to a localized, actionable toast (via {@link TYPED_REJECTION_KEY}) instead of
+ * letting the generic error path dump the BE's untranslated English message.
+ */
+const VOUCHER_NOT_SUPPORTED_CODE = "VOUCHER_NOT_SUPPORTED_FOR_GATEWAY_EXCEPTION"
+const INVALID_VOUCHER_CODE = "INVALID_VOUCHER_EXCEPTION"
+const INSTALLMENT_CURRENCY_CODE = "INSTALLMENT_CURRENCY_NOT_SUPPORTED_EXCEPTION"
+
+/** Typed-rejection code → i18n key for its localized toast description. */
+const TYPED_REJECTION_KEY: Record<string, string> = {
+    [VOUCHER_NOT_SUPPORTED_CODE]: "payment.voucher.rejected.notSupported",
+    [INVALID_VOUCHER_CODE]: "payment.voucher.rejected.invalid",
+    [INSTALLMENT_CURRENCY_CODE]: "payment.voucher.rejected.installmentCurrency",
+}
 
 /** Format an integer VND amount as "1.275.000₫". */
 const formatVnd = (amount: number): string => `${amount.toLocaleString("vi-VN")}₫`
@@ -100,6 +119,9 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
     const [currency, setCurrency] = useState<PriceCurrency>("VND")
     // installment plan term chosen — null = pay in full (unchanged default)
     const [installmentMonths, setInstallmentMonths] = useState<number | null>(null)
+    // Coin-shop voucher code applied on top of the loyalty discount — null = none.
+    // Course-enroll flow only (the multi-course cart has no voucherCode field).
+    const [voucherCode, setVoucherCode] = useState<string | null>(null)
     // which panel is showing — always reopens on "summary" (reset alongside
     // installmentMonths below, on a fresh context)
     const [selectedTab, setSelectedTab] = useState<PaymentModalTab>("summary")
@@ -113,6 +135,9 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
 
     // course price preview (original vs loyalty-discounted) — exact checkout pricing
     const coursePriceSwr = useQueryCoursePricePreviewSwr(isCourse ? course?.id ?? null : null)
+    // the viewer's Coin-shop vouchers — the source for the apply-voucher field
+    // (course flow only). Shares the rewards page's SWR cache.
+    const vouchersSwr = useQueryMyVouchersSwr()
     // multi-course checkout preview (per-course + summed charged/list, bundle bonus).
     // Keyed on the context's course ids → shares the cart page's SWR cache.
     const checkoutCourseIds = useMemo(
@@ -224,18 +249,54 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
         : null
     // paying in installments is VND-only (PayOS/Sepay) — force the domestic side
     const installmentActive = selectedInstallment != null
-    // reset the term + panel whenever the order/context changes (a new modal open)
+    // reset the term + voucher + panel whenever the order/context changes (a new modal open)
     useEffect(() => {
         setInstallmentMonths(null)
+        setVoucherCode(null)
         setSelectedTab("summary")
     }, [context])
 
+    // vouchers the viewer can apply to THIS course: unused, and either global
+    // (any course) or scoped to the course being enrolled. Course flow only —
+    // the cart checkout has no voucherCode field.
+    const applicableVouchers = useMemo(
+        () => (isCourse
+            ? (vouchersSwr.data ?? []).filter((voucher) =>
+                voucher.status === "unused"
+                && (voucher.courseId == null || voucher.courseId === course?.id))
+            : []),
+        [isCourse, vouchersSwr.data, course?.id],
+    )
+    const selectedVoucher = useMemo(
+        () => applicableVouchers.find((voucher) => voucher.code === voucherCode) ?? null,
+        [applicableVouchers, voucherCode],
+    )
+    // a Flat (VND-denominated) voucher can't be applied on a USD gateway (the BE
+    // rejects it per the capability matrix) — so, mirroring how an installment
+    // term forces VND, selecting one clamps the order to the domestic side.
+    const flatVoucherActive = selectedVoucher?.discountType === "flat"
+
     // whether international (USD) gateways are usable for this order (never while
-    // paying in installments — those cycles can only be collected in VND)
-    const hasUsd = (isMembership || (order?.priceUsd != null)) && !installmentActive
+    // paying in installments or applying a Flat voucher — both are VND-only)
+    const hasUsd = (isMembership || (order?.priceUsd != null)) && !installmentActive && !flatVoucherActive
     // the effective currency (clamped to VND when no USD price exists)
     const activeCurrency: PriceCurrency = hasUsd ? currency : "VND"
     const isUsd = activeCurrency === "USD"
+
+    // options for the apply-voucher field: a leading "no voucher" row plus one
+    // per applicable voucher, labelled with its code + discount.
+    const voucherOptions = useMemo(
+        () => [
+            { value: "", label: t("payment.voucher.none") },
+            ...applicableVouchers.map((voucher) => ({
+                value: voucher.code,
+                label: `${voucher.code} · ${voucher.discountType === "percent"
+                    ? `-${voucher.value}%`
+                    : t("payment.voucher.flatOff", { amount: formatVnd(voucher.value) })}`,
+            })),
+        ],
+        [applicableVouchers, t],
+    )
 
     // method groups, each carrying its currency
     const paymentGroups = useMemo(
@@ -308,6 +369,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                             payosReturnUrl: window.location.href,
                             payosCancelUrl: window.location.href,
                             installmentMonths: installmentMonths ?? undefined,
+                            voucherCode: voucherCode ?? undefined,
                         })
                         if (!response.data?.courseEnroll) {
                             throw new Error(response.error?.message)
@@ -321,26 +383,36 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                         // message for a friendly, expected-state toast (with a shortcut
                         // into the course) instead of letting the generic catch below
                         // dump the BE's English exception message verbatim.
-                        if (
-                            CombinedGraphQLErrors.is(error)
-                            && error.errors[0]?.extensions?.code === COURSE_ALREADY_ENROLLED_CODE
-                        ) {
-                            toast.warning(t("payment.alreadyEnrolled.title"), {
-                                description: t("payment.alreadyEnrolled.description"),
-                                actionProps: {
-                                    children: t("payment.alreadyEnrolled.action"),
-                                    onPress: () => {
-                                        setOpen(false)
-                                        router.push(
-                                            pathConfig().locale(locale).course(courseDisplayId).learn().content().build(),
-                                        )
+                        if (CombinedGraphQLErrors.is(error)) {
+                            const code = String(error.errors[0]?.extensions?.code ?? "")
+                            if (code === COURSE_ALREADY_ENROLLED_CODE) {
+                                toast.warning(t("payment.alreadyEnrolled.title"), {
+                                    description: t("payment.alreadyEnrolled.description"),
+                                    actionProps: {
+                                        children: t("payment.alreadyEnrolled.action"),
+                                        onPress: () => {
+                                            setOpen(false)
+                                            router.push(
+                                                pathConfig().locale(locale).course(courseDisplayId).learn().content().build(),
+                                            )
+                                        },
                                     },
-                                },
-                            })
-                            // showSuccessToast is false for this call, so returning a
-                            // failed-but-swallowed response shows no further toast and
-                            // `checkoutUrl` stays empty (no gateway redirect below).
-                            return { success: false, message: "", error: COURSE_ALREADY_ENROLLED_CODE }
+                                })
+                                // showSuccessToast is false for this call, so returning a
+                                // failed-but-swallowed response shows no further toast and
+                                // `checkoutUrl` stays empty (no gateway redirect below).
+                                return { success: false, message: "", error: COURSE_ALREADY_ENROLLED_CODE }
+                            }
+                            // typed modifier rejections (voucher/installment) — swap the
+                            // BE's raw English exception message for a localized, actionable
+                            // toast instead of letting the generic error path dump it verbatim.
+                            const rejectionKey = TYPED_REJECTION_KEY[code]
+                            if (rejectionKey) {
+                                toast.danger(t("payment.voucher.rejected.title"), {
+                                    description: t(rejectionKey),
+                                })
+                                return { success: false, message: "", error: code }
+                            }
                         }
                         throw error
                     }
@@ -395,6 +467,11 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
             },
         )
         if (success && checkoutUrl) {
+            // an applied voucher is now reserved by this in-flight checkout — refresh
+            // the wallet so its status reflects that (BE: Unused → Reserved).
+            if (voucherCode) {
+                void vouchersSwr.mutate()
+            }
             submitCheckout({ checkoutUrl, checkoutFields })
         }
     }
@@ -691,6 +768,30 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                                                                 total: formatVnd(selectedInstallment.totalAmountVnd),
                                                                 markup: selectedInstallment.markupPercent,
                                                             })}
+                                                        </Typography>
+                                                    ) : null}
+                                                </div>
+                                            ) : null}
+
+                                            {/* apply-voucher field — Coin-shop vouchers the viewer can use on THIS
+                                    course (unused + in-scope). Course flow only (the cart has no voucher
+                                    field). Selecting a Flat voucher clamps the order to VND (the USD
+                                    gateways can't apply a VND-denominated discount), mirroring how an
+                                    installment term forces VND above. */}
+                                            {isCourse && applicableVouchers.length > 0 ? (
+                                                <div className="flex flex-col gap-3">
+                                                    <Label>{t("payment.voucher.title")}</Label>
+                                                    <SelectSingle
+                                                        ariaLabel={t("payment.voucher.title")}
+                                                        placeholder={t("payment.voucher.none")}
+                                                        options={voucherOptions}
+                                                        value={voucherCode ?? ""}
+                                                        onValueChange={(value) => setVoucherCode(value || null)}
+                                                        isDisabled={isMutating}
+                                                    />
+                                                    {flatVoucherActive ? (
+                                                        <Typography type="body-xs" color="muted">
+                                                            {t("payment.voucher.vndOnlyHint")}
                                                         </Typography>
                                                     ) : null}
                                                 </div>

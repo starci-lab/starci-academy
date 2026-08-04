@@ -6,6 +6,7 @@ import { BuildingsIcon, MapPinIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { pathConfig } from "@/resources/path"
+import { isJobPostingExpired } from "../../utils"
 import type { JobPostingEntity } from "@/modules/types/entities/job-posting"
 import { WorkMode } from "@/modules/types/enums/work-mode"
 import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
@@ -57,6 +58,8 @@ export const JobListRow = ({ job }: JobListRowProps) => {
         [job.createdAt, t],
     )
 
+    const expired = isJobPostingExpired(job)
+
     return (
         <SurfaceListCardItem
             href={pathConfig().locale(locale).jobs(job.displayId).build()}
@@ -78,6 +81,11 @@ export const JobListRow = ({ job }: JobListRowProps) => {
                         {job.company.title}
                     </Typography>
                     <div className="flex flex-wrap items-center gap-2">
+                        {expired ? (
+                            <Chip size="sm" variant="soft" color="danger">
+                                <Chip.Label>{t("jobs.list.row.expired")}</Chip.Label>
+                            </Chip>
+                        ) : null}
                         {job.location ? (
                             <span className="inline-flex items-center gap-1 text-xs text-muted">
                                 <MapPinIcon aria-hidden focusable="false" className="size-3" />

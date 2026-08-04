@@ -2,7 +2,9 @@
 
 import React, {
     Suspense,
+    useCallback,
     useEffect,
+    useState,
 } from "react"
 import {
     Spinner,
@@ -23,6 +25,9 @@ import {
     EnrolledSuccess,
 } from "./EnrolledSuccess"
 import {
+    CheckoutExpired,
+} from "./CheckoutExpired"
+import {
     QrPanel,
 } from "./QrPanel"
 import {
@@ -34,6 +39,15 @@ import { pathConfig } from "@/resources/path"
 const POLL_INTERVAL_MS = 5000
 /** Delay (ms) before redirecting to the course once enrollment is confirmed. */
 const REDIRECT_DELAY_MS = 2000
+/**
+ * How long (ms) to keep polling before treating the checkout as timed out.
+ * There is no transaction-status query in the FE GraphQL layer (the only signal
+ * is enrollment, which can never flip `true → false`), so once this window
+ * elapses without enrollment we surface a terminal "expired" state rather than
+ * spinning forever — matching the BE's `Pending → Unpaid` transition
+ * (`transactions/business.md`). 15 minutes covers a slow bank transfer.
+ */
+const CHECKOUT_EXPIRY_MS = 15 * 60 * 1000
 
 /**
  * SePay checkout container.
@@ -57,9 +71,18 @@ const SepayCheckoutContent = () => {
     } = useQueryCourseEnrollmentStatusSwr()
     const isEnrolled = statusData?.courseEnrollmentStatus?.data?.isEnrolled
 
-    // poll the enrollment status on a fixed interval while waiting for payment
+    // once the checkout window elapses without enrollment, flip to the terminal
+    // "expired" state (there is no tx-status query to observe `Unpaid` directly)
+    const [isExpired, setIsExpired] = useState(false)
+
+    // poll the enrollment status on a fixed interval while waiting for payment —
+    // stops once we're enrolled (redirecting) or the checkout has expired, so we
+    // don't keep hitting the API on a settled/dead checkout
     useEffect(
         () => {
+            if (isEnrolled || isExpired) {
+                return
+            }
             const interval = setInterval(
                 () => {
                     refreshStatus()
@@ -67,6 +90,41 @@ const SepayCheckoutContent = () => {
                 POLL_INTERVAL_MS,
             )
             return () => clearInterval(interval)
+        },
+        [
+            refreshStatus,
+            isEnrolled,
+            isExpired,
+        ],
+    )
+
+    // arm the expiry timeout while waiting; re-arms whenever the user re-checks
+    // (which resets `isExpired` to false), and never fires once enrolled
+    useEffect(
+        () => {
+            if (isEnrolled || isExpired) {
+                return
+            }
+            const timer = setTimeout(
+                () => {
+                    setIsExpired(true)
+                },
+                CHECKOUT_EXPIRY_MS,
+            )
+            return () => clearTimeout(timer)
+        },
+        [
+            isEnrolled,
+            isExpired,
+        ],
+    )
+
+    // re-open the poll window and re-check once more (e.g. a slow transfer just
+    // settled after the timeout) — resets the terminal back to the waiting view
+    const onRecheck = useCallback(
+        () => {
+            setIsExpired(false)
+            refreshStatus()
         },
         [
             refreshStatus,
@@ -96,6 +154,10 @@ const SepayCheckoutContent = () => {
 
     if (isEnrolled) {
         return <EnrolledSuccess />
+    }
+
+    if (isExpired) {
+        return <CheckoutExpired onRecheck={onRecheck} />
     }
 
     return (

@@ -108,7 +108,7 @@ export const CommunityCommentItem = ({
                 onReact={authenticated ? onReact : undefined}
                 actions={(
                     <div className="flex items-center gap-3">
-                        {authenticated ? (
+                        {authenticated && !comment.isDeleted ? (
                             <Link onPress={() => setReplyOpen((previous) => !previous)}>
                                 <Typography type="body-xs" color="muted">
                                     {t("community.comments.reply")}

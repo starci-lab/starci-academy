@@ -14,7 +14,7 @@ import {
     Tabs,
     Typography,
 } from "@heroui/react"
-import { ArrowCounterClockwiseIcon, PlayIcon } from "@phosphor-icons/react"
+import { ArrowCounterClockwiseIcon, PlayIcon, MagnifyingGlassIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 import { useParams, useRouter } from "next/navigation"
@@ -23,6 +23,7 @@ import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { AIProcessingText } from "@/components/features/learn/AIProcessingText"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { ErrorContent } from "@/components/blocks/async/ErrorContent"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { StatusChip, type StatusChipTone } from "@/components/blocks/chips/StatusChip"
 import { ExtendedTabs } from "@/components/blocks/navigation/ExtendedTabs"
@@ -166,7 +167,12 @@ export const PracticeProblem = () => {
         return () => window.removeEventListener("blur", handleBlur)
     }, [])
 
-    const { data: problem, isLoading } = useSWR<CodingProblem | null>(
+    const {
+        data: problem,
+        isLoading,
+        error: problemError,
+        mutate: mutateProblem,
+    } = useSWR<CodingProblem | null>(
         ["coding-problem", slug],
         async () => {
             const response = await queryCodingProblem({ request: { slug } })
@@ -337,8 +343,43 @@ export const PracticeProblem = () => {
 
     const judging = pendingJobId !== null
 
-    if (isLoading || !problem) {
+    // first load in flight → skeleton
+    if (isLoading) {
         return <PracticeProblemSkeleton />
+    }
+
+    // load resolved with no problem: either a network/GraphQL error (`problemError`)
+    // or the BE's uniform 404 for an unknown/disabled slug (fetcher yields `null`).
+    // Distinguish the two, and never leave the skeleton spinning forever.
+    if (!problem) {
+        return (
+            <div className="flex h-[calc(100vh-4rem)] flex-col">
+                <div className="flex flex-col gap-3 border-b border-default px-6 py-3">
+                    <BackLink target={t("codingPractice.title")} onPress={onBack} />
+                </div>
+                <div className="flex min-h-0 flex-1 items-center justify-center px-6">
+                    {problemError ? (
+                        <ErrorContent
+                            title={t("codingPractice.detailError")}
+                            description={t("codingPractice.detailErrorHint")}
+                            onRetry={() => { void mutateProblem() }}
+                            retryLabel={t("common.retry")}
+                        />
+                    ) : (
+                        <EmptyState
+                            icon={<MagnifyingGlassIcon aria-hidden focusable="false" weight="duotone" />}
+                            title={t("codingPractice.notFound")}
+                            description={t("codingPractice.notFoundHint")}
+                            action={(
+                                <Button variant="primary" size="sm" onPress={onBack}>
+                                    {t("codingPractice.backToPractice")}
+                                </Button>
+                            )}
+                        />
+                    )}
+                </div>
+            </div>
+        )
     }
 
     const samples = problem.testcases ?? []

@@ -57,6 +57,9 @@ export const ProgressCockpit = ({
     const standing = standingSwr.data
 
     const solved = progress?.solvedProblemIds.length ?? 0
+    // `totalPoints` is the user's whole spendable Coin balance, NOT a coding-only
+    // figure — the `coding` leaderboard ranks on distinct problems solved instead
+    // (points are a different currency). Labelled "Coin" via `metric.points`.
     const totalPoints = progress?.totalPoints ?? 0
 
     // 2026-07-12: `skills`/`standing` fire alongside `progress` but the outer

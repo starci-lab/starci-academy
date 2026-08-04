@@ -9,6 +9,7 @@ import { HeadhuntingCompanyConsultants } from "./HeadhuntingCompanyConsultants"
 import { HeadhuntingCompanyProfile } from "./HeadhuntingCompanyProfile"
 import { HeadhuntingCompanyLoadingState } from "./HeadhuntingCompanyLoadingState"
 import { useHeadhuntingCompanyDetail } from "../hooks"
+import { ErrorContent } from "@/components/blocks/async/ErrorContent"
 
 /** Props for {@link HeadhuntingCompany}. */
 export type HeadhuntingCompanyProps = WithClassNames<undefined>
@@ -24,7 +25,21 @@ export const HeadhuntingCompany = ({ className }: HeadhuntingCompanyProps) => {
         companyId,
         company,
         companies,
+        error,
+        retry,
     } = useHeadhuntingCompanyDetail()
+
+    // an errored query never lands in Redux, so `companies` stays undefined — the
+    // loading gate below would otherwise spin forever; surface a retry instead
+    if (error && !companies) {
+        return (
+            <ErrorContent
+                title={t("headhuntings.error")}
+                onRetry={retry}
+                retryLabel={t("common.retry")}
+            />
+        )
+    }
 
     if (!companies) {
         return <HeadhuntingCompanyLoadingState />

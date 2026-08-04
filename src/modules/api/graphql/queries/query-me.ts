@@ -23,6 +23,12 @@ const query1 = gql`
         twoFactorEnabled
         openToWork
         profileLocked
+        sectionVisibility {
+          projects
+          challenges
+          skills
+          activity
+        }
         featuredAchievementSlug
         roleTitle
         location

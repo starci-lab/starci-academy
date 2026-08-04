@@ -45,6 +45,26 @@ export const CommunityCommentRow = ({
     // resolve the display name, falling back to the username when unset
     const displayName = comment.author.displayName || comment.author.username
 
+    // Soft-deleted comments are still returned by the listing (BE does not filter
+    // `isDeleted`); render a muted placeholder instead of the (empty) body, and
+    // suppress author identity, the reaction bar, and reply/edit controls. The
+    // `actions` slot is still rendered so thread navigation (e.g. "view replies")
+    // the owning feature chooses to keep stays reachable on a deleted node.
+    if (comment.isDeleted) {
+        return (
+            <div className={className}>
+                <div className="flex min-w-0 flex-col gap-1">
+                    <Typography type="body-xs" color="muted" className="italic">
+                        {t("community.comments.deleted")}
+                    </Typography>
+                    {actions ? (
+                        <div className="flex items-center gap-3">{actions}</div>
+                    ) : null}
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className={className}>
             <div className="flex gap-3">

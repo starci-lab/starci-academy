@@ -1,8 +1,8 @@
 "use client"
 
 import React, { useEffect } from "react"
-import { cn, Spinner } from "@heroui/react"
-import { useRouter } from "next/navigation"
+import { Button, cn, Spinner, Typography } from "@heroui/react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useLocale, useTranslations } from "next-intl"
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -37,6 +37,12 @@ export const OauthRedirect = ({ action, className }: OauthRedirectProps) => {
     const router = useRouter()
     const locale = useLocale()
     const t = useTranslations()
+    const searchParams = useSearchParams()
+
+    // Keycloak (and the OAuth2 spec) hands back a failed/cancelled round-trip on the
+    // redirect_uri as `?error=...` (e.g. `access_denied`), never establishing a session.
+    // Detect it BEFORE redirecting so we don't drop the user home wearing success chrome.
+    const hasOauthError = Boolean(searchParams.get("error"))
 
     // Hold the user briefly so the Keycloak session settles, then continue on: a sign-in
     // started from the `/login` guard stashed where the visitor was headed (query params
@@ -44,6 +50,11 @@ export const OauthRedirect = ({ action, className }: OauthRedirectProps) => {
     // setTimeout (not `sleep().then()`) so the pending redirect is cancelled via cleanup if
     // this page unmounts within the delay — `sleep()`'s promise can't be cancelled.
     useEffect(() => {
+        // a failed/cancelled hand-off never authenticated the user — render the failure
+        // state instead of forwarding them on as if signed in.
+        if (hasOauthError) {
+            return
+        }
         const handle = setTimeout(() => {
             let target: string | undefined
             if (action === OauthAction.Login) {
@@ -57,7 +68,29 @@ export const OauthRedirect = ({ action, className }: OauthRedirectProps) => {
         }, 1000)
 
         return () => clearTimeout(handle)
-    }, [action, locale, router])
+    }, [action, locale, router, hasOauthError])
+
+    if (hasOauthError) {
+        return (
+            <div className={cn("flex min-h-[60vh] flex-col items-center justify-center", className)}>
+                <div className="flex max-w-sm flex-col items-center gap-2 text-center">
+                    <Typography type="h5" weight="semibold" align="center">
+                        {t("auth.oauth.failedTitle")}
+                    </Typography>
+                    <Typography type="body-sm" color="muted" align="center">
+                        {t("auth.oauth.failedDescription")}
+                    </Typography>
+                    <Spacer y={3} />
+                    <Button
+                        variant="primary"
+                        onPress={() => router.replace(pathConfig().locale(locale).login().build())}
+                    >
+                        {t("auth.oauth.retry")}
+                    </Button>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className={cn("flex min-h-[60vh] flex-col items-center justify-center", className)}>

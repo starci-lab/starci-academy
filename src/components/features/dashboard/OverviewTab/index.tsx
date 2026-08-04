@@ -26,6 +26,9 @@ import {
     StreakStrip,
 } from "../StreakStrip"
 import {
+    StreakFreezeCard,
+} from "../StreakFreezeCard"
+import {
     WeeklyGoals,
 } from "../WeeklyGoals"
 import {
@@ -85,6 +88,8 @@ export const OverviewTab = ({
             >
                 <StreakStrip />
             </LabeledCard>
+            {/* streak-freeze inventory — self-framed card (buy/owned/full states), reads myWeeklyStats */}
+            <StreakFreezeCard />
             <LabeledCard
                 label={t("dashboard.sections.goals")}
                 onSeeMore={onSeeMoreGoals}

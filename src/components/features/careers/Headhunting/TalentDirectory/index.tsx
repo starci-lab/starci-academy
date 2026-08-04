@@ -53,7 +53,7 @@ export const TalentDirectory = ({ className }: TalentDirectoryProps) => {
         }
     }, [selectedCourseId, courses])
 
-    const { data, isLoading } = useQueryTalentCandidatesSwr(selectedCourseId)
+    const { data, isLoading, error, mutate } = useQueryTalentCandidatesSwr(selectedCourseId)
     const candidates = data ?? []
 
     return (
@@ -100,6 +100,12 @@ export const TalentDirectory = ({ className }: TalentDirectoryProps) => {
                         title: t("talentDirectory.empty"),
                         description: t("talentDirectory.emptyHint"),
                         icon: <ChartLineUpIcon aria-hidden focusable="false" className="size-8 text-muted" />,
+                    }}
+                    error={candidates.length === 0 ? error : undefined}
+                    errorContent={{
+                        title: t("talentDirectory.error"),
+                        onRetry: () => { void mutate() },
+                        retryLabel: t("common.retry"),
                     }}
                 >
                     <GroupPressableCard

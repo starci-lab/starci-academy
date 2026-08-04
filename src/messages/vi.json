@@ -24,7 +24,8 @@
       "reply": "Trả lời",
       "replyPlaceholder": "Viết trả lời…",
       "viewReplies": "Xem {count} trả lời",
-      "hideReplies": "Ẩn trả lời"
+      "hideReplies": "Ẩn trả lời",
+      "deleted": "[đã xoá]"
     },
     "chat": {
       "title": "Chat cộng đồng",
@@ -37,7 +38,10 @@
       "loading": "Đang tải tin nhắn…",
       "empty": "Chưa có tin nhắn. Bạn mở lời trước nhé.",
       "error": "Không tải được tin nhắn",
-      "signInRequired": "Đăng nhập bằng tài khoản có gói member để vào chat."
+      "signInRequired": "Đăng nhập bằng tài khoản có gói member để vào chat.",
+      "membersOnly": "Chỉ dành cho member",
+      "membersOnlyDescription": "Chat cộng đồng chỉ mở cho member đang hoạt động. Nâng cấp gói member để tham gia trò chuyện.",
+      "viewMembership": "Xem gói member"
     },
     "emptyFiltered": "Chưa có bài nào trong kênh này",
     "viewAllChannels": "Xem tất cả kênh"
@@ -914,7 +918,9 @@
     "phone": "Điện thoại",
     "email": "Email",
     "contactLocked": "Cần điểm CV ≥ {score} để mở thông tin liên hệ.",
-    "improveCv": "Cải thiện CV"
+    "contactLockedTitle": "Thông tin liên hệ đang bị khoá",
+    "improveCv": "Cải thiện CV",
+    "error": "Không tải được danh sách tư vấn viên."
   },
   "cv": {
     "title": "CV",
@@ -1946,7 +1952,7 @@
       "byDifficulty": "Theo độ khó",
       "metric": {
         "solved": "Đã giải",
-        "points": "Điểm",
+        "points": "Coin",
         "rank": "Hạng",
         "percentile": "Top đầu"
       }
@@ -2007,6 +2013,11 @@
   "codingPractice": {
     "title": "Luyện thuật toán",
     "subtitle": "Giải bài tập và được chấm code ngay lập tức",
+    "notFound": "Không tìm thấy bài tập",
+    "notFoundHint": "Bài tập có thể đã bị gỡ hoặc đường dẫn không đúng.",
+    "backToPractice": "Về trang luyện tập",
+    "detailError": "Không tải được bài tập này",
+    "detailErrorHint": "Đã có lỗi xảy ra. Vui lòng thử lại.",
     "allDifficulties": "Tất cả",
     "empty": "Chưa có bài tập nào.",
     "solved": "Đã giải",
@@ -3451,7 +3462,8 @@
       },
       "row": {
         "salaryNegotiable": "Thoả thuận",
-        "salaryRange": "{min} - {max}"
+        "salaryRange": "{min} - {max}",
+        "expired": "Hết hạn"
       },
       "emptyPlatform": {
         "title": "Chưa có tin tuyển dụng nào",
@@ -3471,7 +3483,8 @@
       "descriptionLabel": "Mô tả công việc",
       "requirementsLabel": "Yêu cầu",
       "apply": "Ứng tuyển",
-      "applyByEmail": "Ứng tuyển qua {email}"
+      "applyByEmail": "Ứng tuyển qua {email}",
+      "expired": "Tin tuyển dụng này đã hết hạn và không còn nhận hồ sơ ứng tuyển."
     },
     "post": {
       "title": "Đăng tin tuyển dụng",
@@ -3643,7 +3656,10 @@
     "oauth": {
       "authenticating": "Đang xác thực…",
       "signingIn": "Đang đăng nhập…",
-      "signingOut": "Đang đăng xuất…"
+      "signingOut": "Đang đăng xuất…",
+      "failedTitle": "Đăng nhập thất bại",
+      "failedDescription": "Chúng tôi không thể hoàn tất đăng nhập. Có thể bạn đã huỷ hoặc phiên đã hết hạn. Vui lòng thử lại.",
+      "retry": "Quay lại đăng nhập"
     }
   },
   "priceTag": {
@@ -3707,6 +3723,18 @@
     "crypto": {
       "desc": "Thanh toán bằng stablecoin (USDT/USDC)"
     },
+    "voucher": {
+      "title": "Mã giảm giá",
+      "none": "Không dùng mã",
+      "flatOff": "-{amount}",
+      "vndOnlyHint": "Mã này chỉ áp dụng cho cổng thanh toán nội địa (VND).",
+      "rejected": {
+        "title": "Không thể áp dụng mã giảm giá",
+        "notSupported": "Mã này không dùng được với cổng thanh toán đã chọn. Hãy thử cổng nội địa (VND).",
+        "invalid": "Mã giảm giá không còn hợp lệ — có thể đã hết hạn hoặc đã được sử dụng.",
+        "installmentCurrency": "Trả góp chỉ khả dụng với cổng thanh toán nội địa (VND)."
+      }
+    },
     "sepay": {
       "desc": "Thanh toán qua Sepay",
       "instruction": "Quét mã QR bằng ứng dụng ngân hàng để thanh toán.",
@@ -3719,7 +3747,13 @@
       "waiting": "Đang chờ thanh toán...",
       "success": "Thanh toán thành công!",
       "redirecting": "Đang chuyển hướng đến khóa học của bạn...",
-      "checkStatus": "Kiểm tra trạng thái"
+      "checkStatus": "Kiểm tra trạng thái",
+      "expired": {
+        "title": "Chưa hoàn tất thanh toán",
+        "description": "Chúng tôi chưa nhận được thanh toán của bạn kịp thời. Phiên thanh toán đã hết hạn — bạn có thể bắt đầu lại từ trang khóa học, hoặc kiểm tra lại nếu vừa thanh toán.",
+        "startOver": "Về trang khóa học",
+        "recheck": "Tôi đã thanh toán — kiểm tra lại"
+      }
     }
   },
   "aiProcessing": {
@@ -4696,6 +4730,8 @@
     "done": "Hoàn thành! Bạn đã ôn hết các thẻ đến hạn.",
     "due": "{count, plural, other {# thẻ cần ôn tập}}",
     "empty": "Hiện chưa có thẻ nào đến hạn ôn tập.",
+    "loadError": "Không tải được thẻ ôn tập.",
+    "intervalDays": "{days} ngày",
     "flip": "Lật thẻ",
     "progress": "{current} / {total}",
     "start": "Bắt đầu ôn",
@@ -4725,6 +4761,7 @@
       "milestoneGraded": "Chấm điểm Milestone",
       "newFollower": "Người theo dõi",
       "commentReply": "Bình luận",
+      "communityReply": "Cộng đồng",
       "subscriptionGranted": "Gói AI",
       "announcement": "Thông báo chung",
       "streakMilestone": "Streak"
@@ -5144,6 +5181,7 @@
     "candidatesAria": "Danh sách ứng viên theo lộ trình đang chọn",
     "qualified": "Đạt chuẩn",
     "empty": "Chưa có ứng viên cho lộ trình này.",
-    "emptyHint": "Chưa có ứng viên nào đạt đủ độ sâu ở lộ trình này. Bạn thử lộ trình khác xem sao."
+    "emptyHint": "Chưa có ứng viên nào đạt đủ độ sâu ở lộ trình này. Bạn thử lộ trình khác xem sao.",
+    "error": "Không tải được ứng viên cho lộ trình này."
   }
 }

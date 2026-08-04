@@ -17,6 +17,8 @@ export enum NotificationType {
     NewFollower = "newFollower",
     /** Someone replied to one of the recipient's discussion comments. */
     CommentReply = "commentReply",
+    /** Someone commented on or replied within the recipient's community post. */
+    CommunityReply = "communityReply",
     /** A paid AI subscription / membership tier was granted to the recipient. */
     SubscriptionGranted = "subscriptionGranted",
     /** A broadcast announcement fanned out to the recipient. */

@@ -7,6 +7,8 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ConsultantCard } from "../../Headhuntings/ConsultantCard"
 import { ConsultantCardSkeleton } from "../../Headhuntings/ConsultantCardSkeleton"
 import { useAppSelector } from "@/redux/hooks"
+import { useQueryHeadhunterCompaniesSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhunterCompaniesSwr"
+import { useQueryHeadhuntersSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhuntersSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 
 /** Number of placeholder cards shown while consultants load. */
@@ -27,6 +29,12 @@ export const HeadhuntingCompanyConsultants = ({ className }: HeadhuntingCompanyC
     const t = useTranslations()
     const consultants = useAppSelector((state) => state.headhunter.entities)
     const companyId = useAppSelector((state) => state.headhunter.companyId)
+    // read the loader queries' error/retry so a failed query surfaces error+retry
+    // rather than a perpetual skeleton (Redux stays `undefined` on failure). SWR
+    // dedupes with the container's own calls.
+    const { error: companiesError, mutate: mutateCompanies } = useQueryHeadhunterCompaniesSwr()
+    const { error: consultantsError, mutate: mutateConsultants } = useQueryHeadhuntersSwr()
+    const error = companiesError ?? consultantsError
 
     const companyConsultants = useMemo(() => {
         if (!consultants?.length || !companyId) {
@@ -49,6 +57,15 @@ export const HeadhuntingCompanyConsultants = ({ className }: HeadhuntingCompanyC
             )}
             isEmpty={companyConsultants.length === 0}
             emptyContent={{ title: t("headhuntings.empty") }}
+            error={error}
+            errorContent={{
+                title: t("headhuntings.error"),
+                onRetry: () => {
+                    void mutateCompanies()
+                    void mutateConsultants()
+                },
+                retryLabel: t("common.retry"),
+            }}
         >
             <div className={cn("grid grid-cols-1 gap-3 @app-sm:grid-cols-2 @app-lg:grid-cols-3", className)}>
                 {companyConsultants.map((consultant) => (

@@ -12,7 +12,9 @@ import { JobApplyMethod } from "@/modules/types/enums/job-apply-method"
 import { WorkMode } from "@/modules/types/enums/work-mode"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
+import { isJobPostingExpired } from "../utils"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Callout } from "@/components/composites/feedback/Callout"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
@@ -69,6 +71,9 @@ export const JobDetail = ({ className }: JobDetailProps) => {
     }, [job, locale, t])
 
     const postedAgo = job ? getTimeAgoLabel(getTimeAgoMessage(job.createdAt), t) : ""
+    // an expired posting is served like any other (no BE expiry filter) — the FE
+    // closes it: the Apply CTA is replaced with a "no longer accepting" notice
+    const expired = job ? isJobPostingExpired(job) : false
 
     const companyHref = job && courseDisplayId
         ? pathConfig().locale(locale).course(courseDisplayId).headhuntingCompanies(job.companyId).build()
@@ -219,18 +224,24 @@ export const JobDetail = ({ className }: JobDetailProps) => {
                             ) : null}
                         </div>
 
-                        {job.applyMethod === JobApplyMethod.ExternalUrl && job.applyUrl ? (
-                            <Button variant="primary" size="lg" onPress={onApplyExternal}>
-                                {t("jobs.detail.apply")}
-                                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
-                            </Button>
-                        ) : null}
-                        {job.applyMethod === JobApplyMethod.Email && job.applyEmail ? (
-                            <Button variant="primary" size="lg" onPress={onApplyByEmail}>
-                                {t("jobs.detail.applyByEmail", { email: job.applyEmail })}
-                                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
-                            </Button>
-                        ) : null}
+                        {expired ? (
+                            <Callout status="warning" title={t("jobs.detail.expired")} />
+                        ) : (
+                            <>
+                                {job.applyMethod === JobApplyMethod.ExternalUrl && job.applyUrl ? (
+                                    <Button variant="primary" size="lg" onPress={onApplyExternal}>
+                                        {t("jobs.detail.apply")}
+                                        <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                                    </Button>
+                                ) : null}
+                                {job.applyMethod === JobApplyMethod.Email && job.applyEmail ? (
+                                    <Button variant="primary" size="lg" onPress={onApplyByEmail}>
+                                        {t("jobs.detail.applyByEmail", { email: job.applyEmail })}
+                                        <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                                    </Button>
+                                ) : null}
+                            </>
+                        )}
                     </>
                 ) : null}
             </AsyncContent>

@@ -18,6 +18,7 @@ import {
     PuzzlePieceIcon,
     SparkleIcon,
     UserPlusIcon,
+    UsersThreeIcon,
 } from "@phosphor-icons/react"
 import {
     Button,
@@ -81,6 +82,7 @@ const TYPE_ICONS: Record<NotificationType, ReactNode> = {
     [NotificationType.MilestoneGraded]: <FlagIcon aria-hidden focusable="false" />,
     [NotificationType.NewFollower]: <UserPlusIcon aria-hidden focusable="false" />,
     [NotificationType.CommentReply]: <ChatCircleIcon aria-hidden focusable="false" />,
+    [NotificationType.CommunityReply]: <UsersThreeIcon aria-hidden focusable="false" />,
     [NotificationType.SubscriptionGranted]: <SparkleIcon aria-hidden focusable="false" />,
     [NotificationType.Announcement]: <MegaphoneIcon aria-hidden focusable="false" />,
     [NotificationType.StreakMilestone]: <FlameIcon aria-hidden focusable="false" />,
@@ -237,6 +239,11 @@ export const NotificationCenter = ({ className }: NotificationCenterProps) => {
                                 key: NotificationType.CommentReply,
                                 label: t("notifications.tabs.commentReply"),
                                 icon: <ChatCircleIcon className="size-4" aria-hidden focusable="false" />,
+                            },
+                            {
+                                key: NotificationType.CommunityReply,
+                                label: t("notifications.tabs.communityReply"),
+                                icon: <UsersThreeIcon className="size-4" aria-hidden focusable="false" />,
                             },
                             {
                                 key: NotificationType.MilestoneGraded,

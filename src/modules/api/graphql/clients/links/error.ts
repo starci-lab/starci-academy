@@ -69,6 +69,11 @@ export const createErrorLink = (debug = false) =>
                     if (debug) {
                         console.log("[GraphQL error]: Unauthorized")
                     }
+                    // token expired mid-session (not superseded) → force logout the
+                    // same way, so the user re-authenticates instead of being stranded
+                    // on a half-authed shell where every query keeps returning 401.
+                    handleSessionSuperseded()
+                    return
                 }
             }
             return

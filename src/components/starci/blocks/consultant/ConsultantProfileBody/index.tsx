@@ -52,6 +52,15 @@ export interface ConsultantProfileBodyProps {
     onOpenCompany?: () => void
     /** Fired from the locked callout's CTA. No CTA renders without it. */
     onImproveCv?: () => void
+    /** Locked-callout heading. Falls back to the block's own English copy when omitted. */
+    lockedTitle?: string
+    /**
+     * Locked-callout body — the place to surface the required CV score (e.g.
+     * "cần điểm CV ≥ 70"). Falls back to the block's own English copy when omitted.
+     */
+    lockedDescription?: string
+    /** Locked-callout CTA label. Falls back to the block's own English copy when omitted. */
+    lockedCtaLabel?: string
     /**
      * `true` → `Image` and every `Typography` line switch to their own shimmer, the
      * company button is disabled, and the contact fork shows a neutral shimmer
@@ -76,6 +85,9 @@ const ConsultantProfileBody = ({
     consultant,
     onOpenCompany,
     onImproveCv,
+    lockedTitle,
+    lockedDescription,
+    lockedCtaLabel,
     isSkeleton = false,
 }: ConsultantProfileBodyProps) => {
     const { fullName, jobTitle, companyTitle, description, avatarUrl, contactUnlocked, contactLinks } = consultant
@@ -157,9 +169,9 @@ const ConsultantProfileBody = ({
         <Callout
             status="warning"
             icon={LockIcon}
-            title={LOCKED_TITLE}
-            description={LOCKED_DESCRIPTION}
-            actionLabel={onImproveCv ? LOCKED_CTA_LABEL : undefined}
+            title={lockedTitle ?? LOCKED_TITLE}
+            description={lockedDescription ?? LOCKED_DESCRIPTION}
+            actionLabel={onImproveCv ? (lockedCtaLabel ?? LOCKED_CTA_LABEL) : undefined}
             onAction={onImproveCv}
 
 

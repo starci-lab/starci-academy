@@ -24,7 +24,8 @@
       "reply": "Reply",
       "replyPlaceholder": "Write a reply…",
       "viewReplies": "View {count} replies",
-      "hideReplies": "Hide replies"
+      "hideReplies": "Hide replies",
+      "deleted": "[deleted]"
     },
     "chat": {
       "title": "Community chat",
@@ -37,7 +38,10 @@
       "loading": "Loading messages…",
       "empty": "No messages yet. Say hello!",
       "error": "Could not load messages",
-      "signInRequired": "Sign in with an active membership to join the chat."
+      "signInRequired": "Sign in with an active membership to join the chat.",
+      "membersOnly": "Members only",
+      "membersOnlyDescription": "Community chat is open to active members. Upgrade your membership to join the conversation.",
+      "viewMembership": "View membership"
     },
     "emptyFiltered": "No posts in this channel yet",
     "viewAllChannels": "View all channels"
@@ -905,7 +909,9 @@
     "phone": "Phone",
     "email": "Email",
     "contactLocked": "Reach a CV score of {score} or higher to unlock contact info.",
-    "improveCv": "Improve your CV"
+    "contactLockedTitle": "Contact is locked",
+    "improveCv": "Improve your CV",
+    "error": "Could not load consultants."
   },
   "cv": {
     "title": "CV",
@@ -1937,7 +1943,7 @@
       "byDifficulty": "By difficulty",
       "metric": {
         "solved": "Solved",
-        "points": "Points",
+        "points": "Coin",
         "rank": "Rank",
         "percentile": "Top percentile"
       }
@@ -1998,6 +2004,11 @@
   "codingPractice": {
     "title": "Algorithm Practice",
     "subtitle": "Solve problems and get your code judged instantly",
+    "notFound": "Problem not found",
+    "notFoundHint": "This problem may have been unpublished, or the link is wrong.",
+    "backToPractice": "Back to practice",
+    "detailError": "Couldn't load this problem",
+    "detailErrorHint": "Something went wrong. Please try again.",
     "allDifficulties": "All",
     "empty": "No problems yet.",
     "solved": "Solved",
@@ -3442,7 +3453,8 @@
       },
       "row": {
         "salaryNegotiable": "Negotiable",
-        "salaryRange": "{min} - {max}"
+        "salaryRange": "{min} - {max}",
+        "expired": "Expired"
       },
       "emptyPlatform": {
         "title": "No job postings yet",
@@ -3462,7 +3474,8 @@
       "descriptionLabel": "Job description",
       "requirementsLabel": "Requirements",
       "apply": "Apply now",
-      "applyByEmail": "Apply via {email}"
+      "applyByEmail": "Apply via {email}",
+      "expired": "This posting has expired and is no longer accepting applications."
     },
     "post": {
       "title": "Post a job",
@@ -3634,7 +3647,10 @@
     "oauth": {
       "authenticating": "Authenticating you…",
       "signingIn": "Signing you in…",
-      "signingOut": "Signing you out…"
+      "signingOut": "Signing you out…",
+      "failedTitle": "Sign-in failed",
+      "failedDescription": "We couldn't complete the sign-in. It may have been cancelled or timed out. Please try again.",
+      "retry": "Back to sign in"
     }
   },
   "priceTag": {
@@ -3698,6 +3714,18 @@
     "crypto": {
       "desc": "Pay with stablecoins (USDT/USDC)"
     },
+    "voucher": {
+      "title": "Voucher",
+      "none": "No voucher",
+      "flatOff": "-{amount}",
+      "vndOnlyHint": "This voucher is only valid on domestic (VND) gateways.",
+      "rejected": {
+        "title": "Voucher couldn't be applied",
+        "notSupported": "This voucher can't be used with the selected payment gateway. Try a domestic (VND) gateway.",
+        "invalid": "This voucher is no longer valid — it may have expired or already been used.",
+        "installmentCurrency": "Installments are only available on domestic (VND) gateways."
+      }
+    },
     "sepay": {
       "desc": "Pay with Sepay",
       "instruction": "Scan the QR code below using your banking app to pay.",
@@ -3710,7 +3738,13 @@
       "waiting": "Waiting for payment...",
       "success": "Payment Successful!",
       "redirecting": "Redirecting to your course...",
-      "checkStatus": "Check Status"
+      "checkStatus": "Check Status",
+      "expired": {
+        "title": "Payment not completed",
+        "description": "We haven't received your payment in time. The checkout has expired — you can start over from the course page, or check once more if you've just paid.",
+        "startOver": "Back to course",
+        "recheck": "I've paid — check again"
+      }
     }
   },
   "aiProcessing": {
@@ -4696,6 +4730,8 @@
     "done": "All caught up! You've reviewed every due card.",
     "due": "{count, plural, one {# card due for review} other {# cards due for review}}",
     "empty": "No cards are due for review right now.",
+    "loadError": "Couldn't load your review cards.",
+    "intervalDays": "{days}d",
     "flip": "Flip card",
     "progress": "{current} / {total}",
     "start": "Start review",
@@ -4725,6 +4761,7 @@
       "milestoneGraded": "Milestone grading",
       "newFollower": "Followers",
       "commentReply": "Comments",
+      "communityReply": "Community",
       "subscriptionGranted": "AI plan",
       "announcement": "Announcements",
       "streakMilestone": "Streak"
@@ -5144,6 +5181,7 @@
     "candidatesAria": "Candidates for the selected track",
     "qualified": "Qualified",
     "empty": "No candidates for this track yet.",
-    "emptyHint": "No one open to work has built depth in this track. Try another track."
+    "emptyHint": "No one open to work has built depth in this track. Try another track.",
+    "error": "Could not load candidates for this track."
   }
 }

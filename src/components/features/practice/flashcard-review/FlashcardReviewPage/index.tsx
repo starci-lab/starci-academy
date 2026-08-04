@@ -31,8 +31,10 @@ import type {
 import { useMutateReviewFlashcardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReviewFlashcardSwr"
 import { useQueryMyDueFlashcardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDueFlashcardsSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import { ErrorContent } from "@/components/blocks/async/ErrorContent"
 import type { GraphQLResponse } from "@/modules/api/graphql/types"
 import type { ReviewFlashcardData } from "@/modules/api/graphql/mutations/types/review-flashcard"
+import type { QueryFlashcardNextIntervals } from "@/modules/api/graphql/queries/types/my-due-flashcards"
 
 /** Props for {@link FlashcardReviewPage}. */
 export type FlashcardReviewPageProps = WithClassNames<undefined>
@@ -40,7 +42,8 @@ export type FlashcardReviewPageProps = WithClassNames<undefined>
 /** SM-2 grade buttons (value + i18n key + tone), ordered worst → best. */
 const GRADES: Array<{
     grade: number
-    key: string
+    /** i18n key AND the `nextIntervals` field this grade previews. */
+    key: keyof QueryFlashcardNextIntervals
     variant: "danger" | "danger-soft" | "secondary" | "primary"
 }> = [
     { grade: 0, key: "again", variant: "danger" },
@@ -64,7 +67,7 @@ export const FlashcardReviewPage = ({
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
-    const { data, isLoading } = useQueryMyDueFlashcardsSwr()
+    const { data, isLoading, error, mutate } = useQueryMyDueFlashcardsSwr()
     const { trigger: triggerReview } = useMutateReviewFlashcardSwr()
     const runGraphQL = useGraphQLWithToast()
 
@@ -116,6 +119,20 @@ export const FlashcardReviewPage = ({
             runGraphQL,
         ],
     )
+
+    // query failed with no cached data → error state with retry (never spin
+    // forever: `isLoading` is already false and `data` is undefined here)
+    if (error && !data) {
+        return (
+            <div className={cn("flex min-h-[60vh] items-center justify-center", className)}>
+                <ErrorContent
+                    title={t("flashcardReview.loadError")}
+                    onRetry={() => { void mutate() }}
+                    retryLabel={t("common.retry")}
+                />
+            </div>
+        )
+    }
 
     // still loading the queue → centred spinner
     if (isLoading || !data) {
@@ -195,7 +212,17 @@ export const FlashcardReviewPage = ({
                             isPending={savingGrade === item.grade}
                             onPress={() => void onGrade(item.grade)}
                         >
-                            {t(`flashcardReview.${item.key}`)}
+                            {/* label over the SM-2 next-interval preview the BE ships
+                                per grade (`nextIntervals`), so the learner sees how far
+                                each choice pushes the card before picking. */}
+                            <span className="flex flex-col items-center leading-tight">
+                                <span>{t(`flashcardReview.${item.key}`)}</span>
+                                <span className="text-xs opacity-80">
+                                    {t("flashcardReview.intervalDays", {
+                                        days: current.nextIntervals[item.key],
+                                    })}
+                                </span>
+                            </span>
                         </Button>
                     ))}
                 </div>

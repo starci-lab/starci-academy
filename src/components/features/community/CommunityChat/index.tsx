@@ -2,8 +2,10 @@
 
 import React, { useMemo, useState } from "react"
 import { Button } from "@heroui/react"
+import { UsersThreeIcon } from "@phosphor-icons/react"
 import type { Key } from "react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 import { ChatPane } from "./ChatPane"
 import { ChatPaneSkeleton } from "./ChatPane/ChatPaneSkeleton"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
@@ -14,6 +16,7 @@ import { useAuthenticationOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useQueryCommunityChatConversationSwr } from "@/hooks/swr/api/graphql/queries/useQueryCommunityChatConversationSwr"
 import { useQueryMyFounderConversationSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFounderConversationSwr"
 import { useAppSelector } from "@/redux/hooks"
+import { pathConfig } from "@/resources/path"
 
 /** Which conversation the chat surface is showing. */
 type ChatTab = "community" | "founder"
@@ -25,17 +28,29 @@ type ChatTab = "community" | "founder"
  */
 export const CommunityChat = () => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const authentication = useAuthenticationOverlayState()
     const [tab, setTab] = useState<ChatTab>("community")
 
-    const { data: communityConversation } = useQueryCommunityChatConversationSwr()
-    const { data: founderConversation } = useQueryMyFounderConversationSwr()
+    const communityConversationSwr = useQueryCommunityChatConversationSwr()
+    const founderConversationSwr = useQueryMyFounderConversationSwr()
+
+    // the SWR handle for the active tab — chat reads are member-only, so a
+    // signed-in non-member either errors (membership gate) or resolves to null.
+    const activeConversationSwr = tab === "community"
+        ? communityConversationSwr
+        : founderConversationSwr
 
     // the conversation id for the active tab (undefined until resolved)
-    const conversationId = tab === "community"
-        ? communityConversation?.id
-        : founderConversation?.id
+    const conversationId = activeConversationSwr.data?.id
+    // still resolving: only the initial load, before either an id or a terminal
+    // (error / null) is known — this is what the skeleton is allowed to cover.
+    const isResolving = activeConversationSwr.isLoading && !activeConversationSwr.data
+    // the query settled but yielded no conversation for the active tab: the
+    // membership gate rejected a signed-in non-member (or the read failed).
+    const membersOnly = !isResolving && !conversationId
 
     const tabs = useMemo(
         () => [
@@ -65,6 +80,26 @@ export const CommunityChat = () => {
                         />
                         {conversationId ? (
                             <ChatPane key={conversationId} conversationId={conversationId} />
+                        ) : membersOnly ? (
+                            // Signed-in but the membership gate rejected this read (or it
+                            // failed): a non-member must not sit on a perpetual skeleton —
+                            // surface a members-only terminal with an upsell to membership.
+                            <EmptyState
+                                icon={<UsersThreeIcon aria-hidden focusable="false" />}
+                                title={t("community.chat.membersOnly")}
+                                description={t("community.chat.membersOnlyDescription")}
+                                action={(
+                                    <Button
+                                        variant="primary"
+                                        size="sm"
+                                        onPress={() => router.push(
+                                            pathConfig().locale(locale).profile().membership().build(),
+                                        )}
+                                    >
+                                        {t("community.chat.viewMembership")}
+                                    </Button>
+                                )}
+                            />
                         ) : (
                             // 2026-07-12: was a bare "loading…" caption while the active
                             // conversation id resolves — mirror the real pane's shape

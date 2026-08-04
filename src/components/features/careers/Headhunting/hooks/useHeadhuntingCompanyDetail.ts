@@ -21,6 +21,10 @@ export interface UseHeadhuntingCompanyDetailResult {
     consultants: Array<ConsultantEntity> | undefined
     /** Consultants belonging to the active company, sorted by order index. */
     companyConsultants: Array<ConsultantEntity>
+    /** SWR error from either the companies or consultants query, when one failed. */
+    error: unknown
+    /** Revalidate both underlying queries (retry after an error). */
+    retry: () => void
 }
 
 /**
@@ -36,8 +40,8 @@ export const useHeadhuntingCompanyDetail = (): UseHeadhuntingCompanyDetailResult
     const companies = useAppSelector((state) => state.headhunter.companies)
     const consultants = useAppSelector((state) => state.headhunter.entities)
 
-    useQueryHeadhunterCompaniesSwr()
-    useQueryHeadhuntersSwr()
+    const { error: companiesError, mutate: mutateCompanies } = useQueryHeadhunterCompaniesSwr()
+    const { error: consultantsError, mutate: mutateConsultants } = useQueryHeadhuntersSwr()
 
     // sync the active company into Redux once the list + route param resolve
     useEffect(() => {
@@ -73,5 +77,10 @@ export const useHeadhuntingCompanyDetail = (): UseHeadhuntingCompanyDetailResult
         companies,
         consultants,
         companyConsultants,
+        error: companiesError ?? consultantsError,
+        retry: () => {
+            void mutateCompanies()
+            void mutateConsultants()
+        },
     }
 }

@@ -7,6 +7,8 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ConsultantCard } from "../ConsultantCard"
 import { ConsultantCardSkeleton } from "../ConsultantCardSkeleton"
 import { useAppSelector } from "@/redux/hooks"
+import { useQueryHeadhunterCompaniesSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhunterCompaniesSwr"
+import { useQueryHeadhuntersSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhuntersSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 
 /** Number of placeholder cards shown while the consultant list loads. */
@@ -25,6 +27,12 @@ export type ConsultantGridProps = WithClassNames<undefined>
 export const ConsultantGrid = ({ className }: ConsultantGridProps) => {
     const t = useTranslations()
     const consultants = useAppSelector((state) => state.headhunter.entities)
+    // the list is loaded into Redux by these queries; read their error/retry here
+    // so a failed query surfaces an error+retry instead of an endless skeleton
+    // (Redux stays `undefined` on failure). SWR dedupes with the container's calls.
+    const { error: companiesError, mutate: mutateCompanies } = useQueryHeadhunterCompaniesSwr()
+    const { error: consultantsError, mutate: mutateConsultants } = useQueryHeadhuntersSwr()
+    const error = companiesError ?? consultantsError
 
     const sortedConsultants = useMemo(() => {
         if (!consultants?.length) {
@@ -45,6 +53,15 @@ export const ConsultantGrid = ({ className }: ConsultantGridProps) => {
             )}
             isEmpty={sortedConsultants.length === 0}
             emptyContent={{ title: t("headhuntings.empty") }}
+            error={error}
+            errorContent={{
+                title: t("headhuntings.error"),
+                onRetry: () => {
+                    void mutateCompanies()
+                    void mutateConsultants()
+                },
+                retryLabel: t("common.retry"),
+            }}
         >
             <div className={cn("grid grid-cols-1 gap-6 @app-sm:grid-cols-2 @app-lg:grid-cols-3", className)}>
                 {sortedConsultants.map((consultant) => (

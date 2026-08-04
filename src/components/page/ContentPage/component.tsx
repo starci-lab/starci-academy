@@ -14,7 +14,7 @@ import {
     type ContentModeOption,
 } from "@/components/starci/blocks/learn/ContentModeNav"
 import {
-    ContentArticle as ArticleBlock,
+    ContentArticle,
     type ContentArticleOffer,
 } from "@/components/starci/blocks/learn/ContentArticle"
 import {
@@ -35,9 +35,30 @@ import {
     type ContentPagerNeighbour,
 } from "@/components/starci/blocks/learn/ContentPager"
 
+/**
+ * `_ContentPage` — the SRC TWIN of `.storybook/components/starci/pages/
+ * ContentPage/ContentPage.tsx`. Presentational: typed props, already
+ * resolved; no fetch/store/i18n (that's the connected half, `./index.tsx`).
+ *
+ * A screen owns a list of functions: it calls blocks, places them in frames,
+ * and hands each typed data. Seven functions, in reading order: what this
+ * lesson is · how to look at it · read it · say how it landed · what else to
+ * read · talk about it · step to the next one. The footer (reaction, related
+ * reading, discussion, pager) is conditional — it appears only on an open
+ * lesson; a reader stopped by the paywall sees one decision (the `Locked`
+ * leaf). The sandbox / challenges / AI lab tab bodies are their own
+ * not-yet-built blocks and are deliberately left unrendered rather than
+ * stubbed.
+ *
+ * On top of the pure blueprint composition, this presentational file also
+ * carries the real async lifecycle (error → skeleton → empty → content) —
+ * the same extension `_ModulePage`/`_ContentArticle` already make, since a
+ * static storybook blueprint has no fetch to fail but a real page does.
+ */
+
 // re-exported so the connected file (and anything downstream) can build data
-// against the SAME types the blueprint (`ContentPage`) and its blocks define,
-// rather than redeclaring shape that already exists.
+// against the SAME types the blueprint's blocks define, rather than
+// redeclaring shape that already exists.
 export type {
     ContentHeaderCrumb,
     ContentHeaderOutcome,
@@ -54,8 +75,8 @@ export type {
 }
 
 /** The mobile/tablet-only "practice this lesson" nudge — omitted → the block never mounts. */
-export interface ContentArticleUpNext {
-    /** Small label above the title, e.g. "Up next - Practice this lesson". */
+export interface ContentPageUpNext {
+    /** Small label above the title, e.g. "Up next · Practice this lesson". */
     eyebrow: string
     /** Nudge title, e.g. "Do this lesson's 3 challenges". */
     title: string
@@ -67,11 +88,13 @@ export interface ContentArticleUpNext {
     onPress: () => void
 }
 
-/** Props for {@link _ContentArticle} — presentational; all data resolved, no fetch/store/i18n. */
-export interface ContentArticleProps {
-    /** Async status, owned by the connected file. */
+/** Props for {@link _ContentPage}. */
+export interface ContentPageProps {
+    /** `true` while the lesson fetch is running (no cache yet). */
     isLoading?: boolean
+    /** Set once loading finishes with no result → the error branch. */
     error?: unknown
+    /** Retry the failed fetch. */
     onRetry?: () => void
     /** `true` (after loading) → no lesson found → the empty state. */
     isEmpty?: boolean
@@ -103,7 +126,12 @@ export interface ContentArticleProps {
     mode: ContentMode
     /** Fired with the mode the reader picked. */
     onModeChange: (mode: ContentMode) => void
-    /** The FULL fixed language catalog, each carrying its own `isDisabled`. */
+    /**
+     * The FULL fixed language catalog, each carrying its own `isDisabled` for a
+     * language this lesson has no body in — see `ContentModeNav`'s own prop
+     * doc. Fewer than two AVAILABLE entries → the tab row's right-hand group
+     * is not drawn at all.
+     */
     languages?: Array<ContentLanguage>
     /** Which language is being read. */
     language?: string
@@ -137,7 +165,7 @@ export interface ContentArticleProps {
      * qualifies (mode === "content" && challengeCount > 0) and only then hands
      * this over — omitted → the block never mounts, on any viewport.
      */
-    upNext?: ContentArticleUpNext
+    upNext?: ContentPageUpNext
 
     /** Related lessons; empty → that block draws nothing. */
     relatedItems: Array<ContentRelatedItem>
@@ -186,22 +214,12 @@ export interface ContentArticleProps {
 }
 
 /**
- * Lesson reading screen — the presentational half of {@link ContentArticle}, mirroring the
- * `ContentPage` blueprint's block composition (`.storybook/components/starci/pages/ContentPage`)
- * onto the same seven functions: identity (`ContentHeader`) → how to view it (`ContentModeNav`) →
- * read it (the `ContentArticle` block) → react to it (`ContentReaction`) → what else to read
- * (`ContentRelatedList`) → discuss it (`ContentDiscussion`) → step to the next one (`ContentPager`).
+ * The lesson reading screen. See the file header for the function list and
+ * the async-lifecycle extension over the pure blueprint.
  *
- * ONE tree (`spine`), threaded with `isSkeleton`; the error/empty states swap in the shared
- * `AsyncContentError`/`AsyncContentEmpty` message frames ahead of it, priority error → skeleton →
- * empty → content (BLOCK-8). `ContentModeNav` is the one exception — static chrome the
- * reader already knows before any request settles, so it never receives `isSkeleton` (see its
- * own file header). The footer cluster (reaction, related, discussion, pager) is skipped
- * entirely while `isLocked` — a paywalled reader has one decision to make, not five.
- *
- * @param props - {@link ContentArticleProps}
+ * @param props - {@link ContentPageProps}
  */
-export const _ContentArticle = ({
+export const _ContentPage = ({
     isLoading = false,
     error,
     onRetry,
@@ -254,7 +272,7 @@ export const _ContentArticle = ({
     previous,
     next,
     pagerAriaLabel,
-}: ContentArticleProps) => {
+}: ContentPageProps) => {
     // ONE tree — the resting state is this SAME spine with `isSkeleton` threaded into every
     // shimmer-capable part, never a hand-mirrored copy. `spine(true)` is the loading branch,
     // `spine(false)` the content branch; they cannot drift because they are the same code.
@@ -299,7 +317,7 @@ export const _ContentArticle = ({
                                         />
                                     ),
                                     () => (
-                                        <ArticleBlock
+                                        <ContentArticle
                                             body={body}
                                             isLocked={isLocked}
                                             offer={offer}
@@ -395,7 +413,7 @@ export const _ContentArticle = ({
             : spine(isLoading)
 
     return (
-        <div data-tier="page" data-component="ContentArticle">
+        <div data-tier="page" data-component="ContentPage">
             {inner}
         </div>
     )

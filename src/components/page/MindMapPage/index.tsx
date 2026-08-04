@@ -24,6 +24,16 @@ import { StackH, StackV } from "@/components/frames/Stack"
  * PRESENTATIONAL — every input arrives as a prop; this twin owns no data of
  * its own, so `index.tsx` IS the presentational file (no separate connected
  * wrapper, no `component.tsx` split).
+ *
+ * Emits its own identity (`data-tier="page"` / `data-component="MindMapPage"`)
+ * unconditionally on its root, same as `_ModulePage`/`_ContentArticle` — see
+ * `split.md`'s "Identity is data-tier + data-component" section. Three raw
+ * `className` spots remain (viewport-relative full-bleed height, the canvas's
+ * floating-chrome anchoring, the rail's scroll region) — each is a genuine
+ * vocabulary gap, not a style miss; see the inline "NEW VOCABULARY GAP" notes
+ * at each spot for why no existing frame reaches there and why `Box` (the
+ * frame tier's own escape hatch) is not the fix — it is explicitly off-limits
+ * to a page/block, not just to this one.
  */
 
 /** Which shape of the mind map this screen renders — see the file header. */
@@ -185,133 +195,152 @@ const MindMapPage = ({
     isSkeleton = false,
     isEmpty = false,
 }: MindMapPageProps) => {
-    if (variant === "workspace" && isEmpty) {
-        return <MindMapWorkspaceEmpty />
+    // Built as a thunk, called only for the non-empty branch below — mirrors
+    // `_ModulePage`'s `spine(isSkeleton)`, so the empty branch never pays for
+    // building a tree it will not render.
+    const workspace = () => {
+        const railSection = (
+            <MindMapRail
+
+                query={query}
+                onQuery={onQuery}
+                tier={tier}
+                onTier={onTier}
+                items={items}
+                selectedId={selectedId}
+                onPick={onPick}
+                isLoading={isRailLoading}
+                ariaLabel={railAriaLabel}
+                tierAriaLabel={railTierAriaLabel}
+                isSkeleton={isSkeleton}
+
+            />
+        )
+
+        // The canvas region's floating chrome — in the real app these render as the
+        // SAME ReactFlow engine's own Panel children. NEW VOCABULARY GAP: no frame
+        // owns "floating chrome anchored over a canvas" yet — `AllowedClassName`
+        // deliberately excludes `absolute`/`relative`/`fixed`/`sticky` (positioning
+        // scheme is a parent composite's call, per its own doc), and `Box` — the
+        // frame tier's escape hatch for exactly that appearance concern — is
+        // explicitly off-limits to a page/block. Kept as minimal raw markup
+        // (one flat `className`, no `cn()`) until that frame exists.
+        const canvasOverlays = (
+            <>
+                <div className="absolute inset-x-0 top-4 z-10">
+                    <StackV
+                        gap={1}
+                        principles={["sibling-stack"]}
+                        align="center"
+                        isSkeleton={isSkeleton}
+                        items={[() => (
+                            <MindMapContinueButton
+
+                                resumeHref={resumeHref}
+                                allContentDone={allContentDone}
+                                onResume={onResume}
+                                continueAriaLabel={continueAriaLabel}
+                                isSkeleton={isSkeleton}
+                            />
+                        )]}
+                    />
+                </div>
+                <div className="absolute bottom-4 left-4 z-10">
+                    <StackV
+                        gap={1}
+                        isSkeleton={isSkeleton}
+                        items={[() => <Legend items={legendItems} />]}
+                    />
+                </div>
+                <div className="absolute bottom-4 right-4 z-10">
+                    <StackV
+                        gap={1}
+                        isSkeleton={isSkeleton}
+                        items={[() => (
+                            <MindMapFullscreenButton
+
+                                onZoomIn={onZoomIn}
+                                onZoomOut={onZoomOut}
+                                onToggleFullscreen={onToggleFullscreen}
+                                isFullscreen={isFullscreen}
+                                ariaLabels={fullscreenAriaLabels}
+                                isSkeleton={isSkeleton}
+                            />
+                        )]}
+                    />
+                </div>
+            </>
+        )
+
+        const canvasRegion = (
+            <>
+                <MindMapCanvasGap isLoading={isSkeleton} />
+                {variant === "standalone" && !isSkeleton ? canvasOverlays : null}
+            </>
+        )
+
+        const workspaceRail = (
+            <ResizableRail
+                storageKey={RAIL_STORAGE_KEY}
+                defaultWidth={RAIL_DEFAULT_WIDTH}
+                minWidth={RAIL_MIN_WIDTH}
+                maxWidth={RAIL_MAX_WIDTH}
+                ariaLabel={railResizeAriaLabel}
+                handleSide="right"
+                className="h-full shrink-0 border-r border-default"
+
+            >
+                {/* NEW VOCABULARY GAP: no frame carries a scrollable-region flag
+                    (`overflow-y-auto`) yet — `ResizableRail`/`RailShell` own width and
+                    the handle only. Kept as minimal raw markup until one does. */}
+                <div className="overflow-y-auto">
+                    <StackV
+                        padding={6}
+                        principles={["page-pad"]}
+                        gap={1}
+                        classNames={["h-full"]}
+                        isSkeleton={isSkeleton}
+                        items={[() => railSection]}
+                    />
+                </div>
+            </ResizableRail>
+        )
+
+        const workspaceSections = (
+            <>
+                {variant === "workspace" ? workspaceRail : null}
+                {/* The canvas region: the out-of-reach engine's gap, plus (standalone only) the
+                    floating chrome that in the real app renders as the SAME engine's own Panel
+                    children — see the `canvasOverlays` gap note above. */}
+                <div className="relative">
+                    <StackV
+                        gap={1}
+                        classNames={["min-w-0", "flex-1"]}
+                        isSkeleton={isSkeleton}
+                        items={[() => canvasRegion]}
+                    />
+                </div>
+            </>
+        )
+
+        // NEW VOCABULARY GAP: no frame owns a viewport-relative full-bleed height
+        // (`h-[calc(100dvh-4rem)]`, the shell's own chrome height subtracted) — the
+        // house gap/padding scale has no viewport-unit member. Kept as minimal raw
+        // markup until a frame does.
+        return (
+            <div className="h-[calc(100dvh-4rem)]">
+                <StackH gap={1} isSkeleton={isSkeleton} items={[() => workspaceSections]} />
+            </div>
+        )
     }
 
-    const railSection = (
-        <MindMapRail
-
-            query={query}
-            onQuery={onQuery}
-            tier={tier}
-            onTier={onTier}
-            items={items}
-            selectedId={selectedId}
-            onPick={onPick}
-            isLoading={isRailLoading}
-            ariaLabel={railAriaLabel}
-            tierAriaLabel={railTierAriaLabel}
-            isSkeleton={isSkeleton}
-
-        />
-    )
-
-    // The canvas region's floating chrome — in the real app these render as the
-    // SAME ReactFlow engine's own Panel children, see the file header's
-    // "OVERLAYS ARE FRAMES" note.
-    const canvasOverlays = (
-        <>
-            <div className="absolute inset-x-0 top-4 z-10">
-                <StackV
-                    gap={1}
-                    principles={["sibling-stack"]}
-                    align="center"
-                    isSkeleton={isSkeleton}
-                    items={[() => (
-                        <MindMapContinueButton
-
-                            resumeHref={resumeHref}
-                            allContentDone={allContentDone}
-                            onResume={onResume}
-                            continueAriaLabel={continueAriaLabel}
-                            isSkeleton={isSkeleton}
-                        />
-                    )]}
-                />
-            </div>
-            <div className="absolute bottom-4 left-4 z-10">
-                <StackV
-                    gap={1}
-                    isSkeleton={isSkeleton}
-                    items={[() => (
-                        <div>
-                            <Legend items={legendItems} />
-                        </div>
-                    )]}
-                />
-            </div>
-            <div className="absolute bottom-4 right-4 z-10">
-                <StackV
-                    gap={1}
-                    isSkeleton={isSkeleton}
-                    items={[() => (
-                        <MindMapFullscreenButton
-
-                            onZoomIn={onZoomIn}
-                            onZoomOut={onZoomOut}
-                            onToggleFullscreen={onToggleFullscreen}
-                            isFullscreen={isFullscreen}
-                            ariaLabels={fullscreenAriaLabels}
-                            isSkeleton={isSkeleton}
-                        />
-                    )]}
-                />
-            </div>
-        </>
-    )
-
-    const canvasRegion = (
-        <>
-            <MindMapCanvasGap isLoading={isSkeleton} />
-            {variant === "standalone" && !isSkeleton ? canvasOverlays : null}
-        </>
-    )
-
-    const workspaceRail = (
-        <ResizableRail
-            storageKey={RAIL_STORAGE_KEY}
-            defaultWidth={RAIL_DEFAULT_WIDTH}
-            minWidth={RAIL_MIN_WIDTH}
-            maxWidth={RAIL_MAX_WIDTH}
-            ariaLabel={railResizeAriaLabel}
-            handleSide="right"
-            className="h-full shrink-0 border-r border-default"
-
-        >
-            <div className="overflow-y-auto">
-                <StackV
-                    padding={6}
-                    principles={["page-pad"]}
-                    gap={1}
-                    classNames={["h-full"]}
-                    isSkeleton={isSkeleton}
-                    items={[() => railSection]}
-                />
-            </div>
-        </ResizableRail>
-    )
-
-    const workspaceSections = (
-        <>
-            {variant === "workspace" ? workspaceRail : null}
-            {/* The canvas region: the out-of-reach engine's gap, plus (standalone only) the
-                floating chrome that in the real app renders as the SAME engine's own Panel
-                children — see the file header's "OVERLAYS ARE FRAMES" note. */}
-            <div className="relative">
-                <StackV
-                    gap={1}
-                    classNames={["min-w-0", "flex-1"]}
-                    isSkeleton={isSkeleton}
-                    items={[() => canvasRegion]}
-                />
-            </div>
-        </>
-    )
+    const inner = variant === "workspace" && isEmpty
+        ? <MindMapWorkspaceEmpty />
+        : workspace()
 
     return (
-        <div className="h-[calc(100dvh-4rem)]">
-            <StackH gap={1} isSkeleton={isSkeleton} items={[() => workspaceSections]} />
+        <div data-tier="page" data-component="MindMapPage">
+            {inner}
         </div>
     )
 }

@@ -6,26 +6,29 @@ import { ModuleLessonList, type ModuleLessonListLesson } from "@/components/star
 import { ModuleChallengeList, type ModuleChallengeItem } from "@/components/starci/blocks/learn/ModuleChallengeList"
 import { ContentPaywall } from "@/components/starci/blocks/learn/ContentPaywall"
 import type { PricingPhase } from "@/components/starci/blocks/commerce/PhaseScarcityNote"
-import { AsyncContent } from "@/components/composites/async/AsyncContent"
+import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { Container } from "@/components/frames/Container"
 import { StackV } from "@/components/frames/Stack"
 import type { CourseContentTier } from "@/modules/types/enums/course-content-tier"
 
 /**
- * `ModulePage` — the screen for one module's own page: orient, resume, then
- * browse everything it contains. Mirrors the v2 blueprint at
- * `.storybook/components/starci/pages/ModulePage/ModulePage.tsx`: five
- * functions in reading order — orient (`ModuleHeader`) · gate (`ContentPaywall`,
- * reused from the lesson reader) · resume + completion (`ModuleContinueBand`) ·
- * browse lessons (`ModuleLessonList`) · browse challenges (`ModuleChallengeList`).
- * The paywall REPLACES browsing rather than sitting above it. The challenge
- * list is a screen-owned structural switch: a module with no challenges yet
- * does not earn an empty challenge list on its own page.
+ * `_ModulePage` — the SRC TWIN of `.storybook/components/starci/pages/
+ * ModulePage/ModulePage.tsx`. Presentational: typed props, already resolved;
+ * no fetch/store/i18n (that's the connected half, `./index.tsx`).
  *
- * On top of the pure blueprint composition, this presentational file also owns
- * the real async lifecycle (`isLoading`/`error`/`onRetry`) through `AsyncContent`
- * — the same extension `_ContentArticle`/`_CourseContents` already make, since a
- * static storybook blueprint has no fetch to fail but a real page does.
+ * A screen owns a list of functions: it calls blocks, places them in frames,
+ * and hands each typed data. Five functions in reading order — orient
+ * (`ModuleHeader`) · gate (`ContentPaywall`, reused from the lesson reader) ·
+ * resume + completion (`ModuleContinueBand`) · browse lessons
+ * (`ModuleLessonList`) · browse challenges (`ModuleChallengeList`). The
+ * paywall REPLACES browsing rather than sitting above it. The challenge list
+ * is a screen-owned structural switch: a module with no challenges yet does
+ * not earn an empty challenge list on its own page.
+ *
+ * On top of the pure blueprint composition, this presentational file also
+ * carries the real async lifecycle (error → skeleton → empty → content) —
+ * the same extension `_CourseContents` already makes, since a static
+ * storybook blueprint has no fetch to fail but a real page does.
  */
 
 /** Props for {@link _ModulePage}. */
@@ -157,7 +160,7 @@ export const _ModulePage = ({
     onSelectChallenge,
 }: ModulePageProps) => {
     // ONE tree — the resting state is this SAME spine with `isSkeleton` threaded into every
-    // shimmer-capable block, never a hand-mirrored copy (mirrors `_ContentArticle`/`_CourseContents`).
+    // shimmer-capable block, never a hand-mirrored copy (mirrors `_CourseContents`).
     const spine = (isSkeleton: boolean) => (
         <Container
             size="md"
@@ -234,21 +237,18 @@ export const _ModulePage = ({
         />
     )
 
+    // error → skeleton → empty → content (BLOCK-8): the empty and error surfaces are the shared
+    // `AsyncContent*` frames dropped in as their own states; otherwise the ONE spine renders, with
+    // `isLoading` flowing in as the co-located shimmer flag (loading-and-skeleton.md §6).
+    const inner = error
+        ? <AsyncContentError title={errorTitle} onRetry={onRetry} retryLabel={retryLabel} />
+        : (!isLoading && isEmpty)
+            ? <AsyncContentEmpty title={emptyTitle} icon={StackIcon} />
+            : spine(isLoading)
+
     return (
         <div data-tier="page" data-component="ModulePage">
-            <AsyncContent
-                isLoading={isLoading}
-                skeleton={() => spine(true)}
-                isEmpty={isEmpty}
-                emptyContent={{ title: emptyTitle, icon: StackIcon }}
-                error={error}
-                errorContent={{
-                    title: errorTitle,
-                    onRetry: () => { onRetry?.() },
-                    retryLabel,
-                }}
-                content={() => spine(false)}
-            />
+            {inner}
         </div>
     )
 }

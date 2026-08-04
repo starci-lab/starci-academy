@@ -1,6 +1,6 @@
 import React from "react"
 import { GithubLogoIcon } from "@phosphor-icons/react"
-import { AsyncContent } from "@/components/composites/async/AsyncContent"
+import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { PageHeader } from "@/components/composites/layout/Page"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
@@ -249,6 +249,15 @@ export const _PersonalProject = ({
         )
     }
 
+    // error → skeleton → empty → content (BLOCK-8): the empty and error surfaces are the shared
+    // `AsyncContent*` frames dropped in as their own states; otherwise the ONE spine renders, with
+    // `isLoading` flowing in as the co-located shimmer flag (loading-and-skeleton.md §6).
+    const body = error
+        ? <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retry} />
+        : (!isLoading && isEmpty)
+            ? <AsyncContentEmpty title={labels.emptyTitle} />
+            : spine(isLoading)
+
     return (
         <div data-tier="page" data-component="PersonalProject">
             <StackV
@@ -262,21 +271,7 @@ export const _PersonalProject = ({
                             meta={MetaChip}
                         />
                     ),
-                    () => (
-                        <AsyncContent
-                            isLoading={isLoading}
-                            skeleton={() => spine(true)}
-                            isEmpty={isEmpty}
-                            emptyContent={{ title: labels.emptyTitle }}
-                            error={error}
-                            errorContent={{
-                                title: labels.errorTitle,
-                                onRetry: () => { onRetry?.() },
-                                retryLabel: labels.retry,
-                            }}
-                            content={() => spine(false)}
-                        />
-                    ),
+                    () => body,
                 ]}
             />
         </div>

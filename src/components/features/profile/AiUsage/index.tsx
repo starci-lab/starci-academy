@@ -20,8 +20,8 @@ import {
     SettingsBreadcrumb,
 } from "../Settings/SettingsBreadcrumb"
 import {
-    QuotaLane,
-} from "@/components/modals/AiQuotaModal/QuotaLane"
+    AiQuotaLane,
+} from "@/components/starci/blocks/ai/AiQuotaLane"
 import {
     AiUsageHistory,
 } from "./AiUsageHistory"
@@ -30,7 +30,10 @@ import { pathConfig } from "@/resources/path"
 import { AiSubTier } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
-import { QuotaLaneVariant } from "@/components/modals/AiQuotaModal/types/quota-lane-variant"
+import {
+    QuotaLaneVariant,
+    useQuotaLaneData,
+} from "./hooks"
 
 /**
  * Full AI quota / usage page — Auto + Premium lanes and usage history.
@@ -41,6 +44,7 @@ export const AiUsage = () => {
     const router = useRouter()
     const locale = useLocale()
     const { data: quota } = useQueryMyAiQuotaSwr()
+    const { data: premiumLane, isLoading: isPremiumLaneLoading } = useQuotaLaneData(QuotaLaneVariant.Premium)
 
 
     const subscriptionHref = useMemo(
@@ -94,7 +98,7 @@ export const AiUsage = () => {
                         </Chip>
                     )}
                 >
-                    <QuotaLane variant={QuotaLaneVariant.Premium} />
+                    <AiQuotaLane data={premiumLane} isLoading={isPremiumLaneLoading} />
                 </LabeledCard>
 
                 {/* upsell prompt — urges free users to buy / paid users to upgrade; hidden on MAX */}

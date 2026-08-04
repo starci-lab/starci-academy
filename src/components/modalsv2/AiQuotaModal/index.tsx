@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { resetAiQuotaTab, setAiQuotaTab } from "@/redux/slices/tabs"
 import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
 import { useQueryMyCreditUsageSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCreditUsageSwr"
-import { useAiQuotaHistorySwr, useWindowResetLabel } from "@/components/modals/AiQuotaModal/hooks"
+import { useAiQuotaHistorySwr, useWindowResetLabel } from "./hooks"
 import { pathConfig } from "@/resources/path"
 import {
     _AiQuotaModal,
@@ -35,10 +35,10 @@ import {
 
 /**
  * AI usage quota dialog — the CONNECTED half of `AiQuotaModal`: reads the overlay open-state
- * (`useAiQuotaOverlayState`, zustand), the active tab (redux `state.tabs.aiQuotaTab`, shared with
- * the un-migrated `src/components/modals/AiQuotaModal`), and each tab's own SWR data
- * (`myAiQuota` / `myCreditUsage` / the credit-usage history query — reusing the real modal's own
- * `useAiQuotaHistorySwr` + `useWindowResetLabel` hooks unchanged), converts every real/blueprint
+ * (`useAiQuotaOverlayState`, zustand), the active tab (redux `state.tabs.aiQuotaTab`, formerly
+ * shared with the now-retired `src/components/modals/AiQuotaModal`), and each tab's own SWR
+ * data (`myAiQuota` / `myCreditUsage` / the credit-usage history query, via this folder's own
+ * `./hooks/useAiQuotaHistorySwr` + `./hooks/useWindowResetLabel`), converts every real/blueprint
  * enum boundary (see `./map`), and hands fully-typed data to the presentational {@link _AiQuotaModal}.
  *
  * TODO(i18n): `_AiQuotaModal` owns its own hardcoded English vocabulary (tab labels, tier badge,

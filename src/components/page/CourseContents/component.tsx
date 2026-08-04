@@ -22,8 +22,8 @@ import { StackH, StackV } from "@/components/frames/Stack"
 import { DifficultyChip, type Difficulty } from "@/components/blocks/chips/DifficultyChip"
 import { GithubTeamGate } from "@/components/features/auth/GithubTeamGate"
 import { LearnBreadcrumb } from "@/components/features/learn/shared/LearnBreadcrumb"
-import { LearnNudges } from "@/components/blockv2/LearnNudges"
-import { TrialConversionStrip } from "@/components/blockv2/TrialConversionStrip"
+import { LearnNudges } from "@/components/blocks/learn/LearnNudges"
+import { TrialConversionStrip } from "@/components/blocks/commerce/TrialConversionStrip"
 
 /** One lesson row on the "keep going" path — leading state icon · title · minutes-read · difficulty + premium-lock. */
 export interface CourseContentsLesson {

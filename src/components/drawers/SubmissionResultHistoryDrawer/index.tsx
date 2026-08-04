@@ -1,17 +1,11 @@
 "use client"
 
-import React, { useEffect, useMemo, useState } from "react"
-import { cn, Chip, Drawer, Pagination, ScrollShadow, Typography } from "@heroui/react"
+import React, { useMemo } from "react"
 import { useTranslations } from "next-intl"
 import { dayjs, getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import { ModelByline } from "@/components/blocks/grading/GradingByline"
-import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import type { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
 import type { SubmissionAttemptEntity } from "@/modules/types/entities/submission-attempt"
-
-/** Attempts per page inside the history drawer. */
-const HISTORY_PAGE_SIZE = 6
+import { _SubmissionResultHistoryDrawer, type SubmissionResultHistoryRow } from "./component"
 
 /** Props for {@link SubmissionResultHistoryDrawer}. */
 export type SubmissionResultHistoryDrawerProps = {
@@ -34,10 +28,11 @@ export type SubmissionResultHistoryDrawerProps = {
 }
 
 /**
- * Submission-history drawer: each attempt as a bordered surface-card row (verdict,
- * score, the AI model that graded it + tier, time), paginated client-side. Right
- * on desktop, bottom sheet on mobile. Co-located with the other attempt drawers
- * (see {@link DrawerContainer}); presentational — the page owns open + selection.
+ * Submission-history drawer — the CONNECTED half: it resolves every label (incl. per-row interpolation)
+ * and hands them to the presentational {@link _SubmissionResultHistoryDrawer}. Co-located with the other
+ * attempt drawers (see {@link DrawerContainer}); the page owns open + selection. See `tiers/split.md`.
+ *
+ * @param props - {@link SubmissionResultHistoryDrawerProps}
  */
 export const SubmissionResultHistoryDrawer = ({
     isOpen,
@@ -50,135 +45,38 @@ export const SubmissionResultHistoryDrawer = ({
     onSelect,
 }: SubmissionResultHistoryDrawerProps) => {
     const t = useTranslations()
-    const { isMobile } = useSmViewpoint()
-    const [page, setPage] = useState(1)
 
-    // reset to the first page whenever the drawer opens
-    useEffect(() => {
-        if (isOpen) {
-            setPage(1)
-        }
-    }, [isOpen])
-
-    const totalPages = Math.max(1, Math.ceil(attempts.length / HISTORY_PAGE_SIZE))
-    const pagedAttempts = useMemo(
-        () => attempts.slice((page - 1) * HISTORY_PAGE_SIZE, page * HISTORY_PAGE_SIZE),
-        [attempts, page],
+    const rows = useMemo<Array<SubmissionResultHistoryRow>>(
+        () => attempts.map((attempt) => ({
+            id: attempt.id,
+            attemptNumber: attempt.attemptNumber,
+            score: attempt.score,
+            servedModel: attempt.servedModel,
+            category: attempt.servedModel ? modelCategoryMap.get(attempt.servedModel) : undefined,
+            attemptLineLabel: t("submissionAttempts.attemptLine", { number: attempt.attemptNumber }),
+            timeLabel: attempt.processedAt
+                ? getTimeAgoLabel(getTimeAgoMessage(dayjs(attempt.processedAt)), t)
+                : null,
+        })),
+        [attempts, modelCategoryMap, t],
     )
 
-    // verdict + score for a row, guarding an unknown threshold (treat as NOT passing)
-    const isPassing = (score: number | null) =>
-        passThreshold > 0 && maxScore > 0 && (score ?? 0) >= passThreshold * maxScore
-    const scoreLabel = (score: number | null) => (maxScore > 0 ? `${score ?? 0}/${maxScore}` : `${score ?? 0}`)
-
     return (
-        <Drawer>
-            <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange} className="backdrop-blur-sm">
-                <Drawer.Content placement={isMobile ? "bottom" : "right"}>
-                    <Drawer.Dialog className="p-0">
-                        <div className="p-4">
-                            <Drawer.CloseTrigger />
-                            <Drawer.Header>
-                                <Drawer.Heading>
-                                    {`${t("submissionResult.history")} · ${attempts.length}`}
-                                </Drawer.Heading>
-                            </Drawer.Header>
-                        </div>
-                        <Drawer.Body>
-                            <ScrollShadow hideScrollBar className="h-full p-4">
-                                <SurfaceListCard>
-                                    {pagedAttempts.map((attempt) => {
-                                        const selected = attempt.id === selectedAttemptId
-                                        const attemptPass = isPassing(attempt.score)
-                                        const attemptCategory = attempt.servedModel
-                                            ? modelCategoryMap.get(attempt.servedModel)
-                                            : undefined
-                                        const attemptTime = attempt.processedAt
-                                            ? getTimeAgoLabel(getTimeAgoMessage(dayjs(attempt.processedAt)), t)
-                                            : null
-                                        return (
-                                            <SurfaceListCardItem
-                                                key={attempt.id}
-                                                onPress={() => {
-                                                    onSelect(attempt.id)
-                                                    onOpenChange(false)
-                                                }}
-                                                className={selected ? "bg-accent-soft hover:bg-accent-soft" : undefined}
-                                            >
-                                                <div className="flex flex-col gap-2">
-                                                    <div className="flex items-center gap-2">
-                                                        <Typography type="body-sm" weight="medium">
-                                                            {t("submissionAttempts.attemptLine", { number: attempt.attemptNumber })}
-                                                        </Typography>
-                                                        <Chip color={attemptPass ? "success" : "danger"} variant="soft" size="sm">
-                                                            <Chip.Label>
-                                                                {t(attemptPass ? "submissionResult.passed" : "submissionResult.failed")}
-                                                            </Chip.Label>
-                                                        </Chip>
-                                                        <Typography
-                                                            type="body-sm"
-                                                            className={cn("ml-auto", attemptPass ? "text-success-soft-foreground" : "text-muted")}
-                                                        >
-                                                            {scoreLabel(attempt.score)}
-                                                        </Typography>
-                                                    </div>
-                                                    <div className="flex flex-wrap items-center gap-2">
-                                                        <ModelByline model={attempt.servedModel} category={attemptCategory} />
-                                                        {attemptTime ? (
-                                                            <Typography type="body-xs" color="muted" className="ml-auto">
-                                                                {attemptTime}
-                                                            </Typography>
-                                                        ) : null}
-                                                    </div>
-                                                </div>
-                                            </SurfaceListCardItem>
-                                        )
-                                    })}
-                                </SurfaceListCard>
-                            </ScrollShadow>
-                        </Drawer.Body>
-                        {totalPages > 1 ? (
-                            <Drawer.Footer className="border-t p-4">
-                                <Pagination aria-label={t("submissionResult.history")} size="sm" className="w-full justify-start">
-                                    <Pagination.Content className="flex flex-wrap justify-start gap-2">
-                                        <Pagination.Item>
-                                            <Pagination.Previous
-                                                aria-label={t("common.pagination.previous")}
-                                                isDisabled={page <= 1}
-                                                onPress={() => setPage((current) => Math.max(1, current - 1))}
-                                                className="cursor-pointer rounded-medium transition-colors hover:bg-default"
-                                            >
-                                                <Pagination.PreviousIcon />
-                                            </Pagination.Previous>
-                                        </Pagination.Item>
-                                        {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-                                            <Pagination.Item key={pageNumber}>
-                                                <Pagination.Link
-                                                    isActive={pageNumber === page}
-                                                    onPress={() => setPage(pageNumber)}
-                                                    className="cursor-pointer rounded-medium transition-colors hover:bg-default data-[active=true]:hover:bg-accent"
-                                                >
-                                                    {pageNumber}
-                                                </Pagination.Link>
-                                            </Pagination.Item>
-                                        ))}
-                                        <Pagination.Item>
-                                            <Pagination.Next
-                                                aria-label={t("common.pagination.next")}
-                                                isDisabled={page >= totalPages}
-                                                onPress={() => setPage((current) => Math.min(totalPages, current + 1))}
-                                                className="cursor-pointer rounded-medium transition-colors hover:bg-default"
-                                            >
-                                                <Pagination.NextIcon />
-                                            </Pagination.Next>
-                                        </Pagination.Item>
-                                    </Pagination.Content>
-                                </Pagination>
-                            </Drawer.Footer>
-                        ) : null}
-                    </Drawer.Dialog>
-                </Drawer.Content>
-            </Drawer.Backdrop>
-        </Drawer>
+        <_SubmissionResultHistoryDrawer
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            rows={rows}
+            selectedAttemptId={selectedAttemptId}
+            maxScore={maxScore}
+            passThreshold={passThreshold}
+            onSelect={onSelect}
+            labels={{
+                historyLabel: t("submissionResult.history"),
+                passed: t("submissionResult.passed"),
+                failed: t("submissionResult.failed"),
+                previous: t("common.pagination.previous"),
+                next: t("common.pagination.next"),
+            }}
+        />
     )
 }

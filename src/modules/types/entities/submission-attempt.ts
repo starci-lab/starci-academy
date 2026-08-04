@@ -16,7 +16,7 @@ export interface SubmissionAttemptEntity extends AbstractEntity {
     processedAt: Date | null
     /** The URL of the source submitted in this attempt. */
     submissionUrl: string
-    /** Concrete AI model that actually graded this attempt (e.g. `qwen2.5-coder:7b`); null for older attempts. */
+    /** Concrete AI model that actually graded this attempt (e.g. `deepseek/deepseek-v4-flash`); null for older attempts. */
     servedModel: string | null
     /** Provider that served the grading model (e.g. `local`, `openai`, `gemini`); null for older attempts. */
     servedProvider: string | null

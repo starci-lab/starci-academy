@@ -8,7 +8,7 @@ import type { AiModelCategory } from "../query-ai-models"
  * keys (per-key health stays behind the admin `aiBalancerHealth` query).
  */
 export interface AiModelLatency {
-    /** Concrete model name (e.g. "qwen2.5-coder:7b"). */
+    /** Concrete model name (e.g. "deepseek/deepseek-v4-flash"). */
     name: string
     /** Provider that serves the model. */
     provider: ModelProvider

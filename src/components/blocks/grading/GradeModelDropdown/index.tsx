@@ -105,11 +105,18 @@ const ModelHealthChip = ({ ok, latencyMs, errorMessage }: ModelHealth) => {
     return <span className="shrink-0">{chip}</span>
 }
 
-/** Models self-hosted on StarCi GPU hardware (v1 hardcode; move to catalog later). */
-const SELF_HOST_GPU_MODELS = new Set(["qwen2.5-coder:7b"])
-
+/**
+ * A model served by the `local` provider runs on StarCi GPU hardware by
+ * definition, so the provider alone decides the mark.
+ *
+ * This used to also match a hardcoded set of model names. That set went stale
+ * the moment the catalog changed — the single name it listed is no longer in
+ * the roster, so the mark had quietly stopped appearing for every model, with
+ * nothing to signal it. The catalog decides which models exist; the UI does not
+ * keep a second copy of that list.
+ */
 const showSelfHostMark = (model: AiGradableModel) =>
-    model.provider === ModelProvider.Local && SELF_HOST_GPU_MODELS.has(model.model)
+    model.provider === ModelProvider.Local
 
 /** Dropdown row width — popover must be bounded or `truncate` never fires. */
 const DROPDOWN_POPOVER_CLASS = "w-80 max-w-[calc(100vw-2rem)]"

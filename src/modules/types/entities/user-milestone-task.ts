@@ -29,7 +29,7 @@ export interface UserMilestoneTaskAttemptEntity extends AbstractEntity {
     shortFeedback: string | null
     /** When the attempt was finished processing. */
     processedAt: Date | null
-    /** Concrete AI model that graded this attempt (e.g. "qwen2.5-coder:7b"); null for legacy. */
+    /** Concrete AI model that graded this attempt (e.g. "deepseek/deepseek-v4-flash"); null for legacy. */
     servedModel: string | null
     /** Provider that served the grading model; null for legacy. */
     servedProvider: string | null

@@ -61,7 +61,7 @@ export const ScoreCard: Story = {
     shortFeedback="Transaction handling is correct; still missing an index for the date-based query."
     submissionUrl="/submissions/8841"
     gradedByModel="claude-sonnet-4-5"
-    modelCategory="frontier"
+    modelCategory="high"
     timeAgo="5 minutes ago"
 />`,
                         render: (
@@ -76,7 +76,7 @@ export const ScoreCard: Story = {
                                 shortFeedback="Transaction handling is correct; still missing an index for the date-based query."
                                 submissionUrl="/submissions/8841"
                                 gradedByModel="claude-sonnet-4-5"
-                                modelCategory="frontier"
+                                modelCategory="high"
                                 timeAgo="5 minutes ago"
                             />
                         ),
@@ -93,7 +93,7 @@ export const ScoreCard: Story = {
     shortFeedback="Race condition when two requests write at the same time isn't handled yet."
     submissionUrl="/submissions/8842"
     gradedByModel="claude-sonnet-4-5"
-    modelCategory="frontier"
+    modelCategory="high"
     timeAgo="12 minutes ago"
 />`,
                         render: (
@@ -106,7 +106,7 @@ export const ScoreCard: Story = {
                                 shortFeedback="Race condition when two requests write at the same time isn't handled yet."
                                 submissionUrl="/submissions/8842"
                                 gradedByModel="claude-sonnet-4-5"
-                                modelCategory="frontier"
+                                modelCategory="high"
                                 timeAgo="12 minutes ago"
                             />
                         ),

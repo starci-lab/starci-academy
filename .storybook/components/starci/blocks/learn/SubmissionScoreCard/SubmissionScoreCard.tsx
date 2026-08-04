@@ -19,15 +19,13 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  */
 
 /** Cost/quality tier of the model that produced the grade. */
-export type AiModelCategory = "free" | "economy" | "balanced" | "premium" | "frontier"
+export type AiModelCategory = "low" | "medium" | "high"
 
-/** Category → `EnumChip` presentation. See the file header for why the ramp folds onto 5 semantic tones. */
+/** Category → `EnumChip` presentation across the three capability tiers. */
 export const MODEL_CATEGORY_MAP: Record<AiModelCategory, EnumChipEntry> = {
-    free: { color: "default", label: "Free" },
-    economy: { color: "success", label: "Economy" },
-    balanced: { color: "accent", label: "Balanced" },
-    premium: { color: "warning", label: "Premium" },
-    frontier: { color: "danger", label: "Frontier" },
+    low: { color: "default", label: "Low" },
+    medium: { color: "accent", label: "Medium" },
+    high: { color: "danger", label: "High" },
 }
 
 /** Props for {@link SubmissionScoreCard}. */

@@ -5,11 +5,11 @@ import type { QueryAiModelsResponse } from "./types"
 
 /** Cost/quality category of a model (mirrors backend `AiModelCategory`). */
 export enum AiModelCategory {
-    Free = "free",
-    Economy = "economy",
-    Balanced = "balanced",
-    Premium = "premium",
-    Frontier = "frontier",
+    Low = "low",
+    Medium = "medium",
+    High = "high",
+    EmbeddingBulk = "embedding_bulk",
+    EmbeddingDoc = "embedding_doc",
 }
 
 /** Task a model is suited for (mirrors backend `AiModelTask`). Drives picker visibility. */

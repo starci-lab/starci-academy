@@ -132,7 +132,7 @@ export const SchemaV2Graded: Story = {
     submissionPanelProps={{
         repoUrl: "https://github.com/hocvien/task-api",
         hasAttempts: true,
-        result: { score: 17, maxScore: 20, isPassing: true, gradedByModel: "GPT-4.1 mini", modelCategory: "economy", timeAgo: "5 minutes ago" },
+        result: { score: 17, maxScore: 20, isPassing: true, gradedByModel: "GPT-4.1 mini", modelCategory: "low", timeAgo: "5 minutes ago" },
         …
     }}
 />`,
@@ -159,7 +159,7 @@ export const SchemaV2Graded: Story = {
                                         isPassing: true,
                                         shortFeedback: "Clean image, multi-stage done right. Missing a `.dockerignore`, so the build context is a bit heavy.",
                                         gradedByModel: "GPT-4.1 mini",
-                                        modelCategory: "economy",
+                                        modelCategory: "low",
                                         timeAgo: "5 minutes ago",
                                     },
                                 }}

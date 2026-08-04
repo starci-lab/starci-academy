@@ -45,7 +45,7 @@ const BASE = {
     shortFeedback: "Cursor pagination is on the right track; still missing a test for the last page.",
     submissionUrl: "#submission",
     gradedByModel: "qwen2.5-coder-32b",
-    modelCategory: "economy" as const,
+    modelCategory: "low" as const,
     timeAgo: "5 minutes ago",
     findingsLabel: "Feedback",
     findings: [
@@ -187,7 +187,7 @@ export const Skeleton: Story = {
 // 8 attempts total — the row shows the newest 5 (real `src`'s own
 // `ATTEMPT_CHIPS_VISIBLE`), "+3" opens the drawer over the FULL 8.
 const HISTORY_ATTEMPTS: Array<SubmissionAttemptRecord> = [
-    { id: "a8", attemptNumber: 8, score: 88, maxScore: 100, isPassing: true, processedTimeAgo: "5 minutes ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" },
+    { id: "a8", attemptNumber: 8, score: 88, maxScore: 100, isPassing: true, processedTimeAgo: "5 minutes ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "low" },
     { id: "a7", attemptNumber: 7, score: 61, maxScore: 100, isPassing: false, processedTimeAgo: "3 hours ago" },
     { id: "a6", attemptNumber: 6, score: 54, maxScore: 100, isPassing: false, processedTimeAgo: "1 day ago" },
     { id: "a5", attemptNumber: 5, score: 40, maxScore: 100, isPassing: false, processedTimeAgo: "2 days ago" },

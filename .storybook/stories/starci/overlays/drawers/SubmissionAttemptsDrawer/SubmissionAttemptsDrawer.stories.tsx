@@ -49,8 +49,8 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 
 // 7 attempts ⇒ past `HISTORY_PAGE_SIZE` (6) ⇒ the pager mounts on page 1.
 const MULTI_PAGE_ATTEMPTS: Array<SubmissionAttemptRecord> = [
-    { id: "attempt-7", attemptNumber: 7, score: 88, maxScore: 100, isPassing: true, processedTimeAgo: "5 minutes ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" },
-    { id: "attempt-6", attemptNumber: 6, score: 60, maxScore: 100, isPassing: false, processedTimeAgo: "2 hours ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" },
+    { id: "attempt-7", attemptNumber: 7, score: 88, maxScore: 100, isPassing: true, processedTimeAgo: "5 minutes ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "low" },
+    { id: "attempt-6", attemptNumber: 6, score: 60, maxScore: 100, isPassing: false, processedTimeAgo: "2 hours ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "low" },
     { id: "attempt-5", attemptNumber: 5, score: 82, maxScore: 100, isPassing: true, processedTimeAgo: "1 day ago" },
     { id: "attempt-4", attemptNumber: 4, score: 45, maxScore: 100, isPassing: false, processedTimeAgo: "2 days ago" },
     { id: "attempt-3", attemptNumber: 3, score: null, maxScore: null, isPassing: false },
@@ -59,7 +59,7 @@ const MULTI_PAGE_ATTEMPTS: Array<SubmissionAttemptRecord> = [
 ]
 
 const SINGLE_PAGE_ATTEMPTS: Array<SubmissionAttemptRecord> = [
-    { id: "attempt-1", attemptNumber: 1, score: 96, maxScore: 100, isPassing: true, processedTimeAgo: "5 minutes ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" },
+    { id: "attempt-1", attemptNumber: 1, score: 96, maxScore: 100, isPassing: true, processedTimeAgo: "5 minutes ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "low" },
 ]
 
 /** Shared controlled wrapper — the trigger reopens the drawer after it closes. */
@@ -90,7 +90,7 @@ const ControlledSubmissionAttemptsDrawer = () => {
   isOpen={isOpen}
   onOpenChange={setIsOpen}
   attempts={[
-    { id: "attempt-7", attemptNumber: 7, score: 88, maxScore: 100, isPassing: true, processedTimeAgo: "5 minutes ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" },
+    { id: "attempt-7", attemptNumber: 7, score: 88, maxScore: 100, isPassing: true, processedTimeAgo: "5 minutes ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "low" },
     // …6 more, newest first
   ]}
   selectedAttemptId="attempt-7"
@@ -113,7 +113,7 @@ const ControlledSubmissionAttemptsDrawer = () => {
                         code: `<SubmissionAttemptsDrawer
   isOpen={isOpen}
   onOpenChange={setIsOpen}
-  attempts={[{ id: "attempt-1", attemptNumber: 1, score: 96, maxScore: 100, isPassing: true, processedTimeAgo: "5 minutes ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "economy" }]}
+  attempts={[{ id: "attempt-1", attemptNumber: 1, score: 96, maxScore: 100, isPassing: true, processedTimeAgo: "5 minutes ago", gradedByModel: "qwen2.5-coder-32b", modelCategory: "low" }]}
   selectedAttemptId="attempt-1"
   onSelect={pickAttempt}
 />`,

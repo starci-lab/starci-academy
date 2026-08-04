@@ -101,11 +101,13 @@ const SEVERITY_TO_TWIN: Record<MilestoneSeverity, SubmissionFeedbackSeverity> = 
 
 /** v1 AiModelCategory enum → the presentational block's category union (same string values). */
 const MODEL_CATEGORY_TO_TWIN: Record<AiModelCategory, SubmissionModelCategory> = {
-    [AiModelCategory.Free]: "free",
-    [AiModelCategory.Economy]: "economy",
-    [AiModelCategory.Balanced]: "balanced",
-    [AiModelCategory.Premium]: "premium",
-    [AiModelCategory.Frontier]: "frontier",
+    [AiModelCategory.Medium]: "medium",
+    [AiModelCategory.High]: "high",
+    // Low is the chat rung and the embedding tiers never grade — folded to the
+    // lowest grading chip so the record stays exhaustive over the enum
+    [AiModelCategory.Low]: "low",
+    [AiModelCategory.EmbeddingBulk]: "low",
+    [AiModelCategory.EmbeddingDoc]: "low",
 }
 
 /**

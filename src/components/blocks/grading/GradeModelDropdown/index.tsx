@@ -45,28 +45,23 @@ export interface GradeModelSelection {
 
 /** Categories that need an unlock (paid OR enrolled) to pick. */
 const PLAN_CATEGORIES: ReadonlyArray<AiModelCategory> = [
-    AiModelCategory.Balanced,
-    AiModelCategory.Premium,
-    AiModelCategory.Frontier,
+    AiModelCategory.Medium,
+    AiModelCategory.High,
 ]
 
 /** Category ladder cheapest → strongest — for "below the floor" comparison. */
 const CATEGORY_ORDER: ReadonlyArray<AiModelCategory> = [
-    AiModelCategory.Free,
-    AiModelCategory.Economy,
-    AiModelCategory.Balanced,
-    AiModelCategory.Premium,
-    AiModelCategory.Frontier,
+    AiModelCategory.Low,
+    AiModelCategory.Medium,
+    AiModelCategory.High,
 ]
 
 /** Tier facet options (incl. the "all" reset). */
 const TIER_FILTERS: ReadonlyArray<AiModelCategory | "all"> = [
     "all",
-    AiModelCategory.Free,
-    AiModelCategory.Economy,
-    AiModelCategory.Balanced,
-    AiModelCategory.Premium,
-    AiModelCategory.Frontier,
+    AiModelCategory.Low,
+    AiModelCategory.Medium,
+    AiModelCategory.High,
 ]
 
 /**

@@ -41,7 +41,7 @@ const BASE = {
     shortFeedback: "Queue and retry logic are on the right track; the dead-letter queue is handled cleanly.",
     submissionUrl: "https://github.com/starci-academy/capstone-submissions/tree/main/attempt-2",
     gradedByModel: "qwen2.5-coder-32b",
-    modelCategory: "economy" as const,
+    modelCategory: "low" as const,
     timeAgo: "12 minutes ago",
     findingsLabel: "Feedback",
     findings: [

@@ -13,15 +13,15 @@ import type { AiModelCategory as BlueprintAiModelCategory } from "@/components/s
  */
 export const toBlueprintModelCategory = (category: RealAiModelCategory): BlueprintAiModelCategory => {
     switch (category) {
-    case RealAiModelCategory.Free:
-        return "free"
-    case RealAiModelCategory.Economy:
-        return "economy"
-    case RealAiModelCategory.Balanced:
-        return "balanced"
-    case RealAiModelCategory.Premium:
-        return "premium"
-    case RealAiModelCategory.Frontier:
-        return "frontier"
+    case RealAiModelCategory.Medium:
+        return "medium"
+    case RealAiModelCategory.High:
+        return "high"
+    // embedding tiers never grade a submission, and Low is the chat rung — all
+    // fold to the lowest grading chip defensively (the switch stays exhaustive)
+    case RealAiModelCategory.Low:
+    case RealAiModelCategory.EmbeddingBulk:
+    case RealAiModelCategory.EmbeddingDoc:
+        return "low"
     }
 }

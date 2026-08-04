@@ -5,17 +5,16 @@ import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
- * The model-category → dot color scale — the SINGLE source of truth for the category
- * tier ramp. A Tailwind palette ramp, not the 5 semantic tokens: cost/quality tier is
- * NOT a status, and 5 tiers would otherwise collide onto `danger` twice (premium ==
- * frontier). Change the ramp here once.
+ * The model-category → dot color scale — the SINGLE source of truth for the tier
+ * ramp. A Tailwind palette ramp, not the semantic tokens: a capability tier is not a
+ * status. The two embedding axes sit off the low/medium/high ramp. Change it here once.
  */
 export const AI_CATEGORY_COLOR: Record<AiModelCategory, string> = {
-    [AiModelCategory.Free]: "bg-slate-400",
-    [AiModelCategory.Economy]: "bg-emerald-500",
-    [AiModelCategory.Balanced]: "bg-cyan-500",
-    [AiModelCategory.Premium]: "bg-violet-500",
-    [AiModelCategory.Frontier]: "bg-amber-500",
+    [AiModelCategory.Low]: "bg-slate-400",
+    [AiModelCategory.Medium]: "bg-cyan-500",
+    [AiModelCategory.High]: "bg-amber-500",
+    [AiModelCategory.EmbeddingBulk]: "bg-violet-500",
+    [AiModelCategory.EmbeddingDoc]: "bg-emerald-500",
 }
 
 /** Props for {@link AiCategoryChip}. */

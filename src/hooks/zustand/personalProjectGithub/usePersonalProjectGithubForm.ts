@@ -39,10 +39,10 @@ const pickDefaultGradingModel = (
     // or — when entitled — any available higher-tier model. Prefer the cheapest (Economy).
     const usable = models.filter(
         (model) => model.available
-            && (model.category === AiModelCategory.Economy || canPremium),
+            && (model.category === AiModelCategory.Low || canPremium),
     )
     const target =
-        usable.find((model) => model.category === AiModelCategory.Economy)
+        usable.find((model) => model.category === AiModelCategory.Low)
         ?? usable[0]
     if (!target) {
         return null
@@ -92,7 +92,7 @@ export const usePersonalProjectGithubForm = (options: UsePersonalProjectGithubFo
     const canPremium = Boolean(myAiSettingsSwr.data?.canPremium)
     const gradeModels = useMemo<Array<AiGradableModel>>(
         () => (aiModelsSwr.data?.aiModels?.data?.gradableModels ?? [])
-            .filter((model) => model.category !== AiModelCategory.Free),
+            .filter((model) => model.category !== AiModelCategory.Low),
         [aiModelsSwr.data],
     )
 

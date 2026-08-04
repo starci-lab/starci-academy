@@ -107,8 +107,8 @@ export const LaneModelPicker = ({
                             const categoryChip = <AiCategoryChip category={model.category} />
                             // Free + Economy are usable without a plan; Balanced + Premium
                             // require a paid subscription.
-                            const requiresPlan = model.category === AiModelCategory.Balanced
-                                || model.category === AiModelCategory.Premium
+                            const requiresPlan = model.category === AiModelCategory.Medium
+                                || model.category === AiModelCategory.High
                             if (!model.available) {
                                 return (
                                     <DropdownItem

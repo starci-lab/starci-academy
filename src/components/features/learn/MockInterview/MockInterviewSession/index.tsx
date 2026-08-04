@@ -123,9 +123,8 @@ const AUTO_SELECTION: GradeModelSelection = {
 
 /** Mid-tier and above — the only categories offered for interview grading. */
 const GRADE_CATEGORIES: ReadonlyArray<AiModelCategory> = [
-    AiModelCategory.Balanced,
-    AiModelCategory.Premium,
-    AiModelCategory.Frontier,
+    AiModelCategory.Medium,
+    AiModelCategory.High,
 ]
 
 /**
@@ -1737,7 +1736,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                                 selection={selection}
                                                 canPremium={canPremium}
                                                 task={AiModelTask.Grading}
-                                                floor={AiModelCategory.Balanced}
+                                                floor={AiModelCategory.Medium}
                                                 showAutoLane
                                                 onSelect={setSelection}
                                                 onUpgrade={() => router.push(`/${locale}/profile/settings/ai-subscription`)}

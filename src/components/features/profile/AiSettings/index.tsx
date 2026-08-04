@@ -30,11 +30,9 @@ import { AiCeilSurface } from "@/modules/api/graphql/mutations/types/set-ai-ceil
 
 /** Category ladder cheapest → strongest (mirrors backend CATEGORY_LADDER). */
 const LADDER: Array<AiModelCategory> = [
-    AiModelCategory.Free,
-    AiModelCategory.Economy,
-    AiModelCategory.Balanced,
-    AiModelCategory.Premium,
-    AiModelCategory.Frontier,
+    AiModelCategory.Low,
+    AiModelCategory.Medium,
+    AiModelCategory.High,
 ]
 
 /** Per-surface override sentinel = follow the global default. */
@@ -67,8 +65,8 @@ export const AiSettings = () => {
 
     /** Categories the plan unlocks (the ceiling); default to the free allowance. */
     const allowed = data?.allowedCategories ?? [
-        AiModelCategory.Free,
-        AiModelCategory.Economy,
+        AiModelCategory.Low,
+        AiModelCategory.Medium,
     ]
     /** Highest category the plan allows = the cap ceiling. */
     const planMax = LADDER[
@@ -76,7 +74,7 @@ export const AiSettings = () => {
     ]
     const planMaxIndex = LADDER.indexOf(planMax)
     /** Free (no paid tier) caps at Economy → little to cap → show the upsell. */
-    const isPaid = planMaxIndex > LADDER.indexOf(AiModelCategory.Economy)
+    const isPaid = planMaxIndex > LADDER.indexOf(AiModelCategory.Low)
 
     /** Human label for a category. */
     const label = useCallback(

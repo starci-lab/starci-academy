@@ -38,7 +38,7 @@ export const resolveInitialGradeSelection = (
     // 2) default to a premium model when the user can pin paid-tier models
     if (canPremium && models.length > 0) {
         const premium = models.find(
-            (model) => model.category === AiModelCategory.Premium,
+            (model) => model.category === AiModelCategory.High,
         ) ?? models[0]
         return {
             model: premium.model,

@@ -45,10 +45,9 @@ import {
  *
  * Emits its own identity (`data-tier="page"` / `data-component="PersonalProjectTaskPage"`)
  * unconditionally on its root, same as `MindMapPage`/`ModulePage` — see
- * `split.md`'s "Identity is data-tier + data-component" section. One raw
- * `className="w-fit"` spot remains around the breadcrumb (shrink-to-content
- * sizing, no frame in the current set carries it) — a vocabulary gap, not a
- * style miss.
+ * `split.md`'s "Identity is data-tier + data-component" section. The
+ * breadcrumb sits in a `StackH inline` (shrink-to-content sizing) rather
+ * than a raw `div`.
  */
 
 /** One personal-project schema-v1 evaluation criterion — the legacy rubric row. */
@@ -307,9 +306,13 @@ const readingColumn = (props: {
                 isSkeleton={isSkeleton}
                 breadcrumb={() =>
                     isSkeleton || breadcrumbItems?.length ? (
-                        <div className="w-fit">
-                            <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems ?? []} isSkeleton={isSkeleton} />
-                        </div>
+                        <StackH
+                            inline
+                            gap={1}
+                            body={() => (
+                                <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems ?? []} isSkeleton={isSkeleton} />
+                            )}
+                        />
                     ) : undefined
                 }
                 title={task.title}

@@ -1,0 +1,28 @@
+/* Neo-brutalist "study sticker" palette + motion for the Mia Mia MARKETING components
+ * in this book. These tokens are OWNED by the landing app (apps/landing/app/globals.css);
+ * this file is the book's mirror of them, so the `mia-mia/**` stories render in their real
+ * colours. All names are `--nb-*` / `nb*`-prefixed and cannot collide with the product theme.
+ * Loaded by preview.tsx. */
+:root {
+    --nb-cream: #FFF6EC;
+    --nb-blush: #FFE1EE;
+    --nb-pink: #FF3E9A;
+    --nb-pink-deep: #E01F7E;
+    --nb-sun: #FFD23F;
+    --nb-mint: #9BE8CE;
+    --nb-ink: #1B1622;
+    --nb-muted: #6A6472;
+    --nb-shadow: 6px 6px 0 0 var(--nb-ink);
+    --nb-shadow-sm: 4px 4px 0 0 var(--nb-ink);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    @keyframes nbFloat { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-9px) } }
+    @keyframes nbRise { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: translateY(0) } }
+    .nbFloat { animation: nbFloat 6s ease-in-out infinite }
+    .nbFloat2 { animation: nbFloat 6.6s ease-in-out .8s infinite }
+    .nbFloat3 { animation: nbFloat 6.2s ease-in-out 1.6s infinite }
+    .nbRise { animation: nbRise .6s ease-out both }
+    .nbRise2 { animation: nbRise .6s ease-out .12s both }
+    .nbRise3 { animation: nbRise .6s ease-out .22s both }
+}

@@ -3,6 +3,9 @@ import React from "react"
 import { NextIntlClientProvider } from "next-intl"
 import { HeroUIProvider } from "../src/components/providers/HeroUIProvider"
 import "../src/app/globals.css"
+// Neo-brutalist `--nb-*` tokens + motion for the mia-mia MARKETING stories (owned by
+// apps/landing/app/globals.css; mirrored here so those stories render in real colour).
+import "./mia-mia.css"
 
 /**
  * Global decorator: HeroUI provider + Tailwind/HeroUI CSS + theme wrapper.

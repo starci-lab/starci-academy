@@ -7,26 +7,21 @@ import {
 import {
     TaskResultsSkeleton,
 } from "../TaskResultsSkeleton"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Score } from "@/components/blocks/stats/Score"
 import { StarCiAIBadge } from "@/components/features/learn/StarCiAIBadge"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackV } from "@/components/frames/Stack"
 import { useQueryUserPersonalTaskAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptsSwr"
-
-/** Props for {@link TaskResults}. */
-export type TaskResultsProps = WithClassNames<undefined>
 
 /**
  * Grading results block: AI badge, score, and short feedback.
  *
- * Self-contained: reads the latest attempt from its own SWR query.
- * Renders nothing when there are no attempts yet.
- * @param props - optional className for the root element
+ * Self-contained: reads the latest attempt from its own SWR query. First load
+ * shimmers in place; settled with no attempt at all, the block self-hides rather
+ * than showing an empty card nobody asked for.
  */
-export const TaskResults = ({
-    className,
-}: TaskResultsProps = {}) => {
+export const TaskResults = () => {
     const t = useTranslations()
     const attemptsSwr = useQueryUserPersonalTaskAttemptsSwr()
 
@@ -41,24 +36,26 @@ export const TaskResults = ({
         return raw || t("finalProject.page.attemptsDrawer.feedbackEmpty")
     }, [latestAttempt?.shortFeedback, t])
 
-    // first load → mirror skeleton; once resolved with no attempt → self-hide (null)
+    if (attemptsSwr.isLoading) {
+        return <TaskResultsSkeleton />
+    }
+    if (!latestAttempt) {
+        return null
+    }
+
     return (
-        <AsyncContent
-            isLoading={attemptsSwr.isLoading}
-            skeleton={<TaskResultsSkeleton className={className} />}
-            isEmpty={!latestAttempt}
+        <LabeledCard
+            identity={{ tier: "block", component: "TaskResults" }}
+            label={t("task.resultsTitle")}
+            action={<StarCiAIBadge />}
         >
-            <LabeledCard
-                className={className}
-                label={t("task.resultsTitle")}
-                action={<StarCiAIBadge />}
-                contentClassName="flex flex-col gap-3"
-            >
-                <Score current={latestAttempt?.score ?? 0} max={20} />
-                <div className="text-sm text-muted">
-                    {shortFeedback}
-                </div>
-            </LabeledCard>
-        </AsyncContent>
+            <StackV
+                gap={4}
+                items={[
+                    () => <Score current={latestAttempt.score ?? 0} max={20} />,
+                    () => <Typography size="sm" color="muted" text={shortFeedback} />,
+                ]}
+            />
+        </LabeledCard>
     )
 }

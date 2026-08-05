@@ -1,51 +1,47 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
 import { LessonCard } from "./LessonCard"
 import { LessonCardSkeleton } from "./LessonCardSkeleton"
 import { Empty } from "./Empty"
 import { useAppSelector } from "@/redux/hooks"
-import { WithClassNames } from "@/modules/types/base/class-name"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { StackV } from "@/components/frames/Stack"
 import { useQueryLessonVideosSwr } from "@/hooks/swr/api/graphql/queries/useQueryLessonVideosSwr"
 import { SearchBar } from "@/components/blocks/form/SearchBar"
 
-/** Props for {@link LessonBody}. */
-export type LessonBodyProps = WithClassNames<undefined>
-
-/** Content tab body listing the lesson's videos, with search. */
-export const LessonBody = ({ className }: LessonBodyProps) => {
+/**
+ * Content tab body listing the lesson's videos, with search.
+ *
+ * First load, nothing in hand → the card list shimmers in place, co-located in the
+ * SAME tree position the real cards occupy (`loading-and-skeleton.md`) rather than
+ * through a separate skeleton branch.
+ */
+export const LessonBody = () => {
     const queryLessonVideosSwr = useQueryLessonVideosSwr()
     const lessonVideos = useAppSelector((state) => state.lessonVideo.entities)
 
-    // loading gate: skeleton until the query settles AND redux has hydrated the
-    // list (undefined = not yet hydrated → skeleton; [] = settled-but-empty → empty state)
-    const body = !lessonVideos?.length ? (
-        <div className={cn("", className)}>
-            <Empty />
-        </div>
-    ) : (
-        <div className={cn("flex flex-col gap-6", className)}>
-            <SearchBar />
-            <div className="flex flex-col gap-3">
-                {lessonVideos.map((lessonVideo) => (
-                    <LessonCard key={lessonVideo.id} lessonVideo={lessonVideo} />
-                ))}
-            </div>
-        </div>
-    )
+    // `undefined` = redux has not hydrated the list yet → still loading; `[]` = the query
+    // settled with nothing → the empty state. Only the first case shimmers.
+    const isSkeleton = queryLessonVideosSwr.isLoading || !lessonVideos
+    if (isSkeleton) {
+        return <LessonCardSkeleton />
+    }
+    if (!lessonVideos.length) {
+        return <Empty />
+    }
 
     return (
-        <AsyncContent
-            isLoading={queryLessonVideosSwr.isLoading || !lessonVideos}
-            skeleton={(
-                <div className={cn("", className)}>
-                    <LessonCardSkeleton />
-                </div>
-            )}
-        >
-            {body}
-        </AsyncContent>
+        <StackV
+            identity={{ tier: "block", component: "LessonBody" }}
+            gap={6}
+            items={[
+                () => <SearchBar />,
+                () => (
+                    <StackV gap={4} items={lessonVideos.map((lessonVideo) => () => (
+                        <LessonCard key={lessonVideo.id} lessonVideo={lessonVideo} />
+                    ))} />
+                ),
+            ]}
+        />
     )
 }

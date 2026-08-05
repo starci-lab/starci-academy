@@ -1,24 +1,22 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { cn } from "@heroui/react"
 import { CodeBodySkeleton } from "../CodeBodySkeleton"
 import { ExplainingCard } from "./ExplainingCard"
 import { Empty } from "./Empty"
 import { useAppSelector } from "@/redux/hooks"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { getContentCodeExplainings } from "@/modules/types/entities/content"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { StackV } from "@/components/frames/Stack"
 import { useQueryContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentSwr"
-
-/** Props for the code-explaining tab body. */
-export type CodeExplainingBodyProps = WithClassNames<undefined>
 
 /**
  * Tab body: critical code snippets with explanations (`content.codeExplainings`).
- * @param props.className - Optional wrapper class.
+ *
+ * First load, nothing in hand → the code-shaped placeholder shimmers in the SAME
+ * position the real cards occupy (`loading-and-skeleton.md`), not through a separate
+ * loading branch handed to a wrapper.
  */
-export const CodeExplainingBody = ({ className }: CodeExplainingBodyProps) => {
+export const CodeExplainingBody = () => {
     const queryContentSwr = useQueryContentSwr()
     const content = useAppSelector((state) => state.content.entity)
 
@@ -29,30 +27,25 @@ export const CodeExplainingBody = ({ className }: CodeExplainingBodyProps) => {
         [content],
     )
 
-    // loading gate: render content only when the content query has settled with
-    // data and no error; otherwise show the code-shaped skeleton.
-    const ready = !queryContentSwr.isLoading
-        && !!queryContentSwr.data
-        && !queryContentSwr.error
-
-    const body = !items.length ? (
-        <div className={cn("", className)}>
-            <Empty />
-        </div>
-    ) : (
-        <div className={cn("flex flex-col gap-6", className)}>
-            {items.map((item) => (
-                <ExplainingCard key={item.id} item={item} />
-            ))}
-        </div>
-    )
+    // Content is ready only once the query has settled WITH data and no error; anything
+    // else is still the first load.
+    const isSkeleton = queryContentSwr.isLoading
+        || !queryContentSwr.data
+        || !!queryContentSwr.error
+    if (isSkeleton) {
+        return <CodeBodySkeleton />
+    }
+    if (!items.length) {
+        return <Empty />
+    }
 
     return (
-        <AsyncContent
-            isLoading={!ready}
-            skeleton={<CodeBodySkeleton className={className} />}
-        >
-            {body}
-        </AsyncContent>
+        <StackV
+            identity={{ tier: "block", component: "CodeExplainingBody" }}
+            gap={6}
+            items={items.map((item) => () => (
+                <ExplainingCard key={item.id} item={item} />
+            ))}
+        />
     )
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { SubmissionResult } from "@/components/features/learn/Challenge/SubmissionResult"
+import { ChallengeResultPage } from "@/components/pages/ChallengeResultPage"
 
 /**
  * Route `…/challenges/[challengeId]/result` — the dedicated challenge grading result
@@ -10,7 +10,7 @@ import { SubmissionResult } from "@/components/features/learn/Challenge/Submissi
  */
 const Page = () => {
     return (
-        <SubmissionResult />
+        <ChallengeResultPage />
     )
 }
 

@@ -8,7 +8,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/chips/EnumChip`. Authored in Storybook (not `src`); synced later.
+ * `@/components/composites/chips/EnumChip`. Authored in Storybook (not `src`); synced later.
  */
 
 /**

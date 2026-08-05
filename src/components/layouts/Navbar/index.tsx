@@ -1,5 +1,6 @@
 "use client"
 
+import { Box } from "@/components/frames/Box"
 import React, {
     useEffect,
     useState,
@@ -102,7 +103,11 @@ export const Navbar = ({ className }: NavbarProps) => {
 
                 <div className="flex items-center justify-end gap-2">
                     {/* desktop: full input-style search; mobile: just an icon */}
-                    <SearchButton className="hidden w-[260px] @app-md:flex" />
+                    {/* the search field is the navbar's own placement call — a fixed measure that
+                        only appears once there is room for it */}
+                    <Box className="hidden w-[260px] @app-md:flex">
+                        <SearchButton />
+                    </Box>
                     <Button
                         isIconOnly
                         variant="tertiary"

@@ -1,7 +1,7 @@
 import React from "react"
 import { AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
-import { StatGridCard, type StatGridCardItem } from "@/components/blocks/stats/StatGridCard"
+import { StatGridCard, type StatGridCardItem } from "@/components/composites/stats/StatGridCard"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
 import { KPI_ICON_MAP } from "./map"

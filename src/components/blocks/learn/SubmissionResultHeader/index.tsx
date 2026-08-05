@@ -46,7 +46,6 @@ const SubmissionResultHeader = ({
     return (
         <div>
             <PageHeader
-
                 isSkeleton={isSkeleton}
                 breadcrumb={() =>
                     isSkeleton ? (

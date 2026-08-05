@@ -5,7 +5,7 @@ import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/stats/StatGridCard`. Authored in Storybook (not `src`);
+ * `@/components/composites/stats/StatGridCard`. Authored in Storybook (not `src`);
  * synced to `src` later.
  */
 

@@ -8,8 +8,8 @@ import {
 import type { AiBalancerKeyHealth } from "@/modules/api/graphql/queries/types/ai-balancer-health"
 import { AiBalancerKeyStatus } from "@/modules/api/graphql/queries/enums/ai-balancer-key-status"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { KeyStatusChip } from "@/components/features/learn/AiBalancer/KeyStatusChip"
-import { formatBalancerTimestamp } from "@/components/features/learn/AiBalancer/utils/format-timestamp"
+import { KeyStatusChip } from "@/components/blocks/learn/AiBalancer/KeyStatusChip"
+import { formatBalancerTimestamp } from "@/components/blocks/learn/AiBalancer/utils/format-timestamp"
 
 interface KeyRowProps extends WithClassNames<undefined> {
     /** Key health row from GraphQL. */

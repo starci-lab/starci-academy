@@ -102,7 +102,7 @@ interface OverlayStoreState {
      * NOT shown in the chat thread. */
     contentAiSelectionContext: string | null
     /**
-     * The learner's explicit choice on {@link import("@/components/features/learn/ContentAiSelectionAsk").ContentAiSelectionAsk}
+     * The learner's explicit choice on {@link import("@/components/blocks/learn/ContentAiSelectionAsk").ContentAiSelectionAsk}
      * when a chat is already active: `true` = "New thread" (forks a fresh
      * born-archived side-conversation, the old default); `false` = "Ask in this
      * chat" (the new default — appends into whichever conversation is already

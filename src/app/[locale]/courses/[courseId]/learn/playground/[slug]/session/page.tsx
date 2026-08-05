@@ -4,9 +4,9 @@ import React, { useEffect } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { useParams, useRouter } from "next/navigation"
 import { Typography } from "@heroui/react"
-import { PlaygroundSession } from "@/components/features/learn/Playground/PlaygroundSession"
-import { PlaygroundRagSession } from "@/components/features/learn/Playground/PlaygroundRagSession"
-import { usePlaygroundSessionContext } from "@/components/features/learn/Playground/PlaygroundSessionProvider"
+import { PlaygroundSessionPage } from "@/components/pages/PlaygroundSessionPage"
+import { PlaygroundRagSession } from "@/components/blocks/learn/PlaygroundRagSession"
+import { usePlaygroundSessionContext } from "@/components/providers/PlaygroundSessionProvider"
 import { pathConfig } from "@/resources/path"
 
 /**
@@ -46,7 +46,7 @@ const Page = () => {
         )
     }
 
-    return isRag ? <PlaygroundRagSession /> : <PlaygroundSession />
+    return isRag ? <PlaygroundRagSession /> : <PlaygroundSessionPage />
 }
 
 export default Page

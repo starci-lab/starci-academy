@@ -1,8 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { SidebarIcon } from "@phosphor-icons/react"
 import { RailShell } from "@/components/frames/RailShell"
-import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
+import { LearnSidebar } from "@/components/blocks/learn/LearnSidebar"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 
 /**
@@ -25,21 +24,16 @@ export interface HeadhuntingCompaniesLayoutProps {
 }
 
 /**
- * The rail slot — the course chapter/lesson tree is not built in this pass,
- * so the slot is a marked gap rather than a rebuilt block.
+ * The rail slot — the SAME course chapter/lesson tree the learn shell uses. It
+ * was a marked gap in an earlier pass; the real block exists, so it goes in
+ * rather than a placeholder shipping to readers.
  */
-const NavRail: ComponentTypeWithSkeleton = () => (
-    <AsyncContentEmpty
-        title="Course navigation"
-        description="The course chapter/lesson tree is not built in this pass — the slot is here, the content comes later."
-        icon={SidebarIcon}
-    />
-)
+const NavRail: ComponentTypeWithSkeleton = () => <LearnSidebar />
 
 /**
  * The scope wrapper for `headhunting-companies/**`. See the file header for
  * why it is a layout, why it is thinner than `LearnShell`, and why its rail
- * is a marked gap rather than a rebuilt block.
+ * mounts the learn shell's own nav rail.
  *
  * @param props - {@link HeadhuntingCompaniesLayoutProps}
  */

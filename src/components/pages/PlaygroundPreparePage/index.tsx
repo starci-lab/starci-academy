@@ -7,7 +7,7 @@ import { pathConfig } from "@/resources/path"
 import {
     usePlaygroundSessionContext,
     type GuideLab,
-} from "@/components/features/learn/Playground/PlaygroundSessionProvider"
+} from "@/components/providers/PlaygroundSessionProvider"
 import type {
     PlaygroundReadinessChecklistItem,
     PlaygroundReadinessKind,

@@ -1,5 +1,5 @@
 import React from "react"
-import { PlaygroundSessionProvider } from "@/components/features/learn/Playground/PlaygroundSessionProvider"
+import { PlaygroundSessionProvider } from "@/components/providers/PlaygroundSessionProvider"
 
 /**
  * Shared shell for ONE playground exercise. Mounts

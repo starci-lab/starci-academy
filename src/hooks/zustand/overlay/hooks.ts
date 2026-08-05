@@ -207,7 +207,7 @@ export const useContentAiClearSignal = (): {
  * scope the next question. Cleared after the question is sent or the chat closes.
  *
  * `forceNewThread` is the learner's explicit "New thread" pick on
- * {@link import("@/components/features/learn/ContentAiSelectionAsk").ContentAiSelectionAsk}
+ * {@link import("@/components/blocks/learn/ContentAiSelectionAsk").ContentAiSelectionAsk}
  * (vs. its default "Ask in this chat") — `ContentAiChat`'s `onSend` consumes it
  * once (forking a fresh born-archived session) then resets it via `setForceNewThread(false)`.
  *

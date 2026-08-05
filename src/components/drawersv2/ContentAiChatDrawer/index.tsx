@@ -14,7 +14,7 @@ import { _ContentAiChatDrawer } from "./component"
  * storybook-driven presentational block in `./component` instead of that v1's
  * hand-built `Drawer`/`ContentAiChat` markup — same overlay-store key, same
  * mode store, same redux title sources. STAGED ONLY: the opener
- * ({@link import("@/components/features/learn/ContentAiFab").ContentAiFab}) and
+ * ({@link import("@/components/blocks/learn/ContentAiFab").ContentAiFab}) and
  * the `DrawerContainer` mount still point at the v1 drawer — this twin is not
  * wired into any route yet (deferred `src-tier-ported-but-unused` debt,
  * matching batches 1–16).

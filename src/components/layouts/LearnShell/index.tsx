@@ -11,7 +11,7 @@ import {
     useContentAiSelection,
     usePaymentOverlayState,
 } from "@/hooks/zustand/overlay/hooks"
-import { useSelectionHintStore } from "@/components/features/learn/ContentAiSelectionAsk/hintStore"
+import { useSelectionHintStore } from "@/components/blocks/learn/ContentAiSelectionAsk/hintStore"
 import { PaymentFlow } from "@/modules/types/payment"
 import { toEnrollGatePrice } from "./map"
 import { _LearnShell, type LearnShellProps, type LearnShellSelectionAsk, type LearnSurface } from "./component"

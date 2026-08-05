@@ -36,7 +36,7 @@ import {
 import {
     PremiumPaywall,
 } from "@/components/blocks/learn/lesson/PremiumPaywall"
-import { SelectionHintCallout } from "@/components/features/learn/ContentAiSelectionAsk/SelectionHintCallout"
+import { SelectionHintCallout } from "@/components/blocks/learn/ContentAiSelectionAsk/SelectionHintCallout"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 import { UpNextCard } from "@/components/blocks/learn/UpNextCard"
 import type { TabsCardGroup } from "@/components/blocks/navigation/TabsCard"

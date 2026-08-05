@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { type SkeletonProps } from "@/components/composites/_slot"
+import { type SkeletonProps } from "@/components/frames/_slot"
 import {
     cn,
     Button as HeroButton,
@@ -265,6 +265,10 @@ const NavbarThemeSwitch = ({ isDarkMode, onThemeToggle }: NavbarThemeSwitchProps
     </HeroSwitch>
 )
 
+const ShortcutHint = ({ shortcutLabel }: { shortcutLabel: string }) => (
+    <Kbd><Kbd.Content>{shortcutLabel}</Kbd.Content></Kbd>
+)
+
 /**
  * The sticky top app bar. See the file header for the full reuse ledger and the
  * judgement calls this port makes.
@@ -445,13 +449,6 @@ const Navbar = ({
         />
     )
 
-    // `InputButtonLike.suffix` is now a component reference (COMPOSITE-4/8), so the
-    // keyboard-shortcut hint is wrapped as a small local component closing over
-    // `shortcutLabel` instead of being built inline.
-    const ShortcutHint = () => (
-        <Kbd><Kbd.Content>{shortcutLabel}</Kbd.Content></Kbd>
-    )
-
     // actions cluster: search · language/theme · cart · notifications · account · mobile menu
     const barActions = (
         <>
@@ -460,7 +457,7 @@ const Navbar = ({
                 <InputButtonLike
                     placeholder={searchPlaceholder}
                     icon={MagnifyingGlassIcon}
-                    suffix={ShortcutHint}
+                    suffix={() => <ShortcutHint shortcutLabel={shortcutLabel} />}
                     onPress={onSearchPress}
                 />
             </span>

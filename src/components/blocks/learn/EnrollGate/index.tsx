@@ -28,6 +28,47 @@ const CARD_SURFACE = "flex w-full max-w-[480px] flex-col items-center gap-3 roun
  */
 const TEASER_FADE = "absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-surface/70 to-surface"
 
+interface EnrollCardProps {
+    title: string
+    description: string
+    priceRegion: () => React.ReactNode
+    scarcity?: () => React.ReactNode
+    ctaLabel: string
+    onEnroll: () => void
+}
+
+const EnrollCard = ({ title, description, priceRegion, scarcity, ctaLabel, onEnroll }: EnrollCardProps) => (
+    <Box className={CARD_SURFACE}>
+        <StackV
+            gap={4}
+            align="center"
+            items={[
+                () => <IconTile icon={<LockIcon aria-hidden focusable="false" />} tone="accent" size="sm" />,
+                () => <Typography size="h4" weight="bold" text={title} />,
+                () => (
+                    <Box className="max-w-[400px]">
+                        <Typography size="sm" color="muted" text={description} />
+                    </Box>
+                ),
+                priceRegion,
+                ...(scarcity ? [scarcity] : []),
+                () => (
+                    <Box className="w-full max-w-[300px]">
+                        <Button
+                            label={ctaLabel}
+                            variant="primary"
+                            size="lg"
+                            suffixIcon={ArrowRightIcon}
+                            onPress={onEnroll}
+                            classNames={["w-full"]}
+                        />
+                    </Box>
+                ),
+            ]}
+        />
+    </Box>
+)
+
 /** Props for {@link EnrollGate}. */
 export interface EnrollGateProps {
     /** Title — e.g. "Unlock Personal project" (the surface name folded in by the caller). */
@@ -95,45 +136,15 @@ export const EnrollGate = ({ title, description, preview }: EnrollGateProps) => 
         ) : null
     }
 
-    // the conversion card — lock identity + outcome copy + price + CTA. A real surface
-    // card so it "floats up" whether it sits alone on the canvas or over the faded teaser.
-    const EnrollCard = () => (
-        <Box className={CARD_SURFACE}>
-            <StackV
-                gap={4}
-                align="center"
-                items={[
-                    () => <IconTile icon={<LockIcon aria-hidden focusable="false" />} tone="accent" size="sm" />,
-                    () => <Typography size="h4" weight="bold" text={title} />,
-                    () => (
-                        <Box className="max-w-[400px]">
-                            <Typography size="sm" color="muted" text={description} />
-                        </Box>
-                    ),
-                    priceRegion,
-                    ...(price ? [() => (
-                        <PhaseScarcityNote
-                            currentPhase={price.currentPhase}
-                            seatsRemaining={price.seatsRemainingInCurrentPhase}
-                            nextPhasePriceVnd={price.nextPhasePriceVnd}
-                        />
-                    )] : []),
-                    () => (
-                        <Box className="w-full max-w-[300px]">
-                            <Button
-                                label={t("enrollGate.cta")}
-                                variant="primary"
-                                size="lg"
-                                suffixIcon={ArrowRightIcon}
-                                onPress={onEnroll}
-                                classNames={["w-full"]}
-                            />
-                        </Box>
-                    ),
-                ]}
+    const scarcity = price
+        ? () => (
+            <PhaseScarcityNote
+                currentPhase={price.currentPhase}
+                seatsRemaining={price.seatsRemainingInCurrentPhase}
+                nextPhasePriceVnd={price.nextPhasePriceVnd}
             />
-        </Box>
-    )
+        )
+        : undefined
 
     // no teaser → just the centred enroll card.
     if (!preview) {
@@ -143,7 +154,16 @@ export const EnrollGate = ({ title, description, preview }: EnrollGateProps) => 
                 gap={1}
                 align="center"
                 padding={{ x: 5, y: 6 }}
-                body={EnrollCard}
+                body={() => (
+                    <EnrollCard
+                        title={title}
+                        description={description}
+                        priceRegion={priceRegion}
+                        scarcity={scarcity}
+                        ctaLabel={t("enrollGate.cta")}
+                        onEnroll={onEnroll}
+                    />
+                )}
             />
         )
     }
@@ -159,7 +179,14 @@ export const EnrollGate = ({ title, description, preview }: EnrollGateProps) => 
                 <Box className={TEASER_FADE} />
             </Box>
             <Box className="relative z-10 -mt-32 flex justify-center px-4 pb-6">
-                <EnrollCard />
+                <EnrollCard
+                    title={title}
+                    description={description}
+                    priceRegion={priceRegion}
+                    scarcity={scarcity}
+                    ctaLabel={t("enrollGate.cta")}
+                    onEnroll={onEnroll}
+                />
             </Box>
         </Box>
     )

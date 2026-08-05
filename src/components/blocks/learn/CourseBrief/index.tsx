@@ -1,6 +1,6 @@
 import React from "react"
 import { PageHeader } from "@/components/composites/layout/Page"
-import { type SkeletonProps } from "@/components/composites/_slot"
+import { type SkeletonProps } from "@/components/frames/_slot"
 import { Breadcrumbs } from "@/components/atoms/navigation/Breadcrumbs"
 import { Typography } from "@/components/atoms/text/Typography"
 

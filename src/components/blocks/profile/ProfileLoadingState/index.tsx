@@ -9,7 +9,7 @@ import { AvatarGroup, type AvatarGroupItem } from "@/components/composites/lists
 import { InlineIconLabel } from "@/components/composites/text/InlineIconLabel"
 import { ProgressBar } from "@/components/atoms/display/Progress"
 import { SurfaceCard, SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { Container } from "@/components/frames/Container"
 import { StackV, StackH } from "@/components/frames/Stack"
 import { Grid, type GridItem } from "@/components/frames/Grid"

@@ -1,5 +1,5 @@
 import React from "react"
-import { type SkeletonProps } from "@/components/composites/_slot"
+import { type SkeletonProps } from "@/components/frames/_slot"
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import { SurfaceCardPressableGroup, type SurfaceCardPressableGroupItem } from "@/components/composites/cards/SurfaceCard"

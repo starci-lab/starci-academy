@@ -11,7 +11,7 @@ import {
 import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { Pagination } from "@/components/atoms/navigation/Pagination"
 import { Cluster } from "@/components/frames/Cluster"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { StackV } from "@/components/frames/Stack"
 
 /**

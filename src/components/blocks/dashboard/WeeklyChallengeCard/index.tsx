@@ -1,5 +1,5 @@
 import React from "react"
-import { type SkeletonProps } from "@/components/composites/_slot"
+import { type SkeletonProps } from "@/components/frames/_slot"
 import { AsyncContent } from "@/components/composites/async/AsyncContent"
 import { SurfaceCard, SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { Chip } from "@/components/atoms/chips/Chip"

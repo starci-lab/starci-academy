@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useMemo, useState } from "react"
-import { type SkeletonProps } from "@/components/composites/_slot"
+import { type SkeletonProps } from "@/components/frames/_slot"
 import { TrophyIcon } from "@phosphor-icons/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { AsyncContent } from "@/components/composites/async/AsyncContent"

@@ -1,5 +1,5 @@
 import React from "react"
-import { type SkeletonProps } from "@/components/composites/_slot"
+import { type SkeletonProps } from "@/components/frames/_slot"
 import { Popover } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Chip } from "@/components/atoms/chips/Chip"

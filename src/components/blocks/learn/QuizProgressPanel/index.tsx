@@ -1,5 +1,5 @@
 import React from "react"
-import { type SkeletonProps } from "@/components/composites/_slot"
+import { type SkeletonProps } from "@/components/frames/_slot"
 import type { ComponentType, SVGProps } from "react"
 import { ChartBarIcon, ChartLineIcon, ClockCounterClockwiseIcon } from "@phosphor-icons/react"
 import { Tabs, type TabItem } from "@/components/atoms/navigation/Tabs"

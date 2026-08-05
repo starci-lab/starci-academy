@@ -1,5 +1,5 @@
 import React from "react"
-import { type SkeletonProps } from "@/components/composites/_slot"
+import { type SkeletonProps } from "@/components/frames/_slot"
 import { SearchAutocomplete, type SearchAutocompleteItem } from "@/components/atoms/forms/SearchAutocomplete"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackH } from "@/components/frames/Stack"

@@ -1,6 +1,6 @@
 import React from "react"
 import { ArrowRightIcon, LockIcon } from "@phosphor-icons/react"
-import { type SkeletonProps } from "@/components/composites/_slot"
+import { type SkeletonProps } from "@/components/frames/_slot"
 import { IconTile } from "@/components/atoms/display/IconTile"
 import { PriceTagProminent, type PriceBreakdown } from "@/components/blocks/commerce/PriceTag"
 // The NON-legacy version (`designs/commerce/…`) — the `_legacy` version of the same

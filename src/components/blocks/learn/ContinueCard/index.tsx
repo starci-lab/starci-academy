@@ -1,5 +1,5 @@
 import React from "react"
-import { type SkeletonProps } from "@/components/composites/_slot"
+import { type SkeletonProps } from "@/components/frames/_slot"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"

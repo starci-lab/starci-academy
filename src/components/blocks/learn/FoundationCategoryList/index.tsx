@@ -79,6 +79,13 @@ const resolveThumbnail = (category: FoundationCategoryListItem): { src?: string;
         ? { src: category.logoSrc, fallbackSrc: category.thumbnailUrl }
         : { src: category.thumbnailUrl, fallbackSrc: undefined }
 
+const NoCategoriesEmptyState = ({ hasQuery, searchQuery }: { hasQuery: boolean; searchQuery?: string }) => (
+    <EmptyState
+        icon={hasQuery ? MagnifyingGlassIcon : undefined}
+        title={hasQuery ? `No topics match "${searchQuery?.trim()}".` : LIBRARY_EMPTY_TITLE}
+    />
+)
+
 /**
  * The Foundations library's browse-and-drill-in list. See the file header for
  * the thumbnail-priority chain, the two empty reasons, and why loading stays a
@@ -130,15 +137,9 @@ const FoundationCategoryList = ({
     // Which of the two empty reasons applies (see file header, judgement 2) —
     // never during the skeleton branch, where "empty" just means "not loaded yet".
     const hasQuery = (searchQuery?.trim().length ?? 0) > 0
-    // `emptyState` is now a component reference (COMPOSITE-4); only rendered when
-    // not skeleton, so the component itself needs no `isSkeleton` branch of its own.
-    const NoCategoriesEmptyState = () => (
-        <EmptyState
-            icon={hasQuery ? MagnifyingGlassIcon : undefined}
-            title={hasQuery ? `No topics match "${searchQuery?.trim()}".` : LIBRARY_EMPTY_TITLE}
-        />
-    )
-    const emptyState = !isSkeleton && categories.length === 0 ? NoCategoriesEmptyState : undefined
+    const emptyState = !isSkeleton && categories.length === 0
+        ? () => <NoCategoriesEmptyState hasQuery={hasQuery} searchQuery={searchQuery} />
+        : undefined
 
     // Nothing to page through during the first fetch or an empty result (see
     // file header, judgement on the pager).

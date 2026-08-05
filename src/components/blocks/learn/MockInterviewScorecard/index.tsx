@@ -1,5 +1,5 @@
 import React from "react"
-import { type SkeletonProps } from "@/components/composites/_slot"
+import { type SkeletonProps } from "@/components/frames/_slot"
 import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { ArrowRightIcon, CheckCircleIcon, WarningCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { Chip } from "@/components/atoms/chips/Chip"

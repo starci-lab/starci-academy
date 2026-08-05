@@ -1,5 +1,5 @@
 import React from "react"
-import { type SkeletonProps } from "@/components/composites/_slot"
+import { type SkeletonProps } from "@/components/frames/_slot"
 import { FlowArrowIcon, PlayIcon } from "@phosphor-icons/react"
 import { Avatar } from "@/components/atoms/display/Avatar"
 import { Typography } from "@/components/atoms/text/Typography"

@@ -15,7 +15,7 @@ import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 import { Grid, type GridItem } from "@/components/frames/Grid"
 import { Cluster } from "@/components/frames/Cluster"
 import { StackH, StackV } from "@/components/frames/Stack"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { VariantChipDifficulty, type Difficulty } from "@/components/blocks/learn/VariantChip"
 
 /**

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { type SkeletonProps } from "@/components/composites/_slot"
+import { type SkeletonProps } from "@/components/frames/_slot"
 import { Button as HeroButton, Popover as HeroPopover, cn } from "@heroui/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import { ReactionPicker } from "@/components/atoms/feedback/ReactionPicker"

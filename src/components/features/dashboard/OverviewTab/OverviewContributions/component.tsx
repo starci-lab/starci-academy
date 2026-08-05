@@ -1,17 +1,9 @@
 import React from "react"
 import { AsyncContentError } from "@/components/composites/async/AsyncContent"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { ContributionCalendarView } from "@/components/features/profile/ContributionCalendarView"
-import { StackV, StackH } from "@/components/frames/Stack"
-import { Cluster } from "@/components/frames/Cluster"
+import { StackV } from "@/components/frames/Stack"
 import type { CallerIdentity } from "@/components/frames/_identity"
 import type { QueryMyContributionDayData } from "@/modules/api/graphql/queries/types/my-dashboard"
-
-/** Year-switcher placeholder count while shimmering (mirrors {@link ContributionCalendarView}'s current + 2 back). */
-const YEAR_BUTTON_COUNT = 3
-
-/** Less→More legend placeholder cells while shimmering (mirrors {@link ContributionCalendarView}'s 5-step legend). */
-const LEGEND_LEVEL_COUNT = 5
 
 /** This block's own identity (BLOCK-2/split.md) — handed down to the track standing in as its root. See `_identity.ts`. */
 const IDENTITY: CallerIdentity = { tier: "block", component: "OverviewContributions" }
@@ -68,36 +60,20 @@ export const _OverviewContributions = ({
         return <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retry} />
     }
 
+    // The calendar owns its own resting state, so this block hands the flag down instead
+    // of keeping a second description of the same shape (`loading-and-skeleton.md`).
     return (
-        <StackV gap={4} identity={IDENTITY} body={() => (
-            isSkeleton ? (
-                <StackV gap={4} items={[
-                    () => (
-                        <StackH gap={4} justify="between" align="center" items={[
-                            () => <Skeleton.Typography type="body-sm" width="1/3" />,
-                            () => (
-                                <Cluster gap={3} items={
-                                    Array.from({ length: YEAR_BUTTON_COUNT }, () => (
-                                        () => <Skeleton className="h-5 w-10 rounded-medium" />
-                                    ))
-                                } />
-                            ),
-                        ]} />
-                    ),
-                    // single blob standing in for the draggable week-column grid — matches its
-                    // approximate box height so the card neither shrinks nor jumps on resolve
-                    () => <Skeleton className="h-32 w-full rounded-medium" />,
-                    () => (
-                        <Cluster gap={3} justify="end" items={
-                            Array.from({ length: LEGEND_LEVEL_COUNT }, () => (
-                                () => <Skeleton className="size-3 shrink-0 rounded-sm" />
-                            ))
-                        } />
-                    ),
-                ]} />
-            ) : (
-                <ContributionCalendarView days={days} year={year} onYearChange={onYearChange} />
-            )
-        )} />
+        <StackV
+            gap={4}
+            identity={IDENTITY}
+            body={() => (
+                <ContributionCalendarView
+                    isSkeleton={isSkeleton}
+                    days={days}
+                    year={year}
+                    onYearChange={onYearChange}
+                />
+            )}
+        />
     )
 }

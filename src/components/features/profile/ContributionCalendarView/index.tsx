@@ -19,6 +19,7 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import type { QueryMyContributionDayData } from "@/modules/api/graphql/queries/types/my-dashboard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link ContributionCalendarView}. */
 export interface ContributionCalendarViewProps extends WithClassNames<undefined> {
@@ -28,6 +29,13 @@ export interface ContributionCalendarViewProps extends WithClassNames<undefined>
     year: number
     /** Called with the picked year when the user flips the year switcher. */
     onYearChange: (year: number) => void
+    /**
+     * First load, nothing in hand → this view shimmers its own shape. The resting state
+     * lives in THIS file, right beside the loaded one, and derives its counts from the
+     * SAME `YEAR_SPAN` / `LEVEL_CLASS` constants — so the two cannot drift the way a
+     * hand-kept placeholder in a caller does (`loading-and-skeleton.md`).
+     */
+    isSkeleton?: boolean
 }
 
 /** One rendered cell of the calendar grid. */
@@ -99,6 +107,7 @@ export const ContributionCalendarView = ({
     days,
     year,
     onYearChange,
+    isSkeleton = false,
     className,
 }: ContributionCalendarViewProps) => {
     const t = useTranslations()
@@ -239,6 +248,35 @@ export const ContributionCalendarView = ({
             locale,
         ],
     )
+
+    // The resting state of THIS view, beside the loaded one, so a change to either is
+    // visible against the other. The counts come from the SAME constants the real render
+    // walks (`years` from YEAR_SPAN, `LEVEL_CLASS`), so they cannot fall out of step.
+    if (isSkeleton) {
+        return (
+            <div className={cn("flex flex-col gap-3", className)}>
+                {/* header: year-scoped count + the year switcher */}
+                <div className="flex items-center justify-between gap-3">
+                    <Skeleton.Typography type="body-sm" width="1/3" />
+                    <div className="flex items-center gap-2">
+                        {years.map((option) => (
+                            <Skeleton key={option} className="h-5 w-10 shrink-0 rounded-medium" />
+                        ))}
+                    </div>
+                </div>
+                {/* the heatmap grid */}
+                <Skeleton className="h-40 w-full rounded-xl" />
+                {/* legend: Less → More */}
+                <div className="flex items-center justify-end gap-2">
+                    <Skeleton className="h-3 w-8 shrink-0 rounded" />
+                    {LEVEL_CLASS.map((_levelClass, index) => (
+                        <Skeleton key={index} className="size-3 shrink-0 rounded-sm" />
+                    ))}
+                    <Skeleton className="h-3 w-8 shrink-0 rounded" />
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className={cn("flex flex-col gap-3",

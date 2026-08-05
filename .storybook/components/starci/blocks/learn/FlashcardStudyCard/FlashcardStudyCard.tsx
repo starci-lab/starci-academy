@@ -1,5 +1,5 @@
 import React from "react"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { type SkeletonProps } from "@sb-components/frames/_slot"
 import { LockIcon, CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"

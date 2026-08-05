@@ -13,7 +13,7 @@ import { QaReactionBar } from "@sb-components/starci/blocks/learn/QaReactionBar/
 import { QaMessageBubble } from "@sb-components/starci/blocks/learn/QaMessageBubble/QaMessageBubble"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
-import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/frames/_slot"
 
 /**
  * BLOCK — `QaQuestionThread`: ONE course-Q&A conversation — a collapsed social

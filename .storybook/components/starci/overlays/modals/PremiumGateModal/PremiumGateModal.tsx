@@ -1,5 +1,5 @@
 import React from "react"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { type SkeletonProps } from "@sb-components/frames/_slot"
 import { CheckCircleIcon } from "@phosphor-icons/react"
 import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShell"
 import {

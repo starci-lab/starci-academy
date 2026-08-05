@@ -15,7 +15,7 @@ import { AsyncContentEmpty } from "@sb-components/composites/async/AsyncContent/
 import { Grid, type GridItem } from "@sb-components/frames/Grid/Grid"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/blocks/learn/VariantChip/VariantChip"
 
 /**

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { type SkeletonProps } from "@sb-components/frames/_slot"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { InputTextarea } from "@sb-components/atoms/forms/Input/Input"

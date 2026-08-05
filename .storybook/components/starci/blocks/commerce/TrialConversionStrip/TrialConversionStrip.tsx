@@ -1,5 +1,5 @@
 import React from "react"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { type SkeletonProps } from "@sb-components/frames/_slot"
 import { ArrowRightIcon, LockIcon } from "@phosphor-icons/react"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
 import { PriceBreakdown, PriceTagProminent } from "@sb-components/starci/blocks/commerce/PriceTag/PriceTag"

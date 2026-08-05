@@ -221,6 +221,18 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
     )
 }
 
+const ErrorEmptyState = ({ onRetry, retryLabel }: { onRetry?: () => void; retryLabel?: string }) => (
+    <AsyncContentError
+        title={ERROR_TITLE}
+        onRetry={onRetry}
+        retryLabel={retryLabel}
+    />
+)
+
+const PlainEmptyState = ({ title }: { title: string }) => (
+    <AsyncContentEmpty title={title} />
+)
+
 /**
  * The "Feedback" findings card. See the file header for what this block owns
  * (severity vocabulary, sort order, the repo-URL→file-link builder) and why
@@ -258,27 +270,11 @@ const SubmissionFindingsList = ({
             body: () => findingPanel(finding, repositoryUrl),
         }))
 
-    // Both branches render BOUNDED inside `SurfaceCard.Accordion`'s own `emptyState`
-    // slot (see file header, judgement call 2–3) instead of swapping the whole card
-    // for `AsyncContent`'s unbounded message. `emptyState` is now a component
-    // reference (COMPOSITE-4), so each branch is wrapped as a zero-arg component.
-    const ErrorEmptyState = () => (
-        <AsyncContentError
-            title={ERROR_TITLE}
-            onRetry={onRetry}
-            retryLabel={retryLabel}
-
-        />
-    )
-
-    const PlainEmptyState = () => (
-        <AsyncContentEmpty
-            title={emptyLabel ?? EMPTY_LABEL_DEFAULT}
-
-        />
-    )
-
-    const emptyState = error ? ErrorEmptyState : resolvedEmpty ? PlainEmptyState : undefined
+    const emptyState = error
+        ? () => <ErrorEmptyState onRetry={onRetry} retryLabel={retryLabel} />
+        : resolvedEmpty
+            ? () => <PlainEmptyState title={emptyLabel ?? EMPTY_LABEL_DEFAULT} />
+            : undefined
 
     return (
         <div>

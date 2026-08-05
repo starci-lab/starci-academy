@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { type SkeletonProps } from "@sb-components/frames/_slot"
 import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"

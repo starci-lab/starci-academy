@@ -1,5 +1,5 @@
 import React from "react"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { type SkeletonProps } from "@sb-components/frames/_slot"
 import { StackIcon } from "@phosphor-icons/react"
 import { ModuleHeader, CourseContentTier, type ModuleHeaderCrumb } from "@sb-components/starci/blocks/learn/ModuleHeader/ModuleHeader"
 import { ModuleContinueBand } from "@sb-components/starci/blocks/learn/ModuleContinueBand/ModuleContinueBand"

@@ -18,7 +18,7 @@ import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/compos
 import { HighlightChip } from "@sb-components/composites/chips/HighlightChip/HighlightChip"
 import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
-import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/frames/_slot"
 import { Breadcrumbs, type BreadcrumbItem } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcrumbs"
 import { ChipBase } from "@sb-components/atoms/chips/Chip/ChipBase"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
@@ -114,6 +114,20 @@ const CourseContentsEmpty = () => (
     />
 )
 
+const BreadcrumbSlot: ComponentTypeWithSkeleton = () => <Breadcrumbs items={CRUMBS} />
+
+const MetaChips: ComponentTypeWithSkeleton = ({ isSkeleton }) => (
+    <StackH
+        gap={3}
+        isSkeleton={isSkeleton}
+        items={[
+            ({ isSkeleton }: SkeletonProps) => <HighlightChip isSkeleton={isSkeleton} icon={StackIcon} value={8} label="chapters" />,
+            ({ isSkeleton }: SkeletonProps) => <HighlightChip isSkeleton={isSkeleton} icon={ClockIcon} value="~14" label="hours" />,
+            ({ isSkeleton }: SkeletonProps) => <HighlightChip isSkeleton={isSkeleton} icon={UsersIcon} value="2,481" label="learners" />,
+        ]}
+    />
+)
+
 /**
  * The `/learn/content` dashboard leaf.
  *
@@ -123,20 +137,6 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
     if (isEmpty) {
         return <CourseContentsEmpty />
     }
-
-    // Header slots the PageHeader calls itself (skipped while it draws its own skeleton header).
-    const BreadcrumbSlot: ComponentTypeWithSkeleton = () => <Breadcrumbs items={CRUMBS} />
-    const MetaChips: ComponentTypeWithSkeleton = () => (
-        <StackH
-            gap={3}
-            isSkeleton={isSkeleton}
-            items={[
-                ({ isSkeleton }: SkeletonProps) => <HighlightChip isSkeleton={isSkeleton} icon={StackIcon} value={8} label="chapters" />,
-                ({ isSkeleton }: SkeletonProps) => <HighlightChip isSkeleton={isSkeleton} icon={ClockIcon} value="~14" label="hours" />,
-                ({ isSkeleton }: SkeletonProps) => <HighlightChip isSkeleton={isSkeleton} icon={UsersIcon} value="2,481" label="learners" />,
-            ]}
-        />
-    )
 
     // Keep-going rows — leading state icon, title, minutes-read subtitle, difficulty + premium-lock meta.
     const lessonRows: Array<SurfaceCardListItem> = LESSONS.map((lesson) => {

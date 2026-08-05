@@ -11,7 +11,7 @@ import {
     type AsyncContentErrorProps,
 } from "@sb-components/composites/async/AsyncContent/AsyncContent"
 import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 

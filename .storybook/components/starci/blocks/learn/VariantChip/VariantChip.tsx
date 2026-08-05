@@ -1,7 +1,3 @@
-import React from "react"
-import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-
 /**
  * `VariantChip.*` — a chip family (design tier) that applies one meaningful role
  * (difficulty, language, platform) on top of the `Chip.*` atom, attaching the
@@ -12,96 +8,12 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * `.Language`/`.HostPlatform`/`.AiCategory` as screens need them.
  */
 
-/** The supported difficulty levels a piece of content can be tagged with. */
-export type Difficulty = "beginner" | "intermediate" | "advanced" | "insane"
-
-/**
- * Dot color scale by difficulty tier — the SSOT for this ramp, import it, don't
- * redeclare it.
- *
- * Uses a sequential Tailwind palette ramp (hotter = harder) INSTEAD OF the 5
- * semantic tokens (`accent`/`success`/`warning`/`danger`/`default`): difficulty is
- * a **TIER**, not a **STATE** — forcing 4 tiers into semantic tokens would collide
- * on `danger` twice.
- */
-export const DIFFICULTY_COLOR: Record<Difficulty, string> = {
-    beginner: "text-emerald-500",
-    intermediate: "text-amber-500",
-    advanced: "text-orange-500",
-    insane: "text-rose-500",
-}
-
-/** Props for {@link VariantChipDifficulty}. */
-export interface VariantChipDifficultyProps {
-    /** Difficulty tier — decides BOTH the label AND the dot color. The one axis. */
-    difficulty: Difficulty
-    /**
-     * Extra classes on the wrapper. A closed union, not a free string: this
-     * value is handed straight to `Chip`'s own closed `classNames` union, so an
-     * unconstrained string here would only fail one tier down.
-     */
-    classNames?: Array<AllowedClassName>
-    /** `true` → shimmer bar mirroring the exact dot+label shape (the atom draws it itself). */
-    isSkeleton?: boolean
-    /** Dev/spec: overlay anatomy labels on this chip. */
-}
-
-/** Title-case a difficulty key for the default label. */
-const capitalize = (value: Difficulty): string => value.charAt(0).toUpperCase() + value.slice(1)
-
-/**
- * `VariantChipDifficulty` — a color dot by tier + a difficulty word (GitHub
- * language-dot style). A thin wrapper over the `Chip` atom; color comes from
- * {@link DIFFICULTY_COLOR}.
- *
- * The shape is ALWAYS a pill — the atom's default, and design doesn't expose a
- * shape axis to the caller (see the ⛔ note at the top of this file).
- *
- * @param props - {@link VariantChipDifficultyProps}
- */
-const VariantChipDifficulty = ({
-    difficulty,
-    classNames,
-    isSkeleton,
-}: VariantChipDifficultyProps) => {
-    // Part name so the anatomy tree can call out exactly what this design builds —
-    // the tree reads off the DOM, so without a name the story reveals nothing
-    // about what it's made of.
-    // The label must be the NAMESPACE name (`Chip`) because readers look it
-    // up by story name.
-    // Two branches because the atom's `isSkeleton` is a disjoint union (when
-    // skeleton, `text` isn't required): passing a single `boolean | undefined`
-    // into one call site wouldn't type-check. The skeleton branch STILL keeps
-    // `dotClassName` so the atom sizes the box correctly while leaving room for
-    // the dot.
-    const chip = isSkeleton ? (
-        <Chip
-            isSkeleton
-            dotClassName={DIFFICULTY_COLOR[difficulty]}
-            classNames={classNames}
-        />
-    ) : (
-        <Chip
-            dotClassName={DIFFICULTY_COLOR[difficulty]}
-            text={capitalize(difficulty)}
-            classNames={classNames}
-        />
-    )
-    // Part name goes on the span that WRAPS the chip itself — NOT through
-    // `AnatomyOverlay`.
-    //
-    // The overlay emits an `inset-0` span sitting NEXT TO the chip rather than
-    // wrapping it, so `Dot`/`Label` (inside the chip) walking up the ancestor
-    // chain never reach `VariantChipDifficulty` → the anatomy tree flattens
-    // wrong, with the two atoms jumping up to sit level with design. The tree
-    // is inferred from the DOM, so the name
-    // must sit on the node that ACTUALLY contains the children.
-    return chip
-}
+export type { Difficulty, VariantChipDifficultyProps } from "./types"
+export { DIFFICULTY_COLOR } from "./types"
+export { VariantChipDifficulty } from "./VariantChipDifficulty"
 
 /**
  * `VariantChip.*` — the family of chips carrying a meaningful role. Members are
  * named by ROLE (§14d), not by shape. No `Base` (see the doc at the top of this
  * file).
  */
-export { VariantChipDifficulty }

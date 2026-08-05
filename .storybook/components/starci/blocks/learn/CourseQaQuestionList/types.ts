@@ -1,0 +1,70 @@
+/** One asker — plain data, the row builds the avatar + name from it. */
+export interface CourseQaQuestionAuthor {
+    /** Stable id — used to detect "this is the viewer's own question". */
+    id: string
+    /** Display name (or username fallback), already resolved by the caller. */
+    displayName: string
+    /** Avatar image; absent → the atom's own generated/initials fallback chain. */
+    avatarUrl?: string
+}
+
+/** Where a question was asked — drives the scope chip's own label (§14d.1). */
+export type CourseQaQuestionScope =
+    | { kind: "lesson", lessonTitle: string }
+    | { kind: "general" }
+
+/** One question row — plain DATA; the block builds the wording/chips/dot. */
+export interface CourseQaQuestionItem {
+    /** Stable id — the React key, and how "own question" is detected. */
+    id: string
+    /** Who asked it. */
+    author: CourseQaQuestionAuthor
+    /** Already-formatted relative time, e.g. "2 hours ago" (no i18n layer at this tier). */
+    createdTimeAgo: string
+    /** `true` → a pin glyph rides beside the asker's name. */
+    isPinned?: boolean
+    /** `true` → a founder-verified glyph rides beside the asker's name. */
+    isFounderAuthor?: boolean
+    /** One/two-line preview of the question body. */
+    preview: string
+    /** Which lesson (or "general/course-wide") this question belongs to. */
+    scope: CourseQaQuestionScope
+    /** How many answers this question has. `0` ⇒ unanswered. */
+    replyCount: number
+    /** `true` → the (at least one) answer came from the course founder. */
+    answeredByFounder?: boolean
+}
+
+/** The signed-in viewer's own identity — threaded through for the `QaQuestionThread` swap (★2/★6). */
+export interface CourseQaCurrentUser {
+    username: string
+    avatar?: string
+}
+
+/** Props for {@link CourseQaQuestionList}. */
+export interface CourseQaQuestionListProps {
+    /** The current page's questions, in display order. */
+    questions: ReadonlyArray<CourseQaQuestionItem>
+    /** `true` while this list's own fetch is in flight (feeds the Loading leaf). */
+    isLoading: boolean
+    /** Truthy → the fetch failed (feeds the Error leaf, outranks loading/empty). */
+    error?: unknown
+    /** Retry the failed fetch. Omit → the error message carries no action. */
+    onRetry?: () => void
+    /** 1-based current page. */
+    page: number
+    /** Total page count. */
+    totalPages: number
+    /** Fired with the 1-based page the viewer picked. */
+    onPageChange: (page: number) => void
+    /** Signed-in viewer's id (drives the "You" swap, ★6); `null` when signed out. */
+    currentUserId: string | null
+    /** Signed-in viewer's identity — pass-through for the `QaQuestionThread` swap (★2). */
+    currentUser: CourseQaCurrentUser | null
+    /** Fired after an answer is posted/edited/deleted — pass-through for the `QaQuestionThread` swap (★2). */
+    onAnswered?: () => void
+    /** Accessible name for the pager region (★4). */
+    pagerAriaLabel: string
+    /** External skeleton override, distinct from `isLoading` (★5). */
+    isSkeleton?: boolean
+}

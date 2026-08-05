@@ -7,9 +7,10 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { SurfaceCard, SurfaceCardCrossList, type SurfaceCardCrossListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Callout, type CalloutIcon } from "@sb-components/composites/feedback/Callout/Callout"
-import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import { ScoreRow } from "./ScoreRow"
+import { ScoreRowSkeleton } from "./ScoreRowSkeleton"
 
 /**
  * `MockInterviewScorecard` — read-only render of one graded mock-interview run:
@@ -98,54 +99,9 @@ const VERDICT_LABEL: Record<MockInterviewVerdict, string> = {
     fail: "Fail",
 }
 
-/**
- * Score bar/text color BY VALUE, not a fixed tone — a low score must read as
- * low. Ported unchanged from the source `scoreColorOf`.
- */
-const scoreColorOf = (score: number, max: number): "success" | "warning" | "danger" => {
-    const ratio = max > 0 ? score / max : 0
-    return ratio < 0.5 ? "danger" : ratio < 0.75 ? "warning" : "success"
-}
-
 /** Placeholder row count while `isSkeleton` and the real breakdown length isn't known yet. */
 const SKELETON_SCORE_ROWS = 3
 const SKELETON_ATTRIBUTE_ROWS = 3
-
-/** One labeled score row: a truncating label, a value-colored bar, and the raw "earned/max" beside it. */
-const ScoreRow = ({
-    label,
-    score,
-    max,
-}: {
-    label: string
-    score: number
-    max: number
-}) => (
-    <StackH
-        gap={4}
-        align="center"
-        principles={["content-row"]}
-        items={[
-            () => <Typography size="sm" truncate classNames={["shrink-0"]} text={label} />,
-            () => <ProgressMeter value={score} max={max} color={scoreColorOf(score, max)} classNames={["flex-1"]} />,
-            () => <Typography size="xs" color="muted" tabularNums classNames={["shrink-0"]} text={`${score}/${max}`} />,
-        ]}
-    />
-)
-
-/** Same shape as {@link ScoreRow}, shimmering — `ProgressMeter` has no `isSkeleton` of its own (see file header). */
-const ScoreRowSkeleton = () => (
-    <StackH
-        gap={4}
-        align="center"
-        principles={["content-row"]}
-        items={[
-            () => <Typography size="sm" isSkeleton classNames={["shrink-0", "w-1/4"]} />,
-            () => <HeroSkeleton className="h-1 flex-1 rounded-full" />,
-            () => <Typography size="xs" isSkeleton classNames={["shrink-0", "w-1/4"]} />,
-        ]}
-    />
-)
 
 /**
  * The graded-run scorecard. See the file header for the full contract, the

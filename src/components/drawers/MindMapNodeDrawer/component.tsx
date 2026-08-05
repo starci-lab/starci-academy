@@ -1,12 +1,15 @@
 import React from "react"
-import { Drawer, Label, ScrollShadow, Typography } from "@heroui/react"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/types/search-course-content"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { DrawerShell } from "@/components/composites/layout/DrawerShell"
+import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackV } from "@/components/frames/Stack"
+import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 
 /** One kind-bucketed section of RAG hits, already resolved (label + count) by the connected `MindMapNodeDrawer`. */
 export interface MindMapNodeDrawerGroup {
@@ -58,12 +61,18 @@ export interface MindMapNodeDrawerProps {
     labels: MindMapNodeDrawerLabels
 }
 
+/** How many placeholder sections/rows the loading skeleton mirrors — matches the common 1–2 group shape. */
+const SKELETON_SECTION_COUNT = 2
+const SKELETON_ROW_COUNT = 2
+
 /**
  * PRESENTATIONAL drawer — the mind-map keyword's related-surfaces view, driven by plain props (no
  * store/SWR/i18n) so it is fully story-able. Renders the relevance-ordered RAG hits already bucketed
- * into kind sections (lessons / flashcards / challenges / capstone), each a jump link; renders
- * loading / empty / error via {@link AsyncContent}. See `tiers/split.md` — the connected `index.tsx`
- * owns the fetch, the bucketing, and i18n.
+ * into kind sections (lessons / flashcards / challenges / capstone), each a jump link. Branches in
+ * priority order error → skeleton → empty → content (`AsyncContentError`/`AsyncContentEmpty` for the
+ * message branches; the skeleton is a small inline mirror of the group/row shape, per
+ * `authoring/loading-and-skeleton.md`). See `tiers/split.md` — the connected `index.tsx` owns the
+ * fetch, the bucketing, and i18n.
  *
  * @param props - {@link MindMapNodeDrawerProps}
  * @see Story: .storybook/stories/drawers/MindMapNodeDrawer/MindMapNodeDrawer.stories
@@ -83,105 +92,98 @@ export const _MindMapNodeDrawer = ({
 }: MindMapNodeDrawerProps) => {
     const { isMobile } = useSmViewpoint()
 
+    // authored explainer — "understand the concept right in the drawer" (teacher, 2026-07-18) before
+    // RAG lists where to dig deeper below. Always known from the click, never part of the RAG fetch,
+    // so it never shimmers.
+    const header: ComponentTypeWithSkeleton = () => (
+        <StackV
+            gap={1}
+            items={[
+                () => <Typography size="xs" color="muted" text={labels.aboutEyebrow} />,
+                () => <Typography size="h4" weight="bold" text={keyword ?? labels.titleFallback} />,
+                ...(desc ? [() => <Typography size="sm" color="muted" text={desc} />] : []),
+            ]}
+        />
+    )
+
+    // small inline mirror of the [group label + bordered row list] shape — one Skeleton.Typography
+    // per text node, the same structural nodes (SurfaceListCard, SurfaceListCardItem) real content
+    // renders through, so the box doesn't jump when the data lands.
+    const skeletonSections: Array<ComponentTypeWithSkeleton> = Array.from(
+        { length: SKELETON_SECTION_COUNT },
+        () => () => (
+            <StackV
+                gap={2}
+                items={[
+                    () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                    () => (
+                        <SurfaceListCard bordered>
+                            {Array.from({ length: SKELETON_ROW_COUNT }, (_row, index) => (
+                                <SurfaceListCardItem key={index}>
+                                    <StackV
+                                        gap={2}
+                                        items={[
+                                            () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                                            () => <Skeleton.Typography type="body-sm" width="3/4" />,
+                                        ]}
+                                    />
+                                </SurfaceListCardItem>
+                            ))}
+                        </SurfaceListCard>
+                    ),
+                ]}
+            />
+        ),
+    )
+
+    const body: ComponentTypeWithSkeleton = () => {
+        if (error) {
+            return <AsyncContentError title={labels.loadError} onRetry={onRetry} retryLabel={labels.retry} />
+        }
+        if (isSkeleton) {
+            return <StackV gap={4} items={skeletonSections} />
+        }
+        if (isEmpty) {
+            return <AsyncContentEmpty title={labels.emptyTitle} description={labels.emptyDescription} />
+        }
+        return (
+            <StackV
+                gap={4}
+                items={[
+                    // section label over the related-content groups (each an interactive nav list)
+                    () => <Typography size="sm" weight="semibold" text={labels.eyebrow} />,
+                    ...groups.map((group) => () => (
+                        <LabeledCard frameless subtleLabel label={group.label} labelEnd={group.countLabel}>
+                            <SurfaceListCard bordered>
+                                {group.items.map((item, index) => (
+                                    <EntityResultRow
+                                        key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
+                                        item={item}
+                                        showSnippet
+                                        onSelect={onSelectItem}
+                                    />
+                                ))}
+                            </SurfaceListCard>
+                        </LabeledCard>
+                    )),
+                ]}
+            />
+        )
+    }
+
     return (
-        <Drawer data-tier="overlay" data-component="MindMapNodeDrawer">
-            <Drawer.Backdrop
+        <div data-tier="overlay" data-component="MindMapNodeDrawer">
+            <DrawerShell
                 isOpen={isOpen}
                 onOpenChange={(open) => {
                     if (!open) {
                         onClose()
                     }
                 }}
-            >
-                <Drawer.Content placement={isMobile ? "bottom" : "right"}>
-                    <Drawer.Dialog className="p-0">
-                        <div className="flex flex-col gap-2 p-4">
-                            <Drawer.CloseTrigger />
-                            <Drawer.Header className="flex flex-col gap-1 p-0">
-                                <Typography type="body-xs" color="muted">
-                                    {labels.aboutEyebrow}
-                                </Typography>
-                                <Drawer.Heading>
-                                    {keyword ?? labels.titleFallback}
-                                </Drawer.Heading>
-                            </Drawer.Header>
-                            {/* authored explainer — "understand the concept right in the drawer"
-                                (teacher, 2026-07-18) before RAG lists where to dig deeper below. */}
-                            {desc ? (
-                                <Typography type="body-sm" color="muted">
-                                    {desc}
-                                </Typography>
-                            ) : null}
-                        </div>
-                        <Drawer.Body>
-                            <ScrollShadow className="h-full p-4 pt-0" hideScrollBar>
-                                <AsyncContent
-                                    isLoading={isSkeleton}
-                                    skeleton={(
-                                        <div className="flex flex-col gap-4">
-                                            {[0, 1].map((section) => (
-                                                <div key={section} className="flex flex-col gap-2">
-                                                    {/* group label + count */}
-                                                    <Skeleton.Typography type="body-xs" width="1/3" />
-                                                    {/* bordered list of EntityResultRows (breadcrumb + title) */}
-                                                    <SurfaceListCard bordered>
-                                                        {[0, 1].map((row) => (
-                                                            <SurfaceListCardItem key={row}>
-                                                                <div className="flex flex-col gap-2">
-                                                                    <Skeleton.Typography type="body-xs" width="1/3" />
-                                                                    <Skeleton.Typography type="body-sm" width="3/4" />
-                                                                </div>
-                                                            </SurfaceListCardItem>
-                                                        ))}
-                                                    </SurfaceListCard>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                    isEmpty={isEmpty}
-                                    emptyContent={{
-                                        title: labels.emptyTitle,
-                                        description: labels.emptyDescription,
-                                    }}
-                                    error={error}
-                                    errorContent={{
-                                        title: labels.loadError,
-                                        onRetry,
-                                        retryLabel: labels.retry,
-                                    }}
-                                >
-                                    <div className="flex flex-col gap-4">
-                                        {/* section label over the related-content groups (each an
-                                            interactive nav list) → `<Label>`, not hand-rolled muted
-                                            Typography (label.md §1b/§1c). */}
-                                        <Label>{labels.eyebrow}</Label>
-                                        {groups.map((group) => (
-                                            <LabeledCard
-                                                key={group.key}
-                                                frameless
-                                                subtleLabel
-                                                label={group.label}
-                                                labelEnd={group.countLabel}
-                                            >
-                                                <SurfaceListCard bordered>
-                                                    {group.items.map((item, index) => (
-                                                        <EntityResultRow
-                                                            key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
-                                                            item={item}
-                                                            showSnippet
-                                                            onSelect={onSelectItem}
-                                                        />
-                                                    ))}
-                                                </SurfaceListCard>
-                                            </LabeledCard>
-                                        ))}
-                                    </div>
-                                </AsyncContent>
-                            </ScrollShadow>
-                        </Drawer.Body>
-                    </Drawer.Dialog>
-                </Drawer.Content>
-            </Drawer.Backdrop>
-        </Drawer>
+                placement={isMobile ? "bottom" : "right"}
+                header={header}
+                body={body}
+            />
+        </div>
     )
 }

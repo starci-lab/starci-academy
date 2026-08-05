@@ -5,7 +5,7 @@ import { Typography } from "@/components/atoms/text/Typography"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { LinkSeeMore } from "@/components/atoms/navigation/Link"
 import { StackH, StackV } from "@/components/frames/Stack"
-import { ModalRoot } from "@/components/frames/ModalRoot"
+import { Box } from "@/components/frames/Box"
 import { AiQuotaLane, type AiQuotaLaneData } from "@/components/starci/blocks/ai/AiQuotaLane"
 import { AiQuotaSubscriptionPanel } from "@/components/starci/blocks/ai/AiQuotaSubscriptionPanel"
 import {
@@ -13,7 +13,6 @@ import {
     type AiQuotaHistoryChartPoint,
     type AiQuotaHistoryChargeItem,
 } from "@/components/starci/blocks/ai/AiQuotaHistoryPanel"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * `AiQuotaModal` — the root overlay for "how much AI have I used": a dialog with the
@@ -85,8 +84,6 @@ export interface AiQuotaModalProps {
     onSubscribe: () => void
     /** Fired when the "view full usage" link is pressed. */
     onViewDetails: () => void
-    /** Extra classes merged onto the dialog. */
-    classNames?: Array<AllowedClassName>
 }
 
 /** Tab → label. The block's own vocabulary (§14d.1), same pattern as `ContentModeNav`'s `MODE_LABEL`. */
@@ -127,12 +124,12 @@ const _AiQuotaModal = ({
     history,
     onSubscribe,
     onViewDetails,
-    classNames,
 }: AiQuotaModalProps) => {
-    // Caller-built header (title + optional tier chip): `ModalShell.title` only carries ONE
-    // Typography node, so a second element beside it (the chip) has to compose its own
-    // wrapper — which then owns its own `pr-8` for the close button, per ModalShell's
-    // caller-built-header contract.
+    // Caller-built header (title + optional tier chip): `ModalShell.header` only carries ONE
+    // component reference, so a second element beside it (the chip) has to compose its own
+    // wrapper — which then owns its own `pr-8` for the close button, the same contract
+    // `ContentAiChatDrawer`'s caller-built header uses. `Box` is the frame tier's own escape
+    // hatch for exactly this: single-side padding no `Stack`/`Flex` prop can express.
     const titleAndTierChip = [
         () => (
             <Typography
@@ -147,15 +144,15 @@ const _AiQuotaModal = ({
         )] : []),
     ]
 
-    const header = (
-        <div className="pr-8">
+    const header = () => (
+        <Box className="pr-8">
             <StackH
                 gap={3}
                 principles={["identity"]}
                 align="center"
                 items={titleAndTierChip}
             />
-        </div>
+        </Box>
     )
 
     // The one panel slot, filled by whichever sibling block the active tab names. The wrapper
@@ -188,27 +185,24 @@ const _AiQuotaModal = ({
 
     const tabsAndPanel = [
         () => (
-            <div>
-                <Tabs
-                    items={TAB_ITEMS}
-                    selectedKey={activeTab}
-                    onSelectionChange={(key) => onTabChange(key as AiQuotaModalTab)}
-                    ariaLabel="AI usage"
-                />
-            </div>
+            <Tabs
+                items={TAB_ITEMS}
+                selectedKey={activeTab}
+                onSelectionChange={(key) => onTabChange(key as AiQuotaModalTab)}
+                ariaLabel="AI usage"
+            />
         ),
         () => panel,
     ]
 
     return (
-        <ModalRoot data-component="AiQuotaModal">
+        <div data-tier="overlay" data-component="AiQuotaModal">
             <ModalShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
-                header={() => header}
+                header={header}
                 size="lg"
                 scroll="inside"
-                classNames={classNames}
                 footer={() => (
                     <LinkSeeMore
                         label="View full usage"
@@ -219,7 +213,7 @@ const _AiQuotaModal = ({
                 )}
                 body={() => <StackV gap={6} items={tabsAndPanel} />}
             />
-        </ModalRoot>
+        </div>
     )
 }
 

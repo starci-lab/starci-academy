@@ -5,6 +5,7 @@ import { Typography } from "@/components/atoms/text/Typography"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { StackH } from "@/components/frames/Stack"
+import { Box } from "@/components/frames/Box"
 
 /**
  * `ContentAiChatDrawer` — the global "ask StarCi AI" chat panel in drawer
@@ -94,36 +95,41 @@ const _ContentAiChatDrawer = ({
 
     const titleAndModeSwitch = [
         () => (
-            <span className="min-w-0 flex-1">
-                <Typography text={title ?? FALLBACK_TITLE} weight="bold" truncate />
-            </span>
+            <Typography
+                text={title ?? FALLBACK_TITLE}
+                weight="bold"
+                truncate
+                classNames={["min-w-0", "flex-1"]}
+            />
         ),
         ...(hasModeSwitch ? [() => (
-            <span>
-                <ButtonRadioGroup
-                    items={MODE_ITEMS}
-                    value={mode as ContentAiChatDrawerMode}
-                    onChange={(next) => onModeChange?.(next)}
-                    ariaLabel={MODE_SWITCH_ARIA_LABEL}
-
-                />
-            </span>
+            <ButtonRadioGroup
+                items={MODE_ITEMS}
+                value={mode as ContentAiChatDrawerMode}
+                onChange={(next) => onModeChange?.(next)}
+                ariaLabel={MODE_SWITCH_ARIA_LABEL}
+            />
         )] : []),
     ]
 
+    // `DrawerShell.header` only carries ONE Typography node, so a second element
+    // beside it (the mode switch) has to compose its own wrapper — which then
+    // owns its own `pr-8` for the close button, same contract `AiQuotaModal`'s
+    // caller-built header uses. `Box` is the frame tier's own escape hatch for
+    // exactly this: a single-side padding no `Stack`/`Flex` prop can express.
     const header = () => (
-        <div className="pr-8">
+        <Box className="pr-8">
             <StackH
                 gap={3}
                 principles={["sibling-stack"]}
                 justify="between"
                 items={titleAndModeSwitch}
             />
-        </div>
+        </Box>
     )
 
     return (
-        <div>
+        <div data-tier="overlay" data-component="ContentAiChatDrawer">
             <DrawerShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
@@ -131,14 +137,11 @@ const _ContentAiChatDrawer = ({
                 header={header}
                 body={() => (
                     <SurfaceCard
-
-
                         body={() => (
                             <EmptyState
                                 icon={ChatsCircleIcon}
                                 title={BODY_GAP_TITLE}
                                 description={BODY_GAP_DESCRIPTION}
-
                             />
                         )}
                     />

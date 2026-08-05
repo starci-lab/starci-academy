@@ -1,19 +1,19 @@
 import React from "react"
-import { cn } from "@heroui/react"
 import { SettingsSidebarNav, type SettingsNavGroup } from "@/components/starci/blocks/navigation/SettingsSidebarNav"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { Container } from "@/components/frames/Container"
-import { StackV } from "@/components/frames/Stack"
+import { RailShell } from "@/components/frames/RailShell"
 
 /**
  * `_SettingsLayout` — the chrome wrapping every route under `/profile/(settings)`
  * (edit profile, appearance, security, sessions, course history, AI settings,
  * bookmarks, membership, installments). Ported 1:1 from the storybook blueprint
- * `starci/layouts/SettingsLayout` — see that file for why the outer switch is
- * `StackV` (not `Split`) and why the nav is the block's own two-leaf
- * `SettingsSidebarNav` (desktop rail + mobile pill strip, both always in the DOM).
- * The layout is column-first on narrow screens, a row from `@app-md`.
+ * `starci/layouts/SettingsLayout`. The nav is the block's own two-leaf
+ * `SettingsSidebarNav` (desktop rail + mobile pill strip, both always in the DOM)
+ * beside a centered content measure, composed through `RailShell` — the exact
+ * leading-rail-beside-a-growing-body shape that frame's own header names this
+ * file's legacy source as one of the two real call sites that motivated it.
+ * Column-first on narrow screens, a row from `@app-md`.
  *
  * `children` is a BUILDABLE slot (`ComponentTypeWithSkeleton`, uncalled) handed
  * straight to `Container`'s own `body` slot — never a bare `ReactNode` — so the
@@ -39,14 +39,12 @@ export interface SettingsLayoutProps {
     expandLabel: string
     /** `localStorage` key persisting the collapsed flag. */
     storageKey: string
-    /** Where this layout sits inside its parent — placement only, never appearance. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
- * The settings shell: nav beside content, column-first, row from `@app-md`.
- * See the blueprint's file header for why this is a `layouts/` file, why it has
- * only two leaves, and why the outer switch is `StackV` rather than `Split`.
+ * The settings shell: nav rail beside a content measure, column-first, row from
+ * `@app-md` — `RailShell`'s own contract. See that frame's header for why this is
+ * its own khung and why the rail never shrinks while the body absorbs the rest.
  *
  * @param props - {@link SettingsLayoutProps}
  */
@@ -59,38 +57,26 @@ const _SettingsLayout = ({
     collapseLabel,
     expandLabel,
     storageKey,
-    classNames,
 }: SettingsLayoutProps) => {
-    const navAndContent = [
-        () => (
-            <SettingsSidebarNav
-                groups={groups}
-                activeHref={activeHref}
-                onNavigate={onNavigate}
-                title={title}
-                collapseLabel={collapseLabel}
-                expandLabel={expandLabel}
-                storageKey={storageKey}
-            />
-        ),
-        () => (
-            <Container
-                size="md"
-                padding={6}
-                classNames={["min-w-0", "flex-1"]}
-                body={Children}
-            />
-        ),
-    ]
+    const navSlot: ComponentTypeWithSkeleton = () => (
+        <SettingsSidebarNav
+            groups={groups}
+            activeHref={activeHref}
+            onNavigate={onNavigate}
+            title={title}
+            collapseLabel={collapseLabel}
+            expandLabel={expandLabel}
+            storageKey={storageKey}
+        />
+    )
+
+    const contentSlot: ComponentTypeWithSkeleton = () => (
+        <Container size="md" padding={6} body={Children} />
+    )
 
     return (
-        <div data-tier="layout" data-component="SettingsLayout" className={cn(classNames)}>
-            <div className="@app-md:flex-row @app-md:items-start">
-                <StackV
-                    gap={1}
-                    items={navAndContent}
-                />
-            </div>
+        <div data-tier="layout" data-component="SettingsLayout">
+            <RailShell rail={navSlot} body={contentSlot} at="md" />
         </div>
     )
 }

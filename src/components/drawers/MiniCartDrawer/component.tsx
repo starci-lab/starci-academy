@@ -1,7 +1,12 @@
 import React from "react"
-import { Button, Chip, Drawer, ScrollShadow, Typography } from "@heroui/react"
 import { ArrowRightIcon, ShoppingCartIcon } from "@phosphor-icons/react"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
+import { DrawerShell } from "@/components/composites/layout/DrawerShell"
+import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackH, StackV } from "@/components/frames/Stack"
 import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
@@ -75,12 +80,13 @@ export interface MiniCartDrawerProps {
 /**
  * Mini-cart drawer — the presentational half of {@link _MiniCartDrawer}'s connected
  * `MiniCartDrawer` (`index.tsx`): the slide-out cart confirmation + combo meter,
- * right on desktop / bottom-sheet on mobile. Renders the line list (reusing
- * {@link CartLine}, the SAME row the `/cart` page uses), a bundle-discount meter, a
- * footer with the real charged total + saving, a primary "Checkout" and a text link
- * to the full cart page. `error`/`isEmpty` fall to the shared `AsyncContentError` /
- * `AsyncContentEmpty` composites; otherwise the tree renders with `isSkeleton`
- * threaded to the cart-list zone so the shimmer mirrors the loaded shape
+ * right on desktop / bottom-sheet on mobile. Composed on `DrawerShell` (the shared
+ * panel-scaffold composite): a bordered `SurfaceListCard` reusing {@link CartLine}
+ * (the SAME row the `/cart` page uses), a bundle-discount `ProgressMeter`, and a
+ * footer with the real charged total + saving, a primary "Checkout" and a text
+ * link to the full cart page. `error`/`isEmpty` fall to the shared
+ * `AsyncContentError` / `AsyncContentEmpty` composites; otherwise the tree renders
+ * with `isSkeleton` threaded down so the shimmer mirrors the loaded shape
  * (loading-and-skeleton.md). See `tiers/split.md` — the connected `index.tsx` owns
  * the fetch, the stores, and the i18n.
  *
@@ -109,168 +115,197 @@ export const _MiniCartDrawer = ({
     onCheckout,
     onViewFullCart,
     labels,
-}: MiniCartDrawerProps) => (
-    <Drawer>
-        <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange} className="backdrop-blur-sm">
-            <Drawer.Content placement={isMobile ? "bottom" : "right"}>
-                <Drawer.Dialog
-                    data-tier="overlay"
-                    data-component="MiniCartDrawer"
-                    className="p-0 sm:max-w-md"
-                >
-                    <div className="p-4">
-                        <Drawer.CloseTrigger />
-                        <Drawer.Header>
-                            <Drawer.Heading>{labels.header}</Drawer.Heading>
-                        </Drawer.Header>
-                    </div>
-                    <Drawer.Body>
-                        <ScrollShadow hideScrollBar className="h-full p-4">
-                            {error ? (
-                                <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retry} />
-                            ) : !isSkeleton && isEmpty ? (
-                                <AsyncContentEmpty
-                                    icon={ShoppingCartIcon}
-                                    title={labels.emptyTitle}
-                                    description={labels.emptyDescription}
-                                    onRetry={onBrowseCourses}
-                                    retryLabel={labels.browseCourses}
+}: MiniCartDrawerProps) => {
+    // Combo-discount meter — StarCi's bundle differentiator: label + bonus chip row,
+    // the meter, and a hint line. `ProgressMeter` (block) has no co-located skeleton
+    // of its own, so this leaf mirrors it by hand with `Skeleton.ProgressBar` while
+    // the rest of the row threads `isSkeleton` straight down (loading-and-skeleton.md §1).
+    const comboMeterSection: ComponentTypeWithSkeleton = () => (
+        <StackV
+            gap={3}
+            items={[
+                () => (
+                    <StackH
+                        gap={3}
+                        align="center"
+                        justify="between"
+                        items={[
+                            () => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text={labels.comboLabel} />,
+                            ...(isSkeleton
+                                ? [() => <Chip isSkeleton tone="accent" />]
+                                : bundlePercent > 0
+                                    ? [() => <Chip tone="accent" text={labels.bundleBonusChip} />]
+                                    : []),
+                        ]}
+                    />
+                ),
+                () => (isSkeleton ? <Skeleton.ProgressBar /> : <ProgressMeter value={itemCount} max={3} />),
+                () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.comboHint} />,
+            ]}
+        />
+    )
+
+    // Line list — reuses the SAME `CartLine` as the `/cart` page. `bordered`: this
+    // list is NESTED inside the drawer surface, where `shadow-surface` renders
+    // invisible against the parent (dark mode) — nested cards need a border to
+    // delineate (`card.md` §surface-in-surface). The `/cart` PAGE keeps it
+    // un-bordered (top-level on `bg-background`, shadow shows). `CartLine` has no
+    // co-located skeleton of its own, so the loading rows are mirrored by hand,
+    // same shape (leading tile · two text lines · trailing action).
+    const cartListSection: ComponentTypeWithSkeleton = () => (
+        <SurfaceListCard bordered>
+            {isSkeleton
+                ? Array.from({ length: 2 }).map((_row, index) => (
+                    <StackH
+                        key={index}
+                        gap={4}
+                        align="center"
+                        padding={5}
+                        items={[
+                            () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
+                            () => (
+                                <StackV
+                                    gap={3}
+                                    classNames={["min-w-0", "flex-1"]}
+                                    items={[
+                                        () => <Skeleton className="h-4 w-1/2 rounded-lg" />,
+                                        () => <Skeleton className="h-4 w-24 rounded-lg" />,
+                                    ]}
                                 />
-                            ) : isSkeleton ? (
-                                <div className="flex flex-col gap-6">
-                                    {/* combo-discount block above the list (label + bonus chip + meter + hint) */}
-                                    <div className="flex flex-col gap-2">
-                                        <div className="flex items-center justify-between gap-2">
-                                            <Skeleton.Typography type="body-sm" width="1/2" />
-                                            <Skeleton.Chip />
-                                        </div>
-                                        <Skeleton.ProgressBar />
-                                        <Skeleton.Typography type="body-xs" width="2/3" />
-                                    </div>
-                                    {/* mirror the bordered nested list (not shadow-surface) */}
-                                    <div className="overflow-hidden rounded-3xl border border-default bg-surface">
-                                        {Array.from({ length: 2 }).map((_, index) => (
-                                            <div key={index} className="flex items-center gap-3 px-4 py-4">
-                                                <Skeleton className="size-12 shrink-0 rounded-xl" />
-                                                <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                                    <Skeleton className="h-4 w-1/2 rounded-lg" />
-                                                    <Skeleton className="h-4 w-24 rounded-lg" />
-                                                </div>
-                                                <Skeleton className="size-9 shrink-0 rounded-lg" />
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            ) : (
-                                <div className="flex flex-col gap-6">
-                                    {/* combo-discount meter — StarCi's bundle differentiator */}
-                                    <div className="flex flex-col gap-2">
-                                        <div className="flex items-center justify-between gap-2">
-                                            <Typography type="body-sm" weight="medium">
-                                                {labels.comboLabel}
-                                            </Typography>
-                                            {bundlePercent > 0 ? (
-                                                <Chip size="sm" className="bg-accent-soft text-accent-soft-foreground">
-                                                    <Chip.Label>{labels.bundleBonusChip}</Chip.Label>
-                                                </Chip>
-                                            ) : null}
-                                        </div>
-                                        {/* label + Chip row above owns the copy; ProgressMeter's own
-                                            top-row is skipped here since it doesn't host a Chip. */}
-                                        <ProgressMeter value={itemCount} max={3} />
-                                        <Typography type="body-xs" color="muted">
-                                            {labels.comboHint}
-                                        </Typography>
-                                    </div>
+                            ),
+                            () => <Skeleton className="size-9 shrink-0 rounded-lg" />,
+                        ]}
+                    />
+                ))
+                : items.map((item) => (
+                    <CartLine
+                        key={item.id}
+                        item={item}
+                        previewLine={previewByCourse?.get(item.courseId)}
+                        onRemove={onRemove}
+                        isMutating={isMutating}
+                    />
+                ))}
+        </SurfaceListCard>
+    )
 
-                                    {/* line list — reuses the SAME CartLine as the /cart page.
-                                        `bordered`: this list is NESTED inside the drawer surface,
-                                        where `shadow-surface` renders invisible against the parent
-                                        (dark mode) — nested cards need a border to delineate
-                                        (`card.md` §surface-in-surface). The /cart PAGE keeps it
-                                        un-bordered (top-level on `bg-background`, shadow shows). */}
-                                    <SurfaceListCard bordered>
-                                        {items.map((item) => (
-                                            <CartLine
-                                                key={item.id}
-                                                item={item}
-                                                previewLine={previewByCourse?.get(item.courseId)}
-                                                onRemove={onRemove}
-                                                isMutating={isMutating}
-                                            />
-                                        ))}
-                                    </SurfaceListCard>
-                                </div>
-                            )}
-                        </ScrollShadow>
-                    </Drawer.Body>
-                    {items.length > 0 ? (
-                        <Drawer.Footer className="flex flex-col gap-3 border-t p-4">
-                            {/* summary: real charged total + saving; falls back to the plain list total on preview error */}
-                            {isPreviewSkeleton ? (
-                                // mirror the left-aligned, full-width total row
-                                <div className="flex w-full items-center gap-3">
-                                    <Skeleton className="h-5 w-20 rounded-lg" />
-                                    <Skeleton className="h-7 w-32 rounded-lg" />
-                                </div>
-                            ) : (
-                                /* `w-full`: `Drawer.Footer` (flex-col) does NOT stretch its
-                                    non-`fullWidth` children, so this summary block hugged its
-                                    content (~274px) while the `fullWidth` buttons below spanned
-                                    the footer — same gotcha as `Card.Footer` (CourseCard). Force
-                                    full width so the stack matches the buttons' edge. */
-                                <div className="flex w-full flex-col gap-1">
-                                    {/* total + price grouped on the LEFT (not spread edge-to-edge)
-                                        so the whole summary stack — total · saving · installment —
-                                        reads as one left-aligned column, per teacher feedback. */}
-                                    <div className="flex w-full items-center gap-3">
-                                        <Typography type="body" weight="semibold">
-                                            {labels.total}
-                                        </Typography>
-                                        {preview ? (
-                                            <PriceTag
-                                                discounted={preview.totalChargedVnd}
-                                                original={preview.totalListVnd}
-                                                currency="VND"
-                                                size="md"
-                                            />
-                                        ) : previewError ? (
-                                            // preview failed to load — fall back to the plain
-                                            // list total (no bundle discount known) so the total
-                                            // is never blank.
-                                            <PriceTag discounted={fallbackTotalVnd} currency="VND" size="md" />
-                                        ) : null}
-                                    </div>
-                                    {preview && preview.savingsVnd > 0 ? (
-                                        <Typography type="body-sm" className="text-success-soft-foreground">
-                                            {labels.savings}
-                                        </Typography>
-                                    ) : null}
-                                    {cheapestMonthlyLabel != null ? (
-                                        <Typography type="body-xs" color="muted">
-                                            {labels.installmentHint}
-                                        </Typography>
-                                    ) : null}
-                                </div>
-                            )}
+    // Body — error → skeleton → empty → content (BLOCK-8): the empty and error
+    // surfaces are the shared `AsyncContent*` composites dropped in as their own
+    // states; otherwise the ONE tree renders, with `isSkeleton` threaded down so
+    // the shimmer mirrors the loaded shape.
+    const cartBody: ComponentTypeWithSkeleton = () => {
+        if (error) {
+            return <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retry} />
+        }
+        if (!isSkeleton && isEmpty) {
+            return (
+                <AsyncContentEmpty
+                    icon={ShoppingCartIcon}
+                    title={labels.emptyTitle}
+                    description={labels.emptyDescription}
+                    onRetry={onBrowseCourses}
+                    retryLabel={labels.browseCourses}
+                />
+            )
+        }
+        return <StackV gap={6} isSkeleton={isSkeleton} items={[comboMeterSection, cartListSection]} />
+    }
 
-                            <Button
-                                variant="primary"
-                                size="lg"
-                                fullWidth
-                                isDisabled={isMutating}
-                                onPress={onCheckout}
-                            >
-                                {labels.checkout}
-                                <ArrowRightIcon className="size-5" />
-                            </Button>
-                            <Button variant="tertiary" fullWidth onPress={onViewFullCart}>
-                                {labels.viewFullCart}
-                            </Button>
-                        </Drawer.Footer>
-                    ) : null}
-                </Drawer.Dialog>
-            </Drawer.Content>
-        </Drawer.Backdrop>
-    </Drawer>
-)
+    // Footer — real charged total + saving; falls back to the plain list total on
+    // preview error. Total + price grouped on the LEFT (not spread edge-to-edge) so
+    // the whole summary stack — total · saving · installment — reads as one
+    // left-aligned column, per teacher feedback.
+    const footerSection: ComponentTypeWithSkeleton = () => (
+        <StackV
+            gap={4}
+            items={[
+                () => (
+                    isPreviewSkeleton ? (
+                        <StackH
+                            gap={4}
+                            align="center"
+                            items={[
+                                () => <Skeleton className="h-5 w-20 rounded-lg" />,
+                                () => <Skeleton className="h-7 w-32 rounded-lg" />,
+                            ]}
+                        />
+                    ) : (
+                        <StackV
+                            gap={2}
+                            items={[
+                                () => (
+                                    <StackH
+                                        gap={4}
+                                        align="center"
+                                        items={[
+                                            () => <Typography size="base" weight="semibold" text={labels.total} />,
+                                            ...(preview
+                                                ? [() => (
+                                                    <PriceTag
+                                                        discounted={preview.totalChargedVnd}
+                                                        original={preview.totalListVnd}
+                                                        currency="VND"
+                                                        size="md"
+                                                    />
+                                                )]
+                                                // preview failed to load — fall back to the plain list
+                                                // total (no bundle discount known) so the total is never blank.
+                                                : previewError
+                                                    ? [() => <PriceTag discounted={fallbackTotalVnd} currency="VND" size="md" />]
+                                                    : []),
+                                        ]}
+                                    />
+                                ),
+                                ...(preview && preview.savingsVnd > 0
+                                    ? [() => <Typography size="sm" color="success-soft" text={labels.savings} />]
+                                    : []),
+                                ...(cheapestMonthlyLabel != null
+                                    ? [() => <Typography size="xs" color="muted" text={labels.installmentHint} />]
+                                    : []),
+                            ]}
+                        />
+                    )
+                ),
+                () => (
+                    <Button
+                        variant="primary"
+                        size="lg"
+                        suffixIcon={ArrowRightIcon}
+                        isDisabled={isMutating}
+                        onPress={onCheckout}
+                        label={labels.checkout}
+                        classNames={["w-full"]}
+                    />
+                ),
+                () => (
+                    <Button
+                        variant="tertiary"
+                        onPress={onViewFullCart}
+                        label={labels.viewFullCart}
+                        classNames={["w-full"]}
+                    />
+                ),
+            ]}
+        />
+    )
+
+    return (
+        <div data-tier="overlay" data-component="MiniCartDrawer">
+            <DrawerShell
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                placement={isMobile ? "bottom" : "right"}
+                title={labels.header}
+                dialogClassName="sm:max-w-md"
+                isSkeleton={isSkeleton}
+                body={cartBody}
+                footer={items.length > 0 ? footerSection : undefined}
+                // HeroUI's `.drawer__footer` hard-codes `flex-row items-center justify-end
+                // gap-2` (drawer.css) — this footer needs a vertical stack (summary above
+                // full-width buttons), so every conflicting axis is forced with the trailing
+                // `!` important modifier, same technique `DrawerShell` itself uses for `mt-0!`.
+                footerClassName="flex-col! items-stretch! justify-start! gap-3! border-t"
+            />
+        </div>
+    )
+}

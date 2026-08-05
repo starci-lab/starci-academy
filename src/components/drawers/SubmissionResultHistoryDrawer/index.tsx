@@ -74,8 +74,6 @@ export const SubmissionResultHistoryDrawer = ({
                 historyLabel: t("submissionResult.history"),
                 passed: t("submissionResult.passed"),
                 failed: t("submissionResult.failed"),
-                previous: t("common.pagination.previous"),
-                next: t("common.pagination.next"),
             }}
         />
     )

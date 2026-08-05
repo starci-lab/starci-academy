@@ -3,7 +3,6 @@ import type { ReactNode } from "react"
 import { Navbar, type NavbarProps } from "@/components/starci/blocks/navigation/Navbar"
 import { Footer, type FooterProps } from "@/components/starci/blocks/navigation/Footer"
 import { StackV } from "@/components/frames/Stack"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * `InnerLayout` — the wrapper for every route in the app. `children` is a real
@@ -14,7 +13,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
  */
 
 /** Props for {@link _InnerLayout}. */
-export interface InnerLayoutProps extends NavbarProps, Omit<FooterProps, "className" | "anatPart" | "showAnatomy"> {
+export interface InnerLayoutProps extends Omit<NavbarProps, "className">, Omit<FooterProps, "className"> {
     /**
      * The active route's content. MANDATORY (RULE 12) — the shell itself
      * never changes shape across routes; only what fills this slot does.
@@ -27,8 +26,6 @@ export interface InnerLayoutProps extends NavbarProps, Omit<FooterProps, "classN
      * this layout only obeys the flag.
      */
     showFooter: boolean
-    /** Layout utilities on the root track, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -46,7 +43,6 @@ const _InnerLayout = ({
     socials,
     onTermsPress,
     onPrivacyPress,
-    classNames,
     ...navbarProps
 }: InnerLayoutProps) => {
     const navMainFooter = [
@@ -54,11 +50,7 @@ const _InnerLayout = ({
         // where the nav should pin) — Navbar itself owns its own border/background.
         () => (
             <div className="sticky top-0 z-40">
-                <Navbar
-                    {...(navbarProps as NavbarProps)}
-
-
-                />
+                <Navbar {...(navbarProps as NavbarProps)} />
             </div>
         ),
         // CALLER SLOT — deliberately unbadged, see file header.
@@ -70,8 +62,6 @@ const _InnerLayout = ({
                 socials={socials}
                 onTermsPress={onTermsPress}
                 onPrivacyPress={onPrivacyPress}
-
-
             />
         )] : []),
         // Overlay/chat-rail/provider global mount points — intentionally NOT
@@ -79,8 +69,10 @@ const _InnerLayout = ({
     ]
 
     return (
-        <div className="min-h-dvh">
-            <StackV gap={1} classNames={classNames} items={navMainFooter} />
+        <div data-tier="layout" data-component="InnerLayout">
+            <div className="min-h-dvh">
+                <StackV gap={1} items={navMainFooter} />
+            </div>
         </div>
     )
 }

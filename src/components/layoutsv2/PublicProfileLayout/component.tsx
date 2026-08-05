@@ -1,5 +1,7 @@
 import type { ComponentType } from "react"
+import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { Container } from "@/components/frames/Container"
+import { RailShell } from "@/components/frames/RailShell"
 import { StackV } from "@/components/frames/Stack"
 import { ProfileHero, type ProfileHeroUser } from "@/components/starci/blocks/profile/ProfileHero"
 import { ProfileTabsBar, type ProfileTab } from "@/components/starci/blocks/navigation/ProfileTabsBar"
@@ -188,10 +190,12 @@ const _PublicProfileLayout = ({
     // mirrors the real `PublicProfile`'s own `canHire` gate — see file header
     const canHire = !isSelf && Boolean(user.openToWork) && Boolean(user.social?.github)
 
-    // aside + routed panel — the pair the identity/content two-column body composes
-    const asideAndPanel = [
-        () => (
-            <aside className="w-full @app-md:w-72 @app-md:shrink-0">
+    // identity rail (ProfileHero) beside the active tab's routed panel — RailShell owns the
+    // column-first → row-at-@app-md switch, the fixed rail width, and the shrink strategy
+    // (SettingsLayout's own outer switch uses the same frame — see file header).
+    const profileShell: ComponentTypeWithSkeleton = () => (
+        <RailShell
+            rail={() => (
                 <ProfileHero
                     user={user}
                     isSelf={isSelf}
@@ -204,23 +208,9 @@ const _PublicProfileLayout = ({
                     onShare={onShare}
 
                 />
-            </aside>
-        ),
-        () => (
-            <main className="min-w-0 flex-1">
-                <ChildrenSlot />
-            </main>
-        ),
-    ]
-
-    // column-first, becomes a row from @app-md — same technique SettingsLayout uses for its own outer switch (see file header)
-    const profileBody = (
-        <div className="@app-md:flex-row @app-md:items-start">
-            <StackV
-                gap={7}
-                items={asideAndPanel}
-            />
-        </div>
+            )}
+            body={() => <ChildrenSlot />}
+        />
     )
 
     // chrome above the body — mirrors the real Navbar bottom-layer position; see file header
@@ -240,7 +230,7 @@ const _PublicProfileLayout = ({
                 size="xl"
                 padding={6}
 
-                body={() => profileBody}
+                body={profileShell}
             />
         ),
     ]

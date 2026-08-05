@@ -1,6 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react"
-import { cn, Chip, Drawer, Pagination, ScrollShadow, Typography } from "@heroui/react"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Pagination } from "@/components/atoms/navigation/Pagination"
+import { StackH, StackV } from "@/components/frames/Stack"
+import { DrawerShell } from "@/components/composites/layout/DrawerShell"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { ModelByline } from "@/components/blocks/grading/GradingByline"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import type { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
@@ -27,8 +31,6 @@ export interface SubmissionResultHistoryDrawerLabels {
     historyLabel: string
     passed: string
     failed: string
-    previous: string
-    next: string
 }
 
 /** Props for {@link _SubmissionResultHistoryDrawer} — presentational; all data resolved, no fetch/store/i18n. */
@@ -51,9 +53,80 @@ export type SubmissionResultHistoryDrawerProps = {
 }
 
 /**
+ * One row's verdict + score text — guards an unknown threshold (treated as NOT passing).
+ */
+const isRowPassing = (score: number | null, maxScore: number, passThreshold: number) =>
+    passThreshold > 0 && maxScore > 0 && (score ?? 0) >= passThreshold * maxScore
+
+/** `x/max` when a max is known, the bare score otherwise. */
+const rowScoreLabel = (score: number | null, maxScore: number) =>
+    maxScore > 0 ? `${score ?? 0}/${maxScore}` : `${score ?? 0}`
+
+/**
+ * One history row's free-form content: attempt line + verdict chip on line one (score
+ * pushed to the far edge via the track's own `justify="between"`), the grading-model
+ * byline + relative time on line two. Reuses {@link ModelByline} — the SAME connected
+ * block the graded-result card uses — instead of re-deriving the model/tier byline
+ * locally, so the category label stays localized and in sync with every other reader
+ * of it.
+ */
+const historyRowContent = (
+    row: SubmissionResultHistoryRow,
+    isPassing: boolean,
+    scoreText: string,
+    labels: SubmissionResultHistoryDrawerLabels,
+) => {
+    const timeLabel = row.timeLabel
+    return (
+        <StackV
+            gap={2}
+            items={[
+                () => (
+                    <StackH
+                        gap={3}
+                        principles={["sibling-stack"]}
+                        align="center"
+                        justify="between"
+                        items={[
+                            () => (
+                                <StackH
+                                    gap={3}
+                                    principles={["chip-row"]}
+                                    align="center"
+                                    items={[
+                                        () => <Typography size="sm" weight="medium" text={row.attemptLineLabel} />,
+                                        () => <Chip tone={isPassing ? "success" : "danger"} text={isPassing ? labels.passed : labels.failed} />,
+                                    ]}
+                                />
+                            ),
+                            () => <Typography size="sm" color={isPassing ? "success-soft" : "muted"} text={scoreText} />,
+                        ]}
+                    />
+                ),
+                ...(row.servedModel != null || timeLabel != null ? [() => (
+                    <StackH
+                        gap={3}
+                        principles={["chip-row"]}
+                        align="center"
+                        at="sm"
+                        justify="between"
+                        items={[
+                            () => <ModelByline model={row.servedModel} category={row.category} />,
+                            ...(timeLabel != null ? [() => <Typography size="xs" color="muted" text={timeLabel} />] : []),
+                        ]}
+                    />
+                )] : []),
+            ]}
+        />
+    )
+}
+
+/**
  * Submission-history drawer — the presentational half of {@link SubmissionResultHistoryDrawer}: each
- * attempt as a bordered surface-card row (verdict, score, the AI model that graded it + tier, time),
- * paginated client-side. Right on desktop, bottom sheet on mobile. See `tiers/split.md` — the connected
+ * attempt as a free-form `SurfaceCardList` row (verdict, score, the AI model that graded it + tier,
+ * time), paginated client-side. Right on desktop, bottom sheet on mobile. Composes `DrawerShell`
+ * (the shared drawer scaffold) — the selected row's highlight is `SurfaceCardListItem`'s own
+ * `tone="accent"` left-edge band, not a hand-rolled tint. See `tiers/split.md` — the connected
  * `index.tsx` owns i18n.
  *
  * @param props - {@link SubmissionResultHistoryDrawerProps}
@@ -84,113 +157,40 @@ export const _SubmissionResultHistoryDrawer = ({
         [rows, page],
     )
 
-    // verdict + score for a row, guarding an unknown threshold (treat as NOT passing)
-    const isPassing = (score: number | null) =>
-        passThreshold > 0 && maxScore > 0 && (score ?? 0) >= passThreshold * maxScore
-    const scoreLabel = (score: number | null) => (maxScore > 0 ? `${score ?? 0}/${maxScore}` : `${score ?? 0}`)
+    // `tone="accent"` reads as a left accent band — the existing DATA-signal
+    // vocabulary every card frame already shares — instead of a hand-rolled
+    // tint wrapper around the row's own content.
+    const items: Array<SurfaceCardListItem> = pagedRows.map((row) => ({
+        key: row.id,
+        content: () => historyRowContent(row, isRowPassing(row.score, maxScore, passThreshold), rowScoreLabel(row.score, maxScore), labels),
+        tone: row.id === selectedAttemptId ? "accent" : undefined,
+        onPress: () => {
+            onSelect(row.id)
+            onOpenChange(false)
+        },
+    }))
+
+    const listAndPager = [
+        () => <SurfaceCardList items={items} />,
+        // `Pagination` hard-codes its own internal `aria-label` (atom, §4) — the
+        // wrapping `<nav>` is how this drawer's own accessible name still gets
+        // attached, same convention `SubmissionAttemptsDrawer` (drawersv2) uses.
+        ...(totalPages > 1 ? [() => (
+            <nav aria-label={labels.historyLabel}>
+                <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+            </nav>
+        )] : []),
+    ]
 
     return (
-        <Drawer data-tier="overlay" data-component="SubmissionResultHistoryDrawer">
-            <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange} className="backdrop-blur-sm">
-                <Drawer.Content placement={isMobile ? "bottom" : "right"}>
-                    <Drawer.Dialog className="p-0">
-                        <div className="p-4">
-                            <Drawer.CloseTrigger />
-                            <Drawer.Header>
-                                <Drawer.Heading>
-                                    {`${labels.historyLabel} · ${rows.length}`}
-                                </Drawer.Heading>
-                            </Drawer.Header>
-                        </div>
-                        <Drawer.Body>
-                            <ScrollShadow hideScrollBar className="h-full p-4">
-                                <SurfaceListCard>
-                                    {pagedRows.map((row) => {
-                                        const selected = row.id === selectedAttemptId
-                                        const rowPass = isPassing(row.score)
-                                        return (
-                                            <SurfaceListCardItem
-                                                key={row.id}
-                                                onPress={() => {
-                                                    onSelect(row.id)
-                                                    onOpenChange(false)
-                                                }}
-                                                className={selected ? "bg-accent-soft hover:bg-accent-soft" : undefined}
-                                            >
-                                                <div className="flex flex-col gap-2">
-                                                    <div className="flex items-center gap-2">
-                                                        <Typography type="body-sm" weight="medium">
-                                                            {row.attemptLineLabel}
-                                                        </Typography>
-                                                        <Chip color={rowPass ? "success" : "danger"} variant="soft" size="sm">
-                                                            <Chip.Label>
-                                                                {rowPass ? labels.passed : labels.failed}
-                                                            </Chip.Label>
-                                                        </Chip>
-                                                        <Typography
-                                                            type="body-sm"
-                                                            className={cn("ml-auto", rowPass ? "text-success-soft-foreground" : "text-muted")}
-                                                        >
-                                                            {scoreLabel(row.score)}
-                                                        </Typography>
-                                                    </div>
-                                                    <div className="flex flex-wrap items-center gap-2">
-                                                        <ModelByline model={row.servedModel} category={row.category} />
-                                                        {row.timeLabel ? (
-                                                            <Typography type="body-xs" color="muted" className="ml-auto">
-                                                                {row.timeLabel}
-                                                            </Typography>
-                                                        ) : null}
-                                                    </div>
-                                                </div>
-                                            </SurfaceListCardItem>
-                                        )
-                                    })}
-                                </SurfaceListCard>
-                            </ScrollShadow>
-                        </Drawer.Body>
-                        {totalPages > 1 ? (
-                            <Drawer.Footer className="border-t p-4">
-                                <Pagination aria-label={labels.historyLabel} size="sm" className="w-full justify-start">
-                                    <Pagination.Content className="flex flex-wrap justify-start gap-2">
-                                        <Pagination.Item>
-                                            <Pagination.Previous
-                                                aria-label={labels.previous}
-                                                isDisabled={page <= 1}
-                                                onPress={() => setPage((current) => Math.max(1, current - 1))}
-                                                className="cursor-pointer rounded-medium transition-colors hover:bg-default"
-                                            >
-                                                <Pagination.PreviousIcon />
-                                            </Pagination.Previous>
-                                        </Pagination.Item>
-                                        {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-                                            <Pagination.Item key={pageNumber}>
-                                                <Pagination.Link
-                                                    isActive={pageNumber === page}
-                                                    onPress={() => setPage(pageNumber)}
-                                                    className="cursor-pointer rounded-medium transition-colors hover:bg-default data-[active=true]:hover:bg-accent"
-                                                >
-                                                    {pageNumber}
-                                                </Pagination.Link>
-                                            </Pagination.Item>
-                                        ))}
-                                        <Pagination.Item>
-                                            <Pagination.Next
-                                                aria-label={labels.next}
-                                                isDisabled={page >= totalPages}
-                                                onPress={() => setPage((current) => Math.min(totalPages, current + 1))}
-                                                className="cursor-pointer rounded-medium transition-colors hover:bg-default"
-                                            >
-                                                <Pagination.NextIcon />
-                                            </Pagination.Next>
-                                        </Pagination.Item>
-                                    </Pagination.Content>
-                                </Pagination>
-                            </Drawer.Footer>
-                        ) : null}
-                    </Drawer.Dialog>
-                </Drawer.Content>
-            </Drawer.Backdrop>
-        </Drawer>
+        <div data-tier="overlay" data-component="SubmissionResultHistoryDrawer">
+            <DrawerShell
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                placement={isMobile ? "bottom" : "right"}
+                title={`${labels.historyLabel} · ${rows.length}`}
+                body={() => <StackV gap={4} items={listAndPager} />}
+            />
+        </div>
     )
 }

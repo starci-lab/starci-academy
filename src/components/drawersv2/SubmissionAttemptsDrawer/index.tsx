@@ -120,8 +120,7 @@ export const SubmissionAttemptsDrawer = () => {
             attempts={attempts}
             selectedAttemptId={selectedAttemptId}
             onSelect={onSelect}
-            isLoading={isOpen && swr.isLoading && submissionAttempts.length === 0}
-            isEmpty={submissionAttempts.length === 0}
+            isSkeleton={isOpen && swr.isLoading && submissionAttempts.length === 0}
             error={submissionAttempts.length === 0 ? swr.error : undefined}
             onRetry={() => { void swr.mutate() }}
             retryLabel={t("common.retry")}

@@ -11,7 +11,6 @@ import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
 import { Cluster } from "@/components/frames/Cluster"
-import { ModalRoot } from "@/components/frames/ModalRoot"
 
 /**
  * `PremiumGateModal` — the dismissable, value-first buy/register prompt shown when a
@@ -75,8 +74,6 @@ export interface PremiumGateModalProps {
      * handoff shape as `TrialConversionStrip`'s `onEnroll`.
      */
     onUpgrade: () => void
-    /** Extra classes on the root. */
-    className?: string
 }
 
 /** Whether the caller named a specific course, or this is a generic gate. */
@@ -140,7 +137,6 @@ export const _PremiumGateModal = ({
     price,
     isSkeleton = false,
     onUpgrade,
-    className,
 }: PremiumGateModalProps) => {
     const headerVariant: GateHeaderVariant = courseTitle ? "named" : "generic"
     const header = GATE_HEADER[headerVariant]
@@ -226,7 +222,7 @@ export const _PremiumGateModal = ({
     ]
 
     return (
-        <ModalRoot data-component="PremiumGateModal" className={className}>
+        <div data-tier="overlay" data-component="PremiumGateModal">
             <ModalShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
@@ -246,7 +242,7 @@ export const _PremiumGateModal = ({
                 )}
                 body={() => <StackV gap={6} isSkeleton={isSkeleton} items={gateBody} />}
             />
-        </ModalRoot>
+        </div>
     )
 }
 

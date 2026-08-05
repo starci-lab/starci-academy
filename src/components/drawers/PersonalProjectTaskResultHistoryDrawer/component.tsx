@@ -1,12 +1,22 @@
 import React, { useEffect, useMemo, useState } from "react"
-import { cn, Chip, Drawer, Pagination, ScrollShadow, Typography } from "@heroui/react"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import { ModelByline } from "@/components/blocks/grading/GradingByline"
+import { SparkleIcon } from "@phosphor-icons/react"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { Typography } from "@/components/atoms/text/Typography"
+import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
+import { EnumChip, type EnumChipEntry } from "@/components/composites/chips/EnumChip"
+import { DrawerShell } from "@/components/composites/layout/DrawerShell"
+import { InlineIconLabel } from "@/components/composites/text/InlineIconLabel"
+import { Pagination } from "@/components/atoms/navigation/Pagination"
+import { StackH, StackV } from "@/components/frames/Stack"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import type { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
 
 /** Attempts per page inside the history drawer. */
 const HISTORY_PAGE_SIZE = 6
+
+/** Accessible name for the pager `<nav>` — `Pagination` already owns its own internal `aria-label`. */
+const PAGER_ARIA_LABEL = "Task attempt history pagination"
 
 /** One history row, already resolved by the connected `PersonalProjectTaskResultHistoryDrawer` — no raw entity. */
 export interface PersonalProjectTaskResultHistoryRow {
@@ -28,8 +38,10 @@ export interface PersonalProjectTaskResultHistoryDrawerLabels {
     historyLabel: string
     passed: string
     failed: string
-    previous: string
-    next: string
+    /** Empty-state title (no attempts yet). */
+    emptyTitle: string
+    /** Empty-state secondary line. Optional. */
+    emptyDescription?: string
 }
 
 /** Props for {@link _PersonalProjectTaskResultHistoryDrawer} — presentational; all data resolved, no fetch/store/i18n. */
@@ -47,14 +59,90 @@ export type PersonalProjectTaskResultHistoryDrawerProps = {
     /** Select an attempt (the page navigates `?attempt=`). */
     onSelect: (attemptId: string) => void
     labels: PersonalProjectTaskResultHistoryDrawerLabels
+    /** AI-model tier → chip presentation, already localized — the model-byline recipe (`EnumChip`). */
+    categoryMap: Partial<Record<AiModelCategory, EnumChipEntry>>
+}
+
+/** `x/max` when `maxScore` is set, otherwise the bare score. `null` reads as `0`. */
+const scoreLabel = (score: number | null, maxScore: number) => (maxScore > 0 ? `${score ?? 0}/${maxScore}` : `${score ?? 0}`)
+
+/**
+ * One row's free-form content: attempt line + verdict chip + score on the first line
+ * (score pushed to the far edge), an optional model byline (sparkle + model name +
+ * tier chip) + time-ago on the second. Mirrors the sibling `SubmissionAttemptsDrawer`
+ * row recipe — the model byline is composed here from `InlineIconLabel` + `EnumChip`
+ * instead of the `ModelByline` block, since this tier may only import composites/frames.
+ */
+const attemptRowContent = (
+    row: PersonalProjectTaskResultHistoryRow,
+    isSelected: boolean,
+    maxScore: number,
+    labels: PersonalProjectTaskResultHistoryDrawerLabels,
+    categoryMap: Partial<Record<AiModelCategory, EnumChipEntry>>,
+) => {
+    const servedModel = row.servedModel
+    const category = row.category
+    const timeLabel = row.timeLabel
+
+    const attemptLabelAndChip = [
+        () => <Typography size="sm" weight="medium" text={row.attemptLineLabel} />,
+        () => <Chip tone={row.passed ? "success" : "danger"} text={row.passed ? labels.passed : labels.failed} />,
+    ]
+
+    const attemptLine = [
+        () => <StackH gap={2} principles={["chip-row"]} align="center" items={attemptLabelAndChip} />,
+        () => (
+            <Typography
+                size="sm"
+                color={row.passed ? "success-soft" : "muted"}
+                text={scoreLabel(row.score, maxScore)}
+            />
+        ),
+    ]
+
+    const bylineParts = [
+        ...(servedModel != null ? [() => (
+            <InlineIconLabel icon={SparkleIcon} tone="default" size="xs" label={servedModel} />
+        )] : []),
+        ...(servedModel != null && category != null ? [() => (
+            <EnumChip value={category} map={categoryMap} />
+        )] : []),
+    ]
+
+    const rowContent = [
+        () => <StackH gap={3} principles={["sibling-stack"]} align="center" justify="between" items={attemptLine} />,
+        ...(bylineParts.length > 0 || timeLabel != null ? [() => (
+            <StackH
+                gap={3}
+                principles={["sibling-stack"]}
+                align="center"
+                justify="between"
+                items={[
+                    ...(bylineParts.length > 0 ? [() => <StackH gap={3} align="center" items={bylineParts} />] : []),
+                    ...(timeLabel != null ? [() => <Typography size="xs" color="muted" text={timeLabel} />] : []),
+                ]}
+            />
+        )] : []),
+    ]
+
+    // highlight-exception (mirrors `SubmissionAttemptsDrawer`): the selected row's tint is
+    // baked into the row's own content wrapper — a plain, un-tightened `<div>` — since
+    // `SurfaceCardListItem` no longer takes a raw `className` of its own.
+    return (
+        <div className={isSelected ? "bg-accent-soft" : undefined}>
+            <StackV gap={2} items={rowContent} />
+        </div>
+    )
 }
 
 /**
  * Personal-project task submission-history drawer — the presentational half of
- * {@link PersonalProjectTaskResultHistoryDrawer}: each attempt as a bordered surface-card row (verdict,
- * score, the AI model that graded it + tier, time), paginated client-side. Right on desktop, bottom sheet
- * on mobile. Sibling of `SubmissionResultHistoryDrawer` (challenge) — here the verdict comes straight from
- * `row.passed` (no pass-threshold computation). See `tiers/split.md` — the connected `index.tsx` owns i18n.
+ * {@link PersonalProjectTaskResultHistoryDrawer}: each attempt as a free-form
+ * `SurfaceCardList` row (verdict, score, the AI model that graded it + tier, time),
+ * paginated client-side. Right on desktop, bottom sheet on mobile. Sibling of
+ * `SubmissionResultHistoryDrawer` (challenge) — here the verdict comes straight from
+ * `row.passed` (no pass-threshold computation). See `tiers/split.md` — the connected
+ * `index.tsx` owns i18n.
  *
  * @param props - {@link PersonalProjectTaskResultHistoryDrawerProps}
  */
@@ -66,6 +154,7 @@ export const _PersonalProjectTaskResultHistoryDrawer = ({
     maxScore,
     onSelect,
     labels,
+    categoryMap,
 }: PersonalProjectTaskResultHistoryDrawerProps) => {
     const { isMobile } = useSmViewpoint()
     const [page, setPage] = useState(1)
@@ -83,105 +172,41 @@ export const _PersonalProjectTaskResultHistoryDrawer = ({
         [rows, page],
     )
 
-    const scoreLabel = (score: number | null) => (maxScore > 0 ? `${score ?? 0}/${maxScore}` : `${score ?? 0}`)
+    const items: Array<SurfaceCardListItem> = pagedRows.map((row) => ({
+        key: row.id,
+        content: () => attemptRowContent(row, row.id === selectedAttemptId, maxScore, labels, categoryMap),
+        onPress: () => {
+            onSelect(row.id)
+            onOpenChange(false)
+        },
+    }))
+
+    const listAndPager = [
+        () => (
+            <SurfaceCardList
+                items={items}
+                emptyState={() => <AsyncContentEmpty title={labels.emptyTitle} description={labels.emptyDescription} />}
+            />
+        ),
+        ...(totalPages > 1 ? [() => (
+            // `Pagination` hard-codes its own internal `aria-label` — the wrapping `<nav>`
+            // is how this drawer's own accessible name still gets attached, same
+            // convention `SubmissionAttemptsDrawer` uses.
+            <nav aria-label={PAGER_ARIA_LABEL}>
+                <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+            </nav>
+        )] : []),
+    ]
 
     return (
-        <Drawer data-tier="overlay" data-component="PersonalProjectTaskResultHistoryDrawer">
-            <Drawer.Backdrop isOpen={isOpen} onOpenChange={onOpenChange} className="backdrop-blur-sm">
-                <Drawer.Content placement={isMobile ? "bottom" : "right"}>
-                    <Drawer.Dialog className="p-0">
-                        <div className="p-4">
-                            <Drawer.CloseTrigger />
-                            <Drawer.Header>
-                                <Drawer.Heading>
-                                    {`${labels.historyLabel} · ${rows.length}`}
-                                </Drawer.Heading>
-                            </Drawer.Header>
-                        </div>
-                        <Drawer.Body>
-                            <ScrollShadow hideScrollBar className="h-full p-4">
-                                <SurfaceListCard bordered>
-                                    {pagedRows.map((row) => {
-                                        const selected = row.id === selectedAttemptId
-                                        return (
-                                            <SurfaceListCardItem
-                                                key={row.id}
-                                                onPress={() => {
-                                                    onSelect(row.id)
-                                                    onOpenChange(false)
-                                                }}
-                                                className={selected ? "bg-accent-soft" : undefined}
-                                            >
-                                                <div className="flex flex-col gap-2">
-                                                    <div className="flex items-center gap-2">
-                                                        <Typography type="body-sm" weight="medium">
-                                                            {row.attemptLineLabel}
-                                                        </Typography>
-                                                        <Chip color={row.passed ? "success" : "danger"} variant="soft" size="sm">
-                                                            <Chip.Label>
-                                                                {row.passed ? labels.passed : labels.failed}
-                                                            </Chip.Label>
-                                                        </Chip>
-                                                        <Typography
-                                                            type="body-sm"
-                                                            className={cn("ml-auto", row.passed ? "text-success-soft-foreground" : "text-muted")}
-                                                        >
-                                                            {scoreLabel(row.score)}
-                                                        </Typography>
-                                                    </div>
-                                                    <div className="flex flex-wrap items-center gap-2 text-xs text-muted">
-                                                        <ModelByline model={row.servedModel} category={row.category} />
-                                                        {row.timeLabel ? <span className="ml-auto">{row.timeLabel}</span> : null}
-                                                    </div>
-                                                </div>
-                                            </SurfaceListCardItem>
-                                        )
-                                    })}
-                                </SurfaceListCard>
-                            </ScrollShadow>
-                        </Drawer.Body>
-                        {totalPages > 1 ? (
-                            <Drawer.Footer className="border-t p-4">
-                                <Pagination aria-label={labels.historyLabel} size="sm" className="w-full justify-start">
-                                    <Pagination.Content className="flex flex-wrap justify-start gap-2">
-                                        <Pagination.Item>
-                                            <Pagination.Previous
-                                                aria-label={labels.previous}
-                                                isDisabled={page <= 1}
-                                                onPress={() => setPage((current) => Math.max(1, current - 1))}
-                                                className="cursor-pointer rounded-medium transition-colors hover:bg-default"
-                                            >
-                                                <Pagination.PreviousIcon />
-                                            </Pagination.Previous>
-                                        </Pagination.Item>
-                                        {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
-                                            <Pagination.Item key={pageNumber}>
-                                                <Pagination.Link
-                                                    isActive={pageNumber === page}
-                                                    onPress={() => setPage(pageNumber)}
-                                                    className="cursor-pointer rounded-medium transition-colors hover:bg-default data-[active=true]:hover:bg-accent"
-                                                >
-                                                    {pageNumber}
-                                                </Pagination.Link>
-                                            </Pagination.Item>
-                                        ))}
-                                        <Pagination.Item>
-                                            <Pagination.Next
-                                                aria-label={labels.next}
-                                                isDisabled={page >= totalPages}
-                                                onPress={() => setPage((current) => Math.min(totalPages, current + 1))}
-                                                className="cursor-pointer rounded-medium transition-colors hover:bg-default"
-                                            >
-                                                <Pagination.NextIcon />
-                                            </Pagination.Next>
-                                        </Pagination.Item>
-                                    </Pagination.Content>
-                                </Pagination>
-                            </Drawer.Footer>
-                        ) : null}
-                    </Drawer.Dialog>
-                </Drawer.Content>
-            </Drawer.Backdrop>
-        </Drawer>
+        <div data-tier="overlay" data-component="PersonalProjectTaskResultHistoryDrawer">
+            <DrawerShell
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                placement={isMobile ? "bottom" : "right"}
+                title={`${labels.historyLabel} · ${rows.length}`}
+                body={() => <StackV gap={4} items={listAndPager} />}
+            />
+        </div>
     )
 }

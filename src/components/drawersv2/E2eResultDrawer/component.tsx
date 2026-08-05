@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react"
 import { type SkeletonProps } from "@/components/composites/_slot"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { DrawerShell } from "@/components/composites/layout/DrawerShell"
 import { DrawerRoot } from "@/components/frames/DrawerRoot"
 import { StackV, StackH } from "@/components/frames/Stack"
@@ -88,117 +88,125 @@ export const _E2eResultDrawer = ({
     const hasLangFilter = langs.length > 1
     const [activeLang, setActiveLang] = useState<string>(langs[0] ?? UNSPECIFIED_LANG)
 
-    // Checked AFTER every hook above has run (rules of hooks). Distinct from the
-    // root guard below: `isSkeleton` means "still fetching", the guard means
-    // "fetch finished, genuinely nothing recorded".
+    // error → skeleton → empty → content (this drawer has no error state of its
+    // own — the connected half never resolves one). `body` stays `null` for the
+    // empty branch so the overlay mounts no drawer machinery at all rather than
+    // opening onto an empty shell (see the root-guard note below).
+    let body: React.ReactNode = null
+
     if (isSkeleton) {
         const skeletonRows = [
-            () => <HeroSkeleton className="h-4 w-64 max-w-full rounded" />,
+            () => <Skeleton className="h-4 w-64 max-w-full rounded" />,
             ...Array.from({ length: skeletonCount }, () => () => (
-                <HeroSkeleton className="h-11 w-full rounded-xl" />
+                <Skeleton className="h-11 w-full rounded-xl" />
             )),
         ]
 
-        return (
+        body = (
             <DrawerRoot data-component="E2eResultDrawer">
                 <DrawerShell isOpen={isOpen} onOpenChange={onOpenChange} placement={placement} title={DRAWER_TITLE} body={() => <StackV gap={4} isSkeleton={isSkeleton} items={skeletonRows} />} />
             </DrawerRoot>
         )
+    } else {
+        // Root guard — mirrors BOTH real call-sites (see file header). Nothing
+        // recorded means there is nothing to filter or expand, so the overlay
+        // stays inert rather than opening onto an empty shell.
+        const realFlows = flows ?? []
+
+        if (realFlows.length > 0) {
+            const visible = hasLangFilter
+                ? realFlows.filter((flow) => (flow.lang ?? UNSPECIFIED_LANG) === activeLang)
+                : realFlows
+            const passed = visible.filter((flow) => flow.status === "passed").length
+
+            const items: Array<AccordionItem> = visible.map((flow) => {
+                const isPass = flow.status === "passed"
+                const chipAndTitle = [
+                    ({ isSkeleton }: SkeletonProps) => (
+                        <ChipBase
+                            isSkeleton={isSkeleton}
+                            tone={isPass ? "success" : "danger"}
+                            text={isPass ? "pass" : "fail"}
+
+                        />
+                    ),
+                    ({ isSkeleton }: SkeletonProps) => (
+                        <Typography
+                            isSkeleton={isSkeleton}
+                            text={flow.title}
+                            size="sm"
+                            weight="medium"
+
+                        />
+                    ),
+                ]
+                return {
+                    key: flow.id,
+                    title: (
+                        <StackH
+                            gap={2}
+                            isSkeleton={isSkeleton}
+
+                            items={chipAndTitle}
+                        />
+                    ),
+                    content: flow.markdown ? (
+                        <MarkdownContent
+                            source={flow.markdown}
+                            measure="compact"
+
+
+                        />
+                    ) : null,
+                }
+            })
+
+            const countFilterAndAccordion = [
+                ({ isSkeleton }: SkeletonProps) => (
+                    <Typography
+                        isSkeleton={isSkeleton}
+                        text={`${passed}/${visible.length} flows passed — real logs recorded from an actual E2E run against the backend and UI.`}
+                        size="sm"
+                        color="muted"
+
+                    />
+                ),
+                ...(hasLangFilter ? [() => (
+                    <TabsBase
+                        items={langs.map((lang) => ({ key: lang, label: langLabel(lang) }))}
+                        selectedKey={activeLang}
+                        onSelectionChange={setActiveLang}
+                        ariaLabel="E2E language"
+                        variant="secondary"
+
+                    />
+                )] : []),
+                ({ isSkeleton }: SkeletonProps) => (
+                    <Accordion
+                        isSkeleton={isSkeleton}
+                        items={items}
+
+                    />
+                ),
+            ]
+
+            body = (
+                <DrawerRoot data-component="E2eResultDrawer">
+                    <DrawerShell
+                        isOpen={isOpen}
+                        onOpenChange={onOpenChange}
+                        placement={placement}
+                        title={DRAWER_TITLE}
+                        body={() => <StackV gap={4} isSkeleton={isSkeleton} items={countFilterAndAccordion} />}
+                    />
+                </DrawerRoot>
+            )
+        }
     }
 
-    // Root guard — mirrors BOTH real call-sites (see file header). Nothing
-    // recorded means there is nothing to filter or expand, so the overlay
-    // stays inert rather than opening onto an empty shell.
-    const realFlows = flows ?? []
-    if (realFlows.length === 0) return null
-
-    const visible = hasLangFilter
-        ? realFlows.filter((flow) => (flow.lang ?? UNSPECIFIED_LANG) === activeLang)
-        : realFlows
-    const passed = visible.filter((flow) => flow.status === "passed").length
-
-    const items: Array<AccordionItem> = visible.map((flow) => {
-        const isPass = flow.status === "passed"
-        const chipAndTitle = [
-            ({ isSkeleton }: SkeletonProps) => (
-                <ChipBase
-                    isSkeleton={isSkeleton}
-                    tone={isPass ? "success" : "danger"}
-                    text={isPass ? "pass" : "fail"}
-
-                />
-            ),
-            ({ isSkeleton }: SkeletonProps) => (
-                <Typography
-                    isSkeleton={isSkeleton}
-                    text={flow.title}
-                    size="sm"
-                    weight="medium"
-
-                />
-            ),
-        ]
-        return {
-            key: flow.id,
-            title: (
-                <StackH
-                    gap={2}
-                    isSkeleton={isSkeleton}
-
-                    items={chipAndTitle}
-                />
-            ),
-            content: flow.markdown ? (
-                <MarkdownContent
-                    source={flow.markdown}
-                    measure="compact"
-
-
-                />
-            ) : null,
-        }
-    })
-
-    const countFilterAndAccordion = [
-        ({ isSkeleton }: SkeletonProps) => (
-            <Typography
-                isSkeleton={isSkeleton}
-                text={`${passed}/${visible.length} flows passed — real logs recorded from an actual E2E run against the backend and UI.`}
-                size="sm"
-                color="muted"
-
-            />
-        ),
-        ...(hasLangFilter ? [() => (
-            <div>
-                <TabsBase
-                    items={langs.map((lang) => ({ key: lang, label: langLabel(lang) }))}
-                    selectedKey={activeLang}
-                    onSelectionChange={setActiveLang}
-                    ariaLabel="E2E language"
-                    variant="secondary"
-
-                />
-            </div>
-        )] : []),
-        ({ isSkeleton }: SkeletonProps) => (
-            <Accordion
-                isSkeleton={isSkeleton}
-                items={items}
-
-            />
-        ),
-    ]
-
     return (
-        <DrawerRoot data-component="E2eResultDrawer">
-            <DrawerShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                placement={placement}
-                title={DRAWER_TITLE}
-                body={() => <StackV gap={4} isSkeleton={isSkeleton} items={countFilterAndAccordion} />}
-            />
-        </DrawerRoot>
+        <div data-tier="overlay" data-component="E2eResultDrawer">
+            {body}
+        </div>
     )
 }

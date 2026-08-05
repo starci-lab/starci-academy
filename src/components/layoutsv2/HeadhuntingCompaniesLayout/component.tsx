@@ -1,17 +1,18 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { SidebarIcon } from "@phosphor-icons/react"
-import { StackH } from "@/components/frames/Stack"
+import { RailShell } from "@/components/frames/RailShell"
 import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 
 /**
  * `HeadhuntingCompaniesLayout` — the wrapper for every route under
  * `courses/[courseId]/headhunting-companies/**`, a thinner sibling of
- * `LearnShell`. `@app-lg` is a container query measuring the nearest
- * `@container`, not the viewport. One leaf: the layout takes no prop besides
- * `children`/`className`, so the ambient container width is a state, not a
- * second shape.
+ * `LearnShell`. Composed on `RailShell` (leading rail, growing body) — the
+ * same rail-plus-body shape `LearnShell`'s own nav rail and
+ * `SettingsLayout`'s settings rail already own, here with the rail leg still
+ * a marked gap. One leaf: the layout takes no prop besides `children`, so the
+ * ambient container width is a state, not a second shape.
  */
 
 /** Props for {@link _HeadhuntingCompaniesLayout}. */
@@ -21,43 +22,35 @@ export interface HeadhuntingCompaniesLayoutProps {
      * with no children would be a page pretending to wrap something it doesn't.
      */
     children: ReactNode
-    /** Extra class on the root track. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
+ * The rail slot — the course chapter/lesson tree is not built in this pass,
+ * so the slot is a marked gap rather than a rebuilt block.
+ */
+const NavRail: ComponentTypeWithSkeleton = () => (
+    <AsyncContentEmpty
+        title="Course navigation"
+        description="The course chapter/lesson tree is not built in this pass — the slot is here, the content comes later."
+        icon={SidebarIcon}
+    />
+)
+
+/**
  * The scope wrapper for `headhunting-companies/**`. See the file header for
- * why it is a layout, why it is thinner than `LearnShell`, and why its aside
+ * why it is a layout, why it is thinner than `LearnShell`, and why its rail
  * is a marked gap rather than a rebuilt block.
  *
  * @param props - {@link HeadhuntingCompaniesLayoutProps}
  */
 const _HeadhuntingCompaniesLayout = ({
     children,
-    classNames,
-}: HeadhuntingCompaniesLayoutProps) => {
-    const navAndContent = (
-        <>
-            {/* Desktop-only rail: below the `@app-lg` tier it does not collapse into
-                anything, it is simply absent — the real screen has no mobile bar. */}
-            <div className="hidden shrink-0 @app-lg:sticky @app-lg:top-0 @app-lg:block @app-lg:w-64">
-                <AsyncContentEmpty
-                    title="Course navigation"
-                    description="The course chapter/lesson tree is not built in this pass — the slot is here, the content comes later."
-                    icon={SidebarIcon}
-
-                />
-            </div>
-            {/* CALLER SLOT — deliberately unbadged, see file header. */}
-            <div className="min-w-0 flex-1">
-                {children}
-            </div>
-        </>
-    )
-
-    return (
-        <StackH gap={6} principles={["block-boundary"]} align="start" classNames={classNames} items={[() => navAndContent]} />
-    )
-}
+}: HeadhuntingCompaniesLayoutProps) => (
+    <div data-tier="layout" data-component="HeadhuntingCompaniesLayout">
+        {/* CALLER SLOT — deliberately unbadged; whatever sits inside belongs to
+            whoever passed it, the same restraint `RailShell`'s own slots take. */}
+        <RailShell at="lg" rail={NavRail} body={() => <>{children}</>} />
+    </div>
+)
 
 export { _HeadhuntingCompaniesLayout }

@@ -3,7 +3,8 @@ import { CheckCircleIcon, SparkleIcon, XCircleIcon } from "@phosphor-icons/react
 import { DrawerShell } from "@/components/composites/layout/DrawerShell"
 import { DrawerRoot } from "@/components/frames/DrawerRoot"
 import {
-    AsyncContent,
+    AsyncContentEmpty,
+    AsyncContentError,
     type AsyncContentEmptyProps,
     type AsyncContentErrorProps,
 } from "@/components/composites/async/AsyncContent"
@@ -20,12 +21,17 @@ import { Pagination } from "@/components/atoms/navigation/Pagination"
  * `_SubmissionAttemptsDrawer` — the full graded history of one challenge requirement:
  * every past attempt, client-paginated (6 per page), opened over the result screen.
  * Tapping any row both selects that attempt and closes the drawer. Composes
- * `DrawerShell` + `AsyncContent` + `SurfaceCard.List`, reusing the model-byline
- * recipe (`EnumChip`/`InlineIconLabel`/`MODEL_CATEGORY_MAP`).
+ * `DrawerRoot` (identity) + `DrawerShell` + `SurfaceCardList` (free-form rows), reusing
+ * the model-byline recipe (`EnumChip`/`InlineIconLabel`/`MODEL_CATEGORY_MAP`).
  *
- * Takes the whole `attempts` array and slices it client-side (page resets to 1 on
- * open). One `AttemptRow` leaf; pass/fail, model present/absent, and time-ago
- * present/absent are states of it.
+ * Loading is the co-located `isSkeleton` idiom (`loading-and-skeleton.md`): one row
+ * function, `attemptRowContent`, renders BOTH the real row and the placeholder row —
+ * `attempt` is only omitted for the placeholders, and every leaf shimmers through the
+ * same flag. Error/empty are the shared `AsyncContentError`/`AsyncContentEmpty` frames,
+ * dropped into `SurfaceCardList`'s own `errorState`/`emptyState` slots (`isEmpty` is
+ * derived by that list from `items.length`, never passed in as a separate flag). The
+ * selected row's highlight is `SurfaceCardListItem`'s own `tone="accent"` left-edge
+ * band — no hand-rolled tint `<div>`.
  *
  * Ported from `.storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx`
  * (renamed export only — see `index.tsx` for the connected wiring notes).
@@ -59,15 +65,16 @@ export interface SubmissionAttemptsDrawerProps {
     onOpenChange: (open: boolean) => void
     /** The FULL attempt history (newest first) — this block paginates it client-side, same as real `src`. */
     attempts: Array<SubmissionAttemptRecord>
-    /** The attempt currently being viewed — highlighted with a trailing check. */
+    /** The attempt currently being viewed — highlighted with a left accent band. */
     selectedAttemptId?: string
     /** Fired with an attempt id when the reader taps its row. The drawer closes itself right after (same gesture as real `src`). */
     onSelect: (attemptId: string) => void
-    /** `true` → this list's own fetch is in flight; the drawer shows its skeleton mirror. */
-    isLoading?: boolean
-    /** `true` (once loading has finished) → the drawer falls to its empty message. */
-    isEmpty?: boolean
-    /** Truthy → the drawer falls to its error message (beats loading, per `AsyncContent`). */
+    /**
+     * `true` → this list's own fetch is the FIRST load, nothing in hand yet — every
+     * row mirrors itself as a shimmer instead of a hand-built placeholder tree.
+     */
+    isSkeleton?: boolean
+    /** Truthy → the list falls to its error message (beats the skeleton, per `SurfaceCardList`). */
     error?: unknown
     /** Retry handler — paired with `retryLabel` to show a retry button on the error branch. */
     onRetry?: () => void
@@ -90,7 +97,13 @@ const HISTORY_PAGE_SIZE = 6
 const SKELETON_ATTEMPT_COUNT = 3
 
 /** One attempt's verdict `Chip` shape — tone/icon/text, all derived from data. */
-const scoreChipFor = (attempt: SubmissionAttemptRecord): { tone: "success" | "danger" | "default"; icon?: typeof CheckCircleIcon; text: string } => {
+interface AttemptChipShape {
+    tone: "success" | "danger" | "default"
+    icon?: typeof CheckCircleIcon
+    text?: string
+}
+
+const scoreChipFor = (attempt: SubmissionAttemptRecord): AttemptChipShape => {
     if (attempt.score == null) {
         return { tone: "default", text: UNGRADED_LABEL }
     }
@@ -101,33 +114,40 @@ const scoreChipFor = (attempt: SubmissionAttemptRecord): { tone: "success" | "da
     }
 }
 
-/** Turns one attempt into a {@link SurfaceCardListItem}'s free-form `content` — mirrors real `src`'s row exactly: attempt line + verdict chip + time-ago on line 1, model byline on line 2. */
-const attemptRowContent = (attempt: SubmissionAttemptRecord, isSelected: boolean) => {
-    const chip = scoreChipFor(attempt)
+/**
+ * Turns one attempt into the list row's free-form content — attempt line + verdict
+ * chip + time-ago on line 1, model byline on line 2. `attempt` is omitted only for
+ * the skeleton placeholder rows, which render this SAME tree with `isSkeleton` on
+ * every leaf (§ `loading-and-skeleton.md`) instead of a second, hand-built shape.
+ */
+const attemptRowContent = (attempt: SubmissionAttemptRecord | undefined, isSkeleton: boolean) => {
+    const chip: AttemptChipShape = attempt ? scoreChipFor(attempt) : { tone: "default" }
 
     const attemptLabelAndChip = [
         () => (
             <Typography
-                text={`Attempt ${attempt.attemptNumber}`}
+                text={attempt != null ? `Attempt ${attempt.attemptNumber}` : undefined}
                 size="sm"
                 weight="medium"
-
+                isSkeleton={isSkeleton}
+                classNames={isSkeleton ? ["w-1/4"] : undefined}
             />
         ),
-        () => <Chip tone={chip.tone} icon={chip.icon} text={chip.text} />,
+        () => <Chip tone={chip.tone} icon={chip.icon} text={chip.text} isSkeleton={isSkeleton} />,
     ]
 
     // justify="between" pushes the timeago to the far edge — the PARENT does the
     // pushing, not a child margin; the label+chip stay grouped in their own inner track
     // so `between` only ever splits two things, not three.
     const attemptLineContent = [
-        () => <StackH gap={3} principles={["chip-row"]} align="center" items={attemptLabelAndChip} />,
-        ...(attempt.processedTimeAgo != null ? [() => (
+        () => <StackH gap={3} principles={["chip-row"]} align="center" isSkeleton={isSkeleton} items={attemptLabelAndChip} />,
+        ...(isSkeleton || attempt?.processedTimeAgo != null ? [() => (
             <Typography
-                text={attempt.processedTimeAgo}
+                text={attempt?.processedTimeAgo}
                 size="xs"
                 color="muted"
-
+                isSkeleton={isSkeleton}
+                classNames={isSkeleton ? ["w-1/4"] : undefined}
             />
         )] : []),
     ]
@@ -138,14 +158,15 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, isSelected: boolean
                 icon={SparkleIcon}
                 tone="default"
                 size="xs"
-                label={`Graded by ${attempt.gradedByModel}`}
+                isSkeleton={isSkeleton}
+                label={attempt?.gradedByModel != null ? `Graded by ${attempt.gradedByModel}` : undefined}
             />
         ),
-        ...(attempt.modelCategory != null ? [() => (
+        ...(isSkeleton || attempt?.modelCategory != null ? [() => (
             <EnumChip
-                value={attempt.modelCategory ?? ""}
+                value={attempt?.modelCategory ?? ""}
                 map={MODEL_CATEGORY_MAP}
-
+                isSkeleton={isSkeleton}
             />
         )] : []),
     ]
@@ -157,24 +178,16 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, isSelected: boolean
                 principles={["sibling-stack"]}
                 align="center"
                 justify="between"
-
+                isSkeleton={isSkeleton}
                 items={attemptLineContent}
             />
         ),
-        ...(attempt.gradedByModel != null ? [() => (
-            <StackH gap={3} principles={["chip-row"]} align="center" at="sm" items={bylineContent} />
+        ...(isSkeleton || attempt?.gradedByModel != null ? [() => (
+            <StackH gap={3} principles={["chip-row"]} align="center" at="sm" isSkeleton={isSkeleton} items={bylineContent} />
         )] : []),
     ]
 
-    // highlight-exception: the selected row's tint is baked into the row's own
-    // content wrapper (a plain, un-tightened `<div>`), since `SurfaceCardListItem`
-    // no longer takes a raw `className` — same class real `src`'s
-    // `SurfaceListCardItem` uses.
-    return (
-        <div className={isSelected ? "bg-accent-soft hover:bg-accent-soft" : undefined}>
-            <StackV gap={2} items={rowContent} />
-        </div>
-    )
+    return <StackV gap={2} isSkeleton={isSkeleton} items={rowContent} />
 }
 
 /**
@@ -189,8 +202,7 @@ const _SubmissionAttemptsDrawer = ({
     attempts,
     selectedAttemptId,
     onSelect,
-    isLoading = false,
-    isEmpty = false,
+    isSkeleton = false,
     error,
     onRetry,
     retryLabel,
@@ -211,29 +223,21 @@ const _SubmissionAttemptsDrawer = ({
         [attempts, page],
     )
 
-    const emptyContent: AsyncContentEmptyProps = {
-        title: EMPTY_TITLE,
+    const emptyContent: AsyncContentEmptyProps = { title: EMPTY_TITLE }
+    const errorContent: AsyncContentErrorProps = { title: ERROR_TITLE, onRetry, retryLabel }
 
-    }
+    const skeletonItems: Array<SurfaceCardListItem> = Array.from({ length: SKELETON_ATTEMPT_COUNT }, (_, index) => ({
+        key: `skeleton-${index}`,
+        content: () => attemptRowContent(undefined, true),
+    }))
 
-    const errorContent: AsyncContentErrorProps = {
-        title: ERROR_TITLE,
-        onRetry,
-        retryLabel,
-
-    }
-
-    const skeletonRows = Array.from({ length: SKELETON_ATTEMPT_COUNT }, () => () => (
-        <div className="h-16 w-full rounded-2xl bg-default/40" />
-    ))
-
-    // `selected` (a trailing check) is only wired for the FIXED title/subtitle row
-    // shape — this row uses free-form `content` instead (2 lines, richer than that
-    // shape fits), so the highlight is baked into `attemptRowContent`'s own wrapper
-    // div, same class real `src`'s `SurfaceListCardItem` uses.
+    // `selected` reads as a left accent band (`SurfaceCardListItem.tone`) — the
+    // existing DATA-signal vocabulary every card frame already shares — instead
+    // of a hand-rolled tint wrapper around the row's own content.
     const items: Array<SurfaceCardListItem> = pagedAttempts.map((attempt) => ({
         key: attempt.id,
-        content: () => attemptRowContent(attempt, attempt.id === selectedAttemptId),
+        content: () => attemptRowContent(attempt, false),
+        tone: attempt.id === selectedAttemptId ? "accent" : undefined,
         onPress: () => {
             onSelect(attempt.id)
             onOpenChange(false)
@@ -243,12 +247,14 @@ const _SubmissionAttemptsDrawer = ({
     const listAndPager = [
         () => (
             <SurfaceCardList
-                items={items}
-
-
+                items={isSkeleton ? skeletonItems : items}
+                isSkeleton={isSkeleton}
+                error={error}
+                errorState={() => <AsyncContentError {...errorContent} />}
+                emptyState={() => <AsyncContentEmpty {...emptyContent} />}
             />
         ),
-        ...(totalPages > 1 ? [() => (
+        ...(!isSkeleton && totalPages > 1 ? [() => (
             // `Pagination` hard-codes its own internal `aria-label` (§4) — the
             // wrapping `<nav>` is how this block's own accessible name still
             // gets attached, same convention `CourseQaQuestionList` uses.
@@ -257,7 +263,6 @@ const _SubmissionAttemptsDrawer = ({
                     currentPage={page}
                     totalPages={totalPages}
                     onPageChange={setPage}
-
                 />
             </nav>
         )] : []),
@@ -270,31 +275,7 @@ const _SubmissionAttemptsDrawer = ({
                 onOpenChange={onOpenChange}
                 placement={placement}
                 title={`${DRAWER_TITLE} · ${attempts.length}`}
-                body={() => (
-                    <AsyncContent
-                        isLoading={isLoading}
-                        skeleton={() => (
-                            <StackV
-                                gap={3}
-
-                                items={skeletonRows}
-                            />
-                        )}
-                        isEmpty={isEmpty}
-                        emptyContent={emptyContent}
-                        error={error}
-                        errorContent={errorContent}
-
-                        content={() => (
-                            <StackV
-                                gap={4}
-
-
-                                items={listAndPager}
-                            />
-                        )}
-                    />
-                )}
+                body={() => <StackV gap={4} isSkeleton={isSkeleton} items={listAndPager} />}
             />
         </DrawerRoot>
     )

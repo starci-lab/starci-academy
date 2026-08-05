@@ -2,6 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { ResizableRail } from "@/components/behaviors/ResizableRail"
 import { Spinner } from "@/components/atoms/display/Spinner"
+import { Box } from "@/components/frames/Box"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { EnrollGate, type EnrollGateProps } from "@/components/starci/blocks/learn/EnrollGate"
 import { ContentAiFab } from "@/components/starci/blocks/learn/ContentAiFab"
@@ -115,7 +116,6 @@ const _LearnShell = ({
                 ariaLabel={RAIL_ARIA_LABEL}
                 handleSide="right"
                 className="h-full shrink-0 border-r border-default"
-
             >
                 <StackV
                     gap={1}
@@ -123,15 +123,16 @@ const _LearnShell = ({
                     align="center"
                     justify="center"
                     classNames={["h-full"]}
-
                     items={[() => <Spinner label={RAIL_LOADING_LABEL} />]}
                 />
             </ResizableRail>
         )] : []),
         () => (
-            <div className="min-w-0 flex-1">
-                {children}
-            </div>
+            <StackV
+                gap={1}
+                classNames={["min-w-0", "flex-1"]}
+                body={() => <>{children}</>}
+            />
         ),
     ]
 
@@ -144,16 +145,14 @@ const _LearnShell = ({
                     preview={enrollGateProps.preview}
                     price={enrollGateProps.price}
                     onEnroll={enrollGateProps.onEnroll}
-
-
                 />
             ) : (
-                <div className="min-h-[calc(100dvh-4rem)]">
+                <Box className="min-h-[calc(100dvh-4rem)]">
                     <StackH
                         gap={1}
                         items={railAndContent}
                     />
-                </div>
+                </Box>
             )}
 
             {showAiTriggers ? (
@@ -161,16 +160,12 @@ const _LearnShell = ({
                     <ContentAiFab
                         onOpen={onOpenAiChat}
                         isOpen={isAiChatOpen}
-
-
                     />
                     {selectionAsk != null ? (
                         <ContentAiSelectionAsk
                             onOpen={onOpenSelectionAsk}
                             anchor={selectionAsk.anchor}
                             isNew={selectionAsk.isNew}
-
-
                         />
                     ) : null}
                 </>

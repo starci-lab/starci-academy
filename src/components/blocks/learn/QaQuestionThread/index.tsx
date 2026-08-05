@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import type { CourseQuestionNode } from "@/modules/api/graphql/queries/types/course-questions"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import type { AvatarGroupUser } from "@/components/blocks/identity/AvatarGroup"
+import type { AvatarGroupItem } from "@/components/composites/lists/AvatarGroup"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
 import { Composer } from "@/components/blocks/feed/Composer"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
@@ -94,13 +94,18 @@ export const QaQuestionThread = ({ question, currentUserId, currentUser, onAnswe
     }, [isFollowingAsker, triggerSetFollow, question.author.id])
 
     // distinct answerers → the "who joined in" avatar group in the header
-    const participants = useMemo<Array<AvatarGroupUser>>(() => {
+    const participants = useMemo<Array<AvatarGroupItem>>(() => {
         const seen = new Set<string>()
-        const list: Array<AvatarGroupUser> = []
+        const list: Array<AvatarGroupItem> = []
         for (const answer of answers) {
             if (!seen.has(answer.author.id)) {
                 seen.add(answer.author.id)
-                list.push({ username: answer.author.username, avatar: answer.author.avatar })
+                list.push({
+                    key: answer.author.id,
+                    seed: answer.author.username,
+                    name: answer.author.username,
+                    src: answer.author.avatar ?? undefined,
+                })
             }
         }
         return list

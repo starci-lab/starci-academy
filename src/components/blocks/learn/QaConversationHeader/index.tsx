@@ -8,8 +8,7 @@ import {
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
-import { AvatarGroup } from "@/components/blocks/identity/AvatarGroup"
-import type { AvatarGroupUser } from "@/components/blocks/identity/AvatarGroup"
+import { AvatarGroup, type AvatarGroupItem } from "@/components/composites/lists/AvatarGroup"
 import { FollowButton } from "@/components/blocks/community/FollowButton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -27,7 +26,7 @@ export interface QaConversationHeaderProps extends WithClassNames<undefined> {
     /** Whether the asker is the founder (drives the verified badge). */
     isFounderAsker?: boolean
     /** Distinct people who have answered — shown as an overlapping avatar group. */
-    participants: ReadonlyArray<AvatarGroupUser>
+    participants: Array<AvatarGroupItem>
     /** Total answers (top-level + replies) — the "N replies" line. */
     replyCount: number
     /** Collapse the conversation back to its inbox row. */
@@ -118,7 +117,7 @@ export const QaConversationHeader = ({
             {hasAnswers ? (
                 <div className="flex shrink-0 items-center gap-2">
                     {participants.length > 0 ? (
-                        <AvatarGroup users={participants} max={4} />
+                        <AvatarGroup items={participants} max={4} />
                     ) : null}
                     <Typography type="body-xs" color="muted">
                         {t("courseQa.replyCount", { count: replyCount })}

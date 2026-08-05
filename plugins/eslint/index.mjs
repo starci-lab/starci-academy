@@ -668,6 +668,89 @@ const noHardcodedUserTextInVocabulary = {
   },
 }
 
+// Token families whose members are NEAR NEIGHBOURS — picking between them is a real
+// judgement, and that judgement is the only thing worth writing down. An `explain` on a
+// token from one of these families must name the sibling it rejected, because the reader
+// who needs this later is deciding between exactly these.
+const PRINCIPLE_FAMILIES = [
+  ["cell-pad", "card-padding", "row-pad", "control-pad", "page-pad", "pill-pad"],
+  ["sibling-stack", "group-boundary", "block-boundary", "layout-split", "marketing-beat"],
+  ["title-subtitle", "label-field", "name-handle", "icon-text"],
+]
+
+/** Static string of an `explain` attribute, or null when it is built at runtime. */
+function explainText(node) {
+  const v = node && node.value
+  if (!v) return null
+  if (v.type === "Literal" && typeof v.value === "string") return v.value
+  if (v.type === "JSXExpressionContainer") {
+    const e = v.expression
+    if (e.type === "Literal" && typeof e.value === "string") return e.value
+    if (e.type === "TemplateLiteral" && e.expressions.length === 0) return e.quasis.map((q) => q.value.cooked).join("")
+  }
+  return null
+}
+
+/** Principle tokens declared on the same element, read off its `principles={[…]}` array. */
+function principleTokens(opening) {
+  const attr = opening.attributes.find((a) => a.name && a.name.name === "principles")
+  const expr = attr && attr.value && attr.value.expression
+  if (!expr || expr.type !== "ArrayExpression") return []
+  return expr.elements
+    .filter((el) => el && el.type === "Literal" && typeof el.value === "string")
+    .map((el) => el.value)
+}
+
+const explainJustifiesTokenChoice = {
+  meta: {
+    type: "problem",
+    docs: {
+      description: "`explain` justifies the TOKEN choice, not the node. [[fe-contract]]",
+    },
+    schema: [],
+    messages: {
+      restates: "`explain` here only says the token again in prose. `principles` is already the claim; repeating it adds a sentence and no knowledge. Say why THIS token and not the one beside it.",
+      noAlternative: "`{{token}}` sits in a family of near neighbours ({{siblings}}) and this `explain` names none of them. Choosing between them is the only real judgement on this node, so it is the one thing worth recording — write what made this token right and the neighbour wrong. Read across the codebase, those sentences are how the token set's boundaries are actually learned; a sentence that describes the node teaches nobody anything.",
+      tooShort: "`explain` is too short to carry a reason. One clause naming what breaks, wraps or overflows — not a label.",
+    },
+  },
+  create(context) {
+    const file = (context.filename || context.getFilename()).replace(/\\/g, "/")
+    if (!file.includes("/src/components/")) return {}
+    return {
+      JSXAttribute(node) {
+        if (!node.name || node.name.name !== "explain") return
+        const text = explainText(node)
+        // built at runtime — nothing static to read, and a reason should not need computing
+        if (text == null) return
+        const words = text.trim().split(/\s+/).filter(Boolean)
+        if (words.length < 6) {
+          context.report({ node, messageId: "tooShort" })
+          return
+        }
+        const opening = node.parent
+        const tokens = opening && opening.attributes ? principleTokens(opening) : []
+        const normalized = text.toLowerCase()
+        // a sentence built only from the token's own words says nothing the token did not
+        const tokenWords = new Set(tokens.flatMap((t) => t.split("-")))
+        const carriesOwnWords = words.every((w) => tokenWords.has(w.toLowerCase().replace(/[^a-z]/g, "")))
+        if (tokens.length > 0 && carriesOwnWords) {
+          context.report({ node, messageId: "restates" })
+          return
+        }
+        for (const token of tokens) {
+          const family = PRINCIPLE_FAMILIES.find((f) => f.includes(token))
+          if (!family) continue
+          const siblings = family.filter((t) => t !== token)
+          if (siblings.some((s) => normalized.includes(s))) continue
+          context.report({ node, messageId: "noAlternative", data: { token, siblings: siblings.join(", ") } })
+          return
+        }
+      },
+    }
+  },
+}
+
 const noPerPartClassNameProp = {
   meta: {
     type: "problem",
@@ -886,6 +969,7 @@ const noHelperFolderInComponents = {
 export default {
   meta: { name: "eslint-plugin-starci-fe", version: "0.5.0" },
   rules: {
+    "explain-justifies-token-choice": explainJustifiesTokenChoice,
     "no-per-part-classname-prop": noPerPartClassNameProp,
     "require-frame-self-declare": requireFrameSelfDeclare,
     "no-inline-skeleton-branch": noInlineSkeletonBranch,

@@ -103,6 +103,7 @@ export default defineConfig([
             "starci-fe/no-identity-wrapper-div": "warn", // [[canon components/frames/_identity.ts]] · nợ đo 2026-08-05 = 1
             "starci-fe/no-raw-shape-at-sentence-tier": "warn", // [[canon sentence-tier-composes-not-draws]] · nợ đo 2026-08-05 = 1746
             "starci-fe/no-parallel-skeleton": "warn", // [[canon v2-src-twins-and-gates]] · nợ đo 2026-08-05 = 159
+            "starci-fe/explain-justifies-token-choice": "error", // [[canon fe-contract]] · debt 0 at introduction, so it starts closed
             "starci-fe/no-per-part-classname-prop": "warn", // [[canon BLOCK-4]] · nợ đo 2026-08-05 = 30
             "starci-fe/require-frame-self-declare": "warn", // [[canon fe-contract]] · nợ đo 2026-08-05 = 1009
             "starci-fe/no-inline-skeleton-branch": "warn", // [[canon loading-and-skeleton.md]] · nợ đo 2026-08-05 = 67

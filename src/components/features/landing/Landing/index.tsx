@@ -38,7 +38,7 @@ const ArchitectureScene3D = dynamic(
 )
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { FOUNDER_FACEBOOK, FOUNDER_GITHUB, FOUNDER_LINKEDIN } from "@/components/features/contact/Contact/constants"
+import { FOUNDER_FACEBOOK, FOUNDER_GITHUB, FOUNDER_LINKEDIN } from "@/resources/contact"
 import { StatStrip } from "./StatStrip"
 import { TalentMarketplace } from "./TalentMarketplace"
 import { LearnLoopScroll } from "./LearnLoopScroll"

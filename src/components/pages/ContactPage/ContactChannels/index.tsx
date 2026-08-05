@@ -14,7 +14,7 @@ import {
     CONTACT_EMAIL,
     CONTACT_PHONE,
     CONTACT_PHONE_TEL,
-} from "../constants"
+} from "@/resources/contact"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"

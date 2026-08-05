@@ -1,6 +1,6 @@
 import React from "react"
 import type { Metadata } from "next"
-import { Contact } from "@/components/features/contact/Contact"
+import { ContactPage } from "@/components/pages/ContactPage"
 import { buildPageMetadata } from "@/modules/seo/buildMetadata"
 
 /** Route params for `/[locale]/contact`. */
@@ -29,7 +29,7 @@ export const generateMetadata = async ({
  * Thin route file: only mounts the feature, no logic/UI here.
  */
 const Page = () => {
-    return <Contact />
+    return <ContactPage />
 }
 
 export default Page

@@ -16,7 +16,7 @@ import {
     FOUNDER_FACEBOOK,
     FOUNDER_GITHUB,
     FOUNDER_LINKEDIN,
-} from "../../constants"
+} from "@/resources/contact"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 
 /** Props for {@link FounderCard}. */

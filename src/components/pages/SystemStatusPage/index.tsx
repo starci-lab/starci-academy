@@ -23,7 +23,7 @@ import { ComponentStatus } from "@/modules/api/graphql/queries/enums"
  *
  * An overall banner ("N/M components healthy", green/red) sits on top.
  */
-export const SystemStatus = () => {
+export const SystemStatusPage = () => {
     const t = useTranslations("status")
 
     const {

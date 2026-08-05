@@ -1,6 +1,6 @@
 import React from "react"
 import type { Metadata } from "next"
-import { Architecture } from "@/components/features/architecture"
+import { ArchitecturePage } from "@/components/pages/ArchitecturePage"
 import { buildPageMetadata } from "@/modules/seo/buildMetadata"
 
 /** Route params for `/[locale]/architecture`. */
@@ -29,7 +29,7 @@ export const generateMetadata = async ({
  * Thin route file: only mounts the feature, no logic/UI here.
  */
 const Page = () => {
-    return <Architecture />
+    return <ArchitecturePage />
 }
 
 export default Page

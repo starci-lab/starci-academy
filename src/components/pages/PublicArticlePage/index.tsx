@@ -5,7 +5,7 @@ import { Typography } from "@heroui/react"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import type { ContentEntity } from "@/modules/types/entities/content"
 
-/** Props for {@link PublicArticle}. */
+/** Props for {@link PublicArticlePage}. */
 export interface PublicArticleProps {
     /** The public content to render (fetched server-side by the route). */
     content: ContentEntity
@@ -20,7 +20,7 @@ export interface PublicArticleProps {
  *
  * @param props - {@link PublicArticleProps}
  */
-export const PublicArticle = ({ content }: PublicArticleProps) => (
+export const PublicArticlePage = ({ content }: PublicArticleProps) => (
     <article className="mx-auto flex max-w-4xl flex-col gap-3 p-6">
         <Typography.Heading level={1} weight="bold">
             {content.title}

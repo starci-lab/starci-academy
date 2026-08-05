@@ -1,7 +1,7 @@
 import React, { cache } from "react"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { PublicArticle } from "@/components/features/content/PublicArticle"
+import { PublicArticlePage } from "@/components/pages/PublicArticlePage"
 import { SEO_CONFIG } from "@/config/seo"
 import { queryPublicContent } from "@/modules/api/graphql/queries/query-public-content"
 
@@ -105,7 +105,7 @@ const Page = async ({ params }: ContentPageProps) => {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            <PublicArticle content={content} />
+            <PublicArticlePage content={content} />
         </>
     )
 }

@@ -14,7 +14,7 @@ import { PageContainer } from "@/components/blocks/layout/PageContainer"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 
 /** Props for {@link Contact}. */
-export type ContactProps = WithClassNames<undefined>
+export type ContactPageProps = WithClassNames<undefined>
 
 /**
  * Contact page (`/[locale]/contact`). Founder-led routing: a header with an honest
@@ -25,7 +25,7 @@ export type ContactProps = WithClassNames<undefined>
  *
  * @param props - optional className (placement only).
  */
-export const Contact = ({ className }: ContactProps) => {
+export const ContactPage = ({ className }: ContactPageProps) => {
     const t = useTranslations()
     return (
         <PageContainer className={className}>

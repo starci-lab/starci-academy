@@ -11,7 +11,7 @@ import {
     useTranslations,
 } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { CONTACT_FAQ_INDEXES } from "../constants"
+import { CONTACT_FAQ_INDEXES } from "@/resources/contact"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 
 /** Props for {@link ContactFaq}. */

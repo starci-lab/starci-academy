@@ -15,7 +15,7 @@ import {
 import { CheckCircleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { CONTACT_CATEGORY_KEYS } from "../constants"
+import { CONTACT_CATEGORY_KEYS } from "@/resources/contact"
 import { useContactForm } from "@/hooks/rhf/useContactForm"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import type { ContactCategory } from "@/modules/api/graphql/mutations/types/contact"

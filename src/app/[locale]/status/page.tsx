@@ -1,6 +1,6 @@
 import React from "react"
 import type { Metadata } from "next"
-import { SystemStatus } from "@/components/features/status/SystemStatus"
+import { SystemStatusPage } from "@/components/pages/SystemStatusPage"
 import { buildPageMetadata } from "@/modules/seo/buildMetadata"
 
 /** Route params for `/[locale]/status`. */
@@ -28,7 +28,7 @@ export const generateMetadata = async ({
  * auth / admin gate. Thin route file: only mounts the feature, no logic/UI here.
  */
 const Page = () => {
-    return <SystemStatus />
+    return <SystemStatusPage />
 }
 
 export default Page

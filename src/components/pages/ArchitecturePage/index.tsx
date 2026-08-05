@@ -38,7 +38,7 @@ const BACKEND_REPO_URL = "https://github.com/starci-lab/starci-academy-backend"
  * during that window (its own nodes render "checking"), so only a genuine fetch
  * failure (no cache to fall back to) swaps in the error state below.
  */
-export const Architecture = () => {
+export const ArchitecturePage = () => {
     const t = useTranslations("architecture")
     const tGlobal = useTranslations()
     const router = useRouter()

@@ -28,7 +28,7 @@ import {
     FOUNDER_FACEBOOK,
     FOUNDER_GITHUB,
     FOUNDER_LINKEDIN,
-} from "@/components/features/contact/Contact/constants"
+} from "@/resources/contact"
 import {
     FooterNavColumn,
 } from "./FooterNavColumn"

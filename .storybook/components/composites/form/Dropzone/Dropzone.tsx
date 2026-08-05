@@ -1,7 +1,8 @@
 import { FolderIcon, FolderOpenIcon } from "@phosphor-icons/react"
 import { useCallback } from "react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { useDropzone } from "react-dropzone"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * Props for {@link Dropzone}.
@@ -22,8 +23,8 @@ export interface DropzoneProps {
     /** Fires when the dropzone input loses focus or the file dialog is cancelled. */
     onBlur?: () => void
     /**
-     * When true, renders a skeleton mirroring the dashed drop box instead of the
-     * live control. @default false
+     * When true, keeps the dashed drop box real and shimmers the hint/filename
+     * via `Typography` (COMPOSITE-10). @default false
      */
     isSkeleton?: boolean
 }
@@ -60,37 +61,32 @@ export const Dropzone = ({
         multiple: false,
     })
 
-    if (isSkeleton) {
-        return (
-            <div data-tier="composite" data-component="Dropzone" className="flex flex-col gap-2">
-                <HeroSkeleton className="h-[68px] w-full rounded-3xl" />
-            </div>
-        )
-    }
-
     return (
         <div data-tier="composite" data-component="Dropzone" className="flex flex-col gap-2">
             <div
-                {...getRootProps()}
+                {...(isSkeleton ? {} : getRootProps())}
                 className={cn(
-                    "cursor-pointer border-2 border-dashed rounded-3xl bg-surface p-2 transition-colors",
-                    isDragActive ? "border-accent" : "",
-                    errorMessage ? "border-danger" : "",
+                    "border-2 border-dashed rounded-3xl bg-surface p-2 transition-colors",
+                    !isSkeleton && "cursor-pointer",
+                    !isSkeleton && isDragActive ? "border-accent" : "",
+                    !isSkeleton && errorMessage ? "border-danger" : "",
                 )}
             >
-                <input {...getInputProps({ onBlur })} />
+                {isSkeleton ? null : <input {...getInputProps({ onBlur })} />}
                 <div className="flex flex-col items-center gap-2 text-center">
-                    {isDragActive ? (
+                    {isSkeleton ? null : isDragActive ? (
                         <FolderOpenIcon className="size-6 text-accent" />
                     ) : (
                         <FolderIcon className="size-6 text-muted" />
                     )}
-                    <div className="text-sm">
-                        {file?.name ?? hint}
-                    </div>
+                    <Typography
+                        size="sm"
+                        isSkeleton={isSkeleton}
+                        text={isSkeleton ? undefined : (file?.name ?? hint)}
+                    />
                 </div>
             </div>
-            {errorMessage ? (
+            {!isSkeleton && errorMessage ? (
                 <div className="text-sm text-danger-soft-foreground">{errorMessage}</div>
             ) : null}
         </div>

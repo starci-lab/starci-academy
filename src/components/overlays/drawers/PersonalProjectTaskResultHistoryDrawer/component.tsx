@@ -90,7 +90,7 @@ const attemptRowContent = (
     ]
 
     const attemptLine = [
-        () => <StackH gap={2} principles={["chip-row"]} align="center" items={attemptLabelAndChip} />,
+        () => <StackH gap={2} principle="chip-row" align="center" items={attemptLabelAndChip} />,
         () => (
             <Typography
                 size="sm"
@@ -110,11 +110,11 @@ const attemptRowContent = (
     ]
 
     const rowContent = [
-        () => <StackH gap={3} principles={["sibling-stack"]} align="center" justify="between" items={attemptLine} />,
+        () => <StackH gap={3} principle="sibling-stack" align="center" justify="between" items={attemptLine} />,
         ...(bylineParts.length > 0 || timeLabel != null ? [() => (
             <StackH
                 gap={3}
-                principles={["sibling-stack"]}
+                principle="sibling-stack"
                 align="center"
                 justify="between"
                 items={[

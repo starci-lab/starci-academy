@@ -1,37 +1,25 @@
 import type { ReactNode } from "react"
-import { Table as HeroTable, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import {
+    TableRoot,
+    TableScrollContainer,
+    TableContent,
+    TableHeader,
+    TableBody,
+    TableColumn,
+    TableRow,
+    TableCell,
+} from "@/components/atoms/data/Table"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { Box } from "@/components/frames/Box"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE TIER (§13) — `Table.*`: data-table frame, wrapping the HeroUI `Table`.
- *
- * | Member | Shape | Content channel |
- * |---|---|---|
- * | `.Base` | 1 column–row table | **`columns` + `items` DATA — children FORBIDDEN** |
- *
- * FRAME API LAW (§13b):
- *   • A table is a REPEATED LIST (N rows of the same kind) ⇒ `items` is
- *     **REQUIRED**, `children` is FORBIDDEN. Column configuration goes through
- *     `columns` (not a JSX `<Column>` child).
- *   • The frame carries NO domain content: it does NOT format money/dates/status —
- *     the consumer passes an already-formatted `ReactNode` into each cell
- *     (`items[i][column.key]`).
- *   • The frame does NOT grow functionality: no internal sort/filter/paginate/select.
- *     An interactive cell (button, chip) is a node the consumer passes in.
- *
- * COMPOSE (§13c): uses the HeroUI `Table` compound DIRECTLY (alias `HeroTable`) —
- * `Table.ScrollContainer` → `Table.Content` → `Header/Column` + `Body/Row/Cell`;
- * the skeleton mirror uses `Typography.isSkeleton` bars (structural scaffold, §12c).
- *
- * ⚠️ ALIGNMENT via a WRAPPING SPAN, not a class on `<th>/<td>`: HeroUI's own CSS
- * (`.table__column { text-align: left }`) is un-layered, so it WINS over Tailwind
- * v4 utilities (which live inside `@layer utilities`). Declaring `text-align` on
- * the child itself (the span) always wins over an INHERITED value → no `!important` needed.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `Table` — a table frame. Owns the column configuration (`columns`: alignment + width),
+ * building rows from `items`, and the three frame states of a list: empty (`emptyContent`),
+ * loading (`isSkeleton`), and pressable rows (`onRowPress`). Does not format content — every
+ * cell is a `ReactNode` the consumer passes in.
  */
 
 /** Which edge a column's content aligns to (reading start, or the right edge for numbers/actions). */
@@ -55,6 +43,9 @@ export interface TableColumnSpec {
 /**
  * ONE row: `key` (React key + row id) plus one node for EVERY `column.key`.
  * Already-formatted nodes — the frame knows nothing about the domain.
+ *
+ * COMPOSITE-8 note: cell values remain `ReactNode` on this pre-existing item shape
+ * (`TableRowItem = Record<string, ReactNode>`). Not redesigned in the COMPOSITE-3/10 batch.
  */
 export type TableRowItem = Record<string, ReactNode> & { key: string }
 
@@ -98,7 +89,8 @@ const SKELETON_ROWS_FALLBACK = 3
 /** Content alignment — set on the CHILD span (wins over inheritance), see the file header note. */
 const ALIGN_CLS: Record<TableAlign, string> = {
     start: "text-start",
-    end: "text-end"}
+    end: "text-end",
+}
 
 /** Wraps one cell/header's content so the FRAME owns alignment (§4), instead of it leaking to the call site. */
 /** Params for the local {@link CellBox} — one table cell's alignment wrapper (internal, not a public slot). */
@@ -127,51 +119,54 @@ const TableBase = ({
     emptyContent: EmptyContent,
     isSkeleton = false,
     onRowPress,
-    classNames}: TableBaseProps) => {
+    classNames,
+}: TableBaseProps) => {
     // The header is CONFIGURATION (known before any data arrives) → the skeleton keeps
     // the REAL header, only cells become bars; the frame/column widths never jump once data lands (§8).
     const header = (
-        <HeroTable.Header>
+        <TableHeader>
             {columns.map((column, index) => (
-                <HeroTable.Column
+                <TableColumn
                     key={column.key}
                     id={column.key}
                     isRowHeader={index === 0}
                     style={column.width != null ? { width: column.width } : undefined}
+
                 >
                     <CellBox align={column.align}>
                         <Typography size="sm" text={column.header} />
                     </CellBox>
-                </HeroTable.Column>
+                </TableColumn>
             ))}
-        </HeroTable.Header>
+        </TableHeader>
     )
 
     const body = isSkeleton ? (
-        <HeroTable.Body>
+        <TableBody>
             {Array.from({ length: items.length || SKELETON_ROWS_FALLBACK }).map((_, rowIndex) => (
-                <HeroTable.Row key={rowIndex} id={`skeleton-${rowIndex}`}>
+                <TableRow key={rowIndex} id={`skeleton-${rowIndex}`}>
                     {columns.map((column) => (
-                        <HeroTable.Cell key={column.key}>
+                        <TableCell key={column.key}>
                             {/* The bar is 14px tall < the real cell's 20px line-height → wrap it in an
                                 `h-5` box so the mirror row is the EXACT height of a real row (§8, no
                                 layout jump). Balance the height with `items-center`, NOT with margin
                                 (§10a). The tag sits OUTSIDE the atom (the atom takes no rest props) —
                                 same reason as `CellBox`. */}
                             <span className="flex h-5 items-center">
-                                <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
+                                <Typography size="sm" isSkeleton />
                             </span>
-                        </HeroTable.Cell>
+                        </TableCell>
                     ))}
-                </HeroTable.Row>
+                </TableRow>
             ))}
-        </HeroTable.Body>
+        </TableBody>
     ) : (
-        <HeroTable.Body
+        <TableBody
+
             renderEmptyState={
                 EmptyContent != null
                     ? () => (
-                        <Box principles={["page-pad"]} className="text-center">
+                        <Box principle="page-pad" className="text-center">
                             <EmptyContent isSkeleton={isSkeleton} />
                         </Box>
                     )
@@ -179,35 +174,34 @@ const TableBase = ({
             }
         >
             {items.map((item) => (
-                <HeroTable.Row
+                <TableRow
                     key={item.key}
                     id={item.key}
                     onAction={onRowPress != null ? () => onRowPress(item.key) : undefined}
+
                 >
                     {columns.map((column) => (
-                        <HeroTable.Cell key={column.key}>
+                        <TableCell key={column.key}>
                             <CellBox align={column.align}>{item[column.key]}</CellBox>
-                        </HeroTable.Cell>
+                        </TableCell>
                     ))}
-                </HeroTable.Row>
+                </TableRow>
             ))}
-        </HeroTable.Body>
+        </TableBody>
     )
 
     return (
-        <HeroTable
-            variant="primary"
-            className={cn(classNames)}
-            data-tier="composite"
-            data-component="Table"
-        >
-            <HeroTable.ScrollContainer>
-                <HeroTable.Content aria-label={ariaLabel}>
-                    {header}
-                    {body}
-                </HeroTable.Content>
-            </HeroTable.ScrollContainer>
-        </HeroTable>
+        // House `TableRoot` omits `className` — placement classes ride a plain wrapper.
+        <div className={cn(classNames)} data-tier="composite" data-component="Table">
+            <TableRoot variant="primary">
+                <TableScrollContainer>
+                    <TableContent aria-label={ariaLabel}>
+                        {header}
+                        {body}
+                    </TableContent>
+                </TableScrollContainer>
+            </TableRoot>
+        </div>
     )
 }
 

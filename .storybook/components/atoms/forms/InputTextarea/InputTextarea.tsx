@@ -1,6 +1,6 @@
 import { useId } from "react"
 import { TextField as HeroTextField, TextArea as HeroTextArea, cn } from "@heroui/react"
-import { FieldFrame, fieldName } from "@sb-components/atoms/forms/_field/FieldFrame"
+import { FieldFrame, fieldName } from "@sb-components/composites/form/_field/FieldFrame"
 import type { StringFieldProps } from "../_input/types"
 import { FieldSkeleton } from "../_input/FieldSkeleton"
 

@@ -2,33 +2,33 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { gapClassNames, type AllowedGap, type Responsive } from "@/components/frames/_spacing"
-import { principlesAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
+import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT (frame) — `ResponsiveRow.*`: a repeat-list row that is a FIXED grid below
+ * LAYOUT (frame) -- `ResponsiveRow.*`: a repeat-list row that is a FIXED grid below
  * a container step and an EQUAL-SHARE flex row from it up. One member, `ResponsiveRow`.
  *
  * WHY THIS EXISTS (§13z, 2026-07-29). `StatRibbon` needs BOTH shapes on the same row: a
- * padded 2-column grid on a narrow shell, and — from `@app-sm` — one un-padded row where
+ * padded 2-column grid on a narrow shell, and -- from `@app-sm` -- one un-padded row where
  * N cells share the width evenly and a `border-l` marks the seam between them instead of a
  * gap. Neither existing frame covers this: `Grid` is always `display:grid` with a FIXED
  * column count, so 2 items in a 4-column grid leave two tracks empty instead of sharing the
  * row; `Flex`/`Stack` is always one display type, with no per-step switch at all. Measured
- * that day: exactly one call-site needed this (`StatRibbon`), so the frame stays narrow —
+ * that day: exactly one call-site needed this (`StatRibbon`), so the frame stays narrow --
  * one switch step, one gap, columns capped at what a narrow shell can actually hold.
  *
- * FRAME API LAW (§13b) — REPEATING LIST ⇒ `items` DATA, `children` FORBIDDEN, same
+ * FRAME API LAW (§13b) -- REPEATING LIST ⇒ `items` DATA, `children` FORBIDDEN, same
  * contract as `Grid`/`Cluster`: every cell is the same kind of thing.
  *
  * WHY NO GAP ABOVE THE SWITCH STEP: a divided row (`border-l` between cells) has ONE seam
- * mechanism, not two — a `gap` AND a border would double the visible space on every cell
+ * mechanism, not two -- a `gap` AND a border would double the visible space on every cell
  * boundary. The row goes flush (`gap-0`) once flex takes over; the caller marks the seam
  * with a border on its own cell content instead (§10a: a divided row owns its rhythm with
  * a border, not a gap it would then have to strip off the first/last cell by hand).
  *
- * CONTAINER QUERIES, NOT VIEWPORT: same reasoning as `Grid` (see that file's header) —
+ * CONTAINER QUERIES, NOT VIEWPORT: same reasoning as `Grid` (see that file's header) --
  * `@app-sm/md/lg` answer the nearest `@container`, not the viewport.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -36,7 +36,7 @@ import { resolveIdentity, type CallerIdentity } from "@/components/frames/_ident
 /**
  * Container step the row leaves the grid for the flex row at.
  *
- * The shared width-switch scale for the frame tier — any frame naming the container step it
+ * The shared width-switch scale for the frame tier -- any frame naming the container step it
  * changes shape at (FRAME-10) reuses this union rather than minting its own. `xl` exists for
  * `SplitWorkspace`, whose real `src` sources both switch at `@app-xl`.
  */
@@ -45,48 +45,48 @@ export type ResponsiveRowSwitch = "sm" | "md" | "lg" | "xl"
 /** Props for {@link ResponsiveRow}. */
 export interface ResponsiveRowProps {
     /**
-     * The cells, in reading order — each an uncalled `ComponentType<{isSkeleton?}>` the row
+     * The cells, in reading order -- each an uncalled `ComponentType<{isSkeleton?}>` the row
      * renders itself (`<Item isSkeleton={isSkeleton} />`), so it can build both the real and
-     * shimmer state from one source. REQUIRED — repeat list = DATA, never children (§13b).
+     * shimmer state from one source. REQUIRED -- repeat list = DATA, never children (§13b).
      */
     items: ReadonlyArray<ComponentTypeWithSkeleton>
     /** `true` → passes `isSkeleton` down to every `items` component so the whole row shimmers. */
     isSkeleton?: boolean
     /**
-     * Grid column count BELOW `at`. Capped at `1 | 2` — a narrow shell wide enough for a
+     * Grid column count BELOW `at`. Capped at `1 | 2` -- a narrow shell wide enough for a
      * 3+ column grid is wide enough for the flex row instead, so a caller needing more
      * belongs on `Grid`, not here.
      */
     columns: 1 | 2
     /** Container step the row switches from the fixed grid to the equal-share flex row at. */
     at: ResponsiveRowSwitch
-    /** Seam BELOW `at` (the grid gap), on the house gap scale. At/above `at` the row goes flush — see the file header. */
+    /** Seam BELOW `at` (the grid gap), on the house gap scale. At/above `at` the row goes flush -- see the file header. */
     gap: Responsive<AllowedGap>
     /**
-     * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
+     * Anatomy tag for THIS frame itself -- so the PARENT can badge it as ONE node (§11a.1).
      * Missing this prop means the frame is used but the panel cannot see it.
      */
     /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Where this sits inside its parent. Appearance is not passable -- it is already a prop.
      */
     classNames?: Array<AllowedClassName>
     /**
-     * The layout pattern this row's seam realises — a token from `test-runner/patterns.mjs`.
-     * Emitted as `data-principles` on this same root, beside `data-tier`/`data-component`, so the
-     * rendered-tree test can assert the seam is the step the pattern names. See `Flex`'s own
-     * `pattern` doc for the full contract.
+     * The layout pattern this row's seam realises - one token from `test-runner/patterns.mjs`.
+     * Emitted as `data-principle` on this same root, beside `data-tier`/`data-component`, so the
+     * rendered-tree test can assert the seam is the step the pattern names. Query as
+     * `[data-principle="token"]`. See `Flex`'s own `pattern` doc for the full contract.
      */
-    principles?: Array<PrincipleToken>
+    principle?: PrincipleToken
     /**
-     * Why this layer exists — one sentence, emitted as `data-explain` beside the tokens.
-     * A reason, never a restatement of `principles`; see `_principles.ts`.
+     * Why this layer exists - one sentence, emitted as `data-explain` beside the token.
+     * A reason, never a restatement of `principle`.
      */
     explain?: ExplainReason
     /**
-     * Caller identity to wear on this row's root instead of `ResponsiveRow`'s own — pass this
+     * Caller identity to wear on this row's root instead of `ResponsiveRow`'s own -- pass this
      * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its
      * own) is using this row AS its root element, instead of wrapping it in a raw `<div
-     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this row keeps emitting its
+     * data-tier=... data-component=...>`. See `_identity.ts`. Omitted → this row keeps emitting its
      * own `data-tier="frame" data-component="ResponsiveRow"`, unchanged.
      */
     identity?: CallerIdentity
@@ -121,12 +121,12 @@ const ResponsiveRowBase = ({
     gap,
     isSkeleton,
     classNames,
-    principles,
+    principle,
     explain,
     identity}: ResponsiveRowProps) => (
     <div
         {...resolveIdentity(identity, { tier: "frame", name: "ResponsiveRow" })}
-        data-principles={principlesAttr(principles)}
+        data-principle={principleAttr(principle)}
         data-explain={explainAttr(explain)}
         className={cn(
             "grid",
@@ -142,10 +142,10 @@ const ResponsiveRowBase = ({
 )
 
 /**
- * `ResponsiveRow.*` — the grid-below/flex-above frame namespace. Namespace only — no bare
+ * `ResponsiveRow.*` -- the grid-below/flex-above frame namespace. Namespace only -- no bare
  * component export (§13a).
  */
 export { ResponsiveRowBase as ResponsiveRow }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "frame", name: "ResponsiveRow" } as const

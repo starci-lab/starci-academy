@@ -7,14 +7,15 @@ import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
- * Ported from `@/components/blocks/identity/SnippetIcon`.
+ * ATOM — `SnippetIcon`: the system's one single-click copy affordance.
  *
- * The trigger has no `classNames` hook into its internal icons — only the root
- * takes `classNames`.
+ * 1 PROP = 1 LEAF. `copyString` is required but produces no visual difference — every
+ * value renders the same copy glyph, only the clipboard content changes — so it gets no
+ * leaf. `className` gets no leaf. The one prop with a shape is `isCopied`, which pins the
+ * ✓ glyph from the outside.
  *
- * Renders a single fixed-size glyph (`w-5 h-5`, see `CopyIcon`/`CheckCircleIcon`
- * below), not text, so there is no `skeletonWidth` prop — nothing here scales
- * with content length, unlike a line of text.
+ * Leaf set: `Default` (idle) + `Copied` (prop `isCopied`). The atom exposes `showAnatomy`
+ * so both leaves can carry an anatomy badge.
  */
 
 /** Props shared, excluding the `copyString`/`isSkeleton` pair — see {@link SnippetIconProps}. */
@@ -69,7 +70,7 @@ const SnippetIconBase = ({
     // `isCopied` passed from outside wins over internal state (used for previews).
     const copied = isCopied ?? copiedState
 
-    const onCopy = async () => {
+    const handleCopy = async () => {
         // `copyString` is `string | undefined` here because it's optional in the
         // `isSkeleton` branch of the union — a skeleton is never clicked, but the
         // guard also keeps this call type-safe without narrowing on `isSkeleton`.
@@ -90,6 +91,7 @@ const SnippetIconBase = ({
                 data-tier="atom"
                 data-component="SnippetIcon"
                 className={cn("w-5 h-5 shrink-0 rounded-full", classNames)}
+
             />
         )
     }
@@ -100,9 +102,10 @@ const SnippetIconBase = ({
         <motion.div
             data-tier="atom"
             data-component="SnippetIcon"
-            onClick={onCopy}
+            onClick={handleCopy}
             className={cn("cursor-pointer", classNames)}
             whileTap={{ scale: 0.9 }}
+
         >
             <AnimatePresence mode="wait">
                 {copied ? (
@@ -112,6 +115,7 @@ const SnippetIconBase = ({
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.85, opacity: 0 }}
                         transition={{ duration: 0.15, ease: "easeOut" }}
+
                     >
                         <CheckCircleIcon className="w-5 h-5" />
                     </motion.span>
@@ -122,6 +126,7 @@ const SnippetIconBase = ({
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.85, opacity: 0 }}
                         transition={{ duration: 0.15, ease: "easeOut" }}
+
                     >
                         <CopyIcon className="w-5 h-5" />
                     </motion.span>
@@ -134,5 +139,4 @@ const SnippetIconBase = ({
 /** `SnippetIcon.*` — one-tap copy affordance namespace. */
 export { SnippetIconBase as SnippetIcon }
 
-/** Tier metadata for `SnippetIcon`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "SnippetIcon" } as const

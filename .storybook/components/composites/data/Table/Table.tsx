@@ -1,5 +1,15 @@
 import type { ReactNode } from "react"
-import { Table as HeroTable, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import {
+    TableRoot,
+    TableScrollContainer,
+    TableContent,
+    TableHeader,
+    TableBody,
+    TableColumn,
+    TableRow,
+    TableCell,
+} from "@sb-components/atoms/data/Table/Table"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
@@ -33,6 +43,9 @@ export interface TableColumnSpec {
 /**
  * ONE row: `key` (React key + row id) plus one node for EVERY `column.key`.
  * Already-formatted nodes — the frame knows nothing about the domain.
+ *
+ * COMPOSITE-8 note: cell values remain `ReactNode` on this pre-existing item shape
+ * (`TableRowItem = Record<string, ReactNode>`). Not redesigned in the COMPOSITE-3/10 batch.
  */
 export type TableRowItem = Record<string, ReactNode> & { key: string }
 
@@ -111,9 +124,9 @@ const TableBase = ({
     // The header is CONFIGURATION (known before any data arrives) → the skeleton keeps
     // the REAL header, only cells become bars; the frame/column widths never jump once data lands (§8).
     const header = (
-        <HeroTable.Header>
+        <TableHeader>
             {columns.map((column, index) => (
-                <HeroTable.Column
+                <TableColumn
                     key={column.key}
                     id={column.key}
                     isRowHeader={index === 0}
@@ -123,17 +136,17 @@ const TableBase = ({
                     <CellBox align={column.align}>
                         <Typography size="sm" text={column.header} />
                     </CellBox>
-                </HeroTable.Column>
+                </TableColumn>
             ))}
-        </HeroTable.Header>
+        </TableHeader>
     )
 
     const body = isSkeleton ? (
-        <HeroTable.Body>
+        <TableBody>
             {Array.from({ length: items.length || SKELETON_ROWS_FALLBACK }).map((_, rowIndex) => (
-                <HeroTable.Row key={rowIndex} id={`skeleton-${rowIndex}`}>
+                <TableRow key={rowIndex} id={`skeleton-${rowIndex}`}>
                     {columns.map((column) => (
-                        <HeroTable.Cell key={column.key}>
+                        <TableCell key={column.key}>
                             {/* The bar is 14px tall < the real cell's 20px line-height → wrap it in an
                                 `h-5` box so the mirror row is the EXACT height of a real row (§8, no
                                 layout jump). Balance the height with `items-center`, NOT with margin
@@ -142,18 +155,18 @@ const TableBase = ({
                             <span className="flex h-5 items-center">
                                 <Typography size="sm" isSkeleton />
                             </span>
-                        </HeroTable.Cell>
+                        </TableCell>
                     ))}
-                </HeroTable.Row>
+                </TableRow>
             ))}
-        </HeroTable.Body>
+        </TableBody>
     ) : (
-        <HeroTable.Body
+        <TableBody
 
             renderEmptyState={
                 EmptyContent != null
                     ? () => (
-                        <Box principles="page-pad" className="text-center">
+                        <Box principle="page-pad" className="text-center">
                             <EmptyContent isSkeleton={isSkeleton} />
                         </Box>
                     )
@@ -161,37 +174,34 @@ const TableBase = ({
             }
         >
             {items.map((item) => (
-                <HeroTable.Row
+                <TableRow
                     key={item.key}
                     id={item.key}
                     onAction={onRowPress != null ? () => onRowPress(item.key) : undefined}
 
                 >
                     {columns.map((column) => (
-                        <HeroTable.Cell key={column.key}>
+                        <TableCell key={column.key}>
                             <CellBox align={column.align}>{item[column.key]}</CellBox>
-                        </HeroTable.Cell>
+                        </TableCell>
                     ))}
-                </HeroTable.Row>
+                </TableRow>
             ))}
-        </HeroTable.Body>
+        </TableBody>
     )
 
     return (
-        <HeroTable
-            variant="primary"
-            className={cn(classNames)}
-
-            data-tier="composite"
-            data-component="Table"
-        >
-            <HeroTable.ScrollContainer>
-                <HeroTable.Content aria-label={ariaLabel}>
-                    {header}
-                    {body}
-                </HeroTable.Content>
-            </HeroTable.ScrollContainer>
-        </HeroTable>
+        // House `TableRoot` omits `className` — placement classes ride a plain wrapper.
+        <div className={cn(classNames)} data-tier="composite" data-component="Table">
+            <TableRoot variant="primary">
+                <TableScrollContainer>
+                    <TableContent aria-label={ariaLabel}>
+                        {header}
+                        {body}
+                    </TableContent>
+                </TableScrollContainer>
+            </TableRoot>
+        </div>
     )
 }
 

@@ -31,6 +31,8 @@ const LABELS: AuthCardLabels = {
     nameLabel: "Your name",
     emailLabel: "Email",
     passwordLabel: "Password",
+    passwordRevealLabel: "Show password",
+    passwordHideLabel: "Hide password",
     loginSubmitLabel: "Sign in",
     registerSubmitLabel: "Create account",
     toggleToRegisterLabel: "Create a new account",

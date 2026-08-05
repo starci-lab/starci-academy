@@ -691,14 +691,20 @@ function explainText(node) {
   return null
 }
 
-/** Principle tokens declared on the same element, read off its `principles={[…]}` array. */
+/** Principle token declared on the same element via `principle="token"` (never an array). */
 function principleTokens(opening) {
-  const attr = opening.attributes.find((a) => a.name && a.name.name === "principles")
-  const expr = attr && attr.value && attr.value.expression
-  if (!expr || expr.type !== "ArrayExpression") return []
-  return expr.elements
-    .filter((el) => el && el.type === "Literal" && typeof el.value === "string")
-    .map((el) => el.value)
+  const attr = opening.attributes.find((a) => a.name && a.name.name === "principle")
+  if (!attr || !attr.value) return []
+  const v = attr.value
+  if (v.type === "Literal" && typeof v.value === "string") return [v.value]
+  if (v.type === "JSXExpressionContainer") {
+    const e = v.expression
+    if (e.type === "Literal" && typeof e.value === "string") return [e.value]
+    if (e.type === "TemplateLiteral" && e.expressions.length === 0) {
+      return [e.quasis.map((q) => q.value.cooked).join("")]
+    }
+  }
+  return []
 }
 
 const explainJustifiesTokenChoice = {
@@ -709,7 +715,7 @@ const explainJustifiesTokenChoice = {
     },
     schema: [],
     messages: {
-      restates: "`explain` here only says the token again in prose. `principles` is already the claim; repeating it adds a sentence and no knowledge. Say why THIS token and not the one beside it.",
+      restates: "`explain` here only says the token again in prose. `principle` is already the claim; repeating it adds a sentence and no knowledge. Say why THIS token and not the one beside it.",
       noAlternative: "`{{token}}` sits in a family of near neighbours ({{siblings}}) and this `explain` names none of them. Choosing between them is the only real judgement on this node, so it is the one thing worth recording — write what made this token right and the neighbour wrong. Read across the codebase, those sentences are how the token set's boundaries are actually learned; a sentence that describes the node teaches nobody anything.",
       tooShort: "`explain` is too short to carry a reason. One clause naming what breaks, wraps or overflows — not a label.",
     },
@@ -738,9 +744,8 @@ const explainJustifiesTokenChoice = {
           context.report({ node, messageId: "restates" })
           return
         }
-        // EVERY token on the node must be accounted for, not just the first checkable one.
-        // A node claiming two seams is claiming both; an explanation that argues one of them
-        // and stays silent on the other is half an answer wearing the shape of a whole one.
+        // The one token on the node must be accounted for. A node claims exactly one seam;
+        // an explanation that ignores the neighbour it rejected teaches nobody the boundary.
         for (const token of tokens) {
           const family = PRINCIPLE_FAMILIES.find((f) => f.includes(token))
           if (!family) continue
@@ -779,9 +784,9 @@ const noPerPartClassNameProp = {
 }
 
 // ── mỗi lớp phải TỰ KHAI nó là gì và VÌ SAO nó tồn tại ──────────────────────────
-// `principles` = lớp này tuyên bố nó là seam gì (tập đóng, khớp `patterns.mjs`, test đi
-// theo được). `explain` = vì sao có lớp này — thứ không ai dựng lại được từ markup về sau,
-// và là thứ quyết định lớp kế tiếp nằm CẠNH hay nằm TRONG lớp này.
+// `principle` = lớp này tuyên bố nó là seam gì (một token, tập đóng, khớp `patterns.mjs`,
+// test đi theo `[data-principle]`). `explain` = vì sao có lớp này — thứ không ai dựng lại
+// được từ markup về sau, và là thứ quyết định lớp kế tiếp nằm CẠNH hay nằm TRONG lớp này.
 // Atom miễn: nó bọc vendor, nó không dựng layer nào của riêng mình.
 
 /** Frame nào cũng dựng ra một node thật, nên node đó phải tự khai. */
@@ -810,13 +815,13 @@ const requireFrameSelfDeclare = {
   meta: {
     type: "problem",
     docs: {
-      description: "Every frame instance above the atom tier declares `principles` + `explain`. [[fe-contract]]",
+      description: "Every frame instance above the atom tier declares `principle` + `explain`. [[fe-contract]]",
     },
     schema: [],
     messages: {
-      missing: "`<{{name}}>` declares neither `principles` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principles`) and the reason it exists (`explain`).",
-      noPrinciples: "`<{{name}}>` has `explain` but no `principles` — the reason is there, the claim is not. Tests walk `[data-principles~=\"…\"]`; an unlabelled layer is invisible to every one of them.",
-      noExplain: "`<{{name}}>` declares `principles` but no `explain` — the tokens say WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later.",
+      missing: "`<{{name}}>` declares neither `principle` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principle`) and the reason it exists (`explain`).",
+      noPrinciple: "`<{{name}}>` has `explain` but no `principle` — the reason is there, the claim is not. Tests walk `[data-principle=\"…\"]`; an unlabelled layer is invisible to every one of them.",
+      noExplain: "`<{{name}}>` declares `principle` but no `explain` — the token says WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later.",
     },
   },
   create(context) {
@@ -830,10 +835,10 @@ const requireFrameSelfDeclare = {
       JSXOpeningElement(node) {
         const name = jsxElementName(node)
         if (!name || !FRAME_ELEMENTS.has(name)) return
-        const principles = hasJsxProp(node, "principles")
+        const principle = hasJsxProp(node, "principle")
         const explain = hasJsxProp(node, "explain")
-        if (principles && explain) return
-        const messageId = !principles && !explain ? "missing" : (principles ? "noExplain" : "noPrinciples")
+        if (principle && explain) return
+        const messageId = !principle && !explain ? "missing" : (principle ? "noExplain" : "noPrinciple")
         context.report({ node, messageId, data: { name } })
       },
     }

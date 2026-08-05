@@ -5,12 +5,12 @@
  * Internal module (`_`-prefixed): it is a type + class table, NOT a component,
  * and never leaves this folder.
  *
- * SSOT FOR THE COUNTS AND THE REASONING:
+ * SSOT FOR THE COUNTS AND THE REASONING (historical doc folder names):
  *   design/storybook/architecture/principles/gap.md
  *   design/storybook/architecture/principles/padding.md
  *   design/storybook/architecture/principles/responsive.md
  * This file only encodes what those hold. principles/README.md's rule for the
- * folder — "a value is written out here and nowhere else" — is why the class
+ * folder - "a value is written out here and nowhere else" - is why the class
  * tables live beside the type instead of inside each frame that consumes them.
  *
  * WHY NUMBERS, NOT WORDS (the migration this file carries out). The scale used
@@ -124,7 +124,7 @@ const isResponsiveValue = <T,>(v: Responsive<T>): v is { base: T; sm?: T; md?: T
 /**
  * Resolve a {@link Responsive}<{@link AllowedGap}> into the class list a frame's `cn()` composes.
  * Centralised here rather than in each of the six frames that take `gap`, so the responsive
- * shape is read the same way everywhere — see principles/README.md's "one place" rule.
+ * shape is read the same way everywhere -- see principles/README.md's "one place" rule.
  */
 export function gapClassNames(gap: Responsive<AllowedGap>): Array<string | false> {
     if (!isResponsiveValue(gap)) return [GAP_CLASS[gap]]

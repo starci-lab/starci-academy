@@ -113,7 +113,7 @@ const Content = ({ codingPercentile, track, isSkeleton }: ContentProps) => {
         <>
             <StackH
                 gap={4}
-                principles={["content-row"]}
+                principle="content-row"
                 at="sm"
                 align="center"
                 isSkeleton={isSkeleton}

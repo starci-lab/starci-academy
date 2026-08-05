@@ -85,7 +85,7 @@ const AiQuotaSubscriptionPanel = ({
 
 
                     body={() => (
-                        <StackV gap={4} principles={["content-row"]} align="start" isSkeleton={isSkeleton} items={[
+                        <StackV gap={4} principle="content-row" align="start" isSkeleton={isSkeleton} items={[
                             () => (
                                 <Typography
                                     size="sm"

@@ -97,19 +97,19 @@ const ConsultantDirectoryGrid = ({
                 isLoading={isLoading}
                 skeleton={() => (
                     <div>
-                        <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={4} principles={["sibling-stack"]} items={skeletonTiles} />
+                        <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={4} principle="sibling-stack" items={skeletonTiles} />
                     </div>
                 )}
                 isEmpty={isEmpty}
                 emptyContent={emptyContent}
                 content={() => (
-                    <StackV gap={4} principles={["group-boundary"]} items={[
+                    <StackV gap={4} principle="group-boundary" items={[
                         ...(count !== undefined ? [() => (
                             <Typography size="sm" color="muted" text={countLabel(count)} />
                         )] : []),
                         () => (
                             <div>
-                                <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={4} principles={["sibling-stack"]} items={tiles} />
+                                <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={4} principle="sibling-stack" items={tiles} />
                             </div>
                         ),
                     ]} />

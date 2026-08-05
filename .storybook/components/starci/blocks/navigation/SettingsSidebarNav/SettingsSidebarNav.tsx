@@ -178,7 +178,7 @@ const SettingsSidebarNav = ({
                 <div className="overflow-x-auto border-b border-default bg-background/80 backdrop-blur-xl">
                     <StackH
                         gap={3}
-                        principles="flex-action"
+                        principle="flex-action"
                         padding={{ x: 4, y: 3 }}
                         items={flatItems.map((item) => () => {
                             const isActive = item.href === activeHref
@@ -199,7 +199,7 @@ const SettingsSidebarNav = ({
                                         isActive ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
                                     )}
                                 >
-                                    <StackH gap={2} principles="icon-text" align="center" items={[() => pillContent]} />
+                                    <StackH gap={2} principle="icon-text" align="center" items={[() => pillContent]} />
                                 </button>
                             )
                         })}

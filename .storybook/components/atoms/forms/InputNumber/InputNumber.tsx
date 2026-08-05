@@ -1,5 +1,5 @@
 import { NumberField as HeroNumberField, cn } from "@heroui/react"
-import { FieldFrame, fieldName } from "@sb-components/atoms/forms/_field/FieldFrame"
+import { FieldFrame, fieldName } from "@sb-components/composites/form/_field/FieldFrame"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { FrameProps } from "../_input/types"
 import { FieldSkeleton } from "../_input/FieldSkeleton"

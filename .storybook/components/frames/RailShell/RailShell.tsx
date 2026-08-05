@@ -2,7 +2,8 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
-import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
+import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@sb-components/frames/_principles"
+import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_identity"
 
 /**
  * WARNING: STATE SCOPE: `RailShell` is a frame with a LEADING rail + a shrinking body. The
@@ -23,28 +24,21 @@ import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_prin
  * and the INNER node -- a real descendant -- carries the `flex`/`gap`/switch classes
  * that actually answer `@app-md`.
  *
- * WARNING: APP-WIRE HANDOFF -- the EXACT two things apps/app must have for this to render
+ * WARNING: APP-WIRE HANDOFF -- the EXACT two things the app must have for this to render
  * as a right rail instead of the stacked list the shell shipped with:
  * 1. The class this component now puts on its own outer node -- the Tailwind v4
  *    utility `@container` (compiles to `container-type: inline-size`). Nothing
  *    ELSE needs to open a container context; `RailShell` no longer trusts an
  *    ancestor for this (see the note above) -- it is self-contained as of this fix.
  * 2. The `--container-app-sm/md/lg/xl` custom properties, declared inside an
- *    `@theme { }` block in THIS book's `src/app/globals.css` (40rem / 48rem / 64rem
+ *    `@theme { }` block in this book's `src/app/globals.css` (40rem / 48rem / 64rem
  *    / 80rem -- pinned to the viewport `sm/md/lg/xl` pixel values, see that file's
  *    comment for why). These are what make the `@app-sm:`/`@app-md:`/`@app-lg:`/
  *    `@app-xl:` utility CLASSES exist in the compiled CSS at all -- Tailwind only
  *    generates a `@app-md:` variant where `--container-app-md` is defined somewhere
  *    in the build's `@theme`. Point 1 without point 2 compiles fine and renders
  *    stacked forever with NO error, because the `@app-md:flex-row` class name is
- *    real but matches nothing. apps/app must declare the SAME four custom
- *    properties (identical rem values) in its own global stylesheet -- either by
- *    literally copying the `@theme { --container-app-* }` block, or by importing a
- *    stylesheet that does -- before `RailShell`/`DashboardShell` will lay out
- *    correctly there. This is the one step this book fix CANNOT do on apps/app's
- *    behalf; the story fixtures below only work because `.storybook/preview.tsx`
- *    imports this book's `src/app/globals.css`, which already carries that
- *    `@theme` block.
+ *    real but matches nothing.
  */
 
 /** Props for {@link RailShell}. */
@@ -83,21 +77,28 @@ export interface RailShellProps {
     side?: "start" | "end"
     /** Renders `rail`/`body` in their skeleton state. */
     isSkeleton?: boolean
-    /**
-     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
-     * `data-anat-part` on the identity outer. The frame never names itself.
-     */
-    anatPart?: string
     /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
      * The layout pattern this frame's seam realises -- a token from `test-runner/patterns.mjs`
-     * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principles` on the element
-     * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
-     * A frame does not KNOW its pattern -- the caller does -- so it is passed in.
-     * One token per instance.
+     * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principle` on the
+     * element that carries the gap, so the rendered-tree test can assert the seam is the step
+     * the pattern names. One token per instance.
      */
-    principles?: PrincipleToken
+    principle?: PrincipleToken
+    /**
+     * Why this layer exists -- one sentence, emitted as `data-explain` beside the token.
+     * A reason, never a restatement of `principle`.
+     */
+    explain?: ExplainReason
+    /**
+     * Caller identity to wear on this shell's root instead of the frame's own -- pass this when
+     * a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
+     * is using this shell AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=... data-component=...>`. See `_identity.ts`. Omitted -> this shell keeps emitting
+     * its own `data-tier="frame" data-component="RailShell"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -130,7 +131,7 @@ const RAIL_STICKY_CLASS: Record<ResponsiveRowSwitch, string> = {
 
 /**
  * The leading-rail shell. See the file header for why this is its own frame and
- * why `at` and `isRailSticky` are its only props beyond the two slots.
+ * why `at`, `isRailSticky`, and `side` are its only props beyond the two slots.
  *
  * @param props - {@link RailShellProps}
  */
@@ -142,12 +143,10 @@ const RailShell = ({
     side = "start",
     isSkeleton,
     classNames,
-    principles,
-    anatPart,
+    principle,
+    explain,
+    identity,
 }: RailShellProps) => {
-    // `rail`/`body` are CALLER SLOTS -- whatever sits inside belongs to whoever passed
-    // it, so neither gets an anatomy badge of its own (same restraint as
-    // `SplitWorkspace`'s two slots).
     const railNode = (
         <aside
             key="rail"
@@ -165,25 +164,14 @@ const RailShell = ({
             <Body isSkeleton={isSkeleton} />
         </main>
     )
-    // `side` only re-orders the two named columns; every self-owned number (the 288px
-    // rail width, the `@app-*` threshold, `shrink-0` on the rail, `min-w-0` on the body)
-    // is identical either way, so "end" is a mirror, not a second layout.
     return (
-        // OUTER: opens `@container` + `w-full` so the switch below always has a query
-        // context, whatever the caller wrapped this in (see file header). Carries
-        // identity (`data-tier`/`data-component`) and `classNames` -- same split as
-        // `Container`'s outer/inner, `classNames` living beside identity there too.
         <div
-            data-tier="frame"
-            data-component="RailShell"
-            data-anat-part={anatPart}
+            {...resolveIdentity(identity, { tier: "frame", name: "RailShell" })}
             className={cn("@container w-full", classNames)}
         >
-            {/* INNER: a real descendant of the `@container` above, so `@app-md:flex-row`
-                actually answers it. Carries the gap, so `data-principles` lands here --
-                the element that carries the gap, not the identity node beside it. */}
             <div
-                data-principles={principlesAttr(principles)}
+                data-principle={principleAttr(principle)}
+                data-explain={explainAttr(explain)}
                 className={cn("flex flex-col gap-6", SHELL_SWITCH_CLASS[at])}
             >
                 {side === "end" ? [bodyNode, railNode] : [railNode, bodyNode]}

@@ -88,7 +88,7 @@ export const PricePeriod = ({
         <div
             data-tier="composite"
             data-component="PricePeriod"
-            data-principles="value-row"
+            data-principle="value-row"
             className={cn("flex flex-wrap items-baseline gap-2", classNames)}
         >
             {/* Main amount — prominent, sized off {@link SIZE_TO_TOKENS}. */}

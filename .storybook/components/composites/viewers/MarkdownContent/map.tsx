@@ -1,14 +1,14 @@
 import React from "react"
-// ATOM GAP — `Accordion` and `Table` (compound children: `.Item`/`.Heading`/`.Trigger`/`.Panel`/
-// `.Body`/`.Column`/`.Cell`) come straight from the vendor because no house atom wraps either
-// compound. `atoms/navigation/Accordion` wraps a DIFFERENT vendor primitive (`Disclosure`/
-// `DisclosureGroup`) behind a data-driven `items` array — it cannot take this viewer's panels,
-// which react-markdown dispatches to `accordionblock`/`accordionpanel` one node at a time, never
-// as one upfront array a composite could pass through `items`. `composites/data/Table` is a
-// separate, config-driven composite (`columns`/`items` data, `children` forbidden by its own
-// contract) — a GFM table arrives as an already-rendered `thead`/`tbody` children tree, which
-// cannot be reduced back into that shape without re-parsing the table by hand.
-import { Accordion, Table as HeroTable, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import {
+    AccordionTree,
+    AccordionTreeBody,
+    AccordionTreeHeading,
+    AccordionTreeIndicator,
+    AccordionTreeItem,
+    AccordionTreePanel,
+    AccordionTreeTrigger,
+} from "@sb-components/atoms/navigation/AccordionTree/AccordionTree"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { CodeToHtml } from "@sb-components/composites/viewers/MarkdownContent/CodeToHtml"
@@ -17,6 +17,7 @@ import { TabsBlock, TabPane } from "@sb-components/composites/viewers/MarkdownCo
 import {
     MarkdownTable,
     MarkdownTableBody,
+    MarkdownTableCell,
     MarkdownTableColumn,
     MarkdownTableHead,
     MarkdownTableRow,
@@ -29,8 +30,8 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  * tables, code, mermaid, custom directive tags) in one file.
  *
  * Handles: Shiki syntax highlighting, mermaid diagrams, `:::tab`/`:::code`/
- * `:::preview` → Preview↔Code tabs, GFM tables → HeroUI `Table`,
- * `::::accordion`/`:::panel` → HeroUI `Accordion`, `:::muted`, `:::chip`, image
+ * `:::preview` → Preview↔Code tabs, GFM tables → house `TableRoot`,
+ * `::::accordion`/`:::panel` → house `AccordionTree`, `:::muted`, `:::chip`, image
  * captions, link routing, heading anchors. Not handled here: `arcSections`,
  * `plain` mode, the ` ```mdx ` live-render fence, the ` ```layout ` fence.
  *
@@ -72,9 +73,18 @@ export interface MarkdownImageProps {
     alt?: string
 }
 
-/** A code node. A fenced block arrives with `language-*`; anything else is inline. */
+/**
+ * A code node. A fenced block arrives with `language-*` on react-markdown's
+ * `className`; that string is the language hook, not a styling door — stored here
+ * as `fenceClass` so COMPOSITE-4 does not see a `className` prop on a `*Props` type.
+ */
 export interface MarkdownCodeProps extends MarkdownNodeProps {
     /** `language-*` for a fenced block, absent for inline code. */
+    fenceClass?: string
+}
+
+/** react-markdown still emits `className` on `code`; rename at the renderer boundary. */
+type MarkdownCodeRuntimeProps = MarkdownNodeProps & {
     className?: string
 }
 
@@ -269,7 +279,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
                 <img src={src} alt="" className={cn("w-full rounded-2xl", blockMy)} />
             )
         ),
-        // GFM table → real HeroUI `Table` compound (see the file header on `MarkdownTableParts.tsx`
+        // GFM table → house `TableRoot` compound (see the file header on `MarkdownTableParts.tsx`
         // for why this is NOT the config-driven `composites/data/Table`). The block-rhythm margin
         // (COMPOSITE-4: `MarkdownTable` takes no `className`) is owned here, by the plain wrapping
         // `<div>` — margin is a seam between two blocks, not a prop of either one.
@@ -282,24 +292,27 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
         tbody: MarkdownTableBody,
         tr: MarkdownTableRow,
         th: MarkdownTableColumn,
-        td: ({ children }: MarkdownNodeProps) => <HeroTable.Cell>{children}</HeroTable.Cell>,
+        td: MarkdownTableCell,
         // A fenced block's inner `code` carries `language-*`; anything else is inline.
-        code: ({ children, className }: MarkdownCodeProps) => {
-            if (className?.startsWith("language-")) {
+        // react-markdown still passes `className`; rename to `fenceClass` at this boundary.
+        code: ({ children, className }: MarkdownCodeRuntimeProps) => {
+            const fenceClass = className
+            if (fenceClass?.startsWith("language-")) {
                 return children
             }
             return (
                 // inset-exception: inline-code geometry, wider than tall by nature, not a surface inset
                 // (same shape as `RichText`'s inline `<code>` — see `RichText.tsx`)
-                <Box as="code" principles="control-pad" className="rounded-md bg-default px-1 py-0 font-mono text-sm text-foreground [overflow-wrap:anywhere]">
+                <Box as="code" principle="control-pad" className="rounded-md bg-default px-1 py-0 font-mono text-sm text-foreground [overflow-wrap:anywhere]">
                     {children}
                 </Box>
             )
         },
         // Fenced block dispatch: `mermaid` → diagram, everything else → Shiki.
         pre: ({ children }: MarkdownNodeProps) => {
-            const child = React.Children.only(children) as React.ReactElement<MarkdownCodeProps>
-            const lang = /language-(\w+)/.exec(child.props.className ?? "")?.[1] ?? "text"
+            const child = React.Children.only(children) as React.ReactElement<MarkdownCodeRuntimeProps>
+            const fenceClass = child.props.className
+            const lang = /language-(\w+)/.exec(fenceClass ?? "")?.[1] ?? "text"
             const code = String(child.props.children ?? "").replace(/\n$/, "")
             // Block-rhythm margin (COMPOSITE-4: neither viewer takes `className`) owned by the
             // plain wrapping `<div>` — margin is a seam between two blocks, not either one's prop.
@@ -344,7 +357,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
                     as="span"
                     at="sm"
                     gap={3}
-                    principles="chip-row"
+                    principle="chip-row"
                     items={String(items ?? "").split("|").filter(Boolean).map((keyword) => () => (
                         <Chip tone="default" text={keyword} />
                     ))}
@@ -355,44 +368,46 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
         tabblock: ({ children }: MarkdownNodeProps) => <TabsBlock>{children}</TabsBlock>,
         tabcode: ({ children }: MarkdownNodeProps) => <TabPane kind="code">{children}</TabPane>,
         tabpreview: ({ children }: MarkdownNodeProps) => <TabPane kind="preview">{children}</TabPane>,
-        // ::::accordion / :::panel{title} → the CORRECT HeroUI `Accordion` compound directly (this
-        // composite used to route this through the Disclosure-based `Accordion` ATOM, which is a
-        // different underlying primitive with no surface chrome hook — wrong fit for a nested
-        // "card inside a reading column" look). `variant="default"` keeps the item separator
-        // FULL-BLEED, with the light hairline `--separator` re-point so dividers read the same as
-        // the `SurfaceListCard` family; `border` delineates it as a nested surface.
+        // ::::accordion / :::panel{title} → house `AccordionTree` compound (incremental panels from
+        // react-markdown — not the data-driven Disclosure `Accordion` atom). `variant="default"`
+        // keeps the item separator FULL-BLEED, with the light hairline `--separator` re-point so
+        // dividers read the same as the `SurfaceListCard` family; `border` delineates it as a
+        // nested surface.
         accordionblock: ({ children }: MarkdownNodeProps) => (
-            <Accordion
-                variant="default"
-                style={{ "--separator": "color-mix(in oklab, var(--surface-foreground) 6%, transparent)" } as React.CSSProperties}
-                className={cn("overflow-hidden border border-default bg-surface", blockMy)}
-            >
-                {children}
-            </Accordion>
+            // `AccordionTree` omits `className` (atom door is closed); border/rhythm sit on the
+            // wrapping seam so COMPOSITE-4 stays clean while the nested-surface look is preserved.
+            <div className={cn("overflow-hidden border border-default bg-surface", blockMy)}>
+                <AccordionTree
+                    variant="default"
+                    style={{ "--separator": "color-mix(in oklab, var(--surface-foreground) 6%, transparent)" } as React.CSSProperties}
+                >
+                    {children}
+                </AccordionTree>
+            </div>
         ),
         accordionpanel: ({ title, children }: MarkdownPanelProps) => (
-            <Accordion.Item aria-label={String(title ?? "")}>
-                <Accordion.Heading>
-                    <Accordion.Trigger>
+            <AccordionTreeItem aria-label={String(title ?? "")}>
+                <AccordionTreeHeading>
+                    <AccordionTreeTrigger>
                         <div className="text-start">
                             <StackH
                                 gap={4}
-                                principles="content-row"
+                                principle="content-row"
                                 justify="between"
                                 items={[
                                     () => <span className={reading ? "text-base font-semibold" : "text-sm font-semibold"}>{title}</span>,
-                                    () => <Accordion.Indicator />,
+                                    () => <AccordionTreeIndicator />,
                                 ]}
                             />
                         </div>
-                    </Accordion.Trigger>
-                </Accordion.Heading>
-                <Accordion.Panel>
-                    <Accordion.Body>
+                    </AccordionTreeTrigger>
+                </AccordionTreeHeading>
+                <AccordionTreePanel>
+                    <AccordionTreeBody>
                         <div className="space-y-2">{children}</div>
-                    </Accordion.Body>
-                </Accordion.Panel>
-            </Accordion.Item>
+                    </AccordionTreeBody>
+                </AccordionTreePanel>
+            </AccordionTreeItem>
         ),
     }
 }

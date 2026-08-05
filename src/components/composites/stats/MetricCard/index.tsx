@@ -1,28 +1,38 @@
 import React from "react"
-import { Card, CardContent, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import { Card, CardContent, type CardProps } from "@/components/atoms/display/Card"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
-/**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/stats/MetricCard`. Authored in Storybook (not `src`);
- * synced to `src` later.
- */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "MetricCard" } as const
+
+/** `hint` is the only optional slot — omit it when value + label already explain themselves. */
 
 /**
  * Inlined faithful local copy of `@/components/blocks/cards/SectionCard` (the
- * header-less path MetricCard uses): HeroUI `Card`/`CardContent` — globals already
+ * header-less path MetricCard uses): house `Card`/`CardContent` — globals already
  * give it the 3xl radius, `p-3`, no-shadow + border.
  * TODO: swap for the SectionCard local when the cards category ports it.
  */
-const SectionCard = ({
-    body,
-    classNames}: {
+interface MetricSectionCardProps {
     body: React.ReactNode
     classNames?: Array<AllowedClassName>
-}) => (
-    <Card className={cn(classNames)} data-tier="composite" data-component="MetricCard">
+}
+
+const SectionCard = ({
+    body,
+    classNames,
+}: MetricSectionCardProps) => (
+    // House Card omits `className` from its public type; positioning still lands on the chrome.
+    <Card
+        {...({
+            className: cn(classNames),
+            "data-tier": "composite",
+            "data-component": "MetricCard",
+        } as CardProps)}
+    >
         <CardContent>
             <StackV gap={4} items={[() => body]} />
         </CardContent>
@@ -85,21 +95,19 @@ export type MetricCardProps = MetricCardOwnProps &
  *
  * @param props - {@link MetricCardProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "MetricCard" } as const
-
-/** A framed card wrapping a single value, label and optional hint, built on `SectionCard`. */
 export const MetricCard = ({
     value,
     label,
     hint,
     isSkeleton = false,
-    classNames}: MetricCardProps) => {
+    classNames,
+}: MetricCardProps) => {
     return (
         // SectionCard provides the framed card shell (border + bg + radius)
         <SectionCard classNames={classNames} body={
             <StackV
                 gap={3}
+                isSkeleton={isSkeleton}
                 items={[
                     // Primary metric value — large and visually prominent
                     () => <Typography size="h4" isSkeleton={isSkeleton} text={value} />,

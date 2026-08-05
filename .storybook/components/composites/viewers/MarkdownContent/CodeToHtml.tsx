@@ -153,20 +153,20 @@ export const CodeToHtml = ({ code, language, theme, classNames }: CodeToHtmlProp
             )}
         >
             {/* slim header: language label (left) + copy (right) — orients long lessons with many snippets */}
-            <Box principles="control-pad" className="flex items-center justify-between border-b border-default px-3 py-2">
+            <Box principle="control-pad" className="flex items-center justify-between border-b border-default px-3 py-2">
                 <span className="font-mono text-xs text-muted">{languageLabel(language)}</span>
                 <SnippetIcon copyString={code} />
             </Box>
             {html ? (
-                // data-principles hand-set (not `Box`): `dangerouslySetInnerHTML` has no slot on `Box`'s prop surface.
+                // data-principle hand-set (not `Box`): `dangerouslySetInnerHTML` has no slot on `Box`'s prop surface.
                 <div
-                    data-principles="cell-pad" className="p-3 text-sm [&_code]:!whitespace-pre-wrap [&_code]:!break-words [&_pre]:!whitespace-pre-wrap [&_pre]:!break-words [&_pre]:!bg-transparent [&_pre]:!p-0"
+                    data-principle="cell-pad" className="p-3 text-sm [&_code]:!whitespace-pre-wrap [&_code]:!break-words [&_pre]:!whitespace-pre-wrap [&_pre]:!break-words [&_pre]:!bg-transparent [&_pre]:!p-0"
                     dangerouslySetInnerHTML={{ __html: html }}
                 />
             ) : (
                 /* Fallback: always show raw code while Shiki hasn't finished / on error (avoids an empty box).
-                   data-principles hand-set: `Box` has no `"pre"` in its `as` union. */
-                <pre data-principles="cell-pad" className="p-3 text-sm whitespace-pre-wrap break-words">
+                   data-principle hand-set: `Box` has no `"pre"` in its `as` union. */
+                <pre data-principle="cell-pad" className="p-3 text-sm whitespace-pre-wrap break-words">
                     <code>{code}</code>
                 </pre>
             )}

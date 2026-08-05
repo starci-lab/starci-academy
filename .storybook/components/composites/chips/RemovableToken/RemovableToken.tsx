@@ -120,7 +120,7 @@ export const RemovableToken = ({
             )}
             data-tier="composite"
             data-component="RemovableToken"
-            data-principles="cell-pad"
+            data-principle="cell-pad"
         >
             <StackH
                 gap={3}

@@ -80,7 +80,7 @@ export const CrossListItem = ({ showCross = true, children }: CrossListItemProps
             gap={4}
             align="start"
             padding={4}
-            principles={["content-row"]}
+            principle="content-row"
             items={[
                 ...(showCross
                     ? [() => (

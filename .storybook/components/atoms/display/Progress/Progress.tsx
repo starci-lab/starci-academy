@@ -45,6 +45,11 @@ interface ProgressTrackProps {
     /** Render the leaf skeleton instead of the indicator. */
     isSkeleton?: boolean
     /**
+     * Track thickness. `"compact"` is the labelled-meter density (`h-1`);
+     * omit for the atom's own preset size.
+     */
+    trackDensity?: "default" | "compact"
+    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
      */
@@ -63,6 +68,7 @@ const ProgressBar = ({
     size = "md",
     ariaLabel = "Progress",
     isSkeleton = false,
+    trackDensity = "default",
     classNames,
 }: ProgressTrackProps) => {
     if (isSkeleton) {
@@ -70,7 +76,7 @@ const ProgressBar = ({
             <HeroSkeleton
                 data-tier="atom"
                 data-component="ProgressBar"
-                className={cn("h-2 w-full rounded-full", classNames)}
+                className={cn(trackDensity === "compact" ? "h-1" : "h-2", "w-full rounded-full", classNames)}
 
             />
         )
@@ -87,12 +93,8 @@ const ProgressBar = ({
             size={size}
             className={cn("w-full", classNames)}
         >
-            <HeroProgressBar.Track
-
-            >
-                <HeroProgressBar.Fill
-
-                />
+            <HeroProgressBar.Track className={trackDensity === "compact" ? "h-1" : undefined}>
+                <HeroProgressBar.Fill />
             </HeroProgressBar.Track>
         </HeroProgressBar>
     )

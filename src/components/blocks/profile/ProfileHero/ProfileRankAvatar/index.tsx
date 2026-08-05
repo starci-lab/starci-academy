@@ -48,5 +48,5 @@ export const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false}: 
             ) : null}
         </>
     )
-    return <StackV gap={2} principles={["title-subtitle"]} align="center" isSkeleton={isSkeleton} items={[() => rankBody]} />
+    return <StackV gap={2} principle="title-subtitle" align="center" isSkeleton={isSkeleton} items={[() => rankBody]} />
 }

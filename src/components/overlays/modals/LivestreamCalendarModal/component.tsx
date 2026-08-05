@@ -60,7 +60,7 @@ const sessionRowContent = (row: LivestreamCalendarSessionRow) => (
                 <Cluster
                     gap={3}
                     align="center"
-                    principles={["chip-row"]}
+                    principle="chip-row"
                     items={[
                         () => <Chip text={row.dayLabel} />,
                         () => <ClockIcon aria-hidden focusable="false" className="size-3 text-muted" />,

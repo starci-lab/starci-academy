@@ -12,6 +12,7 @@ export type ButtonVariant =
     | "secondary"
     | "tertiary"
     | "outline"
+    | "field"
     | "ghost"
     | "danger"
     | "danger-soft"
@@ -24,6 +25,7 @@ export const HERO_VARIANT: Record<ButtonVariant, HeroVariant> = {
     secondary: "secondary",
     tertiary: "tertiary",
     outline: "outline",
+    field: "outline",
     ghost: "ghost",
     danger: "danger",
     "danger-soft": "secondary",
@@ -32,6 +34,7 @@ export const HERO_VARIANT: Record<ButtonVariant, HeroVariant> = {
 /** Classes layered on for variants HeroUI has no native equivalent for. Empty = use the HeroUI variant as-is. */
 export const VARIANT_CLS: Partial<Record<ButtonVariant, string>> = {
     "danger-soft": "bg-danger-soft text-danger-soft-foreground hover:bg-danger-soft/70",
+    field: "w-full justify-between rounded-field border-[var(--field-border)] bg-field px-3 font-normal text-field-foreground shadow-[var(--field-shadow)] hover:bg-field",
 }
 
 /** Size scale, mapped directly to HeroUI's `size` (`md` = default). */

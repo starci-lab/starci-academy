@@ -224,7 +224,7 @@ export const SurfaceListCardRow = ({
                 {subtitle ? <Typography size="xs" color="muted" truncate text={subtitle} /> : null}
             </div>
             {Meta || Trailing ? (
-                <Box principles={["push-end"]} className="ml-auto shrink-0">
+                <Box principle="push-end" className="ml-auto shrink-0">
                     <StackH gap={2} items={[() => (Meta ? <Meta /> : null), () => (Trailing ? <Trailing /> : null)]} />
                 </Box>
             ) : null}

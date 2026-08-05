@@ -102,7 +102,7 @@ export const _RegistrationState = ({
         <Modal.Header>
             <StackV
                 gap={2}
-                principles={["title-subtitle"]}
+                principle="title-subtitle"
                 items={[
                     () => (
                         <Box className="pr-8">

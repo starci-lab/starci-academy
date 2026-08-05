@@ -94,7 +94,7 @@ const FlashcardStudyCard = ({
     const metaRow = hasMeta ? (
         <StackH
             gap={3}
-            principles={["chip-row"]}
+            principle="chip-row"
             at="sm"
             align="center"
             isSkeleton={isSkeleton}
@@ -122,13 +122,13 @@ const FlashcardStudyCard = ({
     const lockNotice = (
         <StackV
             gap={3}
-            principles={["sibling-stack"]}
+            principle="sibling-stack"
             isSkeleton={isSkeleton}
             items={[
                 ({ isSkeleton }: SkeletonProps) => (
                     <StackH
                         gap={3}
-                        principles={["identity"]}
+                        principle="identity"
                         align="center"
                         isSkeleton={isSkeleton}
                         items={[
@@ -212,7 +212,7 @@ const FlashcardStudyCard = ({
     const navRow = (
         <StackH
             gap={3}
-            principles={["flex-action"]}
+            principle="flex-action"
             justify="between"
             align="center"
             isSkeleton={isSkeleton}

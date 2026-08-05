@@ -1,18 +1,15 @@
 import React from "react"
-import { ProgressBar, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import { ProgressBar } from "@/components/atoms/display/Progress"
 import { ProgressMeterTargetMark } from "./TargetMark"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV, StackH } from "@/components/frames/Stack"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
-/**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/stats/ProgressMeter`. Authored in Storybook (not `src`);
- * synced to `src` later.
- *
- * A presentational, props-only progress meter that renders an optional
- * label / value row above a HeroUI {@link ProgressBar}.
- */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "ProgressMeter" } as const
+
+/** Fill still far from the 85% target — the accent notch pill overshoots the thin bar; `mt-5` reserves room for the floating "85%" label. */
 interface ProgressMeterOwnProps {
     /** Maximum value representing 100% completion. Defaults to `100`. */
     max?: number
@@ -69,7 +66,7 @@ export type ProgressMeterProps = ProgressMeterOwnProps &
 
 /**
  * ProgressMeter renders a labelled, accessible progress bar: an optional top row
- * (label + rounded percentage) above a HeroUI {@link ProgressBar}, with an
+ * (label + rounded percentage) above a house {@link ProgressBar}, with an
  * optional target/goal marker overlaid on the track. A second, independent row
  * — {@link ProgressMeterOwnProps.leading}/{@link ProgressMeterOwnProps.trailing} —
  * can render just above the track for callers that need components instead of
@@ -77,10 +74,6 @@ export type ProgressMeterProps = ProgressMeterOwnProps &
  *
  * @param props - {@link ProgressMeterProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "ProgressMeter" } as const
-
-/** A labelled progress bar with an optional percentage readout and target marker. */
 export const ProgressMeter = ({
     value,
     max = 100,
@@ -92,7 +85,8 @@ export const ProgressMeter = ({
     leading: Leading,
     trailing: Trailing,
     isSkeleton = false,
-    classNames}: ProgressMeterProps) => {
+    classNames,
+}: ProgressMeterProps) => {
     const safeMax = max > 0 ? max : 1
     // `value` is REQUIRED whenever `isSkeleton` is false (the discriminated union above) —
     // guaranteed by the type at every real call site — the `?? 0` only satisfies narrowing
@@ -107,12 +101,13 @@ export const ProgressMeter = ({
     const topRow = hasTopRow ? (
         <StackH
             gap={3}
-            principles={["content-row"]}
+            principle="content-row"
             justify="between"
+            isSkeleton={isSkeleton}
             items={[
-                () => <Typography size="xs" color="muted" truncate classNames={["min-w-0"]} isSkeleton={isSkeleton} text={label} />,
+                () => <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={label} />,
                 ...(showValue ? [() => (
-                    <Typography size="xs" color="muted" classNames={["shrink-0"]} isSkeleton={isSkeleton} text={<>{percent}%</>} />
+                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={<>{percent}%</>} />
                 )] : []),
             ]}
         />
@@ -126,14 +121,15 @@ export const ProgressMeter = ({
     const slotRow = hasSlotRow ? (
         <StackH
             gap={3}
-            principles={["content-row"]}
+            principle="content-row"
             justify="between"
+            isSkeleton={isSkeleton}
             items={[
-                () => (Leading ? (
+                () => Leading ? (
                     <div className="min-w-0">
                         <Leading isSkeleton={isSkeleton} />
                     </div>
-                ) : <span />),
+                ) : <span />,
                 ...(Trailing ? [() => (
                     <div className="shrink-0">
                         <Trailing isSkeleton={isSkeleton} />
@@ -142,51 +138,36 @@ export const ProgressMeter = ({
             ]}
         />
     ) : null
-    // Two DIFFERENT jobs, so two boxes — a fix landed 2026-07-29 after the target pill
-    // measured 14px off the track's own midline (44 vs 58 on a 1280px viewport).
-    // One div was doing both: `pt-6` (24px, room for the floating label) and
-    // `flex h-5 items-center` (20px, the pill's reference frame) on the SAME element.
-    // Padding that exceeds the declared height forces the browser to grow the outer
-    // box to fit it (24px, not 20), and the two children then read TWO DIFFERENT
-    // origins on that grown box — the track (normal flow) starts AFTER the padding,
-    // at y=56, while the pill (`absolute top-1/2`) measures against the WHOLE padding
-    // box, landing at y=44. Nothing here was wrong on its own; stacking both jobs on
-    // one element is what broke the promise below.
-    // OUTER box owns the label's clearance only (`pt-6`, still the scale's first
-    // step that clears a `h-5`/20px obstacle — no exception, teacher 2026-07-27).
+    // Two DIFFERENT jobs, so two boxes. A single div doing both — `pt-6` (24px,
+    // room for the floating label) and `flex h-5 items-center` (20px, the pill's
+    // reference frame) on the SAME element — breaks: padding that exceeds the
+    // declared height forces the browser to grow the outer box to fit it (24px,
+    // not 20), and the two children then read TWO DIFFERENT origins on that grown
+    // box — the track (normal flow) starts AFTER the padding, at y=56, while the
+    // pill (`absolute top-1/2`) measures against the WHOLE padding box, landing at
+    // y=44.
+    // OUTER box owns the label's clearance only (`pt-6`, the scale's first step
+    // that clears a `h-5`/20px obstacle).
     // INNER box is `relative flex h-5 items-center` — the pill's containing block
     // AND the track's flex-center axis, both measured against the SAME 20px frame,
-    // so the `h-5` pill sits EXACTLY on the track midline again.
+    // so the `h-5` pill sits EXACTLY on the track midline.
     const trackSection = (
         <div className={cn(targetPercent !== null && targetLabel !== undefined && "pt-6")}>
             <div
                 className={cn(
                     "relative",
-                    targetPercent !== null && "flex h-5 items-center")}
+                    targetPercent !== null && "flex h-5 items-center",
+                )}
             >
                 <div className="w-full">
-                    {/* ATOM GAP: the `Progress.ProgressBar` atom does not expose its Track's
-                        height for override, and this meter's compact `h-1` track (vs the
-                        atom's own preset sizes) can only be reproduced with the vendor
-                        `ProgressBar` directly. Kept as the REAL element in both states — the
-                        skeleton no longer imports a vendor `Skeleton`, it swaps the same
-                        track slot for a neutral flat fill instead (no hand-drawn
-                        `animate-pulse` shimmer, COMPOSITE-10). */}
-                    {isSkeleton ? (
-                        <div className="h-1 w-full rounded-full bg-default" />
-                    ) : (
-                        <ProgressBar
-                            aria-label={label ?? "Progress"}
-                            value={value}
-                            maxValue={safeMax}
-                            color={color}
-                            size="sm"
-                        >
-                            <ProgressBar.Track className="h-1">
-                                <ProgressBar.Fill />
-                            </ProgressBar.Track>
-                        </ProgressBar>
-                    )}
+                    <ProgressBar
+                        trackDensity="compact"
+                        value={value}
+                        max={safeMax}
+                        color={color}
+                        ariaLabel={label ?? "Progress"}
+                        isSkeleton={isSkeleton}
+                    />
                 </div>
                 {targetPercent === null ? null : (
                     <ProgressMeterTargetMark percent={targetPercent} label={targetLabel} />
@@ -198,6 +179,7 @@ export const ProgressMeter = ({
         <StackV
             gap={3}
             classNames={classNames}
+            isSkeleton={isSkeleton}
             items={[
                 () => topRow,
                 () => slotRow,

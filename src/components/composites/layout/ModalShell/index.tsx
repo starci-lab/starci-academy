@@ -1,34 +1,28 @@
 import React from "react"
-import { cn, Modal } from "@heroui/react"
+import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import {
+    ModalRoot,
+    ModalBackdrop,
+    ModalContainer,
+    ModalDialog,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    ModalCloseTrigger,
+} from "@/components/atoms/overlay/Modal"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `ModalShell.*`, the dialog-scaffold FRAME
- * namespace (teacher's call, 2026-07-25, canon §13a). Authored in Storybook (not `src`);
- * synced to `src` later. No `@/components` imports (design-spec ports stay
- * self-contained).
- *
- * FRAME API LAW (§13b): `.Base` is a WRAPPER frame → the named slots
- * `header`/`body`/`footer` are the main road. `footer` is a REAL slot now (rendered as HeroUI `Modal.Footer`)
- * — before this refactor every caller hand-rolled a wrapper div
- * (`flex justify-end gap-2`) CTA row INSIDE the body, which is
- * exactly the "several things crammed into one place" the slot law exists to
- * stop. Nothing here repeats, so no `items` member. Namespace only — no bare
- * component export.
- *
- * A tier-3 presentational frame — it owns no state of its own; the caller
- * threads open/close state plus the header and body content via props.
- *
- * COMPOSITE-8: `title`/`description` are TEXT the frame renders itself (wrapped
- * in `Typography` here, with `isSkeleton`); `header`/`body`/`footer` are CONTENT
- * REGIONS — component references the frame mounts itself
- * (`<Header isSkeleton={isSkeleton} />`), never already-built nodes.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `ModalShell` — the dialog scaffold frame:
+ * `ModalRoot > Backdrop > Container > Dialog > CloseTrigger + Header? + Body + Footer?`.
+ * Named slots `header`/`body`/`footer` are the main road; `children` is
+ * shorthand for `body`. `footer` replaces the hand-rolled
+ * `<div className="flex justify-end gap-2">` every caller used to nest inside
+ * the body.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -36,11 +30,11 @@ export const meta = { tier: "composite", name: "ModalShell" } as const
 
 /** Props for {@link ModalShell}. */
 export interface ModalShellBaseProps {
-    /** Whether the modal is currently open. Forwarded to HeroUI `<Modal>`. */
+    /** Whether the modal is currently open. Forwarded to house `<ModalRoot>`. */
     isOpen: boolean
     /**
      * Open-state change handler (fires on backdrop click, Escape, and the
-     * close-trigger button). Forwarded to HeroUI `<Modal>`.
+     * close-trigger button). Forwarded to house `<ModalRoot>`.
      */
     onOpenChange: (open: boolean) => void
     /**
@@ -68,32 +62,38 @@ export interface ModalShellBaseProps {
     /** Body content of the modal. A COMPONENT reference (COMPOSITE-8) the frame mounts itself. */
     body?: ComponentTypeWithSkeleton
     /**
-     * Bottom action row of the dialog (the CTA cluster). Rendered as HeroUI
-     * `Modal.Footer`, which already lays it out `flex flex-row items-center
+     * Bottom action row of the dialog (the CTA cluster). Rendered as house
+     * `ModalFooter`, which already lays it out `flex flex-row items-center
      * justify-end gap-2` — pass the buttons bare, do NOT re-wrap them in a
      * flex row. A COMPONENT reference (COMPOSITE-8) the frame mounts itself.
      */
     footer?: ComponentTypeWithSkeleton
-    /** Size of the underlying `Modal.Container` (dialog width). */
-    size?: React.ComponentProps<typeof Modal.Container>["size"]
+    /** Size of the underlying `ModalContainer` (dialog width). */
+    size?: React.ComponentProps<typeof ModalContainer>["size"]
     /**
-     * Scroll behavior of the underlying `Modal.Container`. Use `"inside"` when
+     * Scroll behavior of the underlying `ModalContainer`. Use `"inside"` when
      * the body is longer than the viewport — header stays put, body scrolls.
      * When set, the container also gets `max-h-[85vh]`.
      */
-    scroll?: React.ComponentProps<typeof Modal.Container>["scroll"]
-    /** Extra classes merged onto `Modal.Container` (merged after the `scroll="inside"` max-height default). */
+    scroll?: React.ComponentProps<typeof ModalContainer>["scroll"]
+    /** Extra classes merged onto `ModalContainer` (merged after the `scroll="inside"` max-height default). */
     containerClassName?: string
-    /** Extra classes merged onto `Modal.Dialog`, in addition to {@link ModalShellBaseProps.classNames}. */
+    /** Extra classes merged onto `ModalDialog`, in addition to {@link ModalShellBaseProps.classNames}. */
     dialogClassName?: string
-    /** Extra classes merged onto `Modal.Body`. */
+    /** Extra classes merged onto `ModalBody`. */
     bodyClassName?: string
-    /** Extra classes merged onto `Modal.Footer`. */
+    /** Extra classes merged onto `ModalFooter`. */
     footerClassName?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
+    /**
+     * Caller identity to wear on this composite's root instead of its own — pass this
+     * when a block/layout/overlay/page uses this composite as its root element.
+     * Omitted → this composite keeps emitting its own data-tier/data-component.
+     */
+    identity?: CallerIdentity
     /**
      * `true` → the `title`/`description` text this frame owns switches to
      * shimmer, AND every content-region slot it mounts (`header` / `body` /
@@ -102,18 +102,10 @@ export interface ModalShellBaseProps {
      * it the same way it reaches the title/description text).
      */
     isSkeleton?: boolean
-    /**
-     * Caller identity to wear on this scaffold's root `<Modal>` instead of its own — pass this
-     * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its
-     * own) is using this scaffold AS its root element, instead of wrapping it in a raw
-     * `<div data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this scaffold keeps
-     * emitting its own `data-tier="composite" data-component="ModalShell"`, unchanged.
-     */
-    identity?: CallerIdentity
 }
 
 /**
- * Shared modal scaffold: `Modal > Backdrop > Container > Dialog > CloseTrigger
+ * Shared modal scaffold: `ModalRoot > Backdrop > Container > Dialog > CloseTrigger
  * + Header? + Body + Footer?`. Extracted so each modal only supplies its
  * open-state, header content, body, and action row.
  *
@@ -141,33 +133,36 @@ const Base = ({
     const hasHeader = Header != null || title != null
     const main = Body ? <Body isSkeleton={isSkeleton} /> : null
     return (
-        <Modal
+        <ModalRoot
             isOpen={isOpen}
             onOpenChange={onOpenChange}
             {...resolveIdentity(identity, { tier: "composite", name: "ModalShell" })}
         >
-            <Modal.Backdrop>
-                <Modal.Container
+            <ModalBackdrop>
+                <ModalContainer
                     className={cn(scroll === "inside" && "max-h-[85vh]", containerClassName)}
                     scroll={scroll}
                     size={size}
                 >
-                    {/* ⭐ The PARENT keeps the rhythm (teacher's call (a), 2026-07-27). The Dialog is
+                    {/* The PARENT keeps the rhythm. The Dialog is
                         ALREADY a flex, but with `rowGap: normal`, so the seam must be pushed by the
                         child itself via `mt-*!` — the `!` only overrides HeroUI's own CSS
                         (`.modal__header + .modal__body { mt-2 }`, `mt-5` before the footer), not to
                         compete with the parent.
-                        Now `gap-4` here + `mt-0!` on the child: ONE seam, ONE owner (§10a). */}
-                    <Modal.Dialog className={cn("gap-3", dialogClassName, classNames)}>
-                        <Modal.CloseTrigger />
+                        Dialog gap + mt-0 on the child: ONE seam, ONE owner. */}
+                    <ModalDialog className={cn(dialogClassName, classNames)}>
+                        <ModalCloseTrigger />
                         {Header ? (
-                            <Modal.Header><Header isSkeleton={isSkeleton} /></Modal.Header>
+                            <ModalHeader><Header isSkeleton={isSkeleton} /></ModalHeader>
                         ) : title != null ? (
-                            <Modal.Header>
+                            <ModalHeader>
+                                {/* `pr-8` (room for the close button) + arbitrary caller `titleClassName`
+                                    ride a plain wrapper — neither is an `AllowedClassName`, so the typed
+                                    `StackV` frame keeps its closed `classNames` union. */}
                                 <div className={cn("pr-8", titleClassName)}>
                                     <StackV
                                         gap={2}
-                                        principles={["title-subtitle"]}
+                                        principle="title-subtitle"
                                         isSkeleton={isSkeleton}
                                         items={[
                                             () => (
@@ -177,21 +172,19 @@ const Base = ({
                                                     text={title}
                                                 />
                                             ),
-                                            ...(description != null
-                                                ? [() => (
-                                                    <Typography size="sm"
-                                                        color="muted"
-                                                        isSkeleton={isSkeleton}
-                                                        text={description}
-                                                    />
-                                                )]
-                                                : []),
+                                            ...(description != null ? [() => (
+                                                <Typography size="sm"
+                                                    color="muted"
+                                                    isSkeleton={isSkeleton}
+                                                    text={description}
+                                                />
+                                            )] : []),
                                         ]}
                                     />
                                 </div>
-                            </Modal.Header>
+                            </ModalHeader>
                         ) : null}
-                        {/* ⚠️ `bodyStartsWithTabs` was DELETED in this same pass. It made the
+                        {/* NOTE: `bodyStartsWithTabs` was DELETED in this same pass. It made the
                             caller declare "my body starts with tabs" so the frame could subtract
                             4px — which means the FRAME WAS ASKING WHAT KIND OF CONTENT SITS
                             INSIDE IT, exactly what the definition of a frame forbids.
@@ -199,30 +192,33 @@ const Base = ({
                             `Tabs`'s own geometry, and it must own it itself (§13z), not have the
                             frame compensate for it from outside.
                             Real consequence: a tabs case turned 12px into 16px. */}
-                        <Modal.Body
+                        <ModalBody
+
                             className={cn(
-                                // `mt-0!` only TURNS OFF the margin HeroUI ships with; the rhythm is
-                                // decided by the Dialog's own `gap-4`. The 0 sits on the scale, so it
+                                // mt-0 only turns off the margin HeroUI ships with; the rhythm is
+                                // decided by ModalDialog's baked seam. The 0 sits on the scale, so it
                                 // is not an exception.
                                 hasHeader && "mt-0!",
-                                bodyClassName)}
+                                bodyClassName,
+                            )}
                         >
                             {main}
-                        </Modal.Body>
-                        {/* Same reason as above: HeroUI ships `mt-5` (20px) before the
-                            footer, off the scale — the Dialog's own `gap-3` decides it now so
+                        </ModalBody>
+                        {/* Same reason as above: HeroUI ships mt-5 (20px) before the
+                            footer, off the scale — ModalDialog's baked seam decides it now so
                             header→body and body→footer read as the SAME gap. */}
                         {Footer != null ? (
-                            <Modal.Footer
+                            <ModalFooter
+
                                 className={cn("mt-0!", footerClassName)}
                             >
                                 <Footer isSkeleton={isSkeleton} />
-                            </Modal.Footer>
+                            </ModalFooter>
                         ) : null}
-                    </Modal.Dialog>
-                </Modal.Container>
-            </Modal.Backdrop>
-        </Modal>
+                    </ModalDialog>
+                </ModalContainer>
+            </ModalBackdrop>
+        </ModalRoot>
     )
 }
 

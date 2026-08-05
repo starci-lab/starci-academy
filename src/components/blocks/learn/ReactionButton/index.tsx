@@ -57,7 +57,7 @@ const ReactionButton = ({
     const summaryRow = total > 0 ? (
         <StackH
             gap={3}
-            principles={["value-row"]}
+            principle="value-row"
             align="center"
             isSkeleton={isSkeleton}
             items={[
@@ -91,16 +91,16 @@ const ReactionButton = ({
                     </HeroButton>
                 </HeroPopover.Trigger>
                 {/* TODO(atom): skin-shape đậm (rounded-full + px-2 py-1 pill) — frame không làm được,
-                    tạm bọc bằng data-principles hand-set. `className` sits on `HeroPopover.Content`
+                    tạm bọc bằng data-principle hand-set. `className` sits on `HeroPopover.Content`
                     itself (the vendor's OWN rendered surface, react-aria `Popover`), not a raw <div>
                     we author, so `Box` can't wrap it (moving the shape down onto an inner wrapping
                     Box would leave the real popover surface with its default non-pill radius showing
-                    behind it — a visible shape regression). `data-principles` on `Content` directly is
+                    behind it — a visible shape regression). `data-principle` on `Content` directly is
                     type-safe (forwarded through `DOMAttributes`), so tagged in place instead. Needs a
                     dedicated pill-popover atom/composite to own this shape. Same declared shape
                     as `QaReactionBar.tsx`'s trigger.
                     inset-exception: pill geometry, the same px-2 py-1 HeroUI ships in chip.css. */}
-                <HeroPopover.Content data-principles="pill-pad" className="overflow-visible rounded-full px-2 py-1">
+                <HeroPopover.Content data-principle="pill-pad" className="overflow-visible rounded-full px-2 py-1">
                     <ReactionPicker
                         items={Object.values(REACTION_BY_TYPE).map((reaction) => ({ key: reaction.type, imgSrc: `/reactions/${reaction.type}.svg`, label: reaction.label }))}
                         activeKey={myReaction}
@@ -114,7 +114,7 @@ const ReactionButton = ({
     )
 
     return (
-        <StackH gap={3} principles={["flex-action"]} align="center" isSkeleton={isSkeleton} items={[() => triggerAndSummary]} />
+        <StackH gap={3} principle="flex-action" align="center" isSkeleton={isSkeleton} items={[() => triggerAndSummary]} />
     )
 }
 

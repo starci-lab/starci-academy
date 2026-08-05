@@ -6,28 +6,16 @@ import { Avatar as HeroAvatar, AvatarImage as HeroAvatarImage, AvatarFallback as
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
- * ATOM — `Avatar`: the ONE constrained avatar atom over HeroUI Avatar.
+ * ATOM — `Avatar`: the system's one avatar, wrapping HeroUI `Avatar` directly.
  *
- * Fallback chain, in order: real image (`src`) → generated image (DiceBear,
- * seeded by `seed ?? name`) → initials (`name`) → icon.
+ * One prop = one leaf, each of the props with a shape: `Default` · `Source` (the
+ * src → generated → initials → icon fallback chain, including the failed-load case) ·
+ * `Fallback` · `Status` (4 tones) · `Sizes` (3 tiers) · `Colors` (5 tints) ·
+ * `Skeleton`. A prop with no shape (`className`) gets no leaf. Each `states[]` entry
+ * renders exactly one `Avatar` instance.
  *
- * `fallback` selects what shows when there is no `src`:
- *   • `"generated"` (default) — DiceBear joins the image chain; only once
- *     that fails does it drop to initials/icon.
- *   • `"initials"` / `"icon"` — DiceBear is skipped; initials/icon show directly.
- *
- * The image chain advances on load ERROR, not just a missing URL: HeroUI/Radix
- * only mounts the `<img>` after it has loaded, so `onError` on the element
- * never fires — the atom listens to `onLoadingStatusChange` instead.
- *
- * The atom forces size (sm/md/lg) and draws its own status dot + leaf skeleton
- * (`isSkeleton`). `icon` takes a COMPONENT (e.g. `icon={UserIcon}`), not JSX —
- * the atom renders it inside the fallback.
- *
- * Icon library is `@phosphor-icons/react` only. Glyph weight follows size:
- * `size-5` and up renders `regular` (no `weight` prop); below `size-5` (avatar
- * `sm` → `size-4`) renders `weight="bold"` to keep the stroke visible at that
- * scale. The atom derives weight from `size`; callers do not set it.
+ * Icon = Phosphor — pass the component (`icon={UserIcon}`), not JSX; the atom forces
+ * the scale and weight from `size`.
  */
 
 /**
@@ -65,7 +53,6 @@ export type AvatarColor = "accent" | "danger" | "default" | "success" | "warning
  */
 export type AvatarFallback = "generated" | "initials" | "icon"
 
-/** Background colour utility for each avatar status dot. */
 export const STATUS_TONE: Record<AvatarStatus, string> = {
     online: "bg-success",
     offline: "bg-default-400",
@@ -97,7 +84,6 @@ export interface AvatarSizeStyle {
     glyphWeight?: IconWeight
 }
 
-/** Per-size chrome (box, status-dot, fallback glyph) that `AvatarSize` resolves to. */
 export const SIZE_MAP: Record<AvatarSize, AvatarSizeStyle> = {
     sm: { box: "size-8", dot: "size-2", glyph: "size-4", glyphWeight: "bold" },
     md: { box: "size-10", dot: "size-2.5", glyph: "size-5" },
@@ -127,6 +113,11 @@ export interface AvatarBaseProps {
     seed?: string
     /** Display name: drives image `alt` + the initials fallback (first two letters). */
     name?: string
+    /**
+     * Exact fallback text, not sliced to two letters — for overflow chips (`+12`)
+     * where initials would corrupt the count.
+     */
+    exactLabel?: string
     /** Fallback glyph as a COMPONENT reference (shown per the `fallback` chain). */
     icon?: IconComponent
     /** What to show when there is no `src`. Default `"generated"` (DiceBear). */
@@ -161,6 +152,7 @@ export const AvatarBase = ({
     src,
     seed,
     name,
+    exactLabel,
     icon: Icon,
     fallback = "generated",
     status,
@@ -186,6 +178,7 @@ export const AvatarBase = ({
                 {status ? (
                     <span
                         aria-hidden
+
                         className={cn("ring-background absolute bottom-0 right-0 rounded-full ring-2", dot, "bg-default-300")}
                     />
                 ) : null}
@@ -196,11 +189,12 @@ export const AvatarBase = ({
     // Image candidates in order: src (if any) → DiceBear generated from seed ?? name.
     // fallback="initials"/"icon" excludes DiceBear from the chain (src only, if present).
     const candidates = useMemo(() => {
+        if (exactLabel) return []
         const uploaded = src?.trim()
         if (fallback !== "generated") return uploaded ? [uploaded] : []
         const generated = dicebearAvatarUrl(seed ?? name ?? "")
         return uploaded ? [uploaded, generated] : [generated]
-    }, [src, seed, name, fallback])
+    }, [src, seed, name, fallback, exactLabel])
 
     // Index of the candidate currently being tried; advances on load ERROR, not
     // just a missing URL (see onLoadingStatusChange note above). Keyed by the
@@ -213,7 +207,7 @@ export const AvatarBase = ({
     // Once image candidates are exhausted: fallback="icon" shows the glyph
     // directly; otherwise initials take priority, dropping to the icon only
     // when `name` is empty.
-    const initials = (name ?? "").trim().slice(0, 2).toUpperCase()
+    const initials = exactLabel ?? (name ?? "").trim().slice(0, 2).toUpperCase()
     const iconGlyph = Icon ? (
         <span aria-hidden className="inline-flex">
             <Icon className={glyph} weight={glyphWeight} />
@@ -235,6 +229,7 @@ export const AvatarBase = ({
                     <HeroAvatarImage
                         src={imageSrc}
                         alt={name ?? ""}
+
                         onLoadingStatusChange={(loadStatus) => {
                             if (loadStatus === "error") {
                                 setState({ signature, index: index + 1 })
@@ -247,6 +242,7 @@ export const AvatarBase = ({
             {status ? (
                 <span
                     aria-hidden
+
                     className={cn(
                         "ring-background absolute bottom-0 right-0 rounded-full ring-2",
                         dot,
@@ -258,5 +254,4 @@ export const AvatarBase = ({
     )
 }
 
-/** Tier metadata for `Avatar` — `index.tsx` also re-exports its own copy. */
 export const meta = { tier: "atom", name: "Avatar" } as const

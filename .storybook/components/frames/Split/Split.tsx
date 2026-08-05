@@ -2,14 +2,28 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { ALIGN_CLASS, gapClassNames, type AllowedGap, type LayoutAlign, type Responsive } from "@sb-components/frames/_spacing"
-import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
+import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@sb-components/frames/_principles"
+import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_identity"
 
 /**
- * WARNING: STATE SCOPE: `Split` is a LEFT <-> RIGHT row FRAME. The state it produces is
- * the relationship BETWEEN THE TWO NAMED SIDES: the seam `gap`, the cross-axis
- * alignment `align`. No `wrap`/`justify` -- `justify-between` is this frame's
- * DEFINITION, not an option; a row with many items should use `StackH`/`Cluster`
- * instead.
+ * ─────────────────────────────────────────────────────────────────────────────
+ * LAYOUT (frame) -- `Split.*`: the LEFT ↔ RIGHT row (`items-center justify-between`).
+ * One member, `Split`: the shape has no second form -- a split is a split.
+ *
+ * WHY IT IS ITS OWN FRAME and not "a `StackH` with `justify=between`": the row
+ * appears 43× across the app (card title ↔ action, label ↔ value, price ↔ CTA)
+ * and it is not one track of N children -- it is TWO NAMED SIDES with different
+ * width strategies: `start` may truncate (`min-w-0`), `end` must never be
+ * squeezed (`shrink-0`). Naming the sides is what makes that rule enforceable in
+ * ONE place instead of at 43 call sites.
+ *
+ * FRAME API LAW (§13b): two NAMED SLOTS (`start`/`end`) are the whole content
+ * contract → NO `children`. Children would reopen the "which child goes where"
+ * question the named slots exist to close.
+ *
+ * `gap` is a {@link Responsive}<{@link AllowedGap}> and REQUIRED (off-scale is a
+ * type error). §13: no domain content, no behaviour -- placement only.
+ * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /** Props for {@link Split}. */
@@ -34,23 +48,30 @@ export interface SplitBaseProps {
     gap: Responsive<AllowedGap>
     /** Cross-axis alignment of the two sides. Default `center` (the split row's normal). */
     align?: LayoutAlign
-    /**
-     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
-     * `data-anat-part`. The frame never names itself.
-     */
-    anatPart?: string
     /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
-     * The layout pattern this frame's seam realises -- a token from `test-runner/patterns.mjs`
-     * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principles` on the element
+     * The layout pattern this frame's seam realises - one token from `test-runner/patterns.mjs`
+     * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principle` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
-     * A frame does not KNOW its pattern -- the caller does -- so it is passed in.
-     * One token per instance.
+     * Query as `[data-principle="token"]`. A frame does not KNOW its pattern - the caller does - so it is passed in.
      */
-    principles?: PrincipleToken
+    principle?: PrincipleToken
+    /**
+     * Why this layer exists - one sentence, emitted as `data-explain` beside the token.
+     * A reason, never a restatement of `principle`.
+     */
+    explain?: ExplainReason
     /** `true` mounts both sides in their loading state. */
     isSkeleton?: boolean
+    /**
+     * Caller identity to wear on this row's root instead of `Split`'s own -- pass this when a
+     * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
+     * using this row AS its root element, instead of wrapping it in a raw `<div data-tier=...
+     * data-component=...>`. See `_identity.ts`. Omitted → this row keeps emitting its own
+     * `data-tier="frame" data-component="Split"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -64,25 +85,23 @@ const SplitBase = ({
     gap,
     align = "center",
     classNames,
-    principles,
-    anatPart,
+    principle,
+    explain,
     isSkeleton,
-}: SplitBaseProps) => {
+    identity}: SplitBaseProps) => {
     const Start = start
     const End = end
     return (
         <div
-            data-tier="frame"
-            data-component="Split"
-            data-anat-part={anatPart}
-            data-principles={principlesAttr(principles)}
+            {...resolveIdentity(identity, { tier: "frame", name: "Split" })}
+            data-principle={principleAttr(principle)}
+            data-explain={explainAttr(explain)}
             className={cn(
                 "flex w-full",
                 ...gapClassNames(gap),
                 "flex-row justify-between",
                 ALIGN_CLASS[align],
-                classNames,
-            )}
+                classNames)}
         >
             {/* `start`/`end` are CALLER slots -- whatever they render (a `Typography`, a
                 `Button`, a `StackV`) belongs to the caller, not to this frame. */}
@@ -96,7 +115,10 @@ const SplitBase = ({
     )
 }
 
-/** Left-right row frame. Direct named export. */
+/**
+ * `Split.*` -- the left↔right row frame namespace. Namespace only -- no bare
+ * component export (§13a).
+ */
 export { SplitBase as Split }
 
 /** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */

@@ -252,7 +252,7 @@ export const buildMarkdownRenderers = ({
         // Custom `:::chip` directive tag (see remarkChip in ./index): a wrapped row of soft chips,
         // one per authored keyword line. `items` is the `|`-joined keyword list.
         chipblock: ({ items }: { items?: string }) => (
-            <span data-principles="sibling-stack" className="my-2 flex flex-wrap gap-2">
+            <span data-principle="sibling-stack" className="my-2 flex flex-wrap gap-2">
                 {String(items ?? "").split("|").filter(Boolean).map((keyword, index) => (
                     <HeroUI.Chip key={index} size="sm" variant="soft" color="default">{keyword}</HeroUI.Chip>
                 ))}

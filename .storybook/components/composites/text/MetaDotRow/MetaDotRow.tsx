@@ -71,7 +71,7 @@ export const MetaDotRow = ({
 
             data-tier="composite"
             data-component="MetaDotRow"
-            data-principles="separator-dot"
+            data-principle="separator-dot"
         >
             {fragments.map((fragment, index) => (
                 <React.Fragment key={fragment.key}>

@@ -137,4 +137,21 @@ export default defineConfig([
             // gỡ ban gravity 2026-07-14). Chọn icon theo thẩm mỹ; size icon theo TEXT-size (principles §5 icon-size).
         },
     },
+    {
+        // The FE plugin is a 2-space Node module. App indent is 4. Do not reindent the
+        // whole plugin just to lint it beside components.
+        files: ["plugins/eslint/**/*.{js,mjs,cjs}"],
+        languageOptions: { globals: globals.node },
+        rules: {
+            indent: "off",
+        },
+    },
+    {
+        // test-runner is a Playwright harness, not a component module. Its `async function`
+        // audits predate prefer-arrow-export; rewriting them is unrelated cleanup.
+        files: [".storybook/test-runner.ts", ".storybook/test-runner/**/*.{js,mjs,ts}"],
+        rules: {
+            "starci-fe/prefer-arrow-export": "off",
+        },
+    },
 ])

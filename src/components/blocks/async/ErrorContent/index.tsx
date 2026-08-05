@@ -57,7 +57,7 @@ export const ErrorContent = ({
                 () => (
                     <StackV
                         gap={2}
-                        principles={["title-subtitle"]}
+                        principle="title-subtitle"
                         items={[
                             () => <Typography size="sm" weight="medium" align="center" text={title} />,
                             ...(description

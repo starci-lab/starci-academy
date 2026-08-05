@@ -163,17 +163,24 @@ const PlaygroundConnectSheet = ({
     if (isSkeleton) {
         return (
             <div className="overflow-hidden rounded-t-3xl border border-default bg-surface shadow-surface">
-                <StackH
-                    gap={4}
-                    principles="content-row"
-                    align="center"
-                    justify="between"
+                <StackV
+                    gap={1}
+                    principle="cell-pad"
                     padding={4}
                     isSkeleton={isSkeleton}
-                    items={[
-                        () => <HeroSkeleton className="h-5 w-24 rounded-full" />,
-                        () => <HeroSkeleton className="h-8 w-24 rounded-xl" />,
-                    ]}
+                    items={[() => (
+                        <StackH
+                            gap={4}
+                            principle="content-row"
+                            align="center"
+                            justify="between"
+                            isSkeleton={isSkeleton}
+                            items={[
+                                () => <HeroSkeleton className="h-5 w-24 rounded-full" />,
+                                () => <HeroSkeleton className="h-8 w-24 rounded-xl" />,
+                            ]}
+                        />
+                    )]}
                 />
             </div>
         )
@@ -188,7 +195,7 @@ const PlaygroundConnectSheet = ({
     const statusGroup = (
         <StackH
             gap={3}
-            principles="sibling-stack"
+            principle="sibling-stack"
             align="center"
             isSkeleton={isSkeleton}
             items={[
@@ -217,7 +224,7 @@ const PlaygroundConnectSheet = ({
     const actionsGroup = (
         <StackH
             gap={3}
-            principles="flex-action"
+            principle="flex-action"
             align="center"
             isSkeleton={isSkeleton}
             items={[
@@ -272,22 +279,37 @@ const PlaygroundConnectSheet = ({
     return (
         <div className="overflow-hidden rounded-t-3xl border border-default bg-surface shadow-surface">
             {/* PEEK — always visible: status + reconnect, plus the toggle that opens the body. */}
-            <StackH
-                gap={4}
-                principles="content-row"
-                align="center"
-                justify="between"
+            <StackV
+                gap={1}
+                principle="cell-pad"
                 padding={4}
                 isSkeleton={isSkeleton}
-                items={[
-                    () => statusGroup,
-                    () => actionsGroup,
-                ]}
+                items={[() => (
+                    <StackH
+                        gap={4}
+                        principle="content-row"
+                        align="center"
+                        justify="between"
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => statusGroup,
+                            () => actionsGroup,
+                        ]}
+                    />
+                )]}
             />
             {/* BODY — mounted only while open, matching a real bottom-sheet's collapsed state. */}
             {open ? (
                 <div className="border-t border-default">
-                    <StackV gap={4} principles="card-caption" padding={4} isSkeleton={isSkeleton} items={[() => sheetBody]} />
+                    <StackV
+                        gap={1}
+                        principle="cell-pad"
+                        padding={4}
+                        isSkeleton={isSkeleton}
+                        items={[() => (
+                            <StackV gap={4} principle="card-caption" isSkeleton={isSkeleton} items={[() => sheetBody]} />
+                        )]}
+                    />
                 </div>
             ) : null}
         </div>

@@ -33,12 +33,20 @@ export const MessageRow = ({
     const authorRow = (
         <StackH
             gap={2}
-            principles="icon-text"
+            principle="separator-dot"
             align="center"
-
             items={[
-                () => <Avatar src={answer.author.avatarUrl} name={answer.author.displayName} seed={answer.author.id} size="sm" />,
-                () => <Typography size="xs" weight="medium" text={displayName} />,
+                () => (
+                    <StackH
+                        gap={2}
+                        principle="icon-text"
+                        align="center"
+                        items={[
+                            () => <Avatar src={answer.author.avatarUrl} name={answer.author.displayName} seed={answer.author.id} size="sm" />,
+                            () => <Typography size="xs" weight="medium" text={displayName} />,
+                        ]}
+                    />
+                ),
                 () => <Typography size="xs" color="muted" text={answer.createdTimeAgo} />,
                 ...(answer.isAcceptedAnswer ? [() => <Chip tone="success" text="Accepted answer" />] : []),
             ]}
@@ -48,7 +56,7 @@ export const MessageRow = ({
     const reactionRow = interactive ? (
         <StackH
             gap={3}
-            principles="flex-action"
+            principle="flex-action"
             align="center"
 
             items={[
@@ -91,7 +99,7 @@ export const MessageRow = ({
     return (
         <div className={cn("flex w-full", isMine ? "justify-end" : "justify-start")}>
             <div className="max-w-[92%]">
-                <StackV gap={2} principles="title-subtitle" align={isMine ? "end" : undefined} classNames={["min-w-0"]} items={[() => bubbleBody]} />
+                <StackV gap={2} principle="title-subtitle" align={isMine ? "end" : undefined} classNames={["min-w-0"]} items={[() => bubbleBody]} />
             </div>
         </div>
     )

@@ -1,6 +1,7 @@
-import { RadioGroup as HeroRadioGroup, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { ChoiceRadio, type InlineFrameProps } from "@sb-components/atoms/forms"
-import { FieldFrame } from "@sb-components/atoms/forms/_field/FieldFrame"
+import { RadioGroup } from "@sb-components/atoms/forms/RadioGroup/RadioGroup"
+import { FieldFrame } from "@sb-components/composites/form/_field/FieldFrame"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
@@ -52,7 +53,7 @@ export interface ChoiceRadioGroupProps extends InlineFrameProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "ChoiceRadioGroup" } as const
 
-/** `ChoiceRadioGroup` — mutually-exclusive single-select group (HeroUI RadioGroup + `ChoiceRadio` rows). */
+/** `ChoiceRadioGroup` — mutually-exclusive single-select group (house RadioGroup + `ChoiceRadio` rows). */
 export const ChoiceRadioGroup = ({
     value,
     onValueChange,
@@ -83,32 +84,33 @@ export const ChoiceRadioGroup = ({
                 // COMPOSITE-10: the composite only decides HOW MANY rows shimmer — each row
                 // draws its own shimmer via `ChoiceRadio`'s own `isSkeleton` branch, the same
                 // shape ButtonGroup/ChipGroup delegate to `Button`/`Chip` while loading.
-                <div data-principles="sibling-stack" className={cn("flex flex-col gap-2", classNames)}>
+                <div data-principle="sibling-stack" className={cn("flex flex-col gap-2", classNames)}>
                     {Array.from({ length: rows }, (_, index) => (
                         <ChoiceRadio key={index} value={String(index)} label="" isSkeleton />
                     ))}
                 </div>
             }
         >
-            <HeroRadioGroup
-                aria-label={groupLabel ?? ariaLabel}
-                value={value}
-                onChange={onValueChange}
-                isInvalid={invalid}
-                isDisabled={isDisabled}
-                data-principles="sibling-stack"
-                className={cn("flex flex-col gap-2", classNames)}
-            >
-                {options.map((option) => (
-                    // Deps tree is built from the DOM: `ChoiceRadio` takes no name-prop of its
-                    // own (ATOM-10 — an atom writes its own name, never a caller's), so the
-                    // composite badges the wrapper instead — the same technique `AvatarGroup`
-                    // uses to name each `Avatar` it rebuilds.
-                    <span key={option.value}>
-                        <ChoiceRadio value={option.value} label={option.label} isDisabled={option.isDisabled} />
-                    </span>
-                ))}
-            </HeroRadioGroup>
+            {/* House `RadioGroup` omits `className` — stack layout rides a plain wrapper. */}
+            <div data-principle="sibling-stack" className={cn("flex flex-col gap-2", classNames)}>
+                <RadioGroup
+                    aria-label={groupLabel ?? ariaLabel}
+                    value={value}
+                    onChange={onValueChange}
+                    isInvalid={invalid}
+                    isDisabled={isDisabled}
+                >
+                    {options.map((option) => (
+                        // Deps tree is built from the DOM: `ChoiceRadio` takes no name-prop of its
+                        // own (ATOM-10 — an atom writes its own name, never a caller's), so the
+                        // composite badges the wrapper instead — the same technique `AvatarGroup`
+                        // uses to name each `Avatar` it rebuilds.
+                        <span key={option.value}>
+                            <ChoiceRadio value={option.value} label={option.label} isDisabled={option.isDisabled} />
+                        </span>
+                    ))}
+                </RadioGroup>
+            </div>
         </FieldFrame>
     )
 }

@@ -1,12 +1,12 @@
 import { useId } from "react"
 import { SearchField as HeroSearchField, cn } from "@heroui/react"
-import { FieldFrame, fieldName } from "@/components/atoms/forms/_field/FieldFrame"
+import { FieldFrame, fieldName } from "@/components/composites/form/_field/FieldFrame"
 import type { StringFieldProps } from "../_input/types"
 import { FieldSkeleton } from "../_input/FieldSkeleton"
 
 /** Props for {@link InputSearch}. */
 type InputSearchProps = StringFieldProps & {
-    /** Accessible name for the search field — no English fallback, callers must pass a translated string. */
+    /** Accessible name for the search field — callers pass a translated string. */
     ariaLabel: string
 }
 

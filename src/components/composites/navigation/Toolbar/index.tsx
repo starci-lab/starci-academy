@@ -1,42 +1,29 @@
 import React, { type Key, type ReactNode } from "react"
-import { ListBox, Select, Tabs, cn } from "@heroui/react"
-import { TabsExtended } from "@/components/atoms/navigation/Tabs"
+import { cn } from "@heroui/react"
+import {
+    TabsExtended,
+    TabsListContainer,
+    TabsList,
+    TabsTab,
+    TabsIndicator,
+    TabsPanel,
+} from "@/components/atoms/navigation/Tabs"
+import {
+    SelectRoot,
+    SelectTrigger,
+    SelectValue,
+    SelectIndicator,
+    SelectPopover,
+} from "@/components/atoms/forms/Select"
+import { ListBoxRoot, ListBoxItem } from "@/components/atoms/forms/ListBox"
 import { StackH } from "@/components/frames/Stack"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * COMPOSITE TIER (§13) — `Toolbar.*`, the FRAME of a nav/control ROW above a panel.
- *
- * ⚠️ RENAMED (2026-07-25): this was `TabsCard`. The name was a lie — there is no
- * card anywhere in it: the root is `flex items-center justify-between gap-3`,
- * with NO surface fill, NO border, NO radius, NO padding. What it actually is:
- * a TOOLBAR row that pins one tab group left, an optional inline action cluster
- * (`leftEnd`) right after it, and an optional second tab group right — collapsing
- * that right group into a compact dropdown below `@app-sm`. Behaviour and skin
- * are carried over VERBATIM; this is a rename, not a redesign.
- *
- * FRAME API LAW (§13b): `Toolbar` is NOT a generic wrapper — every channel
- * is a named slot. The two tab groups arrive as DATA (`items` + `selectedKey` +
- * `onSelectionChange`, {@link ToolbarTabGroup}), never as children; only
- * `leftEnd` is a free node slot. Namespace only — no bare component export.
- *
- * §13c — WHY this frame is not "an atom in a costume", i.e. why `Tabs.Base` /
- * `SelectSingle` are NOT composed here (would change the pixels):
- *  - `Tabs.Base` (atom) renders HeroUI's own tab chrome only. This row needs the
- *    `.extended-tabs` hug-content variant, the `size="sm"` compact strip, the
- *    NEUTRAL selected chrome (`border-b-2 border-foreground` — `.tabs--secondary`'s
- *    indicator is hardcoded `bg-accent`, so the native indicator is suppressed on
- *    that path), the per-item `muted` tone, and the icon-only-on-mobile label
- *    (`sr-only @app-sm:not-sr-only`). None of those are expressible through the
- *    atom's locked API, so the group keeps rendering through `ExtendedTabs`.
- *  - `SelectSingle` (atom) is a FIELD control: `FieldFrame` + `fullWidth` + a
- *    trigger that prints the selected LABEL. The collapsed right group here is a
- *    compact ICON-ONLY trigger (label `sr-only`) that must not stretch. Swapping
- *    it in would visibly change the mobile row, so the HeroUI `Select` compound
- *    stays. Revisit if the atom ever grows a `fullWidth={false}` + trigger slot.
- *
- * Authored in Storybook (not `src`); synced to `src` later.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `Toolbar` — the nav/control-row frame sitting above a panel: the primary tab group pinned
+ * left (+ an action cluster `leftEnd` right after it), a secondary tab group pinned right,
+ * collapsing into a dropdown below `@app-sm`. No chrome; root is
+ * `flex items-center justify-between gap-3`. Tab groups come in as data
+ * (`items`/`selectedKey`/`onSelectionChange`), and each tab's display state (disabled/muted) is drawn here.
  */
 /** One tab in a {@link ToolbarTabGroup}. */
 export interface ToolbarTabItem {
@@ -46,10 +33,9 @@ export interface ToolbarTabItem {
     label: ReactNode
     /**
      * Set → shown INSTEAD of `label` below `@app-sm` (e.g. "TS" for "TypeScript"),
-     * `label` returns from `@app-sm` up — a deliberate call (teacher's ruling,
-     * 2026-07-29, "go by judgment, not by trusting the source"): a shortened tab beats collapsing the group
-     * behind `collapseRightOnMobile`'s dropdown when every option should stay
-     * reachable in one tap. Omit → unchanged (no compact swap).
+     * `label` returns from `@app-sm` up: a shortened tab beats collapsing the
+     * group behind `collapseRightOnMobile`'s dropdown when every option should
+     * stay reachable in one tap. Omit → unchanged (no compact swap).
      */
     compactLabel?: ReactNode
     /** Optional leading icon rendered before the label. */
@@ -120,14 +106,14 @@ export interface ToolbarBaseProps {
 const TAB_SIZE_SM = "h-auto! w-auto! px-3! py-2! text-xs!"
 /**
  * Selected-state TEXT color only (accent tab group) — the underline itself now
- * comes from `<Tabs.Indicator/>` (native HeroUI `.tabs--secondary` accent bar).
+ * comes from `<TabsIndicator/>` (native HeroUI `.tabs--secondary` accent bar).
  */
 const TAB_CLASS_ACCENT = "data-[selected=true]:text-accent-soft-foreground"
 /**
  * Selected-state chrome — NEUTRAL foreground underline (secondary toggle
  * group, no accent). Kept on the MANUAL `border-b-2` technique because
  * `.tabs--secondary`'s indicator is hardcoded `bg-accent` — there is no
- * "neutral-colored" native indicator to switch to, so `<Tabs.Indicator/>` is
+ * "neutral-colored" native indicator to switch to, so `<TabsIndicator/>` is
  * suppressed for this path (see below).
  */
 const TAB_CLASS_NEUTRAL =
@@ -155,7 +141,8 @@ const ToolbarBase = ({
     rightTabsNeutral,
     variant = "secondary",
     size = "md",
-    classNames}: ToolbarBaseProps) => {
+    classNames,
+}: ToolbarBaseProps) => {
     /** Render one controlled tab group (`accent` = accent selected chrome, secondary-only). */
     const renderGroup = (group: ToolbarTabGroup, accent = true): ReactNode => (
         <TabsExtended
@@ -164,35 +151,36 @@ const ToolbarBase = ({
             selectedKey={group.selectedKey}
             onSelectionChange={group.onSelectionChange}
         >
-            <Tabs.ListContainer>
-                <Tabs.List aria-label={group.ariaLabel}>
+            <TabsListContainer>
+                <TabsList aria-label={group.ariaLabel}>
                     {group.items.map((item) => (
-                        <Tabs.Tab
+                        <TabsTab
                             key={item.key}
                             id={item.key}
                             isDisabled={item.isDisabled}
                             className={cn(
                                 variant === "secondary" && (accent ? TAB_CLASS_ACCENT : TAB_CLASS_NEUTRAL),
-                                size === "sm" && TAB_SIZE_SM)}
+                                size === "sm" && TAB_SIZE_SM,
+                            )}
                         >
                             <StackH
                                 gap={3}
+                                principle="icon-text"
                                 items={[
-                                    () => item.icon,
+                                    () => <>{item.icon}</>,
                                     // a tab WITH an icon hides its label visually on mobile
                                     // (icon-only) and shows it from sm up; `sr-only` keeps the
                                     // accessible name on mobile. An icon-less tab always shows it.
-                                    () =>
-                                        item.compactLabel != null ? (
-                                            <>
-                                                <span className="@app-sm:hidden">{item.compactLabel}</span>
-                                                <span className="hidden @app-sm:inline">{item.label}</span>
-                                            </>
-                                        ) : item.label ? (
-                                            <span className={cn(item.icon && "sr-only @app-sm:not-sr-only")}>
-                                                {item.label}
-                                            </span>
-                                        ) : null,
+                                    ...(item.compactLabel != null ? [() => (
+                                        <>
+                                            <span className="@app-sm:hidden">{item.compactLabel}</span>
+                                            <span className="hidden @app-sm:inline">{item.label}</span>
+                                        </>
+                                    )] : item.label ? [() => (
+                                        <span className={cn(item.icon && "sr-only @app-sm:not-sr-only")}>
+                                            {item.label}
+                                        </span>
+                                    )] : []),
                                 ]}
                             />
                             {/* REQUIRED for "primary" and secondary-ACCENT — HeroUI Tabs
@@ -200,18 +188,18 @@ const ToolbarBase = ({
                                 secondary-NEUTRAL: `.tabs--secondary`'s indicator is hardcoded
                                 `bg-accent`, so that path keeps its OWN `border-b-2
                                 border-foreground` (TAB_CLASS_NEUTRAL) as the sole indicator. */}
-                            {(variant === "primary" || accent) && <Tabs.Indicator />}
-                        </Tabs.Tab>
+                            {(variant === "primary" || accent) && <TabsIndicator />}
+                        </TabsTab>
                     ))}
-                </Tabs.List>
-            </Tabs.ListContainer>
+                </TabsList>
+            </TabsListContainer>
             {/* react-aria's useTab ALWAYS computes an `aria-controls` id pointing at
                 a tabpanel with this tab's key, whether or not one is ever rendered.
                 `Toolbar` never shows panel CONTENT here (callers render their own
                 content elsewhere), so these panels stay empty/`sr-only` — they exist
                 purely to satisfy the tab↔tabpanel ARIA relationship. */}
             {group.items.map((item) => (
-                <Tabs.Panel key={item.key} id={item.key} className="sr-only">{null}</Tabs.Panel>
+                <TabsPanel key={item.key} id={item.key} className="sr-only">{null}</TabsPanel>
             ))}
         </TabsExtended>
     )
@@ -222,7 +210,7 @@ const ToolbarBase = ({
     const renderSelect = (group: ToolbarTabGroup): ReactNode => {
         const selected = group.items.find((item) => item.key === group.selectedKey)
         return (
-            <Select.Root<{ id: string }, "single">
+            <SelectRoot
                 variant="secondary"
                 aria-label={group.ariaLabel}
                 selectedKey={group.selectedKey}
@@ -232,8 +220,8 @@ const ToolbarBase = ({
                     }
                 }}
             >
-                <Select.Trigger aria-label={group.ariaLabel}>
-                    <Select.Value>
+                <SelectTrigger aria-label={group.ariaLabel}>
+                    <SelectValue>
                         {() => (
                             <span className="flex items-center">
                                 {selected?.icon}
@@ -242,19 +230,19 @@ const ToolbarBase = ({
                                 <span className="sr-only">{selected?.label}</span>
                             </span>
                         )}
-                    </Select.Value>
-                    <Select.Indicator />
-                </Select.Trigger>
-                <Select.Popover>
+                    </SelectValue>
+                    <SelectIndicator />
+                </SelectTrigger>
+                <SelectPopover>
                     {/* `item.icon` stays OFF each row on purpose — it's the closed trigger's
                         only content (no room for text there), but once the popover is open
                         every row already reads its own full label; repeating the same icon
                         on every row adds no information (§5a.2, the "everyone already knows
                         this icon" rule: no icon purely decorating text that already reads on
                         its own). */}
-                    <ListBox.Root aria-label={group.ariaLabel}>
+                    <ListBoxRoot aria-label={group.ariaLabel}>
                         {group.items.map((item) => (
-                            <ListBox.Item
+                            <ListBoxItem
                                 key={item.key}
                                 id={item.key}
                                 isDisabled={item.isDisabled}
@@ -263,11 +251,11 @@ const ToolbarBase = ({
                                 }
                             >
                                 {item.label}
-                            </ListBox.Item>
+                            </ListBoxItem>
                         ))}
-                    </ListBox.Root>
-                </Select.Popover>
-            </Select.Root>
+                    </ListBoxRoot>
+                </SelectPopover>
+            </SelectRoot>
         )
     }
     const leftGroup = leftEnd ? (
@@ -286,8 +274,8 @@ const ToolbarBase = ({
         ? collapseRightOnMobile
             ? (
                 <div>
-                    {/* mobile: collapse to a dropdown (HeroUI Select.Root); sm+: inline tabs
-                        (atom Tabs.Extended) — BOTH real components mount at once (one hidden
+                    {/* mobile: collapse to a dropdown (house SelectRoot); sm+: inline tabs
+                        (atom TabsExtended) — BOTH real components mount at once (one hidden
                         via CSS), so each gets its OWN badge instead of one wrapper name that
                         could only honestly describe one of them. */}
                     <div className="@app-sm:hidden">{renderSelect(rightTabs)}</div>
@@ -300,8 +288,9 @@ const ToolbarBase = ({
         <StackH
             gap={4}
             justify="between"
-            principles={["content-row"]}
+            principle="content-row"
             classNames={classNames}
+
             items={[
                 () => leftGroup,
                 () => rightGroup,

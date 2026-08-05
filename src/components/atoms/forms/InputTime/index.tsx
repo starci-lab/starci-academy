@@ -1,6 +1,6 @@
 import { TimeField as HeroTimeField, cn } from "@heroui/react"
 import type { TimeValue } from "react-aria-components"
-import { FieldFrame, fieldName } from "@/components/atoms/forms/_field/FieldFrame"
+import { FieldFrame, fieldName } from "@/components/composites/form/_field/FieldFrame"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { FrameProps } from "../_input/types"
 import { FieldSkeleton } from "../_input/FieldSkeleton"
@@ -11,7 +11,7 @@ export const InputTime = ({
     onValueChange,
     isDisabled,
     isInvalid,
-    ariaLabel,
+    ariaLabel = "Pick a time",
     isSkeleton,
     classNames,
     label,
@@ -23,8 +23,7 @@ export const InputTime = ({
     onValueChange: (value: TimeValue | null) => void
     isDisabled?: boolean
     isInvalid?: boolean
-    /** Accessible name for the field — no English fallback, callers must pass a translated string. */
-    ariaLabel: string
+    ariaLabel?: string
     isSkeleton?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
@@ -40,6 +39,7 @@ export const InputTime = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
+
             skeletonControl={<FieldSkeleton classNames={classNames} />}
         >
             <HeroTimeField

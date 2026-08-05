@@ -120,7 +120,7 @@ const SubmissionScoreCard = ({
     const modelByline = gradedByModel != null ? (
         <StackH
             gap={3}
-            principles="sibling-stack"
+            principle="sibling-stack"
             align="center"
             at="sm"
             isSkeleton={isSkeleton}
@@ -158,7 +158,7 @@ const SubmissionScoreCard = ({
 
     const scoreSummary = (
         <>
-            <StackH gap={4} principles="value-row" align="baseline" at="sm" isSkeleton={isSkeleton} items={[() => scoreRow]} />
+            <StackH gap={4} principle="value-row" align="baseline" at="sm" isSkeleton={isSkeleton} items={[() => scoreRow]} />
 
             {pointsNeeded != null && pointsNeeded > 0 ? (
                 <Typography

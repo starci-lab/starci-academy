@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from "react"
 import { cn } from "@heroui/react"
-import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
+import { principleAttr, type PrincipleToken } from "@sb-components/frames/_principles"
+import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_identity"
 
 /**
  * ESCAPE HATCH -- the only frame allowed to take raw `className` and `children`.
@@ -15,17 +16,12 @@ import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_prin
  * not reach for `Box`; they compose frames and atoms. A raw skin box in a block
  * is a sign it should be an atom or composite instead.
  *
- * Spacing remains measurable: pass one `principles` token so the rendered-tree
+ * Spacing remains measurable: pass one `principle` token so the rendered-tree
  * test can still assert the seam.
  */
 export interface BoxProps {
-    /** Layout/seam token this element embodies -> emitted as `data-principles`. */
-    principles?: PrincipleToken
-    /**
-     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
-     * `data-anat-part`. The frame never names itself.
-     */
-    anatPart?: string
+    /** Layout/seam token this element embodies -> emitted as `data-principle`. */
+    principle?: PrincipleToken
     /**
      * ESCAPE HATCH: raw appearance or foreign-mount classes. Forbidden on every
      * other frame. Do not treat this as a general styling door.
@@ -42,29 +38,35 @@ export interface BoxProps {
      * composition slot. Do not copy `children` onto any other frame.
      */
     children?: ReactNode
+    /**
+     * Caller identity to wear on this element instead of `Box`'s own -- pass this when a
+     * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
+     * using this element AS its root element, instead of wrapping it in a raw `<div data-tier=...
+     * data-component=...>`. See `_identity.ts`. Omitted -> this element keeps emitting its own
+     * `data-tier="frame" data-component="Box"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /** Source-level tier metadata. */
 export const meta = { tier: "frame", name: "Box" } as const
 
 /**
- * Escape-hatch frame: one element with raw `className` plus measurable `principles`.
+ * Escape-hatch frame: one element with raw `className` plus measurable `principle`.
  * Use only where a named frame cannot carry appearance or a third-party mount point.
  */
 export const Box = ({
-    principles,
-    anatPart,
+    principle,
     className,
     as: Tag = "div",
     style,
     "aria-hidden": ariaHidden,
     children,
+    identity,
 }: BoxProps) => (
     <Tag
-        data-tier="frame"
-        data-component="Box"
-        data-anat-part={anatPart}
-        data-principles={principlesAttr(principles)}
+        {...resolveIdentity(identity, meta)}
+        data-principle={principleAttr(principle)}
         className={cn(className)}
         style={style}
         aria-hidden={ariaHidden}

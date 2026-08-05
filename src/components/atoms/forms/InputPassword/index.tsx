@@ -1,15 +1,15 @@
 import { useId, useState } from "react"
 import { Input as HeroInput, TextField as HeroTextField, cn } from "@heroui/react"
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react"
-import { FieldFrame, fieldName } from "@/components/atoms/forms/_field/FieldFrame"
+import { FieldFrame, fieldName } from "@/components/composites/form/_field/FieldFrame"
 import type { StringFieldProps } from "../_input/types"
 import { FieldSkeleton } from "../_input/FieldSkeleton"
 
 /** Props for {@link InputPassword}. */
 type InputPasswordProps = StringFieldProps & {
-    /** Accessible name for the toggle button when it would reveal the password — no English fallback, callers must pass a translated string. */
+    /** Accessible name for the toggle when it would reveal the password. */
     revealLabel: string
-    /** Accessible name for the toggle button when it would hide the password — no English fallback, callers must pass a translated string. */
+    /** Accessible name for the toggle when it would hide the password. */
     hideLabel: string
 }
 
@@ -46,7 +46,6 @@ export const InputPassword = ({
         >
             <HeroTextField data-tier="atom" data-component="InputPassword" aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", classNames)}>
                 <div className="relative">
-                    {/* The wrapping div stays only for `relative` positioning. */}
                     <HeroInput
                         id={controlId}
                         type={reveal ? "text" : "password"}
@@ -61,7 +60,6 @@ export const InputPassword = ({
                         onClick={() => setReveal((r) => !r)}
                         className="text-muted absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer [&_svg]:size-4"
                     >
-                        {/* icon size-4 is below the size-5 threshold, so `weight="bold"` compensates for the thinner stroke. */}
                         {reveal ? <EyeSlashIcon weight="bold" aria-hidden /> : <EyeIcon weight="bold" aria-hidden />}
                     </button>
                 </div>

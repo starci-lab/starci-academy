@@ -1,26 +1,48 @@
 import type { CSSProperties, ReactNode } from "react"
 import { cn } from "@heroui/react"
-import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { principleAttr, type PrincipleToken } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
-/** Props for {@link Box}. */
+/**
+ * ESCAPE HATCH -- the only frame allowed to take raw `className` and `children`.
+ *
+ * Use this solely as a foreign mount: a third-party surface (Mermaid, PDF, syntax
+ * highlighter) or vendor skin that no named frame can carry. `className` is the
+ * open appearance/mount string the rest of the tier forbids. `children` is the
+ * foreign tree or empty mount point that library owns.
+ *
+ * Do not copy this exception onto any other frame. Ordinary house regions belong
+ * on named buildable slots (`body` / `items`), not here. Blocks and pages should
+ * not reach for `Box`; they compose frames and atoms. A raw skin box in a block
+ * is a sign it should be an atom or composite instead.
+ *
+ * Spacing remains measurable: pass one `principle` token so the rendered-tree
+ * test can still assert the seam.
+ */
 export interface BoxProps {
-    /** Layout/seam tokens this element embodies → emitted as `data-principles`. */
-    principles?: Array<PrincipleToken>
-    /** Raw appearance/mount classes — the reason `Box` exists over a frame. */
+    /** Layout/seam token this element embodies -> emitted as `data-principle`. */
+    principle?: PrincipleToken
+    /**
+     * ESCAPE HATCH: raw appearance or foreign-mount classes. Forbidden on every
+     * other frame. Do not treat this as a general styling door.
+     */
     className?: string
     /** The HTML element to render. */
     as?: "div" | "span" | "section" | "figure" | "article" | "aside" | "header" | "footer" | "code"
-    /** Inline style — for a value that can't be a class (a computed pixel size). */
+    /** Inline style -- for a value that cannot be a class (a computed pixel size). */
     style?: CSSProperties
     /** Native `aria-hidden`, forwarded straight to the rendered tag. */
     "aria-hidden"?: boolean
+    /**
+     * ESCAPE HATCH: foreign content or an empty mount point. Not a house
+     * composition slot. Do not copy `children` onto any other frame.
+     */
     children?: ReactNode
     /**
-     * Caller identity to wear on this element instead of `Box`'s own — pass this when a
+     * Caller identity to wear on this element instead of `Box`'s own -- pass this when a
      * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
-     * using this element AS its root element, instead of wrapping it in a raw `<div data-tier=…
-     * data-component=…>`. See `_identity.ts`. Omitted → this element keeps emitting its own
+     * using this element AS its root element, instead of wrapping it in a raw `<div data-tier=...
+     * data-component=...>`. See `_identity.ts`. Omitted -> this element keeps emitting its own
      * `data-tier="frame" data-component="Box"`, unchanged.
      */
     identity?: CallerIdentity
@@ -30,20 +52,21 @@ export interface BoxProps {
 export const meta = { tier: "frame", name: "Box" } as const
 
 /**
- * `Box` — the ESCAPE-HATCH primitive: a single element that takes raw `className`
- * (appearance the frames deliberately can't carry — `border`/`bg`/`rounded`/`shadow`,
- * a 3rd-party mount point like Mermaid/PDF/code-highlight) AND declares its spacing
- * via `principles` so the node is still measurable by the rendered-tree test.
- *
- * Use ONLY where a real frame can't reach: a composite wrapping a foreign library, or
- * a skin surface. Blocks/pages should NOT reach for `Box` — they compose frames +
- * atoms (`Divider` for a rule, `SurfaceCard` for a skin surface); a raw skin box in a
- * block is the sign it should be an atom/composite instead.
+ * Escape-hatch frame: one element with raw `className` plus measurable `principle`.
+ * Use only where a named frame cannot carry appearance or a third-party mount point.
  */
-export const Box = ({ principles, className, as: Tag = "div", style, "aria-hidden": ariaHidden, children, identity }: BoxProps) => (
+export const Box = ({
+    principle,
+    className,
+    as: Tag = "div",
+    style,
+    "aria-hidden": ariaHidden,
+    children,
+    identity,
+}: BoxProps) => (
     <Tag
         {...resolveIdentity(identity, meta)}
-        data-principles={principlesAttr(principles)}
+        data-principle={principleAttr(principle)}
         className={cn(className)}
         style={style}
         aria-hidden={ariaHidden}

@@ -96,7 +96,7 @@ export const _MaintenanceModal = ({
                                 () => (
                                     <StackH
                                         gap={2}
-                                        principles={["icon-text"]}
+                                        principle="icon-text"
                                         align="center"
                                         items={[
                                             ...(isChecking ? [() => <Spinner tone="current" size="sm" />] : []),

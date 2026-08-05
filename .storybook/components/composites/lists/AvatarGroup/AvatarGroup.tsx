@@ -1,4 +1,4 @@
-import { Avatar as HeroAvatar, AvatarFallback as HeroAvatarFallback, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import type { AvatarSize, IconComponent } from "@sb-components/atoms/display/Avatar/Avatar"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
@@ -98,16 +98,11 @@ export const AvatarGroup = ({
                         <Avatar isSkeleton size={size} />
                     </span>
                 ) : (
-                    // "+N" is a COUNT, not a person — rendered here rather than through
-                    // Avatar, whose initials fallback would clip "+12" to "+1".
-                    // ATOM GAP (COMPOSITE-3): the house `Avatar` atom's fallback slices
-                    // `name` to 2 chars for initials (`AvatarBase.tsx`: `.slice(0, 2)`) —
-                    // there is no house atom shaped "avatar-ring holding an arbitrary
-                    // short string", so the vendor `Avatar`/`AvatarFallback` stays here on
-                    // purpose rather than truncating a 2-digit+ overflow count to garbage.
-                    <HeroAvatar size={size} className={GROUP_RING}>
-                        <HeroAvatarFallback>+{extra}</HeroAvatarFallback>
-                    </HeroAvatar>
+                    // "+N" is a COUNT, not a person — house `Avatar.exactLabel` renders the
+                    // full string (no 2-char initials slice).
+                    <span className={cn("inline-flex", GROUP_RING)}>
+                        <Avatar size={size} exactLabel={`+${extra}`} />
+                    </span>
                 )
             ) : null}
         </div>

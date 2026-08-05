@@ -116,7 +116,7 @@ const LearnShell = ({
             >
                 <StackV
                     gap={1}
-                    principles="sibling-stack"
+                    principle="sibling-stack"
                     align="center"
                     justify="center"
                     classNames={["h-full"]}

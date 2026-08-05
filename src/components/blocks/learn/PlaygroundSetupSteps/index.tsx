@@ -159,7 +159,7 @@ const PlaygroundSetupSteps = ({
     const pairStepBody: ReactNode = (
         <StackV
             gap={3}
-            principles={["sibling-stack"]}
+            principle="sibling-stack"
             isSkeleton={isSkeleton}
             items={[
                 () => (
@@ -179,7 +179,7 @@ const PlaygroundSetupSteps = ({
                     <StackH
                         gap={3}
                         at="sm"
-                        principles={["flex-action"]}
+                        principle="flex-action"
                         isSkeleton={isSkeleton}
                         items={[
                             () => renderVerifyButton(),

@@ -59,7 +59,7 @@ const IconLabelValueRow = ({
         className={cn("flex min-w-0 items-center gap-3", classNames)}
         data-tier="composite"
         data-component="IconLabelValueRow"
-        data-principles="content-row"
+        data-principle="content-row"
 
     >
         {isSkeleton ? (

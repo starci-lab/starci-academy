@@ -121,7 +121,7 @@ const goalCellContent = (
     )
 
     const labelRow = (
-        <StackH gap={3} principles={["sibling-stack"]} justify="between" isSkeleton={isSkeleton} items={[
+        <StackH gap={3} principle="sibling-stack" justify="between" isSkeleton={isSkeleton} items={[
             () => iconLabel,
             () => (
                 <Typography

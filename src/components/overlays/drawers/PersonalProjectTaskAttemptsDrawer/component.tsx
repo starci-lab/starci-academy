@@ -122,7 +122,7 @@ const AttemptRow = ({ attempt, isSkeleton = false }: AttemptRowProps) => {
         () => (
             <StackH
                 gap={4}
-                principles={["content-row"]}
+                principle="content-row"
                 align="center"
                 justify="between"
                 at="sm"

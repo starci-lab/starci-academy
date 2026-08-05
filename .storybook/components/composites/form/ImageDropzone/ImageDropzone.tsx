@@ -1,7 +1,8 @@
-import type { ComponentType, ReactNode, SVGProps } from "react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import type { ComponentType, SVGProps } from "react"
+import { cn } from "@heroui/react"
 import { ImageIcon } from "@phosphor-icons/react"
 import { useDropzone } from "react-dropzone"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * Icon stroke weight accepted by {@link IconComponent}. Kept generic so the
@@ -31,9 +32,9 @@ export interface ImageDropzoneProps {
     /** Called with the dropped or picked image file after type and size filters. */
     onFile: (file: File) => void
     /** Primary call to action (e.g. "Drag and drop an image, or click to browse"). */
-    label: ReactNode
+    label: string
     /** Format or size hint below the CTA. Hidden when unset. */
-    hint?: ReactNode
+    hint?: string
     /** Override the default {@link ImageIcon}. Pass a component reference, not JSX. */
     icon?: IconComponent
     /**
@@ -44,10 +45,8 @@ export interface ImageDropzoneProps {
      */
     isDragActive?: boolean
     /**
-     * When true, renders the skeleton mirror instead of the live drop target:
-     * same dashed frame, radius, and padding. The icon slot becomes a circular
-     * shimmer, `label` a text bar, and `hint` a second bar only when `hint` was
-     * passed. @default false
+     * When true, keeps the dashed frame real and shimmers `label` / `hint` via
+     * `Typography` (COMPOSITE-10). Icon is hidden while loading. @default false
      */
     isSkeleton?: boolean
 }
@@ -80,51 +79,46 @@ export const ImageDropzone = ({
     })
     const isDragActive = isDragActiveProp ?? isDragActiveInternal
 
-    if (isSkeleton) {
-        return (
-            <div
-                data-tier="composite"
-                data-component="ImageDropzone"
-                className="flex flex-col items-center gap-2 rounded-2xl border border-dashed border-separator px-6 py-8 text-center"
-            >
-                <HeroSkeleton className="size-8 rounded-full" />
-                <HeroSkeleton className="inline-block h-[14px] w-1/2 rounded" />
-                {hint ? (
-                    <HeroSkeleton className="inline-block h-3 w-1/3 rounded" />
-                ) : null}
-            </div>
-        )
-    }
-
     return (
         <div
-            {...getRootProps()}
+            {...(isSkeleton ? {} : getRootProps())}
             data-tier="composite"
             data-component="ImageDropzone"
             className={cn(
-                "flex cursor-pointer flex-col items-center gap-2 rounded-2xl border border-dashed border-separator px-6 py-8 text-center transition-colors hover:border-accent",
-                isDragActive && "border-solid border-accent bg-accent-soft",
+                "flex flex-col items-center gap-2 rounded-2xl border border-dashed border-separator px-6 py-8 text-center",
+                !isSkeleton && "cursor-pointer transition-colors hover:border-accent",
+                !isSkeleton && isDragActive && "border-solid border-accent bg-accent-soft",
             )}
         >
-            <input {...getInputProps()} />
-            <span
-                aria-hidden
-                className={cn("text-muted [&_svg]:size-8", isDragActive && "text-accent-soft-foreground")}
-            >
-                {Icon ? <Icon /> : <ImageIcon focusable="false" />}
-            </span>
-            <span
-                className={cn(
-                    "text-sm font-medium text-center",
-                    isDragActive ? "text-accent-soft-foreground" : "text-foreground",
-                )}
-            >
-                {label}
-            </span>
-            {hint ? (
-                <span className="text-xs font-normal text-muted text-center">
-                    {hint}
+            {isSkeleton ? null : <input {...getInputProps()} />}
+            {isSkeleton ? null : (
+                <span
+                    aria-hidden
+                    className={cn("text-muted [&_svg]:size-8", isDragActive && "text-accent-soft-foreground")}
+                >
+                    {Icon ? <Icon /> : <ImageIcon focusable="false" />}
                 </span>
+            )}
+            {isSkeleton ? (
+                <Typography size="sm" weight="medium" isSkeleton />
+            ) : (
+                <span
+                    className={cn(
+                        "text-sm font-medium text-center",
+                        isDragActive ? "text-accent-soft-foreground" : "text-foreground",
+                    )}
+                >
+                    {label}
+                </span>
+            )}
+            {hint != null && hint !== "" ? (
+                isSkeleton ? (
+                    <Typography size="xs" isSkeleton />
+                ) : (
+                    <span className="text-xs font-normal text-muted text-center">
+                        {hint}
+                    </span>
+                )
             ) : null}
         </div>
     )

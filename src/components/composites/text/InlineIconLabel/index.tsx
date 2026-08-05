@@ -1,39 +1,26 @@
 import React from "react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { TypographyColor, TypographyIcon } from "@/components/atoms/text/Typography"
 import type { AlertStatus } from "@/components/atoms/feedback/Alert"
 import type { AllowedClassName, SkeletonWidth } from "@/components/atoms/_allowed-class-name"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "InlineIconLabel" } as const
+
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — InlineIconLabel: a leading icon + an inline text
- * label as ONE composite. An "icon + text" row (a count, an eyebrow, a tab label,
- * a toned caption) is a semantic UNIT — so it is a single component that OWNS the
- * icon size (§5 icon-ownership: it sits with the text scale) instead of every
- * call-site hand-rolling `flex items-center gap-1` + a bare icon + a Typography.
- *
- * Second most-recurring composite in the app (≥15 call-sites, 5 lanes: CourseCard
- * count, GradeModelDropdown/GradingByline/GradeCreditCaption, Toolbar tab label,
- * ChatToolResult/UpNextCard eyebrow, PhaseScarcityNote notice…). NO `@/components`
- * imports.
- *
- * TONE — neutral (`default`) flows through Typography's `color="muted"` prop
- * (§9-clean, Typography's OWN vocabulary — not this tone's name); `accent`/`success`
- * flow through `color="accent-soft"`/`"success-soft"` (real Typography colour
- * tokens, mirrors PriceTag). `warning`/`danger`/`info` have no matching SOFT
- * Typography colour token (only accent-soft/success-soft exist), so those three
- * ride Typography's own full-strength `warning`/`danger`/`info` colour instead —
- * ATOM GAP: a `warning-soft`/`danger-soft`/`info-soft` trio doesn't exist yet. The
- * leading icon gets the SAME tone via a className on its own plain span
- * (currentColor), so icon + text stay in lockstep.
+ * `InlineIconLabel` — a leading icon + an inline text label as one unit (a count, an eyebrow, a
+ * tab label, a toned caption). Owns the icon size (per the text scale) and the tone colour, so a
+ * call-site never hand-rolls `flex items-center gap-1` + a bare icon + a `Typography`. Leaves:
+ * `icon`, `tone`, `size`, `truncate`, `isSkeleton`, `skeletonWidth`.
  */
 
 /**
  * Semantic tone — colours icon + text together. Omit for foreground (inherits currentColor).
  *
- * Alias, not a redeclaration (teacher's call, 2026-07-29): the same five values
- * {@link AlertStatus} already carries — neutral is `default`, matching every
- * other status-driven prop in the system instead of this composite's own `muted`.
+ * Alias, not a redeclaration: the same five values {@link AlertStatus} already
+ * carries — neutral is `default`, matching every other status-driven prop in
+ * the system.
  */
 export type InlineIconLabelTone = AlertStatus
 
@@ -45,7 +32,7 @@ interface SizeConfig {
     /** Gap between icon and text. */
     gap: string
     /**
-     * `data-principles` token for this size's gap — both sizes now render at `gap-1` (4px,
+     * `data-principle` token for this size's gap — both sizes now render at `gap-1` (4px,
      * gap-scale step 2) and carry the same `icon-text` token (`patterns.mjs`): an icon
      * beside its text is one thing with a joint, whether or not it is clickable.
      */
@@ -54,14 +41,14 @@ interface SizeConfig {
 
 // Icon is always size-4 (inline-meta convention across the app); only text + gap scale.
 const ICON_BOX = "[&_svg]:size-4"
-const SKELETON_ICON = "size-4"
 
 const SIZE_CONFIG: Record<InlineIconLabelSize, SizeConfig> = {
     // gap-1 = 4px = the step-2 joint; an icon + its text as ONE thing — `icon-text`.
     xs: { gap: "gap-1", pattern: "icon-text" },
-    // `affordance` (gap-2, 8px) is retired: an icon next to text is `icon-text`, step 2, 4px,
-    // whether or not it is clickable (teacher's ruling, 2026-08-01).
-    sm: { gap: "gap-1", pattern: "icon-text" }}
+    // An icon next to text is `icon-text`, step 2, 4px, whether or not it is
+    // clickable.
+    sm: { gap: "gap-1", pattern: "icon-text" },
+}
 
 /** Tone → wrapper text-colour class (icon + `color="current"` text both inherit it). */
 const TONE_CLASS: Record<InlineIconLabelTone, string> = {
@@ -70,7 +57,8 @@ const TONE_CLASS: Record<InlineIconLabelTone, string> = {
     danger: "text-danger-soft-foreground",
     success: "text-success-soft-foreground",
     accent: "text-accent-soft-foreground",
-    info: "text-info-soft-foreground"}
+    info: "text-info-soft-foreground",
+}
 
 /** Props for the {@link InlineIconLabel} composite. */
 export interface InlineIconLabelProps {
@@ -88,12 +76,12 @@ export interface InlineIconLabelProps {
     size?: InlineIconLabelSize
     /** Truncate the label to a single line (needs a bounded parent width). */
     truncate?: boolean
-    /** `true` → render the skeleton mirror (icon dot + text bar). */
+    /** `true` → shimmer the label via `Typography`; the icon stays (caller-supplied, not fetched). */
     isSkeleton?: boolean
     /**
-     * Width of the label's shimmer, as a fraction of the row. Narrowed from `string` on
-     * 2026-07-31: this value is handed straight to `Typography`, whose `classNames` is a closed
-     * union, so an unconstrained string here would only fail one tier down.
+     * Width of the label's shimmer, as a fraction of the row. This value is
+     * handed straight to `Typography`, whose `classNames` is a closed union, so
+     * an unconstrained string here would only fail one tier down.
      */
     skeletonWidth?: SkeletonWidth
     /**
@@ -109,10 +97,6 @@ export interface InlineIconLabelProps {
  *
  * @param props - {@link InlineIconLabelProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "InlineIconLabel" } as const
-
-/** Renders a leading icon beside an inline text label as one sized, toned unit. */
 export const InlineIconLabel = ({
     icon: Icon,
     label,
@@ -121,8 +105,8 @@ export const InlineIconLabel = ({
     truncate = false,
     isSkeleton = false,
     skeletonWidth = "w-1/4",
-    
-    classNames}: InlineIconLabelProps) => {
+    classNames,
+}: InlineIconLabelProps) => {
     const cfg = SIZE_CONFIG[size]
     // Icon span always gets its tone via className (currentColor) — no atom involved there.
     const toneClass = tone ? TONE_CLASS[tone] : undefined
@@ -139,34 +123,29 @@ export const InlineIconLabel = ({
                                 : undefined
 
     // COMPOSITE-10: ONE render path — same wrapper, same gap, in both states. The
-    // label text always goes through `Typography`'s own `isSkeleton` (§12c: the atom
-    // draws its own bar, sized to ITS OWN value). The leading icon is the one
-    // exception: no bare icon-shaped shimmer atom exists yet, so there is nothing to
-    // forward `isSkeleton` into for it — a documented ATOM GAP, kept here as a single
-    // conditional rather than a second copy of the wrapper `<span>`.
+    // icon is caller-supplied (not fetched), so it stays mounted while loading; only
+    // the label shimmers via `Typography`'s own `isSkeleton`.
     return (
         <span
             className={cn("inline-flex items-center", cfg.gap, classNames)}
+
             data-tier="composite"
             data-component="InlineIconLabel"
-            data-principles={cfg.pattern}
+            data-principle={cfg.pattern}
         >
-            {isSkeleton ? (
-                <HeroSkeleton className={cn(SKELETON_ICON, "shrink-0 rounded-full")} />
-            ) : (
-                // icon-ownership: the composite forces the svg box; tone via currentColor on this span
-                <span className={cn("shrink-0", ICON_BOX, toneClass)}>
-                    <Icon aria-hidden focusable="false" />
-                </span>
-            )}
-            <Typography
-                size={size}
-                color={isSkeleton ? undefined : textColor}
-                classNames={isSkeleton ? [skeletonWidth] : undefined}
-                truncate={truncate}
-                isSkeleton={isSkeleton}
-                text={label}
-            />
+            {/* icon-ownership: the composite forces the svg box; tone via currentColor on this span */}
+            <span className={cn("shrink-0", ICON_BOX, toneClass)}>
+                <Icon aria-hidden focusable="false" />
+            </span>
+            <span className={isSkeleton ? skeletonWidth : undefined}>
+                <Typography
+                    size={size}
+                    color={isSkeleton ? undefined : textColor}
+                    truncate={truncate}
+                    isSkeleton={isSkeleton}
+                    text={label}
+                />
+            </span>
         </span>
     )
 }

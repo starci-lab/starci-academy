@@ -1,14 +1,35 @@
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
-import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
+import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@sb-components/frames/_principles"
+import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_identity"
 
 /**
- * `ScrollArea` -- a region that SCROLLS its own overflow, on either axis, instead
- * of growing past its box.
+ * ─────────────────────────────────────────────────────────────────────────────
+ * FRAME (frame) -- `ScrollArea`: a region that SCROLLS its own overflow, on
+ * either axis, instead of growing past its box.
  *
- * A scroll region WRAPS one thing -- its scrollable content -- so it gets ONE named
- * slot, `body`, the same shape as `Container`'s single-slot contract.
+ * WHY THIS FRAME EXISTS (teacher's ruling: when vocabulary is missing, CREATE
+ * it). Real `src` -- `MindMapPage/index.tsx` (~line 296) -- hand-rolled exactly
+ * this shape around the search rail's own content, with the comment in place:
+ * *"NEW VOCABULARY GAP: no frame carries a scrollable-region flag
+ * (`overflow-y-auto`) yet -- `ResizableRail`/`RailShell` own width and the
+ * handle only. Kept as minimal raw markup until one does."* This frame is that
+ * flag.
+ *
+ * FRAME API LAW (§13b): a scroll region WRAPS one thing -- its scrollable
+ * content -- so it gets ONE named slot, `body`, the same shape as
+ * `Container`'s single-slot contract (a wrapping frame that is not a repeat
+ * list takes a slot, never `items`).
+ *
+ * `axis` NAMES THE DIRECTION. `MindMapPage`'s one real call site scrolls
+ * vertically only (`overflow-y-auto`), which is also the dominant shape
+ * anywhere content outgrows its box -- so `axis` defaults to `"y"` and an
+ * unmigrated caller would render identically. `"x"`/`"both"` are offered
+ * up front rather than bolted on later: `overflow-x-auto`/`overflow-auto` are
+ * the only other two members `overflow-*` actually has for "scroll, don't
+ * clip", so the union is already complete, not grown speculatively.
+ * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /** Which axis {@link ScrollArea} scrolls -- see the file header. */
@@ -22,24 +43,31 @@ export interface ScrollAreaProps {
     axis?: ScrollAreaAxis
     /** Renders `body` in its skeleton state. */
     isSkeleton?: boolean
-    /**
-     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
-     * `data-anat-part`. The frame never names itself.
-     */
-    anatPart?: string
     /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
-     * The layout pattern this frame's seam realises -- a token from `test-runner/patterns.mjs`
-     * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principles` on the element
+     * The layout pattern this frame's seam realises - one token from `test-runner/patterns.mjs`
+     * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principle` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
-     * A frame does not KNOW its pattern -- the caller does -- so it is passed in.
-     * One token per instance.
+     * Query as `[data-principle="token"]`. A frame does not KNOW its pattern - the caller does - so it is passed in.
      */
-    principles?: PrincipleToken
+    principle?: PrincipleToken
+    /**
+     * Why this layer exists - one sentence, emitted as `data-explain` beside the token.
+     * A reason, never a restatement of `principle`.
+     */
+    explain?: ExplainReason
+    /**
+     * Caller identity to wear on this region's root instead of the frame's own -- pass this when
+     * a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
+     * is using this region AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=... data-component=...>`. See `_identity.ts`. Omitted → this region keeps emitting
+     * its own `data-tier="frame" data-component="ScrollArea"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
-/** {@link ScrollAreaAxis} -> literal `overflow-*` class. */
+/** {@link ScrollAreaAxis} → literal `overflow-*` class. */
 const AXIS_CLASS: Record<ScrollAreaAxis, string> = {
     y: "overflow-y-auto",
     x: "overflow-x-auto",
@@ -56,14 +84,13 @@ const ScrollArea = ({
     axis = "y",
     isSkeleton,
     classNames,
-    principles,
-    anatPart,
-}: ScrollAreaProps) => (
+    principle,
+    explain,
+    identity}: ScrollAreaProps) => (
     <div
-        data-tier="frame"
-        data-component="ScrollArea"
-        data-anat-part={anatPart}
-        data-principles={principlesAttr(principles)}
+        {...resolveIdentity(identity, { tier: "frame", name: "ScrollArea" })}
+        data-principle={principleAttr(principle)}
+        data-explain={explainAttr(explain)}
         className={cn(AXIS_CLASS[axis], classNames)}
     >
         {/* `body` is a CALLER SLOT -- the node inside belongs to whoever passed it, not to

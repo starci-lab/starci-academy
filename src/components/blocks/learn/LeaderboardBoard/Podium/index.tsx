@@ -39,7 +39,7 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
         <div key={entry.rank} className="w-24">
             <StackV
                 gap={2}
-                principles={["title-subtitle"]}
+                principle="title-subtitle"
                 align="center"
                 isSkeleton={isSkeleton}
                 items={[
@@ -89,7 +89,7 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
 export const Podium = ({ entries, meLabel, isSkeleton }: PodiumProps) => (
     <StackH
         gap={3}
-        principles={["sibling-stack"]}
+        principle="sibling-stack"
         justify="center"
         align="end"
         isSkeleton={isSkeleton}

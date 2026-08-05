@@ -110,7 +110,7 @@ const BreadcrumbsBase = ({
             </div>
         )
         const backBar = (
-            <div data-tier="atom" data-component="Breadcrumbs" data-principles="icon-text" className={cn("flex w-fit items-center gap-1", classNames)}>
+            <div data-tier="atom" data-component="Breadcrumbs" data-principle="icon-text" className={cn("flex w-fit items-center gap-1", classNames)}>
                 <HeroSkeleton className="size-3.5 rounded-full" />
                 <HeroSkeleton className="h-4 w-1/3 rounded-md" />
             </div>
@@ -177,7 +177,7 @@ const BreadcrumbsBase = ({
             <HeroLink
                 data-tier="atom"
                 data-component="Breadcrumbs"
-                data-principles="icon-text"
+                data-principle="icon-text"
                 onPress={parent?.onPress}
                 className={cn(
                     "group text-muted hover:text-foreground flex w-fit cursor-pointer items-center gap-1 text-sm no-underline transition-colors",

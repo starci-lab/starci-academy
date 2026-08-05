@@ -1,6 +1,6 @@
 import { DatePicker as HeroDatePicker, DateField, Calendar, cn } from "@heroui/react"
 import type { DateValue } from "@internationalized/date"
-import { FieldFrame, fieldName } from "@/components/atoms/forms/_field/FieldFrame"
+import { FieldFrame, fieldName } from "@/components/composites/form/_field/FieldFrame"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { FrameProps } from "../_input/types"
 import { FieldSkeleton } from "../_input/FieldSkeleton"
@@ -13,7 +13,7 @@ export const InputDate = ({
     maxValue,
     isDisabled,
     isInvalid,
-    ariaLabel,
+    ariaLabel = "Pick a date",
     isSkeleton,
     classNames,
     label,
@@ -27,8 +27,7 @@ export const InputDate = ({
     maxValue?: DateValue
     isDisabled?: boolean
     isInvalid?: boolean
-    /** Accessible name for the field and its calendar popover — no English fallback, callers must pass a translated string. */
-    ariaLabel: string
+    ariaLabel?: string
     isSkeleton?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
@@ -44,6 +43,7 @@ export const InputDate = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
+
             skeletonControl={<FieldSkeleton classNames={classNames} />}
         >
             <HeroDatePicker

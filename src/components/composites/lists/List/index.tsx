@@ -1,46 +1,41 @@
 import React from "react"
 import type { ComponentType } from "react"
-import { Label, Switch, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { TitledText } from "@/components/composites/text/TitledText"
 import { Typography } from "@/components/atoms/text/Typography"
+import { Label } from "@/components/atoms/forms/Label"
+import {
+    Switch,
+    SwitchContent,
+    SwitchControl,
+    SwitchThumb,
+} from "@/components/atoms/forms/Switch"
 import { ChoiceSwitch } from "@/components/atoms/forms"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { Box } from "@/components/frames/Box"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
+import type { ComponentTypeWithSkeleton , SkeletonProps } from "@/components/frames/_slot"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `List.*`, the ONE row/list FRAME namespace
- * (teacher's call 2026-07-25, canon §13). Four sibling frames that used to live as
- * four loose folders (`lists/ListRow` · `lists/LabeledList` · `lists/MetaRow` ·
- * `list/SettingToggleRow`) are now MEMBERS of one namespace — same tier, same
- * job (arranging elements into a ROW / a LIST), one import.
+ * `List.*` — the row/list frame namespace, arranging elements into a ROW or a LIST.
  *
  * | Member | Shape | Content channel |
  * |---|---|---|
  * | `.Row` | 1 generic list row | data props (`leading`/`title`/`subtitle`/`meta`/`trailing`) |
- * | `.Labeled` | label + REPEATING list (+CTA) | **`items` — children FORBIDDEN** |
- * | `.Meta` | 1 inline meta row | `chip` + **`items`** (meta segments) |
+ * | `.Labeled` | label + repeating list (+CTA) | `items` — children forbidden |
+ * | `.Meta` | 1 inline meta row | `chip` + `items` (meta segments) |
  * | `.ToggleRow` | 1 settings row with a switch | data props (`label`/`description`/`checked`) |
  *
- * FRAME API LAW (§13b):
- * - A REPEATING-LIST frame (`.Labeled`) MUST receive `items` data — children are FORBIDDEN.
- * - A single-ROW frame (`.Row` / `.Meta` / `.ToggleRow`) receives named data props, does NOT
- *   accept free-form children: the row is a FIXED shape (leading · text · meta/trailing),
- *   free-form content is the design/block tier's job.
- * - Namespace only — no bare component export.
+ * A repeating-list frame (`.Labeled`) must receive `items` data; children are
+ * forbidden. A single-row frame (`.Row`/`.Meta`/`.ToggleRow`) takes named data
+ * props and a fixed shape, no free-form children. Namespace only — no bare
+ * component export.
  *
- * Each member's behaviour/skin is kept VERBATIM from the old folder; this is an API
- * refactor, not a visual refactor. Synced to `src` later.
- *
- * 2026-07-31: converted every slot the frame renders and is responsible for the
- * loading state of from `ReactNode` to a COMPONENT reference or `string`
- * (COMPOSITE-8) — `leading`/`meta`/`trailing`/`icon`/`action`/`emptyState`/`chip`
- * now take a component the frame calls itself, and `title`/`subtitle`/`label`/
- * `.Meta`'s `items` now take `string`, since the frame wraps them in its own
- * atom. See callers in this same folder's stories for the updated call shape.
- * ─────────────────────────────────────────────────────────────────────────────
+ * The slots the frame renders and owns the loading state of are COMPONENT
+ * references or `string`: `leading`/`meta`/`trailing`/`icon`/`action`/`emptyState`/
+ * `chip` take a component the frame calls itself, and
+ * `title`/`subtitle`/`label`/`.Meta`'s `items` take `string` (the frame wraps them
+ * in its own atom).
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -106,6 +101,11 @@ export interface ListRowProps {
     isSkeleton?: boolean
     /** Layout utilities merged onto the root element, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
+    /**
+     * When `true`, each composed part (leading / title-text / meta-trailing
+     * cluster) emits `` so a BlockAnatomy panel can badge
+     * it on-render. Off by default (production).
+     */
 }
 
 /**
@@ -127,7 +127,8 @@ const Row = ({
     onPress,
     href,
     isSkeleton = false,
-    classNames}: ListRowProps) => {
+    classNames,
+}: ListRowProps) => {
     // Interactivity is a LOADED-state affordance only — a loading row is inert,
     // same as the old separate `RowSkeleton` never wired a role/href/onClick.
     const isPressable = !isSkeleton && Boolean(onPress || href)
@@ -137,7 +138,8 @@ const Row = ({
         divider && "border-b border-separator",
         isPressable &&
             "rounded-2xl transition-colors hover:bg-surface-secondary focus-visible:bg-surface-secondary focus-visible:outline-none",
-        classNames)
+        classNames,
+    )
 
     // One render path: `leading` is now a COMPONENT reference (COMPOSITE-8), so the
     // row calls it itself and forwards `isSkeleton` — it decides how to shimmer, or
@@ -158,11 +160,13 @@ const Row = ({
                 subtitle={subtitle}
                 isSkeleton={isSkeleton}
                 truncate
+
             />
             {!isSkeleton && (MetaSlot || TrailingSlot) ? (
-                <Box principles={["push-end"]} className="ml-auto">
+                <Box principle="push-end" className="ml-auto">
                     <StackH
                         gap={3}
+                        isSkeleton={isSkeleton}
                         classNames={["shrink-0"]}
                         items={[
                             ...(MetaSlot ? [() => <MetaSlot />] : []),
@@ -176,7 +180,7 @@ const Row = ({
 
     if (!isSkeleton && href) {
         return (
-            <a href={href} onClick={onPress} className={baseClassName} data-tier="composite" data-component="ListRow" data-principles="content-row">
+            <a href={href} onClick={onPress} className={baseClassName} data-tier="composite" data-component="ListRow" data-principle="content-row">
                 {content}
             </a>
         )
@@ -197,7 +201,7 @@ const Row = ({
                 className={cn(baseClassName, "cursor-pointer")}
                 data-tier="composite"
                 data-component="ListRow"
-                data-principles="content-row"
+                data-principle="content-row"
             >
                 {content}
             </div>
@@ -205,7 +209,7 @@ const Row = ({
     }
 
     return (
-        <div className={baseClassName} data-tier="composite" data-component="ListRow" data-principles="content-row">
+        <div className={baseClassName} data-tier="composite" data-component="ListRow" data-principle="content-row">
             {content}
         </div>
     )
@@ -217,10 +221,10 @@ const Row = ({
 
 /**
  * One row of a {@link ListLabeled} — the SAME data shape as {@link ListRow}
- * (which renders it), plus a stable React key. `isSkeleton`/`` are
+ * (which renders it), plus a stable React key. `isSkeleton` are
  * owned by the frame, not by the item.
  */
-export interface ListLabeledItem extends Omit<ListRowProps, "isSkeleton" | ""> {
+export interface ListLabeledItem extends Omit<ListRowProps, "isSkeleton" | "showAnatomy"> {
     /** Stable React key. */
     key: string
 }
@@ -280,7 +284,8 @@ const Labeled = ({
     emptyState: EmptyState,
     isSkeleton = false,
     skeletonRows = 3,
-    classNames}: ListLabeledProps) => {
+    classNames,
+}: ListLabeledProps) => {
     // Skeleton placeholder rows go through the SAME `Row` the live list renders —
     // no second hand-built row shape to keep in sync (COMPOSITE-10). `title`/
     // `subtitle` are non-empty stand-ins: `TitledText` never renders them while
@@ -295,22 +300,24 @@ const Labeled = ({
 
     return (
         // `as="section"` keeps the landmark tag while still routing the seam through the
-        // frame (§13z) — `Stack`'s `as` prop was added 2026-07-29 for exactly this case.
+        // frame — `Stack`'s `as` prop handles exactly this case.
         <StackV
             as="section"
             gap={4}
+            isSkeleton={isSkeleton}
             classNames={classNames}
             items={[
-                () => (
+                ({ isSkeleton }: SkeletonProps) => (
                     <StackH
                         gap={3}
+                        isSkeleton={isSkeleton}
                         items={[
                             ...(Icon ? [() => <Icon />] : []),
                             () => <Label>{label}</Label>,
                         ]}
                     />
                 ),
-                () => <StackV gap={3} items={[() => rows]} />,
+                ({ isSkeleton }: SkeletonProps) => <StackV gap={3} isSkeleton={isSkeleton} items={[() => rows]} />,
                 // `isSkeleton`-gated: while loading there is no data behind the CTA yet,
                 // same reasoning as the `meta`/`trailing` omission on `Row` above.
                 ...(!isSkeleton && Action ? [() => <div><Action /></div>] : []),
@@ -359,28 +366,30 @@ const Meta = ({ chip: Chip, items, classNames}: ListMetaProps) => (
     <StackH
         gap={3}
         classNames={["min-w-0", ...(classNames ?? [])]}
+
         items={[
             ...(Chip ? [() => <span className="shrink-0"><Chip /></span>] : []),
             ...(items.length > 0 ? [() => (
-                <Typography size="xs"
-                    text={(
-                        <>
-                            {items.map((item, index) => (
-                                <React.Fragment key={index}>
-                                    {/* The breathing room around the `·` comes from the whitespace
-                                        IN the string itself, NOT a hand-typed `mx-1`: a child's own
-                                        margin is a two-owner seam (§10a), and the `check-padding`
-                                        gate catches exactly this spot (caught 2026-07-27). */}
-                                    {index > 0 ? <span aria-hidden>{" · "}</span> : null}
-                                    {item}
-                                </React.Fragment>
-                            ))}
-                        </>
-                    )}
-                    color="muted"
-                    truncate
-                    classNames={["min-w-0"]}
-                />
+                <span className="min-w-0">
+                    <Typography size="xs"
+                        text={(
+                            <>
+                                {items.map((item, index) => (
+                                    <React.Fragment key={index}>
+                                        {/* The breathing room around the `·` comes from the whitespace
+                                                IN the string itself, NOT a hand-typed `mx-1`: a child's own
+                                                margin is a two-owner seam, and the `check-padding`
+                                                gate catches exactly this spot. */}
+                                        {index > 0 ? <span aria-hidden>{" · "}</span> : null}
+                                        {item}
+                                    </React.Fragment>
+                                ))}
+                            </>
+                        )}
+                        color="muted"
+                        truncate
+                    />
+                </span>
             )] : []),
         ]}
     />
@@ -422,12 +431,12 @@ export interface ListToggleRowProps {
 
 /**
  * Generic settings row: a label (+ optional muted description) on the left, a
- * HeroUI `Switch` pinned to the right. Presentational — the caller owns
+ * house `Switch` pinned to the right. Presentational — the caller owns
  * persistence/state; this row only reports the next boolean via
  * {@link ListToggleRowProps.onCheckedChange}.
  *
  * Grounded in the hand-roll toggle rows in `src/components/features/profile/
- * PrivacySettings` (the "Lock profile" lock row + the per-section
+ * PrivacySettings` (the "lock profile" lock row + the per-section
  * visibility rows).
  *
  * @param props - {@link ListToggleRowProps}
@@ -439,22 +448,20 @@ const ToggleRow = ({
     onCheckedChange,
     isDisabled = false,
     classNames,
-    isSkeleton = false}: ListToggleRowProps) => (
+    isSkeleton = false,
+}: ListToggleRowProps) => (
     // One outer shape whether loading or not: same wrapper, same `TitledText` call
     // (it forwards `isSkeleton` to its own atom — COMPOSITE-10). Only the trailing
-    // control itself still branches:
-    // ATOM GAP (COMPOSITE-3): the house `ChoiceSwitch` atom always couples the
-    // track to its OWN adjacent label (or none) — it has no "silent track, external
-    // aria-label" mode. This row already shows the label via `TitledText`, so
-    // reusing `ChoiceSwitch`'s label slot would print it twice; dropping it loses
-    // the switch's accessible name entirely. The vendor `Switch` stays for the
-    // REAL control on purpose; the SKELETON still mirrors through `ChoiceSwitch`
+    // control itself still branches: the REAL control is the silent house `Switch`
+    // (aria-label from the row label — `ChoiceSwitch` would duplicate the visible
+    // `TitledText` label); the SKELETON still mirrors through `ChoiceSwitch`
     // (a plain shimmer pill has no label to duplicate).
     <div className={cn(isDisabled && "opacity-50")}>
         <StackH
             gap={4}
+            isSkeleton={isSkeleton}
             classNames={classNames}
-            principles={["label-field"]}
+            principle="label-field"
             items={[
                 () => (
                     <TitledText
@@ -462,30 +469,33 @@ const ToggleRow = ({
                         subtitle={description}
                         isSkeleton={isSkeleton}
                         classNames={["flex-1"]}
+
                     />
                 ),
-                () => (isSkeleton ? (
-                    <ChoiceSwitch
-                        isSkeleton
-                        isSelected={false}
-                        onValueChange={() => undefined}
-                        classNames={["shrink-0"]}
-                    />
+                () => isSkeleton ? (
+                    <span className="shrink-0">
+                        <ChoiceSwitch
+                            isSkeleton
+                            isSelected={false}
+                            onValueChange={() => undefined}
+                        />
+                    </span>
                 ) : (
-                    <Switch
-                        className="shrink-0"
-                        isSelected={checked}
-                        isDisabled={isDisabled}
-                        onChange={onCheckedChange}
-                        aria-label={label}
-                    >
-                        <Switch.Content>
-                            <Switch.Control>
-                                <Switch.Thumb />
-                            </Switch.Control>
-                        </Switch.Content>
-                    </Switch>
-                )),
+                    <span className="shrink-0">
+                        <Switch
+                            isSelected={checked}
+                            isDisabled={isDisabled}
+                            onChange={onCheckedChange}
+                            aria-label={label}
+                        >
+                            <SwitchContent>
+                                <SwitchControl>
+                                    <SwitchThumb />
+                                </SwitchControl>
+                            </SwitchContent>
+                        </Switch>
+                    </span>
+                ),
             ]}
         />
     </div>

@@ -39,7 +39,8 @@ export const GithubGradingSettingsBody = ({ form }: GithubGradingSettingsBodyPro
                     onValueChange={form.onTokenChange}
                     hint={form.tokenHint ?? DEFAULT_TOKEN_HINT}
                     placeholder="ghp_…"
-
+                    revealLabel="Show token"
+                    hideLabel="Hide token"
                 />
             ),
         ]}

@@ -12,14 +12,15 @@
  *   SPACING is carried by the tokens below, PASSED BY THE CALLER (like `anatPart`), because only the
  *   caller knows WHY a gap is what it is. This is the layer neither Every Layout nor Braid names.
  *
- * A component declares every pattern it embodies, space-separated like `class`:
+ * A marked frame node declares exactly one pattern:
  *
- *     <div data-principles="card-padding block-boundary" className="flex flex-col gap-6 p-4"> … </div>
+ *     <div data-principle="card-padding" className="p-4"> … </div>
  *
- * Queryable `[data-principles~="card-padding"]`, split on whitespace by the test. Each entry says which
- * CSS property it governs and the value it must compute to; the test in `test-runner.ts` measures it.
+ * Queryable `[data-principle="token"]`. Each entry says which CSS property it governs and the value
+ * it must compute to; the test in `test-runner.ts` measures it. Multiple whitespace-separated tokens
+ * on one node are illegal — split the node, do not join tokens.
  *
- * The token is the CONCEPT, never the pixel — `data-principles="card-padding"`, never `"p-4"`.
+ * The token is the CONCEPT, never the pixel — `data-principle="card-padding"`, never `"p-4"`.
  *
  * gap step → px: 1→0 2→4 3→8 4→12 5→16 6→24 7→32 8→48   (principles/gap.md)
  * padding step → px: 1→0 2→4 3→8 4→12 5→16 6→24          (principles/padding.md)

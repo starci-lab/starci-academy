@@ -1,8 +1,15 @@
 import React from "react"
 import type { ComponentType } from "react"
-import { Label, Switch, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { Label } from "@sb-components/atoms/forms/Label/Label"
+import {
+    Switch,
+    SwitchContent,
+    SwitchControl,
+    SwitchThumb,
+} from "@sb-components/atoms/forms/Switch/Switch"
 import { ChoiceSwitch } from "@sb-components/atoms/forms"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { Box } from "@sb-components/frames/Box/Box"
@@ -156,7 +163,7 @@ const Row = ({
 
             />
             {!isSkeleton && (MetaSlot || TrailingSlot) ? (
-                <Box principles="push-end" className="ml-auto">
+                <Box principle="push-end" className="ml-auto">
                     <StackH
                         gap={3}
                         isSkeleton={isSkeleton}
@@ -173,7 +180,7 @@ const Row = ({
 
     if (!isSkeleton && href) {
         return (
-            <a href={href} onClick={onPress} className={baseClassName} data-tier="composite" data-component="ListRow" data-principles="content-row">
+            <a href={href} onClick={onPress} className={baseClassName} data-tier="composite" data-component="ListRow" data-principle="content-row">
                 {content}
             </a>
         )
@@ -194,7 +201,7 @@ const Row = ({
                 className={cn(baseClassName, "cursor-pointer")}
                 data-tier="composite"
                 data-component="ListRow"
-                data-principles="content-row"
+                data-principle="content-row"
             >
                 {content}
             </div>
@@ -202,7 +209,7 @@ const Row = ({
     }
 
     return (
-        <div className={baseClassName} data-tier="composite" data-component="ListRow" data-principles="content-row">
+        <div className={baseClassName} data-tier="composite" data-component="ListRow" data-principle="content-row">
             {content}
         </div>
     )
@@ -424,7 +431,7 @@ export interface ListToggleRowProps {
 
 /**
  * Generic settings row: a label (+ optional muted description) on the left, a
- * HeroUI `Switch` pinned to the right. Presentational — the caller owns
+ * house `Switch` pinned to the right. Presentational — the caller owns
  * persistence/state; this row only reports the next boolean via
  * {@link ListToggleRowProps.onCheckedChange}.
  *
@@ -445,20 +452,16 @@ const ToggleRow = ({
 }: ListToggleRowProps) => (
     // One outer shape whether loading or not: same wrapper, same `TitledText` call
     // (it forwards `isSkeleton` to its own atom — COMPOSITE-10). Only the trailing
-    // control itself still branches:
-    // ATOM GAP (COMPOSITE-3): the house `ChoiceSwitch` atom always couples the
-    // track to its OWN adjacent label (or none) — it has no "silent track, external
-    // aria-label" mode. This row already shows the label via `TitledText`, so
-    // reusing `ChoiceSwitch`'s label slot would print it twice; dropping it loses
-    // the switch's accessible name entirely. The vendor `Switch` stays for the
-    // REAL control on purpose; the SKELETON still mirrors through `ChoiceSwitch`
+    // control itself still branches: the REAL control is the silent house `Switch`
+    // (aria-label from the row label — `ChoiceSwitch` would duplicate the visible
+    // `TitledText` label); the SKELETON still mirrors through `ChoiceSwitch`
     // (a plain shimmer pill has no label to duplicate).
     <div className={cn(isDisabled && "opacity-50")}>
         <StackH
             gap={4}
             isSkeleton={isSkeleton}
             classNames={classNames}
-            principles="label-field"
+            principle="label-field"
             items={[
                 () => (
                     <TitledText
@@ -478,20 +481,20 @@ const ToggleRow = ({
                         />
                     </span>
                 ) : (
-                    <Switch
-                        className="shrink-0"
-                        isSelected={checked}
-                        isDisabled={isDisabled}
-                        onChange={onCheckedChange}
-                        aria-label={label}
-
-                    >
-                        <Switch.Content>
-                            <Switch.Control>
-                                <Switch.Thumb />
-                            </Switch.Control>
-                        </Switch.Content>
-                    </Switch>
+                    <span className="shrink-0">
+                        <Switch
+                            isSelected={checked}
+                            isDisabled={isDisabled}
+                            onChange={onCheckedChange}
+                            aria-label={label}
+                        >
+                            <SwitchContent>
+                                <SwitchControl>
+                                    <SwitchThumb />
+                                </SwitchControl>
+                            </SwitchContent>
+                        </Switch>
+                    </span>
                 ),
             ]}
         />

@@ -154,7 +154,7 @@ const MindMapWorkspaceEmpty = ({ labels, onBrowseModules }: {
         canvas={() => (
             <StackV
                 gap={1}
-                principles={["sibling-stack"]}
+                principle="sibling-stack"
                 align="center"
                 justify="center"
                 items={[() => (
@@ -239,7 +239,7 @@ const _MindMapPage = ({
             ? ({ isSkeleton }: SkeletonProps) => (
                 <StackV
                     gap={1}
-                    principles={["sibling-stack"]}
+                    principle="sibling-stack"
                     align="center"
                     isSkeleton={isSkeleton}
                     items={[() => (
@@ -318,7 +318,7 @@ const _MindMapPage = ({
                     body={({ isSkeleton }: SkeletonProps) => (
                         <StackV
                             padding={6}
-                            principles={["page-pad"]}
+                            principle="page-pad"
                             gap={1}
                             classNames={["h-full"]}
                             isSkeleton={isSkeleton}

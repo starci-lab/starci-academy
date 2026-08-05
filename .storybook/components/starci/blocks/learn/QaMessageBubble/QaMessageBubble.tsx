@@ -38,12 +38,20 @@ const QaMessageBubble = ({
             <>
                 <StackH
                     gap={2}
-                    principles="icon-text"
+                    principle="separator-dot"
                     align="center"
-
                     items={[
-                        () => <Avatar isSkeleton size="sm" />,
-                        () => <HeroSkeleton className="h-3 w-16 rounded" />,
+                        () => (
+                            <StackH
+                                gap={2}
+                                principle="icon-text"
+                                align="center"
+                                items={[
+                                    () => <Avatar isSkeleton size="sm" />,
+                                    () => <HeroSkeleton className="h-3 w-16 rounded" />,
+                                ]}
+                            />
+                        ),
                         () => <HeroSkeleton className="h-3 w-10 rounded" />,
                     ]}
                 />

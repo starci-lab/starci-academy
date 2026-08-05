@@ -16,6 +16,7 @@ import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Box } from "@sb-components/frames/Box/Box"
+import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "FlowDiagram" } as const
@@ -47,19 +48,18 @@ const FlowDiagramCardNode = ({ data, selected }: NodeProps) => {
         <>
             {/* Connection points — required for a CUSTOM node or edges never draw. */}
             <Handle type="target" position={Position.Top} className="!size-2 !border-none !bg-muted" />
-            <div
-                data-principles="title-subtitle"
+            <Box
+                principle="title-subtitle"
                 className={cn(
                     "flex min-w-[140px] max-w-[220px] flex-col items-center gap-1 rounded-large border bg-surface px-3 py-2 text-center shadow-sm transition-colors",
                     selected ? "border-accent ring-2 ring-accent/40" : "border-default",
                 )}
             >
-                {/* §10: container owns the gap (tight) — description no longer self-margins */}
                 <Typography size="sm" weight="medium" text={label} />
                 {description ? (
                     <Typography size="xs" color="muted" text={description} />
                 ) : null}
-            </div>
+            </Box>
             <Handle type="source" position={Position.Bottom} className="!size-2 !border-none !bg-muted" />
         </>
     )
@@ -127,17 +127,30 @@ export const FlowDiagram = ({ nodes, edges, isSkeleton = false, classNames}: Flo
             data-component="FlowDiagram"
         >
             {isSkeleton ? (
-                <Box principles="group-boundary" className="flex h-full items-center justify-center gap-4 p-6">
-                    {Array.from({ length: SKELETON_NODE_COUNT }, (_, index) => (
-                        <Box
-                            key={index}
-                            principles="title-subtitle" className="flex min-w-[140px] max-w-[220px] flex-col items-center gap-1 rounded-large border border-default bg-surface px-3 py-2 text-center shadow-sm"
-                        >
-                            <Typography size="sm" weight="medium" isSkeleton />
-                            <Typography size="xs" color="muted" isSkeleton />
-                        </Box>
-                    ))}
-                </Box>
+                <StackH
+                    gap={1}
+                    principle="page-pad"
+                    padding={6}
+                    align="center"
+                    justify="center"
+                    classNames={["h-full"]}
+                    items={[() => (
+                        <StackH
+                            gap={5}
+                            principle="group-boundary"
+                            align="center"
+                            items={Array.from({ length: SKELETON_NODE_COUNT }, () => () => (
+                                <Box
+                                    principle="title-subtitle"
+                                    className="flex min-w-[140px] max-w-[220px] flex-col items-center gap-1 rounded-large border border-default bg-surface px-3 py-2 text-center shadow-sm"
+                                >
+                                    <Typography size="sm" weight="medium" isSkeleton />
+                                    <Typography size="xs" color="muted" isSkeleton />
+                                </Box>
+                            ))}
+                        />
+                    )]}
+                />
             ) : (
                 <ReactFlowProvider>
                     <ReactFlow

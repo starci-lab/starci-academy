@@ -88,7 +88,7 @@ const ModuleHeader = ({
             gap={3}
             align="center"
             at="sm"
-            principles={["chip-row"]}
+            principle="chip-row"
             isSkeleton={isSkeleton}
 
             items={[

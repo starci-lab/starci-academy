@@ -113,7 +113,7 @@ const UserCellBase = ({
     // caller's component shimmer in place instead of vanishing during loading
     // and jumping the row's width once data lands.
     const trailingSlot = Trailing ? (
-        <Box principles={["push-end"]} className="shrink-0">
+        <Box principle="push-end" className="shrink-0">
             <Trailing isSkeleton={isSkeleton} />
         </Box>
     ) : null

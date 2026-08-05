@@ -109,7 +109,7 @@ const KvRow = ({ label, value }: MemberDetailKvRowProps) => (
         gap={3}
         align="center"
         justify="between"
-        principles="content-row"
+        principle="content-row"
         items={[
             () => <Typography size="sm" color="muted" text={label} />,
             () => (typeof value === "string" ? <Typography size="sm" weight="medium" text={value} /> : <>{value}</>),

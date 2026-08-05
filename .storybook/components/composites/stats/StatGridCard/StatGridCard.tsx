@@ -75,7 +75,7 @@ export const StatGridCard = ({ items, isSkeleton = false, classNames}: StatGridC
                 return (
                     <div
                         key={item.key}
-                        data-principles="cell-pad"
+                        data-principle="cell-pad"
                         className={cn(
                             "flex flex-col gap-3 p-3",
                             isLastOddSpan && "col-span-2",

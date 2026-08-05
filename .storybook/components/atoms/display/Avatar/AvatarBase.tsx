@@ -113,6 +113,11 @@ export interface AvatarBaseProps {
     seed?: string
     /** Display name: drives image `alt` + the initials fallback (first two letters). */
     name?: string
+    /**
+     * Exact fallback text, not sliced to two letters — for overflow chips (`+12`)
+     * where initials would corrupt the count.
+     */
+    exactLabel?: string
     /** Fallback glyph as a COMPONENT reference (shown per the `fallback` chain). */
     icon?: IconComponent
     /** What to show when there is no `src`. Default `"generated"` (DiceBear). */
@@ -147,6 +152,7 @@ export const AvatarBase = ({
     src,
     seed,
     name,
+    exactLabel,
     icon: Icon,
     fallback = "generated",
     status,
@@ -183,11 +189,12 @@ export const AvatarBase = ({
     // Image candidates in order: src (if any) → DiceBear generated from seed ?? name.
     // fallback="initials"/"icon" excludes DiceBear from the chain (src only, if present).
     const candidates = useMemo(() => {
+        if (exactLabel) return []
         const uploaded = src?.trim()
         if (fallback !== "generated") return uploaded ? [uploaded] : []
         const generated = dicebearAvatarUrl(seed ?? name ?? "")
         return uploaded ? [uploaded, generated] : [generated]
-    }, [src, seed, name, fallback])
+    }, [src, seed, name, fallback, exactLabel])
 
     // Index of the candidate currently being tried; advances on load ERROR, not
     // just a missing URL (see onLoadingStatusChange note above). Keyed by the
@@ -200,7 +207,7 @@ export const AvatarBase = ({
     // Once image candidates are exhausted: fallback="icon" shows the glyph
     // directly; otherwise initials take priority, dropping to the icon only
     // when `name` is empty.
-    const initials = (name ?? "").trim().slice(0, 2).toUpperCase()
+    const initials = exactLabel ?? (name ?? "").trim().slice(0, 2).toUpperCase()
     const iconGlyph = Icon ? (
         <span aria-hidden className="inline-flex">
             <Icon className={glyph} weight={glyphWeight} />

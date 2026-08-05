@@ -16,7 +16,7 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean): Sur
     content: () => (
         <StackH
             gap={3}
-            principles={["identity"]}
+            principle="identity"
             align="center"
             isSkeleton={isSkeleton}
             items={[
@@ -139,7 +139,7 @@ export const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCou
             body={() => (
                 <StackH
                     gap={3}
-                    principles={["identity"]}
+                    principle="identity"
                     align="center"
                     isSkeleton={isSkeleton}
                     items={[

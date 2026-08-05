@@ -109,7 +109,7 @@ export const AiQuotaHistoryPanel = ({
     const isEmpty = !isLoading && (items?.length ?? 0) === 0
 
     const chart = (
-        <StackV gap={4} principles={["card-caption"]} items={[
+        <StackV gap={4} principle="card-caption" items={[
             () => <Typography size="sm" weight="medium" text="Credits used per day (last 7 days)" />,
             () => (
                 <SurfaceCard

@@ -253,7 +253,7 @@ const ProfileHero = ({
                 isSkeleton={isSkeleton}
 
             />
-            <StackV gap={1} principles="name-handle" align="center" isSkeleton={isSkeleton} items={[() => nameBlock]} />
+            <StackV gap={1} principle="name-handle" align="center" isSkeleton={isSkeleton} items={[() => nameBlock]} />
         </>
     )
 
@@ -321,7 +321,7 @@ const ProfileHero = ({
 
     const cardBody = (
         <>
-            <StackV gap={4} principles="card-caption" align="center" isSkeleton={isSkeleton} items={[() => identitySection]} />
+            <StackV gap={4} principle="card-caption" align="center" isSkeleton={isSkeleton} items={[() => identitySection]} />
 
             {isSkeleton || bio ? (
                 <Typography
@@ -338,7 +338,7 @@ const ProfileHero = ({
             {hasLocationRow ? (
                 <Cluster
                     gap={3}
-                    principles="chip-row"
+                    principle="chip-row"
                     justify="center"
                     items={[
                         ...(isSkeleton || location
@@ -367,7 +367,7 @@ const ProfileHero = ({
                 />
             ) : null}
 
-            <StackH gap={3} principles="sibling-stack" divider isSkeleton={isSkeleton} items={[() => statsRow]} />
+            <StackH gap={3} principle="sibling-stack" divider isSkeleton={isSkeleton} items={[() => statsRow]} />
 
             <StackH gap={3} isSkeleton={isSkeleton} items={[() => actionsRow]} />
 

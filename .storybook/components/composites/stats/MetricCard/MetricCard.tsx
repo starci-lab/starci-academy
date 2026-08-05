@@ -1,5 +1,6 @@
 import React from "react"
-import { Card, CardContent, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import { Card, CardContent, type CardProps } from "@sb-components/atoms/display/Card/Card"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
@@ -11,7 +12,7 @@ export const meta = { tier: "composite", name: "MetricCard" } as const
 
 /**
  * Inlined faithful local copy of `@/components/blocks/cards/SectionCard` (the
- * header-less path MetricCard uses): HeroUI `Card`/`CardContent` — globals already
+ * header-less path MetricCard uses): house `Card`/`CardContent` — globals already
  * give it the 3xl radius, `p-3`, no-shadow + border.
  * TODO: swap for the SectionCard local when the cards category ports it.
  */
@@ -24,7 +25,14 @@ const SectionCard = ({
     body,
     classNames,
 }: MetricSectionCardProps) => (
-    <Card className={cn(classNames)} data-tier="composite" data-component="MetricCard">
+    // House Card omits `className` from its public type; positioning still lands on the chrome.
+    <Card
+        {...({
+            className: cn(classNames),
+            "data-tier": "composite",
+            "data-component": "MetricCard",
+        } as CardProps)}
+    >
         <CardContent>
             <StackV gap={4} items={[() => body]} />
         </CardContent>

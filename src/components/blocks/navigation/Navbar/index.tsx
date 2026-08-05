@@ -308,7 +308,7 @@ const Navbar = ({
     // notification popover body: header row → async list → footer link
     const notificationPanel = (
         <>
-            <StackH gap={3} principles={["sibling-stack"]} justify="between" items={[() => notificationHeader]} />
+            <StackH gap={3} principle="sibling-stack" justify="between" items={[() => notificationHeader]} />
             <AsyncContent
                 isLoading={notifications.isLoading && notifications.items.length === 0}
                 skeleton={() => <StackV gap={1} items={[() => notificationSkeletonRows]} />}
@@ -425,7 +425,7 @@ const Navbar = ({
                     </HeroButton>
                     <PopoverContent placement="bottom right" className="w-[360px]">
                         {/* inset-exception: vendor popover body padding, wider than tall, not a surface inset */}
-                        <StackV gap={2} principles={["control-pad"]} padding={{ x: 3, y: 2 }} items={[() => notificationPanel]} />
+                        <StackV gap={2} principle="control-pad" padding={{ x: 3, y: 2 }} items={[() => notificationPanel]} />
                     </PopoverContent>
                 </Popover>
             ) : null}
@@ -453,7 +453,7 @@ const Navbar = ({
                     )}
                 </HeroButton>
                 <Dropdown.Popover placement="bottom right" className="w-[300px]">
-                    <StackV gap={1} padding={4} principles={["cell-pad"]} body={() => accountMenuHeader} />
+                    <StackV gap={1} padding={4} principle="cell-pad" body={() => accountMenuHeader} />
                     <Divider />
                     <Dropdown.Menu aria-label="Account">
                         <Dropdown.Section>
@@ -538,8 +538,8 @@ const Navbar = ({
     // controls hidden from the mobile bar live here: language + theme
     const drawerControls = (
         <>
-            <StackH gap={3} principles={["sibling-stack"]} justify="between" items={[() => languageRow]} />
-            <StackH gap={3} principles={["sibling-stack"]} justify="between" items={[() => themeRow]} />
+            <StackH gap={3} principle="sibling-stack" justify="between" items={[() => languageRow]} />
+            <StackH gap={3} principle="sibling-stack" justify="between" items={[() => themeRow]} />
         </>
     )
 
@@ -560,7 +560,7 @@ const Navbar = ({
             <div className="h-16 min-h-16">
                 <StackH
                     gap={6}
-                    principles={["block-boundary"]}
+                    principle="block-boundary"
                     justify="between"
                     padding={{ x: 4 }}
 

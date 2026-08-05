@@ -4,7 +4,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { LinkBack } from "@sb-components/atoms/navigation/Link/Link"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
-import { principlesAttr } from "@sb-components/frames/_principles"
+import { principleAttr } from "@sb-components/frames/_principles"
 
 /**
  * `WorkSessionHeader` — the band that signals "you are inside a session",
@@ -86,10 +86,10 @@ const WorkSessionHeader = ({
         )
         return (
             <div className="border-b border-default bg-surface">
-                <StackH gap={4} principles="content-row" align="center" isSkeleton={isSkeleton} items={[() => skeletonRow]} />
+                <StackH gap={4} principle="content-row" align="center" isSkeleton={isSkeleton} items={[() => skeletonRow]} />
                 {/* `cell-pad` is the closest registered padding token to this wrapper's
                     `p-2` — the frame's `padding={3}` keeps the exact 8px inset. */}
-                <StackV gap={1} principles="cell-pad" padding={3} isSkeleton={isSkeleton} items={[() => <HeroSkeleton className="h-1 w-full rounded-full" />]} />
+                <StackV gap={1} principle="cell-pad" padding={3} isSkeleton={isSkeleton} items={[() => <HeroSkeleton className="h-1 w-full rounded-full" />]} />
             </div>
         )
     }
@@ -140,22 +140,22 @@ const WorkSessionHeader = ({
                 key={step}
                 type="button"
                 aria-label={`${counter} — ${step}`}
-                className="flex-1 py-2" data-principles={principlesAttr("control-pad")}
+                className="flex-1 py-2" data-principle={principleAttr("control-pad")}
                 onClick={() => onStepPress(step)}
             >
                 {segment}
             </button>
         ) : (
-            <span key={step} className="flex-1 py-2" data-principles={principlesAttr("control-pad")}>{segment}</span>
+            <span key={step} className="flex-1 py-2" data-principle={principleAttr("control-pad")}>{segment}</span>
         )
     })
 
     return (
         <div className="border-b border-default bg-surface">
-            <StackH gap={4} principles="content-row" align="center" isSkeleton={isSkeleton} items={[() => headerRow]} />
+            <StackH gap={4} principle="content-row" align="center" isSkeleton={isSkeleton} items={[() => headerRow]} />
             {/* The rail. Segments are laid out by a frame so the seam stays on scale; each
                 segment carries its own hit zone, because a 4px bar is not a touch target. */}
-            <StackH gap={2} principles="chip-row" align="center" isSkeleton={isSkeleton} items={[() => railSegments]} />
+            <StackH gap={2} principle="chip-row" align="center" isSkeleton={isSkeleton} items={[() => railSegments]} />
         </div>
     )
 }

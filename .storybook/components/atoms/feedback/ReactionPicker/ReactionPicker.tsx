@@ -3,6 +3,10 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
+ * @noSkeleton the reactions are a fixed set the caller declares, not a value fetched behind this
+ * component. There is nothing standing behind the row to wait for, so a shimmer here would be a
+ * shimmer for nothing.
+ *
  * ATOM — `ReactionPicker`: a row of image buttons, each scaling up and lifting
  * with its name floating above on hover, staggered pop-in on mount. Genuinely
  * generic — no "reaction"/"lesson" domain knowledge, only `items`/`activeKey`/

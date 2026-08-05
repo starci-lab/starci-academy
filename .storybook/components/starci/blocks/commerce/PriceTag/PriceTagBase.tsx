@@ -161,7 +161,8 @@ export const PriceTagBase = ({
         // Two vertical rows inside a design (the eyebrow and the breakdown list) =
         // `grouped`, not `tight`. `tight` (1) is reserved for what sits INSIDE a
         // composite, e.g. the icon+label pair of `InlineIconLabel`.
-        <StackV gap={4} principles="label-field" padding={4} isSkeleton={isSkeleton} items={[
+        <StackV gap={1} principle="cell-pad" padding={4} isSkeleton={isSkeleton} items={[() => (
+            <StackV gap={4} principle="label-field" isSkeleton={isSkeleton} items={[
             ({ isSkeleton }: SkeletonProps) => <Typography size="xs" color="muted" text="Price breakdown" isSkeleton={isSkeleton} />,
             // No `gap` passed: `KeyValueList` already owns its row rhythm (its own default
             // is the §10b `grouped` step). Passing one from here overrides the composite's
@@ -210,6 +211,7 @@ export const PriceTagBase = ({
                 />
             ),
         ]} />
+        )]} />
     ) : null
 
     // The price row aligns on BASELINE (big number, struck number, chip share the
@@ -219,7 +221,7 @@ export const PriceTagBase = ({
     const priceRow = (
         <Cluster
             gap={3}
-            principles="value-row"
+            principle="value-row"
             align="baseline"
 
             items={[

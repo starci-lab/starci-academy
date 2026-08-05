@@ -57,7 +57,7 @@ export const ChipGroup = ({
 
                 data-tier="composite"
                 data-component="ChipGroup"
-                data-principles="chip-row"
+                data-principle="chip-row"
             >
                 {/* Matches the resting footprint: `maxVisible` cells, each drawing its own
                     shimmer — the group doesn't draw it for them, or the two shapes would
@@ -79,7 +79,7 @@ export const ChipGroup = ({
 
             data-tier="composite"
             data-component="ChipGroup"
-            data-principles="chip-row"
+            data-principle="chip-row"
         >
             {visibleItems.map(({ key, text }) => (
                 <Chip key={key} text={text} tone={tone} />
@@ -90,7 +90,7 @@ export const ChipGroup = ({
                     label={
                         // Tooltip lists the full row, including the visible part —
                         // opening it shows "everything", not just "what's hidden".
-                        <div data-principles="sibling-stack" className="flex max-h-[200px] flex-col gap-2 overflow-y-auto">
+                        <div data-principle="sibling-stack" className="flex max-h-[200px] flex-col gap-2 overflow-y-auto">
                             {items.map(({ key, text }) => (
                                 <span key={key}>{text}</span>
                             ))}

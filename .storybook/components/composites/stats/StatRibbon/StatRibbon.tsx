@@ -1,5 +1,6 @@
 import React from "react"
-import { Card, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import { Card, type CardProps } from "@sb-components/atoms/display/Card/Card"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StatPair, type StatPairValueType } from "@sb-components/composites/stats/StatPair/StatPair"
 import { ResponsiveRow } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
@@ -74,11 +75,14 @@ export const StatRibbon = ({
         ? Array.from({ length: skeletonCount }, (_unused, index) => ({ key: String(index) }))
         : (items ?? [])
     return (
+        // House Card omits `className` from its public type; bordered chrome + placement still need it.
         <Card
-            variant="default"
-            className={cn(bordered && "!border !border-solid !border-default !shadow-none", classNames)}
-            data-tier="composite"
-            data-component="StatRibbon"
+            {...({
+                variant: "default",
+                className: cn(bordered && "!border !border-solid !border-default !shadow-none", classNames),
+                "data-tier": "composite",
+                "data-component": "StatRibbon",
+            } as CardProps)}
         >
             {/* Desktop: bleed the row to the card's inner edges (`@app-sm:-m-3` cancels the
                 globals `.card { p-3 !important }`) so the per-cell `border-l` reaches the
@@ -90,7 +94,7 @@ export const StatRibbon = ({
                     columns={2}
                     at="sm"
                     gap={4}
-                    principles="sibling-stack"
+                    principle="sibling-stack"
                     items={cells.map((item, index) => () => (
                         <div
 

@@ -10,17 +10,16 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 /**
  * `Progress.*` — the progress-indicator atom namespace, wrapping HeroUI.
  *
- * Members, by shape and meaning:
+ * Members:
  *   - `ProgressBar` — linear bar for ongoing progress. Determinate (`value`) or
  *     `isIndeterminate` (duration unknown).
  *   - `ProgressCircle` — circular, same progress semantics as Bar.
- *   - `ProgressMeter` — static measurement (capacity, battery level, score).
- *     Always determinate — react-aria's Meter has no indeterminate state.
+ *   - `ProgressMeter` — static measurement (capacity, battery, score). Always
+ *     determinate — react-aria's Meter has no indeterminate state.
  *
- * Bar/Circle wrap react-aria's ProgressBar (supports indeterminate); Meter wraps
- * react-aria's Meter (measurement only). Each member owns its size/color mapping
- * and draws its own leaf skeleton (`isSkeleton`). Track/Fill are internal parts —
- * owned by the atom, not inserted by the consumer.
+ * Bar/Circle wrap react-aria's ProgressBar; Meter wraps react-aria's Meter. Each
+ * member owns its size/color mapping and draws its own leaf skeleton
+ * (`isSkeleton`). Track/Fill are internal parts owned by the atom.
  */
 
 /** Fill tone shared by all three members. */
@@ -46,6 +45,11 @@ interface ProgressTrackProps {
     /** Render the leaf skeleton instead of the indicator. */
     isSkeleton?: boolean
     /**
+     * Track thickness. `"compact"` is the labelled-meter density (`h-1`);
+     * omit for the atom's own preset size.
+     */
+    trackDensity?: "default" | "compact"
+    /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      * Prefer this over `className`; the string form is going away.
      */
@@ -64,6 +68,7 @@ const ProgressBar = ({
     size = "md",
     ariaLabel = "Progress",
     isSkeleton = false,
+    trackDensity = "default",
     classNames,
 }: ProgressTrackProps) => {
     if (isSkeleton) {
@@ -71,7 +76,8 @@ const ProgressBar = ({
             <HeroSkeleton
                 data-tier="atom"
                 data-component="ProgressBar"
-                className={cn("h-2 w-full rounded-full", classNames)}
+                className={cn(trackDensity === "compact" ? "h-1" : "h-2", "w-full rounded-full", classNames)}
+
             />
         )
     }
@@ -87,10 +93,8 @@ const ProgressBar = ({
             size={size}
             className={cn("w-full", classNames)}
         >
-            <HeroProgressBar.Track
-            >
-                <HeroProgressBar.Fill
-                />
+            <HeroProgressBar.Track className={trackDensity === "compact" ? "h-1" : undefined}>
+                <HeroProgressBar.Fill />
             </HeroProgressBar.Track>
         </HeroProgressBar>
     )
@@ -113,6 +117,7 @@ const ProgressCircle = ({
                 data-tier="atom"
                 data-component="ProgressCircle"
                 className={cn("rounded-full", CIRCLE_BOX[size], classNames)}
+
             />
         )
     }
@@ -129,9 +134,11 @@ const ProgressCircle = ({
             className={cn(classNames)}
         >
             <HeroProgressCircle.Track
+
             >
                 <HeroProgressCircle.TrackCircle />
                 <HeroProgressCircle.FillCircle
+
                 />
             </HeroProgressCircle.Track>
         </HeroProgressCircle>
@@ -181,6 +188,7 @@ const Meter = ({
                 data-tier="atom"
                 data-component="ProgressGauge"
                 className={cn("h-2 w-full rounded-full", classNames)}
+
             />
         )
     }
@@ -196,8 +204,10 @@ const Meter = ({
             className={cn("w-full", classNames)}
         >
             <HeroMeter.Track
+
             >
                 <HeroMeter.Fill
+
                 />
             </HeroMeter.Track>
         </HeroMeter>
@@ -212,10 +222,6 @@ const Meter = ({
  */
 export { ProgressBar, ProgressCircle, Meter as ProgressGauge }
 
-/** `Progress.*` namespace — folder-matching handle grouping the progress-indicator atom members. */
-export const Progress = { Bar: ProgressBar, Circle: ProgressCircle, Gauge: Meter }
-
-/** Tier metadata for each `Progress.*` member, used by the component registry/Storybook lookup. */
 export const meta = [
     { tier: "atom", name: "ProgressBar" },
     { tier: "atom", name: "ProgressCircle" },

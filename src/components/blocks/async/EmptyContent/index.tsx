@@ -66,7 +66,7 @@ export const EmptyContent = ({
                         )}
                     </>
                 ),
-                () => <StackV gap={2} principles={["title-subtitle"]} items={titleLines} />,
+                () => <StackV gap={2} principle="title-subtitle" items={titleLines} />,
                 ...(onRetry && retryLabel
                     ? [() => <Button variant="secondary" size="sm" onPress={onRetry} label={retryLabel} />]
                     : []),

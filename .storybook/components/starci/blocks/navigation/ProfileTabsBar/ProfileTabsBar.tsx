@@ -115,7 +115,7 @@ const ProfileTabsBar = ({
                                 >
                                     <StackH
                                         gap={2}
-                                        principles="icon-text"
+                                        principle="icon-text"
                                         align="center"
 
                                         items={[

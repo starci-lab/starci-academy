@@ -1,14 +1,14 @@
 import React from "react"
-import { Card, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import { Card, type CardProps } from "@/components/atoms/display/Card"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { StatPair, type StatPairValueType } from "@/components/composites/stats/StatPair"
 import { ResponsiveRow } from "@/components/frames/ResponsiveRow"
 
-/**
- * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/composites/stats/StatRibbon`. Authored in Storybook (not `src`);
- * synced to `src` later.
- */
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "StatRibbon" } as const
+
+/** Same parts for every leaf: N StatPair cells inside one Card — the real `StatPair` composite. */
 
 /** One statistic in a {@link StatRibbon} — a headline value with its caption. */
 export interface StatRibbonItem {
@@ -65,26 +65,26 @@ export type StatRibbonProps = StatRibbonOwnProps &
  *
  * @param props - {@link StatRibbonProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "StatRibbon" } as const
-
-/** A framed row of `StatPair`s in one card, dividing horizontally or wrapping to a mobile grid. */
 export const StatRibbon = ({
     items,
     valueType,
     bordered = false,
     isSkeleton = false,
     skeletonCount = 3,
-    classNames}: StatRibbonProps) => {
+    classNames,
+}: StatRibbonProps) => {
     const cells = isSkeleton
         ? Array.from({ length: skeletonCount }, (_unused, index) => ({ key: String(index) }))
         : (items ?? [])
     return (
+        // House Card omits `className` from its public type; bordered chrome + placement still need it.
         <Card
-            variant="default"
-            className={cn(bordered && "!border !border-solid !border-default !shadow-none", classNames)}
-            data-tier="composite"
-            data-component="StatRibbon"
+            {...({
+                variant: "default",
+                className: cn(bordered && "!border !border-solid !border-default !shadow-none", classNames),
+                "data-tier": "composite",
+                "data-component": "StatRibbon",
+            } as CardProps)}
         >
             {/* Desktop: bleed the row to the card's inner edges (`@app-sm:-m-3` cancels the
                 globals `.card { p-3 !important }`) so the per-cell `border-l` reaches the
@@ -96,22 +96,19 @@ export const StatRibbon = ({
                     columns={2}
                     at="sm"
                     gap={4}
-                    principles={["sibling-stack"]}
+                    principle="sibling-stack"
                     items={cells.map((item, index) => () => (
                         <div
+
                             className={cn(
                                 "min-w-0 @app-sm:flex-1 @app-sm:px-6 @app-sm:py-3 @app-sm:first:pl-3 @app-sm:last:pr-3",
-                                index > 0 && "@app-sm:border-l @app-sm:border-default")}
+                                index > 0 && "@app-sm:border-l @app-sm:border-default",
+                            )}
                         >
                             {isSkeleton ? (
                                 <StatPair isSkeleton valueType={valueType} />
                             ) : (
-                                <StatPair
-                                    value={(item as StatRibbonItem).value}
-                                    label={(item as StatRibbonItem).label}
-                                    detail={(item as StatRibbonItem).detail}
-                                    valueType={valueType}
-                                />
+                                <StatPair value={(item as StatRibbonItem).value} label={(item as StatRibbonItem).label} detail={(item as StatRibbonItem).detail} valueType={valueType} />
                             )}
                         </div>
                     ))}

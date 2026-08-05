@@ -272,7 +272,7 @@ const QaQuestionThread = ({
         const askerNameRow = (
             <StackH
                 gap={3}
-                principles="identity"
+                principle="identity"
                 at="sm"
                 align="center"
                 isSkeleton={isSkeleton}
@@ -340,7 +340,7 @@ const QaQuestionThread = ({
         const collapsedRow = (
             <StackH
                 gap={4}
-                principles="content-row"
+                principle="content-row"
                 align="start"
                 isSkeleton={isSkeleton}
 
@@ -386,7 +386,7 @@ const QaQuestionThread = ({
     const questionMetaRow = (
         <StackH
             gap={3}
-            principles="identity"
+            principle="identity"
             at="sm"
             align="center"
             isSkeleton={isSkeleton}
@@ -407,7 +407,7 @@ const QaQuestionThread = ({
     const questionFooterRow = (
         <StackH
             gap={3}
-            principles="flex-action"
+            principle="flex-action"
             at="sm"
             align="center"
             isSkeleton={isSkeleton}
@@ -439,7 +439,7 @@ const QaQuestionThread = ({
             <div className="max-w-[92%]">
                 <StackV
                     gap={2}
-                    principles="title-subtitle"
+                    principle="title-subtitle"
                     align={isMineQuestion ? "end" : "stretch"}
                     classNames={["min-w-0"]}
                     isSkeleton={isSkeleton}

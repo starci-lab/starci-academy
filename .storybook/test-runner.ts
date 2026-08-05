@@ -70,13 +70,6 @@ const TRANSPARENT_TIERS = new Set(["fixture"])
 const ALLOWED_GAP_PX = [0, 4, 8, 12, 16, 24, 32, 48]
 
 /**
- * `principles/responsive.md` — the four container breakpoints, in px. `--container-app-*` in
- * `src/app/globals.css` confirms the root font-size assumption (`40rem` ↔ `640px` etc.) — these
- * are not guessed, they are the same tokens the app's own CSS declares.
- */
-const BREAKPOINT_PX = { sm: 640, md: 768, lg: 1024, xl: 1280 } as const
-
-/**
  * `elements/*.md` "may import" rows, restated as: which tiers may appear as the NEAREST
  * `data-tier` descendant of an element of this tier (nearest = walking down through untagged
  * wrappers and `fixture` scaffolding, stopping the instant a real tier is found — what is deeper
@@ -365,6 +358,9 @@ async function auditEllipsis(page: Page): Promise<AuditResult> {
  * it (nothing else in this system moves the breakpoint mid-band). Ten resizes is cheap; sweeping
  * the full range at fine granularity, for every story, is not, and isn't needed to prove the
  * step-function property — see the "could not verify" note on cost in the final report.
+ *
+ * Breakpoint edges are `principles/responsive.md` (sm 640 / md 768 / lg 1024 / xl 1280), matching
+ * `--container-app-*` in `src/app/globals.css`.
  */
 const SWEEP_WIDTHS = [320, 639, 640, 767, 768, 1023, 1024, 1279, 1280, 1440]
 /** Band pairs that must be IDENTICAL — no legal breakpoint sits inside them. */
@@ -392,7 +388,7 @@ async function settle(page: Page) {
 }
 
 async function auditResponsiveSwitch(page: Page): Promise<AuditResult> {
-    const hasFrames = await page.evaluate(`document.querySelector('[data-tier="frame"]') !== null`)
+    const hasFrames = await page.evaluate(() => document.querySelector("[data-tier=\"frame\"]") !== null)
     if (!hasFrames) {
         return { hard: [], info: ["no [data-tier=\"frame\"] elements in this story — responsive sweep skipped"] }
     }
@@ -428,8 +424,8 @@ async function auditResponsiveSwitch(page: Page): Promise<AuditResult> {
                 hard.push(
                     `frame #${i} changed shape between ${lo}px and ${hi}px` +
                     (pinned ? ` (at ${pinned}px)` : "") +
-                    ` — no @app-* breakpoint sits inside that band, so this is either a content-driven ` +
-                    `threshold (FRAME-10's boolean case) or a class-buried width, not the named switch`
+                    " — no @app-* breakpoint sits inside that band, so this is either a content-driven " +
+                    "threshold (FRAME-10's boolean case) or a class-buried width, not the named switch"
                 )
             }
         }
@@ -486,15 +482,16 @@ async function binarySearchChange(page: Page, lo: number, hi: number, index: num
 /**
  * `auditGapScale` above proves a frame's gap is SOME value on the scale. This proves the stronger
  * thing: that a layout decision the source NAMED is the value that name means. A container marked
- * `data-principles="flex-action"` must compute an 8px gap; one marked `data-principles="card-padding"`
+ * `data-principle="flex-action"` must compute an 8px gap; one marked `data-principle="card-padding"`
  * must compute 16px padding. "On the scale" would pass a control row at 24px as happily as at 8px —
  * only the pattern catches a value that is on the ladder but on the wrong rung, and it catches the
  * WRONG-PROPERTY case a gap-only check cannot see at all.
  *
- * `data-principles` is space-separated tokens, like `class` — one element usually makes several layout
- * decisions (pads itself AND sets the gap between its groups), so it declares each. The registry
+ * `data-principle` carries exactly one token per marked frame node. Multiple whitespace-separated
+ * tokens are a hard failure — one element, one layout decision. A node that both pads itself and
+ * sets a gap between its groups is two frames, not two tokens on one node. The registry
  * `patterns.mjs` says, per token, which property to read (`gap` / `padding` / `margin`) and the
- * value it must be. This file needs no table of components: it reads every `data-principles` the story
+ * value it must be. This file needs no table of components: it reads every `data-principle` the story
  * rendered and measures the box the browser produced.
  *
  * An unknown token — a typo, or a pattern nobody registered — is a hard finding on its own: a marker
@@ -509,69 +506,73 @@ async function auditPatterns(page: Page): Promise<AuditResult> {
             const hard = []
             const info = []
 
-            const marked = Array.from(document.querySelectorAll('[data-principles]')).filter((el) => !inPanel(el))
+            const marked = Array.from(document.querySelectorAll('[data-principle]')).filter((el) => !inPanel(el))
             for (const el of marked) {
                 const style = getComputedStyle(el)
-                const tokens = (el.getAttribute("data-principles") || "").split(/\\s+/).filter(Boolean)
+                const declared = el.getAttribute("data-principle") || ""
+                const tokens = declared.split(/\\s+/).filter(Boolean)
                 const px = (v) => parseFloat(v)
-                for (const name of tokens) {
-                    const concept = CONCEPTS[name]
-                    if (!concept) {
-                        hard.push('data-principles token "' + name + '" is not in patterns.mjs — a claim nothing can check')
-                        continue
-                    }
-                    const prop = concept.prop
-
-                    // gap / padding — symmetric px: every measured axis/side must be the concept's
-                    // step, and 'normal' (no gap set) is simply nothing to measure, not a failure.
-                    if (prop === "gap" || prop === "padding") {
-                        const reads = READS[prop] || []
-                        const measured = reads.map((k) => style[k]).filter((v) => v && v !== "normal").map(px).filter((n) => !Number.isNaN(n))
-                        if (measured.length === 0) { info.push(name + ": declares it but has no " + prop + " to measure"); continue }
-                        if (measured.find((n) => Math.abs(n - concept.px) > 1) !== undefined) {
-                            hard.push(name + " (" + concept.what + "): " + prop + " computes " + measured.join("/") + "px, the concept is step " + concept.step + " = " + concept.px + "px")
-                        }
-                        continue
-                    }
-
-                    // padding-xy — the dominant real shape (px ≠ py). x-sides checked against
-                    // concept.x, y-sides against concept.y; a symmetric box here is the mismatch.
-                    if (prop === "padding-xy") {
-                        const xs = READS["padding-xy"].x.map((k) => px(style[k])).filter((n) => !Number.isNaN(n))
-                        const ys = READS["padding-xy"].y.map((k) => px(style[k])).filter((n) => !Number.isNaN(n))
-                        const badX = xs.find((n) => Math.abs(n - concept.x) > 1) !== undefined
-                        const badY = ys.find((n) => Math.abs(n - concept.y) > 1) !== undefined
-                        if ((xs.length || ys.length) && (badX || badY)) {
-                            hard.push(name + " (" + concept.what + "): padding computes x=" + xs.join("/") + " y=" + ys.join("/") + "px, the concept is x=" + concept.x + " y=" + concept.y + "px")
-                        }
-                        continue
-                    }
-
-                    // overflow — a reel scrolls; auto and scroll both satisfy an 'auto' concept.
-                    if (prop === "overflow") {
-                        const v = style[READS.overflow[concept.axis]]
-                        const ok = v === concept.value || (concept.value === "auto" && (v === "auto" || v === "scroll"))
-                        if (!ok) hard.push(name + " (" + concept.what + "): overflow-" + concept.axis + " computes '" + v + "', the concept expects '" + concept.value + "'")
-                        continue
-                    }
-
-                    // position — sticky / fixed read straight back from computed style.
-                    if (prop === "position") {
-                        if (style.position !== concept.value) hard.push(name + " (" + concept.what + "): position computes '" + style.position + "', the concept expects '" + concept.value + "'")
-                        continue
-                    }
-
-                    // margin:auto — DELIBERATELY not asserted. getComputedStyle reports the USED px an
-                    // 'auto' margin resolved to, never the string 'auto', so the concept is unrecoverable
-                    // from the rendered box. Recorded honestly rather than checked against a value the
-                    // DOM does not expose — like the ellipsis 'content fits' case, present-but-unprovable.
-                    if (prop === "margin") { info.push(name + ": margin '" + concept.value + "' does not survive into computed style (auto → used px) — not asserted here"); continue }
-
-                    // breakpoint — the responsive-switch sweep owns this, not a single computed value.
-                    if (prop === "breakpoint") { info.push(name + ": a responsive switch — asserted by the sweep, not measured here"); continue }
-
-                    info.push(name + ": prop '" + prop + "' has no measurement rule in this audit")
+                if (tokens.length !== 1) {
+                    hard.push('data-principle must declare exactly one token, got "' + declared + '"')
+                    continue
                 }
+                const name = tokens[0]
+                const concept = CONCEPTS[name]
+                if (!concept) {
+                    hard.push('data-principle token "' + name + '" is not in patterns.mjs — a claim nothing can check')
+                    continue
+                }
+                const prop = concept.prop
+
+                // gap / padding — symmetric px: every measured axis/side must be the concept's
+                // step, and 'normal' (no gap set) is simply nothing to measure, not a failure.
+                if (prop === "gap" || prop === "padding") {
+                    const reads = READS[prop] || []
+                    const measured = reads.map((k) => style[k]).filter((v) => v && v !== "normal").map(px).filter((n) => !Number.isNaN(n))
+                    if (measured.length === 0) { info.push(name + ": declares it but has no " + prop + " to measure"); continue }
+                    if (measured.find((n) => Math.abs(n - concept.px) > 1) !== undefined) {
+                        hard.push(name + " (" + concept.what + "): " + prop + " computes " + measured.join("/") + "px, the concept is step " + concept.step + " = " + concept.px + "px")
+                    }
+                    continue
+                }
+
+                // padding-xy — the dominant real shape (px ≠ py). x-sides checked against
+                // concept.x, y-sides against concept.y; a symmetric box here is the mismatch.
+                if (prop === "padding-xy") {
+                    const xs = READS["padding-xy"].x.map((k) => px(style[k])).filter((n) => !Number.isNaN(n))
+                    const ys = READS["padding-xy"].y.map((k) => px(style[k])).filter((n) => !Number.isNaN(n))
+                    const badX = xs.find((n) => Math.abs(n - concept.x) > 1) !== undefined
+                    const badY = ys.find((n) => Math.abs(n - concept.y) > 1) !== undefined
+                    if ((xs.length || ys.length) && (badX || badY)) {
+                        hard.push(name + " (" + concept.what + "): padding computes x=" + xs.join("/") + " y=" + ys.join("/") + "px, the concept is x=" + concept.x + " y=" + concept.y + "px")
+                    }
+                    continue
+                }
+
+                // overflow — a reel scrolls; auto and scroll both satisfy an 'auto' concept.
+                if (prop === "overflow") {
+                    const v = style[READS.overflow[concept.axis]]
+                    const ok = v === concept.value || (concept.value === "auto" && (v === "auto" || v === "scroll"))
+                    if (!ok) hard.push(name + " (" + concept.what + "): overflow-" + concept.axis + " computes '" + v + "', the concept expects '" + concept.value + "'")
+                    continue
+                }
+
+                // position — sticky / fixed read straight back from computed style.
+                if (prop === "position") {
+                    if (style.position !== concept.value) hard.push(name + " (" + concept.what + "): position computes '" + style.position + "', the concept expects '" + concept.value + "'")
+                    continue
+                }
+
+                // margin:auto — DELIBERATELY not asserted. getComputedStyle reports the USED px an
+                // 'auto' margin resolved to, never the string 'auto', so the concept is unrecoverable
+                // from the rendered box. Recorded honestly rather than checked against a value the
+                // DOM does not expose — like the ellipsis 'content fits' case, present-but-unprovable.
+                if (prop === "margin") { info.push(name + ": margin '" + concept.value + "' does not survive into computed style (auto → used px) — not asserted here"); continue }
+
+                // breakpoint — the responsive-switch sweep owns this, not a single computed value.
+                if (prop === "breakpoint") { info.push(name + ": a responsive switch — asserted by the sweep, not measured here"); continue }
+
+                info.push(name + ": prop '" + prop + "' has no measurement rule in this audit")
             }
             return { hard, info }
         })()

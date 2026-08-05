@@ -4,16 +4,11 @@ import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
  * Identity root for a drawer overlay: emits `data-tier="drawer"` and the caller's
  * `data-component` so every drawer shares one root instead of a raw identity div.
  * It arranges nothing and carries no spacing -- pure identity, so it declares no
- * `principles`.
+ * `principle`.
  */
 export interface DrawerRootProps {
     /** The drawer's `data-component` name -- supplied by the caller, e.g. `"SubmissionAttemptsDrawer"`. */
     "data-component": string
-    /**
-     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
-     * `data-anat-part`. The frame never names itself.
-     */
-    anatPart?: string
     /** Single buildable region mounted inside the identity root. */
     body: ComponentTypeWithSkeleton
     /** When true, the body renders in its skeleton state. */
@@ -29,11 +24,10 @@ export const meta = { tier: "frame", name: "DrawerRoot" } as const
  */
 export const DrawerRoot = ({
     "data-component": dataComponent,
-    anatPart,
     body: Body,
     isSkeleton,
 }: DrawerRootProps) => (
-    <div data-tier="drawer" data-component={dataComponent} data-anat-part={anatPart}>
+    <div data-tier="drawer" data-component={dataComponent}>
         <Body isSkeleton={isSkeleton} />
     </div>
 )

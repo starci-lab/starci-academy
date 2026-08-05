@@ -82,7 +82,7 @@ export const MetaDotRow = ({
             className={cn("flex flex-wrap items-center gap-1 text-muted", classNames)}
             data-tier="composite"
             data-component="MetaDotRow"
-            data-principles="separator-dot"
+            data-principle="separator-dot"
         >
             {fragments.map((fragment, index) => (
                 <React.Fragment key={fragment.key}>

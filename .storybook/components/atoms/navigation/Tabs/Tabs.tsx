@@ -13,6 +13,13 @@ import { TabsExtended } from "./TabsExtended"
  * at call. `secondary` produces a label+underline shimmer instead of a solid pill.
  */
 export { TabsBase as Tabs, TabsExtended }
+export {
+    TabsListContainer,
+    TabsList,
+    TabsTab,
+    TabsIndicator,
+    TabsPanel,
+} from "./TabsParts"
 
 export type { IconComponent, TabItem, TabsBaseProps } from "./TabsBase"
 export type { TabsExtendedProps } from "./TabsExtended"

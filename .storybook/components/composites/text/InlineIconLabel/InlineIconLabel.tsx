@@ -1,5 +1,5 @@
 import React from "react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { TypographyColor, TypographyIcon } from "@sb-components/atoms/text/Typography/Typography"
 import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
@@ -32,7 +32,7 @@ interface SizeConfig {
     /** Gap between icon and text. */
     gap: string
     /**
-     * `data-principles` token for this size's gap — both sizes now render at `gap-1` (4px,
+     * `data-principle` token for this size's gap — both sizes now render at `gap-1` (4px,
      * gap-scale step 2) and carry the same `icon-text` token (`patterns.mjs`): an icon
      * beside its text is one thing with a joint, whether or not it is clickable.
      */
@@ -41,7 +41,6 @@ interface SizeConfig {
 
 // Icon is always size-4 (inline-meta convention across the app); only text + gap scale.
 const ICON_BOX = "[&_svg]:size-4"
-const SKELETON_ICON = "size-4"
 
 const SIZE_CONFIG: Record<InlineIconLabelSize, SizeConfig> = {
     // gap-1 = 4px = the step-2 joint; an icon + its text as ONE thing — `icon-text`.
@@ -77,7 +76,7 @@ export interface InlineIconLabelProps {
     size?: InlineIconLabelSize
     /** Truncate the label to a single line (needs a bounded parent width). */
     truncate?: boolean
-    /** `true` → render the skeleton mirror (icon dot + text bar). */
+    /** `true` → shimmer the label via `Typography`; the icon stays (caller-supplied, not fetched). */
     isSkeleton?: boolean
     /**
      * Width of the label's shimmer, as a fraction of the row. This value is
@@ -124,27 +123,20 @@ export const InlineIconLabel = ({
                                 : undefined
 
     // COMPOSITE-10: ONE render path — same wrapper, same gap, in both states. The
-    // label text always goes through `Typography`'s own `isSkeleton` (§12c: the atom
-    // draws its own bar, sized to ITS OWN value). The leading icon is the one
-    // exception: no bare icon-shaped shimmer atom exists yet, so there is nothing to
-    // forward `isSkeleton` into for it — a documented ATOM GAP, kept here as a single
-    // conditional rather than a second copy of the wrapper `<span>`.
+    // icon is caller-supplied (not fetched), so it stays mounted while loading; only
+    // the label shimmers via `Typography`'s own `isSkeleton`.
     return (
         <span
             className={cn("inline-flex items-center", cfg.gap, classNames)}
 
             data-tier="composite"
             data-component="InlineIconLabel"
-            data-principles={cfg.pattern}
+            data-principle={cfg.pattern}
         >
-            {isSkeleton ? (
-                <HeroSkeleton className={cn(SKELETON_ICON, "shrink-0 rounded-full")} />
-            ) : (
-                // icon-ownership: the composite forces the svg box; tone via currentColor on this span
-                <span className={cn("shrink-0", ICON_BOX, toneClass)}>
-                    <Icon aria-hidden focusable="false" />
-                </span>
-            )}
+            {/* icon-ownership: the composite forces the svg box; tone via currentColor on this span */}
+            <span className={cn("shrink-0", ICON_BOX, toneClass)}>
+                <Icon aria-hidden focusable="false" />
+            </span>
             <span className={isSkeleton ? skeletonWidth : undefined}>
                 <Typography
                     size={size}

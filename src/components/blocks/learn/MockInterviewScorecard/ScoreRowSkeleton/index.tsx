@@ -8,7 +8,7 @@ export const ScoreRowSkeleton = () => (
     <StackH
         gap={4}
         align="center"
-        principles={["content-row"]}
+        principle="content-row"
         items={[
             () => <Typography size="sm" isSkeleton classNames={["shrink-0", "w-1/4"]} />,
             () => <HeroSkeleton className="h-1 flex-1 rounded-full" />,

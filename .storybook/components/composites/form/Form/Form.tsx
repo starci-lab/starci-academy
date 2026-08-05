@@ -166,7 +166,7 @@ const Section = ({
         className={cn("flex min-w-0 flex-col", GAP_CLASS[gap], classNames)}
         data-tier="composite"
         data-component="FormSection"
-        data-principles="label-field"
+        data-principle="label-field"
     >
         {/* tight gap-1: title ↔ description is a PAIR, not two regions (§10b).
             No `` wrapper: it never helps the reader past what the
@@ -176,7 +176,7 @@ const Section = ({
         <StackV
             gap={2}
             classNames={["min-w-0"]}
-            principles="title-subtitle"
+            principle="title-subtitle"
             isSkeleton={isSkeleton}
             items={[
                 () => (

@@ -1,0 +1,102 @@
+{
+  "updated": "2026-08-06",
+  "decisions": [
+    {
+      "id": "fieldframe-stay-until-labeled-controls-re-tier",
+      "date": "2026-08-05",
+      "status": "open",
+      "summary": "Do not move FieldFrame into composites/form while labeled form controls remain atoms.",
+      "reason": "InputText, ChoiceCheckbox, and siblings import FieldFrame. COMPOSITE sits above atom, so an atom cannot import a composite helper. Moving FieldFrame now would either break import direction or force a silent atom-to-composite re-tier of every labeled control in the same patch. Dropzone and ImageDropzone can move alone because they do not feed other atoms.",
+      "next": "After Choice*/Input* labeled members become composites (or vendor-only Base atoms plus composite wrappers), move FieldFrame with them and replace children/skeletonControl with a buildable control slot."
+    },
+    {
+      "id": "multi-principle-keep-first-token",
+      "date": "2026-08-05",
+      "status": "superseded",
+      "summary": "Singular principles unblocked tsc by keeping the first token on 19 multi-token call sites.",
+      "reason": "Replaced by nested one-token ownership splits in the 2026-08-06 principle migration repair.",
+      "supersededBy": "multi-token-nested-ownership-2026-08-06"
+    },
+    {
+      "id": "multi-token-nested-ownership-2026-08-06",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "Former multi-token sites split into nested frames with one principle each.",
+      "sites": [
+        "AuthorByline: outer separator-dot, inner icon-text",
+        "InputTags: outer control-pad Box, inner sibling-stack Cluster gap={3}",
+        "PriceTagBase: outer cell-pad, inner label-field",
+        "ContentCommentThread byline: removed principle from single-child wrapper",
+        "PlaygroundConnectSheet peek x2: outer cell-pad, inner content-row",
+        "PlaygroundConnectSheet body: outer cell-pad, inner card-caption",
+        "CommandSkeleton body: outer cell-pad, inner sibling-stack",
+        "FlowDiagram / QaMessageBubble MessageRow: SB-only; src had no multi-token twin"
+      ],
+      "next": "None. SB and src twins both split."
+    },
+    {
+      "id": "principle-filename-stays-plural",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Keep module filename `_principles.ts` even though the public prop is `principle`.",
+      "reason": "Renaming the file would churn every importer for an rg-cleanliness win. Import path hits are not API leftovers.",
+      "next": "Leave the filename plural as the token registry. Do not rename in tooling sync. Teacher only if the filename is later treated as public API."
+    },
+    {
+      "id": "inputtags-sibling-stack-gap-step",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "InputTags inner Cluster uses gap={3} (sibling-stack / 8px), not gap={2}.",
+      "reason": "The old class was Tailwind `gap-2` (8px). House step 3 is that value. Prompt text said gap={2}, which is the 4px icon-text step.",
+      "next": "Teacher: confirm gap={3} on the sibling-stack layer."
+    },
+    {
+      "id": "content-comment-byline-wrapper",
+      "date": "2026-08-06",
+      "status": "applied",
+      "summary": "ContentCommentThread byline seam lives inside CommentByline.",
+      "reason": "Passthrough StackH wrapper removed. CommentByline is outer separator-dot + inner icon-text on both trees.",
+      "next": "None."
+    },
+    {
+      "id": "worksessionheader-src-partial-port",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Src WorkSessionHeader only gained data-principle on segment hit-zones.",
+      "reason": "Src is still HeroUI ScrollShadow, not the SB Stack header/rail. Fuller frame port is out of this marker repair.",
+      "next": "Teacher: leave markers, or port the SB frame shell in a later patch."
+    },
+    {
+      "id": "sublabel-field-unregistered-token",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "SurfaceCard and LabeledCard emit data-principle=\"sublabel-field\" which is not a PrincipleToken.",
+      "reason": "Pre-existing invalid token, renamed marker only. Oracle will hard-fail unknown tokens.",
+      "next": "Teacher: register sublabel-field, or map subtle labels to label-field."
+    },
+    {
+      "id": "eslint-still-expects-principles-prop",
+      "date": "2026-08-06",
+      "status": "applied",
+      "summary": "starci-fe/require-frame-self-declare and explainJustifiesTokenChoice now detect singular `principle`.",
+      "reason": "Tooling sync batch 2026-08-06. Diagnostics, docs, and parsers use `principle` / `data-principle` / `principleAttr`.",
+      "next": "None."
+    },
+    {
+      "id": "anat-part-contract-conflict",
+      "date": "2026-08-06",
+      "status": "applied",
+      "summary": "Teacher chose the retired overlay: FRAME-11 no longer requires anatPart; both trees stay anatomy-free.",
+      "reason": "ESLint starci-fe/no-anatomy-overlay and split.md already retired the overlay. Frame audit and Storybook frames now match.",
+      "next": "None."
+    },
+    {
+      "id": "cell-pad-shell-dummy-gap",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Outer cell-pad Stack shells pass a dummy gap because Stack.gap is required.",
+      "reason": "Nested ownership needs a padding owner with a single body child. Stack currently requires gap.",
+      "next": "Teacher: accept dummy gap, or allow optional gap on padding-only Stack shells."
+    }
+  ]
+}

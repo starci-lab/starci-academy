@@ -74,16 +74,30 @@ interface CommentBylineProps {
  * anything stateful — there is no state in this leaf to lose.
  */
 const CommentByline = ({ username, isFounderAuthor, createdTimeAgo, isEdited }: CommentBylineProps) => (
-    <>
-        <Typography size="sm" weight="medium" text={username} />
-        {isFounderAuthor ? (
-            <SealCheckIcon weight="fill" aria-label="Founder" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-        ) : null}
-        <Typography size="xs" color="muted" text={createdTimeAgo} />
-        {isEdited ? (
-            <Typography size="xs" color="muted" text="(edited)" />
-        ) : null}
-    </>
+    <StackH
+        gap={2}
+        principle="separator-dot"
+        align="center"
+        items={[
+            () => (
+                <StackH
+                    gap={2}
+                    principle="icon-text"
+                    align="center"
+                    items={[
+                        () => <Typography size="sm" weight="medium" text={username} />,
+                        ...(isFounderAuthor ? [() => (
+                            <SealCheckIcon weight="fill" aria-label="Founder" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+                        )] : []),
+                    ]}
+                />
+            ),
+            () => <Typography size="xs" color="muted" text={createdTimeAgo} />,
+            ...(isEdited ? [() => (
+                <Typography size="xs" color="muted" text="(edited)" />
+            )] : []),
+        ]}
+    />
 )
 
 /** Props for {@link ContentCommentThread}. */
@@ -208,7 +222,7 @@ const ContentCommentThread = ({
             )}
 
             {!comment.isDeleted && !editing ? (
-                <StackH gap={4} principles={["content-row"]} at="sm" align="center" items={[() => actionRow]} />
+                <StackH gap={4} principle="content-row" at="sm" align="center" items={[() => actionRow]} />
             ) : null}
         </>
     )
@@ -224,7 +238,7 @@ const ContentCommentThread = ({
             {replying ? (
                 <StackH
                     gap={2}
-                    principles={["icon-text"]}
+                    principle="icon-text"
                     align="start"
 
                     items={[
@@ -302,21 +316,11 @@ const ContentCommentThread = ({
 
 
             byline={() => (
-                <StackH
-                    gap={2}
-                    principles={["icon-text", "separator-dot"]}
-                    at="sm"
-                    align="center"
-
-                    items={[() => (
-                        <CommentByline
-                            username={comment.author.username}
-                            isFounderAuthor={comment.isFounderAuthor}
-                            createdTimeAgo={comment.createdTimeAgo}
-                            isEdited={comment.isEdited}
-
-                        />
-                    )]}
+                <CommentByline
+                    username={comment.author.username}
+                    isFounderAuthor={comment.isFounderAuthor}
+                    createdTimeAgo={comment.createdTimeAgo}
+                    isEdited={comment.isEdited}
                 />
             )}
             // `body` is the former `children` slot (COMPOSITE-8) — a component

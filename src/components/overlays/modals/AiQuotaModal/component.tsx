@@ -148,7 +148,7 @@ const _AiQuotaModal = ({
         <Box className="pr-8">
             <StackH
                 gap={3}
-                principles={["identity"]}
+                principle="identity"
                 align="center"
                 items={titleAndTierChip}
             />

@@ -3,17 +3,11 @@ import { cn } from "@heroui/react"
 import { LinkSeeMore } from "@/components/atoms/navigation/Link"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackH } from "@/components/frames/Stack"
-import type { ComponentTypeWithSkeleton , SkeletonProps } from "@/components/frames/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — shared header of the `Surface*Card` family.
- *
- * Authored inside Storybook (not `src/components`) so the design is iterated here
- * first and synced to `src` later (teacher 2026-07-21: storybook-driven, "fix
- * storybook first, sync to code after"). Imported by the local SurfaceCard /
- * SurfaceListCard / SurfaceAccordionCard specs so all three share ONE header.
- * ─────────────────────────────────────────────────────────────────────────────
+ * The shared header of the `Surface*Card` family. Imported by SurfaceCard,
+ * SurfaceListCard, and SurfaceAccordionCard so all three share ONE header.
  */
 
 /** Shared label props every `Surface*Card` accepts to render a header above the surface. */
@@ -44,11 +38,6 @@ export interface SurfaceLabelProps {
     /** Render the label as a SUBTLE eyebrow (`text-xs text-muted`, tighter gap). */
     subtleLabel?: boolean
     /**
-     * Storybook-only: attaches `data-anat-part` to header row parts rebuilt from an
-     * atom (currently: `LinkSeeMore`) so a BlockAnatomy panel can anchor the badge +
-     * link to that atom's own story. Doesn't affect the visual.
-     */
-    /**
      * `true` → the header row is in the RESTING state: `label` and the slot must turn
      * into shimmer.
      *
@@ -73,7 +62,8 @@ export const SurfaceCardHeader = ({
     seeMoreLabel = "See more",
     action: Action,
     subtleLabel = false,
-    isSkeleton = false}: SurfaceLabelProps) => {
+    isSkeleton = false,
+}: SurfaceLabelProps) => {
     if (label == null) return null
     // Both sides of the row follow `subtleLabel` for text size — ONE shared variable
     // so the two sides can never drift apart.
@@ -90,7 +80,6 @@ export const SurfaceCardHeader = ({
             color={subtleLabel ? "muted" : undefined}
             truncate
             isSkeleton={isSkeleton}
-            classNames={isSkeleton ? ["w-1/2"] : undefined}
             text={label}
         />
     )
@@ -107,7 +96,6 @@ export const SurfaceCardHeader = ({
             size={textSize}
             color="muted"
             isSkeleton={isSkeleton}
-            classNames={isSkeleton ? ["shrink-0", "w-1/4"] : ["shrink-0"]}
             text={labelEnd}
         />
     ) : null)
@@ -115,10 +103,9 @@ export const SurfaceCardHeader = ({
         <StackH
             gap={4}
             justify="between"
-            principles={["content-row"]}
-            isSkeleton={isSkeleton}
+            principle="content-row"
             items={[
-                ({ isSkeleton }: SkeletonProps) => <StackH gap={3} classNames={["min-w-0"]} isSkeleton={isSkeleton} items={[() => labelSlot]} />,
+                () => <StackH gap={3} classNames={["min-w-0"]} items={[() => labelSlot]} />,
                 () => endSlot,
             ]}
         />
@@ -129,26 +116,21 @@ export const SurfaceCardHeader = ({
 export const surfaceSectionGap = (subtleLabel: boolean | undefined) => (subtleLabel ? "gap-2" : "gap-3")
 
 /**
- * Three frame variants of a `Surface*Card` face — AXIS 1/3 (teacher decided
- * 2026-07-26, see the top of SurfaceCard.tsx to read all three axes):
+ * Three frame variants of a `Surface*Card` face:
  * - `"surface"` (default) — `shadow-surface`, used when the parent is a bare
  *   `bg-background`.
  * - `"nested"` — a border REPLACES the shadow (`border border-default`, shadow
  *   dropped) — used when this face sits INSIDE another face (a `bg-surface`
  *   panel, a `bg-surface-secondary` bubble, a modal/page card): the shadow sinks
- *   into the parent face so the signal switches to a border instead (§1a).
+ *   into the parent face so the signal switches to a border instead.
  */
 export type SurfaceCardVariant = "surface" | "nested"
 
 /**
  * The shared `Surface*Card` frame class — `rounded-3xl bg-surface` + a BORDER XOR the
  * elevation SHADOW (`variant="nested"` = surface-in-surface: a border replaces the
- * shadow that renders invisible on a parent surface). Was copy-pasted verbatim in
- * SurfaceCard / SurfaceListCard / SurfaceAccordionCard / CrossListCard — now ONE
- * source. Callers add their own `overflow-hidden` / padding.
- *
- * 2026-07-26 (teacher): the parameter changed from `bordered?: boolean` to {@link SurfaceCardVariant}.
- * `bordered=true` ⇔ `variant="nested"`, `bordered=false` ⇔ `variant="surface"` (default).
+ * shadow that renders invisible on a parent surface). Callers add their own
+ * `overflow-hidden` / padding.
  */
 export const surfaceFrame = (variant: SurfaceCardVariant = "surface") =>
     cn("rounded-3xl bg-surface", variant === "nested" ? "border border-default" : "shadow-surface")

@@ -69,7 +69,7 @@ export const _MermaidDiagram = ({ svg, loadingLabel, expandLabel, caption, fallb
                             <Modal.Container size="full">
                                 <Modal.Dialog>
                                     <Modal.CloseTrigger />
-                                    <Modal.Body data-principles="card-padding" className="p-4">
+                                    <Modal.Body data-principle="card-padding" className="p-4">
                                         {/* Full-screen figure: diagram scaled to fill, caption beneath. */}
                                         <figure className="flex h-full flex-col items-center justify-center gap-2">
                                             <div className="flex w-full flex-1 items-center justify-center overflow-auto">

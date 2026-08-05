@@ -131,7 +131,7 @@ export const ChipButtonList = ({
 
             data-tier="composite"
             data-component="ChipButtonList"
-            data-principles={direction === "wrap" ? "flex-action" : undefined}
+            data-principle={direction === "wrap" ? "flex-action" : undefined}
         >
             {rendered}
         </div>

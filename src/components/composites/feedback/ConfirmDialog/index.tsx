@@ -1,24 +1,24 @@
-import { AlertDialog, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import {
+    AlertDialogRoot,
+    AlertDialogBackdrop,
+    AlertDialogContainer,
+    AlertDialogDialog,
+    AlertDialogHeader,
+    AlertDialogHeading,
+    AlertDialogBody,
+    AlertDialogFooter,
+} from "@/components/atoms/feedback/AlertDialog"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { ButtonGroup } from "@/components/composites/buttons/ButtonGroup"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `ConfirmDialog`, a blocking dialog shell for an
- * action that can't be undone (`title`/`description` + `confirmLabel`/`cancelLabel`).
- *
- * ⚠️ Split out of the `Feedback.*` namespace (2026-08-01) back into its own flat
- * file — the 2026-07-25 consolidation grouped `Callout`/`Empty`/`Confirm` under
- * one `Feedback` folder; this reverses that so each frame is discoverable by
- * its own name again (this member was `Feedback.Confirm` / `FeedbackConfirm`).
- * Props/behaviour are UNCHANGED — this is a file-location + naming refactor,
- * not a visual or API change.
- *
- * FRAME API LAW: the shell already builds a FULL header/body/footer (footer =
- * `ButtonGroup` cancel + confirm) so it does NOT open up `children` — content
- * goes through `title`/`description` only.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `ConfirmDialog` — a blocking dialog shell for an irreversible action (unenroll, delete a
+ * submission). Builds Header/Body/Footer; content goes through `title`/`description` + the two
+ * button labels, not `children`. Purely presentational: `isOpen` and every callback come via
+ * props. The Confirm button does not close the dialog — the caller closes it through
+ * `onOpenChange` once the action finishes, so `isConfirming` keeps it open while waiting.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -26,7 +26,7 @@ export const meta = { tier: "composite", name: "ConfirmDialog" } as const
 
 /** Props for {@link ConfirmDialog}. */
 export interface ConfirmDialogProps {
-    /** Whether the dialog is currently open (controlled). Forwarded to HeroUI `AlertDialog`. */
+    /** Whether the dialog is currently open (controlled). Forwarded to house `AlertDialogRoot`. */
     isOpen: boolean
     /**
      * Open-state change handler (fires on cancel and, when dismissable, on Escape).
@@ -75,7 +75,7 @@ export interface ConfirmDialogProps {
 
 /**
  * A controlled confirmation dialog for irreversible actions (unenroll from a course,
- * delete a submission) built on HeroUI `AlertDialog`. A purely presentational frame —
+ * delete a submission) built on house `AlertDialog*` parts. A purely presentational frame —
  * open state and every callback come in via props; the frame holds no state, does no fetching.
  *
  * The shell already builds a FULL header/body/footer (footer = `ButtonGroup` cancel +
@@ -98,35 +98,31 @@ export const ConfirmDialog = ({
 }: ConfirmDialogProps) => {
     const isDanger = tone === "danger"
     return (
-        <AlertDialog isOpen={isOpen} onOpenChange={onOpenChange}>
-            {/* `AlertDialog` root = react-aria `DialogTrigger`: a LOGICAL wrapper, renders no DOM
-                node of its own. */}
-            <AlertDialog.Backdrop>
-                <AlertDialog.Container size="sm">
-                    <AlertDialog.Dialog className={cn(classNames)}>
-                        {/* No status icon — text-only; layout UNCHANGED (heading/body left, footer right) — teacher confirmed 2026-07-23. */}
-                        <AlertDialog.Header>
-                            <AlertDialog.Heading>
+        <AlertDialogRoot isOpen={isOpen} onOpenChange={onOpenChange}>
+            {/* Root = react-aria `DialogTrigger`: a LOGICAL wrapper, renders no DOM node of its own. */}
+            <AlertDialogBackdrop>
+                <AlertDialogContainer size="sm">
+                    <AlertDialogDialog className={cn(classNames)}>
+                        {/* No status icon — text-only; heading/body left, footer right. */}
+                        <AlertDialogHeader>
+                            <AlertDialogHeading>
                                 {/* `alert-dialog__heading` already sets `text-base font-medium` —
                                     match it explicitly so wrapping in `Typography` doesn't shift
                                     the weight. */}
                                 <Typography text={title} weight="medium" isSkeleton={isSkeleton} />
-                            </AlertDialog.Heading>
-                        </AlertDialog.Header>
+                            </AlertDialogHeading>
+                        </AlertDialogHeader>
                         {description != null ? (
-                            <AlertDialog.Body>
+                            <AlertDialogBody>
                                 {/* Typography atom doesn't accept unknown props — tag the wrapper (§11a.1). */}
                                 <span>
                                     <Typography size="sm" text={description} color="muted" isSkeleton={isSkeleton} />
                                 </span>
-                            </AlertDialog.Body>
+                            </AlertDialogBody>
                         ) : null}
-                        <AlertDialog.Footer className="w-full">
-                            {/* Footer forwards so the REAL nodes (Button × 2) show up, instead of
-                                mislabeling this heroui Footer wrapper as if it were ButtonGroup itself. */}
+                        <AlertDialogFooter className="w-full">
                             <ButtonGroup
                                 align="end"
-                                classNames={["w-full"]}
                                 items={[
                                     {
                                         key: "cancel",
@@ -144,10 +140,10 @@ export const ConfirmDialog = ({
                                     },
                                 ]}
                             />
-                        </AlertDialog.Footer>
-                    </AlertDialog.Dialog>
-                </AlertDialog.Container>
-            </AlertDialog.Backdrop>
-        </AlertDialog>
+                        </AlertDialogFooter>
+                    </AlertDialogDialog>
+                </AlertDialogContainer>
+            </AlertDialogBackdrop>
+        </AlertDialogRoot>
     )
 }

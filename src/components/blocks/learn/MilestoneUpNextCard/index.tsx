@@ -67,7 +67,7 @@ const MilestoneUpNextCard = ({
         body={() => (
             <StackV
                 gap={4}
-                principles={["content-row"]}
+                principle="content-row"
                 items={[
                     // Back INSIDE the card face (not `SurfaceCard.label`,
                     // which sits OUTSIDE/above it) — a plain atom call, not raw CSS, so no

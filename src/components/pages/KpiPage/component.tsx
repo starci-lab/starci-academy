@@ -8,7 +8,7 @@ import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButt
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
-import { Progress } from "@/components/atoms/display/Progress"
+import { ProgressBar } from "@/components/atoms/display/Progress"
 import { Container } from "@/components/frames/Container"
 import { StackV, StackH } from "@/components/frames/Stack"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
@@ -124,7 +124,7 @@ const kpiRowBody = (row: KpiRowData, isSkeleton: boolean, labels: KpiLabels) => 
             />
         ),
         () => (
-            <Progress.Bar
+            <ProgressBar
                 ariaLabel={row.label}
                 value={row.current}
                 max={row.target || 1}

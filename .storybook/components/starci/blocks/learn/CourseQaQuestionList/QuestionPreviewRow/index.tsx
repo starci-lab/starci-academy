@@ -84,7 +84,7 @@ export const QuestionPreviewRow = ({ question, currentUserId }: QuestionPreviewR
     return (
         <StackH
             gap={4}
-            principles="content-row"
+            principle="content-row"
             align="start"
 
             items={[

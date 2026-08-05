@@ -178,55 +178,57 @@ export const PriceTagBase = ({
         // Two vertical rows inside a design (the eyebrow and the breakdown list) =
         // `grouped`, not `tight`. `tight` (1) is reserved for what sits INSIDE a
         // composite, e.g. the icon+label pair of `InlineIconLabel`.
-        <StackV gap={4} principles={["label-field", "cell-pad"]} padding={4} isSkeleton={isSkeleton} items={[
-            ({ isSkeleton }: SkeletonProps) => <Typography size="xs" color="muted" text={labels.breakdownTitle} isSkeleton={isSkeleton} />,
-            // No `gap` passed: `KeyValueList` already owns its row rhythm (its own default
-            // is the §10b `grouped` step). Passing one from here overrides the composite's
-            // spacing from OUTSIDE, which §10 forbids — a composite owns its internal
-            // spacing and must not receive it.
-            ({ isSkeleton }: SkeletonProps) => (
-                <KeyValueList
-                    isSkeleton={isSkeleton}
-                    items={[
-                        {
-                            key: "list",
-                            label: labels.listPrice,
-                            value: formatPrice(original ?? discounted, currency),
-                        },
-                        ...(breakdown && original != null && original > breakdown.phase
-                            ? [{
-                                key: "phase",
-                                label: labels.phaseRow,
-                                // NOTE: `KeyValueListItem.value` is now a plain `string` — this row
-                                // loses the `color="success-soft"` (green) tint it used to carry via
-                                // its own `Typography`. `KeyValueRow` only renders `value` through the
-                                // emphasis/plain split, no per-row tone prop. Preserving the green
-                                // accent needs either accepting the loss (done here) or a future
-                                // `tone`/`accent` field on `KeyValueListItem` — left for whoever owns
-                                // PriceTag/KeyValue next, not decided in this pass.
-                                value: `−${formatPrice(original - breakdown.phase, currency)} (−${phaseSave}%)`,
-                            }]
-                            : []),
-                        ...(breakdown && breakdown.loyaltyPercent > 0 && breakdown.phase > discounted
-                            ? [{
-                                key: "loyalty",
-                                label: labels.loyaltyRow,
-                                // See the "phase" row's note above — same loss of the green tint,
-                                // same reason.
-                                value: `−${formatPrice(breakdown.phase - discounted, currency)} (−${breakdown.loyaltyPercent}%)`,
-                            }]
-                            : []),
-                        {
-                            key: "total",
-                            label: labels.youPay,
-                            value: formatPrice(discounted, currency),
-                            // the TOTAL row: the frame handles the emphasis, replacing a hand-typed `border-t … pt-1`
-                            emphasis: true,
-                        },
-                    ]}
-                />
-            ),
-        ]} />
+        <StackV gap={4} principle="cell-pad" padding={4} isSkeleton={isSkeleton} body={() => (
+            <StackV gap={4} principle="label-field" isSkeleton={isSkeleton} items={[
+                ({ isSkeleton }: SkeletonProps) => <Typography size="xs" color="muted" text={labels.breakdownTitle} isSkeleton={isSkeleton} />,
+                // No `gap` passed: `KeyValueList` already owns its row rhythm (its own default
+                // is the §10b `grouped` step). Passing one from here overrides the composite's
+                // spacing from OUTSIDE, which §10 forbids — a composite owns its internal
+                // spacing and must not receive it.
+                ({ isSkeleton }: SkeletonProps) => (
+                    <KeyValueList
+                        isSkeleton={isSkeleton}
+                        items={[
+                            {
+                                key: "list",
+                                label: labels.listPrice,
+                                value: formatPrice(original ?? discounted, currency),
+                            },
+                            ...(breakdown && original != null && original > breakdown.phase
+                                ? [{
+                                    key: "phase",
+                                    label: labels.phaseRow,
+                                    // NOTE: `KeyValueListItem.value` is now a plain `string` — this row
+                                    // loses the `color="success-soft"` (green) tint it used to carry via
+                                    // its own `Typography`. `KeyValueRow` only renders `value` through the
+                                    // emphasis/plain split, no per-row tone prop. Preserving the green
+                                    // accent needs either accepting the loss (done here) or a future
+                                    // `tone`/`accent` field on `KeyValueListItem` — left for whoever owns
+                                    // PriceTag/KeyValue next, not decided in this pass.
+                                    value: `−${formatPrice(original - breakdown.phase, currency)} (−${phaseSave}%)`,
+                                }]
+                                : []),
+                            ...(breakdown && breakdown.loyaltyPercent > 0 && breakdown.phase > discounted
+                                ? [{
+                                    key: "loyalty",
+                                    label: labels.loyaltyRow,
+                                    // See the "phase" row's note above — same loss of the green tint,
+                                    // same reason.
+                                    value: `−${formatPrice(breakdown.phase - discounted, currency)} (−${breakdown.loyaltyPercent}%)`,
+                                }]
+                                : []),
+                            {
+                                key: "total",
+                                label: labels.youPay,
+                                value: formatPrice(discounted, currency),
+                                // the TOTAL row: the frame handles the emphasis, replacing a hand-typed `border-t … pt-1`
+                                emphasis: true,
+                            },
+                        ]}
+                    />
+                ),
+            ]} />
+        )} />
     ) : null
 
     // The price row aligns on BASELINE (big number, struck number, chip share the
@@ -236,7 +238,7 @@ export const PriceTagBase = ({
     const priceRow = (
         <Cluster
             gap={3}
-            principles={["value-row"]}
+            principle="value-row"
             align="baseline"
 
             items={[

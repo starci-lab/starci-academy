@@ -154,7 +154,7 @@ const MockInterviewScorecard = ({
             gap={4}
             justify="between"
             at="sm"
-            principles={["content-row"]}
+            principle="content-row"
             isSkeleton={isSkeleton}
             items={[
                 () => (isSkeleton ? (
@@ -213,7 +213,7 @@ const MockInterviewScorecard = ({
         <StackH
             gap={2}
             align="center"
-            principles={["icon-text"]}
+            principle="icon-text"
             isSkeleton={isSkeleton}
             items={[
                 ({ isSkeleton }: SkeletonProps) => <Typography size="xs" color="muted" text="Weakest:" isSkeleton={isSkeleton} />,
@@ -226,7 +226,7 @@ const MockInterviewScorecard = ({
         <StackH
             gap={4}
             at="sm"
-            principles={["flex-action"]}
+            principle="flex-action"
             isSkeleton={isSkeleton}
             items={[
                 () => (

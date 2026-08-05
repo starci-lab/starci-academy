@@ -1,4 +1,14 @@
-import { AlertDialog, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import {
+    AlertDialogRoot,
+    AlertDialogBackdrop,
+    AlertDialogContainer,
+    AlertDialogDialog,
+    AlertDialogHeader,
+    AlertDialogHeading,
+    AlertDialogBody,
+    AlertDialogFooter,
+} from "@sb-components/atoms/feedback/AlertDialog/AlertDialog"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { ButtonGroup } from "@sb-components/composites/buttons/ButtonGroup/ButtonGroup"
@@ -16,7 +26,7 @@ export const meta = { tier: "composite", name: "ConfirmDialog" } as const
 
 /** Props for {@link ConfirmDialog}. */
 export interface ConfirmDialogProps {
-    /** Whether the dialog is currently open (controlled). Forwarded to HeroUI `AlertDialog`. */
+    /** Whether the dialog is currently open (controlled). Forwarded to house `AlertDialogRoot`. */
     isOpen: boolean
     /**
      * Open-state change handler (fires on cancel and, when dismissable, on Escape).
@@ -65,7 +75,7 @@ export interface ConfirmDialogProps {
 
 /**
  * A controlled confirmation dialog for irreversible actions (unenroll from a course,
- * delete a submission) built on HeroUI `AlertDialog`. A purely presentational frame —
+ * delete a submission) built on house `AlertDialog*` parts. A purely presentational frame —
  * open state and every callback come in via props; the frame holds no state, does no fetching.
  *
  * The shell already builds a FULL header/body/footer (footer = `ButtonGroup` cancel +
@@ -88,29 +98,29 @@ export const ConfirmDialog = ({
 }: ConfirmDialogProps) => {
     const isDanger = tone === "danger"
     return (
-        <AlertDialog isOpen={isOpen} onOpenChange={onOpenChange}>
-            {/* `AlertDialog` root = react-aria `DialogTrigger`: a LOGICAL wrapper, renders no DOM node of its own. */}
-            <AlertDialog.Backdrop>
-                <AlertDialog.Container size="sm">
-                    <AlertDialog.Dialog className={cn(classNames)}>
+        <AlertDialogRoot isOpen={isOpen} onOpenChange={onOpenChange}>
+            {/* Root = react-aria `DialogTrigger`: a LOGICAL wrapper, renders no DOM node of its own. */}
+            <AlertDialogBackdrop>
+                <AlertDialogContainer size="sm">
+                    <AlertDialogDialog className={cn(classNames)}>
                         {/* No status icon — text-only; heading/body left, footer right. */}
-                        <AlertDialog.Header>
-                            <AlertDialog.Heading>
+                        <AlertDialogHeader>
+                            <AlertDialogHeading>
                                 {/* `alert-dialog__heading` already sets `text-base font-medium` —
                                     match it explicitly so wrapping in `Typography` doesn't shift
                                     the weight. */}
                                 <Typography text={title} weight="medium" isSkeleton={isSkeleton} />
-                            </AlertDialog.Heading>
-                        </AlertDialog.Header>
+                            </AlertDialogHeading>
+                        </AlertDialogHeader>
                         {description != null ? (
-                            <AlertDialog.Body>
+                            <AlertDialogBody>
                                 {/* Typography atom doesn't accept unknown props — tag the wrapper (§11a.1). */}
                                 <span>
                                     <Typography size="sm" text={description} color="muted" isSkeleton={isSkeleton} />
                                 </span>
-                            </AlertDialog.Body>
+                            </AlertDialogBody>
                         ) : null}
-                        <AlertDialog.Footer className="w-full">
+                        <AlertDialogFooter className="w-full">
                             <ButtonGroup
                                 align="end"
                                 items={[
@@ -130,10 +140,10 @@ export const ConfirmDialog = ({
                                     },
                                 ]}
                             />
-                        </AlertDialog.Footer>
-                    </AlertDialog.Dialog>
-                </AlertDialog.Container>
-            </AlertDialog.Backdrop>
-        </AlertDialog>
+                        </AlertDialogFooter>
+                    </AlertDialogDialog>
+                </AlertDialogContainer>
+            </AlertDialogBackdrop>
+        </AlertDialogRoot>
     )
 }

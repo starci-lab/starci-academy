@@ -95,7 +95,7 @@ export const _DueReviewHero = ({
             return <AsyncContentEmpty title={labels.allCaughtTitle} description={labels.allCaughtHint} />
         }
         return (
-            <StackH gap={4} principles={["flex-action"]} justify="between" at="sm" isSkeleton={isSkeleton} items={[
+            <StackH gap={4} principle="flex-action" justify="between" at="sm" isSkeleton={isSkeleton} items={[
                 () => (
                     <StackV gap={1} isSkeleton={isSkeleton} items={[
                         () => <Typography size="sm" text={labels.count} isSkeleton={isSkeleton} />,

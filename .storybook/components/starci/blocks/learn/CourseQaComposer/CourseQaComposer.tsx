@@ -192,7 +192,7 @@ const CourseQaComposer = ({
                 isSkeleton={isSkeleton}
 
             />
-            <StackH gap={3} principles="flex-action" justify="end" isSkeleton={isSkeleton} items={[() => actionRow]} />
+            <StackH gap={3} principle="flex-action" justify="end" isSkeleton={isSkeleton} items={[() => actionRow]} />
         </>
     )
 

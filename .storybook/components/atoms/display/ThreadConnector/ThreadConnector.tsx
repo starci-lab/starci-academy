@@ -2,6 +2,8 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
+ * @noSkeleton draws a guide line, not a value — there is nothing behind it to wait for.
+ *
  * ATOM — `ThreadConnector`: the curved guide line linking a comment's avatar down into a
  * reply composer's own avatar (Facebook-style nested reply). Same family as `Stack.nested`'s
  * straight indent-guide border, bent into a corner instead of a straight drop.

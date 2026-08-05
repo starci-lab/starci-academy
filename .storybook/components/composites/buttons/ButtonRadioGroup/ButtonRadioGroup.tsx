@@ -1,6 +1,11 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Button, ButtonGroup as HeroButtonGroup, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import { Button } from "@sb-components/atoms/buttons/Button/Button"
+import {
+    ButtonGroupRoot,
+    ButtonGroupSeparator,
+} from "@sb-components/atoms/buttons/ButtonGroup/ButtonGroup"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
@@ -83,18 +88,21 @@ export const meta = { tier: "composite", name: "ButtonRadioGroup" } as const
 
 /**
  * A single-select toggle-button group laid out as a flex-wrap row (buttons wrap
- * to the next line, never scroll). Every option is a real HeroUI `<Button>`:
+ * to the next line, never scroll). Every option is a house `<Button>`:
  * standalone, selected = filled `tertiary` (NEUTRAL, not accent — a facet/config
  * toggle isn't a CTA), unselected = hollow `ghost`. NEVER `primary` here — a config
  * row commonly sits on the SAME surface as the page's one accent CTA.
  *
  * When `itemAction` is supplied, each item instead renders as one connected
  * `ButtonGroup` — the select button + its action button(s) touching, only the
- * two outer ends rounded (`[select | delete | ⋮]`). The seam is HeroUI's own
- * `ButtonGroup.Separator`, recoloured to the `--border` token and forced full-height.
+ * two outer ends rounded (`[select | delete | ⋮]`). The seam is the house
+ * `ButtonGroupSeparator`, baked to the `--border` token and full-height.
  *
- * `role="group"` + `aria-pressed` per button — works for BOTH the default
- * single-select toggle group and the multi-select mode.
+ * `role="group"` + `aria-pressed` per option — works for BOTH the default
+ * single-select toggle group and the multi-select mode. House `Button` does not
+ * accept `aria-pressed`, so the standalone path wraps the control in a span;
+ * the fused `ButtonGroupRoot` path cannot wrap (segments must be buttons), so
+ * pressed state is carried only on the standalone span.
  *
  * @param props - {@link ButtonRadioGroupProps}
  */
@@ -118,60 +126,47 @@ export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<
             className={cn("flex flex-wrap items-center gap-2", classNames)}
             data-tier="composite"
             data-component="ButtonRadioGroup"
-            data-principles="flex-action"
+            data-principle="flex-action"
         >
             {items.map((item) => {
                 const selected = isSelected(item.value)
                 if (!itemAction) {
                     // standalone: selected = filled `tertiary`, unselected = hollow `ghost`.
                     return (
-                        <Button
-                            key={item.value}
-                            size="sm"
-                            variant={selected ? "tertiary" : "ghost"}
-                            isDisabled={item.isDisabled}
-                            aria-pressed={selected}
-                            onPress={() => handlePress(item.value)}
-
-                        >
-                            {item.content}
-                        </Button>
+                        <span key={item.value} aria-pressed={selected}>
+                            <Button
+                                size="sm"
+                                variant={selected ? "tertiary" : "ghost"}
+                                isDisabled={item.isDisabled}
+                                onPress={() => handlePress(item.value)}
+                                label={item.content}
+                            />
+                        </span>
                     )
                 }
                 // select button + its action(s) = one connected ButtonGroup per item.
-                // Each action button gets a `ButtonGroup.Separator` injected at the head
-                // of its children — HeroUI's separator must sit inside the following button.
+                // Each action button gets a `ButtonGroupSeparator` injected at the head
+                // of its children — the separator must sit inside the following button.
                 return (
-                    <HeroButtonGroup
-                        key={item.value}
-                        size="sm"
-                        className="w-fit"
-
-                    >
+                    <ButtonGroupRoot key={item.value} size="sm">
                         <Button
                             size="sm"
                             variant={selected ? "secondary" : "tertiary"}
                             isDisabled={item.isDisabled}
-                            aria-pressed={selected}
                             onPress={() => handlePress(item.value)}
-
-                        >
-                            {item.content}
-                        </Button>
+                            label={item.content}
+                        />
                         {React.Children.map(itemAction(item), (action) =>
                             React.isValidElement<CloneableActionElementProps>(action)
                                 ? React.cloneElement(
                                     action,
                                     undefined,
-                                    <HeroButtonGroup.Separator
-                                        className="!top-0 !h-full !bg-border !opacity-100"
-
-                                    />,
+                                    <ButtonGroupSeparator />,
                                     action.props.children,
                                 )
                                 : action,
                         )}
-                    </HeroButtonGroup>
+                    </ButtonGroupRoot>
                 )
             })}
             {trailing}

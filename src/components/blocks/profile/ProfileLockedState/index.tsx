@@ -73,7 +73,7 @@ const ProfileLockedState = ({
     return (
         <StackV
             gap={6}
-            principles={["block-boundary"]}
+            principle="block-boundary"
             padding={6}
             identity={identity}
             items={[() => lockedBody]}

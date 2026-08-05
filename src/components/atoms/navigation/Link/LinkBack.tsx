@@ -73,7 +73,7 @@ export const LinkBack = ({
         // (14px bar in the 20px `text-sm` line box) so the row's height does
         // not change when the real label lands.
         return (
-            <div data-tier="atom" data-component="LinkBack" data-principles="icon-text" className={cn("flex w-fit items-center gap-1", classNames)}>
+            <div data-tier="atom" data-component="LinkBack" data-principle="icon-text" className={cn("flex w-fit items-center gap-1", classNames)}>
                 <HeroSkeleton className="size-3.5 rounded-full" />
                 <HeroSkeleton
                     className={cn(SKELETON_TEXT_BAR_SM, skeletonWidth ?? "w-1/4")}
@@ -89,7 +89,7 @@ export const LinkBack = ({
             data-tier="atom"
             data-component="LinkBack"
             onPress={onPress}
-            data-principles="icon-text"
+            data-principle="icon-text"
             className={cn(
                 "group flex w-fit cursor-pointer items-center gap-1 text-sm text-muted no-underline transition-colors hover:text-foreground",
                 classNames,

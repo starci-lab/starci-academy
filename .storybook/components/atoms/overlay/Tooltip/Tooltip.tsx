@@ -1,3 +1,4 @@
+/** @noSkeleton renders a floating surface; the content is handed in and shimmers on its own. */
 /**
  * ATOM — `Tooltip`: the one hover-hint atom, wrapping HeroUI Tooltip.
  * 

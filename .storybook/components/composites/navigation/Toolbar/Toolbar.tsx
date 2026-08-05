@@ -1,6 +1,21 @@
 import React, { type Key, type ReactNode } from "react"
-import { ListBox, Select, Tabs, cn } from "@heroui/react"
-import { TabsExtended } from "@sb-components/atoms/navigation/Tabs/Tabs"
+import { cn } from "@heroui/react"
+import {
+    TabsExtended,
+    TabsListContainer,
+    TabsList,
+    TabsTab,
+    TabsIndicator,
+    TabsPanel,
+} from "@sb-components/atoms/navigation/Tabs/Tabs"
+import {
+    SelectRoot,
+    SelectTrigger,
+    SelectValue,
+    SelectIndicator,
+    SelectPopover,
+} from "@sb-components/atoms/forms/Select/Select"
+import { ListBoxRoot, ListBoxItem } from "@sb-components/atoms/forms/ListBox/ListBox"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /**
@@ -10,10 +25,6 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * `flex items-center justify-between gap-3`. Tab groups come in as data
  * (`items`/`selectedKey`/`onSelectionChange`), and each tab's display state (disabled/muted) is drawn here.
  */
-interface ToolbarSelectItem {
-    id: string
-}
-
 /** One tab in a {@link ToolbarTabGroup}. */
 export interface ToolbarTabItem {
     /** Stable id used as the selection key. */
@@ -95,14 +106,14 @@ export interface ToolbarBaseProps {
 const TAB_SIZE_SM = "h-auto! w-auto! px-3! py-2! text-xs!"
 /**
  * Selected-state TEXT color only (accent tab group) — the underline itself now
- * comes from `<Tabs.Indicator/>` (native HeroUI `.tabs--secondary` accent bar).
+ * comes from `<TabsIndicator/>` (native HeroUI `.tabs--secondary` accent bar).
  */
 const TAB_CLASS_ACCENT = "data-[selected=true]:text-accent-soft-foreground"
 /**
  * Selected-state chrome — NEUTRAL foreground underline (secondary toggle
  * group, no accent). Kept on the MANUAL `border-b-2` technique because
  * `.tabs--secondary`'s indicator is hardcoded `bg-accent` — there is no
- * "neutral-colored" native indicator to switch to, so `<Tabs.Indicator/>` is
+ * "neutral-colored" native indicator to switch to, so `<TabsIndicator/>` is
  * suppressed for this path (see below).
  */
 const TAB_CLASS_NEUTRAL =
@@ -140,10 +151,10 @@ const ToolbarBase = ({
             selectedKey={group.selectedKey}
             onSelectionChange={group.onSelectionChange}
         >
-            <Tabs.ListContainer>
-                <Tabs.List aria-label={group.ariaLabel}>
+            <TabsListContainer>
+                <TabsList aria-label={group.ariaLabel}>
                     {group.items.map((item) => (
-                        <Tabs.Tab
+                        <TabsTab
                             key={item.key}
                             id={item.key}
                             isDisabled={item.isDisabled}
@@ -154,6 +165,7 @@ const ToolbarBase = ({
                         >
                             <StackH
                                 gap={3}
+                                principle="icon-text"
                                 items={[
                                     () => <>{item.icon}</>,
                                     // a tab WITH an icon hides its label visually on mobile
@@ -176,18 +188,18 @@ const ToolbarBase = ({
                                 secondary-NEUTRAL: `.tabs--secondary`'s indicator is hardcoded
                                 `bg-accent`, so that path keeps its OWN `border-b-2
                                 border-foreground` (TAB_CLASS_NEUTRAL) as the sole indicator. */}
-                            {(variant === "primary" || accent) && <Tabs.Indicator />}
-                        </Tabs.Tab>
+                            {(variant === "primary" || accent) && <TabsIndicator />}
+                        </TabsTab>
                     ))}
-                </Tabs.List>
-            </Tabs.ListContainer>
+                </TabsList>
+            </TabsListContainer>
             {/* react-aria's useTab ALWAYS computes an `aria-controls` id pointing at
                 a tabpanel with this tab's key, whether or not one is ever rendered.
                 `Toolbar` never shows panel CONTENT here (callers render their own
                 content elsewhere), so these panels stay empty/`sr-only` — they exist
                 purely to satisfy the tab↔tabpanel ARIA relationship. */}
             {group.items.map((item) => (
-                <Tabs.Panel key={item.key} id={item.key} className="sr-only">{null}</Tabs.Panel>
+                <TabsPanel key={item.key} id={item.key} className="sr-only">{null}</TabsPanel>
             ))}
         </TabsExtended>
     )
@@ -198,7 +210,7 @@ const ToolbarBase = ({
     const renderSelect = (group: ToolbarTabGroup): ReactNode => {
         const selected = group.items.find((item) => item.key === group.selectedKey)
         return (
-            <Select.Root<ToolbarSelectItem, "single">
+            <SelectRoot
                 variant="secondary"
                 aria-label={group.ariaLabel}
                 selectedKey={group.selectedKey}
@@ -208,8 +220,8 @@ const ToolbarBase = ({
                     }
                 }}
             >
-                <Select.Trigger aria-label={group.ariaLabel}>
-                    <Select.Value>
+                <SelectTrigger aria-label={group.ariaLabel}>
+                    <SelectValue>
                         {() => (
                             <span className="flex items-center">
                                 {selected?.icon}
@@ -218,19 +230,19 @@ const ToolbarBase = ({
                                 <span className="sr-only">{selected?.label}</span>
                             </span>
                         )}
-                    </Select.Value>
-                    <Select.Indicator />
-                </Select.Trigger>
-                <Select.Popover>
+                    </SelectValue>
+                    <SelectIndicator />
+                </SelectTrigger>
+                <SelectPopover>
                     {/* `item.icon` stays OFF each row on purpose — it's the closed trigger's
                         only content (no room for text there), but once the popover is open
                         every row already reads its own full label; repeating the same icon
                         on every row adds no information (§5a.2, the "everyone already knows
                         this icon" rule: no icon purely decorating text that already reads on
                         its own). */}
-                    <ListBox.Root aria-label={group.ariaLabel}>
+                    <ListBoxRoot aria-label={group.ariaLabel}>
                         {group.items.map((item) => (
-                            <ListBox.Item
+                            <ListBoxItem
                                 key={item.key}
                                 id={item.key}
                                 isDisabled={item.isDisabled}
@@ -239,11 +251,11 @@ const ToolbarBase = ({
                                 }
                             >
                                 {item.label}
-                            </ListBox.Item>
+                            </ListBoxItem>
                         ))}
-                    </ListBox.Root>
-                </Select.Popover>
-            </Select.Root>
+                    </ListBoxRoot>
+                </SelectPopover>
+            </SelectRoot>
         )
     }
     const leftGroup = leftEnd ? (
@@ -262,8 +274,8 @@ const ToolbarBase = ({
         ? collapseRightOnMobile
             ? (
                 <div>
-                    {/* mobile: collapse to a dropdown (HeroUI Select.Root); sm+: inline tabs
-                        (atom Tabs.Extended) — BOTH real components mount at once (one hidden
+                    {/* mobile: collapse to a dropdown (house SelectRoot); sm+: inline tabs
+                        (atom TabsExtended) — BOTH real components mount at once (one hidden
                         via CSS), so each gets its OWN badge instead of one wrapper name that
                         could only honestly describe one of them. */}
                     <div className="@app-sm:hidden">{renderSelect(rightTabs)}</div>
@@ -276,7 +288,7 @@ const ToolbarBase = ({
         <StackH
             gap={4}
             justify="between"
-            principles="content-row"
+            principle="content-row"
             classNames={classNames}
 
             items={[

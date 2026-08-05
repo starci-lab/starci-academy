@@ -95,7 +95,7 @@ export const Legend = ({
                 classNames)}
             data-tier="composite"
             data-component="Legend"
-            data-principles={direction === "col" ? "sibling-stack" : undefined}
+            data-principle={direction === "col" ? "sibling-stack" : undefined}
         >
             {isSkeleton
                 ? Array.from({ length: skeletonCount }, (_unused, index) => (

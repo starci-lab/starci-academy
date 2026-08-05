@@ -1,12 +1,12 @@
 import type { ReactNode } from "react"
 import { Label, Skeleton as HeroSkeleton, cn } from "@heroui/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `FieldFrame` — the label / hint / control / error scaffold every form atom
  * composes so the atom itself is the full field.
  *
- * Self-contained in the atom layer: HeroUI only, no importing from `blocks/`.
+ * Composite form helper: label / hint / control / error scaffold.
  * Owns the vertical rhythm (`flex flex-col`, a fixed `gap-3` — the label rule,
  * see `FIELD_SEAM`): label on top, hint below the label, control, error line
  * last — and mirrors the exact shape when `isSkeleton`.
@@ -86,7 +86,8 @@ const FieldFrameBase = ({
     skeletonControl,
     children,
     id,
-    classNames}: FieldFrameProps) => {
+    classNames,
+}: FieldFrameProps) => {
     const hasFrame = label != null || hint != null || errorMessage != null
 
     // ── Loading mirror ────────────────────────────────────────────────────────
@@ -96,7 +97,7 @@ const FieldFrameBase = ({
             return <>{skeletonControl}</>
         }
         return (
-            <div data-tier="atom" data-component="FieldFrame" data-principles="label-field" className={cn("flex flex-col", FIELD_SEAM, classNames)}>
+            <div data-tier="composite" data-component="FieldFrame" data-principle="label-field" className={cn("flex flex-col", FIELD_SEAM, classNames)}>
                 {label != null ? (
                     // label-bar look), not the slot word "Label" it stands in for.
                     <HeroSkeleton className="h-4 w-1/3 rounded-md" />
@@ -113,7 +114,7 @@ const FieldFrameBase = ({
 
     // ── Full field ─────────────────────────────────────────────────────────────
     return (
-        <div data-tier="atom" data-component="FieldFrame" className={cn("flex flex-col", FIELD_SEAM, classNames)}>
+        <div data-tier="composite" data-component="FieldFrame" className={cn("flex flex-col", FIELD_SEAM, classNames)}>
             {label != null ? (
                 <Label htmlFor={id} isDisabled={isDisabled} className="text-sm font-medium">
                     {withRequired(label, isRequired)}
@@ -137,8 +138,7 @@ const FieldFrameBase = ({
     )
 }
 
-/** `FieldFrame.*` — label/hint/control/error scaffold namespace. */
+/** `FieldFrame` — label/hint/control/error scaffold. */
 export { FieldFrameBase as FieldFrame }
 
-/** Tier metadata for `FieldFrame`, used by the component registry/Storybook lookup. */
-export const meta = { tier: "atom", name: "FieldFrame" } as const
+export const meta = { tier: "composite", name: "FieldFrame" } as const

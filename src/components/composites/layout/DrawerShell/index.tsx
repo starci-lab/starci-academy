@@ -1,30 +1,27 @@
 import React from "react"
-import { cn, Drawer } from "@heroui/react"
+import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import {
+    DrawerRoot,
+    DrawerBackdrop,
+    DrawerContent,
+    DrawerDialog,
+    DrawerHeader,
+    DrawerBody,
+    DrawerFooter,
+    DrawerCloseTrigger,
+} from "@/components/atoms/overlay/Drawer"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `DrawerShell.*`, the panel-scaffold KHUNG
- * namespace. Sibling of `ModalShell` (canon §13a/§13b) — same slot contract
- * (`header`/`body`/`footer`), same seam rule
- * (`gap-3` on the Dialog owns the rhythm, the body only cancels HeroUI's own
- * `mt-*` with `mt-0!`), same tier-3 presentational contract (no state of its
- * own — caller threads `isOpen`/`onOpenChange` plus content via props).
- *
- * Differs from `ModalShell` only where the underlying HeroUI primitive
- * differs: `Modal.Container` takes `size` (dialog width, centered dialog);
- * `Drawer.Content` takes `placement` (which edge the panel slides from — a
- * drawer has no "size" in that sense, it is full-bleed along its edge).
- *
- * COMPOSITE-8: `title`/`description` are TEXT the frame renders itself (wrapped
- * in `Typography` here, with `isSkeleton`); `header`/`body`/`footer` are CONTENT
- * REGIONS — component references the frame mounts itself
- * (`<Header isSkeleton={isSkeleton} />`), never already-built nodes.
- * ─────────────────────────────────────────────────────────────────────────────
+ * `DrawerShell` — the panel scaffold frame:
+ * `DrawerRoot > Backdrop > Content > Dialog > CloseTrigger + Header? + Body + Footer?`.
+ * Sibling of `ModalShell` — same named slots (`header`/`body`/`footer`,
+ * `children` = body shorthand), differing only where the drawer primitive
+ * differs: `placement` (which edge it slides from) instead of `size`.
  */
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -32,11 +29,11 @@ export const meta = { tier: "composite", name: "DrawerShell" } as const
 
 /** Props for {@link DrawerShell}. */
 export interface DrawerShellBaseProps {
-    /** Whether the drawer is currently open. Forwarded to HeroUI `<Drawer>`. */
+    /** Whether the drawer is currently open. Forwarded to house `<DrawerRoot>`. */
     isOpen: boolean
     /**
      * Open-state change handler (fires on backdrop click, Escape, and the
-     * close-trigger button). Forwarded to HeroUI `<Drawer>`.
+     * close-trigger button). Forwarded to house `<DrawerRoot>`.
      */
     onOpenChange: (open: boolean) => void
     /** Which edge the panel slides in from. @default "right" */
@@ -66,24 +63,30 @@ export interface DrawerShellBaseProps {
     /** Body content of the drawer. A COMPONENT reference (COMPOSITE-8) the frame mounts itself. */
     body?: ComponentTypeWithSkeleton
     /**
-     * Bottom action row of the panel (the CTA cluster). Rendered as HeroUI
-     * `Drawer.Footer`, which already lays it out `flex flex-row items-center
+     * Bottom action row of the panel (the CTA cluster). Rendered as house
+     * `DrawerFooter`, which already lays it out `flex flex-row items-center
      * justify-end gap-2` — pass the buttons bare, do NOT re-wrap them in a
      * flex row. A COMPONENT reference (COMPOSITE-8) the frame mounts itself.
      */
     footer?: ComponentTypeWithSkeleton
-    /** Extra classes merged onto `Drawer.Content` (the sliding panel itself — width/height). */
+    /** Extra classes merged onto `DrawerContent` (the sliding panel itself — width/height). */
     contentClassName?: string
-    /** Extra classes merged onto `Drawer.Dialog`, in addition to {@link DrawerShellBaseProps.classNames}. */
+    /** Extra classes merged onto `DrawerDialog`, in addition to {@link DrawerShellBaseProps.classNames}. */
     dialogClassName?: string
-    /** Extra classes merged onto `Drawer.Body`. */
+    /** Extra classes merged onto `DrawerBody`. */
     bodyClassName?: string
-    /** Extra classes merged onto `Drawer.Footer`. */
+    /** Extra classes merged onto `DrawerFooter`. */
     footerClassName?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
+    /**
+     * Caller identity to wear on this composite's root instead of its own — pass this
+     * when a block/layout/overlay/page uses this composite as its root element.
+     * Omitted → this composite keeps emitting its own data-tier/data-component.
+     */
+    identity?: CallerIdentity
     /**
      * `true` → the `title`/`description` text this frame owns switches to
      * shimmer, AND every content-region slot it mounts (`header` / `body` /
@@ -92,18 +95,10 @@ export interface DrawerShellBaseProps {
      * it the same way it reaches the title/description text).
      */
     isSkeleton?: boolean
-    /**
-     * Caller identity to wear on this shell's root `<Drawer>` instead of its own — pass this
-     * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its
-     * own) is using this shell AS its root element, instead of wrapping it in a raw
-     * `<div data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this shell keeps
-     * emitting its own `data-tier="composite" data-component="DrawerShell"`, unchanged.
-     */
-    identity?: CallerIdentity
 }
 
 /**
- * Shared drawer scaffold: `Drawer > Backdrop > Content > Dialog > CloseTrigger
+ * Shared drawer scaffold: `DrawerRoot > Backdrop > Content > Dialog > CloseTrigger
  * + Header? + Body + Footer?`. Extracted so each drawer only supplies its
  * open-state, header content, body, and action row.
  *
@@ -130,23 +125,26 @@ const Base = ({
     const hasHeader = Header != null || title != null
     const main = Body ? <Body isSkeleton={isSkeleton} /> : null
     return (
-        <Drawer
+        <DrawerRoot
             isOpen={isOpen}
             onOpenChange={onOpenChange}
             {...resolveIdentity(identity, { tier: "composite", name: "DrawerShell" })}
         >
-            <Drawer.Backdrop>
-                <Drawer.Content className={contentClassName} placement={placement}>
-                    <Drawer.Dialog className={cn("gap-3", dialogClassName, classNames)}>
-                        <Drawer.CloseTrigger />
+            <DrawerBackdrop>
+                <DrawerContent className={contentClassName} placement={placement}>
+                    <DrawerDialog className={cn(dialogClassName, classNames)}>
+                        <DrawerCloseTrigger />
                         {Header ? (
-                            <Drawer.Header><Header isSkeleton={isSkeleton} /></Drawer.Header>
+                            <DrawerHeader><Header isSkeleton={isSkeleton} /></DrawerHeader>
                         ) : title != null ? (
-                            <Drawer.Header>
+                            <DrawerHeader>
+                                {/* `pr-8` (room for the close button) + arbitrary caller `titleClassName`
+                                    ride a plain wrapper — neither is an `AllowedClassName`, so the typed
+                                    `StackV` frame keeps its closed `classNames` union. */}
                                 <div className={cn("pr-8", titleClassName)}>
                                     <StackV
                                         gap={2}
-                                        principles={["title-subtitle"]}
+                                        principle="title-subtitle"
                                         isSkeleton={isSkeleton}
                                         items={[
                                             () => (
@@ -156,42 +154,43 @@ const Base = ({
                                                     text={title}
                                                 />
                                             ),
-                                            ...(description != null
-                                                ? [() => (
-                                                    <Typography size="sm"
-                                                        color="muted"
-                                                        isSkeleton={isSkeleton}
-                                                        text={description}
-                                                    />
-                                                )]
-                                                : []),
+                                            ...(description != null ? [() => (
+                                                <Typography size="sm"
+                                                    color="muted"
+                                                    isSkeleton={isSkeleton}
+                                                    text={description}
+                                                />
+                                            )] : []),
                                         ]}
                                     />
                                 </div>
-                            </Drawer.Header>
+                            </DrawerHeader>
                         ) : null}
-                        <Drawer.Body
+                        <DrawerBody
+
                             className={cn(
-                                // `mt-0!` only cancels HeroUI's shipped margin; the gap the
-                                // reader sees comes from the Dialog's own `gap-3` (same rule
+                                // mt-0 only cancels HeroUI's shipped margin; the gap the
+                                // reader sees comes from DrawerDialog's baked seam (same rule
                                 // as ModalShell — one seam, one owner, §10a).
                                 hasHeader && "mt-0!",
                                 "overflow-y-auto",
-                                bodyClassName)}
+                                bodyClassName,
+                            )}
                         >
                             {main}
-                        </Drawer.Body>
+                        </DrawerBody>
                         {Footer != null ? (
-                            <Drawer.Footer
+                            <DrawerFooter
+
                                 className={cn("mt-0!", footerClassName)}
                             >
                                 <Footer isSkeleton={isSkeleton} />
-                            </Drawer.Footer>
+                            </DrawerFooter>
                         ) : null}
-                    </Drawer.Dialog>
-                </Drawer.Content>
-            </Drawer.Backdrop>
-        </Drawer>
+                    </DrawerDialog>
+                </DrawerContent>
+            </DrawerBackdrop>
+        </DrawerRoot>
     )
 }
 

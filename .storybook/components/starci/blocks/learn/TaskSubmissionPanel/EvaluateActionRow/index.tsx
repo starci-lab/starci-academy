@@ -16,7 +16,7 @@ interface EvaluateActionRowProps {
 export const EvaluateActionRow = ({ onEvaluate, isEvaluating, aiStatusText, isSkeleton }: EvaluateActionRowProps) => (
     <StackH
         gap={3}
-        principles="flex-action"
+        principle="flex-action"
         align="center"
         justify="between"
         at="sm"

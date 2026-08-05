@@ -7,24 +7,32 @@ import { type AllowedGap, type LayoutAlign, type LayoutJustify, type PaddingValu
 import { Flex } from "@sb-components/frames/Flex/Flex"
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 import type { PrincipleToken } from "@sb-components/frames/_principles"
+import type { CallerIdentity } from "@sb-components/frames/_identity"
 
 /**
- * `Stack` -- a LAYOUT frame: the base one-axis track. Two members = two axes:
- *   - `StackV` -- stacks vertically (column).
- *   - `StackH` -- stacks horizontally (row); only this axis takes `at` (the
- *     container step it wraps below, never a bare boolean).
+ * ─────────────────────────────────────────────────────────────────────────────
+ * LAYOUT (frame) -- `Stack.*`: the base one-axis track. Two members = two AXES,
+ * the only real shapes a stack has:
+ *   • `StackV` -- stacks VERTICALLY (column).
+ *   • `StackH` -- stacks HORIZONTALLY (row); only this axis takes `at` (FRAME-10:
+ *     the container step it wraps below, never a bare boolean).
  *
- * A stack wraps arbitrary content (not a repeating list), so `body` or `items`
- * is the road -- a track has exactly one region. Use `Cluster`/`Grid` for
- * repeat-list frames.
+ * FRAME API LAW (§13b): a stack WRAPS arbitrary content -- it is not a repeating
+ * list -- so `children` is the road (there is no `header`/`body`/`footer` trio to
+ * name: a track has exactly ONE slot, its content). `items` would be wrong here;
+ * see `Cluster`/`Grid` for the repeat-list frames of this folder.
  *
- * `gap` is typed {@link Responsive}<{@link AllowedGap}> -- a closed index into the
- * house gap table, so off-scale cannot be typed. It is REQUIRED so the seam is
- * never chosen by accident.
+ * WHY THIS FRAME EXISTS: `gap` is typed {@link Responsive}<{@link AllowedGap}> -- a
+ * CLOSED index into the house gap table. Off-scale (`gap-4.5`, `gap-[13px]`) cannot even
+ * be typed, so the scale is enforced by the COMPILER instead of by review.
+ * `gap` is REQUIRED for the same reason: an implicit default would let the seam
+ * be chosen by accident, and §10a says a seam has exactly one deliberate owner.
  *
- * No domain content, no feature behaviour -- the track only decides direction /
- * gap / alignment / an optional rule between children. `divider` composes the
- * existing `Divider` atom.
+ * §13 boundaries respected: no domain content, no feature behaviour -- the track
+ * only decides direction / gap / alignment / an optional rule between children.
+ * `divider` COMPOSES the existing `Divider` atom (§13c: a frame never
+ * hand-rolls what an atom already owns).
+ * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /** Props shared by both axes of {@link Stack}. */
@@ -34,24 +42,27 @@ export interface StackBaseProps {
      * The PARENT owns this seam (§10a), so children must not carry margin.
      */
     gap: Responsive<AllowedGap>
-    /** Cross-axis alignment (`V` -> horizontal, `H` -> vertical). */
+    /** Cross-axis alignment (`V` → horizontal, `H` → vertical). */
     align?: LayoutAlign
-    /** Main-axis distribution (`V` -> vertical, `H` -> horizontal). */
+    /** Main-axis distribution (`V` → vertical, `H` → horizontal). */
     justify?: LayoutJustify
-    /** `true` -> inserts `Divider` BETWEEN children (never before the first / after the last). */
+    /** `true` → inserts `Divider` BETWEEN children (never before the first / after the last). */
     divider?: boolean
     /**
      * Space INSIDE the track, same scale as `gap`.
      *
-     * Forwarded down to `Flex` so a stack that also needs padding no longer
-     * has to DROP to `Flex` and lose `divider` plus the axis semantics.
+     * 2026-07-27: forwarded down to `Flex` so a stack that also needs padding no longer
+     * has to DROP to `Flex` and lose `divider` plus the axis semantics. That drop was the
+     * one remaining reason to reach past this frame, and a way out that costs less than the
+     * proper road always wins -- the same force that produced 227 hand-written
+     * `flex flex-col gap-4` in the first place.
      */
     padding?: Responsive<PaddingValue>
     /**
-     * `true` -> a left guide border + matching indent (`pl-3`, `@app-sm:pl-6`),
+     * `true` → a left guide border + matching indent (`pl-3`, `@app-sm:pl-6`),
      * for a track that is ONE LEVEL DEEPER than its caller (a threaded reply,
      * a nested tree row) -- the frame owns the exact classes so no block ever
-     * hand-writes `border-l`/`pl-*` itself. Same vocabulary
+     * hand-writes `border-l`/`pl-*` itself (teacher 2026-07-28). Same vocabulary
      * as `SurfaceCard`'s own `variant="nested"` (border marks "inside a
      * parent", not a fresh outer face) -- this is that same idea for a track.
      */
@@ -59,41 +70,50 @@ export interface StackBaseProps {
     /**
      * The HTML element to render, forwarded to `Flex`. Defaults to `div`.
      *
-     * A stack that also needs a real tag (`section`, `figure`, `span`) would otherwise have to
-     * DROP to hand-written classes and lose the axis semantics along the way.
+     * Added 2026-07-29 for the same reason `padding` was: a stack that also needed a real tag
+     * (`section`, `figure`, `span`) had to DROP to hand-written classes and lose the axis
+     * semantics along the way. Three call-sites sat outside the frame tier for exactly that.
      */
     as?: "div" | "section" | "figure" | "span" | "li"
     /**
-     * `true` -> the track hugs its content (`inline-flex`) instead of taking the whole line.
+     * `true` → the track hugs its content (`inline-flex`) instead of taking the whole line.
      * Measured on the same content: the block box came out 503px, the inline box 136px.
      */
     inline?: boolean
     /**
-     * Caller-supplied part name for the Storybook anatomy overlay. Forwarded to
-     * `Flex`, which owns the DOM. The frame never names itself.
+     * Anatomy tag for THIS frame itself -- so the PARENT can badge it as ONE node (§11a.1).
+     * Missing this prop means the `layouts`-tier frame is used but the panel cannot see it.
      */
-    anatPart?: string
     /** A SINGLE buildable child -- an uncalled `ComponentType<{isSkeleton?}>` the track renders itself. Use `items` for several. */
     body?: ComponentTypeWithSkeleton
     /**
      * The stacked content as BUILDABLE items -- each an uncalled `ComponentType<{isSkeleton?}>`
-     * the track renders itself, so it can thread `isSkeleton` down and interleave dividers on the
-     * real children. A frame that can BUILD its children can shimmer them (one tree, no hand-mirror).
+     * the track renders itself, so it can thread `isSkeleton` down and interleave dividers. Preferred
+     * over `body`: a frame that can BUILD its children can shimmer them (one tree, no hand-mirror).
      * Wins over `body` when both are passed.
      */
     items?: Array<ComponentTypeWithSkeleton>
-    /** `true` -> the track passes `isSkeleton` to every `items` component so the whole column shimmers. */
+    /** `true` → the track passes `isSkeleton` to every `items` component so the whole column shimmers. */
     isSkeleton?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable -- it is already a prop.
      */
     classNames?: Array<AllowedClassName>
     /**
-     * The layout pattern this track's seam realises -- forwarded straight to the `Flex` this
+     * The layout pattern this track's seam realises - forwarded straight to the `Flex` this
      * track renders through, the same way `gap`/`align`/`justify` are. See `Flex`'s own
-     * `principles` doc for the full contract. One token per instance.
+     * `pattern` doc for the full contract. Query as `[data-principle="token"]`.
      */
-    principles?: PrincipleToken
+    principle?: PrincipleToken
+    /**
+     * Caller identity to wear on this track's root instead of `Stack`'s own -- pass this when a
+     * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
+     * using this track AS its root element, instead of wrapping it in a raw `<div data-tier=...
+     * data-component=...>`. Forwarded straight to `Flex`, which is what actually renders the DOM
+     * (see `Flex`'s own `identity` doc). See `_identity.ts`. Omitted → this track keeps
+     * emitting `data-tier="frame" data-component="Flex"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /** Props for {@link StackV} -- a vertical track (no row-only prop to add). */
@@ -113,9 +133,12 @@ export interface StackHProps extends StackBaseProps {
 
 /**
  * Interleaves `Divider` between children -- NOT around them: N children get
- * N-1 rules. Horizontal rules sit on the track as the atom. Vertical rules wrap
- * in a `self-stretch` Flex so the line spans the row's full height even when the
- * row is `items-center`, without passing placement classes into the atom.
+ * N−1 rules. The atom carries its own `` (part name `Line`), so the
+ * frame adds no wrapper element and the DOM is identical with badges on or off.
+ *
+ * On a ROW the rule is vertical and gets `self-stretch`: `align-self` overrides
+ * the track's `items-*`, so the line spans the row's full height even when the
+ * row is `items-center`.
  */
 const interleaveDividers = (children: ReactNode, axis: "vertical" | "horizontal") => {
     const nodes = React.Children.toArray(children)
@@ -125,18 +148,11 @@ const interleaveDividers = (children: ReactNode, axis: "vertical" | "horizontal"
         index === 0
             ? [child]
             : [
-                ruleOrientation === "vertical" ? (
-                    <Flex
-                        key={`stack-divider-${index}`}
-                        direction="row"
-                        gap={1}
-                        align="stretch"
-                        classNames={["self-stretch"]}
-                        body={<Divider orientation="vertical" />}
-                    />
-                ) : (
-                    <Divider key={`stack-divider-${index}`} orientation="horizontal" />
-                ),
+                <Divider
+                    key={`stack-divider-${index}`}
+                    orientation={ruleOrientation}
+                    classNames={ruleOrientation === "vertical" ? ["self-stretch"] : undefined}
+                />,
                 child,
             ],
     )
@@ -160,11 +176,10 @@ const StackV = ({
     isSkeleton,
     padding,
     classNames,
-    principles,
-    anatPart,
-}: StackVProps) => {
-    // `items` (buildable) is the preferred path -- the track renders each item itself, threading
-    // `isSkeleton`; `body` (a plain node) is the simple fallback when no build/shimmer is needed.
+    principle,
+    identity}: StackVProps) => {
+    // `items` (buildable) wins over legacy `body`: the track renders each item itself, threading
+    // `isSkeleton`, so it can shimmer the whole column and interleave dividers on the real children.
     const content = (items ?? (body ? [body] : [])).map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)
     return (
         <Flex
@@ -177,8 +192,8 @@ const StackV = ({
             justify={justify}
             nested={nested}
             classNames={classNames}
-            principles={principles}
-            anatPart={anatPart}
+            principle={principle}
+            identity={identity}
             body={divider ? interleaveDividers(content, "vertical") : content}
         />
     )
@@ -198,9 +213,8 @@ const StackH = ({
     isSkeleton,
     padding,
     classNames,
-    principles,
-    anatPart,
-}: StackHProps) => {
+    principle,
+    identity}: StackHProps) => {
     const content = (items ?? (body ? [body] : [])).map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)
     return (
         <Flex
@@ -214,8 +228,8 @@ const StackH = ({
             at={at}
             nested={nested}
             classNames={classNames}
-            principles={principles}
-            anatPart={anatPart}
+            principle={principle}
+            identity={identity}
             body={divider ? interleaveDividers(content, "horizontal") : content}
         />
     )
@@ -224,11 +238,20 @@ const StackH = ({
 export { StackV, StackH }
 
 /**
+ * `Stack` -- named export matching this folder (structure-and-naming §5). The two axes have no
+ * single canonical member (see the `meta` note below: neither `StackV` nor `StackH` is "the"
+ * component this file names), so this groups both under the folder's own name rather than
+ * aliasing one of them as `Stack`. Existing call sites keep importing `StackV`/`StackH`
+ * directly, unchanged -- this export adds a name, it does not replace either one.
+ */
+export const Stack = { V: StackV, H: StackH } as const
+
+/**
  * Source-level tier marker -- lets a gate read the tier without guessing from the folder path.
  *
  * Shaped as a record, not the single `{ tier, name }` most frame files export: this file has
  * TWO public components, not one, and neither is more "the" component this file names. See
- * `Flex.tsx`'s own `meta` note for the DOM side of this -- `StackV`/`StackH` render no element
+ * `Flex`'s own `meta` note for the DOM side of this -- `StackV`/`StackH` render no element
  * of their own (100% delegated to `Flex`), so `data-component` on a rendered Stack instance
  * reads `"Flex"`, not `"StackV"`/`"StackH"`; this export is the source-level identity, which a
  * gate can still read even though the DOM cannot show it.

@@ -61,13 +61,13 @@ export interface RatingBarProps {
 const ratingTileBody = (option: RatingOption, position: number): ReactNode => (
     <StackV
         gap={3}
-        principles="sibling-stack"
+        principle="sibling-stack"
 
         items={[
             () => (
                 <StackH
                     gap={3}
-                    principles="chip-row"
+                    principle="chip-row"
                     align="center"
                     justify="between"
 

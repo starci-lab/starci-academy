@@ -78,7 +78,7 @@ const PersonalProjectGatePreview = ({
         <StackH
             key={index}
             gap={2}
-            principles={["icon-text"]}
+            principle="icon-text"
             align="center"
             isSkeleton={isSkeleton}
 

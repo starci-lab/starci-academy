@@ -139,7 +139,7 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord | undefined, isSkele
     // pushing, not a child margin; the label+chip stay grouped in their own inner track
     // so `between` only ever splits two things, not three.
     const attemptLineContent = [
-        () => <StackH gap={3} principles={["chip-row"]} align="center" isSkeleton={isSkeleton} items={attemptLabelAndChip} />,
+        () => <StackH gap={3} principle="chip-row" align="center" isSkeleton={isSkeleton} items={attemptLabelAndChip} />,
         ...(isSkeleton || attempt?.processedTimeAgo != null ? [() => (
             <Typography
                 text={attempt?.processedTimeAgo}
@@ -174,7 +174,7 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord | undefined, isSkele
         () => (
             <StackH
                 gap={3}
-                principles={["sibling-stack"]}
+                principle="sibling-stack"
                 align="center"
                 justify="between"
                 isSkeleton={isSkeleton}
@@ -182,7 +182,7 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord | undefined, isSkele
             />
         ),
         ...(isSkeleton || attempt?.gradedByModel != null ? [() => (
-            <StackH gap={3} principles={["chip-row"]} align="center" at="sm" isSkeleton={isSkeleton} items={bylineContent} />
+            <StackH gap={3} principle="chip-row" align="center" at="sm" isSkeleton={isSkeleton} items={bylineContent} />
         )] : []),
     ]
 

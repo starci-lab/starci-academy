@@ -125,7 +125,7 @@ const Base = ({
                         onClick={toggle}
                         aria-expanded={open}
                         disabled={isDisabled}
-                        data-principles="icon-text"
+                        data-principle="icon-text"
                         className={cn(
                             "group flex w-fit items-center gap-1 text-muted outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent",
                             isDisabled ? "cursor-not-allowed opacity-60" : "cursor-pointer")}

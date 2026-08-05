@@ -61,7 +61,7 @@ const LeaderboardToolbar = ({
 }: LeaderboardToolbarProps) => (
     <StackH
         gap={3}
-        principles={["flex-action"]}
+        principle="flex-action"
         align="center"
         classNames={classNames}
 

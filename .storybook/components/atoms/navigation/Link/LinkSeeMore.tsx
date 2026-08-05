@@ -145,7 +145,7 @@ export const LinkSeeMore = ({
         // here: this branch renders neither the HeroUI `Link` nor the plain
         // `<a>`/`<span>` the other branches produce.
         return (
-            <span data-tier="atom" data-component="LinkSeeMore" data-principles="icon-text" className={cn("inline-flex w-fit shrink-0 items-center gap-1", classNames)}>
+            <span data-tier="atom" data-component="LinkSeeMore" data-principle="icon-text" className={cn("inline-flex w-fit shrink-0 items-center gap-1", classNames)}>
                 <HeroSkeleton
                     className={cn(SKEL_TEXT_BAR[size], skeletonWidth ?? "w-1/4")}
 
@@ -182,7 +182,7 @@ export const LinkSeeMore = ({
         // anywhere on that surface, not a hover zone of this span alone. Untagged:
         // this is a plain `<span>`, not the HeroUI `Link`, so "Link" would be inaccurate here.
         return (
-            <span data-tier="atom" data-component="LinkSeeMore" data-principles="icon-text" className={baseClassName(size, classNames)}>
+            <span data-tier="atom" data-component="LinkSeeMore" data-principle="icon-text" className={baseClassName(size, classNames)}>
                 {text}
                 {arrow}
             </span>
@@ -195,7 +195,7 @@ export const LinkSeeMore = ({
         // Untagged for the same reason as the `decorative` branch above: a plain
         // `<a>`, not the HeroUI `Link`.
         return (
-            <a data-tier="atom" data-component="LinkSeeMore" data-principles="icon-text" href={href} className={interactiveClassName}>
+            <a data-tier="atom" data-component="LinkSeeMore" data-principle="icon-text" href={href} className={interactiveClassName}>
                 {text}
                 {arrow}
             </a>
@@ -210,7 +210,7 @@ export const LinkSeeMore = ({
             data-tier="atom"
             data-component="LinkSeeMore"
 
-            data-principles="icon-text"
+            data-principle="icon-text"
             onPress={onPress}
             className={interactiveClassName}
         >

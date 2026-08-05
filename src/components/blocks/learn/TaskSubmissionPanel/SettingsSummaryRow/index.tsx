@@ -17,7 +17,7 @@ interface SettingsSummaryRowProps {
 export const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton }: SettingsSummaryRowProps) => (
     <StackH
         gap={3}
-        principles={["flex-action"]}
+        principle="flex-action"
         align="center"
         justify="between"
         isSkeleton={isSkeleton}
@@ -26,7 +26,7 @@ export const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton
             ({ isSkeleton }: SkeletonProps) => (
                 <StackH
                     gap={3}
-                    principles={["chip-row"]}
+                    principle="chip-row"
                     align="center"
                     at="sm"
                     isSkeleton={isSkeleton}

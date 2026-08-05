@@ -413,7 +413,7 @@ const submissionPanel = (props: PersonalProjectTaskActColumnProps) => {
 
                 />
             </div>
-            <StackH gap={3} at="sm" principles="flex-action" isSkeleton={isSkeleton} items={[() => evaluateActions]} />
+            <StackH gap={3} at="sm" principle="flex-action" isSkeleton={isSkeleton} items={[() => evaluateActions]} />
         </>
     )
 

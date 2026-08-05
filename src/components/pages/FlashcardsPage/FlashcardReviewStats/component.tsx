@@ -158,7 +158,7 @@ export const _FlashcardReviewStats = ({
         ? Array.from({ length: WEAK_TOPIC_SKELETON_ROW_COUNT }, (_unused, index) => (
             <div key={`pending-${index}`} className="flex items-center gap-3 p-3">
                 <Skeleton.Typography type="body-sm" width="1/3" />
-                <Box principles={["push-end"]} className="ml-auto shrink-0">
+                <Box principle="push-end" className="ml-auto shrink-0">
                     <Skeleton.Chip />
                 </Box>
             </div>

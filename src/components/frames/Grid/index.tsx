@@ -2,31 +2,31 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { gapClassNames, type AllowedGap, type Responsive } from "@/components/frames/_spacing"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
-import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { principleAttr, type PrincipleToken } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT (frame) — `Grid.*`: the responsive grid of equal cells. One member,
+ * LAYOUT (frame) -- `Grid.*`: the responsive grid of equal cells. One member,
  * `Grid` (a grid has one shape; density is a PROP, §6b).
  *
- * FRAME API LAW (§13b) — REPEATING LIST ⇒ `items` DATA, `children` FORBIDDEN.
+ * FRAME API LAW (§13b) -- REPEATING LIST ⇒ `items` DATA, `children` FORBIDDEN.
  * A grid's premise is that every cell is the same kind of thing; children would
  * let one cell be something else and quietly break the premise.
  *
- * ⭐ CONTAINER QUERIES, NOT VIEWPORT (`@app-*`, `globals.css`): the app shell is a
- * split — the whole app renders in a left column that a docked AI rail can narrow
+ * CONTAINER QUERIES, NOT VIEWPORT (`@app-*`, `globals.css`): the app shell is a
+ * split -- the whole app renders in a left column that a docked AI rail can narrow
  * at will. A grid that read `md:` would keep 3 columns while its own column had
  * been squeezed to 400px. `@app-sm/md/lg` are pinned to the SAME pixel values as
  * the viewport scale, so the steps read the same but measure the CONTAINER.
- * (Tailwind's built-in `@sm/@md/@lg` are a DIFFERENT, half-size scale — using
+ * (Tailwind's built-in `@sm/@md/@lg` are a DIFFERENT, half-size scale -- using
  * them here would silently halve every breakpoint.) These variants resolve
  * against the nearest `@container` ancestor, which the app shell (and the
- * Storybook preview) already provides — this frame deliberately does NOT open its
+ * Storybook preview) already provides -- this frame deliberately does NOT open its
  * own container, or every grid would answer to its own width instead of the shell's.
  *
  * `gap` is a {@link Responsive}<{@link AllowedGap}> and REQUIRED.
- * §13: no domain content, no behaviour — placement only.
+ * §13: no domain content, no behaviour -- placement only.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -35,15 +35,15 @@ export interface GridItem {
     /** Stable React key. */
     key: string
     /**
-     * The cell's content — a card, a tile, a stat. Received UNCALLED (a component
+     * The cell's content -- a card, a tile, a stat. Received UNCALLED (a component
      * reference, never a built element) so the frame can render it with `isSkeleton`.
      */
     content: ComponentTypeWithSkeleton
     /**
-     * Columns this cell spans. Default `1` (no class set — the cell stays a
+     * Columns this cell spans. Default `1` (no class set -- the cell stays a
      * normal one-column track). Capped at `2`: an app-wide scan found only 7
      * `col-span` call sites (5×`col-span-2`, 2×`col-span-1`), so the union stops
-     * there on purpose — a wider span or an arbitrary start position belongs to
+     * there on purpose -- a wider span or an arbitrary start position belongs to
      * a real composition decision, not a frame prop (decided by the mentor: no
      * `Col` escape hatch, that is what let `col-start-2` break mobile in `GroupPressableCard`).
      */
@@ -67,7 +67,7 @@ export interface GridColumns {
     lg?: 1 | 2 | 3 | 4
 }
 
-// Tailwind never emits an interpolated `@app-md:grid-cols-${n}` — every supported
+// Tailwind never emits an interpolated `@app-md:grid-cols-${n}` -- every supported
 // count is written out so the class actually ships in the compiled CSS.
 /** Base (narrowest) column count → literal class. */
 const BASE_COLUMNS_CLASS: Record<1 | 2, string> = {
@@ -91,7 +91,7 @@ const LG_COLUMNS_CLASS: Record<1 | 2 | 3 | 4, string> = {
     3: "@app-lg:grid-cols-3",
     4: "@app-lg:grid-cols-4"}
 // Same reason as the column tables above: Tailwind never emits an interpolated
-// `col-span-${n}`, so the one supported span (2 — see `GridItem.span`) is
+// `col-span-${n}`, so the one supported span (2 -- see `GridItem.span`) is
 // written out literal.
 /** {@link GridItem.span} `2` → literal class. */
 const SPAN_CLASS: Record<2, string> = {
@@ -100,40 +100,40 @@ const SPAN_CLASS: Record<2, string> = {
 /** Props for {@link Grid}. */
 export interface GridBaseProps {
     /**
-     * The cells, in reading order. REQUIRED — repeat list = DATA, never children
+     * The cells, in reading order. REQUIRED -- repeat list = DATA, never children
      * (§13b). An empty array renders an empty track; the empty MESSAGE is the
      * caller's to phrase, not the frame's.
      */
     items: ReadonlyArray<GridItem>
     /**
-     * Column count per container step — REQUIRED, so the reflow is always a
+     * Column count per container step -- REQUIRED, so the reflow is always a
      * decision. Steps are emitted in ascending width order (later wins).
      */
     columns: GridColumns
-    /** Seam between cells on the house gap scale — REQUIRED. Both axes. */
+    /** Seam between cells on the house gap scale -- REQUIRED. Both axes. */
     gap: Responsive<AllowedGap>
     /**
-     * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
+     * Anatomy tag for THIS frame itself -- so the PARENT can badge it as ONE node (§11a.1).
      * Missing this prop means the frame is used but the panel cannot see it.
      */
     /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Where this sits inside its parent. Appearance is not passable -- it is already a prop.
      */
     classNames?: Array<AllowedClassName>
     /**
-     * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
-     * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the element
+     * The layout pattern this frame's seam realises - one token from `test-runner/patterns.mjs`
+     * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principle` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
-     * A frame does not KNOW its pattern — the caller does — so it is passed in.
+     * Query as `[data-principle="token"]`. A frame does not KNOW its pattern - the caller does - so it is passed in.
      */
-    principles?: Array<PrincipleToken>
+    principle?: PrincipleToken
     /** Renders every cell's skeleton form instead of its content form. */
     isSkeleton?: boolean
     /**
-     * Caller identity to wear on this grid's root instead of the frame's own — pass this when a
+     * Caller identity to wear on this grid's root instead of the frame's own -- pass this when a
      * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
-     * using this grid AS its root element, instead of wrapping it in a raw `<div data-tier=…
-     * data-component=…>`. See `_identity.ts`. Omitted → this grid keeps emitting its own
+     * using this grid AS its root element, instead of wrapping it in a raw `<div data-tier=...
+     * data-component=...>`. See `_identity.ts`. Omitted → this grid keeps emitting its own
      * `data-tier="frame" data-component="Grid"`, unchanged.
      */
     identity?: CallerIdentity
@@ -145,10 +145,10 @@ export interface GridBaseProps {
  *
  * @param props - {@link GridBaseProps}
  */
-const GridBase = ({ items, columns, gap, classNames, principles, isSkeleton, identity }: GridBaseProps) => (
+const GridBase = ({ items, columns, gap, classNames, principle, isSkeleton, identity }: GridBaseProps) => (
     <div
         {...resolveIdentity(identity, { tier: "frame", name: "Grid" })}
-        data-principles={principlesAttr(principles)}
+        data-principle={principleAttr(principle)}
         className={cn(
             "grid",
             ...gapClassNames(gap),
@@ -163,15 +163,15 @@ const GridBase = ({ items, columns, gap, classNames, principles, isSkeleton, ide
             const Content = item.content
             const spanClass = item.span === 2 ? SPAN_CLASS[2] : undefined
             // A spanning cell needs a real wrapper to hang `col-span-2` on, even
-            // when `` is off — a `Fragment` cannot carry a class. A
+            // when `` is off -- a `Fragment` cannot carry a class. A
             // plain (non-spanning) cell keeps the old behaviour untouched.
             //
-            // ⚠️ 2026-07-28: this wrapper used to ALSO grow under `` alone (not
+            // 2026-07-28: this wrapper used to ALSO grow under `` alone (not
             // just `spanClass`) so it could carry ``. Dropped: "Cell"
-            // had no component or story of its own — it is just this `min-w-0`/`col-span`
+            // had no component or story of its own -- it is just this `min-w-0`/`col-span`
             // box, the frame's own geometry (§13z's logic one tier up), not a separate part
             // a reader could click through to. No story ever declared it, so the badge only
-            // ever rendered into the DOM invisibly — a name with nowhere to send the reader
+            // ever rendered into the DOM invisibly -- a name with nowhere to send the reader
             // is worse than no name, so the wrapper now only grows for the reason it
             // actually needs to: hanging `col-span-2` on a spanning cell.
             if (spanClass) {
@@ -189,10 +189,10 @@ const GridBase = ({ items, columns, gap, classNames, principles, isSkeleton, ide
 )
 
 /**
- * `Grid.*` — the responsive grid frame namespace. Namespace only — no bare
+ * `Grid.*` -- the responsive grid frame namespace. Namespace only -- no bare
  * component export (§13a).
  */
 export { GridBase as Grid }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "frame", name: "Grid" } as const

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { Switch as HeroSwitch, Label as HeroLabel, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { SKELETON_TEXT_BAR } from "@sb-components/atoms/_skeleton-bar"
-import { FieldFrame } from "@sb-components/atoms/forms/_field/FieldFrame"
+import { FieldFrame } from "@sb-components/composites/form/_field/FieldFrame"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { InlineFrameProps } from "../_choice/types"
 import { withRequired } from "../_choice/with-required"

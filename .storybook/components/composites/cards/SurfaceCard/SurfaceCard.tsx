@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import type { ComponentType, ReactNode, SVGProps } from "react"
 import Link from "next/link"
-import { Card, cn, Radio, RadioGroup } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { CheckCircleIcon, CircleIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import { Card } from "@sb-components/atoms/display/Card/Card"
 import { type AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
+import { Radio, RadioContent } from "@sb-components/atoms/forms/Radio/Radio"
+import { RadioGroup } from "@sb-components/atoms/forms/RadioGroup/RadioGroup"
 import { Accordion as AccordionAtom, type AccordionItem as AccordionAtomItem } from "@sb-components/atoms/navigation/Accordion/Accordion"
 import { SurfaceCardHeader, surfaceSectionGap, surfaceFrame, type SurfaceLabelProps, type SurfaceCardVariant } from "@sb-components/composites/cards/SurfaceCard/surface-card-header"
 import { type VerdictBand, type VerdictBandVariant, verdictBandClassName } from "@sb-components/composites/cards/verdict-band"
@@ -71,11 +74,13 @@ const composeSlots = ({ header: Header, body: Body, footer: Footer, isSkeleton }
  * Interactive anchor for a clickable row: an INTERNAL route (`/…`) → Next `<Link>`
  * (client-side push, keeps history); a protocol / external href → native `<a>`.
  */
-interface RowAnchorProps {
+/** Internal link/anchor chrome — not a public prop door (COMPOSITE-4). */
+interface RowAnchorConfig {
     href: string
     onClick?: () => void
     ariaCurrent?: boolean
-    className?: string
+    /** Pre-composed frame classes applied to the link element. */
+    chrome?: string
     children: ReactNode
 }
 
@@ -83,13 +88,13 @@ const RowAnchor = ({
     href,
     onClick,
     ariaCurrent,
-    className,
+    chrome,
     children,
-}: RowAnchorProps) => {
+}: RowAnchorConfig) => {
     if (href.startsWith("/")) {
-        return <Link href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={className}>{children}</Link>
+        return <Link href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={chrome}>{children}</Link>
     }
-    return <a href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={className}>{children}</a>
+    return <a href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={chrome}>{children}</a>
 }
 /**
  * Discriminates the two accessible-name contracts for a PRESSABLE card: without
@@ -418,7 +423,7 @@ const Base = ({
     )
     return (
         <section
-            data-principles={subtleLabel ? "sublabel-field" : "label-field"}
+            data-principle={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames)}
             data-tier="composite"
             data-component="SurfaceCard"
@@ -616,7 +621,7 @@ const Nested = ({
                     <StackH
                         gap={3}
                         justify="between"
-                        principles="content-row"
+                        principle="content-row"
                         classNames={["min-w-0"]}
                         padding={{ x: 4, y: 3 }}
                         isSkeleton={isSkeleton}
@@ -644,7 +649,7 @@ const Nested = ({
             ) : null}
             <div className="flex flex-col divide-y divide-default">{innerBody}</div>
             {Footer ? (
-                <Box principles="control-pad" className="border-t border-default px-3 py-2">
+                <Box principle="control-pad" className="border-t border-default px-3 py-2">
                     <Footer isSkeleton={isSkeleton} />
                 </Box>
             ) : null}
@@ -940,7 +945,7 @@ const PressableGroup = ({
                 <Grid
                     columns={columns}
                     gap={gap}
-                    principles="sibling-stack"
+                    principle="sibling-stack"
                     items={items.map((item) => ({
                         key: item.key,
                         content: () => <PressableGroupSkeletonTile classNames={item.classNames} />,
@@ -964,7 +969,7 @@ const PressableGroup = ({
             <Grid
                 columns={columns}
                 gap={gap}
-                principles="sibling-stack"
+                principle="sibling-stack"
                 items={items.map((item) => {
                     // A component reference, not a built node (COMPOSITE-8) — `Base`'s
                     // `body` slot calls this itself; the closure keeps the item's own
@@ -1046,9 +1051,9 @@ const SELECTABLE_GROUP_COLUMNS: Record<1 | 2 | 3, GridColumns> = {
     3: { base: 2, sm: 3, md: 3, lg: 3 },
 }
 /**
- * A single-select group of surface cards: each option is a canonical HeroUI `Card`;
+ * A single-select group of surface cards: each option is a house `Card`;
  * choosing one draws an accent OUTLINE ring around it (never a fill / colour change,
- * so the card stays neutral `bg-surface`). Built on HeroUI `RadioGroup`/`Radio`
+ * so the card stays neutral `bg-surface`). Built on house `RadioGroup`/`Radio`
  * (React Aria) so it is a real radio group — arrow-key roving, single-select
  * semantics, focus ring — not a hand-rolled toggle-button grid. This is the
  * SELECTION sibling of `.PressableGroup` (§ note at the top of this file):
@@ -1060,9 +1065,9 @@ const SELECTABLE_GROUP_COLUMNS: Record<1 | 2 | 3, GridColumns> = {
  * would swallow a box-shadow ring, but never touches `outline`. That same shadow is
  * dropped (`!shadow-none`) while the ring is up so the two don't stack.
  *
- * NOTE: Calls HeroUI `Radio`/`RadioGroup` directly rather than the design system's
- * `ChoiceRadio`/`ChoiceRadioGroup` atom — known drift, carried over verbatim
- * from `atoms/navigation/SelectableCardGroup` (not refactored in this move).
+ * NOTE: Uses house `Radio`/`RadioGroup`/`Card` rather than `ChoiceRadio`/
+ * `ChoiceRadioGroup` — known drift, carried over from
+ * `atoms/navigation/SelectableCardGroup` (not refactored in this move).
  *
  * @param props - {@link SurfaceCardSelectableGroupProps}
  */
@@ -1083,55 +1088,60 @@ const SelectableGroup = <T extends string>({
         >
             <Grid
                 gap={3}
-                principles="sibling-stack"
+                principle="sibling-stack"
                 columns={SELECTABLE_GROUP_COLUMNS[columns]}
                 classNames={classNames}
                 items={items.map((item) => ({
                     key: item.value,
                     content: () => (
-                        <Radio value={item.value} isDisabled={item.isDisabled} className="w-full">
-                            <Radio.Content className="block w-full">
-                                {({ isSelected, isDisabled, isFocusVisible }) => {
-                                    const optionRow = (
-                                        <>
-                                            {item.icon ? (
-                                                <span className="shrink-0" aria-hidden>
-                                                    <item.icon />
-                                                </span>
-                                            ) : null}
-                                            <span className="flex min-w-0 flex-col">
-                                                <Typography size="sm" truncate text={item.label} />
-                                                {item.description != null ? (
-                                                    <Typography size="xs" color="muted" truncate text={item.description} />
+                        // House `Radio`/`Card` omit `className` from their public props —
+                        // width and selection chrome ride plain wrappers around them.
+                        <div className="w-full">
+                            <Radio value={item.value} isDisabled={item.isDisabled}>
+                                <RadioContent className="block w-full">
+                                    {({ isSelected, isDisabled, isFocusVisible }) => {
+                                        const optionRow = (
+                                            <>
+                                                {item.icon ? (
+                                                    <span className="shrink-0" aria-hidden>
+                                                        <item.icon />
+                                                    </span>
                                                 ) : null}
-                                            </span>
-                                            {item.badge ? (
-                                                <Box as="span" principles="push-end" className="shrink-0">
-                                                    <item.badge />
-                                                </Box>
-                                            ) : null}
-                                        </>
-                                    )
-                                    return (
-                                        <Card
-                                            variant="default"
-                                            className={cn(
-                                                "w-full text-sm text-foreground transition-colors",
-                                                // selection & keyboard focus = an accent OUTLINE ring, NO
-                                                // fill / colour change. Drop the card's `shadow-surface`
-                                                // while the ring is up so the two elevations don't stack.
-                                                (isSelected || isFocusVisible) &&
-                                            "outline outline-2 outline-accent outline-offset-0 !shadow-none",
-                                                !isSelected && !isDisabled && "hover:bg-default",
-                                                isDisabled && "opacity-60",
-                                            )}
-                                        >
-                                            <StackH gap={3} items={[() => optionRow]} />
-                                        </Card>
-                                    )
-                                }}
-                            </Radio.Content>
-                        </Radio>
+                                                <span className="flex min-w-0 flex-col">
+                                                    <Typography size="sm" truncate text={item.label} />
+                                                    {item.description != null ? (
+                                                        <Typography size="xs" color="muted" truncate text={item.description} />
+                                                    ) : null}
+                                                </span>
+                                                {item.badge ? (
+                                                    <Box as="span" principle="push-end" className="shrink-0">
+                                                        <item.badge />
+                                                    </Box>
+                                                ) : null}
+                                            </>
+                                        )
+                                        return (
+                                            <div
+                                                className={cn(
+                                                    "w-full text-sm text-foreground transition-colors",
+                                                    // selection & keyboard focus = an accent OUTLINE ring, NO
+                                                    // fill / colour change. Drop the card's `shadow-surface`
+                                                    // while the ring is up so the two elevations don't stack.
+                                                    (isSelected || isFocusVisible) &&
+                                                "outline outline-2 outline-accent outline-offset-0 [&>*]:!shadow-none",
+                                                    !isSelected && !isDisabled && "hover:bg-default",
+                                                    isDisabled && "opacity-60",
+                                                )}
+                                            >
+                                                <Card variant="default">
+                                                    <StackH gap={3} items={[() => optionRow]} />
+                                                </Card>
+                                            </div>
+                                        )
+                                    }}
+                                </RadioContent>
+                            </Radio>
+                        </div>
                     ),
                 }))}
             />
@@ -1396,7 +1406,7 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
                 ]}
             />
             {metaSlot || trailingSlot || selected ? (
-                <Box principles="push-end">
+                <Box principle="push-end">
                     <StackH
                         gap={3}
                         classNames={["shrink-0"]}
@@ -1415,7 +1425,7 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
         </>
     )
     if (href) {
-        return <RowAnchor href={href} onClick={onPress} ariaCurrent={selected} className={rowClassName}>{content}</RowAnchor>
+        return <RowAnchor href={href} onClick={onPress} ariaCurrent={selected} chrome={rowClassName}>{content}</RowAnchor>
     }
     if (onPress) {
         return <button type="button" onClick={onPress} disabled={isDisabled} aria-current={selected ? "true" : undefined} className={rowClassName}>{content}</button>
@@ -1452,7 +1462,7 @@ const ListFreeRow = ({ item }: ListFreeRowProps) => {
         return null
     }
     if (href) {
-        return <RowAnchor href={href} onClick={onPress} className={itemClassName}><Content /></RowAnchor>
+        return <RowAnchor href={href} onClick={onPress} chrome={itemClassName}><Content /></RowAnchor>
     }
     if (onPress) {
         return <button type="button" onClick={onPress} disabled={isDisabled} className={itemClassName}><Content /></button>
@@ -1495,8 +1505,8 @@ const List = ({
     // outranks the skeleton (a failed fetch is not a loading state); empty only
     // reads once loading is done.
     const inner = error && ErrorState != null
-        ? <Box principles="page-pad"><ErrorState /></Box>
-        : !isSkeleton && isEmpty && EmptyState != null ? <Box principles="page-pad"><EmptyState /></Box> : rows
+        ? <Box principle="page-pad"><ErrorState /></Box>
+        : !isSkeleton && isEmpty && EmptyState != null ? <Box principle="page-pad"><EmptyState /></Box> : rows
     const bare = label == null && description == null
     const surface = (
         <div
@@ -1528,7 +1538,7 @@ const List = ({
     return (
         <section
 
-            data-principles={subtleLabel ? "sublabel-field" : "label-field"}
+            data-principle={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames)}
             data-tier="composite"
             data-component="SurfaceCardList"
@@ -1732,7 +1742,7 @@ const AccordionCard = ({
     return (
         <section
 
-            data-principles={subtleLabel ? "sublabel-field" : "label-field"}
+            data-principle={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames)}
             data-tier="composite"
             data-component="SurfaceCardAccordion"
@@ -1872,7 +1882,7 @@ const CrossListRow = ({
         <StackH
             gap={4}
             align="start"
-            principles="content-row"
+            principle="content-row"
             padding={4}
             isSkeleton={isSkeleton}
             items={
@@ -2005,7 +2015,7 @@ const Placeholder = ({
     if (isSkeleton) {
         return (
             <div
-                data-principles="icon-text"
+                data-principle="icon-text"
                 className={shellClassName}
                 data-tier="composite"
                 data-component="SurfaceCardPlaceholder"
@@ -2022,7 +2032,7 @@ const Placeholder = ({
             aria-pressed={isSelected || undefined}
             data-tier="composite"
             data-component="SurfaceCardPlaceholder"
-            data-principles="icon-text"
+            data-principle="icon-text"
             className={shellClassName}
         >
             {tileBody}

@@ -121,7 +121,7 @@ const PdfViewportPage = (props: PdfViewportPageProps) => {
                     // drawn shimmer rectangle); the two lines inside are the only shimmer,
                     // and `Typography` draws its own shape (COMPOSITE-10).
                     <Box
-                        principles={["title-subtitle"]} className="flex w-full max-w-full flex-col items-center justify-center gap-2 rounded-medium border border-default"
+                        principle="title-subtitle" className="flex w-full max-w-full flex-col items-center justify-center gap-2 rounded-medium border border-default"
                         style={{ minHeight: placeholderMinH }}
                         aria-hidden
                     >
@@ -277,7 +277,7 @@ export const PDFView = ({
                     gap={4}
                     items={Array.from({ length: SKELETON_PAGE_COUNT }, () => () => (
                         <Box
-                            principles={["title-subtitle"]} className="flex w-full flex-col items-center justify-center gap-2 rounded-medium border border-default"
+                            principle="title-subtitle" className="flex w-full flex-col items-center justify-center gap-2 rounded-medium border border-default"
                             style={{ minHeight: 320 }}
                             aria-hidden
                         >

@@ -46,7 +46,7 @@ export const SkeletonQuestionRow = () => {
     return (
         <StackH
             gap={4}
-            principles={["content-row"]}
+            principle="content-row"
             align="start"
 
             items={[

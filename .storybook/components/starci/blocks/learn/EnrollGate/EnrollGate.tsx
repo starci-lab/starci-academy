@@ -144,7 +144,7 @@ const EnrollGateBase = ({
             <AsyncContent
                 isLoading={priceLoading}
                 skeleton={() => <HeroSkeleton className="h-7 w-32 rounded-xl" />}
-                content={() => <StackV gap={4} principles="card-caption" align="center" isSkeleton={isSkeleton} items={[() => priceGroup]} />}
+                content={() => <StackV gap={4} principle="card-caption" align="center" isSkeleton={isSkeleton} items={[() => priceGroup]} />}
             />
             <Button
                 label="Enroll now"
@@ -165,15 +165,15 @@ const EnrollGateBase = ({
     const card = (
         // `SurfaceCard.className` door was deleted (COMPOSITE-4) and `max-w-[480px]` is an
         // arbitrary value outside the closed `AllowedClassName` union anyway — no frame's
-        // typed `classNames` can carry it. `Box` centres via `principles="center-measure"`
+        // typed `classNames` can carry it. `Box` centres via `principle="center-measure"`
         // (the real `mx-auto`) and keeps the raw width class as its escape-hatch `className`.
         // TODO(atom): `max-w-[480px]` still wants its own typed sizing step (or a matching
         // `Container` size) so this card stops needing the escape hatch at all.
-        <Box principles="center-measure" className="w-full max-w-[480px]">
+        <Box principle="center-measure" className="w-full max-w-[480px]">
             <SurfaceCard
                 padding={6}
 
-                body={() => <StackV gap={4} principles="content-row" align="center" isSkeleton={isSkeleton} items={[() => offerBody]} />}
+                body={() => <StackV gap={4} principle="content-row" align="center" isSkeleton={isSkeleton} items={[() => offerBody]} />}
             />
         </Box>
     )
@@ -183,7 +183,7 @@ const EnrollGateBase = ({
     // governs the wrapper's padding instead of a hand-typed `p-*` value.
     if (preview == null) {
         return (
-            <StackH gap={1} principles="page-pad" justify="center" padding={6} isSkeleton={isSkeleton} classNames={classNames} items={[() => card]} />
+            <StackH gap={1} principle="page-pad" justify="center" padding={6} isSkeleton={isSkeleton} classNames={classNames} items={[() => card]} />
         )
     }
 
@@ -205,7 +205,7 @@ const EnrollGateBase = ({
                 hand-written: it is the float-over-the-fade OVERLAP effect itself, not a seam
                 between siblings, the same idiom as `SurfaceCard.Pressable`'s highlight layer. */}
             <div className="relative z-10 -mt-32">
-                <StackH gap={1} principles="page-pad" justify="center" padding={6} isSkeleton={isSkeleton} items={[() => card]} />
+                <StackH gap={1} principle="page-pad" justify="center" padding={6} isSkeleton={isSkeleton} items={[() => card]} />
             </div>
         </div>
     )

@@ -1,6 +1,7 @@
 import React from "react"
 import { Button, ScrollShadow, Typography, cn } from "@heroui/react"
 import { BackLink } from "../BackLink"
+import { principleAttr } from "@/components/frames/_principles"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Identity chip shown after the back link — an avatar (optional) + a name. */
@@ -228,11 +229,12 @@ export const _WorkSessionHeader = ({
                             aria-current={isCurrent ? "step" : undefined}
                             onClick={() => onSegmentClick(position)}
                             className="flex flex-1 cursor-pointer items-center rounded py-2 transition-opacity hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                            data-principle={principleAttr("control-pad")}
                         >
                             {content}
                         </button>
                     ) : (
-                        <span key={position} aria-hidden className="flex flex-1 items-center py-2">{content}</span>
+                        <span key={position} aria-hidden className="flex flex-1 items-center py-2" data-principle={principleAttr("control-pad")}>{content}</span>
                     )
                 })}
             </div>

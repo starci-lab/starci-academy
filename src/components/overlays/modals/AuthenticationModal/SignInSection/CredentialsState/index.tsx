@@ -219,7 +219,7 @@ export const CredentialsState = ({ hideCloseButton }: CredentialsStateProps = {}
                 <Box className="pr-8">
                     <StackV
                         gap={2}
-                        principles={["title-subtitle"]}
+                        principle="title-subtitle"
                         items={[
                             () => <Typography weight="semibold" align="center" text={t("auth.signIn.title")} />,
                             () => <Typography size="xs" color="muted" align="center" text={t("auth.signIn.desc")} />,

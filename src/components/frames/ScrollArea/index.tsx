@@ -1,30 +1,30 @@
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
-import { principlesAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
+import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * FRAME (frame) — `ScrollArea`: a region that SCROLLS its own overflow, on
+ * FRAME (frame) -- `ScrollArea`: a region that SCROLLS its own overflow, on
  * either axis, instead of growing past its box.
  *
- * ⭐ WHY THIS FRAME EXISTS (teacher's ruling: when vocabulary is missing, CREATE
- * it). Real `src` — `MindMapPage/index.tsx` (~line 296) — hand-rolled exactly
+ * WHY THIS FRAME EXISTS (teacher's ruling: when vocabulary is missing, CREATE
+ * it). Real `src` -- `MindMapPage/index.tsx` (~line 296) -- hand-rolled exactly
  * this shape around the search rail's own content, with the comment in place:
  * *"NEW VOCABULARY GAP: no frame carries a scrollable-region flag
- * (`overflow-y-auto`) yet — `ResizableRail`/`RailShell` own width and the
+ * (`overflow-y-auto`) yet -- `ResizableRail`/`RailShell` own width and the
  * handle only. Kept as minimal raw markup until one does."* This frame is that
  * flag.
  *
- * FRAME API LAW (§13b): a scroll region WRAPS one thing — its scrollable
- * content — so it gets ONE named slot, `body`, the same shape as
+ * FRAME API LAW (§13b): a scroll region WRAPS one thing -- its scrollable
+ * content -- so it gets ONE named slot, `body`, the same shape as
  * `Container`'s single-slot contract (a wrapping frame that is not a repeat
  * list takes a slot, never `items`).
  *
- * ⭐ `axis` NAMES THE DIRECTION. `MindMapPage`'s one real call site scrolls
+ * `axis` NAMES THE DIRECTION. `MindMapPage`'s one real call site scrolls
  * vertically only (`overflow-y-auto`), which is also the dominant shape
- * anywhere content outgrows its box — so `axis` defaults to `"y"` and an
+ * anywhere content outgrows its box -- so `axis` defaults to `"y"` and an
  * unmigrated caller would render identically. `"x"`/`"both"` are offered
  * up front rather than bolted on later: `overflow-x-auto`/`overflow-auto` are
  * the only other two members `overflow-*` actually has for "scroll, don't
@@ -32,36 +32,36 @@ import { resolveIdentity, type CallerIdentity } from "@/components/frames/_ident
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Which axis {@link ScrollArea} scrolls — see the file header. */
+/** Which axis {@link ScrollArea} scrolls -- see the file header. */
 export type ScrollAreaAxis = "y" | "x" | "both"
 
 /** Props for {@link ScrollArea}. */
 export interface ScrollAreaProps {
-    /** The scrollable content — an uncalled `ComponentType<{isSkeleton?}>` this frame renders itself. */
+    /** The scrollable content -- an uncalled `ComponentType<{isSkeleton?}>` this frame renders itself. */
     body: ComponentTypeWithSkeleton
-    /** Which axis scrolls. Defaults to `"y"` — the dominant shape (see file header). */
+    /** Which axis scrolls. Defaults to `"y"` -- the dominant shape (see file header). */
     axis?: ScrollAreaAxis
     /** Renders `body` in its skeleton state. */
     isSkeleton?: boolean
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
-     * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
-     * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the element
+     * The layout pattern this frame's seam realises - one token from `test-runner/patterns.mjs`
+     * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principle` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
-     * A frame does not KNOW its pattern — the caller does — so it is passed in.
+     * Query as `[data-principle="token"]`. A frame does not KNOW its pattern - the caller does - so it is passed in.
      */
-    principles?: Array<PrincipleToken>
+    principle?: PrincipleToken
     /**
-     * Why this layer exists — one sentence, emitted as `data-explain` beside the tokens.
-     * A reason, never a restatement of `principles`; see `_principles.ts`.
+     * Why this layer exists - one sentence, emitted as `data-explain` beside the token.
+     * A reason, never a restatement of `principle`.
      */
     explain?: ExplainReason
     /**
-     * Caller identity to wear on this region's root instead of the frame's own — pass this when
+     * Caller identity to wear on this region's root instead of the frame's own -- pass this when
      * a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
      * is using this region AS its root element, instead of wrapping it in a raw `<div
-     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this region keeps emitting
+     * data-tier=... data-component=...>`. See `_identity.ts`. Omitted → this region keeps emitting
      * its own `data-tier="frame" data-component="ScrollArea"`, unchanged.
      */
     identity?: CallerIdentity
@@ -84,16 +84,16 @@ const ScrollArea = ({
     axis = "y",
     isSkeleton,
     classNames,
-    principles,
+    principle,
     explain,
     identity}: ScrollAreaProps) => (
     <div
         {...resolveIdentity(identity, { tier: "frame", name: "ScrollArea" })}
-        data-principles={principlesAttr(principles)}
+        data-principle={principleAttr(principle)}
         data-explain={explainAttr(explain)}
         className={cn(AXIS_CLASS[axis], classNames)}
     >
-        {/* `body` is a CALLER SLOT — the node inside belongs to whoever passed it, not to
+        {/* `body` is a CALLER SLOT -- the node inside belongs to whoever passed it, not to
             this frame, so it gets no badge of its own (same restraint as `Container.body`). */}
         <Body isSkeleton={isSkeleton} />
     </div>
@@ -101,5 +101,5 @@ const ScrollArea = ({
 
 export { ScrollArea }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "frame", name: "ScrollArea" } as const

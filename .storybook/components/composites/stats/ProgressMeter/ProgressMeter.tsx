@@ -1,5 +1,6 @@
 import React from "react"
-import { ProgressBar, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import { ProgressBar } from "@sb-components/atoms/display/Progress/Progress"
 import { ProgressMeterTargetMark } from "./TargetMark"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
@@ -65,7 +66,7 @@ export type ProgressMeterProps = ProgressMeterOwnProps &
 
 /**
  * ProgressMeter renders a labelled, accessible progress bar: an optional top row
- * (label + rounded percentage) above a HeroUI {@link ProgressBar}, with an
+ * (label + rounded percentage) above a house {@link ProgressBar}, with an
  * optional target/goal marker overlaid on the track. A second, independent row
  * — {@link ProgressMeterOwnProps.leading}/{@link ProgressMeterOwnProps.trailing} —
  * can render just above the track for callers that need components instead of
@@ -100,7 +101,7 @@ export const ProgressMeter = ({
     const topRow = hasTopRow ? (
         <StackH
             gap={3}
-            principles="content-row"
+            principle="content-row"
             justify="between"
             isSkeleton={isSkeleton}
             items={[
@@ -120,7 +121,7 @@ export const ProgressMeter = ({
     const slotRow = hasSlotRow ? (
         <StackH
             gap={3}
-            principles="content-row"
+            principle="content-row"
             justify="between"
             isSkeleton={isSkeleton}
             items={[
@@ -159,28 +160,14 @@ export const ProgressMeter = ({
                 )}
             >
                 <div className="w-full">
-                    {/* ATOM GAP: the `Progress.ProgressBar` atom does not expose its Track's
-                        height for override, and this meter's compact `h-1` track (vs the
-                        atom's own preset sizes) can only be reproduced with the vendor
-                        `ProgressBar` directly. Kept as the REAL element in both states — the
-                        skeleton no longer imports a vendor `Skeleton`, it swaps the same
-                        track slot for a neutral flat fill instead (no hand-drawn
-                        `animate-pulse` shimmer, COMPOSITE-10). */}
-                    {isSkeleton ? (
-                        <div className="h-1 w-full rounded-full bg-default" />
-                    ) : (
-                        <ProgressBar
-                            aria-label={label ?? "Progress"}
-                            value={value}
-                            maxValue={safeMax}
-                            color={color}
-                            size="sm"
-                        >
-                            <ProgressBar.Track className="h-1">
-                                <ProgressBar.Fill />
-                            </ProgressBar.Track>
-                        </ProgressBar>
-                    )}
+                    <ProgressBar
+                        trackDensity="compact"
+                        value={value}
+                        max={safeMax}
+                        color={color}
+                        ariaLabel={label ?? "Progress"}
+                        isSkeleton={isSkeleton}
+                    />
                 </div>
                 {targetPercent === null ? null : (
                     <ProgressMeterTargetMark percent={targetPercent} label={targetLabel} />

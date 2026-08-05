@@ -74,6 +74,10 @@ export interface AuthCardLabels {
     emailLabel: string
     /** Label above the password field. */
     passwordLabel: string
+    /** Accessible name for the password reveal control. */
+    passwordRevealLabel: string
+    /** Accessible name for the password hide control. */
+    passwordHideLabel: string
     /** Submit button label in login mode. */
     loginSubmitLabel: string
     /** Submit button label in register mode. */
@@ -141,6 +145,8 @@ const AuthCard = (props: AuthCardProps) => {
                                                 value={password}
                                                 onValueChange={onPasswordChange}
                                                 isDisabled={isSubmitting}
+                                                revealLabel={labels.passwordRevealLabel}
+                                                hideLabel={labels.passwordHideLabel}
                                             />
                                         ),
                                     ]}

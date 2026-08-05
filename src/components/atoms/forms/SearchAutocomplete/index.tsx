@@ -10,7 +10,7 @@ import {
     Spinner,
     Typography,
 } from "@heroui/react"
-import { FieldFrame, fieldName } from "@/components/atoms/forms/_field/FieldFrame"
+import { FieldFrame, fieldName } from "@/components/composites/form/_field/FieldFrame"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**

@@ -44,7 +44,7 @@ const NavLinks = ({ items, onNavigate, classNames }: NavLinksProps) => (
     <div className="hidden @app-md:flex">
         <StackH
             gap={3}
-            principles={["flex-action"]}
+            principle="flex-action"
             justify="center"
             classNames={classNames}
 

@@ -151,7 +151,7 @@ export const LabeledCard = ({
     return (
         <section
             {...resolveIdentity(identity)}
-            data-principles={subtleLabel ? "sublabel-field" : "label-field"}
+            data-principle={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", subtleLabel ? "gap-2" : "gap-3", fillHeight && "h-full", className)}
         >
             <StackH gap={4} justify="between" items={[() => labelSlot, () => endSlot]} />

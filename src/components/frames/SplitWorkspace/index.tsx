@@ -2,63 +2,63 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
-import { principlesAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
+import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * FRAME (frame) — `SplitWorkspace`: the READ-COLUMN + STICKY-ASIDE workspace
- * shape — a brief/content column that grows, beside a fixed-width action column
+ * FRAME (frame) -- `SplitWorkspace`: the READ-COLUMN + STICKY-ASIDE workspace
+ * shape -- a brief/content column that grows, beside a fixed-width action column
  * that pins to the viewport once there's room for both side by side.
  *
- * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): renamed the tier
- * label "LAYOUT" → "FRAME" — this file lives in the `frames/` folder, and
- * `principles/naming` §6 already SETTLED (2026-07-29, the disc as referee):
+ * AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1): renamed the tier
+ * label "LAYOUT" → "FRAME" -- this file lives in the `frames/` folder, and
+ * naming §6 already SETTLED (2026-07-29, the disc as referee):
  * `frame` = `frames/`, `layout` = `<app>/layouts/`, two different tiers. Also
- * removed the fake `.Base` namespace declaration below — this file really
+ * removed the fake `.Base` namespace declaration below -- this file really
  * exports BARE (confirmed across every call-site), not a namespace.
  *
- * ⭐ WHY THIS FRAME EXISTS (per the teacher's note, 2026-07-29: "desktop should
- * render as flex, shouldn't it?"). Real `src` has this EXACT shape TWICE, byte-for-byte identical CSS —
- * `ChallengeView/index.tsx:195` and `PersonalProjectWorkspace/index.tsx:61` —
+ * WHY THIS FRAME EXISTS (per the teacher's note, 2026-07-29: "desktop should
+ * render as flex, shouldn't it?"). Real `src` has this EXACT shape TWICE, byte-for-byte identical CSS --
+ * `ChallengeView/index.tsx:195` and `PersonalProjectWorkspace/index.tsx:61` --
  * and BOTH corresponding Storybook screens (`ChallengePage`, `PersonalProjectTaskPage`)
  * worked around its absence with `StackH gap="section" align="start" wrap`
  * holding two `StackV` children, each self-flagging the exact same comment:
  * *"the BEST-AVAILABLE substitute... this design system has no dedicated
  * 'reading column + fixed aside' frame yet"*. `StackH` is a FIXED horizontal
- * axis (§13, by design — two `Stack.*` members = two axes, chosen by the
- * caller, never switching on their own) — with `wrap` and the main column's
+ * axis (§13, by design -- two `Stack.*` members = two axes, chosen by the
+ * caller, never switching on their own) -- with `wrap` and the main column's
  * `min-w-0 flex-1` (free to shrink without limit), the row almost never
  * actually wraps, so the split was rendering side-by-side at EVERY width,
  * mobile included, instead of stacking cleanly below desktop like `src` does.
  *
  * `flex-col` (mobile/tablet) → `@app-xl:flex-row` (desktop, `src`'s own
- * breakpoint) is not a generic "responsive Stack" ask — it is THIS one named
+ * breakpoint) is not a generic "responsive Stack" ask -- it is THIS one named
  * shape, so it gets its own frame instead of a new prop bolted onto `Stack.*`
  * that would blur what "two axes" means there.
  *
- * ⭐ `at` NAMES THE BREAKPOINT (FRAME-10), EVERY OTHER NUMBER STAYS HARD-OWNED
+ * `at` NAMES THE BREAKPOINT (FRAME-10), EVERY OTHER NUMBER STAYS HARD-OWNED
  * (§6c: a layout frame owns its internal sizing). Both real `src` sources agree
  * on `@app-xl` as the switch step, so `at` defaults to `xl` and an unmigrated
- * caller renders identically — but the step itself is now a
+ * caller renders identically -- but the step itself is now a
  * `ResponsiveRowSwitch` prop instead of a bare string in `cn(...)`, so it is
  * readable from the prop list. `gap-6`/`gap-8`, `w-[360px]`, `top-24` and
- * `max-h-[calc(100dvh-7rem)]` are the SAME in both sources — there is no second
+ * `max-h-[calc(100dvh-7rem)]` are the SAME in both sources -- there is no second
  * shape to generalize for yet. Add a prop for one of those only when a THIRD
  * real consumer actually disagrees with it.
  *
  * FRAME API LAW (§13b): two DISTINCT roles ⇒ two NAMED slots (`main`/`aside`),
- * not a single `children` — a workspace has no "one obvious slot" the way
+ * not a single `children` -- a workspace has no "one obvious slot" the way
  * `Container`/`Stack` do.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /** Props for {@link SplitWorkspace}. */
 export interface SplitWorkspaceProps {
-    /** The reading column — grows, shrinks without limit (`min-w-0 flex-1`). */
+    /** The reading column -- grows, shrinks without limit (`min-w-0 flex-1`). */
     main: ComponentTypeWithSkeleton
     /**
-     * The action column — full width and stacked below `main` under `@app-xl`;
+     * The action column -- full width and stacked below `main` under `@app-xl`;
      * pins to a `360px` sticky rail beside it from `@app-xl` up.
      */
     aside: ComponentTypeWithSkeleton
@@ -66,28 +66,28 @@ export interface SplitWorkspaceProps {
     isSkeleton?: boolean
     /**
      * Container step `aside` drops below `main` and pins beside it at.
-     * Defaults to `xl` — the step both real sources agree on.
+     * Defaults to `xl` -- the step both real sources agree on.
      */
     at?: ResponsiveRowSwitch
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
-     * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
-     * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the element
+     * The layout pattern this frame's seam realises - one token from `test-runner/patterns.mjs`
+     * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principle` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
-     * A frame does not KNOW its pattern — the caller does — so it is passed in.
+     * Query as `[data-principle="token"]`. A frame does not KNOW its pattern - the caller does - so it is passed in.
      */
-    principles?: Array<PrincipleToken>
+    principle?: PrincipleToken
     /**
-     * Why this layer exists — one sentence, emitted as `data-explain` beside the tokens.
-     * A reason, never a restatement of `principles`; see `_principles.ts`.
+     * Why this layer exists - one sentence, emitted as `data-explain` beside the token.
+     * A reason, never a restatement of `principle`.
      */
     explain?: ExplainReason
     /**
-     * Caller identity to wear on this workspace's root instead of `SplitWorkspace`'s own —
+     * Caller identity to wear on this workspace's root instead of `SplitWorkspace`'s own --
      * pass this when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a
      * shape of its own) is using this workspace AS its root element, instead of wrapping it
-     * in a raw `<div data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this
+     * in a raw `<div data-tier=... data-component=...>`. See `_identity.ts`. Omitted → this
      * workspace keeps emitting `data-tier="frame" data-component="SplitWorkspace"`, unchanged.
      */
     identity?: CallerIdentity
@@ -123,18 +123,18 @@ const SplitWorkspace = ({
     at = "xl",
     isSkeleton,
     classNames,
-    principles,
+    principle,
     explain,
     identity}: SplitWorkspaceProps) => (
     <div
         {...resolveIdentity(identity, { tier: "frame", name: "SplitWorkspace" })}
-        data-principles={principlesAttr(principles)}
+        data-principle={principleAttr(principle)}
         data-explain={explainAttr(explain)}
         className={cn("flex flex-col gap-6", WORKSPACE_SWITCH_CLASS[at], classNames)}
     >
-        {/* `main`/`aside` are CALLER SLOTS — the node inside belongs to whoever passed it, not
+        {/* `main`/`aside` are CALLER SLOTS -- the node inside belongs to whoever passed it, not
             to this frame, so neither gets a badge of its own (same as `Container.body`'s bare
-            render — a badge here would be "declare it or stop badging it" with nothing to
+            render -- a badge here would be "declare it or stop badging it" with nothing to
             declare, since there is no `SplitWorkspace`-owned content at either position). */}
         <div className="min-w-0 flex-1">
             <Main isSkeleton={isSkeleton} />
@@ -147,5 +147,5 @@ const SplitWorkspace = ({
 
 export { SplitWorkspace }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "frame", name: "SplitWorkspace" } as const

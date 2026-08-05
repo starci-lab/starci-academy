@@ -121,7 +121,7 @@ const _ContentAiChatDrawer = ({
         <Box className="pr-8">
             <StackH
                 gap={3}
-                principles={["sibling-stack"]}
+                principle="sibling-stack"
                 justify="between"
                 items={titleAndModeSwitch}
             />

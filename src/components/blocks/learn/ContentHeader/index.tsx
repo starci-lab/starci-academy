@@ -140,7 +140,7 @@ const ContentHeader = ({
                 title={title}
                 description={description}
                 meta={() =>
-                    <StackH gap={3} align="center" principles={["sibling-stack"]} isSkeleton={isSkeleton} items={[() => metaRow]} />
+                    <StackH gap={3} align="center" principle="sibling-stack" isSkeleton={isSkeleton} items={[() => metaRow]} />
                 }
             />
             {hasOutcomes ? (

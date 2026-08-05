@@ -171,7 +171,7 @@ export const PricingTable = ({
             identity={{ tier: "block", component: "PricingTable" }}
             columns={{ base: 1, md: tierGridColumns(tiers.length) }}
             gap={6}
-            principles={["block-boundary"]}
+            principle="block-boundary"
             items={tierItems}
         />
     )

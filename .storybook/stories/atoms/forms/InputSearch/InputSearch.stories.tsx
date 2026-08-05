@@ -38,7 +38,7 @@ export const Default: Story = {
                         {
                             name: "no label, hint, or error passed",
                             why: "Only the search field renders: a magnifier leading icon inside `FieldFrame`, no label row above it and no hint or error line below it. This is the bare control, the shape every other leaf below adds one thing on top of.",
-                            code: "<InputSearch value={v} onValueChange={setV} />",
+                            code: "<InputSearch ariaLabel=\"Search\" value={v} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
                                     <InputSearch value={value} onValueChange={setValue} ariaLabel="Search" />
@@ -70,10 +70,10 @@ export const Placeholder: Story = {
                         {
                             name: "placeholder set, value empty",
                             why: "The ghost text sits inside the empty field and disappears the moment a first character is typed. It only shows while the field holds no value, so it never competes with real input.",
-                            code: "<InputSearch placeholder=\"Search courses…\" value={v} onValueChange={setV} />",
+                            code: "<InputSearch ariaLabel=\"Search\" placeholder=\"Search courses…\" value={v} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputSearch placeholder="Search courses…" value={value} onValueChange={setValue} />
+                                    <InputSearch ariaLabel="Search" placeholder="Search courses…" value={value} onValueChange={setValue} />
                                 </div>
                             ),
                         },
@@ -100,10 +100,10 @@ export const WithLabel: Story = {
                         {
                             name: "label and hint set",
                             why: "A label row grows above the field and a muted hint line grows below it, on top of the same bare field from `Default`. Naming the field and explaining what to type in it are two separate slots that a caller can add independently.",
-                            code: "<InputSearch label=\"Search courses\" hint=\"By name or skill\" value={v} onValueChange={setV} />",
+                            code: "<InputSearch ariaLabel=\"Search\" label=\"Search courses\" hint=\"By name or skill\" value={v} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputSearch label="Search courses" hint="By name or skill" value={value} onValueChange={setValue} placeholder="Search courses…" />
+                                    <InputSearch ariaLabel="Search" label="Search courses" hint="By name or skill" value={value} onValueChange={setValue} placeholder="Search courses…" />
                                 </div>
                             ),
                         },
@@ -130,10 +130,10 @@ export const Required: Story = {
                         {
                             name: "isRequired = true",
                             why: "A `*` mark appears right after the label text, nothing else in the field changes. It's the one visual cue that tells the learner this search is not optional before they can move on.",
-                            code: "<InputSearch label=\"Search courses\" isRequired value={v} onValueChange={setV} />",
+                            code: "<InputSearch ariaLabel=\"Search\" label=\"Search courses\" isRequired value={v} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputSearch label="Search courses" isRequired value={value} onValueChange={setValue} placeholder="Search courses…" />
+                                    <InputSearch ariaLabel="Search" label="Search courses" isRequired value={value} onValueChange={setValue} placeholder="Search courses…" />
                                 </div>
                             ),
                         },
@@ -160,10 +160,10 @@ export const Filled: Story = {
                         {
                             name: "value = \"React\"",
                             why: "A trailing clear (×) button grows in the field once `value` holds text, next to the label from `WithLabel`. HeroUI's `SearchField` only offers a way to blank the field back out when there's something to blank.",
-                            code: "<InputSearch label=\"Search courses\" value=\"React\" onValueChange={setV} />",
+                            code: "<InputSearch ariaLabel=\"Search\" label=\"Search courses\" value=\"React\" onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputSearch label="Search courses" value={value} onValueChange={setValue} placeholder="Search courses…" />
+                                    <InputSearch ariaLabel="Search" label="Search courses" value={value} onValueChange={setValue} placeholder="Search courses…" />
                                 </div>
                             ),
                         },
@@ -190,10 +190,10 @@ export const Disabled: Story = {
                         {
                             name: "isDisabled = true",
                             why: "The whole field locks and the label dims along with it, no node is added or removed. This is the state a search bar takes while whatever it filters hasn't finished loading yet.",
-                            code: "<InputSearch label=\"Search courses\" value=\"React\" isDisabled onValueChange={setV} />",
+                            code: "<InputSearch ariaLabel=\"Search\" label=\"Search courses\" value=\"React\" isDisabled onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputSearch label="Search courses" value={value} onValueChange={setValue} isDisabled placeholder="Search courses…" />
+                                    <InputSearch ariaLabel="Search" label="Search courses" value={value} onValueChange={setValue} isDisabled placeholder="Search courses…" />
                                 </div>
                             ),
                         },
@@ -224,10 +224,10 @@ export const Invalid: Story = {
                         {
                             name: "isInvalid = true, errorMessage not set",
                             why: "The field's border turns red and nothing else changes, no message line grows below it. `isInvalid` alone only marks the control as wrong; it takes a separate `errorMessage` (the next leaf) to say why.",
-                            code: "<InputSearch label=\"Search courses\" isInvalid value={v} onValueChange={setV} />",
+                            code: "<InputSearch ariaLabel=\"Search\" label=\"Search courses\" isInvalid value={v} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputSearch label="Search courses" isInvalid value={value} onValueChange={setValue} placeholder="Search courses…" />
+                                    <InputSearch ariaLabel="Search" label="Search courses" isInvalid value={value} onValueChange={setValue} placeholder="Search courses…" />
                                 </div>
                             ),
                         },
@@ -254,10 +254,10 @@ export const Error: Story = {
                         {
                             name: "errorMessage = \"Invalid search term\"",
                             why: "The same red border from `Invalid` shows, plus a red message line grows below the field carrying the actual text. Setting `errorMessage` implies `isInvalid` on its own, so a caller never has to pass both.",
-                            code: "<InputSearch label=\"Search courses\" errorMessage=\"Invalid search term\" value={v} onValueChange={setV} />",
+                            code: "<InputSearch ariaLabel=\"Search\" label=\"Search courses\" errorMessage=\"Invalid search term\" value={v} onValueChange={setV} />",
                             render: (
                                 <div data-tier="fixture" className="w-72">
-                                    <InputSearch label="Search courses" errorMessage="Invalid search term" value={value} onValueChange={setValue} placeholder="Search courses…" />
+                                    <InputSearch ariaLabel="Search" label="Search courses" errorMessage="Invalid search term" value={value} onValueChange={setValue} placeholder="Search courses…" />
                                 </div>
                             ),
                         },
@@ -282,10 +282,10 @@ export const Loading: Story = {
                     {
                         name: "isSkeleton = true, label set",
                         why: "The field box and the label both switch to shimmer bars in the same layout the loaded control will occupy. Mirroring the label too, instead of only the box, keeps the row height from jumping once the real label text arrives.",
-                        code: "<InputSearch label=\"Search courses\" isSkeleton />",
+                        code: "<InputSearch ariaLabel=\"Search\" label=\"Search courses\" isSkeleton />",
                         render: (
                             <div data-tier="fixture" className="w-72">
-                                <InputSearch label="Search courses" value="" onValueChange={() => {}} isSkeleton />
+                                <InputSearch ariaLabel="Search" label="Search courses" value="" onValueChange={() => {}} isSkeleton />
                             </div>
                         ),
                     },

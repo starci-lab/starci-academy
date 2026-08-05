@@ -1,3 +1,4 @@
+/** @noSkeleton renders a floating surface; the content is handed in and shimmers on its own. */
 /**
  * ATOM — `Popover`: the one click-panel atom, wraps HeroUI `Popover` directly + a `Button` as
  * its pressable trigger (react-aria's `DialogTrigger` requires one). No child atom splits into

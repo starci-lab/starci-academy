@@ -1,38 +1,30 @@
-import { Button, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { IconComponent } from "@/components/atoms/buttons/Button/button-tokens"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
-import { StackH } from "@/components/frames/Stack"
+
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "InputButtonLike" } as const
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — the target `InputButtonLike`. Authored in
- * Storybook (not `src`); synced to `src` later. NO `@/components` imports.
+ * `InputButtonLike` — a button disguised as an input field: it carries the house
+ * `Button` `variant="field"` look (rounded shell, field background + border, muted
+ * placeholder) but behaves as a single press target with no inner dividers, so it
+ * can trigger an overlay (a global search dialog, a command palette) instead of
+ * accepting typed input. Leaves: `icon`, `suffix`, `size`, `isSkeleton`, `placeholder`.
  */
 
 export type InputButtonLikeSize = "sm" | "md" | "lg"
 
-// Field height + min-height per size (§6: its own field shape — does not compose the base Button).
-const HEIGHT_CLS: Record<InputButtonLikeSize, string> = {
-    sm: "h-8 min-h-8",
-    md: "h-9 min-h-9",
-    lg: "h-10 min-h-10"}
-// Placeholder text size per size.
-const TEXT_CLS: Record<InputButtonLikeSize, string> = {
-    sm: "text-xs",
-    md: "text-sm",
-    lg: "text-base"}
-// icon-size §5a: the block forces the icon/suffix svg size itself — the caller passes a bare icon.
-const ICON_CLS: Record<InputButtonLikeSize, string> = {
-    sm: "[&_svg]:size-4",
-    md: "[&_svg]:size-4",
-    lg: "[&_svg]:size-5"}
-// Placeholder text-size expressed as a `Typography` size (matches TEXT_CLS 1:1) — lets
-// the skeleton branch hand the SAME scale to the atom instead of a hand-copied class.
+// Placeholder text-size expressed as a `Typography` size — lets the skeleton
+// branch hand the SAME scale to the atom instead of a hand-copied class.
 const TYPOGRAPHY_SIZE: Record<InputButtonLikeSize, "xs" | "sm" | "base"> = {
     sm: "xs",
     md: "sm",
-    lg: "base"}
+    lg: "base",
+}
 
 /**
  * Props for the {@link InputButtonLike} block.
@@ -74,18 +66,21 @@ export interface InputButtonLikeProps {
 }
 
 /**
- * A button disguised as an input field. It carries the native HeroUI field
- * look — rounded-field shell, field background + border,
+ * A button disguised as an input field. It carries the house `Button`
+ * `variant="field"` look — rounded-field shell, field background + border,
  * muted placeholder text — but behaves as a single press target with no inner
  * dividers, so it can trigger an overlay/command palette instead of accepting
  * typed input. Pure and props-only: the block owns the entire look — including
  * icon size (§5a) and muted color; consumers pass only raw content + a press
  * handler (and placement via classNames).
+ *
+ * ONE render path (§12c): the field shell stays real throughout — same
+ * height/border/shadow whether loading or not, "a field that is loading is
+ * still a field". Only the placeholder LABEL keeps its own bar via
+ * `Typography` while loading; the leading icon and trailing `suffix` are
+ * omitted while loading, and the press is locked. House `Button.isSkeleton` is
+ * NEVER set here — that would replace the field chrome with a pill shimmer.
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "InputButtonLike" } as const
-
-/** A press-only button styled as a native field, used to trigger overlays like a command palette. */
 export const InputButtonLike = ({
     placeholder,
     icon: Icon,
@@ -94,60 +89,39 @@ export const InputButtonLike = ({
     ariaLabel,
     onPress,
     isSkeleton = false,
-    classNames}: InputButtonLikeProps) => {
-    // NOTE: left as raw HeroUI <Button> (not the Button port,
-    // ../../buttons/Button/Button.tsx) — three real gaps vs the port's API:
-    //  1. `variant="outline"` isn't in the port's ButtonVariant union (only
-    //     primary/secondary/tertiary/ghost/danger) — no value maps onto it.
-    //  2. This control needs a LEADING icon + a separate trailing `suffix`
-    //     section; the port's `icon` slot is trailing-only (single icon next
-    //     to the label), it has no leading-icon or third-slot concept.
-    //  3. The port auto-sizes descendant svgs via §5a (`[&_svg]:size-4/5/6`
-    //     keyed to button `size`), which would override this component's own
-    //     ICON_CLS scale (sm/md→size-4, lg→size-5) at higher CSS specificity.
-    // Deferred — swapping would change rendered variant/icon-size/layout.
-    //
-    // ONE render path (§12c): the field shell stays real throughout — same
-    // height/border/shadow whether loading or not, "a field that is loading is
-    // still a field". Only the placeholder LABEL keeps its own bar via
-    // `Typography` while loading; the leading icon and trailing `suffix` are
-    // omitted while loading (their shape isn't known yet — the composite's
-    // call on how many parts shimmer), and the press is locked.
+    classNames,
+}: InputButtonLikeProps) => {
+    const placeholderLabel = isSkeleton ? (
+        <Typography size={TYPOGRAPHY_SIZE[size]} isSkeleton />
+    ) : (
+        <span className={cn("truncate font-normal text-field-placeholder")}>
+            {placeholder}
+        </span>
+    )
+
+    const label = !isSkeleton && Suffix ? (
+        <span className="flex w-full min-w-0 items-center justify-between gap-3">
+            {placeholderLabel}
+            <span className="shrink-0">
+                <Suffix isSkeleton={isSkeleton} />
+            </span>
+        </span>
+    ) : (
+        placeholderLabel
+    )
+
     return (
-        <Button
-            variant="outline"
-            aria-label={ariaLabel ?? placeholder}
-            onPress={isSkeleton ? undefined : onPress}
-            isDisabled={isSkeleton}
-            data-tier="composite"
-            data-component="InputButtonLike"
-            className={cn(
-                "w-full justify-between rounded-field border-[var(--field-border)] bg-field px-3 font-normal text-field-foreground shadow-[var(--field-shadow)] hover:bg-field",
-                HEIGHT_CLS[size],
-                ICON_CLS[size],
-                classNames)}
-        >
-            <StackH
-                gap={3}
-                classNames={["min-w-0"]}
-                items={[
-                    ...(!isSkeleton && Icon ? [() => (
-                        <span className="inline-flex shrink-0 items-center text-field-placeholder">
-                            <Icon />
-                        </span>
-                    )] : []),
-                    () => (isSkeleton ? (
-                        <Typography size={TYPOGRAPHY_SIZE[size]} isSkeleton classNames={["min-w-0", "flex-1"]} />
-                    ) : (
-                        <span className={cn("truncate text-field-placeholder", TEXT_CLS[size])}>
-                            {placeholder}
-                        </span>
-                    )),
-                ]}
+        <div data-tier="composite" data-component="InputButtonLike">
+            <Button
+                variant="field"
+                size={size}
+                ariaLabel={ariaLabel ?? placeholder}
+                onPress={isSkeleton ? undefined : onPress}
+                isDisabled={isSkeleton}
+                prefixIcon={!isSkeleton && Icon ? Icon : undefined}
+                classNames={classNames}
+                label={label}
             />
-            {!isSkeleton && Suffix ? (
-                <StackH gap={3} classNames={["shrink-0"]} items={[() => <Suffix isSkeleton={isSkeleton} />]} />
-            ) : null}
-        </Button>
+        </div>
     )
 }

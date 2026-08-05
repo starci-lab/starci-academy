@@ -194,7 +194,7 @@ const MindMapRail = ({
 
     const railBody = (
         <>
-            <StackH gap={3} principles="flex-action" at="sm" isSkeleton={isSkeleton} items={[() => searchRow]} />
+            <StackH gap={3} principle="flex-action" at="sm" isSkeleton={isSkeleton} items={[() => searchRow]} />
             <AsyncContent
                 isLoading={isLoading || isSkeleton}
                 skeleton={() => <SurfaceCardList items={skeletonRows()} isSkeleton />}

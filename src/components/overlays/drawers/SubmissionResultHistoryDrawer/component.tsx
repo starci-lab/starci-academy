@@ -84,14 +84,14 @@ const historyRowContent = (
                 () => (
                     <StackH
                         gap={3}
-                        principles={["sibling-stack"]}
+                        principle="sibling-stack"
                         align="center"
                         justify="between"
                         items={[
                             () => (
                                 <StackH
                                     gap={3}
-                                    principles={["chip-row"]}
+                                    principle="chip-row"
                                     align="center"
                                     items={[
                                         () => <Typography size="sm" weight="medium" text={row.attemptLineLabel} />,
@@ -106,7 +106,7 @@ const historyRowContent = (
                 ...(row.servedModel != null || timeLabel != null ? [() => (
                     <StackH
                         gap={3}
-                        principles={["chip-row"]}
+                        principle="chip-row"
                         align="center"
                         at="sm"
                         justify="between"

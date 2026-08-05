@@ -102,7 +102,7 @@ const MilestoneUpNextCard = ({
             body={() => (
                 <StackH
                     gap={4}
-                    principles={["content-row"]}
+                    principle="content-row"
                     justify="between"
                     align="center"
                     at="sm"

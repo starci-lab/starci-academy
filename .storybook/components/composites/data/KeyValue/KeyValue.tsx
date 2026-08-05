@@ -107,7 +107,7 @@ const KeyValueRow = ({
             <StackV
                 gap={2}
                 classNames={["min-w-0"]}
-                principles="title-subtitle"
+                principle="title-subtitle"
                 isSkeleton={isSkeleton}
                 items={[
                     () => (
@@ -133,7 +133,7 @@ const KeyValueRow = ({
             />
             <span
                 className={cn("flex shrink-0 items-center", copyable && !isSkeleton && "gap-2")}
-                data-principles={copyable && !isSkeleton ? "flex-action" : undefined}
+                data-principle={copyable && !isSkeleton ? "flex-action" : undefined}
             >
                 <span>
                     {emphasis ? (
@@ -158,7 +158,7 @@ const KeyValueRow = ({
             align="start"
             justify="between"
             gap={3}
-            principles="value-row"
+            principle="value-row"
             classNames={classNames}
             isSkeleton={isSkeleton}
             items={[() => pairContent]}

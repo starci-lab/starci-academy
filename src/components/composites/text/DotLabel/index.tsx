@@ -130,7 +130,7 @@ export const DotLabel = ({
             className={cn("inline-flex items-center gap-1", classNames)}
             data-tier="composite"
             data-component="DotLabel"
-            data-principles="icon-text"
+            data-principle="icon-text"
         >
             {isSkeleton ? (
                 // ATOM GAP (same one `Legend` already flags): no swatch/dot atom exists

@@ -1,42 +1,52 @@
 import React from "react"
-import { cn, Table } from "@heroui/react"
+import { cn } from "@heroui/react"
+import {
+    TableBody,
+    TableCell,
+    TableColumn,
+    TableContent,
+    TableHeader,
+    TableRoot,
+    TableRow,
+    TableScrollContainer,
+} from "@/components/atoms/data/Table"
 import {
     flattenMarkdownTableHeaderChildren,
-    isMarkdownHeaderTableRowNode} from "@/components/composites/viewers/MarkdownContent/markdown-table"
+    isMarkdownHeaderTableRowNode,
+} from "@/components/composites/viewers/MarkdownContent/markdown-table"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — faithful port of
- * `@/components/blocks/rendering/MarkdownContent/MarkdownTableParts`. Authored in
- * Storybook (not `src`); synced back to `src` later.
+ * `MarkdownTableParts` — renders a markdown GFM table for `MarkdownContent` via
+ * the house `TableRoot` compound.
  *
- * ⚠️ NOT the `composites/data/Table` composite. That composite is CONFIG-DRIVEN
- * (`columns` + `items` DATA, children forbidden by its own §13b contract) — a
- * markdown GFM table arrives as an arbitrary, already-rendered `thead`/`tbody`
- * children TREE from `react-markdown`, which cannot be reduced back into that
- * shape without re-parsing the table by hand. `MarkdownContent` is a VIEWER — it
- * never knows its own shape ahead of render (see the file header on
- * `MarkdownContent.tsx`) — so it goes straight to the HeroUI `Table` compound
- * instead, exactly like `src` does.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Not the `composites/data/Table` composite: that one is config-driven (`columns`
+ * + `items` data, children forbidden), whereas a GFM table arrives as an
+ * already-rendered `thead`/`tbody` children tree from `react-markdown` that cannot
+ * be reduced back into that shape without re-parsing. As a viewer, `MarkdownContent`
+ * never knows its own shape ahead of render, so it goes straight to the house
+ * table compound.
  */
 
 /**
- * Builds a HeroUI header column from a rendered `th`/`Table.Column` or body `Table.Cell`.
+ * Builds a house header column from a rendered `th`/`TableColumn` or body `TableCell`.
  * @param column - Rendered header cell from markdown.
  * @param index - Zero-based column index in the header row.
- * @returns A `Table.Column` with `isRowHeader` on the first column (HeroUI requirement).
+ * @returns A `TableColumn` with `isRowHeader` on the first column (HeroUI requirement).
  */
 const toMarkdownHeaderColumn = (column: React.ReactNode, index: number): React.ReactNode => {
-    if (!React.isValidElement<{ children?: React.ReactNode }>(column)) {
+    if (!React.isValidElement<ElementWithChildren>(column)) {
         return column
     }
     return (
-        <Table.Column key={`md-th-${index}`} isRowHeader={index === 0}>
+        <TableColumn key={`md-th-${index}`} isRowHeader={index === 0}>
             {column.props.children}
-        </Table.Column>
+        </TableColumn>
     )
+}
+
+interface ElementWithChildren {
+    children?: React.ReactNode
 }
 
 /** Props for markdown table row/cell parts. */
@@ -50,19 +60,19 @@ export interface MarkdownTablePartProps {
 }
 
 /**
- * Header row: columns must be direct children of `Table.Header` (fragment, not `Table.Row`).
- * Body row: wrapped in HeroUI `Table.Row`.
+ * Header row: columns must be direct children of `TableHeader` (fragment, not `TableRow`).
+ * Body row: wrapped in house `TableRow`.
  */
 export const MarkdownTableRow = ({ children, node, classNames }: MarkdownTablePartProps) => {
     if (isMarkdownHeaderTableRowNode(node)) {
         return <>{children}</>
     }
 
-    return <Table.Row className={cn(classNames)}>{children}</Table.Row>
+    return <TableRow className={cn(classNames)}>{children}</TableRow>
 }
 
 /**
- * Maps markdown `thead` to HeroUI `Table.Header`.
+ * Maps markdown `thead` to house `TableHeader`.
  * Rebuilds columns with `isRowHeader` on the first column (required by HeroUI / React Aria).
  * Renders a screen-reader-only column when the header row is empty so the table still mounts.
  */
@@ -70,15 +80,15 @@ export const MarkdownTableHead = ({ children, classNames }: MarkdownTablePartPro
     const columns = flattenMarkdownTableHeaderChildren(children)
 
     return (
-        <Table.Header className={cn(classNames)}>
+        <TableHeader className={cn(classNames)}>
             {columns.length === 0 ? (
-                <Table.Column isRowHeader className="sr-only">
+                <TableColumn isRowHeader className="sr-only">
                     {" "}
-                </Table.Column>
+                </TableColumn>
             ) : (
                 columns.map((column, index) => toMarkdownHeaderColumn(column, index))
             )}
-        </Table.Header>
+        </TableHeader>
     )
 }
 
@@ -86,7 +96,7 @@ export const MarkdownTableHead = ({ children, classNames }: MarkdownTablePartPro
 export interface MarkdownTableProps {
     /** Rendered `thead` / `tbody` from react-markdown. */
     children?: React.ReactNode
-    /** Accessible name for `Table.Content`. */
+    /** Accessible name for `TableContent`. */
     ariaLabel: string
     /**
      * Where this sits inside its parent, from the closed positioning union.
@@ -98,16 +108,18 @@ export interface MarkdownTableProps {
 }
 
 /**
- * Wraps GFM tables in HeroUI `Table` and ensures a header row exists with `isRowHeader`.
+ * Wraps GFM tables in house `TableRoot` and ensures a header row exists with `isRowHeader`.
  * Some markdown tables only emit `tbody`; the first body row is promoted to `thead` in that case.
  * @param props - {@link MarkdownTableProps}
  */
 export const MarkdownTable = ({ children, ariaLabel, classNames }: MarkdownTableProps) => {
     const parts = React.Children.toArray(children)
     const hasThead = parts.some(
-        (child) => React.isValidElement(child) && child.type === MarkdownTableHead)
+        (child) => React.isValidElement(child) && child.type === MarkdownTableHead,
+    )
     const tbodyIndex = parts.findIndex(
-        (child) => React.isValidElement(child) && child.type === MarkdownTableBody)
+        (child) => React.isValidElement(child) && child.type === MarkdownTableBody,
+    )
 
     let content: React.ReactNode
     if (hasThead) {
@@ -120,7 +132,7 @@ export const MarkdownTable = ({ children, ariaLabel, classNames }: MarkdownTable
             </>
         )
     } else {
-        const tbody = parts[tbodyIndex] as React.ReactElement<{ children?: React.ReactNode }>
+        const tbody = parts[tbodyIndex] as React.ReactElement<ElementWithChildren>
         const bodyRows = React.Children.toArray(tbody.props.children)
         const [firstRow, ...restRows] = bodyRows
         content = (
@@ -133,29 +145,34 @@ export const MarkdownTable = ({ children, ariaLabel, classNames }: MarkdownTable
         )
     }
 
-    // The HeroUI table-root is a CSS grid; its inner scroll-container's min-width doesn't
+    // The house table-root is a CSS grid; its inner scroll-container's min-width doesn't
     // propagate, so a wide table forces the whole reading column past the viewport (page stops
     // shrinking). Wrap in a PLAIN BLOCK x-scroll box — a block scroll container has min-content
     // 0, so the column shrinks and the table scrolls inside instead of blocking the layout.
     return (
-        <div className="max-w-full overflow-x-auto">
-            <Table variant="primary" className={cn(classNames)}>
-                <Table.ScrollContainer>
-                    <Table.Content aria-label={ariaLabel}>
+        <div className={cn("max-w-full overflow-x-auto", classNames)}>
+            <TableRoot variant="primary">
+                <TableScrollContainer>
+                    <TableContent aria-label={ariaLabel}>
                         {content}
-                    </Table.Content>
-                </Table.ScrollContainer>
-            </Table>
+                    </TableContent>
+                </TableScrollContainer>
+            </TableRoot>
         </div>
     )
 }
 
-/** Maps markdown `tbody` to HeroUI `Table.Body`. */
+/** Maps markdown `tbody` to house `TableBody`. */
 export const MarkdownTableBody = ({ children, classNames }: MarkdownTablePartProps) => (
-    <Table.Body className={cn(classNames)}>{children}</Table.Body>
+    <TableBody className={cn(classNames)}>{children}</TableBody>
 )
 
-/** Maps markdown `th` to HeroUI `Table.Column`. */
+/** Maps markdown `th` to house `TableColumn`. */
 export const MarkdownTableColumn = ({ children, classNames }: MarkdownTablePartProps) => (
-    <Table.Column className={cn(classNames)}>{children}</Table.Column>
+    <TableColumn className={cn(classNames)}>{children}</TableColumn>
+)
+
+/** Maps markdown `td` to house `TableCell` — exported for `map.tsx`. */
+export const MarkdownTableCell = ({ children, classNames }: MarkdownTablePartProps) => (
+    <TableCell className={cn(classNames)}>{children}</TableCell>
 )

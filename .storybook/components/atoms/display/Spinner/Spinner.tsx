@@ -2,8 +2,10 @@ import { Spinner as HeroSpinner, cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
+ * @noSkeleton the spinner IS the loading indicator — a shimmer standing in for one is circular.
+ *
  * ATOM — `Spinner`: wraps HeroUI Spinner directly, only forcing `size`/`tone`.
- * 
+ *
  * LEAF atom — it composes no atom of our own with a story, so it has no atom-tier dep.
  * It renders one `@heroui/react` import directly, so `HeroSpinner` enters the tree with
  * `tier: "heroui"` (no `storyId`, the library has no story of ours to jump to).

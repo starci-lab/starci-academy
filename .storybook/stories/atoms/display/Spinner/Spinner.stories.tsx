@@ -130,7 +130,7 @@ export const Tones: Story = {
                         why: "The ring inherits whatever text colour surrounds it instead of picking one of its own, shown here against a foreground-coloured wrapper. This is the step reached for when the spinner sits inside a coloured button and must match the button's own label colour.",
                         code: "<Spinner tone=\"current\" />",
                         render: (
-                            <span data-tier="fixture" className="text-foreground inline-flex">
+                            <span data-tier="fixture" className="inline-flex" style={{ color: "var(--foreground)" }}>
                                 <Spinner tone="current" />
                             </span>
                         ),

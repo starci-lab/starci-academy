@@ -130,7 +130,7 @@ const PlaygroundSessionPage = ({
             <StackV
                 gap={1}
                 padding={6}
-                principles="page-pad"
+                principle="page-pad"
                 classNames={["min-w-0", "flex-1"]}
 
                 items={[
@@ -154,7 +154,7 @@ const PlaygroundSessionPage = ({
             <StackV
                 gap={1}
                 padding={6}
-                principles="page-pad"
+                principle="page-pad"
                 classNames={["w-full", "shrink-0"]}
 
                 items={[
@@ -178,7 +178,7 @@ const PlaygroundSessionPage = ({
             <div className="overflow-hidden">
                 <StackH
                     gap={6}
-                    principles="block-boundary"
+                    principle="block-boundary"
                     align="start"
                     divider
                     classNames={["h-full", "min-h-0"]}

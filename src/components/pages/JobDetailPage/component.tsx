@@ -186,7 +186,7 @@ export const _JobDetailPage = ({
                                 body={() => (
                                     <StackH
                                         gap={3}
-                                        principles={["content-row"]}
+                                        principle="content-row"
                                         items={[
                                             () => (isSkeleton ? (
                                                 <Skeleton className="size-16 shrink-0 rounded-2xl" />

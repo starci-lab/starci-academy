@@ -1,3 +1,4 @@
+/** @noSkeleton renders the brand mark, which is always present and never loading. */
 /**
  * ATOM — `Logo`: the system's one and only brand mark (a "C" glyph in pink stroke
  * plus two dotted corner marks), inline SVG, no background, one fixed colour.

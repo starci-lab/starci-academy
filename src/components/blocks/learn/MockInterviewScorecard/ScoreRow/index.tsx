@@ -25,7 +25,7 @@ export const ScoreRow = ({
     <StackH
         gap={4}
         align="center"
-        principles={["content-row"]}
+        principle="content-row"
         items={[
             () => <Typography size="sm" truncate classNames={["shrink-0"]} text={label} />,
             () => <ProgressMeter value={score} max={max} color={scoreColorOf(score, max)} classNames={["flex-1"]} />,

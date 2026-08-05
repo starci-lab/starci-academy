@@ -53,28 +53,35 @@ const AuthorByline = ({
 }: AuthorBylineProps) => (
     <StackH
         gap={2}
-        principles="icon-text"
+        principle="separator-dot"
         classNames={["min-w-0", ...(classNames ?? [])]}
         isSkeleton={isSkeleton}
-
         items={[
             () => (
-                <Typography
-                    size="sm"
-                    weight="medium"
-                    color="default"
-                    truncate
+                <StackH
+                    gap={2}
+                    principle="icon-text"
                     isSkeleton={isSkeleton}
-
-                    text={name}
+                    items={[
+                        () => (
+                            <Typography
+                                size="sm"
+                                weight="medium"
+                                color="default"
+                                truncate
+                                isSkeleton={isSkeleton}
+                                text={name}
+                            />
+                        ),
+                        ...(!isSkeleton && verified ? [() => (
+                            <SealCheckIcon aria-hidden focusable="false" weight="fill" className="size-4 shrink-0 text-accent" />
+                        )] : []),
+                        ...(!isSkeleton && pinned ? [() => (
+                            <PushPinIcon aria-hidden focusable="false" weight="fill" className="size-4 shrink-0 text-accent" />
+                        )] : []),
+                    ]}
                 />
             ),
-            ...(!isSkeleton && verified ? [() => (
-                <SealCheckIcon aria-hidden focusable="false" weight="fill" className="size-4 shrink-0 text-accent" />
-            )] : []),
-            ...(!isSkeleton && pinned ? [() => (
-                <PushPinIcon aria-hidden focusable="false" weight="fill" className="size-4 shrink-0 text-accent" />
-            )] : []),
             () => <Typography size="xs" color="muted" text="·" />,
             () => (
                 <Typography
@@ -82,7 +89,6 @@ const AuthorByline = ({
                     color="muted"
                     truncate
                     isSkeleton={isSkeleton}
-
                     text={timestamp}
                 />
             ),

@@ -86,7 +86,7 @@ const IconLabelValueRow = ({
         className={cn("flex min-w-0 items-center gap-3", classNames)}
         data-tier="composite"
         data-component="IconLabelValueRow"
-        data-principles="content-row"
+        data-principle="content-row"
     >
         {isSkeleton ? (
             <span aria-hidden className="size-5 shrink-0 rounded-md bg-default" />

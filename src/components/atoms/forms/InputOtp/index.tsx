@@ -1,5 +1,5 @@
 import { InputOTP as HeroInputOTP, Skeleton as HeroSkeleton, cn } from "@heroui/react"
-import { FieldFrame, fieldName } from "@/components/atoms/forms/_field/FieldFrame"
+import { FieldFrame, fieldName } from "@/components/composites/form/_field/FieldFrame"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { FrameProps } from "../_input/types"
 

@@ -131,7 +131,7 @@ export const LinkSeeMore = ({
         // label lands. `decorative`/`href`/`onPress` don't affect this shape —
         // they only change what happens on press.
         return (
-            <span data-tier="atom" data-component="LinkSeeMore" data-principles="icon-text" className={cn("inline-flex w-fit shrink-0 items-center gap-1", classNames)}>
+            <span data-tier="atom" data-component="LinkSeeMore" data-principle="icon-text" className={cn("inline-flex w-fit shrink-0 items-center gap-1", classNames)}>
                 <HeroSkeleton
                     className={cn(SKEL_TEXT_BAR[size], skeletonWidth ?? "w-1/4")}
                 />
@@ -167,7 +167,7 @@ export const LinkSeeMore = ({
         // anywhere on that surface, not a hover zone of this span alone. Untagged:
         // this is a plain `<span>`, not the HeroUI `Link`, so "Link" would be inaccurate here.
         return (
-            <span data-tier="atom" data-component="LinkSeeMore" data-principles="icon-text" className={baseClassName(size, classNames)}>
+            <span data-tier="atom" data-component="LinkSeeMore" data-principle="icon-text" className={baseClassName(size, classNames)}>
                 {text}
                 {arrow}
             </span>
@@ -180,7 +180,7 @@ export const LinkSeeMore = ({
         // Untagged for the same reason as the `decorative` branch above: a plain
         // `<a>`, not the HeroUI `Link`.
         return (
-            <a data-tier="atom" data-component="LinkSeeMore" data-principles="icon-text" href={href} className={interactiveClassName}>
+            <a data-tier="atom" data-component="LinkSeeMore" data-principle="icon-text" href={href} className={interactiveClassName}>
                 {text}
                 {arrow}
             </a>
@@ -191,7 +191,7 @@ export const LinkSeeMore = ({
     // `href`, no `decorative`), so it's the only one that can accurately claim
     // the "Link" tag.
     return (
-        <HeroUILink data-tier="atom" data-component="LinkSeeMore" data-principles="icon-text" onPress={onPress} className={interactiveClassName}>
+        <HeroUILink data-tier="atom" data-component="LinkSeeMore" data-principle="icon-text" onPress={onPress} className={interactiveClassName}>
             {text}
             {arrow}
         </HeroUILink>

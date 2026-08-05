@@ -1,19 +1,16 @@
-import { Avatar as HeroAvatar, AvatarFallback as HeroAvatarFallback, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { Avatar } from "@/components/atoms/display/Avatar"
 import type { AvatarSize, IconComponent } from "@/components/atoms/display/Avatar"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "AvatarGroup" } as const
+
 /**
- * `AvatarGroup` — an overlapping row of avatars ("who follows"), each
- * ringed, with a "+N" chip for the overflow.
- *
- * The only component in the Avatar family with dependencies of its own — it
- * imports `Avatar`.
- *
- *   • `items` is DATA, not `children`; the composite builds each `Avatar` itself.
- *   • `size` is set at the GROUP level (the row is always one size); items
- *     do not carry their own size.
- *   • `isSkeleton` passes down so each item mirrors it, keeping the row's footprint stable.
+ * `AvatarGroup` — a row of edge-overlapping avatars ("who follows") plus a "+N" chip. Leaves:
+ * `Default` (items mapping), `Overflow` (`max` and `total`, both producing the "+N" chip),
+ * `Sizes` (cluster-level `size`), and the `isSkeleton` mirror. Per-avatar state
+ * (status/colors/fallback) lives in `Avatar`; `AvatarGroup` imports `Avatar` to build each one.
  */
 
 /** One avatar in an {@link AvatarGroup} row. */
@@ -60,10 +57,6 @@ const GROUP_RING = "rounded-full ring-2 ring-background"
  *
  * @param props - {@link AvatarGroupProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "AvatarGroup" } as const
-
-/** Renders an overlapping row of avatars with an optional "+N" overflow chip. */
 export const AvatarGroup = ({
     items,
     max = 5,
@@ -82,6 +75,8 @@ export const AvatarGroup = ({
             data-component="AvatarGroup"
         >
             {visible.map((item) => (
+                // One badge per member: names each avatar as one opaque part
+                // instead of exposing Avatar's own Image/Fallback parts.
                 <span key={item.key} className={cn("inline-flex", GROUP_RING)}>
                     <Avatar
                         src={item.src}
@@ -103,15 +98,11 @@ export const AvatarGroup = ({
                         <Avatar isSkeleton size={size} />
                     </span>
                 ) : (
-                    // "+N" is a COUNT, not a person — rendered here rather than through
-                    // Avatar, whose initials fallback would clip "+12" to "+1".
-                    // ATOM GAP (COMPOSITE-3): the house `Avatar` atom's fallback slices
-                    // `name` to 2 chars for initials — there is no house atom shaped
-                    // "avatar-ring holding an arbitrary short string", so the vendor
-                    // `Avatar`/`AvatarFallback` stays here on purpose.
-                    <HeroAvatar size={size} className={GROUP_RING}>
-                        <HeroAvatarFallback>+{extra}</HeroAvatarFallback>
-                    </HeroAvatar>
+                    // "+N" is a COUNT, not a person — house `Avatar.exactLabel` renders the
+                    // full string (no 2-char initials slice).
+                    <span className={cn("inline-flex", GROUP_RING)}>
+                        <Avatar size={size} exactLabel={`+${extra}`} />
+                    </span>
                 )
             ) : null}
         </div>

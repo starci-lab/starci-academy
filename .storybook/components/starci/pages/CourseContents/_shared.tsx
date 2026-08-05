@@ -131,7 +131,7 @@ export const deviceLeaf = ({ width, isSkeleton = false, isEmpty = false, viewer 
     <StackV
         gap={1}
         padding={6}
-        principles="page-pad"
+        principle="page-pad"
         body={() => (
             <BlockAnatomy
                 name="CourseContents"

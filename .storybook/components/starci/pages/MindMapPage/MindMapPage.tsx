@@ -108,7 +108,7 @@ interface MindMapCanvasGapProps {
 const MindMapCanvasGap = ({ isLoading = false}: MindMapCanvasGapProps) => (
     <StackV
         gap={1}
-        principles="sibling-stack"
+        principle="sibling-stack"
         align="center"
         justify="center"
         classNames={["h-full"]}
@@ -133,7 +133,7 @@ const MindMapWorkspaceEmpty = () => (
     <div className="h-[calc(100dvh-4rem)]">
         <StackV
             gap={1}
-            principles="sibling-stack"
+            principle="sibling-stack"
             align="center"
             justify="center"
             items={[() => (
@@ -211,7 +211,7 @@ const MindMapPage = ({
             <div className="absolute inset-x-0 top-4 z-10">
                 <StackV
                     gap={1}
-                    principles="sibling-stack"
+                    principle="sibling-stack"
                     align="center"
                     isSkeleton={isSkeleton}
                     items={[() => (
@@ -278,7 +278,7 @@ const MindMapPage = ({
             <div className="overflow-y-auto">
                 <StackV
                     padding={6}
-                    principles="page-pad"
+                    principle="page-pad"
                     gap={1}
                     classNames={["h-full"]}
                     isSkeleton={isSkeleton}

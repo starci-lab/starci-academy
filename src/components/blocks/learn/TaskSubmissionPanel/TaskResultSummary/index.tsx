@@ -62,11 +62,11 @@ export const TaskResultSummary = ({ result, isSkeleton }: TaskResultSummaryProps
     return (
         <StackV
             gap={2}
-            principles={["title-subtitle"]}
+            principle="title-subtitle"
             isSkeleton={isSkeleton}
 
             items={[
-                ({ isSkeleton }: SkeletonProps) => <StackH gap={4} principles={["content-row"]} align="baseline" at="sm" isSkeleton={isSkeleton} items={[() => scoreRow]} />,
+                ({ isSkeleton }: SkeletonProps) => <StackH gap={4} principle="content-row" align="baseline" at="sm" isSkeleton={isSkeleton} items={[() => scoreRow]} />,
                 ...(result.shortFeedback != null ? [() => (
                     <Typography
                         size="sm"

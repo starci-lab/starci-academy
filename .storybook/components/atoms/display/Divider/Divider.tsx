@@ -1,3 +1,4 @@
+/** @noSkeleton renders a rule between two things — there is no value behind it to wait for. */
 /**
  * ATOM — `Divider`: wraps HeroUI `Separator` directly (HeroUI has no "Divider";
  * renamed for the app's vocabulary). A leaf atom — it builds none of our own storied

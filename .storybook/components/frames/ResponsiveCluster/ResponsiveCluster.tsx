@@ -3,14 +3,27 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { GAP_CLASS, JUSTIFY_CLASS, type AllowedGap, type LayoutJustify } from "@sb-components/frames/_spacing"
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
-import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
+import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@sb-components/frames/_principles"
 
 /**
- * `ResponsiveCluster` -- a repeat-list FRAME: a full-width COLUMN below its switch
- * step, a packed ROW from it up, with ONE shared gap on both sides (unlike
- * `ResponsiveRow`, which goes flush once it becomes a row). Below the switch every
- * item is stretched `w-full`, released to `w-auto` at the switch step, so a caller's
- * `Button` never has to know which form it is in. Real caller: `ButtonGroup`.
+ * ─────────────────────────────────────────────────────────────────────────────
+ * FRAME -- `ResponsiveCluster`: a repeat-list track that is a FULL-WIDTH COLUMN
+ * below a named container step and a packed ROW from it up, ONE shared gap on
+ * both sides. One member, `ResponsiveCluster`.
+ *
+ * See the blueprint (`.storybook/components/frames/ResponsiveCluster/ResponsiveCluster.tsx`)
+ * for why this exists and why it stays internal-only for now.
+ *
+ * FRAME API LAW ⇒ REPEATING LIST ⇒ `items` DATA, `children` FORBIDDEN, same
+ * contract as `Cluster`/`Grid`: every cell is the same kind of thing.
+ *
+ * FULL WIDTH BELOW THE SWITCH: each item is wrapped in `w-full`, released to
+ * `w-auto` at the switch step -- the wrapper carries the class, not the item's
+ * own content, so a caller's `Button` never has to know which form it is in.
+ *
+ * CONTAINER QUERIES, NOT VIEWPORT: same reasoning as `Grid`/`ResponsiveRow` --
+ * `@app-sm/md/lg/xl` answer the nearest `@container`, not the viewport.
+ * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /** One cell of a {@link ResponsiveCluster}. */
@@ -35,32 +48,32 @@ export interface ResponsiveClusterProps {
     at: ResponsiveRowSwitch
     /** Main-axis distribution once packed into a row. Left out means the browser default. */
     justify?: LayoutJustify
-    /**
-     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
-     * `data-anat-part`. The frame never names itself.
-     */
-    anatPart?: string
     /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
      * Permanent contract marker (not anatomy tooling) -- hard-coded by whoever calls this
-     * frame, because the frame has no public identity of its own yet. See the file header.
+     * frame, because the frame has no public identity of its own yet. See the blueprint.
      */
     "data-tier"?: string
     /** Paired with `data-tier` -- the public name of the caller badging this root. */
     "data-component"?: string
     /**
-     * The layout pattern this track's seam realises -- a token from `test-runner/patterns.mjs`.
-     * Emitted as `data-principles` on this same root, beside `data-tier`/`data-component`, so the
-     * rendered-tree test can assert the seam is the step the pattern names. See `Flex`'s own
-     * `principles` doc for the full contract. One token per instance.
+     * The layout pattern this track's seam realises - one token from `test-runner/patterns.mjs`.
+     * Emitted as `data-principle` on this same root, beside `data-tier`/`data-component`, so the
+     * rendered-tree test can assert the seam is the step the pattern names. Query as
+     * `[data-principle="token"]`. See `Flex`'s own `pattern` doc for the full contract.
      */
-    principles?: PrincipleToken
+    principle?: PrincipleToken
+    /**
+     * Why this layer exists - one sentence, emitted as `data-explain` beside the token.
+     * A reason, never a restatement of `principle`.
+     */
+    explain?: ExplainReason
     /** Renders every cell's skeleton form instead of its content form. */
     isSkeleton?: boolean
 }
 
-/** Switch step -> the class that flips the track from a column to a row from that step up. */
+/** Switch step → the class that flips the track from a column to a row from that step up. */
 const DIRECTION_SWITCH_CLASS: Record<ResponsiveRowSwitch, string> = {
     sm: "@app-sm:flex-row",
     md: "@app-md:flex-row",
@@ -68,7 +81,7 @@ const DIRECTION_SWITCH_CLASS: Record<ResponsiveRowSwitch, string> = {
     xl: "@app-xl:flex-row",
 }
 
-/** Switch step -> the class releasing an item from full width back to its own width. */
+/** Switch step → the class releasing an item from full width back to its own width. */
 const ITEM_WIDTH_SWITCH_CLASS: Record<ResponsiveRowSwitch, string> = {
     sm: "@app-sm:w-auto",
     md: "@app-md:w-auto",
@@ -77,8 +90,8 @@ const ITEM_WIDTH_SWITCH_CLASS: Record<ResponsiveRowSwitch, string> = {
 }
 
 /**
- * The full-width-column/packed-row track. See the file header for why it exists and
- * what it deliberately does not cover.
+ * The full-width-column/packed-row track. See the blueprint file header for why it
+ * exists and what it deliberately does not cover.
  *
  * @param props - {@link ResponsiveClusterProps}
  */
@@ -90,15 +103,15 @@ const ResponsiveClusterBase = ({
     classNames,
     "data-tier": dataTier,
     "data-component": dataComponent,
-    principles,
-    anatPart,
+    principle,
+    explain,
     isSkeleton,
 }: ResponsiveClusterProps) => (
     <div
         data-tier={dataTier}
         data-component={dataComponent}
-        data-anat-part={anatPart}
-        data-principles={principlesAttr(principles)}
+        data-principle={principleAttr(principle)}
+        data-explain={explainAttr(explain)}
         className={cn(
             "flex w-full flex-col items-center",
             GAP_CLASS[gap],
@@ -118,8 +131,8 @@ const ResponsiveClusterBase = ({
     </div>
 )
 
-/** Full-width column / packed-row frame. Direct named export. */
+/**
+ * `ResponsiveCluster.*` -- namespace only, no bare component export (house convention
+ * for every frame in this folder).
+ */
 export { ResponsiveClusterBase as ResponsiveCluster }
-
-/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
-export const meta = { tier: "frame", name: "ResponsiveCluster" } as const

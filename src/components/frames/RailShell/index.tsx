@@ -2,77 +2,62 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
-import { principlesAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
+import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- * FRAME (khung) — `RailShell`: a LEADING rail that introduces the page, beside a
- * body column that grows. The rail comes FIRST in reading order and never
- * shrinks; the body follows and absorbs every remaining pixel.
+ * WARNING: STATE SCOPE: `RailShell` is a frame with a LEADING rail + a shrinking body. The
+ * state it produces is the relationship between the TWO NAMED SIDES across the
+ * `@app-md` threshold: stacked when narrow, two columns when wide, and whether the
+ * rail is pinned or not. The rail width (288px) and the threshold (`@app-md`) are
+ * SELF-OWNED by the frame, not a prop -- the two real `src` sources agree on both
+ * numbers, disagreeing only on sticky.
  *
- * ⭐ WHY THIS IS NOT `SplitWorkspace`. That khung is the mirror image and a
- * different job: its `main` reading column comes first and the `aside` is a
- * 360px action rail that pins beside it. Here the rail LEADS — it is who you
- * are, or where you are, and the body is what you came to read. Same two boxes,
- * opposite reading order, opposite shrink strategy. Folding both into one khung
- * would need a `railFirst` flag, and a flag that reverses reading order is not
- * a variant of one shape, it is two shapes sharing a file.
+ * WARNING: SELF-CONTAINED `@container`: this frame opens its OWN container query context
+ * rather than trusting an ancestor to have opened one -- the `dashboard` real `src`
+ * mounts it inside a bare `<div>` (no `Container`), so if the switch depended on an
+ * ancestor `@container`, `@app-md:flex-row` never fires and the shell is stuck in
+ * its stacked shape at every width, `side="end"` included. TWO layers, the same
+ * split `Container` uses and for the same reason: a container query can only be
+ * answered by a DESCENDANT of the element that opens it, never by that element
+ * itself, so the OUTER node opens `@container` (identity + `classNames` live here)
+ * and the INNER node -- a real descendant -- carries the `flex`/`gap`/switch classes
+ * that actually answer `@app-md`.
  *
- * ⭐ WHY IT EXISTS AT ALL (audit 2026-07-30, dashboard overview). Real `src` has
- * this exact shape TWICE and both wrote it by hand:
- *   • `features/dashboard/index.tsx:61-67` — identity rail, then the open tab
- *   • `features/profile/Settings/SettingsLayout/index.tsx:62-96` — settings nav
- *     rail, then the settings panel
- * Both hand-rolled `@app-md:flex-row` on the wrapper, `shrink-0` on the aside
- * and `min-w-0 flex-1` on the main — the 44th and 45th call sites of the
- * shrink-strategy pattern `Split` was built to own in ONE place. Two independent
- * cases stating the same lack is the bar for a new khung (`frame` decision
- * sheet), and it is met.
- *
- * ⭐ THE RAIL IS `shrink-0`, THE BODY IS `min-w-0`. This is the whole contract,
- * and it is why the sides are NAMED. A caller who writes the two columns by
- * hand has to remember both classes at every call site; naming them puts the
- * rule in one file. Without `min-w-0` the body refuses to shrink below its
- * content and pushes the rail off-screen — a failure that only shows up once
- * real long content arrives.
- *
- * ⭐ `at` NAMES THE BREAKPOINT (FRAME-10), 288px IS STILL HARD-OWNED. Both real
- * sources agree on the switch step and on the rail width, so the width stays a
- * constant (§6c: a khung owns its own sizing) — but the STEP itself is a
- * `ResponsiveRowSwitch` prop, defaulting to `md` (both sources' step), so the
- * threshold is readable from the prop list instead of buried in a class string.
- * They DISAGREE on sticky — dashboard scrolls its rail with the page, settings
- * pins its rail to the viewport — so `isRailSticky` is a prop for the same
- * reason. A number becomes a prop when a real consumer disagrees, not before.
- *
- * ⭐ NO `wrap`. The breakpoint is declared, not hoped for. `wrap` carries no
- * threshold: the body shrinks without limit so the row almost never wraps, which
- * is exactly how two screens shipped with their columns glued together at every
- * width including mobile (`responsive` decision sheet).
- *
- * KHUNG API LAW (§13b): two DISTINCT roles ⇒ two NAMED slots (`rail`/`body`),
- * never a single `children`.
- * ─────────────────────────────────────────────────────────────────────────────
+ * WARNING: APP-WIRE HANDOFF -- the EXACT two things the app must have for this to render
+ * as a right rail instead of the stacked list the shell shipped with:
+ * 1. The class this component now puts on its own outer node -- the Tailwind v4
+ *    utility `@container` (compiles to `container-type: inline-size`). Nothing
+ *    ELSE needs to open a container context; `RailShell` no longer trusts an
+ *    ancestor for this (see the note above) -- it is self-contained as of this fix.
+ * 2. The `--container-app-sm/md/lg/xl` custom properties, declared inside an
+ *    `@theme { }` block in this book's `src/app/globals.css` (40rem / 48rem / 64rem
+ *    / 80rem -- pinned to the viewport `sm/md/lg/xl` pixel values, see that file's
+ *    comment for why). These are what make the `@app-sm:`/`@app-md:`/`@app-lg:`/
+ *    `@app-xl:` utility CLASSES exist in the compiled CSS at all -- Tailwind only
+ *    generates a `@app-md:` variant where `--container-app-md` is defined somewhere
+ *    in the build's `@theme`. Point 1 without point 2 compiles fine and renders
+ *    stacked forever with NO error, because the `@app-md:flex-row` class name is
+ *    real but matches nothing.
  */
 
 /** Props for {@link RailShell}. */
 export interface RailShellProps {
     /**
-     * The LEADING column — identity, navigation, standing. Full width and stacked
+     * The LEADING column -- identity, navigation, standing. Full width and stacked
      * above `body` under `@app-md`; a fixed `288px` column beside it from `@app-md` up.
      * Never shrinks.
      */
     rail: ComponentTypeWithSkeleton
     /**
-     * The FOLLOWING column — the content the reader came for. Grows into whatever
+     * The FOLLOWING column -- the content the reader came for. Grows into whatever
      * the rail leaves, and shrinks without limit (`min-w-0`) so long content
      * truncates inside it rather than pushing the rail away.
      */
     body: ComponentTypeWithSkeleton
     /**
      * Container step the rail drops below `body` and becomes a side-by-side row at.
-     * Defaults to `md` — the step both real sources agree on.
+     * Defaults to `md` -- the step both real sources agree on.
      */
     at?: ResponsiveRowSwitch
     /**
@@ -81,34 +66,43 @@ export interface RailShellProps {
      * the reader returns to while the body scrolls past it.
      */
     isRailSticky?: boolean
+    /**
+     * Which end of the row the rail sits at. `"start"` (default) keeps the rail
+     * LEADING -- before `body` in the DOM and on the left once the two sit side by
+     * side. `"end"` moves it to the FOLLOWING side -- after `body` in the DOM and on
+     * the right -- for a shell whose navigation lives on the trailing edge. Because
+     * the stacked (below-`at`) order follows the DOM order, `"end"` also drops the
+     * rail BELOW the body when narrow. Left unset, behaviour is unchanged.
+     */
+    side?: "start" | "end"
     /** Renders `rail`/`body` in their skeleton state. */
     isSkeleton?: boolean
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
-     * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
-     * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the element
-     * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
-     * A frame does not KNOW its pattern — the caller does — so it is passed in.
+     * The layout pattern this frame's seam realises -- a token from `test-runner/patterns.mjs`
+     * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principle` on the
+     * element that carries the gap, so the rendered-tree test can assert the seam is the step
+     * the pattern names. One token per instance.
      */
-    principles?: Array<PrincipleToken>
+    principle?: PrincipleToken
     /**
-     * Why this layer exists — one sentence, emitted as `data-explain` beside the tokens.
-     * A reason, never a restatement of `principles`; see `_principles.ts`.
+     * Why this layer exists -- one sentence, emitted as `data-explain` beside the token.
+     * A reason, never a restatement of `principle`.
      */
     explain?: ExplainReason
     /**
-     * Caller identity to wear on this shell's root instead of the frame's own — pass this when
+     * Caller identity to wear on this shell's root instead of the frame's own -- pass this when
      * a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
      * is using this shell AS its root element, instead of wrapping it in a raw `<div
-     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this shell keeps emitting
+     * data-tier=... data-component=...>`. See `_identity.ts`. Omitted -> this shell keeps emitting
      * its own `data-tier="frame" data-component="RailShell"`, unchanged.
      */
     identity?: CallerIdentity
 }
 
 /**
- * Switch step → the wrapper classes that flip the shell from stacked to a side-by-side
+ * Switch step -> the wrapper classes that flip the shell from stacked to a side-by-side
  * row from that step up. Written out per step for the same reason `ResponsiveRow`'s table
  * is: Tailwind never emits an interpolated `@app-${step}:flex-row`.
  */
@@ -116,25 +110,28 @@ const SHELL_SWITCH_CLASS: Record<ResponsiveRowSwitch, string> = {
     sm: "@app-sm:flex-row @app-sm:items-start @app-sm:gap-8",
     md: "@app-md:flex-row @app-md:items-start @app-md:gap-8",
     lg: "@app-lg:flex-row @app-lg:items-start @app-lg:gap-8",
-    xl: "@app-xl:flex-row @app-xl:items-start @app-xl:gap-8"}
+    xl: "@app-xl:flex-row @app-xl:items-start @app-xl:gap-8",
+}
 
-/** Switch step → the fixed `288px` rail width from that step up. */
+/** Switch step -> the fixed `288px` rail width from that step up. */
 const RAIL_WIDTH_CLASS: Record<ResponsiveRowSwitch, string> = {
     sm: "@app-sm:w-72",
     md: "@app-md:w-72",
     lg: "@app-lg:w-72",
-    xl: "@app-xl:w-72"}
+    xl: "@app-xl:w-72",
+}
 
-/** Switch step → the sticky-rail classes, applied only when `isRailSticky`. */
+/** Switch step -> the sticky-rail classes, applied only when `isRailSticky`. */
 const RAIL_STICKY_CLASS: Record<ResponsiveRowSwitch, string> = {
     sm: "@app-sm:sticky @app-sm:top-24 @app-sm:max-h-[calc(100dvh-7rem)] @app-sm:self-start @app-sm:overflow-y-auto",
     md: "@app-md:sticky @app-md:top-24 @app-md:max-h-[calc(100dvh-7rem)] @app-md:self-start @app-md:overflow-y-auto",
     lg: "@app-lg:sticky @app-lg:top-24 @app-lg:max-h-[calc(100dvh-7rem)] @app-lg:self-start @app-lg:overflow-y-auto",
-    xl: "@app-xl:sticky @app-xl:top-24 @app-xl:max-h-[calc(100dvh-7rem)] @app-xl:self-start @app-xl:overflow-y-auto"}
+    xl: "@app-xl:sticky @app-xl:top-24 @app-xl:max-h-[calc(100dvh-7rem)] @app-xl:self-start @app-xl:overflow-y-auto",
+}
 
 /**
- * The leading-rail shell. See the file header for why this is its own khung and
- * why `at` and `isRailSticky` are its only props beyond the two slots.
+ * The leading-rail shell. See the file header for why this is its own frame and
+ * why `at`, `isRailSticky`, and `side` are its only props beyond the two slots.
  *
  * @param props - {@link RailShellProps}
  */
@@ -143,35 +140,47 @@ const RailShell = ({
     body: Body,
     at = "md",
     isRailSticky = false,
+    side = "start",
     isSkeleton,
     classNames,
-    principles,
+    principle,
     explain,
-    identity}: RailShellProps) => (
-    <div
-        {...resolveIdentity(identity, { tier: "frame", name: "RailShell" })}
-        data-principles={principlesAttr(principles)}
-        data-explain={explainAttr(explain)}
-        className={cn("flex flex-col gap-6", SHELL_SWITCH_CLASS[at], classNames)}
-    >
-        {/* `rail`/`body` are CALLER SLOTS — whatever sits inside belongs to whoever passed
-            it, so neither gets an anatomy badge of its own (same restraint as
-            `SplitWorkspace`'s two slots). */}
+    identity,
+}: RailShellProps) => {
+    const railNode = (
         <aside
+            key="rail"
             className={cn(
                 "flex w-full shrink-0 flex-col",
                 RAIL_WIDTH_CLASS[at],
-                isRailSticky && RAIL_STICKY_CLASS[at])}
+                isRailSticky && RAIL_STICKY_CLASS[at],
+            )}
         >
             <Rail isSkeleton={isSkeleton} />
         </aside>
-        <main className="flex min-w-0 flex-1 flex-col">
+    )
+    const bodyNode = (
+        <main key="body" className="flex min-w-0 flex-1 flex-col">
             <Body isSkeleton={isSkeleton} />
         </main>
-    </div>
-)
+    )
+    return (
+        <div
+            {...resolveIdentity(identity, { tier: "frame", name: "RailShell" })}
+            className={cn("@container w-full", classNames)}
+        >
+            <div
+                data-principle={principleAttr(principle)}
+                data-explain={explainAttr(explain)}
+                className={cn("flex flex-col gap-6", SHELL_SWITCH_CLASS[at])}
+            >
+                {side === "end" ? [bodyNode, railNode] : [railNode, bodyNode]}
+            </div>
+        </div>
+    )
+}
 
 export { RailShell }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "frame", name: "RailShell" } as const

@@ -4,7 +4,15 @@ import React, { useId, useState } from "react"
 import { MagnifyingGlassPlusIcon } from "@phosphor-icons/react"
 import mermaid from "mermaid"
 import useSWR from "swr"
-import { Modal, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import {
+    ModalBackdrop,
+    ModalBody,
+    ModalCloseTrigger,
+    ModalContainer,
+    ModalDialog,
+    ModalRoot,
+} from "@/components/atoms/overlay/Modal"
 import { Box } from "@/components/frames/Box"
 import { StackV } from "@/components/frames/Stack"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
@@ -65,23 +73,25 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
             mermaid.initialize({
                 startOnLoad: false,
                 theme,
-                securityLevel: "strict"})
+                securityLevel: "strict",
+            })
             const { svg } = await mermaid.render(`mermaid-${renderId}`, code)
             return svg
         },
         {
             revalidateOnFocus: false,
-            revalidateOnReconnect: false})
+            revalidateOnReconnect: false,
+        },
+    )
 
     return (
         <figure className={cn("overflow-hidden rounded-3xl border border-default bg-background", classNames)}>
             {/* Header row matches `CodeToHtml`'s exact chrome (label left, action right) — a
-                mermaid block is "a fence with a name" the same way a code fence is (teacher's
-                call 2026-07-29: drop the diagram icon entirely, spell out "mermaid" instead —
-                the WORD "mermaid" is the label, same as a code fence names its own language). The zoom
+                mermaid block is "a fence with a name" the same way a code fence is: the WORD
+                "mermaid" is the label, same as a code fence names its own language. The zoom
                 trigger is icon-only too, matching `SnippetIcon`'s copy button — always visible,
                 not a hover-only overlay. */}
-            <Box principles={["control-pad"]} className="flex items-center justify-between border-b border-default px-3 py-2">
+            <Box principle="control-pad" className="flex items-center justify-between border-b border-default px-3 py-2">
                 <span className="font-mono text-xs text-muted">mermaid</span>
                 {data ? (
                     <button type="button" aria-label={expandLabel} title={expandLabel} onClick={() => setOpen(true)} className="text-muted">
@@ -95,9 +105,9 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                         outranks our `max-w-full` class, so a wide diagram would otherwise push
                         the reading column past the viewport. Wrap it in an x-scroll box: it
                         scales to fit when it can, and scrolls inside the figure when it can't.
-                        data-principles hand-set (not `Box`): `dangerouslySetInnerHTML` has no slot on `Box`'s prop surface. */}
+                        data-principle hand-set (not `Box`): `dangerouslySetInnerHTML` has no slot on `Box`'s prop surface. */}
                     <div
-                        data-principles="cell-pad" className="overflow-x-auto p-3 [&_svg]:h-auto [&_svg]:!w-auto [&_svg]:!max-w-none"
+                        data-principle="cell-pad" className="overflow-x-auto p-3 [&_svg]:h-auto [&_svg]:!w-auto [&_svg]:!max-w-none"
                         dangerouslySetInnerHTML={{ __html: data }}
                     />
                     {/* Authored caption ("Figure N: …") as a real figcaption — the source paragraph
@@ -106,27 +116,27 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                         above, not its own surface), not a symmetric `padding`/`padding-xy` shape in
                         patterns.mjs; `figcaption` is also outside `Box`'s `as` union. Nearest token by
                         intent (dense inner surface, same 12px measure as the diagram box above),
-                        data-principles hand-set directly. */}
+                        data-principle hand-set directly. */}
                     {caption ? (
-                        <figcaption data-principles="cell-pad" className="px-3 pb-3 text-center text-sm italic text-muted">
+                        <figcaption data-principle="cell-pad" className="px-3 pb-3 text-center text-sm italic text-muted">
                             {caption}
                         </figcaption>
                     ) : null}
-                    <Modal isOpen={isOpen} onOpenChange={setOpen}>
-                        <Modal.Backdrop>
-                            <Modal.Container size="full">
-                                <Modal.Dialog>
-                                    <Modal.CloseTrigger />
+                    <ModalRoot isOpen={isOpen} onOpenChange={setOpen}>
+                        <ModalBackdrop>
+                            <ModalContainer size="full">
+                                <ModalDialog>
+                                    <ModalCloseTrigger />
                                     {/* `p-6` — the composite viewer tier caps padding to the house
                                         scale (`AllowedPadding` steps `1..6`, see `scripts/check-padding.mjs`);
                                         `src`'s `p-4` is off that scale, so the full-screen preview gets the
                                         closest generous step instead. */}
-                                    <Modal.Body data-principles="page-pad" className="p-6">
+                                    <ModalBody data-principle="page-pad" className="p-6">
                                         {/* Full-screen figure: diagram scaled to fill, caption beneath. */}
                                         <StackV
                                             as="figure"
                                             gap={3}
-                                            principles={["sibling-stack"]}
+                                            principle="sibling-stack"
                                             align="center"
                                             justify="center"
                                             classNames={["h-full"]}
@@ -146,14 +156,14 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                                                 ),
                                             ]}
                                         />
-                                    </Modal.Body>
-                                </Modal.Dialog>
-                            </Modal.Container>
-                        </Modal.Backdrop>
-                    </Modal>
+                                    </ModalBody>
+                                </ModalDialog>
+                            </ModalContainer>
+                        </ModalBackdrop>
+                    </ModalRoot>
                 </>
             ) : (
-                <Box principles={["cell-pad"]} className="p-3 text-sm text-muted">{loadingLabel}</Box>
+                <Box principle="cell-pad" className="p-3 text-sm text-muted">{loadingLabel}</Box>
             )}
         </figure>
     )

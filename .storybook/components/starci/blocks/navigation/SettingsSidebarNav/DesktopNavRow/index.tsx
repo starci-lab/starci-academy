@@ -51,7 +51,7 @@ export const DesktopNavRow = ({ item, isActive, onNavigate }: DesktopNavRowProps
                 isActive ? "bg-accent-soft text-accent-soft-foreground" : "text-foreground hover:bg-default/40",
             )}
         >
-            <StackH gap={2} principles="icon-text" align="center" justify={collapsed ? "center" : "start"} items={[() => rowContent]} />
+            <StackH gap={2} principle="icon-text" align="center" justify={collapsed ? "center" : "start"} items={[() => rowContent]} />
         </button>
     )
 }

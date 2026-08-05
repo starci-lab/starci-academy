@@ -18,7 +18,7 @@ import {
     type FoundationCategoryHeaderCrumb,
     type FoundationCategoryListItem,
 } from "./component"
-import { resolveFoundationLogo } from "@/components/features/learn/Foundations/shared/foundation-logo"
+import { resolveFoundationLogo } from "@/modules/utils/foundation/foundation-logo"
 import { pathConfig } from "@/resources/path"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import {

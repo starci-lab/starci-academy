@@ -21,7 +21,7 @@ import {
 import type { FoundationKindEnum } from "@/components/starci/blocks/learn/FoundationResourceList"
 import { FoundationKind } from "@/modules/types/enums/foundation-kind"
 import type { FoundationEntity } from "@/modules/types/entities/foundation"
-import { compareFoundations, resolveFoundationMountFileUrl } from "@/components/features/learn/Foundations/utils"
+import { compareFoundations, resolveFoundationMountFileUrl } from "@/modules/utils/foundation"
 import { pathConfig } from "@/resources/path"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import {

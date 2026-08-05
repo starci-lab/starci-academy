@@ -22,7 +22,7 @@ import { useQueryFoundationsSwr } from "@/hooks/swr/api/graphql/queries/useQuery
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 import { pathConfig } from "@/resources/path"
-import { resolveFoundationMountFileUrl } from "@/components/features/learn/Foundations/utils"
+import { resolveFoundationMountFileUrl } from "@/modules/utils/foundation"
 
 /**
  * `FoundationResourcePage` — the CONNECTED half of the SRC TWIN. Mirrors the

@@ -1,4 +1,4 @@
-import type { ComponentTypeWithSkeleton, SkeletonProps } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton, SkeletonProps } from "@sb-components/frames/_slot"
 import { RailShell } from "@sb-components/frames/RailShell/RailShell"
 import { NivoTopBar, type NivoTopBarProps } from "@sb-components/nivo/blocks/navigation/NivoTopBar/NivoTopBar"
 import { NivoSidebar, type NivoSidebarProps } from "@sb-components/nivo/blocks/navigation/NivoSidebar/NivoSidebar"

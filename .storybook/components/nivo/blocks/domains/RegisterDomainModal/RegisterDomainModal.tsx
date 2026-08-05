@@ -1,7 +1,7 @@
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { InputText } from "@sb-components/atoms/forms/Input/Input"
 import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShell"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**

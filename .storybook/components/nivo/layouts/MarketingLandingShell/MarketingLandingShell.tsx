@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { BackToTop } from "@sb-components/atoms/buttons/BackToTop/BackToTop"
 import { Footer, type FooterProps } from "@sb-components/nivo/blocks/landing/Footer/Footer"
 import { MarketingNavbar, type MarketingNavbarProps } from "@sb-components/nivo/blocks/landing/MarketingNavbar/MarketingNavbar"

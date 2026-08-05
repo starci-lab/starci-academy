@@ -3,7 +3,7 @@ import { ChoiceSwitch } from "@sb-components/atoms/forms/Choice/Choice"
 import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { KeyValueList } from "@sb-components/composites/data/KeyValue/KeyValue"
 import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShell"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { DomainStatusKey } from "@sb-components/nivo/blocks/domains/DomainList/DomainList"
 

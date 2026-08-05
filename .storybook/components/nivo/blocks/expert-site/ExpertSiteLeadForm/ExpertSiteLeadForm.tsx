@@ -3,7 +3,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { InputText, InputTextarea } from "@sb-components/atoms/forms/Input/Input"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**

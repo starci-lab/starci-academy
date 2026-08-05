@@ -4,7 +4,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { Grid } from "@sb-components/frames/Grid/Grid"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import {

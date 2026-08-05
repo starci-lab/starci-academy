@@ -14,7 +14,7 @@ import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { StatGridCard, type StatGridCardItem } from "@sb-components/composites/stats/StatGridCard/StatGridCard"
 import { StatPair } from "@sb-components/composites/stats/StatPair/StatPair"
-import type { ComponentTypeWithSkeleton, SkeletonProps } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton, SkeletonProps } from "@sb-components/frames/_slot"
 import { Grid } from "@sb-components/frames/Grid/Grid"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import {

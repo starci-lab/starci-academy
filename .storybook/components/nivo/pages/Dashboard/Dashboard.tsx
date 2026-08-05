@@ -2,7 +2,7 @@ import type { ReactNode } from "react"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import {
     InvoiceList,

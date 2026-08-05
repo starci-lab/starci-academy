@@ -5,7 +5,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ChipGroup } from "@sb-components/composites/chips/ChipGroup/ChipGroup"
 import { KeyValueList } from "@sb-components/composites/data/KeyValue/KeyValue"
 import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**

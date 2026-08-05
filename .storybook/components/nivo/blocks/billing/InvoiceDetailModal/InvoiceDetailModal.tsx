@@ -3,7 +3,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Chip, type ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShell"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import type { InvoiceStatusKey } from "@sb-components/nivo/blocks/billing/InvoiceList/InvoiceList"
 

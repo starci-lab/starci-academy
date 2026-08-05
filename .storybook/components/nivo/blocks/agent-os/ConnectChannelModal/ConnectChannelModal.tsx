@@ -3,7 +3,7 @@ import { InputText } from "@sb-components/atoms/forms/Input/Input"
 import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { ChoiceRadioGroup } from "@sb-components/composites/form/ChoiceRadioGroup/ChoiceRadioGroup"
 import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShell"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**

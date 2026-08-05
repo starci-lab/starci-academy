@@ -45,7 +45,7 @@ export const FreeTierCard = ({
         <TierCardBase
             isSkeleton={isSkeleton}
             className={className}
-            icon={(
+            icon={() => (
                 <TierLevelIcon
                     level={1}
                     className="size-6 shrink-0 text-accent-soft-foreground"
@@ -53,7 +53,7 @@ export const FreeTierCard = ({
             )}
             title={t("aiSubscription.free.title")}
             description={t("aiSubscription.free.desc")}
-            price={(
+            price={() => (
                 <>
                     <Typography type="h3" weight="bold">
                         {t("aiSubscription.free.price")}
@@ -70,7 +70,7 @@ export const FreeTierCard = ({
                 t("aiSubscription.creditsPerWeek", { credits: FREE_CREDITS_PER_WEEK }),
             ]}
             isCurrent={isCurrent}
-            cta={(
+            cta={() => (
                 <Button
                     variant="secondary"
                     isDisabled

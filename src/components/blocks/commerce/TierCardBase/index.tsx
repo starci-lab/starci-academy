@@ -1,7 +1,7 @@
 "use client"
 
 import { SealCheckIcon } from "@phosphor-icons/react"
-import React from "react"
+import React, { type ComponentType } from "react"
 import {
     cn,
     Card,
@@ -15,22 +15,25 @@ import { type WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link TierCardBase} (shared shell for {@link TierCard} and {@link FreeTierCard}). */
 export interface TierCardBaseProps extends WithClassNames<undefined> {
-    /** Tier level icon — already sized/colored by the caller. */
-    icon: React.ReactNode
-    /** Tier display name. */
-    title: React.ReactNode
+    /**
+     * Tier level icon — a BUILDABLE slot (uncalled component), never a built element:
+     * an element handed in is already rendered, so this shell cannot decide not to.
+     */
+    icon: ComponentType
+    /** Tier display name — text, so it arrives as text. */
+    title: string
     /** Optional adornment rendered after the title (e.g. the "popular" chip). */
-    badge?: React.ReactNode
+    badge?: ComponentType
     /** Short tagline shown in a fixed `h-[2lh]` slot so cards align. */
-    description?: React.ReactNode
-    /** Price block content — rendered inside the shared `flex-col gap-2` wrapper. */
-    price: React.ReactNode
+    description?: string
+    /** Price block — a buildable slot; the tiers lay their price out differently. */
+    price: ComponentType
     /** Feature rows shown in the footer, each rendered with a seal-check icon. */
     features: string[]
     /** Whether this tier is the user's current plan. */
     isCurrent: boolean
-    /** Call-to-action rendered in place of the "current plan" badge. */
-    cta: React.ReactNode
+    /** Call-to-action rendered in place of the "current plan" badge — a buildable slot. */
+    cta: ComponentType
     /**
      * First load, nothing in hand → every content slot shimmers while the card keeps
      * its own boxes, so the grid does not jump on resolve. The resting shape lives
@@ -53,14 +56,14 @@ const SKELETON_FEATURE_ROWS = 2
  * @param props - shell content for one tier card
  */
 export const TierCardBase = ({
-    icon,
+    icon: Icon,
     title,
-    badge,
+    badge: Badge,
     description,
-    price,
+    price: Price,
     features,
     isCurrent,
-    cta,
+    cta: Cta,
     className,
     isSkeleton = false,
 }: TierCardBaseProps) => {
@@ -77,11 +80,11 @@ export const TierCardBase = ({
                 <div className="flex items-center gap-2">
                     {isSkeleton
                         ? <Skeleton className="size-6 shrink-0 rounded-full" />
-                        : icon}
+                        : <Icon />}
                     <Typography type="h5" weight="semibold">
                         {isSkeleton ? <Skeleton className="h-5 w-16 rounded" /> : title}
                     </Typography>
-                    {isSkeleton ? null : badge}
+                    {isSkeleton || !Badge ? null : <Badge />}
                 </div>
                 {/* short tagline — fixed slot so cards align */}
                 <div className="h-[2lh]">
@@ -90,7 +93,7 @@ export const TierCardBase = ({
                     </Typography>
                 </div>
                 <div className="flex flex-col gap-2">
-                    {isSkeleton ? <Skeleton className="h-9 w-24 rounded" /> : price}
+                    {isSkeleton ? <Skeleton className="h-9 w-24 rounded" /> : <Price />}
                 </div>
                 {isSkeleton ? (
                     <Skeleton className="h-10 w-full rounded-3xl" />
@@ -100,7 +103,7 @@ export const TierCardBase = ({
                             {t("aiSubscription.currentPlan")}
                         </Typography>
                     </div>
-                ) : cta}
+                ) : <Cta />}
             </Card.Content>
             <Card.Footer>
                 {/* feature list — seal-check icon + muted text */}

@@ -42,6 +42,9 @@ export interface TierCardProps extends WithClassNames<undefined> {
  * shadow per global, `rounded-3xl`); the popular tier gets an accent border + ring.
  * @param props - tier, current state
  */
+/** Placeholder for the resting card's slots — the shell shimmers over every one of them. */
+const EmptySlot = () => null
+
 export const TierCard = ({
     tier,
     isCurrent,
@@ -73,12 +76,12 @@ export const TierCard = ({
             <TierCardBase
                 isSkeleton
                 className={className}
-                icon={null}
-                title={null}
-                price={null}
+                icon={EmptySlot}
+                title=""
+                price={EmptySlot}
                 features={[]}
                 isCurrent={false}
-                cta={null}
+                cta={EmptySlot}
             />
         )
     }
@@ -95,24 +98,26 @@ export const TierCard = ({
                 tier.popular ? "border-accent ring-2 ring-accent/30" : "",
                 className,
             )}
-            icon={(
+            icon={() => (
                 <TierLevelIcon
                     level={tierLevel}
                     className="size-6 shrink-0 text-accent-soft-foreground"
                 />
             )}
             title={tier.displayName}
-            badge={tier.popular ? (
-                <Chip
-                    size="sm"
-                    color="accent"
-                    variant="soft"
-                >
-                    <Chip.Label>{t("aiSubscription.popular")}</Chip.Label>
-                </Chip>
-            ) : null}
+            badge={tier.popular
+                ? () => (
+                    <Chip
+                        size="sm"
+                        color="accent"
+                        variant="soft"
+                    >
+                        <Chip.Label>{t("aiSubscription.popular")}</Chip.Label>
+                    </Chip>
+                )
+                : undefined}
             description={tier.description ?? ""}
-            price={(
+            price={() => (
                 <>
                     {/* VND number prominent + "/month" */}
                     <div className="flex flex-wrap items-baseline gap-x-2">
@@ -136,7 +141,7 @@ export const TierCard = ({
                 t("aiSubscription.creditsPerWeek", { credits: tier.creditsPerWeek }),
             ]}
             isCurrent={isCurrent}
-            cta={(
+            cta={() => (
                 <Button
                     variant="primary"
                     fullWidth

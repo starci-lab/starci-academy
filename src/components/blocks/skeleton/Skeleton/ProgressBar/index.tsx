@@ -2,10 +2,8 @@ import React from "react"
 import { Skeleton, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
-/** Props for {@link SkeletonProgressBar}. */
-export interface SkeletonProgressBarProps extends WithClassNames<undefined> {
-    // No part-specific props; width is controlled via className.
-}
+/** Props for {@link SkeletonProgressBar} — no part-specific props; width is controlled via className. */
+export type SkeletonProgressBarProps = WithClassNames<undefined>
 
 /**
  * Skeleton matching a HeroUI <ProgressBar/> track.

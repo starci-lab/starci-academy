@@ -2,10 +2,8 @@ import React from "react"
 import { Skeleton, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
-/** Props for {@link SkeletonBadge}. */
-export interface SkeletonBadgeProps extends WithClassNames<undefined> {
-    // No part-specific props; the small badge is a fixed square dot.
-}
+/** Props for {@link SkeletonBadge} — no part-specific props; the small badge is a fixed square dot. */
+export type SkeletonBadgeProps = WithClassNames<undefined>
 
 /**
  * Skeleton matching a HeroUI <Badge/> box (small size).

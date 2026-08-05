@@ -4,7 +4,7 @@ import { CaretDownIcon } from "@phosphor-icons/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
-import { StackH, StackV } from "@/components/frames/Stack"
+import { StackV } from "@/components/frames/Stack"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────

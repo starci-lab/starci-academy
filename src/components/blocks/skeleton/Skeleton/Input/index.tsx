@@ -2,10 +2,8 @@ import React from "react"
 import { Skeleton, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
-/** Props for {@link SkeletonInput}. */
-export interface SkeletonInputProps extends WithClassNames<undefined> {
-    // No part-specific props: a single field-height bar.
-}
+/** Props for {@link SkeletonInput} — no part-specific props: a single field-height bar. */
+export type SkeletonInputProps = WithClassNames<undefined>
 
 /**
  * Skeleton matching a HeroUI <Input/> field box

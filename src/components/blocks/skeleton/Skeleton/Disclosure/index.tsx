@@ -2,10 +2,8 @@ import React from "react"
 import { Skeleton, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
-/** Props for {@link SkeletonDisclosure}. */
-export interface SkeletonDisclosureProps extends WithClassNames<undefined> {
-    // Single trigger row; no part-specific props needed.
-}
+/** Props for {@link SkeletonDisclosure} — single trigger row; no part-specific props needed. */
+export type SkeletonDisclosureProps = WithClassNames<undefined>
 
 /**
  * Skeleton matching a HeroUI <Disclosure/> trigger row: an inline label bar

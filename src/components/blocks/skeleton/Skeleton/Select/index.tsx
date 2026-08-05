@@ -2,10 +2,8 @@ import React from "react"
 import { Skeleton, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
-/** Props for {@link SkeletonSelect}. */
-export interface SkeletonSelectProps extends WithClassNames<undefined> {
-    // No part-specific props: a single field-height trigger with chevron.
-}
+/** Props for {@link SkeletonSelect} — no part-specific props: a single field-height trigger with chevron. */
+export type SkeletonSelectProps = WithClassNames<undefined>
 
 /**
  * Skeleton matching a HeroUI <Select/> trigger box.

@@ -2,10 +2,8 @@ import React from "react"
 import { Skeleton, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
-/** Props for {@link SkeletonSlider}. */
-export interface SkeletonSliderProps extends WithClassNames<undefined> {
-    // No part-specific props.
-}
+/** Props for {@link SkeletonSlider} — no part-specific props. */
+export type SkeletonSliderProps = WithClassNames<undefined>
 
 /**
  * Skeleton matching a HeroUI <Slider/>.

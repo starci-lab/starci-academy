@@ -2,10 +2,8 @@ import React from "react"
 import { Skeleton, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
-/** Props for {@link SkeletonChip}. */
-export interface SkeletonChipProps extends WithClassNames<undefined> {
-    // No part-specific props; width is controlled via className.
-}
+/** Props for {@link SkeletonChip} — no part-specific props; width is controlled via className. */
+export type SkeletonChipProps = WithClassNames<undefined>
 
 /**
  * Skeleton matching a HeroUI <Chip/> box.

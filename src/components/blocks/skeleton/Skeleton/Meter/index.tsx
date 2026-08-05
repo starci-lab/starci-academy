@@ -2,10 +2,8 @@ import React from "react"
 import { Skeleton, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
-/** Props for {@link SkeletonMeter}. */
-export interface SkeletonMeterProps extends WithClassNames<undefined> {
-    // No part-specific props; width is controlled via className.
-}
+/** Props for {@link SkeletonMeter} — no part-specific props; width is controlled via className. */
+export type SkeletonMeterProps = WithClassNames<undefined>
 
 /**
  * Skeleton matching a HeroUI <Meter/> track.

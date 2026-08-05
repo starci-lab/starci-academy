@@ -76,10 +76,11 @@ export const ChoiceRadioGroup = ({
     isInvalid,
     isSkeleton,
     skeletonRows,
-        classNames,
+    classNames,
     hint,
     errorMessage,
-    isRequired}: ChoiceRadioGroupProps) => {
+    isRequired,
+}: ChoiceRadioGroupProps) => {
     const invalid = isInvalid || errorMessage != null
     const rows = skeletonRows ?? options.length
     return (

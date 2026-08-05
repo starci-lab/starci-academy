@@ -2,10 +2,8 @@ import React from "react"
 import { Skeleton, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
-/** Props for {@link SkeletonSwitch}. */
-export interface SkeletonSwitchProps extends WithClassNames<undefined> {
-    // No part-specific props.
-}
+/** Props for {@link SkeletonSwitch} — no part-specific props. */
+export type SkeletonSwitchProps = WithClassNames<undefined>
 
 /**
  * Skeleton matching a HeroUI <Switch/> track.

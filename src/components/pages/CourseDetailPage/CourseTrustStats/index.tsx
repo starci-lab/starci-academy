@@ -21,7 +21,7 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import { HighlightChip } from "@/components/blocks/chips/HighlightChip"
+import { HighlightChip } from "@/components/composites/chips/HighlightChip"
 import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link CourseTrustStats}. */
@@ -45,29 +45,29 @@ export const CourseTrustStats = ({ className }: CourseTrustStatsProps) => {
         <div className={cn("flex flex-wrap gap-2", className)}>
             {enrollmentCount > 0 ? (
                 <HighlightChip
-                    icon={<UsersIcon aria-hidden focusable="false" className="size-4" />}
+                    icon={UsersIcon}
                     value={numeral(enrollmentCount).format("0,0")}
                     label={t("courseLanding.stats.learners")}
                 />
             ) : null}
             <HighlightChip
-                icon={<StackIcon aria-hidden focusable="false" className="size-4" />}
+                icon={StackIcon}
                 value={totals.moduleCount}
                 label={t("courseLanding.stats.modules")}
             />
             <HighlightChip
-                icon={<BookOpenIcon aria-hidden focusable="false" className="size-4" />}
+                icon={BookOpenIcon}
                 value={totals.lessonCount}
                 label={t("courseLanding.stats.lessons")}
             />
             <HighlightChip
-                icon={<ClockIcon aria-hidden focusable="false" className="size-4" />}
+                icon={ClockIcon}
                 value={hours}
                 label={t("courseLanding.stats.hours")}
             />
             {totals.challengeCount > 0 ? (
                 <HighlightChip
-                    icon={<PuzzlePieceIcon aria-hidden focusable="false" className="size-4" />}
+                    icon={PuzzlePieceIcon}
                     value={totals.challengeCount}
                     label={t("courseLanding.stats.challenges")}
                 />

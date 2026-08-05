@@ -5,7 +5,7 @@ import { cn } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { CoinsIcon } from "@phosphor-icons/react"
-import { HighlightChip } from "@/components/blocks/chips/HighlightChip"
+import { HighlightChip } from "@/components/composites/chips/HighlightChip"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
@@ -71,7 +71,7 @@ export const RewardsPage = ({ className }: RewardsPageProps) => {
                     meta={(
                         <HighlightChip
                             tone="accent"
-                            icon={<CoinsIcon aria-hidden focusable="false" className="size-4" />}
+                            icon={CoinsIcon}
                             value={balance}
                             label={t("rewards.balanceLabel")}
                         />

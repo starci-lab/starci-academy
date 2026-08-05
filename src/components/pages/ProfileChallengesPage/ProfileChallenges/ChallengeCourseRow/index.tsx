@@ -19,7 +19,7 @@ import {
 } from "@/modules/utils/challenge-difficulty"
 import { pathConfig } from "@/resources/path"
 import { IconTile } from "@/components/blocks/identity/IconTile"
-import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import type { QueryUserSolvedChallengeItemData } from "@/modules/api/graphql/queries/types/user-solved-challenges"
 

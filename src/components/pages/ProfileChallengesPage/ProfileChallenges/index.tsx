@@ -30,7 +30,7 @@ import { useQueryUserSolvedChallengesSwr } from "@/hooks/swr/api/graphql/queries
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { StatRibbon } from "@/components/composites/stats/StatRibbon"
-import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"

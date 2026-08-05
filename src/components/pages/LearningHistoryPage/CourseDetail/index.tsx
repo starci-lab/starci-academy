@@ -38,7 +38,7 @@ import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQ
 import { useQueryMyCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCoursesSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { IconTile } from "@/components/blocks/identity/IconTile"
-import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { fromGlobalId } from "@/modules/utils/globalId"

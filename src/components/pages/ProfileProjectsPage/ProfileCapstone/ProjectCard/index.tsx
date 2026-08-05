@@ -9,7 +9,7 @@ import {
     SealCheckIcon,
 } from "@phosphor-icons/react"
 import { IconTile } from "@/components/blocks/identity/IconTile"
-import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Typography } from "@/components/atoms/text/Typography"

@@ -13,7 +13,7 @@ import { useQueryUserCodingRankSwr } from "@/hooks/swr/api/graphql/queries/useQu
 import { useQueryUserCodingSkillsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingSkillsSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { MetricCard } from "@/components/composites/stats/MetricCard"
-import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { useAppSelector } from "@/redux/hooks"
 import { CodingDifficulty } from "@/modules/api/graphql/queries/types/coding"

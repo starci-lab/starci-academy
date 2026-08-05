@@ -7,7 +7,7 @@ import { SurfaceCardPlaceholder } from "@/components/composites/cards/SurfaceCar
 import { MediaCard } from "@/components/blocks/cards/MediaCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Button } from "@/components/atoms/buttons/Button"
-import { Choice } from "@/components/atoms/forms/Choice"
+import { ChoiceSwitch } from "@/components/atoms/forms"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Box } from "@/components/frames/Box"
 import { Grid, type GridItem } from "@/components/frames/Grid"
@@ -136,7 +136,7 @@ const CvGalleryCardFooter = ({ item, labels }: { item: CvGalleryDocument; labels
                     justify="between"
                     items={[
                         () => (
-                            <Choice.Switch
+                            <ChoiceSwitch
                                 isSelected={item.isPublic}
                                 isDisabled={item.isTogglingPublic}
                                 onValueChange={item.onTogglePublic}

@@ -1,6 +1,6 @@
 import { PencilSimpleIcon, FlowArrowIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { ChoiceSwitch } from "@sb-components/atoms/forms/Choice/Choice"
+import { ChoiceSwitch } from "@sb-components/atoms/forms"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Table, type TableColumnSpec, type TableRowItem } from "@sb-components/composites/data/Table/Table"

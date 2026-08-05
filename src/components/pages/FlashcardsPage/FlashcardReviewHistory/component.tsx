@@ -1,5 +1,6 @@
 "use client"
 
+import { InputSearch } from "@/components/atoms/forms"
 import React, { useMemo, useState } from "react"
 import { CardsIcon, ClockCounterClockwiseIcon, ClockIcon } from "@phosphor-icons/react"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
@@ -14,7 +15,7 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
-import { Input } from "@/components/atoms/forms/Input"
+
 import { StackV, StackH } from "@/components/frames/Stack"
 import type { QueryFlashcardReviewHistoryItem } from "@/modules/api/graphql/queries/types/my-flashcard-review-history"
 import { groupByTimeBucket } from "@/modules/utils/history-buckets"
@@ -91,7 +92,7 @@ export interface FlashcardReviewHistoryProps {
 
 /**
  * "Study cards" run history — the presentational half of {@link FlashcardReviewHistory}, composed
- * on the tier-correct vocabulary (`Input.Search` / `TabsCard` / `LabeledAccordionCard` /
+ * on the tier-correct vocabulary (`InputSearch` / `TabsCard` / `LabeledAccordionCard` /
  * `LabeledCard` / `SurfaceListCard` / `ProgressMeter`). Three states in the fixed order
  * error → skeleton → empty → content (`loading-and-skeleton.md`): `error` falls to the shared
  * `AsyncContentError` frame, `isEmpty` (once settled) to `AsyncContentEmpty`, and otherwise the
@@ -204,7 +205,7 @@ export const _FlashcardReviewHistory = ({
     const toolbar = (
         <StackH gap={3} justify="between" at="sm" items={[
             () => (
-                <Input.Search
+                <InputSearch
                     isSkeleton={isSkeleton}
                     ariaLabel={labels.searchPlaceholder}
                     placeholder={labels.searchPlaceholder}

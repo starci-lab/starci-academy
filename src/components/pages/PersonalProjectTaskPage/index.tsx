@@ -1,10 +1,11 @@
+import { InputText } from "@/components/atoms/forms"
 import React from "react"
 import { type SkeletonProps } from "@/components/frames/_slot"
 import { CaretRightIcon, GearSixIcon, SparkleIcon } from "@phosphor-icons/react"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Breadcrumbs, type BreadcrumbItem } from "@/components/atoms/navigation/Breadcrumbs"
 import { Chip } from "@/components/atoms/chips/Chip"
-import { InputText } from "@/components/atoms/forms/Input"
+
 import { Typography } from "@/components/atoms/text/Typography"
 import {
     SurfaceCard,

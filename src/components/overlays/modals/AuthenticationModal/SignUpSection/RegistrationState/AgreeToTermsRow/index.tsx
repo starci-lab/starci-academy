@@ -2,7 +2,7 @@
 
 import React from "react"
 import { useTranslations } from "next-intl"
-import { Choice } from "@/components/atoms/forms/Choice"
+import { ChoiceCheckbox } from "@/components/atoms/forms"
 import { Typography } from "@/components/atoms/text/Typography"
 import { pathConfig } from "@/resources/path"
 
@@ -46,7 +46,7 @@ export const AgreeToTermsRow = ({
     )
 
     return (
-        <Choice.Checkbox
+        <ChoiceCheckbox
             isSelected={isSelected}
             onValueChange={onChangeSelected}
             label={label}

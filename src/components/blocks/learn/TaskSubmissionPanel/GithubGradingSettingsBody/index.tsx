@@ -1,6 +1,7 @@
+import { InputPassword, InputText, SelectSingle } from "@/components/atoms/forms"
 import React from "react"
-import { InputPassword, InputText } from "@/components/atoms/forms/Input"
-import { SelectSingle } from "@/components/atoms/forms/Select"
+
+
 import { StackV } from "@/components/frames/Stack"
 import { type GithubGradingSettingsFormProps, type TaskSubmissionPanelLabels } from "../types"
 

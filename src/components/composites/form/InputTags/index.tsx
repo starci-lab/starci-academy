@@ -1,8 +1,9 @@
+import { FieldSkeleton, type FrameProps } from "@/components/atoms/forms"
 import { useId, useState } from "react"
 import { cn } from "@heroui/react"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { FieldFrame, fieldName } from "@/components/atoms/forms/_field/FieldFrame"
-import { FieldSkeleton, type FrameProps } from "@/components/atoms/forms/Input"
+
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Box } from "@/components/frames/Box"
 

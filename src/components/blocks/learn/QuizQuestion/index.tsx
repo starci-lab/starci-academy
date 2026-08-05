@@ -1,8 +1,9 @@
+import { InputTextarea } from "@/components/atoms/forms"
 import React from "react"
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Chip } from "@/components/atoms/chips/Chip"
-import { InputTextarea } from "@/components/atoms/forms/Input"
+
 import { Typography } from "@/components/atoms/text/Typography"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { MarkdownContent } from "@/components/composites/viewers/MarkdownContent"

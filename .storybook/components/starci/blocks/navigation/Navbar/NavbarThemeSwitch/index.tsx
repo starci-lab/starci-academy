@@ -9,7 +9,7 @@ export interface NavbarThemeSwitchProps {
 }
 
 /**
- * Dark/light toggle — raw HeroUI `Switch` (see file header: `Choice.Switch` has no
+ * Dark/light toggle — raw HeroUI `Switch` (see file header: `ChoiceSwitch` has no
  * icon-in-thumb slot). Shared verbatim by the desktop row and the mobile drawer row.
  */
 export const NavbarThemeSwitch = ({ isDarkMode, onThemeToggle }: NavbarThemeSwitchProps) => (

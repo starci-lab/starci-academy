@@ -1,5 +1,5 @@
 import { PuzzlePieceIcon } from "@phosphor-icons/react"
-import { ChoiceSwitch } from "@sb-components/atoms/forms/Choice/Choice"
+import { ChoiceSwitch } from "@sb-components/atoms/forms"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"

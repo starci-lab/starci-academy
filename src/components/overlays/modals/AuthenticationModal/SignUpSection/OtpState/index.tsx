@@ -76,7 +76,7 @@ export const OtpState = ({ hideCloseButton }: OtpStateProps = {}) => {
         ],
     )
 
-    // `Input.Otp` carries no `onBlur` — mark touched on the first edit instead
+    // `InputOtp` carries no `onBlur` — mark touched on the first edit instead
     // (same combined value+touch shape used across the sign-up fields).
     const onChangeOtp = useCallback(
         (value: string) => {

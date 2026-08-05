@@ -1,10 +1,11 @@
+import { InputTextarea } from "@/components/atoms/forms"
 import React from "react"
 import type { ReactNode } from "react"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { CommunityCommentRow } from "@/components/blocks/feed/CommunityCommentRow"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Button } from "@/components/atoms/buttons/Button"
-import { Input } from "@/components/atoms/forms/Input"
+
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
@@ -166,7 +167,7 @@ export const _CommunityCommentItem = ({
                 ...(replyOpen && authenticated ? [() => (
                     <StackV gap={3} nested items={[
                         () => (
-                            <Input.Textarea
+                            <InputTextarea
                                 rows={2}
                                 value={replyBody}
                                 onValueChange={onReplyBodyChange}

@@ -4,7 +4,7 @@ import React from "react"
 import {
     useTranslations,
 } from "next-intl"
-import { Choice } from "@/components/atoms/forms/Choice"
+import { ChoiceCheckbox } from "@/components/atoms/forms"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackH } from "@/components/frames/Stack"
 
@@ -30,7 +30,7 @@ export const RememberMeRow = ({
     const t = useTranslations()
     const items = [
         () => (
-            <Choice.Checkbox
+            <ChoiceCheckbox
                 isSelected={isSelected}
                 onValueChange={onChangeSelected}
                 label={<Typography size="xs" color="muted" text={t("auth.signIn.rememberMe")} />}

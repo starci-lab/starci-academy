@@ -1,3 +1,4 @@
+import { type SelectOption, SelectSingle } from "@/components/atoms/forms"
 import React from "react"
 import { ArrowRightIcon, GraduationCapIcon, LockIcon } from "@phosphor-icons/react"
 import { ModalShell } from "@/components/composites/layout/ModalShell"
@@ -10,7 +11,7 @@ import { IconTile } from "@/components/atoms/display/IconTile"
 import { Typography, type TypographyIcon } from "@/components/atoms/text/Typography"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Spinner } from "@/components/atoms/display/Spinner"
-import { SelectSingle, type SelectOption } from "@/components/atoms/forms/Select"
+
 import { StackV, StackH } from "@/components/frames/Stack"
 import { PaymentType } from "@/modules/types/enums/payment-type"
 

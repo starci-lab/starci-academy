@@ -4,8 +4,8 @@ import { CheckIcon, MinusIcon } from "@phosphor-icons/react"
 import { SKELETON_TEXT_BAR } from "@sb-components/atoms/_skeleton-bar"
 import { FieldFrame } from "@sb-components/atoms/forms/_field/FieldFrame"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import type { InlineFrameProps } from "../Choice/types"
-import { withRequired } from "../Choice/with-required"
+import type { InlineFrameProps } from "../_choice/types"
+import { withRequired } from "../_choice/with-required"
 
 /** Props for {@link ChoiceCheckbox}. */
 export interface ChoiceCheckboxProps extends InlineFrameProps {

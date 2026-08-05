@@ -200,7 +200,7 @@ const rowClassName = (state: OptionVisualState) => `${ROW_BASE} ${ROW_CLASSES[st
  *
  * `missingVocabulary` — the option group stays on raw HeroUI `Radio` /
  * `RadioGroup` / `Checkbox` / `CheckboxGroup` rather than the design system's own
- * `Choice.Radio` / `Choice.Checkbox` (`atoms/forms/Choice`) or `ChoiceRadioGroup`
+ * `ChoiceRadio` / `ChoiceCheckbox` or `ChoiceRadioGroup`
  * (`composites/form/ChoiceRadioGroup`): neither takes a `ReactNode` option label,
  * neither carries a per-option CORRECTNESS skin (selected / correct / incorrect /
  * correct-but-unselected) with a trailing result glyph, and there is no checkbox

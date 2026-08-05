@@ -1,3 +1,4 @@
+import { InputText } from "@/components/atoms/forms"
 import React from "react"
 import { type SkeletonProps } from "@/components/frames/_slot"
 import {
@@ -6,7 +7,7 @@ import {
     WarningCircleIcon,
 } from "@phosphor-icons/react"
 import { type IconComponent } from "@/components/atoms/buttons/Button"
-import { InputText } from "@/components/atoms/forms/Input"
+
 import { InlineIconLabel, type InlineIconLabelTone } from "@/components/composites/text/InlineIconLabel"
 import { StackV } from "@/components/frames/Stack"
 import { type TaskSubmissionAutosaveStatus } from "../types"

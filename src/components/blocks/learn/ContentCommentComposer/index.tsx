@@ -1,7 +1,8 @@
+import { InputTextarea } from "@/components/atoms/forms"
 import React, { useState } from "react"
 import { Avatar } from "@/components/atoms/display/Avatar"
 import { Button } from "@/components/atoms/buttons/Button"
-import { InputTextarea } from "@/components/atoms/forms/Input"
+
 import { InputButtonLike } from "@/components/composites/buttons/InputButtonLike"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { StackH, StackV } from "@/components/frames/Stack"

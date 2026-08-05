@@ -1,8 +1,9 @@
+import { InputOtp } from "@/components/atoms/forms"
 import React, { type ReactNode } from "react"
 import { Modal } from "@heroui/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Button } from "@/components/atoms/buttons/Button"
-import { Input } from "@/components/atoms/forms/Input"
+
 import { Box } from "@/components/frames/Box"
 import { StackV, StackH } from "@/components/frames/Stack"
 import { Form } from "@/components/composites/form/Form"
@@ -84,7 +85,7 @@ export const _OtpState = ({
                                         gap={3}
                                         items={[
                                             () => (
-                                                <Input.Otp
+                                                <InputOtp
                                                     length={6}
                                                     value={otp}
                                                     onValueChange={onChangeOtp}

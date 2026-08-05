@@ -8,6 +8,7 @@
  *
  * @see {@link SignInSection} for step routing; mirror this folder when sign-up adds a verify-email step.
  */
+import { InputOtp } from "@/components/atoms/forms"
 import React from "react"
 import { Modal } from "@heroui/react"
 import { useTranslations } from "next-intl"
@@ -16,7 +17,7 @@ import { useSignInForm } from "@/hooks/zustand/signIn/useSignInForm"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Button } from "@/components/atoms/buttons/Button"
-import { Input } from "@/components/atoms/forms/Input"
+
 import { StackV, StackH } from "@/components/frames/Stack"
 import { Box } from "@/components/frames/Box"
 
@@ -92,7 +93,7 @@ export const OtpState = ({ hideCloseButton }: OtpStateProps = {}) => {
                 gap={4}
                 items={[
                     () => (
-                        <Input.Otp
+                        <InputOtp
                             value={values.otp}
                             onValueChange={(value) => setFieldValue("otp", value)}
                             isInvalid={otpInvalid}

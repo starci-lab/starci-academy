@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { RadioGroup as HeroRadioGroup } from "@heroui/react"
-import { ChoiceRadio } from "@sb-components/atoms/forms/Choice/Choice"
+import { ChoiceRadio } from "@sb-components/atoms/forms"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**

@@ -1,5 +1,5 @@
 import { RadioGroup as HeroRadioGroup, cn } from "@heroui/react"
-import { ChoiceRadio, type InlineFrameProps } from "@sb-components/atoms/forms/Choice/Choice"
+import { ChoiceRadio, type InlineFrameProps } from "@sb-components/atoms/forms"
 import { FieldFrame } from "@sb-components/atoms/forms/_field/FieldFrame"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 

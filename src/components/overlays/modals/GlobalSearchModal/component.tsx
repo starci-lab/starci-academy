@@ -1,3 +1,4 @@
+import { InputSearch } from "@/components/atoms/forms"
 import React from "react"
 import {
     CardsIcon,
@@ -11,7 +12,7 @@ import {
 } from "@phosphor-icons/react"
 import type { Icon as PhosphorIcon } from "@phosphor-icons/react"
 import { ModalShell } from "@/components/composites/layout/ModalShell"
-import { Input } from "@/components/atoms/forms/Input"
+
 import { Typography } from "@/components/atoms/text/Typography"
 import { Cluster } from "@/components/frames/Cluster"
 import { StackV } from "@/components/frames/Stack"
@@ -27,7 +28,7 @@ import { GlobalSearchContent } from "./Content"
  * MISSING VOCABULARY (documented, not invented here — see the task's
  * `missingVocabulary` report): the design system has no atom wrapping a
  * `Kbd`-style keycap chip, so the shortcut hints render as plain
- * `Typography` instead of key-cap glyphs; `Input.Search` exposes neither
+ * `Typography` instead of key-cap glyphs; `InputSearch` exposes neither
  * `autoFocus` nor `onKeyDown`, so the palette no longer autofocuses on open
  * nor moves focus into the results on ArrowDown; and there is no
  * roving-tabindex "options list" composite (the old raw HeroUI `ListBox`
@@ -171,7 +172,7 @@ export const _GlobalSearchModal = ({
     onSelectPopularCourse,
 }: GlobalSearchModalProps) => {
     const header = () => (
-        <Input.Search
+        <InputSearch
             ariaLabel={labels.placeholder}
             placeholder={labels.placeholder}
             value={query}

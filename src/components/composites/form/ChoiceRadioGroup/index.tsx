@@ -1,12 +1,12 @@
 import { RadioGroup as HeroRadioGroup, cn } from "@heroui/react"
-import { ChoiceRadio, type InlineFrameProps } from "@/components/atoms/forms/Choice"
+import { ChoiceRadio, type InlineFrameProps } from "@/components/atoms/forms"
 import { FieldFrame } from "@/components/atoms/forms/_field/FieldFrame"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * `ChoiceRadioGroup` — a mutually-exclusive pick-one row, built from `options` DATA.
  *
- * Moved out of `atoms/forms/Choice/Choice.tsx` (ATOM-8, 2026-07-31): it rebuilt one
+ * Moved out of the choice atoms (ATOM-8, 2026-07-31): it rebuilt one
  * `ChoiceRadio` per entry, which is the composite signal (rendering another house
  * atom once per item), not the atom one. `ChoiceRadio` itself stayed behind — it is
  * still one radio row and still owns its own checked/skeleton state; this file only

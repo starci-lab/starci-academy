@@ -1,6 +1,7 @@
+import { InputSearch } from "@/components/atoms/forms"
 import React from "react"
 import { Toolbar } from "@/components/composites/navigation/Toolbar"
-import { InputSearch } from "@/components/atoms/forms/Input"
+
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackH, StackV } from "@/components/frames/Stack"
 
@@ -45,7 +46,7 @@ export interface CourseQaToolbarProps {
     /** Accessible name for the filter tab row, localized by the caller (blocks carry no i18n). */
     filterAriaLabel: string
     /**
-     * Accessible name for the search field — `Input.Search`'s `ariaLabel` no
+     * Accessible name for the search field — `InputSearch`'s `ariaLabel` no
      * longer defaults to English, so the caller must resolve and pass a
      * translated string (blocks carry no i18n).
      */

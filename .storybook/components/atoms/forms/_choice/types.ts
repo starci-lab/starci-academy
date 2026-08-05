@@ -7,8 +7,7 @@ import type { ReactNode } from "react"
  * mark to the inline label. Leave them all off and the control renders bare.
  *
  * Exported so `composites/form/ChoiceRadioGroup` can extend the same shape for
- * its own group-level hint/error/required — it moved out of this file (ATOM-8)
- * but still carries the same frame.
+ * its own group-level hint/error/required.
  */
 export interface InlineFrameProps {
     /** Secondary description (via FieldFrame). */

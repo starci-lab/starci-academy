@@ -1,6 +1,7 @@
+import { InputSearch } from "@/components/atoms/forms"
 import React from "react"
 import { CaretRightIcon, CardsIcon, MagnifyingGlassIcon, RowsIcon, SquaresFourIcon } from "@phosphor-icons/react"
-import { InputSearch } from "@/components/atoms/forms/Input"
+
 import { Tabs, type TabItem } from "@/components/atoms/navigation/Tabs"
 import { Pagination } from "@/components/atoms/navigation/Pagination"
 import { ProgressGauge } from "@/components/atoms/display/Progress"

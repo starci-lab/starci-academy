@@ -1,7 +1,8 @@
+import { InputTextarea } from "@/components/atoms/forms"
 import { useState } from "react"
 import { MicrophoneIcon } from "@phosphor-icons/react"
 import { Button } from "@/components/atoms/buttons/Button"
-import { InputTextarea } from "@/components/atoms/forms/Input"
+
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
 

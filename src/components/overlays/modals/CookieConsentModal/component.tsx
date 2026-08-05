@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Button } from "@/components/atoms/buttons/Button"
-import { Choice } from "@/components/atoms/forms/Choice"
+import { ChoiceSwitch } from "@/components/atoms/forms"
 import { StackV } from "@/components/frames/Stack"
 import { ModalShell } from "@/components/composites/layout/ModalShell"
 
@@ -49,10 +49,10 @@ export interface CookieConsentModalProps {
 
 /**
  * Cookie preferences modal — the presentational half of `CookieConsentModal`: the granular
- * "Customize" panel — Necessary (locked on) + Analytics (toggle), via {@link Choice.Switch}'s
+ * "Customize" panel — Necessary (locked on) + Analytics (toggle), via {@link ChoiceSwitch}'s
  * own label+hint composition — with Save / Reject / Accept-all in the dialog footer (a real
  * `ModalShell` footer slot, not a hand-rolled row inside the body). Composes `ModalShell` +
- * `Choice.Switch` + `Button`. Holds its OWN draft toggle, re-seeded from
+ * `ChoiceSwitch` + `Button`. Holds its OWN draft toggle, re-seeded from
  * {@link CookieConsentModalProps.analyticsAllowed} each time the modal opens — same shape
  * `SubmissionResultHistoryDrawer` uses to reset its own page on open. See `tiers/split.md`.
  *
@@ -77,7 +77,7 @@ export const _CookieConsentModal = ({
 
     const switchRows = [
         () => (
-            <Choice.Switch
+            <ChoiceSwitch
                 isSelected
                 isDisabled
                 onValueChange={() => { /* locked on — always granted */ }}
@@ -86,7 +86,7 @@ export const _CookieConsentModal = ({
             />
         ),
         () => (
-            <Choice.Switch
+            <ChoiceSwitch
                 isSelected={analyticsDraft}
                 onValueChange={setAnalyticsDraft}
                 label={labels.analyticsLabel}

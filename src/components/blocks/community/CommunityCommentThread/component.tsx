@@ -1,11 +1,12 @@
 "use client"
 
+import { InputTextarea } from "@/components/atoms/forms"
 import React, { useCallback, useState } from "react"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Divider } from "@/components/atoms/display/Divider"
-import { Input } from "@/components/atoms/forms/Input"
+
 import { StackH, StackV } from "@/components/frames/Stack"
 import { CommunityCommentItem } from "@/components/blocks/community/CommunityCommentItem"
 import type { QueryCommunityCommentNode } from "@/modules/api/graphql/queries/types/community-comments"
@@ -128,7 +129,7 @@ export const _CommunityCommentThread = ({
                 ...(authenticated ? [() => (
                     <StackV gap={2} items={[
                         () => (
-                            <Input.Textarea
+                            <InputTextarea
                                 variant="secondary"
                                 rows={2}
                                 value={composerValue}

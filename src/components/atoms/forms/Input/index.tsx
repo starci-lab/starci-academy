@@ -652,21 +652,7 @@ const InputOtp = ({
  */
 export { InputText, InputTextarea, InputNumber, InputDate, InputSearch, InputPassword, InputCurrency, InputTime, InputOtp }
 
-/** `Input.*` namespace — folder-matching handle grouping the input-field atom members. */
-export const Input = {
-    Text: InputText,
-    Textarea: InputTextarea,
-    Number: InputNumber,
-    Date: InputDate,
-    Search: InputSearch,
-    Password: InputPassword,
-    Currency: InputCurrency,
-    Time: InputTime,
-    Otp: InputOtp,
-    Skeleton: FieldSkeleton,
-}
-
-/** Tier metadata for each `Input.*` member, used by the component registry/Storybook lookup. */
+/** Tier metadata for each input member, used by the component registry/Storybook lookup. */
 export const meta = [
     { tier: "atom", name: "FieldSkeleton" },
     { tier: "atom", name: "InputText" },

@@ -1,3 +1,4 @@
+import { InputSearch } from "@/components/atoms/forms"
 import React from "react"
 import { ListBox, ScrollShadow } from "@heroui/react"
 import { CardsThreeIcon, MicrophoneStageIcon } from "@phosphor-icons/react"
@@ -5,7 +6,7 @@ import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/as
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
-import { Input } from "@/components/atoms/forms/Input"
+
 import { StackV } from "@/components/frames/Stack"
 import { Box } from "@/components/frames/Box"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -188,7 +189,7 @@ export const _FlashcardStudyRail = ({
                     />
                 ),
                 ...(mode === "study" ? [() => (
-                    <Input.Search
+                    <InputSearch
                         label={labels.decksLabel}
                         ariaLabel={labels.searchAria}
                         placeholder={labels.searchPlaceholder}

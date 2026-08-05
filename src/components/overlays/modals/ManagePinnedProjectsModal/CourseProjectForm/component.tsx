@@ -1,7 +1,8 @@
+import { InputTextarea, SelectSingle } from "@/components/atoms/forms"
 import React from "react"
 import { CheckCircleIcon } from "@phosphor-icons/react"
-import { Input } from "@/components/atoms/forms/Input"
-import { Select } from "@/components/atoms/forms/Select"
+
+
 import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Form } from "@/components/composites/form/Form"
@@ -97,7 +98,7 @@ export const _CourseProjectForm = ({
                 gap={4}
                 items={[
                     () => (
-                        <Select.Single
+                        <SelectSingle
                             label={labels.selectLabel}
                             ariaLabel={labels.selectLabel}
                             placeholder={isLoading ? labels.loading : labels.selectPlaceholder}
@@ -137,7 +138,7 @@ export const _CourseProjectForm = ({
                         <AsyncContentEmpty title={labels.noCourses} />
                     )] : []),
                     () => (
-                        <Input.Textarea
+                        <InputTextarea
                             label={labels.description}
                             placeholder={labels.descriptionPlaceholder}
                             rows={3}

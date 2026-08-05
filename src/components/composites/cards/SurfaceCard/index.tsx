@@ -69,8 +69,8 @@ import { resolveIdentity, type CallerIdentity } from "@/components/frames/_ident
  * ⚠️ KNOWN DRIFT (do not fix in this pass): `.SelectableGroup` calls HeroUI
  * `Radio`/`RadioGroup` directly instead of going through the design system's
  * own `ChoiceRadio`/`ChoiceRadioGroup` atom
- * (`.storybook/components/atoms/forms/Choice/Choice.tsx`, which has its own
- * story). Every other member of this namespace composes lower-tier atoms; this
+ * (`ChoiceRadio` / `ChoiceRadioGroup`, which have their own
+ * stories). Every other member of this namespace composes lower-tier atoms; this
  * one reaches past them straight to HeroUI. Left as-is per instruction —
  * flagged here for a future pass.
  *

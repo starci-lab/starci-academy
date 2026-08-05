@@ -1,6 +1,6 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ChoiceCheckbox } from "@sb-components/atoms/forms/Choice/Choice"
+import { ChoiceCheckbox } from "@sb-components/atoms/forms"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**

@@ -1,5 +1,6 @@
+import { InputSearch } from "@/components/atoms/forms"
 import { FunnelSimpleIcon, MagnifyingGlassIcon } from "@phosphor-icons/react"
-import { InputSearch } from "@/components/atoms/forms/Input"
+
 import { Popover } from "@/components/atoms/overlay/Popover"
 import { ButtonRadioGroup } from "@/components/composites/buttons/ButtonRadioGroup"
 import { Badge } from "@/components/atoms/display/Badge"

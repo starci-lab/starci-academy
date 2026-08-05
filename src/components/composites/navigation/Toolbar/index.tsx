@@ -21,7 +21,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
  * `leftEnd` is a free node slot. Namespace only — no bare component export.
  *
  * §13c — WHY this frame is not "an atom in a costume", i.e. why `Tabs.Base` /
- * `Select.Single` are NOT composed here (would change the pixels):
+ * `SelectSingle` are NOT composed here (would change the pixels):
  *  - `Tabs.Base` (atom) renders HeroUI's own tab chrome only. This row needs the
  *    `.extended-tabs` hug-content variant, the `size="sm"` compact strip, the
  *    NEUTRAL selected chrome (`border-b-2 border-foreground` — `.tabs--secondary`'s
@@ -29,7 +29,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
  *    that path), the per-item `muted` tone, and the icon-only-on-mobile label
  *    (`sr-only @app-sm:not-sr-only`). None of those are expressible through the
  *    atom's locked API, so the group keeps rendering through `ExtendedTabs`.
- *  - `Select.Single` (atom) is a FIELD control: `FieldFrame` + `fullWidth` + a
+ *  - `SelectSingle` (atom) is a FIELD control: `FieldFrame` + `fullWidth` + a
  *    trigger that prints the selected LABEL. The collapsed right group here is a
  *    compact ICON-ONLY trigger (label `sr-only`) that must not stretch. Swapping
  *    it in would visibly change the mobile row, so the HeroUI `Select` compound

@@ -1,5 +1,6 @@
+import { InputText, InputTextarea } from "@/components/atoms/forms"
 import React from "react"
-import { Input } from "@/components/atoms/forms/Input"
+
 import { Button } from "@/components/atoms/buttons/Button"
 import { Form } from "@/components/composites/form/Form"
 import { StackV } from "@/components/frames/Stack"
@@ -80,7 +81,7 @@ export const _ExternalProjectForm = ({
                 gap={4}
                 items={[
                     () => (
-                        <Input.Text
+                        <InputText
                             label={labels.title}
                             placeholder={labels.titlePlaceholder}
                             value={values.title}
@@ -90,7 +91,7 @@ export const _ExternalProjectForm = ({
                         />
                     ),
                     () => (
-                        <Input.Text
+                        <InputText
                             label={labels.url}
                             placeholder={labels.urlPlaceholder}
                             value={values.url}
@@ -100,7 +101,7 @@ export const _ExternalProjectForm = ({
                         />
                     ),
                     () => (
-                        <Input.Text
+                        <InputText
                             label={labels.techStack}
                             placeholder={labels.techStackPlaceholder}
                             hint={labels.techStackHint}
@@ -109,7 +110,7 @@ export const _ExternalProjectForm = ({
                         />
                     ),
                     () => (
-                        <Input.Textarea
+                        <InputTextarea
                             label={labels.description}
                             placeholder={labels.descriptionPlaceholder}
                             rows={3}

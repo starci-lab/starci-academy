@@ -1,9 +1,10 @@
+import { InputTextarea } from "@/components/atoms/forms"
 import React, { useCallback, useState } from "react"
 import { SealCheckIcon } from "@phosphor-icons/react"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { Button } from "@/components/atoms/buttons/Button"
-import { Input } from "@/components/atoms/forms/Input"
+
 import { Typography } from "@/components/atoms/text/Typography"
 import { Box } from "@/components/frames/Box"
 import { ScrollArea } from "@/components/frames/ScrollArea"
@@ -158,7 +159,7 @@ export const _ChatPane = ({
                 () => (
                     <StackV gap={3} items={[
                         () => (
-                            <Input.Textarea
+                            <InputTextarea
                                 variant="secondary"
                                 rows={2}
                                 value={body}

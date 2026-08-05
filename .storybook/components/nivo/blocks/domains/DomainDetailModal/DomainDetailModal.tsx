@@ -1,5 +1,5 @@
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { ChoiceSwitch } from "@sb-components/atoms/forms/Choice/Choice"
+import { ChoiceSwitch } from "@sb-components/atoms/forms"
 import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { KeyValueList } from "@sb-components/composites/data/KeyValue/KeyValue"
 import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShell"

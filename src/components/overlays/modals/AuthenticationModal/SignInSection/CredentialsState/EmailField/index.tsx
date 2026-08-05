@@ -1,10 +1,11 @@
 "use client"
 
+import { InputText } from "@/components/atoms/forms"
 import React from "react"
 import {
     useTranslations,
 } from "next-intl"
-import { Input } from "@/components/atoms/forms/Input"
+
 
 /** Props for {@link EmailField}. */
 export interface EmailFieldProps {
@@ -34,7 +35,7 @@ export const EmailField = ({
     const t = useTranslations()
     const invalid = !!(touched && error)
     return (
-        <Input.Text
+        <InputText
             variant="secondary"
             label={t("auth.signIn.email.label")}
             placeholder={t("auth.signIn.email.placeholder")}

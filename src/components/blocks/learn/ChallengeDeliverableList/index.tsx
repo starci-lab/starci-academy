@@ -1,7 +1,8 @@
+import { InputText } from "@/components/atoms/forms"
 import React from "react"
 import { GearSixIcon } from "@phosphor-icons/react"
 import { Button } from "@/components/atoms/buttons/Button"
-import { InputText } from "@/components/atoms/forms/Input"
+
 import { Typography } from "@/components/atoms/text/Typography"
 import { EnumChip, type EnumChipEntry } from "@/components/composites/chips/EnumChip"
 import { SurfaceCardAccordion, markIcon, type ListMark, type MarkTone, type SurfaceCardAccordionItem } from "@/components/composites/cards/SurfaceCard"

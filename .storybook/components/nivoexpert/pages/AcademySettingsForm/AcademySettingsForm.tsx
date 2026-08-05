@@ -1,6 +1,6 @@
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { InputNumber, InputText } from "@sb-components/atoms/forms/Input/Input"
-import { ChoiceSwitch } from "@sb-components/atoms/forms/Choice/Choice"
+import { ChoiceSwitch } from "@sb-components/atoms/forms"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Callout } from "@sb-components/composites/feedback/Callout/Callout"

@@ -1,8 +1,9 @@
 "use client"
 
+import { InputPassword } from "@/components/atoms/forms"
 import React from "react"
 import { useTranslations } from "next-intl"
-import { Input } from "@/components/atoms/forms/Input"
+
 
 /** Which sign-up password field this row renders — picks the i18n key prefix. */
 export type PasswordFieldKind = "password" | "confirmPassword"
@@ -24,7 +25,7 @@ export interface PasswordFieldProps {
 /**
  * Password input row for the sign-up registration step — reused for both the
  * password and confirm-password fields via {@link PasswordFieldKind}. The
- * show/hide reveal toggle is owned by the `Input.Password` atom itself.
+ * show/hide reveal toggle is owned by the `InputPassword` atom itself.
  *
  * Presentational: value + validation driven by props, forwards the change
  * event upward. No business logic.
@@ -44,7 +45,7 @@ export const PasswordField = ({
     const hideLabel = kind === "password" ? t("auth.signUp.password.hide") : t("auth.signUp.confirmPassword.hide")
     const showError = Boolean(touched && error)
     return (
-        <Input.Password
+        <InputPassword
             label={label}
             placeholder={placeholder}
             isInvalid={showError}

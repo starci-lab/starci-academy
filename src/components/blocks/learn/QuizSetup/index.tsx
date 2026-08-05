@@ -1,9 +1,10 @@
+import { InputText } from "@/components/atoms/forms"
 import React from "react"
 import { type SkeletonProps } from "@/components/frames/_slot"
 import { PlayIcon } from "@phosphor-icons/react"
 import { Button } from "@/components/atoms/buttons/Button"
 import { ButtonRadioGroup } from "@/components/composites/buttons/ButtonRadioGroup"
-import { InputText } from "@/components/atoms/forms/Input"
+
 import { Typography } from "@/components/atoms/text/Typography"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { Callout } from "@/components/composites/feedback/Callout"

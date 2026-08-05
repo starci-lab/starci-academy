@@ -1,10 +1,11 @@
 "use client"
 
+import { InputPassword } from "@/components/atoms/forms"
 import React from "react"
 import {
     useTranslations,
 } from "next-intl"
-import { Input } from "@/components/atoms/forms/Input"
+
 
 /** Props for {@link PasswordField}. */
 export interface PasswordFieldProps {
@@ -22,7 +23,7 @@ export interface PasswordFieldProps {
  * Password input row for the sign-in credentials step.
  *
  * Presentational: renders the labelled password field — the reveal/hide
- * toggle is owned by the `Input.Password` atom — and forwards the change
+ * toggle is owned by the `InputPassword` atom — and forwards the change
  * event upward. No business logic.
  * @param props - value, validation state, and the change callback
  */
@@ -35,7 +36,7 @@ export const PasswordField = ({
     const t = useTranslations()
     const invalid = !!(touched && error)
     return (
-        <Input.Password
+        <InputPassword
             label={t("auth.signIn.password.label")}
             placeholder={t("auth.signIn.password.placeholder")}
             value={value}

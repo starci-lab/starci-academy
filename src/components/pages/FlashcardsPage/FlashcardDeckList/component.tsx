@@ -1,3 +1,4 @@
+import { InputSearch } from "@/components/atoms/forms"
 import React from "react"
 import { ListIcon, SquaresFourIcon } from "@phosphor-icons/react"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
@@ -8,7 +9,7 @@ import { Typography } from "@/components/atoms/text/Typography"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Chip, type ChipTone } from "@/components/atoms/chips/Chip"
 import { Divider } from "@/components/atoms/display/Divider"
-import { Input } from "@/components/atoms/forms/Input"
+
 import { Pagination } from "@/components/atoms/navigation/Pagination"
 import { Box } from "@/components/frames/Box"
 import { Grid } from "@/components/frames/Grid"
@@ -305,7 +306,7 @@ export const _FlashcardDeckList = ({
                     <StackH gap={4} at="sm" justify="between" align="center" items={[
                         () => (
                             <Box className="w-full @app-sm:max-w-sm">
-                                <Input.Search
+                                <InputSearch
                                     value={query}
                                     onValueChange={onQueryChange}
                                     isSkeleton={isSkeleton}

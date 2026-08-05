@@ -1,5 +1,5 @@
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
-import { ChoiceSwitch } from "@sb-components/atoms/forms/Choice/Choice"
+import { ChoiceSwitch } from "@sb-components/atoms/forms"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"

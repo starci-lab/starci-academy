@@ -31,7 +31,7 @@ import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { Callout } from "@/components/blocks/feedback/Callout"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { IconTile } from "@/components/blocks/identity/IconTile"
-import { ModalShell } from "@/components/blocks/layout/ModalShell"
+import { ModalShell } from "@/components/composites/layout/ModalShell"
 import { useMutateRedeemRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateRedeemRewardSwr"
 import { useQueryMyRewardWalletSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr"
 import { useQueryMyVouchersSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr"
@@ -389,32 +389,34 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
                 }}
                 title={t("rewards.confirmRedeem")}
                 size="sm"
-                bodyClassName="gap-4"
-            >
-                <Typography type="body-sm" color="muted">
-                    {confirming
-                        ? t("rewards.confirmRedeemBody", { cost: confirming.cost, title: confirming.title })
-                        : null}
-                </Typography>
-                <div className="flex justify-end gap-2">
-                    <Button variant="tertiary" onPress={() => setConfirming(null)}>
-                        {t("rewards.cancel")}
-                    </Button>
-                    <Button
-                        variant="primary"
-                        isPending={redeeming !== null}
-                        onPress={() => {
-                            const reward = confirming
-                            setConfirming(null)
-                            if (reward) {
-                                void onRedeem(reward)
-                            }
-                        }}
-                    >
-                        {t("rewards.confirmRedeem")}
-                    </Button>
-                </div>
-            </ModalShell>
+                body={() => (
+                    <Typography type="body-sm" color="muted">
+                        {confirming
+                            ? t("rewards.confirmRedeemBody", { cost: confirming.cost, title: confirming.title })
+                            : null}
+                    </Typography>
+                )}
+                footer={() => (
+                    <>
+                        <Button variant="tertiary" onPress={() => setConfirming(null)}>
+                            {t("rewards.cancel")}
+                        </Button>
+                        <Button
+                            variant="primary"
+                            isPending={redeeming !== null}
+                            onPress={() => {
+                                const reward = confirming
+                                setConfirming(null)
+                                if (reward) {
+                                    void onRedeem(reward)
+                                }
+                            }}
+                        >
+                            {t("rewards.confirmRedeem")}
+                        </Button>
+                    </>
+                )}
+            />
         </div>
     )
 }

@@ -5,7 +5,7 @@ import { Button, Spinner, Typography, cn } from "@heroui/react"
 import { ArrowRightIcon, CardsIcon, ClockCountdownIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { ModalShell } from "@/components/blocks/layout/ModalShell"
+import { ModalShell } from "@/components/composites/layout/ModalShell"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import type { FlashcardReviewMode } from "@/modules/api/graphql/mutations/types/start-flashcard-review-session"
 
@@ -64,7 +64,6 @@ export const FlashcardReviewModeModal = ({
     dueCount,
     onStart,
     isPending,
-    className,
 }: FlashcardReviewModeModalProps) => {
     const t = useTranslations()
     const [mode, setMode] = useState<FlashcardReviewMode>("full")
@@ -83,54 +82,55 @@ export const FlashcardReviewModeModal = ({
             onOpenChange={(open) => { if (!open && !isPending) onClose() }}
             title={t("flashcard.mode.title")}
             size="sm"
-            className={className}
-        >
-            <div className="flex flex-col gap-4">
-                <Typography type="body-sm" color="muted">
-                    {t("flashcard.mode.subtitle", { deck: deckTitle })}
-                </Typography>
+            body={() => (
+                <div className="flex flex-col gap-4">
+                    <Typography type="body-sm" color="muted">
+                        {t("flashcard.mode.subtitle", { deck: deckTitle })}
+                    </Typography>
 
-                <SurfaceListCard bordered>
-                    <SurfaceListCardRow
-                        // UNSELECTED → block-native bg-default hover (distinct from the accent-soft
-                        // selected tint, no clash). SELECTED → keep hover:bg-accent-soft so the picked
-                        // row does NOT flicker to bg-default on hover (same idiom as
-                        // SubmissionResultHistoryDrawer). Selection signal = accent icon + the row's
-                        // own `selected` bg-accent-soft tint (icon.md §6); `title` is plain text now
-                        // (never a built element), and `titleClassName` stays lint-forbidden, so the
-                        // per-mode colour rides on the icon + row tint alone.
-                        className={mode === "full" ? "hover:bg-accent-soft" : undefined}
-                        leading={() => <CardsIcon className={cn("size-6", mode === "full" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
-                        title={t("flashcard.mode.fullLabel")}
-                        subtitle={t("flashcard.mode.fullDescription")}
-                        selected={mode === "full"}
-                        isDisabled={isPending}
-                        onPress={() => setMode("full")}
-                        meta={() => (
-                            <span className="whitespace-nowrap text-xs font-medium text-muted">
-                                {t("flashcard.mode.fullBadge", { count: totalCount })}
-                            </span>
-                        )}
-                    />
-                    <SurfaceListCardRow
-                        className={mode === "due" ? "hover:bg-accent-soft" : undefined}
-                        leading={() => <ClockCountdownIcon className={cn("size-6", mode === "due" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
-                        title={t("flashcard.mode.dueLabel")}
-                        subtitle={t("flashcard.mode.dueDescription")}
-                        selected={mode === "due"}
-                        isDisabled={isPending || dueDisabled}
-                        onPress={() => setMode("due")}
-                        meta={() => (
-                            <span className={`whitespace-nowrap text-xs font-medium ${dueDisabled ? "text-muted" : "text-warning-soft-foreground"}`}>
-                                {dueDisabled
-                                    ? t("flashcard.mode.dueBadgeEmpty")
-                                    : t("flashcard.mode.dueBadge", { count: dueCount })}
-                            </span>
-                        )}
-                    />
-                </SurfaceListCard>
-
-                <div className="flex justify-end gap-2">
+                    <SurfaceListCard bordered>
+                        <SurfaceListCardRow
+                            // UNSELECTED → block-native bg-default hover (distinct from the accent-soft
+                            // selected tint, no clash). SELECTED → keep hover:bg-accent-soft so the picked
+                            // row does NOT flicker to bg-default on hover (same idiom as
+                            // SubmissionResultHistoryDrawer). Selection signal = accent icon + the row's
+                            // own `selected` bg-accent-soft tint (icon.md §6); `title` is plain text now
+                            // (never a built element), and `titleClassName` stays lint-forbidden, so the
+                            // per-mode colour rides on the icon + row tint alone.
+                            className={mode === "full" ? "hover:bg-accent-soft" : undefined}
+                            leading={() => <CardsIcon className={cn("size-6", mode === "full" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
+                            title={t("flashcard.mode.fullLabel")}
+                            subtitle={t("flashcard.mode.fullDescription")}
+                            selected={mode === "full"}
+                            isDisabled={isPending}
+                            onPress={() => setMode("full")}
+                            meta={() => (
+                                <span className="whitespace-nowrap text-xs font-medium text-muted">
+                                    {t("flashcard.mode.fullBadge", { count: totalCount })}
+                                </span>
+                            )}
+                        />
+                        <SurfaceListCardRow
+                            className={mode === "due" ? "hover:bg-accent-soft" : undefined}
+                            leading={() => <ClockCountdownIcon className={cn("size-6", mode === "due" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
+                            title={t("flashcard.mode.dueLabel")}
+                            subtitle={t("flashcard.mode.dueDescription")}
+                            selected={mode === "due"}
+                            isDisabled={isPending || dueDisabled}
+                            onPress={() => setMode("due")}
+                            meta={() => (
+                                <span className={`whitespace-nowrap text-xs font-medium ${dueDisabled ? "text-muted" : "text-warning-soft-foreground"}`}>
+                                    {dueDisabled
+                                        ? t("flashcard.mode.dueBadgeEmpty")
+                                        : t("flashcard.mode.dueBadge", { count: dueCount })}
+                                </span>
+                            )}
+                        />
+                    </SurfaceListCard>
+                </div>
+            )}
+            footer={() => (
+                <>
                     <Button variant="tertiary" isDisabled={isPending} onPress={onClose}>
                         {t("common.cancel")}
                     </Button>
@@ -141,8 +141,8 @@ export const FlashcardReviewModeModal = ({
                         {t("flashcard.mode.start")}
                         {!isPending ? <ArrowRightIcon className="size-5" aria-hidden focusable="false" /> : null}
                     </Button>
-                </div>
-            </div>
-        </ModalShell>
+                </>
+            )}
+        />
     )
 }

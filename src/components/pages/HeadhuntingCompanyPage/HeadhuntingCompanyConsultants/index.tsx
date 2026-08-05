@@ -13,7 +13,7 @@ import { useAppSelector } from "@/redux/hooks"
 import { useQueryHeadhunterCompaniesSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhunterCompaniesSwr"
 import { useQueryHeadhuntersSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhuntersSwr"
 import { pathConfig } from "@/resources/path"
-import { ModalShell } from "@/components/blocks/layout/ModalShell"
+import { ModalShell } from "@/components/composites/layout/ModalShell"
 import {
     ConsultantProfileBody,
     type ConsultantProfileBodyContactLink,
@@ -155,8 +155,7 @@ export const HeadhuntingCompanyConsultants = () => {
                 onOpenChange={(next) => { if (!next) { setOpenedId(null) } }}
                 title={t("headhuntings.modalTitle")}
                 scroll="inside"
-            >
-                {opened ? (
+                body={() => opened ? (
                     <ConsultantProfileBody
                         consultant={{
                             fullName: opened.fullName,
@@ -174,7 +173,7 @@ export const HeadhuntingCompanyConsultants = () => {
                         lockedCtaLabel={t("headhuntings.improveCv")}
                     />
                 ) : null}
-            </ModalShell>
+            />
         </>
     )
 }

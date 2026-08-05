@@ -28,7 +28,7 @@ import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
 import { Callout, STATUS_ACTION_CLASS } from "@/components/blocks/feedback/Callout"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { ModalShell } from "@/components/blocks/layout/ModalShell"
+import { ModalShell } from "@/components/composites/layout/ModalShell"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
@@ -1829,25 +1829,27 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             }}
             title={confirmCopy?.title}
             size="sm"
-            bodyClassName="gap-3"
-        >
-            <Typography type="body-sm" color="muted">{confirmCopy?.body}</Typography>
-            <div className="flex justify-end gap-2">
-                <Button variant="tertiary" onPress={() => setConfirmAction(null)}>
-                    {t("mockInterview.stayInInterview")}
-                </Button>
-                <Button
-                    variant={confirmCopy?.ctaVariant ?? "primary"}
-                    onPress={() => {
-                        const run = confirmCopy?.onConfirm
-                        setConfirmAction(null)
-                        run?.()
-                    }}
-                >
-                    {confirmCopy?.cta}
-                </Button>
-            </div>
-        </ModalShell>
+            body={() => (
+                <Typography type="body-sm" color="muted">{confirmCopy?.body}</Typography>
+            )}
+            footer={() => (
+                <>
+                    <Button variant="tertiary" onPress={() => setConfirmAction(null)}>
+                        {t("mockInterview.stayInInterview")}
+                    </Button>
+                    <Button
+                        variant={confirmCopy?.ctaVariant ?? "primary"}
+                        onPress={() => {
+                            const run = confirmCopy?.onConfirm
+                            setConfirmAction(null)
+                            run?.()
+                        }}
+                    >
+                        {confirmCopy?.cta}
+                    </Button>
+                </>
+            )}
+        />
     )
 
     // ── INTERVIEW, mode="qna" (Round 5 — "ask one question at a time"): 1 question, 1 answer box ──

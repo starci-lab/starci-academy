@@ -4,23 +4,25 @@
  * **Sign-up step 2** — OTP after `signUpInit`; resend uses {@link useMutateSignUpResendOtpSwr}.
  *
  * Submit runs `signUpVerifyOtp` via {@link useSignUpForm} while `signUpState === Otp`.
+ * Container: owns the sign-up formik singleton, the resend mutation, and i18n;
+ * hands resolved props to the presentational {@link _OtpState}. See `tiers/split.md`.
  */
-import React from "react"
-import { Button, cn, FieldError, InputOTP, Link, Modal, Spinner, TextField, Typography } from "@heroui/react"
+import React, { useCallback } from "react"
 import { useTranslations } from "next-intl"
+import { Typography } from "@/components/atoms/text/Typography"
+import { _OtpState } from "./component"
 import { useMutateSignUpResendOtpSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSignUpResendOtpSwr"
 import { useSignUpForm } from "@/hooks/zustand/signUp/useSignUpForm"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link OtpState}. */
-export interface OtpStateProps extends WithClassNames<undefined> {
+export interface OtpStateProps {
     /** Hides `Modal.CloseTrigger` when hosted outside a dismissible modal (the `/login` page). */
     hideCloseButton?: boolean
 }
 
 /**
- * OTP entry for completing GraphQL sign-up (mirrors sign-in `OTPState`).
+ * OTP entry for completing GraphQL sign-up (mirrors sign-in `OtpState`).
  */
 export const OtpState = ({ hideCloseButton }: OtpStateProps = {}) => {
     const t = useTranslations()
@@ -37,110 +39,89 @@ export const OtpState = ({ hideCloseButton }: OtpStateProps = {}) => {
         isValid,
     } = useSignUpForm()
 
-    const onResend = async () => {
-        const challengeId = values.challengeId
-        if (!challengeId) {
-            return
-        }
-        await runGraphQL(
-            async () => {
-                const apolloResult = await mutateSignUpResendOtp({
-                    request: {
-                        challengeId,
-                    },
-                })
-                const env = apolloResult.data?.signUpResendOtp
-                if (!env?.success || !env.data?.challengeId) {
-                    throw new Error(
-                        env?.error ?? env?.message ?? "signUpResendOtp failed"
-                    )
-                }
-                await setFieldValue("challengeId", env.data.challengeId)
-                await setFieldValue("otp", "", true)
-                return env
-            },
-            {
-                showErrorToast: true,
-                showSuccessToast: true,
+    const onResend = useCallback(
+        async () => {
+            const challengeId = values.challengeId
+            if (!challengeId) {
+                return
             }
-        )
-    }
-
-    return (
-        <>
-            {!hideCloseButton && <Modal.CloseTrigger />}
-            <Modal.Header>
-                <Typography type="body" weight="semibold" className="pr-8 text-center">
-                    {t("auth.signUp.otp.title")}
-                </Typography>
-            </Modal.Header>
-            <Modal.Body className="flex flex-col gap-6">
-                <Typography type="body-xs" color="muted" className="text-center">
-                    {
-                        t.rich("auth.signUp.otp.desc", {
-                            emailHighlight: (chunks) => (
-                                <span className="text-accent-soft-foreground">{chunks}</span>
-                            ),
-                            email: values.email,
-                        }
+            await runGraphQL(
+                async () => {
+                    const apolloResult = await mutateSignUpResendOtp({
+                        request: {
+                            challengeId,
+                        },
+                    })
+                    const env = apolloResult.data?.signUpResendOtp
+                    if (!env?.success || !env.data?.challengeId) {
+                        throw new Error(
+                            env?.error ?? env?.message ?? "signUpResendOtp failed"
                         )
                     }
-                </Typography>
-                <div className="flex flex-col gap-3">
-                    <TextField variant="secondary" isInvalid={!!(touched.otp && errors.otp)}>
-                        <InputOTP
-                            id="sign-up-otp"
-                            name="otp"
-                            variant="secondary"
-                            maxLength={6}
-                            value={values.otp}
-                            onChange={(value) => setFieldValue("otp", value)}
-                            onBlur={() => setFieldTouched("otp", true)}
-                        >
-                            <InputOTP.Group>
-                                <InputOTP.Slot index={0} />
-                                <InputOTP.Slot index={1} />
-                                <InputOTP.Slot index={2} />
-                            </InputOTP.Group>
-                            <InputOTP.Separator />
-                            <InputOTP.Group>
-                                <InputOTP.Slot index={3} />
-                                <InputOTP.Slot index={4} />
-                                <InputOTP.Slot index={5} />
-                            </InputOTP.Group>
-                        </InputOTP>
-                        <FieldError className="text-center">{errors.otp}</FieldError>
-                    </TextField>
-                    <div className="flex flex-wrap items-center justify-center gap-2 text-center">
-                        <Typography type="body-xs" color="muted">{t("auth.signUp.otp.resend")}</Typography>
-                        <Link
-                            className={cn("text-xs text-accent-soft-foreground", isResending ? "text-muted" : "")}
-                            data-disabled={isResending ? true : undefined}
-                            onPress={() => {
-                                if (isResending) return
-                                onResend()
-                            }}
-                        >
-                            {t("auth.signUp.otp.resendLink")}
-                        </Link>
-                    </div>
-                </div>
-                <Button
-                    type="submit"
-                    variant="primary"
-                    fullWidth
-                    isDisabled={!isValid}
-                    isPending={isSubmitting}
-                    onPress={() => submitForm()}
-                >
-                    {({ isPending }) => (
-                        <>
-                            {isPending ? <Spinner color="current" size="sm" /> : null}
-                            {t("auth.signUp.otp.submit")}
-                        </>
-                    )}
-                </Button>
-            </Modal.Body>
-        </>
+                    await setFieldValue("challengeId", env.data.challengeId)
+                    await setFieldValue("otp", "", true)
+                    return env
+                },
+                {
+                    showErrorToast: true,
+                    showSuccessToast: true,
+                }
+            )
+        },
+        [
+            values.challengeId,
+            runGraphQL,
+            mutateSignUpResendOtp,
+            setFieldValue,
+        ],
+    )
+
+    // `Input.Otp` carries no `onBlur` — mark touched on the first edit instead
+    // (same combined value+touch shape used across the sign-up fields).
+    const onChangeOtp = useCallback(
+        (value: string) => {
+            setFieldValue("otp", value)
+            setFieldTouched("otp", true)
+        },
+        [
+            setFieldValue,
+            setFieldTouched,
+        ],
+    )
+
+    const onSubmit = useCallback(
+        () => {
+            submitForm()
+        },
+        [
+            submitForm,
+        ],
+    )
+
+    return (
+        <_OtpState
+            hideCloseButton={hideCloseButton}
+            otp={values.otp}
+            error={errors.otp}
+            touched={touched.otp}
+            isValid={isValid}
+            isSubmitting={isSubmitting}
+            isResending={isResending}
+            onChangeOtp={onChangeOtp}
+            onSubmit={onSubmit}
+            onResend={onResend}
+            labels={{
+                title: t("auth.signUp.otp.title"),
+                desc: t.rich("auth.signUp.otp.desc", {
+                    emailHighlight: (chunks) => (
+                        <Typography isInline size="xs" color="accent-soft" text={chunks} />
+                    ),
+                    email: values.email,
+                }),
+                resend: t("auth.signUp.otp.resend"),
+                resendLink: t("auth.signUp.otp.resendLink"),
+                submit: t("auth.signUp.otp.submit"),
+            }}
+        />
     )
 }

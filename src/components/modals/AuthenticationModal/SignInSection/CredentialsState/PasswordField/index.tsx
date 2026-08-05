@@ -1,27 +1,13 @@
 "use client"
 
-import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react"
-import React, {
-    useCallback,
-    useState,
-} from "react"
-import {
-    Button,
-    cn,
-    FieldError,
-    Input,
-    Label,
-    TextField,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
+import React from "react"
 import {
     useTranslations,
 } from "next-intl"
+import { Input } from "@/components/atoms/forms/Input"
 
 /** Props for {@link PasswordField}. */
-export interface PasswordFieldProps extends WithClassNames<undefined> {
+export interface PasswordFieldProps {
     /** Current password value. */
     value: string
     /** Validation error message, if any. */
@@ -30,68 +16,32 @@ export interface PasswordFieldProps extends WithClassNames<undefined> {
     touched?: boolean
     /** Fired with the new password value on change. */
     onChangeValue: (value: string) => void
-    /** Fired when the field loses focus. */
-    onBlurField: () => void
 }
 
 /**
- * Password input row for the sign-in credentials step, with a show/hide
- * toggle and a "forgot password" link.
+ * Password input row for the sign-in credentials step.
  *
- * Presentational: owns only the local plaintext-visibility toggle (UI state);
- * value + validation are driven by props. No business logic.
- * @param props - value, validation state, and change/blur callbacks
+ * Presentational: renders the labelled password field — the reveal/hide
+ * toggle is owned by the `Input.Password` atom — and forwards the change
+ * event upward. No business logic.
+ * @param props - value, validation state, and the change callback
  */
 export const PasswordField = ({
     value,
     error,
     touched,
     onChangeValue,
-    onBlurField,
-    className,
 }: PasswordFieldProps) => {
     const t = useTranslations()
-
-    // local UI-only state: whether the password is shown as plaintext
-    const [showPassword, setShowPassword] = useState(false)
-    const onToggleVisibility = useCallback(
-        () => setShowPassword((shown) => !shown),
-        [],
-    )
-
+    const invalid = !!(touched && error)
     return (
-        <TextField variant="secondary" isInvalid={!!(touched && error)} className={cn(className)}>
-            <Label htmlFor="sign-in-password" className="text-sm">
-                {t("auth.signIn.password.label")}
-            </Label>
-            <div className="relative">
-                <Button
-                    isIconOnly
-                    variant="ghost"
-                    aria-label={showPassword ? t("auth.signIn.password.hide") : t("auth.signIn.password.show")}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 min-w-8 h-8 border-none text-muted hover:text-foreground"
-                    onPress={onToggleVisibility}
-                >
-                    {showPassword ? (
-                        <EyeIcon className="size-4" />
-                    ) : (
-                        <EyeSlashIcon className="size-4" />
-                    )}
-                </Button>
-                <Input
-                    id="sign-in-password"
-                    required
-                    variant="secondary"
-                    type={showPassword ? "text" : "password"}
-                    placeholder={t("auth.signIn.password.placeholder")}
-                    name="password"
-                    className="w-full"
-                    value={value}
-                    onChange={(event) => onChangeValue(event.target.value)}
-                    onBlur={onBlurField}
-                />
-            </div>
-            <FieldError>{error}</FieldError>
-        </TextField>
+        <Input.Password
+            label={t("auth.signIn.password.label")}
+            placeholder={t("auth.signIn.password.placeholder")}
+            value={value}
+            onValueChange={onChangeValue}
+            isInvalid={invalid}
+            errorMessage={invalid ? error : undefined}
+        />
     )
 }

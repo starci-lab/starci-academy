@@ -9,6 +9,7 @@ import { UserCell } from "@/components/composites/lists/UserCell"
 import { Tabs, type TabItem } from "@/components/atoms/navigation/Tabs"
 import { Typography } from "@/components/atoms/text/Typography"
 import { ModalShell } from "@/components/composites/layout/ModalShell"
+import { Box } from "@/components/frames/Box"
 import { ScrollArea } from "@/components/frames/ScrollArea"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { InfiniteScrollSentinel } from "@/components/blocks/async/InfiniteScrollSentinel"
@@ -208,12 +209,13 @@ export const _FollowListModal = ({
                 // values), and `PinnedTrack` hard-owns the page-shell's own
                 // `sticky top-0 z-40` for its one real consumer. `ScrollArea`
                 // still owns the `overflow-y-auto` behaviour; only the height
-                // cap itself has nowhere to live yet, so it stays a single raw
-                // class on the wrapper.
+                // cap itself has nowhere to live yet, so it goes through `Box`
+                // (the sanctioned raw-appearance escape hatch) rather than a
+                // bare `div`.
                 () => (
-                    <div className="max-h-[60vh]">
+                    <Box className="max-h-[60vh]">
                         <ScrollArea axis="y" body={listBody} />
-                    </div>
+                    </Box>
                 ),
             ]}
         />

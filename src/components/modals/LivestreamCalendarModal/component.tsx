@@ -1,7 +1,6 @@
 import React from "react"
 import { Calendar } from "@heroui/react"
-import type { DateValue } from "@heroui/react/rac"
-import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date"
+import { CalendarDate, getLocalTimeZone, today, type DateValue } from "@internationalized/date"
 import { ClockIcon } from "@phosphor-icons/react"
 import { ModalShell } from "@/components/composites/layout/ModalShell"
 import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
@@ -11,6 +10,7 @@ import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
 import { Cluster } from "@/components/frames/Cluster"
+import { Box } from "@/components/frames/Box"
 
 /**
  * `_LivestreamCalendarModal` — the presentational half of `LivestreamCalendarModal`:
@@ -23,7 +23,11 @@ import { Cluster } from "@/components/frames/Cluster"
  * ⚠️ MISSING VOCABULARY: there is no atom/composite wrapping a STANDALONE, always-visible
  * HeroUI `Calendar` (`atoms/forms/Input`'s `InputDate` only wraps one inside a text-field
  * popover). Kept as a direct `@heroui/react` import here, minimal, pending that atom —
- * see the task's `missingVocabulary` report. Do not spread this pattern elsewhere.
+ * see the task's `missingVocabulary` report. Do not spread this pattern elsewhere. The
+ * `DateValue` type it needs comes from `@internationalized/date` (the same nominal type
+ * `@heroui/react/rac` re-exports) so this stays the ONLY direct HeroUI import in the file;
+ * `Box` (the frames escape hatch for "a composite wrapping a foreign library") carries the
+ * `overflow-hidden`/`shadow-none` reset instead of a raw `className` on `Calendar` itself.
  *
  * No `isSkeleton`: `rows` comes straight off redux (`state.livestreamSession.entities`,
  * populated synchronously wherever the store is hydrated), so there is no async
@@ -106,14 +110,15 @@ export const _LivestreamCalendarModal = ({
     const isEmpty = rows.length === 0
 
     const calendarSlot = () => (
-        <Calendar
-            aria-label={labels.calendarAriaLabel}
-            className="overflow-hidden shadow-none"
-            defaultFocusedValue={defaultFocusedValue}
-            defaultValue={today(getLocalTimeZone())}
-            firstDayOfWeek="mon"
-            isDateUnavailable={isDateUnavailable}
-        />
+        <Box className="overflow-hidden shadow-none">
+            <Calendar
+                aria-label={labels.calendarAriaLabel}
+                defaultFocusedValue={defaultFocusedValue}
+                defaultValue={today(getLocalTimeZone())}
+                firstDayOfWeek="mon"
+                isDateUnavailable={isDateUnavailable}
+            />
+        </Box>
     )
 
     const listItems: Array<SurfaceCardListItem> = rows.map((row) => ({

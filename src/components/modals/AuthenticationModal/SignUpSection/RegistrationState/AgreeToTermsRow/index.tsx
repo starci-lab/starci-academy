@@ -1,26 +1,13 @@
 "use client"
 
 import React from "react"
-import {
-    Checkbox,
-    cn,
-    Label,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-import {
-    useTranslations,
-} from "next-intl"
-import {
-    Link,
-} from "@/i18n/navigation"
-import {
-    pathConfig,
-} from "@/resources/path"
+import { useTranslations } from "next-intl"
+import { Choice } from "@/components/atoms/forms/Choice"
+import { Typography } from "@/components/atoms/text/Typography"
+import { pathConfig } from "@/resources/path"
 
 /** Props for {@link AgreeToTermsRow}. */
-export interface AgreeToTermsRowProps extends WithClassNames<undefined> {
+export interface AgreeToTermsRowProps {
     /** Whether the terms checkbox is checked. */
     isSelected: boolean
     /** Validation error message, if any. */
@@ -37,60 +24,34 @@ export interface AgreeToTermsRowProps extends WithClassNames<undefined> {
  * Presentational: checked state + validation driven by props. The terms /
  * privacy links open the real `/terms` and `/privacy` pages in a new tab so
  * the in-progress sign-up form isn't lost.
- * @param props - selected state, validation, and the change callback
+ * @param props - {@link AgreeToTermsRowProps}
  */
 export const AgreeToTermsRow = ({
     isSelected,
     error,
     touched,
     onChangeSelected,
-    className,
 }: AgreeToTermsRowProps) => {
     const t = useTranslations()
     const paths = pathConfig().locale()
+    const showError = Boolean(touched && error)
+
+    const label = (
+        <>
+            <Typography size="xs" color="muted" text={t("auth.signUp.agreeToTerms.prefix")} />{" "}
+            <Typography size="xs" isLink underlineOnHover href={paths.terms().build()} target="_blank" text={t("auth.signUp.agreeToTerms.terms")} />{" "}
+            <Typography size="xs" color="muted" text={t("auth.signUp.agreeToTerms.and")} />{" "}
+            <Typography size="xs" isLink underlineOnHover href={paths.privacy().build()} target="_blank" text={t("auth.signUp.agreeToTerms.privacy")} />
+        </>
+    )
 
     return (
-        <div className={cn("flex flex-col gap-2", className)}>
-            <div className="flex items-start gap-2">
-                <Checkbox
-                    id="sign-up-agree-to-terms"
-                    className="w-full"
-                    variant="secondary"
-                    isSelected={isSelected}
-                    onChange={(value) => onChangeSelected(Boolean(value))}
-                >
-                    <Checkbox.Control>
-                        <Checkbox.Indicator />
-                    </Checkbox.Control>
-                    <Checkbox.Content className="w-full">
-                        <Label htmlFor="sign-up-agree-to-terms">
-                            <div className="text-xs text-muted">
-                                <span>{t("auth.signUp.agreeToTerms.prefix")}{" "}</span>
-                                <Link
-                                    href={paths.terms().build()}
-                                    target="_blank"
-                                    className="text-xs underline underline-offset-4 decoration-[var(--separator-tertiary)] inline"
-                                >
-                                    {t("auth.signUp.agreeToTerms.terms")}
-                                </Link>{" "}
-                                <span>{t("auth.signUp.agreeToTerms.and")}{" "}</span>
-                                <Link
-                                    href={paths.privacy().build()}
-                                    target="_blank"
-                                    className="text-xs underline underline-offset-4 decoration-[var(--separator-tertiary)] inline"
-                                >
-                                    {t("auth.signUp.agreeToTerms.privacy")}
-                                </Link>
-                            </div>
-                        </Label>
-                    </Checkbox.Content>
-                </Checkbox>
-            </div>
-            {touched && error ? (
-                <div className="text-xs text-danger-soft-foreground mt-1">
-                    {error}
-                </div>
-            ) : null}
-        </div>
+        <Choice.Checkbox
+            isSelected={isSelected}
+            onValueChange={onChangeSelected}
+            label={label}
+            isInvalid={showError}
+            errorMessage={showError ? error : undefined}
+        />
     )
 }

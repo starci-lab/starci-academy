@@ -1,43 +1,34 @@
 "use client"
 
 import React from "react"
-import {
-    cn,
-    Link,
-} from "@heroui/react"
-import {
-    useTranslations,
-} from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useTranslations } from "next-intl"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackH } from "@/components/frames/Stack"
 
 /** Props for {@link SignInPrompt}. */
-export interface SignInPromptProps extends WithClassNames<undefined> {
+export interface SignInPromptProps {
     /** Fired when the user chooses to switch back to the sign-in tab. */
     onSwitchToSignIn: () => void
 }
 
 /**
- * "Already have an account? Sign in" footer link for the sign-up step.
+ * "Already have an account? Sign in" footer row for the sign-up step.
  *
  * Presentational: forwards the switch-tab intent via `onSwitchToSignIn`.
- * @param props - the switch-to-sign-in callback
+ * @param props - {@link SignInPromptProps}
  */
 export const SignInPrompt = ({
     onSwitchToSignIn,
-    className,
 }: SignInPromptProps) => {
     const t = useTranslations()
     return (
-        <div className={cn("flex justify-center items-center gap-2", className)}>
-            <div className="text-xs text-muted">
-                {t("auth.signUp.haveAccount")}
-            </div>
-            <Link
-                className="text-xs"
-                onPress={onSwitchToSignIn}
-            >
-                {t("auth.signUp.signIn")}
-            </Link>
-        </div>
+        <StackH
+            gap={3}
+            justify="center"
+            items={[
+                () => <Typography size="xs" color="muted" text={t("auth.signUp.haveAccount")} />,
+                () => <Typography size="xs" color="accent" isButton onPress={onSwitchToSignIn} text={t("auth.signUp.signIn")} />,
+            ]}
+        />
     )
 }

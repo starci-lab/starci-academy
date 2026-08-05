@@ -2,20 +2,14 @@
 
 import React from "react"
 import {
-    Checkbox,
-    cn,
-    Label,
-    Link,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-import {
     useTranslations,
 } from "next-intl"
+import { Choice } from "@/components/atoms/forms/Choice"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackH } from "@/components/frames/Stack"
 
 /** Props for {@link RememberMeRow}. */
-export interface RememberMeRowProps extends WithClassNames<undefined> {
+export interface RememberMeRowProps {
     /** Whether the "remember me" box is checked. */
     isSelected: boolean
     /** Fired with the new checked state. */
@@ -32,31 +26,19 @@ export interface RememberMeRowProps extends WithClassNames<undefined> {
 export const RememberMeRow = ({
     isSelected,
     onChangeSelected,
-    className,
 }: RememberMeRowProps) => {
     const t = useTranslations()
-    return (
-        <div className={cn("flex justify-between", className)}>
-            <Checkbox
-                id="sign-in-remember-me"
-                variant="secondary"
+    const items = [
+        () => (
+            <Choice.Checkbox
                 isSelected={isSelected}
-                onChange={(value) => onChangeSelected(Boolean(value))}
-            >
-                <Checkbox.Control>
-                    <Checkbox.Indicator />
-                </Checkbox.Control>
-                <Checkbox.Content className="w-full">
-                    <Label htmlFor="sign-in-remember-me">
-                        <div className="text-xs text-muted">
-                            <span>{t("auth.signIn.rememberMe")}{" "}</span>
-                        </div>
-                    </Label>
-                </Checkbox.Content>
-            </Checkbox>
-            <Link className="text-xs cursor-pointer hover:opacity-80">
-                {t("auth.signIn.forgotPassword")}
-            </Link>
-        </div>
-    )
+                onValueChange={onChangeSelected}
+                label={<Typography size="xs" color="muted" text={t("auth.signIn.rememberMe")} />}
+            />
+        ),
+        () => (
+            <Typography size="xs" isLink text={t("auth.signIn.forgotPassword")} />
+        ),
+    ]
+    return <StackH gap={1} justify="between" items={items} />
 }

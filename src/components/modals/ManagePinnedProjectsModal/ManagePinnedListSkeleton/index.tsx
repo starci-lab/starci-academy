@@ -1,12 +1,15 @@
 import React from "react"
-import {
-    Card,
-    CardContent,
-} from "@heroui/react"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Box } from "@/components/frames/Box"
+import { StackV } from "@/components/frames/Stack"
+import { Cluster } from "@/components/frames/Cluster"
 
 /** Rows shown while the owner's pinned list is first loading. */
 const SKELETON_ROW_COUNT = 3
+
+/** Icon-only footer actions a manage-mode card shows (move-up, move-down, open, remove). */
+const SKELETON_BUTTON_COUNT = 4
 
 /**
  * Loading mirror for the "manage" tab's pin list. `PinnedProjectCard` composes the
@@ -16,28 +19,43 @@ const SKELETON_ROW_COUNT = 3
  * tree of its own to shimmer) instead of a prop reaching into `MediaCard`.
  *
  * Mirrors `MediaCard` (manage mode) row-for-row: cover · title · meta chip row ·
- * description · footer of 4 icon-only action buttons.
+ * description · footer of 4 icon-only action buttons. The card chrome comes from
+ * the `Box` frame's `className="card"` escape hatch (border/radius/shadow are
+ * appearance a frame deliberately can't carry); every row inside is a real
+ * `Skeleton.*`/`Button` shimmer, laid out with `StackV`/`Cluster`.
  */
 export const ManagePinnedListSkeleton = () => (
-    <div className="flex flex-col gap-3">
-        {Array.from({ length: SKELETON_ROW_COUNT }).map((_, index) => (
-            <Card key={index} className="gap-0 overflow-hidden p-0">
-                <Skeleton className="aspect-video w-full" />
-                <CardContent className="flex flex-col gap-3 px-4 pb-4 pt-3">
-                    <Skeleton.Typography width="1/2" />
-                    <div className="flex flex-wrap items-center gap-2">
-                        <Skeleton.Chip />
-                        <Skeleton.Chip />
-                    </div>
-                    <Skeleton.Typography type="body-sm" width="full" />
-                    <Skeleton.Typography type="body-sm" width="2/3" />
-                    <div className="flex items-center gap-2">
-                        {Array.from({ length: 4 }).map((__, buttonIndex) => (
-                            <Skeleton key={buttonIndex} className="size-9 shrink-0 rounded-lg" />
-                        ))}
-                    </div>
-                </CardContent>
-            </Card>
+    <StackV
+        gap={4}
+        items={Array.from({ length: SKELETON_ROW_COUNT }).map(() => () => (
+            <Box className="card">
+                <StackV
+                    gap={4}
+                    items={[
+                        () => <Skeleton className="aspect-video w-full rounded-xl" />,
+                        () => <Skeleton.Typography width="1/2" />,
+                        () => (
+                            <Cluster
+                                gap={3}
+                                items={[
+                                    () => <Skeleton.Chip />,
+                                    () => <Skeleton.Chip />,
+                                ]}
+                            />
+                        ),
+                        () => <Skeleton.Typography type="body-sm" width="full" />,
+                        () => <Skeleton.Typography type="body-sm" width="2/3" />,
+                        () => (
+                            <Cluster
+                                gap={3}
+                                items={Array.from({ length: SKELETON_BUTTON_COUNT }).map(() => () => (
+                                    <Button isSkeleton isIconOnly size="sm" />
+                                ))}
+                            />
+                        ),
+                    ]}
+                />
+            </Box>
         ))}
-    </div>
+    />
 )

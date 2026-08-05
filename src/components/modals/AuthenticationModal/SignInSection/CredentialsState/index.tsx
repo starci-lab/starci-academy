@@ -14,11 +14,7 @@ import React, {
     useMemo,
 } from "react"
 import {
-    Button,
     Modal,
-    Separator,
-    Spinner,
-    Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -38,12 +34,16 @@ import { SessionStorageId } from "@/modules/storage/session/enums/id"
 import { type SessionStorageOauthIdpHint } from "@/modules/storage/session/types/oauth-idp-hint"
 import { type SessionStoragePostLoginRedirect } from "@/modules/storage/session/types/post-login-redirect"
 import { useSearchParams } from "next/navigation"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Turnstile } from "@/components/features/auth/Turnstile"
 import { publicEnv } from "@/resources/env/public"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Divider } from "@/components/atoms/display/Divider"
+import { StackV } from "@/components/frames/Stack"
+import { Box } from "@/components/frames/Box"
 
 /** Props for {@link CredentialsState}. */
-export interface CredentialsStateProps extends WithClassNames<undefined> {
+export interface CredentialsStateProps {
     /** Hides `Modal.CloseTrigger` when hosted outside a dismissible modal (the `/login` page). */
     hideCloseButton?: boolean
 }
@@ -111,14 +111,6 @@ export const CredentialsState = ({ hideCloseButton }: CredentialsStateProps = {}
             setFieldValue,
         ],
     )
-    const onBlurEmail = useCallback(
-        () => {
-            setFieldTouched("email", true)
-        },
-        [
-            setFieldTouched,
-        ],
-    )
 
     const onChangePassword = useCallback(
         (value: string) => {
@@ -126,14 +118,6 @@ export const CredentialsState = ({ hideCloseButton }: CredentialsStateProps = {}
         },
         [
             setFieldValue,
-        ],
-    )
-    const onBlurPassword = useCallback(
-        () => {
-            setFieldTouched("password", true)
-        },
-        [
-            setFieldTouched,
         ],
     )
 
@@ -169,79 +153,82 @@ export const CredentialsState = ({ hideCloseButton }: CredentialsStateProps = {}
 
     const isSubmitDisabled = publicEnv().captcha.enabled && !values.captchaToken
 
+    const bodyItems = [
+        () => (
+            <StackV
+                gap={4}
+                items={[
+                    () => <OauthButtons items={oauthButtons} onOauthPress={onOauthPress} />,
+                    () => <Divider label={t("auth.signIn.or")} />,
+                ]}
+            />
+        ),
+        () => (
+            <StackV
+                gap={4}
+                items={[
+                    () => (
+                        <EmailField
+                            value={values.email}
+                            error={errors.email}
+                            touched={touched.email}
+                            onChangeValue={onChangeEmail}
+                        />
+                    ),
+                    () => (
+                        <PasswordField
+                            value={values.password}
+                            error={errors.password}
+                            touched={touched.password}
+                            onChangeValue={onChangePassword}
+                        />
+                    ),
+                    () => (
+                        <RememberMeRow
+                            isSelected={values.rememberMe}
+                            onChangeSelected={onChangeRememberMe}
+                        />
+                    ),
+                ]}
+            />
+        ),
+        ...(publicEnv().captcha.enabled ? [() => (
+            <Turnstile
+                onVerify={(token: string) => setFieldValue("captchaToken", token)}
+                onExpire={() => setFieldValue("captchaToken", undefined)}
+                onError={() => setFieldValue("captchaToken", undefined)}
+            />
+        )] : []),
+        () => (
+            <Button
+                variant="primary"
+                classNames={["w-full"]}
+                isPending={isSubmitting}
+                isDisabled={isSubmitDisabled}
+                label={t("auth.signIn.submit")}
+                onPress={onSubmit}
+            />
+        ),
+        () => <SignUpPrompt onSwitchToSignUp={onSwitchToSignUp} />,
+    ]
+
     return (
         <>
             {!hideCloseButton && <Modal.CloseTrigger />}
             <Modal.Header>
-                <Typography type="body" weight="semibold" className="pr-8 text-center">
-                    {t("auth.signIn.title")}
-                </Typography>
-                <Typography type="body-xs" color="muted" className="text-center">
-                    {t("auth.signIn.desc")}
-                </Typography>
+                <Box className="pr-8">
+                    <StackV
+                        gap={2}
+                        principles={["title-subtitle"]}
+                        items={[
+                            () => <Typography weight="semibold" align="center" text={t("auth.signIn.title")} />,
+                            () => <Typography size="xs" color="muted" align="center" text={t("auth.signIn.desc")} />,
+                        ]}
+                    />
+                </Box>
             </Modal.Header>
-            <Modal.Body className="flex flex-col gap-6">
-                <div className="flex flex-col gap-3">
-                    <OauthButtons
-                        items={oauthButtons}
-                        onOauthPress={onOauthPress}
-                    />
-
-                    <div className="flex items-center justify-center gap-3">
-                        <Separator className="flex-1" />
-                        <Typography type="body-xs" color="muted">{t("auth.signIn.or")}</Typography>
-                        <Separator className="flex-1" />
-                    </div>
-                </div>
-
-                <div className="flex flex-col gap-3">
-                    <EmailField
-                        value={values.email}
-                        error={errors.email}
-                        touched={touched.email}
-                        onChangeValue={onChangeEmail}
-                        onBlurField={onBlurEmail}
-                    />
-
-                    <PasswordField
-                        value={values.password}
-                        error={errors.password}
-                        touched={touched.password}
-                        onChangeValue={onChangePassword}
-                        onBlurField={onBlurPassword}
-                    />
-
-                    <RememberMeRow
-                        isSelected={values.rememberMe}
-                        onChangeSelected={onChangeRememberMe}
-                    />
-                </div>
-
-                {publicEnv().captcha.enabled && (
-                    <Turnstile
-                        onVerify={(token) => setFieldValue("captchaToken", token)}
-                        onExpire={() => setFieldValue("captchaToken", undefined)}
-                        onError={() => setFieldValue("captchaToken", undefined)}
-                    />
-                )}
-
-                <Button
-                    type="submit"
-                    variant="primary"
-                    fullWidth
-                    isPending={isSubmitting}
-                    isDisabled={isSubmitDisabled}
-                    onPress={onSubmit}
-                >
-                    {({ isPending }) => (
-                        <>
-                            {isPending ? <Spinner color="current" size="sm" /> : null}
-                            {t("auth.signIn.submit")}
-                        </>
-                    )}
-                </Button>
-
-                <SignUpPrompt onSwitchToSignUp={onSwitchToSignUp} />
+            <Modal.Body>
+                <StackV gap={6} items={bodyItems} />
             </Modal.Body>
         </>
     )

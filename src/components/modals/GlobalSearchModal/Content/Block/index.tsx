@@ -40,11 +40,7 @@ const renderEmText = (text: string) => {
             {parts.map((part, index) => {
                 if (part.startsWith("<em>") && part.endsWith("</em>")) {
                     const content = part.replace(/<\/?em>/g, "")
-                    return (
-                        <span key={index} className="font-semibold text-accent-soft-foreground underline underline-offset-4 decoration-[var(--separator-tertiary)] decoration-accent/60">
-                            {content}
-                        </span>
-                    )
+                    return <Typography key={index} size="xs" color="accent-soft" weight="semibold" isInline text={content} />
                 }
                 return <span key={index}>{part}</span>
             })}

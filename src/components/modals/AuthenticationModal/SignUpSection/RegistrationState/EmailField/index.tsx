@@ -1,22 +1,11 @@
 "use client"
 
 import React from "react"
-import {
-    cn,
-    FieldError,
-    Input,
-    Label,
-    TextField,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-import {
-    useTranslations,
-} from "next-intl"
+import { useTranslations } from "next-intl"
+import { Input } from "@/components/atoms/forms/Input"
 
 /** Props for {@link EmailField}. */
-export interface EmailFieldProps extends WithClassNames<undefined> {
+export interface EmailFieldProps {
     /** Current email value. */
     value: string
     /** Validation error message, if any. */
@@ -25,43 +14,32 @@ export interface EmailFieldProps extends WithClassNames<undefined> {
     touched?: boolean
     /** Fired with the new email value on change. */
     onChangeValue: (value: string) => void
-    /** Fired when the field loses focus. */
-    onBlurField: () => void
 }
 
 /**
  * Email input row for the sign-up registration step.
  *
- * Presentational: value + validation driven by props, forwards change/blur
- * events upward. No business logic.
- * @param props - value, validation state, and change/blur callbacks
+ * Presentational: value + validation driven by props, forwards the change
+ * event upward. No business logic.
+ * @param props - {@link EmailFieldProps}
  */
 export const EmailField = ({
     value,
     error,
     touched,
     onChangeValue,
-    onBlurField,
-    className,
 }: EmailFieldProps) => {
     const t = useTranslations()
+    const showError = Boolean(touched && error)
     return (
-        <TextField variant="secondary" isInvalid={!!(touched && error)} className={cn(className)}>
-            <Label htmlFor="sign-up-email" className="text-sm">
-                {t("auth.signUp.email.label")}
-            </Label>
-            <Input
-                id="sign-up-email"
-                required
-                variant="secondary"
-                type="email"
-                placeholder={t("auth.signUp.email.placeholder")}
-                name="email"
-                value={value}
-                onChange={(event) => onChangeValue(event.target.value)}
-                onBlur={onBlurField}
-            />
-            <FieldError>{error}</FieldError>
-        </TextField>
+        <Input.Text
+            variant="secondary"
+            label={t("auth.signUp.email.label")}
+            placeholder={t("auth.signUp.email.placeholder")}
+            isInvalid={showError}
+            errorMessage={showError ? error : undefined}
+            value={value}
+            onValueChange={onChangeValue}
+        />
     )
 }

@@ -3,6 +3,7 @@ import type { ReactNode } from "react"
 import { Navbar, type NavbarProps } from "@/components/starci/blocks/navigation/Navbar"
 import { Footer, type FooterProps } from "@/components/starci/blocks/navigation/Footer"
 import { StackV } from "@/components/frames/Stack"
+import { PinnedTrack } from "@/components/frames/PinnedTrack"
 
 /**
  * `InnerLayout` — the wrapper for every route in the app. `children` is a real
@@ -45,16 +46,20 @@ const _InnerLayout = ({
     onPrivacyPress,
     ...navbarProps
 }: InnerLayoutProps) => {
-    const navMainFooter = [
-        // Sticky positioning is a SHELL concern (only the root scroll container knows
-        // where the nav should pin) — Navbar itself owns its own border/background.
+    const trackAndFooter = [
+        // Sticky nav pinned above the flex-1 routed content — a `PinnedTrack`
+        // (pin-then-fill vertical track). `landmark` renders the fill member as this
+        // page's ONE `<main>`; `classNames={["flex-1"]}` lets the whole track (not just
+        // its own inner `body`) grow to fill the remaining height at THIS level, the
+        // same role `main`'s own `flex-1` played before the shape moved into the frame.
         () => (
-            <div className="sticky top-0 z-40">
-                <Navbar {...(navbarProps as NavbarProps)} />
-            </div>
+            <PinnedTrack
+                pinned={() => <Navbar {...(navbarProps as NavbarProps)} />}
+                body={() => <>{children}</>}
+                landmark
+                classNames={["flex-1"]}
+            />
         ),
-        // CALLER SLOT — deliberately unbadged, see file header.
-        () => <main className="min-w-0 flex-1">{children}</main>,
         ...(showFooter ? [() => (
             <Footer
                 exploreLinks={exploreLinks}
@@ -71,7 +76,7 @@ const _InnerLayout = ({
     return (
         <div data-tier="layout" data-component="InnerLayout">
             <div className="min-h-dvh">
-                <StackV gap={1} items={navMainFooter} />
+                <StackV gap={1} items={trackAndFooter} />
             </div>
         </div>
     )

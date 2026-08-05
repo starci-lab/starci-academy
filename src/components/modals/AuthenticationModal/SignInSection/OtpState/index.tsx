@@ -9,15 +9,19 @@
  * @see {@link SignInSection} for step routing; mirror this folder when sign-up adds a verify-email step.
  */
 import React from "react"
-import { Button, cn, FieldError, InputOTP, Link, Modal, Spinner, TextField, Typography } from "@heroui/react"
+import { Modal } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useMutateSignInResendOtpSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSignInResendOtpSwr"
 import { useSignInForm } from "@/hooks/zustand/signIn/useSignInForm"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Input } from "@/components/atoms/forms/Input"
+import { StackV, StackH } from "@/components/frames/Stack"
+import { Box } from "@/components/frames/Box"
 
 /** Props for {@link OtpState}. */
-export interface OtpStateProps extends WithClassNames<undefined> {
+export interface OtpStateProps {
     /** Hides `Modal.CloseTrigger` when hosted outside a dismissible modal (the `/login` page). */
     hideCloseButton?: boolean
 }
@@ -35,7 +39,6 @@ export const OtpState = ({ hideCloseButton }: OtpStateProps = {}) => {
         touched,
         submitForm,
         setFieldValue,
-        setFieldTouched,
         isSubmitting,
     } = useSignInForm()
 
@@ -68,76 +71,79 @@ export const OtpState = ({ hideCloseButton }: OtpStateProps = {}) => {
         )
     }
 
+    const otpInvalid = !!(touched.otp && errors.otp)
+
+    const bodyItems = [
+        () => (
+            <Typography
+                size="xs"
+                color="muted"
+                align="center"
+                text={t.rich("auth.signIn.otp.desc", {
+                    emailHighlight: (chunks) => (
+                        <span className="text-accent-soft-foreground">{chunks}</span>
+                    ),
+                    email: values.email,
+                })}
+            />
+        ),
+        () => (
+            <StackV
+                gap={4}
+                items={[
+                    () => (
+                        <Input.Otp
+                            value={values.otp}
+                            onValueChange={(value) => setFieldValue("otp", value)}
+                            isInvalid={otpInvalid}
+                            errorMessage={otpInvalid ? errors.otp : undefined}
+                        />
+                    ),
+                    () => (
+                        <StackH
+                            gap={3}
+                            justify="center"
+                            items={[
+                                () => <Typography size="xs" color="muted" text={t("auth.signIn.otp.resend")} />,
+                                () => (
+                                    <Typography
+                                        size="xs"
+                                        isLink
+                                        color={isResending ? "muted" : "accent-soft"}
+                                        onPress={() => {
+                                            if (isResending) return
+                                            void onResend()
+                                        }}
+                                        text={t("auth.signIn.otp.resendLink")}
+                                    />
+                                ),
+                            ]}
+                        />
+                    ),
+                ]}
+            />
+        ),
+        () => (
+            <Button
+                variant="primary"
+                classNames={["w-full"]}
+                isPending={isSubmitting}
+                label={t("auth.signIn.otp.submit")}
+                onPress={() => submitForm()}
+            />
+        ),
+    ]
+
     return (
         <>
             {!hideCloseButton && <Modal.CloseTrigger />}
             <Modal.Header>
-                <Typography type="body" weight="semibold" className="pr-8 text-center">
-                    {t("auth.signIn.otp.title")}
-                </Typography>
+                <Box className="pr-8">
+                    <Typography weight="semibold" align="center" text={t("auth.signIn.otp.title")} />
+                </Box>
             </Modal.Header>
-            <Modal.Body className="flex flex-col gap-6">
-                <Typography type="body-xs" color="muted" className="text-center">
-                    {t.rich("auth.signIn.otp.desc", {
-                        emailHighlight: (chunks) => (
-                            <span className="text-accent-soft-foreground">{chunks}</span>
-                        ),
-                        email: values.email,
-                    })}
-                </Typography>
-                <div className="flex flex-col gap-3">
-                    <TextField variant="secondary" isInvalid={!!(touched.otp && errors.otp)}>
-                        <InputOTP
-                            id="sign-in-otp"
-                            name="otp"
-                            variant="secondary"
-                            maxLength={6}
-                            value={values.otp}
-                            onChange={(value) => setFieldValue("otp", value)}
-                            onBlur={() => setFieldTouched("otp", true)}
-                        >
-                            <InputOTP.Group>
-                                <InputOTP.Slot index={0} />
-                                <InputOTP.Slot index={1} />
-                                <InputOTP.Slot index={2} />
-                            </InputOTP.Group>
-                            <InputOTP.Separator />
-                            <InputOTP.Group>
-                                <InputOTP.Slot index={3} />
-                                <InputOTP.Slot index={4} />
-                                <InputOTP.Slot index={5} />
-                            </InputOTP.Group>
-                        </InputOTP>
-                        <FieldError className="text-center">{errors.otp}</FieldError>
-                    </TextField>
-                    <div className="flex flex-wrap items-center justify-center gap-2 text-center">
-                        <Typography type="body-xs" color="muted">{t("auth.signIn.otp.resend")}</Typography>
-                        <Link
-                            className={cn("text-xs text-accent-soft-foreground", isResending ? "text-muted" : "")}
-                            data-disabled={isResending ? true : undefined}
-                            onPress={() => {
-                                if (isResending) return
-                                void onResend()
-                            }}
-                        >
-                            {t("auth.signIn.otp.resendLink")}
-                        </Link>
-                    </div>
-                </div>
-                <Button
-                    type="submit"
-                    variant="primary"
-                    fullWidth
-                    isPending={isSubmitting}
-                    onPress={() => submitForm()}
-                >
-                    {({isPending}) => (
-                        <>
-                            {isPending ? <Spinner color="current" size="sm" /> : null}
-                            {t("auth.signIn.otp.submit")}
-                        </>
-                    )}
-                </Button>
+            <Modal.Body>
+                <StackV gap={6} items={bodyItems} />
             </Modal.Body>
         </>
     )

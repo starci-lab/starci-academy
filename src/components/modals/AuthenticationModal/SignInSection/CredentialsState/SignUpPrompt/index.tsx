@@ -2,18 +2,13 @@
 
 import React from "react"
 import {
-    cn,
-    Link,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-import {
     useTranslations,
 } from "next-intl"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackH } from "@/components/frames/Stack"
 
 /** Props for {@link SignUpPrompt}. */
-export interface SignUpPromptProps extends WithClassNames<undefined> {
+export interface SignUpPromptProps {
     /** Fired when the user chooses to switch to the sign-up tab. */
     onSwitchToSignUp: () => void
 }
@@ -26,20 +21,11 @@ export interface SignUpPromptProps extends WithClassNames<undefined> {
  */
 export const SignUpPrompt = ({
     onSwitchToSignUp,
-    className,
 }: SignUpPromptProps) => {
     const t = useTranslations()
-    return (
-        <div className={cn("flex justify-center items-center gap-2", className)}>
-            <div className="text-xs text-muted">
-                {t("auth.signIn.noAccount")}
-            </div>
-            <Link
-                className="text-xs"
-                onPress={onSwitchToSignUp}
-            >
-                {t("auth.signIn.signUp")}
-            </Link>
-        </div>
-    )
+    const items = [
+        () => <Typography size="xs" color="muted" text={t("auth.signIn.noAccount")} />,
+        () => <Typography size="xs" isLink onPress={onSwitchToSignUp} text={t("auth.signIn.signUp")} />,
+    ]
+    return <StackH gap={3} justify="center" items={items} />
 }

@@ -1,6 +1,6 @@
 import React from "react"
 import { CheckIcon, CopyIcon, PlayIcon } from "@phosphor-icons/react"
-import { Callout } from "@/components/blocks/feedback/Callout"
+import { Callout } from "@/components/composites/feedback/Callout"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"

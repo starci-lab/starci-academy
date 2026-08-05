@@ -23,7 +23,7 @@ import {
     SettingsBreadcrumb,
 } from "@/components/blocks/settings/SettingsBreadcrumb"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { Callout } from "@/components/blocks/feedback/Callout"
+import { Callout } from "@/components/composites/feedback/Callout"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"

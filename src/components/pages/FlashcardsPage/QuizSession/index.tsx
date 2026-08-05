@@ -24,7 +24,7 @@ import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcar
 import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-card"
 import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
-import { Callout } from "@/components/blocks/feedback/Callout"
+import { Callout } from "@/components/composites/feedback/Callout"
 import { ConfirmDialog } from "@/components/composites/feedback/ConfirmDialog"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"

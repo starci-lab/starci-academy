@@ -28,7 +28,7 @@ import {
     TicketIcon,
 } from "@phosphor-icons/react"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { Callout } from "@/components/blocks/feedback/Callout"
+import { Callout } from "@/components/composites/feedback/Callout"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { ModalShell } from "@/components/composites/layout/ModalShell"
@@ -168,32 +168,33 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
             {justRedeemed ? (
                 <Callout
                     status="accent"
-                    icon={<CheckCircleIcon className="size-5" />}
+                    icon={CheckCircleIcon}
                     title={
                         justRedeemed.kind === "voucher"
                             ? t("rewards.justRedeemed.voucherTitle")
                             : t("rewards.justRedeemed.aiCreditTitle")
                     }
                     description={
-                        justRedeemed.kind === "voucher" ? (
-                            <span className="flex items-center gap-2">
-                                <span className="font-mono font-medium text-foreground">{justRedeemed.code}</span>
-                                <Button
-                                    variant="tertiary"
-                                    size="sm"
-                                    onPress={() => void onCopyCode(justRedeemed.code)}
-                                >
-                                    <CopyIcon aria-hidden focusable="false" className="size-4" />
-                                    {t("rewards.myVouchers.copy")}
-                                </Button>
-                            </span>
-                        ) : (
-                            t("rewards.justRedeemed.aiCreditDescription", {
+                        justRedeemed.kind === "voucher"
+                            ? undefined
+                            : t("rewards.justRedeemed.aiCreditDescription", {
                                 amount5h: justRedeemed.grant.amount5h,
                                 amountWeek: justRedeemed.grant.amountWeek,
                             })
-                        )
                     }
+                    body={justRedeemed.kind === "voucher" ? () => (
+                        <span className="flex items-center gap-2">
+                            <span className="font-mono font-medium text-foreground">{justRedeemed.code}</span>
+                            <Button
+                                variant="tertiary"
+                                size="sm"
+                                onPress={() => void onCopyCode(justRedeemed.code)}
+                            >
+                                <CopyIcon aria-hidden focusable="false" className="size-4" />
+                                {t("rewards.myVouchers.copy")}
+                            </Button>
+                        </span>
+                    ) : undefined}
                     onClose={() => setJustRedeemed(null)}
                     closeAriaLabel={t("rewards.justRedeemed.dismiss")}
                 />

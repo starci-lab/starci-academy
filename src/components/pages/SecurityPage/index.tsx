@@ -32,7 +32,7 @@ import { useMutateDisableTwoFactorSwr } from "@/hooks/swr/api/graphql/mutations/
 import type { SetupTwoFactorData } from "@/modules/api/graphql/mutations/types/two-factor"
 import { QRCode } from "@/components/blocks/media/QRCode"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
-import { Callout } from "@/components/blocks/feedback/Callout"
+import { Callout } from "@/components/composites/feedback/Callout"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 

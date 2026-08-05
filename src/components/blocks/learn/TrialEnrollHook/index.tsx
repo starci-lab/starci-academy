@@ -4,15 +4,10 @@ import React, {
     useCallback,
 } from "react"
 import {
-    Button,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
-import {
-    ArrowRightIcon,
-} from "@phosphor-icons/react"
-import { Callout } from "@/components/blocks/feedback/Callout"
+import { Callout } from "@/components/composites/feedback/Callout"
+import { Box } from "@/components/frames/Box"
 import { useAppSelector } from "@/redux/hooks"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
@@ -52,22 +47,14 @@ export const TrialEnrollHook = ({ className }: TrialEnrollHookProps) => {
     }
 
     return (
-        <Callout
-            status="accent"
-            className={className}
-            title={t("enrollGate.hookTitle")}
-            description={t("enrollGate.hookDesc")}
-            action={(
-                <Button
-                    variant="primary"
-                    size="sm"
-                    className="shrink-0 self-start"
-                    onPress={onEnroll}
-                >
-                    {t("enrollGate.hookCta")}
-                    <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
-                </Button>
-            )}
-        />
+        <Box className={className}>
+            <Callout
+                status="accent"
+                title={t("enrollGate.hookTitle")}
+                description={t("enrollGate.hookDesc")}
+                actionLabel={t("enrollGate.hookCta")}
+                onAction={onEnroll}
+            />
+        </Box>
     )
 }

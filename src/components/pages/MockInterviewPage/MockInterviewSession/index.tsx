@@ -25,7 +25,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
-import { Callout, STATUS_ACTION_CLASS } from "@/components/blocks/feedback/Callout"
+import { Callout } from "@/components/composites/feedback/Callout"
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { ModalShell } from "@/components/composites/layout/ModalShell"
@@ -1864,16 +1864,8 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 status="warning"
                 title={t("mockInterview.quotaExceededTitle")}
                 description={t("mockInterview.quotaExceededDescription")}
-                action={(
-                    <Button
-                        variant="secondary"
-                        size="sm"
-                        className={STATUS_ACTION_CLASS.warning}
-                        onPress={() => router.push(pathConfig().locale(locale).profile().aiSubscription().build())}
-                    >
-                        {t("mockInterview.quotaExceededCta")}
-                    </Button>
-                )}
+                actionLabel={t("mockInterview.quotaExceededCta")}
+                onAction={() => router.push(pathConfig().locale(locale).profile().aiSubscription().build())}
             />
         ) : gradeError ? (
             <Callout status="danger" title={gradeError} />
@@ -2127,16 +2119,8 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                             status="warning"
                             title={t("mockInterview.quotaExceededTitle")}
                             description={t("mockInterview.quotaExceededDescription")}
-                            action={(
-                                <Button
-                                    variant="secondary"
-                                    size="sm"
-                                    className={STATUS_ACTION_CLASS.warning}
-                                    onPress={() => router.push(pathConfig().locale(locale).profile().aiSubscription().build())}
-                                >
-                                    {t("mockInterview.quotaExceededCta")}
-                                </Button>
-                            )}
+                            actionLabel={t("mockInterview.quotaExceededCta")}
+                            onAction={() => router.push(pathConfig().locale(locale).profile().aiSubscription().build())}
                         />
                     ) : gradeError ? (
                         <Callout status="danger" title={gradeError} />

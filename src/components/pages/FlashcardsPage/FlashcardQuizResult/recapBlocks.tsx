@@ -1,12 +1,12 @@
 "use client"
 
 import React, { useCallback } from "react"
-import { Button, cn, ScrollShadow, Typography } from "@heroui/react"
+import { Button, ScrollShadow, Typography } from "@heroui/react"
 import { ArrowRightIcon, FlameIcon, LockIcon, MicrophoneStageIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { type QuizSessionReadinessData, type QuizSessionWeakTagData } from "@/modules/api/graphql/mutations/types/complete-flashcard-quiz-session"
-import { Callout, STATUS_ACTION_CLASS } from "@/components/blocks/feedback/Callout"
+import { Callout } from "@/components/composites/feedback/Callout"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
@@ -221,7 +221,7 @@ export const RecapReadinessCallout = ({ readiness, mockInterviewHref }: RecapRea
         return (
             <Callout
                 status="default"
-                icon={<LockIcon className="size-5" aria-hidden focusable="false" />}
+                icon={LockIcon}
                 title={t("flashcard.quiz.readinessLockedTitle")}
                 description={t("flashcard.quiz.readinessLockedDescription", {
                     currentAvg: readiness.currentAvg,
@@ -234,20 +234,11 @@ export const RecapReadinessCallout = ({ readiness, mockInterviewHref }: RecapRea
     return (
         <Callout
             status="success"
-            icon={<MicrophoneStageIcon className="size-5" aria-hidden focusable="false" />}
+            icon={MicrophoneStageIcon}
             title={t("flashcard.quiz.readinessUnlockedTitle")}
             description={t("flashcard.quiz.readinessUnlockedDescription")}
-            action={(
-                <Button
-                    variant="secondary"
-                    size="sm"
-                    className={cn("shrink-0", STATUS_ACTION_CLASS.success)}
-                    onPress={() => router.push(mockInterviewHref)}
-                >
-                    {t("flashcard.quiz.readinessUnlockedCta")}
-                    <ArrowRightIcon className="size-4" aria-hidden focusable="false" />
-                </Button>
-            )}
+            actionLabel={t("flashcard.quiz.readinessUnlockedCta")}
+            onAction={() => router.push(mockInterviewHref)}
         />
     )
 }

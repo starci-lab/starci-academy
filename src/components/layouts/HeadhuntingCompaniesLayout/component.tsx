@@ -2,7 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { RailShell } from "@/components/frames/RailShell"
 import { LearnSidebar } from "@/components/blocks/learn/LearnSidebar"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 
 /**
  * `HeadhuntingCompaniesLayout` — the wrapper for every route under

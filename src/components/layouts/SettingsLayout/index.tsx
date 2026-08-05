@@ -10,7 +10,6 @@ import {
     useRouter,
 } from "next/navigation"
 import { getSettingsGroups } from "@/resources/settings-nav"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { toBlockSettingsGroups } from "./map"
 import { _SettingsLayout } from "./component"
 
@@ -49,11 +48,6 @@ export const SettingsLayout = ({ children }: SettingsLayoutProps) => {
 
     const groups = toBlockSettingsGroups(getSettingsGroups(locale))
 
-    // Buildable slot — `Container`'s `body` mounts an uncalled component (COMPOSITE-8),
-    // never a handed-in element; this wraps the router-supplied `children` once so it
-    // fits that shape without pushing a `ReactNode` prop down into the presentational tree.
-    const BodySlot: ComponentTypeWithSkeleton = () => <>{children}</>
-
     return (
         <_SettingsLayout
             groups={groups}
@@ -63,7 +57,7 @@ export const SettingsLayout = ({ children }: SettingsLayoutProps) => {
             collapseLabel={t("profileSettings.collapseMenu")}
             expandLabel={t("profileSettings.expandMenu")}
             storageKey={SIDEBAR_STORAGE_KEY}
-            body={BodySlot}
+            body={() => <>{children}</>}
         />
     )
 }

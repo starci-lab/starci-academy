@@ -1,6 +1,6 @@
 import React from "react"
 import { SettingsSidebarNav, type SettingsNavGroup } from "@/components/blocks/navigation/SettingsSidebarNav"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { Container } from "@/components/frames/Container"
 import { RailShell } from "@/components/frames/RailShell"
 

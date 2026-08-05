@@ -1,12 +1,13 @@
 "use client"
 
 import React from "react"
-import { LessonReader } from "@/components/features/learn/LessonReader"
+import { ContentPage } from "@/components/pages/ContentPage"
 
-const Page = () => {
-    return (
-        <LessonReader />
-    )
-}
+/**
+ * Learn / one lesson — the reader, with its four tabs (article, sandbox,
+ * challenges, AI lab), the paywall for a locked premium lesson, and the
+ * discussion + pager beneath.
+ */
+const Page = () => <ContentPage />
 
 export default Page

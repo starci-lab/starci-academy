@@ -3,11 +3,11 @@ import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { Container } from "@/components/frames/Container"
 import { RailShell } from "@/components/frames/RailShell"
 import { StackV } from "@/components/frames/Stack"
-import { ProfileHero, type ProfileHeroUser } from "@/components/starci/blocks/profile/ProfileHero"
+import { ProfileHero, type ProfileHeroUser } from "@/components/blocks/profile/ProfileHero"
 import { ProfileTabsBar, type ProfileTab } from "@/components/blocks/navigation/ProfileTabsBar"
 import { ProfileLoadingState } from "@/components/blocks/profile/ProfileLoadingState"
-import { ProfileNotFoundState } from "@/components/starci/blocks/profile/ProfileNotFoundState"
-import { ProfileLockedState } from "@/components/starci/blocks/profile/ProfileLockedState"
+import { ProfileNotFoundState } from "@/components/blocks/profile/ProfileNotFoundState"
+import { ProfileLockedState } from "@/components/blocks/profile/ProfileLockedState"
 
 /**
  * `_PublicProfileLayout` — the wrapper mounted once per `/profile/[username]/**`

@@ -1,299 +1,529 @@
-"use client"
-
 import React from "react"
+import type { ComponentType, SVGProps } from "react"
 import {
-    Button,
-    Link,
-    Typography,
-    cn,
-} from "@heroui/react"
-import {
-    useLocale,
-    useTranslations,
-} from "next-intl"
-import {
-    useRouter,
-} from "next/navigation"
-import {
-    FaGithub,
-    FaLinkedin,
-} from "react-icons/fa6"
-import {
-    BriefcaseIcon,
     CalendarBlankIcon,
+    GithubLogoIcon,
     GlobeIcon,
+    HandshakeIcon,
+    LinkedinLogoIcon,
     MapPinIcon,
-    PaperPlaneTiltIcon,
+    PencilSimpleIcon,
+    ShareNetworkIcon,
+    UserCheckIcon,
+    UserPlusIcon,
 } from "@phosphor-icons/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-import {
-    useProfileUsername,
-} from "@/hooks/profile/useProfileUsername"
-import {
-    useProfileFollow,
-} from "@/hooks/profile/useProfileFollow"
-import {
-    ProfileRankAvatar,
-} from "./ProfileRankAvatar"
-import {
-    ShareProfileButton,
-} from "./ShareProfileButton"
-import {
-    ProfileFollowers,
-} from "./ProfileFollowers"
-import {
-    ProfileBadges,
-} from "./ProfileBadges"
-import {
-    ProfileHeroSkeleton,
-} from "./ProfileHeroSkeleton"
-import { WorkMode } from "@/modules/types/enums/work-mode"
-import { useAppSelector } from "@/redux/hooks"
-import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
-import { pathConfig } from "@/resources/path"
-import { FollowButton } from "@/components/blocks/community/FollowButton"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { StatusChip } from "@/components/blocks/chips/StatusChip"
-
-/** Props for {@link ProfileHero}. */
-export type ProfileHeroProps = WithClassNames<undefined>
-
-/** Maps a {@link WorkMode} to its i18n label key (static keys keep next-intl typed). */
-const WORK_MODE_LABEL_KEY = {
-    [WorkMode.Remote]: "publicProfile.workMode.remote",
-    [WorkMode.Hybrid]: "publicProfile.workMode.hybrid",
-    [WorkMode.Onsite]: "publicProfile.workMode.onsite",
-} as const
+import { Avatar } from "@/components/atoms/display/Avatar"
+import type { AvatarRing } from "@/components/atoms/display/Avatar"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { Divider } from "@/components/atoms/display/Divider"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Button } from "@/components/atoms/buttons/Button"
+import type { ButtonVariant } from "@/components/atoms/buttons/Button"
+import { EnumChip, type EnumChipEntry } from "@/components/composites/chips/EnumChip"
+import { InlineIconLabel } from "@/components/composites/text/InlineIconLabel"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /**
- * Identity column of the public profile — the BARE left sidebar (no card, per
- * `starci-concept.md`: identity is the static ground, content cards sit on the
- * right). Stacks the rank-framed avatar, name + `@handle`, the open-to-work
- * badge, a short bio, the action cluster (one primary CTA — recruiter "Contact for
- * hiring" / Follow / owner edit+settings), share, and a meta block
- * (followers · following · joined · github).
- *
- * Self-contained: resolves the target user from the route, reads the profile via
- * SWR (deduped across the page), pulls the viewer + auth flag from redux, and
- * owns follow state via {@link useProfileFollow}. XP is intentionally omitted.
- *
- * @param props - optional className (placement only — the sidebar wrapper).
+ * `ProfileHero` — the identity sidebar for a person's profile page:
+ * rank-framed avatar, name/@handle/role, bio, location + work-mode, follower
+ * and badge social proof, one primary CTA (hire/follow/edit) + share, and a
+ * github/linkedin/website/joined meta list. Composed from `SurfaceCard` around
+ * `StackV`/`StackH`/`Cluster` holding `Avatar`/`Typography`/`Chip`/`Button`/
+ * `Divider` plus `EnumChip`/`InlineIconLabel`. Two leaves: `Default` (every
+ * optional row present; CTA/skeleton/follow-state are content states) and
+ * `Minimal` (no rank/role/bio/location/work-mode/badges/social links — losing
+ * those removes real nodes, earning its own leaf).
  */
-export const ProfileHero = ({
-    className,
-}: ProfileHeroProps) => {
-    const t = useTranslations()
-    const router = useRouter()
-    const locale = useLocale()
-    const username = useProfileUsername()
-    const viewer = useAppSelector((state) => state.user.user)
-    const authenticated = useAppSelector((state) => state.keycloak.authenticated)
-    const { data: user, isLoading } = useQueryUserProfileSwr(username)
-    const targetUserId = user?.id ?? null
-    const {
-        following,
-        isPending: isFollowPending,
-        onToggle: onToggleFollow,
-    } = useProfileFollow()
 
-    // "my own profile" = match by USERNAME (route is username-keyed; viewer.id vs the
-    // projected profile id can differ and falsely read as a visitor). id as fallback.
-    const isSelf = !!viewer && !!user
-        && ((!!viewer.username && viewer.username === user.username) || viewer.id === targetUserId)
-    const hasDisplayName = Boolean(user?.displayName?.trim())
-    const title = hasDisplayName ? user?.displayName : user?.username
-    // recruiter CTA is the single primary action when the user opts in + exposes
-    // a github channel; otherwise Follow takes the primary slot
-    const canHire = !isSelf && Boolean(user?.openToWork) && Boolean(user?.githubUsername)
-    // show the bare hostname for the website link (cleaner than the full URL)
-    let websiteHost: string | null = null
-    if (user?.websiteUrl?.trim()) {
-        try {
-            websiteHost = new URL(user.websiteUrl).host
-        } catch {
-            websiteHost = user.websiteUrl
-        }
-    }
-    // show the LinkedIn handle (`/in/<handle>`) for parity with the website host;
-    // fall back to a generic label when the URL has no recognizable handle
-    let linkedinHandle = "LinkedIn"
-    if (user?.linkedinUrl?.trim()) {
-        try {
-            const match = new URL(user.linkedinUrl).pathname.match(/\/in\/([^/]+)/)
-            if (match?.[1]) {
-                linkedinHandle = decodeURIComponent(match[1])
-            }
-        } catch {
-            // keep the generic "LinkedIn" label on a malformed URL
-        }
-    }
-    const joinedLabel = user?.createdAt
-        ? t("profile.joined", {
-            // full month name per the time-rendering rule ("June 2026"), not the abbreviated "Jun"
-            date: new Date(user.createdAt).toLocaleDateString(locale, {
-                month: "long",
-                year: "numeric",
-            }),
-        })
-        : null
+/** An icon passed as a COMPONENT (e.g. a Phosphor `*Icon`), rendered at the tile's own scale. Declared locally per atom convention (§5.0) rather than importing one library's type. */
+type IconComponent = ComponentType<SVGProps<SVGSVGElement> & { weight?: "regular" | "bold" }>
 
-    return (
-        <AsyncContent
-            isLoading={isLoading && !user}
-            skeleton={<ProfileHeroSkeleton className={className} />}
-        >
-            {user ? (
-                <div className={cn("flex flex-col gap-4", className)}>
-                    {/* rank-framed avatar — the seniority flex */}
-                    <ProfileRankAvatar />
+/** How this person works — the block owns the label wording (§14d.1), the caller only says which one. */
+export type ProfileWorkMode = "remote" | "onsite" | "hybrid"
 
-                    {/* name + @handle (open-to-work is a LinkedIn-style badge on the avatar) */}
-                    <div className="flex flex-col gap-0">
-                        <Typography type="h3" weight="bold" truncate>
-                            {title}
-                        </Typography>
-                        {user.roleTitle?.trim() ? (
-                            <Typography type="body-sm" weight="medium">
-                                {user.roleTitle}
-                            </Typography>
-                        ) : null}
-                        {hasDisplayName ? (
-                            <Typography type="body-sm" color="muted" truncate>
-                        @{user.username}
-                            </Typography>
-                        ) : null}
-                    </div>
+/** External profile links. Each is optional; an absent one simply drops its meta row. */
+export interface ProfileSocialLinks {
+    /** GitHub profile URL. */
+    github?: string
+    /** LinkedIn profile URL. */
+    linkedin?: string
+    /** Personal site/portfolio URL. */
+    website?: string
+}
 
-                    {/* short bio (wraps in the sidebar) */}
-                    {user.bio?.trim() ? (
-                        <Typography type="body-sm" color="muted">
-                            {user.bio}
-                        </Typography>
-                    ) : null}
+/** One achievement/verification badge earned by this person. */
+export interface ProfileBadge {
+    /** Stable id — used as the chip's React key. */
+    id: string
+    /** Badge label, already worded by the caller's domain (e.g. "Top mentor"). */
+    label: string
+    /** Optional leading glyph for the badge chip. */
+    icon?: IconComponent
+}
 
-                    {/* location · preferred work mode */}
-                    {user.location?.trim() || user.workMode ? (
-                        <div className="flex flex-wrap items-center gap-2">
-                            {user.location?.trim() ? (
-                                <span className="flex items-center gap-2">
-                                    <MapPinIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                                    <Typography type="body-sm" color="muted" truncate>
-                                        {user.location}
-                                    </Typography>
-                                </span>
-                            ) : null}
-                            {user.workMode ? (
-                                <StatusChip
-                                    tone="neutral"
-                                    icon={<BriefcaseIcon aria-hidden focusable="false" className="size-3.5" />}
-                                >
-                                    {t(WORK_MODE_LABEL_KEY[user.workMode])}
-                                </StatusChip>
-                            ) : null}
-                        </div>
-                    ) : null}
+/** The person this hero profiles — plain data, the block builds the sidebar from it. */
+export interface ProfileHeroUser {
+    /** Stable id (not rendered; kept for parity with other domain-user shapes). */
+    id: string
+    /** Full display name. */
+    fullName: string
+    /** Handle WITHOUT the leading `@` — the block adds it (§14d.1). */
+    handle: string
+    /** Role/title line under the name. Row disappears when absent. */
+    roleTitle?: string
+    /** Short bio/about text. Row disappears when absent. */
+    bio?: string
+    /** Free-text location (e.g. "Hanoi, Vietnam"). Row disappears when absent. */
+    location?: string
+    /** How this person works. Row disappears when absent. */
+    workMode?: ProfileWorkMode
+    /** Photo URL. Empty/missing → `Avatar`'s own fallback chain, never a blank frame. */
+    avatarUrl?: string
+    /** Leaderboard-style standing (1 = top). Absent → no rank frame/caption at all. */
+    rank?: number
+    /** Total followers. Absent renders as `0` (a real, known count of nothing). */
+    followersCount?: number
+    /** Achievement badges earned. Empty/absent → the badges row disappears entirely. */
+    badges?: ReadonlyArray<ProfileBadge>
+    /** ISO date string this person joined. Required — every profile has one. */
+    joinedAt: string
+    /** External links. Absent/all-empty → the social rows of the meta list disappear. */
+    social?: ProfileSocialLinks
+}
 
-                    {/* social proof — followers (avatar group, links to the follow modal) +
-                earned-badge medal strip, moved high in the column */}
-                    <ProfileFollowers />
-                    <ProfileBadges />
+/** Props for {@link ProfileHero}. */
+export interface ProfileHeroProps {
+    /** The profiled person. */
+    user: ProfileHeroUser
+    /** `true` → the viewer IS this person: the primary CTA becomes "Edit profile", follow/hire never show. */
+    isSelf?: boolean
+    /** `true` (and not `isSelf`) → the primary CTA becomes "Hire me" instead of follow. */
+    canHire?: boolean
+    /** Whether the viewer already follows this person. Ignored when `isSelf`/`canHire`. */
+    following?: boolean
+    /** `true` → the follow CTA shows its busy state while the toggle is in flight. */
+    isFollowPending?: boolean
+    /** Fired when the viewer toggles follow (only reachable when neither `isSelf` nor `canHire`). */
+    onToggleFollow?: () => void
+    /** Fired when the viewer presses "Hire me" (only reachable when `canHire` and not `isSelf`). See file header, judgement call 3. */
+    onHire?: () => void
+    /** Fired when the profile owner presses "Edit profile" (only reachable when `isSelf`). */
+    onEdit?: () => void
+    /** Fired when the share action is pressed. */
+    onShare?: () => void
+    /** `true` → every real part switches to its own shimmer; the profile stops accepting presses. */
+    isSkeleton?: boolean
+}
 
-                    {/* action cluster — exactly one primary CTA; full-width in the narrow column */}
-                    <div className="flex flex-col gap-2">
-                        {canHire ? (
-                            <Button
-                                variant="primary"
-                                fullWidth
-                                aria-label={t("publicProfile.contactForHiring")}
-                                onPress={() => window.open(`https://github.com/${user.githubUsername}`, "_blank", "noopener,noreferrer")}
-                            >
-                                <PaperPlaneTiltIcon aria-hidden focusable="false" className="size-5" />
-                                {t("publicProfile.contactForHiring")}
-                            </Button>
-                        ) : null}
-                        {authenticated && !isSelf ? (
-                            <FollowButton
-                                following={following}
-                                isPending={isFollowPending}
-                                onToggle={onToggleFollow}
-                                className="w-full"
-                            />
-                        ) : null}
-                        {isSelf ? (
-                            <>
-                                {/* owner primary = edit; settings live in the navbar dropdown */}
-                                <Button
-                                    variant="primary"
-                                    fullWidth
-                                    onPress={() => router.push(pathConfig().locale(locale).profile().edit().build())}
-                                >
-                                    {t("profileEdit.title")}
-                                </Button>
-                                <ShareProfileButton title={title ?? user.username} />
-                            </>
-                        ) : (
-                            <ShareProfileButton title={title ?? user.username} />
-                        )}
-                    </div>
+// ─────────────────────────────────────────────────────────────────────────────
+// Leaf — ProfileRankAvatar: the avatar + its rank frame + rank caption.
+// ─────────────────────────────────────────────────────────────────────────────
 
-                    {/* meta: github · linkedin · website · joined — tight rows, one
-                        leading icon each (no 44px tap-targets; this is sidebar meta) */}
-                    <div className="flex flex-col gap-2">
-                        {user.githubUsername ? (
-                            <Link
-                                href={`https://github.com/${user.githubUsername}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label={`GitHub: ${user.githubUsername}`}
-                                className="flex items-center gap-2 py-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-                            >
-                                <FaGithub aria-hidden className="size-5 shrink-0 text-muted" />
-                                <Typography type="body-sm" color="muted" truncate>
-                                    {user.githubUsername}
-                                </Typography>
-                            </Link>
-                        ) : null}
-                        {user.linkedinUrl ? (
-                            <Link
-                                href={user.linkedinUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label={`LinkedIn: ${linkedinHandle}`}
-                                className="flex items-center gap-2 py-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-                            >
-                                <FaLinkedin aria-hidden className="size-5 shrink-0 text-muted" />
-                                <Typography type="body-sm" color="muted" truncate>
-                                    {linkedinHandle}
-                                </Typography>
-                            </Link>
-                        ) : null}
-                        {websiteHost ? (
-                            <Link
-                                href={user.websiteUrl ?? undefined}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label={`Website: ${websiteHost}`}
-                                className="flex items-center gap-2 py-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-                            >
-                                <GlobeIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                                <Typography type="body-sm" color="muted" truncate>
-                                    {websiteHost}
-                                </Typography>
-                            </Link>
-                        ) : null}
-                        {joinedLabel ? (
-                            <div className="flex items-center gap-2 py-0">
-                                <CalendarBlankIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                                <Typography type="body-sm" color="muted" truncate>
-                                    {joinedLabel}
-                                </Typography>
-                            </div>
-                        ) : null}
-                    </div>
-                </div>
+/**
+ * Ring tone for a ranked avatar — top-3 gets the strongest (warning) frame,
+ * any other rank a quieter accent frame, no rank at all → no ring. A fact
+ * about standing, not decoration chosen for its own sake. The atom (`Avatar`'s
+ * `ring` prop) owns the frame's shape; this only picks the tone.
+ */
+const rankRingTone = (rank: number | undefined): AvatarRing | undefined => {
+    if (rank == null) return undefined
+    return rank <= 3 ? "warning" : "accent"
+}
+
+interface ProfileRankAvatarProps {
+    name: string
+    avatarUrl?: string
+    rank?: number
+    isSkeleton?: boolean
+}
+
+/** Avatar with an optional rank-tinted ring, plus the "Rank #N" caption underneath. */
+const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false}: ProfileRankAvatarProps) => {
+    const rankBody = (
+        <>
+            <div>
+                <Avatar
+                    name={name}
+                    src={avatarUrl}
+                    size="lg"
+                    isSkeleton={isSkeleton}
+
+                    ring={isSkeleton ? undefined : rankRingTone(rank)}
+                />
+            </div>
+            {isSkeleton || rank != null ? (
+                <Typography
+                    size="xs"
+                    color="muted"
+                    weight="medium"
+                    isSkeleton={isSkeleton}
+                    text={rank != null ? `Rank #${rank}` : undefined}
+
+                />
             ) : null}
-        </AsyncContent>
+        </>
+    )
+    return <StackV gap={2} principles={["title-subtitle"]} align="center" isSkeleton={isSkeleton} items={[() => rankBody]} />
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Leaf — ProfileFollowers: the follower count stat.
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface ProfileFollowersProps {
+    followersCount?: number
+    isSkeleton?: boolean
+}
+
+/** Follower count + caption, same "big tabular number over a muted label" idiom `FlashcardDueHero` uses for its due-count (file header, judgement call 4). */
+const ProfileFollowers = ({ followersCount, isSkeleton = false}: ProfileFollowersProps) => {
+    const followersBody = (
+        <>
+            <Typography
+                size="h5"
+                weight="bold"
+                tabularNums
+                isSkeleton={isSkeleton}
+                text={isSkeleton ? undefined : String(followersCount ?? 0)}
+
+            />
+            <Typography
+                size="xs"
+                color="muted"
+                isSkeleton={isSkeleton}
+                text="Followers"
+
+            />
+        </>
+    )
+    return <StackV gap={1} isSkeleton={isSkeleton} items={[() => followersBody]} />
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Leaf — ProfileBadges: the earned-achievement chip row.
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface ProfileBadgesProps {
+    badges?: ReadonlyArray<ProfileBadge>
+    isSkeleton?: boolean
+}
+
+/** Two placeholder pills while loading — enough to read as "a row of badges", not a guess at the real count. */
+const SKELETON_BADGE_KEYS = ["skeleton-badge-1", "skeleton-badge-2"] as const
+
+/** A wrapping row of earned-achievement chips. */
+const ProfileBadges = ({ badges, isSkeleton = false}: ProfileBadgesProps) => {
+    const items = isSkeleton
+        ? SKELETON_BADGE_KEYS.map(() => () => <Chip isSkeleton />)
+        : (badges ?? []).map((badge) => () => (
+            <Chip
+                tone="accent"
+                icon={badge.icon}
+                text={badge.label}
+            />
+        ))
+    return <Cluster items={items} gap={2} />
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Leaf — ShareProfileButton: the icon-only share trigger.
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface ShareProfileButtonProps {
+    onShare?: () => void
+    isSkeleton?: boolean
+}
+
+/** Icon-only share trigger — the caller decides what "share" does (copy link, open a sheet, …). */
+const ShareProfileButton = ({ onShare, isSkeleton = false}: ShareProfileButtonProps) => {
+    if (isSkeleton) {
+        return <Button isSkeleton isIconOnly />
+    }
+    return (
+        <Button
+            isIconOnly
+            variant="tertiary"
+            prefixIcon={ShareNetworkIcon}
+            ariaLabel="Share profile"
+            onPress={onShare}
+
+        />
     )
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Primary CTA — hire / follow / edit, mutually exclusive (one slot, §ProfileHero brief).
+// ─────────────────────────────────────────────────────────────────────────────
+
+interface PrimaryAction {
+    label: string
+    variant: ButtonVariant
+    prefixIcon: IconComponent
+    onPress?: () => void
+    isPending?: boolean
+}
+
+/** Inputs {@link resolvePrimaryAction} needs to pick the one CTA slot. */
+interface ResolvePrimaryActionParams {
+    isSelf: boolean
+    canHire: boolean
+    following: boolean
+    isFollowPending: boolean
+    onEdit?: () => void
+    onHire?: () => void
+    onToggleFollow?: () => void
+}
+
+const resolvePrimaryAction = (params: ResolvePrimaryActionParams): PrimaryAction => {
+    const { isSelf, canHire, following, isFollowPending, onEdit, onHire, onToggleFollow } = params
+    if (isSelf) {
+        return { label: "Edit profile", variant: "secondary", prefixIcon: PencilSimpleIcon, onPress: onEdit }
+    }
+    if (canHire) {
+        return { label: "Hire me", variant: "primary", prefixIcon: HandshakeIcon, onPress: onHire }
+    }
+    return {
+        label: following ? "Following" : "Follow",
+        variant: following ? "secondary" : "primary",
+        prefixIcon: following ? UserCheckIcon : UserPlusIcon,
+        onPress: onToggleFollow,
+        isPending: isFollowPending,
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Meta list — social links (as text-links) + joined date (plain).
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** One entry of the social meta list — the block's own icon + label per platform. */
+interface ProfileSocialMetaEntry {
+    key: keyof ProfileSocialLinks
+    icon: IconComponent
+    label: string
+}
+
+/** The block's own label per platform (§14d.1) — the caller only supplies the URL. */
+const SOCIAL_META: ReadonlyArray<ProfileSocialMetaEntry> = [
+    { key: "github", icon: GithubLogoIcon, label: "GitHub" },
+    { key: "linkedin", icon: LinkedinLogoIcon, label: "LinkedIn" },
+    { key: "website", icon: GlobeIcon, label: "Personal site" },
+]
+
+/** `Intl`-formatted "Month M, YYYY" from an ISO date string. Empty input → empty string (no bogus date printed). */
+const formatJoinedDate = (isoDate: string): string => {
+    const date = new Date(isoDate)
+    if (Number.isNaN(date.getTime())) return ""
+    return new Intl.DateTimeFormat("vi-VN", { month: "long", year: "numeric" }).format(date)
+}
+
+/** How this person works, worded by the block (§14d.1). */
+const WORK_MODE_MAP: Record<ProfileWorkMode, EnumChipEntry> = {
+    remote: { label: "Remote" },
+    onsite: { label: "Onsite" },
+    hybrid: { label: "Hybrid", color: "accent" },
+}
+
+/**
+ * The bare identity sidebar. See the file header for the reuse contract and the
+ * four judgement calls.
+ *
+ * @param props - {@link ProfileHeroProps}
+ */
+const ProfileHero = ({
+    user,
+    isSelf = false,
+    canHire = false,
+    following = false,
+    isFollowPending = false,
+    onToggleFollow,
+    onHire,
+    onEdit,
+    onShare,
+    isSkeleton = false,
+}: ProfileHeroProps) => {
+    const { fullName, handle, roleTitle, bio, location, workMode, avatarUrl, rank, followersCount, badges, joinedAt, social } = user
+
+    const action = resolvePrimaryAction({ isSelf, canHire, following, isFollowPending, onEdit, onHire, onToggleFollow })
+    const hasBadgesRow = isSkeleton || Boolean(badges && badges.length > 0)
+    const hasLocationRow = isSkeleton || Boolean(location) || Boolean(workMode)
+
+    const socialLinks = social ?? {}
+    const socialEntries = SOCIAL_META.filter((entry) => Boolean(socialLinks[entry.key]))
+    const hasMetaList = isSkeleton || socialEntries.length > 0 || Boolean(joinedAt)
+
+    const nameBlock = (
+        <>
+            <Typography
+                size="h5"
+                weight="bold"
+                align="center"
+                isSkeleton={isSkeleton}
+                text={fullName}
+
+            />
+            <Typography
+                size="sm"
+                color="muted"
+                align="center"
+                isSkeleton={isSkeleton}
+                text={isSkeleton ? undefined : `@${handle}`}
+
+            />
+            {isSkeleton || roleTitle ? (
+                <Typography
+                    size="sm"
+                    weight="medium"
+                    align="center"
+                    isSkeleton={isSkeleton}
+                    text={roleTitle}
+
+                />
+            ) : null}
+        </>
+    )
+
+    const identitySection = (
+        <>
+            <ProfileRankAvatar
+                name={fullName}
+                avatarUrl={avatarUrl}
+                rank={rank}
+                isSkeleton={isSkeleton}
+
+            />
+            <StackV gap={1} principles={["name-handle"]} align="center" isSkeleton={isSkeleton} items={[() => nameBlock]} />
+        </>
+    )
+
+    const statsRow = (
+        <>
+            <ProfileFollowers followersCount={followersCount} isSkeleton={isSkeleton} />
+            {hasBadgesRow ? (
+                <ProfileBadges badges={badges} isSkeleton={isSkeleton} />
+            ) : null}
+        </>
+    )
+
+    const actionsRow = (
+        <>
+            <Button
+                classNames={["flex-1"]}
+                variant={action.variant}
+                label={action.label}
+                prefixIcon={action.prefixIcon}
+                onPress={action.onPress}
+                isPending={action.isPending}
+                isSkeleton={isSkeleton}
+
+            />
+            <ShareProfileButton onShare={onShare} isSkeleton={isSkeleton} />
+        </>
+    )
+
+    const metaList = (
+        <>
+            {(isSkeleton ? SOCIAL_META : socialEntries).map((entry) => {
+                const socialRow = (
+                    <>
+                        <span aria-hidden className="inline-flex shrink-0 text-muted [&_svg]:size-4">
+                            <entry.icon />
+                        </span>
+                        <Typography
+                            size="xs"
+                            isLink={!isSkeleton}
+                            href={isSkeleton ? undefined : socialLinks[entry.key]}
+                            isSkeleton={isSkeleton}
+                            truncate
+                            text={isSkeleton ? undefined : entry.label}
+
+                        />
+                    </>
+                )
+                return <StackH key={entry.key} gap={2} isSkeleton={isSkeleton} items={[() => socialRow]} />
+            })}
+            <InlineIconLabel
+                icon={CalendarBlankIcon}
+                tone="default"
+                isSkeleton={isSkeleton}
+                label={isSkeleton ? undefined : `Joined ${formatJoinedDate(joinedAt)}`}
+            />
+        </>
+    )
+
+    const metaSection = hasMetaList ? (
+        <>
+            <Divider />
+            <StackV gap={4} isSkeleton={isSkeleton} items={[() => metaList]} />
+        </>
+    ) : null
+
+    const cardBody = (
+        <>
+            <StackV gap={4} principles={["card-caption"]} align="center" isSkeleton={isSkeleton} items={[() => identitySection]} />
+
+            {isSkeleton || bio ? (
+                <Typography
+                    size="sm"
+                    color="muted"
+                    align="center"
+                    lineClamp={3}
+                    isSkeleton={isSkeleton}
+                    text={bio}
+
+                />
+            ) : null}
+
+            {hasLocationRow ? (
+                <Cluster
+                    gap={3}
+                    principles={["chip-row"]}
+                    justify="center"
+                    items={[
+                        ...(isSkeleton || location
+                            ? [
+                                () => (
+                                    <InlineIconLabel
+                                        icon={MapPinIcon}
+                                        isSkeleton={isSkeleton}
+                                        label={location}
+                                    />
+                                ),
+                            ]
+                            : []),
+                        ...(isSkeleton || workMode
+                            ? [
+                                () => (
+                                    <EnumChip
+                                        value={(workMode ?? "remote") as ProfileWorkMode}
+                                        map={WORK_MODE_MAP}
+                                        isSkeleton={isSkeleton}
+                                    />
+                                ),
+                            ]
+                            : []),
+                    ]}
+                />
+            ) : null}
+
+            <StackH gap={3} principles={["sibling-stack"]} divider isSkeleton={isSkeleton} items={[() => statsRow]} />
+
+            <StackH gap={3} isSkeleton={isSkeleton} items={[() => actionsRow]} />
+
+            {metaSection}
+        </>
+    )
+
+    return (
+        <div>
+            <SurfaceCard
+
+
+                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={[() => cardBody]} />}
+            />
+        </div>
+    )
+}
+
+export { ProfileHero }

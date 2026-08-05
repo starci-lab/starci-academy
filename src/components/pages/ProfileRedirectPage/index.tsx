@@ -9,7 +9,7 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import { ProfileHeroSkeleton } from "@/components/blocks/profile/ProfileHero/ProfileHeroSkeleton"
+import { ProfileHero } from "@/components/blocks/profile/ProfileHero"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 
@@ -51,7 +51,12 @@ export const ProfileRedirectPage = ({
             <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-6 @app-md:flex-row @app-md:items-start">
                 {/* left: identity column — reuse the real hero skeleton */}
                 <aside className="flex w-full flex-col gap-4 @app-md:w-72 @app-md:shrink-0">
-                    <ProfileHeroSkeleton />
+                    {/* the REAL hero at rest — one description of the shape, so the
+                        resting column cannot drift from the loaded one */}
+                    <ProfileHero
+                        isSkeleton
+                        user={{ id: "", fullName: "", handle: "", joinedAt: "" }}
+                    />
                 </aside>
 
                 {/* right: labelled overview sections (each = label + section skeleton body) */}

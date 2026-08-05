@@ -113,7 +113,6 @@ export const ConfirmDialog = ({
                         <AlertDialog.Footer className="w-full">
                             <ButtonGroup
                                 align="end"
-                                classNames={["w-full"]}
                                 items={[
                                     {
                                         key: "cancel",

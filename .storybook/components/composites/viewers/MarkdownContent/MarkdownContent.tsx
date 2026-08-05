@@ -348,8 +348,8 @@ const MarkdownContent = ({
                 isSkeleton={isSkeleton}
 
                 items={[
-                    () => <Typography isSkeleton size="base" classNames={["w-full"]} />,
-                    () => <Typography isSkeleton size="base" classNames={["w-2/3"]} />,
+                    () => <Typography isSkeleton size="base" />,
+                    () => <Typography isSkeleton size="base" />,
                 ]}
             />
         )

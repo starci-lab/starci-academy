@@ -23,10 +23,13 @@ type BodySize = "xs" | "sm" | "base"
  * period (body scale) — so the whole unit grows as one coherent piece instead of a
  * big number next to leftover tiny text.
  */
-const SIZE_TO_TOKENS: Record<
-    PricePeriodSize,
-    { amount: AmountHeadingSize; original: BodySize; period: BodySize }
-> = {
+interface PricePeriodSizeTokens {
+    amount: AmountHeadingSize
+    original: BodySize
+    period: BodySize
+}
+
+const SIZE_TO_TOKENS: Record<PricePeriodSize, PricePeriodSizeTokens> = {
     sm: { amount: "h4", original: "xs", period: "xs" },
     md: { amount: "h3", original: "sm", period: "xs" },
     lg: { amount: "h2", original: "base", period: "sm" },
@@ -91,7 +94,6 @@ export const PricePeriod = ({
                 weight="semibold"
                 color="default"
                 isSkeleton={isSkeleton}
-                classNames={isSkeleton ? ["w-1/3"] : undefined}
                 text={amount}
             />
             {/* Struck-through original — only rendered for a real value; no skeleton
@@ -110,7 +112,6 @@ export const PricePeriod = ({
                     size={tokens.period}
                     color={isSkeleton ? undefined : "muted"}
                     isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-1/4"] : undefined}
                     text={period}
                 />
             ) : null}
@@ -118,4 +119,5 @@ export const PricePeriod = ({
     )
 }
 
+/** Source-level tier metadata for this composite. */
 export const meta = { tier: "composite", name: "PricePeriod" } as const

@@ -6,6 +6,9 @@ import type { TypographySize as AtomTypographySize } from "@sb-components/atoms/
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Box } from "@sb-components/frames/Box/Box"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "RichText" } as const
+
 /** Empty `text` → renders nothing (Typography with no children), takes no unexpected space. */
 
 /**
@@ -175,9 +178,6 @@ const renderInline = (text: string): ReactNode => {
  * no data/i18n.
  * @param props - {@link RichTextProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "RichText" } as const
-
 export const RichText = ({
     text,
     size = "body-sm",
@@ -189,7 +189,7 @@ export const RichText = ({
     // `isSkeleton`; this composite only decides size/color and renders a thin `<span>`.
     return (
         <span
-
+            className={classNames?.join(" ")}
             data-tier="composite"
             data-component="RichText"
         >
@@ -197,8 +197,6 @@ export const RichText = ({
                 size={SIZE_MAP[size]}
                 color={color}
                 isSkeleton={isSkeleton}
-
-                classNames={classNames}
                 text={renderInline(text ?? "")}
             />
         </span>

@@ -55,13 +55,15 @@ type StepState = "done" | "current" | "upcoming"
  * otherwise, tokened by state — done = filled success, current = filled accent
  * with an emphasis ring, upcoming = muted outline.
  */
+interface StepIndicatorProps {
+    state: StepState
+    index: number
+}
+
 const StepIndicator = ({
     state,
     index,
-}: {
-    state: StepState
-    index: number
-}) => (
+}: StepIndicatorProps) => (
     <span
         aria-hidden
         className={cn(

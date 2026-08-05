@@ -4,6 +4,9 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "MetricCard" } as const
+
 /** `hint` is the only optional slot — omit it when value + label already explain themselves. */
 
 /**
@@ -12,13 +15,15 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * give it the 3xl radius, `p-3`, no-shadow + border.
  * TODO: swap for the SectionCard local when the cards category ports it.
  */
+interface MetricSectionCardProps {
+    body: React.ReactNode
+    classNames?: Array<AllowedClassName>
+}
+
 const SectionCard = ({
     body,
     classNames,
-}: {
-    body: React.ReactNode
-    classNames?: Array<AllowedClassName>
-}) => (
+}: MetricSectionCardProps) => (
     <Card className={cn(classNames)} data-tier="composite" data-component="MetricCard">
         <CardContent>
             <StackV gap={4} items={[() => body]} />
@@ -82,9 +87,6 @@ export type MetricCardProps = MetricCardOwnProps &
  *
  * @param props - {@link MetricCardProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "MetricCard" } as const
-
 export const MetricCard = ({
     value,
     label,

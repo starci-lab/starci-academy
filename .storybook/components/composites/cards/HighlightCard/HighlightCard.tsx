@@ -2,6 +2,9 @@ import React from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "HighlightCard" } as const
+
 /**
  * `HighlightCard` — wraps a card with a single accent-colored arc sweeping around it, on its
  * own layer behind the card (peeking 2px past the edges). A pure standout decoration, not a
@@ -31,9 +34,6 @@ export interface HighlightCardProps {
  *
  * @param props - {@link HighlightCardProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "HighlightCard" } as const
-
 export const HighlightCard = ({ body, isSkeleton = false, classNames }: HighlightCardProps) => (
     <div
         className={cn("relative", classNames)}

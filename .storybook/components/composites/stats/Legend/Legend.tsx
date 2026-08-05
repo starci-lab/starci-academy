@@ -4,6 +4,9 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "Legend" } as const
+
 /** Many items in a narrow block wrap to a new line instead of overflowing. */
 
 /**
@@ -72,9 +75,6 @@ export type LegendProps = LegendOwnProps &
  *
  * @param props - {@link LegendProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "Legend" } as const
-
 export const Legend = ({
     items,
     direction = "row",
@@ -102,20 +102,20 @@ export const Legend = ({
                         gap={3}
                         isSkeleton={isSkeleton}
                         items={[
-                                    /* ATOM GAP: no swatch/dot atom exists yet, so the dot stays a
+                            /* ATOM GAP: no swatch/dot atom exists yet, so the dot stays a
                                     real plain span in both states — a neutral flat fill (no
                                     hand-drawn `animate-pulse`, COMPOSITE-10) instead of reaching
                                     for a vendor Skeleton (the same span shape the loaded entry
                                     below draws, just without a real color). */
-                                () => (
+                            () => (
                                 <span
                                     aria-hidden
                                     className="size-2.5 shrink-0 rounded-full bg-default"
 
                                 />
-                                ),
-                                () => <Typography size="xs" isSkeleton />,
-                            ]}
+                            ),
+                            () => <Typography size="xs" isSkeleton />,
+                        ]}
                     />
                 ))
                 : (items ?? []).map((item) => {

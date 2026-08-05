@@ -3,6 +3,9 @@ import { cn } from "@heroui/react"
 import { Chip, type ChipTone, type IconComponent } from "@sb-components/atoms/chips/Chip/Chip"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "HighlightChip" } as const
+
 /** Neutral (default): value + label, no leading icon — the plain figure pill. */
 
 /** Local mirror of the shared `WithClassNames` base (avoids a `@/` import). */
@@ -49,9 +52,6 @@ export type HighlightChipProps = HighlightChipOwnProps &
  * "276 Practice exercises". Pure and props-only (tone drives the color). Used in the
  * `PageHeader` meta row to show a course's figures.
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "HighlightChip" } as const
-
 export const HighlightChip = ({ tone = "default", icon, value, label, isSkeleton = false, classNames }: HighlightChipProps) => (
     // Wrapping span exists only to carry the composite's own position (`classNames`)
     // and its tier tags — `Chip` (the house atom) is the one real element rendered,

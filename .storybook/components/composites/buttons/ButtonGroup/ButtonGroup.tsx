@@ -54,8 +54,10 @@ export interface ButtonGroupProps {
     classNames?: Array<AllowedClassName>
 }
 
+/** Source-level tier metadata. */
 export const meta = { tier: "composite", name: "ButtonGroup" } as const
 
+/** Cluster of related buttons that wrap together at a breakpoint. */
 export const ButtonGroup = ({
     items,
     size = "md",

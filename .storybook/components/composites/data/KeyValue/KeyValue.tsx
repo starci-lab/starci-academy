@@ -117,7 +117,6 @@ const KeyValueRow = ({
                                 color={isSkeleton ? undefined : (emphasis ? undefined : "muted")}
                                 weight={isSkeleton ? undefined : (emphasis ? "medium" : undefined)}
                                 isSkeleton={isSkeleton}
-                                classNames={isSkeleton ? ["w-1/3"] : undefined}
                             />
                         </span>
                     ),
@@ -127,7 +126,6 @@ const KeyValueRow = ({
                                 text={hint}
                                 color={isSkeleton ? undefined : "muted"}
                                 isSkeleton={isSkeleton}
-                                classNames={isSkeleton ? ["w-1/4"] : undefined}
                             />
                         </span>
                     )] : []),
@@ -139,9 +137,9 @@ const KeyValueRow = ({
             >
                 <span>
                     {emphasis ? (
-                        <Typography text={value} weight={isSkeleton ? undefined : "bold"} tabularNums={!isSkeleton} isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/4"] : undefined} />
+                        <Typography text={value} weight={isSkeleton ? undefined : "bold"} tabularNums={!isSkeleton} isSkeleton={isSkeleton} />
                     ) : (
-                        <Typography size="sm" text={value} weight={isSkeleton ? undefined : "medium"} tabularNums={!isSkeleton} isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/4"] : undefined} />
+                        <Typography size="sm" text={value} weight={isSkeleton ? undefined : "medium"} tabularNums={!isSkeleton} isSkeleton={isSkeleton} />
                     )}
                 </span>
                 {copyable && !isSkeleton ? (

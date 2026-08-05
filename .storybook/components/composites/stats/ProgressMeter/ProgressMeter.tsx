@@ -5,6 +5,9 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "ProgressMeter" } as const
+
 /** Fill still far from the 85% target — the accent notch pill overshoots the thin bar; `mt-5` reserves room for the floating "85%" label. */
 interface ProgressMeterOwnProps {
     /** Maximum value representing 100% completion. Defaults to `100`. */
@@ -70,9 +73,6 @@ export type ProgressMeterProps = ProgressMeterOwnProps &
  *
  * @param props - {@link ProgressMeterProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "ProgressMeter" } as const
-
 export const ProgressMeter = ({
     value,
     max = 100,
@@ -104,9 +104,9 @@ export const ProgressMeter = ({
             justify="between"
             isSkeleton={isSkeleton}
             items={[
-                () => <Typography size="xs" color="muted" truncate classNames={["min-w-0"]} isSkeleton={isSkeleton} text={label} />,
+                () => <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={label} />,
                 ...(showValue ? [() => (
-                    <Typography size="xs" color="muted" classNames={["shrink-0"]} isSkeleton={isSkeleton} text={<>{percent}%</>} />
+                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={<>{percent}%</>} />
                 )] : []),
             ]}
         />

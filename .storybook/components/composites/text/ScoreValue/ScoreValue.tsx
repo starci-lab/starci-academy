@@ -1,6 +1,9 @@
 import React from "react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "ScoreValue" } as const
+
 /**
  * COMPOSITE — "N points", the free-form point value a grading row is worth. Renders as
  * accent TEXT, never a `Chip` (§2a: a point count has no closed set of values, so it is
@@ -27,16 +30,12 @@ export interface ScoreValueProps {
  *
  * @param props - {@link ScoreValueProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "ScoreValue" } as const
-
 export const ScoreValue = ({ points, unit = "points", isSkeleton = false }: ScoreValueProps) => (
     <Typography
         size="xs"
         weight="medium"
         tabularNums
         isSkeleton={isSkeleton}
-        classNames={isSkeleton ? ["w-1/4"] : undefined}
         text={`${points} ${unit}`}
     />
 )

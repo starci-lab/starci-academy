@@ -5,6 +5,9 @@ import type { IconComponent } from "@sb-components/atoms/buttons/Button/button-t
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "InputButtonLike" } as const
+
 /**
  * `InputButtonLike` — a button disguised as an input field: it carries the native HeroUI
  * field look (rounded shell, field background + border, muted placeholder) but behaves as a
@@ -89,9 +92,6 @@ export interface InputButtonLikeProps {
  * icon size (§5a) and muted color; consumers pass only raw content + a press
  * handler (and placement via classNames).
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "InputButtonLike" } as const
-
 export const InputButtonLike = ({
     placeholder,
     icon: Icon,
@@ -146,7 +146,7 @@ export const InputButtonLike = ({
                         </span>
                     )] : []),
                     () => (isSkeleton ? (
-                        <Typography size={TYPOGRAPHY_SIZE[size]} isSkeleton classNames={["min-w-0", "flex-1"]} />
+                        <span className="min-w-0 flex-1"><Typography size={TYPOGRAPHY_SIZE[size]} isSkeleton /></span>
                     ) : (
                         <span className={cn("truncate text-field-placeholder", TEXT_CLS[size])}>
                             {placeholder}

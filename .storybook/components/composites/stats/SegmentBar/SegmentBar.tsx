@@ -5,6 +5,9 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "SegmentBar" } as const
+
 /** No shared total — slices always fill 100% as shares of each other. */
 
 /** One slice of a {@link SegmentBar}. */
@@ -82,9 +85,6 @@ const PALETTE = [
  *
  * @param props - {@link SegmentBarProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "SegmentBar" } as const
-
 export const SegmentBar = ({
     segments,
     ariaLabel,

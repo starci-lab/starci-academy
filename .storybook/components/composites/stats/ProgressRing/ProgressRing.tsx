@@ -3,6 +3,9 @@ import { ProgressCircle, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "ProgressRing" } as const
+
 /** Custom label overrides the centered percentage with a fraction when the count reads clearer. */
 /** Ring diameter + label type scale that one size step resolves to. */
 interface ProgressRingSizeStyle {
@@ -64,9 +67,6 @@ export type ProgressRingProps = ProgressRingOwnProps &
  *
  * @param props - {@link ProgressRingProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "ProgressRing" } as const
-
 export const ProgressRing = ({
     value,
     label,
@@ -121,7 +121,7 @@ export const ProgressRing = ({
                 ),
                 // Optional caption — small + muted, distinct from the centered value
                 ...(caption !== undefined ? [() => (
-                        <Typography size="xs" color="muted" align="center" isSkeleton={isSkeleton} text={caption} />
+                    <Typography size="xs" color="muted" align="center" isSkeleton={isSkeleton} text={caption} />
                 )] : []),
             ]}
         />

@@ -363,26 +363,26 @@ const Meta = ({ chip: Chip, items, classNames}: ListMetaProps) => (
         items={[
             ...(Chip ? [() => <span className="shrink-0"><Chip /></span>] : []),
             ...(items.length > 0 ? [() => (
-                <Typography size="xs"
-                    text={(
-                        <>
-                            {items.map((item, index) => (
-                                <React.Fragment key={index}>
-                                    {/* The breathing room around the `·` comes from the whitespace
-                                            IN the string itself, NOT a hand-typed `mx-1`: a child's own
-                                            margin is a two-owner seam, and the `check-padding`
-                                            gate catches exactly this spot. */}
-                                    {index > 0 ? <span aria-hidden>{" · "}</span> : null}
-                                    {item}
-                                </React.Fragment>
-                            ))}
-                        </>
-                    )}
-                    color="muted"
-                    truncate
-                    classNames={["min-w-0"]}
-
-                />
+                <span className="min-w-0">
+                    <Typography size="xs"
+                        text={(
+                            <>
+                                {items.map((item, index) => (
+                                    <React.Fragment key={index}>
+                                        {/* The breathing room around the `·` comes from the whitespace
+                                                IN the string itself, NOT a hand-typed `mx-1`: a child's own
+                                                margin is a two-owner seam, and the `check-padding`
+                                                gate catches exactly this spot. */}
+                                        {index > 0 ? <span aria-hidden>{" · "}</span> : null}
+                                        {item}
+                                    </React.Fragment>
+                                ))}
+                            </>
+                        )}
+                        color="muted"
+                        truncate
+                    />
+                </span>
             )] : []),
         ]}
     />
@@ -470,13 +470,13 @@ const ToggleRow = ({
                     />
                 ),
                 () => isSkeleton ? (
-                    <ChoiceSwitch
-                        isSkeleton
-                        isSelected={false}
-                        onValueChange={() => undefined}
-                        classNames={["shrink-0"]}
-
-                    />
+                    <span className="shrink-0">
+                        <ChoiceSwitch
+                            isSkeleton
+                            isSelected={false}
+                            onValueChange={() => undefined}
+                        />
+                    </span>
                 ) : (
                     <Switch
                         className="shrink-0"

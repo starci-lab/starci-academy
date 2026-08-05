@@ -4,6 +4,9 @@ import { Legend } from "@sb-components/composites/stats/Legend/Legend"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "CourseProgressBar" } as const
+
 /** Multiple dimensions at wildly different scales — each lane fills to its OWN ratio. */
 
 /** One dimension of course progress (content / challenge / milestone). */
@@ -58,9 +61,6 @@ const PALETTE = ["var(--accent)", "var(--success)", "var(--warning)", "var(--dan
  *
  * @param props - {@link CourseProgressBarProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "CourseProgressBar" } as const
-
 export const CourseProgressBar = ({
     dims,
     ariaLabel,

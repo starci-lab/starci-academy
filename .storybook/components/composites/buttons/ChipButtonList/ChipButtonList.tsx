@@ -25,7 +25,9 @@ export interface ChipButtonItem {
     isDisabled?: boolean
 }
 
+/** Visual variant applied to every chip button in the list. */
 export type ChipButtonListVariant = "secondary" | "ghost"
+/** Layout: wrapping chip cluster or full-width vertical menu. */
 export type ChipButtonListDirection = "wrap" | "column"
 
 /** Props for the {@link ChipButtonList} composite. */
@@ -107,12 +109,13 @@ export const ChipButtonList = ({
                                 </span>
                             ) : null}
                             {direction === "column" ? (
-                                <Typography size="sm"
-                                    weight="medium"
-                                    truncate
-                                    classNames={["min-w-0", "flex-1"]}
-                                    text={item.label}
-                                />
+                                <span className="min-w-0 flex-1">
+                                    <Typography size="sm"
+                                        weight="medium"
+                                        truncate
+                                        text={item.label}
+                                    />
+                                </span>
                             ) : (
                                 item.label
                             )}

@@ -3,6 +3,9 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "StatGridCard" } as const
+
 /**
  * COMPOSITE — a bounded surface whose cells sit in a 2-col grid, divided by thin
  * seams (the grid sibling of `SurfaceListCard`'s vertical list). The block owns
@@ -54,9 +57,6 @@ export interface StatGridCardProps {
  *
  * @param props - {@link StatGridCardProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "StatGridCard" } as const
-
 export const StatGridCard = ({ items, isSkeleton = false, classNames}: StatGridCardProps) => {
     const total = items.length
     const isOddTotal = total % 2 === 1

@@ -116,7 +116,7 @@ export const EmptyState = (props: EmptyStateProps) => {
     const skeletonAttrs = isSkeleton ? ({ isSkeleton: true } as const) : ({ isSkeleton: false } as const)
 
     if (size === "compact") {
-        // ⚠️ The `Typography.*` atom does NOT accept unknown props (no rest spread) → every
+        // NOTE: The `Typography.*` atom does NOT accept unknown props (no rest spread) → every
         // anatomy tag must sit on a WRAPPING element, not be stuffed into the atom.
         return (
             <span

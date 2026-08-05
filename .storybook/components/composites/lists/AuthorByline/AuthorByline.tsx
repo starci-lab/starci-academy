@@ -65,7 +65,6 @@ const AuthorByline = ({
                     color="default"
                     truncate
                     isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-1/3"] : undefined}
 
                     text={name}
                 />
@@ -83,7 +82,6 @@ const AuthorByline = ({
                     color="muted"
                     truncate
                     isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-1/4"] : undefined}
 
                     text={timestamp}
                 />

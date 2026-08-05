@@ -3,6 +3,9 @@ import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "ProgressMeterTargetMark" } as const
+
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/stats/ProgressMeter/TargetMark`. Authored in Storybook
@@ -51,9 +54,6 @@ export interface ProgressMeterTargetMarkProps {
  *
  * @param props - {@link ProgressMeterTargetMarkProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "ProgressMeterTargetMark" } as const
-
 export const ProgressMeterTargetMark = ({ percent, label, classNames }: ProgressMeterTargetMarkProps) => (
     <div
         className={cn("pointer-events-none absolute top-1/2 -translate-x-1/2 -translate-y-1/2", classNames)}

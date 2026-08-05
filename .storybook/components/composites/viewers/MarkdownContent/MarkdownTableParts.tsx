@@ -25,7 +25,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * @returns A `Table.Column` with `isRowHeader` on the first column (HeroUI requirement).
  */
 const toMarkdownHeaderColumn = (column: React.ReactNode, index: number): React.ReactNode => {
-    if (!React.isValidElement<{ children?: React.ReactNode }>(column)) {
+    if (!React.isValidElement<ElementWithChildren>(column)) {
         return column
     }
     return (
@@ -33,6 +33,10 @@ const toMarkdownHeaderColumn = (column: React.ReactNode, index: number): React.R
             {column.props.children}
         </Table.Column>
     )
+}
+
+interface ElementWithChildren {
+    children?: React.ReactNode
 }
 
 /** Props for markdown table row/cell parts. */
@@ -118,7 +122,7 @@ export const MarkdownTable = ({ children, ariaLabel, classNames }: MarkdownTable
             </>
         )
     } else {
-        const tbody = parts[tbodyIndex] as React.ReactElement<{ children?: React.ReactNode }>
+        const tbody = parts[tbodyIndex] as React.ReactElement<ElementWithChildren>
         const bodyRows = React.Children.toArray(tbody.props.children)
         const [firstRow, ...restRows] = bodyRows
         content = (

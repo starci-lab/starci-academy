@@ -4,6 +4,9 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "MetaDotRow" } as const
+
 /**
  * COMPOSITE — `MetaDotRow`: a row of muted text fragments separated by a `·`
  * mark ("12 lessons · 3 hours · Free"). Replaces the hand-rolled `flex
@@ -13,7 +16,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * and the tone (`muted`, on every fragment AND the root, so the marks inherit
  * it).
  *
- * 📐 **1 PROP = 1 LEAF.** `items`, `isSkeleton`, `skeletonCount` each get their
+ *  **1 PROP = 1 LEAF.** `items`, `isSkeleton`, `skeletonCount` each get their
  * own leaf. `classNames` gets none — a pure placement prop with no visible
  * shape of its own to demonstrate.
  */
@@ -47,9 +50,6 @@ export type MetaDotRowProps = MetaDotRowOwnProps &
  *
  * @param props - {@link MetaDotRowProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "MetaDotRow" } as const
-
 export const MetaDotRow = ({
     items,
     isSkeleton = false,
@@ -79,7 +79,6 @@ export const MetaDotRow = ({
                     <Typography
                         size="xs"
                         color={isSkeleton ? undefined : "muted"}
-                        classNames={isSkeleton ? ["w-1/4"] : undefined}
                         isSkeleton={isSkeleton}
                         text={fragment.text}
                     />

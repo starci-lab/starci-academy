@@ -1,4 +1,5 @@
 import React from "react"
+import { cn } from "@heroui/react"
 import type { ReactNode } from "react"
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { Tooltip } from "@sb-components/atoms/overlay/Tooltip/Tooltip"
@@ -94,32 +95,33 @@ export interface EnumChipProps<E extends string> {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "EnumChip" } as const
 
+/** Chip whose tone, label, tooltip, and icon come from `map[value]`. */
 export const EnumChip = <E extends string>({ value, map, className, classNames, isSkeleton }: EnumChipProps<E>) => {
+    const wrapChip = (chip: React.ReactElement) => {
+        const cls = cn(className, classNames)
+        return cls ? <div className={cls}>{chip}</div> : chip
+    }
     if (isSkeleton) {
         // The atom's shimmer matches the real chip box, so no `h-6` patch is needed
         // here — a call site having to patch the atom's shape is the sign the atom is
-        // wrong, not this spot. `Chip` no longer takes a free `className`; the legacy
-        // string (kept only for the two `_legacy` callers) wraps a div instead.
-        const skeletonChip = <Chip isSkeleton classNames={classNames} />
-        return className ? <div className={className}>{skeletonChip}</div> : skeletonChip
+        // wrong, not this spot. `Chip` no longer takes placement classes; wrap instead.
+        return wrapChip(<Chip isSkeleton />)
     }
     const entry = map[value]
     if (!entry) {
         throw new Error(`EnumChip: no map entry for value "${value}"`)
     }
-    const chip = (
+    const chip = wrapChip(
         <Chip
             tone={entry.color ?? "default"}
-            classNames={classNames}
             text={entry.label}
             icon={entry.icon != null ? ENUM_CHIP_ICON_MAP[entry.icon] : undefined}
-        />
+        />,
     )
-    const wrappedChip = className ? <div className={className}>{chip}</div> : chip
     if (entry.tooltip == null) {
-        return wrappedChip
+        return chip
     }
     return (
-        <Tooltip label={entry.tooltip}>{wrappedChip}</Tooltip>
+        <Tooltip label={entry.tooltip}>{chip}</Tooltip>
     )
 }

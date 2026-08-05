@@ -6,6 +6,10 @@ import React from "react"
  * in Storybook (not `src`); synced back to `src` later.
  */
 
+interface ElementWithChildren {
+    children?: React.ReactNode
+}
+
 /** One `th`/`td` cell inside the HAST `tr` node backing a markdown table row. */
 export interface MarkdownTableCellElement {
     /** HAST node type — always `"element"` for a real cell. */
@@ -38,12 +42,12 @@ export function flattenMarkdownTableHeaderChildren(children: React.ReactNode): A
     }
 
     React.Children.forEach(children, (row) => {
-        if (!React.isValidElement<{ children?: React.ReactNode }>(row)) {
+        if (!React.isValidElement<ElementWithChildren>(row)) {
             return
         }
         if (row.type === React.Fragment) {
             React.Children.forEach(row.props.children, (nestedRow) => {
-                if (!React.isValidElement<{ children?: React.ReactNode }>(nestedRow)) {
+                if (!React.isValidElement<ElementWithChildren>(nestedRow)) {
                     return
                 }
                 pushRowCells(nestedRow.props.children)

@@ -82,14 +82,12 @@ const IconLabelValueRow = ({
             color={isSkeleton ? undefined : "default"}
             truncate={isSkeleton ? undefined : true}
             isSkeleton={isSkeleton}
-            classNames={isSkeleton ? ["w-1/3"] : ["flex-1", "min-w-0"]}
             text={label}
         />
         <Typography
             size="sm"
             color={isSkeleton ? undefined : "muted"}
             isSkeleton={isSkeleton}
-            classNames={isSkeleton ? ["w-1/4"] : ["shrink-0"]}
             text={value}
         />
     </div>

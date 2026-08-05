@@ -140,7 +140,7 @@ const TableBase = ({
                                 (§10a). The tag sits OUTSIDE the atom (the atom takes no rest props) —
                                 same reason as `CellBox`. */}
                             <span className="flex h-5 items-center">
-                                <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
+                                <Typography size="sm" isSkeleton />
                             </span>
                         </HeroTable.Cell>
                     ))}

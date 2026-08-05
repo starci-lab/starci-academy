@@ -6,6 +6,9 @@ import { Button, type IconComponent } from "@sb-components/atoms/buttons/Button/
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "RemovableToken" } as const
+
 /**
  * `RemovableToken` — a bordered, single-line selected-item row: an optional leading icon, a
  * label, and up to two trailing affordances (edit / remove). Leaves: `icon`, `onEdit`
@@ -64,9 +67,6 @@ export interface RemovableTokenProps {
  *
  * @param props - {@link RemovableTokenProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "RemovableToken" } as const
-
 export const RemovableToken = ({
     label,
     icon: Icon,
@@ -83,7 +83,7 @@ export const RemovableToken = ({
     // edit/remove controls) — `Button`/`Typography` each draw their own shimmer,
     // this composite only decides which parts show and how many (COMPOSITE-10).
     const trailing = isSkeleton ? (
-        <Button isSkeleton size="sm" classNames={["shrink-0"]} />
+        <span className="shrink-0"><Button isSkeleton size="sm" /></span>
     ) : onEdit || onRemove ? (
         <StackH
             gap={3}
@@ -142,7 +142,6 @@ export const RemovableToken = ({
                             weight="medium"
                             truncate
                             isSkeleton={isSkeleton}
-                            classNames={isSkeleton ? ["w-1/3"] : undefined}
                             text={label}
                         />
                     ),

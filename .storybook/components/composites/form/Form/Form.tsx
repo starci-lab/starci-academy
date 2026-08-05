@@ -11,7 +11,7 @@ import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
  * + a content column following the `gap` rhythm (§10c) + an `actions` slot at
  * the bottom.
  *
- * ⚠️ STATE SCOPE (§12f): the stories here only render state that the shell
+ * NOTE: STATE SCOPE (§12f): the stories here only render state that the shell
  * ITSELF produces — `isDisabled` (locks the whole form via `<fieldset
  * disabled>`) and how it lays out `body`/`actions`. A field's label/hint/error/
  * required is the ATOM's state (`Atoms/Forms/Input/*`, §12e) — NOT repeated

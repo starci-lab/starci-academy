@@ -167,7 +167,7 @@ const Base = ({
                                 </div>
                             </Modal.Header>
                         ) : null}
-                        {/* ⚠️ `bodyStartsWithTabs` was DELETED in this same pass. It made the
+                        {/* NOTE: `bodyStartsWithTabs` was DELETED in this same pass. It made the
                             caller declare "my body starts with tabs" so the frame could subtract
                             4px — which means the FRAME WAS ASKING WHAT KIND OF CONTENT SITS
                             INSIDE IT, exactly what the definition of a frame forbids.

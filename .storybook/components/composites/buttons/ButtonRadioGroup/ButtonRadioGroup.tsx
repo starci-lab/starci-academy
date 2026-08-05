@@ -10,6 +10,10 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * turns each item into a fused `ButtonGroup` [select | delete | more].
  */
 
+interface CloneableActionElementProps {
+    children?: ReactNode
+}
+
 /** One selectable button in a {@link ButtonRadioGroup}. */
 export interface ButtonRadioGroupItem<T extends string> {
     /** Value selected when this button is chosen. */
@@ -35,7 +39,7 @@ interface ButtonRadioGroupBaseProps<T extends string> {
      * Optional per-item trailing action(s) — e.g. a delete button and/or a "⋮"
      * (kebab) menu trigger. When provided, the item's select button and these
      * action buttons render as ONE connected `ButtonGroup` per item
-     * (`[select | 🗑 | ⋮]`). Return the action `<Button>`s as an ARRAY (with
+     * (`[select | delete | ⋮]`). Return the action `<Button>`s as an ARRAY (with
      * `key`s) so each is an individual segment. Omit for a plain single-select row.
      */
     itemAction?: (item: ButtonRadioGroupItem<T>) => ReactNode
@@ -86,7 +90,7 @@ export const meta = { tier: "composite", name: "ButtonRadioGroup" } as const
  *
  * When `itemAction` is supplied, each item instead renders as one connected
  * `ButtonGroup` — the select button + its action button(s) touching, only the
- * two outer ends rounded (`[select | 🗑 | ⋮]`). The seam is HeroUI's own
+ * two outer ends rounded (`[select | delete | ⋮]`). The seam is HeroUI's own
  * `ButtonGroup.Separator`, recoloured to the `--border` token and forced full-height.
  *
  * `role="group"` + `aria-pressed` per button — works for BOTH the default
@@ -155,7 +159,7 @@ export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<
                             {item.content}
                         </Button>
                         {React.Children.map(itemAction(item), (action) =>
-                            React.isValidElement<{ children?: ReactNode }>(action)
+                            React.isValidElement<CloneableActionElementProps>(action)
                                 ? React.cloneElement(
                                     action,
                                     undefined,

@@ -4,6 +4,9 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { TypographyColor } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "DotLabel" } as const
+
 /**
  * `DotLabel` — a colour dot + an inline text label as one unit, with no pill/background. Use
  * where a coloured dot reads faster than the word alone but a full chip's padding would be too
@@ -83,9 +86,6 @@ export type DotLabelProps = DotLabelOwnProps &
  *
  * @param props - {@link DotLabelProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "DotLabel" } as const
-
 export const DotLabel = ({
     color,
     label,
@@ -124,7 +124,6 @@ export const DotLabel = ({
             <Typography
                 size="sm"
                 color={isSkeleton ? undefined : TONE_TO_TYPOGRAPHY[tone]}
-                classNames={isSkeleton ? ["w-1/3"] : undefined}
 
                 isSkeleton={isSkeleton}
                 text={label}

@@ -4,6 +4,9 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StatPair, type StatPairValueType } from "@sb-components/composites/stats/StatPair/StatPair"
 import { ResponsiveRow } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "StatRibbon" } as const
+
 /** Same parts for every leaf: N StatPair cells inside one Card — the real `StatPair` composite. */
 
 /** One statistic in a {@link StatRibbon} — a headline value with its caption. */
@@ -59,9 +62,6 @@ export type StatRibbonProps = StatRibbonOwnProps &
  *
  * @param props - {@link StatRibbonProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "StatRibbon" } as const
-
 export const StatRibbon = ({
     items,
     valueType,

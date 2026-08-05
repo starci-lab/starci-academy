@@ -17,6 +17,9 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Box } from "@sb-components/frames/Box/Box"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "FlowDiagram" } as const
+
 /** 6 basic web architecture concepts, connected along a real request flow. */
 
 /** React Flow node-type id for {@link FlowDiagram}'s built-in labeled card node. */
@@ -111,9 +114,6 @@ export type FlowDiagramProps = FlowDiagramOwnProps &
  *
  * @param props - See {@link FlowDiagramProps}.
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "FlowDiagram" } as const
-
 export const FlowDiagram = ({ nodes, edges, isSkeleton = false, classNames}: FlowDiagramProps) => {
     const nodeTypes = useMemo(() => NODE_TYPES, [])
 

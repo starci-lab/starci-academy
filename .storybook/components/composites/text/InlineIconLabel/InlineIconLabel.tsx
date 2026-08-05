@@ -5,6 +5,9 @@ import type { TypographyColor, TypographyIcon } from "@sb-components/atoms/text/
 import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 import type { AllowedClassName, SkeletonWidth } from "@sb-components/atoms/_allowed-class-name"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "InlineIconLabel" } as const
+
 /**
  * `InlineIconLabel` — a leading icon + an inline text label as one unit (a count, an eyebrow, a
  * tab label, a toned caption). Owns the icon size (per the text scale) and the tone colour, so a
@@ -95,9 +98,6 @@ export interface InlineIconLabelProps {
  *
  * @param props - {@link InlineIconLabelProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "InlineIconLabel" } as const
-
 export const InlineIconLabel = ({
     icon: Icon,
     label,
@@ -145,14 +145,15 @@ export const InlineIconLabel = ({
                     <Icon aria-hidden focusable="false" />
                 </span>
             )}
-            <Typography
-                size={size}
-                color={isSkeleton ? undefined : textColor}
-                classNames={isSkeleton ? [skeletonWidth] : undefined}
-                truncate={truncate}
-                isSkeleton={isSkeleton}
-                text={label}
-            />
+            <span className={isSkeleton ? skeletonWidth : undefined}>
+                <Typography
+                    size={size}
+                    color={isSkeleton ? undefined : textColor}
+                    truncate={truncate}
+                    isSkeleton={isSkeleton}
+                    text={label}
+                />
+            </span>
         </span>
     )
 }

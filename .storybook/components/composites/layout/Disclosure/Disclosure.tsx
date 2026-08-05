@@ -4,7 +4,7 @@ import { CaretDownIcon } from "@phosphor-icons/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/frames/_slot"
-import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * `Disclosure` — the generic collapsible frame: a trigger row (leading caret + title) toggling

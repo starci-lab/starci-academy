@@ -125,7 +125,7 @@ export interface AsyncContentBaseProps {
     error?: unknown
     /**
      * The ERROR branch slot, passed as PROPS — forwarded straight to
-     * {@link AsyncContentError}. ⚠️ Left empty, the error branch does NOT
+     * {@link AsyncContentError}. NOTE: Left empty, the error branch does NOT
      * activate (the frame falls through to loading/empty/content) — keeping the
      * old contract, no behaviour change in this consolidation.
      */

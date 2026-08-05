@@ -15,6 +15,9 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Box } from "@sb-components/frames/Box/Box"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "PDFView" } as const
+
 /**
  * A tiny, valid single-page PDF encoded as a data URI — an INLINE sample so the
  * file-backed stories have something real to load without a live storage URL.
@@ -177,9 +180,6 @@ export type PDFViewProps = PDFViewOwnProps &
  * observers and react-pdf canvas rendering.
  * @param props - {@link PDFViewProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "PDFView" } as const
-
 export const PDFView = ({
     src,
     title,

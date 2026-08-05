@@ -3,6 +3,8 @@ import { Alert, type AlertStatus } from "@sb-components/atoms/feedback/Alert/Ale
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
+import { Box } from "@sb-components/frames/Box/Box"
+import { cn } from "@heroui/react"
 
 /**
  * `Callout` — a flat tint strip placed inside a surface (surface-in-surface), not a floating
@@ -116,7 +118,7 @@ export const Callout = (props: CalloutProps) => {
     const content = props.isSkeleton
         ? ({ isSkeleton: true, title: props.title } as const)
         : ({ isSkeleton: false, title: props.title } as const)
-    return (
+    const alert = (
         <Alert
             status={status}
             tone="soft"
@@ -135,7 +137,7 @@ export const Callout = (props: CalloutProps) => {
             }
             onClose={onClose}
             closeAriaLabel={closeAriaLabel}
-            classNames={classNames}
         />
     )
+    return classNames?.length ? <Box className={cn(classNames)}>{alert}</Box> : alert
 }

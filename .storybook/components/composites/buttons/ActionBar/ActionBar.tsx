@@ -5,14 +5,14 @@ import { ResponsiveCluster, type ResponsiveClusterItem } from "@sb-components/fr
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 
 /**
- * ⚠️ STATE SCOPE: `ActionBar` does not grow new meaning — it composes `Button` per
+ * NOTE: STATE SCOPE: `ActionBar` does not grow new meaning — it composes `Button` per
  * role and hands the row to `ResponsiveCluster`. Stories here render only state that
  * BELONGS TO THE ROW: which roles are present (`primary`/`secondary`/`dismiss`),
  * the row-level `isSkeleton`, and the row-level `at` threshold. Per-button state
  * (`prefixIcon`, `isPending`, `isDisabled`, what a variant looks like) lives on the
  * `Button` story, not repeated here — same split `ButtonGroup`'s stories already draw.
  *
- * 📐 1 PROP = 1 LEAF, with one deliberate exception: `primary`/`secondary`/`dismiss`
+ *  1 PROP = 1 LEAF, with one deliberate exception: `primary`/`secondary`/`dismiss`
  * share ONE leaf ("Slots") rather than three, because they are not independent
  * axes — they are the one shape decision this component exists to make (which
  * roles are in the row), so the states under that leaf vary which slots are
@@ -65,6 +65,7 @@ export interface ActionBarProps {
     classNames?: Array<AllowedClassName>
 }
 
+/** Source-level tier metadata. */
 export const meta = { tier: "composite", name: "ActionBar" } as const
 
 /** A slot → its rendered `Button`, or `null` when the slot was not passed. */

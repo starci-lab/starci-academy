@@ -3,6 +3,9 @@ import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import type { AvatarSize, IconComponent } from "@sb-components/atoms/display/Avatar/Avatar"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "AvatarGroup" } as const
+
 /**
  * `AvatarGroup` — a row of edge-overlapping avatars ("who follows") plus a "+N" chip. Leaves:
  * `Default` (items mapping), `Overflow` (`max` and `total`, both producing the "+N" chip),
@@ -54,9 +57,6 @@ const GROUP_RING = "rounded-full ring-2 ring-background"
  *
  * @param props - {@link AvatarGroupProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "AvatarGroup" } as const
-
 export const AvatarGroup = ({
     items,
     max = 5,

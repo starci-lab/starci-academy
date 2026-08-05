@@ -42,6 +42,7 @@ export interface ChipGroupProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "ChipGroup" } as const
 
+/** A wrapping cluster of chips with an overflow +N remainder. */
 export const ChipGroup = ({
     items,
     maxVisible = 3,

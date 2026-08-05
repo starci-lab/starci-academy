@@ -5,6 +5,9 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { IconComponent } from "@sb-components/atoms/buttons/Button/button-tokens"
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "FloatingActionButton" } as const
+
 /**
  * `FloatingActionButton` — a bottom-right floating action button: a round, shadowed accent
  * circle composing the icon-only `Button`, pinned to the corner with `fixed`. Leaves: `icon`,
@@ -40,9 +43,6 @@ export interface FloatingActionButtonProps {
  *
  * @param props - {@link FloatingActionButtonProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "FloatingActionButton" } as const
-
 export const FloatingActionButton = ({
     onPress,
     ariaLabel,

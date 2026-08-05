@@ -379,7 +379,6 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
                                 gap={4}
                                 principles={["content-row"]}
                                 justify="between"
-                                classNames={["w-full"]}
                                 items={[
                                     () => <span className={reading ? "text-base font-semibold" : "text-sm font-semibold"}>{title}</span>,
                                     () => <Accordion.Indicator />,

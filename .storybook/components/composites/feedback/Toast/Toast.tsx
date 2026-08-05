@@ -2,6 +2,8 @@ import type { ComponentType, SVGProps } from "react"
 import { Alert as AtomAlert } from "@sb-components/atoms/feedback/Alert/Alert"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
+import { Box } from "@sb-components/frames/Box/Box"
+import { cn } from "@heroui/react"
 /**
  * `Toast` — the one notification surface, composed from `Alert` (`tone="plain"` + glyph `sm`);
  * the HeroUI port lives entirely in `Alert`. Leaves: `Statuses` (the full `ToastStatus` union)
@@ -70,7 +72,7 @@ const ToastBase = (props: ToastBaseProps) => {
     const content = props.isSkeleton
         ? ({ isSkeleton: true, title: props.title } as const)
         : ({ isSkeleton: false, title: props.title } as const)
-    return (
+    const alert = (
         <AtomAlert
             status={STATUS_TO_ALERT[status]}
             tone="plain"
@@ -80,10 +82,9 @@ const ToastBase = (props: ToastBaseProps) => {
             action={Action ? <Action isSkeleton={props.isSkeleton} /> : undefined}
             onClose={onClose}
             closeAriaLabel={closeLabel}
-            classNames={classNames}
-
         />
     )
+    return classNames?.length ? <Box className={cn(classNames)}>{alert}</Box> : alert
 }
 /** `Toast.*` — the notification-surface composite namespace. `status`/`action`/`close` are all leaf props. */
 export { ToastBase as Toast }

@@ -71,19 +71,21 @@ const composeSlots = ({ header: Header, body: Body, footer: Footer, isSkeleton }
  * Interactive anchor for a clickable row: an INTERNAL route (`/…`) → Next `<Link>`
  * (client-side push, keeps history); a protocol / external href → native `<a>`.
  */
+interface RowAnchorProps {
+    href: string
+    onClick?: () => void
+    ariaCurrent?: boolean
+    className?: string
+    children: ReactNode
+}
+
 const RowAnchor = ({
     href,
     onClick,
     ariaCurrent,
     className,
     children,
-}: {
-    href: string
-    onClick?: () => void
-    ariaCurrent?: boolean
-    className?: string
-    children: ReactNode
-}) => {
+}: RowAnchorProps) => {
     if (href.startsWith("/")) {
         return <Link href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={className}>{children}</Link>
     }
@@ -182,7 +184,7 @@ interface SurfaceCardBaseOwnProps extends SurfaceLabelProps, SlotProps {
      * Use on EXACTLY ONE card that needs to stand out on a face — two cards
      * both highlighted cancel each other's emphasis out.
      *
-     * ⚠️ The visual lives in the GLOBAL class `.highlight-card-sweep`
+     * NOTE: The visual lives in the GLOBAL class `.highlight-card-sweep`
      * (`src/app/globals.css`), not in this file — fixing the sweep effect means
      * going to `src`. This is the only node in the `SurfaceCard` tree in
      * that situation.
@@ -219,6 +221,7 @@ interface SurfaceCardBaseOwnProps extends SurfaceLabelProps, SlotProps {
     /** Extra classes on the surface (content) wrapper. */
     contentClassName?: string
 }
+/** Shared label, press, highlight and placement props for every SurfaceCard variant. */
 export type SurfaceCardBaseProps = SurfaceCardBaseOwnProps & PressableActionsProps
 /**
  * The generic `bg-surface` content card of the namespace, with an OPTIONAL section
@@ -606,7 +609,7 @@ const Nested = ({
             data-component="SurfaceCardNested"
         >
             {hasHeader ? (
-                // ⚠️ The header's own border chrome (`border-b border-default`) is not a
+                // NOTE: The header's own border chrome (`border-b border-default`) is not a
                 // positioning token, so it wraps a div; the `px-3 py-2` padding threads
                 // through the frame's own `padding` prop (asymmetric x/y shape).
                 <div className="border-b border-default">
@@ -628,7 +631,7 @@ const Nested = ({
                                         items={[
                                             ...(Icon ? [() => <Icon aria-hidden focusable="false" />] : []),
                                             () => (isSkeleton
-                                                ? <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
+                                                ? <Typography size="xs" isSkeleton />
                                                 : <Typography size="xs" color="muted" truncate text={title} />),
                                         ]}
                                     />
@@ -859,8 +862,8 @@ const PressableGroupSkeletonTile = ({ classNames }: PressableGroupSkeletonTilePr
             <Avatar isSkeleton size="md" />
         </div>
         <div className="flex min-w-0 flex-1 flex-col">
-            <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
-            <Typography size="xs" isSkeleton classNames={["w-2/3"]} />
+            <Typography size="sm" isSkeleton />
+            <Typography size="xs" isSkeleton />
         </div>
     </div>
 )
@@ -1057,7 +1060,7 @@ const SELECTABLE_GROUP_COLUMNS: Record<1 | 2 | 3, GridColumns> = {
  * would swallow a box-shadow ring, but never touches `outline`. That same shadow is
  * dropped (`!shadow-none`) while the ring is up so the two don't stack.
  *
- * ⚠️ Calls HeroUI `Radio`/`RadioGroup` directly rather than the design system's
+ * NOTE: Calls HeroUI `Radio`/`RadioGroup` directly rather than the design system's
  * `ChoiceRadio`/`ChoiceRadioGroup` atom — known drift, carried over verbatim
  * from `atoms/navigation/SelectableCardGroup` (not refactored in this move).
  *
@@ -1123,7 +1126,7 @@ const SelectableGroup = <T extends string>({
                                                 isDisabled && "opacity-60",
                                             )}
                                         >
-                                            <StackH gap={3} classNames={["w-full"]} items={[() => optionRow]} />
+                                            <StackH gap={3} items={[() => optionRow]} />
                                         </Card>
                                     )
                                 }}
@@ -1259,7 +1262,7 @@ export interface SurfaceCardListProps extends SurfaceLabelProps {
      * same divider) INSTEAD OF `items`, and `label`/`description` also switch to
      * shimmer.
      *
-     * ⭐ This branch receives `items` as DATA so the frame builds the row — the
+     * NOTE: This branch receives `items` as DATA so the frame builds the row — the
      * flag FLOWS ON straight into that row, the row keeps its box/padding/divider
      * and only its text switches to shimmer. There's no second skeleton tree
      * anywhere (§12c), so no row-count prop is needed either: the row count IS
@@ -1751,13 +1754,13 @@ const AccordionCard = ({
     )
 }
 // ─────────────────────────────────────────────────────────────────────────────
-// .CrossList — static marked (✓/✗) list card (was `CrossListCard`)
+// .CrossList — static marked (check/cross) list card (was `CrossListCard`)
 // ─────────────────────────────────────────────────────────────────────────────
 /** Per-row mark: success check · muted cross · NEUTRAL pending (not yet decided) · none. */
 export type ListMark = "check" | "cross" | "pending" | "none"
 /**
  * Tone of the mark — prominence climbs by TONE, the element stays:
- * `success` (green ✓ signal) · `muted` (recede, text leads) · `danger` (red — a hard
+ * `success` (green check signal) · `muted` (recede, text leads) · `danger` (red — a hard
  * NEGATIVE signal: lost/blocked/warning row, not just "not included") · `neutral`
  * (`text-foreground`, same weight as body text — "not decided yet", NOT "unimportant";
  * an icon carrying STATUS meaning must read the status, and
@@ -1812,16 +1815,16 @@ export interface SurfaceCardCrossListItem {
     /** Row body — plain text. The composite wraps it in `Typography` itself (COMPOSITE-8). */
     text: string
     /**
-     * Leading mark: `"check"` (✓ included/done), `"cross"` (muted ✗ excluded), or `"none"`
+     * Leading mark: `"check"` (check included/done), `"cross"` (muted cross excluded), or `"none"`
      * (plain row). Default `"check"`.
      */
     mark?: ListMark
     /**
-     * Tone of the mark. Defaults per mark: `check` → `"success"` (green ✓ — a real
+     * Tone of the mark. Defaults per mark: `check` → `"success"` (green check — a real
      * included/done SIGNAL, e.g. PricingTable), `cross` → `"muted"` (excluded, recede).
      * `"muted"` on a check makes the TEXT lead (value-props INSIDE another card, see
      * `principles.md` §2); `"danger"` marks a hard NEGATIVE row (lost/blocked/warning —
-     * e.g. a red ✗ "lost all progress"), not mere absence. Ignored for `none`.
+     * e.g. a red cross "lost all progress"), not mere absence. Ignored for `none`.
      */
     tone?: MarkTone
 }
@@ -1877,7 +1880,7 @@ const CrossListRow = ({
                     () => <div aria-hidden className="size-5 shrink-0 rounded-full bg-default" />,
                     () => (
                         <div className="min-w-0 flex-1">
-                            <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
+                            <Typography size="sm" isSkeleton />
                         </div>
                     ),
                 ] : [
@@ -1889,9 +1892,9 @@ const CrossListRow = ({
     </li>
 )
 /**
- * Static "brief list" of MARKED rows (✓ / ✗ / none) in a bounded `bg-surface` card with
- * full-bleed dividers — a single list can mix marks (e.g. a plan's included ✓ and excluded
- * ✗ features). Read-only; for CLICKABLE rows use {@link SurfaceCardList}.
+ * Static "brief list" of MARKED rows (check / cross / none) in a bounded `bg-surface` card with
+ * full-bleed dividers — a single list can mix marks (e.g. a plan's included check and excluded
+ * cross features). Read-only; for CLICKABLE rows use {@link SurfaceCardList}.
  *
  * `isSkeleton` self-renders `skeletonRows` mirror rows (each row in its own skeleton
  * state) — consumer just flips the flag, no manual `<Skeleton>` assembly.
@@ -1996,7 +1999,7 @@ const Placeholder = ({
             <span aria-hidden className="[&>svg]:size-8">
                 <Icon />
             </span>
-            <Typography size="sm" weight="medium" color="muted" isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/3"] : undefined} text={label} />
+            <Typography size="sm" weight="medium" color="muted" isSkeleton={isSkeleton} text={label} />
         </>
     )
     if (isSkeleton) {

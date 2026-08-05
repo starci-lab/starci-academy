@@ -72,7 +72,7 @@ export const InputTags = ({
             isSkeleton={isSkeleton}
 
             id={controlId}
-            skeletonControl={<FieldSkeleton classNames={classNames} />}
+            skeletonControl={<Box className={cn(classNames)}><FieldSkeleton /></Box>}
         >
             <Box
                 principles={["control-pad", "sibling-stack"]}

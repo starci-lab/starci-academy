@@ -1,8 +1,10 @@
 import React from "react"
-import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
+
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "TitledText" } as const
 
 /**
  * `TitledText` — a primary line + optional muted secondary (and optional hint) stacked
@@ -104,9 +106,6 @@ export interface TitledTextProps {
  *
  * @param props - {@link TitledTextProps}
  */
-/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
-export const meta = { tier: "composite", name: "TitledText" } as const
-
 export const TitledText = ({
     title,
     subtitle,
@@ -137,7 +136,6 @@ export const TitledText = ({
                         weight={isSkeleton ? undefined : (weight ?? cfg.titleWeight)}
                         truncate={isSkeleton ? undefined : truncate}
                         isSkeleton={isSkeleton}
-                        classNames={isSkeleton ? [cfg.skeleton.title] : undefined}
                         text={title}
 
                     />
@@ -149,7 +147,6 @@ export const TitledText = ({
                         weight={isSkeleton ? undefined : cfg.subWeight}
                         truncate={isSkeleton ? undefined : truncate}
                         isSkeleton={isSkeleton}
-                        classNames={isSkeleton ? [cfg.skeleton.sub] : undefined}
                         text={subtitle}
 
                     />
@@ -160,7 +157,6 @@ export const TitledText = ({
                         color={isSkeleton ? undefined : "muted"}
                         truncate={isSkeleton ? undefined : truncate}
                         isSkeleton={isSkeleton}
-                        classNames={isSkeleton ? [cfg.skeleton.hint] : undefined}
                         text={hint}
 
                     />

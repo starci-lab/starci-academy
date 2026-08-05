@@ -10,6 +10,10 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * `flex items-center justify-between gap-3`. Tab groups come in as data
  * (`items`/`selectedKey`/`onSelectionChange`), and each tab's display state (disabled/muted) is drawn here.
  */
+interface ToolbarSelectItem {
+    id: string
+}
+
 /** One tab in a {@link ToolbarTabGroup}. */
 export interface ToolbarTabItem {
     /** Stable id used as the selection key. */
@@ -156,14 +160,14 @@ const ToolbarBase = ({
                                     // (icon-only) and shows it from sm up; `sr-only` keeps the
                                     // accessible name on mobile. An icon-less tab always shows it.
                                     ...(item.compactLabel != null ? [() => (
-                                            <>
-                                                <span className="@app-sm:hidden">{item.compactLabel}</span>
-                                                <span className="hidden @app-sm:inline">{item.label}</span>
-                                            </>
+                                        <>
+                                            <span className="@app-sm:hidden">{item.compactLabel}</span>
+                                            <span className="hidden @app-sm:inline">{item.label}</span>
+                                        </>
                                     )] : item.label ? [() => (
-                                            <span className={cn(item.icon && "sr-only @app-sm:not-sr-only")}>
-                                                {item.label}
-                                            </span>
+                                        <span className={cn(item.icon && "sr-only @app-sm:not-sr-only")}>
+                                            {item.label}
+                                        </span>
                                     )] : []),
                                 ]}
                             />
@@ -194,7 +198,7 @@ const ToolbarBase = ({
     const renderSelect = (group: ToolbarTabGroup): ReactNode => {
         const selected = group.items.find((item) => item.key === group.selectedKey)
         return (
-            <Select.Root<{ id: string }, "single">
+            <Select.Root<ToolbarSelectItem, "single">
                 variant="secondary"
                 aria-label={group.ariaLabel}
                 selectedKey={group.selectedKey}

@@ -11,7 +11,7 @@ import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { StatPair } from "@/components/blocks/stats/StatPair"
+import { StatPair } from "@/components/composites/stats/StatPair"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 

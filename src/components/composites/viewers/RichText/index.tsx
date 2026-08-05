@@ -9,7 +9,7 @@ import { Box } from "@/components/frames/Box"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — faithful port of
- * `@/components/blocks/rendering/RichText`. Authored in Storybook (not `src`);
+ * `@/components/composites/viewers/RichText`. Authored in Storybook (not `src`);
  * synced back to `src` later. A tiny INLINE-only markdown renderer — NOT a full
  * markdown renderer (that is `MarkdownContent`).
  * ─────────────────────────────────────────────────────────────────────────────

@@ -6,7 +6,7 @@ import { ResponsiveRow } from "@/components/frames/ResponsiveRow"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/stats/StatRibbon`. Authored in Storybook (not `src`);
+ * `@/components/composites/stats/StatRibbon`. Authored in Storybook (not `src`);
  * synced to `src` later.
  */
 
@@ -22,6 +22,8 @@ export interface StatRibbonItem {
     value: string
     /** Caption describing the value, rendered small + muted. `string` — see {@link StatRibbonItem.value}. */
     label: string
+    /** Optional second caption line — the specific behind the category. See {@link StatPair}. */
+    detail?: string
 }
 
 /** Props {@link StatRibbon} carries regardless of loading state. */
@@ -104,7 +106,12 @@ export const StatRibbon = ({
                             {isSkeleton ? (
                                 <StatPair isSkeleton valueType={valueType} />
                             ) : (
-                                <StatPair value={(item as StatRibbonItem).value} label={(item as StatRibbonItem).label} valueType={valueType} />
+                                <StatPair
+                                    value={(item as StatRibbonItem).value}
+                                    label={(item as StatRibbonItem).label}
+                                    detail={(item as StatRibbonItem).detail}
+                                    valueType={valueType}
+                                />
                             )}
                         </div>
                     ))}

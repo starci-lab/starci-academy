@@ -6,7 +6,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/stats/Legend`. Authored in Storybook (not `src`); synced
+ * `@/components/composites/stats/Legend`. Authored in Storybook (not `src`); synced
  * to `src` later.
  */
 

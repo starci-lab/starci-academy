@@ -5,7 +5,7 @@ import { StackV } from "@/components/frames/Stack"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
- * `@/components/blocks/stats/StatPair`. Authored in Storybook (not `src`);
+ * `@/components/composites/stats/StatPair`. Authored in Storybook (not `src`);
  * synced to `src` later.
  */
 
@@ -29,7 +29,7 @@ interface StatPairOwnProps {
  */
 export type StatPairProps = StatPairOwnProps &
     (
-        | { isSkeleton: true; value?: string; label?: string }
+        | { isSkeleton: true; value?: string; label?: string; detail?: string }
         | {
             isSkeleton?: false
             /**
@@ -45,6 +45,12 @@ export type StatPairProps = StatPairOwnProps &
              * {@link StatPairProps.value}.
              */
             label: string
+            /**
+             * A second caption line under the label — the specific behind the category
+             * ("Intel i7-12700H" under "CPU"). Truncates rather than wrapping, so a long
+             * value cannot push the row taller than its neighbours in a ribbon.
+             */
+            detail?: string
         }
     )
 
@@ -66,6 +72,7 @@ const VALUE_SIZE: Record<StatPairValueType, "h4" | "h5" | "base"> = { h4: "h4", 
 export const StatPair = ({
     value,
     label,
+    detail,
     valueType = "h4",
     isSkeleton = false,
     classNames}: StatPairProps) => {
@@ -85,6 +92,9 @@ export const StatPair = ({
                     />
                 ),
                 () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={label} />,
+                ...(detail
+                    ? [() => <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={detail} />]
+                    : []),
             ]}
         />
     )

@@ -3,7 +3,7 @@
 import React from "react"
 import { Chip, Typography, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { StatPair } from "@/components/blocks/stats/StatPair"
+import { StatPair } from "@/components/composites/stats/StatPair"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { useQueryMyJobReadinessSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyJobReadinessSwr"
 import type { UserJobReadinessBand } from "@/modules/api/graphql/queries/types/user-job-readiness"

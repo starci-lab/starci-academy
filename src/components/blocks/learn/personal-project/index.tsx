@@ -21,7 +21,7 @@ import {
 } from "./TaskCodeImplementations"
 import { useAppSelector } from "@/redux/hooks"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { RichText } from "@/components/blocks/rendering/RichText"
+import { RichText } from "@/components/composites/viewers/RichText"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
 import { useQueryMilestoneTaskSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskSwr"

@@ -11,7 +11,7 @@ import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQuery
 import { useQueryUserJobReadinessSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserJobReadinessSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { StatPair } from "@/components/blocks/stats/StatPair"
+import { StatPair } from "@/components/composites/stats/StatPair"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"

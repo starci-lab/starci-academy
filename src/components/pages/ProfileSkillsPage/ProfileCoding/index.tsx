@@ -39,7 +39,7 @@ import { useQueryUserXpSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserX
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { LanguageChip } from "@/components/blocks/chips/LanguageChip"
-import { StatRibbon } from "@/components/blocks/stats/StatRibbon"
+import { StatRibbon } from "@/components/composites/stats/StatRibbon"
 import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
 import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"

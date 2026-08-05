@@ -22,7 +22,7 @@ import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 import { LabeledAccordionCard } from "@/components/blocks/cards/LabeledAccordionCard"
-import { StatRibbon } from "@/components/blocks/stats/StatRibbon"
+import { StatRibbon } from "@/components/composites/stats/StatRibbon"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 import { PlaygroundHeader } from "@/components/blocks/learn/PlaygroundHeader"
@@ -244,13 +244,8 @@ export const PlaygroundCliSession = () => {
     const device = byomState.deviceInfo
     // Device specs render as ONE StatRibbon (a single Card with vertical dividers —
     // the canon "ribbon"), NOT N hand-rolled tiles which read as surface-in-surface
-    // on the bg-surface sheet. Each StatPair label carries the category + a detail line.
-    const deviceLabel = (caption: string, detail: string) => (
-        <span className="flex flex-col">
-            <span>{caption}</span>
-            <span className="truncate">{detail}</span>
-        </span>
-    )
+    // on the bg-surface sheet. Each pair carries the category plus the specific behind
+    // it, which the ribbon draws as its own second line.
 
     const connectedBody = (
         <div className="flex flex-col gap-4">
@@ -264,27 +259,28 @@ export const PlaygroundCliSession = () => {
                             {
                                 key: "os",
                                 value: platformLabel(device.platform),
-                                label: deviceLabel(t("playground.session.deviceOs"), `${device.arch} · ${device.hostname}`),
+                                label: t("playground.session.deviceOs"),
+                                detail: `${device.arch} · ${device.hostname}`,
                             },
                             {
                                 key: "cpu",
                                 value: t("playground.session.deviceCores", { count: device.cpuCores }),
-                                label: deviceLabel(t("playground.session.deviceCpu"), device.cpuModel),
+                                label: t("playground.session.deviceCpu"),
+                                detail: device.cpuModel,
                             },
                             {
                                 key: "ram",
                                 value: `${gb(device.totalMemBytes)} GB`,
-                                label: deviceLabel(t("playground.session.deviceRam"), t("playground.session.deviceRamFree", { gb: gb(device.freeMemBytes) })),
+                                label: t("playground.session.deviceRam"),
+                                detail: t("playground.session.deviceRamFree", { gb: gb(device.freeMemBytes) }),
                             },
                             {
                                 key: "gpu",
                                 value: device.gpu ?? "—",
-                                label: deviceLabel(
-                                    t("playground.session.deviceGpu"),
-                                    device.vramTotalMb
-                                        ? `${Math.round(device.vramTotalMb / 1024)} GB VRAM${device.vramFreeMb != null ? ` · ${device.vramFreeMb} MB ${t("playground.session.deviceVramFree")}` : ""}`
-                                        : device.gpu ? "" : t("playground.session.deviceGpuUnknown"),
-                                ),
+                                label: t("playground.session.deviceGpu"),
+                                detail: device.vramTotalMb
+                                    ? `${Math.round(device.vramTotalMb / 1024)} GB VRAM${device.vramFreeMb != null ? ` · ${device.vramFreeMb} MB ${t("playground.session.deviceVramFree")}` : ""}`
+                                    : device.gpu ? undefined : t("playground.session.deviceGpuUnknown"),
                             },
                         ]}
                     />

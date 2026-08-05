@@ -8,20 +8,19 @@ import {
     Label,
     Popover,
     PopoverContent,
-    Switch as HeroSwitch,
 } from "@heroui/react"
 import {
     BellIcon,
     ChecksIcon,
     CircleIcon,
     MagnifyingGlassIcon,
-    MoonIcon,
     ShoppingCartIcon,
     SidebarSimpleIcon,
-    SunIcon,
-    TranslateIcon,
     UserIcon,
 } from "@phosphor-icons/react"
+import { NavbarLanguageMenu } from "./NavbarLanguageMenu"
+import { NavbarThemeSwitch } from "./NavbarThemeSwitch"
+import type { NavbarLanguageOption } from "./types"
 import { Logo } from "@/components/atoms/display/Logo"
 import { Avatar } from "@/components/atoms/display/Avatar"
 import { Badge } from "@/components/atoms/display/Badge"
@@ -58,13 +57,7 @@ export interface NavLinkItem {
     onPress: () => void
 }
 
-/** One selectable locale in the language dropdown. */
-export interface NavbarLanguageOption {
-    /** Locale code (e.g. `"vi"`), also the value reported to `onLocaleChange`. */
-    code: string
-    /** Visible language name, already localized by the caller. */
-    label: string
-}
+export type { NavbarLanguageOption }
 
 /** One row in the notification popover's list. */
 export interface NavbarNotificationItem {
@@ -182,88 +175,6 @@ export interface NavbarProps {
     /** Extra class on the root `<nav>` (placement only). */
     className?: string
 }
-
-/** Props for the internal {@link NavbarLanguageMenu} control (desktop icon + mobile drawer row share it). */
-interface NavbarLanguageMenuProps {
-    languages: Array<NavbarLanguageOption>
-    activeLocale: string
-    onLocaleChange: (code: string) => void
-}
-
-/**
- * Locale picker — raw HeroUI `Dropdown` (see file header: no atom here supports a
- * single-select CHECK indicator). Shared verbatim by the desktop icon row and the
- * mobile drawer row so the two never drift.
- */
-const NavbarLanguageMenu = ({ languages, activeLocale, onLocaleChange }: NavbarLanguageMenuProps) => (
-    <Dropdown>
-        <Button
-            isIconOnly
-            variant="ghost"
-            prefixIcon={TranslateIcon}
-            ariaLabel="Language"
-
-        />
-        <Dropdown.Popover>
-            <Dropdown.Menu
-                aria-label="Language"
-                selectionMode="single"
-                selectedKeys={new Set([activeLocale])}
-                onSelectionChange={(keys) => {
-                    if (keys === "all") return
-                    const next = [...keys][0]
-                    if (next != null) onLocaleChange(String(next))
-                }}
-
-            >
-                <Dropdown.Section>
-                    {languages.map((language) => (
-                        <Dropdown.Item
-                            key={language.code}
-                            id={language.code}
-                            textValue={language.label}
-
-                        >
-                            <Dropdown.ItemIndicator />
-                            <Label>{language.label}</Label>
-                        </Dropdown.Item>
-                    ))}
-                </Dropdown.Section>
-            </Dropdown.Menu>
-        </Dropdown.Popover>
-    </Dropdown>
-)
-
-/** Props for the internal {@link NavbarThemeSwitch} control (desktop icon row + mobile drawer row share it). */
-interface NavbarThemeSwitchProps {
-    isDarkMode: boolean
-    onThemeToggle: (isDark: boolean) => void
-}
-
-/**
- * Dark/light toggle — raw HeroUI `Switch` (see file header: `Choice.Switch` has no
- * icon-in-thumb slot). Shared verbatim by the desktop row and the mobile drawer row.
- */
-const NavbarThemeSwitch = ({ isDarkMode, onThemeToggle }: NavbarThemeSwitchProps) => (
-    <HeroSwitch
-        isSelected={isDarkMode}
-        onChange={onThemeToggle}
-        aria-label="Toggle dark mode"
-
-    >
-        {({ isSelected }) => (
-            <HeroSwitch.Content>
-                <HeroSwitch.Control>
-                    <HeroSwitch.Thumb>
-                        <HeroSwitch.Icon>
-                            {isSelected ? <MoonIcon className="size-5 text-inherit" /> : <SunIcon className="size-5 text-inherit" />}
-                        </HeroSwitch.Icon>
-                    </HeroSwitch.Thumb>
-                </HeroSwitch.Control>
-            </HeroSwitch.Content>
-        )}
-    </HeroSwitch>
-)
 
 const ShortcutHint = ({ shortcutLabel }: { shortcutLabel: string }) => (
     <Kbd><Kbd.Content>{shortcutLabel}</Kbd.Content></Kbd>

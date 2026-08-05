@@ -16,7 +16,8 @@ import {
 import { Divider } from "@/components/atoms/display/Divider"
 import { Typography, type TypographyIcon } from "@/components/atoms/text/Typography"
 import { StackH, StackV } from "@/components/frames/Stack"
-import { CollapsibleSidebar, useSidebarCollapsed } from "@/components/blocks/navigation/CollapsibleSidebar"
+import { CollapsibleSidebar } from "@/components/blocks/navigation/CollapsibleSidebar"
+import { DesktopNavRow } from "./DesktopNavRow"
 
 /**
  * `SettingsSidebarNav` — the account-settings destination list, drawn as a
@@ -63,7 +64,7 @@ export interface SettingsNavGroup {
 }
 
 /** Destination → label. The block's own wording (§14d.1), never handed in by the caller. */
-const DESTINATION_LABEL: Record<SettingsDestinationKey, string> = {
+export const DESTINATION_LABEL: Record<SettingsDestinationKey, string> = {
     editProfile: "Edit profile",
     appearance: "Appearance",
     security: "Security",
@@ -78,7 +79,7 @@ const DESTINATION_LABEL: Record<SettingsDestinationKey, string> = {
 }
 
 /** Destination → icon. Same glyphs `src`'s `nav.tsx` maps, so porting this table reads as ONE control. */
-const DESTINATION_ICON: Record<SettingsDestinationKey, TypographyIcon> = {
+export const DESTINATION_ICON: Record<SettingsDestinationKey, TypographyIcon> = {
     editProfile: PencilSimpleIcon,
     appearance: PaintBrushIcon,
     security: ShieldCheckIcon,
@@ -90,58 +91,6 @@ const DESTINATION_ICON: Record<SettingsDestinationKey, TypographyIcon> = {
     bookmarks: BookmarkSimpleIcon,
     membership: StarIcon,
     installments: WalletIcon,
-}
-
-/** Props for the private {@link DesktopNavRow} — the inlined `SidebarNavItem` gap (see file header). */
-interface DesktopNavRowProps {
-    /** Which destination this row is. */
-    item: SettingsNavItem
-    /** Whether this row's `href` is the one being viewed right now. */
-    isActive: boolean
-    /** Fired with the row's `href` when it is pressed. */
-    onNavigate: (href: string) => void
-}
-
-/**
- * One destination row in the desktop rail: a leading icon + truncating label, icon-only
- * when `CollapsibleSidebar` is collapsed (read via `useSidebarCollapsed`, exported by that
- * composite so any nav-row content can drop to a rail without owning the flag itself).
- * A plain `<button>` rather than a HeroUI `Link` — see the file header's hand-roll call.
- *
- * @param props - {@link DesktopNavRowProps}
- */
-const DesktopNavRow = ({ item, isActive, onNavigate }: DesktopNavRowProps) => {
-    const collapsed = useSidebarCollapsed()
-    const Icon = DESTINATION_ICON[item.key]
-    const rowContent = (
-        <>
-            <Icon aria-hidden focusable="false" className="size-5 shrink-0" />
-            {!collapsed ? (
-                <Typography
-                    size="sm"
-                    weight={isActive ? "medium" : undefined}
-                    text={DESTINATION_LABEL[item.key]}
-                    truncate
-
-                />
-            ) : null}
-        </>
-    )
-    return (
-        <button
-            type="button"
-            aria-label={DESTINATION_LABEL[item.key]}
-            aria-current={isActive ? "page" : undefined}
-            onClick={() => onNavigate(item.href)}
-            className={cn(
-                "w-full rounded-large text-start outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent",
-                collapsed ? "px-2 py-2" : "px-3 py-2",
-                isActive ? "bg-accent-soft text-accent-soft-foreground" : "text-foreground hover:bg-default/40",
-            )}
-        >
-            <StackH gap={2} principles={["icon-text"]} align="center" justify={collapsed ? "center" : "start"} items={[() => rowContent]} />
-        </button>
-    )
 }
 
 /** Props for {@link SettingsSidebarNav}. */

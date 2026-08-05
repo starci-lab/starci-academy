@@ -21,7 +21,7 @@ import {
 } from "@/components/blocks/settings/SettingsBreadcrumb"
 import {
     AiQuotaLane,
-} from "@/components/starci/blocks/ai/AiQuotaLane"
+} from "@/components/blocks/ai/AiQuotaLane"
 import {
     AiUsageHistory,
 } from "./AiUsageHistory"

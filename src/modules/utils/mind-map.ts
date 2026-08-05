@@ -1,4 +1,4 @@
-import type { MindMapRailTier as MindMapTier } from "@/components/starci/blocks/learn/MindMapRail"
+import type { MindMapRailTier as MindMapTier } from "@/components/blocks/learn/MindMapRail"
 
 /** Numeric rank of a popularity tier — higher = more common. */
 export const POP_RANK: Record<string, number> = {

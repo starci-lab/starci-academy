@@ -1,18 +1,18 @@
 import React from "react"
 import { TerminalWindowIcon } from "@phosphor-icons/react"
-import { PlaygroundSetupHeader } from "@/components/starci/blocks/learn/PlaygroundSetupHeader"
-import { PlaygroundEnterBanner } from "@/components/starci/blocks/learn/PlaygroundEnterBanner"
-import { PlaygroundDeviceSnapshot, type PlaygroundDeviceInfo } from "@/components/starci/blocks/learn/PlaygroundDeviceSnapshot"
+import { PlaygroundSetupHeader } from "@/components/blocks/learn/PlaygroundSetupHeader"
+import { PlaygroundEnterBanner } from "@/components/blocks/learn/PlaygroundEnterBanner"
+import { PlaygroundDeviceSnapshot, type PlaygroundDeviceInfo } from "@/components/blocks/learn/PlaygroundDeviceSnapshot"
 import {
     PlaygroundSetupSteps,
     type PlaygroundSetupFlavor,
     type PlaygroundSetupOs,
-} from "@/components/starci/blocks/learn/PlaygroundSetupSteps"
+} from "@/components/blocks/learn/PlaygroundSetupSteps"
 import {
     PlaygroundReadinessChecklist,
     type PlaygroundReadinessChecklistItem,
     type PlaygroundReadinessKind,
-} from "@/components/starci/blocks/learn/PlaygroundReadinessChecklist"
+} from "@/components/blocks/learn/PlaygroundReadinessChecklist"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { Container } from "@/components/frames/Container"
 import { StackV } from "@/components/frames/Stack"

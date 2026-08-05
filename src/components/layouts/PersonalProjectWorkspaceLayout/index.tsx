@@ -39,15 +39,15 @@ import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/type
 import type {
     PersonalProjectDashboardTask,
     PersonalProjectTaskSubtitleState,
-} from "@/components/starci/blocks/learn/PersonalProjectDashboard"
+} from "@/components/blocks/learn/PersonalProjectDashboard"
 import type {
     PersonalProjectTaskLegacyCriterionItem,
     PersonalProjectTaskLegacyCodeImplementationItem,
 } from "@/components/pages/PersonalProjectTaskPage"
-import type { AiModelCategory as SubmissionModelCategory } from "@/components/starci/blocks/learn/SubmissionScoreCard"
-import type { SubmissionAttempt } from "@/components/starci/blocks/learn/SubmissionAttemptSelector"
-import type { SubmissionFinding, SubmissionFeedbackSeverity } from "@/components/starci/blocks/learn/SubmissionFindingsList"
-import type { ContentRelatedItem } from "@/components/starci/blocks/learn/ContentRelatedList"
+import type { AiModelCategory as SubmissionModelCategory } from "@/components/blocks/learn/SubmissionScoreCard"
+import type { SubmissionAttempt } from "@/components/blocks/learn/SubmissionAttemptSelector"
+import type { SubmissionFinding, SubmissionFeedbackSeverity } from "@/components/blocks/learn/SubmissionFindingsList"
+import type { ContentRelatedItem } from "@/components/blocks/learn/ContentRelatedList"
 
 /**
  * `PersonalProjectWorkspace` — the CONNECTED half of the SRC TWIN of

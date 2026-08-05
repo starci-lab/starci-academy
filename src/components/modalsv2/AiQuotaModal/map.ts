@@ -7,7 +7,7 @@ import type {
     AiQuotaHistoryChargeItem,
     AiQuotaHistoryChartPoint,
     AiQuotaHistorySurface,
-} from "@/components/starci/blocks/ai/AiQuotaHistoryPanel"
+} from "@/components/blocks/ai/AiQuotaHistoryPanel"
 import type { AiQuotaModalTab, AiQuotaTier } from "./component"
 
 /** How many trailing days the usage chart plots — mirrors the source's fixed 7-day window. */

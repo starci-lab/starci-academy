@@ -21,9 +21,9 @@ import { PaymentFlow } from "@/modules/types/payment"
 import { pathConfig } from "@/resources/path"
 import { ContentTab } from "@/redux/slices/tabs"
 import { toDifficulty, toArticlePricingPhase } from "@/components/pages/_map"
-import type { ModuleHeaderCrumb } from "@/components/starci/blocks/learn/ModuleHeader"
-import type { ModuleLessonListLesson } from "@/components/starci/blocks/learn/ModuleLessonList"
-import type { ModuleChallengeItem } from "@/components/starci/blocks/learn/ModuleChallengeList"
+import type { ModuleHeaderCrumb } from "@/components/blocks/learn/ModuleHeader"
+import type { ModuleLessonListLesson } from "@/components/blocks/learn/ModuleLessonList"
+import type { ModuleChallengeItem } from "@/components/blocks/learn/ModuleChallengeList"
 import { _ModulePage } from "./component"
 
 /**

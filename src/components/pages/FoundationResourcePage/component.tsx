@@ -5,13 +5,13 @@ import {
     FoundationKind,
     type FoundationHeaderCrumb,
     type FoundationHeaderTag,
-} from "@/components/starci/blocks/learn/FoundationHeader"
+} from "@/components/blocks/learn/FoundationHeader"
 import {
     FoundationResourceBody,
     type FoundationKind as FoundationResourceKind,
-} from "@/components/starci/blocks/learn/FoundationResourceBody"
-import { TrialEnrollBanner } from "@/components/starci/blocks/learn/TrialEnrollBanner"
-import { FoundationResourceEmpty } from "@/components/starci/blocks/learn/FoundationResourceEmpty"
+} from "@/components/blocks/learn/FoundationResourceBody"
+import { TrialEnrollBanner } from "@/components/blocks/learn/TrialEnrollBanner"
+import { FoundationResourceEmpty } from "@/components/blocks/learn/FoundationResourceEmpty"
 import { Container } from "@/components/frames/Container"
 import { StackV } from "@/components/frames/Stack"
 

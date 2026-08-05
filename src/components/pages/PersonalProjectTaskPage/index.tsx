@@ -21,11 +21,11 @@ import { SplitWorkspace } from "@/components/frames/SplitWorkspace"
 import {
     ContentRelatedList,
     type ContentRelatedItem,
-} from "@/components/starci/blocks/learn/ContentRelatedList"
+} from "@/components/blocks/learn/ContentRelatedList"
 import {
     SubmissionScoreCard,
     type AiModelCategory,
-} from "@/components/starci/blocks/learn/SubmissionScoreCard"
+} from "@/components/blocks/learn/SubmissionScoreCard"
 
 /**
  * `PersonalProjectTaskPage` — the screen to solve one personal-project task. A

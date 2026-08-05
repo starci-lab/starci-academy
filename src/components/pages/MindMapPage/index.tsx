@@ -16,7 +16,7 @@ import type {
     MindMapPopularity,
     MindMapRailItem,
     MindMapRailTier,
-} from "@/components/starci/blocks/learn/MindMapRail"
+} from "@/components/blocks/learn/MindMapRail"
 import { Stage } from "@/components/frames/Stage"
 import { _MindMapPage, type MindMapVariant } from "./component"
 

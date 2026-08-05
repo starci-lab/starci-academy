@@ -6,13 +6,13 @@ import { Chip } from "@/components/atoms/chips/Chip"
 import { LinkSeeMore } from "@/components/atoms/navigation/Link"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { Box } from "@/components/frames/Box"
-import { AiQuotaLane, type AiQuotaLaneData } from "@/components/starci/blocks/ai/AiQuotaLane"
-import { AiQuotaSubscriptionPanel } from "@/components/starci/blocks/ai/AiQuotaSubscriptionPanel"
+import { AiQuotaLane, type AiQuotaLaneData } from "@/components/blocks/ai/AiQuotaLane"
+import { AiQuotaSubscriptionPanel } from "@/components/blocks/ai/AiQuotaSubscriptionPanel"
 import {
     AiQuotaHistoryPanel,
     type AiQuotaHistoryChartPoint,
     type AiQuotaHistoryChargeItem,
-} from "@/components/starci/blocks/ai/AiQuotaHistoryPanel"
+} from "@/components/blocks/ai/AiQuotaHistoryPanel"
 
 /**
  * `AiQuotaModal` — the root overlay for "how much AI have I used": a dialog with the

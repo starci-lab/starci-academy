@@ -17,9 +17,9 @@ import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 import { pathConfig } from "@/resources/path"
 import { _LeaderboardPage } from "./component"
-import type { LeaderboardHeaderCrumb } from "@/components/starci/blocks/learn/LeaderboardHeader"
-import type { LeaderboardCategoryOption } from "@/components/starci/blocks/learn/LeaderboardCategoryNav"
-import type { LeaderboardStanding, LeaderboardPodiumEntry, LeaderboardRow } from "@/components/starci/blocks/learn/LeaderboardBoard"
+import type { LeaderboardHeaderCrumb } from "@/components/blocks/learn/LeaderboardHeader"
+import type { LeaderboardCategoryOption } from "@/components/blocks/learn/LeaderboardCategoryNav"
+import type { LeaderboardStanding, LeaderboardPodiumEntry, LeaderboardRow } from "@/components/blocks/learn/LeaderboardBoard"
 
 /**
  * Course-level leaderboard screen — the CONNECTED half of the `/learn/leaderboard` page.

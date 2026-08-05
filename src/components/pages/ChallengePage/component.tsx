@@ -4,19 +4,19 @@ import {
     ChallengeHeader,
     type ChallengeDifficulty,
     type ChallengeStatus,
-} from "@/components/starci/blocks/learn/ChallengeHeader"
+} from "@/components/blocks/learn/ChallengeHeader"
 import {
     ChallengeBrief,
     type ChallengeBriefPrerequisiteItem,
     type ChallengeBriefRequirementItem,
     type ChallengeBriefStepItem,
     type ChallengeBriefOutputItem,
-} from "@/components/starci/blocks/learn/ChallengeBrief"
+} from "@/components/blocks/learn/ChallengeBrief"
 import {
     ChallengeDeliverableList,
     type ChallengeDeliverableItem,
-} from "@/components/starci/blocks/learn/ChallengeDeliverableList"
-import { ChallengeScoreCard } from "@/components/starci/blocks/learn/ChallengeScoreCard"
+} from "@/components/blocks/learn/ChallengeDeliverableList"
+import { ChallengeScoreCard } from "@/components/blocks/learn/ChallengeScoreCard"
 import { Container } from "@/components/frames/Container"
 import { StackV } from "@/components/frames/Stack"
 import { SplitWorkspace } from "@/components/frames/SplitWorkspace"

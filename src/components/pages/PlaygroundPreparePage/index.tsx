@@ -11,7 +11,7 @@ import {
 import type {
     PlaygroundReadinessChecklistItem,
     PlaygroundReadinessKind,
-} from "@/components/starci/blocks/learn/PlaygroundReadinessChecklist"
+} from "@/components/blocks/learn/PlaygroundReadinessChecklist"
 import { _PlaygroundPreparePage } from "./component"
 
 /**

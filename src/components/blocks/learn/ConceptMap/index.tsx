@@ -28,7 +28,7 @@ import type {
     CourseMindMapData,
     CourseMindMapNodeData,
 } from "@/modules/api/graphql/queries/types"
-import type { MindMapRailTier as MindMapTier } from "@/components/starci/blocks/learn/MindMapRail"
+import type { MindMapRailTier as MindMapTier } from "@/components/blocks/learn/MindMapRail"
 import {
     POP_RANK,
     TIER_MIN,

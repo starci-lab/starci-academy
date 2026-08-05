@@ -2,17 +2,17 @@ import React from "react"
 import {
     FoundationCategoryHeader,
     type FoundationCategoryHeaderCrumb,
-} from "@/components/starci/blocks/learn/FoundationCategoryHeader"
+} from "@/components/blocks/learn/FoundationCategoryHeader"
 import {
     FoundationCategoryList,
     type FoundationCategoryListItem,
     type FoundationCategoryListPagination,
-} from "@/components/starci/blocks/learn/FoundationCategoryList"
+} from "@/components/blocks/learn/FoundationCategoryList"
 import {
     FoundationCategorySearchBar,
     type FoundationCategorySuggestion,
-} from "@/components/starci/blocks/learn/FoundationCategorySearchBar"
-import { TrialEnrollBanner } from "@/components/starci/blocks/learn/TrialEnrollBanner"
+} from "@/components/blocks/learn/FoundationCategorySearchBar"
+import { TrialEnrollBanner } from "@/components/blocks/learn/TrialEnrollBanner"
 import { Container } from "@/components/frames/Container"
 import { StackV } from "@/components/frames/Stack"
 

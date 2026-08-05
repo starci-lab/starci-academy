@@ -4,7 +4,7 @@ import type {
 import type {
     SettingsDestinationKey,
     SettingsNavGroup,
-} from "@/components/starci/blocks/navigation/SettingsSidebarNav"
+} from "@/components/blocks/navigation/SettingsSidebarNav"
 
 /**
  * The ported `SettingsSidebarNav` block's closed destination vocabulary — every

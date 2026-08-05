@@ -2,7 +2,7 @@ import React from "react"
 import {
     PersonalProjectDashboard,
     type PersonalProjectDashboardProps,
-} from "@/components/starci/blocks/learn/PersonalProjectDashboard"
+} from "@/components/blocks/learn/PersonalProjectDashboard"
 import {
     PersonalProjectTaskPage,
     type PersonalProjectTaskPageProps,
@@ -10,7 +10,7 @@ import {
 import {
     PersonalProjectResultScreen,
     type PersonalProjectResultScreenProps,
-} from "@/components/starci/blocks/learn/PersonalProjectResultScreen"
+} from "@/components/blocks/learn/PersonalProjectResultScreen"
 
 /**
  * `_PersonalProjectWorkspaceLayout` — the SRC TWIN of `.storybook/components/starci/

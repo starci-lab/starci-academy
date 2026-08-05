@@ -1,5 +1,5 @@
 import React from "react"
-import { SettingsSidebarNav, type SettingsNavGroup } from "@/components/starci/blocks/navigation/SettingsSidebarNav"
+import { SettingsSidebarNav, type SettingsNavGroup } from "@/components/blocks/navigation/SettingsSidebarNav"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { Container } from "@/components/frames/Container"
 import { RailShell } from "@/components/frames/RailShell"

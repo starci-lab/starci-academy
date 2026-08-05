@@ -4,7 +4,7 @@ import {
     SubmissionFindingsList,
     type SubmissionFinding,
     type SubmissionFeedbackSeverity,
-} from "@/components/starci/blocks/learn/SubmissionFindingsList"
+} from "@/components/blocks/learn/SubmissionFindingsList"
 
 /**
  * `_FeedbackDetailsModal` — the presentational half of `FeedbackDetailsModal`: a

@@ -23,7 +23,7 @@ import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQuery
 import { useQueryPublicUserCvSwr } from "@/hooks/swr/api/graphql/queries/useQueryPublicUserCvSwr"
 import { useProfileUsername } from "@/hooks/profile/useProfileUsername"
 import { useProfileFollow } from "@/hooks/profile/useProfileFollow"
-import type { ProfileTab } from "@/components/starci/blocks/navigation/ProfileTabsBar"
+import type { ProfileTab } from "@/components/blocks/navigation/ProfileTabsBar"
 import { toPublicProfileUser } from "./map"
 import { _PublicProfileLayout } from "./component"
 

@@ -1,6 +1,6 @@
 import React from "react"
-import { PlaygroundHubHeader } from "@/components/starci/blocks/learn/PlaygroundHubHeader"
-import { PlaygroundExerciseGrid, type PlaygroundExerciseGridItem } from "@/components/starci/blocks/learn/PlaygroundExerciseGrid"
+import { PlaygroundHubHeader } from "@/components/blocks/learn/PlaygroundHubHeader"
+import { PlaygroundExerciseGrid, type PlaygroundExerciseGridItem } from "@/components/blocks/learn/PlaygroundExerciseGrid"
 import { Container } from "@/components/frames/Container"
 import { StackV } from "@/components/frames/Stack"
 

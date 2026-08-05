@@ -5,7 +5,7 @@ import {
 } from "react"
 import type {
     AiQuotaLaneData,
-} from "@/components/starci/blocks/ai/AiQuotaLane"
+} from "@/components/blocks/ai/AiQuotaLane"
 import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
 import { useQueryMyCreditUsageSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCreditUsageSwr"
 import { useWindowResetLabel } from "@/components/modalsv2/AiQuotaModal/hooks"

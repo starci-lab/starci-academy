@@ -12,7 +12,7 @@ import { SiDocker, SiKubernetes } from "react-icons/si"
 // (No Nomic mark exists in the set, so the embedding row keeps a Phosphor glyph.)
 import { Ollama, Qwen } from "@lobehub/icons"
 import type { ReadinessChecklistItem } from "@/components/blocks/feedback/ReadinessChecklist"
-import type { PlaygroundSetupFlavor } from "@/components/starci/blocks/learn/PlaygroundSetupSteps"
+import type { PlaygroundSetupFlavor } from "@/components/blocks/learn/PlaygroundSetupSteps"
 import { useQueryPlaygroundSwr } from "@/hooks/swr/api/graphql/queries/useQueryPlaygroundSwr"
 import { useMutateCreatePlaygroundSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCreatePlaygroundSessionSwr"
 import { queryMyOpenPlaygroundSession } from "@/modules/api/graphql/queries/playground"

@@ -38,7 +38,7 @@ import type {
     NavbarAccountMenuItem,
     NavbarNotificationItem,
     NavLinkItem,
-} from "@/components/starci/blocks/navigation/Navbar"
+} from "@/components/blocks/navigation/Navbar"
 import { _InnerLayout, type InnerLayoutProps } from "./component"
 
 /**

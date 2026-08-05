@@ -1,7 +1,7 @@
 import { AiModelCategory as RealAiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
 import { SubmissionFeedbackSeverity as RealSubmissionFeedbackSeverity } from "@/modules/types/enums/submission-feedback-severity"
-import type { AiModelCategory as BlueprintAiModelCategory } from "@/components/starci/blocks/learn/SubmissionScoreCard"
-import type { SubmissionFeedbackSeverity as BlueprintSubmissionFeedbackSeverity } from "@/components/starci/blocks/learn/SubmissionFindingsList"
+import type { AiModelCategory as BlueprintAiModelCategory } from "@/components/blocks/learn/SubmissionScoreCard"
+import type { SubmissionFeedbackSeverity as BlueprintSubmissionFeedbackSeverity } from "@/components/blocks/learn/SubmissionFindingsList"
 
 /**
  * Real `AiModelCategory` (a backend-mirroring TS `enum`) → the blueprint's plain

@@ -6,8 +6,8 @@ import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
 import { MarkdownContent } from "@/components/composites/viewers/MarkdownContent"
 import { StackH, StackV } from "@/components/frames/Stack"
-import { QaChatBubble } from "@/components/starci/blocks/learn/QaChatBubble"
-import { QaReactionBar, type QaReactionType } from "@/components/starci/blocks/learn/QaReactionBar"
+import { QaChatBubble } from "@/components/blocks/learn/QaChatBubble"
+import { QaReactionBar, type QaReactionType } from "@/components/blocks/learn/QaReactionBar"
 
 /**
  * BLOCK — `QaMessageBubble`: one answer (plus its flattened replies) in a Q&A

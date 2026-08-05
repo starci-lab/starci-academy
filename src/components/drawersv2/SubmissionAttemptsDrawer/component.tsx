@@ -13,7 +13,7 @@ import { Typography } from "@/components/atoms/text/Typography"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { EnumChip } from "@/components/composites/chips/EnumChip"
 import { InlineIconLabel } from "@/components/composites/text/InlineIconLabel"
-import { MODEL_CATEGORY_MAP, type AiModelCategory } from "@/components/starci/blocks/learn/SubmissionScoreCard"
+import { MODEL_CATEGORY_MAP, type AiModelCategory } from "@/components/blocks/learn/SubmissionScoreCard"
 import { Pagination } from "@/components/atoms/navigation/Pagination"
 
 /**

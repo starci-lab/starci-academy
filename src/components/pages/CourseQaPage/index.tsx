@@ -9,8 +9,8 @@ import { mutateCreateComment } from "@/modules/api/graphql/mutations/mutation-cr
 import { pathConfig } from "@/resources/path"
 import { useAppSelector } from "@/redux/hooks"
 import { _CourseQaPage } from "./component"
-import type { CourseQaHeaderCrumb } from "@/components/starci/blocks/learn/CourseQaHeader"
-import type { CourseQaFilter } from "@/components/starci/blocks/learn/CourseQaToolbar"
+import type { CourseQaHeaderCrumb } from "@/components/blocks/learn/CourseQaHeader"
+import type { CourseQaFilter } from "@/components/blocks/learn/CourseQaToolbar"
 
 /** Questions shown per page before the pager kicks in (mirrors the request limit). */
 const QUESTIONS_PER_PAGE = 20

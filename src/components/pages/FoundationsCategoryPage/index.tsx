@@ -18,7 +18,7 @@ import {
     type FoundationResourceItem,
     type FoundationsHeaderCrumb,
 } from "./component"
-import type { FoundationKindEnum } from "@/components/starci/blocks/learn/FoundationResourceList"
+import type { FoundationKindEnum } from "@/components/blocks/learn/FoundationResourceList"
 import { FoundationKind } from "@/modules/types/enums/foundation-kind"
 import type { FoundationEntity } from "@/modules/types/entities/foundation"
 import { compareFoundations, resolveFoundationMountFileUrl } from "@/modules/utils/foundation"

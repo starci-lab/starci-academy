@@ -13,9 +13,9 @@ import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/
 import { setActiveChallengeSubmissionId } from "@/redux/slices/submission-attempt"
 import { resolveSearchResultHref } from "@/modules/learn/resolve-search-result-href"
 import type { AiModelCategory as RealAiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
-import type { SubmissionAttempt } from "@/components/starci/blocks/learn/SubmissionAttemptSelector"
-import type { SubmissionFinding } from "@/components/starci/blocks/learn/SubmissionFindingsList"
-import type { ContentRelatedItem } from "@/components/starci/blocks/learn/ContentRelatedList"
+import type { SubmissionAttempt } from "@/components/blocks/learn/SubmissionAttemptSelector"
+import type { SubmissionFinding } from "@/components/blocks/learn/SubmissionFindingsList"
+import type { ContentRelatedItem } from "@/components/blocks/learn/ContentRelatedList"
 import { toBlueprintModelCategory, toBlueprintSeverity } from "./map"
 import { _ChallengeResultPage } from "./component"
 

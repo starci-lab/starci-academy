@@ -10,15 +10,15 @@ import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyS
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `N8nWorkflowTable` — the "n8n workflows" tab. A table of the expert's workflows
- * (name · webhook · active toggle) plus a recent-executions list and a labelled
- * region standing in for the embedded n8n editor. The three phases — `empty`,
- * `with-workflows`, `with-executions` — are DATA, so they are STATES of the single
+ * `N8nWorkflowTable` -- the "n8n workflows" tab. A table of the expert's workflows
+ * (name - webhook - active toggle) plus a recent-executions list and a labelled
+ * region standing in for the embedded n8n editor. The three phases -- `empty`,
+ * `with-workflows`, `with-executions` -- are DATA, so they are STATES of the single
  * shape. Grounded in the real `N8nToolsService.listAll()` / `executions()` and
  * `setActive(id, active)` behind the toggle.
  */
 
-/** One workflow row — a subset of the real `listAll()` result. */
+/** One workflow row -- a subset of the real `listAll()` result. */
 export interface WorkflowRowView {
     /** Workflow id in n8n. */
     id: string
@@ -33,7 +33,7 @@ export interface WorkflowRowView {
 /** The three execution statuses n8n reports. */
 export type ExecutionStatus = "success" | "error" | "running"
 
-/** One recent run — a subset of the real `executions()` result. */
+/** One recent run -- a subset of the real `executions()` result. */
 export interface ExecutionRowView {
     /** Execution id. */
     id: string
@@ -51,17 +51,17 @@ export interface N8nWorkflowTableProps {
     workflows: Array<WorkflowRowView>
     /** Recent runs, newest first. Empty hides the executions section. */
     executions: Array<ExecutionRowView>
-    /** Turn a workflow on/off — the connected layer runs `setActive(id, active)`. */
+    /** Turn a workflow on/off -- the connected layer runs `setActive(id, active)`. */
     onToggleWorkflow: (id: string, active: boolean) => void
     /** Id of the workflow whose toggle is in flight (its switch locks), or null. */
     togglingId?: string | null
     /** Re-read the workflow list and recent runs from n8n. */
     onReload: () => void
     /**
-     * `true` → the block's own first fetch is in flight: the manage card keeps its
+     * `true` -> the block's own first fetch is in flight: the manage card keeps its
      * title and renders a fixed count of workflow-shaped rows with every cell
      * shimmering (§12b), the reload action and row toggles go inert, and the
-     * executions card is skipped (nothing has run yet). Threaded straight down —
+     * executions card is skipped (nothing has run yet). Threaded straight down --
      * never fed to a separate skeleton tree.
      */
     isSkeleton?: boolean
@@ -108,7 +108,7 @@ export interface N8nWorkflowTableLabels {
 /** Column keys, shared by the header config and each row. */
 const COLUMN_KEY = { workflow: "workflow", webhook: "webhook", active: "active" } as const
 
-/** Execution status → chip tone. Success is healthy, error is a failure, running is in progress. */
+/** Execution status -> chip tone. Success is healthy, error is a failure, running is in progress. */
 const STATUS_TONE: Record<ExecutionStatus, ChipTone> = {
     success: "success",
     error: "danger",
@@ -118,7 +118,7 @@ const STATUS_TONE: Record<ExecutionStatus, ChipTone> = {
 /** How many placeholder rows the loading mirror draws while `workflows` hasn't landed yet. */
 const SKELETON_ROW_COUNT = 3
 
-/** Placeholder workflows — sized like a real row so the table's shimmer mirrors the loaded shape. */
+/** Placeholder workflows -- sized like a real row so the table's shimmer mirrors the loaded shape. */
 const SKELETON_WORKFLOWS: Array<WorkflowRowView> = Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
     id: `skeleton-${index}`,
     name: "Workflow name",
@@ -226,7 +226,7 @@ const N8nWorkflowTable = ({
         />
     )
 
-    /** The recent-runs card — only rendered when at least one run exists. */
+    /** The recent-runs card -- only rendered when at least one run exists. */
     const ExecutionsCard = () => (
         <SurfaceCard
             padding={3}
@@ -260,7 +260,7 @@ const N8nWorkflowTable = ({
                 isSkeleton={isSkeleton}
                 items={[
                     () => <ManageCard />,
-                    // Executions are DATA that arrives with the first fetch — while
+                    // Executions are DATA that arrives with the first fetch -- while
                     // loading there is nothing to show, so the card is skipped (same
                     // omission the loaded `executions.length > 0` guard makes).
                     ...(!isSkeleton && executions.length > 0 ? [() => <ExecutionsCard />] : []),
@@ -273,5 +273,5 @@ const N8nWorkflowTable = ({
 
 export { N8nWorkflowTable }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "N8nWorkflowTable" } as const

@@ -10,13 +10,13 @@ import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `LeadDetailDrawer` — the overlay for one lead: its pipeline stage stepper,
+ * `LeadDetailDrawer` -- the overlay for one lead: its pipeline stage stepper,
  * its message/source, and an AI-drafted reply the expert reviews (edit or
- * approve) before it sends. The lead is a resolved view handed in as props —
+ * approve) before it sends. The lead is a resolved view handed in as props --
  * this file never fetches.
  */
 
-/** The four fixed pipeline stages — same set `LeadsPipeline` sorts leads into. */
+/** The four fixed pipeline stages -- same set `LeadsPipeline` sorts leads into. */
 export type LeadStage = "new" | "contacted" | "won" | "lost"
 
 /** Props for {@link LeadDetailDrawer}. */
@@ -25,7 +25,7 @@ export interface LeadDetailDrawerProps {
     isOpen: boolean
     /** Open-state change handler (backdrop click, Escape, close button). Forwarded to `DrawerShell`. */
     onOpenChange: (open: boolean) => void
-    /** The lead's email — the drawer's title. */
+    /** The lead's email -- the drawer's title. */
     email: string
     /** Which stage the lead is currently in. */
     stage: LeadStage
@@ -37,16 +37,16 @@ export interface LeadDetailDrawerProps {
     draftReply: string
     /** Fires as the expert edits the draft, once {@link isEditingDraft} is true. */
     onDraftReplyChange: (value: string) => void
-    /** `true` → the draft renders as an editable textarea instead of static text. */
+    /** `true` -> the draft renders as an editable textarea instead of static text. */
     isEditingDraft?: boolean
     /** Switches the draft into edit mode. */
     onEditDraft: () => void
-    /** Sends the (possibly edited) draft — the human-in-loop approval gesture. */
+    /** Sends the (possibly edited) draft -- the human-in-loop approval gesture. */
     onSendReply: () => void
-    /** `true` → the send is in flight: both footer buttons lock, Send shows a spinner. */
+    /** `true` -> the send is in flight: both footer buttons lock, Send shows a spinner. */
     isSending?: boolean
     /**
-     * `true` → the drawer's own first fetch (looking the lead up by id) is in
+     * `true` -> the drawer's own first fetch (looking the lead up by id) is in
      * flight: the title, the stage stepper, the message/source rows, and the
      * AI-draft card all draw their skeleton mirror, threaded straight down.
      */
@@ -57,7 +57,7 @@ export interface LeadDetailDrawerProps {
 
 /** The already-resolved copy the drawer renders. */
 export interface LeadDetailDrawerLabels {
-    /** The four stage labels, keyed by stage — drives the stepper row. */
+    /** The four stage labels, keyed by stage -- drives the stepper row. */
     stageLabels: Record<LeadStage, string>
     /** Row label for the lead's message. */
     messageLabel: string
@@ -77,7 +77,7 @@ export interface LeadDetailDrawerLabels {
     sendingLabel: string
 }
 
-/** Stepper order — fixed, mirrors `LeadsPipeline`'s own column order. */
+/** Stepper order -- fixed, mirrors `LeadsPipeline`'s own column order. */
 const STAGE_ORDER: ReadonlyArray<LeadStage> = ["new", "contacted", "won", "lost"]
 
 /**
@@ -102,7 +102,7 @@ const LeadDetailDrawer = ({
     isSkeleton = false,
     labels,
 }: LeadDetailDrawerProps) => {
-    /** One stepper pill — filled/accent for the lead's current stage, muted otherwise. */
+    /** One stepper pill -- filled/accent for the lead's current stage, muted otherwise. */
     const stepperChip = (candidate: LeadStage): { tone: ChipTone } => ({ tone: candidate === stage ? "accent" : "default" })
 
     const detailRows: Array<KeyValueListItem> = [
@@ -229,5 +229,5 @@ const LeadDetailDrawer = ({
 
 export { LeadDetailDrawer }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "overlay", name: "LeadDetailDrawer" } as const

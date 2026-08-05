@@ -7,19 +7,19 @@ import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyS
 import type { SkeletonProps } from "@sb-components/frames/_slot"
 
 /**
- * `NotificationsDrawer` — the overlay opened from `ExpertDashboardShell`'s top
- * bar bell: the cross-domain notification feed, with one primary action —
+ * `NotificationsDrawer` -- the overlay opened from `ExpertDashboardShell`'s top
+ * bar bell: the cross-domain notification feed, with one primary action --
  * mark every notification read.
  */
 
-/** The four sources folded into one feed — same vocabulary `ExpertDashboardOverview`'s activity feed uses. */
+/** The four sources folded into one feed -- same vocabulary `ExpertDashboardOverview`'s activity feed uses. */
 export type NotificationKind = "completion" | "order" | "community" | "lead"
 
-/** One notification — already resolved to a single display line + a relative time. */
+/** One notification -- already resolved to a single display line + a relative time. */
 export interface NotificationItem {
     /** Stable id. */
     id: string
-    /** Which domain source this notification came from — decides the leading icon. */
+    /** Which domain source this notification came from -- decides the leading icon. */
     kind: NotificationKind
     /** The already-resolved display line (e.g. "A learner completed \"Advanced React\""). */
     message: string
@@ -35,13 +35,13 @@ export interface NotificationsDrawerProps {
     onOpenChange: (open: boolean) => void
     /** The feed, newest first. Empty is the drawer's own empty state. */
     notifications: Array<NotificationItem>
-    /** Mark every notification read — the connected layer runs the mutation and closes the drawer. */
+    /** Mark every notification read -- the connected layer runs the mutation and closes the drawer. */
     onMarkAllRead: () => void
-    /** `true` → the mark-all-read mutation is in flight (button busy, locked). */
+    /** `true` -> the mark-all-read mutation is in flight (button busy, locked). */
     isMarkingAllRead?: boolean
     /**
-     * `true` → the drawer's own first fetch is in flight: the title and every
-     * row shimmer. Threaded straight down — never fed to a separate skeleton tree.
+     * `true` -> the drawer's own first fetch is in flight: the title and every
+     * row shimmer. Threaded straight down -- never fed to a separate skeleton tree.
      */
     isSkeleton?: boolean
     /** Already-localized copy. */
@@ -56,11 +56,11 @@ export interface NotificationsDrawerLabels {
     emptyTitle: string
     /** Empty-state supporting line. */
     emptyDescription: string
-    /** Primary action label — mark every notification read. */
+    /** Primary action label -- mark every notification read. */
     markAllReadLabel: string
 }
 
-/** `kind` -> leading icon. A lookup, not a caller choice — the feed owns what each source means. */
+/** `kind` -> leading icon. A lookup, not a caller choice -- the feed owns what each source means. */
 const KIND_ICON: Record<NotificationKind, typeof ReceiptIcon> = {
     completion: TrophyIcon,
     order: ReceiptIcon,
@@ -71,7 +71,7 @@ const KIND_ICON: Record<NotificationKind, typeof ReceiptIcon> = {
 /** How many placeholder rows the skeleton draws while `notifications` hasn't landed yet. */
 const SKELETON_ROW_COUNT = 3
 
-/** Placeholder rows — sized like a real notification so the shimmer mirrors the loaded shape. */
+/** Placeholder rows -- sized like a real notification so the shimmer mirrors the loaded shape. */
 const SKELETON_ITEMS: Array<NotificationItem> = Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
     id: `skeleton-${index}`,
     kind: "order",
@@ -136,5 +136,5 @@ const NotificationsDrawer = ({
 
 export { NotificationsDrawer }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "overlay", name: "NotificationsDrawer" } as const

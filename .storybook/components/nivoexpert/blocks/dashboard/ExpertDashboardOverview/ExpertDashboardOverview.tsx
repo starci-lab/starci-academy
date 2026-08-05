@@ -8,14 +8,14 @@ import { Grid } from "@sb-components/frames/Grid/Grid"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ExpertDashboardOverview` — the expert's business overview: three metric tiles
+ * `ExpertDashboardOverview` -- the expert's business overview: three metric tiles
  * (members, paid orders, revenue) above a per-course completion funnel. The three
- * pictures — `loading`, `content`, `empty` — are DATA, so they are STATES of the
+ * pictures -- `loading`, `content`, `empty` -- are DATA, so they are STATES of the
  * single shape. Grounded in the real `dashboardStats` and `completionFunnel`
- * (`learners` → `started` → `completed`).
+ * (`learners` -> `started` -> `completed`).
  */
 
-/** One headline metric tile — already resolved by the connected layer. */
+/** One headline metric tile -- already resolved by the connected layer. */
 export interface MetricView {
     /** The large value (e.g. "12,500,000 VND", "1,204"). */
     value: string
@@ -35,13 +35,13 @@ export interface DashboardMetrics {
     revenue: MetricView
 }
 
-/** One course's completion funnel — a `completionFunnel` point. */
+/** One course's completion funnel -- a `completionFunnel` point. */
 export interface FunnelCourseView {
     /** Course slug (`CompletionFunnelPoint.slug`). */
     slug: string
     /** Course title (`CompletionFunnelPoint.title`). */
     title: string
-    /** Enrolled learners — the funnel's base (`CompletionFunnelPoint.learners`). */
+    /** Enrolled learners -- the funnel's base (`CompletionFunnelPoint.learners`). */
     learners: number
     /** Learners who started at least one lesson (`CompletionFunnelPoint.started`). */
     started: number
@@ -55,7 +55,7 @@ export interface ExpertDashboardOverviewProps {
     metrics: DashboardMetrics
     /** Per-course completion funnel. Empty is the `empty` state. */
     funnel: Array<FunnelCourseView>
-    /** `true` → the overview's own first fetch is in flight: every tile and the funnel draw their skeleton mirror (§12b), threaded down. */
+    /** `true` -> the overview's own first fetch is in flight: every tile and the funnel draw their skeleton mirror (§12b), threaded down. */
     isSkeleton?: boolean
     /** Already-localized copy. */
     labels: ExpertDashboardOverviewLabels
@@ -78,7 +78,7 @@ export interface ExpertDashboardOverviewLabels {
 /** How many placeholder cards the funnel skeleton draws. */
 const SKELETON_FUNNEL_COUNT = 2
 
-/** The three funnel stages, in descending order — read off the point in place. */
+/** The three funnel stages, in descending order -- read off the point in place. */
 const STAGES = ["learners", "started", "completed"] as const
 
 /**
@@ -125,7 +125,7 @@ const ExpertDashboardOverview = ({ metrics, funnel, isSkeleton = false, labels }
         />
     )
 
-    /** One funnel stage — its label + count/percent, then a bar filled to its share of `learners`. */
+    /** One funnel stage -- its label + count/percent, then a bar filled to its share of `learners`. */
     const Stage = (course: FunnelCourseView, stage: (typeof STAGES)[number]) => {
         const value = course[stage]
         const pct = course.learners > 0 ? Math.round((value / course.learners) * 100) : 0
@@ -157,7 +157,7 @@ const ExpertDashboardOverview = ({ metrics, funnel, isSkeleton = false, labels }
         )
     }
 
-    /** One course's funnel card — its header, then the three descending stages. */
+    /** One course's funnel card -- its header, then the three descending stages. */
     const CourseFunnel = (course: FunnelCourseView) => (
         <SurfaceCard
             variant="nested"
@@ -184,7 +184,7 @@ const ExpertDashboardOverview = ({ metrics, funnel, isSkeleton = false, labels }
         />
     )
 
-    /** The funnel section body — skeleton mirror, empty state, or the course cards. */
+    /** The funnel section body -- skeleton mirror, empty state, or the course cards. */
     const FunnelBody = () => {
         if (isSkeleton) {
             return (
@@ -198,7 +198,7 @@ const ExpertDashboardOverview = ({ metrics, funnel, isSkeleton = false, labels }
                                 <StackV
                                     gap={3}
                                     items={[
-                                        () => <Typography size="base" isSkeleton classNames={["w-1/3"]} />,
+                                        () => <Typography size="base" isSkeleton />,
                                         () => <StackV gap={3} items={STAGES.map(() => () => <ProgressBar isSkeleton />)} />,
                                     ]}
                                 />
@@ -229,5 +229,5 @@ const ExpertDashboardOverview = ({ metrics, funnel, isSkeleton = false, labels }
 
 export { ExpertDashboardOverview }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "ExpertDashboardOverview" } as const

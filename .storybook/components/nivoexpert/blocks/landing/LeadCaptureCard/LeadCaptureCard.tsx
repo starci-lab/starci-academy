@@ -7,22 +7,22 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `LeadCaptureCard` — the closing "Contact" card of the tenant landing: name +
+ * `LeadCaptureCard` -- the closing "Contact" card of the tenant landing: name +
  * contact + optional message, one submit action, and a sent confirmation. It
- * is the universal onward path present in EVERY page state — never omitted,
+ * is the universal onward path present in EVERY page state -- never omitted,
  * only its heading copy changes with `intent`. Restyle, not rewrite, of the
  * real `apps/expert/app/LeadForm.tsx`, grounded in `LeadEntity`
- * (`name`, `contact`, `message`) and the real `submitLead` mutation — the
+ * (`name`, `contact`, `message`) and the real `submitLead` mutation -- the
  * real form has no error slot (a thrown mutation still flips to the sent
  * message, since there is nothing the visitor could fix), so none is modelled
  * here either. Built on the shared HeroUI atom system
  * (`SurfaceCard`/`Input.*`/`Button`/`Typography`/`Container`/`Stack`),
  * re-themed per tenant through `apps/expert/app/globals.css`'s `--nivo-*` ->
- * HeroUI CSS-var bridge — see the component's own file header for the full
+ * HeroUI CSS-var bridge -- see the component's own file header for the full
  * contract.
  */
 
-/** Which heading copy the card shows — mirrors the page's own course-count state. */
+/** Which heading copy the card shows -- mirrors the page's own course-count state. */
 export type LeadCaptureIntent = "empty" | "populated"
 
 /** Already-localized copy the card renders. */
@@ -51,13 +51,13 @@ export interface LeadCaptureCardLabels {
 
 /** Props for {@link LeadCaptureCard}. */
 export interface LeadCaptureCardProps {
-    /** Which heading copy to show — derived from the same course count that decides the catalog region. Ignored while `isSkeleton`. */
+    /** Which heading copy to show -- derived from the same course count that decides the catalog region. Ignored while `isSkeleton`. */
     intent: LeadCaptureIntent
     /** Current name value (controlled). */
     name: string
     /** Fires as the name field changes. */
     onNameChange: (value: string) => void
-    /** Current contact value — email or phone, free text (controlled). */
+    /** Current contact value -- email or phone, free text (controlled). */
     contact: string
     /** Fires as the contact field changes. */
     onContactChange: (value: string) => void
@@ -65,16 +65,16 @@ export interface LeadCaptureCardProps {
     message: string
     /** Fires as the message field changes. */
     onMessageChange: (value: string) => void
-    /** Submit the lead — the connected layer runs `submitLead({ name, contact, message })`. */
+    /** Submit the lead -- the connected layer runs `submitLead({ name, contact, message })`. */
     onSubmit: () => void
-    /** `true` → the mutation is in flight: the submit button shows its busy label and every field locks. */
+    /** `true` -> the mutation is in flight: the submit button shows its busy label and every field locks. */
     isSubmitting?: boolean
-    /** `true` → `submitLead` has resolved (or calmly swallowed a transport error): the fields are replaced by the confirmation line, matching the real `LeadForm.tsx`'s `sent` state. */
+    /** `true` -> `submitLead` has resolved (or calmly swallowed a transport error): the fields are replaced by the confirmation line, matching the real `LeadForm.tsx`'s `sent` state. */
     isSent?: boolean
     /**
-     * `true` → the page's course-count/brand data has not resolved yet, so the
+     * `true` -> the page's course-count/brand data has not resolved yet, so the
      * card cannot yet know whether `intent` is `"empty"` or `"populated"`. Only
-     * the sub-heading shimmers — the fields and the submit action are static,
+     * the sub-heading shimmers -- the fields and the submit action are static,
      * never data-dependent, and stay live throughout (matches the real page's
      * "the lead form is still reachable" first-load behaviour).
      */
@@ -103,7 +103,7 @@ const LeadCaptureCard = ({
     isSkeleton = false,
     labels,
 }: LeadCaptureCardProps) => {
-    // Presentation logic the block derives, not a request it makes — mirrors the
+    // Presentation logic the block derives, not a request it makes -- mirrors the
     // real `submit`'s implicit guard (`!name.trim() || !contact.trim() || busy`).
     const canSubmit = name.trim().length > 0 && contact.trim().length > 0 && !isSubmitting
 
@@ -148,7 +148,6 @@ const LeadCaptureCard = ({
                                                             color="muted"
                                                             align="center"
                                                             isSkeleton={isSkeleton}
-                                                            classNames={isSkeleton ? ["w-2/3"] : undefined}
                                                             text={intent === "populated" ? labels.subheadingPopulated : labels.subheadingEmpty}
                                                         />
                                                     ),
@@ -184,15 +183,16 @@ const LeadCaptureCard = ({
                                                         />
                                                     ),
                                                     () => (
-                                                        <Button
-                                                            variant="primary"
-                                                            label={isSubmitting ? labels.submittingLabel : labels.submitLabel}
-                                                            prefixIcon={PaperPlaneTiltIcon}
-                                                            onPress={onSubmit}
-                                                            isDisabled={!canSubmit}
-                                                            isPending={isSubmitting}
-                                                            classNames={["w-full"]}
-                                                        />
+                                                        <div className="grid w-full">
+                                                            <Button
+                                                                variant="primary"
+                                                                label={isSubmitting ? labels.submittingLabel : labels.submitLabel}
+                                                                prefixIcon={PaperPlaneTiltIcon}
+                                                                onPress={onSubmit}
+                                                                isDisabled={!canSubmit}
+                                                                isPending={isSubmitting}
+                                                            />
+                                                        </div>
                                                     ),
                                                 ]}
                                             />
@@ -210,5 +210,5 @@ const LeadCaptureCard = ({
 
 export { LeadCaptureCard }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "LeadCaptureCard" } as const

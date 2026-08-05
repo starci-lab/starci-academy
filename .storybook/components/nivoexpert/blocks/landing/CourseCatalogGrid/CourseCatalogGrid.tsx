@@ -6,13 +6,13 @@ import {
 import { Grid } from "@sb-components/frames/Grid/Grid"
 
 /**
- * `CourseCatalogGrid` — the tenant landing's course catalog at the volume the
- * real backend and the researched platforms both assume: 2–6 courses
+ * `CourseCatalogGrid` -- the tenant landing's course catalog at the volume the
+ * real backend and the researched platforms both assume: 2-6 courses
  * typical, more flowing to additional rows (`CoursesResolver.execute()` is
  * unpaginated). Each cell is a real `CourseOfferCard`; this block owns only
  * the responsive `Grid` arrangement around them. Never called with 0 courses
  * (`CatalogComingSoonPanel`'s job) or exactly 1 (`CourseFeaturedCard`'s job)
- * — see the component's file header for why those are siblings, not states
+ * -- see the component's file header for why those are siblings, not states
  * of this shape.
  */
 
@@ -22,11 +22,11 @@ export type CourseCatalogGridLabels = CourseOfferCardLabels
 /** Props for {@link CourseCatalogGrid}. */
 export interface CourseCatalogGridProps {
     /**
-     * The tenant's courses, in listing order — 2+ typical. Never called with 0
+     * The tenant's courses, in listing order -- 2+ typical. Never called with 0
      * or 1 (see the file header); this grid does not model those pictures.
      */
     courses: Array<CourseOfferCardView>
-    /** Fires as any card is pressed — the connected layer routes to `/classroom/[slug]`. */
+    /** Fires as any card is pressed -- the connected layer routes to `/classroom/[slug]`. */
     onOpenCourse: (slug: string) => void
     /**
      * `true` -> the catalog's own first fetch is in flight: a fixed count of
@@ -41,7 +41,7 @@ export interface CourseCatalogGridProps {
 /** How many placeholder cards the loading grid draws while `courses` hasn't landed yet. */
 const SKELETON_CARD_COUNT = 3
 
-/** Placeholder courses — sized like real cards so the grid's shimmer mirrors the loaded shape. */
+/** Placeholder courses -- sized like real cards so the grid's shimmer mirrors the loaded shape. */
 const SKELETON_COURSES: Array<CourseOfferCardView> = Array.from({ length: SKELETON_CARD_COUNT }, (_unused, index) => ({
     slug: `skeleton-${index}`,
     title: "Course title",
@@ -78,5 +78,5 @@ const CourseCatalogGrid = ({ courses, onOpenCourse, isSkeleton = false, labels }
 
 export { CourseCatalogGrid }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "CourseCatalogGrid" } as const

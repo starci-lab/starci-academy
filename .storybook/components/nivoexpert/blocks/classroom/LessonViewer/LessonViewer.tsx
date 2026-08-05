@@ -7,18 +7,18 @@ import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyS
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `LessonViewer` — one lesson opened in the classroom: title, an optional video
- * region, the body, and a "mark complete" action. The three pictures — `unread`,
- * `completed`, `no-video` — are DATA, so they are STATES of the single shape.
+ * `LessonViewer` -- one lesson opened in the classroom: title, an optional video
+ * region, the body, and a "mark complete" action. The three pictures -- `unread`,
+ * `completed`, `no-video` -- are DATA, so they are STATES of the single shape.
  * Grounded in the real `LessonEntity`, the `MediaAssetEntity` behind the video, and
  * `LessonProgressEntity.completedAt` behind the complete mark.
  */
 
-/** The lesson body — a subset of `LessonEntity`. */
+/** The lesson body -- a subset of `LessonEntity`. */
 export interface LessonView {
     /** Lesson title (`LessonEntity.title`). */
     title: string
-    /** Lesson content — markdown source (`LessonEntity.body`), rendered as a plain content region here. */
+    /** Lesson content -- markdown source (`LessonEntity.body`), rendered as a plain content region here. */
     body: string
 }
 
@@ -38,15 +38,15 @@ export interface LessonViewerProps {
     video?: LessonVideoView | null
     /** `true` once the viewer has completed this lesson (`LessonProgressEntity.completedAt` set). */
     isCompleted: boolean
-    /** `true` while the complete mark is in flight — the button locks and shows a spinner. */
+    /** `true` while the complete mark is in flight -- the button locks and shows a spinner. */
     isMarking?: boolean
-    /** Mark the lesson complete — the connected layer runs `markLessonComplete(lessonId)`. */
+    /** Mark the lesson complete -- the connected layer runs `markLessonComplete(lessonId)`. */
     onMarkComplete: () => void
     /**
-     * `true` → the block's own first fetch is in flight: the same card renders its
+     * `true` -> the block's own first fetch is in flight: the same card renders its
      * title, the video region, the body, and the complete action all shimmering
      * (§12b). The video region always shows while loading so the shape stays
-     * stable. Threaded straight down — never fed to a separate skeleton tree.
+     * stable. Threaded straight down -- never fed to a separate skeleton tree.
      */
     isSkeleton?: boolean
     /** Already-localized copy. */
@@ -92,7 +92,7 @@ const LessonViewer = ({ lesson, video, isCompleted, isMarking = false, onMarkCom
         />
     )
 
-    /** The completion control — a shimmer while loading, a live button, or a success chip once done. */
+    /** The completion control -- a shimmer while loading, a live button, or a success chip once done. */
     const CompleteAction = () =>
         isSkeleton ? (
             <Button variant="primary" prefixIcon={CheckIcon} label={labels.markCompleteLabel} isSkeleton />
@@ -135,5 +135,5 @@ const LessonViewer = ({ lesson, video, isCompleted, isMarking = false, onMarkCom
 
 export { LessonViewer }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "LessonViewer" } as const

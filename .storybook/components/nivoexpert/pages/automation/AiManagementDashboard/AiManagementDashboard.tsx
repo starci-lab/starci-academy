@@ -25,10 +25,10 @@ import {
 } from "@sb-components/nivoexpert/blocks/automation/OpsEventTable/OpsEventTable"
 
 /**
- * `AiManagementDashboard` — the AI-management PAGE: summary tiles atop a tab strip
+ * `AiManagementDashboard` -- the AI-management PAGE: summary tiles atop a tab strip
  * switching between the operations assistant, the n8n workflows it can call, and
  * the platform events those workflows can listen for. A page's story is one
- * complete STATE per story — `loading`, `content`, `empty` — not a leaf-per-prop
+ * complete STATE per story -- `loading`, `content`, `empty` -- not a leaf-per-prop
  * map. Grounded in the real ops module: `ClawbotService`, `N8nToolsService`, and
  * `N8nDispatcherService`'s five `OpsEvent`s.
  */
@@ -42,16 +42,16 @@ export interface AiManagementDashboardProps {
     activeTab: AutomationTabKey
     /** Fires with the newly selected tab. */
     onTabChange: (key: AutomationTabKey) => void
-    /** The header summary tiles — forwarded to {@link AiOpsSummary}. */
+    /** The header summary tiles -- forwarded to {@link AiOpsSummary}. */
     summary: AiOpsSummaryMetrics
 
-    /** The goal the expert is typing — forwarded to {@link AgentTaskConsole}. */
+    /** The goal the expert is typing -- forwarded to {@link AgentTaskConsole}. */
     goal: string
     /** Fires as the goal changes. */
     onGoalChange: (value: string) => void
     /** Give the current goal to the agent. */
     onSubmit: () => void
-    /** `true` → a task is in flight. */
+    /** `true` -> a task is in flight. */
     isRunning?: boolean
     /** Suggested tasks offered as one-tap chips. */
     suggestions: Array<string>
@@ -64,7 +64,7 @@ export interface AiManagementDashboardProps {
     /** Re-read the workflow list the assistant can call. */
     onReloadTools: () => void
 
-    /** The expert's n8n workflows — forwarded to {@link N8nWorkflowTable}. */
+    /** The expert's n8n workflows -- forwarded to {@link N8nWorkflowTable}. */
     workflows: Array<WorkflowRowView>
     /** Recent workflow runs, newest first. */
     executions: Array<ExecutionRowView>
@@ -75,13 +75,13 @@ export interface AiManagementDashboardProps {
     /** Re-read the workflow list and recent runs from n8n. */
     onReloadWorkflows: () => void
 
-    /** The five platform events — forwarded to {@link OpsEventTable}. */
+    /** The five platform events -- forwarded to {@link OpsEventTable}. */
     events: Array<OpsEventRowView>
 
     /**
-     * `true` → the page's own first fetch is in flight: the summary tiles, the tab
+     * `true` -> the page's own first fetch is in flight: the summary tiles, the tab
      * strip, and the active tab's block all draw their skeleton mirror (§12b),
-     * threaded straight down — never a separate skeleton tree.
+     * threaded straight down -- never a separate skeleton tree.
      */
     isSkeleton?: boolean
     /** Already-localized copy for the page's own chrome. */
@@ -148,7 +148,7 @@ const AiManagementDashboard = ({
         { key: "events", label: labels.eventsTabLabel, icon: BroadcastIcon },
     ]
 
-    /** The tab currently selected — only ITS block is mounted below the strip. */
+    /** The tab currently selected -- only ITS block is mounted below the strip. */
     const ActivePanel = () => {
         if (activeTab === "assistant") {
             return (
@@ -212,5 +212,5 @@ const AiManagementDashboard = ({
 
 export { AiManagementDashboard }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "page", name: "AiManagementDashboard" } as const

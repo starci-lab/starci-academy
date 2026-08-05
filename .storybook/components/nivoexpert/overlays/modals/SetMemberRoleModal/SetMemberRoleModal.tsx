@@ -4,13 +4,13 @@ import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShe
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `SetMemberRoleModal` — the blocking gate for picking a member's new role: a
+ * `SetMemberRoleModal` -- the blocking gate for picking a member's new role: a
  * radio group of the three roles, gated behind Save/Cancel. The pending pick is
- * controlled by the caller — same pattern as `AiQuotaModal`'s `activeTab` — so
+ * controlled by the caller -- same pattern as `AiQuotaModal`'s `activeTab` -- so
  * the connected layer decides when it becomes the real `setMemberRole` mutation.
  */
 
-/** A community member's role — mirrors `MembersManager`'s `MemberRole` (kept local: OVERLAY-3, a modal may not import a block). */
+/** A community member's role -- mirrors `MembersManager`'s `MemberRole` (kept local: OVERLAY-3, a modal may not import a block). */
 export type MemberRole = "member" | "moderator" | "admin"
 
 /** Props for {@link SetMemberRoleModal}. */
@@ -19,15 +19,15 @@ export interface SetMemberRoleModalProps {
     isOpen: boolean
     /** Open-state change handler. Forwarded to `ModalShell`. */
     onOpenChange: (open: boolean) => void
-    /** The member's display name — shown in the title. */
+    /** The member's display name -- shown in the title. */
     memberName: string
-    /** The pending role pick (controlled) — the CALLER owns this, same as `AiQuotaModal`'s `activeTab` (Rule 7: the modal never picks its own value). */
+    /** The pending role pick (controlled) -- the CALLER owns this, same as `AiQuotaModal`'s `activeTab` (Rule 7: the modal never picks its own value). */
     selectedRole: MemberRole
     /** Fired with the role the viewer just picked in the radio group. */
     onSelectedRoleChange: (role: MemberRole) => void
-    /** Fired when Save is pressed — the connected layer runs `setMemberRole(id, selectedRole)`. */
+    /** Fired when Save is pressed -- the connected layer runs `setMemberRole(id, selectedRole)`. */
     onSave: () => void
-    /** `true` while the mutation is in flight — Save shows a spinner and both buttons lock. */
+    /** `true` while the mutation is in flight -- Save shows a spinner and both buttons lock. */
     isSaving?: boolean
     /** Already-resolved copy. */
     labels: SetMemberRoleModalLabels
@@ -45,10 +45,10 @@ export interface SetMemberRoleModalLabels {
     cancelLabel: string
 }
 
-/** Fixed, block-owned title prefix — real `src` appends the member's name, same convention `SubmissionAttemptsDrawer` uses for its count. */
+/** Fixed, block-owned title prefix -- real `src` appends the member's name, same convention `SubmissionAttemptsDrawer` uses for its count. */
 const MODAL_TITLE = "Change role"
 
-/** Fixed role order — a 3-way choice, not caller-supplied ordering (§14d.1). */
+/** Fixed role order -- a 3-way choice, not caller-supplied ordering (§14d.1). */
 const ROLE_ORDER: ReadonlyArray<MemberRole> = ["member", "moderator", "admin"]
 
 /**

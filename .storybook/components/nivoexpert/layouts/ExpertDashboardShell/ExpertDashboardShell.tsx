@@ -10,10 +10,10 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { RailShell } from "@sb-components/frames/RailShell/RailShell"
 
 /**
- * `ExpertDashboardShell` — the layout every `apps/expert` dashboard route sits
- * in: a full-width top bar (search · account · notifications) above a
+ * `ExpertDashboardShell` -- the layout every `apps/expert` dashboard route sits
+ * in: a full-width top bar (search - account - notifications) above a
  * `RailShell` whose leading rail is the nine-destination nav (three clusters
- * — Operations / Business / Automation) and whose body is the routed page.
+ * -- Operations / Business / Automation) and whose body is the routed page.
  */
 
 /** A nav-row glyph passed as a COMPONENT reference, rendered at row scale. */
@@ -23,13 +23,13 @@ export type ExpertNavIcon = ComponentType<SVGProps<SVGSVGElement> & { weight?: "
 export interface ExpertDashboardNavItem {
     /** Stable id. */
     id: string
-    /** Visible label — already localized by the caller. */
+    /** Visible label -- already localized by the caller. */
     label: string
     /** Leading glyph as a COMPONENT reference. */
     icon: ExpertNavIcon
-    /** Destination the row points at — the connected layer swaps in a real router link. */
+    /** Destination the row points at -- the connected layer swaps in a real router link. */
     href: string
-    /** `true` → this row matches the current route (tonal accent treatment). */
+    /** `true` -> this row matches the current route (tonal accent treatment). */
     isActive?: boolean
     /** Fired when the row is pressed. */
     onPress: () => void
@@ -42,7 +42,7 @@ export interface ExpertDashboardNavItem {
 export interface ExpertDashboardNavGroup {
     /** Stable id. */
     id: string
-    /** Uppercase caption shown above the group's rows — omit for an unlabelled cluster. */
+    /** Uppercase caption shown above the group's rows -- omit for an unlabelled cluster. */
     label?: string
     /** The group's destinations, in display order. */
     items: Array<ExpertDashboardNavItem>
@@ -50,15 +50,15 @@ export interface ExpertDashboardNavGroup {
 
 /** The brand mark pinned at the top of the rail. */
 export interface ExpertDashboardShellBrand {
-    /** The academy's display name — already localized/resolved by the caller. */
+    /** The academy's display name -- already localized/resolved by the caller. */
     name: string
     /** Subtitle under the name (e.g. the tenant's live domain). */
     domainLabel: string
-    /** Fired when the brand mark is pressed — routing "home" is the caller's call. */
+    /** Fired when the brand mark is pressed -- routing "home" is the caller's call. */
     onLogoPress: () => void
 }
 
-/** The identity summary pinned at the bottom of the rail — read-only display. */
+/** The identity summary pinned at the bottom of the rail -- read-only display. */
 export interface ExpertDashboardShellIdentity {
     /** Display name. */
     name: string
@@ -68,13 +68,13 @@ export interface ExpertDashboardShellIdentity {
     avatarUrl?: string | null
 }
 
-/** The top bar's search box — controlled. */
+/** The top bar's search box -- controlled. */
 export interface ExpertDashboardShellSearch {
     /** Current query text. */
     value: string
     /** Fires as the query changes. */
     onValueChange: (value: string) => void
-    /** Field placeholder — already localized. */
+    /** Field placeholder -- already localized. */
     placeholder: string
 }
 
@@ -82,7 +82,7 @@ export interface ExpertDashboardShellSearch {
 export interface ExpertDashboardShellNotifications {
     /** Drives the bell's count badge; `0` hides it. */
     unreadCount: number
-    /** Fired when the bell is pressed — the caller opens `NotificationsDrawer`. */
+    /** Fired when the bell is pressed -- the caller opens `NotificationsDrawer`. */
     onOpen: () => void
 }
 
@@ -90,7 +90,7 @@ export interface ExpertDashboardShellNotifications {
 export interface ExpertDashboardShellProps {
     /** Brand mark pinned at the top of the rail. */
     brand: ExpertDashboardShellBrand
-    /** The rail's clusters, in display order — the ONE source the nav column reads. */
+    /** The rail's clusters, in display order -- the ONE source the nav column reads. */
     navGroups: Array<ExpertDashboardNavGroup>
     /** The identity summary pinned at the bottom of the rail. */
     identity: ExpertDashboardShellIdentity
@@ -112,11 +112,19 @@ export interface ExpertDashboardShellProps {
     isSkeleton?: boolean
 }
 
-/** Bell trigger chrome — a plain button because `Badge` must wrap the glyph (no atom hosts that). Mirrors `NivoTopBar`'s own constant. */
+/** Bell trigger chrome -- a plain button because `Badge` must wrap the glyph (no atom hosts that). Mirrors `NivoTopBar`'s own constant. */
 const BELL_TRIGGER = "inline-flex items-center justify-center rounded-full p-2 text-foreground transition-colors hover:bg-default/40"
 
-/** One pressable nav row — icon + label, tonal accent treatment while active. */
-const NavRow = ({ item, isSkeleton }: { item: ExpertDashboardNavItem; isSkeleton?: boolean }) => (
+/** Props for one pressable nav row. */
+interface ExpertDashboardNavRowProps {
+    /** The destination this row renders. */
+    item: ExpertDashboardNavItem
+    /** `true` -> the row is a loading mirror. */
+    isSkeleton?: boolean
+}
+
+/** One pressable nav row -- icon + label, tonal accent treatment while active. */
+const NavRow = ({ item, isSkeleton }: ExpertDashboardNavRowProps) => (
     <button
         type="button"
         disabled={isSkeleton}
@@ -132,8 +140,18 @@ const NavRow = ({ item, isSkeleton }: { item: ExpertDashboardNavItem; isSkeleton
     </button>
 )
 
+/** Props for one nav cluster in the rail. */
+interface ExpertDashboardNavGroupViewProps {
+    /** The cluster this view renders. */
+    group: ExpertDashboardNavGroup
+    /** `true` -> captions and rows shimmer. */
+    isSkeleton?: boolean
+    /** `true` -> skip the leading divider (nothing above the first group). */
+    isFirst: boolean
+}
+
 /** One cluster of nav rows, with a caption (when set) and a leading divider (every group but the first). */
-const NavGroup = ({ group, isSkeleton, isFirst }: { group: ExpertDashboardNavGroup; isSkeleton?: boolean; isFirst: boolean }) => (
+const NavGroup = ({ group, isSkeleton, isFirst }: ExpertDashboardNavGroupViewProps) => (
     <div className="flex flex-col gap-1">
         {!isFirst ? (
             <div className="py-2">
@@ -178,7 +196,7 @@ const ExpertDashboardShell = ({
     // frame renders itself.
     const railSlot = ({ isSkeleton: skeleton }: SkeletonProps) => (
         <div className="flex h-full flex-col gap-4 border-r border-default p-3">
-            <button type="button" onClick={brand.onLogoPress} disabled={skeleton} className="flex flex-col items-start gap-0.5 rounded-xl px-3 py-2 text-left disabled:cursor-default">
+            <button type="button" onClick={brand.onLogoPress} disabled={skeleton} className="flex flex-col items-start gap-1 rounded-xl px-3 py-2 text-left disabled:cursor-default">
                 <Typography size="lg" weight="bold" color="accent" isSkeleton={skeleton} text={brand.name} />
                 <Typography size="xs" color="muted" isSkeleton={skeleton} text={brand.domainLabel} />
             </button>
@@ -189,7 +207,7 @@ const ExpertDashboardShell = ({
             </nav>
             <div className="flex items-center gap-2 border-t border-default pt-3">
                 <Avatar size="sm" name={identity.name} src={identity.avatarUrl ?? undefined} seed={identity.name} isSkeleton={skeleton} />
-                <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                <div className="flex min-w-0 flex-1 flex-col gap-1">
                     <Typography size="sm" weight="medium" truncate isSkeleton={skeleton} text={identity.name} />
                     <Typography size="xs" color="muted" truncate isSkeleton={skeleton} text={identity.roleLabel} />
                 </div>
@@ -197,7 +215,7 @@ const ExpertDashboardShell = ({
         </div>
     )
 
-    // The routed page's own content — a CALLER SLOT `RailShell` mounts itself with the
+    // The routed page's own content -- a CALLER SLOT `RailShell` mounts itself with the
     // shell's skeleton flag threaded straight through.
     const bodySlot = ({ isSkeleton: skeleton }: SkeletonProps) => <Content isSkeleton={skeleton} />
 
@@ -214,7 +232,7 @@ const ExpertDashboardShell = ({
                     <Avatar size="sm" name={identity.name} src={identity.avatarUrl ?? undefined} seed={identity.name} />
                 </button>
 
-                {/* Bell — plain button so `Badge` can anchor its count around the glyph, the
+                {/* Bell -- plain button so `Badge` can anchor its count around the glyph, the
                     same badge-around-glyph shape `NivoTopBar` uses. */}
                 <button type="button" aria-label={notificationsLabel} onClick={notifications.onOpen} className={BELL_TRIGGER}>
                     <Badge color="danger" count={notifications.unreadCount}>
@@ -232,5 +250,5 @@ const ExpertDashboardShell = ({
 
 export { ExpertDashboardShell }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "layout", name: "ExpertDashboardShell" } as const

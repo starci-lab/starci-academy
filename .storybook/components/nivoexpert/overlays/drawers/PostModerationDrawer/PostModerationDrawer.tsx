@@ -7,10 +7,10 @@ import { UserCell } from "@sb-components/composites/lists/UserCell/UserCell"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PostModerationDrawer` — the full-detail moderation surface for ONE community
+ * `PostModerationDrawer` -- the full-detail moderation surface for ONE community
  * post: author, title, body, and status, with the actions the compact
  * `PostModerationCard` row has no room for. `onRemove` names a (new) hard-delete
- * mutation this drawer is BUILT for, distinct from `onHide`'s soft moderation — the
+ * mutation this drawer is BUILT for, distinct from `onHide`'s soft moderation -- the
  * FE has no admin moderation capability wired yet, same disclaimer
  * `PostModerationCard` carries. Once a post is hidden there is no un-hide control,
  * so its action row collapses to the hard-delete action only.
@@ -27,11 +27,11 @@ export interface ModeratedPostDetail {
     authorName: string
     /** Post title. */
     title: string
-    /** Post body — markdown source, rendered plain here. */
+    /** Post body -- markdown source, rendered plain here. */
     body: string
     /** Whether the post is pinned to the top of the public feed. */
     pinned: boolean
-    /** Moderation status — `removed` posts are hidden from the public feed. */
+    /** Moderation status -- `removed` posts are hidden from the public feed. */
     status: PostModerationDrawerStatus
 }
 
@@ -43,15 +43,15 @@ export interface PostModerationDrawerProps {
     onOpenChange: (open: boolean) => void
     /** The post being moderated. Unset while `isSkeleton` (nothing to show yet). */
     post?: ModeratedPostDetail
-    /** Pin or unpin the post — the connected layer runs the (new) `pinPost`/`unpinPost` mutation. */
+    /** Pin or unpin the post -- the connected layer runs the (new) `pinPost`/`unpinPost` mutation. */
     onTogglePin: () => void
-    /** Hide the post from the public feed — the connected layer runs the (new) `hidePost` mutation. */
+    /** Hide the post from the public feed -- the connected layer runs the (new) `hidePost` mutation. */
     onHide: () => void
-    /** Permanently delete the post — the connected layer runs the (new) `removePost` mutation. */
+    /** Permanently delete the post -- the connected layer runs the (new) `removePost` mutation. */
     onRemove: () => void
-    /** `true` while this post's own pin/hide/remove mutation is in flight — locks every footer action. */
+    /** `true` while this post's own pin/hide/remove mutation is in flight -- locks every footer action. */
     isBusy?: boolean
-    /** `true` → the drawer's own first fetch is in flight; the title and body shimmer, and the footer is omitted (nothing to act on yet). */
+    /** `true` -> the drawer's own first fetch is in flight; the title and body shimmer, and the footer is omitted (nothing to act on yet). */
     isSkeleton?: boolean
     /** Already-localized copy. */
     labels: PostModerationDrawerLabels
@@ -174,5 +174,5 @@ const PostModerationDrawer = ({
 
 export { PostModerationDrawer }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "overlay", name: "PostModerationDrawer" } as const

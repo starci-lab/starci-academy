@@ -10,16 +10,16 @@ import { Grid } from "@sb-components/frames/Grid/Grid"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `AcademySettingsForm` — the PAGE an expert edits their academy's brand and
+ * `AcademySettingsForm` -- the PAGE an expert edits their academy's brand and
  * landing template from: two stacked cards (brand identity fields, a 3-card
  * template picker) under one form shell + save/discard row. A page's story is
- * one complete STATE per story — not a leaf-per-prop map. Grounded in the real
+ * one complete STATE per story -- not a leaf-per-prop map. Grounded in the real
  * `Brand` shape (`lib/session.ts`) and the three real `landings/` presets.
  *
  * Settings are never genuinely EMPTY (a tenant's brand always exists from
- * `EXPERT_CONFIG` the moment it does) — this page's "empty" state is
+ * `EXPERT_CONFIG` the moment it does) -- this page's "empty" state is
  * therefore the first-fetch skeleton, not a zero-data branch; see `Empty`
- * below. The other three named states — `editing` (dirty) and `saving` are
+ * below. The other three named states -- `editing` (dirty) and `saving` are
  * this page's own interaction states, and `Failed` renders the save-error
  * banner the proposal calls out as new backend scope (contradiction #4:
  * there is no brand/theme update mutation yet).
@@ -32,17 +32,17 @@ export type AcademyLandingTemplate = "classic" | "bold" | "minimal"
 export interface AcademySettingsFormValues {
     /** `Brand.displayName`. */
     displayName: string
-    /** `Brand.slug` — the tenant's routing identity, set at signup. Shown, never edited here. */
+    /** `Brand.slug` -- the tenant's routing identity, set at signup. Shown, never edited here. */
     slug: string
     /** `Brand.tagline`. */
     tagline: string
-    /** `Brand.avatarUrl` — the academy's logo image URL. */
+    /** `Brand.avatarUrl` -- the academy's logo image URL. */
     avatarUrl: string
-    /** `Brand.accentHue` — 0–359, every accent token on the tenant's site derives from this. */
+    /** `Brand.accentHue` -- 0-359, every accent token on the tenant's site derives from this. */
     accentHue: number
     /** `Brand.communityEnabled`. */
     communityEnabled: boolean
-    /** `Brand.communityGroup.url` — the external Discord/Zalo/Telegram "join" link. */
+    /** `Brand.communityGroup.url` -- the external Discord/Zalo/Telegram "join" link. */
     communityGroupUrl: string
     /** `Theme.template`. */
     template: AcademyLandingTemplate
@@ -59,21 +59,21 @@ export interface AcademySettingsFormProps {
     onCommunityEnabledChange: (value: boolean) => void
     onCommunityGroupUrlChange: (value: string) => void
     onTemplateChange: (value: AcademyLandingTemplate) => void
-    /** `true` → at least one field diverges from the last-loaded values; enables Save/Discard. */
+    /** `true` -> at least one field diverges from the last-loaded values; enables Save/Discard. */
     isDirty?: boolean
     /** Revert every field back to the last-loaded values. */
     onDiscard: () => void
-    /** Persist the current values — the connected layer runs the (not-yet-existing) brand/theme update mutation. */
+    /** Persist the current values -- the connected layer runs the (not-yet-existing) brand/theme update mutation. */
     onSave: () => void
-    /** `true` → the save is in flight: the whole form locks (native `<fieldset disabled>`) and the Save button spins. */
+    /** `true` -> the save is in flight: the whole form locks (native `<fieldset disabled>`) and the Save button spins. */
     isSaving?: boolean
-    /** Set → the last save attempt failed; renders the failed-save banner. `null`/unset → no banner. */
+    /** Set -> the last save attempt failed; renders the failed-save banner. `null`/unset -> no banner. */
     saveError?: string | null
     /**
-     * `true` → the page's own first fetch (`getBrand()` / `api.theme()`) is in
+     * `true` -> the page's own first fetch (`getBrand()` / `api.theme()`) is in
      * flight: every field renders its field-box shimmer and the template picker
      * renders its placeholder tiles. There is no separate "empty" branch for
-     * this page — see the file header.
+     * this page -- see the file header.
      */
     isSkeleton?: boolean
     /** Already-localized copy for the page's own chrome. */
@@ -122,10 +122,10 @@ export interface AcademySettingsFormLabels {
     saveErrorTitle: string
 }
 
-/** Templates, in display order — also the picker's column order. */
+/** Templates, in display order -- also the picker's column order. */
 const TEMPLATE_ORDER: ReadonlyArray<AcademyLandingTemplate> = ["classic", "bold", "minimal"]
 
-/** A small decorative color swatch standing in for each template's real preview screenshot — abstract, not a literal render of `landings/*.tsx`. */
+/** A small decorative color swatch standing in for each template's real preview screenshot -- abstract, not a literal render of `landings/*.tsx`. */
 const TEMPLATE_SWATCH_CLASS: Record<AcademyLandingTemplate, string> = {
     classic: "bg-gradient-to-br from-accent to-accent-soft",
     bold: "bg-gradient-to-br from-danger to-foreground",
@@ -157,7 +157,7 @@ const AcademySettingsForm = ({
     isSkeleton = false,
     labels,
 }: AcademySettingsFormProps) => {
-    /** The brand-identity fields — the card's `body` slot, a component reference so `isSkeleton` reaches every field. */
+    /** The brand-identity fields -- the card's `body` slot, a component reference so `isSkeleton` reaches every field. */
     const BrandFields = ({ isSkeleton: skeleton }: SkeletonProps) => (
         <StackV
             gap={4}
@@ -261,10 +261,10 @@ const AcademySettingsForm = ({
     )
 
     /**
-     * The template picker — `SurfaceCardPressableGroup` used as a single-select
+     * The template picker -- `SurfaceCardPressableGroup` used as a single-select
      * chooser (its own documented `selected` mode), NOT `SurfaceCardSelectableGroup`
      * (the more semantically exact single-select control, built on a real HeroUI
-     * `RadioGroup`) — that member has no `isSkeleton` prop at all, and this picker
+     * `RadioGroup`) -- that member has no `isSkeleton` prop at all, and this picker
      * must shimmer during the page's first fetch same as every other field. Filed
      * as a proposed gap (add `isSkeleton` to `SurfaceCardSelectableGroup`) rather
      * than hand-rolled around here.
@@ -375,5 +375,5 @@ const AcademySettingsForm = ({
 
 export { AcademySettingsForm }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "page", name: "AcademySettingsForm" } as const

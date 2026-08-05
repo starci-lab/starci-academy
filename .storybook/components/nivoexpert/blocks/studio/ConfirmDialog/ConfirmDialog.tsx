@@ -6,10 +6,10 @@ import { ButtonGroup } from "@sb-components/composites/buttons/ButtonGroup/Butto
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ConfirmDialog` — overlay modal for an irreversible delete: names the
+ * `ConfirmDialog` -- overlay modal for an irreversible delete: names the
  * exact blast radius and keeps the danger action disabled until the operator
  * types the entity's own slug back. One shell for every hard-delete flow in
- * the academy — a course, a lesson, an order — never a bare
+ * the academy -- a course, a lesson, an order -- never a bare
  * `window.confirm`.
  */
 
@@ -19,15 +19,15 @@ export interface ConfirmDialogProps {
     isOpen: boolean
     /**
      * Open-state change handler (fires on cancel and, when dismissable, on
-     * Escape). The confirm button does NOT close the dialog itself — the
+     * Escape). The confirm button does NOT close the dialog itself -- the
      * caller closes it through this handler once {@link onConfirm} resolves.
      */
     onOpenChange: (open: boolean) => void
-    /** Dialog heading — a short question (e.g. "Delete this course?"). */
+    /** Dialog heading -- a short question (e.g. "Delete this course?"). */
     title: string
     /** The danger banner's own title (e.g. "This can't be undone"). */
     warningTitle: string
-    /** The danger banner's body — names the exact blast radius, already composed by the caller. */
+    /** The danger banner's body -- names the exact blast radius, already composed by the caller. */
     warningDescription: string
     /** The exact string the operator must type to unlock the confirm action (a slug, an order id). */
     matchText: string
@@ -38,12 +38,12 @@ export interface ConfirmDialogProps {
     /** Fires when the operator presses the confirm action. Run the irreversible action here. */
     onConfirm: () => void
     /**
-     * `true` → the confirm button shows a spinner and blocks further presses
+     * `true` -> the confirm button shows a spinner and blocks further presses
      * while the delete is in flight; the cancel button and the field lock too.
      */
     isConfirming?: boolean
     /**
-     * `true` → `title`/`warningTitle`/`warningDescription` switch to shimmer —
+     * `true` -> `title`/`warningTitle`/`warningDescription` switch to shimmer --
      * this dialog only ever opens once the entity it names has resolved, so
      * this is a placeholder state, not an everyday one.
      */
@@ -152,5 +152,5 @@ const ConfirmDialog = ({
 
 export { ConfirmDialog }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "ConfirmDialog" } as const

@@ -2,14 +2,14 @@ import { Grid } from "@sb-components/frames/Grid/Grid"
 import { MetricCard } from "@sb-components/composites/stats/MetricCard/MetricCard"
 
 /**
- * `RevenueSummary` — the four headline tiles atop the revenue dashboard: this
+ * `RevenueSummary` -- the four headline tiles atop the revenue dashboard: this
  * month's revenue, order count, coupons redeemed, and installment plans still
- * running. The only state is `isSkeleton` (§12b) — the shape never otherwise
+ * running. The only state is `isSkeleton` (§12b) -- the shape never otherwise
  * changes. Grounded in the real `PaymentModule` order ledger, `CouponEntity`
  * redemptions, and the `InstallmentPlanEntity` rows still mid-schedule.
  */
 
-/** One headline tile — already resolved by the connected layer. */
+/** One headline tile -- already resolved by the connected layer. */
 export interface RevenueMetricView {
     /** The large value (e.g. "$4,820", "690", "54"). */
     value: string
@@ -36,8 +36,8 @@ export interface RevenueSummaryProps {
     /** The four headline tiles. */
     metrics: RevenueSummaryMetrics
     /**
-     * `true` → the dashboard's own first fetch is in flight: all four tiles draw
-     * their skeleton mirror (§12b), threaded straight down — never fed to a
+     * `true` -> the dashboard's own first fetch is in flight: all four tiles draw
+     * their skeleton mirror (§12b), threaded straight down -- never fed to a
      * separate skeleton tree.
      */
     isSkeleton?: boolean
@@ -102,5 +102,5 @@ const RevenueSummary = ({ metrics, isSkeleton = false }: RevenueSummaryProps) =>
 
 export { RevenueSummary }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "RevenueSummary" } as const

@@ -8,10 +8,10 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { CourseOfferCardView } from "@sb-components/nivoexpert/blocks/landing/CourseOfferCard/CourseOfferCard"
 
 /**
- * `CourseFeaturedCard` — the 1-course arrangement of the tenant landing's
+ * `CourseFeaturedCard` -- the 1-course arrangement of the tenant landing's
  * catalog: a full-measure two-pane card, never a one-cell grid. A sibling of
  * `CourseCatalogGrid` (2+ courses) and `CatalogComingSoonPanel` (0 courses),
- * not a variant of either — the proposal's §3 volume table forces exactly
+ * not a variant of either -- the proposal's §3 volume table forces exactly
  * this shape at a count of 1. The right pane shows the real lesson count as
  * a `MetricCard` stat rather than an invented image, since `CourseEntity`
  * has no thumbnail field.
@@ -31,7 +31,7 @@ export interface CourseFeaturedCardLabels {
 export interface CourseFeaturedCardProps {
     /** The tenant's one course. */
     course: CourseOfferCardView
-    /** Fires on press — the connected layer routes to `/classroom/[slug]`. */
+    /** Fires on press -- the connected layer routes to `/classroom/[slug]`. */
     onOpenCourse: (slug: string) => void
     /** `true` -> a fixed skeleton course renders in place of `course`, every field shimmering. */
     isSkeleton?: boolean
@@ -39,7 +39,7 @@ export interface CourseFeaturedCardProps {
     labels: CourseFeaturedCardLabels
 }
 
-/** Skeleton placeholder — sized like the real course so the shimmer mirrors the loaded shape. */
+/** Skeleton placeholder -- sized like the real course so the shimmer mirrors the loaded shape. */
 const SKELETON_COURSE: CourseOfferCardView = {
     slug: "skeleton",
     title: "Course title goes here",
@@ -117,5 +117,5 @@ const CourseFeaturedCard = ({ course, onOpenCourse, isSkeleton = false, labels }
 
 export { CourseFeaturedCard }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "CourseFeaturedCard" } as const

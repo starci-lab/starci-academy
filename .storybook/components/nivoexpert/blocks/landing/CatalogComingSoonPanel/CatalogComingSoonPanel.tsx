@@ -4,9 +4,9 @@ import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyS
 import type { SkeletonProps } from "@sb-components/frames/_slot"
 
 /**
- * `CatalogComingSoonPanel` — the honest 0-course empty state for a brand-new
+ * `CatalogComingSoonPanel` -- the honest 0-course empty state for a brand-new
  * tenant's catalog section, per `nivo-expert-landing.proposal.md` §3/§5/§6.
- * Built on the shared `EmptyState` composite — a grid with one "no items"
+ * Built on the shared `EmptyState` composite -- a grid with one "no items"
  * caption inside it reads as a broken grid, so the empty case gets this
  * purpose-built panel instead, with one onward action that routes into the
  * page's lead capture section so the empty catalog is never a dead end.
@@ -14,13 +14,13 @@ import type { SkeletonProps } from "@sb-components/frames/_slot"
 
 /** Props for {@link CatalogComingSoonPanel}. */
 export interface CatalogComingSoonPanelProps {
-    /** Panel heading — already-resolved copy (e.g. "First course coming soon"). */
+    /** Panel heading -- already-resolved copy (e.g. "First course coming soon"). */
     title: string
-    /** Supporting line under the heading — honest, never a fabricated launch date. */
+    /** Supporting line under the heading -- honest, never a fabricated launch date. */
     description: string
-    /** Onward CTA label — routes into the page's lead capture section, never a dead end. */
+    /** Onward CTA label -- routes into the page's lead capture section, never a dead end. */
     onwardLabel: string
-    /** Fires on press — the connected layer scrolls/navigates to the page's lead capture section. */
+    /** Fires on press -- the connected layer scrolls/navigates to the page's lead capture section. */
     onExploreLead: () => void
 }
 
@@ -49,5 +49,5 @@ const CatalogComingSoonPanel = ({ title, description, onwardLabel, onExploreLead
 
 export { CatalogComingSoonPanel }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "CatalogComingSoonPanel" } as const

@@ -10,15 +10,15 @@ import { Disclosure } from "@sb-components/composites/layout/Disclosure/Disclosu
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `AgentTaskConsole` — the "operations assistant" tab. The expert gives the agent
+ * `AgentTaskConsole` -- the "operations assistant" tab. The expert gives the agent
  * a task in words; the agent runs ONE of their n8n workflows (or answers directly)
- * and reports back, beside the list of workflows it can use. The five phases —
- * `idle`, `running`, `result-ran-workflow`, `result-direct-answer`, `no-tools` —
+ * and reports back, beside the list of workflows it can use. The five phases --
+ * `idle`, `running`, `result-ran-workflow`, `result-direct-answer`, `no-tools` --
  * are DATA, so they are STATES of the single shape. Grounded in the real
- * `ClawbotService.act(goal)` → `AgentRun` and `N8nToolsService.list()` → `N8nTool`.
+ * `ClawbotService.act(goal)` -> `AgentRun` and `N8nToolsService.list()` -> `N8nTool`.
  */
 
-/** One n8n workflow the agent may call — a subset of the real `N8nTool`. */
+/** One n8n workflow the agent may call -- a subset of the real `N8nTool`. */
 export interface AgentToolView {
     /** Workflow id in n8n (`N8nTool.id`). */
     id: string
@@ -28,7 +28,7 @@ export interface AgentToolView {
     webhookPath?: string | null
 }
 
-/** One completed task the agent ran — a subset of the real `AgentRun`. */
+/** One completed task the agent ran -- a subset of the real `AgentRun`. */
 export interface AgentRunView {
     /** Stable row id. */
     id: string
@@ -36,7 +36,7 @@ export interface AgentRunView {
     goal: string
     /** The workflow the agent ran (`AgentRun.toolUsed`), or null when it answered directly. */
     toolUsed: string | null
-    /** Raw workflow output — present only when a workflow ran (`AgentRun.toolOutput`). */
+    /** Raw workflow output -- present only when a workflow ran (`AgentRun.toolOutput`). */
     toolOutput?: string | null
     /** The agent's final answer (`AgentRun.result`); empty on error. */
     result: string
@@ -46,13 +46,13 @@ export interface AgentRunView {
 
 /** Props for {@link AgentTaskConsole}. */
 export interface AgentTaskConsoleProps {
-    /** The goal the expert is typing — the console's only free input. */
+    /** The goal the expert is typing -- the console's only free input. */
     goal: string
     /** Fires as the goal changes. */
     onGoalChange: (value: string) => void
-    /** Give the current goal to the agent — the connected layer runs `agentAct(goal)`. */
+    /** Give the current goal to the agent -- the connected layer runs `agentAct(goal)`. */
     onSubmit: () => void
-    /** `true` → a task is in flight (input + submit lock, submit shows a spinner). */
+    /** `true` -> a task is in flight (input + submit lock, submit shows a spinner). */
     isRunning?: boolean
     /** Suggested tasks offered as one-tap chips. */
     suggestions: Array<string>
@@ -60,15 +60,15 @@ export interface AgentTaskConsoleProps {
     onSuggestion: (goal: string) => void
     /** The completed tasks, newest first. */
     runs: Array<AgentRunView>
-    /** The workflows the agent can currently use — empty is the `no-tools` state. */
+    /** The workflows the agent can currently use -- empty is the `no-tools` state. */
     tools: Array<AgentToolView>
     /** Re-read the workflow list from n8n. */
     onReloadTools: () => void
     /**
-     * `true` → the block's own first fetch is in flight: the same two-region
+     * `true` -> the block's own first fetch is in flight: the same two-region
      * shape renders the console card, a fixed count of result-shaped rows, and a
      * fixed count of tool-shaped rows, every content node shimmering (§12b). The
-     * reload action drops while it loads. Threaded straight down — never a
+     * reload action drops while it loads. Threaded straight down -- never a
      * separate skeleton tree, and independent of {@link isRunning}.
      */
     isSkeleton?: boolean
@@ -116,13 +116,13 @@ export interface AgentTaskConsoleLabels {
     noToolsDescription: string
 }
 
-/** Minimum goal length before Submit is offered — mirrors the real app's `goal.trim()` guard. */
+/** Minimum goal length before Submit is offered -- mirrors the real app's `goal.trim()` guard. */
 const MIN_GOAL_LENGTH = 1
 
 /** How many placeholder rows each loading mirror draws while its data hasn't landed yet. */
 const SKELETON_ROW_COUNT = 3
 
-/** Placeholder result rows — sized like a real run so the shimmer mirrors the loaded shape. */
+/** Placeholder result rows -- sized like a real run so the shimmer mirrors the loaded shape. */
 const SKELETON_RUNS: Array<AgentRunView> = Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
     id: `skeleton-run-${index}`,
     goal: "A task the assistant handled",
@@ -131,7 +131,7 @@ const SKELETON_RUNS: Array<AgentRunView> = Array.from({ length: SKELETON_ROW_COU
     error: null,
 }))
 
-/** Placeholder tool rows — sized like a real workflow so the shimmer mirrors the loaded shape. */
+/** Placeholder tool rows -- sized like a real workflow so the shimmer mirrors the loaded shape. */
 const SKELETON_TOOLS: Array<AgentToolView> = Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
     id: `skeleton-tool-${index}`,
     name: "Workflow name",
@@ -160,7 +160,7 @@ const AgentTaskConsole = ({
 }: AgentTaskConsoleProps) => {
     const canSubmit = goal.trim().length >= MIN_GOAL_LENGTH && !isRunning && !isSkeleton
 
-    /** Result badge: error → danger, a workflow → accent, a direct answer → neutral. */
+    /** Result badge: error -> danger, a workflow -> accent, a direct answer -> neutral. */
     const statusOf = (run: AgentRunView): { tone: ChipTone; text: string } => {
         if (run.error) {
             return { tone: "danger", text: labels.errorLabel }
@@ -206,16 +206,17 @@ const AgentTaskConsole = ({
                                 isSkeleton={isSkeleton}
                                 items={[
                                     () => (
-                                        <InputText
-                                            variant="secondary"
-                                            ariaLabel={labels.inputAriaLabel}
-                                            placeholder={labels.inputPlaceholder}
-                                            value={goal}
-                                            onValueChange={onGoalChange}
-                                            isDisabled={isRunning}
-                                            isSkeleton={isSkeleton}
-                                            classNames={["flex-1", "min-w-0"]}
-                                        />
+                                        <div className="min-w-0 flex-1">
+                                            <InputText
+                                                variant="secondary"
+                                                ariaLabel={labels.inputAriaLabel}
+                                                placeholder={labels.inputPlaceholder}
+                                                value={goal}
+                                                onValueChange={onGoalChange}
+                                                isDisabled={isRunning}
+                                                isSkeleton={isSkeleton}
+                                            />
+                                        </div>
                                     ),
                                     () => (
                                         <Button
@@ -248,12 +249,20 @@ const AgentTaskConsole = ({
         />
     )
 
+    /** Props for one result card in {@link AgentTaskConsole}. */
+    interface AgentRunCardProps {
+        /** The completed run this card renders. */
+        run: AgentRunView
+        /** `true` -> this row is a loading mirror of the loaded card. */
+        isSkeleton: boolean
+    }
+
     /**
-     * One result card — the goal, the status badge, the answer, and the optional
+     * One result card -- the goal, the status badge, the answer, and the optional
      * raw output. The SAME shape drives the loaded and the loading rows;
      * `isSkeleton` threads down so a loading row is the loaded row shimmering.
      */
-    const RunCard = ({ run, isSkeleton: rowSkeleton }: { run: AgentRunView; isSkeleton: boolean }) => {
+    const RunCard = ({ run, isSkeleton: rowSkeleton }: AgentRunCardProps) => {
         const status = statusOf(run)
         return (
             <SurfaceCard
@@ -388,7 +397,7 @@ const AgentTaskConsole = ({
         />
     )
 
-    // Two regions — the console and the tools list — stacked as ONE column. The
+    // Two regions -- the console and the tools list -- stacked as ONE column. The
     // block owns WHICH regions exist and their data; a page decides whether to sit
     // them side by side (blocks take no `className`, so placement is the page's call).
     return (
@@ -404,5 +413,5 @@ const AgentTaskConsole = ({
 
 export { AgentTaskConsole }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "AgentTaskConsole" } as const

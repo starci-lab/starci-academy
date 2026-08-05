@@ -31,11 +31,11 @@ import {
 } from "@sb-components/nivoexpert/blocks/community/PostCard/PostCard"
 
 /**
- * `AcademyManagementDashboard` — the console PAGE an expert runs their academy
+ * `AcademyManagementDashboard` -- the console PAGE an expert runs their academy
  * from: a persistent KPI strip above an Overview / Members / Courses / Community
  * tab switch, each panel an existing block. A page's story is one complete STATE
- * per story — one per active tab, plus the one empty branch this page owns
- * directly (Community with no posts) and the whole-page loading skeleton — not a
+ * per story -- one per active tab, plus the one empty branch this page owns
+ * directly (Community with no posts) and the whole-page loading skeleton -- not a
  * leaf-per-prop map. Grounded in the real `dashboardStats`, `completionFunnel`,
  * `MemberEntity`, `CourseEntity` / `LessonEntity` / `LessonProgressEntity`, and
  * `PostEntity` / `ReactionEntity`.
@@ -44,7 +44,7 @@ import {
 /** Which panel is showing right now. */
 export type AcademyTab = "overview" | "members" | "courses" | "community"
 
-/** The persistent KPI strip — members / paid orders / revenue / completion, always visible regardless of the active tab. */
+/** The persistent KPI strip -- members / paid orders / revenue / completion, always visible regardless of the active tab. */
 export interface AcademyKpis {
     /** Total + active members (`dashboardStats.totalMembers` / `activeMembers`). */
     members: MetricView
@@ -52,11 +52,11 @@ export interface AcademyKpis {
     paidOrders: MetricView
     /** Revenue, formatted in VND (`dashboardStats.revenueVnd`). */
     revenue: MetricView
-    /** Academy-wide completion rate — every course's `completionFunnel` aggregated (total `completed` / total `learners`), NOT a single course's funnel. */
+    /** Academy-wide completion rate -- every course's `completionFunnel` aggregated (total `completed` / total `learners`), NOT a single course's funnel. */
     completion: MetricView
 }
 
-/** One community feed entry for the Community panel — a subset mirroring `CommunityFeed`'s own `FeedPostView`, kept local so this page imports the `PostCard` BLOCK rather than the `CommunityFeed` PAGE. */
+/** One community feed entry for the Community panel -- a subset mirroring `CommunityFeed`'s own `FeedPostView`, kept local so this page imports the `PostCard` BLOCK rather than the `CommunityFeed` PAGE. */
 export interface AcademyPostView {
     /** The post. */
     post: PostView
@@ -80,13 +80,13 @@ export interface AcademyManagementDashboardProps {
     overviewLabels: ExpertDashboardOverviewLabels
     /** Forwarded to the Members panel's {@link MembersManager}. Empty is that block's own empty branch. */
     members: Array<MemberRowView>
-    /** Forwarded to {@link MembersManager} — the connected layer runs `createMember`. */
+    /** Forwarded to {@link MembersManager} -- the connected layer runs `createMember`. */
     onAddMember: () => void
-    /** Forwarded to {@link MembersManager} — a row press; the connected layer opens `MemberDetailDrawer` for this member id (role changes and bans live behind that drawer, not this page). */
+    /** Forwarded to {@link MembersManager} -- a row press; the connected layer opens `MemberDetailDrawer` for this member id (role changes and bans live behind that drawer, not this page). */
     onViewMember: (id: string) => void
-    /** Forwarded to {@link MembersManager} — the connected layer runs `grantCourseAccess`. */
+    /** Forwarded to {@link MembersManager} -- the connected layer runs `grantCourseAccess`. */
     onGrantMemberAccess: (id: string) => void
-    /** Forwarded to {@link MembersManager} — id of the member whose controls are in flight. */
+    /** Forwarded to {@link MembersManager} -- id of the member whose controls are in flight. */
     membersBusyId?: string | null
     /** Already-localized copy forwarded to {@link MembersManager}. */
     membersLabels: MembersManagerLabels
@@ -98,11 +98,11 @@ export interface AcademyManagementDashboardProps {
     courseLabels: CourseViewLabels
     /** The Community panel's feed, pinned-first. Empty is THIS page's own empty branch (see file header). */
     posts: Array<AcademyPostView>
-    /** Toggle a post's like — the connected layer runs `reactPost(postId)`. */
+    /** Toggle a post's like -- the connected layer runs `reactPost(postId)`. */
     onToggleLikePost: (postId: string) => void
     /** Already-localized copy forwarded to each {@link PostCard}. */
     postLabels: PostCardLabels
-    /** `true` → the page's own first fetch is in flight: the KPI tiles shimmer and the active panel's block draws its own skeleton mirror. The tab row itself never shimmers — its labels are static configuration, not data. */
+    /** `true` -> the page's own first fetch is in flight: the KPI tiles shimmer and the active panel's block draws its own skeleton mirror. The tab row itself never shimmers -- its labels are static configuration, not data. */
     isSkeleton?: boolean
     /** Already-localized copy for the page's own chrome. */
     labels: AcademyManagementDashboardLabels
@@ -127,7 +127,7 @@ export interface AcademyManagementDashboardLabels {
 /** Tabs, in display + reading order. */
 const TAB_ORDER: ReadonlyArray<AcademyTab> = ["overview", "members", "courses", "community"]
 
-/** How many placeholder post cards the Community panel's skeleton draws — mirrors `CommunityFeed`'s own count. */
+/** How many placeholder post cards the Community panel's skeleton draws -- mirrors `CommunityFeed`'s own count. */
 const SKELETON_POST_COUNT = 3
 
 /** A placeholder post sized like a real one, so the skeleton card mirrors the loaded shape. */
@@ -171,7 +171,7 @@ const AcademyManagementDashboard = ({
     isSkeleton = false,
     labels,
 }: AcademyManagementDashboardProps) => {
-    /** The four headline tiles, in a reflowing grid — the one part of the header that IS data. */
+    /** The four headline tiles, in a reflowing grid -- the one part of the header that IS data. */
     const KpiGrid = () => (
         <Grid
             columns={{ base: 1, sm: 2, lg: 4 }}
@@ -217,12 +217,12 @@ const AcademyManagementDashboard = ({
         />
     )
 
-    /** The Overview panel — the existing `ExpertDashboardOverview` block, verbatim. */
+    /** The Overview panel -- the existing `ExpertDashboardOverview` block, verbatim. */
     const OverviewPanel = ({ isSkeleton: skeleton }: SkeletonProps) => (
         <ExpertDashboardOverview metrics={overviewMetrics} funnel={overviewFunnel} isSkeleton={skeleton} labels={overviewLabels} />
     )
 
-    /** The Members panel — the existing `MembersManager` block, verbatim. */
+    /** The Members panel -- the existing `MembersManager` block, verbatim. */
     const MembersPanel = ({ isSkeleton: skeleton }: SkeletonProps) => (
         <MembersManager
             members={members}
@@ -235,13 +235,13 @@ const AcademyManagementDashboard = ({
         />
     )
 
-    /** The Courses panel — the existing `CourseView` block, verbatim. */
+    /** The Courses panel -- the existing `CourseView` block, verbatim. */
     const CoursesPanel = ({ isSkeleton: skeleton }: SkeletonProps) => (
         <CourseView course={course} lessons={lessons} isSkeleton={skeleton} labels={courseLabels} />
     )
 
     /**
-     * The Community panel — composes the `PostCard` BLOCK directly (see file
+     * The Community panel -- composes the `PostCard` BLOCK directly (see file
      * header for why `CommunityFeed` the page is not imported here). No card
      * wrapper of its own, same as `CommunityFeed`'s own bare `StackV` of posts.
      */
@@ -283,7 +283,7 @@ const AcademyManagementDashboard = ({
     }
     const ActivePanel = PANEL[activeTab]
 
-    // Tab labels are static configuration, not data, so this row never shimmers —
+    // Tab labels are static configuration, not data, so this row never shimmers --
     // the same distinction `ExpertDashboardOverview` draws for its funnel title.
     const tabs: ToolbarTabGroup = {
         items: TAB_ORDER.map((tab) => ({ key: tab, label: labels.tabLabels[tab] })),
@@ -310,5 +310,5 @@ const AcademyManagementDashboard = ({
 
 export { AcademyManagementDashboard }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "page", name: "AcademyManagementDashboard" } as const

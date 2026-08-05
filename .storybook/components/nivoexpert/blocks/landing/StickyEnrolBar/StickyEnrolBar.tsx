@@ -4,19 +4,19 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `StickyEnrolBar` — the mobile sticky bottom CTA bar: the primary offer's title
+ * `StickyEnrolBar` -- the mobile sticky bottom CTA bar: the primary offer's title
  * + real price pinned to the viewport bottom, one always-reachable Enrol button
  * beside it. `isVisible` is CALLER-CONTROLLED (same convention as the shared
- * `BackToTop` atom) — this block owns no scroll listener of its own, so both the
+ * `BackToTop` atom) -- this block owns no scroll listener of its own, so both the
  * shown and hidden look stay demoable here with no real scroll behind them. Built
  * on the shared HeroUI atom system (`Typography` / `Button`).
  */
 
-/** The offer this bar restates — a subset of the real `Course`. */
+/** The offer this bar restates -- a subset of the real `Course`. */
 export interface StickyEnrolBarOffer {
-    /** `Course.title` — the course this bar pushes. */
+    /** `Course.title` -- the course this bar pushes. */
     title: string
-    /** `Course.priceText`, verbatim. Null renders `labels.freeLabel` — a copy decision, not a fabricated price. */
+    /** `Course.priceText`, verbatim. Null renders `labels.freeLabel` -- a copy decision, not a fabricated price. */
     priceText?: string | null
 }
 
@@ -32,15 +32,15 @@ export interface StickyEnrolBarLabels {
 export interface StickyEnrolBarProps {
     /** The offer this bar restates. */
     offer: StickyEnrolBarOffer
-    /** Fires on the CTA press — the caller routes to enrolment / scrolls to the offer section. */
+    /** Fires on the CTA press -- the caller routes to enrolment / scrolls to the offer section. */
     onEnrol: () => void
     /**
-     * `true` → the bar slides up into view and its CTA accepts presses; `false` →
-     * it slides off-screen and stops accepting presses/focus. Caller-controlled —
+     * `true` -> the bar slides up into view and its CTA accepts presses; `false` ->
+     * it slides off-screen and stops accepting presses/focus. Caller-controlled --
      * see the file header for why this block owns no scroll listener of its own.
      */
     isVisible: boolean
-    /** `true` → the offer hasn't resolved yet: title/price shimmer and the CTA stops accepting presses. */
+    /** `true` -> the offer hasn't resolved yet: title/price shimmer and the CTA stops accepting presses. */
     isSkeleton?: boolean
     /** Already-localized copy. */
     labels: StickyEnrolBarLabels
@@ -96,5 +96,5 @@ const StickyEnrolBar = ({ offer, onEnrol, isVisible, isSkeleton = false, labels 
 
 export { StickyEnrolBar }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "StickyEnrolBar" } as const

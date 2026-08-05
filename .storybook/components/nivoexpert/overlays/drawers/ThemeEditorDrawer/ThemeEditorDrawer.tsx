@@ -7,9 +7,9 @@ import { Grid } from "@sb-components/frames/Grid/Grid"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ThemeEditorDrawer` — a P3 shell: advanced per-tenant theming (corner
+ * `ThemeEditorDrawer` -- a P3 shell: advanced per-tenant theming (corner
  * radius, font, raw global-CSS override) beyond `AcademySettingsForm`'s
- * single accent-hue field. `onPreview`/`onSaveAndApply` are plain callbacks —
+ * single accent-hue field. `onPreview`/`onSaveAndApply` are plain callbacks --
  * the app phase wires live-preview and persistence once that endpoint exists.
  */
 
@@ -18,7 +18,7 @@ export type ThemeFontChoice = "inter" | "manrope" | "system"
 
 /** The drawer's editable fields (controlled). */
 export interface ThemeEditorDrawerValues {
-    /** 0–359 — every accent color on the tenant's site derives from this. */
+    /** 0-359 -- every accent color on the tenant's site derives from this. */
     accentHue: number
     /** Corner radius, in pixels, applied to cards/buttons/fields. */
     cornerRadius: number
@@ -42,12 +42,12 @@ export interface ThemeEditorDrawerProps {
     onCustomCssChange: (value: string) => void
     /** Renders the current values against the live site without saving them. */
     onPreview: () => void
-    /** Persists the values — the connected layer runs the (P3, not-yet-existing) theme-update mutation. */
+    /** Persists the values -- the connected layer runs the (P3, not-yet-existing) theme-update mutation. */
     onSaveAndApply: () => void
-    /** `true` → the save is in flight: the whole form locks and Save shows a spinner. */
+    /** `true` -> the save is in flight: the whole form locks and Save shows a spinner. */
     isSaving?: boolean
     /**
-     * `true` → the drawer's own first fetch is in flight: every field renders
+     * `true` -> the drawer's own first fetch is in flight: every field renders
      * its field-box shimmer, threaded straight down.
      */
     isSkeleton?: boolean
@@ -76,7 +76,7 @@ export interface ThemeEditorDrawerLabels {
     savingLabel: string
 }
 
-/** Fixed font order — a 3-way choice, not a caller-supplied list. */
+/** Fixed font order -- a 3-way choice, not a caller-supplied list. */
 const FONT_ORDER: ReadonlyArray<ThemeFontChoice> = ["inter", "manrope", "system"]
 
 /**
@@ -218,5 +218,5 @@ const ThemeEditorDrawer = ({
 
 export { ThemeEditorDrawer }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "overlay", name: "ThemeEditorDrawer" } as const

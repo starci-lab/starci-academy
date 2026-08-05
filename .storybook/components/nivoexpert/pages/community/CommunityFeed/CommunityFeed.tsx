@@ -13,14 +13,14 @@ import {
 } from "@sb-components/nivoexpert/blocks/community/PostCard/PostCard"
 
 /**
- * `CommunityFeed` — the community PAGE: the post feed beside a sticky moderation-queue
- * summary card. A page's story is one complete STATE per story — `with-posts`,
- * `loading`, `empty` — not a leaf-per-prop map. Grounded in the real `posts` query →
+ * `CommunityFeed` -- the community PAGE: the post feed beside a sticky moderation-queue
+ * summary card. A page's story is one complete STATE per story -- `with-posts`,
+ * `loading`, `empty` -- not a leaf-per-prop map. Grounded in the real `posts` query ->
  * `PostEntity[]`, the `reactPost` like toggle, and the moderation-queue count (the FE
- * has no full admin capability for it yet — this page only summarizes a count).
+ * has no full admin capability for it yet -- this page only summarizes a count).
  */
 
-/** One feed entry — a post plus whether the viewer has liked it (derived from `ReactionEntity`). */
+/** One feed entry -- a post plus whether the viewer has liked it (derived from `ReactionEntity`). */
 export interface FeedPostView {
     /** The post. */
     post: PostView
@@ -32,18 +32,24 @@ export interface FeedPostView {
 export interface CommunityFeedProps {
     /** The feed, pinned-first, as ordered by the connected layer. Empty is the `empty` state. */
     posts: Array<FeedPostView>
-    /** Toggle the viewer's like on one post — the connected layer runs `reactPost(postId)`. */
+    /** Toggle the viewer's like on one post -- the connected layer runs `reactPost(postId)`. */
     onToggleLike: (postId: string) => void
-    /** How many community posts are waiting for moderation review right now. `0` → the aside shows the all-clear picture. */
+    /** How many community posts are waiting for moderation review right now. `0` -> the aside shows the all-clear picture. */
     pendingModerationCount: number
     /** Opens the moderation queue (the connected layer routes to the moderation surface, e.g. `PostModerationDrawer` on the first pending post). */
     onOpenModerationQueue: () => void
-    /** `true` → the feed's first fetch is in flight; the page shows a heading + a fixed count of skeleton post cards (the same {@link PostCard} with `isSkeleton`) so nothing jumps. */
+    /** `true` -> the feed's first fetch is in flight; the page shows a heading + a fixed count of skeleton post cards (the same {@link PostCard} with `isSkeleton`) so nothing jumps. */
     isSkeleton?: boolean
     /** Already-localized copy for the page. */
     labels: CommunityFeedLabels
     /** Already-localized copy forwarded to each {@link PostCard}. */
     postLabels: PostCardLabels
+}
+
+/** Props for the feed's reading column or sticky aside. */
+interface CommunityFeedColumnProps {
+    /** `true` -> this column is a loading mirror. */
+    isSkeleton?: boolean
 }
 
 /** The already-resolved copy the page renders. */
@@ -99,8 +105,8 @@ const CommunityFeed = ({
     labels,
     postLabels,
 }: CommunityFeedProps) => {
-    /** The reading column — the feed heading above the post list, or its skeleton mirror. */
-    const Main = ({ isSkeleton = false }: { isSkeleton?: boolean }) =>
+    /** The reading column -- the feed heading above the post list, or its skeleton mirror. */
+    const Main = ({ isSkeleton = false }: CommunityFeedColumnProps) =>
         isSkeleton ? (
             <StackV
                 gap={4}
@@ -143,8 +149,8 @@ const CommunityFeed = ({
             />
         )
 
-    /** The sticky aside — a summary of the moderation queue, never the queue itself. */
-    const Aside = ({ isSkeleton = false }: { isSkeleton?: boolean }) => (
+    /** The sticky aside -- a summary of the moderation queue, never the queue itself. */
+    const Aside = ({ isSkeleton = false }: CommunityFeedColumnProps) => (
         <SurfaceCard
             padding={3}
             label={labels.moderationTitle}
@@ -179,5 +185,5 @@ const CommunityFeed = ({
 
 export { CommunityFeed }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "page", name: "CommunityFeed" } as const

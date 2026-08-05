@@ -10,17 +10,17 @@ import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `AiSuggestionDrawer` — human-in-loop review for one AI tutor answer: the
+ * `AiSuggestionDrawer` -- human-in-loop review for one AI tutor answer: the
  * learner's question, the RAG-grounded suggestion with its sources, and an
  * explicit reminder that the expert is responsible for what ships. Edit or
- * approve before it sends — there is no auto-send path.
+ * approve before it sends -- there is no auto-send path.
  */
 
 /** One lesson the suggestion was grounded in. */
 export interface AiSuggestionSourceView {
     /** Stable id. */
     id: string
-    /** Already-formatted label (e.g. "Advanced React · Lesson 1"). */
+    /** Already-formatted label (e.g. "Advanced React - Lesson 1"). */
     label: string
 }
 
@@ -36,18 +36,18 @@ export interface AiSuggestionDrawerProps {
     suggestion: string
     /** Fires as the expert edits the suggestion, once {@link isEditingSuggestion} is true. */
     onSuggestionChange: (value: string) => void
-    /** `true` → the suggestion renders as an editable textarea instead of static text. */
+    /** `true` -> the suggestion renders as an editable textarea instead of static text. */
     isEditingSuggestion?: boolean
     /** Switches the suggestion into edit mode. */
     onEditSuggestion: () => void
-    /** The lessons the suggestion drew from. Empty → the sources line is skipped. */
+    /** The lessons the suggestion drew from. Empty -> the sources line is skipped. */
     sources: Array<AiSuggestionSourceView>
     /** Approves the (possibly edited) suggestion and sends it to the learner. */
     onApproveAndSend: () => void
-    /** `true` → the send is in flight: both footer buttons lock, Approve shows a spinner. */
+    /** `true` -> the send is in flight: both footer buttons lock, Approve shows a spinner. */
     isSending?: boolean
     /**
-     * `true` → the drawer's own first fetch is in flight: the question, the
+     * `true` -> the drawer's own first fetch is in flight: the question, the
      * suggestion card, and the sources line all draw their skeleton mirror,
      * threaded straight down.
      */
@@ -216,5 +216,5 @@ const AiSuggestionDrawer = ({
 
 export { AiSuggestionDrawer }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "overlay", name: "AiSuggestionDrawer" } as const

@@ -6,15 +6,15 @@ import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/Surface
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `CommunityPreviewCard` — the landing's honest community proof: the real
+ * `CommunityPreviewCard` -- the landing's honest community proof: the real
  * latest/pinned post, the "be the first" sub-state when the community is on
  * but genuinely has zero posts, or (per the caller, not this component) not
  * mounted at all when `Brand.communityEnabled` is false. Grounded in the real
- * `Post` shape (`id`/`authorName`/`title`/`body`/`pinned`) — no reaction or
+ * `Post` shape (`id`/`authorName`/`title`/`body`/`pinned`) -- no reaction or
  * student count, since `expert-api` exposes none. Built on the shared HeroUI
  * atom system (`SurfaceCard`/`Avatar`/`Chip`/`Typography`/`Stack`), re-themed
  * per tenant through `apps/expert/app/globals.css`'s `--nivo-*` -> HeroUI
- * CSS-var bridge — see the component's own file header for the full
+ * CSS-var bridge -- see the component's own file header for the full
  * contract.
  */
 
@@ -28,7 +28,7 @@ export interface CommunityPreviewPost {
     title: string
     /** Post body (`Post.body`), rendered as a short plain-text preview. */
     body: string
-    /** Whether this post is pinned (`Post.pinned`) — the seeded welcome post ships pinned. */
+    /** Whether this post is pinned (`Post.pinned`) -- the seeded welcome post ships pinned. */
     pinned: boolean
 }
 
@@ -44,7 +44,7 @@ export interface CommunityPreviewCardLabels {
     emptyTitle: string
     /** Supporting line for the same sub-state. */
     emptyDescription: string
-    /** Onward CTA label — opens the community, in every sub-state. */
+    /** Onward CTA label -- opens the community, in every sub-state. */
     onwardLabel: string
 }
 
@@ -54,10 +54,10 @@ export interface CommunityPreviewCardProps {
     post: CommunityPreviewPost | null
     /** Already-localized copy. */
     labels: CommunityPreviewCardLabels
-    /** Fires on press — the connected layer routes into `/community`. */
+    /** Fires on press -- the connected layer routes into `/community`. */
     onOpenCommunity: () => void
     /**
-     * `true` → the feed's own first fetch is in flight: every content node
+     * `true` -> the feed's own first fetch is in flight: every content node
      * (identity, caption, post title/body) shimmers, threaded down, mirroring
      * the loaded shape so nothing reflows when the post lands.
      */
@@ -102,9 +102,9 @@ const CommunityPreviewCard = ({ post, labels, onOpenCommunity, isSkeleton = fals
                             gap={2}
                             isSkeleton
                             items={[
-                                () => <Typography size="sm" isSkeleton classNames={["w-2/3"]} />,
-                                () => <Typography size="sm" isSkeleton classNames={["w-full"]} />,
-                                () => <Typography size="sm" isSkeleton classNames={["w-3/4"]} />,
+                                () => <Typography size="sm" isSkeleton />,
+                                () => <Typography size="sm" isSkeleton />,
+                                () => <Typography size="sm" isSkeleton />,
                             ]}
                         />
                     )
@@ -151,5 +151,5 @@ const CommunityPreviewCard = ({ post, labels, onOpenCommunity, isSkeleton = fals
 
 export { CommunityPreviewCard }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "CommunityPreviewCard" } as const

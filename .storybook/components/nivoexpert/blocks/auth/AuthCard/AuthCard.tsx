@@ -7,13 +7,13 @@ import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/Surface
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `AuthCard` — the centred email/password card a visitor meets before entering
+ * `AuthCard` -- the centred email/password card a visitor meets before entering
  * their learning space or their academy dashboard. ONE composition: an
  * optional name field (register only), email + password, a submit button, and
  * an error slot. The `mode` toggle and the presence/absence of the toggle
- * LINK are DATA, so they are STATES of the single shape — not two components.
+ * LINK are DATA, so they are STATES of the single shape -- not two components.
  * Grounded in the real `learn/page.tsx` (student: register ⇄ login, default
- * mode `register`) and `dashboard/page.tsx` (admin: login only, no register —
+ * mode `register`) and `dashboard/page.tsx` (admin: login only, no register --
  * `onToggleMode` is simply omitted). Maps onto the real `register`/`login`
  * GraphQL mutations (`lib/session.ts`). The real app has no OAuth/SSO
  * provider anywhere in `lib/session.ts`, so no OAuth button is modelled here.
@@ -24,15 +24,15 @@ export type AuthMode = "login" | "register"
 
 /** Fields + actions every mode shares. */
 interface AuthCardOwnProps {
-    /** Email address — maps to `register`/`login`'s `email` argument. */
+    /** Email address -- maps to `register`/`login`'s `email` argument. */
     email: string
     /** Fires as the email field changes. */
     onEmailChange: (value: string) => void
-    /** Password — maps to `register`/`login`'s `password` argument. */
+    /** Password -- maps to `register`/`login`'s `password` argument. */
     password: string
     /** Fires as the password field changes. */
     onPasswordChange: (value: string) => void
-    /** Submit the form — the connected layer runs `register(...)` or `login(...)` by `mode`. */
+    /** Submit the form -- the connected layer runs `register(...)` or `login(...)` by `mode`. */
     onSubmit: () => void
     /**
      * The mutation's thrown message (`AuthResult` envelope's `error`/`message`),
@@ -40,7 +40,7 @@ interface AuthCardOwnProps {
      * fields have changed since the last failed attempt.
      */
     errorMessage?: string
-    /** `true` → the mutation is in flight: the submit button shows a spinner and every field locks. */
+    /** `true` -> the mutation is in flight: the submit button shows a spinner and every field locks. */
     isSubmitting?: boolean
     /** Already-localized copy. */
     labels: AuthCardLabels
@@ -48,12 +48,12 @@ interface AuthCardOwnProps {
 
 /**
  * `mode` decides the composition (COMPOSITE rule: scenario is a discriminating
- * prop). `register` always carries `name` + `onNameChange` + `onToggleMode` —
+ * prop). `register` always carries `name` + `onNameChange` + `onToggleMode` --
  * the real app only reaches the register form through the toggle, so a
  * register-mode card with no way back to login cannot occur. `login` carries
  * `onToggleMode` only when the deployment actually offers self-registration
  * (the student flow); the admin flow's dashboard sign-in omits it, and the
- * card renders with no toggle link at all — matching `dashboard/page.tsx`,
+ * card renders with no toggle link at all -- matching `dashboard/page.tsx`,
  * which has no register branch to switch to.
  */
 export type AuthCardProps = AuthCardOwnProps &
@@ -95,7 +95,7 @@ const AuthCard = (props: AuthCardProps) => {
     const name = mode === "register" ? props.name : undefined
     const onNameChange = mode === "register" ? props.onNameChange : undefined
 
-    // Presentation logic the block derives, not a request it makes — mirrors the
+    // Presentation logic the block derives, not a request it makes -- mirrors the
     // real `doAuth`'s implicit contract (both mutations require email + password;
     // `register` additionally requires a name).
     const canSubmit = email.trim().length > 0 && password.trim().length > 0 && (mode !== "register" || Boolean(name?.trim().length))
@@ -177,5 +177,5 @@ const AuthCard = (props: AuthCardProps) => {
 
 export { AuthCard }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "AuthCard" } as const

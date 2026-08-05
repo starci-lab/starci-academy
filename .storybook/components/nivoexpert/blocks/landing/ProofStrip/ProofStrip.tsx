@@ -4,14 +4,14 @@ import { Grid } from "@sb-components/frames/Grid/Grid"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ProofStrip` — the tenant landing's outcomes-at-a-glance strip: real course
+ * `ProofStrip` -- the tenant landing's outcomes-at-a-glance strip: real course
  * count, real lesson count, and the community's honest open/coming-soon
  * status, in one full-width row. Fills the researched "Outcomes / benefits"
- * section the current block set does not cover on its own — every number is
+ * section the current block set does not cover on its own -- every number is
  * derived from the real course list this strip is handed, never a separate,
  * inventable prop. Built on the shared HeroUI atom system
  * (`SurfaceCard`/`Grid`/`Typography`/`Stack`), re-themed per tenant through
- * `apps/expert/app/globals.css`'s `--nivo-*` -> HeroUI CSS-var bridge — see
+ * `apps/expert/app/globals.css`'s `--nivo-*` -> HeroUI CSS-var bridge -- see
  * the component's own file header for the full contract, and the sibling
  * `nivo` namespace's own `ProofStrip` for the shared shape this mirrors.
  */
@@ -40,20 +40,30 @@ export interface ProofStripLabels {
 
 /** Props for {@link ProofStrip}. */
 export interface ProofStripProps {
-    /** The real, unpaginated course list — `courseCount` and `lessonCount` are both derived from this, never passed as separate numbers. */
+    /** The real, unpaginated course list -- `courseCount` and `lessonCount` are both derived from this, never passed as separate numbers. */
     courses: Array<ProofStripCourse>
-    /** Real `Brand.communityEnabled` — a disabled feature never gets a cell of its own. */
+    /** Real `Brand.communityEnabled` -- a disabled feature never gets a cell of its own. */
     isCommunityEnabled: boolean
-    /** Real `posts().length > 0` — decides which of the two honest community values shows. */
+    /** Real `posts().length > 0` -- decides which of the two honest community values shows. */
     hasCommunityPost: boolean
     /** Already-localized copy. */
     labels: ProofStripLabels
-    /** `true` → every cell's value and label shimmer, mirroring the loaded shape (same page-level first-load region `HeroIdentity`'s stat line belongs to). */
+    /** `true` -> every cell's value and label shimmer, mirroring the loaded shape (same page-level first-load region `HeroIdentity`'s stat line belongs to). */
+    isSkeleton?: boolean
+}
+
+/** Props for one proof-strip stat cell. */
+interface ProofStripStatProps {
+    /** The bold value. */
+    value: string
+    /** The muted label under the value. */
+    label: string
+    /** `true` -> value and label shimmer. */
     isSkeleton?: boolean
 }
 
 /** One stat cell: a bold value over a muted label, both threaded with `isSkeleton`. */
-const Stat = ({ value, label, isSkeleton }: { value: string; label: string; isSkeleton?: boolean }) => (
+const Stat = ({ value, label, isSkeleton }: ProofStripStatProps) => (
     <StackV
         gap={1}
         align="center"
@@ -65,7 +75,6 @@ const Stat = ({ value, label, isSkeleton }: { value: string; label: string; isSk
                     weight="bold"
                     align="center"
                     isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-1/2"] : undefined}
                     text={value}
                 />
             ),
@@ -75,7 +84,6 @@ const Stat = ({ value, label, isSkeleton }: { value: string; label: string; isSk
                     color="muted"
                     align="center"
                     isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-2/3"] : undefined}
                     text={label}
                 />
             ),
@@ -120,5 +128,5 @@ const ProofStrip = ({ courses, isCommunityEnabled, hasCommunityPost, labels, isS
 
 export { ProofStrip }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "ProofStrip" } as const

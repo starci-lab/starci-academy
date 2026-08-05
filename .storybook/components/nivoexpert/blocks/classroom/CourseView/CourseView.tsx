@@ -8,9 +8,9 @@ import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/Pro
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `CourseView` — one published course opened in the classroom: header + overall
+ * `CourseView` -- one published course opened in the classroom: header + overall
  * completion meter + the ordered lessons with each lesson's own state. The four
- * pictures — `not-started`, `in-progress`, `completed`, `no-lessons` — are DATA, so
+ * pictures -- `not-started`, `in-progress`, `completed`, `no-lessons` -- are DATA, so
  * they are STATES of the single shape. Grounded in the real `CourseEntity`,
  * `LessonEntity`, and `LessonProgressEntity` (each lesson's status is derived).
  */
@@ -18,7 +18,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 /** A lesson's learning state, derived from its `LessonProgressEntity` row. */
 export type LessonStatus = "completed" | "in-progress" | "not-started"
 
-/** One lesson row — a subset of `LessonEntity` joined with the viewer's progress. */
+/** One lesson row -- a subset of `LessonEntity` joined with the viewer's progress. */
 export interface CourseLessonView {
     /** Lesson id (`LessonEntity.id`). */
     id: string
@@ -30,7 +30,7 @@ export interface CourseLessonView {
     status: LessonStatus
 }
 
-/** The course header — a subset of `CourseEntity`. */
+/** The course header -- a subset of `CourseEntity`. */
 export interface CourseHeaderView {
     /** Course title (`CourseEntity.title`). */
     title: string
@@ -47,9 +47,9 @@ export interface CourseViewProps {
     /** The lessons, in `sortIndex` order. Empty is the `no-lessons` state. */
     lessons: Array<CourseLessonView>
     /**
-     * `true` → the block's own first fetch is in flight: the same card renders its
+     * `true` -> the block's own first fetch is in flight: the same card renders its
      * header, a shimmering progress meter, and a fixed count of lesson-shaped rows
-     * (§12b), threading the flag down so every content node shimmers — the box
+     * (§12b), threading the flag down so every content node shimmers -- the box
      * neither shrinks nor jumps when the course resolves.
      */
     isSkeleton?: boolean
@@ -75,14 +75,14 @@ export interface CourseViewLabels {
     emptyDescription: string
 }
 
-/** Lesson status → the leading glyph + its tone class + the chip tone. */
+/** Lesson status -> the leading glyph + its tone class + the chip tone. */
 const STATUS_ICON = {
     completed: CheckCircleIcon,
     "in-progress": CircleHalfIcon,
     "not-started": CircleIcon,
 } as const
 
-/** Icon colour per status — completed reads success, in-progress warning, not-started muted. */
+/** Icon colour per status -- completed reads success, in-progress warning, not-started muted. */
 const STATUS_ICON_CLASS: Record<LessonStatus, string> = {
     completed: "size-5 shrink-0 text-success",
     "in-progress": "size-5 shrink-0 text-warning",
@@ -109,7 +109,7 @@ const CourseView = ({ course, lessons, isSkeleton = false, labels }: CourseViewP
     const total = lessons.length
     const completedCount = lessons.filter((lesson) => lesson.status === "completed").length
 
-    /** The course header row — title on the left, the optional price chip on the right. */
+    /** The course header row -- title on the left, the optional price chip on the right. */
     const Header = () => (
         <StackV
             gap={2}
@@ -160,7 +160,7 @@ const CourseView = ({ course, lessons, isSkeleton = false, labels }: CourseViewP
         />
     )
 
-    /** One lesson row — a status glyph, the title + position, and status/video chips. */
+    /** One lesson row -- a status glyph, the title + position, and status/video chips. */
     const LessonRow = (lesson: CourseLessonView, index: number) => {
         const Icon = STATUS_ICON[lesson.status]
         return (
@@ -234,5 +234,5 @@ const CourseView = ({ course, lessons, isSkeleton = false, labels }: CourseViewP
 
 export { CourseView }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "CourseView" } as const

@@ -5,10 +5,10 @@ import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShe
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `BanMemberModal` — the danger gate for banning a community member: a warning
+ * `BanMemberModal` -- the danger gate for banning a community member: a warning
  * callout naming the consequence, a required audit-reason field, and a red
  * Confirm disabled until a reason is entered. Confirm does NOT close the modal
- * itself (same rule `ConfirmDialog` follows) — the caller closes it via
+ * itself (same rule `ConfirmDialog` follows) -- the caller closes it via
  * `onOpenChange` once `setMemberStatus` resolves, keeping it open (`isBanning`)
  * while the mutation is in flight.
  */
@@ -19,15 +19,15 @@ export interface BanMemberModalProps {
     isOpen: boolean
     /** Open-state change handler. Forwarded to `ModalShell`. */
     onOpenChange: (open: boolean) => void
-    /** The member's display name — shown in the title and the warning copy. */
+    /** The member's display name -- shown in the title and the warning copy. */
     memberName: string
     /** The audit-reason text (controlled). Confirm stays disabled while this is empty. */
     reason: string
     /** Fired on every keystroke in the reason field. */
     onReasonChange: (value: string) => void
-    /** Fired when Confirm is pressed — the connected layer runs `setMemberStatus` with the audit reason. Does NOT close the modal itself; the caller closes it once the mutation resolves. */
+    /** Fired when Confirm is pressed -- the connected layer runs `setMemberStatus` with the audit reason. Does NOT close the modal itself; the caller closes it once the mutation resolves. */
     onConfirm: () => void
-    /** `true` while the ban is in flight — Confirm shows a spinner, both buttons and the reason field lock. */
+    /** `true` while the ban is in flight -- Confirm shows a spinner, both buttons and the reason field lock. */
     isBanning?: boolean
     /** Already-resolved copy. */
     labels: BanMemberModalLabels
@@ -45,10 +45,10 @@ export interface BanMemberModalLabels {
     confirmLabel: string
 }
 
-/** Fixed, block-owned title prefix — the member's name is appended, same convention `SetMemberRoleModal` uses. */
+/** Fixed, block-owned title prefix -- the member's name is appended, same convention `SetMemberRoleModal` uses. */
 const MODAL_TITLE = "Ban member?"
 
-/** Fixed warning-callout title — the consequence is always the same shape, only the name varies. */
+/** Fixed warning-callout title -- the consequence is always the same shape, only the name varies. */
 const WARNING_TITLE = "This can't be undone automatically"
 
 /**

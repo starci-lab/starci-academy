@@ -7,18 +7,18 @@ import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/Pro
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `MemberDetailDrawer` — the read view over one community member: identity (via
+ * `MemberDetailDrawer` -- the read view over one community member: identity (via
  * the shell's own title/description), a few key/value rows, and the two actions
- * that hand off to the sibling overlays in this set — "Change role" opens
+ * that hand off to the sibling overlays in this set -- "Change role" opens
  * `SetMemberRoleModal`, "Ban member" opens `BanMemberModal`. The drawer never runs
  * a mutation itself; "Unban member" is the one direct action, since reversing a
  * ban needs no audit reason.
  */
 
-/** A community member's role — mirrors `MembersManager`'s `MemberRole` (kept local: OVERLAY-3, a drawer may not import a block). */
+/** A community member's role -- mirrors `MembersManager`'s `MemberRole` (kept local: OVERLAY-3, a drawer may not import a block). */
 export type MemberRole = "member" | "moderator" | "admin"
 
-/** Whether a member can participate — mirrors `MembersManager`'s `MemberStatus`. */
+/** Whether a member can participate -- mirrors `MembersManager`'s `MemberStatus`. */
 export type MemberStatus = "active" | "banned"
 
 /** A member's current/most-recent course and how far they are through it. */
@@ -35,27 +35,27 @@ export interface MemberDetailDrawerProps {
     isOpen: boolean
     /** Open-state change handler (backdrop click, Escape, close button). Forwarded to `DrawerShell`. */
     onOpenChange: (open: boolean) => void
-    /** Display name — rendered as the shell's title. */
+    /** Display name -- rendered as the shell's title. */
     name: string
-    /** Email — rendered as the shell's description, under the name. */
+    /** Email -- rendered as the shell's description, under the name. */
     email: string
     /** Role in the community. */
     role: MemberRole
     /** Active or banned. */
     status: MemberStatus
-    /** Current course + completion percent. `null` → not enrolled in any course yet. */
+    /** Current course + completion percent. `null` -> not enrolled in any course yet. */
     courseProgress: MemberCourseProgress | null
-    /** Already-formatted join date (e.g. "12 Jul 2026") — date formatting is the connected layer's job. */
+    /** Already-formatted join date (e.g. "12 Jul 2026") -- date formatting is the connected layer's job. */
     joinedLabel: string
     /** How many courses this member has purchased access to. */
     purchasedCourseCount: number
-    /** Opens `SetMemberRoleModal` for this member — the connected layer owns the transition. */
+    /** Opens `SetMemberRoleModal` for this member -- the connected layer owns the transition. */
     onChangeRole: () => void
-    /** Opens `BanMemberModal` for this member (active members only) — the connected layer owns the transition. */
+    /** Opens `BanMemberModal` for this member (active members only) -- the connected layer owns the transition. */
     onBan: () => void
-    /** Reverses a ban directly — the connected layer runs `setMemberStatus(id, "active")`. No audit reason needed to restore access. */
+    /** Reverses a ban directly -- the connected layer runs `setMemberStatus(id, "active")`. No audit reason needed to restore access. */
     onUnban: () => void
-    /** `true` while a mutation for this member is in flight — locks both footer actions. */
+    /** `true` while a mutation for this member is in flight -- locks both footer actions. */
     isBusy?: boolean
     /** Which edge the panel slides in from. @default "right" */
     placement?: "top" | "bottom" | "left" | "right"
@@ -89,14 +89,22 @@ export interface MemberDetailDrawerLabels {
     unbanLabel: string
 }
 
-/** Status → chip tone. Active reads healthy, banned reads a failure. */
+/** Status -> chip tone. Active reads healthy, banned reads a failure. */
 const STATUS_TONE: Record<MemberStatus, ChipTone> = { active: "success", banned: "danger" }
 
-/** Role → chip tone. Admin reads elevated, the rest read neutral. */
+/** Role -> chip tone. Admin reads elevated, the rest read neutral. */
 const ROLE_TONE: Record<MemberRole, ChipTone> = { admin: "accent", moderator: "default", member: "default" }
 
-/** One label/value row — the row shape every field in this drawer shares. */
-const KvRow = ({ label, value }: { label: string; value: ReactNode }) => (
+/** Props for one label/value row in {@link MemberDetailDrawer}. */
+interface MemberDetailKvRowProps {
+    /** Field label on the leading side. */
+    label: string
+    /** Field value on the trailing side -- text or a chip/control. */
+    value: ReactNode
+}
+
+/** One label/value row -- the row shape every field in this drawer shares. */
+const KvRow = ({ label, value }: MemberDetailKvRowProps) => (
     <StackH
         gap={3}
         align="center"

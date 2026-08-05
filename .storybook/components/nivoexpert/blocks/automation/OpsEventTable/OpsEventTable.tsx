@@ -5,14 +5,14 @@ import { Table, type TableColumnSpec, type TableRowItem } from "@sb-components/c
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `OpsEventTable` — the "platform events" tab. A reference table mapping each
+ * `OpsEventTable` -- the "platform events" tab. A reference table mapping each
  * platform event the ops layer fires to n8n to its per-event webhook path and to
  * whether an active workflow listens. The event set is FIXED (five events), so the
  * block has a single state. Grounded in the real `N8nDispatcherService`, whose
  * `OpsEvent` union is these five and whose path is `nivo-<event with dots as dashes>`.
  */
 
-/** The five platform events the ops layer fires — mirrors the real `OpsEvent` union. */
+/** The five platform events the ops layer fires -- mirrors the real `OpsEvent` union. */
 export type OpsEventKey =
     | "member.registered"
     | "order.paid"
@@ -20,7 +20,7 @@ export type OpsEventKey =
     | "quiz.passed"
     | "certificate.issued"
 
-/** One event row — an event, when it fires, its webhook path, and whether a workflow listens. */
+/** One event row -- an event, when it fires, its webhook path, and whether a workflow listens. */
 export interface OpsEventRowView {
     /** The platform event (`OpsEvent`). */
     event: OpsEventKey
@@ -113,5 +113,5 @@ const OpsEventTable = ({ events, labels }: OpsEventTableProps) => {
 
 export { OpsEventTable }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "OpsEventTable" } as const

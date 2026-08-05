@@ -4,25 +4,25 @@ import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/Surface
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `CourseOfferCard` — one course in the public tenant landing's catalog:
+ * `CourseOfferCard` -- one course in the public tenant landing's catalog:
  * title, a price chip (verbatim `Course.priceText`, or the free-course label
  * when unset), an optional summary, and the real lesson count. The whole card
  * is one press target, matching the real `landings/Classic.tsx`'s
  * card-as-link convention. Built on the shared HeroUI atom system
- * (`SurfaceCard` / `Typography` / `Chip`) — the tenant-landing tier moved
+ * (`SurfaceCard` / `Typography` / `Chip`) -- the tenant-landing tier moved
  * onto it once `apps/expert` wired the HeroUI theme bridge; the atoms still
  * read the app's per-tenant `--nivo-*` runtime tokens, one indirection later.
  */
 
-/** One course, as the public landing reads it — a subset of the real `Course`. */
+/** One course, as the public landing reads it -- a subset of the real `Course`. */
 export interface CourseOfferCardView {
-    /** `Course.slug` — the grid key and the `onOpenCourse` argument. */
+    /** `Course.slug` -- the grid key and the `onOpenCourse` argument. */
     slug: string
     /** `Course.title`. */
     title: string
-    /** `Course.summary` — null when the expert left it unset. */
+    /** `Course.summary` -- null when the expert left it unset. */
     summary?: string | null
-    /** `Course.priceText`, verbatim. Null renders `labels.freeLabel` — a copy decision, not a fabricated price. */
+    /** `Course.priceText`, verbatim. Null renders `labels.freeLabel` -- a copy decision, not a fabricated price. */
     priceText?: string | null
     /** `Course.lessons.length`. */
     lessonCount: number
@@ -40,7 +40,7 @@ export interface CourseOfferCardLabels {
 export interface CourseOfferCardProps {
     /** The course this card renders. */
     course: CourseOfferCardView
-    /** Fires on press — the connected layer routes to `/classroom/[slug]`. */
+    /** Fires on press -- the connected layer routes to `/classroom/[slug]`. */
     onOpenCourse: (slug: string) => void
     /** `true` -> a fixed skeleton course renders in place of `course`, every field shimmering. */
     isSkeleton?: boolean
@@ -48,7 +48,7 @@ export interface CourseOfferCardProps {
     labels: CourseOfferCardLabels
 }
 
-/** Skeleton placeholder — sized like a real card so the shimmer mirrors the loaded shape. */
+/** Skeleton placeholder -- sized like a real card so the shimmer mirrors the loaded shape. */
 const SKELETON_COURSE: CourseOfferCardView = {
     slug: "skeleton",
     title: "Course title",
@@ -111,5 +111,5 @@ const CourseOfferCard = ({ course, onOpenCourse, isSkeleton = false, labels }: C
 
 export { CourseOfferCard }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "CourseOfferCard" } as const

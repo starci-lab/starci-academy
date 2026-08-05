@@ -7,19 +7,19 @@ import { UserCell } from "@sb-components/composites/lists/UserCell/UserCell"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PostModerationCard` — one community post as the expert's moderation queue
+ * `PostModerationCard` -- one community post as the expert's moderation queue
  * shows it: identity, title + body, static like/comment counts, and the
  * pin/hide controls the public `PostCard` has no room for. The three
- * pictures — `published, not pinned`, `published, pinned`, `hidden` — are
+ * pictures -- `published, not pinned`, `published, pinned`, `hidden` -- are
  * DATA, so they are STATES of the single shape. Grounded in the real
- * `PostEntity.pinned` and `PostEntity.status` (`"published" | "removed"`) —
+ * `PostEntity.pinned` and `PostEntity.status` (`"published" | "removed"`) --
  * the FE has no `pinPost`/`hidePost` mutation yet.
  */
 
 /** Moderation status of a post (`PostEntity.status`). */
 export type PostModerationStatus = "published" | "removed"
 
-/** One moderated post — a subset of `PostEntity`. */
+/** One moderated post -- a subset of `PostEntity`. */
 export interface PostModerationView {
     /** Post id (`PostEntity.id`). */
     id: string
@@ -27,13 +27,13 @@ export interface PostModerationView {
     authorName: string
     /** Post title (`PostEntity.title`). */
     title: string
-    /** Post body — markdown source (`PostEntity.body`), rendered plain here. */
+    /** Post body -- markdown source (`PostEntity.body`), rendered plain here. */
     body: string
     /** Whether the post is pinned to the top of the public feed (`PostEntity.pinned`). */
     pinned: boolean
-    /** Moderation status — `removed` posts are hidden from the public feed (`PostEntity.status`). */
+    /** Moderation status -- `removed` posts are hidden from the public feed (`PostEntity.status`). */
     status: PostModerationStatus
-    /** Denormalised like count (`PostEntity.reactionCount`), shown as a static count — the admin never likes a post. */
+    /** Denormalised like count (`PostEntity.reactionCount`), shown as a static count -- the admin never likes a post. */
     reactionCount: number
     /** Total number of comments. */
     commentCount: number
@@ -43,14 +43,14 @@ export interface PostModerationView {
 export interface PostModerationCardProps {
     /** The post. */
     post: PostModerationView
-    /** Pin or unpin the post — the connected layer runs the (new) `pinPost`/`unpinPost` mutation. */
+    /** Pin or unpin the post -- the connected layer runs the (new) `pinPost`/`unpinPost` mutation. */
     onTogglePin: () => void
-    /** Hide the post from the public feed — the connected layer runs the (new) `hidePost` mutation. */
+    /** Hide the post from the public feed -- the connected layer runs the (new) `hidePost` mutation. */
     onHide: () => void
-    /** `true` while this row's own pin/hide mutation is in flight — locks both controls. */
+    /** `true` while this row's own pin/hide mutation is in flight -- locks both controls. */
     isBusy?: boolean
     /**
-     * `true` → the moderation queue's own first fetch is in flight: the same
+     * `true` -> the moderation queue's own first fetch is in flight: the same
      * card renders with every content node shimmering (§12b). A list renders a
      * fixed count of these while loading.
      */
@@ -86,7 +86,7 @@ export interface PostModerationCardLabels {
 const PostModerationCard = ({ post, onTogglePin, onHide, isBusy = false, isSkeleton = false, labels }: PostModerationCardProps) => {
     const isHidden = post.status === "removed"
 
-    /** The moderation action row — pin/unpin + hide while published; a status chip once hidden (no restore mutation exists yet). */
+    /** The moderation action row -- pin/unpin + hide while published; a status chip once hidden (no restore mutation exists yet). */
     const ModerationRow = () =>
         isHidden ? (
             <Chip tone="default" icon={EyeSlashIcon} text={labels.hiddenLabel} />
@@ -190,5 +190,5 @@ const PostModerationCard = ({ post, onTogglePin, onHide, isBusy = false, isSkele
 
 export { PostModerationCard }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "PostModerationCard" } as const

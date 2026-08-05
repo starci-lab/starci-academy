@@ -7,14 +7,14 @@ import { Grid } from "@sb-components/frames/Grid/Grid"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `LearnerOverview` — the student's dashboard-home header: a greeting, then two
+ * `LearnerOverview` -- the student's dashboard-home header: a greeting, then two
  * headline tiles (enrolled courses, lessons completed), then an optional XP/level
- * strip. The two pictures — `xp present`, `xp unavailable` — are DATA, so they are
+ * strip. The two pictures -- `xp present`, `xp unavailable` -- are DATA, so they are
  * STATES of the single shape. Grounded in the real `myXp` query and the client's
  * own per-course progress count.
  */
 
-/** The two headline tiles — counted across every enrolled course by the connected layer. */
+/** The two headline tiles -- counted across every enrolled course by the connected layer. */
 export interface LearnerOverviewStats {
     /** Courses with at least one lesson touched (any `LessonProgressEntity` row). */
     enrolledCount: number
@@ -41,12 +41,12 @@ export interface LearnerOverviewProps {
     /** The two headline tiles. */
     stats: LearnerOverviewStats
     /**
-     * The member's XP/level, or `null` when the XP query failed — the real client
+     * The member's XP/level, or `null` when the XP query failed -- the real client
      * swallows that failure silently, so `null` means "no strip", never an error.
      */
     xp: LearnerXpView | null
     /**
-     * `true` → the overview's own first fetch is in flight: the greeting, both
+     * `true` -> the overview's own first fetch is in flight: the greeting, both
      * tiles, and the XP strip all draw their skeleton mirror, threaded down.
      */
     isSkeleton?: boolean
@@ -108,13 +108,13 @@ const LearnerOverview = ({ learnerName, stats, xp, isSkeleton = false, labels }:
     )
 
     /**
-     * `true` → the strip has something to draw: either the real XP is in hand, or
+     * `true` -> the strip has something to draw: either the real XP is in hand, or
      * the block is still loading (loading doesn't know yet whether XP will land, so
      * it shows the fuller shape rather than guessing it will be absent).
      */
     const showXpStrip = isSkeleton || xp !== null
 
-    /** The XP/level strip — a chip + title above a progress-to-next-level meter. */
+    /** The XP/level strip -- a chip + title above a progress-to-next-level meter. */
     const XpStrip = () => {
         const nextAt = xp?.nextAt ?? null
         const xpValue = xp?.xp ?? 0
@@ -177,5 +177,5 @@ const LearnerOverview = ({ learnerName, stats, xp, isSkeleton = false, labels }:
 
 export { LearnerOverview }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "LearnerOverview" } as const

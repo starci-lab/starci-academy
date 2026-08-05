@@ -5,18 +5,18 @@ import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShe
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `RefundOrderModal` — a blocking, DANGER confirmation for refunding one order:
+ * `RefundOrderModal` -- a blocking, DANGER confirmation for refunding one order:
  * the order/amount summary, a warning that refunding revokes the member's course
  * access, and a destructive confirm. Built on `ModalShell` directly (not the
  * generic `ConfirmDialog`) because the order/amount summary needs its own rows,
  * richer than `ConfirmDialog`'s single description string. The confirm button
- * does NOT close the modal itself — the caller closes it once the refund
+ * does NOT close the modal itself -- the caller closes it once the refund
  * mutation resolves, keeping it open while `isConfirming`.
  */
 
-/** The order being refunded — the summary this modal shows above the warning. */
+/** The order being refunded -- the summary this modal shows above the warning. */
 export interface RefundOrderSummary {
-    /** Order number (e.g. "8821" → "Order #8821"). */
+    /** Order number (e.g. "8821" -> "Order #8821"). */
     orderNumber: string
     /** Name of the purchased package/plan. */
     packageName: string
@@ -30,15 +30,15 @@ export interface RefundOrderSummary {
 export interface RefundOrderModalProps {
     /** Whether the modal is currently open. Forwarded to `ModalShell`. */
     isOpen: boolean
-    /** Open-state change handler — backdrop click, Escape, close button, or the caller closing after confirm resolves. Forwarded to `ModalShell`. */
+    /** Open-state change handler -- backdrop click, Escape, close button, or the caller closing after confirm resolves. Forwarded to `ModalShell`. */
     onOpenChange: (open: boolean) => void
     /** The order being refunded. Unset while `isSkeleton` (nothing to show yet). */
     order?: RefundOrderSummary
     /** Fires when the reviewer presses the destructive confirm. Run the refund mutation here; the modal does NOT close itself. */
     onConfirm: () => void
-    /** `true` → the confirm button shows a spinner and blocks further presses; cancel locks too. */
+    /** `true` -> the confirm button shows a spinner and blocks further presses; cancel locks too. */
     isConfirming?: boolean
-    /** `true` → the order summary rows shimmer; the footer is omitted (nothing to confirm yet). */
+    /** `true` -> the order summary rows shimmer; the footer is omitted (nothing to confirm yet). */
     isSkeleton?: boolean
     /** Already-localized copy. */
     labels: RefundOrderModalLabels
@@ -56,7 +56,7 @@ export interface RefundOrderModalLabels {
     gatewayLabel: string
     /** Shown for an order with no gateway (a free enrollment). */
     noGatewayLabel: string
-    /** Warning copy — what refunding this order does to the member's access. */
+    /** Warning copy -- what refunding this order does to the member's access. */
     warningTitle: string
     /** Cancel button label. */
     cancelLabel: string
@@ -137,5 +137,5 @@ const RefundOrderModal = ({ isOpen, onOpenChange, order, onConfirm, isConfirming
 
 export { RefundOrderModal }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "overlay", name: "RefundOrderModal" } as const

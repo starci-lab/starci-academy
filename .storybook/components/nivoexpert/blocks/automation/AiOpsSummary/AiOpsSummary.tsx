@@ -2,14 +2,14 @@ import { Grid } from "@sb-components/frames/Grid/Grid"
 import { MetricCard } from "@sb-components/composites/stats/MetricCard/MetricCard"
 
 /**
- * `AiOpsSummary` — the three headline tiles atop the AI-management console: active
+ * `AiOpsSummary` -- the three headline tiles atop the AI-management console: active
  * workflows, tasks the assistant ran today, and events with a workflow listening.
- * The only state is `isSkeleton` (§12b) — the shape never otherwise changes.
+ * The only state is `isSkeleton` (§12b) -- the shape never otherwise changes.
  * Grounded in the real app's `N8nToolsService.listAll()`, the day's `AgentRun`
  * rows, and `N8nDispatcherService`'s per-event `isListening` join.
  */
 
-/** One headline tile — already resolved by the connected layer. */
+/** One headline tile -- already resolved by the connected layer. */
 export interface AiOpsMetricView {
     /** The large value (e.g. "4 / 6", "12", "3 / 5"). */
     value: string
@@ -34,8 +34,8 @@ export interface AiOpsSummaryProps {
     /** The three headline tiles. */
     metrics: AiOpsSummaryMetrics
     /**
-     * `true` → the console's own first fetch is in flight: all three tiles draw
-     * their skeleton mirror (§12b), threaded straight down — never fed to a
+     * `true` -> the console's own first fetch is in flight: all three tiles draw
+     * their skeleton mirror (§12b), threaded straight down -- never fed to a
      * separate skeleton tree.
      */
     isSkeleton?: boolean
@@ -99,5 +99,5 @@ const AiOpsSummary = ({ metrics, isSkeleton = false }: AiOpsSummaryProps) => (
 
 export { AiOpsSummary }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "AiOpsSummary" } as const

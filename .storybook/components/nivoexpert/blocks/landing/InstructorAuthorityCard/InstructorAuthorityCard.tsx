@@ -5,18 +5,18 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `InstructorAuthorityCard` — the landing's trust signal about the person, one
+ * `InstructorAuthorityCard` -- the landing's trust signal about the person, one
  * of the two peer cards in the trust row (beside `CommunityPreviewCard`).
  * Deliberately THIN: `Brand` (`lib/api.ts`) has no `bio`, no `credentials`,
  * no testimonial, no student-count field anywhere in the schema, so this
- * card shows only what really exists — identity plus the real stat row
+ * card shows only what really exists -- identity plus the real stat row
  * derived from `courses()` and `Brand.communityEnabled`. At zero courses the
  * three-chip stat row collapses to one honest combined line instead of
  * padding an empty stat with a zero lesson count and a community chip.
  *
  * HeroUI rebuild (P1 foundation): `Card`/`CardContent` + the shared
  * `Avatar`/`Chip`/`Typography`/`Stack` atoms, re-themed per tenant through
- * `apps/expert/app/globals.css`'s `--nivo-*` -> HeroUI CSS-var bridge — see
+ * `apps/expert/app/globals.css`'s `--nivo-*` -> HeroUI CSS-var bridge -- see
  * the component's own file header for the full contract.
  */
 
@@ -24,9 +24,9 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 export interface InstructorAuthorityCardBrand {
     /** `Brand.displayName`. */
     displayName: string
-    /** `Brand.tagline`, or `null` when unset — shown as the role/positioning line. */
+    /** `Brand.tagline`, or `null` when unset -- shown as the role/positioning line. */
     tagline: string | null
-    /** `Brand.avatarUrl`, or `null` — renders the initials fallback instead. */
+    /** `Brand.avatarUrl`, or `null` -- renders the initials fallback instead. */
     avatarUrl: string | null
 }
 
@@ -50,13 +50,13 @@ export interface InstructorAuthorityCardProps {
     courseCount: number
     /** Real sum of every course's `lessons.length`. */
     lessonCount: number
-    /** Real `Brand.communityEnabled` — a disabled feature is never advertised as a stat. */
+    /** Real `Brand.communityEnabled` -- a disabled feature is never advertised as a stat. */
     communityEnabled: boolean
     /**
-     * `true` → the courses fetch is still in flight: the identity (avatar,
+     * `true` -> the courses fetch is still in flight: the identity (avatar,
      * name, tagline) and the stat row all shimmer, threaded to every leaf
      * this card composes. Unlike `HeroIdentity`, this card's identity is
-     * shimmered too — it sits inside the same trust-row loading picture as
+     * shimmered too -- it sits inside the same trust-row loading picture as
      * the stat row it is paired with, so the pair resolves together rather
      * than the identity appearing to "finish" before the stats do.
      */
@@ -160,5 +160,5 @@ const InstructorAuthorityCard = ({
 
 export { InstructorAuthorityCard }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "InstructorAuthorityCard" } as const

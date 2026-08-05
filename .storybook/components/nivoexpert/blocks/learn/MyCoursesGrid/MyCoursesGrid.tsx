@@ -9,16 +9,16 @@ import { Grid } from "@sb-components/frames/Grid/Grid"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `MyCoursesGrid` — every course the member is enrolled in, one card each: title,
+ * `MyCoursesGrid` -- every course the member is enrolled in, one card each: title,
  * status chip, progress meter, "done / total" count, and an open-course action.
- * The three pictures — `empty`, `content`, `overflow` — are DATA, so they are
+ * The three pictures -- `empty`, `content`, `overflow` -- are DATA, so they are
  * STATES of the single shape. Grounded in the real `Course`/`Lesson` shape and the
  * client's own per-course progress count.
  */
 
-/** One course card — a subset of `Course` joined with the viewer's progress. */
+/** One course card -- a subset of `Course` joined with the viewer's progress. */
 export interface CourseCardView {
-    /** Course slug — routes to `/classroom/[slug]` (`Course.slug`). */
+    /** Course slug -- routes to `/classroom/[slug]` (`Course.slug`). */
     slug: string
     /** Course title (`Course.title`). */
     title: string
@@ -34,12 +34,12 @@ export interface CourseCardView {
 export interface MyCoursesGridProps {
     /** The enrolled courses, in listing order. Empty is the `empty` state. */
     courses: Array<CourseCardView>
-    /** Open a course's classroom — the connected layer routes to `/classroom/[slug]`. */
+    /** Open a course's classroom -- the connected layer routes to `/classroom/[slug]`. */
     onOpenCourse: (slug: string) => void
-    /** Empty state's onward action — the connected layer routes to the course catalog. */
+    /** Empty state's onward action -- the connected layer routes to the course catalog. */
     onBrowseCourses: () => void
     /**
-     * `true` → the grid's own first fetch is in flight: a fixed count of
+     * `true` -> the grid's own first fetch is in flight: a fixed count of
      * course-shaped cards render with every cell shimmering (§12b), threaded down.
      */
     isSkeleton?: boolean
@@ -61,18 +61,18 @@ export interface MyCoursesGridLabels {
     lessonsCompleteSuffix: string
     /** Open-course CTA label. */
     openLabel: string
-    /** Empty-state title — a brand-new member has never enrolled. */
+    /** Empty-state title -- a brand-new member has never enrolled. */
     emptyTitle: string
     /** Empty-state supporting line. */
     emptyDescription: string
-    /** Empty-state action label — browse the catalog. */
+    /** Empty-state action label -- browse the catalog. */
     browseLabel: string
 }
 
 /** How many placeholder cards the loading grid draws while `courses` hasn't landed yet. */
 const SKELETON_CARD_COUNT = 3
 
-/** Placeholder courses — sized like a real card so the grid's shimmer mirrors the loaded shape. */
+/** Placeholder courses -- sized like a real card so the grid's shimmer mirrors the loaded shape. */
 const SKELETON_COURSES: Array<CourseCardView> = Array.from({ length: SKELETON_CARD_COUNT }, (_unused, index) => ({
     slug: `skeleton-${index}`,
     title: "Course title",
@@ -90,7 +90,7 @@ const SKELETON_COURSES: Array<CourseCardView> = Array.from({ length: SKELETON_CA
 const MyCoursesGrid = ({ courses, onOpenCourse, onBrowseCourses, isSkeleton = false, labels }: MyCoursesGridProps) => {
     const cards = isSkeleton ? SKELETON_COURSES : courses
 
-    /** One course card — header + status chip, optional summary, meter, count, open action. */
+    /** One course card -- header + status chip, optional summary, meter, count, open action. */
     const CourseCard = (course: CourseCardView) => {
         const isDone = course.lessonCount > 0 && course.completedCount === course.lessonCount
         const tone: ChipTone = isDone ? "success" : "accent"
@@ -129,14 +129,15 @@ const MyCoursesGrid = ({ courses, onOpenCourse, onBrowseCourses, isSkeleton = fa
                                 />
                             ),
                             () => (
-                                <Button
-                                    variant="secondary"
-                                    size="sm"
-                                    label={labels.openLabel}
-                                    isSkeleton={isSkeleton}
-                                    onPress={() => onOpenCourse(course.slug)}
-                                    classNames={["w-fit"]}
-                                />
+                                <div className="w-fit">
+                                    <Button
+                                        variant="secondary"
+                                        size="sm"
+                                        label={labels.openLabel}
+                                        isSkeleton={isSkeleton}
+                                        onPress={() => onOpenCourse(course.slug)}
+                                    />
+                                </div>
                             ),
                         ]}
                     />
@@ -145,7 +146,7 @@ const MyCoursesGrid = ({ courses, onOpenCourse, onBrowseCourses, isSkeleton = fa
         )
     }
 
-    /** Empty state's action — browse the course catalog. A component reference, called by `EmptyState` itself. */
+    /** Empty state's action -- browse the course catalog. A component reference, called by `EmptyState` itself. */
     const BrowseAction = () => (
         <Button variant="primary" size="sm" prefixIcon={CompassIcon} label={labels.browseLabel} onPress={onBrowseCourses} />
     )
@@ -175,5 +176,5 @@ const MyCoursesGrid = ({ courses, onOpenCourse, onBrowseCourses, isSkeleton = fa
 
 export { MyCoursesGrid }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "MyCoursesGrid" } as const

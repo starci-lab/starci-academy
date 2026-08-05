@@ -6,28 +6,28 @@ import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/Drawer
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `OrderDetailDrawer` — the full-detail surface for ONE order: paying member,
+ * `OrderDetailDrawer` -- the full-detail surface for ONE order: paying member,
  * package, amount, gateway, and status, with a refund action that hands off to
- * `RefundOrderModal`. This shell does NOT run the refund itself — `onRefund` is the
+ * `RefundOrderModal`. This shell does NOT run the refund itself -- `onRefund` is the
  * hand-off; the caller owns what happens next.
  */
 
-/** Payment state of the order shown — drives both the status chip and whether refund is offered. */
+/** Payment state of the order shown -- drives both the status chip and whether refund is offered. */
 export type OrderDetailStatus = "paid" | "installment" | "free" | "refunded"
 
 /** The order this drawer shows in full. */
 export interface OrderDetailView {
-    /** Order number, shown in the drawer title (e.g. "8821" → "Order #8821"). */
+    /** Order number, shown in the drawer title (e.g. "8821" -> "Order #8821"). */
     orderNumber: string
     /** Display name of the paying member. */
     memberName: string
     /** Name of the purchased package/plan. */
     packageName: string
-    /** Already-formatted amount (e.g. "$899", "$299 × 3"). */
+    /** Already-formatted amount (e.g. "$899", "$299 x 3"). */
     amountLabel: string
     /** Already-resolved status copy (e.g. "Paid", "Period 1 of 3", "Free", "Refunded"). */
     statusLabel: string
-    /** Payment state — drives the status chip's tone and whether the refund action shows. */
+    /** Payment state -- drives the status chip's tone and whether the refund action shows. */
     status: OrderDetailStatus
     /** Payment gateway that processed the order (`"SePay"`, `"PayOS"`), or `null` for a free order. */
     gatewayLabel?: string | null
@@ -41,9 +41,9 @@ export interface OrderDetailDrawerProps {
     onOpenChange: (open: boolean) => void
     /** The order being viewed. Unset while `isSkeleton` (nothing to show yet). */
     order?: OrderDetailView
-    /** Fired when the refund action is pressed — the connected layer opens `RefundOrderModal`. */
+    /** Fired when the refund action is pressed -- the connected layer opens `RefundOrderModal`. */
     onRefund: () => void
-    /** `true` → the drawer's own first fetch is in flight; the title and every row shimmer, and the footer is omitted (nothing to act on yet). */
+    /** `true` -> the drawer's own first fetch is in flight; the title and every row shimmer, and the footer is omitted (nothing to act on yet). */
     isSkeleton?: boolean
     /** Already-localized copy. */
     labels: OrderDetailDrawerLabels
@@ -69,7 +69,7 @@ export interface OrderDetailDrawerLabels {
     refundActionLabel: string
 }
 
-/** Order status → chip tone. Paid/refunded are settled states, installment is still running, free needs none. */
+/** Order status -> chip tone. Paid/refunded are settled states, installment is still running, free needs none. */
 const STATUS_TONE: Record<OrderDetailStatus, ChipTone> = {
     paid: "success",
     installment: "warning",
@@ -77,7 +77,7 @@ const STATUS_TONE: Record<OrderDetailStatus, ChipTone> = {
     refunded: "default",
 }
 
-/** Only a fully paid order is offered a refund — an installment plan, a free enrollment, or an already-refunded order have nothing (further) to refund. */
+/** Only a fully paid order is offered a refund -- an installment plan, a free enrollment, or an already-refunded order have nothing (further) to refund. */
 const isRefundable = (status: OrderDetailStatus) => status === "paid"
 
 /**
@@ -123,7 +123,7 @@ const OrderDetailDrawer = ({ isOpen, onOpenChange, order, onRefund, isSkeleton =
                                         () => <Typography size="sm" color="muted" isSkeleton={isSkeleton} text={labels.statusLabel} />,
                                         () =>
                                             isSkeleton || order == null ? (
-                                                <Typography size="sm" isSkeleton classNames={["w-1/4"]} />
+                                                <Typography size="sm" isSkeleton />
                                             ) : (
                                                 <Chip tone={STATUS_TONE[order.status]} text={order.statusLabel} />
                                             ),
@@ -145,5 +145,5 @@ const OrderDetailDrawer = ({ isOpen, onOpenChange, order, onRefund, isSkeleton =
 
 export { OrderDetailDrawer }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "overlay", name: "OrderDetailDrawer" } as const

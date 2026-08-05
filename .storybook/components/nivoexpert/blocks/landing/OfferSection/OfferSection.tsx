@@ -10,8 +10,8 @@ import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `OfferSection` — the landing's closing pricing/enrol push: every real course
- * restated as one compact row (title · real lesson count · real price) with its
+ * `OfferSection` -- the landing's closing pricing/enrol push: every real course
+ * restated as one compact row (title - real lesson count - real price) with its
  * own Enrol CTA, inside a single surface. A nivo tenant sells single courses, not
  * tiers, so this restates each course's real price instead of a tier grid. An
  * optional risk-reversal `guarantee` line renders ONLY when the connected layer
@@ -19,13 +19,13 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * atom/composite system (`SurfaceCard` / `List.Row` / `Chip` / `Button`).
  */
 
-/** One course's offer row — a subset of the real `Course`, price pre-formatted. */
+/** One course's offer row -- a subset of the real `Course`, price pre-formatted. */
 export interface OfferSectionCourseRow {
-    /** `Course.slug` — the row key and the `onEnrol` argument. */
+    /** `Course.slug` -- the row key and the `onEnrol` argument. */
     slug: string
     /** `Course.title`. */
     title: string
-    /** `Course.priceText`, verbatim. Null renders `labels.freeLabel` — a copy decision, not a fabricated price. */
+    /** `Course.priceText`, verbatim. Null renders `labels.freeLabel` -- a copy decision, not a fabricated price. */
     priceText?: string | null
     /** `Course.lessons.length`. */
     lessonCount: number
@@ -59,16 +59,16 @@ export interface OfferSectionProps {
     courses: Array<OfferSectionCourseRow>
     /** Fires with a course's slug when its row CTA is pressed. */
     onEnrol: (slug: string) => void
-    /** Fired from the defensive empty branch — the caller routes to the lead-capture section. */
+    /** Fired from the defensive empty branch -- the caller routes to the lead-capture section. */
     onContact: () => void
     /**
      * Real risk-reversal copy (e.g. a refund window), verbatim from the expert's
-     * own policy. `null`/omitted → no guarantee line renders; this block never
+     * own policy. `null`/omitted -> no guarantee line renders; this block never
      * invents one (see file header).
      */
     guarantee?: string | null
     /**
-     * `true` → the catalog's own first fetch is in flight: the offer keeps its row
+     * `true` -> the catalog's own first fetch is in flight: the offer keeps its row
      * shape while every title/price shimmers and every CTA stops accepting presses.
      */
     isSkeleton?: boolean
@@ -79,7 +79,7 @@ export interface OfferSectionProps {
 /** How many placeholder rows the loading mirror draws while `courses` hasn't landed. */
 const SKELETON_ROW_COUNT = 3
 
-/** Placeholder rows — sized like a real row so the shimmer mirrors the loaded shape. */
+/** Placeholder rows -- sized like a real row so the shimmer mirrors the loaded shape. */
 const SKELETON_COURSES: Array<OfferSectionCourseRow> = Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
     slug: `skeleton-${index}`,
     title: "Course title",
@@ -98,7 +98,7 @@ interface OfferRowProps {
 
 /**
  * One offer row: title + real lesson count on the left, the price chip and Enrol
- * CTA on the right. The SAME shape drives the loaded and loading rows —
+ * CTA on the right. The SAME shape drives the loaded and loading rows --
  * `isSkeleton` mirrors, it does not branch to a second shape.
  */
 const OfferRow = ({ course, onEnrol, labels, isSkeleton, divider }: OfferRowProps) => (
@@ -188,5 +188,5 @@ const OfferSection = ({ courses, onEnrol, onContact, guarantee, isSkeleton = fal
 
 export { OfferSection }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "OfferSection" } as const

@@ -6,7 +6,7 @@ import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `TemplatePickerModal` — a P3 shell: pick one starter template (accent +
+ * `TemplatePickerModal` -- a P3 shell: pick one starter template (accent +
  * layout + section-defaults preset) to inject into the tenant's `--nivo-*`
  * tokens. `onApply` is a plain callback; the app phase wires the real preset-
  * injection mutation once it exists.
@@ -15,15 +15,15 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
 /** The four starter presets in the current gallery. */
 export type StarterTemplateId = "crimson" | "ocean" | "emerald" | "amber"
 
-/** One selectable starter template — already resolved by the connected layer. */
+/** One selectable starter template -- already resolved by the connected layer. */
 export interface StarterTemplateOptionView {
-    /** Stable id — also the value reported to {@link TemplatePickerModalProps.onSelectTemplate}. */
+    /** Stable id -- also the value reported to {@link TemplatePickerModalProps.onSelectTemplate}. */
     id: StarterTemplateId
     /** Display name (e.g. "Ocean"). */
     name: string
     /** One-line description of the preset. */
     description: string
-    /** `true` → carries a "Default" badge next to its name. */
+    /** `true` -> carries a "Default" badge next to its name. */
     isDefault?: boolean
 }
 
@@ -39,12 +39,12 @@ export interface TemplatePickerModalProps {
     selectedTemplateId: StarterTemplateId
     /** Fires with a template's id when its tile is tapped. */
     onSelectTemplate: (id: StarterTemplateId) => void
-    /** Injects the selected preset into `--nivo-*` — the connected layer runs the (P3, not-yet-existing) apply mutation. */
+    /** Injects the selected preset into `--nivo-*` -- the connected layer runs the (P3, not-yet-existing) apply mutation. */
     onApply: () => void
-    /** `true` → the apply is in flight: the grid locks and Apply shows a spinner. */
+    /** `true` -> the apply is in flight: the grid locks and Apply shows a spinner. */
     isApplying?: boolean
     /**
-     * `true` → the modal's own first fetch (reading the gallery) is in flight:
+     * `true` -> the modal's own first fetch (reading the gallery) is in flight:
      * the title/description and the whole grid draw their skeleton mirror,
      * threaded straight down.
      */
@@ -79,7 +79,7 @@ const SWATCH_CLASS: Record<StarterTemplateId, string> = {
     amber: "bg-gradient-to-br from-warning to-foreground",
 }
 
-/** Placeholder gallery — sized like the real four presets so the shimmer mirrors the loaded shape. */
+/** Placeholder gallery -- sized like the real four presets so the shimmer mirrors the loaded shape. */
 const SKELETON_TEMPLATES: Array<StarterTemplateOptionView> = (["crimson", "ocean", "emerald", "amber"] as const).map((id) => ({
     id,
     name: "Template name",
@@ -168,5 +168,5 @@ const TemplatePickerModal = ({
 
 export { TemplatePickerModal }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "overlay", name: "TemplatePickerModal" } as const

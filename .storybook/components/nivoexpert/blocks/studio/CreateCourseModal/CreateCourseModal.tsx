@@ -6,14 +6,14 @@ import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `CreateCourseModal` — overlay modal that creates a new `CourseEntity`:
+ * `CreateCourseModal` -- overlay modal that creates a new `CourseEntity`:
  * name, slug, a short description, a price, and a starting status. The
  * primary action drops the expert straight into `CourseStudio` for the
  * just-created course. The one failure this modal itself surfaces is a
  * taken slug, rendered inline on the field.
  */
 
-/** A newly-created course's starting lifecycle state — `CourseEntity.status` before it ever publishes. */
+/** A newly-created course's starting lifecycle state -- `CourseEntity.status` before it ever publishes. */
 export type CourseDraftStatus = "draft" | "published"
 
 /** Props for {@link CreateCourseModal}. */
@@ -22,40 +22,40 @@ export interface CreateCourseModalProps {
     isOpen: boolean
     /** Open-state change handler (backdrop click, Escape, close button). Forwarded to `ModalShell`. */
     onOpenChange: (open: boolean) => void
-    /** Course title (controlled) — `CourseEntity.title`. */
+    /** Course title (controlled) -- `CourseEntity.title`. */
     title: string
     /** Fires as the title field changes. */
     onTitleChange: (value: string) => void
-    /** Course slug (controlled) — `CourseEntity.slug`, the classroom URL segment. */
+    /** Course slug (controlled) -- `CourseEntity.slug`, the classroom URL segment. */
     slug: string
     /** Fires as the slug field changes. */
     onSlugChange: (value: string) => void
-    /** Short description (controlled) — `CourseEntity.summary`. */
+    /** Short description (controlled) -- `CourseEntity.summary`. */
     description: string
     /** Fires as the description field changes. */
     onDescriptionChange: (value: string) => void
-    /** Price in VND, raw number — `CourseEntity.price`. `InputCurrency` owns the formatting. */
+    /** Price in VND, raw number -- `CourseEntity.price`. `InputCurrency` owns the formatting. */
     price: number
     /** Fires as the price field changes. */
     onPriceChange: (value: number) => void
-    /** Starting status — `CourseEntity.status`. */
+    /** Starting status -- `CourseEntity.status`. */
     status: CourseDraftStatus
     /** Fires as the status field changes. */
     onStatusChange: (value: CourseDraftStatus) => void
-    /** Create the course and route into `CourseStudio` for it — the connected layer runs `createCourse`. */
+    /** Create the course and route into `CourseStudio` for it -- the connected layer runs `createCourse`. */
     onCreate: () => void
-    /** `true` → the create mutation is in flight (fields lock, button busy). */
+    /** `true` -> the create mutation is in flight (fields lock, button busy). */
     isCreating?: boolean
     /**
-     * Set once the slug is already taken by another course on this academy —
+     * Set once the slug is already taken by another course on this academy --
      * renders inline under the slug field. Cleared by the connected layer the
      * next time the field changes.
      */
     slugError?: string | null
     /**
-     * `true` → the modal's own first fetch (e.g. resolving this academy's
+     * `true` -> the modal's own first fetch (e.g. resolving this academy's
      * slug availability rules) is in flight: every field shimmers.
-     * Threaded straight down — never fed to a separate skeleton tree.
+     * Threaded straight down -- never fed to a separate skeleton tree.
      */
     isSkeleton?: boolean
     /** Already-localized copy. */
@@ -207,5 +207,5 @@ const CreateCourseModal = ({
 
 export { CreateCourseModal }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "CreateCourseModal" } as const

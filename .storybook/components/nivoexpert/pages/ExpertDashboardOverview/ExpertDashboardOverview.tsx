@@ -11,21 +11,21 @@ import { Grid } from "@sb-components/frames/Grid/Grid"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `ExpertDashboardOverview` — the PAGE an expert lands on inside
+ * `ExpertDashboardOverview` -- the PAGE an expert lands on inside
  * `ExpertDashboardShell`: four headline KPI tiles, a six-month revenue chart
- * beside the site-wide learner funnel (landing → registered → purchased →
+ * beside the site-wide learner funnel (landing -> registered -> purchased ->
  * completed), then the cross-domain recent-activity feed. A page's story is
- * one complete STATE per story — `Loading`, `Content`, `NewAccount` — not a
+ * one complete STATE per story -- `Loading`, `Content`, `NewAccount` -- not a
  * leaf-per-prop map.
  */
 
-/** An icon component (e.g. a phosphor `*Icon`), not JSX — the tile scales it itself. */
+/** An icon component (e.g. a phosphor `*Icon`), not JSX -- the tile scales it itself. */
 export type ExpertKpiIcon = ComponentType<SVGProps<SVGSVGElement> & { weight?: "regular" | "bold" }>
 
-/** How a KPI tile's own delta note reads — the DATA decides the tone, never a caller guess. */
+/** How a KPI tile's own delta note reads -- the DATA decides the tone, never a caller guess. */
 export type ExpertKpiDeltaTone = "positive" | "negative" | "neutral"
 
-/** One headline KPI tile — already resolved (formatted value + optional trend note) by the connected layer. */
+/** One headline KPI tile -- already resolved (formatted value + optional trend note) by the connected layer. */
 export interface ExpertDashboardKpi {
     /** Stable key. */
     key: string
@@ -39,7 +39,7 @@ export interface ExpertDashboardKpi {
     delta?: { text: string; tone: ExpertKpiDeltaTone }
 }
 
-/** One month of the revenue trend — the connected layer supplies the raw amount, this page derives the bar heights. */
+/** One month of the revenue trend -- the connected layer supplies the raw amount, this page derives the bar heights. */
 export interface RevenueTrendPoint {
     /** Stable key. */
     key: string
@@ -52,7 +52,7 @@ export interface RevenueTrendPoint {
 /** The four stages of the site-wide learner funnel, top to bottom. */
 export type LearnerFunnelStageKey = "visited" | "registered" | "purchased" | "completed"
 
-/** One funnel stage's raw count — this page derives each stage's share of the first (`visited`) stage. */
+/** One funnel stage's raw count -- this page derives each stage's share of the first (`visited`) stage. */
 export interface LearnerFunnelStagePoint {
     /** Which stage this point is. */
     key: LearnerFunnelStageKey
@@ -63,11 +63,11 @@ export interface LearnerFunnelStagePoint {
 /** The four activity sources folded into one feed. */
 export type ExpertActivityKind = "completion" | "order" | "community" | "lead"
 
-/** One activity entry — already resolved to a single display line + a relative time. */
+/** One activity entry -- already resolved to a single display line + a relative time. */
 export interface ExpertDashboardActivityItem {
     /** Stable id. */
     id: string
-    /** Which domain source this entry came from — decides the leading icon. */
+    /** Which domain source this entry came from -- decides the leading icon. */
     kind: ExpertActivityKind
     /** The already-resolved display line (e.g. "A learner completed \"Advanced React\""). */
     message: string
@@ -85,7 +85,7 @@ export interface ExpertDashboardOverviewProps {
     funnel: Array<LearnerFunnelStagePoint>
     /** The cross-domain activity feed, newest first. Empty is the feed's own empty state. */
     activity: Array<ExpertDashboardActivityItem>
-    /** `true` → the overview's own first fetch is in flight: every section draws its skeleton mirror, threaded down. */
+    /** `true` -> the overview's own first fetch is in flight: every section draws its skeleton mirror, threaded down. */
     isSkeleton?: boolean
     /** Already-localized copy. */
     labels: ExpertDashboardOverviewLabels
@@ -111,21 +111,21 @@ export interface ExpertDashboardOverviewLabels {
     activityEmptyDescription: string
 }
 
-/** The four funnel stages, top to bottom — read off a point in place. */
+/** The four funnel stages, top to bottom -- read off a point in place. */
 const FUNNEL_STAGES: ReadonlyArray<LearnerFunnelStageKey> = ["visited", "registered", "purchased", "completed"]
 
 /** How many placeholder KPI tiles / funnel rows / activity rows the skeleton draws. */
 const SKELETON_KPI_COUNT = 4
 const SKELETON_ACTIVITY_COUNT = 4
 
-/** Delta tone → the `Typography` color it renders in. */
+/** Delta tone -> the `Typography` color it renders in. */
 const DELTA_COLOR: Record<ExpertKpiDeltaTone, TypographyColor> = {
     positive: "success",
     negative: "danger",
     neutral: "muted",
 }
 
-/** `kind` -> leading icon. A lookup, not a caller choice — the feed owns what each source means. */
+/** `kind` -> leading icon. A lookup, not a caller choice -- the feed owns what each source means. */
 const ACTIVITY_ICON: Record<ExpertActivityKind, typeof ReceiptIcon> = {
     completion: TrophyIcon,
     order: ReceiptIcon,
@@ -133,7 +133,7 @@ const ACTIVITY_ICON: Record<ExpertActivityKind, typeof ReceiptIcon> = {
     lead: TargetIcon,
 }
 
-/** Placeholder KPI tiles — sized like a real tile so the shimmer mirrors the loaded shape. */
+/** Placeholder KPI tiles -- sized like a real tile so the shimmer mirrors the loaded shape. */
 const SKELETON_KPIS: Array<ExpertDashboardKpi> = Array.from({ length: SKELETON_KPI_COUNT }, (_unused, index) => ({
     key: `skeleton-kpi-${index}`,
     icon: ChartLineUpIcon,
@@ -148,7 +148,7 @@ const SKELETON_KPIS: Array<ExpertDashboardKpi> = Array.from({ length: SKELETON_K
  * @param props - {@link ExpertDashboardOverviewProps}
  */
 const ExpertDashboardOverview = ({ kpis, revenueTrend, funnel, activity, isSkeleton = false, labels }: ExpertDashboardOverviewProps) => {
-    /** The four headline tiles, in a reflowing grid — same column steps `nivo/blocks/dashboard/KpiRow` uses. */
+    /** The four headline tiles, in a reflowing grid -- same column steps `nivo/blocks/dashboard/KpiRow` uses. */
     const KpiRow = () => (
         <Grid
             columns={{ base: 1, sm: 2, lg: 4 }}
@@ -189,7 +189,7 @@ const ExpertDashboardOverview = ({ kpis, revenueTrend, funnel, activity, isSkele
         />
     )
 
-    /** Six vertical bars, each a share of the trend's own peak month — never a fabricated axis. */
+    /** Six vertical bars, each a share of the trend's own peak month -- never a fabricated axis. */
     const RevenueChart = () => {
         const points = isSkeleton
             ? Array.from({ length: 6 }, (_unused, index) => ({ key: `skeleton-month-${index}`, monthLabel: "", amountVnd: 0 }))
@@ -210,7 +210,7 @@ const ExpertDashboardOverview = ({ kpis, revenueTrend, funnel, activity, isSkele
         )
     }
 
-    /** One funnel stage — its label + count, then a bar filled to its share of the top (`visited`) stage. */
+    /** One funnel stage -- its label + count, then a bar filled to its share of the top (`visited`) stage. */
     const FunnelStageRow = (stage: LearnerFunnelStagePoint, baseline: number) => (
         <StackV
             gap={1}
@@ -238,7 +238,7 @@ const ExpertDashboardOverview = ({ kpis, revenueTrend, funnel, activity, isSkele
         />
     )
 
-    /** The funnel section body — skeleton mirror, empty state, or the four stage rows. */
+    /** The funnel section body -- skeleton mirror, empty state, or the four stage rows. */
     const FunnelBody = () => {
         if (isSkeleton) {
             return (
@@ -248,7 +248,7 @@ const ExpertDashboardOverview = ({ kpis, revenueTrend, funnel, activity, isSkele
                         <StackV
                             gap={1}
                             items={[
-                                () => <Typography size="sm" isSkeleton classNames={["w-1/3"]} />,
+                                () => <Typography size="sm" isSkeleton />,
                                 () => <ProgressBar isSkeleton />,
                             ]}
                         />
@@ -263,7 +263,7 @@ const ExpertDashboardOverview = ({ kpis, revenueTrend, funnel, activity, isSkele
         return <StackV gap={3} items={funnel.map((stage) => () => FunnelStageRow(stage, baseline))} />
     }
 
-    /** The recent-activity feed — a bounded surface list, same idiom `nivo/blocks/dashboard/RecentActivityCard` uses. */
+    /** The recent-activity feed -- a bounded surface list, same idiom `nivo/blocks/dashboard/RecentActivityCard` uses. */
     const ActivityList = () => {
         const rows = isSkeleton
             ? Array.from({ length: SKELETON_ACTIVITY_COUNT }, (_unused, index) => ({ id: `skeleton-activity-${index}`, kind: "order" as const, message: "", timeLabel: "" }))
@@ -305,5 +305,5 @@ const ExpertDashboardOverview = ({ kpis, revenueTrend, funnel, activity, isSkele
 
 export { ExpertDashboardOverview }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "page", name: "ExpertDashboardOverview" } as const

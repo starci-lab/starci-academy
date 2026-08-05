@@ -6,25 +6,25 @@ import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyS
 import { Grid, type GridItem } from "@sb-components/frames/Grid/Grid"
 
 /**
- * `LeadsPipeline` — the leads board: every lead sorted into one of four fixed
- * pipeline stages (new → contacted → won/lost), one column per stage. Tapping a
- * row is the select action — the real app opens `LeadDetailDrawer` with the
+ * `LeadsPipeline` -- the leads board: every lead sorted into one of four fixed
+ * pipeline stages (new -> contacted -> won/lost), one column per stage. Tapping a
+ * row is the select action -- the real app opens `LeadDetailDrawer` with the
  * tapped lead's id. The board is one shape; `isSkeleton`/`empty` are STATES of
  * it, not separate leaves.
  */
 
-/** The four fixed pipeline stages — order is the board's own column order. */
+/** The four fixed pipeline stages -- order is the board's own column order. */
 export type LeadStage = "new" | "contacted" | "won" | "lost"
 
-/** One lead — a subset of the real lead record. */
+/** One lead -- a subset of the real lead record. */
 export interface LeadRowView {
-    /** Stable row id — the value reported to {@link LeadsPipelineProps.onSelectLead}. */
+    /** Stable row id -- the value reported to {@link LeadsPipelineProps.onSelectLead}. */
     id: string
-    /** The lead's email — the row's primary line. */
+    /** The lead's email -- the row's primary line. */
     email: string
-    /** What the lead is interested in, when known — the row's secondary line. */
+    /** What the lead is interested in, when known -- the row's secondary line. */
     interest?: string | null
-    /** Where the lead came from (e.g. "Landing page") — shown as trailing metadata. */
+    /** Where the lead came from (e.g. "Landing page") -- shown as trailing metadata. */
     source?: string | null
     /** Which column this lead sits in. */
     stage: LeadStage
@@ -32,14 +32,14 @@ export interface LeadRowView {
 
 /** Props for {@link LeadsPipeline}. */
 export interface LeadsPipelineProps {
-    /** Every lead, any stage — this block sorts them into columns itself. Empty is the `empty` state. */
+    /** Every lead, any stage -- this block sorts them into columns itself. Empty is the `empty` state. */
     leads: Array<LeadRowView>
-    /** Fired with a lead id when its row is tapped — the caller opens `LeadDetailDrawer` with it. */
+    /** Fired with a lead id when its row is tapped -- the caller opens `LeadDetailDrawer` with it. */
     onSelectLead: (leadId: string) => void
     /**
-     * `true` → the board's own first fetch is in flight: every column keeps its
+     * `true` -> the board's own first fetch is in flight: every column keeps its
      * label and draws a fixed count of lead-shaped rows shimmering (§12b),
-     * threaded straight down — never a separate skeleton tree.
+     * threaded straight down -- never a separate skeleton tree.
      */
     isSkeleton?: boolean
     /** Already-localized copy. */
@@ -48,20 +48,20 @@ export interface LeadsPipelineProps {
 
 /** The already-resolved copy the block renders. */
 export interface LeadsPipelineLabels {
-    /** The four stage labels, keyed by stage — also the four column headers. */
+    /** The four stage labels, keyed by stage -- also the four column headers. */
     stageLabels: Record<LeadStage, string>
     /** Shown inside a column that has no leads at that stage. */
     emptyColumnLabel: string
-    /** Board-wide empty-state title — no leads at all yet. */
+    /** Board-wide empty-state title -- no leads at all yet. */
     emptyTitle: string
     /** Board-wide empty-state supporting line. */
     emptyDescription: string
 }
 
-/** Column order — fixed, not caller-supplied (mirrors the real funnel: new → contacted → won/lost). */
+/** Column order -- fixed, not caller-supplied (mirrors the real funnel: new -> contacted -> won/lost). */
 const STAGE_ORDER: ReadonlyArray<LeadStage> = ["new", "contacted", "won", "lost"]
 
-/** Stage → count-chip tone. New is the active-attention stage, won is a success, lost is neutral. */
+/** Stage -> count-chip tone. New is the active-attention stage, won is a success, lost is neutral. */
 const STAGE_TONE: Record<LeadStage, ChipTone> = {
     new: "accent",
     contacted: "warning",
@@ -72,7 +72,7 @@ const STAGE_TONE: Record<LeadStage, ChipTone> = {
 /** How many placeholder rows each column's loading mirror draws while `leads` hasn't landed yet. */
 const SKELETON_ROWS_PER_COLUMN = 2
 
-/** Placeholder leads, two per stage — sized like a real row so the shimmer mirrors the loaded shape. */
+/** Placeholder leads, two per stage -- sized like a real row so the shimmer mirrors the loaded shape. */
 const SKELETON_LEADS: Array<LeadRowView> = STAGE_ORDER.flatMap((stage) =>
     Array.from({ length: SKELETON_ROWS_PER_COLUMN }, (_unused, index) => ({
         id: `skeleton-${stage}-${index}`,
@@ -135,5 +135,5 @@ const LeadsPipeline = ({ leads, onSelectLead, isSkeleton = false, labels }: Lead
 
 export { LeadsPipeline }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "LeadsPipeline" } as const

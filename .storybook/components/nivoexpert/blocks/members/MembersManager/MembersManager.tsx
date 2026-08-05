@@ -12,7 +12,7 @@ import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/Pro
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `MembersManager` — the expert's community roster: one row per member (identity,
+ * `MembersManager` -- the expert's community roster: one row per member (identity,
  * current-course progress, role, status), filtered by a tab strip (all / learning /
  * completed / banned). A row press opens `MemberDetailDrawer`; role changes and
  * bans route through `SetMemberRoleModal` and `BanMemberModal` from there, so this
@@ -36,39 +36,39 @@ export interface MemberCourseProgress {
     percent: number
 }
 
-/** One roster row — a subset of `MemberEntity`. */
+/** One roster row -- a subset of `MemberEntity`. */
 export interface MemberRowView {
     /** Member id (`MemberEntity.id`). */
     id: string
     /** Display name (`MemberEntity.name`). */
     name: string
-    /** Email — the member's unique identity (`MemberEntity.email`). */
+    /** Email -- the member's unique identity (`MemberEntity.email`). */
     email: string
     /** Role in the community (`MemberEntity.role`). */
     role: MemberRole
     /** Active or banned (`MemberEntity.status`). */
     status: MemberStatus
-    /** Current course + completion percent. `null` → not enrolled in any course yet. */
+    /** Current course + completion percent. `null` -> not enrolled in any course yet. */
     courseProgress: MemberCourseProgress | null
 }
 
 /** Props for {@link MembersManager}. */
 export interface MembersManagerProps {
-    /** The FULL roster — this block filters it client-side by the active tab. Empty is the `empty` state. */
+    /** The FULL roster -- this block filters it client-side by the active tab. Empty is the `empty` state. */
     members: Array<MemberRowView>
-    /** Open the add-member flow — the connected layer runs `createMember`. */
+    /** Open the add-member flow -- the connected layer runs `createMember`. */
     onAddMember: () => void
-    /** A row was pressed — the connected layer opens `MemberDetailDrawer` for this member id. */
+    /** A row was pressed -- the connected layer opens `MemberDetailDrawer` for this member id. */
     onViewMember: (id: string) => void
-    /** Grant a member course access — the connected layer runs `grantCourseAccess`. */
+    /** Grant a member course access -- the connected layer runs `grantCourseAccess`. */
     onGrantAccess: (id: string) => void
     /** Id of the member whose controls are in flight (they lock), or null. */
     busyId?: string | null
     /**
-     * `true` → the roster's own first fetch is in flight: the card keeps its title
+     * `true` -> the roster's own first fetch is in flight: the card keeps its title
      * and renders a fixed count of member-shaped rows with every cell shimmering
      * (§12b), the Add action and per-row controls go inert. Threaded straight down
-     * — never fed to a separate skeleton tree.
+     * -- never fed to a separate skeleton tree.
      */
     isSkeleton?: boolean
     /** Already-localized copy. */
@@ -105,9 +105,9 @@ export interface MembersManagerLabels {
     tabsAriaLabel: string
     /** "All" tab label. */
     tabAllLabel: string
-    /** "Learning" tab label — enrolled, not yet at 100%. */
+    /** "Learning" tab label -- enrolled, not yet at 100%. */
     tabLearningLabel: string
-    /** "Completed" tab label — enrolled, at 100%. */
+    /** "Completed" tab label -- enrolled, at 100%. */
     tabCompletedLabel: string
     /** "Banned" tab label. */
     tabBannedLabel: string
@@ -120,16 +120,16 @@ export interface MembersManagerLabels {
 /** Column keys, shared by the header config and each row. */
 const COLUMN_KEY = { member: "member", progress: "progress", status: "status", role: "role", actions: "actions" } as const
 
-/** Status → chip tone. Active reads healthy, banned reads a failure. */
+/** Status -> chip tone. Active reads healthy, banned reads a failure. */
 const STATUS_TONE: Record<MemberStatus, ChipTone> = { active: "success", banned: "danger" }
 
-/** Role → chip tone. Admin reads elevated, the rest read neutral. */
+/** Role -> chip tone. Admin reads elevated, the rest read neutral. */
 const ROLE_TONE: Record<MemberRole, ChipTone> = { admin: "accent", moderator: "default", member: "default" }
 
 /** How many placeholder rows the loading mirror draws while `members` hasn't landed yet. */
 const SKELETON_ROW_COUNT = 3
 
-/** Placeholder members — sized like a real row so the table's shimmer mirrors the loaded shape. */
+/** Placeholder members -- sized like a real row so the table's shimmer mirrors the loaded shape. */
 const SKELETON_MEMBERS: Array<MemberRowView> = Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
     id: `skeleton-${index}`,
     name: "Member name",
@@ -273,5 +273,5 @@ const MembersManager = ({
 
 export { MembersManager }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "MembersManager" } as const

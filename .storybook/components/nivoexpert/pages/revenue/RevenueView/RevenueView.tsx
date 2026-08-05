@@ -11,26 +11,26 @@ import {
 } from "@sb-components/nivoexpert/blocks/revenue/RevenueSummary/RevenueSummary"
 
 /**
- * `RevenueView` — the revenue PAGE: the headline summary tiles above the recent-orders
- * table (member · package · amount · gateway · status — coupons and installment plans
+ * `RevenueView` -- the revenue PAGE: the headline summary tiles above the recent-orders
+ * table (member - package - amount - gateway - status -- coupons and installment plans
  * surface as data inside those two blocks, not as separate sections). A page's story
- * is one complete STATE per story — `loading`, `content`, `empty-orders` — not a
+ * is one complete STATE per story -- `loading`, `content`, `empty-orders` -- not a
  * leaf-per-prop map. Grounded in the real `PaymentModule` order ledger, `CouponEntity`
  * redemptions, and `InstallmentPlanEntity` schedules.
  */
 
 /** Props for {@link RevenueView}. */
 export interface RevenueViewProps {
-    /** The headline tiles — forwarded to {@link RevenueSummary}. */
+    /** The headline tiles -- forwarded to {@link RevenueSummary}. */
     summary: RevenueSummaryMetrics
-    /** The recent orders — forwarded to {@link OrderTable}. Empty is the `empty-orders` state. */
+    /** The recent orders -- forwarded to {@link OrderTable}. Empty is the `empty-orders` state. */
     orders: Array<OrderRowView>
-    /** Fired with an order id when its row is tapped — the connected layer opens `OrderDetailDrawer`. */
+    /** Fired with an order id when its row is tapped -- the connected layer opens `OrderDetailDrawer`. */
     onSelectOrder: (orderId: string) => void
     /**
-     * `true` → the page's own first fetch is in flight: the heading, the summary
+     * `true` -> the page's own first fetch is in flight: the heading, the summary
      * tiles, and the orders table all draw their skeleton mirror (§12b), threaded
-     * straight down — never a separate skeleton tree.
+     * straight down -- never a separate skeleton tree.
      */
     isSkeleton?: boolean
     /** Already-localized copy for the page's own chrome. */
@@ -71,5 +71,5 @@ const RevenueView = ({ summary, orders, onSelectOrder, isSkeleton = false, label
 
 export { RevenueView }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "page", name: "RevenueView" } as const

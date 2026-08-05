@@ -9,7 +9,7 @@ import { Grid } from "@sb-components/frames/Grid/Grid"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `AnalyticsView` — the "Analytics" destination: new learners per week (as
+ * `AnalyticsView` -- the "Analytics" destination: new learners per week (as
  * relative bars), the most-viewed lessons, and the single clearest drop-off
  * point. The three pictures are DATA, so they are STATES of one shape.
  */
@@ -38,12 +38,12 @@ export interface AnalyticsViewProps {
     growth: Array<WeeklyGrowthPointView>
     /** Lessons ranked by views, most-viewed first. Empty is the section's own empty state. */
     topLessons: Array<TopLessonView>
-    /** Already-formatted description of the clearest drop-off point (e.g. "Lesson 4 drops 22% of learners"). `null` → nothing clear enough to call out yet. */
+    /** Already-formatted description of the clearest drop-off point (e.g. "Lesson 4 drops 22% of learners"). `null` -> nothing clear enough to call out yet. */
     dropOffDescription?: string | null
     /**
-     * `true` → the view's own first fetch is in flight: all three sections keep
+     * `true` -> the view's own first fetch is in flight: all three sections keep
      * their titles and draw their skeleton mirror (§12b), threaded straight
-     * down — never a separate skeleton tree.
+     * down -- never a separate skeleton tree.
      */
     isSkeleton?: boolean
     /** Already-localized copy. */
@@ -79,13 +79,13 @@ export interface AnalyticsViewLabels {
 /** How many placeholder rows each section's loading mirror draws. */
 const SKELETON_ROW_COUNT = 3
 
-/** Placeholder growth points — sized like a real week so the shimmer mirrors the loaded shape. */
+/** Placeholder growth points -- sized like a real week so the shimmer mirrors the loaded shape. */
 const SKELETON_GROWTH: Array<WeeklyGrowthPointView> = Array.from({ length: 6 }, (_unused, index) => ({
     weekLabel: `W${index + 1}`,
     newLearners: 10,
 }))
 
-/** Placeholder lessons — sized like a real row so the shimmer mirrors the loaded shape. */
+/** Placeholder lessons -- sized like a real row so the shimmer mirrors the loaded shape. */
 const SKELETON_LESSONS: Array<TopLessonView> = Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
     id: `skeleton-${index}`,
     title: "Lesson title",
@@ -196,7 +196,7 @@ const AnalyticsView = ({ growth, topLessons, dropOffDescription, isSkeleton = fa
             isSkeleton={isSkeleton}
             body={() =>
                 isSkeleton ? (
-                    <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
+                    <Typography size="sm" isSkeleton />
                 ) : dropOffDescription != null ? (
                     <Callout status="warning" title={labels.dropOffTitle} description={dropOffDescription} />
                 ) : (
@@ -232,5 +232,5 @@ const AnalyticsView = ({ growth, topLessons, dropOffDescription, isSkeleton = fa
 
 export { AnalyticsView }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "AnalyticsView" } as const

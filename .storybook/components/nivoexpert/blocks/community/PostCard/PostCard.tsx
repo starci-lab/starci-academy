@@ -7,14 +7,14 @@ import { UserCell } from "@sb-components/composites/lists/UserCell/UserCell"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PostCard` — one community feed post: author identity, title + body, a like toggle
- * with its count, a comment count, and a comments preview. The three pictures —
- * `default`, `liked`, `with-comments` — are DATA, so they are STATES of the single
+ * `PostCard` -- one community feed post: author identity, title + body, a like toggle
+ * with its count, a comment count, and a comments preview. The three pictures --
+ * `default`, `liked`, `with-comments` -- are DATA, so they are STATES of the single
  * shape. Grounded in the real `PostEntity`, `CommentEntity`, and `ReactionEntity`
  * (`hasLiked` is derived; the like toggle is the real `reactPost` mutation).
  */
 
-/** One comment preview — a subset of `CommentEntity`. */
+/** One comment preview -- a subset of `CommentEntity`. */
 export interface PostCommentView {
     /** Comment id (`CommentEntity.id`). */
     id: string
@@ -24,7 +24,7 @@ export interface PostCommentView {
     body: string
 }
 
-/** One feed post — a subset of `PostEntity`. */
+/** One feed post -- a subset of `PostEntity`. */
 export interface PostView {
     /** Post id (`PostEntity.id`). */
     id: string
@@ -32,7 +32,7 @@ export interface PostView {
     authorName: string
     /** Post title (`PostEntity.title`). */
     title: string
-    /** Post body — markdown source (`PostEntity.body`), rendered plain here. */
+    /** Post body -- markdown source (`PostEntity.body`), rendered plain here. */
     body: string
     /** Whether the post is pinned to the top of the feed (`PostEntity.pinned`). */
     pinned: boolean
@@ -40,7 +40,7 @@ export interface PostView {
     reactionCount: number
     /** Total number of comments (`PostEntity.comments.length`). */
     commentCount: number
-    /** A preview of the first comments — the connected layer caps the list. */
+    /** A preview of the first comments -- the connected layer caps the list. */
     comments: Array<PostCommentView>
 }
 
@@ -50,10 +50,10 @@ export interface PostCardProps {
     post: PostView
     /** `true` when the viewing member has a reaction row for this post (derived from `ReactionEntity`). */
     hasLiked: boolean
-    /** Toggle the viewer's like — the connected layer runs `reactPost(postId)`. */
+    /** Toggle the viewer's like -- the connected layer runs `reactPost(postId)`. */
     onToggleLike: () => void
     /**
-     * `true` → the feed's first fetch is in flight: the same post card renders
+     * `true` -> the feed's first fetch is in flight: the same post card renders
      * with every content node (author, title, body, like/comment counts)
      * shimmering (§12b), threaded down. A feed renders a fixed count of these
      * while loading.
@@ -71,7 +71,7 @@ export interface PostCardLabels {
     likeAriaLabel: string
     /** Suffix after the comment count (e.g. "comments"). */
     commentsSuffix: string
-    /** Template piece before the hidden-comments count (e.g. "more") — rendered as "+N more". */
+    /** Template piece before the hidden-comments count (e.g. "more") -- rendered as "+N more". */
     moreCommentsSuffix: string
 }
 
@@ -84,7 +84,7 @@ export interface PostCardLabels {
 const PostCard = ({ post, hasLiked, onToggleLike, isSkeleton = false, labels }: PostCardProps) => {
     const hiddenComments = post.commentCount - post.comments.length
 
-    /** One comment preview — commenter identity above the comment body. */
+    /** One comment preview -- commenter identity above the comment body. */
     const CommentRow = (comment: PostCommentView) => (
         <StackV
             gap={1}
@@ -96,7 +96,7 @@ const PostCard = ({ post, hasLiked, onToggleLike, isSkeleton = false, labels }: 
         />
     )
 
-    /** The comments preview region — only rendered when a preview exists. */
+    /** The comments preview region -- only rendered when a preview exists. */
     const CommentsRegion = () => (
         <SurfaceCard
             variant="nested"
@@ -181,5 +181,5 @@ const PostCard = ({ post, hasLiked, onToggleLike, isSkeleton = false, labels }: 
 
 export { PostCard }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "PostCard" } as const

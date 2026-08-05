@@ -12,26 +12,26 @@ import { BackToTopButton } from "@sb-components/nivoexpert/atoms/BackToTopButton
 import { LandingFooter, type LandingFooterProps } from "@sb-components/nivoexpert/blocks/landing/LandingFooter/LandingFooter"
 
 /**
- * `TenantLandingShell` — the LAYOUT the public `apps/expert` `/` landing
+ * `TenantLandingShell` -- the LAYOUT the public `apps/expert` `/` landing
  * route sits in: a sticky brand nav (brand mark, in-page anchors, sign-in +
  * enrol) on top, the route's own section stack in the CENTER, `LandingFooter`
  * closing it, a floating `BackToTopButton`, and a mobile-only sticky enrol
- * bar. `content` is the one slot a route's shape enters — mirrors
+ * bar. `content` is the one slot a route's shape enters -- mirrors
  * `nivo/layouts/MarketingLandingShell`'s own `content` slot, so `isSkeleton`
  * (loaded vs loading) is the only structural state a story maps.
  * `AnatomyTier` has no `layout` member, so this story passes `tier="screen"`
  * (story.md: a layout's story is the top arrangement tier).
  *
  * HeroUI: composes the house `Avatar`/`Button`/`Typography` atoms and
- * `Cluster`/`StackH` frames — every colour resolves through `apps/expert`'s
- * `--nivo-*` → HeroUI bridge, so the fixture below renders correctly with NO
+ * `Cluster`/`StackH` frames -- every colour resolves through `apps/expert`'s
+ * `--nivo-*` -> HeroUI bridge, so the fixture below renders correctly with NO
  * host `:root` override present (this story), same as the real per-tenant
  * override would apply on top.
  */
 
 /** One in-page anchor link in the nav's link row. */
 export interface TenantNavLink {
-    /** Stable id — also the React key. */
+    /** Stable id -- also the React key. */
     id: string
     /** Visible link label. */
     label: string
@@ -41,17 +41,17 @@ export interface TenantNavLink {
 
 /** Props for {@link TenantLandingShell}. */
 export interface TenantLandingShellProps {
-    /** The expert's display name (`Brand.displayName`) — nav brand mark + avatar-fallback initial. */
+    /** The expert's display name (`Brand.displayName`) -- nav brand mark + avatar-fallback initial. */
     brandName: string
-    /** Optional avatar image (`Brand.avatarUrl`) — falls back to `brandName`'s initial when unset. */
+    /** Optional avatar image (`Brand.avatarUrl`) -- falls back to `brandName`'s initial when unset. */
     avatarUrl?: string
-    /** The nav's in-page anchors, in display order — drop below `@app-md`; brand + actions remain. */
+    /** The nav's in-page anchors, in display order -- drop below `@app-md`; brand + actions remain. */
     navLinks: Array<TenantNavLink>
     /** Visible label for the nav's secondary sign-in action. */
     loginLabel: string
-    /** Fired when sign-in is pressed — the caller opens the auth surface. No destination of its own. */
+    /** Fired when sign-in is pressed -- the caller opens the auth surface. No destination of its own. */
     onLogin: () => void
-    /** Visible label for the primary enrol action — used by BOTH the nav button and the sticky bar's button. */
+    /** Visible label for the primary enrol action -- used by BOTH the nav button and the sticky bar's button. */
     enrolLabel: string
     /** Fired when the enrol action is pressed, from either the nav or the sticky bar. No destination of its own. */
     onEnrol: () => void
@@ -65,7 +65,7 @@ export interface TenantLandingShellProps {
     isSkeleton?: boolean
 }
 
-/** How far (px) the reader scrolls before `BackToTopButton` reveals itself — mirrors the prototype's own fold threshold. */
+/** How far (px) the reader scrolls before `BackToTopButton` reveals itself -- mirrors the prototype's own fold threshold. */
 const BACK_TO_TOP_REVEAL_PX = 560
 
 /**
@@ -88,7 +88,7 @@ const TenantLandingShell = ({
     backToTopLabel,
     isSkeleton,
 }: TenantLandingShellProps) => {
-    // Scroll-driven reveal is UI state the shell owns locally — not domain data,
+    // Scroll-driven reveal is UI state the shell owns locally -- not domain data,
     // so it sits beside `isSkeleton` rather than replacing it (a first-load
     // skeleton can still be scrolled past).
     const [isPastFold, setIsPastFold] = useState(false)
@@ -171,5 +171,5 @@ const TenantLandingShell = ({
 
 export { TenantLandingShell }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "layout", name: "TenantLandingShell" } as const

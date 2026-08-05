@@ -9,17 +9,17 @@ import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `LessonEditorPanel` — overlay drawer over one lesson: title, body, its
+ * `LessonEditorPanel` -- overlay drawer over one lesson: title, body, its
  * position among the course's siblings, and the video attached to it. The
- * pictures — editing an existing lesson, one still transcoding its video,
- * one with a ready video, drafting a brand-new lesson, a failed save — are
+ * pictures -- editing an existing lesson, one still transcoding its video,
+ * one with a ready video, drafting a brand-new lesson, a failed save -- are
  * DATA, so they are STATES of the single shape. Grounded in the real
  * `LessonManager.tsx` (`createLesson` / `updateLesson`) and the video
- * pipeline (MinIO → ffmpeg → DASH), the ad hoc admin UI this overlay ports
+ * pipeline (MinIO -> ffmpeg -> DASH), the ad hoc admin UI this overlay ports
  * into the design system.
  */
 
-/** The lesson open in the drawer — a subset of `LessonEntity`, or a not-yet-saved draft when `id` is null. */
+/** The lesson open in the drawer -- a subset of `LessonEntity`, or a not-yet-saved draft when `id` is null. */
 export interface LessonEditView {
     /** Lesson id (`LessonEntity.id`), or null while drafting a brand-new lesson not yet saved. */
     id: string | null
@@ -31,7 +31,7 @@ export interface LessonEditView {
     order: number
 }
 
-/** Where the lesson's attached video sits in the transcode pipeline — `none` until the first upload. */
+/** Where the lesson's attached video sits in the transcode pipeline -- `none` until the first upload. */
 export type LessonVideoStatus = "none" | "processing" | "ready"
 
 /** Props for {@link LessonEditorPanel}. */
@@ -44,7 +44,7 @@ export interface LessonEditorPanelProps {
     courseTitle: string
     /** The lesson being edited. */
     lesson: LessonEditView
-    /** Total lessons on the course — bounds the `order` field. */
+    /** Total lessons on the course -- bounds the `order` field. */
     lessonCount: number
     /** Fired as the title field changes. */
     onChangeTitle: (title: string) => void
@@ -54,28 +54,28 @@ export interface LessonEditorPanelProps {
     onChangeOrder: (order: number) => void
     /** Where the attached video sits in the transcode pipeline. `"none"` shows the upload trigger alone. */
     video: LessonVideoStatus
-    /** Start a video upload — the connected layer opens the file picker and drives the transcode job. */
+    /** Start a video upload -- the connected layer opens the file picker and drives the transcode job. */
     onUploadVideo: () => void
-    /** Save the lesson — the connected layer runs `createLesson` (new) or `updateLesson` (existing). */
+    /** Save the lesson -- the connected layer runs `createLesson` (new) or `updateLesson` (existing). */
     onSave: () => void
     /**
-     * Ask to delete the lesson — the connected layer opens `ConfirmDialog` (an
+     * Ask to delete the lesson -- the connected layer opens `ConfirmDialog` (an
      * overlay this drawer never mounts itself), never deletes directly. Hidden
      * for a not-yet-saved draft.
      */
     onDelete: () => void
-    /** `true` → a save is in flight: every field and both actions lock, the Save button shows its busy label. */
+    /** `true` -> a save is in flight: every field and both actions lock, the Save button shows its busy label. */
     isSaving?: boolean
     /**
      * The last save's error message, or null/omitted on success. The typed
-     * `lesson` stays exactly as the expert left it — a failed save never
+     * `lesson` stays exactly as the expert left it -- a failed save never
      * discards what was written.
      */
     saveError?: string | null
     /**
-     * `true` → the drawer's own first fetch (the opened lesson's full body) is
+     * `true` -> the drawer's own first fetch (the opened lesson's full body) is
      * in flight: the title, every field, and the video row all shimmer.
-     * Threaded straight down — never fed to a separate skeleton tree.
+     * Threaded straight down -- never fed to a separate skeleton tree.
      */
     isSkeleton?: boolean
     /** Already-localized copy. */
@@ -154,7 +154,7 @@ const LessonEditorPanel = ({
                     gap={4}
                     isSkeleton={isSkeleton}
                     items={[
-                        // A save failure keeps the typed content on screen (no data loss) —
+                        // A save failure keeps the typed content on screen (no data loss) --
                         // the alert sits ABOVE the still-editable fields, not in their place.
                         ...(saveError ? [() => (
                             <Alert status="danger" title={labels.saveErrorTitle} description={saveError} />
@@ -252,5 +252,5 @@ const LessonEditorPanel = ({
 
 export { LessonEditorPanel }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "LessonEditorPanel" } as const

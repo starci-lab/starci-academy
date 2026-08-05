@@ -11,20 +11,20 @@ import {
 } from "@sb-components/nivoexpert/blocks/studio/CourseRailList/CourseRailList"
 
 /**
- * `CourseStudio` — the admin PAGE at `/studio`: a rail of courses and the
+ * `CourseStudio` -- the admin PAGE at `/studio`: a rail of courses and the
  * selected course's lessons. Picking or adding a lesson opens
  * `LessonEditorPanel` (a wide drawer); adding a course opens
- * `CreateCourseModal` — neither overlay mounted by this page itself. A
- * page's story is one complete STATE per story — the brand-new tenant's
+ * `CreateCourseModal` -- neither overlay mounted by this page itself. A
+ * page's story is one complete STATE per story -- the brand-new tenant's
  * zero-course prompt, the populated rail, a course with no lessons yet, and
- * the whole-page loading skeleton — not a leaf-per-prop map. Grounded in the
+ * the whole-page loading skeleton -- not a leaf-per-prop map. Grounded in the
  * real `CourseForm.tsx` / `LessonManager.tsx`, the ad hoc admin UI this page
  * ports into the design system (`CourseEntity` / `LessonEntity`).
  */
 
 /** Props for {@link CourseStudio}. */
 export interface CourseStudioProps {
-    /** The expert's courses. Empty is the WHOLE PAGE's `no-courses` state — see file header. */
+    /** The expert's courses. Empty is the WHOLE PAGE's `no-courses` state -- see file header. */
     courses: Array<CourseRailCourseView>
     /** Id of the course whose lessons show in the rail, or null. */
     selectedCourseId: string | null
@@ -41,8 +41,8 @@ export interface CourseStudioProps {
     /** Open `LessonEditorPanel` in its drafting state for a brand-new lesson on the selected course. */
     onAddLesson: () => void
     /**
-     * `true` → the page's own first fetch is in flight: the rail draws its
-     * own skeleton mirror. Threaded straight down — never fed to a separate
+     * `true` -> the page's own first fetch is in flight: the rail draws its
+     * own skeleton mirror. Threaded straight down -- never fed to a separate
      * skeleton tree.
      */
     isSkeleton?: boolean
@@ -86,7 +86,7 @@ const CourseStudio = ({
     labels,
     railLabels,
 }: CourseStudioProps) => {
-    // A brand-new tenant has nothing to rail yet — one centred prompt outranks
+    // A brand-new tenant has nothing to rail yet -- one centred prompt outranks
     // an empty rail with nothing to show. Never taken while isSkeleton: the
     // first fetch hasn't resolved `courses` either way yet.
     if (!isSkeleton && courses.length === 0) {
@@ -133,5 +133,5 @@ const CourseStudio = ({
 
 export { CourseStudio }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "page", name: "CourseStudio" } as const

@@ -5,7 +5,7 @@ import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/Surface
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `PostComposer` — the title + body + submit card a member meets above the
+ * `PostComposer` -- the title + body + submit card a member meets above the
  * community feed. ONE composition: two fields and a submit action; there are
  * no separate pictures here, only the `isSubmitting` in-flight state. Grounded
  * in the real `PostForm.tsx` (`title`, `body`, the `createPost` mutation, and a
@@ -22,9 +22,9 @@ export interface PostComposerProps {
     body: string
     /** Fires as the body field changes. */
     onBodyChange: (value: string) => void
-    /** Submit the post — the connected layer runs `createPost({ title, body })`. */
+    /** Submit the post -- the connected layer runs `createPost({ title, body })`. */
     onSubmit: () => void
-    /** `true` → the mutation is in flight: the submit button shows a spinner and both fields lock. */
+    /** `true` -> the mutation is in flight: the submit button shows a spinner and both fields lock. */
     isSubmitting?: boolean
     /** Already-localized copy. */
     labels: PostComposerLabels
@@ -60,7 +60,7 @@ const PostComposer = ({
     isSubmitting = false,
     labels,
 }: PostComposerProps) => {
-    // Presentation logic the block derives, not a request it makes — mirrors the
+    // Presentation logic the block derives, not a request it makes -- mirrors the
     // real `submit`'s implicit guard (`!title.trim() || !body.trim() || busy`).
     const canSubmit = title.trim().length > 0 && body.trim().length > 0
 
@@ -122,5 +122,5 @@ const PostComposer = ({
 
 export { PostComposer }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "PostComposer" } as const

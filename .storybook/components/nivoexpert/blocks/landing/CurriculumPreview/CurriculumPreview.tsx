@@ -3,31 +3,31 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `CurriculumPreview` — the landing's curriculum-transparency block: every
+ * `CurriculumPreview` -- the landing's curriculum-transparency block: every
  * real course, expanding to its real lesson titles, straight from
  * `CourseEntity`/`LessonEntity`. Grounded in the research annex's converged
- * finding — "give away module/lesson TITLES… people buy when they know
- * exactly what they get" — this is the PUBLIC, pre-enrollment picture: no
+ * finding -- "give away module/lesson TITLES... people buy when they know
+ * exactly what they get" -- this is the PUBLIC, pre-enrollment picture: no
  * status glyph, no press handler, just the ordered title list, unlike
  * `LessonTOC` inside the classroom. Never called with 0 courses
- * (`CatalogComingSoonPanel`'s job) — see the component's file header.
+ * (`CatalogComingSoonPanel`'s job) -- see the component's file header.
  */
 
-/** One lesson row, as the public landing reads it — a subset of `LessonEntity`. */
+/** One lesson row, as the public landing reads it -- a subset of `LessonEntity`. */
 export interface CurriculumPreviewLesson {
-    /** `LessonEntity.id` — React key. */
+    /** `LessonEntity.id` -- React key. */
     id: string
     /** `LessonEntity.title`, shown verbatim, in `sortIndex` order. */
     title: string
 }
 
-/** One course panel, as the public landing reads it — a subset of `CourseEntity`. */
+/** One course panel, as the public landing reads it -- a subset of `CourseEntity`. */
 export interface CurriculumPreviewCourse {
-    /** `CourseEntity.id` — also the accordion panel key. */
+    /** `CourseEntity.id` -- also the accordion panel key. */
     id: string
     /** `CourseEntity.title`, shown in the panel trigger. */
     title: string
-    /** `CourseEntity.lessons`, in `sortIndex` order. Never empty in practice — a course with no lessons has nothing to preview. */
+    /** `CourseEntity.lessons`, in `sortIndex` order. Never empty in practice -- a course with no lessons has nothing to preview. */
     lessons: Array<CurriculumPreviewLesson>
 }
 
@@ -45,11 +45,11 @@ export interface CurriculumPreviewProps {
     title: string
     /** Optional supporting intro line below the title. */
     intro?: string
-    /** The tenant's courses, in listing order — 1+ (see the file header's precondition). */
+    /** The tenant's courses, in listing order -- 1+ (see the file header's precondition). */
     courses: Array<CurriculumPreviewCourse>
     /**
-     * `true` → the courses fetch is still in flight: the heading stays as
-     * given (static marketing copy, always known up front — the same
+     * `true` -> the courses fetch is still in flight: the heading stays as
+     * given (static marketing copy, always known up front -- the same
      * decision `FaqAccordion` makes for its own heading), and the accordion
      * renders a fixed count of collapsed, shimmering course rows in place of
      * `courses`.
@@ -62,7 +62,7 @@ export interface CurriculumPreviewProps {
 /** How many placeholder course panels the loading accordion draws while `courses` hasn't landed yet. */
 const SKELETON_COURSE_COUNT = 2
 
-/** Placeholder courses — sized like real panels so the accordion's shimmer mirrors the loaded shape. */
+/** Placeholder courses -- sized like real panels so the accordion's shimmer mirrors the loaded shape. */
 const SKELETON_COURSES: Array<CurriculumPreviewCourse> = Array.from({ length: SKELETON_COURSE_COUNT }, (_unused, index) => ({
     id: `skeleton-course-${index}`,
     title: "Course title",
@@ -98,7 +98,11 @@ const CurriculumPreview = ({ eyebrow, title, intro, courses, isSkeleton = false,
                     <StackH
                         gap={2}
                         items={[
-                            () => <Typography size="sm" color="muted" tabularNums classNames={["shrink-0"]} text={`${index + 1}.`} />,
+                            () => (
+                                <span className="shrink-0">
+                                    <Typography size="sm" color="muted" tabularNums text={`${index + 1}.`} />
+                                </span>
+                            ),
                             () => <Typography size="sm" text={lesson.title} />,
                         ]}
                     />
@@ -130,5 +134,5 @@ const CurriculumPreview = ({ eyebrow, title, intro, courses, isSkeleton = false,
 
 export { CurriculumPreview }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "CurriculumPreview" } as const

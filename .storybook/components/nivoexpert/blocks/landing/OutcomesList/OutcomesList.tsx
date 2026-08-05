@@ -7,16 +7,16 @@ import { Grid } from "@sb-components/frames/Grid/Grid"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
- * `OutcomesList` — the landing's "what you'll learn" section: a scannable grid of
+ * `OutcomesList` -- the landing's "what you'll learn" section: a scannable grid of
  * skill/habit/career-gain bullets, each a success-toned check glyph beside one line
- * of copy. Grounded in the expert's own config copy — the real `Brand`/`Course`
+ * of copy. Grounded in the expert's own config copy -- the real `Brand`/`Course`
  * shape carries no `outcomes` field, so this block never derives or fabricates a
  * bullet; zero items is a real, honest state for a tenant who has not written any
  * yet. Built on the shared HeroUI atom system (`Typography` / `IconTile` /
  * `EmptyState`).
  */
 
-/** One outcome bullet — already-resolved copy, never generated here. */
+/** One outcome bullet -- already-resolved copy, never generated here. */
 export interface OutcomesListItem {
     /** Stable React key. */
     id: string
@@ -40,10 +40,10 @@ export interface OutcomesListLabels {
 
 /** Props for {@link OutcomesList}. */
 export interface OutcomesListProps {
-    /** The outcome bullets, in display order. Empty is a real, honest state — see the file header. */
+    /** The outcome bullets, in display order. Empty is a real, honest state -- see the file header. */
     items: Array<OutcomesListItem>
     /**
-     * `true` → the first fetch of the expert's own copy is in flight: the section
+     * `true` -> the first fetch of the expert's own copy is in flight: the section
      * keeps a fixed placeholder-bullet shape while every line shimmers.
      */
     isSkeleton?: boolean
@@ -54,18 +54,26 @@ export interface OutcomesListProps {
 /** How many placeholder bullets the loading mirror draws while `items` hasn't landed. */
 const SKELETON_ITEM_COUNT = 6
 
-/** Placeholder bullets — sized like real copy so the shimmer mirrors the loaded shape. */
+/** Placeholder bullets -- sized like real copy so the shimmer mirrors the loaded shape. */
 const SKELETON_ITEMS: Array<OutcomesListItem> = Array.from({ length: SKELETON_ITEM_COUNT }, (_unused, index) => ({
     id: `skeleton-${index}`,
     text: "One outcome the reader will walk away with",
 }))
 
+/** Props for one outcome bullet row. */
+interface OutcomeRowProps {
+    /** The bullet this row renders. */
+    item: OutcomesListItem
+    /** `true` -> the row shimmers as a loading mirror. */
+    isSkeleton: boolean
+}
+
 /**
  * One bullet row: a success-toned check glyph beside one line of copy. The SAME
- * shape drives the loaded and loading rows — `isSkeleton` mirrors, it does not
+ * shape drives the loaded and loading rows -- `isSkeleton` mirrors, it does not
  * branch to a second shape.
  */
-const OutcomeRow = ({ item, isSkeleton }: { item: OutcomesListItem; isSkeleton: boolean }) => (
+const OutcomeRow = ({ item, isSkeleton }: OutcomeRowProps) => (
     <StackH
         gap={3}
         align="start"
@@ -132,5 +140,5 @@ const OutcomesList = ({ items, isSkeleton = false, labels }: OutcomesListProps) 
 
 export { OutcomesList }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "block", name: "OutcomesList" } as const

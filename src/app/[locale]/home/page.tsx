@@ -1,6 +1,6 @@
 import React from "react"
 import type { Metadata } from "next"
-import { Landing } from "@/components/features/landing/Landing"
+import { LandingPage } from "@/components/pages/LandingPage"
 import { JsonLd, organizationSchema, websiteSchema } from "@/modules/seo/jsonLd"
 import { buildPageMetadata } from "@/modules/seo/buildMetadata"
 
@@ -39,7 +39,7 @@ const Page = async ({
     return (
         <>
             <JsonLd data={[organizationSchema(), websiteSchema(locale)]} />
-            <Landing />
+            <LandingPage />
         </>
     )
 }

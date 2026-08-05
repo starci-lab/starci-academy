@@ -14,7 +14,7 @@ import numeral from "numeral"
 import {
     useRouter,
 } from "next/navigation"
-import { useCourseTotals } from "@/components/features/course/CourseDetail/hooks/useCourseTotals"
+import { useCourseTotals } from "@/hooks/useCourseTotals"
 import {
     pathConfig,
 } from "@/resources/path"

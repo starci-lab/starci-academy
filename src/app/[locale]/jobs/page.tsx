@@ -1,14 +1,9 @@
 "use client"
 
 import React from "react"
-import { JobList } from "@/components/features/careers/Jobs/JobList"
+import { JobListPage } from "@/components/pages/JobListPage"
 
-/**
- * Route `/[locale]/jobs` — the public IT job board: search + filter over
- * structured postings from partner companies.
- */
-const Page = () => {
-    return <JobList />
-}
+/** Jobs board. */
+const Page = () => <JobListPage />
 
 export default Page

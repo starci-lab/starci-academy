@@ -22,7 +22,7 @@ import {
 } from "@phosphor-icons/react"
 import {
     CourseTrialChip,
-} from "@/components/features/course/CourseTrialChip"
+} from "@/components/blocks/course/CourseTrialChip"
 import {
     SettingsBreadcrumb,
 } from "../SettingsBreadcrumb"

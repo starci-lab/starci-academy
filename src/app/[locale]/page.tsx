@@ -1,9 +1,9 @@
 import React from "react"
-import { Landing } from "@/components/features/landing/Landing"
+import { LandingPage } from "@/components/pages/LandingPage"
 
 const Page = () => {
     return (
-        <Landing />
+        <LandingPage />
     )
 }
 

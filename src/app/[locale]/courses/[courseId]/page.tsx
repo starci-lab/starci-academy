@@ -1,6 +1,6 @@
 import React, { cache } from "react"
 import type { Metadata } from "next"
-import { CourseDetail } from "@/components/features/course/CourseDetail"
+import { CourseDetailPage } from "@/components/pages/CourseDetailPage"
 import { SEO_CONFIG } from "@/config/seo"
 import { publicEnv } from "@/resources/env/public"
 import { JsonLd, courseSchema } from "@/modules/seo/jsonLd"
@@ -29,7 +29,7 @@ const COURSE_META_QUERY =
 /**
  * Course fetch by displayId, memoized per request so `generateMetadata` and the
  * page body share one round-trip. Returns null on any error so SEO degrades
- * gracefully (the client {@link CourseDetail} renders its own state regardless).
+ * gracefully (the client {@link CourseDetailPage} renders its own state regardless).
  */
 const getCourse = cache(async (displayId: string): Promise<CourseMeta | null> => {
     try {
@@ -74,7 +74,7 @@ export const generateMetadata = async ({
 
 /**
  * Route `/[locale]/courses/[courseId]` — public course detail. Server component
- * for `generateMetadata` + Course JSON-LD; renders the client {@link CourseDetail}
+ * for `generateMetadata` + Course JSON-LD; renders the client {@link CourseDetailPage}
  * which reads the courseId from the route itself.
  *
  * @param props.params - the awaited route params.
@@ -100,7 +100,7 @@ const Page = async ({
                     })}
                 />
             ) : null}
-            <CourseDetail />
+            <CourseDetailPage />
         </>
     )
 }

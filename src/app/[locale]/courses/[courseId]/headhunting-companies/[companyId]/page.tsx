@@ -1,12 +1,12 @@
 "use client"
 import React from "react"
-import { HeadhuntingCompany } from "@/components/features/careers/Headhunting/HeadhuntingCompany"
+import { HeadhuntingCompanyPage } from "@/components/pages/HeadhuntingCompanyPage"
 
 /**
  * Course / headhunting-companies / [companyId] — company profile and consultants.
  */
 const Page = () => {
-    return <HeadhuntingCompany />
+    return <HeadhuntingCompanyPage />
 }
 
 export default Page

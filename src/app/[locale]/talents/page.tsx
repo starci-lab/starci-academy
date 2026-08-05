@@ -1,14 +1,9 @@
 "use client"
 
 import React from "react"
-import { TalentDirectory } from "@/components/features/careers/Headhunting/TalentDirectory"
+import { TalentDirectoryPage } from "@/components/pages/TalentDirectoryPage"
 
-/**
- * Route `/[locale]/talents` — the talent directory: users who opted into
- * "open to work", for recruiters / headhunters to browse.
- */
-const Page = () => {
-    return <TalentDirectory />
-}
+/** Talent directory. */
+const Page = () => <TalentDirectoryPage />
 
 export default Page

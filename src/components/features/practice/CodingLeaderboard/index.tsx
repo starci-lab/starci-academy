@@ -1,36 +1,111 @@
 "use client"
 
 import React from "react"
-import { Chip, Typography, cn } from "@heroui/react"
 import useSWR from "swr"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux/hooks"
 import { queryCodingLeaderboard } from "@/modules/api/graphql/queries/query-coding-leaderboard"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { UserCell } from "@/components/blocks/identity/UserCell"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Box } from "@/components/frames/Box"
+import { StackH } from "@/components/frames/Stack"
 
 /** Max ranked users to pull for the board (backend caps this too). */
 const LEADERBOARD_LIMIT = 50
 
-/** Props for {@link CodingLeaderboard}. */
-export type CodingLeaderboardProps = WithClassNames<undefined>
+/** Placeholder rows shown while the board loads. */
+const SKELETON_ROWS = 6
+
+/** One ranked entry as returned by `codingLeaderboard`. */
+interface LeaderboardEntry {
+    userId: string
+    username: string
+    solvedCount: number
+}
+
+/** Props for {@link LeaderboardRow}. */
+interface LeaderboardRowProps {
+    /** 1-based position on the board. */
+    rank: number
+    /** The ranked user. Absent only while {@link LeaderboardRowProps.isSkeleton}. */
+    entry?: LeaderboardEntry
+    /** Tints the signed-in viewer's own row. */
+    isViewer?: boolean
+    /** Already-translated "N solved" metric. */
+    solvedLabel?: string
+    /** Already-translated "you" chip label. */
+    youLabel?: string
+    /** First load → this row rests. Its resting state lives here, beside the loaded one. */
+    isSkeleton?: boolean
+}
+
+/**
+ * One board row: rank · avatar + name · the solved metric. ONE description of the
+ * shape, resting or loaded, so the two cannot drift (`loading-and-skeleton.md`).
+ *
+ * @param props - {@link LeaderboardRowProps}
+ */
+const LeaderboardRow = ({ rank, entry, isViewer = false, solvedLabel, youLabel, isSkeleton = false }: LeaderboardRowProps) => (
+    <SurfaceListCardItem className={!isSkeleton && isViewer ? "bg-accent-soft" : undefined}>
+        <StackH
+            gap={4}
+            align="center"
+            items={[
+                // the rank column is a fixed gutter so every name starts on the same line
+                () => (
+                    <Box className="w-6 shrink-0">
+                        <Typography
+                            size="sm"
+                            weight="semibold"
+                            color="muted"
+                            align="center"
+                            isSkeleton={isSkeleton}
+                            text={String(rank)}
+                        />
+                    </Box>
+                ),
+                () => (isSkeleton
+                    ? <Skeleton.Avatar size="sm" />
+                    : (
+                        <UserCell
+                            username={entry?.username ?? ""}
+                            size="sm"
+                            className="flex-1"
+                            trailing={isViewer ? <Chip tone="accent" text={youLabel} /> : undefined}
+                        />
+                    )),
+                ...(isSkeleton ? [() => <Typography size="sm" isSkeleton classNames={["flex-1"]} />] : []),
+                // the ranking metric — distinct problems solved (NOT points)
+                () => (
+                    <Typography
+                        size="sm"
+                        weight="semibold"
+                        color="accent-soft"
+                        isSkeleton={isSkeleton}
+                        classNames={isSkeleton ? ["w-1/4"] : undefined}
+                        text={solvedLabel}
+                    />
+                ),
+            ]}
+        />
+    </SurfaceListCardItem>
+)
 
 /**
  * The GLOBAL coding leaderboard — every user ranked by **distinct problems solved**
  * (`solvedCount`, the exact axis the backend `codingLeaderboard` orders on; NOT
- * points — those are a different currency). A single capped reading column
- * (`max-w-2xl`): rank · avatar · name · "N solved", with the signed-in viewer's
- * row accent-tinted. The viewer's own standing (rank / percentile / points) lives
- * in the {@link ProgressCockpit} above this on the page, so the board itself is
- * just the list. **No podium** — coding is a pure ranked list. Self-contained: it
- * reads the viewer id from the store and drives its own SWR.
- *
- * @param props - optional className for the root element.
+ * points — those are a different currency). A single capped reading column:
+ * rank · avatar · name · "N solved", with the signed-in viewer's row accent-tinted.
+ * The viewer's own standing (rank / percentile / points) lives in the ProgressCockpit
+ * above this on the page, so the board itself is just the list. **No podium** —
+ * coding is a pure ranked list. Self-contained: it reads the viewer id from the store
+ * and drives its own SWR.
  */
-export const CodingLeaderboard = ({ className }: CodingLeaderboardProps) => {
+export const CodingLeaderboard = () => {
     const t = useTranslations()
     // viewer identity highlights their own row
     const viewerId = useAppSelector((state) => state.user.user?.id) ?? null
@@ -46,74 +121,42 @@ export const CodingLeaderboard = ({ className }: CodingLeaderboardProps) => {
     )
 
     const entries = data ?? []
+    const isSkeleton = isLoading && !data
+
+    // error beats a stale loading flag; empty only once settled (BLOCK-8 order).
+    if (error) {
+        return (
+            <AsyncContentError
+                title={t("practice.leaderboard.error")}
+                onRetry={() => { void mutate() }}
+                retryLabel={t("practice.retry")}
+            />
+        )
+    }
+    if (!isSkeleton && entries.length === 0) {
+        return <AsyncContentEmpty title={t("practice.leaderboard.empty")} />
+    }
 
     return (
-        <AsyncContent
-            isLoading={isLoading && !data}
-            skeleton={(
-                <SurfaceListCard className={cn("mx-auto w-full max-w-2xl", className)}>
-                    {[0, 1, 2, 3, 4, 5].map((index) => (
-                        <SurfaceListCardItem key={index}>
-                            <div className="flex items-center gap-3">
-                                {/* rank */}
-                                <Skeleton className="h-[14px] w-6 shrink-0 rounded" />
-                                {/* avatar (UserCell size="sm") */}
-                                <Skeleton.Avatar size="sm" />
-                                <div className="flex flex-1 flex-col gap-2">
-                                    <Skeleton.Typography type="body-sm" width="1/3" />
-                                </div>
-                                {/* solved metric */}
-                                <Skeleton.Typography type="body-sm" width="1/4" />
-                            </div>
-                        </SurfaceListCardItem>
-                    ))}
-                </SurfaceListCard>
-            )}
-            isEmpty={entries.length === 0}
-            emptyContent={{
-                title: t("practice.leaderboard.empty"),
-            }}
-            error={error}
-            errorContent={{
-                title: t("practice.leaderboard.error"),
-                onRetry: () => { void mutate() },
-                retryLabel: t("practice.retry"),
-            }}
-        >
-            <SurfaceListCard className={cn("mx-auto w-full max-w-2xl", className)}>
-                {entries.map((entry, index) => {
-                    // rank is implicit array order (board is pre-sorted by solvedCount desc)
-                    const rank = index + 1
-                    const isViewer = !!viewerId && entry.userId === viewerId
-                    return (
-                        <SurfaceListCardItem
+        // the board keeps a capped reading measure — a width no closed union carries
+        <Box className="mx-auto w-full max-w-2xl">
+            <SurfaceListCard identity={{ tier: "block", component: "CodingLeaderboard" }}>
+                {isSkeleton
+                    ? Array.from({ length: SKELETON_ROWS }, (_row, index) => (
+                        <LeaderboardRow key={index} rank={index + 1} isSkeleton />
+                    ))
+                    : entries.map((entry, index) => (
+                        // rank is implicit array order (board is pre-sorted by solvedCount desc)
+                        <LeaderboardRow
                             key={entry.userId}
-                            className={cn(isViewer && "bg-accent-soft")}
-                        >
-                            <div className="flex items-center gap-3">
-                                {/* rank position */}
-                                <Typography type="body-sm" weight="semibold" color="muted" align="center" className="w-6 shrink-0">
-                                    {rank}
-                                </Typography>
-                                <UserCell
-                                    username={entry.username}
-                                    size="sm"
-                                    className="flex-1"
-                                    trailing={isViewer ? (
-                                        <Chip size="sm" variant="soft" color="accent">
-                                            {t("practice.leaderboard.you")}
-                                        </Chip>
-                                    ) : undefined}
-                                />
-                                {/* the ranking metric — distinct problems solved (NOT points) */}
-                                <Typography type="body-sm" weight="semibold" className="shrink-0 text-accent-soft-foreground">
-                                    {t("practice.leaderboard.solved", { count: entry.solvedCount })}
-                                </Typography>
-                            </div>
-                        </SurfaceListCardItem>
-                    )
-                })}
+                            rank={index + 1}
+                            entry={entry}
+                            isViewer={!!viewerId && entry.userId === viewerId}
+                            solvedLabel={t("practice.leaderboard.solved", { count: entry.solvedCount })}
+                            youLabel={t("practice.leaderboard.you")}
+                        />
+                    ))}
             </SurfaceListCard>
-        </AsyncContent>
+        </Box>
     )
 }

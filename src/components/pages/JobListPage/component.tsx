@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import type { ReactNode } from "react"
 import { BriefcaseIcon, FunnelIcon, TrayIcon } from "@phosphor-icons/react"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { Badge } from "@/components/atoms/display/Badge"
 import { Button } from "@/components/atoms/buttons/Button"

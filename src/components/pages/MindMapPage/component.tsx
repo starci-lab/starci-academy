@@ -5,7 +5,7 @@ import { MindMapContinueButton } from "@/components/blocks/learn/MindMapContinue
 import { MindMapFullscreenButton, type MindMapFullscreenButtonAriaLabels } from "@/components/blocks/learn/MindMapFullscreenButton"
 import { Legend, type LegendItem } from "@/components/composites/stats/Legend"
 import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
-import { type ComponentTypeWithSkeleton, type SkeletonProps } from "@/components/composites/_slot"
+import { type ComponentTypeWithSkeleton, type SkeletonProps } from "@/components/frames/_slot"
 import { ResizableRail } from "@/components/behaviors/ResizableRail"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { Stage } from "@/components/frames/Stage"

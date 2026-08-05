@@ -30,6 +30,15 @@ const RESTING_HEIGHT = "h-[70vh] min-h-[480px]"
 /** Viewport-proportioned height of the loaded sheet. */
 const LOADED_HEIGHT = "h-[80vh] min-h-[520px]"
 
+const PublicCvEditButton = ({ label, onPress }: { label: string; onPress: () => void }) => (
+    <Button
+        label={label}
+        variant="secondary"
+        prefixIcon={PencilSimpleIcon}
+        onPress={onPress}
+    />
+)
+
 /**
  * Public CV tab (`/profile/<username>/cv`) — the read-only, PDF-only view of the
  * ONE CV a user has flagged public. Anyone (signed in or not) can view it. When
@@ -56,15 +65,8 @@ export const ProfilePublicCvPage = () => {
     const cv = cvSwr.data
     const isSkeleton = cvSwr.isLoading && !cvSwr.data
 
-    /** "Edit CV" → the owner's private editor gallery (always-own /profile/cv). */
-    const EditButton = () => (
-        <Button
-            label={t("publicProfile.publicCv.editCta")}
-            variant="secondary"
-            prefixIcon={PencilSimpleIcon}
-            onPress={() => router.push(pathConfig().locale(locale).profile().cv().build())}
-        />
-    )
+    const editLabel = t("publicProfile.publicCv.editCta")
+    const onEdit = () => router.push(pathConfig().locale(locale).profile().cv().build())
 
     // error beats a stale loading flag (BLOCK-8 order).
     if (cvSwr.error) {
@@ -101,7 +103,7 @@ export const ProfilePublicCvPage = () => {
                         ? t("publicProfile.publicCv.notCompiledSelfHint")
                         : t("publicProfile.publicCv.emptySelfHint"))
                     : undefined}
-                action={isSelf ? EditButton : undefined}
+                action={isSelf ? () => <PublicCvEditButton label={editLabel} onPress={onEdit} /> : undefined}
             />
         )
     }
@@ -116,7 +118,7 @@ export const ProfilePublicCvPage = () => {
             gap={5}
             items={[
                 ...(isSelf ? [() => (
-                    <StackH justify="end" gap={1} body={EditButton} />
+                    <StackH justify="end" gap={1} body={() => <PublicCvEditButton label={editLabel} onPress={onEdit} />} />
                 )] : []),
                 () => (
                     <Box className={LOADED_HEIGHT}>

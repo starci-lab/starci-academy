@@ -2,7 +2,7 @@ import React from "react"
 import { CardsIcon as LayersIcon } from "@phosphor-icons/react"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
-import type { SkeletonProps } from "@/components/composites/_slot"
+import type { SkeletonProps } from "@/components/frames/_slot"
 import { Split } from "@/components/frames/Split"
 import { StackV } from "@/components/frames/Stack"
 

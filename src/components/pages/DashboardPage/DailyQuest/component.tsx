@@ -17,6 +17,32 @@ const SKELETON_ROW_COUNT = 5
 /** This block's own identity (BLOCK-2/split.md) — handed down to whichever root-capable frame renders as its root, per branch. See `_identity.ts`. */
 const IDENTITY: CallerIdentity = { tier: "block", component: "DailyQuest" }
 
+const DailyQuestClaimState = ({
+    isSkeleton,
+    claimed,
+    allDone,
+    isClaiming,
+    onClaim,
+    labels,
+}: Pick<DailyQuestProps, "isSkeleton" | "claimed" | "allDone" | "isClaiming" | "onClaim" | "labels">) => (
+    isSkeleton ? (
+        <Typography isSkeleton size="xs" classNames={["w-1/2"]} />
+    ) : claimed ? (
+        <Chip tone="success" text={labels.claimed} classNames={["self-start"]} />
+    ) : allDone ? (
+        <Button
+            variant="primary"
+            size="sm"
+            classNames={["self-start"]}
+            isPending={isClaiming}
+            onPress={onClaim}
+            label={labels.claim}
+        />
+    ) : (
+        <Typography size="xs" color="muted" text={labels.completePrompt} />
+    )
+)
+
 /** One resolved daily-quest task row, already localized by the connected `DailyQuest`. */
 export interface DailyQuestTask {
     /** Stable row key — also names which task this is (mirrors BE `DailyQuestKey`). */
@@ -98,34 +124,21 @@ export const _DailyQuest = ({
         return <AsyncContentError title={labels.loadError} onRetry={onRetry} retryLabel={labels.retry} />
     }
 
-    // claim-state line, rendered BELOW the card (LabeledCard's own `description`
-    // slot, never inside the surface) — a generic placeholder while shimmering,
-    // since which of the three resolved states will show is not known yet.
-    const ClaimState = () => (
-        isSkeleton ? (
-            <Typography isSkeleton size="xs" classNames={["w-1/2"]} />
-        ) : claimed ? (
-            <Chip tone="success" text={labels.claimed} classNames={["self-start"]} />
-        ) : allDone ? (
-            <Button
-                variant="primary"
-                size="sm"
-                classNames={["self-start"]}
-                isPending={isClaiming}
-                onPress={onClaim}
-                label={labels.claim}
-            />
-        ) : (
-            <Typography size="xs" color="muted" text={labels.completePrompt} />
-        )
-    )
-
     return (
         <LabeledCard
             identity={IDENTITY}
             label={labels.title}
             frameless
-            description={ClaimState}
+            description={() => (
+                <DailyQuestClaimState
+                    isSkeleton={isSkeleton}
+                    claimed={claimed}
+                    allDone={allDone}
+                    isClaiming={isClaiming}
+                    onClaim={onClaim}
+                    labels={labels}
+                />
+            )}
         >
             <SurfaceListCard>
                 {isSkeleton

@@ -4,7 +4,7 @@ import type { QuizSessionReadinessData, QuizSessionWeakTagData } from "@/modules
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { MetricCard } from "@/components/composites/stats/MetricCard"
 import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
-import type { SkeletonProps } from "@/components/composites/_slot"
+import type { SkeletonProps } from "@/components/frames/_slot"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"

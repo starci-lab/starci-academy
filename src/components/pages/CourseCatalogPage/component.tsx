@@ -21,7 +21,7 @@ import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Pagination } from "@/components/blocks/navigation/Pagination"
 import { CourseCardSkeleton } from "@/components/blocks/cards/CourseCardSkeleton"
 import { CatalogCourseCard } from "./CatalogCourseCard"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import type { CourseEntity } from "@/modules/types/entities/course"
 
 /** Courses per page (3 columns × 3 rows on desktop). Re-exported so the connected `CourseCatalogPage` computes `totalPages` against the same constant. */

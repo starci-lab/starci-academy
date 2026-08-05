@@ -1,7 +1,7 @@
 import React from "react"
 import { CircleIcon, FlameIcon } from "@phosphor-icons/react"
 import { AsyncContentError } from "@/components/composites/async/AsyncContent"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Button } from "@/components/atoms/buttons/Button"

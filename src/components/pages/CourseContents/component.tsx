@@ -14,7 +14,7 @@ import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composit
 import { HighlightChip } from "@/components/composites/chips/HighlightChip"
 import { PageHeader } from "@/components/composites/layout/Page"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Container } from "@/components/frames/Container"
@@ -129,6 +129,24 @@ const SKELETON_LESSON_ROWS: Array<SurfaceCardListItem> = Array.from({ length: 4 
 /** Breadcrumb slot for the header — a connected child that self-fetches its crumbs (split.md). */
 const BreadcrumbSlot: ComponentTypeWithSkeleton = () => <LearnBreadcrumb />
 
+interface CourseContentsMetaChipsProps {
+    meta: CourseContentsMeta
+    labels: Pick<CourseContentsLabels, "metaModulesLabel" | "metaHoursLabel" | "metaLearnersLabel">
+}
+
+const CourseContentsMetaChips = ({ meta, labels }: CourseContentsMetaChipsProps) => (
+    <StackH
+        gap={3}
+        items={[
+            () => <HighlightChip icon={StackIcon} value={meta.moduleCount} label={labels.metaModulesLabel} />,
+            () => <HighlightChip icon={ClockIcon} value={meta.hoursText} label={labels.metaHoursLabel} />,
+            ...(meta.learnersText
+                ? [() => <HighlightChip icon={UsersIcon} value={meta.learnersText!} label={labels.metaLearnersLabel} />]
+                : []),
+        ]}
+    />
+)
+
 /**
  * Course-content home — the presentational half of {@link CourseContents}, composed on the
  * tier-correct storybook vocabulary (`Container` / `PageHeader` / `HighlightChip` / `ProgressMeter` /
@@ -158,24 +176,9 @@ export const _CourseContents = ({
     lessons,
     labels,
 }: CourseContentsProps) => {
-    // Header meta chips — a slot the PageHeader calls itself (skipped while loading, where the frame
-    // draws its own placeholder). Captured through a narrowed const so the closure keeps the fields.
-    let MetaChips: ComponentTypeWithSkeleton | undefined
-    if (meta) {
-        const catalog = meta
-        MetaChips = () => (
-            <StackH
-                gap={3}
-                items={[
-                    () => <HighlightChip icon={StackIcon} value={catalog.moduleCount} label={labels.metaModulesLabel} />,
-                    () => <HighlightChip icon={ClockIcon} value={catalog.hoursText} label={labels.metaHoursLabel} />,
-                    ...(catalog.learnersText
-                        ? [() => <HighlightChip icon={UsersIcon} value={catalog.learnersText!} label={labels.metaLearnersLabel} />]
-                        : []),
-                ]}
-            />
-        )
-    }
+    const metaSlot: ComponentTypeWithSkeleton | undefined = meta
+        ? () => <CourseContentsMetaChips meta={meta} labels={labels} />
+        : undefined
 
     // Keep-going path rows — each lesson as a fixed SurfaceCardList row: leading state icon, title,
     // minutes-read subtitle, and a difficulty + premium-lock meta slot.
@@ -228,7 +231,7 @@ export const _CourseContents = ({
                                 breadcrumb={BreadcrumbSlot}
                                 title={title}
                                 description={description}
-                                meta={MetaChips}
+                                meta={metaSlot}
                                 isSkeleton={isSkeleton}
                             />
                         ),

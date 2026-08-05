@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react"
 import { SealCheckIcon } from "@phosphor-icons/react"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Input } from "@/components/atoms/forms/Input"
 import { Typography } from "@/components/atoms/text/Typography"

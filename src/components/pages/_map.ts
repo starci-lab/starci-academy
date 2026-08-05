@@ -10,7 +10,7 @@ import type { ContentCommentNode } from "@/components/blocks/learn/ContentCommen
  * used by both `ContentPage` (the lesson reader) and `ModulePage` (the paywall offer it
  * reuses), and `toDifficulty` is used by both `CourseContents` and `ModulePage` — a page
  * reaching into a SIBLING page's folder for its mappers is the smell this file removes.
- * Same convention as `composites/_slot.ts` and `frames/_principles.ts` — an
+ * Same convention as `frames/_slot.ts` and `frames/_principles.ts` — an
  * underscore-prefixed shared module at the tier root.
  *
  * The blocks under `@/components/starci/blocks/learn/*` define their own small

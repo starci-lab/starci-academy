@@ -17,6 +17,16 @@ import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
+const ProfilePinnedAction = ({ label, onPress }: { label: string; onPress: () => void }) => (
+    <Link
+        onPress={onPress}
+        className="inline-flex shrink-0 cursor-pointer items-center gap-1 text-sm text-accent-soft-foreground no-underline transition-opacity hover:opacity-60"
+    >
+        <PencilIcon className="size-4" aria-hidden="true" focusable="false" />
+        {label}
+    </Link>
+)
+
 /** Props for {@link ProfilePinned}. */
 export type ProfilePinnedProps = WithClassNames<undefined>
 
@@ -55,18 +65,6 @@ export const ProfilePinned = ({
     const isSelf = !!viewer && !!userId && viewer.id === userId
     const pins = data ?? []
 
-    // header action shown only to the owner WHEN there are pins (→ manage). The
-    // empty state owns its own add CTA, so we don't repeat an add button up here.
-    const Action = isSelf && pins.length > 0 ? () => (
-        <Link
-            onPress={openManage}
-            className="inline-flex shrink-0 cursor-pointer items-center gap-1 text-sm text-accent-soft-foreground no-underline transition-opacity hover:opacity-60"
-        >
-            <PencilIcon className="size-4" aria-hidden="true" focusable="false" />
-            {t("pinnedProjects.manage")}
-        </Link>
-    ) : undefined
-
     // visitor viewing a profile with no pins and nothing loading/erroring → hide the
     // whole section (clean profile). Owners always keep the card (header + add CTA).
     if (!isSelf && !isLoading && !error && pins.length === 0) {
@@ -82,7 +80,9 @@ export const ProfilePinned = ({
         <LabeledCard
             frameless={hasPins}
             label={t("pinnedProjects.heading")}
-            action={Action}
+            action={isSelf && pins.length > 0
+                ? () => <ProfilePinnedAction label={t("pinnedProjects.manage")} onPress={openManage} />
+                : undefined}
             className={className}
         >
             <AsyncContent

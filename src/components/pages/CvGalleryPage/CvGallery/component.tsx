@@ -1,7 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { TrashIcon } from "@phosphor-icons/react"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { SurfaceCardPlaceholder } from "@/components/composites/cards/SurfaceCard"
 import { MediaCard } from "@/components/blocks/cards/MediaCard"
@@ -101,88 +101,79 @@ export interface CvGalleryProps {
 /** How many placeholder tiles the loading grid shows — mirrors the real grid's usual row. */
 const SKELETON_TILE_COUNT = 3
 
+const CvGalleryCardCover = ({ item, labels }: { item: CvGalleryDocument; labels: CvGalleryLabels }) => (
+    <button
+        type="button"
+        onClick={item.onOpen}
+        aria-label={item.editAriaLabel}
+        className="group relative block h-52 w-full cursor-pointer overflow-hidden bg-white outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
+    >
+        <Box
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{ transform: "scale(0.42)", transformOrigin: "top left", width: "238%" }}
+        >
+            <CvHtmlDocument doc={item.doc} />
+        </Box>
+        <Box
+            as="span"
+            className="absolute inset-0 flex items-end justify-center bg-foreground/0 pb-3 opacity-0 transition-opacity group-hover:bg-foreground/5 group-hover:opacity-100"
+        >
+            <Box as="span" className="rounded-full bg-accent px-4 py-2 text-sm text-accent-foreground">
+                {labels.openEditor}
+            </Box>
+        </Box>
+    </button>
+)
+
+const CvGalleryCardFooter = ({ item, labels }: { item: CvGalleryDocument; labels: CvGalleryLabels }) => (
+    <StackV
+        gap={3}
+        items={[
+            () => (
+                <StackH
+                    gap={3}
+                    justify="between"
+                    items={[
+                        () => (
+                            <Choice.Switch
+                                isSelected={item.isPublic}
+                                isDisabled={item.isTogglingPublic}
+                                onValueChange={item.onTogglePublic}
+                                label={labels.publicToggle}
+                            />
+                        ),
+                        () => (
+                            <Button
+                                isIconOnly
+                                size="sm"
+                                variant="ghost"
+                                ariaLabel={labels.deleteCta}
+                                prefixIcon={TrashIcon}
+                                onPress={item.onDelete}
+                            />
+                        ),
+                    ]}
+                />
+            ),
+            ...(item.isPublic ? [() => (
+                <Typography size="xs" color="muted" text={labels.publicHint} />
+            )] : []),
+        ]}
+    />
+)
+
 /**
  * One CvGalleryPage card — a scaled live thumbnail that opens the editor, plus a
  * public-toggle switch and a delete button in the footer.
  */
-const CvGalleryCard = ({ item, labels }: { item: CvGalleryDocument; labels: CvGalleryLabels }) => {
-    const Cover = () => (
-        <button
-            type="button"
-            onClick={item.onOpen}
-            aria-label={item.editAriaLabel}
-            className="group relative block h-52 w-full cursor-pointer overflow-hidden bg-white outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
-        >
-            {/* Scaled live render of the CvGalleryPage as a thumbnail — a foreign-content mount
-                point (`Box`, §13z: the raw className/positioning a frame can't carry). */}
-            <Box
-                aria-hidden
-                className="pointer-events-none absolute inset-0"
-                style={{ transform: "scale(0.42)", transformOrigin: "top left", width: "238%" }}
-            >
-                <CvHtmlDocument doc={item.doc} />
-            </Box>
-            <Box
-                as="span"
-                className="absolute inset-0 flex items-end justify-center bg-foreground/0 pb-3 opacity-0 transition-opacity group-hover:bg-foreground/5 group-hover:opacity-100"
-            >
-                <Box as="span" className="rounded-full bg-accent px-4 py-2 text-sm text-accent-foreground">
-                    {labels.openEditor}
-                </Box>
-            </Box>
-        </button>
-    )
-
-    const Footer = () => (
-        <StackV
-            gap={3}
-            items={[
-                () => (
-                    <StackH
-                        gap={3}
-                        justify="between"
-                        items={[
-                            // ATOM GAP (COMPOSITE-3, same one documented in `composites/lists/List`'s
-                            // `ToggleRow`): `Choice.Switch` always couples the track to its OWN
-                            // adjacent label — there is no "silent track, external aria-label" mode.
-                            // Its label reads `font-medium`, not the muted/body-sm sibling this card
-                            // used to hand-roll; accepted here rather than reaching past the atom.
-                            () => (
-                                <Choice.Switch
-                                    isSelected={item.isPublic}
-                                    isDisabled={item.isTogglingPublic}
-                                    onValueChange={item.onTogglePublic}
-                                    label={labels.publicToggle}
-                                />
-                            ),
-                            () => (
-                                <Button
-                                    isIconOnly
-                                    size="sm"
-                                    variant="ghost"
-                                    ariaLabel={labels.deleteCta}
-                                    prefixIcon={TrashIcon}
-                                    onPress={item.onDelete}
-                                />
-                            ),
-                        ]}
-                    />
-                ),
-                ...(item.isPublic ? [() => (
-                    <Typography size="xs" color="muted" text={labels.publicHint} />
-                )] : []),
-            ]}
-        />
-    )
-
-    return (
-        <MediaCard
-            cover={Cover}
-            title={item.label}
-            footer={Footer}
-        />
-    )
-}
+const CvGalleryCard = ({ item, labels }: { item: CvGalleryDocument; labels: CvGalleryLabels }) => (
+    <MediaCard
+        cover={() => <CvGalleryCardCover item={item} labels={labels} />}
+        title={item.label}
+        footer={() => <CvGalleryCardFooter item={item} labels={labels} />}
+    />
+)
 
 /** One dashed "add new" tile mirroring {@link SKELETON_TILE_COUNT} placeholder cards while loading. */
 const SkeletonTile = () => <Box className="h-[19rem] rounded-3xl border border-default bg-surface" />

@@ -3,7 +3,7 @@ import { ArrowRightIcon, BriefcaseIcon, BuildingsIcon, MapPinIcon } from "@phosp
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { Callout } from "@/components/composites/feedback/Callout"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"

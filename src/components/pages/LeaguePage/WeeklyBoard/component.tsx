@@ -1,6 +1,6 @@
 import React from "react"
 import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { StandingHeroCard } from "@/components/blocks/dashboard/StandingHeroCard"
 import { Podium, type PodiumEntry } from "@/components/blocks/dashboard/Podium"
 import { rankBadgeIcon } from "@/components/blocks/dashboard/rankBadge"

@@ -25,7 +25,7 @@ export interface LearnNudge {
     /**
      * The row's text.
      *
-     * ⛔ NO separate `count` field: the title
+     *  NO separate `count` field: the title
      * already contains the number ("Review 12 due flashcards"); showing a `12`
      * chip on the right too is **saying it twice**. One fact only ever appears
      * in ONE place within a row.
@@ -78,7 +78,7 @@ const LearnNudgesBase = ({
                         <Typography
                             size="sm"
                             isSkeleton
-                            classNames={["w-2/3"]}
+
 
                         />
                     ),

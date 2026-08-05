@@ -208,7 +208,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                                                 suffixIcon={ArrowRightIcon}
                                                 iconSlide
                                                 onPress={() => {}}
-                                                classNames={["shrink-0"]}
+
                                             />
                                         )] : []),
                                     ]}

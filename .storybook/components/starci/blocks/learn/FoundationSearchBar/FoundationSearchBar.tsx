@@ -9,7 +9,7 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  * (not a reach past it) and for the independent-count-loading axis that makes
  * it a distinct block rather than the same one reused.
  *
- * 📐 ONE LEAF (§14d.2). `isSkeleton`, `isCountLoading`, an empty vs. populated
+ *  ONE LEAF (§14d.2). `isSkeleton`, `isCountLoading`, an empty vs. populated
  * suggestion list, and every value `resultCount` can take (unknown / zero / N)
  * are all DATA on the same fixed structure — no node appears or disappears —
  * so they are STATES inside the single `Default` leaf, not leaves of their own.
@@ -105,7 +105,7 @@ const FoundationSearchBar = ({
                                     size="sm"
                                     color="muted"
                                     isSkeleton
-                                    classNames={["shrink-0"]}
+
 
                                 />
                             ),
@@ -118,7 +118,7 @@ const FoundationSearchBar = ({
                                         color="muted"
                                         tabularNums
                                         text={resultCountLabel(resultCount)}
-                                        classNames={["shrink-0"]}
+
 
                                     />
                                 ),

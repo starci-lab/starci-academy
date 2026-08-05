@@ -84,12 +84,12 @@ const ContentDiscussion = ({
     const answeredCount = comments.filter((comment) => comment.replyCount > 0).length
 
     // no icon here: a chat-bubble icon needs an ASSOCIATION step to read as
-    // "discussion" (not a universal symbol like ✓/🔒), and the label text already
+    // "discussion" (not a universal symbol like check/locklock), and the label text already
     // carries the full fact on its own.
     const labelLines = (
         <>
             {isSkeleton ? (
-                <Typography weight="medium" isSkeleton classNames={["w-1/4"]} />
+                <Typography weight="medium" isSkeleton />
             ) : (
                 <Typography weight="medium" text={`${label} · ${total}`} />
             )}
@@ -98,7 +98,7 @@ const ContentDiscussion = ({
                     size="xs"
                     color="muted"
                     isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-2/3"] : undefined}
+
                     text={`${answeredCount}/${total} questions answered, accumulated over time`}
 
                 />
@@ -142,7 +142,7 @@ const ContentDiscussion = ({
                 <Button
                     variant="ghost"
                     size="sm"
-                    classNames={["self-center"]}
+
                     label={isLoadingMore ? "Loading…" : "Show more comments"}
                     isDisabled={isLoadingMore}
                     onPress={onLoadMore}

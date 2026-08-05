@@ -79,7 +79,11 @@ const resolveThumbnail = (category: FoundationCategoryListItem): { src?: string;
         ? { src: category.logoSrc, fallbackSrc: category.thumbnailUrl }
         : { src: category.thumbnailUrl, fallbackSrc: undefined }
 
-const NoCategoriesEmptyState = ({ hasQuery, searchQuery }: { hasQuery: boolean; searchQuery?: string }) => (
+interface NoCategoriesEmptyStateProps {
+    hasQuery: boolean
+    searchQuery?: string
+}
+const NoCategoriesEmptyState = ({ hasQuery, searchQuery }: NoCategoriesEmptyStateProps) => (
     <EmptyState
         icon={hasQuery ? MagnifyingGlassIcon : undefined}
         title={hasQuery ? `No topics match "${searchQuery?.trim()}".` : LIBRARY_EMPTY_TITLE}

@@ -91,7 +91,7 @@ const IMPLEMENTATION_EXAMPLE_HEADING = "Example"
 const CriteriaEmptyState = () => <EmptyState title={CRITERIA_EMPTY_TITLE} />
 
 /** How many shimmer paragraph lines `BriefMarkdown` guesses while `isSkeleton` — see file header. */
-const BRIEF_SKELETON_LINE_WIDTHS = ["w-full", "w-full", "w-3/4", "w-2/3"] as const
+const BRIEF_SKELETON_LINE_COUNT = 4
 
 /**
  * The personal-project task reading column. See the file header for the full
@@ -157,9 +157,9 @@ const TaskBriefBody = ({
                 isSkeleton={isSkeleton}
 
                 items={[
-                    () => <Typography size="h3" weight="bold" isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/2"] : undefined} text={title} />,
+                    () => <Typography size="h3" weight="bold" isSkeleton={isSkeleton} text={title} />,
                     ...(isSkeleton
-                        ? [() => <Typography size="sm" color="muted" isSkeleton classNames={["w-2/3"]} />]
+                        ? [() => <Typography size="sm" color="muted" isSkeleton />]
                         : description != null && description.trim().length > 0
                             ? [() => <Typography size="sm" color="muted" text={description} />]
                             : []),
@@ -191,8 +191,8 @@ const TaskBriefBody = ({
                         gap={2}
                         isSkeleton={isSkeleton}
 
-                        items={BRIEF_SKELETON_LINE_WIDTHS.map((width) => () => (
-                            <Typography size="base" isSkeleton classNames={[width]} />
+                        items={Array.from({ length: BRIEF_SKELETON_LINE_COUNT }, () => () => (
+                            <Typography size="base" isSkeleton />
                         ))}
                     />
                 ) : (

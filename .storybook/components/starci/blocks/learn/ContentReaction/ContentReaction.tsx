@@ -62,7 +62,7 @@ const ContentReaction = ({
 
             />
             {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} />
+                <Typography size="xs" color="muted" isSkeleton />
             ) : viewCount != null ? (
                 <Typography
                     size="xs"

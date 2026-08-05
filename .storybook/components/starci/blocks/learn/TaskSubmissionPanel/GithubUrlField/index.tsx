@@ -3,17 +3,12 @@ import { type SkeletonProps } from "@sb-components/frames/_slot"
 import {
     CheckCircleIcon,
     CloudArrowUpIcon,
-    CodeIcon,
-    GearSixIcon,
-    GitBranchIcon,
-    PlayIcon,
-    SparkleIcon,
     WarningCircleIcon,
 } from "@phosphor-icons/react"
-import { Button, type IconComponent } from "@sb-components/atoms/buttons/Button/Button"
+import { type IconComponent } from "@sb-components/atoms/buttons/Button/Button"
 import { InputText } from "@sb-components/atoms/forms"
 import { InlineIconLabel, type InlineIconLabelTone } from "@sb-components/composites/text/InlineIconLabel/InlineIconLabel"
-import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 import { type TaskSubmissionAutosaveStatus } from "../types"
 
 /** Autosave state → its own icon/tone/wording. `idle` never renders (see file header). */

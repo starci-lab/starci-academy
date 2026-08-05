@@ -15,6 +15,7 @@ const rankRingTone = (rank: number | undefined): AvatarRing | undefined => {
     return rank <= 3 ? "warning" : "accent"
 }
 
+/** Props for {@link ProfileRankAvatar}. */
 export interface ProfileRankAvatarProps {
     name: string
     avatarUrl?: string

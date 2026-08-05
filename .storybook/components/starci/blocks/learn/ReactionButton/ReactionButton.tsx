@@ -16,7 +16,7 @@ export type { ReactionType, ReactionCount, ReactionButtonProps } from "./types"
  * `ContentDiscussion`'s thread — the SAME control real `src`'s `ReactionBar`
  * is, reused between `InteractionBar` and `CommentItem`.
  *
- * 📐 LEAF by STRUCTURE (§14d.2). Which emotion is picked and whether the
+ *  LEAF by STRUCTURE (§14d.2). Which emotion is picked and whether the
  * summary is empty keep the same two-part shape ⇒ states. The caller
  * flipping `isSkeleton` is its own leaf.
  */
@@ -90,8 +90,8 @@ const ReactionButton = ({
                         </span>
                     </HeroButton>
                 </HeroPopover.Trigger>
-                {/* TODO(atom): skin-shape đậm (rounded-full + px-2 py-1 pill) — frame không làm được,
-                    tạm bọc bằng data-principles hand-set. `className` sits on `HeroPopover.Content`
+                {/* TODO(atom): bold skin-shape (rounded-full + px-2 py-1 pill) — a frame cannot own it,
+                    Wrap with a hand-set data-principles for now. `className` sits on `HeroPopover.Content`
                     itself (the vendor's OWN rendered surface, react-aria `Popover`), not a raw <div>
                     we author, so `Box` can't wrap it (moving the shape down onto an inner wrapping
                     Box would leave the real popover surface with its default non-pill radius showing

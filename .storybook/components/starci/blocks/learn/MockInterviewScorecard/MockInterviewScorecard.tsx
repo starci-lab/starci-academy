@@ -158,12 +158,12 @@ const MockInterviewScorecard = ({
             isSkeleton={isSkeleton}
             items={[
                 () => (isSkeleton ? (
-                    <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/2"]} />
+                    <Typography size="sm" weight="medium" isSkeleton />
                 ) : promptTitle != null ? (
                     <Typography size="sm" weight="medium" text={promptTitle} />
                 ) : null),
                 () => (isSkeleton ? (
-                    <Typography size="xs" color="muted" isSkeleton classNames={["w-1/3"]} />
+                    <Typography size="xs" color="muted" isSkeleton />
                 ) : createdAt != null ? (
                     <Typography size="xs" color="muted" text={createdAt} />
                 ) : null),
@@ -316,7 +316,7 @@ const MockInterviewScorecard = ({
             ) : null}
 
             {/* no icon here — §5a.2: a chat-bubble needs an ASSOCIATION step to read as
-                "a question" (not a universal symbol like ✓/🔒), and the card's own
+                "a question" (not a universal symbol like check/locklock), and the card's own
                 label="Follow-up question" already carries the fact. */}
             {hasFollowUp ? (
                 <SurfaceCard

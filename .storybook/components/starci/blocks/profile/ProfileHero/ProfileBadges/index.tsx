@@ -6,6 +6,7 @@ import type { ProfileBadge } from "../ProfileHero"
 /** Two placeholder pills while loading — enough to read as "a row of badges", not a guess at the real count. */
 const SKELETON_BADGE_KEYS = ["skeleton-badge-1", "skeleton-badge-2"] as const
 
+/** Props for {@link ProfileBadges}. */
 export interface ProfileBadgesProps {
     badges?: ReadonlyArray<ProfileBadge>
     isSkeleton?: boolean

@@ -13,8 +13,11 @@ import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 
 /** The course's pricing phases (inlined from `@/modules/types/enums/pricing-phase`). */
 export enum PricingPhase {
+    /** Opening phase with the fewest seats and the lowest price. */
     Pioneer = "pioneer",
+    /** Mid phase after pioneer, still discounted before standard pricing. */
     EarlyBird = "early_bird",
+    /** Full-price phase after early-bird seats are gone. */
     Regular = "regular",
 }
 

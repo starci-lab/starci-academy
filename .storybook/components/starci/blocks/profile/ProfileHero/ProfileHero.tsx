@@ -269,7 +269,7 @@ const ProfileHero = ({
     const actionsRow = (
         <>
             <Button
-                classNames={["flex-1"]}
+
                 variant={action.variant}
                 label={action.label}
                 prefixIcon={action.prefixIcon}

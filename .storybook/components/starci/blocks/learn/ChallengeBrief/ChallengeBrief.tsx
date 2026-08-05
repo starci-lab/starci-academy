@@ -92,7 +92,7 @@ const markdownBody = (body: string): ReactNode => (
 const skeletonListRows = (count: number, keyPrefix: string): Array<SurfaceCardListItem> =>
     Array.from({ length: count }, (_unused, index) => ({
         key: `${keyPrefix}-${index}`,
-        content: () => <Typography size="sm" isSkeleton classNames={["w-3/4"]} />,
+        content: () => <Typography size="sm" isSkeleton />,
     }))
 
 /** One expected-output row: a leading check plus the stripped output text. */
@@ -246,7 +246,7 @@ const ChallengeBrief = ({
 
                     body={() =>
                         isSkeleton
-                            ? <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
+                            ? <Typography size="sm" isSkeleton />
                             : markdownBody(trimmedHint)
                     }
                 />

@@ -22,7 +22,7 @@ export type {
  * BLOCK — `LeaderboardBoard`: the ranked board itself. See the component's own
  * file header for the full reuse contract; this file only adds the states.
  *
- * 📐 LEAF by STRUCTURE (§14d.2): loading / empty / error / how many rows / whether
+ *  LEAF by STRUCTURE (§14d.2): loading / empty / error / how many rows / whether
  * the viewer needs pinning are all DATA — `AsyncContent`'s own branch switch
  * already reads that way — so this block has exactly ONE leaf ("Board") and five
  * states inside it, the same shape `QuizRecapList`'s single `Full` leaf uses.

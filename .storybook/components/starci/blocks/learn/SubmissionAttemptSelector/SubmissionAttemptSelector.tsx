@@ -88,12 +88,8 @@ const attemptChip = (attempt: SubmissionAttempt) => (
     />
 )
 
-/** Props for {@link AttemptRowSkeleton}. */
-interface AttemptRowSkeletonProps {
-}
-
 /** Mirrors the real strip's footprint while attempts are loading — pill-for-pill, no data. */
-const AttemptRowSkeleton = ({  }: AttemptRowSkeletonProps) => (
+const AttemptRowSkeleton = () => (
     <Cluster
         gap={3}
 

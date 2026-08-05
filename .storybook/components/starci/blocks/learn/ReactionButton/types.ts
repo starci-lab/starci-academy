@@ -4,21 +4,21 @@ export type ReactionType = "like" | "love" | "haha" | "wow" | "sad" | "angry"
 /** One reaction kind's fixed vocabulary — the block's own table (§14d.1), never caller-supplied. */
 interface ReactionDescriptor {
     type: ReactionType
-    /** Native emoji glyph — `alt` text for the real SVG asset. */
-    emoji: string
     /** Accessible + summary label, matches `src/messages/vi.json`'s `discussion.reactions.*`. */
     label: string
 }
 
+/** The six reactions in display order -- SVG assets live at `/reactions/<type>.svg`. */
 export const REACTIONS: ReadonlyArray<ReactionDescriptor> = [
-    { type: "like", emoji: "👍", label: "Like" },
-    { type: "love", emoji: "❤️", label: "Love" },
-    { type: "haha", emoji: "😂", label: "Haha" },
-    { type: "wow", emoji: "😮", label: "Wow" },
-    { type: "sad", emoji: "😢", label: "Sad" },
-    { type: "angry", emoji: "😡", label: "Angry" },
+    { type: "like", label: "Like" },
+    { type: "love", label: "Love" },
+    { type: "haha", label: "Haha" },
+    { type: "wow", label: "Wow" },
+    { type: "sad", label: "Sad" },
+    { type: "angry", label: "Angry" },
 ]
 
+/** Lookup from reaction type to its descriptor. */
 export const REACTION_BY_TYPE: Record<ReactionType, ReactionDescriptor> = REACTIONS.reduce(
     (acc, descriptor) => { acc[descriptor.type] = descriptor; return acc },
     {} as Record<ReactionType, ReactionDescriptor>,

@@ -176,7 +176,10 @@ export interface NavbarProps {
     className?: string
 }
 
-const ShortcutHint = ({ shortcutLabel }: { shortcutLabel: string }) => (
+interface ShortcutHintProps {
+    shortcutLabel: string
+}
+const ShortcutHint = ({ shortcutLabel }: ShortcutHintProps) => (
     <Kbd><Kbd.Content>{shortcutLabel}</Kbd.Content></Kbd>
 )
 
@@ -329,7 +332,7 @@ const Navbar = ({
             <Button
                 variant="ghost"
                 size="sm"
-                classNames={["w-full"]}
+
                 label="See all"
                 onPress={notifications.onSeeAll}
 
@@ -506,7 +509,7 @@ const Navbar = ({
             key={item.id}
             variant={item.isActive ? "secondary" : "ghost"}
             align="start"
-            classNames={["w-full"]}
+
             label={item.label}
             onPress={() => {
                 item.onPress()

@@ -143,7 +143,7 @@ const findingLocationChip = (finding: SubmissionFinding): ReactNode | undefined 
         <Chip
             tone="default"
             text={finding.location}
-            classNames={["shrink-0"]}
+
 
         />
     ) : undefined
@@ -221,7 +221,11 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
     )
 }
 
-const ErrorEmptyState = ({ onRetry, retryLabel }: { onRetry?: () => void; retryLabel?: string }) => (
+interface FindingsErrorEmptyStateProps {
+    onRetry?: () => void
+    retryLabel?: string
+}
+const ErrorEmptyState = ({ onRetry, retryLabel }: FindingsErrorEmptyStateProps) => (
     <AsyncContentError
         title={ERROR_TITLE}
         onRetry={onRetry}
@@ -229,7 +233,10 @@ const ErrorEmptyState = ({ onRetry, retryLabel }: { onRetry?: () => void; retryL
     />
 )
 
-const PlainEmptyState = ({ title }: { title: string }) => (
+interface FindingsPlainEmptyStateProps {
+    title: string
+}
+const PlainEmptyState = ({ title }: FindingsPlainEmptyStateProps) => (
     <AsyncContentEmpty title={title} />
 )
 

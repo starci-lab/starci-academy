@@ -37,7 +37,7 @@ export const ContinueCardHero = (props: ContinueCardHeroProps) => {
                             iconSlide
                             onPress={onPress}
 
-                            classNames={["w-fit", "shrink-0"]}
+
                         />
                     }
                 />

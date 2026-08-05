@@ -191,7 +191,7 @@ const VERDICT_MAP: Partial<Record<ChallengeDeliverableVerdict, EnumChipEntry>> =
  * SUCCESS, `failed` is DANGER. `accent` is not used for any branch — accent is
  * the brand's active-state pink, not a status tone (`matrix.md` §11).
  *
- * ⭐ DELIBERATELY DOES NOT port `AIProcessingText`'s rotating conic-gradient
+ * * DELIBERATELY DOES NOT port `AIProcessingText`'s rotating conic-gradient
  * border. That is `src`'s own IMPLEMENTATION detail (a `motion.div` gradient
  * spinning over 2.8s), not a shape this system has a slot for — porting it
  * would be exactly Trap 3 of `.claude/fe/boundary.md` (copying behaviour/
@@ -199,10 +199,12 @@ const VERDICT_MAP: Partial<Record<ChallengeDeliverableVerdict, EnumChipEntry>> =
  * face for "a note with a tone living inside a face" is `Callout`, and that is
  * what is used here.
  */
-const JOB_STATUS_CALLOUT: Record<
-    ChallengeDeliverableJobStatus,
-    { status: CalloutStatus, title: string, description: string }
-> = {
+interface ChallengeDeliverableJobStatusCallout {
+    status: CalloutStatus
+    title: string
+    description: string
+}
+const JOB_STATUS_CALLOUT: Record<ChallengeDeliverableJobStatus, ChallengeDeliverableJobStatusCallout> = {
     queued: {
         status: "warning",
         title: "Queued for processing",

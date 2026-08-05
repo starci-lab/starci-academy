@@ -103,7 +103,7 @@ const DailyQuest = ({
                 label={`Claim ${quest.reward} coins`}
                 isPending={isClaiming}
                 onPress={onClaim}
-                classNames={["w-fit"]}
+
 
             />
         ) : (

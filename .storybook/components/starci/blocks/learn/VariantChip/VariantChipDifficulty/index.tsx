@@ -8,13 +8,12 @@ import { capitalize, DIFFICULTY_COLOR, type VariantChipDifficultyProps } from ".
  * {@link DIFFICULTY_COLOR}.
  *
  * The shape is ALWAYS a pill — the atom's default, and design doesn't expose a
- * shape axis to the caller (see the ⛔ note at the top of this file).
+ * shape axis to the caller (see the  note at the top of this file).
  *
  * @param props - {@link VariantChipDifficultyProps}
  */
 export const VariantChipDifficulty = ({
     difficulty,
-    classNames,
     isSkeleton,
 }: VariantChipDifficultyProps) => {
     // Part name so the anatomy tree can call out exactly what this design builds —
@@ -31,13 +30,13 @@ export const VariantChipDifficulty = ({
         <Chip
             isSkeleton
             dotClassName={DIFFICULTY_COLOR[difficulty]}
-            classNames={classNames}
+
         />
     ) : (
         <Chip
             dotClassName={DIFFICULTY_COLOR[difficulty]}
             text={capitalize(difficulty)}
-            classNames={classNames}
+
         />
     )
     // Part name goes on the span that WRAPS the chip itself — NOT through

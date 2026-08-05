@@ -153,7 +153,7 @@ const EnrollGateBase = ({
                 suffixIcon={ArrowRightIcon}
                 iconSlide
                 onPress={onEnroll}
-                classNames={["w-full"]}
+
 
             />
         </>

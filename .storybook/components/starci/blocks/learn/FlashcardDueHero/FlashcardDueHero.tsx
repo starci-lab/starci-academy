@@ -164,7 +164,7 @@ const FlashcardDueHero = ({
                 isPending={isStarting}
                 isSkeleton={isSkeleton}
 
-                classNames={["w-fit"]}
+
             />
         </>
     )

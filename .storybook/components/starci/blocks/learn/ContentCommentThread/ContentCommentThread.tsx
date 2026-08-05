@@ -13,7 +13,7 @@ import { ReactionButton, type ReactionType, type ReactionCount } from "@sb-compo
  * verbatim from real `src`'s `CommentItem`. See the component's own file
  * header for the massive gap this fills against the earlier flat-list cut.
  *
- * 📐 LEAVES by STRUCTURE (§14d.2). Owner-only actions appearing, the body
+ *  LEAVES by STRUCTURE (§14d.2). Owner-only actions appearing, the body
  * swapping for an edit composer or a deleted placeholder, and the reply
  * subtree expanding each add/remove real nodes ⇒ separate leaves.
  */

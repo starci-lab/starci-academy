@@ -21,7 +21,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * breakdown. See the component's own file header for the full contract; this
  * file only adds the states.
  *
- * 📐 LEAF by STRUCTURE (§14d.2): the six metrics never change the SHAPE of the
+ *  LEAF by STRUCTURE (§14d.2): the six metrics never change the SHAPE of the
  * tree, only the numbers inside it, so this block has exactly ONE leaf
  * ("Content") — loading / error / content are states of that one leaf, the
  * same shape `ChallengeScoreCard`'s single leaf uses. No `isEmpty` state:

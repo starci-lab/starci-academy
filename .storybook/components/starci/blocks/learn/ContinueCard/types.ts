@@ -22,7 +22,7 @@ export interface ContinueCardDataProps {
     /**
      * Navigation target — ONLY `.Item` can use it (its CTA is `LinkSeeMore`, a real link).
      *
-     * ⚠️ `.Hero` does NOT accept it: its CTA is `Button`, and the Button atom
+     * NOTE: `.Hero` does NOT accept it: its CTA is `Button`, and the Button atom
      * **has no `href`** (it's a button, not a link). The old version dodged this by
      * hand-rolling a `<Link>` styled to look like a button — exactly the drift being
      * cleaned up here, so it's dropped. `.Hero` navigates via `onPress` (the caller
@@ -41,7 +41,7 @@ export interface ContinueCardDataProps {
      * The flag FLOWS DOWN to the atom wherever an atom already has `isSkeleton`
      * (`Typography` for the title, `Button` for `.Hero`'s CTA, `SurfaceCard` for the card face).
      *
-     * ⚠️ THREE spots in this tree have NO atom to take the flag, and the
+     * NOTE: THREE spots in this tree have NO atom to take the flag, and the
      * scaffold/atom holding them sit OUTSIDE the 4 files touched this round (do not touch):
      *   • the meta/subtitle row goes through scaffold `ListMeta` — no `isSkeleton` yet;
      *   • `ProgressMeter` (scaffold) — no `isSkeleton` yet;

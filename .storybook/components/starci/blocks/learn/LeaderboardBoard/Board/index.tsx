@@ -28,7 +28,7 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean): Sur
                         align="center"
                         isSkeleton={isSkeleton}
                         text={isSkeleton ? undefined : `#${row.rank}`}
-                        classNames={["w-1/4", "shrink-0"]}
+
 
                     />
                 ),

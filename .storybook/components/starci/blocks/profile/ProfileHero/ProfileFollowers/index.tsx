@@ -2,6 +2,7 @@ import React from "react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
+/** Props for {@link ProfileFollowers}. */
 export interface ProfileFollowersProps {
     followersCount?: number
     isSkeleton?: boolean

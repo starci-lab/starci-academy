@@ -112,7 +112,7 @@ const ModuleContinueBand = ({
                         label={RESUME_LABEL}
                         suffixIcon={ArrowRightIcon}
                         onPress={onResume}
-                        classNames={["shrink-0"]}
+
 
                     />
                 )] : []),

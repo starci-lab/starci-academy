@@ -136,8 +136,8 @@ const TrialConversionStripBase = ({
                 // The CTA card renders instantly once the outline
                 // resolves, but the price is a second fetch — mirror the price
                 // line instead of showing an empty gap until it lands.
-                () => <Typography size="h4" isSkeleton classNames={["w-1/3"]} />,
-                () => <Typography size="xs" isSkeleton classNames={["w-1/2"]} />,
+                () => <Typography size="h4" isSkeleton />,
+                () => <Typography size="xs" isSkeleton />,
             ] : price?.discountedPriceVnd != null ? [
                 ({ isSkeleton }: SkeletonProps) => (
                     <PriceTagProminent
@@ -185,7 +185,7 @@ const TrialConversionStripBase = ({
                         isSkeleton={isSkeleton}
                         variant="primary"
                         size="lg"
-                        classNames={["shrink-0"]}
+
                         label="Unlock the full course"
                         suffixIcon={ArrowRightIcon}
                         iconSlide

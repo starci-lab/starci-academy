@@ -96,7 +96,7 @@ const PlaygroundExerciseGrid = ({
                     ),
                     () => (
                         <div>
-                            <Chip tone="default" icon={ListChecksIcon} text={stepCountLabel(exercise.stepCount)} classNames={["w-fit"]} />
+                            <Chip tone="default" icon={ListChecksIcon} text={stepCountLabel(exercise.stepCount)} />
                         </div>
                     ),
                 ]}

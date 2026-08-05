@@ -74,7 +74,7 @@ const QaConversationHeader = ({
             isSkeleton={isSkeleton}
 
             items={isSkeleton
-                ? [() => <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/3"]} />]
+                ? [() => <Typography size="sm" weight="medium" isSkeleton />]
                 : [
                     () => <Typography size="sm" weight="medium" text={asker.displayName} />,
                     ...(isFounderAsker ? [() => (
@@ -93,7 +93,7 @@ const QaConversationHeader = ({
             items={[
                 () => nameRow,
                 () => (isSkeleton ? (
-                    <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} />
+                    <Typography size="xs" color="muted" isSkeleton />
                 ) : (
                     <Typography size="xs" color="muted" text={replyLabel(replyCount)} />
                 )),

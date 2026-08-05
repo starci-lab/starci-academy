@@ -10,7 +10,7 @@ import { StackV } from "@sb-components/frames/Stack/Stack"
  * unlocked milestone task on a capstone track. Distinct from the challenge
  * flow (no such fixed handoff exists there) — see the component file header.
  *
- * 📐 TWO LEAVES (§14d.2). `showCheck` and `isSkeleton` only toggle a glyph or
+ *  TWO LEAVES (§14d.2). `showCheck` and `isSkeleton` only toggle a glyph or
  * mirror the existing shape — neither changes what is composed, so both are
  * STATES of `Default`. `isHighlight` is different: it adds/removes the
  * highlight streak, a real DOM node, so its two values are the `Default`
@@ -114,7 +114,7 @@ const MilestoneUpNextCard = ({
                             suffixIcon={ArrowRightIcon}
                             iconSlide
                             onPress={onPress}
-                            classNames={["w-fit", "shrink-0"]}
+
 
                         />
                     ),

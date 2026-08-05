@@ -16,7 +16,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * component's own file header for the full contract; this file only adds the
  * states.
  *
- * 📐 LEAF by STRUCTURE (§14d.2): which pillar bars render is a DATA condition
+ *  LEAF by STRUCTURE (§14d.2): which pillar bars render is a DATA condition
  * (a pillar with no score is omitted, never zero-filled), not a different
  * shape this block draws — so loading / empty / error / content-with-various-
  * pillars are all states of the same one leaf ("Content").
@@ -141,11 +141,11 @@ const Content = ({ codingPercentile, track, isSkeleton }: ContentProps) => {
             {pillarMeter("Mock interview", track.interviewScore, isSkeleton)}
             {pillarMeter("CV", track.cvScore, isSkeleton)}
             {isSkeleton ? (
-                <Button isSkeleton classNames={["self-start"]} />
+                <Button isSkeleton />
             ) : track.nextAction ? (
                 <Button
                     variant="primary"
-                    classNames={["self-start"]}
+
                     label={track.nextAction.label}
                     onPress={track.nextAction.onPress}
 

@@ -53,7 +53,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     // passes `content` and stays untouched by the list's own shimmer branch.
     const readinessTrack = (
         <>
-            <Typography size="sm" isSkeleton classNames={["w-1/2"]} />
+            <Typography size="sm" isSkeleton />
             <ProgressBar isSkeleton />
             <ProgressBar isSkeleton />
         </>
@@ -69,8 +69,8 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     const courseItems: Array<SurfaceCardListItem> = [0, 1].map((i) => {
         const progressHeader = (
             <>
-                <Typography size="sm" isSkeleton classNames={["w-1/2"]} />
-                <Typography size="xs" isSkeleton classNames={["w-1/4", "shrink-0"]} />
+                <Typography size="sm" isSkeleton />
+                <Typography size="xs" isSkeleton />
             </>
         )
         const courseDetails = (
@@ -94,14 +94,14 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     const skillItems: Array<GridItem> = [0, 1].map((i) => {
         const statCardBody = (
             <>
-                <Typography size="h3" isSkeleton classNames={["w-1/4"]} />
-                <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
-                <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
+                <Typography size="h3" isSkeleton />
+                <Typography size="sm" isSkeleton />
+                <Typography size="xs" isSkeleton />
             </>
         )
         const skillCard = (
             <>
-                <Typography size="h4" isSkeleton classNames={["w-1/2"]} />
+                <Typography size="h4" isSkeleton />
                 <SurfaceCard
                     padding={4}
 
@@ -129,9 +129,9 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     // name (h3) + role title + @handle — one unit of meaning, flush
     const nameBlock = (
         <>
-            <Typography size="h3" isSkeleton classNames={["w-3/4"]} />
-            <Typography size="sm" isSkeleton classNames={["w-1/2"]} />
-            <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
+            <Typography size="h3" isSkeleton />
+            <Typography size="sm" isSkeleton />
+            <Typography size="sm" isSkeleton />
         </>
     )
 
@@ -139,7 +139,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     const locationLabel = (
         <>
             <HeroSkeleton className="size-5 rounded" />
-            <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
+            <Typography size="sm" isSkeleton />
         </>
     )
     const locationRow = (
@@ -152,16 +152,16 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     // follower / following line
     const followRow = (
         <>
-            <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
-            <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
+            <Typography size="sm" isSkeleton />
+            <Typography size="sm" isSkeleton />
         </>
     )
 
     // action cluster — two full-width buttons
     const actionButtons = (
         <>
-            <Button isSkeleton classNames={["w-full"]} />
-            <Button isSkeleton classNames={["w-full"]} />
+            <Button isSkeleton />
+            <Button isSkeleton />
         </>
     )
 
@@ -170,7 +170,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
         const metaRow = (
             <>
                 <HeroSkeleton className="size-5 rounded" />
-                <Typography size="sm" isSkeleton classNames={["w-1/2"]} />
+                <Typography size="sm" isSkeleton />
             </>
         )
         return <StackH key={key} gap={2} items={[() => metaRow]} />
@@ -182,7 +182,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
             <StackV gap={1} items={[() => nameBlock]} />
 
             {/* short bio */}
-            <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
+            <Typography size="sm" isSkeleton />
 
             <StackH gap={3} principles={["chip-row"]} at="sm" items={[() => locationRow]} />
             <StackH gap={4} items={[() => followRow]} />
@@ -199,9 +199,9 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
 
     const readinessCard = (
         <>
-            <Typography size="h3" isSkeleton classNames={["w-1/4"]} />
-            <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
-            <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
+            <Typography size="h3" isSkeleton />
+            <Typography size="sm" isSkeleton />
+            <Typography size="xs" isSkeleton />
         </>
     )
     const readinessGroup = (
@@ -220,7 +220,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     // job readiness — headline metric card + a tracked-goal row
     const readinessSection = (
         <>
-            <Typography size="h4" isSkeleton classNames={["w-1/2"]} />
+            <Typography size="h4" isSkeleton />
             <StackV gap={4} items={[() => readinessGroup]} />
         </>
     )
@@ -228,7 +228,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     // courses — icon tile + title/percent + progress rows
     const coursesSection = (
         <>
-            <Typography size="h4" isSkeleton classNames={["w-1/2"]} />
+            <Typography size="h4" isSkeleton />
             <SurfaceCardList
                 items={courseItems}
 
@@ -239,7 +239,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     const contributionStreak = (
         <>
             <HeroSkeleton className="size-4 rounded-full" />
-            <Typography size="sm" isSkeleton classNames={["w-1/2"]} />
+            <Typography size="sm" isSkeleton />
         </>
     )
     const contributionGroup = (
@@ -251,7 +251,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     // contributions — heatmap grid + streak line
     const contributionsSection = (
         <>
-            <Typography size="h4" isSkeleton classNames={["w-1/2"]} />
+            <Typography size="h4" isSkeleton />
             <StackV gap={4} items={[() => contributionGroup]} />
         </>
     )

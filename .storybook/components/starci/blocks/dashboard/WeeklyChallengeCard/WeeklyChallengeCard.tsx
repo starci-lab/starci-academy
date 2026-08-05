@@ -13,7 +13,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
  * the week. See the component's own file header for the full contract; this
  * file only adds the states.
  *
- * 📐 LEAF by STRUCTURE (§14d.2): whether the viewer already passed, already
+ *  LEAF by STRUCTURE (§14d.2): whether the viewer already passed, already
  * claimed, or the leaderboard is short, are all DATA conditions of the same
  * status row/list — never a different shape this block draws — so this block
  * has exactly ONE leaf ("Content"), the same shape `LeaderboardBoard`'s single

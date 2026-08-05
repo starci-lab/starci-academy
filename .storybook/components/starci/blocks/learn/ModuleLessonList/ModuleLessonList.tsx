@@ -41,7 +41,7 @@ export interface ModuleLessonListProps {
     lessons: Array<ModuleLessonListLesson>
     /** The lesson to mark "resume" — wins over `isRead` for the leading icon (see file header). */
     resumeLessonId?: string
-    /** Fired with the lesson id on ANY row press, premium or not (see the ⛔ note above). */
+    /** Fired with the lesson id on ANY row press, premium or not (see the  note above). */
     onSelectLesson: (id: string) => void
     /**
      * `true` → the list draws its own row mirror. `lessons` empty while loading
@@ -132,7 +132,7 @@ const ModuleLessonList = ({
                 />
             ) : undefined,
             // A quiet trailing marker, riding NEXT TO the chip rather than replacing the
-            // leading icon (see the ⭐ judgement call above).
+            // leading icon (see the * judgement call above).
             trailingIcon: lesson.isPremium ? LockIcon : undefined,
         }
     })

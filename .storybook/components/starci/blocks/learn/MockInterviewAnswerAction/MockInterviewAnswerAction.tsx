@@ -43,7 +43,7 @@ const MockInterviewAnswerAction = ({
         onPress={onSubmit}
         isDisabled={isDisabled}
         isPending={isPending}
-        classNames={["self-center"]}
+
 
     />
 )

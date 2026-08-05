@@ -10,9 +10,9 @@ export const ScoreRowSkeleton = () => (
         align="center"
         principles={["content-row"]}
         items={[
-            () => <Typography size="sm" isSkeleton classNames={["shrink-0", "w-1/4"]} />,
+            () => <Typography size="sm" isSkeleton />,
             () => <HeroSkeleton className="h-1 flex-1 rounded-full" />,
-            () => <Typography size="xs" isSkeleton classNames={["shrink-0", "w-1/4"]} />,
+            () => <Typography size="xs" isSkeleton />,
         ]}
     />
 )

@@ -37,14 +37,14 @@ const RETRY_LABEL = "Retry"
 const EMPTY_TITLE = "No questions match the current filter"
 const EMPTY_DESCRIPTION = "Try a different filter or search term."
 
-/** The Loading branch's rows — see ★1 for why these are NOT `SurfaceCardList.isSkeleton`. */
+/** The Loading branch's rows — see *1 for why these are NOT `SurfaceCardList.isSkeleton`. */
 const skeletonItems = (): Array<SurfaceCardListItem> =>
     Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
         key: `skeleton-${index}`,
         content: () => <SkeletonQuestionRow />,
     }))
 
-/** The Content branch's real rows — each a {@link QuestionPreviewRow} (★2 gap stand-in). */
+/** The Content branch's real rows — each a {@link QuestionPreviewRow} (*2 gap stand-in). */
 const questionItems = (
     questions: ReadonlyArray<CourseQaQuestionItem>,
     currentUserId: string | null,
@@ -56,7 +56,7 @@ const questionItems = (
 
 /**
  * The course-wide Q&A roll-up list. See the file header for the full contract,
- * the GAP note on `QaQuestionThread` (★2), and the remaining judgement calls.
+ * the GAP note on `QaQuestionThread` (*2), and the remaining judgement calls.
  *
  * @param props - {@link CourseQaQuestionListProps}
  */
@@ -75,7 +75,7 @@ const CourseQaQuestionList = ({
     isSkeleton = false,
 }: import("./types").CourseQaQuestionListProps) => {
     // `currentUser`/`onAnswered` are pure pass-through for the future `QaQuestionThread`
-    // swap (★2/GAP) — `QuestionPreviewRow` (today's stand-in) does not consume them.
+    // swap (*2/GAP) — `QuestionPreviewRow` (today's stand-in) does not consume them.
     void currentUser
     void onAnswered
 
@@ -96,7 +96,7 @@ const CourseQaQuestionList = ({
     return (
         <div>
             <AsyncContent
-                // ★5 — an external override (`isSkeleton`) converges on the same Loading
+                // *5 — an external override (`isSkeleton`) converges on the same Loading
                 // branch as the list's own fetch flag (`isLoading`).
                 isLoading={isSkeleton || isLoading}
                 skeleton={() => (
@@ -123,7 +123,7 @@ const CourseQaQuestionList = ({
                             ),
                             ...(totalPages > 1
                                 ? [
-                                    // ★4 — `Pagination` hard-codes its own aria-label; a wrapping
+                                    // *4 — `Pagination` hard-codes its own aria-label; a wrapping
                                     // <nav> is how the caller's `pagerAriaLabel` still names the region.
                                     () => (
                                         <nav aria-label={pagerAriaLabel}>

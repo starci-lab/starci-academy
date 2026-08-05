@@ -86,7 +86,7 @@ const PlaygroundEnterBanner = ({
                                 isDisabled={!allReady}
                                 isSkeleton={isSkeleton}
 
-                                classNames={["w-fit"]}
+
                             />
                         ),
                     ]}

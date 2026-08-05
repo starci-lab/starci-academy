@@ -75,7 +75,7 @@ const LeaderboardToolbar = ({
                 />
             ),
             // no icon here — §5a.2: a clock needs an ASSOCIATION step to read as "time"
-            // (not a universal symbol like ✓/🔒), and the text already carries the fact.
+            // (not a universal symbol like check/locklock), and the text already carries the fact.
             ...(updatedAt != null ? [() => (
                 <Typography
                     size="xs"

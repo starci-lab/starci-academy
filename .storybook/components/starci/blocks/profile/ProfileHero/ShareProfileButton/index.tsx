@@ -2,6 +2,7 @@ import React from "react"
 import { ShareNetworkIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 
+/** Props for {@link ShareProfileButton}. */
 export interface ShareProfileButtonProps {
     onShare?: () => void
     isSkeleton?: boolean

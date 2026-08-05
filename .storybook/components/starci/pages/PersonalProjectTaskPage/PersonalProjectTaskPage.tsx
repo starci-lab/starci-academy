@@ -207,7 +207,7 @@ const legacyCodeBody = (item: PersonalProjectTaskLegacyCodeImplementationItem) =
  * A private render helper (see file header for why this is not a separate
  * storied component), not an anatomy node of its own.
  */
-const readingColumn = (props: {
+interface PersonalProjectTaskReadingColumnProps {
     breadcrumbItems?: Array<BreadcrumbItem>
     task: PersonalProjectTaskPageTask
     isLocked: boolean
@@ -217,7 +217,9 @@ const readingColumn = (props: {
     relatedItems: Array<ContentRelatedItem>
     relatedLabel: string
     isSkeleton: boolean
-}) => {
+}
+
+const readingColumn = (props: PersonalProjectTaskReadingColumnProps) => {
     const {
         breadcrumbItems,
         task,
@@ -349,10 +351,12 @@ const readingColumn = (props: {
  * evaluate/secondary actions + the latest graded result. A private render
  * helper (see file header), not an anatomy node of its own.
  */
-const submissionPanel = (props: {
+interface PersonalProjectTaskActColumnProps {
     panel: PersonalProjectTaskSubmissionPanelProps
     isSkeleton: boolean
-}) => {
+}
+
+const submissionPanel = (props: PersonalProjectTaskActColumnProps) => {
     const { panel, isSkeleton } = props
     const hasAttempts = panel.hasAttempts ?? false
 

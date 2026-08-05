@@ -280,7 +280,7 @@ const QaQuestionThread = ({
                 items={[
                     () =>
                         isSkeleton ? (
-                            <Typography size="xs" weight="medium" isSkeleton classNames={["w-1/4"]} />
+                            <Typography size="xs" weight="medium" isSkeleton />
                         ) : (
                             <>
                                 {question.isPinned ? (
@@ -303,8 +303,8 @@ const QaQuestionThread = ({
                 isSkeleton={isSkeleton}
 
                 items={[
-                    () => <Typography size="sm" isSkeleton classNames={["w-full"]} />,
-                    () => <Typography size="sm" isSkeleton classNames={["w-2/3"]} />,
+                    () => <Typography size="sm" isSkeleton />,
+                    () => <Typography size="sm" isSkeleton />,
                 ]}
             />
         ) : (

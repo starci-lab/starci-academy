@@ -35,7 +35,7 @@ export interface CourseQaQuestionItem {
     answeredByFounder?: boolean
 }
 
-/** The signed-in viewer's own identity — threaded through for the `QaQuestionThread` swap (★2/★6). */
+/** The signed-in viewer's own identity — threaded through for the `QaQuestionThread` swap (*2/*6). */
 export interface CourseQaCurrentUser {
     username: string
     avatar?: string
@@ -57,14 +57,14 @@ export interface CourseQaQuestionListProps {
     totalPages: number
     /** Fired with the 1-based page the viewer picked. */
     onPageChange: (page: number) => void
-    /** Signed-in viewer's id (drives the "You" swap, ★6); `null` when signed out. */
+    /** Signed-in viewer's id (drives the "You" swap, *6); `null` when signed out. */
     currentUserId: string | null
-    /** Signed-in viewer's identity — pass-through for the `QaQuestionThread` swap (★2). */
+    /** Signed-in viewer's identity — pass-through for the `QaQuestionThread` swap (*2). */
     currentUser: CourseQaCurrentUser | null
-    /** Fired after an answer is posted/edited/deleted — pass-through for the `QaQuestionThread` swap (★2). */
+    /** Fired after an answer is posted/edited/deleted — pass-through for the `QaQuestionThread` swap (*2). */
     onAnswered?: () => void
-    /** Accessible name for the pager region (★4). */
+    /** Accessible name for the pager region (*4). */
     pagerAriaLabel: string
-    /** External skeleton override, distinct from `isLoading` (★5). */
+    /** External skeleton override, distinct from `isLoading` (*5). */
     isSkeleton?: boolean
 }

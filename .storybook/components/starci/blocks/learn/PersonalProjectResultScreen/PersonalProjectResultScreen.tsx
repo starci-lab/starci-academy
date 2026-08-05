@@ -118,7 +118,7 @@ const MilestoneUpNextCard = ({
                                 suffixIcon={ArrowRightIcon}
                                 iconSlide
                                 onPress={onGoToNextTask}
-                                classNames={["w-fit", "shrink-0"]}
+
                             />
                         ),
                     ]}

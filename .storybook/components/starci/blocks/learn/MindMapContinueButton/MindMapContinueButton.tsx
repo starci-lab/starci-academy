@@ -85,9 +85,9 @@ const MindMapContinueButton = ({
 
     if (allContentDone) {
         return (
-            // TODO(atom): skin-shape đậm (rounded-full + border + bg + shadow — pill nổi)
-            // nên thành atom/composite (Chip/Button/SurfaceCard) — frame không làm được,
-            // tạm bọc Box + principles.
+            // TODO(atom): bold skin-shape (rounded-full + border + bg + shadow — raised pill)
+            // should become an atom/composite (Chip/Button/SurfaceCard) — a frame cannot own it,
+            // Wrap with Box + principles for now.
             <Box
                 principles={["control-pad"]} className="rounded-full border border-default bg-surface px-3 py-2 shadow-lg"
             >

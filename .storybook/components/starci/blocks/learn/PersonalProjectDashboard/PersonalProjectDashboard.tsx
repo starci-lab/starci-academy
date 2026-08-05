@@ -230,7 +230,7 @@ const Body = ({
                         size="xs"
                         color="muted"
                         isSkeleton={isSkeleton}
-                        classNames={isSkeleton ? ["w-3/4"] : undefined}
+
                         text={statsLine(stats)}
 
                     />

@@ -11,7 +11,7 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  * earns its own layer over the bare `SearchAutocomplete` atom (domain
  * mapping + count wording, §14d.1).
  *
- * 📐 ONE LEAF (§14d.2). `isSkeleton`, an empty vs. populated suggestion list,
+ *  ONE LEAF (§14d.2). `isSkeleton`, an empty vs. populated suggestion list,
  * and every value `count` can take (unknown / zero / N) are all DATA — no
  * node appears or disappears across them — so they are STATES inside the
  * single `Default` leaf, not leaves of their own.
@@ -87,7 +87,7 @@ const FoundationCategorySearchBar = ({
                         </div>
                     ),
                     ...(isSkeleton
-                        ? [() => <Typography size="sm" color="muted" isSkeleton classNames={["shrink-0"]} />]
+                        ? [() => <Typography size="sm" color="muted" isSkeleton />]
                         : count !== undefined
                             ? [
                                 ({ isSkeleton }: SkeletonProps) => (
@@ -96,7 +96,7 @@ const FoundationCategorySearchBar = ({
                                         size="sm"
                                         color="muted"
                                         text={countLabel(count)}
-                                        classNames={["shrink-0"]}
+
 
                                     />
                                 ),

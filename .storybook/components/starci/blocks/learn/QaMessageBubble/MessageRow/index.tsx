@@ -1,6 +1,6 @@
 import React from "react"
 import { CheckCircleIcon } from "@phosphor-icons/react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
@@ -12,15 +12,21 @@ import { QaReactionBar, type QaReactionType } from "@sb-components/starci/blocks
 import { type QaMessageBubbleAnswer } from "../types"
 
 /** One bubble + author line, with no interactive controls — used for the top answer's OWN rendering and for every read-only reply beneath it. */
+interface MessageRowInteractive {
+    canAccept: boolean
+    onAcceptAnswer: (accepted: boolean) => void
+    onReact: (type: QaReactionType | null) => void
+}
+interface MessageRowProps {
+    answer: QaMessageBubbleAnswer
+    currentUserId: string | null
+    interactive: MessageRowInteractive | null
+}
 export const MessageRow = ({
     answer,
     currentUserId,
     interactive,
-}: {
-    answer: QaMessageBubbleAnswer
-    currentUserId: string | null
-    interactive: { canAccept: boolean, onAcceptAnswer: (accepted: boolean) => void, onReact: (type: QaReactionType | null) => void } | null
-}) => {
+}: MessageRowProps) => {
     const isMine = currentUserId != null && currentUserId === answer.author.id
     const displayName = isMine ? "You" : answer.author.displayName
 

@@ -96,7 +96,7 @@ const ContentHeader = ({
                 />
             ) : null}
             {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-2/3"]} />
+                <Typography size="xs" color="muted" isSkeleton />
             ) : (
                 <>
                     {minutesRead != null ? (

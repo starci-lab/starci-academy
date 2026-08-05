@@ -151,9 +151,9 @@ export const PriceTagBase = ({
         // already knows how to emphasise a total row, and that emphasis looks the same
         // across every price table in the system.
         //
-        // ⚠️ The frame does NOT format for you: every money string coming in here
+        // NOTE: The frame does NOT format for you: every money string coming in here
         // has already gone through `formatPrice`.
-        // ⚠️ This column is NOT badged: the panel groups nodes BY NAME (`firstEl` keeps
+        // NOTE: This column is NOT badged: the panel groups nodes BY NAME (`firstEl` keeps
         // only the first element of each name), so two `StackV`s with the same name
         // would MERGE into one node and the tree would read wrong. The node that
         // matters inside the popover is `KeyValueList` — that one is badged; the
@@ -231,7 +231,7 @@ export const PriceTagBase = ({
                         size={AMOUNT_TYPE[emphasis]}
                         weight="bold"
                         isSkeleton={isSkeleton}
-                        classNames={isSkeleton ? ["w-2/3"] : undefined}
+
 
                         text={formatPrice(discounted, currency)}
                     />
@@ -243,7 +243,7 @@ export const PriceTagBase = ({
                             color="muted"
                             isSkeleton={isSkeleton}
                             isStruck
-                            classNames={isSkeleton ? ["w-1/3"] : undefined}
+
 
                             text={formatPrice(original, currency)}
                         />
@@ -282,7 +282,7 @@ export const PriceTagBase = ({
             size="xs"
             color="muted"
             isSkeleton={isSkeleton}
-            classNames={isSkeleton ? ["w-1/2"] : undefined}
+
 
             text={hasSaving ? `Save ${formatPrice(original - discounted, currency)}` : undefined}
         />

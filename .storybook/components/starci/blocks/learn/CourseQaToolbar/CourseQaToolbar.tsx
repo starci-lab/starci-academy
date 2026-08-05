@@ -88,7 +88,7 @@ const CourseQaToolbar = ({
                     size="sm"
                     color="muted"
                     isSkeleton
-                    classNames={["shrink-0"]}
+
 
                 />
             ) : (
@@ -97,7 +97,7 @@ const CourseQaToolbar = ({
                     color="muted"
                     tabularNums
                     text={resultCountLabel(resultCount)}
-                    classNames={["shrink-0"]}
+
 
                 />
             )}

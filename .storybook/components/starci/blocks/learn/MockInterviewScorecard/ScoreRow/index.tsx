@@ -13,23 +13,24 @@ const scoreColorOf = (score: number, max: number): "success" | "warning" | "dang
 }
 
 /** One labeled score row: a truncating label, a value-colored bar, and the raw "earned/max" beside it. */
+interface ScoreRowProps {
+    label: string
+    score: number
+    max: number
+}
 export const ScoreRow = ({
     label,
     score,
     max,
-}: {
-    label: string
-    score: number
-    max: number
-}) => (
+}: ScoreRowProps) => (
     <StackH
         gap={4}
         align="center"
         principles={["content-row"]}
         items={[
-            () => <Typography size="sm" truncate classNames={["shrink-0"]} text={label} />,
+            () => <Typography size="sm" truncate text={label} />,
             () => <ProgressMeter value={score} max={max} color={scoreColorOf(score, max)} classNames={["flex-1"]} />,
-            () => <Typography size="xs" color="muted" tabularNums classNames={["shrink-0"]} text={`${score}/${max}`} />,
+            () => <Typography size="xs" color="muted" tabularNums text={`${score}/${max}`} />,
         ]}
     />
 )

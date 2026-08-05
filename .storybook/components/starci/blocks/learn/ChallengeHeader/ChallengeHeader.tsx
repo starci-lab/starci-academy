@@ -125,7 +125,7 @@ const ChallengeHeader = ({
                 />
             )}
             {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} />
+                <Typography size="xs" color="muted" isSkeleton />
             ) : scoreValue != null ? (
                 <Typography
                     size="xs"
@@ -144,7 +144,7 @@ const ChallengeHeader = ({
                 isSkeleton={isSkeleton}
                 breadcrumb={() =>
                     isSkeleton ? (
-                        <Typography size="sm" isSkeleton classNames={["w-1/4"]} />
+                        <Typography size="sm" isSkeleton />
                     ) : (
                         <LinkBack
                             label={backLabel}

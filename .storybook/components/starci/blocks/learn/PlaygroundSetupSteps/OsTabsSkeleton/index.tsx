@@ -14,8 +14,8 @@ const renderOsTabSkeleton = (key: PlaygroundSetupOs) => (
         align="center"
         principles={["title-subtitle"]}
         items={[
-            () => <Typography size="sm" isSkeleton classNames={["w-1/3"]} />,
-            () => <Typography size="xs" isSkeleton classNames={["w-1/3"]} />,
+            () => <Typography size="sm" isSkeleton />,
+            () => <Typography size="xs" isSkeleton />,
         ]}
     />
 )

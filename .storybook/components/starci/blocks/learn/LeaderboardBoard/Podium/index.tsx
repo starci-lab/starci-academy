@@ -64,7 +64,7 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
                             align="center"
                             isSkeleton={isSkeleton}
                             text={isSkeleton ? undefined : entry.username}
-                            classNames={["w-full"]}
+
 
                         />
                     ),

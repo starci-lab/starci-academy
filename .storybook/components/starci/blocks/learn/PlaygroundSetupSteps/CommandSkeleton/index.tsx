@@ -22,15 +22,15 @@ export const CommandSkeleton = ({ lines = 1 }: CommandSkeletonProps) => (
             justify="between"
             padding={{ x: 4, y: 3 }}
             principles={["control-pad"]}
-            body={() => <Typography size="xs" isSkeleton classNames={["w-1/4"]} />}
+            body={() => <Typography size="xs" isSkeleton />}
         />
         <Divider />
         <StackV
             gap={3}
             padding={4}
             principles={["sibling-stack", "cell-pad"]}
-            items={Array.from({ length: lines }, (_unused, index) => () => (
-                <Typography size="xs" isSkeleton classNames={[index === lines - 1 ? "w-1/2" : "w-3/4"]} />
+            items={Array.from({ length: lines }, () => () => (
+                <Typography size="xs" isSkeleton />
             ))}
         />
     </div>

@@ -28,7 +28,7 @@ export const CardBody = ({
                 // yet and sits outside this round's boundary — CardBody calls that scaffold
                 // DIRECTLY so it builds ONE shimmer bar in place of the meta/subtitle row
                 // (the real shape always has EXACTLY ONE of the two) using atom `Typography`.
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} />
+                <Typography size="xs" color="muted" isSkeleton />
             ) : meta?.length || timeLeft ? (
                 <ListMeta
                     items={meta ?? []}

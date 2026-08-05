@@ -7,8 +7,7 @@ import { AsyncContentEmpty } from "@sb-components/composites/async/AsyncContent/
  */
 
 /** Props for {@link FoundationResourceEmpty}. */
-export interface FoundationResourceEmptyProps {
-}
+export type FoundationResourceEmptyProps = Record<string, never>
 
 /**
  * The foundation resource's own empty message. See the file header for why
@@ -17,7 +16,7 @@ export interface FoundationResourceEmptyProps {
  *
  * @param props - {@link FoundationResourceEmptyProps}
  */
-const FoundationResourceEmpty = ({ }: FoundationResourceEmptyProps) => (
+const FoundationResourceEmpty = () => (
     <AsyncContentEmpty
 
         title="This category doesn't have any resources yet."

@@ -50,7 +50,7 @@ const SubmissionResultHeader = ({
                 isSkeleton={isSkeleton}
                 breadcrumb={() =>
                     isSkeleton ? (
-                        <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
+                        <Typography size="sm" isSkeleton />
                     ) : (
                         <LinkBack label={backLabel} onPress={onBack} />
                     )

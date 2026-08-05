@@ -124,7 +124,7 @@ const CourseQaComposer = ({
             src={currentUser?.avatarSrc}
             size="sm"
             isSkeleton={isSkeleton}
-            classNames={["shrink-0"]}
+
 
         />
     ) : null

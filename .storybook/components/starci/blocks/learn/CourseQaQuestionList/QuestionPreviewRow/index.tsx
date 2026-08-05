@@ -28,7 +28,7 @@ interface QuestionPreviewRowProps {
 
 /**
  * TEMPORARY GAP STAND-IN for the not-yet-built `QaQuestionThread` block — see
- * the file header's GAP note (★2). Renders the COLLAPSED look only (real data,
+ * the file header's GAP note (*2). Renders the COLLAPSED look only (real data,
  * real atoms), no expand/reply behaviour: pressing does nothing, because
  * inventing a fake "open the thread" affordance here would be worse than
  * honestly having none yet.
@@ -40,7 +40,7 @@ export const QuestionPreviewRow = ({ question, currentUserId }: QuestionPreviewR
 
     // ONE chip for the row's classification axis (status — the thing worth scanning
     // the list for); the scope rides as plain muted text beside it instead of a
-    // second chip (eslint `starci-fe/no-adjacent-chip`, ★7).
+    // second chip (eslint `starci-fe/no-adjacent-chip`, *7).
     const chips: Array<ComponentTypeWithSkeleton> = [
         () => <Typography size="xs" color="muted" text={scopeLabel(question.scope)} />,
         () => (
@@ -53,7 +53,7 @@ export const QuestionPreviewRow = ({ question, currentUserId }: QuestionPreviewR
     ]
     if (isAnswered) {
         // no icon here — §5a.2: a chat-bubble needs an ASSOCIATION step to read as
-        // "replies" (not a universal symbol like ✓/🔒), and the text already carries
+        // "replies" (not a universal symbol like check/locklock), and the text already carries
         // the fact on its own (same fix already applied to QaQuestionThread/QaConversationHeader).
         chips.push(() => (
             <Typography size="xs" color="muted" text={`${question.replyCount} replies`} />

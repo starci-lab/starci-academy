@@ -102,7 +102,7 @@ const QuotaBar = ({
                         size="sm"
                         color="muted"
                         isSkeleton={isSkeleton}
-                        classNames={isSkeleton ? ["w-1/4"] : undefined}
+
 
                         text={label}
                     />
@@ -113,7 +113,7 @@ const QuotaBar = ({
                         weight="medium"
                         tabularNums
                         isSkeleton={isSkeleton}
-                        classNames={isSkeleton ? ["w-1/3"] : undefined}
+
 
                         text={(
                             <>
@@ -161,7 +161,7 @@ const QuotaBar = ({
                         size="xs"
                         color="muted"
                         isSkeleton={isSkeleton}
-                        classNames={isSkeleton ? ["w-1/2"] : undefined}
+
 
                         text={resetLabel ?? undefined}
                     />

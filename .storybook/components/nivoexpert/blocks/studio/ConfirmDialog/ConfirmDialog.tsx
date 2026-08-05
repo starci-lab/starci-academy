@@ -1,6 +1,6 @@
 import { AlertDialog, cn } from "@heroui/react"
 import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
-import { InputText } from "@sb-components/atoms/forms/Input/Input"
+import { InputText } from "@sb-components/atoms/forms"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ButtonGroup } from "@sb-components/composites/buttons/ButtonGroup/ButtonGroup"
 import { StackV } from "@sb-components/frames/Stack/Stack"

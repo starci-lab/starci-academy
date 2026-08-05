@@ -2,7 +2,7 @@ import { FloppyDiskIcon, TrashIcon, UploadSimpleIcon } from "@phosphor-icons/rea
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
-import { InputNumber, InputText, InputTextarea } from "@sb-components/atoms/forms/Input/Input"
+import { InputNumber, InputText, InputTextarea } from "@sb-components/atoms/forms"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
 import type { SkeletonProps } from "@sb-components/frames/_slot"

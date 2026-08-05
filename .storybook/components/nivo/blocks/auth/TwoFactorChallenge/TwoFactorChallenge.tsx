@@ -1,5 +1,5 @@
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { InputOtp } from "@sb-components/atoms/forms/Input/Input"
+import { InputOtp } from "@sb-components/atoms/forms"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 

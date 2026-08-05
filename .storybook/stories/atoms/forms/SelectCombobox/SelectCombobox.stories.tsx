@@ -1,6 +1,6 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { SelectCombobox } from "@sb-components/atoms/forms/Select/Select"
+import { SelectCombobox } from "@sb-components/atoms/forms"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -20,7 +20,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
 
-const meta: Meta = { title: "Atoms/Forms/Select/SelectCombobox", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
+const meta: Meta = { title: "Atoms/Forms/SelectCombobox", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
 type Story = StoryObj
 

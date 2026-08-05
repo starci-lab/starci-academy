@@ -3,22 +3,22 @@ export { ChoiceCheckbox } from "./ChoiceCheckbox/ChoiceCheckbox"
 export { ChoiceRadio } from "./ChoiceRadio/ChoiceRadio"
 export { ChoiceSwitch } from "./ChoiceSwitch/ChoiceSwitch"
 
-export type { FrameProps, FieldSkeletonProps } from "./Input/Input"
-export {
-    FieldSkeleton,
-    InputText,
-    InputTextarea,
-    InputNumber,
-    InputDate,
-    InputSearch,
-    InputPassword,
-    InputCurrency,
-    InputTime,
-    InputOtp,
-} from "./Input/Input"
+export type { FrameProps, FieldSkeletonProps } from "./_input/types"
+export { FieldSkeleton } from "./_input/FieldSkeleton"
+export { InputText } from "./InputText/InputText"
+export { InputTextarea } from "./InputTextarea/InputTextarea"
+export { InputNumber } from "./InputNumber/InputNumber"
+export { InputDate } from "./InputDate/InputDate"
+export { InputSearch } from "./InputSearch/InputSearch"
+export { InputPassword } from "./InputPassword/InputPassword"
+export { InputCurrency } from "./InputCurrency/InputCurrency"
+export { InputTime } from "./InputTime/InputTime"
+export { InputOtp } from "./InputOtp/InputOtp"
 
-export type { SelectOption } from "./Select/Select"
-export { SelectSingle, SelectMulti, SelectCombobox } from "./Select/Select"
+export type { SelectOption } from "./_select/types"
+export { SelectSingle } from "./SelectSingle/SelectSingle"
+export { SelectMulti } from "./SelectMulti/SelectMulti"
+export { SelectCombobox } from "./SelectCombobox/SelectCombobox"
 
 export { SearchAutocomplete } from "./SearchAutocomplete/SearchAutocomplete"
 export { Dropzone } from "./Dropzone/Dropzone"

@@ -1,7 +1,6 @@
 import { EyeIcon, FloppyDiskIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { InputNumber, InputTextarea } from "@sb-components/atoms/forms/Input/Input"
-import { SelectSingle, type SelectOption } from "@sb-components/atoms/forms/Select/Select"
+import { InputNumber, InputTextarea, SelectSingle, type SelectOption } from "@sb-components/atoms/forms"
 import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
 import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { Grid } from "@sb-components/frames/Grid/Grid"

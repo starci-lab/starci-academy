@@ -1,6 +1,6 @@
 import { CheckCircleIcon, ShieldCheckIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { InputOtp } from "@sb-components/atoms/forms/Input/Input"
+import { InputOtp } from "@sb-components/atoms/forms"
 import { QRCode } from "@sb-components/atoms/media/QRCode/QRCode"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"

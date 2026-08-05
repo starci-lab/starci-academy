@@ -1,4 +1,4 @@
-import { type SelectOption } from "@sb-components/atoms/forms/Select/Select"
+import { type SelectOption } from "@sb-components/atoms/forms"
 
 /** Where the repo-URL field's autosave currently stands. */
 export type TaskSubmissionAutosaveStatus = "idle" | "saving" | "saved" | "error"

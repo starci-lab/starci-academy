@@ -1,5 +1,5 @@
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { InputTextarea } from "@sb-components/atoms/forms/Input/Input"
+import { InputTextarea } from "@sb-components/atoms/forms"
 import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShell"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"

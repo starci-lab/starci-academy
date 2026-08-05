@@ -1,6 +1,6 @@
 import { EnvelopeSimpleIcon } from "@phosphor-icons/react"
 import { Chip, type ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
-import { SelectSingle } from "@sb-components/atoms/forms/Select/Select"
+import { SelectSingle } from "@sb-components/atoms/forms"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"

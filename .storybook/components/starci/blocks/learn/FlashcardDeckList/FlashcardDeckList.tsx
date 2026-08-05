@@ -1,6 +1,6 @@
 import React from "react"
 import { CaretRightIcon, CardsIcon, MagnifyingGlassIcon, RowsIcon, SquaresFourIcon } from "@phosphor-icons/react"
-import { InputSearch } from "@sb-components/atoms/forms/Input/Input"
+import { InputSearch } from "@sb-components/atoms/forms"
 import { Tabs, type TabItem } from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { Pagination } from "@sb-components/atoms/navigation/Pagination/Pagination"
 import { ProgressGauge } from "@sb-components/atoms/display/Progress/Progress"

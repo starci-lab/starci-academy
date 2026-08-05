@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { InputTextarea } from "@sb-components/atoms/forms/Input/Input"
+import { InputTextarea } from "@sb-components/atoms/forms"
 import { InputButtonLike } from "@sb-components/composites/buttons/InputButtonLike/InputButtonLike"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"

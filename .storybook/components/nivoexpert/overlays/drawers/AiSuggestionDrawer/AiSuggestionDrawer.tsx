@@ -1,6 +1,6 @@
 import { CheckCircleIcon, PencilSimpleIcon, SparkleIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { InputTextarea } from "@sb-components/atoms/forms/Input/Input"
+import { InputTextarea } from "@sb-components/atoms/forms"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { KeyValueList, type KeyValueListItem } from "@sb-components/composites/data/KeyValue/KeyValue"

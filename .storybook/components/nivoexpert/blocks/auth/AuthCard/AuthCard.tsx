@@ -1,7 +1,7 @@
 import { SignInIcon, UserPlusIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
-import { InputPassword, InputText } from "@sb-components/atoms/forms/Input/Input"
+import { InputPassword, InputText } from "@sb-components/atoms/forms"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { StackV } from "@sb-components/frames/Stack/Stack"

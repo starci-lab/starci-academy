@@ -2,7 +2,7 @@ import { useId, useState } from "react"
 import { cn } from "@heroui/react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { FieldFrame, fieldName } from "@sb-components/atoms/forms/_field/FieldFrame"
-import { FieldSkeleton, type FrameProps } from "@sb-components/atoms/forms/Input/Input"
+import { FieldSkeleton, type FrameProps } from "@sb-components/atoms/forms"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Box } from "@sb-components/frames/Box/Box"
 

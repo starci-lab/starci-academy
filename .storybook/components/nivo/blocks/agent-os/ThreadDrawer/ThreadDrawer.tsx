@@ -1,7 +1,7 @@
 import { PaperPlaneTiltIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
-import { InputTextarea } from "@sb-components/atoms/forms/Input/Input"
+import { InputTextarea } from "@sb-components/atoms/forms"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard, SurfaceCardNested } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"

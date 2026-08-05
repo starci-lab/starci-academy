@@ -1,6 +1,6 @@
 import React from "react"
 import { Toolbar } from "@sb-components/composites/navigation/Toolbar/Toolbar"
-import { InputSearch } from "@sb-components/atoms/forms/Input/Input"
+import { InputSearch } from "@sb-components/atoms/forms"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 

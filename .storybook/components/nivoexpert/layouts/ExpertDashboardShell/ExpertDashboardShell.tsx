@@ -5,7 +5,7 @@ import type { ComponentTypeWithSkeleton, SkeletonProps } from "@sb-components/fr
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Badge } from "@sb-components/atoms/display/Badge/Badge"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
-import { InputSearch } from "@sb-components/atoms/forms/Input/Input"
+import { InputSearch } from "@sb-components/atoms/forms"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { RailShell } from "@sb-components/frames/RailShell/RailShell"
 

@@ -1,6 +1,5 @@
 import React from "react"
-import { InputPassword, InputText } from "@sb-components/atoms/forms/Input/Input"
-import { SelectSingle } from "@sb-components/atoms/forms/Select/Select"
+import { InputPassword, InputText, SelectSingle } from "@sb-components/atoms/forms"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import { DEFAULT_TOKEN_HINT, type GithubGradingSettingsFormProps } from "../types"
 

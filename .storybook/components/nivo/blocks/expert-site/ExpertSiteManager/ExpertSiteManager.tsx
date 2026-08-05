@@ -1,6 +1,6 @@
 import { RocketLaunchIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { InputText } from "@sb-components/atoms/forms/Input/Input"
+import { InputText } from "@sb-components/atoms/forms"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"

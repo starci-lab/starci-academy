@@ -1,5 +1,5 @@
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { InputText } from "@sb-components/atoms/forms/Input/Input"
+import { InputText } from "@sb-components/atoms/forms"
 import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { ChoiceRadioGroup } from "@sb-components/composites/form/ChoiceRadioGroup/ChoiceRadioGroup"
 import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShell"

@@ -1,6 +1,6 @@
 import { CheckCircleIcon, PaperPlaneTiltIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { InputText, InputTextarea } from "@sb-components/atoms/forms/Input/Input"
+import { InputText, InputTextarea } from "@sb-components/atoms/forms"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import type { SkeletonProps } from "@sb-components/frames/_slot"

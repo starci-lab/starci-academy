@@ -1,6 +1,5 @@
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { ChoiceSwitch } from "@sb-components/atoms/forms"
-import { InputText, InputTextarea } from "@sb-components/atoms/forms/Input/Input"
+import { ChoiceSwitch, InputText, InputTextarea } from "@sb-components/atoms/forms"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ChipGroup } from "@sb-components/composites/chips/ChipGroup/ChipGroup"
 import { KeyValueList } from "@sb-components/composites/data/KeyValue/KeyValue"

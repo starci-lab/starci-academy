@@ -1,6 +1,6 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { InputText } from "@sb-components/atoms/forms/Input/Input"
+import { InputText } from "@sb-components/atoms/forms"
 import { Form, FormActions, FormSection } from "@sb-components/composites/form/Form/Form"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 

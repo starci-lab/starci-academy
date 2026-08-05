@@ -1,7 +1,7 @@
 import { CopySimpleIcon, SparkleIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Chip, type ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
-import { SelectSingle } from "@sb-components/atoms/forms/Select/Select"
+import { SelectSingle } from "@sb-components/atoms/forms"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCardNested } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"

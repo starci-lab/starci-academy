@@ -1,9 +1,9 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { InputText } from "@sb-components/atoms/forms/Input/Input"
+import { InputText } from "@sb-components/atoms/forms"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
-const meta: Meta = { title: "Atoms/Forms/Input/InputText", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
+const meta: Meta = { title: "Atoms/Forms/InputText", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
 type Story = StoryObj
 

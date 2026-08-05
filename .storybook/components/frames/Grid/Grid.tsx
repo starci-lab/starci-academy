@@ -5,12 +5,12 @@ import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
 
 /**
- * ⚠️ STATE SCOPE: `Grid` is a two-dimensional REPEATED-LIST FRAME. The state it
- * produces = `columns` (column count by CONTAINER breakpoint — a distinctive state no
+ * WARNING: STATE SCOPE: `Grid` is a two-dimensional REPEATED-LIST FRAME. The state it
+ * produces = `columns` (column count by CONTAINER breakpoint -- a distinctive state no
  * other frame has), and `gap` (§10). No `align`/`justify`: a grid cell stretches to
  * fill by default, aligning content inside the cell is the job of the component
- * inside it. An empty list → an empty track, the "nothing here yet" copy belongs to
- * the caller (§13 — a frame carries no content).
+ * inside it. An empty list -> an empty track, the "nothing here yet" copy belongs to
+ * the caller (§13 -- a frame carries no content).
  */
 
 /** One cell of a {@link Grid}. */
@@ -18,15 +18,15 @@ export interface GridItem {
     /** Stable React key. */
     key: string
     /**
-     * The cell's content — a card, a tile, a stat. Received UNCALLED (a component
+     * The cell's content -- a card, a tile, a stat. Received UNCALLED (a component
      * reference, never a built element) so the frame can render it with `isSkeleton`.
      */
     content: ComponentTypeWithSkeleton
     /**
-     * Columns this cell spans. Default `1` (no class set — the cell stays a
+     * Columns this cell spans. Default `1` (no class set -- the cell stays a
      * normal one-column track). Capped at `2`: an app-wide scan found only 7
-     * `col-span` call sites (5×`col-span-2`, 2×`col-span-1`), so the union stops
-     * there on purpose — a wider span or an arbitrary start position belongs to
+     * `col-span` call sites (5x`col-span-2`, 2x`col-span-1`), so the union stops
+     * there on purpose -- a wider span or an arbitrary start position belongs to
      * a real composition decision, not a frame prop (decided by the mentor: no
      * `Col` escape hatch, that is what let `col-start-2` break mobile in `GroupPressableCard`).
      */
@@ -50,27 +50,27 @@ export interface GridColumns {
     lg?: 1 | 2 | 3 | 4
 }
 
-// Tailwind never emits an interpolated `@app-md:grid-cols-${n}` — every supported
+// Tailwind never emits an interpolated `@app-md:grid-cols-${n}` -- every supported
 // count is written out so the class actually ships in the compiled CSS.
-/** Base (narrowest) column count → literal class. */
+/** Base (narrowest) column count -> literal class. */
 const BASE_COLUMNS_CLASS: Record<1 | 2, string> = {
     1: "grid-cols-1",
     2: "grid-cols-2",
 }
-/** `@app-sm` step → literal class. */
+/** `@app-sm` step -> literal class. */
 const SM_COLUMNS_CLASS: Record<1 | 2 | 3, string> = {
     1: "@app-sm:grid-cols-1",
     2: "@app-sm:grid-cols-2",
     3: "@app-sm:grid-cols-3",
 }
-/** `@app-md` step → literal class. */
+/** `@app-md` step -> literal class. */
 const MD_COLUMNS_CLASS: Record<1 | 2 | 3 | 4, string> = {
     1: "@app-md:grid-cols-1",
     2: "@app-md:grid-cols-2",
     3: "@app-md:grid-cols-3",
     4: "@app-md:grid-cols-4",
 }
-/** `@app-lg` step → literal class. */
+/** `@app-lg` step -> literal class. */
 const LG_COLUMNS_CLASS: Record<1 | 2 | 3 | 4, string> = {
     1: "@app-lg:grid-cols-1",
     2: "@app-lg:grid-cols-2",
@@ -78,9 +78,9 @@ const LG_COLUMNS_CLASS: Record<1 | 2 | 3 | 4, string> = {
     4: "@app-lg:grid-cols-4",
 }
 // Same reason as the column tables above: Tailwind never emits an interpolated
-// `col-span-${n}`, so the one supported span (2 — see `GridItem.span`) is
+// `col-span-${n}`, so the one supported span (2 -- see `GridItem.span`) is
 // written out literal.
-/** {@link GridItem.span} `2` → literal class. */
+/** {@link GridItem.span} `2` -> literal class. */
 const SPAN_CLASS: Record<2, string> = {
     2: "col-span-2",
 }
@@ -88,31 +88,31 @@ const SPAN_CLASS: Record<2, string> = {
 /** Props for {@link Grid}. */
 export interface GridBaseProps {
     /**
-     * The cells, in reading order. REQUIRED — repeat list = DATA, never children
+     * The cells, in reading order. REQUIRED -- repeat list = DATA, never children
      * (§13b). An empty array renders an empty track; the empty MESSAGE is the
      * caller's to phrase, not the frame's.
      */
     items: ReadonlyArray<GridItem>
     /**
-     * Column count per container step — REQUIRED, so the reflow is always a
+     * Column count per container step -- REQUIRED, so the reflow is always a
      * decision. Steps are emitted in ascending width order (later wins).
      */
     columns: GridColumns
-    /** Seam between cells on the house gap scale — REQUIRED. Both axes. */
+    /** Seam between cells on the house gap scale -- REQUIRED. Both axes. */
     gap: Responsive<AllowedGap>
     /**
-     * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
+     * Anatomy tag for THIS frame itself -- so the PARENT can badge it as ONE node (§11a.1).
      * Missing this prop means the frame is used but the panel cannot see it.
      */
     /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Where this sits inside its parent. Appearance is not passable -- it is already a prop.
      */
     classNames?: Array<AllowedClassName>
     /**
-     * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
-     * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the element
+     * The layout pattern this frame's seam realises -- a token from `test-runner/patterns.mjs`
+     * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principles` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
-     * A frame does not KNOW its pattern — the caller does — so it is passed in.
+     * A frame does not KNOW its pattern -- the caller does -- so it is passed in.
      */
     principles?: Array<PrincipleToken>
     /** Renders every cell's skeleton form instead of its content form. */
@@ -145,7 +145,7 @@ const GridBase = ({ items, columns, gap, classNames, principles, isSkeleton }: G
         {items.map((item) => {
             const Content = item.content
             const spanClass = item.span === 2 ? SPAN_CLASS[2] : undefined
-            // A spanning cell needs a real wrapper to hang `col-span-2` on — a
+            // A spanning cell needs a real wrapper to hang `col-span-2` on -- a
             // `Fragment` cannot carry a class. A plain (non-spanning) cell keeps the
             // old behaviour untouched.
             if (spanClass) {
@@ -163,10 +163,10 @@ const GridBase = ({ items, columns, gap, classNames, principles, isSkeleton }: G
 )
 
 /**
- * `Grid.*` — the responsive grid frame namespace. Namespace only — no bare
+ * `Grid.*` -- the responsive grid frame namespace. Namespace only -- no bare
  * component export (§13a).
  */
 export { GridBase as Grid }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "frame", name: "Grid" } as const

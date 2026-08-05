@@ -1,8 +1,8 @@
 import type { ReactNode } from "react"
 
-/** Bare identity root — emits `data-tier="drawer"` + the caller's `data-component`. */
+/** Bare identity root -- emits `data-tier="drawer"` + the caller's `data-component`. */
 export interface DrawerRootProps {
-    /** The drawer's `data-component` name — supplied by the caller, e.g. `"SubmissionAttemptsDrawer"`. */
+    /** The drawer's `data-component` name -- supplied by the caller, e.g. `"SubmissionAttemptsDrawer"`. */
     "data-component": string
     /** Optional passthrough classes for the identity root. */
     className?: string
@@ -12,6 +12,10 @@ export interface DrawerRootProps {
 /** Source-level tier metadata. */
 export const meta = { tier: "frame", name: "DrawerRoot" } as const
 
+/**
+ * Identity root for a drawer overlay: emits `data-tier="drawer"` and the caller's
+ * `data-component` so every drawer shares one root instead of a raw identity div.
+ */
 export const DrawerRoot = ({ "data-component": dataComponent, className, children }: DrawerRootProps) => (
     <div data-tier="drawer" data-component={dataComponent} className={className}>
         {children}

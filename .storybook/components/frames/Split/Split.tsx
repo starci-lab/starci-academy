@@ -5,9 +5,9 @@ import { ALIGN_CLASS, gapClassNames, type AllowedGap, type LayoutAlign, type Res
 import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
 
 /**
- * ⚠️ STATE SCOPE: `Split` is a LEFT ↔ RIGHT row FRAME. The state it produces is
+ * WARNING: STATE SCOPE: `Split` is a LEFT <-> RIGHT row FRAME. The state it produces is
  * the relationship BETWEEN THE TWO NAMED SIDES: the seam `gap`, the cross-axis
- * alignment `align`. No `wrap`/`justify` — `justify-between` is this frame's
+ * alignment `align`. No `wrap`/`justify` -- `justify-between` is this frame's
  * DEFINITION, not an option; a row with many items should use `StackH`/`Cluster`
  * instead.
  */
@@ -17,35 +17,35 @@ export interface SplitBaseProps {
     /**
      * LEADING side (the reading-flow anchor: title, label, primary text). Rendered
      * `min-w-0` so long text truncates INSIDE this side instead of pushing `end` out.
-     * An UNCALLED component reference — the frame mounts it itself
+     * An UNCALLED component reference -- the frame mounts it itself
      * (`<Start isSkeleton={isSkeleton} />`), never a built `ReactNode`.
      */
     start: ComponentTypeWithSkeleton
     /**
-     * TRAILING side (action, value, meta). Rendered `shrink-0` — the trailing
+     * TRAILING side (action, value, meta). Rendered `shrink-0` -- the trailing
      * control keeps its size and the leading side gives way first. An UNCALLED
      * component reference, mounted the same way as `start`.
      */
     end: ComponentTypeWithSkeleton
     /**
-     * Seam between the two sides on the house gap scale — REQUIRED. It is the MINIMUM
+     * Seam between the two sides on the house gap scale -- REQUIRED. It is the MINIMUM
      * distance: `justify-between` pushes the sides apart beyond it.
      */
     gap: Responsive<AllowedGap>
     /** Cross-axis alignment of the two sides. Default `center` (the split row's normal). */
     align?: LayoutAlign
     /**
-     * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
+     * Anatomy tag for THIS frame itself -- so the PARENT can badge it as ONE node (§11a.1).
      * Without this prop the frame never enters the Deps tree: using a `layouts`-tier frame
      * that the panel can't see counts as not using it at all.
      */
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
-     * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
-     * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the element
+     * The layout pattern this frame's seam realises -- a token from `test-runner/patterns.mjs`
+     * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principles` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
-     * A frame does not KNOW its pattern — the caller does — so it is passed in.
+     * A frame does not KNOW its pattern -- the caller does -- so it is passed in.
      */
     principles?: Array<PrincipleToken>
     /** `true` mounts both sides in their loading state. */
@@ -82,7 +82,7 @@ const SplitBase = ({
                 classNames,
             )}
         >
-            {/* `start`/`end` are CALLER slots — whatever they render (a `Typography`, a
+            {/* `start`/`end` are CALLER slots -- whatever they render (a `Typography`, a
                 `Button`, a `StackV`) belongs to the caller, not to this frame. */}
             <div className="min-w-0">
                 <Start isSkeleton={isSkeleton} />
@@ -95,10 +95,10 @@ const SplitBase = ({
 }
 
 /**
- * `Split.*` — the left↔right row khung namespace. Namespace only — no bare
+ * `Split.*` -- the left↔right row khung namespace. Namespace only -- no bare
  * component export (§13a).
  */
 export { SplitBase as Split }
 
-/** Source-level tier marker — lets a gate read the tier without guessing from the folder path. */
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
 export const meta = { tier: "frame", name: "Split" } as const

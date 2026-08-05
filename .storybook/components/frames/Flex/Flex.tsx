@@ -6,16 +6,16 @@ import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/Re
 import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
 
 /**
- * `Flex` — THE flex box of the system, and the only place allowed to write
+ * `Flex` -- THE flex box of the system, and the only place allowed to write
  * `flex`, `flex-col`, `flex-wrap`, `items-*`, `justify-*`, or `gap-*`. A single
  * box with a direction and a wrap flag covers columns, rows, wrapping rows, and
  * split rows.
  *
  * Every axis is a UNION, so an off-scale value is a type error where it is written
- * rather than something a reviewer must notice — the gap scale is held by the
+ * rather than something a reviewer must notice -- the gap scale is held by the
  * compiler.
  *
- * Named frames (`StackV`, `Split`, …) stay but stop owning classes: they delegate
+ * Named frames (`StackV`, `Split`, ...) stay but stop owning classes: they delegate
  * here, so the vocabulary survives while the implementation lives in one file.
  */
 
@@ -29,7 +29,7 @@ export interface FlexBaseProps {
      *
      * A frame owns the SHAPE of a box, never the MEANING of its tag. Some call-sites need a
      * real tag: a list needs `section`, a diagram needs `figure`, and a markdown renderer needs
-     * `span` — the last one load-bearing, because that row of chips sits INSIDE a sentence and a
+     * `span` -- the last one load-bearing, because that row of chips sits INSIDE a sentence and a
      * block-level `div` cuts the sentence in three.
      *
      * Screen readers are the other half: `figure` announces a captioned illustration and
@@ -38,8 +38,8 @@ export interface FlexBaseProps {
      *
      * Typed as a NARROW literal union, not `keyof JSX.IntrinsicElements`. TypeScript resolves a
      * dynamic JSX tag's props as the INTERSECTION of every member of the union, and that
-     * intersection includes void elements (`img`, `br`, `input`…) whose `children` type is
-     * `never` — so the full intrinsic-elements union collapses `children`/`className` to `never`
+     * intersection includes void elements (`img`, `br`, `input`...) whose `children` type is
+     * `never` -- so the full intrinsic-elements union collapses `children`/`className` to `never`
      * for every tag, `div` included. The union here stops at the tags this box actually renders,
      * all of which accept children.
      */
@@ -72,7 +72,7 @@ export interface FlexBaseProps {
     /** Main axis distribution. Left out means the browser default, which is `start`. */
     justify?: LayoutJustify
     /**
-     * Container step the row switches from wrapped to single-line at — FRAME-10: a shape
+     * Container step the row switches from wrapped to single-line at -- FRAME-10: a shape
      * change names its width, as a prop, never a bare boolean. Below `at` the row wraps onto a
      * second line; at `at` and above it stays single-line. Meaningless on a column (which
      * already grows without bound), and the render below ignores it there rather than emitting
@@ -81,8 +81,8 @@ export interface FlexBaseProps {
      */
     at?: ResponsiveRowSwitch
     /**
-     * `true` → a left guide border + matching indent (`pl-3`, `@app-sm:pl-6`), for a box that
-     * is ONE LEVEL DEEPER than its caller. This is `Stack`'s `nested` chrome — Flex is the tier
+     * `true` -> a left guide border + matching indent (`pl-3`, `@app-sm:pl-6`), for a box that
+     * is ONE LEVEL DEEPER than its caller. This is `Stack`'s `nested` chrome -- Flex is the tier
      * that actually renders the DOM, and FRAME-5 grants a frame the chrome it draws itself, so
      * the classes live here rather than arriving as a free-form string. `Stack` forwards the
      * boolean the same way it forwards `gap`/`padding`/`align`/`justify`.
@@ -91,14 +91,14 @@ export interface FlexBaseProps {
     /** The content being laid out. */
     body?: ReactNode
     /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Where this sits inside its parent. Appearance is not passable -- it is already a prop.
      */
     classNames?: Array<AllowedClassName>
     /**
-     * The layout pattern this frame's seam realises — a token from `test-runner/patterns.mjs`
-     * (`flex-action`, `label-field`, `group-boundary`, …). Emitted as `data-principles` on the
+     * The layout pattern this frame's seam realises -- a token from `test-runner/patterns.mjs`
+     * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principles` on the
      * element that carries the gap, so the rendered-tree test can assert the seam is the step
-     * the pattern names. A frame does not KNOW its pattern — the caller does — so it is
+     * the pattern names. A frame does not KNOW its pattern -- the caller does -- so it is
      * passed in.
      */
     principles?: Array<PrincipleToken>
@@ -114,7 +114,7 @@ const DIRECTION_CLASS: Record<FlexDirection, string> = {
 const NESTED_CLASS = "border-l border-default pl-3 @app-sm:pl-6"
 
 /**
- * {@link ResponsiveRowSwitch} step → the class that takes the row OUT of `flex-wrap` from that
+ * {@link ResponsiveRowSwitch} step -> the class that takes the row OUT of `flex-wrap` from that
  * step up. Written out per step for the same reason every other breakpoint table in this tier
  * is: Tailwind never emits an interpolated `@app-${step}:flex-nowrap`.
  */
@@ -169,24 +169,23 @@ const FlexBase = ({
     </Tag>
 )
 
-/** `Flex.*` namespace. One shape, so only `.Base`. */
 /**
- * ⛔ INTERNAL to the frame tier. `StackV`/`.H` are the public road; this box
- * is what they are built on. It stays exported ONLY because `Stack.tsx` imports it — no
+ * INTERNAL to the frame tier. `StackV`/`StackH` are the public road; this box
+ * is what they are built on. It stays exported ONLY because `Stack.tsx` imports it -- no
  * story, and nothing outside `components/frames/` may call it.
  *
  * WHY it is not a public frame: it takes `direction` as a prop, so it can express any
- * one-axis track, which makes it a strictly weaker `Stack` — same shapes, minus `divider`,
+ * one-axis track, which makes it a strictly weaker `Stack` -- same shapes, minus `divider`,
  * minus the axis stated in the name. A public frame that can do everything the constrained
  * one can is not a second option, it is the way the constraint gets bypassed.
  */
 export { FlexBase as Flex }
 
 /**
- * Source-level tier marker — lets a gate read the tier without guessing from the folder path.
+ * Source-level tier marker -- lets a gate read the tier without guessing from the folder path.
  *
- * ⚠️ Known collision, flagged rather than silently resolved: `StackV`/`StackH` render zero DOM
- * of their own — every Stack instance IS this `Tag`, with no wrapper — so a rendered Stack's
+ * WARNING: Known collision, flagged rather than silently resolved: `StackV`/`StackH` render zero DOM
+ * of their own -- every Stack instance IS this `Tag`, with no wrapper -- so a rendered Stack's
  * root carries `data-component="Flex"`, not `"StackV"`/`"StackH"`. The tier-marker rule says
  * "hard-coded, not a prop, the component knows what it is", which has no mechanism for one
  * frame built entirely atop another with no element of its own to mark. See `Stack.tsx`'s own

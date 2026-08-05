@@ -1,7 +1,7 @@
 import type { ComponentType } from "react"
 
 /**
- * A region a frame or composite MOUNTS itself — a named slot (`body` / `start` / `header`
+ * A region a frame or composite MOUNTS itself -- a named slot (`body` / `start` / `header`
  * / `content`) it is responsible for the loading state of. The host receives the component
  * UNCALLED (a reference, never a built element), so it can render it with `isSkeleton` and
  * build both states from one source.
@@ -14,7 +14,7 @@ import type { ComponentType } from "react"
  *   body?: ComponentTypeWithSkeleton              // <Body isSkeleton={isSkeleton} />
  *   row?:  ComponentTypeWithSkeleton<{ index: number }>
  *
- * NOT for text — text a host renders is a `string`, so the host wraps it in the atom
+ * NOT for text -- text a host renders is a `string`, so the host wraps it in the atom
  * itself and owns its tone (`<Typography text={label} color="default" isSkeleton />`). A slot typed
  * as a component hands rendering to the caller; a `string` keeps the tone with the host, which
  * is where the no-guess colour rule requires it.
@@ -22,7 +22,7 @@ import type { ComponentType } from "react"
 export type ComponentTypeWithSkeleton<P = Record<never, never>> = ComponentType<SkeletonProps<P>>
 
 /**
- * The props a slot/item component receives — the skeleton flag, plus any extra `P`. Use it to type
+ * The props a slot/item component receives -- the skeleton flag, plus any extra `P`. Use it to type
  * the destructured param of an INLINE item so it stays assignable to `ComponentTypeWithSkeleton`
  * (an untyped `({ isSkeleton }: SkeletonProps) =>` infers implicit-any and fails):
  *

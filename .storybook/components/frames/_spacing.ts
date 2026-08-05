@@ -1,7 +1,7 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * FRAME TIER — the SHARED spacing/alignment vocabulary of the frame tier
- * (`Stack` · `Split` · `Cluster` · `Grid` · `Flex` · `ResponsiveRow` · `Container`).
+ * FRAME TIER -- the SHARED spacing/alignment vocabulary of the frame tier
+ * (`Stack` - `Split` - `Cluster` - `Grid` - `Flex` - `ResponsiveRow` - `Container`).
  * Internal module (`_`-prefixed): it is a type + class table, NOT a component,
  * and never leaves this folder.
  *
@@ -10,11 +10,11 @@
  *   design/storybook/architecture/principles/padding.md
  *   design/storybook/architecture/principles/responsive.md
  * This file only encodes what those hold. principles/README.md's rule for the
- * folder — "a value is written out here and nowhere else" — is why the class
+ * folder -- "a value is written out here and nowhere else" -- is why the class
  * tables live beside the type instead of inside each frame that consumes them.
  *
  * WHY NUMBERS, NOT WORDS (the migration this file carries out). The scale used
- * to be `flush · tight · related · grouped · section · page`, and it is gone —
+ * to be `flush - tight - related - grouped - section - page`, and it is gone --
  * there is no deprecated stage, the old union does not exist any more:
  *
  *   gap="flush"    -> gap={1}      padding="flush" -> padding={1}
@@ -22,32 +22,32 @@
  *   gap="related"  -> gap={3}      padding="cozy"  -> padding={4}
  *   gap="grouped"  -> gap={4}      padding="roomy" -> padding={6}
  *   gap="section"  -> gap={6}      padding="airy"  -> padding={6}  (p-8 never
- *   gap="page"     -> gap={7}       earned its own step — see padding.md)
+ *   gap="page"     -> gap={7}       earned its own step -- see padding.md)
  *
- * The seventh rung is `gap-8` (32px), the LAYOUT seam — two columns left/right,
+ * The seventh rung is `gap-8` (32px), the LAYOUT seam -- two columns left/right,
  * a header and the content under it. It was `gap-10` (40px) for a while, chosen
  * on raw counts, but the design decision is 32px: it sits one step above the
- * `gap-6` (24px) block seam, and the ladder 24 → 32 → 48 reads cleaner than
- * 24 → 40 → 48. `gap-10` call sites migrate down to `gap-8`; `gap-12` (marketing
- * air) is the eighth. See gap.md — layout-split.
+ * `gap-6` (24px) block seam, and the ladder 24 -> 32 -> 48 reads cleaner than
+ * 24 -> 40 -> 48. `gap-10` call sites migrate down to `gap-8`; `gap-12` (marketing
+ * air) is the eighth. See gap.md -- layout-split.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /**
  * A step on the gap scale. An INDEX into the table below, never a measurement:
  * `gap={3}` is `gap-2` (8px) because row `3` says so, not because `3` means
- * anything in pixels. `gap={2}` twice is not `gap={4}` — see gap.md.
+ * anything in pixels. `gap={2}` twice is not `gap={4}` -- see gap.md.
  *
  * Eight rungs, each earned by call sites counted on `src/components`
  * (gap.md): the six carried over from the old word scale, plus the two the
- * app's wide end actually uses — `7` (`gap-10`, page bands, 55 uses) and `8`
+ * app's wide end actually uses -- `7` (`gap-10`, page bands, 55 uses) and `8`
  * (`gap-12`, marketing air, 9 uses). Step `5` (`gap-4`) has no settled meaning
  * yet; 56 call sites chose it, which earns the rung, but nobody has read them
  * (see gap.md's open question).
  */
 export type AllowedGap = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
 
-/** {@link AllowedGap} step → literal Tailwind class. Tailwind never emits an interpolated class, so this is written out in full rather than templated. */
+/** {@link AllowedGap} step -> literal Tailwind class. Tailwind never emits an interpolated class, so this is written out in full rather than templated. */
 export const GAP_CLASS: Record<AllowedGap, string> = {
     1: "gap-0",
     2: "gap-1",
@@ -108,12 +108,12 @@ const GAP_CLASS_XL: Record<AllowedGap, string> = {
 }
 
 /**
- * A value, or that value per container width. One generic for every scale in this folder —
+ * A value, or that value per container width. One generic for every scale in this folder --
  * see responsive.md for why `ResponsiveGap`/`ResponsivePadding` would be three copies of the
  * same idea. `base` is required in the object form: a responsive value with no floor depends
  * on which breakpoint happens to match first, and that is not a decision anybody made.
  *
- * The four steps are container queries (`@app-sm` … `@app-xl`), never viewport media queries —
+ * The four steps are container queries (`@app-sm` ... `@app-xl`), never viewport media queries --
  * see responsive.md for why a component must not know how wide the screen is.
  */
 export type Responsive<T> = T | { base: T; sm?: T; md?: T; lg?: T; xl?: T }
@@ -124,7 +124,7 @@ const isResponsiveValue = <T,>(v: Responsive<T>): v is { base: T; sm?: T; md?: T
 /**
  * Resolve a {@link Responsive}<{@link AllowedGap}> into the class list a frame's `cn()` composes.
  * Centralised here rather than in each of the six frames that take `gap`, so the responsive
- * shape is read the same way everywhere — see principles/README.md's "one place" rule.
+ * shape is read the same way everywhere -- see principles/README.md's "one place" rule.
  */
 export function gapClassNames(gap: Responsive<AllowedGap>): Array<string | false> {
     if (!isResponsiveValue(gap)) return [GAP_CLASS[gap]]
@@ -140,11 +140,11 @@ export function gapClassNames(gap: Responsive<AllowedGap>): Array<string | false
 /**
  * A step on the padding scale. An index, never a measurement, same discipline as
  * {@link AllowedGap}. Six rungs (padding.md): `p-5`/`p-7`/`p-9`/`p-10` dropped by evidence,
- * `p-8` folds into `6` — `airy` never earned a step of its own.
+ * `p-8` folds into `6` -- `airy` never earned a step of its own.
  */
 export type AllowedPadding = 1 | 2 | 3 | 4 | 5 | 6
 
-/** {@link AllowedPadding} step → literal `p-*` class, all four sides. */
+/** {@link AllowedPadding} step -> literal `p-*` class, all four sides. */
 export const PADDING_CLASS: Record<AllowedPadding, string> = {
     1: "p-0",
     2: "p-1",
@@ -154,7 +154,7 @@ export const PADDING_CLASS: Record<AllowedPadding, string> = {
     6: "p-6",
 }
 
-/** {@link AllowedPadding} step → literal `px-*` class. padding.md: the dominant horizontal shape. */
+/** {@link AllowedPadding} step -> literal `px-*` class. padding.md: the dominant horizontal shape. */
 const PADDING_X_CLASS: Record<AllowedPadding, string> = {
     1: "px-0",
     2: "px-1",
@@ -164,7 +164,7 @@ const PADDING_X_CLASS: Record<AllowedPadding, string> = {
     6: "px-6",
 }
 
-/** {@link AllowedPadding} step → literal `py-*` class. padding.md: the dominant vertical shape. */
+/** {@link AllowedPadding} step -> literal `py-*` class. padding.md: the dominant vertical shape. */
 const PADDING_Y_CLASS: Record<AllowedPadding, string> = {
     1: "py-0",
     2: "py-1",
@@ -286,7 +286,7 @@ const PADDING_TABLE: Record<"base" | "sm" | "md" | "lg" | "xl", PaddingTable> = 
 
 /**
  * Padding may differ per axis, because in this tree it usually does (padding.md: the dominant
- * horizontal value is `4`, the dominant vertical value is `2` — a single scalar cannot say that).
+ * horizontal value is `4`, the dominant vertical value is `2` -- a single scalar cannot say that).
  */
 export type PaddingValue = AllowedPadding | { x?: AllowedPadding; y?: AllowedPadding }
 
@@ -322,14 +322,14 @@ export function paddingClassNames(padding: Responsive<PaddingValue>): Array<stri
  * different heights. The frame could not express that before, so `PriceTag` hand-typed
  * `items-baseline`, and migrating it onto a frame without this step would have BROKEN the
  * layout. Adding a value to the union is additive: no live call-site changes, and the compiler
- * forces every `Record<LayoutAlign, …>` table to cover the new member.
+ * forces every `Record<LayoutAlign, ...>` table to cover the new member.
  */
 export type LayoutAlign = "start" | "center" | "end" | "stretch" | "baseline"
 
 /** Main-axis distribution of a flex track. */
 export type LayoutJustify = "start" | "center" | "end" | "between"
 
-/** {@link LayoutAlign} → literal class. */
+/** {@link LayoutAlign} -> literal class. */
 export const ALIGN_CLASS: Record<LayoutAlign, string> = {
     start: "items-start",
     center: "items-center",
@@ -338,7 +338,7 @@ export const ALIGN_CLASS: Record<LayoutAlign, string> = {
     baseline: "items-baseline",
 }
 
-/** {@link LayoutJustify} → literal class. */
+/** {@link LayoutJustify} -> literal class. */
 export const JUSTIFY_CLASS: Record<LayoutJustify, string> = {
     start: "justify-start",
     center: "justify-center",

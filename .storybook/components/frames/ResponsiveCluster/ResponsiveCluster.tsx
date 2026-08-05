@@ -6,7 +6,7 @@ import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
 
 /**
- * `ResponsiveCluster` — a repeat-list FRAME: a full-width COLUMN below its switch
+ * `ResponsiveCluster` -- a repeat-list FRAME: a full-width COLUMN below its switch
  * step, a packed ROW from it up, with ONE shared gap on both sides (unlike
  * `ResponsiveRow`, which goes flush once it becomes a row). Below the switch every
  * item is stretched `w-full`, released to `w-auto` at the switch step, so a caller's
@@ -27,29 +27,29 @@ export interface ResponsiveClusterItem {
 
 /** Props for {@link ResponsiveCluster}. */
 export interface ResponsiveClusterProps {
-    /** The cells, in reading order. REQUIRED — repeat list = DATA, never children. */
+    /** The cells, in reading order. REQUIRED -- repeat list = DATA, never children. */
     items: ReadonlyArray<ResponsiveClusterItem>
-    /** Seam between cells on the house scale — REQUIRED, ONE value, both forms. */
+    /** Seam between cells on the house scale -- REQUIRED, ONE value, both forms. */
     gap: AllowedGap
     /** Container step the track leaves the full-width column for the packed row at. */
     at: ResponsiveRowSwitch
     /** Main-axis distribution once packed into a row. Left out means the browser default. */
     justify?: LayoutJustify
     /**
-     * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node.
+     * Anatomy tag for THIS frame itself -- so the PARENT can badge it as ONE node.
      * Missing this prop means the frame is used but the panel cannot see it.
      */
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
-     * Permanent contract marker (not anatomy tooling) — hard-coded by whoever calls this
+     * Permanent contract marker (not anatomy tooling) -- hard-coded by whoever calls this
      * frame, because the frame has no public identity of its own yet. See the file header.
      */
     "data-tier"?: string
-    /** Paired with `data-tier` — the public name of the caller badging this root. */
+    /** Paired with `data-tier` -- the public name of the caller badging this root. */
     "data-component"?: string
     /**
-     * The layout pattern this track's seam realises — a token from `test-runner/patterns.mjs`.
+     * The layout pattern this track's seam realises -- a token from `test-runner/patterns.mjs`.
      * Emitted as `data-principles` on this same root, beside `data-tier`/`data-component`, so the
      * rendered-tree test can assert the seam is the step the pattern names. See `Flex`'s own
      * `pattern` doc for the full contract.
@@ -59,7 +59,7 @@ export interface ResponsiveClusterProps {
     isSkeleton?: boolean
 }
 
-/** Switch step → the class that flips the track from a column to a row from that step up. */
+/** Switch step -> the class that flips the track from a column to a row from that step up. */
 const DIRECTION_SWITCH_CLASS: Record<ResponsiveRowSwitch, string> = {
     sm: "@app-sm:flex-row",
     md: "@app-md:flex-row",
@@ -67,7 +67,7 @@ const DIRECTION_SWITCH_CLASS: Record<ResponsiveRowSwitch, string> = {
     xl: "@app-xl:flex-row",
 }
 
-/** Switch step → the class releasing an item from full width back to its own width. */
+/** Switch step -> the class releasing an item from full width back to its own width. */
 const ITEM_WIDTH_SWITCH_CLASS: Record<ResponsiveRowSwitch, string> = {
     sm: "@app-sm:w-auto",
     md: "@app-md:w-auto",
@@ -117,7 +117,7 @@ const ResponsiveClusterBase = ({
 )
 
 /**
- * `ResponsiveCluster.*` — namespace only, no bare component export (house convention
+ * `ResponsiveCluster.*` -- namespace only, no bare component export (house convention
  * for every frame in this folder).
  */
 export { ResponsiveClusterBase as ResponsiveCluster }

@@ -5,7 +5,7 @@ import type { Key } from "react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
 import { pathConfig } from "@/resources/path"
-import { _CommunityFeed } from "./component"
+import { _CommunityFeedPage } from "./component"
 import { useMutateReactCommunityPostSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReactCommunityPostSwr"
 import { useQueryCommunityFeedSwr } from "@/hooks/swr/api/graphql/queries/useQueryCommunityFeedSwr"
 import { CommunityChannel } from "@/modules/api/graphql/queries/types/community-feed"
@@ -18,10 +18,10 @@ const ALL_KEY = "all"
 /**
  * Community feed page — the CONNECTED half: fetches the cursor-paginated feed
  * (SWR infinite), holds the channel filter, reacts to posts, and resolves every
- * label via `t()`, handing them to the presentational {@link _CommunityFeed}.
+ * label via `t()`, handing them to the presentational {@link _CommunityFeedPage}.
  * See `design/storybook/architecture/split.md`.
  */
-export const CommunityFeed = () => {
+export const CommunityFeedPage = () => {
     const t = useTranslations()
     const router = useRouter()
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
@@ -73,7 +73,7 @@ export const CommunityFeed = () => {
     const composerChannel = channel ?? CommunityChannel.General
 
     return (
-        <_CommunityFeed
+        <_CommunityFeedPage
             // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
             isSkeleton={isLoading && items.length === 0}
             // error beats loading + empty; only a settled fetch error (nothing in hand) reaches the block

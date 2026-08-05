@@ -3,7 +3,7 @@
 import React from "react"
 import useSWR from "swr"
 import { useLocale, useTranslations } from "next-intl"
-import { PostRow } from "../../shared/PostRow"
+import { PostRow } from "@/components/blocks/blog/PostRow"
 import { queryBlogPosts } from "@/modules/api/graphql/queries/query-blog-posts"
 import { BlogCategory } from "@/modules/api/graphql/queries/types/blog"
 

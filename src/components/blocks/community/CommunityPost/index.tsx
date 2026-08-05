@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { CommunityCommentThread } from "../CommunityCommentThread"
+import { CommunityCommentThread } from "@/components/blocks/community/CommunityCommentThread"
 import { CommunityPostCard } from "@/components/blocks/feed/CommunityPostCard"
 import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import type { QueryCommunityFeedItemData } from "@/modules/api/graphql/queries/types/community-feed"

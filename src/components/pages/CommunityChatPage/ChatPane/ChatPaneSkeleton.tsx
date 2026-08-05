@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 /** Props for {@link ChatPaneSkeleton}. */
 export interface ChatPaneSkeletonProps {
     /**
-     * Mirror the composer too — ON for {@link import("..").CommunityChat}'s
+     * Mirror the composer too — ON for {@link import("..").CommunityChatPage}'s
      * wait (the whole pane, composer included, hasn't mounted yet), OFF inside
      * `ChatPane`'s own `AsyncContent` (its real composer already renders
      * alongside, so a second skeletoned one would duplicate it).
@@ -15,7 +15,7 @@ export interface ChatPaneSkeletonProps {
 /**
  * Loading placeholder mirroring {@link import(".").ChatPane}'s message-list
  * layout (a few alternating bubbles) — shared by `ChatPane`'s own
- * `AsyncContent` and by {@link import("..").CommunityChat} while it's still
+ * `AsyncContent` and by {@link import("..").CommunityChatPage} while it's still
  * waiting on the active conversation id to resolve, so both waits render the
  * same shape instead of a bare "loading…" caption.
  */

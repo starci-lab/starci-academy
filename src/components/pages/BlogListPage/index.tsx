@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react"
 import useSWR from "swr"
 import { useLocale, useTranslations } from "next-intl"
-import { _BlogList } from "./component"
+import { _BlogListPage } from "./component"
 import { queryBlogPosts } from "@/modules/api/graphql/queries/query-blog-posts"
 import { BlogCategory } from "@/modules/api/graphql/queries/types/blog"
 
@@ -16,7 +16,7 @@ const START_HERE_SLUG = "start-here-monorepo-tour"
 /**
  * Public `/blog` — the CONNECTED half: it fetches the page of posts, derives pagination and
  * the pillar-filter state, formats every date for the current locale, and resolves every
- * label, handing them to the presentational {@link _BlogList}. See `tiers/split.md`.
+ * label, handing them to the presentational {@link _BlogListPage}. See `tiers/split.md`.
  *
  * Reframed as StarCi's engineering publication ("the backend, taken apart"): an operational
  * 3D infra masthead → reframed header → a real-subsystem topics strip → a pinned "start here"
@@ -24,7 +24,7 @@ const START_HERE_SLUG = "start-here-monorepo-tour"
  * pillar actually has posts (today every post is a `codebase` deep-dive, so it stays hidden —
  * no dead buckets). Cover images are used only when present.
  */
-export const BlogList = () => {
+export const BlogListPage = () => {
     const t = useTranslations("blog")
     const locale = useLocale()
     // active editorial-pillar filter (null = all)
@@ -80,7 +80,7 @@ export const BlogList = () => {
     }
 
     return (
-        <_BlogList
+        <_BlogListPage
             // first load, nothing in hand → shimmer (loading-and-skeleton.md's first-load formula)
             isSkeleton={isLoading && posts.length === 0}
             isEmpty={posts.length === 0}

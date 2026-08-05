@@ -10,7 +10,7 @@ import { useTranslations } from "next-intl"
 import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { AvatarGroup } from "@/components/blocks/identity/AvatarGroup"
 import type { AvatarGroupUser } from "@/components/blocks/identity/AvatarGroup"
-import { FollowButton } from "@/components/features/community/FollowButton"
+import { FollowButton } from "@/components/blocks/community/FollowButton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link QaConversationHeader}. */

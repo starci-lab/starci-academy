@@ -20,7 +20,7 @@ import { RelatedPosts } from "./RelatedPosts"
 /** How many placeholder body lines the co-located skeleton mirrors (matches the old 6-full + 1-partial rhythm). */
 const SKELETON_BODY_LINES = 7
 
-/** All display text, already localized by the connected `BlogPost`; a story passes i18n keys. */
+/** All display text, already localized by the connected `BlogPostPage`; a story passes i18n keys. */
 export interface BlogPostLabels {
     back: string
     errorTitle: string
@@ -41,8 +41,8 @@ export interface BlogPostLabels {
     cta: string
 }
 
-/** Props for {@link _BlogPost} — presentational; all data resolved, no fetch/store/i18n. */
-export interface BlogPostProps {
+/** Props for {@link _BlogPostPage} — presentational; all data resolved, no fetch/store/i18n. */
+export interface BlogPostPageProps {
     /** First load, nothing in hand → the whole tree shimmers in place (co-located). Owned by the connected file. */
     isSkeleton?: boolean
     /** Settled with no matching post → the "not found" message. */
@@ -54,7 +54,7 @@ export interface BlogPostProps {
 
     title?: string
     category?: BlogCategory
-    /** Chip tone for {@link BlogPostProps.category} — the connected file resolves it from `CATEGORY_COLOR`. */
+    /** Chip tone for {@link BlogPostPageProps.category} — the connected file resolves it from `CATEGORY_COLOR`. */
     categoryTone?: ChipTone
     isPremium?: boolean
     coverImageUrl?: string | null
@@ -73,16 +73,16 @@ export interface BlogPostProps {
 }
 
 /**
- * Public `/blog/[slug]` article — the presentational half of {@link BlogPost}. Renders a reading-progress
+ * Public `/blog/[slug]` article — the presentational half of {@link BlogPostPage}. Renders a reading-progress
  * bar (once real content is showing), a persistent "back to blog" link, and — error → not-found → content,
  * in that fixed priority — the serif header, the markdown body, the members-only gate, the GitHub source +
  * funnel CTAs, and a "More in {pillar}" strip. The content region threads `isSkeleton` to every leaf so the
  * shimmer mirrors the loaded shape (loading-and-skeleton.md); `MarkdownContent` has no `isSkeleton` of its
  * own, so its slot swaps to a co-located `Skeleton.Paragraph` mirror while shimmering instead.
  *
- * @param props - {@link BlogPostProps}
+ * @param props - {@link BlogPostPageProps}
  */
-export const _BlogPost = ({
+export const _BlogPostPage = ({
     isSkeleton = false,
     isEmpty = false,
     error,
@@ -98,7 +98,7 @@ export const _BlogPost = ({
     ctaUrl,
     slug,
     labels,
-}: BlogPostProps) => {
+}: BlogPostPageProps) => {
     // Always-visible chrome — present in every branch (error/not-found/content alike), unlike the
     // async region below it.
     const backLink: ComponentTypeWithSkeleton = () => (
@@ -111,7 +111,7 @@ export const _BlogPost = ({
         <Container
             size="md"
             padding={6}
-            identity={{ tier: "block", component: "BlogPost" }}
+            identity={{ tier: "block", component: "BlogPostPage" }}
             body={() => (
                 <StackV gap={6} items={[backLink, () => region]} />
             )}
@@ -195,7 +195,7 @@ export const _BlogPost = ({
                 size="md"
                 padding={6}
                 isSkeleton={isSkeleton}
-                identity={{ tier: "block", component: "BlogPost" }}
+                identity={{ tier: "block", component: "BlogPostPage" }}
                 body={() => (
                     <StackV gap={6} items={[backLink, () => articleTree]} />
                 )}

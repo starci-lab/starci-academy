@@ -13,7 +13,7 @@ import { TopicsStrip } from "./TopicsStrip"
 import { StartHereAnchor } from "./StartHereAnchor"
 import { CategoryFilter } from "./CategoryFilter"
 import { FeaturedPost } from "./FeaturedPost"
-import { PostRow } from "../shared/PostRow"
+import { PostRow } from "@/components/blocks/blog/PostRow"
 import { BlogCategory, type QueryBlogPostListItem } from "@/modules/api/graphql/queries/types/blog"
 
 /** How many placeholder rows the co-located skeleton shows under the featured lead. */
@@ -25,7 +25,7 @@ export interface BlogListRestItem {
     formattedDate: string
 }
 
-/** All display text, already localized by the connected `BlogList`; a story passes i18n keys. */
+/** All display text, already localized by the connected `BlogListPage`; a story passes i18n keys. */
 export interface BlogListLabels {
     title: string
     subtitle: string
@@ -42,8 +42,8 @@ export interface BlogListLabels {
     loadMore: string
 }
 
-/** Props for {@link _BlogList} — presentational; all data resolved, no fetch/store/i18n. */
-export interface BlogListProps {
+/** Props for {@link _BlogListPage} — presentational; all data resolved, no fetch/store/i18n. */
+export interface BlogListPageProps {
     /** First load, nothing in hand → the results zone shimmers in place (co-located). Owned by the connected file. */
     isSkeleton?: boolean
     /** Settled with zero posts → the empty message (beats content, loses to loading). */
@@ -107,7 +107,7 @@ const PostRowSkeleton = () => (
 )
 
 /**
- * The public `/blog` listing — presentational half of {@link BlogList}. Four states in the
+ * The public `/blog` listing — presentational half of {@link BlogListPage}. Four states in the
  * fixed order error → loading → empty → content, scoped to the RESULTS zone only: `error`
  * falls to the shared `AsyncContentError` frame, settled-empty to `AsyncContentEmpty`, and
  * otherwise the flow (pinned anchor → featured lead → rows → "load more") renders with
@@ -116,9 +116,9 @@ const PostRowSkeleton = () => (
  * they carry no async state of their own. See `tiers/split.md` — the connected `index.tsx`
  * owns the fetch, pagination and i18n.
  *
- * @param props - {@link BlogListProps}
+ * @param props - {@link BlogListPageProps}
  */
-const _BlogList = ({
+const _BlogListPage = ({
     isSkeleton = false,
     isEmpty = false,
     error,
@@ -135,7 +135,7 @@ const _BlogList = ({
     isLoadingMore = false,
     onLoadMore,
     labels,
-}: BlogListProps) => {
+}: BlogListPageProps) => {
     const resultsZone = () => {
         // error beats a stale loading flag; empty only once settled (BLOCK-8 order).
         if (error) {
@@ -198,7 +198,7 @@ const _BlogList = ({
 
     return (
         <Container
-            identity={{ tier: "block", component: "BlogList" }}
+            identity={{ tier: "block", component: "BlogListPage" }}
             size="md"
             padding={6}
             body={() => (
@@ -230,4 +230,4 @@ const _BlogList = ({
     )
 }
 
-export { _BlogList }
+export { _BlogListPage }

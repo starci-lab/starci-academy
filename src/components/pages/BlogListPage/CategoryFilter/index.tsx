@@ -3,7 +3,7 @@
 import React from "react"
 import { Chip, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { CATEGORY_COLOR } from "../../shared/category"
+import { CATEGORY_COLOR } from "@/modules/utils/blog-category"
 import { BlogCategory } from "@/modules/api/graphql/queries/types/blog"
 
 /** Props for {@link CategoryFilter}. */

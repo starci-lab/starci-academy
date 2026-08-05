@@ -1,11 +1,9 @@
-import React from "react"
-import { LoginPage } from "@/components/features/auth/LoginPage"
+"use client"
 
-/** The auth-guard redirect target (`src/proxy.ts`) for protected routes; also directly navigable. */
-const Page = () => {
-    return (
-        <LoginPage />
-    )
-}
+import React from "react"
+import { LoginPage } from "@/components/pages/LoginPage"
+
+/** Sign in. */
+const Page = () => <LoginPage />
 
 export default Page

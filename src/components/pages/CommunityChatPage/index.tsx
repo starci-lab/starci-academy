@@ -26,7 +26,7 @@ type ChatTab = "community" | "founder"
  * private founder DM, with the active conversation's message pane below. Member-
  * only — signed-out users see a prompt; the server enforces the membership gate.
  */
-export const CommunityChat = () => {
+export const CommunityChatPage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()

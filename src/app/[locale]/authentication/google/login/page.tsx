@@ -1,13 +1,13 @@
 import React from "react"
-import { OauthRedirect } from "@/components/features/auth/OauthRedirect"
-import { OauthAction } from "@/components/features/auth/OauthRedirect/enums/oauth-action"
+import { OauthRedirectPage } from "@/components/pages/OauthRedirectPage"
+import { OauthAction } from "@/components/pages/OauthRedirectPage/enums/oauth-action"
 
 /**
  * Route `/[locale]/authentication/google/login` — OAuth redirect landing after
  * a Google sign-in via Keycloak. Thin route file: only mounts the component.
  */
 const Page = () => {
-    return <OauthRedirect action={OauthAction.Login} />
+    return <OauthRedirectPage action={OauthAction.Login} />
 }
 
 export default Page

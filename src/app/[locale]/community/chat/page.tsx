@@ -1,12 +1,9 @@
-import React from "react"
-import { CommunityChat } from "@/components/features/community/CommunityChat"
+"use client"
 
-/**
- * Route `/[locale]/community/chat` — the member-only community chat surface
- * (global room + founder DM). Thin route file: mounts the feature.
- */
-const Page = () => {
-    return <CommunityChat />
-}
+import React from "react"
+import { CommunityChatPage } from "@/components/pages/CommunityChatPage"
+
+/** Community — live chat. */
+const Page = () => <CommunityChatPage />
 
 export default Page

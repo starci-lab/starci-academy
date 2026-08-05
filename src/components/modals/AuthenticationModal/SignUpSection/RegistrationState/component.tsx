@@ -9,7 +9,7 @@ import { EmailField } from "./EmailField"
 import { PasswordField } from "./PasswordField"
 import { AgreeToTermsRow } from "./AgreeToTermsRow"
 import { SignInPrompt } from "./SignInPrompt"
-import { Turnstile } from "@/components/features/auth/Turnstile"
+import { Turnstile } from "@/components/blocks/auth/Turnstile"
 
 /** Editable values {@link _RegistrationState} renders. */
 export interface RegistrationStateValues {

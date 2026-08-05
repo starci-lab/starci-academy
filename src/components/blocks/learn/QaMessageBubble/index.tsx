@@ -7,10 +7,10 @@ import { useTranslations } from "next-intl"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
-import { ReactionBar } from "@/components/features/community/Discussion/ReactionBar"
-import { CommentComposer } from "@/components/features/community/Discussion/CommentComposer"
+import { ReactionBar } from "@/components/blocks/community/Discussion/ReactionBar"
+import { CommentComposer } from "@/components/blocks/community/Discussion/CommentComposer"
 import type { ReactionType, CommentNode } from "@/modules/api/graphql/queries/types/discussion"
-import type { CommentItemCallbacks } from "@/components/features/community/Discussion/CommentItem"
+import type { CommentItemCallbacks } from "@/components/blocks/community/Discussion/CommentItem"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link QaMessageBubble}. */
@@ -46,7 +46,7 @@ export interface QaMessageBubbleProps extends CommentItemCallbacks, WithClassNam
  * is a plain two-role primitive; the founder is marked in that header, not by
  * recolouring the bubble.
  *
- * Behaviour mirrors the per-lesson {@link import("@/components/features/community/Discussion/CommentItem").CommentItem}
+ * Behaviour mirrors the per-lesson {@link import("@/components/blocks/community/Discussion/CommentItem").CommentItem}
  * — 6-emotion {@link ReactionBar}, reply/edit/delete, and lazily-loaded nested replies —
  * so an answer keeps every interaction it had as a forum row. Nested replies are
  * FLATTENED (rendered as sibling bubbles carrying a `↳ replying to {name}` tag) instead of

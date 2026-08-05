@@ -12,7 +12,7 @@ import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { TabsCard, type TabsCardItem } from "@/components/blocks/navigation/TabsCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { CommunityComposer } from "./CommunityComposer"
-import { CommunityPost } from "../CommunityPost"
+import { CommunityPost } from "@/components/blocks/community/CommunityPost"
 import { CommunityChannel } from "@/modules/api/graphql/queries/types/community-feed"
 import type { QueryCommunityFeedItemData } from "@/modules/api/graphql/queries/types/community-feed"
 import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
@@ -51,7 +51,7 @@ const CommunityFeedSkeletonRow = () => (
     )} />
 )
 
-/** All display text, already localized by the connected `CommunityFeed`; a story passes i18n keys. */
+/** All display text, already localized by the connected `CommunityFeedPage`; a story passes i18n keys. */
 export interface CommunityFeedLabels {
     /** Page title. */
     title: string
@@ -77,8 +77,8 @@ export interface CommunityFeedLabels {
     loadMoreLabel: string
 }
 
-/** Props for {@link _CommunityFeed} — presentational; all data resolved, no fetch/store/i18n. */
-export interface CommunityFeedProps {
+/** Props for {@link _CommunityFeedPage} — presentational; all data resolved, no fetch/store/i18n. */
+export interface CommunityFeedPageProps {
     /** First load, nothing in hand → the feed region shimmers in place (co-located). Owned by the connected file. */
     isSkeleton?: boolean
     /** Settled with a resolved page that carries zero posts → the empty branch. */
@@ -126,7 +126,7 @@ export interface CommunityFeedProps {
 
 /**
  * Community feed page (Facebook/Twitter-style) — the presentational half of
- * {@link CommunityFeed}, composed on the tier-correct vocabulary (`PageContainer` /
+ * {@link CommunityFeedPage}, composed on the tier-correct vocabulary (`PageContainer` /
  * `PageHeader` / `TabsCard` / `SurfaceCard`). The header, channel tabs, and composer
  * always render; only the feed region itself runs the fixed order
  * error → loading → empty → content: `error` falls to the shared `AsyncContentError`
@@ -135,9 +135,9 @@ export interface CommunityFeedProps {
  * the shimmer mirrors the loaded shape (loading-and-skeleton.md). See `tiers/split.md`
  * — the connected `index.tsx` owns the fetch, the channel filter, and i18n.
  *
- * @param props - {@link CommunityFeedProps}
+ * @param props - {@link CommunityFeedPageProps}
  */
-export const _CommunityFeed = ({
+export const _CommunityFeedPage = ({
     isSkeleton = false,
     isEmpty = false,
     error,
@@ -160,7 +160,7 @@ export const _CommunityFeed = ({
     isLoadingMore,
     onLoadMore,
     labels,
-}: CommunityFeedProps) => {
+}: CommunityFeedPageProps) => {
     return (
         <PageContainer>
             <StackV gap={7} items={[

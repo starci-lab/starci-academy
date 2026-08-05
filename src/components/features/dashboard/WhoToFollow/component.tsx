@@ -5,7 +5,7 @@ import {
 } from "@phosphor-icons/react"
 import {
     FollowButton,
-} from "@/components/features/community/FollowButton"
+} from "@/components/blocks/community/FollowButton"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { UserCell } from "@/components/blocks/identity/UserCell"
 import { Chip } from "@/components/atoms/chips/Chip"

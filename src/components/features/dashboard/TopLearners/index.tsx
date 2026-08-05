@@ -13,7 +13,7 @@ import {
 } from "next/navigation"
 import {
     FollowButton,
-} from "@/components/features/community/FollowButton"
+} from "@/components/blocks/community/FollowButton"
 import {
     pathConfig,
 } from "@/resources/path"

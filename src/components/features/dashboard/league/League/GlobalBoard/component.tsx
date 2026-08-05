@@ -39,7 +39,7 @@ import {
 } from "@/components/blocks/cards/SurfaceListCard"
 import {
     FollowButton,
-} from "@/components/features/community/FollowButton"
+} from "@/components/blocks/community/FollowButton"
 import {
     Confetti,
 } from "@/components/features/dashboard/league/Confetti"

@@ -7,7 +7,7 @@ import { Button } from "@/components/atoms/buttons/Button"
 import { Divider } from "@/components/atoms/display/Divider"
 import { Input } from "@/components/atoms/forms/Input"
 import { StackH, StackV } from "@/components/frames/Stack"
-import { CommunityCommentItem } from "../CommunityCommentItem"
+import { CommunityCommentItem } from "@/components/blocks/community/CommunityCommentItem"
 import type { QueryCommunityCommentNode } from "@/modules/api/graphql/queries/types/community-comments"
 
 /** How many placeholder rows the co-located skeleton shows while the thread's first load is in flight. */

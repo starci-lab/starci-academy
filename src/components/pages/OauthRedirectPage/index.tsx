@@ -16,8 +16,8 @@ import { type SessionStoragePostLoginRedirect } from "@/modules/storage/session/
 
 export * from "./enums"
 
-/** Props for {@link OauthRedirect}. */
-export interface OauthRedirectProps extends WithClassNames<undefined> {
+/** Props for {@link OauthRedirectPage}. */
+export interface OauthRedirectPageProps extends WithClassNames<undefined> {
     /**
      * The OAuth lifecycle step this redirect page represents — selects the i18n
      * message shown under the spinner. The redirect destination (locale home)
@@ -33,7 +33,7 @@ export interface OauthRedirectProps extends WithClassNames<undefined> {
  *
  * `"use client"`: relies on `useRouter`, `useEffect` and `useLocale`.
  */
-export const OauthRedirect = ({ action, className }: OauthRedirectProps) => {
+export const OauthRedirectPage = ({ action, className }: OauthRedirectPageProps) => {
     const router = useRouter()
     const locale = useLocale()
     const t = useTranslations()

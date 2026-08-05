@@ -1,12 +1,9 @@
-import React from "react"
-import { CommunityFeed } from "@/components/features/community/CommunityFeed"
+"use client"
 
-/**
- * Route `/[locale]/community` — the public community feed (posts + reactions).
- * Thin route file: mounts the feature; all logic/UI lives in the component.
- */
-const Page = () => {
-    return <CommunityFeed />
-}
+import React from "react"
+import { CommunityFeedPage } from "@/components/pages/CommunityFeedPage"
+
+/** Community — the shared feed. */
+const Page = () => <CommunityFeedPage />
 
 export default Page

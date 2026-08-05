@@ -1,7 +1,7 @@
 import React, { cache } from "react"
 import type { Metadata } from "next"
 import { SEO_CONFIG } from "@/config/seo"
-import { BlogPost } from "@/components/features/blog/BlogPost"
+import { BlogPostPage } from "@/components/pages/BlogPostPage"
 import { publicEnv } from "@/resources/env/public"
 import { JsonLd, articleSchema } from "@/modules/seo/jsonLd"
 import { buildPageMetadata } from "@/modules/seo/buildMetadata"
@@ -31,7 +31,7 @@ const BLOG_META_QUERY =
 /**
  * Blog-post fetch by slug, memoized per request so `generateMetadata` and the
  * page body share one round-trip. Returns null on any error so SEO degrades
- * gracefully (the client {@link BlogPost} renders its own state regardless).
+ * gracefully (the client {@link BlogPostPage} renders its own state regardless).
  */
 const getPost = cache(async (slug: string): Promise<BlogPostMeta | null> => {
     try {
@@ -74,7 +74,7 @@ export const generateMetadata = async ({
 
 /**
  * Route `/[locale]/blog/[slug]` — public blog article. Server component for
- * `generateMetadata` + BlogPosting JSON-LD; renders the client {@link BlogPost}
+ * `generateMetadata` + BlogPosting JSON-LD; renders the client {@link BlogPostPage}
  * which reads the slug from the route itself.
  *
  * @param props.params - the awaited route params.
@@ -102,7 +102,7 @@ const Page = async ({
                     })}
                 />
             ) : null}
-            <BlogPost />
+            <BlogPostPage />
         </>
     )
 }

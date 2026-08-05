@@ -4,15 +4,15 @@ import React from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { useParams } from "next/navigation"
 import { useQueryBlogPostSwr } from "@/hooks/swr/api/graphql/queries/useQueryBlogPostSwr"
-import { CATEGORY_COLOR } from "../shared/category"
-import { _BlogPost, type BlogPostLabels } from "./component"
+import { CATEGORY_COLOR } from "@/modules/utils/blog-category"
+import { _BlogPostPage, type BlogPostLabels } from "./component"
 
 /**
  * Public `/blog/[slug]` article — the CONNECTED half: reads the slug from the route, fetches the
  * article via SWR, resolves every label (incl. interpolation) and the locale-formatted publish date,
- * and hands them to the presentational {@link _BlogPost}. See `tiers/split.md`.
+ * and hands them to the presentational {@link _BlogPostPage}. See `tiers/split.md`.
  */
-export const BlogPost = () => {
+export const BlogPostPage = () => {
     const t = useTranslations("blog")
     const locale = useLocale()
     // the post slug comes straight from the route segment
@@ -55,7 +55,7 @@ export const BlogPost = () => {
     }
 
     return (
-        <_BlogPost
+        <_BlogPostPage
             isSkeleton={isSkeleton}
             isEmpty={isEmpty}
             error={error}

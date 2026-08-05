@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux/hooks"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 
 /** Course slugs that have a dedicated capstone teaser (`finalProject.gatePreview.<key>`). */
 type CourseSlug = "fullstack-mastery" | "system-design-mastery" | "devops-mastery"

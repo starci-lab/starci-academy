@@ -5,7 +5,8 @@ import { useLocale, useTranslations } from "next-intl"
 import { useParams, useRouter } from "next/navigation"
 import { Typography } from "@heroui/react"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
-import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
+import { Box } from "@/components/frames/Box"
 import { usePlaygroundSessionContext } from "@/components/providers/PlaygroundSessionProvider"
 import { pathConfig } from "@/resources/path"
 
@@ -56,11 +57,12 @@ export const PlaygroundHeader = ({ step }: PlaygroundHeaderProps) => {
                     {t("playground.session.stepCounter", { current: step.current, total: step.total })}
                 </Typography>
             </div>
-            <ProgressMeter
-                value={step.current}
-                max={Math.max(step.total, 1)}
-                className="mt-2"
-            />
+            <Box className="mt-2">
+                <ProgressMeter
+                    value={step.current}
+                    max={Math.max(step.total, 1)}
+                />
+            </Box>
         </div>
     )
 }

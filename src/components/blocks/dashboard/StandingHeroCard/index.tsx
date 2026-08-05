@@ -9,7 +9,7 @@ import {
 import {
     ArrowRightIcon,
 } from "@phosphor-icons/react"
-import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"

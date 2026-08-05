@@ -24,7 +24,7 @@ import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
-import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import type { MilestoneEntity } from "@/modules/types/entities/milestone"
 
 /** Props for {@link PersonalProjectDashboard}. */

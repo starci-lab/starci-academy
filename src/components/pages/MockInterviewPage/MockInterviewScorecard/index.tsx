@@ -22,7 +22,7 @@ import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckLis
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { useQueryMatchedContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryMatchedContentSwr"
 import { pathConfig } from "@/resources/path"
@@ -349,7 +349,7 @@ export const MockInterviewScorecard = ({
                                 value={phaseScore.score}
                                 max={phaseScore.max}
                                 color={scoreColorOf(phaseScore.score, phaseScore.max)}
-                                className="flex-1"
+                                classNames={["flex-1"]}
                             />
                         </div>
                     ))}
@@ -389,7 +389,7 @@ export const MockInterviewScorecard = ({
                                     value={attribute.score}
                                     max={100}
                                     color={scoreColorOf(attribute.score, 100)}
-                                    className="flex-1"
+                                    classNames={["flex-1"]}
                                 />
                             </div>
                         ))}

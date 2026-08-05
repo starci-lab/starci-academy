@@ -8,7 +8,8 @@ import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/
 import { LabeledAccordionCard } from "@/components/blocks/cards/LabeledAccordionCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
-import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
+import { Box } from "@/components/frames/Box"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Chip } from "@/components/atoms/chips/Chip"
@@ -180,12 +181,13 @@ export const _FlashcardReviewHistory = ({
                         () => <Typography size="sm" truncate text={showDeck ? item.deckTitle : formatDate(item.updatedAt)} />,
                         () => <Typography size="xs" color="muted" truncate text={showDeck ? `${formatDate(item.updatedAt)} · ${cardCountLabel}` : cardCountLabel} />,
                         () => (
-                            <ProgressMeter
-                                value={item.reviewedCount}
-                                max={Math.max(item.cardCount, 1)}
-                                color={ratio >= STRONG_COMPLETION_RATIO ? "success" : "warning"}
-                                className="max-w-[220px]"
-                            />
+                            <Box className="max-w-[220px]">
+                                <ProgressMeter
+                                    value={item.reviewedCount}
+                                    max={Math.max(item.cardCount, 1)}
+                                    color={ratio >= STRONG_COMPLETION_RATIO ? "success" : "warning"}
+                                />
+                            </Box>
                         ),
                     ]} />
                 ),

@@ -1,6 +1,6 @@
 import React, { type ComponentType } from "react"
 import type { ReactNode } from "react"
-import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { Typography, type TypographyColor } from "@/components/atoms/text/Typography"
 import { StackH, StackV } from "@/components/frames/Stack"

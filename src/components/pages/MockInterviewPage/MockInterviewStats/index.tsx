@@ -9,7 +9,7 @@ import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
-import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { VerdictHeroCard } from "@/components/blocks/stats/VerdictHeroCard"
 import type { VerdictHeroBand } from "@/components/blocks/stats/VerdictHeroCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -107,7 +107,7 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                         max={Math.round(item.avgMax) || 100}
                         color={scoreColorOf(item.avgScore, item.avgMax)}
                         showValue
-                        className="flex-1"
+                        classNames={["flex-1"]}
                     />
                 </div>
             ))}

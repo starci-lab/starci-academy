@@ -9,7 +9,7 @@ import { StackV } from "@/components/frames/Stack"
 import { HighlightCard } from "@/components/blocks/cards/HighlightCard"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { SeeMoreLink } from "@/components/blocks/navigation/SeeMoreLink"
-import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { type CallerIdentity } from "@/components/frames/_identity"
 
 /**

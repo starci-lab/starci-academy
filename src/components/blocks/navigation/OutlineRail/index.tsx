@@ -26,7 +26,7 @@ import type {
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { ContentMapRow } from "@/components/blocks/navigation/ContentMapRow"
-import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 
 /**
  * Placeholder group count the co-located skeleton mirrors while `isSkeleton`

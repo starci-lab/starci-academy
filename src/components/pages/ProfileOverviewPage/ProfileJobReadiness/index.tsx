@@ -12,7 +12,7 @@ import { useQueryUserJobReadinessSwr } from "@/hooks/swr/api/graphql/queries/use
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { StatPair } from "@/components/composites/stats/StatPair"
-import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { pathConfig } from "@/resources/path"

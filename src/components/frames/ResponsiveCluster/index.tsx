@@ -2,7 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { GAP_CLASS, JUSTIFY_CLASS, type AllowedGap, type LayoutJustify } from "@/components/frames/_spacing"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { principlesAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 
 /**

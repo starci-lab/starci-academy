@@ -1,7 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { Divider } from "@/components/atoms/display/Divider"
 import { type AllowedGap, type LayoutAlign, type LayoutJustify, type PaddingValue, type Responsive } from "@/components/frames/_spacing"
 import { Flex } from "@/components/frames/Flex"

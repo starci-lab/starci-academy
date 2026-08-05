@@ -33,7 +33,7 @@ const LABELS: PricingTeaserLabels = {
     productModeLabel: "Platform products",
     solutionModeLabel: "Industry solutions",
     modeAriaLabel: "Pricing mode",
-    recommendedMarker: "★",
+    recommendedMarker: "*",
     solutionBadgeLabel: "Roadmap",
     solutionTitle: "Industry systems need a conversation first",
     solutionDescription: "CRM · Workflow · Dashboard · the AI-First Business OS are on the roadmap. For a complex problem, start with an audit of where it actually leaks.",

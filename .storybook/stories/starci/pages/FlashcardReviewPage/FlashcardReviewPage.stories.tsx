@@ -88,7 +88,7 @@ export const Overview: Story = {
 />`,
                         render: (
                             <FlashcardReviewPage
-                               
+
                                 phase="overview"
                                 flashcardMode="study"
                                 onFlashcardModeChange={() => {}}
@@ -213,7 +213,7 @@ export const OverviewLoading: Story = {
 />`,
                         render: (
                             <FlashcardReviewPage
-                               
+
                                 phase="overview"
                                 flashcardMode="study"
                                 onFlashcardModeChange={() => {}}
@@ -300,7 +300,7 @@ export const Session: Story = {
 />`,
                         render: (
                             <FlashcardReviewPage
-                               
+
                                 phase="session"
                                 flashcardMode="study"
                                 onFlashcardModeChange={() => {}}

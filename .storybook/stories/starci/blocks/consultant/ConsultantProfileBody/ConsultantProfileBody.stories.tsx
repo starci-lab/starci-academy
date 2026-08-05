@@ -81,7 +81,7 @@ export const Default: Story = {
                         render: (
                             <ConsultantProfileBody
 
-                               
+
                                 consultant={FULL_CONSULTANT}
                                 onOpenCompany={() => {}}
                             />

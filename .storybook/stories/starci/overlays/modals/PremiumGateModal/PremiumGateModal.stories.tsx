@@ -82,13 +82,13 @@ const ControlledPremiumGateModal = ({
                 label={triggerLabel}
                 variant="secondary"
                 size="sm"
-                classNames={["self-start"]}
+
                 onPress={() => setIsOpen(true)}
             />
             <PremiumGateModal
                 isOpen={isOpen}
                 onOpenChange={setIsOpen}
-               
+
 
                 {...modalProps}
             />

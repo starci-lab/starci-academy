@@ -64,7 +64,7 @@ const ControlledBanMemberModal = ({
                 label={triggerLabel}
                 variant="secondary"
                 size="sm"
-                classNames={["self-start"]}
+
                 onPress={() => setIsOpen(true)}
             />
             <BanMemberModal
@@ -112,7 +112,7 @@ export const Default: Story = {
                 {
                     name: "reason entered — Confirm enabled",
                     why: "Once the viewer types a reason, Confirm turns pressable — the exact text typed here is what lands in the audit log.",
-                    code: `<BanMemberModal reason="Repeated spam in the community feed" … />`,
+                    code: "<BanMemberModal reason=\"Repeated spam in the community feed\" … />",
                     render: (
                         <ControlledBanMemberModal
                             triggerLabel="Open — reason entered"
@@ -126,7 +126,7 @@ export const Default: Story = {
                 {
                     name: "isBanning = true",
                     why: "Confirm was just pressed — the `setMemberStatus` mutation is in flight, so Confirm shows a spinner and Cancel plus the reason field lock. The modal stays open until the caller closes it.",
-                    code: `<BanMemberModal isBanning … />`,
+                    code: "<BanMemberModal isBanning … />",
                     render: (
                         <ControlledBanMemberModal
                             triggerLabel="Open — banning"

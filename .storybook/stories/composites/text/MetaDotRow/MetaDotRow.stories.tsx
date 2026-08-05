@@ -11,7 +11,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * and the tone (`muted`, on every fragment AND the root, so the marks inherit
  * it).
  *
- * 📐 **1 PROP = 1 LEAF.** `items`, `isSkeleton`, `skeletonCount` each get their
+ * [layout] **1 PROP = 1 LEAF.** `items`, `isSkeleton`, `skeletonCount` each get their
  * own leaf. `classNames` gets none — a pure placement prop with no visible
  * shape of its own to demonstrate.
  */

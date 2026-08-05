@@ -162,7 +162,7 @@ export const Default: Story = {
                         render: (
                             <PlaygroundPreparePage
                                 {...BASE}
-                               
+
                                 checklistItems={MIXED_ITEMS}
                                 deviceInfo={DEVICE}
                                 engineDetail="Ollama 0.3.6 · GPU 8GB VRAM"
@@ -229,7 +229,7 @@ export const InfraFlavor: Story = {
                         render: (
                             <PlaygroundPreparePage
                                 {...BASE}
-                               
+
                                 flavor="infra"
                                 engineName="Docker Desktop"
                                 recommendedGenModel={undefined}
@@ -288,7 +288,7 @@ export const Skeleton: Story = {
                         render: (
                             <PlaygroundPreparePage
                                 {...BASE}
-                               
+
                                 isSkeleton
                                 checklistItems={MIXED_ITEMS}
                                 deviceInfo={DEVICE}

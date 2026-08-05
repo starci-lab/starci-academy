@@ -80,7 +80,7 @@ export const Default: Story = {
                     {
                         name: "cardStatus = approved",
                         why: "A human has already signed off — the composed card's chip flips to success, proving the pairing is real composition, not two components drawn side by side.",
-                        code: `<HumanInTheLoop {...copy} cardStatus="approved" cardStatusLabel="Approved" />`,
+                        code: "<HumanInTheLoop {...copy} cardStatus=\"approved\" cardStatusLabel=\"Approved\" />",
                         render: (
                             <HumanInTheLoop
                                 {...COPY}

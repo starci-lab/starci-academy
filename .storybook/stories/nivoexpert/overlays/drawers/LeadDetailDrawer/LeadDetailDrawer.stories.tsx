@@ -50,6 +50,15 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /** Controlled wrapper — a trigger reopens the drawer after it closes, so the story stays interactive. */
+type ControlledLeadDetailDrawerProps = {
+    isEditingDraft?: boolean
+    draftReply: string
+    stage: "new" | "contacted" | "won" | "lost"
+    message?: string | null
+    source?: string | null
+    isSending?: boolean
+    isSkeleton?: boolean
+}
 const ControlledLeadDetailDrawer = ({
     isEditingDraft,
     draftReply,
@@ -58,21 +67,15 @@ const ControlledLeadDetailDrawer = ({
     source,
     isSending,
     isSkeleton,
-}: {
-    isEditingDraft?: boolean
-    draftReply: string
-    stage: "new" | "contacted" | "won" | "lost"
-    message?: string | null
-    source?: string | null
-    isSending?: boolean
-    isSkeleton?: boolean
-}) => {
+}: ControlledLeadDetailDrawerProps) => {
     const [isOpen, setIsOpen] = useState(true)
     const [draft, setDraft] = useState(draftReply)
     const [editing, setEditing] = useState(isEditingDraft ?? false)
     return (
         <div data-tier="fixture" className="flex flex-col gap-3 p-8">
-            <Button label="Open lead" variant="secondary" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label="Open lead" variant="secondary" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <LeadDetailDrawer
                 isOpen={isOpen}
                 onOpenChange={setIsOpen}

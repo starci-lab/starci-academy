@@ -71,7 +71,7 @@ export const Axis: Story = {
                     {
                         name: "axis = 'y' (default)",
                         why: "The box caps its height and scrolls vertically once its rows outgrow it — the exact shape `MindMapPage`'s search rail hand-wrote as raw `overflow-y-auto` markup before this frame existed.",
-                        code: `<ScrollArea body={<SearchResultsList />} />`,
+                        code: "<ScrollArea body={<SearchResultsList />} />",
                         render: (
                             <div data-tier="fixture" className="overflow-hidden rounded-3xl border border-dashed border-default" style={{ height: 200, width: 280 }}>
                                 <ScrollArea body={() => <Rows count={20} />} />
@@ -81,7 +81,7 @@ export const Axis: Story = {
                     {
                         name: "axis = 'x'",
                         why: "The box caps its width and scrolls horizontally once its columns outgrow it — a filmstrip or a wide toolbar that should scroll sideways instead of wrapping or clipping.",
-                        code: `<ScrollArea axis="x" body={<Filmstrip />} />`,
+                        code: "<ScrollArea axis=\"x\" body={<Filmstrip />} />",
                         render: (
                             <div data-tier="fixture" className="overflow-hidden rounded-3xl border border-dashed border-default" style={{ height: 140, width: 280 }}>
                                 <ScrollArea axis="x" body={() => <Columns count={12} />} />
@@ -91,7 +91,7 @@ export const Axis: Story = {
                     {
                         name: "axis = 'both'",
                         why: "The box caps both dimensions and scrolls on whichever axis the content overflows, or both at once — a dense grid or canvas-like region that outgrows its box in every direction.",
-                        code: `<ScrollArea axis="both" body={<DenseGrid />} />`,
+                        code: "<ScrollArea axis=\"both\" body={<DenseGrid />} />",
                         render: (
                             <div data-tier="fixture" className="overflow-hidden rounded-3xl border border-dashed border-default" style={{ height: 200, width: 280 }}>
                                 <ScrollArea axis="both" body={() => <Grid count={12} />} />

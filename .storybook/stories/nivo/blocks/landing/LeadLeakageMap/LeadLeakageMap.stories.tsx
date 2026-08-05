@@ -79,7 +79,7 @@ export const Default: Story = {
                     {
                         name: "healthy funnel (zero leaks)",
                         why: "A fully instrumented funnel — every stage holds — proves the leak markers are computed from the data, not a hardcoded \"middle stages always leak\" shape.",
-                        code: `<LeadLeakageMap title="Where does a lead usually leak?" stages={[/* no stage has isLeak */]} />`,
+                        code: "<LeadLeakageMap title=\"Where does a lead usually leak?\" stages={[/* no stage has isLeak */]} />",
                         render: <LeadLeakageMap title="Where does a lead usually leak?" stages={HEALTHY_STAGES} />,
                     },
                 ]}

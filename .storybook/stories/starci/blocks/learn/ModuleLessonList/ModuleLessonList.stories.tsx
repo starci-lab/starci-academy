@@ -70,7 +70,7 @@ export const List: Story = {
                         render: (
                             <ModuleLessonList
 
-                               
+
                                 lessons={LESSONS}
                                 resumeLessonId="l2"
                                 onSelectLesson={() => {}}
@@ -107,7 +107,7 @@ export const Skeleton: Story = {
                         render: (
                             <ModuleLessonList
 
-                               
+
                                 isSkeleton
                                 lessons={[]}
                                 onSelectLesson={() => {}}

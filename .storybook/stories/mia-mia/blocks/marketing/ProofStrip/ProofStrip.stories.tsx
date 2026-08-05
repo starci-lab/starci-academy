@@ -6,10 +6,10 @@ const meta: Meta<typeof ProofStrip> = {
     component: ProofStrip,
     args: {
         items: [
-            { key: "exams", value: "39", label: "đề THPT thật" },
-            { key: "games", value: "4", label: "game từ vựng" },
-            { key: "tutor", value: "Mia", label: "trợ giảng AI" },
-            { key: "live", value: "Live", label: "phòng thi ảo" },
+            { key: "exams", value: "39", label: "real national exams" },
+            { key: "games", value: "4", label: "vocab games" },
+            { key: "tutor", value: "Mia", label: "AI teaching assistant" },
+            { key: "live", value: "Live", label: "virtual exam room" },
         ],
     },
 }

@@ -196,7 +196,10 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /** Shared controlled wrapper — one `buyConfirm` state feeds the `orders`-driven leaves below. */
-const ControlledCatalogView = ({ orders }: { orders: Array<MyOrderRow> }) => {
+type ControlledCatalogViewProps = {
+    orders: Array<MyOrderRow>
+}
+const ControlledCatalogView = ({ orders }: ControlledCatalogViewProps) => {
     const [isOpen, setIsOpen] = useState(false)
     const [order, setOrder] = useState<BuyConfirmModalOrder | null>(null)
     const [isConfirming, setIsConfirming] = useState(false)

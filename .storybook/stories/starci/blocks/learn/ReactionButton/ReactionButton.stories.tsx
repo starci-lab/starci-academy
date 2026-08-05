@@ -9,7 +9,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * `ContentDiscussion`'s thread — the SAME control real `src`'s `ReactionBar`
  * is, reused between `InteractionBar` and `CommentItem`.
  *
- * 📐 LEAF by STRUCTURE (§14d.2). Which emotion is picked and whether the
+ * [layout] LEAF by STRUCTURE (§14d.2). Which emotion is picked and whether the
  * summary is empty keep the same two-part shape ⇒ states. The caller
  * flipping `isSkeleton` is its own leaf.
  */

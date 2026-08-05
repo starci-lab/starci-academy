@@ -78,11 +78,17 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /** Shared controlled wrapper — the trigger reopens the drawer after it closes. */
-const ControlledOrderDetailDrawer = ({ triggerLabel, order }: { triggerLabel: string; order?: OrderDetailView }) => {
+type ControlledOrderDetailDrawerProps = {
+    triggerLabel: string
+    order?: OrderDetailView
+}
+const ControlledOrderDetailDrawer = ({ triggerLabel, order }: ControlledOrderDetailDrawerProps) => {
     const [isOpen, setIsOpen] = useState(true)
     return (
         <div data-tier="fixture" className="flex flex-col gap-3 p-8">
-            <Button label={triggerLabel} variant="secondary" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label={triggerLabel} variant="secondary" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <OrderDetailDrawer isOpen={isOpen} onOpenChange={setIsOpen} order={order} onRefund={() => {}} labels={LABELS} />
         </div>
     )

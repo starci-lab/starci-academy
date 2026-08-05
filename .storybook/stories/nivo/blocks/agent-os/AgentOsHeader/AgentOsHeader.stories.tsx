@@ -145,7 +145,7 @@ export const Default: Story = {
                     {
                         name: "isSkeleton = true",
                         why: "The console's own first fetch hasn't resolved yet, so the masthead draws a representative `active` shape shimmering — title, chip, ref line, and both actions — matching the busiest real branch so nothing jumps when the status lands.",
-                        code: `<AgentOsHeader isSkeleton />`,
+                        code: "<AgentOsHeader isSkeleton />",
                         render: <AgentOsHeader isSkeleton />,
                     },
                 ]}

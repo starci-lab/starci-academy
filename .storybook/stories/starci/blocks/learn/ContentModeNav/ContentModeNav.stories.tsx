@@ -64,7 +64,7 @@ export const Full: Story = {
                         render: (
                             <ContentModeNav
 
-                               
+
                                 ariaLabel="How to view this lesson"
                                 mode="content"
                                 modes={MODES}
@@ -142,7 +142,7 @@ export const WithLanguages: Story = {
                         render: (
                             <ContentModeNav
 
-                               
+
                                 ariaLabel="How to view this lesson"
                                 mode="content"
                                 modes={MODES}

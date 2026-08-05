@@ -58,7 +58,7 @@ export const WithChip: Story = {
                             <ListMeta
                                 chip={CountdownChip}
                                 items={["Question 7 / 8", "Middle"]}
-                               
+
                             />
                         ),
                     },

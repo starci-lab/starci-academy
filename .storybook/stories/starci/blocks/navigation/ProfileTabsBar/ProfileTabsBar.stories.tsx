@@ -57,7 +57,7 @@ export const OwnerView: Story = {
                         render: (
                             <ProfileTabsBar
 
-                               
+
                                 ariaLabel="Profile"
                                 activeTab="overview"
                                 visibleTabs={ALL_TABS}
@@ -133,7 +133,7 @@ export const VisitorView: Story = {
                         render: (
                             <ProfileTabsBar
 
-                               
+
                                 ariaLabel="Profile"
                                 activeTab="overview"
                                 visibleTabs={VISITOR_TABS}

@@ -54,7 +54,7 @@ export const Default: Story = {
                         render: (
                             <ConsultantDirectoryCompanySearch
 
-                               
+
                                 query=""
                                 onQueryChange={() => {}}
                                 suggestions={[]}

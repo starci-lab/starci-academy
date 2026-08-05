@@ -131,7 +131,7 @@ export const Default: Story = {
                     {
                         name: "isSkeleton = true",
                         why: "The overview's own first fetch hasn't resolved yet, so the masthead draws a representative `draft` shape shimmering — title, chip, address line, and the one primary button — matching the loaded row so nothing jumps when the status lands.",
-                        code: `<ExpertSiteHeader isSkeleton />`,
+                        code: "<ExpertSiteHeader isSkeleton />",
                         render: <ExpertSiteHeader isSkeleton />,
                     },
                 ]}

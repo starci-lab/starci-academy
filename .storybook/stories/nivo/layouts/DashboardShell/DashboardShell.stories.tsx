@@ -159,7 +159,7 @@ export const Default: Story = {
                     {
                         name: "narrow — below @app-md",
                         why: "The exact real mount: `RailShell` sits inside `DashboardShell`'s bare `<div className=\"mx-auto w-full max-w-7xl px-6 py-8\">` — no `Container`, no ancestor `@container` — proving `RailShell`'s self-contained container-query fix holds through the full composed shell, not just the frame in isolation. Below the threshold the rail drops ABOVE the route content (honest DOM order for a leading `side=\"start\"` rail) as a full-width column, never the collapsed full-width LIST the shell shipped with before the fix.",
-                        code: `<DashboardShell topBar={topBar} sidebar={sidebar} content={RouteContent} />`,
+                        code: "<DashboardShell topBar={topBar} sidebar={sidebar} content={RouteContent} />",
                         render: (
                             <div data-tier="fixture" style={{ width: "22rem", maxWidth: "100%" }}>
                                 <DashboardShell topBar={TOP_BAR} sidebar={SIDEBAR} content={MockRouteContent} />

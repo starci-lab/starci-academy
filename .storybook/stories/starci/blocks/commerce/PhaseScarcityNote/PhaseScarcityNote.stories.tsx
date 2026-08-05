@@ -26,7 +26,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     // SHOW UP in the tree — using a frame the panel can't see leaves the reader thinking
     // this is a hand-rolled div.
     "Cluster": { tier: "frame", role: "a ONE-TRACK frame that wraps on its own and draws its own `·` separator — `gap` is pinned to the §10 scale instead of a hand-typed class", storyId: "frames-cluster-cluster--default" },
-    // ⚠️ The panel only accepts a part with a REAL `storyId` (§11a whitelist) — the two
+    // WARNING: The panel only accepts a part with a REAL `storyId` (§11a whitelist) — the two
     // text lines below used to declare a role but were MISSING `storyId`, so they never
     // made it into the tree. They're built by THIS component itself (not a child's guts)
     // ⇒ per §11a.1 they must be declared.
@@ -68,7 +68,7 @@ export const Default: Story = {
 />`,
                         render: (
                             <PhaseScarcityNote
-                               
+
                                 currentPhase={PricingPhase.EarlyBird}
                                 seatsRemaining={14}
                                 nextPhasePriceVnd={2_490_000}
@@ -85,7 +85,7 @@ export const Default: Story = {
 />`,
                         render: (
                             <PhaseScarcityNote
-                               
+
                                 currentPhase={PricingPhase.Pioneer}
                                 seatsRemaining={3}
                                 nextPhasePriceVnd={1_990_000}
@@ -102,7 +102,7 @@ export const Default: Story = {
 />`,
                         render: (
                             <PhaseScarcityNote
-                               
+
                                 currentPhase={PricingPhase.Regular}
                                 seatsRemaining={5}
                                 nextPhasePriceVnd={null}
@@ -119,7 +119,7 @@ export const Default: Story = {
 />`,
                         render: (
                             <PhaseScarcityNote
-                               
+
                                 currentPhase={PricingPhase.Regular}
                                 seatsRemaining={null}
                                 nextPhasePriceVnd={2_990_000}

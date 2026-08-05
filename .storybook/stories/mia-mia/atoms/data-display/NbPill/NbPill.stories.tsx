@@ -12,7 +12,7 @@ const meta: Meta<typeof NbPill> = {
     title: "MiaMia/NbPill",
     component: NbPill,
     args: {
-        children: "Luyện thi THPT · chơi mà giỏi",
+        children: "National exam prep · play to get better",
         tone: "sun",
         size: "md",
         shadow: true,
@@ -39,21 +39,21 @@ export const Roles: Story = {
                     <Label>Eyebrow (md, sun, shadow)</Label>
                     <Typography type="body-sm" color="muted">sits above the hero headline.</Typography>
                 </div>
-                <NbPill tone="sun" size="md" shadow icon={<Star />}>Luyện thi THPT · chơi mà giỏi</NbPill>
+                <NbPill tone="sun" size="md" shadow icon={<Star />}>National exam prep · play to get better</NbPill>
             </div>
             <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
                     <Label>Meta tag (sm, white)</Label>
                     <Typography type="body-sm" color="muted">a flat detail chip inside a card.</Typography>
                 </div>
-                <NbPill tone="white" size="sm">50 câu · 60′</NbPill>
+                <NbPill tone="white" size="sm">50 questions · 60 min</NbPill>
             </div>
             <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
                     <Label>Status tag (sm, sun)</Label>
                     <Typography type="body-sm" color="muted">a state marker on a submitted paper.</Typography>
                 </div>
-                <NbPill tone="sun" size="sm">Đã nộp</NbPill>
+                <NbPill tone="sun" size="sm">Submitted</NbPill>
             </div>
         </div>
     ),

@@ -110,7 +110,7 @@ export const Default: Story = {
                         render: (
                             <FoundationsCategoryPage
                                 {...BASE}
-                               
+
                                 isTrialNudgeVisible
                                 resultCount={24}
                                 resources={RESOURCES}
@@ -191,7 +191,7 @@ export const Skeleton: Story = {
                         render: (
                             <FoundationsCategoryPage
                                 {...BASE}
-                               
+
                                 isSkeleton
                                 isTrialNudgeVisible={false}
                                 resources={[]}

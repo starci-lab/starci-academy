@@ -99,7 +99,7 @@ export const Sheet: Story = {
                         render: (
                             <ConnectSheetExample
 
-                               
+
                                 connection="connected"
                                 latencyMs={42}
                                 device={DEVICE}
@@ -176,7 +176,7 @@ export const Skeleton: Story = {
                         render: (
                             <ConnectSheetExample
 
-                               
+
                                 isSkeleton
                                 onReconnect={() => {}}
                             />

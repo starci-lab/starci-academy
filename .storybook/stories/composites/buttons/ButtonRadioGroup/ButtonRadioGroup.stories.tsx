@@ -59,13 +59,14 @@ const ATTEMPT_ITEMS: Array<ButtonRadioGroupItem<string>> = [
     { value: "attempt-3", content: "Attempt 3 · 9/10" },
 ]
 /** Owns single-select state so the story is interactive (the atom is fully controlled). */
-const Controlled = <T extends string>(props: {
+type ControlledProps<T extends string> = {
     items: Array<ButtonRadioGroupItem<T>>
     initialValue: T
     ariaLabel: string
     trailing?: ReactNode
     itemAction?: (item: ButtonRadioGroupItem<T>) => ReactNode
-}) => {
+}
+const Controlled = <T extends string>(props: ControlledProps<T>) => {
     const [value, setValue] = useState<T>(props.initialValue)
     return (
         <ButtonRadioGroup
@@ -75,16 +76,17 @@ const Controlled = <T extends string>(props: {
             ariaLabel={props.ariaLabel}
             trailing={props.trailing}
             itemAction={props.itemAction}
-           
+
         />
     )
 }
 /** Owns a SET of values and enforces "keep at least one selected" (deselecting the last is a no-op). */
-const ControlledMulti = <T extends string>(props: {
+type ControlledMultiProps<T extends string> = {
     items: Array<ButtonRadioGroupItem<T>>
     initialValues: Array<T>
     ariaLabel: string
-}) => {
+}
+const ControlledMulti = <T extends string>(props: ControlledMultiProps<T>) => {
     const [values, setValues] = useState<Array<T>>(props.initialValues)
     const toggle = (value: T): void => {
         setValues((previous) => {
@@ -101,7 +103,7 @@ const ControlledMulti = <T extends string>(props: {
             values={values}
             onToggle={toggle}
             ariaLabel={props.ariaLabel}
-           
+
         />
     )
 }
@@ -214,7 +216,7 @@ export const Trailing: Story = {
 }
 /**
  * Leaf prop `itemAction` — each item switches from a single `<Button>` into
- * one fused `ButtonGroup` `[select | 🗑 | ⋮]`.
+ * one fused `ButtonGroup` `[select | delete | ...]`.
  */
 export const ItemAction: Story = {
     render: () => (

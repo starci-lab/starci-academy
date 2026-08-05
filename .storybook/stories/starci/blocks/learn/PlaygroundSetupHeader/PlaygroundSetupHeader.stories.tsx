@@ -52,7 +52,7 @@ export const Default: Story = {
                         render: (
                             <PlaygroundSetupHeader
 
-                               
+
                                 breadcrumbLabel="Playground"
                                 onBack={() => {}}
                                 title="Debug a leaking Node.js service"

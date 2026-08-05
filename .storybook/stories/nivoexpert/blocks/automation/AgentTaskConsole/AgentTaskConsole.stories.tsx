@@ -62,7 +62,7 @@ const RUN_RAN_WORKFLOW: AgentRunView = {
     id: "run-1",
     goal: "Welcome the learners who just signed up",
     toolUsed: "welcome-new-learners",
-    toolOutput: '{"sent": 12, "channel": "email", "template": "welcome-v2"}',
+    toolOutput: "{\"sent\": 12, \"channel\": \"email\", \"template\": \"welcome-v2\"}",
     result: "Ran the welcome workflow: 12 new learners were emailed the welcome-v2 template.",
     error: null,
 }

@@ -75,7 +75,7 @@ export const Default: Story = {
 />`,
                     render: (
                         <Footer
-                           
+
 
                             exploreLinks={EXPLORE_LINKS}
                             supportLinks={SUPPORT_LINKS}
@@ -97,7 +97,7 @@ export const Default: Story = {
 />`,
                     render: (
                         <Footer
-                           
+
 
                             exploreLinks={EXPLORE_LINKS}
                             supportLinks={SUPPORT_LINKS}

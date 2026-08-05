@@ -160,7 +160,7 @@ export const NotAttempted: Story = {
 />`,
                         render: (
                             <ChallengePage
-                               
+
                                 onBackPress={() => {}}
                                 title="Build a Task management REST API"
                                 description="Build a CRUD REST API for the Task resource, with tests, and deploy it to staging."
@@ -209,7 +209,7 @@ export const Graded: Story = {
 />`,
                         render: (
                             <ChallengePage
-                               
+
                                 onBackPress={() => {}}
                                 title="Build a Task management REST API"
                                 description="Build a CRUD REST API for the Task resource, with tests, and deploy it to staging."
@@ -236,7 +236,7 @@ export const Graded: Story = {
 }
 
 /**
- * LEAF ⭐ — the evidence for `SplitWorkspace`'s axis switch, same 3 widths as
+ * LEAF * — the evidence for `SplitWorkspace`'s axis switch, same 3 widths as
  * `ContentPage`'s "Practice nudge — responsive" leaf. Same data as
  * `NotAttempted` at every width — only the container changes.
  */
@@ -358,7 +358,7 @@ export const Skeleton: Story = {
                         code: "<ChallengePage {...props} isSkeleton />",
                         render: (
                             <ChallengePage
-                               
+
                                 onBackPress={() => {}}
                                 title="Build a Task management REST API"
                                 description="Build a CRUD REST API for the Task resource, with tests, and deploy it to staging."

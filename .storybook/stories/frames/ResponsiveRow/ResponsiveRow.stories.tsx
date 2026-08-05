@@ -111,7 +111,7 @@ export const Columns: Story = {
                     {
                         name: "columns = 1 (container = 320px)",
                         why: "Every cell stacks in a single column below the switch step — for a pair whose fixed grid would otherwise squeeze two cells uncomfortably into one narrow row.",
-                        code: `<ResponsiveRow columns={1} at="sm" gap={4} items={cells.slice(0, 2)} />`,
+                        code: "<ResponsiveRow columns={1} at=\"sm\" gap={4} items={cells.slice(0, 2)} />",
                         render: (
                             <Frame width="20rem" label="container 320px — columns=1 → single column">
                                 <ResponsiveRow columns={1} at="sm" gap={4} items={CELLS.slice(0, 2)} />
@@ -121,7 +121,7 @@ export const Columns: Story = {
                     {
                         name: "columns = 2 (container = 320px)",
                         why: "The same four cells instead pair up two-per-row below the switch step — the shape `StatRibbon` actually uses.",
-                        code: `<ResponsiveRow columns={2} at="sm" gap={4} items={cells} />`,
+                        code: "<ResponsiveRow columns={2} at=\"sm\" gap={4} items={cells} />",
                         render: (
                             <Frame width="20rem" label="container 320px — columns=2 → 2-column grid">
                                 <ResponsiveRow columns={2} at="sm" gap={4} items={CELLS} />

@@ -59,7 +59,7 @@ export const Full: Story = {
                         render: (
                             <RatingBar
 
-                               
+
                                 options={OPTIONS}
                                 ariaLabel="How well did you remember it"
                                 onRate={() => {}}
@@ -125,7 +125,7 @@ export const Skeleton: Story = {
                         render: (
                             <RatingBar
 
-                               
+
                                 options={OPTIONS}
                                 ariaLabel="How well did you remember it"
                                 isSkeleton

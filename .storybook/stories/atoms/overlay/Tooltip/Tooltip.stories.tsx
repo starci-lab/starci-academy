@@ -4,18 +4,18 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * ATOM — `Tooltip`: the one hover-hint atom, wrapping HeroUI Tooltip.
- * 
+ *
  * Keeping `children` here is correct (rationale in `Tooltip.tsx`'s header): the atom wrapper
  * must wrap an arbitrary element so react-aria can attach hover/focus/`aria-describedby`
  * straight onto it. It shares the Menu/Popover portal limitation — `Tooltip.Content`/
  * `Tooltip.Arrow` render into `body`, so `BlockAnatomy` can never reach them.
- * 
+ *
  * `annotate`: every HeroUI import `Tooltip.tsx` renders directly declares `tier: "heroui"`,
  * named by the real import (`Tooltip.Trigger`/`Tooltip.Content`/`Tooltip.Arrow`).
  * `Tooltip.Trigger` is the only one inside the render box (it wraps the `children` trigger);
  * `Tooltip.Content`/`Tooltip.Arrow` portal outside, so declaring them is data honesty, not a
  * visibility promise.
- * 
+ *
  * Two leaves cover the props with a shape: `Default` (bare baseline) and `Placements` (the full
  * `placement` union rendered in one leaf, not split per value).
  */

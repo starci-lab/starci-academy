@@ -9,11 +9,11 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * ATOM — a suggest-as-you-type search field built on HeroUI `ComboBox`. Anatomy:
  * `ComboBox.InputGroup` (Input + leading icon) plus `ComboBox.Popover` (ListBox of
  * suggestion rows / spinner / empty state).
- * 
+ *
  * Leaf atom: `ComboBox.InputGroup`/`ComboBox.Popover`/`Skeleton` are real HeroUI components
  * (not hand-rolled slots) — none has its own story here, so `annotate` carries no `storyId`,
  * but they get the `heroui` tier so the two-law panel doesn't silently skip them.
- * 
+ *
  * ANATOMY IS PER-LEAF: each story is its own leaf wrapping its render in its own BlockAnatomy
  * reflecting the parts that leaf composes — the field + dropdown shape is constant across
  * WithSuggestions/Loading/NoResults (only the dropdown's internal content changes);
@@ -93,7 +93,7 @@ export const WithSuggestions: Story = {
                                         inputValue={inputValue}
                                         onInputChange={setInputValue}
                                         onSelect={() => undefined}
-                                       
+
                                     />
                                 ),
                             },
@@ -133,7 +133,7 @@ export const Loading: Story = {
                                         onInputChange={setInputValue}
                                         onSelect={() => undefined}
                                         isLoading
-                                       
+
                                     />
                                 ),
                             },
@@ -170,7 +170,7 @@ export const Skeleton: Story = {
                                 onInputChange={() => undefined}
                                 onSelect={() => undefined}
                                 isSkeleton
-                               
+
                             />
                         ),
                     },
@@ -207,7 +207,7 @@ export const NoResults: Story = {
                                         onInputChange={setInputValue}
                                         onSelect={() => undefined}
                                         emptyLabel="No matching course or topic found"
-                                       
+
                                     />
                                 ),
                             },

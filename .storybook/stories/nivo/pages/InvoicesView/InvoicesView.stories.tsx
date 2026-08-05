@@ -98,7 +98,10 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /** Shared controlled wrapper — one `detail` state feeds the `invoices`-driven leaves below. */
-const ControlledInvoicesView = ({ invoices }: { invoices: Array<InvoiceRow> }) => {
+type ControlledInvoicesViewProps = {
+    invoices: Array<InvoiceRow>
+}
+const ControlledInvoicesView = ({ invoices }: ControlledInvoicesViewProps) => {
     const [isOpen, setIsOpen] = useState(false)
     const [invoice, setInvoice] = useState<InvoiceDetailModalInvoice | null>(null)
     const [isPaying, setIsPaying] = useState(false)

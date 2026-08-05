@@ -55,7 +55,7 @@ export const Default: Story = {
                         render: (
                             <ConsultantDirectoryHeader
 
-                               
+
                                 breadcrumbItems={CRUMBS}
                                 title="Consultant directory"
                                 description="Book a 1:1 session with the consultants supporting the DevOps Mastery course."
@@ -101,7 +101,7 @@ export const Skeleton: Story = {
                         render: (
                             <ConsultantDirectoryHeader
 
-                               
+
                                 title=""
                                 isSkeleton
                             />

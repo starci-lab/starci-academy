@@ -14,7 +14,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /**
  * ATOM — `ImageDropzone`: the system's drop/pick zone for a SINGLE image.
  *
- * 📐 **1 PROP = 1 LEAF**. Props that produce a shape:
+ * [layout] **1 PROP = 1 LEAF**. Props that produce a shape:
  * `hint` (format/size guidance line), `icon` (swaps the center glyph), and
  * `isDragActive` (pins the drag state from outside). `label` is always present,
  * already shown in `Default`. `onFile`, `className` don't produce
@@ -90,7 +90,7 @@ export const Default: Story = {
                         code: "<ImageDropzone onFile={handleFile} label=\"Drag and drop a photo here, or click to browse\" />",
                         render: (
                             <ImageDropzone
-                               
+
                                 onFile={() => {}}
                                 label="Drag and drop a photo here, or click to browse"
                             />
@@ -130,7 +130,7 @@ export const Hint: Story = {
 />`,
                         render: (
                             <ImageDropzone
-                               
+
                                 onFile={() => {}}
                                 label="Drag and drop a photo here, or click to browse"
                                 hint="PNG, JPG, WEBP, GIF · up to 5 MB"
@@ -161,7 +161,7 @@ export const Icon: Story = {
                         code: "<ImageDropzone onFile={handleFile} label=\"Drag and drop a photo here, or click to browse\" />",
                         render: (
                             <ImageDropzone
-                               
+
                                 onFile={() => {}}
                                 label="Drag and drop a photo here, or click to browse"
                             />
@@ -178,7 +178,7 @@ export const Icon: Story = {
 />`,
                         render: (
                             <ImageDropzone
-                               
+
                                 onFile={() => {}}
                                 label="Add a profile photo"
                                 hint="Square images look best"
@@ -215,7 +215,7 @@ export const DragActive: Story = {
                         code: "<ImageDropzone onFile={handleFile} label=\"Drag and drop a photo here, or click to browse\" />",
                         render: (
                             <ImageDropzone
-                               
+
                                 onFile={() => {}}
                                 label="Drag and drop a photo here, or click to browse"
                             />
@@ -231,7 +231,7 @@ export const DragActive: Story = {
 />`,
                         render: (
                             <ImageDropzone
-                               
+
                                 onFile={() => {}}
                                 label="Drag and drop a photo here, or click to browse"
                                 isDragActive

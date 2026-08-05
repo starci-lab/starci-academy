@@ -107,7 +107,7 @@ export const Default: Story = {
                         render: (
                             <HeadhuntingsPage
                                 {...BASE}
-                               
+
                                 consultants={CONSULTANTS}
                                 consultantCount={12}
                                 isLoadingConsultants={false}
@@ -178,7 +178,7 @@ export const Skeleton: Story = {
                         render: (
                             <HeadhuntingsPage
                                 {...BASE}
-                               
+
                                 isSkeleton
                                 isLoadingConsultants
                             />

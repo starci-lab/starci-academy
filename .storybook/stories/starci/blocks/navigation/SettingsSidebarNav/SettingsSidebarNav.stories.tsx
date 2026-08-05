@@ -90,7 +90,7 @@ export const DesktopRail: Story = {
                         render: (
                             <SettingsSidebarNav
 
-                               
+
                                 groups={GROUPS}
                                 activeHref="/profile/security"
                                 onNavigate={() => {}}
@@ -159,7 +159,7 @@ export const MobilePillBar: Story = {
                         render: (
                             <SettingsSidebarNav
 
-                               
+
                                 groups={GROUPS}
                                 activeHref="/profile/ai-settings"
                                 onNavigate={() => {}}

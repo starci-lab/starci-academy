@@ -8,7 +8,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * in `ANNOTATE`, named after the identifier it renders — `Breadcrumbs` (the trail) ·
  * `Breadcrumbs.Item` (one crumb or the "…" placeholder) · `Link` (the collapsed back
  * affordance) · `Skeleton` (a shimmer bar). No `storyId`.
- * 
+ *
  * The `Skeleton` leaf carries the prop's name (`isSkeleton`) and renders every
  * shape-bearing state known before data: `collapseFrom`/`collapseOnMobile` — plain trail
  * bars · back-link (trail about to collapse) · both responsive variants. The `isSkeleton`
@@ -57,7 +57,7 @@ export const Default: Story = {
                                     { key: "course", label: "Advanced React", onPress: () => {} },
                                     { key: "current", label: "Lesson 3: Hooks" },
                                 ]}
-                               
+
                             />
                         ),
                     },
@@ -91,7 +91,7 @@ export const Truncated: Story = {
                                     { key: "module", label: "Chapter 2", onPress: () => {} },
                                     { key: "current", label: "Lesson 3: Hooks" },
                                 ]}
-                               
+
                             />
                         ),
                     },
@@ -125,7 +125,7 @@ export const CollapsedLongTrail: Story = {
                                     { key: "course", label: "Advanced React", onPress: () => {} },
                                     { key: "current", label: "Lesson 3: Hooks" },
                                 ]}
-                               
+
                             />
                         ),
                     },
@@ -159,7 +159,7 @@ export const CollapsedOnMobile: Story = {
                                         { key: "course", label: "Advanced React", onPress: () => {} },
                                         { key: "current", label: "Lesson 3: Hooks" },
                                     ]}
-                                   
+
                                 />
                             </div>
                         ),
@@ -205,7 +205,7 @@ export const Skeleton: Story = {
                                     { key: "course", label: "React" },
                                     { key: "current", label: "Lesson 3" },
                                 ]}
-                               
+
                             />
                         ),
                     },
@@ -222,7 +222,7 @@ export const Skeleton: Story = {
                                     { key: "course", label: "React" },
                                     { key: "current", label: "Lesson 3" },
                                 ]}
-                               
+
                             />
                         ),
                     },
@@ -240,7 +240,7 @@ export const Skeleton: Story = {
                                         { key: "course", label: "React" },
                                         { key: "current", label: "Lesson 3" },
                                     ]}
-                                   
+
                                 />
                             </div>
                         ),

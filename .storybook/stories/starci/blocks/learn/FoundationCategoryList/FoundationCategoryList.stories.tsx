@@ -109,7 +109,7 @@ export const Default: Story = {
                         render: (
                             <FoundationCategoryList
 
-                               
+
                                 categories={CATEGORIES}
                                 onSelectCategory={() => {}}
                                 pagination={{ currentPage: 1, totalPages: 4, onPageChange: () => {} }}
@@ -156,7 +156,7 @@ export const Empty: Story = {
                         render: (
                             <FoundationCategoryList
 
-                               
+
                                 categories={[]}
                                 searchQuery="cobol"
                                 onSelectCategory={() => {}}

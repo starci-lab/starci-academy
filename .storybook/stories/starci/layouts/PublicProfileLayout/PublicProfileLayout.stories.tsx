@@ -119,7 +119,7 @@ export const Loading: Story = {
 </PublicProfileLayout>`,
                     render: (
                         <PublicProfileLayout
-                           
+
 
                             isLoading
                             user={null}
@@ -178,7 +178,7 @@ export const NotFound: Story = {
 </PublicProfileLayout>`,
                     render: (
                         <PublicProfileLayout
-                           
+
 
                             isLoading={false}
                             user={null}
@@ -237,7 +237,7 @@ export const Locked: Story = {
 </PublicProfileLayout>`,
                     render: (
                         <PublicProfileLayout
-                           
+
 
                             isLoading={false}
                             user={LOCKED_USER}
@@ -296,7 +296,7 @@ export const Content: Story = {
 </PublicProfileLayout>`,
                     render: (
                         <PublicProfileLayout
-                           
+
 
                             isLoading={false}
                             user={OWNER_USER}

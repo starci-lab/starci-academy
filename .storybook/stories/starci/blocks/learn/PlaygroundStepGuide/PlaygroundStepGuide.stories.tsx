@@ -61,7 +61,7 @@ export const Step: Story = {
                         render: (
                             <PlaygroundStepGuide
 
-                               
+
                                 step={{
                                     title: "Step 1 · Start Postgres",
                                     body: STEP_BODY,
@@ -169,7 +169,7 @@ export const StepNoCommand: Story = {
                         render: (
                             <PlaygroundStepGuide
 
-                               
+
                                 step={{
                                     title: "Step 0 · Before you begin",
                                     body: "This step assumes your machine already has Docker Desktop installed and the playground agent running in the background. Once you've read it, click **Verify this step** to move to the next one — there's no command to run here.",
@@ -210,7 +210,7 @@ export const Complete: Story = {
                         render: (
                             <PlaygroundStepGuide
 
-                               
+
                                 step={undefined}
                                 verifyState="ready"
                                 onVerify={() => {}}
@@ -248,7 +248,7 @@ export const Skeleton: Story = {
                         render: (
                             <PlaygroundStepGuide
 
-                               
+
                                 isSkeleton
                                 verifyState="ready"
                                 onVerify={() => {}}

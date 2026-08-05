@@ -64,7 +64,7 @@ export const Eyebrow: Story = {
                     {
                         name: "eyebrow omitted",
                         why: "A bare variant with no kicker line — the headline sits alone above the description and CTA row.",
-                        code: `<ClosingCta title="Start with a platform product — or an audit of your exact bottleneck" description={description} primaryCta={primaryCta} secondaryCta={secondaryCta} />`,
+                        code: "<ClosingCta title=\"Start with a platform product — or an audit of your exact bottleneck\" description={description} primaryCta={primaryCta} secondaryCta={secondaryCta} />",
                         render: (
                             <ClosingCta
                                 title={TITLE}

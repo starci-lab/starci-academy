@@ -54,7 +54,7 @@ export const Row: Story = {
                         render: (
                             <NavLinks
 
-                               
+
                                 items={[
                                     { label: "Home", path: "/", isActive: false },
                                     { label: "Courses", path: "/course", isActive: true },

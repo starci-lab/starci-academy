@@ -6,7 +6,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 /**
  * ATOM — `SelectCombobox`: a type-to-filter single-select autocomplete, wrapping HeroUI
  * `ComboBox` directly.
- * 
+ *
  * Leaf atoms: the typed field + caret is HeroUI `Input`/`ComboBox.Trigger`, the
  * label/description/error frame is the internal `FieldFrame` (no story of its own). No
  * component here has its own story ⇒ `annotate` has no `storyId` — but the four real HeroUI
@@ -56,7 +56,7 @@ export const Default: Story = {
                                         options={OPTIONS}
                                         placeholder="Search city or province"
                                         ariaLabel="City/Province"
-                                       
+
                                     />
                                 </div>
                             ),
@@ -94,7 +94,7 @@ export const WithLabel: Story = {
                                         placeholder="Search city or province"
                                         label="City/Province"
                                         hint="Type to filter fast."
-                                       
+
                                     />
                                 </div>
                             ),
@@ -132,7 +132,7 @@ export const Required: Story = {
                                         placeholder="Search city or province"
                                         label="City/Province"
                                         isRequired
-                                       
+
                                     />
                                 </div>
                             ),
@@ -212,7 +212,7 @@ export const Disabled: Story = {
                                     placeholder="Search city or province"
                                     label="City/Province"
                                     isDisabled
-                                   
+
                                 />
                             </div>
                         ),
@@ -251,7 +251,7 @@ export const Invalid: Story = {
                                     placeholder="Search city or province"
                                     label="City/Province"
                                     isInvalid
-                                   
+
                                 />
                             </div>
                         ),
@@ -287,7 +287,7 @@ export const Error: Story = {
                                         placeholder="Search city or province"
                                         label="City/Province"
                                         errorMessage="Choose a valid city or province."
-                                       
+
                                     />
                                 </div>
                             ),

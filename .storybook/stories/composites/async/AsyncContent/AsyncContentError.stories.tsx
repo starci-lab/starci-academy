@@ -9,7 +9,7 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * but with `tone="danger"`. State here comes from toggling its own slots (description · action
  * · icon). Branch priority (error wins over loading) is a state of `AsyncContent`, not repeated
  * here.
- * 
+ *
  * ANATOMY IS PER-LEAF: each story is its own leaf, carrying its own parts tree.
  */
 const meta: Meta<typeof AsyncContentError> = {
@@ -104,7 +104,7 @@ export const WithDescription: Story = {
                             <AsyncContentError
                                 title="Couldn't load the data"
                                 description="The server isn't responding right now. Please try again later."
-                               
+
                             />
                         ),
                     },
@@ -137,7 +137,7 @@ export const WithRetry: Story = {
                                 description="Something went wrong while loading the content."
                                 onRetry={() => {}}
                                 retryLabel="Try again"
-                               
+
                             />
                         ),
                     },
@@ -202,7 +202,7 @@ export const CustomIcon: Story = {
                                 description="Check your connection, then try again."
                                 onRetry={() => {}}
                                 retryLabel="Try again"
-                               
+
                             />
                         ),
                     },

@@ -70,7 +70,7 @@ export const Default: Story = {
                         render: (
                             <AiQuotaHistoryPanel
 
-                               
+
                                 chartPoints={CHART_POINTS}
                                 items={CHARGES}
                                 isLoading={false}
@@ -118,7 +118,7 @@ export const Loading: Story = {
                         render: (
                             <AiQuotaHistoryPanel
 
-                               
+
                                 chartPoints={CHART_POINTS}
                                 isLoading
                             />

@@ -63,7 +63,7 @@ export const Full: Story = {
                         render: (
                             <WorkSessionHeader
 
-                               
+
                                 backLabel="Exit"
                                 onBack={() => {}}
                                 title="Quick Questions"
@@ -112,7 +112,7 @@ export const Full: Story = {
     ),
 }
 
-/** LEAF — ⭐ the case that PROVES done and current are independent. */
+/** LEAF — * the case that PROVES done and current are independent. */
 export const RevisitingGraded: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -139,7 +139,7 @@ export const RevisitingGraded: Story = {
                         render: (
                             <WorkSessionHeader
 
-                               
+
                                 backLabel="Exit"
                                 onBack={() => {}}
                                 counter="Question 2 / 10"
@@ -183,7 +183,7 @@ export const NoFinish: Story = {
                         render: (
                             <WorkSessionHeader
 
-                               
+
                                 backLabel="Exit"
                                 onBack={() => {}}
                                 title="Review"

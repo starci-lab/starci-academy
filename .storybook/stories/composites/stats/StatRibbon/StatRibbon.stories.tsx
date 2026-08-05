@@ -50,7 +50,7 @@ export const FourStats: Story = {
                                     { key: "top", value: "8%", label: "Top" },
                                     { key: "rank", value: "#3", label: "Rank" },
                                 ]}
-                               
+
                             />
                         ),
                     },
@@ -80,7 +80,7 @@ export const TwoStats: Story = {
                                     { key: "passed", value: "0", label: "Passed" },
                                     { key: "xp", value: "0", label: "XP" },
                                 ]}
-                               
+
                             />
                         ),
                     },
@@ -120,7 +120,7 @@ export const Bordered: Story = {
                                         { key: "xp", value: "1,204", label: "XP" },
                                         { key: "top", value: "8%", label: "Top" },
                                     ]}
-                                   
+
                                 />
                             ),
                         },

@@ -70,7 +70,7 @@ export const Overview: Story = {
                         render: (
                             <FoundationHeader
 
-                               
+
                                 breadcrumbItems={CRUMBS}
                                 title="Managing processes in Linux"
                                 description="Processes, signals, and how the shell tracks a running program."

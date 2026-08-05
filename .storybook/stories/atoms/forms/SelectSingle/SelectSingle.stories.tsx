@@ -5,7 +5,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * ATOM — `SelectSingle`: a single-pick dropdown, wraps HeroUI `Select` directly.
- * 
+ *
  * Leaf atom: the bare control is HeroUI `Select.Trigger`/`Select.Value`/`Select.Popover`, the
  * label/description/error frame is the internal `FieldFrame` (no story of its own). No
  * component here has its own story ⇒ `annotate` carries no `storyId` — but the four real
@@ -53,7 +53,7 @@ export const Default: Story = {
                                         options={OPTIONS}
                                         placeholder="Choose a course"
                                         ariaLabel="Course"
-                                       
+
                                     />
                                 </div>
                             ),
@@ -91,7 +91,7 @@ export const WithLabel: Story = {
                                         placeholder="Choose a course"
                                         label="Course"
                                         hint="Pick the track you want to follow."
-                                       
+
                                     />
                                 </div>
                             ),
@@ -129,7 +129,7 @@ export const Required: Story = {
                                         placeholder="Choose a course"
                                         label="Course"
                                         isRequired
-                                       
+
                                     />
                                 </div>
                             ),
@@ -209,7 +209,7 @@ export const Disabled: Story = {
                                     placeholder="Choose a course"
                                     label="Course"
                                     isDisabled
-                                   
+
                                 />
                             </div>
                         ),
@@ -248,7 +248,7 @@ export const Invalid: Story = {
                                     placeholder="Choose a course"
                                     label="Course"
                                     isInvalid
-                                   
+
                                 />
                             </div>
                         ),
@@ -284,7 +284,7 @@ export const Error: Story = {
                                         placeholder="Choose a course"
                                         label="Course"
                                         errorMessage="Please choose a course."
-                                       
+
                                     />
                                 </div>
                             ),

@@ -46,7 +46,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * lesson states (done · active · todo) · all 4 difficulty steps · a locked
  * lesson.
  *
- * ⛔ Do NOT render two copies to show off `bordered`: the app has NO surface-in-surface case ⇒ `bordered` would be a
+ * [do-not] Do NOT render two copies to show off `bordered`: the app has NO surface-in-surface case ⇒ `bordered` would be a
  * MADE-UP case. A block doesn't invent cases just to round out the set.
  */
 export const Path: Story = {
@@ -70,7 +70,7 @@ export const Path: Story = {
                         render: (
                             <KeepGoingPath
 
-                               
+
                                 module={{ index: 2, name: "Containerization" }}
                                 contents={MIXED}
                             />
@@ -107,7 +107,7 @@ export const Skeleton: Story = {
                         render: (
                             <KeepGoingPath
 
-                               
+
                                 isSkeleton
                                 module={{ index: 2, name: "Containerization" }}
                                 contents={[]}

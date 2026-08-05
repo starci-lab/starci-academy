@@ -76,7 +76,7 @@ export const Eyebrow: Story = {
                     {
                         name: "eyebrow omitted",
                         why: "A bare variant with no kicker line — the headline sits alone above the panels.",
-                        code: `<SystemStoryCard title="Real results come from a real system." before={before} after={after} disclaimer={disclaimer} />`,
+                        code: "<SystemStoryCard title=\"Real results come from a real system.\" before={before} after={after} disclaimer={disclaimer} />",
                         render: <SystemStoryCard title={TITLE} before={BEFORE} after={AFTER} disclaimer={DISCLAIMER} />,
                     },
                 ]}

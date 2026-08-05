@@ -75,14 +75,19 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /** Shared controlled wrapper — one `isOpen`/`isRenewing`/`autoRenew` state feeds every leaf state below. */
-const ControlledDomainDetailModal = ({ domain }: { domain: DomainDetailModalDomain }) => {
+type ControlledDomainDetailModalProps = {
+    domain: DomainDetailModalDomain
+}
+const ControlledDomainDetailModal = ({ domain }: ControlledDomainDetailModalProps) => {
     const [isOpen, setIsOpen] = useState(true)
     const [isRenewing, setIsRenewing] = useState(false)
     const [autoRenew, setAutoRenew] = useState(domain.autoRenew)
 
     return (
         <div data-tier="fixture" className="flex flex-col gap-3 p-8">
-            <Button label="Open domain" variant="secondary" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label="Open domain" variant="secondary" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <DomainDetailModal
                 isOpen={isOpen}
                 onOpenChange={setIsOpen}

@@ -56,7 +56,7 @@ export const Default: Story = {
                         render: (
                             <ChallengeHeader
 
-                               
+
                                 onBackPress={() => {}}
                                 title="Balance a binary search tree"
                                 description="Write a function that checks whether a BST is height-balanced."

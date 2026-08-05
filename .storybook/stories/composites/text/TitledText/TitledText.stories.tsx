@@ -194,7 +194,7 @@ export const Truncate: Story = {
                                 <TitledText
                                     title="A very long title that gets clipped at the end of the line"
                                     subtitle="And a subtitle that is just as long gets clipped the same way"
-                                   
+
                                 />
                             </div>
                         ),

@@ -30,13 +30,13 @@ const relatedItems: ReadonlyArray<SurfaceCardNestedSection> = [
         eyebrow: "Relational databases",
         title: "Data normalization and normal forms",
         content: NormalizationContent,
-        
+
     },
     {
         key: "denormalize",
         eyebrow: "Database review deck",
         title: "When should you denormalize to optimize reads?",
-        
+
     },
 ]
 /** `icon` slot fixture for {@link WithIconMeta} — a component reference (COMPOSITE-8), not a built node. */
@@ -173,7 +173,7 @@ export const InteractiveSections: Story = {
                         render: (
                             <SurfaceCardNested
                                 title="Related lessons"
-                               
+
                                 items={[
                                     { ...relatedItems[0], onPress: () => alert("Open: Data normalization") },
                                     { ...relatedItems[1], href: "#denormalize" },
@@ -212,7 +212,7 @@ export const WithIconMeta: Story = {
                                 title="Related lessons"
                                 meta={RelatedMeta}
                                 items={relatedItems}
-                               
+
                             />
                         ),
                     },
@@ -245,7 +245,7 @@ export const WithFooter: Story = {
                                 title="Related lessons"
                                 items={relatedItems}
                                 footer={ViewAllFooter}
-                               
+
                             />
                         ),
                     },
@@ -292,7 +292,7 @@ export const FreeBody: Story = {
                     {
                         name: "body set, items unset",
                         why: "The body renders whatever free-form component the caller hands to `body`, instead of mapping `items` into a divided row of sections. No `Section` node appears in this tree because there is nothing repeating here to divide.",
-                        code: `<SurfaceCardNested title="Notes" body={NotesBody} />`,
+                        code: "<SurfaceCardNested title=\"Notes\" body={NotesBody} />",
                         render: <SurfaceCardNested title="Notes" body={NotesBody} />,
                     },
                 ]}

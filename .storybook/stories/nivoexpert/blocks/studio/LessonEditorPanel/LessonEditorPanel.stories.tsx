@@ -77,17 +77,18 @@ const REASON =
     "Every field maps one-to-one onto `LessonEntity` (`title`/`body`/`sortIndex`), and Save runs `createLesson` for a not-yet-saved draft (`id === null`) or `updateLesson` for an existing one — the button's own label says which. Delete only ASKS: it opens the `ConfirmDialog` overlay rather than deleting directly, and stays hidden for a draft (nothing on the server yet). A failed save (`saveError`) never clears the fields — the expert's typed content stays exactly where it was."
 
 /** Shared controlled wrapper — one `isOpen`/field state feeds every leaf state below. */
+type ControlledLessonEditorPanelProps = {
+    lesson: LessonEditView
+    video: LessonVideoStatus
+    saveError?: string | null
+    isSaving?: boolean
+}
 const ControlledLessonEditorPanel = ({
     lesson: initialLesson,
     video: initialVideo,
     saveError,
     isSaving,
-}: {
-    lesson: LessonEditView
-    video: LessonVideoStatus
-    saveError?: string | null
-    isSaving?: boolean
-}) => {
+}: ControlledLessonEditorPanelProps) => {
     const [isOpen, setIsOpen] = useState(true)
     const [lesson, setLesson] = useState(initialLesson)
 
@@ -111,7 +112,9 @@ const ControlledLessonEditorPanel = ({
 
     return (
         <div className="flex flex-col gap-3">
-            <Button label="Open lesson editor" variant="secondary" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label="Open lesson editor" variant="secondary" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <LessonEditorPanel {...base} />
         </div>
     )
@@ -128,10 +131,10 @@ export const Default: Story = {
                 annotate={ANNOTATE}
                 reason={REASON}
                 states={[
-                {
-                    name: "existing lesson, no video yet",
-                    why: "The everyday shape: an existing lesson's title/body/position, no video attached — the upload trigger is the way onward, no status chip yet.",
-                    code: `<LessonEditorPanel
+                    {
+                        name: "existing lesson, no video yet",
+                        why: "The everyday shape: an existing lesson's title/body/position, no video attached — the upload trigger is the way onward, no status chip yet.",
+                        code: `<LessonEditorPanel
   isOpen={isOpen}
   onOpenChange={setIsOpen}
   courseTitle="Ship Your First AI Agent"
@@ -143,69 +146,69 @@ export const Default: Story = {
   onDelete={askDelete}
   labels={labels}
 />`,
-                    render: <ControlledLessonEditorPanel lesson={EXISTING_LESSON} video="none" />,
-                },
-                {
-                    name: "video = \"processing\"",
-                    why: "A video was just uploaded and is still transcoding — the status chip names it and the upload trigger locks so a second upload can't race the first.",
-                    code: "<LessonEditorPanel video=\"processing\" … />",
-                    render: <ControlledLessonEditorPanel lesson={EXISTING_LESSON} video="processing" />,
-                },
-                {
-                    name: "video = \"ready\"",
-                    why: "The video finished transcoding and its DASH manifest is ready to stream — both chips read positive, and re-uploading (replacing the video) is still available.",
-                    code: "<LessonEditorPanel video=\"ready\" … />",
-                    render: <ControlledLessonEditorPanel lesson={EXISTING_LESSON} video="ready" />,
-                },
-                {
-                    name: "drafting a new lesson",
-                    why: "A brand-new lesson (`id = null`, added at the end of the list): Delete is hidden — nothing exists on the server yet to delete — and Save reads \"Create lesson\" instead of \"Save\".",
-                    code: "<LessonEditorPanel lesson={{ id: null, title: \"\", body: \"\", order: 5 }} … />",
-                    render: <ControlledLessonEditorPanel lesson={DRAFT_LESSON} video="none" />,
-                },
-                {
-                    name: "saveError set",
-                    why: "The save failed: the alert names it, and every field still shows exactly what the expert typed — a failed save never discards content.",
-                    code: "<LessonEditorPanel lesson={lesson} saveError=\"…\" … />",
-                    render: (
-                        <ControlledLessonEditorPanel
-                            lesson={EXISTING_LESSON}
-                            video="ready"
-                            saveError="The server couldn't be reached. Your changes are kept — try saving again."
-                        />
-                    ),
-                },
-                {
-                    name: "isSaving = true",
-                    why: "A save is in flight: every field and both actions lock, and the Save button shows its busy label instead of a second, silent click doing nothing.",
-                    code: "<LessonEditorPanel lesson={lesson} isSaving … />",
-                    render: <ControlledLessonEditorPanel lesson={EXISTING_LESSON} video="ready" isSaving />,
-                },
-                {
-                    name: "isSkeleton = true",
-                    why: "The drawer's own first fetch (the opened lesson's full body) is in flight, so the title and every field shimmer together, so nothing jumps when the real lesson lands.",
-                    code: "<LessonEditorPanel isSkeleton … />",
-                    render: (
-                        <div data-tier="fixture" className="p-8">
-                            <LessonEditorPanel
-                                isOpen
-                                onOpenChange={NOOP}
-                                courseTitle={COURSE_TITLE}
+                        render: <ControlledLessonEditorPanel lesson={EXISTING_LESSON} video="none" />,
+                    },
+                    {
+                        name: "video = \"processing\"",
+                        why: "A video was just uploaded and is still transcoding — the status chip names it and the upload trigger locks so a second upload can't race the first.",
+                        code: "<LessonEditorPanel video=\"processing\" … />",
+                        render: <ControlledLessonEditorPanel lesson={EXISTING_LESSON} video="processing" />,
+                    },
+                    {
+                        name: "video = \"ready\"",
+                        why: "The video finished transcoding and its DASH manifest is ready to stream — both chips read positive, and re-uploading (replacing the video) is still available.",
+                        code: "<LessonEditorPanel video=\"ready\" … />",
+                        render: <ControlledLessonEditorPanel lesson={EXISTING_LESSON} video="ready" />,
+                    },
+                    {
+                        name: "drafting a new lesson",
+                        why: "A brand-new lesson (`id = null`, added at the end of the list): Delete is hidden — nothing exists on the server yet to delete — and Save reads \"Create lesson\" instead of \"Save\".",
+                        code: "<LessonEditorPanel lesson={{ id: null, title: \"\", body: \"\", order: 5 }} … />",
+                        render: <ControlledLessonEditorPanel lesson={DRAFT_LESSON} video="none" />,
+                    },
+                    {
+                        name: "saveError set",
+                        why: "The save failed: the alert names it, and every field still shows exactly what the expert typed — a failed save never discards content.",
+                        code: "<LessonEditorPanel lesson={lesson} saveError=\"…\" … />",
+                        render: (
+                            <ControlledLessonEditorPanel
                                 lesson={EXISTING_LESSON}
-                                lessonCount={LESSON_COUNT}
-                                onChangeTitle={NOOP}
-                                onChangeBody={NOOP}
-                                onChangeOrder={NOOP}
-                                video="none"
-                                onUploadVideo={NOOP}
-                                onSave={NOOP}
-                                onDelete={NOOP}
-                                labels={LABELS}
-                                isSkeleton
+                                video="ready"
+                                saveError="The server couldn't be reached. Your changes are kept — try saving again."
                             />
-                        </div>
-                    ),
-                },
+                        ),
+                    },
+                    {
+                        name: "isSaving = true",
+                        why: "A save is in flight: every field and both actions lock, and the Save button shows its busy label instead of a second, silent click doing nothing.",
+                        code: "<LessonEditorPanel lesson={lesson} isSaving … />",
+                        render: <ControlledLessonEditorPanel lesson={EXISTING_LESSON} video="ready" isSaving />,
+                    },
+                    {
+                        name: "isSkeleton = true",
+                        why: "The drawer's own first fetch (the opened lesson's full body) is in flight, so the title and every field shimmer together, so nothing jumps when the real lesson lands.",
+                        code: "<LessonEditorPanel isSkeleton … />",
+                        render: (
+                            <div data-tier="fixture" className="p-8">
+                                <LessonEditorPanel
+                                    isOpen
+                                    onOpenChange={NOOP}
+                                    courseTitle={COURSE_TITLE}
+                                    lesson={EXISTING_LESSON}
+                                    lessonCount={LESSON_COUNT}
+                                    onChangeTitle={NOOP}
+                                    onChangeBody={NOOP}
+                                    onChangeOrder={NOOP}
+                                    video="none"
+                                    onUploadVideo={NOOP}
+                                    onSave={NOOP}
+                                    onDelete={NOOP}
+                                    labels={LABELS}
+                                    isSkeleton
+                                />
+                            </div>
+                        ),
+                    },
                 ]}
             />
         </div>

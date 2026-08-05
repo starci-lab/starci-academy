@@ -12,7 +12,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * earns its own layer over the bare `SearchAutocomplete` atom (domain
  * mapping + count wording, §14d.1).
  *
- * 📐 ONE LEAF (§14d.2). `isSkeleton`, an empty vs. populated suggestion list,
+ * [layout] ONE LEAF (§14d.2). `isSkeleton`, an empty vs. populated suggestion list,
  * and every value `count` can take (unknown / zero / N) are all DATA — no
  * node appears or disappears across them — so they are STATES inside the
  * single `Default` leaf, not leaves of their own.
@@ -64,7 +64,7 @@ export const Default: Story = {
                         render: (
                             <FoundationCategorySearchBar
 
-                               
+
                                 query=""
                                 onQueryChange={() => {}}
                                 suggestions={[]}

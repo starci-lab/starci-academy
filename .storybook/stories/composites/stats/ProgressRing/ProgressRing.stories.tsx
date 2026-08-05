@@ -15,6 +15,7 @@ export default meta
 
 type Story = StoryObj<typeof ProgressRing>
 
+/** Story: small size variant. */
 export const SizeSmall: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -23,6 +24,7 @@ export const SizeSmall: Story = {
     ),
 }
 
+/** Story: medium size variant. */
 export const SizeMedium: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -31,6 +33,7 @@ export const SizeMedium: Story = {
     ),
 }
 
+/** Story: large size variant. */
 export const SizeLarge: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -39,6 +42,7 @@ export const SizeLarge: Story = {
     ),
 }
 
+/** Story: ring at zero progress. */
 export const Zero: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -47,6 +51,7 @@ export const Zero: Story = {
     ),
 }
 
+/** Story: ring at full progress. */
 export const Full: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -55,6 +60,7 @@ export const Full: Story = {
     ),
 }
 
+/** Story: accent tone variant. */
 export const ToneAccent: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -63,6 +69,7 @@ export const ToneAccent: Story = {
     ),
 }
 
+/** Story: success tone variant. */
 export const ToneSuccess: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -71,6 +78,7 @@ export const ToneSuccess: Story = {
     ),
 }
 
+/** Story: warning tone variant. */
 export const ToneWarning: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -79,6 +87,7 @@ export const ToneWarning: Story = {
     ),
 }
 
+/** Story: danger tone variant. */
 export const ToneDanger: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -87,6 +96,7 @@ export const ToneDanger: Story = {
     ),
 }
 
+/** Story: ring with caption copy. */
 export const WithCaption: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -104,6 +114,7 @@ export const CustomLabel: Story = {
     ),
 }
 
+/** Story: ring without caption copy. */
 export const WithoutCaption: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">

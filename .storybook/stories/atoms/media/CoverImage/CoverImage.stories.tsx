@@ -29,6 +29,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Skeleton": { tier: "heroui", role: "the SAME aspect-video/rounded-2xl footprint, shimmering — no `<img>` mounted while the source is loading" },
 }
 
+/** Story: cover with a real image source. */
 export const WithImage: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -55,6 +56,7 @@ export const WithImage: Story = {
     ),
 }
 
+/** Story: cover fallback when no image is provided. */
 export const NoImage: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -81,6 +83,7 @@ export const NoImage: Story = {
     ),
 }
 
+/** Story: skeleton shimmer for this component. */
 export const Skeleton: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">

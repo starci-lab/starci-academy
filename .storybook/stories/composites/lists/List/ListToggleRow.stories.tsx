@@ -78,7 +78,7 @@ export const Default: Story = {
                                     description="Allow visitors to see the Projects tab on your public profile"
                                     checked={checked}
                                     onCheckedChange={setChecked}
-                                   
+
                                 />
                             ),
                         },
@@ -116,7 +116,7 @@ export const Selected: Story = {
                                     description="Allow visitors to see the Projects tab on your public profile"
                                     checked={checked}
                                     onCheckedChange={setChecked}
-                                   
+
                                 />
                             ),
                         },
@@ -184,7 +184,7 @@ export const Disabled: Story = {
                                 checked={false}
                                 onCheckedChange={() => {}}
                                 isDisabled
-                               
+
                             />
                         ),
                     },
@@ -215,7 +215,7 @@ export const Loading: Story = {
                                 checked={false}
                                 onCheckedChange={() => {}}
                                 isSkeleton
-                               
+
                             />
                         ),
                     },

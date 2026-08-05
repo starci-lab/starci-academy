@@ -67,7 +67,7 @@ export const Default: Story = {
                         render: (
                             <MindMapRail
 
-                               
+
                                 query=""
                                 onQuery={() => {}}
                                 tier="all"
@@ -173,7 +173,7 @@ export const FilterOpen: Story = {
                         render: (
                             <MindMapRail
 
-                               
+
                                 query=""
                                 onQuery={() => {}}
                                 tier="high"

@@ -34,7 +34,7 @@ const Controlled = ({ initialCount, initialReaction }: ControlledProps) => {
     const [state, setState] = useState({ count: initialCount, myReaction: initialReaction })
     return (
         <QaReactionBar
-           
+
 
             count={state.count}
             myReaction={state.myReaction}

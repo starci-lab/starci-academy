@@ -92,7 +92,7 @@ export const Default: Story = {
                     {
                         name: "complete (externalWorkspaceRef assigned)",
                         why: "All three steps read done and the ref has landed — the moment right before the caller hands off to the console.",
-                        code: '<ProvisioningState currentStepIndex={3} externalWorkspaceRef="aos-ws-7f2a91c" labels={labels} onMarkFailed={cancelAndRetry} />',
+                        code: "<ProvisioningState currentStepIndex={3} externalWorkspaceRef=\"aos-ws-7f2a91c\" labels={labels} onMarkFailed={cancelAndRetry} />",
                         render: <ProvisioningState currentStepIndex={3} externalWorkspaceRef="aos-ws-7f2a91c" labels={LABELS} onMarkFailed={NOOP} />,
                     },
                     {

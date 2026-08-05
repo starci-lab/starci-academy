@@ -79,7 +79,7 @@ export const Default: Story = {
                     {
                         name: "isSkeleton = true",
                         why: "The first fetch hasn't resolved, so the card keeps its title and draws a fixed count of event-shaped rows — time, description, and result chip all shimmering — so nothing jumps when events land.",
-                        code: `<OpsEventTable events={[]} labels={labels} isSkeleton />`,
+                        code: "<OpsEventTable events={[]} labels={labels} isSkeleton />",
                         render: <OpsEventTable events={[]} labels={LABELS} isSkeleton />,
                     },
                 ]}

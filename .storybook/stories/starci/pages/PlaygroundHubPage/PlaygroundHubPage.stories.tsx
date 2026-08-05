@@ -65,7 +65,7 @@ export const Default: Story = {
                         render: (
                             <PlaygroundHubPage
                                 {...BASE}
-                               
+
                                 exercises={EXERCISES}
                             />
                         ),
@@ -110,7 +110,7 @@ export const Skeleton: Story = {
                         render: (
                             <PlaygroundHubPage
                                 {...BASE}
-                               
+
                                 isSkeleton
                                 exercises={[]}
                             />

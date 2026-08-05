@@ -8,7 +8,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * real import, so its root is tagged `"Link"` and declared `tier: "heroui"` in `ANNOTATE`,
  * no `storyId`. Lives in the `Link.*` namespace alongside `LinkSeeMore` — two shapes of the
  * same "text-link + arrow" concept.
- * 
+ *
  * 1 PROP = 1 LEAF. No prop earns its own leaf: `label`/`target` only swap the text inside
  * one existing `<span>` (no element added or removed), and `onPress`/`className` produce no
  * visual. Result: one leaf, `Default`, which demonstrates all three call shapes (bare /

@@ -6,7 +6,7 @@ import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/Surface
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ STATE SCOPE: `StackV` is a single-axis VERTICAL frame. The state it PRODUCES =
+ * WARNING: STATE SCOPE: `StackV` is a single-axis VERTICAL frame. The state it PRODUCES =
  * whatever it decides itself: `gap` (the §10 scale — the reason this frame exists),
  * `align` (the horizontal axis), `divider` (a line between children). `wrap` is NOT here
  * (a column doesn't overflow into rows — that's `StackH`'s state), and `justify` is only
@@ -237,7 +237,7 @@ export const Nested: Story = {
                     {
                         name: "nested = true",
                         why: "A reply one level deeper than its parent comment gets a left guide + indent, so the thread's depth reads at a glance without the caller touching a single className.",
-                        code: `<StackV gap={4} nested body={<Typography size="sm" text="That's right, a missing COPY --from is the most common cause." />} />`,
+                        code: "<StackV gap={4} nested body={<Typography size=\"sm\" text=\"That's right, a missing COPY --from is the most common cause.\" />} />",
                         render: (
                             <StackV gap={4} nested items={[() => <Typography size="sm" text="That's right, a missing COPY --from is the most common cause." />]} />
                         ),
@@ -265,7 +265,7 @@ export const Align: Story = {
                     {
                         name: "align = stretch (default)",
                         why: "Both buttons grow to the full width of the dashed frame around them. This is the alignment a column gets without passing `align` at all.",
-                        code: `<StackV gap={3} align="stretch" body={<>…</>} />`,
+                        code: "<StackV gap={3} align=\"stretch\" body={<>…</>} />",
                         render: (
                             <div data-tier="fixture" className="w-56 rounded-3xl border border-dashed border-default p-3">
                                 <StackV gap={3} align="stretch" items={continueAndSaveButtons} />
@@ -275,7 +275,7 @@ export const Align: Story = {
                     {
                         name: "align = start",
                         why: "Both buttons keep their natural width and sit flush against the left edge of the frame. Neither button stretches to fill the column.",
-                        code: `<StackV gap={3} align="start" body={<>…</>} />`,
+                        code: "<StackV gap={3} align=\"start\" body={<>…</>} />",
                         render: (
                             <div data-tier="fixture" className="w-56 rounded-3xl border border-dashed border-default p-3">
                                 <StackV gap={3} align="start" items={continueAndSaveButtons} />
@@ -285,7 +285,7 @@ export const Align: Story = {
                     {
                         name: "align = center",
                         why: "Both buttons keep their natural width and sit centered inside the frame. Neither button stretches, but both share the same horizontal midpoint.",
-                        code: `<StackV gap={3} align="center" body={<>…</>} />`,
+                        code: "<StackV gap={3} align=\"center\" body={<>…</>} />",
                         render: (
                             <div data-tier="fixture" className="w-56 rounded-3xl border border-dashed border-default p-3">
                                 <StackV gap={3} align="center" items={continueAndSaveButtons} />
@@ -295,7 +295,7 @@ export const Align: Story = {
                     {
                         name: "align = end",
                         why: "Both buttons keep their natural width and sit flush against the right edge of the frame. Neither button stretches to fill the column.",
-                        code: `<StackV gap={3} align="end" body={<>…</>} />`,
+                        code: "<StackV gap={3} align=\"end\" body={<>…</>} />",
                         render: (
                             <div data-tier="fixture" className="w-56 rounded-3xl border border-dashed border-default p-3">
                                 <StackV gap={3} align="end" items={continueAndSaveButtons} />

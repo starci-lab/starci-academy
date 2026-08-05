@@ -60,7 +60,7 @@ const DEMO_GROUPS: Array<NivoSidebarGroup> = [
                 icon: ReceiptIcon,
                 href: "/invoices",
                 onPress: () => {},
-                endContent: <span className="rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-bold text-white">1</span>,
+                endContent: <span className="rounded-full bg-accent px-2 py-0 text-[10px] font-bold text-white">1</span>,
             },
             { id: "wallet", label: "Wallet", icon: WalletIcon, href: "/wallet", onPress: () => {} },
         ],

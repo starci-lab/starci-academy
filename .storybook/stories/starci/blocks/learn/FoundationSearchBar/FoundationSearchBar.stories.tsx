@@ -12,7 +12,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * (not a reach past it) and for the independent-count-loading axis that makes
  * it a distinct block rather than the same one reused.
  *
- * 📐 ONE LEAF (§14d.2). `isSkeleton`, `isCountLoading`, an empty vs. populated
+ * [layout] ONE LEAF (§14d.2). `isSkeleton`, `isCountLoading`, an empty vs. populated
  * suggestion list, and every value `resultCount` can take (unknown / zero / N)
  * are all DATA on the same fixed structure — no node appears or disappears —
  * so they are STATES inside the single `Default` leaf, not leaves of their own.
@@ -64,7 +64,7 @@ export const Default: Story = {
                         render: (
                             <FoundationSearchBar
 
-                               
+
                                 query=""
                                 onQueryChange={() => {}}
                                 suggestions={[]}

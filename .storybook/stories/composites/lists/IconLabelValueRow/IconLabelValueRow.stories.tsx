@@ -39,11 +39,11 @@ export const Default: Story = {
                     {
                         name: "icon + label + value",
                         why: "One `content-row` seam (12px) across icon↔label↔value — no sub-grouping inside the row, so a single gap value is the honest read. `label` is `default`/medium (the row's own text), `value` is `muted` (the fact it reports).",
-                        code: `<IconLabelValueRow icon={UsersIcon} label="Members" value="12 / 20" />`,
+                        code: "<IconLabelValueRow icon={UsersIcon} label=\"Members\" value=\"12 / 20\" />",
                         render: (
                             <IconLabelValueRow
 
-                               
+
                                 icon={UsersIcon}
                                 label="Members"
                                 value="12 / 20"
@@ -70,11 +70,11 @@ export const Skeleton: Story = {
                     {
                         name: "isSkeleton = true",
                         why: "The icon slot shimmers as a flat `bg-default` placeholder (no bare icon-shaped skeleton atom exists yet); `label`/`value` shimmer through `Typography`'s own `isSkeleton` bar, sized to a fraction this row picks.",
-                        code: `<IconLabelValueRow isSkeleton icon={UsersIcon} label="Members" value="12 / 20" />`,
+                        code: "<IconLabelValueRow isSkeleton icon={UsersIcon} label=\"Members\" value=\"12 / 20\" />",
                         render: (
                             <IconLabelValueRow
 
-                               
+
                                 isSkeleton
                                 icon={UsersIcon}
                                 label="Members"

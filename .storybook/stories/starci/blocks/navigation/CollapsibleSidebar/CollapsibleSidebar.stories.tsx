@@ -107,7 +107,7 @@ export const Default: Story = {
                             render: (
                                 <CollapsibleSidebar
 
-                                   
+
                                     title="Coursework"
                                     collapseLabel="Collapse"
                                     expandLabel="Expand"
@@ -143,7 +143,7 @@ export const Default: Story = {
                                             prefixIcon={PlayIcon}
                                             variant="secondary"
                                             size="sm"
-                                            classNames={["w-full"]}
+
                                             onPress={() => {}}
                                         />
                                     )}

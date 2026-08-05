@@ -121,9 +121,9 @@ export const Justify: Story = {
                     {
                         name: "justify = \"end\" (container = 640px)",
                         why: "The packed row gathers both buttons against the trailing edge — the common dialog-footer shape, where the primary action sits at the reading end.",
-                        code: `<ResponsiveCluster at="sm" gap={3} justify="end" items={[…]} />`,
+                        code: "<ResponsiveCluster at=\"sm\" gap={3} justify=\"end\" items={[…]} />",
                         render: (
-                            <Frame width="40rem" label={`container 640px — justify="end"`}>
+                            <Frame width="40rem" label={"container 640px — justify=\"end\""}>
                                 <ResponsiveCluster
                                     at="sm"
                                     gap={3}
@@ -138,9 +138,9 @@ export const Justify: Story = {
                     {
                         name: "justify = \"between\" (container = 640px)",
                         why: "The same two buttons instead pin to opposite edges — for a footer pairing a destructive/secondary action on one side with the primary action on the other.",
-                        code: `<ResponsiveCluster at="sm" gap={3} justify="between" items={[…]} />`,
+                        code: "<ResponsiveCluster at=\"sm\" gap={3} justify=\"between\" items={[…]} />",
                         render: (
-                            <Frame width="40rem" label={`container 640px — justify="between"`}>
+                            <Frame width="40rem" label={"container 640px — justify=\"between\""}>
                                 <ResponsiveCluster
                                     at="sm"
                                     gap={3}

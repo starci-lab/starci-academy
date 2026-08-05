@@ -32,7 +32,7 @@ const LeftOnlyDemo = () => {
     return (
         <DoubleTabsCard
 
-           
+
             leftTabs={{
                 items: [
                     { key: "overview", label: "Overview" },
@@ -53,7 +53,7 @@ const TwoGroupsDemo = () => {
     return (
         <DoubleTabsCard
 
-           
+
             leftTabs={{
                 items: [
                     { key: "overview", label: "Overview" },
@@ -147,7 +147,7 @@ export const Nested: Story = {
                         render: (
                             <DoubleTabsCard
 
-                               
+
                                 cardVariant="nested"
                                 leftTabs={{
                                     items: [

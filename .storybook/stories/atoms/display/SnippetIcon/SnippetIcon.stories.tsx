@@ -5,12 +5,12 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * ATOM — `SnippetIcon`: the system's one single-click copy affordance.
- * 
+ *
  * 1 PROP = 1 LEAF. `copyString` is required but produces no visual difference — every
  * value renders the same copy glyph, only the clipboard content changes — so it gets no
  * leaf. `className` gets no leaf. The one prop with a shape is `isCopied`, which pins the
- * ✓ glyph from the outside.
- * 
+ * check glyph from the outside.
+ *
  * Leaf set: `Default` (idle) + `Copied` (prop `isCopied`). The atom exposes `showAnatomy`
  * so both leaves can carry an anatomy badge.
  */
@@ -88,7 +88,7 @@ export const Default: Story = {
                                 </Typography>
                                 <SnippetIcon
                                     copyString="npm install @starciacademy/playground-agent"
-                                   
+
                                 />
                             </div>
                         ),
@@ -99,7 +99,7 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf for prop `isCopied` — the ✓ glyph pinned from the outside, beside the idle copy glyph. */
+/** Leaf for prop `isCopied` — the check glyph pinned from the outside, beside the idle copy glyph. */
 export const Copied: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -121,7 +121,7 @@ export const Copied: Story = {
                                 </Typography>
                                 <SnippetIcon
                                     copyString="sk-live-51H8x2KJ9mQwErTyUiOp"
-                                   
+
                                 />
                             </div>
                         ),

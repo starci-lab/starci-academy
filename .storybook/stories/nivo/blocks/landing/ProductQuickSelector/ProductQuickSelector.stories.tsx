@@ -69,7 +69,7 @@ export const Default: Story = {
                     {
                         name: "three needs",
                         why: "A shorter catalog of needs still lays out cleanly — the grid reflows from real data instead of assuming a fixed six-card shape.",
-                        code: `<ProductQuickSelector items={sixNeeds.slice(0, 3)} />`,
+                        code: "<ProductQuickSelector items={sixNeeds.slice(0, 3)} />",
                         render: <ProductQuickSelector items={THREE_NEEDS} />,
                     },
                 ]}

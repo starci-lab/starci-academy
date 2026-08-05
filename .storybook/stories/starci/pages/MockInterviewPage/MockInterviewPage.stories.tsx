@@ -80,7 +80,7 @@ export const Setup: Story = {
 />`,
                         render: (
                             <MockInterviewPage
-                               
+
                                 phase="setup"
                                 setupBackLabel="Module"
                                 onSetupBack={() => {}}
@@ -298,7 +298,7 @@ export const Live: Story = {
 />`,
                         render: (
                             <MockInterviewPage
-                               
+
                                 phase="live"
                                 setupBackLabel="Module"
                                 onSetupBack={() => {}}
@@ -463,7 +463,7 @@ export const Result: Story = {
 />`,
                         render: (
                             <MockInterviewPage
-                               
+
                                 phase="result"
                                 setupBackLabel="Module"
                                 onSetupBack={() => {}}

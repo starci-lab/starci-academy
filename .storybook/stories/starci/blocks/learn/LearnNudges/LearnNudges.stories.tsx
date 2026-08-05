@@ -60,7 +60,7 @@ export const Nudges: Story = {
                         render: (
                             <LearnNudges
 
-                               
+
                                 items={NUDGES}
                             />
                         ),
@@ -100,7 +100,7 @@ export const Skeleton: Story = {
                         render: (
                             <LearnNudges
 
-                               
+
                                 isSkeleton
                                 items={[]}
                             />

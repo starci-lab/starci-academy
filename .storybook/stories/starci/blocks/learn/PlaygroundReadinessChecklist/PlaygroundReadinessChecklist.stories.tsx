@@ -81,7 +81,7 @@ export const Default: Story = {
                         render: (
                             <PlaygroundReadinessChecklist
 
-                               
+
                                 items={ITEMS}
                             />
                         ),
@@ -121,7 +121,7 @@ export const Skeleton: Story = {
                         render: (
                             <PlaygroundReadinessChecklist
 
-                               
+
                                 items={ITEMS}
                                 isSkeleton
                             />

@@ -54,7 +54,7 @@ export const Default: Story = {
                         render: (
                             <FoundationCategoryHeader
 
-                               
+
                                 breadcrumbItems={CRUMBS}
                                 title="Programming Basics"
                                 description="Variables, data types, loops — the groundwork before moving on to a framework."
@@ -100,7 +100,7 @@ export const Skeleton: Story = {
                         render: (
                             <FoundationCategoryHeader
 
-                               
+
                                 title=""
                                 isSkeleton
                             />

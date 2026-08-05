@@ -73,7 +73,7 @@ export const Default: Story = {
                     {
                         name: "length = \"deep\"",
                         why: "Picking the other length swaps the card count the start button advertises — the same form, the same fields, only the judgement behind the button's own wording changes.",
-                        code: `<QuizSetup … length="deep" />`,
+                        code: "<QuizSetup … length=\"deep\" />",
                         render: (
                             <QuizSetup
                                 label="Set up session"
@@ -193,7 +193,7 @@ export const Loading: Story = {
                     {
                         name: "isSkeleton = true",
                         why: "Every field and the start button shimmer in the exact card shape they will hold once the setup data (or a resumable run) has loaded.",
-                        code: `<QuizSetup label="Set up session" name="" length="quick" level="middle" isSkeleton />`,
+                        code: "<QuizSetup label=\"Set up session\" name=\"\" length=\"quick\" level=\"middle\" isSkeleton />",
                         render: (
                             <QuizSetup
                                 label="Set up session"

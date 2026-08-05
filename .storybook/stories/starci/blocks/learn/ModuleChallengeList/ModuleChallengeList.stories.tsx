@@ -68,7 +68,7 @@ export const List: Story = {
                         render: (
                             <ModuleChallengeList
 
-                               
+
                                 challenges={MIXED}
                                 onSelectChallenge={() => {}}
                             />
@@ -104,7 +104,7 @@ export const Skeleton: Story = {
                         render: (
                             <ModuleChallengeList
 
-                               
+
                                 isSkeleton
                                 challenges={[]}
                                 onSelectChallenge={() => {}}

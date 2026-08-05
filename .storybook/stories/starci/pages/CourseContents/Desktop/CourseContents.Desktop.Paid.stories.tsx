@@ -18,6 +18,7 @@ export default meta
 
 type Story = StoryObj<typeof CourseContents>
 
+/** Story: resting state for this component. */
 export const Default: Story = {
     render: () => deviceLeaf({ viewer: "paid", leaf: "Default", reason: "Purchased — only TrialConversionStrip drops out, leaving the spine: PageHeader · CourseTeamGate · continue cluster · LearnNudges · keep-going path. The gate stays because the viewer is enrolled but not in the GitHub team yet." }),
 }

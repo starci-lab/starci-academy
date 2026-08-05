@@ -58,7 +58,7 @@ export const Default: Story = {
                     {
                         name: "activeKey = ai_agent",
                         why: "The same row after selecting AI Agent: the active treatment moves to the second tab and the first drops to muted — the proof that exactly one tab is lit and it follows `activeKey`.",
-                        code: `<CategoryTabs categories={categories} activeKey="ai_agent" … />`,
+                        code: "<CategoryTabs categories={categories} activeKey=\"ai_agent\" … />",
                         render: <CategoryTabs categories={CATEGORIES} activeKey="ai_agent" onSelect={NOOP} />,
                     },
                     {

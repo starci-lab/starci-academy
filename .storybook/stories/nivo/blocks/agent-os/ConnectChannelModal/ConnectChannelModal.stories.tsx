@@ -63,7 +63,9 @@ const ControlledConnectChannelModal = () => {
 
     return (
         <div data-tier="fixture" className="flex flex-col gap-3 p-8">
-            <Button label="Connect channel" variant="secondary" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label="Connect channel" variant="secondary" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <BlockAnatomy
                 name="ConnectChannelModal"
                 tier="block"

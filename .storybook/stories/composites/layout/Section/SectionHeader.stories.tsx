@@ -9,7 +9,7 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * children (everything is a named slot), NO chrome (no background/border/
  * radius/padding) — it sits directly on the page background.
  *
- * ⚠️ STATE SCOPE (§12f/§13): this file only renders states this component
+ * WARNING: STATE SCOPE (§12f/§13): this file only renders states this component
  * ITSELF produces — toggling each slot + `level` (the type scale). The
  * vertical rhythm header ↔ body ↔ footer belongs to `Section` (`gap`), so it
  * is NOT repeated here. Tier distinction: `PageHeader` = chrome for the whole
@@ -123,7 +123,7 @@ export const WithDescription: Story = {
                                 <SectionHeader
                                     title="My courses"
                                     description="The courses you're enrolled in, sorted by most recently studied."
-                                   
+
                                 />
                             ),
                         },
@@ -155,7 +155,7 @@ export const WithAction: Story = {
                                 <SectionHeader
                                     title="My courses"
                                     action={() => <Button label="View all" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />}
-                                   
+
                                 />
                             ),
                         },
@@ -191,7 +191,7 @@ export const Full: Story = {
                                     title="Submitted assignments"
                                     description="AI grades within minutes; you can resubmit up to 3 times."
                                     action={() => <Button label="Settings" variant="secondary" size="sm" prefixIcon={GearIcon} onPress={() => {}} />}
-                                   
+
                                 />
                             ),
                         },

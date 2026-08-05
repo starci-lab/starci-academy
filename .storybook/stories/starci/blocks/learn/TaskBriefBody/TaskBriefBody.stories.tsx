@@ -95,7 +95,7 @@ export const SchemaV2Brief: Story = {
                         render: (
                             <TaskBriefBody
 
-                               
+
                                 title="Package an app with a Docker multi-stage build"
                                 description="Optimize image size before pushing to the registry."
                                 isLocked={false}
@@ -162,7 +162,7 @@ export const LegacySchemaV1: Story = {
                         render: (
                             <TaskBriefBody
 
-                               
+
                                 title="Deploy a container to a VPS with Docker Compose"
                                 isLocked={false}
                                 onGoToCurrentTask={() => {}}

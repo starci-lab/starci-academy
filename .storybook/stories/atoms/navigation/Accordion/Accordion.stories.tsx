@@ -8,11 +8,11 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * declares `tier: "heroui"` in `ANNOTATE` with the name matching the import identifier
  * exactly (`DisclosureGroup`/`Disclosure`/`Disclosure.Trigger`/`Disclosure.Indicator`/
  * `Disclosure.Content`/`Skeleton`), with no `storyId`.
- * 
+ *
  * Leaf set = `Default` (bare, prop `items`) + `Single`/`Multiple` (prop `allowsMultiple`,
  * each cell uses `defaultExpandedKeys` to open a panel up front, since `allowsMultiple` only
  * changes behavior on interaction) + `Skeleton` (prop `isSkeleton`).
- * 
+ *
  * `Skeleton` carries the prop's name (`isSkeleton`). The atom has no other size/variant axis
  * for the skeleton, so one rendering is enough.
  */

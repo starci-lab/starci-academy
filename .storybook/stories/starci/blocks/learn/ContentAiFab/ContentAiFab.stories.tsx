@@ -43,7 +43,7 @@ export const Default: Story = {
                         render: (
                             <ContentAiFab
 
-                               
+
                                 onOpen={() => {}}
                                 isOpen={false}
                             />

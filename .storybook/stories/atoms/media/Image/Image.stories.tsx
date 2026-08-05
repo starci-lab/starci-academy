@@ -9,7 +9,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * home to jump to — no badge. `Skeleton` is HeroUI's own `Skeleton` rendered straight
  * through, so it gets a badge + `annotate: { "Skeleton": { tier: "heroui" } }` — the panel
  * only accepts a node with a `storyId` or `tier: "heroui"`.
- * 
+ *
  * TWO LEAVES (split by structure):
  *   • `WithImage` — the tree has an `Img` node. Loaded · loading (skeleton overlay) · using
  *     `fallbackSrc` · every `ratio`/`radius`/`fit` share the same DOM tree ⇒ states/variants

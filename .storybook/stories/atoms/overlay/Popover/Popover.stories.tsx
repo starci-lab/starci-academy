@@ -8,16 +8,16 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * its pressable trigger (react-aria's `DialogTrigger` requires one). No child atom splits into
  * its own story — `heading`/`triggerIcon`/`triggerVariant`/`placement`/`showArrow` are all
  * prop-driven leaves of `Popover` itself.
- * 
+ *
  * `annotate`: every HeroUI import `Popover.tsx` renders directly declares `tier: "heroui"`
  * (no `storyId`). Node names match the real import name (`Button` for the trigger;
  * `Popover.Content`/`Popover.Arrow`/`Popover.Heading` for the panel).
- * 
+ *
  * PORTAL LIMIT: `Popover.Content` and its nested `Popover.Arrow`/`Popover.Heading` render into
  * `document.body`, outside the render-box {@link BlockAnatomy} scans, so they do not show up in
  * the Structure tree — declaring the right name is data honesty, not a visibility promise. Only
  * `Button` (the trigger) lands in the tree.
- * 
+ *
  * The `Placement`/`ShowArrow` leaves open the panel through a portal, so they need `defaultOpen`
  * to be seen, and lay their popovers out in a vertical column so each can open in any direction
  * without overlapping. The `TriggerVariant` leaf's difference lives in the closed button, so it
@@ -68,7 +68,7 @@ export const Default: Story = {
                                     content="Last session was 2 days ago. Keep the streak alive by studying every day."
                                     placement="bottom"
                                     defaultOpen
-                                   
+
                                 />
                             </div>
                         ),
@@ -101,7 +101,7 @@ export const WithHeading: Story = {
                                     content="Study today to keep it going. Miss one day and it resets to zero."
                                     placement="bottom"
                                     defaultOpen
-                                   
+
                                 />
                             </div>
                         ),
@@ -134,7 +134,7 @@ export const WithTriggerIcon: Story = {
                                     content="Score = number of criteria passed divided by the total criteria in the question's checklist."
                                     placement="bottom"
                                     defaultOpen
-                                   
+
                                 />
                             </div>
                         ),

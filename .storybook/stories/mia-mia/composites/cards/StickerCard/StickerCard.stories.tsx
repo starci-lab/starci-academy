@@ -19,11 +19,11 @@ export const Default: Story = {
             <StickerCard
                 variant="paper"
                 tilt="left"
-                title="Đề THPT 2026"
-                metaLabel="50 câu · 60′"
-                scoreLabel="Điểm của bạn"
+                title="National exam 2026"
+                metaLabel="50 questions · 60 min"
+                scoreLabel="Your score"
                 score="8.5"
-                statusLabel="Đã nộp"
+                statusLabel="Submitted"
             />
         </div>
     ),
@@ -40,7 +40,7 @@ export const Variants: Story = {
                     <Typography type="body-sm" color="muted">a submitted mock exam: title, timing, score, status.</Typography>
                 </div>
                 <div className="w-56">
-                    <StickerCard variant="paper" tilt="left" title="Đề THPT 2026" metaLabel="50 câu · 60′" scoreLabel="Điểm của bạn" score="8.5" statusLabel="Đã nộp" />
+                    <StickerCard variant="paper" tilt="left" title="National exam 2026" metaLabel="50 questions · 60 min" scoreLabel="Your score" score="8.5" statusLabel="Submitted" />
                 </div>
             </div>
             <div className="flex flex-col gap-3">
@@ -49,7 +49,7 @@ export const Variants: Story = {
                     <Typography type="body-sm" color="muted">one vocabulary item: word, phonetics, meaning.</Typography>
                 </div>
                 <div className="w-52">
-                    <StickerCard variant="flashcard" tilt="right" word="resilient" phonetic="/rɪˈzɪliənt/ · adj" meaning="kiên cường, bền bỉ" />
+                    <StickerCard variant="flashcard" tilt="right" word="resilient" phonetic="/rɪˈzɪliənt/ · adj" meaning="resilient, persistent" />
                 </div>
             </div>
             <div className="flex flex-col gap-3">
@@ -58,7 +58,7 @@ export const Variants: Story = {
                     <Typography type="body-sm" color="muted">a line of coaching from Mia beside her avatar.</Typography>
                 </div>
                 <div className="w-64">
-                    <StickerCard variant="tutor" avatarText="M" quote="“Câu này bẫy ở thì hoàn thành nha — thử lại xem!”" />
+                    <StickerCard variant="tutor" avatarText="M" quote="This one traps you on the present perfect -- try again!" />
                 </div>
             </div>
         </div>

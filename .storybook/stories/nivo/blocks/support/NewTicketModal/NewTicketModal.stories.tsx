@@ -61,7 +61,9 @@ const ControlledNewTicketModal = () => {
 
     return (
         <div data-tier="fixture" className="flex flex-col gap-3 p-8">
-            <Button label="Open a support ticket" variant="secondary" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label="Open a support ticket" variant="secondary" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <BlockAnatomy
                 name="NewTicketModal"
                 tier="block"

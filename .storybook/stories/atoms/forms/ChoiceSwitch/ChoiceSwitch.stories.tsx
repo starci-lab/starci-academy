@@ -18,24 +18,24 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 /**
  * ATOM — `ChoiceSwitch`: a boolean track, label sits INLINE next to the track (wraps HeroUI Switch).
  *
- * 📐 **1 PROP = 1 LEAF** (§12g). The full set of leaf props WITH A DISTINCT SHAPE: `isSelected`
+ * [layout] **1 PROP = 1 LEAF** (§12g). The full set of leaf props WITH A DISTINCT SHAPE: `isSelected`
  * (`Default`/`Selected`) · `size` (`Sizes`) · `hint` (`WithHint`) · `isRequired` (`Required`) ·
  * `isDisabled` (`Disabled`) · `errorMessage` (`Error`) · `isSkeleton` (`Loading`).
  * `label`/`onValueChange`/`className` produce no distinct shape, so they get
  * no leaf.
  *
- * ⚠️ The previous version was MISSING the `Sizes` leaf entirely, even though the `size` prop
+ * WARNING: The previous version was MISSING the `Sizes` leaf entirely, even though the `size` prop
  * has three clearly distinct shapes (sm/md/lg) — added here. The `Loading` leaf must also
  * render all three sizes (§12g: "an isSkeleton leaf must render the skeleton at ALL 3
  * sizes"), not just one default track.
  *
- * ⭐ DEPS: this atom wraps HeroUI Switch directly — it doesn't rebuild any other atom that
+ * * DEPS: this atom wraps HeroUI Switch directly — it doesn't rebuild any other atom that
  * has its own story, so it has NO `annotate` prop (§12g: "a leaf atom that wraps HeroUI
  * directly ⇒ deps are EMPTY"). `Control`/`Label` are Switch's own internal slots;
  * `Description`/`Error` are slots of `FieldFrame` (an internal scaffold with no story of
  * its own).
  *
- * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`code`) and demo labels in the render
+ * [copy] Text shown on the panel (`leaf`/`reason`/`note`/`code`) and demo labels in the render
  * frame, as well as all JSDoc/comments, are written in ENGLISH.
  */
 const meta: Meta<typeof ChoiceSwitch> = {
@@ -180,7 +180,7 @@ export const WithHint: Story = {
                                         onValueChange={setValue}
                                         label="Dark mode"
                                         hint="Eases eye strain when using the app at night."
-                                       
+
                                     />
                                 </div>
                             ),
@@ -217,7 +217,7 @@ export const Required: Story = {
                                         onValueChange={setValue}
                                         label="Enable two-factor authentication"
                                         isRequired
-                                       
+
                                     />
                                 </div>
                             ),
@@ -281,7 +281,7 @@ export const Error: Story = {
                                         onValueChange={setValue}
                                         label="Security alerts"
                                         errorMessage="Turn this on to get alerted about suspicious activity."
-                                       
+
                                     />
                                 </div>
                             ),

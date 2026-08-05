@@ -84,7 +84,7 @@ export const Open: Story = {
                         render: (
                             <ContentArticle
 
-                               
+
                                 body={BODY}
                                 hintText="Highlight a passage to ask AI about that exact spot."
                             />
@@ -125,7 +125,7 @@ export const Locked: Story = {
                         render: (
                             <ContentArticle
 
-                               
+
                                 body={BODY}
                                 isLocked
                                 offer={OFFER}
@@ -157,7 +157,7 @@ export const Skeleton: Story = {
                         render: (
                             <ContentArticle
 
-                               
+
                                 body=""
                                 isSkeleton
                             />

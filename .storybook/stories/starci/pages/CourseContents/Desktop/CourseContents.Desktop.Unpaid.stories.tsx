@@ -17,6 +17,7 @@ export default meta
 
 type Story = StoryObj<typeof CourseContents>
 
+/** Story: resting state for this component. */
 export const Default: Story = {
     render: () => deviceLeaf({ viewer: "trial", leaf: "Default", reason: "Not purchased — the tree ADDS TrialConversionStrip. A different tree from Paid, so it earns its own story." }),
 }

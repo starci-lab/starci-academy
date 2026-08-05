@@ -69,7 +69,7 @@ const ControlledMemberDetailDrawer = ({
                 label={triggerLabel}
                 variant="secondary"
                 size="sm"
-                classNames={["self-start"]}
+
                 onPress={() => setIsOpen(true)}
             />
             <MemberDetailDrawer isOpen={isOpen} onOpenChange={setIsOpen} {...drawerProps} />
@@ -152,7 +152,7 @@ export const Default: Story = {
                 {
                     name: "banned member",
                     why: "The status chip switches to its danger tone and the footer swaps \"Ban member\" for \"Unban member\" (outline) — reversing a ban is a direct action, no audit reason required.",
-                    code: `<MemberDetailDrawer status="banned" role="member" … onUnban={unban} />`,
+                    code: "<MemberDetailDrawer status=\"banned\" role=\"member\" … onUnban={unban} />",
                     render: (
                         <ControlledMemberDetailDrawer
                             triggerLabel="Open — banned"
@@ -173,7 +173,7 @@ export const Default: Story = {
                 {
                     name: "isBusy = true",
                     why: "A mutation for this member is already in flight (e.g. the unban just fired) — both footer actions lock until it resolves.",
-                    code: `<MemberDetailDrawer isBusy … />`,
+                    code: "<MemberDetailDrawer isBusy … />",
                     render: (
                         <ControlledMemberDetailDrawer
                             triggerLabel="Open — busy"

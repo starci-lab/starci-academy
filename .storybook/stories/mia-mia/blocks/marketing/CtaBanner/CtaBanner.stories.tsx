@@ -5,9 +5,9 @@ const meta: Meta<typeof CtaBanner> = {
     title: "MiaMia/CtaBanner",
     component: CtaBanner,
     args: {
-        title: "Bắt đầu đề đầu tiên hôm nay",
-        description: "Miễn phí, không cần thẻ. Mia đợi sẵn để kèm bạn từ câu đầu tiên.",
-        ctaLabel: "Vào học miễn phí",
+        title: "Start your first exam today",
+        description: "Free, no card required. Mia is ready to coach you from the first question.",
+        ctaLabel: "Start learning free",
         ctaHref: "#",
     },
 }

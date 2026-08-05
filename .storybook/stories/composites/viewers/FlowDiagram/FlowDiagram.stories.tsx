@@ -60,7 +60,7 @@ export const LinearSequence: Story = {
                     { id: "practice-certificate", source: "practice", target: "certificate" },
                 ]}
 
-               
+
             />
         </div>
     ),

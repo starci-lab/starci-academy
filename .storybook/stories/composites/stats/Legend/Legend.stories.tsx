@@ -19,12 +19,13 @@ export default meta
 
 type Story = StoryObj<typeof Legend>
 
+/** Story: basic legend composition. */
 export const Basic: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
             <Legend
 
-               
+
                 items={[
                     { key: "easy", label: "Easy", color: "var(--success)" },
                     { key: "medium", label: "Medium", color: "var(--warning)" },
@@ -42,7 +43,7 @@ export const WrapMany: Story = {
             <div className="max-w-[220px]">
                 <Legend
 
-                   
+
                     items={[
                         { key: "javascript", label: "JavaScript", color: "var(--warning)" },
                         { key: "typescript", label: "TypeScript", color: "var(--accent)" },
@@ -62,7 +63,7 @@ export const WithSuffix: Story = {
         <div data-tier="fixture" className="p-8">
             <Legend
 
-               
+
                 items={[
                     { key: "content", label: "Content", color: "var(--accent)", suffix: " · 12" },
                     { key: "challenge", label: "Challenge", color: "var(--success)", suffix: " · 8" },
@@ -79,7 +80,7 @@ export const Vertical: Story = {
         <div data-tier="fixture" className="p-8">
             <Legend
 
-               
+
                 direction="col"
                 items={[
                     { key: "easy", label: "Easy", color: "var(--success)", suffix: " · 24" },
@@ -97,7 +98,7 @@ export const TailwindClassColors: Story = {
         <div data-tier="fixture" className="p-8">
             <Legend
 
-               
+
                 items={[
                     { key: "accent", label: "Accent", color: "bg-accent" },
                     { key: "success", label: "Success", color: "bg-success" },
@@ -115,7 +116,7 @@ export const LongLabels: Story = {
             <div className="max-w-[260px]">
                 <Legend
 
-                   
+
                     items={[
                         { key: "senior", label: "Senior/Staff — architecture-level system design questions", color: "var(--accent)" },
                         { key: "junior", label: "Junior — fundamental basics questions", color: "var(--success)" },

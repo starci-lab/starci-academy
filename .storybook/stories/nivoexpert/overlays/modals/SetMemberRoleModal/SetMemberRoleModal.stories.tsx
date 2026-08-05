@@ -61,7 +61,7 @@ const ControlledSetMemberRoleModal = ({
                 label={triggerLabel}
                 variant="secondary"
                 size="sm"
-                classNames={["self-start"]}
+
                 onPress={() => setIsOpen(true)}
             />
             <SetMemberRoleModal
@@ -110,7 +110,7 @@ export const Default: Story = {
                 {
                     name: "isSaving = true",
                     why: "Save was just pressed — the `setMemberRole` mutation is in flight, so Save shows a spinner and both buttons (plus the radio group) lock until it resolves.",
-                    code: `<SetMemberRoleModal isSaving … />`,
+                    code: "<SetMemberRoleModal isSaving … />",
                     render: (
                         <ControlledSetMemberRoleModal
                             triggerLabel="Open — saving"

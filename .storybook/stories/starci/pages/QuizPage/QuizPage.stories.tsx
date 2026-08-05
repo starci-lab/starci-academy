@@ -112,7 +112,7 @@ export const SetupEnrolled: Story = {
 />`,
                         render: (
                             <QuizPage
-                               
+
                                 phase="setup"
                                 flashcardMode="quiz"
                                 onFlashcardModeChange={() => {}}
@@ -247,7 +247,7 @@ export const SetupTrial: Story = {
 />`,
                         render: (
                             <QuizPage
-                               
+
                                 phase="setup"
                                 flashcardMode="quiz"
                                 onFlashcardModeChange={() => {}}
@@ -326,7 +326,7 @@ export const SetupLoading: Story = {
 />`,
                         render: (
                             <QuizPage
-                               
+
                                 phase="setup"
                                 flashcardMode="quiz"
                                 onFlashcardModeChange={() => {}}
@@ -418,7 +418,7 @@ export const Active: Story = {
 />`,
                         render: (
                             <QuizPage
-                               
+
                                 phase="active"
                                 flashcardMode="quiz"
                                 onFlashcardModeChange={() => {}}
@@ -579,7 +579,7 @@ export const Recap: Story = {
 />`,
                         render: (
                             <QuizPage
-                               
+
                                 phase="recap"
                                 flashcardMode="quiz"
                                 onFlashcardModeChange={() => {}}

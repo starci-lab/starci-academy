@@ -51,13 +51,13 @@ export const Default: Story = {
                     {
                         name: "healthPercent = 99.2",
                         why: "The loaded tile: pulse glyph, the `Pod health` meter at 99.2%, and the illustrative caption underneath — the same caption text on EVERY value, since the number is never meant to read as a real SLA figure.",
-                        code: `<HealthCard healthPercent={99.2} labels={labels} />`,
+                        code: "<HealthCard healthPercent={99.2} labels={labels} />",
                         render: <HealthCard healthPercent={99.2} labels={LABELS} />,
                     },
                     {
                         name: "isSkeleton = true",
                         why: "The console's own first fetch hasn't resolved yet, so the meter's label/percentage/bar shimmer in place — the decorative glyph tile stays static, the same convention `SurfaceCard.Nested`'s own header icon uses.",
-                        code: `<HealthCard isSkeleton healthPercent={0} labels={labels} />`,
+                        code: "<HealthCard isSkeleton healthPercent={0} labels={labels} />",
                         render: <HealthCard isSkeleton healthPercent={0} labels={LABELS} />,
                     },
                 ]}

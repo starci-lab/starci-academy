@@ -39,6 +39,7 @@ const STAT_PARTS: Array<AnatomyNode> = [
     { name: "Typography", tier: "heroui", role: "the muted caption under the value" },
 ]
 
+/** Story: one stat pair. */
 export const Single: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -61,6 +62,7 @@ export const Single: Story = {
     ),
 }
 
+/** Story: stat pairs in a row. */
 export const Row: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -93,6 +95,7 @@ export const Row: Story = {
     ),
 }
 
+/** Story: stat pairs in a grid. */
 export const Grid: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">

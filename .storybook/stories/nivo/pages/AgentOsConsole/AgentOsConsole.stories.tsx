@@ -180,17 +180,17 @@ const LABELS: AgentOsConsoleLabels = {
     },
     failedBanner: {
         title: "Could not start the pod",
-        description: 'Provisioning failed at the "Connect channels" step — the Zalo OA token is invalid. Agents stay unresponsive until a retry succeeds.',
+        description: "Provisioning failed at the \"Connect channels\" step — the Zalo OA token is invalid. Agents stay unresponsive until a retry succeeds.",
         actionLabel: "Retry",
     },
 }
 
 const EVENTS: Array<OpsEventFeedRow> = [
-    { id: "evt-1", timeLabel: "09:41", description: 'Agent "Sales — Mai" replied to a customer on Zalo', result: "success" },
-    { id: "evt-2", timeLabel: "09:22", description: 'Workflow "Sync orders → Sheet" ran', result: "success" },
+    { id: "evt-1", timeLabel: "09:41", description: "Agent \"Sales — Mai\" replied to a customer on Zalo", result: "success" },
+    { id: "evt-2", timeLabel: "09:22", description: "Workflow \"Sync orders → Sheet\" ran", result: "success" },
     { id: "evt-3", timeLabel: "08:55", description: "WhatsApp Business channel reconnected", result: "success" },
-    { id: "evt-4", timeLabel: "08:10", description: 'Agent "Accounting — Ha" paused by an admin', result: "info" },
-    { id: "evt-5", timeLabel: "07:30", description: 'Workflow "Remind unpaid customers" failed to send', result: "failure" },
+    { id: "evt-4", timeLabel: "08:10", description: "Agent \"Accounting — Ha\" paused by an admin", result: "info" },
+    { id: "evt-5", timeLabel: "07:30", description: "Workflow \"Remind unpaid customers\" failed to send", result: "failure" },
 ]
 
 const ACTIVE_OVERVIEW: AgentOsConsoleSection = {

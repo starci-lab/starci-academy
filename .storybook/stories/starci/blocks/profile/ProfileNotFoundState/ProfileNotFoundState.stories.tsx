@@ -48,7 +48,7 @@ export const Default: Story = {
                         render: (
                             <ProfileNotFoundState
 
-                               
+
                                 title="Profile not found"
                                 description="This profile doesn't exist or has been removed."
                                 onGoHome={() => {}}

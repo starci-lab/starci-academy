@@ -10,7 +10,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * `Button`) rather than hand-rolled — see the component's file header for why
  * (the `CourseTeamGate` precedent + the `ContentTabBar` cautionary tale).
  *
- * 📐 LEAF by STRUCTURE: whether the CTA button exists is a real structural
+ * [layout] LEAF by STRUCTURE: whether the CTA button exists is a real structural
  * difference (`Callout` renders no action node at all without it), so
  * "with CTA" vs "no CTA" are two leaves, not one leaf with a toggled prop.
  */
@@ -51,7 +51,7 @@ export const WithCta: Story = {
                         render: (
                             <TaskLockedAlert
 
-                               
+
                                 message="You can still view this task's criteria. AI grading, feedback, history, and the GitHub section will unlock once you finish the previous step."
                                 onGoToCurrentTask={() => {}}
                             />
@@ -84,7 +84,7 @@ export const NoCta: Story = {
                         render: (
                             <TaskLockedAlert
 
-                               
+
                                 message="You can still view this task's criteria. AI grading, feedback, history, and the GitHub section will unlock once you finish the previous step."
                             />
                         ),

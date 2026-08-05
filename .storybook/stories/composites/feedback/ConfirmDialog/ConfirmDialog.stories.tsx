@@ -55,19 +55,20 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * shows up on the canvas (ConfirmDialog is an overlay). The dialog closes
  * itself on Cancel / Confirm via `onOpenChange`.
  */
+type DemoProps = {
+    tone?: "default" | "danger"
+    triggerLabel: string
+    title: string
+    description?: string
+    confirmLabel?: string
+}
 const Demo = ({
     tone = "default",
     triggerLabel,
     title,
     description,
     confirmLabel,
-}: {
-    tone?: "default" | "danger"
-    triggerLabel: string
-    title: string
-    description?: string
-    confirmLabel?: string
-}) => {
+}: DemoProps) => {
     const [isOpen, setOpen] = React.useState(false)
     return (
         <>
@@ -84,7 +85,7 @@ const Demo = ({
                 description={description}
                 confirmLabel={confirmLabel}
                 onConfirm={() => setOpen(false)}
-               
+
             />
         </>
     )
@@ -188,7 +189,7 @@ export const TitleOnly: Story = {
                                 title="Leave this practice session?"
                                 confirmLabel="Leave"
                                 onConfirm={() => {}}
-                               
+
                             />
                         ),
                     },
@@ -228,7 +229,7 @@ export const Confirming: Story = {
                                 confirmLabel="Delete submission"
                                 isConfirming
                                 onConfirm={() => {}}
-                               
+
                             />
                         ),
                     },

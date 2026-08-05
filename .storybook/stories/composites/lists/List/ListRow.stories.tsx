@@ -117,6 +117,7 @@ const FileTextLeading = ({ isSkeleton }: SkeletonProps) => (
     isSkeleton ? null : <FileTextIcon data-tier="fixture" className="size-5 text-muted" aria-hidden focusable="false" />
 )
 
+/** Story: list row with a leading subtitle. */
 export const LeadingSubtitle: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -141,7 +142,7 @@ export const LeadingSubtitle: Story = {
                                     leading={FileTextLeading}
                                     title="Normalizing relational data to 3NF"
                                     subtitle="Module 4 · Database design"
-                                   
+
                                 />
                             </div>
                         ),
@@ -162,7 +163,7 @@ export const LeadingSubtitle: Story = {
                                     title="Indexes and query plans"
                                     subtitle="Module 4 · Database design"
                                     isSkeleton
-                                   
+
                                 />
                             </div>
                         ),
@@ -206,7 +207,7 @@ export const MetaTrailing: Story = {
                                     subtitle="Submitted Mar 15, 2026"
                                     meta={PassedMeta}
                                     trailing={Chevron}
-                                   
+
                                 />
                             </div>
                         ),
@@ -273,7 +274,7 @@ export const LinkRow: Story = {
                                     subtitle="Issued Feb 1, 2026"
                                     href="/certificates/fullstack-mastery"
                                     trailing={Chevron}
-                                   
+
                                 />
                             </div>
                         ),
@@ -318,7 +319,7 @@ export const Clickable: Story = {
                                                 title={row}
                                                 onPress={() => setLastClicked(row)}
                                                 divider={index < rows.length - 1}
-                                               
+
                                             />
                                         ))}
                                     </div>
@@ -405,7 +406,7 @@ export const AsLessonRow: Story = {
                                                 meta={lesson.meta}
                                                 onPress={() => setLastClicked(lesson.title)}
                                                 divider={index < lessons.length - 1}
-                                               
+
                                             />
                                         ))}
                                     </div>
@@ -476,7 +477,7 @@ export const AsNudgeRow: Story = {
                                     meta={AssignmentsMeta}
                                     trailing={ArrowTrailing}
                                     divider
-                                   
+
                                 />
                                 <ListRow
                                     leading={FileTextLeading}

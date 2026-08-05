@@ -57,7 +57,7 @@ const SURFACE: AnatomyNode = {
     role: "card face — radius/shadow/`padding` (default 3, matching the card `p-3` rule) comes from the scaffold, not hand-rolled",
     storyId: "composites-cards-surfacecard-surfacecard--default",
 }
-// ⚠️ TRIED `Split` and it was WRONG: its contract is "the `start` side is allowed to
+// WARNING: TRIED `Split` and it was WRONG: its contract is "the `start` side is allowed to
 // SHRINK" ⇒ when tight it SQUEEZES the price column and the −33% chip drops to a new
 // line. Price is a number, squeezing it makes no sense — this row must WRAP (the button
 // drops below), i.e. `StackH` with `wrap`.
@@ -170,7 +170,7 @@ export const Skeleton: Story = {
                                 freeLessonsRemaining={3}
                                 isSkeleton
                                 onEnroll={() => {}}
-                               
+
                             />
                         ),
                     },
@@ -179,6 +179,7 @@ export const Skeleton: Story = {
         ),
 }
 
+/** Story: resting state for this component. */
 export const Default: Story = {
     render: () =>
         frame(
@@ -203,7 +204,7 @@ export const Default: Story = {
                                 freeLessonsRemaining={3}
                                 price={SAMPLE_PRICE}
                                 onEnroll={() => {}}
-                               
+
                             />
                         ),
                     },
@@ -220,7 +221,7 @@ export const Default: Story = {
                                 freeLessonsRemaining={0}
                                 price={SAMPLE_PRICE}
                                 onEnroll={() => {}}
-                               
+
                             />
                         ),
                     },

@@ -147,7 +147,7 @@ export const Columns: Story = {
                                     ariaLabel="Mentors (wide container)"
                                     columns={{ base: 1, sm: 2, lg: 4 }}
                                     items={profileItems}
-                                   
+
                                 />
                             </div>
                         ),
@@ -235,7 +235,7 @@ export const WithIcon: Story = {
                             <SurfaceCardPressableGroup
                                 ariaLabel="Resources"
                                 columns={{ base: 1, sm: 2 }}
-                               
+
                                 items={[
                                     {
                                         key: "docs",
@@ -289,7 +289,7 @@ export const KeyboardShortcut: Story = {
                                 columns={{ base: 1, sm: 2 }}
                                 items={profileItems}
                                 keyboardShortcut
-                               
+
                             />
                         ),
                     },
@@ -325,7 +325,7 @@ export const Verdict: Story = {
                                     ...item,
                                     withVerdict: { enable: true, variant: "success" },
                                 }))}
-                               
+
                             />
                         ),
                     },
@@ -398,6 +398,7 @@ const NextContent = () => (
         <CaretRightIcon className="size-3 shrink-0 text-muted" aria-hidden focusable="false" />
     </div>
 )
+/** Story: pressable group pager at full width. */
 export const PagerFullWidth: Story = {
     render: () =>
         shell(
@@ -429,7 +430,7 @@ export const PagerFullWidth: Story = {
                                         content: NextContent,
                                     },
                                 ]}
-                               
+
                             />
                         ),
                     },
@@ -469,7 +470,7 @@ export const Loading: Story = {
                                 columns={{ base: 1, sm: 2 }}
                                 items={profileItems}
                                 isSkeleton
-                               
+
                             />
                         ),
                     },

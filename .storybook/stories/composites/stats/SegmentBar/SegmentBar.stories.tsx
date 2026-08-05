@@ -61,7 +61,7 @@ export const Proportional: Story = {
                             <SegmentBar
                                 ariaLabel="Distribution of answers by difficulty"
 
-                               
+
                                 segments={[
                                     { key: "easy", label: "Easy", value: 12 },
                                     { key: "medium", label: "Medium", value: 20 },
@@ -97,7 +97,7 @@ export const WithMax: Story = {
                                 ariaLabel="Lesson completion progress"
                                 max={50}
 
-                               
+
                                 segments={[
                                     { key: "done", label: "Completed", value: 18, color: "var(--success)" },
                                     { key: "in-progress", label: "In progress", value: 5, color: "var(--warning)" },
@@ -132,7 +132,7 @@ export const HideLegend: Story = {
                                 hideLegend
                                 ariaLabel="Ratio of correct and incorrect answers"
 
-                               
+
                                 segments={[
                                     { key: "correct", label: "Correct", value: 34, color: "var(--success)" },
                                     { key: "incorrect", label: "Incorrect", value: 6, color: "var(--danger)" },
@@ -166,7 +166,7 @@ export const ManyGroups: Story = {
                             <SegmentBar
                                 ariaLabel="Distribution of assessed skills"
 
-                               
+
                                 segments={[
                                     { key: "frontend", label: "Frontend", value: 9 },
                                     { key: "backend", label: "Backend", value: 14 },
@@ -210,7 +210,7 @@ export const InlineLabels: Story = {
                                 ariaLabel="Card maturity breakdown"
                                 caption="Only 8% of cards have matured (retained over a long gap) — that's the real progress, not the raw card count seen."
 
-                               
+
                                 segments={[
                                     { key: "non", label: "Non", value: 52, color: "var(--default)" },
                                     { key: "maturing", label: "Maturing", value: 40, color: "var(--warning)" },
@@ -245,7 +245,7 @@ export const Empty: Story = {
                             <SegmentBar
                                 ariaLabel="No assessment data yet"
 
-                               
+
                                 segments={[
                                     { key: "easy", label: "Easy", value: 0 },
                                     { key: "medium", label: "Medium", value: 0 },

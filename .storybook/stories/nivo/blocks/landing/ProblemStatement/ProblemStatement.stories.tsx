@@ -89,7 +89,7 @@ export const Default: Story = {
                     {
                         name: "healthy funnel (zero leaks)",
                         why: "A fully instrumented funnel recomputes to zero leak markers — the same beat, proving the map's highlighting is never hardcoded into this block's own copy.",
-                        code: `<ProblemStatement leakMapStages={healthyStages} /* narrative props unchanged */ />`,
+                        code: "<ProblemStatement leakMapStages={healthyStages} /* narrative props unchanged */ />",
                         render: (
                             <ProblemStatement
                                 eyebrow="The problem"

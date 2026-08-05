@@ -47,6 +47,20 @@ const BODY_PARTS: Array<AnatomyNode> = [
 ]
 
 /** Controlled wrapper — opens on mount; the trigger reopens after a close. Mirrors `DrawerShell`'s own story helper. */
+type ControlledDrawerProps = {
+    label: string
+    hint: string
+    leaf: string
+    parts: Array<AnatomyNode>
+    reason?: string
+    stateName: string
+    why: string
+    code: string
+    title?: string
+    placement?: "right" | "bottom"
+    mode?: ContentAiChatDrawerMode
+    withModeSwitch: boolean
+}
 const ControlledDrawer = ({
     label,
     hint,
@@ -60,20 +74,7 @@ const ControlledDrawer = ({
     placement,
     mode: initialMode,
     withModeSwitch,
-}: {
-    label: string
-    hint: string
-    leaf: string
-    parts: Array<AnatomyNode>
-    reason?: string
-    stateName: string
-    why: string
-    code: string
-    title?: string
-    placement?: "right" | "bottom"
-    mode?: ContentAiChatDrawerMode
-    withModeSwitch: boolean
-}) => {
+}: ControlledDrawerProps) => {
     const [isOpen, setIsOpen] = useState(true)
     const [mode, setMode] = useState<ContentAiChatDrawerMode>(initialMode ?? "drawer")
     return (
@@ -104,7 +105,7 @@ const ControlledDrawer = ({
                                 title={title}
                                 mode={withModeSwitch ? mode : undefined}
                                 onModeChange={withModeSwitch ? setMode : undefined}
-                               
+
                             />
                         ),
                     },

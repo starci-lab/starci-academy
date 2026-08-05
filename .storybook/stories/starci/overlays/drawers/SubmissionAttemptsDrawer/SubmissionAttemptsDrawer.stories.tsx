@@ -72,7 +72,7 @@ const ControlledSubmissionAttemptsDrawer = () => {
                 label="View submission history"
                 variant="secondary"
                 size="sm"
-                classNames={["self-start"]}
+
                 onPress={() => setIsOpen(true)}
             />
             <BlockAnatomy
@@ -103,7 +103,7 @@ const ControlledSubmissionAttemptsDrawer = () => {
                                 attempts={MULTI_PAGE_ATTEMPTS}
                                 selectedAttemptId={selectedId}
                                 onSelect={setSelectedId}
-                               
+
                             />
                         ),
                     },

@@ -6,10 +6,10 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * ATOM — `Alert`: the one port down to HeroUI Alert (`Callout` and `Toast` both compose from here).
- * 
+ *
  * 1 PROP = 1 LEAF. At the atom tier, `tone`/`icon`/`body`/`action`/`onClose` each change a
  * real shape (a different fill, a different added node), so each gets its own leaf.
- * 
+ *
  * The one true DEP: the `Close` node — the atom builds the × button itself from `Button`
  * (not a caller slot), so it's clickable through to its story. `action` is a slot where the
  * caller supplies any node, so it does not count as a dep.
@@ -214,7 +214,7 @@ export const Body: Story = {
                                         <li>A screenshot of the result</li>
                                     </ul>
                                 )}
-                               
+
                             />
                         ),
                     },
@@ -245,7 +245,7 @@ export const Action: Story = {
                                 title="You haven't joined the course's GitHub team"
                                 description="Some labs need repo access — join to unlock them."
                                 action={<Button size="sm" label="Join team" onPress={() => {}} />}
-                               
+
                             />
                         ),
                     },
@@ -277,7 +277,7 @@ export const Close: Story = {
                                 description="Some labs need repo access — join to unlock them."
                                 onClose={() => {}}
                                 closeAriaLabel="Close"
-                               
+
                             />
                         ),
                     },

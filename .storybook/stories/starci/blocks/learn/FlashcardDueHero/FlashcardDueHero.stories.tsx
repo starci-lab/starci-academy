@@ -54,7 +54,7 @@ export const NoResume: Story = {
                         render: (
                             <FlashcardDueHero
 
-                               
+
                                 dueCount={12}
                                 dueReviewCount={8}
                                 newCount={4}
@@ -113,7 +113,7 @@ export const Resume: Story = {
                         render: (
                             <FlashcardDueHero
 
-                               
+
                                 dueCount={12}
                                 dueReviewCount={8}
                                 newCount={4}
@@ -152,7 +152,7 @@ export const NothingDue: Story = {
                         render: (
                             <FlashcardDueHero
 
-                               
+
                                 dueCount={0}
                                 dueReviewCount={0}
                                 newCount={0}

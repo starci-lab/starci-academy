@@ -57,7 +57,7 @@ export const StreakPresent: Story = {
                         render: (
                             <FlashcardMasteryStrip
 
-                               
+
                                 mastered={18}
                                 total={40}
                                 learning={14}
@@ -100,7 +100,7 @@ export const NoStreak: Story = {
                         render: (
                             <FlashcardMasteryStrip
 
-                               
+
                                 mastered={18}
                                 total={40}
                                 learning={14}
@@ -142,7 +142,7 @@ export const RetentionCaption: Story = {
                         render: (
                             <FlashcardMasteryStrip
 
-                               
+
                                 mastered={25}
                                 total={30}
                                 learning={4}
@@ -183,7 +183,7 @@ export const FirstReviewHint: Story = {
                         render: (
                             <FlashcardMasteryStrip
 
-                               
+
                                 mastered={0}
                                 total={40}
                                 learning={0}

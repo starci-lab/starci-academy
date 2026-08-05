@@ -201,7 +201,7 @@ export const Skeleton: Story = {
                         render: (
                             <PersonalProjectResultScreen
                                 {...BASE}
-                               
+
                                 isSkeleton
                                 isPassing
                                 selectedAttemptId={undefined}

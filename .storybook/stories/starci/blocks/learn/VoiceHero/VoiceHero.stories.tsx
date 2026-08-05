@@ -67,7 +67,7 @@ export const MicHero: Story = {
                         render: (
                             <VoiceHero
 
-                               
+
                                 sttSupported
                                 listening={false}
                                 interimTranscript=""
@@ -165,7 +165,7 @@ export const TypedFallback: Story = {
                         render: (
                             <VoiceHero
 
-                               
+
                                 sttSupported={false}
                                 listening={false}
                                 interimTranscript=""

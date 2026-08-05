@@ -56,7 +56,7 @@ export const ResumeAvailable: Story = {
                         render: (
                             <ModuleContinueBand
 
-                               
+
                                 resumeLessonTitle="Writing an optimized Dockerfile"
                                 lessonsRead={4}
                                 lessonsTotal={12}
@@ -118,7 +118,7 @@ export const AllDone: Story = {
                         render: (
                             <ModuleContinueBand
 
-                               
+
                                 lessonsRead={12}
                                 lessonsTotal={12}
                                 challengesDone={5}
@@ -157,7 +157,7 @@ export const Skeleton: Story = {
                         render: (
                             <ModuleContinueBand
 
-                               
+
                                 lessonsRead={0}
                                 lessonsTotal={0}
                                 challengesDone={0}

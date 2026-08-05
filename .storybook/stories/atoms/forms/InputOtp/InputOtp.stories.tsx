@@ -10,11 +10,11 @@ type Story = StoryObj
 /**
  * ATOM — `InputOtp`: one-time-code cells (HeroUI InputOTP), `length` slots, wrapped through
  * an internal `FieldFrame`.
- * 
+ *
  * No component here has its own story ⇒ `annotate` has no `storyId` — but the HeroUI
  * `InputOTP.Group` plus `FieldFrame`'s `Label`/`Skeleton` still get the `heroui` tier so the
  * two-rule panel doesn't silently miss them.
- * 
+ *
  * a11y: a compound control (a row of cells, not one `<input>`) can't wire up `htmlFor` → the
  * atom pours `label`/`ariaLabel` into `aria-label` itself via the `fieldName` helper, so the
  * screen reader can read the field's name.

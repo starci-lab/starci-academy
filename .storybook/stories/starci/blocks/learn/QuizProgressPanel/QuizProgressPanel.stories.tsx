@@ -72,7 +72,7 @@ export const Content: Story = {
                         render: (
                             <QuizProgressPanel
 
-                               
+
                                 label="How you have been practicing"
                                 view="stats"
                                 onViewChange={() => {}}
@@ -129,7 +129,7 @@ export const Loading: Story = {
                         render: (
                             <QuizProgressPanel
 
-                               
+
                                 label="How you have been practicing"
                                 view="stats"
                                 onViewChange={() => {}}
@@ -188,7 +188,7 @@ export const Empty: Story = {
                         render: (
                             <QuizProgressPanel
 
-                               
+
                                 label="How you have been practicing"
                                 view="stats"
                                 onViewChange={() => {}}

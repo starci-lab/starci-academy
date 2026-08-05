@@ -146,7 +146,7 @@ export const Collapsed: Story = {
                         render: (
                             <QaQuestionThread
 
-                               
+
                                 question={QUESTION_ANSWERED}
                                 currentUserId="u-peer"
                                 currentUser={CURRENT_USER}
@@ -209,7 +209,7 @@ export const Expanded: Story = {
                         render: (
                             <ExpandedPreview
 
-                               
+
                                 question={QUESTION_ANSWERED}
                                 currentUserId="u-peer"
                                 currentUser={CURRENT_USER}

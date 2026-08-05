@@ -122,17 +122,18 @@ const PracticeTopicsBody = ({ className }: PracticeTopicsBodyProps) => {
 }
 
 /** Shell mirrored from `Practice`: flex row, rail `relative shrink-0`, content pane `flex-1` + a `PageHeader`. */
+type PracticeShellDemoProps = {
+    storageKey: string
+    heightClassName: string
+    defaultWidth?: number
+    maxWidth?: number
+}
 const PracticeShellDemo = ({
     storageKey,
     heightClassName,
     defaultWidth = 300,
     maxWidth = 420,
-}: {
-    storageKey: string
-    heightClassName: string
-    defaultWidth?: number
-    maxWidth?: number
-}) => (
+}: PracticeShellDemoProps) => (
     <div data-tier="fixture" className={`flex w-full items-start ${heightClassName}`}>
         <ResizableRail
             className="relative flex h-full shrink-0 flex-col self-stretch"

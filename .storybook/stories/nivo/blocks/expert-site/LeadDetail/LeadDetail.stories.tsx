@@ -52,20 +52,23 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /** Shared controlled wrapper — one `isOpen` feeds every leaf state below; each leaf overrides its own draft flags. */
+type ControlledLeadDetailProps = {
+    draftReply: string | null
+    isDrafting: boolean
+    draftError: string | null
+}
 const ControlledLeadDetail = ({
     draftReply,
     isDrafting,
     draftError,
-}: {
-    draftReply: string | null
-    isDrafting: boolean
-    draftError: string | null
-}) => {
+}: ControlledLeadDetailProps) => {
     const [isOpen, setIsOpen] = useState(true)
 
     return (
         <div data-tier="fixture" className="flex flex-col gap-3 p-8">
-            <Button label="Open lead" variant="secondary" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label="Open lead" variant="secondary" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <LeadDetail
                 isOpen={isOpen}
                 onOpenChange={setIsOpen}

@@ -18,6 +18,7 @@ export default meta
 
 type Story = StoryObj<typeof CourseContents>
 
+/** Story: resting state for this component. */
 export const Default: Story = {
     render: () => deviceLeaf({ width: W, isEmpty: true, leaf: "Default", reason: "Mobile 375px · no contents yet — AsyncContentEmpty replaces the whole spine." }),
 }

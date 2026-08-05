@@ -51,7 +51,7 @@ export const Header: Story = {
                         render: (
                             <SubmissionResultHeader
 
-                               
+
                                 backLabel="Back to solve page"
                                 onBack={() => {}}
                                 title="Normalize the orders table schema"
@@ -66,7 +66,7 @@ export const Header: Story = {
                         render: (
                             <SubmissionResultHeader
 
-                               
+
                                 backLabel=""
                                 onBack={() => {}}
                                 title=""

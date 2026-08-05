@@ -64,7 +64,7 @@ export const Document: Story = {
                         render: (
                             <FoundationResourceBody
 
-                               
+
                                 kind="document"
                                 markdownBody={MARKDOWN_BODY}
                             />
@@ -101,7 +101,7 @@ export const Video: Story = {
                         render: (
                             <FoundationResourceBody
 
-                               
+
                                 kind="video"
                             />
                         ),
@@ -142,7 +142,7 @@ export const ExternalLink: Story = {
                         render: (
                             <FoundationResourceBody
 
-                               
+
                                 kind="external_link"
                                 linkTitle="Official Docker documentation"
                                 linkUrl="https://docs.docker.com"

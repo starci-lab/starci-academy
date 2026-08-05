@@ -188,9 +188,9 @@ export const Dot: Story = {
 <Chip dotClassName="text-danger" text="Down" />`,
                         render: (
                             <div data-tier="fixture" className="flex flex-wrap items-center gap-3">
-                                <Chip dotClassName="text-success" text="Running" />
-                                <Chip dotClassName="text-warning" text="Degraded" />
-                                <Chip dotClassName="text-danger" text="Down" />
+                                <span><Chip dotClassName="text-success" text="Running" /></span>
+                                <span><Chip dotClassName="text-warning" text="Degraded" /></span>
+                                <span><Chip dotClassName="text-danger" text="Down" /></span>
                             </div>
                         ),
                     },
@@ -235,13 +235,15 @@ export const Removable: Story = {
 <Chip tone="accent" text="TypeScript" onRemove={dropFilter} removeLabel="Remove the TypeScript filter" />`,
                         render: (
                             <div data-tier="fixture" className="flex flex-wrap items-center gap-3">
-                                <Chip text="React" onRemove={() => {}} removeLabel="Remove the React filter" />
-                                <Chip
-                                    tone="accent"
-                                    text="TypeScript"
-                                    onRemove={() => {}}
-                                    removeLabel="Remove the TypeScript filter"
-                                />
+                                <span><span><Chip text="React" onRemove={() => {}} removeLabel="Remove the React filter" /></span></span>
+                                <span>
+                                    <Chip
+                                        tone="accent"
+                                        text="TypeScript"
+                                        onRemove={() => {}}
+                                        removeLabel="Remove the TypeScript filter"
+                                    />
+                                </span>
                             </div>
                         ),
                     },

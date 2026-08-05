@@ -57,7 +57,7 @@ export const Default: Story = {
                         render: (
                             <QuotaBar
 
-                               
+
                                 label="Next 5 hours"
                                 used={12}
                                 limit={50}
@@ -154,7 +154,7 @@ export const Skeleton: Story = {
                         render: (
                             <QuotaBar
 
-                               
+
                                 label="Next 5 hours"
                                 used={0}
                                 limit={0}

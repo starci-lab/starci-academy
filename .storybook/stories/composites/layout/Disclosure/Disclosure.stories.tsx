@@ -90,7 +90,7 @@ export const Open: Story = {
                             <Disclosure
                                 title="Customize session"
                                 defaultOpen
-                               
+
                                 body={SampleContent}
                             />
                         ),

@@ -4,7 +4,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * ATOM — `Spinner`: wraps HeroUI Spinner directly, only forcing `size`/`tone`.
- * 
+ *
  * LEAF atom — it composes no atom of our own with a story, so it has no atom-tier dep.
  * It renders one `@heroui/react` import directly, so `HeroSpinner` enters the tree with
  * `tier: "heroui"` (no `storyId`, the library has no story of ours to jump to).

@@ -50,7 +50,9 @@ const ControlledNotificationsDrawer = () => {
 
     return (
         <div data-tier="fixture" className="flex flex-col gap-3 p-8">
-            <Button label="Open notifications" variant="secondary" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label="Open notifications" variant="secondary" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <BlockAnatomy
                 name="NotificationsDrawer"
                 tier="block"

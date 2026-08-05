@@ -88,7 +88,7 @@ export const Default: Story = {
                         render: (
                             <TaskSubmissionPanel
 
-                               
+
                                 githubUrl="https://github.com/hocvien/de-tai-tot-nghiep"
                                 onGithubUrlChange={() => {}}
                                 autosaveStatus="saved"
@@ -196,7 +196,7 @@ export const NoResult: Story = {
                         render: (
                             <TaskSubmissionPanel
 
-                               
+
                                 githubUrl=""
                                 onGithubUrlChange={() => {}}
                                 autosaveStatus="idle"
@@ -220,7 +220,7 @@ const SettingsOpenDemo = () => {
     return (
         <TaskSubmissionPanel
 
-           
+
             githubUrl="https://github.com/hocvien/de-tai-tot-nghiep"
             onGithubUrlChange={() => {}}
             autosaveStatus="saved"
@@ -277,7 +277,7 @@ export const Skeleton: Story = {
                         render: (
                             <TaskSubmissionPanel
 
-                               
+
                                 githubUrl=""
                                 onGithubUrlChange={() => {}}
                                 autosaveStatus="idle"

@@ -7,12 +7,12 @@ const meta: Meta<typeof SiteHeader> = {
     args: {
         brand: "mia mia",
         links: [
-            { label: "Học", href: "#" },
-            { label: "Luyện đề", href: "#" },
-            { label: "Chơi", href: "#" },
-            { label: "Cộng đồng", href: "#" },
+            { label: "Learn", href: "#" },
+            { label: "Practice exams", href: "#" },
+            { label: "Play", href: "#" },
+            { label: "Community", href: "#" },
         ],
-        ctaLabel: "Vào học",
+        ctaLabel: "Start learning",
         ctaHref: "#",
     },
 }

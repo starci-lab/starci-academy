@@ -9,7 +9,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * header for why `variant="primary"` (real `Discussion` is frameless — no
  * card ever wraps this field) and why the avatar-led row is top-level only.
  *
- * 📐 LEAVES by STRUCTURE (§14d.2). Collapsed-pill vs expanded-field is a real
+ * [layout] LEAVES by STRUCTURE (§14d.2). Collapsed-pill vs expanded-field is a real
  * node swap ⇒ separate leaves. Avatar present/absent is also a node swap
  * (top-level vs reply/edit) ⇒ its own leaf.
  */
@@ -53,7 +53,7 @@ export const CollapsedPill: Story = {
                         render: (
                             <ContentCommentComposer
 
-                               
+
                                 collapsible
                                 currentUser={VIEWER}
                                 ariaLabel="Write a comment"
@@ -86,7 +86,7 @@ export const ExpandedWithAvatar: Story = {
                         render: (
                             <ContentCommentComposer
 
-                               
+
                                 collapsible
                                 currentUser={VIEWER}
                                 ariaLabel="Write a comment"
@@ -133,7 +133,7 @@ export const ReplyOrEdit: Story = {
                         render: (
                             <ContentCommentComposer
 
-                               
+
                                 placeholder="Write your reply..."
                                 submitLabel="Reply"
                                 onCancel={() => {}}

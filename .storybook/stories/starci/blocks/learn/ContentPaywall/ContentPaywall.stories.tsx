@@ -60,7 +60,7 @@ export const Full: Story = {
                         render: (
                             <ContentPaywall
 
-                               
+
                                 title="The rest of this lesson is for enrolled students"
                                 description="Unlock every lesson, challenge, and sandbox in this course."
                                 discountedPriceVnd={1290000}
@@ -126,7 +126,7 @@ export const NoScarcity: Story = {
                         render: (
                             <ContentPaywall
 
-                               
+
                                 title="The rest of this lesson is for enrolled students"
                                 discountedPriceVnd={1290000}
                                 originalPriceVnd={1990000}
@@ -166,7 +166,7 @@ export const Skeleton: Story = {
                         render: (
                             <ContentPaywall
 
-                               
+
                                 title="The rest of this lesson is for enrolled students"
                                 description="Unlock every lesson, challenge, and sandbox in this course."
                                 discountedPriceVnd={0}

@@ -90,7 +90,7 @@ export const RailSurface: Story = {
 </LearnShell>`,
                     render: (
                         <LearnShell
-                           
+
 
                             activeSurface="content"
                             isEnrollGated={false}
@@ -139,7 +139,7 @@ export const NoRailSurface: Story = {
                     code: "<LearnShell activeSurface=\"personalProject\" isEnrollGated={false} isAssessmentLive={false} onOpenAiChat={openAiChat} onOpenSelectionAsk={openSelectionAsk}>{routeContent}</LearnShell>",
                     render: (
                         <LearnShell
-                           
+
 
                             activeSurface="personalProject"
                             isEnrollGated={false}
@@ -197,7 +197,7 @@ export const SelectionAskActive: Story = {
 </LearnShell>`,
                     render: (
                         <LearnShell
-                           
+
 
                             activeSurface="content"
                             isEnrollGated={false}
@@ -239,7 +239,7 @@ export const AiSuppressed: Story = {
 </LearnShell>`,
                     render: (
                         <LearnShell
-                           
+
 
                             activeSurface="content"
                             isEnrollGated={false}
@@ -288,7 +288,7 @@ export const EnrollGated: Story = {
 </LearnShell>`,
                     render: (
                         <LearnShell
-                           
+
 
                             activeSurface="personalProject"
                             isEnrollGated

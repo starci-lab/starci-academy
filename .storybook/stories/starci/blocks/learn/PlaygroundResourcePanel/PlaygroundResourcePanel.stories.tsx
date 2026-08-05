@@ -61,7 +61,7 @@ export const Panel: Story = {
                         render: (
                             <PlaygroundResourcePanel
 
-                               
+
                                 connection="notConnected"
                                 resources={[]}
                             />

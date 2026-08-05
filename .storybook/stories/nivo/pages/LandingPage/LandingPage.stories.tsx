@@ -40,7 +40,7 @@ export default meta
 type Story = StoryObj<typeof LandingPage>
 
 const NOOP = () => {}
-const NOOP_ID = (_id: string) => {}
+const NOOP_ID = () => {}
 
 const HERO: LandingPageHero = {
     eyebrow: "AI-First business infrastructure for SMEs",
@@ -170,7 +170,7 @@ const PRICING: LandingPagePricing = {
         productModeLabel: "Products",
         solutionModeLabel: "Industry solutions",
         modeAriaLabel: "Toggle between products and industry solutions",
-        recommendedMarker: "★",
+        recommendedMarker: "*",
         solutionBadgeLabel: "Roadmap",
         solutionTitle: "Industry solutions — in progress",
         solutionDescription: "The full AI-First system per industry is on the roadmap, not buyable today. Run a Lead Leakage Audit and nivo will map the right path.",

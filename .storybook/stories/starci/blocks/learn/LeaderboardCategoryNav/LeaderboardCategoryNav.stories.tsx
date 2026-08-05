@@ -57,7 +57,7 @@ export const ChipRow: Story = {
                         render: (
                             <LeaderboardCategoryNav
 
-                               
+
                                 items={ITEMS}
                                 selected="total"
                                 onSelect={() => {}}

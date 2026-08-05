@@ -41,7 +41,7 @@ export const Default: Story = {
                     {
                         name: "default",
                         why: "The panel as it renders once the catalog's own fetch has resolved to zero real courses — heading, honest supporting line, and the one onward CTA into the lead form.",
-                        code: '<CatalogComingSoonPanel\n    title="First course coming soon"\n    description="No course is public yet — leave your contact below and you\'ll hear the moment the first one opens for enrollment."\n    onwardLabel="Notify me when it launches"\n    onExploreLead={scrollToLeadCapture}\n/>',
+                        code: "<CatalogComingSoonPanel\n    title=\"First course coming soon\"\n    description=\"No course is public yet — leave your contact below and you'll hear the moment the first one opens for enrollment.\"\n    onwardLabel=\"Notify me when it launches\"\n    onExploreLead={scrollToLeadCapture}\n/>",
                         render: (
                             <CatalogComingSoonPanel
                                 title="First course coming soon"

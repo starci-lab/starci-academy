@@ -8,7 +8,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * component's own file header for the full contract; this file only adds the
  * states.
  *
- * 📐 LEAF by STRUCTURE (§14d.2): which pillar bars render is a DATA condition
+ * [layout] LEAF by STRUCTURE (§14d.2): which pillar bars render is a DATA condition
  * (a pillar with no score is omitted, never zero-filled), not a different
  * shape this block draws — so loading / empty / error / content-with-various-
  * pillars are all states of the same one leaf ("Content").
@@ -96,7 +96,7 @@ export const Content: Story = {
                         render: (
                             <JobReadinessWidget
 
-                               
+
                                 isLoading={false}
                                 isEmpty={false}
                                 onRetry={() => {}}

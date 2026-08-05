@@ -26,7 +26,7 @@ type Story = StoryObj<typeof VariantChipDifficulty>
 const LEVELS: Array<Difficulty> = ["beginner", "intermediate", "advanced", "insane"]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    // ⚠️ The wrapping `<span>` this design draws around `Chip` ALSO emits its own
+    // WARNING: The wrapping `<span>` this design draws around `Chip` ALSO emits its own
     // badge (default `anatPart ?? "VariantChipDifficulty"`):
     // without a real DOM node named after the design itself, `Chip`'s own insides
     // (`Dot`/`Label`) would climb the ancestor chain past this design entirely, so it

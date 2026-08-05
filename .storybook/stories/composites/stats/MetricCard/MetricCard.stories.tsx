@@ -47,6 +47,7 @@ const NO_HINT_PARTS: Array<AnatomyNode> = [
     },
 ]
 
+/** Story: resting state for this component. */
 export const Default: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -64,7 +65,7 @@ export const Default: Story = {
                         render: (
                             <MetricCard
 
-                               
+
                                 value="1,204"
                                 label="Total enrolled students"
                                 hint="Updated daily"
@@ -77,6 +78,7 @@ export const Default: Story = {
     ),
 }
 
+/** Story: metric card with hint copy. */
 export const WithHint: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -93,7 +95,7 @@ export const WithHint: Story = {
                         render: (
                             <MetricCard
 
-                               
+
                                 value="98%"
                                 label="Course completion rate"
                                 hint="Vs. last week"
@@ -150,7 +152,7 @@ export const LongText: Story = {
                         render: (
                             <MetricCard
 
-                               
+
                                 value="3,750"
                                 label="Total assignment submissions graded this month"
                                 hint="Includes submissions from both trial and paid students"

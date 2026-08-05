@@ -270,7 +270,7 @@ const QUERY_ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /**
- * Leaf ⭐ — the evidence for the decision "this frame OPENS `@container`".
+ * Leaf * — the evidence for the decision "this frame OPENS `@container`".
  *
  * Two columns, the SAME `Grid` with the SAME `columns`, end up with a different
  * column count: the `md` column sits at the `@app-md` step (2 columns), the `xl`

@@ -96,7 +96,7 @@ export const FindingsAccordion: Story = {
                         render: (
                             <SubmissionFindingsList
 
-                               
+
                                 findings={[]}
                                 label="Feedback"
                                 isLoading

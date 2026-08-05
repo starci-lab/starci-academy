@@ -59,8 +59,8 @@ const SINGLE_LANG_FLOWS: Array<E2eFlow> = [
 3. Confirm payment (sandbox gateway).
 
 \`\`\`
-✓ enrollment created, id=9f2a...
-✓ redirected to /learn/course/9f2a...
+check enrollment created, id=9f2a...
+check redirected to /learn/course/9f2a...
 \`\`\`
 
 Conclusion: the enrollment flow runs correctly end-to-end on the real backend + UI.`,
@@ -76,7 +76,7 @@ Conclusion: the enrollment flow runs correctly end-to-end on the real backend + 
 3. Wait for the grading job.
 
 \`\`\`
-✗ grading job timed out after 30s
+x grading job timed out after 30s
 \`\`\`
 
 Conclusion: the grading job did not respond within this run's wait window.`,
@@ -128,7 +128,7 @@ const ControlledE2eResultDrawer = ({ flows }: ControlledE2eResultDrawerProps) =>
                 label="View E2E result"
                 variant="secondary"
                 size="sm"
-                classNames={["self-start"]}
+
                 onPress={() => setIsOpen(true)}
             />
             <BlockAnatomy
@@ -155,7 +155,7 @@ const ControlledE2eResultDrawer = ({ flows }: ControlledE2eResultDrawerProps) =>
                                 isOpen={isOpen}
                                 onOpenChange={setIsOpen}
                                 flows={SINGLE_LANG_FLOWS}
-                               
+
                             />
                         ),
                     },
@@ -177,7 +177,7 @@ const ControlledE2eResultDrawer = ({ flows }: ControlledE2eResultDrawerProps) =>
                                 isOpen={isOpen}
                                 onOpenChange={setIsOpen}
                                 flows={MULTI_LANG_FLOWS}
-                               
+
                             />
                         ),
                     },
@@ -213,7 +213,7 @@ export const Skeleton: Story = {
                                 onOpenChange={() => {}}
                                 isSkeleton
 
-                               
+
                             />
                         ),
                     },

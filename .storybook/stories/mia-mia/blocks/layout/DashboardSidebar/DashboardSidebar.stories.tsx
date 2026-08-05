@@ -23,32 +23,32 @@ type Story = StoryObj<typeof DashboardSidebar>
 const GROUPS: Array<DashboardNavGroup> = [
     {
         key: "learn",
-        label: "Học tập",
+        label: "Learn",
         items: [
-            { key: "home", href: "/vi/dashboard", label: "Trang chủ", icon: <HouseIcon className="size-5" /> },
-            { key: "exam", href: "/vi/exam", label: "Làm đề", icon: <ExamIcon className="size-5" /> },
-            { key: "vocab", href: "/vi/learn", label: "Ôn từ vựng", icon: <BookOpenIcon className="size-5" /> },
-            { key: "grammar", href: "/vi/learn/grammar", label: "Chuyên đề & ngữ pháp", icon: <TextAaIcon className="size-5" /> },
+            { key: "home", href: "/vi/dashboard", label: "Home", icon: <HouseIcon className="size-5" /> },
+            { key: "exam", href: "/vi/exam", label: "Exams", icon: <ExamIcon className="size-5" /> },
+            { key: "vocab", href: "/vi/learn", label: "Vocabulary", icon: <BookOpenIcon className="size-5" /> },
+            { key: "grammar", href: "/vi/learn/grammar", label: "Topics and grammar", icon: <TextAaIcon className="size-5" /> },
         ],
     },
     {
         key: "compete",
-        label: "Thi đấu",
+        label: "Compete",
         items: [
             {
                 key: "play",
                 href: "/vi/play",
-                label: "Chơi cùng nhau",
+                label: "Play together",
                 icon: <GameControllerIcon className="size-5" />,
                 endContent: <Chip size="sm" variant="soft" color="accent">4</Chip>,
             },
-            { key: "ranks", href: "/vi/play/leaderboard", label: "Xếp hạng", icon: <TrophyIcon className="size-5" /> },
+            { key: "ranks", href: "/vi/play/leaderboard", label: "Leaderboard", icon: <TrophyIcon className="size-5" /> },
         ],
     },
     {
         key: "you",
         items: [
-            { key: "profile", href: "/vi/profile", label: "Hồ sơ", icon: <UserIcon className="size-5" /> },
+            { key: "profile", href: "/vi/profile", label: "Profile", icon: <UserIcon className="size-5" /> },
         ],
     },
 ]
@@ -61,7 +61,7 @@ export const Default: Story = {
             <div className="flex flex-col gap-2">
                 <Label>Dashboard sidebar</Label>
                 <Typography type="body-sm" color="muted">
-                    The learner navigation for mia-mia — làm đề, ôn từ vựng, chơi cùng nhau — collapsing into an icon rail.
+                    The learner navigation for mia-mia — exams, vocabulary, play together — collapsing into an icon rail.
                 </Typography>
             </div>
             <div className="h-[34rem]">
@@ -70,8 +70,8 @@ export const Default: Story = {
                     groups={GROUPS}
                     activeHref="/vi/dashboard"
                     onNavigate={() => {}}
-                    collapseLabel="Thu gọn thanh bên"
-                    expandLabel="Mở rộng thanh bên"
+                    collapseLabel="Collapse sidebar"
+                    expandLabel="Expand sidebar"
                     storageKey="storybook-dashboard-sidebar-default"
                 />
             </div>
@@ -79,13 +79,13 @@ export const Default: Story = {
     ),
 }
 
-/** A deeper destination is active (Làm đề) and a group carries a trailing badge. */
+/** A deeper destination is active (Exams) and a group carries a trailing badge. */
 export const OnExam: Story = {
     parameters: { usage: "A non-home destination is active — the exam catalogue — showing the highlight moving off the dashboard row and a game-count badge on the play row." },
     render: () => (
         <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-2">
-                <Label>Active: Làm đề</Label>
+                <Label>Active: Exams</Label>
                 <Typography type="body-sm" color="muted">
                     The highlight follows the current route; only one row is filled at a time.
                 </Typography>
@@ -96,8 +96,8 @@ export const OnExam: Story = {
                     groups={GROUPS}
                     activeHref="/vi/exam"
                     onNavigate={() => {}}
-                    collapseLabel="Thu gọn thanh bên"
-                    expandLabel="Mở rộng thanh bên"
+                    collapseLabel="Collapse sidebar"
+                    expandLabel="Expand sidebar"
                     storageKey="storybook-dashboard-sidebar-exam"
                 />
             </div>

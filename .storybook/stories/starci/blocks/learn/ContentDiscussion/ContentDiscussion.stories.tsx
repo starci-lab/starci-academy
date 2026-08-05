@@ -102,7 +102,7 @@ export const Full: Story = {
                         render: (
                             <ContentDiscussion
 
-                               
+
                                 label="Discussion"
                                 currentUserId="viewer-1"
                                 currentUser={{ username: "You" }}
@@ -158,7 +158,7 @@ export const Empty: Story = {
                         render: (
                             <ContentDiscussion
 
-                               
+
                                 label="Discussion"
                                 currentUserId={null}
                                 comments={[]}
@@ -194,7 +194,7 @@ export const Error: Story = {
                         render: (
                             <ContentDiscussion
 
-                               
+
                                 label="Discussion"
                                 currentUserId={null}
                                 comments={[]}
@@ -231,7 +231,7 @@ export const Skeleton: Story = {
                         render: (
                             <ContentDiscussion
 
-                               
+
                                 label="Discussion"
                                 currentUserId="viewer-1"
                                 currentUser={{ username: "You" }}

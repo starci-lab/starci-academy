@@ -6,14 +6,14 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ STATE SCOPE: `RailShell` is a frame with a LEADING rail + a shrinking body. The
+ * WARNING: STATE SCOPE: `RailShell` is a frame with a LEADING rail + a shrinking body. The
  * state it produces is the relationship between the TWO NAMED SIDES across the
  * `@app-md` threshold: stacked when narrow, two columns when wide, and whether the
  * rail is pinned or not. The rail width (288px) and the threshold (`@app-md`) are
  * SELF-OWNED by the frame, not a prop — the two real `src` sources agree on both
  * numbers, disagreeing only on sticky.
  *
- * ⚠️ SELF-CONTAINED `@container`: this frame opens its OWN container query context
+ * WARNING: SELF-CONTAINED `@container`: this frame opens its OWN container query context
  * rather than trusting an ancestor to have opened one — the `dashboard` real `src`
  * mounts it inside a bare `<div>` (no `Container`), so if the switch depended on an
  * ancestor `@container`, `@app-md:flex-row` never fires and the shell is stuck in
@@ -24,7 +24,7 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * and the INNER node — a real descendant — carries the `flex`/`gap`/switch classes
  * that actually answer `@app-md`.
  *
- * ⚠️ APP-WIRE HANDOFF — the EXACT two things apps/app must have for this to render
+ * WARNING: APP-WIRE HANDOFF — the EXACT two things apps/app must have for this to render
  * as a right rail instead of the stacked list the shell shipped with:
  * 1. The class this component now puts on its own outer node — the Tailwind v4
  *    utility `@container` (compiles to `container-type: inline-size`). Nothing
@@ -170,7 +170,7 @@ export const Breakpoint: Story = {
                     {
                         name: "container 640px, below @app-md",
                         why: "The two sides stack into a column with the rail on top, each full width. This is what a phone gets, and what any container narrower than the breakpoint gets — the AI rail can squeeze the app column at any window size.",
-                        code: `<RailShell rail={…} body={…} />`,
+                        code: "<RailShell rail={…} body={…} />",
                         render: (
                             <Frame width="40rem" label="container 640px, below @app-md, stacks">
                                 <RailShell
@@ -184,7 +184,7 @@ export const Breakpoint: Story = {
                     {
                         name: "container 960px, at or above @app-md",
                         why: "Same component, same props — only the container crossed the breakpoint. The rail becomes a fixed 288px column and the body takes the remainder.",
-                        code: `<RailShell rail={…} body={…} />`,
+                        code: "<RailShell rail={…} body={…} />",
                         render: (
                             <Frame width="60rem" label="container 960px, at or above @app-md, two columns">
                                 <RailShell
@@ -333,7 +333,7 @@ export const Side: Story = {
                     {
                         name: "side = \"end\", narrow — bare wrapper, below @app-md",
                         why: "The SAME bare-wrapper mount as the row above, only the container shrank below the threshold. `side=\"end\"` follows the DOM order when stacked, so the rail drops BELOW the body instead of above it — the honest reading order for a trailing rail (content first, nav after) and the opposite of the `side=\"start\"` stack in the Breakpoint story. This is the shape a narrow window or a docked chat rail squeezing the app column produces; it must stay a clean stacked column here, never the collapsed-into-nowhere failure the shell shipped with.",
-                        code: `<RailShell side="end" isRailSticky rail={<NivoSidebar />} body={<RouteContent />} />`,
+                        code: "<RailShell side=\"end\" isRailSticky rail={<NivoSidebar />} body={<RouteContent />} />",
                         render: (
                             <BareFrame width="24rem" label="bare wrapper (no @container) — 384px, below @app-md">
                                 <RailShell

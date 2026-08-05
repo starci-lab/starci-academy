@@ -154,7 +154,7 @@ export const MultipleWithAction: Story = {
                                 label="Practice this lesson"
                                 items={challenges}
                                 action={PracticeNowAction}
-                               
+
                             />
                         ),
                     },
@@ -190,7 +190,7 @@ export const WithIcon: Story = {
                                 label="Related flashcards"
                                 icon={CardsLeadingIcon}
                                 items={decks}
-                               
+
                             />
                         ),
                     },
@@ -266,7 +266,7 @@ export const Empty: Story = {
                                 label="Review this lesson"
                                 items={[]}
                                 emptyState={NoRelatedDecks}
-                               
+
                             />
                         ),
                     },

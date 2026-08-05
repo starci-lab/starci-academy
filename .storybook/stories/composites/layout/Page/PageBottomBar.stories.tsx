@@ -129,7 +129,7 @@ export const PriceWithAction: Story = {
                             <Screen
                                 bar={(
                                     <PageBottomBar
-                                       
+
                                         body={EnrollPriceTag}
                                         actions={EnrollAction}
                                     />
@@ -191,7 +191,7 @@ export const WithDecline: Story = {
                             <Screen
                                 bar={(
                                     <PageBottomBar
-                                       
+
                                         actions={DeclineOrAcceptActions}
                                     />
                                 )}

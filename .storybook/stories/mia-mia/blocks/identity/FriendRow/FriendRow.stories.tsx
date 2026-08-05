@@ -22,15 +22,15 @@ export const Default: Story = {
             </div>
             <FriendRow
                 username="an.nguyen"
-                displayName="An Nguyễn"
+                displayName="An Nguyen"
                 handle="@an.nguyen"
                 profileHref="#"
                 isOnline={false}
                 isFollowing={false}
-                followLabel="Kết bạn"
-                followingLabel="Đã kết bạn"
-                onlineLabel="Đang hoạt động"
-                offlineLabel="Ngoại tuyến"
+                followLabel="Add friend"
+                followingLabel="Friends"
+                onlineLabel="Active now"
+                offlineLabel="Offline"
                 onToggleFollow={() => {}}
             />
         </div>
@@ -50,15 +50,15 @@ export const Online: Story = {
             </div>
             <FriendRow
                 username="linh.dao"
-                displayName="Linh Đào"
+                displayName="Linh Dao"
                 handle="@linh.dao"
                 profileHref="#"
                 isOnline
                 isFollowing={false}
-                followLabel="Kết bạn"
-                followingLabel="Đã kết bạn"
-                onlineLabel="Đang hoạt động"
-                offlineLabel="Ngoại tuyến"
+                followLabel="Add friend"
+                followingLabel="Friends"
+                onlineLabel="Active now"
+                offlineLabel="Offline"
                 onToggleFollow={() => {}}
             />
         </div>
@@ -78,15 +78,15 @@ export const Following: Story = {
             </div>
             <FriendRow
                 username="minh.tran"
-                displayName="Minh Trần"
+                displayName="Minh Tran"
                 handle="@minh.tran"
                 profileHref="#"
                 isOnline
                 isFollowing
-                followLabel="Kết bạn"
-                followingLabel="Đã kết bạn"
-                onlineLabel="Đang hoạt động"
-                offlineLabel="Ngoại tuyến"
+                followLabel="Add friend"
+                followingLabel="Friends"
+                onlineLabel="Active now"
+                offlineLabel="Offline"
                 onToggleFollow={() => {}}
             />
         </div>
@@ -106,16 +106,16 @@ export const Pending: Story = {
             </div>
             <FriendRow
                 username="phuc.le"
-                displayName="Phúc Lê"
+                displayName="Phuc Le"
                 handle="@phuc.le"
                 profileHref="#"
                 isOnline={false}
                 isFollowing={false}
                 isPending
-                followLabel="Kết bạn"
-                followingLabel="Đã kết bạn"
-                onlineLabel="Đang hoạt động"
-                offlineLabel="Ngoại tuyến"
+                followLabel="Add friend"
+                followingLabel="Friends"
+                onlineLabel="Active now"
+                offlineLabel="Offline"
                 onToggleFollow={() => {}}
             />
         </div>

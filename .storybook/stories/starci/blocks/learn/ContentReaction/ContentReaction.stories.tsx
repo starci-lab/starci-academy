@@ -56,7 +56,7 @@ export const Full: Story = {
                         render: (
                             <ContentReaction
 
-                               
+
                                 counts={COUNTS}
                                 viewCount={2481}
                                 onReact={() => {}}
@@ -122,7 +122,7 @@ export const Skeleton: Story = {
                         render: (
                             <ContentReaction
 
-                               
+
                                 isSkeleton
                                 onReact={() => {}}
                             />

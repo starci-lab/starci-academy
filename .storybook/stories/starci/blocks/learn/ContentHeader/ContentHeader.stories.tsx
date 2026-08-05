@@ -70,7 +70,7 @@ export const Full: Story = {
                         render: (
                             <ContentHeader
 
-                               
+
                                 breadcrumbItems={CRUMBS}
                                 title="Writing an optimized Dockerfile"
                                 description="Layers, caching, and multi-stage builds — the three things that decide whether an image is heavy or light."
@@ -133,7 +133,7 @@ export const NoOutcomes: Story = {
                         render: (
                             <ContentHeader
 
-                               
+
                                 breadcrumbItems={CRUMBS}
                                 title="Quick notes on BuildKit"
                                 minutesRead={4}
@@ -166,7 +166,7 @@ export const Skeleton: Story = {
                         render: (
                             <ContentHeader
 
-                               
+
                                 title=""
                                 isSkeleton
                             />

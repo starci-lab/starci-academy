@@ -95,7 +95,7 @@ export const Default: Story = {
                         render: (
                             <ProfileHero
 
-                               
+
                                 user={FULL_USER}
                                 following={false}
                                 onToggleFollow={() => {}}
@@ -205,7 +205,7 @@ export const Minimal: Story = {
                         render: (
                             <ProfileHero
 
-                               
+
                                 user={MINIMAL_USER}
                                 onToggleFollow={() => {}}
                                 onShare={() => {}}

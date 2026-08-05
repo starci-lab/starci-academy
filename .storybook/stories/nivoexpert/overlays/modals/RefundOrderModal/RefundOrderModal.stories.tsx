@@ -56,19 +56,22 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /** Shared controlled wrapper — the trigger reopens the modal after it closes. */
+type ControlledRefundOrderModalProps = {
+    triggerLabel: string
+    order?: RefundOrderSummary
+    isConfirming?: boolean
+}
 const ControlledRefundOrderModal = ({
     triggerLabel,
     order,
     isConfirming,
-}: {
-    triggerLabel: string
-    order?: RefundOrderSummary
-    isConfirming?: boolean
-}) => {
+}: ControlledRefundOrderModalProps) => {
     const [isOpen, setIsOpen] = useState(true)
     return (
         <div data-tier="fixture" className="flex flex-col gap-3 p-8">
-            <Button label={triggerLabel} variant="danger" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label={triggerLabel} variant="danger" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <RefundOrderModal
                 isOpen={isOpen}
                 onOpenChange={setIsOpen}

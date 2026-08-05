@@ -46,7 +46,7 @@ const Byline = ({ isSkeleton }: SkeletonProps) => (
                     weight="medium"
                     text="Minh Anh"
                     isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-1/3"] : undefined}
+
                 />
             ),
             ...(!isSkeleton ? [
@@ -58,7 +58,7 @@ const Byline = ({ isSkeleton }: SkeletonProps) => (
                     color="muted"
                     text="2 hours ago"
                     isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-1/4"] : undefined}
+
                 />
             ),
         ]}
@@ -70,7 +70,7 @@ const CommentBody = ({ isSkeleton }: SkeletonProps) => (
     <Typography
         size="sm"
         isSkeleton={isSkeleton}
-        classNames={isSkeleton ? ["w-full"] : undefined}
+
         text={isSkeleton ? undefined : "I followed the multi-stage guide but the image was still 800MB — turned out I forgot COPY --from."}
     />
 )
@@ -94,7 +94,7 @@ export const Default: Story = {
                         render: (
                             <IdentityContentRow
 
-                               
+
                                 avatarName="Minh Anh"
                                 avatarSeed="u1"
                                 byline={Byline}
@@ -127,7 +127,7 @@ export const Skeleton: Story = {
                         render: (
                             <IdentityContentRow
 
-                               
+
                                 isSkeleton
                                 avatarName="Minh Anh"
                                 avatarSeed="u1"

@@ -55,7 +55,7 @@ export const Full: Story = {
                         render: (
                             <ContentRelatedList
 
-                               
+
                                 label="You might also want to read"
                                 items={ITEMS}
                             />
@@ -103,7 +103,7 @@ export const Locked: Story = {
                         render: (
                             <ContentRelatedList
 
-                               
+
                                 label="You might also want to read"
                                 items={[{ ...ITEMS[0], isLocked: true }]}
                             />
@@ -134,7 +134,7 @@ export const Hidden: Story = {
                         render: (
                             <ContentRelatedList
 
-                               
+
                                 label="You might also want to read"
                                 items={[]}
                             />
@@ -165,7 +165,7 @@ export const Skeleton: Story = {
                         render: (
                             <ContentRelatedList
 
-                               
+
                                 label="You might also want to read"
                                 items={[]}
                                 isSkeleton

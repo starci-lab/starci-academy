@@ -79,7 +79,7 @@ export const Default: Story = {
                         render: (
                             <SettingsLayout
 
-                               
+
                                 groups={GROUPS}
                                 activeHref="/profile/edit"
                                 onNavigate={() => {}}

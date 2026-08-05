@@ -4,15 +4,15 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * ATOM — `StepBadge`: the system's one numbered circle for multi-step flows.
- * 
+ *
  * 1 PROP = 1 LEAF. Every prop with a shape gets its own leaf rendering every value it can
  * produce: `state` · `size` · `isSkeleton`. Props with no shape (`className`) get no leaf.
  * `number` gets no leaf — it's free-form content, not a finite union.
- * 
+ *
  * `showAnatomy` (group E) tags `data-anat-part` onto the real root (`"Badge"`), the skeleton
  * root (`"Skeleton"`), and the check-icon wrapper when `state="done"` (`"Icon"`). The `States`
  * leaf turns anatomy on at the `done` cell so both `Badge` and `Icon` surface in one tree.
- * 
+ *
  * `Badge` (root span) and `Icon` (wraps the passed `CheckIcon`) are plain elements, not
  * importable components, so neither is named in `annotate`. Only `Skeleton` is a real,
  * direct HeroUI import — `tier: "heroui"`, no `storyId`.

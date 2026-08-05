@@ -59,12 +59,18 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /** Controlled wrapper — a trigger reopens the drawer after it closes, so the story stays interactive. */
-const ControlledThemeEditorDrawer = ({ isSaving, isSkeleton }: { isSaving?: boolean; isSkeleton?: boolean }) => {
+type ControlledThemeEditorDrawerProps = {
+    isSaving?: boolean
+    isSkeleton?: boolean
+}
+const ControlledThemeEditorDrawer = ({ isSaving, isSkeleton }: ControlledThemeEditorDrawerProps) => {
     const [isOpen, setIsOpen] = useState(true)
     const [values, setValues] = useState(VALUES)
     return (
         <div data-tier="fixture" className="flex flex-col gap-3 p-8">
-            <Button label="Edit theme" variant="secondary" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label="Edit theme" variant="secondary" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <ThemeEditorDrawer
                 isOpen={isOpen}
                 onOpenChange={setIsOpen}

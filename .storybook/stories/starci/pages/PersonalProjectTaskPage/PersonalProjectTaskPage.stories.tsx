@@ -92,7 +92,7 @@ export const SchemaV2: Story = {
 />`,
                         render: (
                             <PersonalProjectTaskPage
-                               
+
                                 breadcrumbItems={CRUMBS}
                                 task={{
                                     title: "Task 3 — Dockerize service",
@@ -138,7 +138,7 @@ export const SchemaV2Graded: Story = {
 />`,
                         render: (
                             <PersonalProjectTaskPage
-                               
+
                                 breadcrumbItems={CRUMBS}
                                 task={{
                                     title: "Task 3 — Dockerize service",
@@ -194,7 +194,7 @@ export const LegacySchema: Story = {
 />`,
                         render: (
                             <PersonalProjectTaskPage
-                               
+
                                 breadcrumbItems={CRUMBS}
                                 task={{
                                     title: "Task 1 — Build a CRUD API for Task",
@@ -242,7 +242,7 @@ export const Locked: Story = {
                         code: "<PersonalProjectTaskPage … isLocked />",
                         render: (
                             <PersonalProjectTaskPage
-                               
+
                                 breadcrumbItems={CRUMBS}
                                 task={{
                                     title: "Task 5 — Deploy to staging",
@@ -279,7 +279,7 @@ export const Skeleton: Story = {
                         code: "<PersonalProjectTaskPage {...props} isSkeleton />",
                         render: (
                             <PersonalProjectTaskPage
-                               
+
                                 task={{ title: "" }}
                                 brief={{ body: "" }}
                                 relatedItems={[]}

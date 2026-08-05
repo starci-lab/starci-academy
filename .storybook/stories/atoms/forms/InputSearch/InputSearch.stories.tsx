@@ -12,7 +12,7 @@ type Story = StoryObj
  * clear) + an internal `FieldFrame`. No component here has its own story ⇒ `annotate`
  * carries no `storyId` — but HeroUI's `SearchField.Group` plus `FieldFrame`'s own
  * `Label`/`Skeleton` get tier `heroui` so the two-rule panel doesn't silently miss them.
- * 
+ *
  * Leaf `Invalid` is split off from `Error`: `isInvalid` alone only changes the border (no
  * message line), while `errorMessage` pulls in the border plus the red line — different
  * pixels, so two leaves.

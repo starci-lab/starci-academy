@@ -82,7 +82,7 @@ export const Default: Story = {
                         render: (
                             <PlaygroundExerciseGrid
 
-                               
+
                                 exercises={EXERCISES}
                                 onSelect={() => {}}
                                 ariaLabel="Playground exercises"
@@ -127,7 +127,7 @@ export const Empty: Story = {
                         render: (
                             <PlaygroundExerciseGrid
 
-                               
+
                                 exercises={[]}
                                 onSelect={() => {}}
                                 ariaLabel="Playground exercises"

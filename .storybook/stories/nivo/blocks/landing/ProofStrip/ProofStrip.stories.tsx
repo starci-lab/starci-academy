@@ -68,7 +68,7 @@ export const Default: Story = {
                     {
                         name: "one product",
                         why: "A single-product catalog recomputes to 1 product and 3 plans — the same block, different data, proving neither number is baked in.",
-                        code: `<ProofStrip products={[{ id: "nivo-ai-academy", planCount: 3 }]} labels={labels} />`,
+                        code: "<ProofStrip products={[{ id: \"nivo-ai-academy\", planCount: 3 }]} labels={labels} />",
                         render: <ProofStrip products={ONE_PRODUCT} labels={LABELS} />,
                     },
                 ]}

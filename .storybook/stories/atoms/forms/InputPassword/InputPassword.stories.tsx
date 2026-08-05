@@ -14,7 +14,7 @@ type Story = StoryObj
  * HeroUI `Input` it renders, and `FieldFrame`'s own HeroUI `Label`/`Skeleton`, get tier
  * `heroui` so the two-law panel doesn't silently drop them. `Toggle` (the hand-rolled
  * show/hide `<button>`) stays unannotated — plain markup, not a real component.
- * 
+ *
  * Leaf `Invalid` is split off from `Error`: `isInvalid` alone only changes the border (no
  * text line), while `errorMessage` adds the border AND the red line — different pixels, so
  * two leaves. The show/hide `reveal` state is internal `useState`, so no prop can pin it

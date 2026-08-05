@@ -73,7 +73,7 @@ export const Unrevealed: Story = {
                         render: (
                             <FlashcardStudyCard
 
-                               
+
                                 question="What is `React.useMemo` used for?"
                                 levelLabel="Middle"
                                 tags={["react", "performance"]}
@@ -154,7 +154,7 @@ export const Revealed: Story = {
                         render: (
                             <FlashcardStudyCard
 
-                               
+
                                 question="What is `React.useMemo` used for?"
                                 levelLabel="Middle"
                                 revealed
@@ -241,7 +241,7 @@ export const RevealedLocked: Story = {
                         render: (
                             <FlashcardStudyCard
 
-                               
+
                                 question="Explain the event loop in Node.js."
                                 levelLabel="Senior"
                                 tags={["nodejs", "internals"]}
@@ -294,7 +294,7 @@ export const Skeleton: Story = {
                         render: (
                             <FlashcardStudyCard
 
-                               
+
                                 question=""
                                 revealed={false}
                                 onReveal={() => {}}

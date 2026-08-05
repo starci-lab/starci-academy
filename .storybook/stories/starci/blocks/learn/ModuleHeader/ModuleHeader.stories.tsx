@@ -64,7 +64,7 @@ export const Full: Story = {
                         render: (
                             <ModuleHeader
 
-                               
+
                                 breadcrumbItems={CRUMBS}
                                 title="Containerizing applications"
                                 description="Packaging, optimizing images, and running containers in production."
@@ -122,7 +122,7 @@ export const NoMeta: Story = {
                         render: (
                             <ModuleHeader
 
-                               
+
                                 breadcrumbItems={CRUMBS}
                                 title="Containerizing applications"
                             />
@@ -157,7 +157,7 @@ export const Skeleton: Story = {
                         render: (
                             <ModuleHeader
 
-                               
+
                                 isSkeleton
                                 breadcrumbItems={[]}
                                 title=""

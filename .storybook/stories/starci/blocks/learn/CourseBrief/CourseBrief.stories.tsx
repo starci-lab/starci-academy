@@ -64,7 +64,7 @@ export const Full: Story = {
                         render: (
                             <CourseBrief
 
-                               
+
                                 breadcrumbItems={CRUMBS}
                                 title="DevOps Mastery"
                                 description="From CI/CD to Kubernetes production — a hands-on path."
@@ -135,7 +135,7 @@ export const NoBreadcrumb: Story = {
                         render: (
                             <CourseBrief
 
-                               
+
                                 title="DevOps Mastery"
                                 description="From CI/CD to Kubernetes production — a hands-on path."
                                 moduleCount={8}
@@ -169,7 +169,7 @@ export const TitleOnly: Story = {
                         render: (
                             <CourseBrief
 
-                               
+
                                 breadcrumbItems={CRUMBS}
                                 title="DevOps Mastery"
                             />
@@ -204,7 +204,7 @@ export const Skeleton: Story = {
                         render: (
                             <CourseBrief
 
-                               
+
                                 isSkeleton
                                 title=""
                             />

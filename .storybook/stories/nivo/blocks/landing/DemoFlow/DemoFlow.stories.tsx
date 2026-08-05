@@ -79,7 +79,7 @@ export const Default: Story = {
                     {
                         name: "two legs",
                         why: "A shorter preview still lays out cleanly — the grid reflows from real data instead of assuming a fixed four-card shape.",
-                        code: `<DemoFlow {...copy} steps={fourSteps.slice(0, 2)} />`,
+                        code: "<DemoFlow {...copy} steps={fourSteps.slice(0, 2)} />",
                         render: <DemoFlow {...COPY} steps={TWO_STEPS} />,
                     },
                 ]}

@@ -6,7 +6,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 /**
  * ATOM — `SelectMulti`: MULTI-select dropdown, wrapping HeroUI `Select` directly
  * (`selectionMode="multiple"`).
- * 
+ *
  * Leaf atom: the trigger summarizes with text ("n selected", hardcoded in `Select.tsx`, not
  * a `Chip`). It does not compose `Chip` or `Select.Value` for the picked values (just a bare
  * `<span>`), so there's no real dep ⇒ `annotate` carries no `storyId`. But
@@ -54,7 +54,7 @@ export const Default: Story = {
                                         options={OPTIONS}
                                         placeholder="Choose languages"
                                         ariaLabel="Language"
-                                       
+
                                     />
                                 </div>
                             ),
@@ -92,7 +92,7 @@ export const WithLabel: Story = {
                                         placeholder="Choose languages"
                                         label="Language"
                                         hint="Pick every language you use."
-                                       
+
                                     />
                                 </div>
                             ),
@@ -130,7 +130,7 @@ export const Required: Story = {
                                         placeholder="Choose languages"
                                         label="Language"
                                         isRequired
-                                       
+
                                     />
                                 </div>
                             ),
@@ -210,7 +210,7 @@ export const Disabled: Story = {
                                     placeholder="Choose languages"
                                     label="Language"
                                     isDisabled
-                                   
+
                                 />
                             </div>
                         ),
@@ -249,7 +249,7 @@ export const Invalid: Story = {
                                     placeholder="Choose languages"
                                     label="Language"
                                     isInvalid
-                                   
+
                                 />
                             </div>
                         ),
@@ -285,7 +285,7 @@ export const Error: Story = {
                                         placeholder="Choose languages"
                                         label="Language"
                                         errorMessage="Pick at least one language."
-                                       
+
                                     />
                                 </div>
                             ),

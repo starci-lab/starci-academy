@@ -122,7 +122,7 @@ export const Default: Story = {
                     {
                         name: "mid-funnel bottleneck",
                         why: "A different balance — the drop-off sits at the proposal stage instead of thinning steadily — proves the fills recompute from data rather than assuming the bottleneck is always the last stage.",
-                        code: `<DashboardProof {...copy} pipelineStages={midBottleneckStages} />`,
+                        code: "<DashboardProof {...copy} pipelineStages={midBottleneckStages} />",
                         render: <DashboardProof {...COPY} pipelineStages={MID_BOTTLENECK_STAGES} />,
                     },
                 ]}

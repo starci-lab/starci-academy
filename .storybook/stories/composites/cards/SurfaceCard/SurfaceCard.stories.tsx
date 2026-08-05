@@ -34,7 +34,7 @@ type Story = StoryObj<typeof SurfaceCard>
  * `isSkeleton` but doesn't own what's inside it. `body` (`ProfileRow`) is the
  * same — it belongs to the caller, not a frame part.
  *
- * ⚠️ The key must match EXACTLY the `data-anat-part` string that
+ * WARNING: The key must match EXACTLY the `data-anat-part` string that
  * `surface-card-header.tsx` emits — forget this and the Deps link breaks SILENTLY.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -63,7 +63,7 @@ const DESCRIPTION_ANNOTATE: Record<string, AnatomyAnnotation> = {
  * (`Avatar` + two `Typography`), NOT raw HeroUI or a class-painted
  * `<span>`. Same mould `Section.stories` already uses.
  *
- * ⭐ Because it goes through atoms, `isSkeleton` just FLOWS ON DOWN into those
+ * * Because it goes through atoms, `isSkeleton` just FLOWS ON DOWN into those
  * three atoms — no `ProfileRowSkeleton` copy to keep in sync anymore (§12c).
  * This is exactly why `body` takes a COMPONENT reference (COMPOSITE-8): the frame
  * calls `ProfileRow` itself with `isSkeleton`, and `ProfileRow` passes it on to
@@ -81,10 +81,10 @@ interface ProfileRowProps {
 
 const ProfileRow = ({ isSkeleton = false }: ProfileRowProps) => (
     <div data-tier="fixture" className="flex items-center gap-3">
-        <Avatar name="StarCi Academy" size="md" isSkeleton={isSkeleton} classNames={["shrink-0"]} />
+        <Avatar name="StarCi Academy" size="md" isSkeleton={isSkeleton} />
         <div className="flex min-w-0 grow flex-col">
-            <Typography size="sm" weight="medium" truncate isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/3"] : undefined} text="StarCi Academy" />
-            <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-2/3"] : undefined} text="Learn fullstack, system design, and DevOps on an interview-prep track." />
+            <Typography size="sm" weight="medium" truncate isSkeleton={isSkeleton} text="StarCi Academy" />
+            <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text="Learn fullstack, system design, and DevOps on an interview-prep track." />
         </div>
     </div>
 )
@@ -102,7 +102,7 @@ export const Default: Story = {
                     {
                         name: "no label, header, or footer passed",
                         why: "The header section drops out entirely and the surface div wraps only the content. This is the bare shape a caller reaches for when the surrounding page already carries its own heading.",
-                        code: `<SurfaceCard body={ProfileRow} />`,
+                        code: "<SurfaceCard body={ProfileRow} />",
                         render: <SurfaceCard body={ProfileRow} />,
                     },
                 ]}
@@ -135,7 +135,7 @@ export const Slots: Story = {
 />`,
                         render: (
                             <SurfaceCard
-                               
+
                                 header={ProfileHeader}
                                 body={ProfileRow}
                                 footer={ProfileFooter}
@@ -148,6 +148,7 @@ export const Slots: Story = {
     ),
 }
 
+/** Story: surface with a leading label. */
 export const WithLabel: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -159,7 +160,7 @@ export const WithLabel: Story = {
                     {
                         name: "label passed",
                         why: "`label` turns on SurfaceCardHeader above the surface frame, gap-3 between the two. This is how a card earns its own heading without the caller hand-rolling a title row.",
-                        code: `<SurfaceCard label="My courses" body={ProfileRow} />`,
+                        code: "<SurfaceCard label=\"My courses\" body={ProfileRow} />",
                         render: <SurfaceCard label="My courses" body={ProfileRow} />,
                     },
                 ]}
@@ -168,6 +169,7 @@ export const WithLabel: Story = {
     ),
 }
 
+/** Story: surface with a see-more action. */
 export const SeeMore: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -180,7 +182,7 @@ export const SeeMore: Story = {
                     {
                         name: "onSeeMore passed",
                         why: "SurfaceCardHeader renders a `LinkSeeMore` in place of `labelEnd`, still inside the same single header node. The frame builds that atom itself rather than taking it from the caller, so it shows up under Deps; `action` would not, because that component is supplied by the caller.",
-                        code: `<SurfaceCard label="Featured courses" onSeeMore={() => {}} body={ProfileRow} />`,
+                        code: "<SurfaceCard label=\"Featured courses\" onSeeMore={() => {}} body={ProfileRow} />",
                         render: <SurfaceCard label="Featured courses" onSeeMore={() => {}} body={ProfileRow} />,
                     },
                 ]}
@@ -189,6 +191,7 @@ export const SeeMore: Story = {
     ),
 }
 
+/** Story: surface with a trailing label slot. */
 export const LabelEnd: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -200,7 +203,7 @@ export const LabelEnd: Story = {
                     {
                         name: "labelEnd passed",
                         why: "`labelEnd` renders a muted tag to the right of the label, in the same header node. This is for a unit or a count that belongs next to the label, not an action a viewer could press.",
-                        code: `<SurfaceCard label="Remaining tuition" labelEnd="VND" body={ProfileRow} />`,
+                        code: "<SurfaceCard label=\"Remaining tuition\" labelEnd=\"VND\" body={ProfileRow} />",
                         render: <SurfaceCard label="Remaining tuition" labelEnd="VND" body={ProfileRow} />,
                     },
                 ]}
@@ -212,6 +215,7 @@ export const LabelEnd: Story = {
 /** `action` slot fixture for {@link WithAction} — a component reference (COMPOSITE-8), not a built node. */
 const ManageAction = () => <Button variant="secondary" size="sm" label="Manage" onPress={() => {}} />
 
+/** Story: surface with an action control. */
 export const WithAction: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -232,7 +236,7 @@ export const WithAction: Story = {
                             <SurfaceCard
                                 label="Payment method"
                                 action={ManageAction}
-                               
+
                                 body={ProfileRow}
                             />
                         ),
@@ -243,6 +247,7 @@ export const WithAction: Story = {
     ),
 }
 
+/** Story: surface with a muted label treatment. */
 export const SubtleLabel: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -258,7 +263,7 @@ export const SubtleLabel: Story = {
                         {
                             name: "subtleLabel = true",
                             why: "The label switches from a bold Label to a muted text-xs eyebrow, with the gap under it tightening from 3 to 2 — still the same single header node. This is for a card sitting under a primary section label, where a second bold heading would compete with it.",
-                            code: `<SurfaceCard label="Today" subtleLabel body={ProfileRow} />`,
+                            code: "<SurfaceCard label=\"Today\" subtleLabel body={ProfileRow} />",
                             render: <SurfaceCard label="Today" subtleLabel body={ProfileRow} />,
                         },
                     ]}
@@ -270,6 +275,7 @@ export const SubtleLabel: Story = {
     ),
 }
 
+/** Story: surface with supporting description copy. */
 export const Description: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -291,7 +297,7 @@ export const Description: Story = {
                             <SurfaceCard
                                 label="Weekly quest"
                                 description="Complete all three to earn the reward."
-                               
+
                                 body={ProfileRow}
                             />
                         ),
@@ -328,7 +334,7 @@ export const Variant: Story = {
                         {
                             name: "variant = \"nested\"",
                             why: "Content switches from a shadow to a border (surface-in-surface, §1a), because a shadow stacked on a parent surface's own shadow is nearly invisible. The card at the left shows the default `variant=\"surface\"` for comparison — same composition, only the edge treatment differs.",
-                            code: `<SurfaceCard label="Questions" variant="nested" body={ProfileRow} />`,
+                            code: "<SurfaceCard label=\"Questions\" variant=\"nested\" body={ProfileRow} />",
                             render: (
                                 <SurfaceCard label="Questions" variant="nested" body={ProfileRow} />
                             ),
@@ -361,6 +367,7 @@ const BleedEdgeBody = () => (
     </>
 )
 
+/** Story: padding variants side by side. */
 export const Padding: Story = {
     render: () => (
         <div data-tier="fixture" className="flex flex-wrap items-start gap-6 p-8">
@@ -376,7 +383,7 @@ export const Padding: Story = {
                         {
                             name: "padding = 1",
                             why: "The card drops its `p-3` inset and turns on `overflow-hidden`, so a child now owns its own padding and its edges follow the frame's own corners. The card at the left shows the default step `4` inset for comparison, the standard card interior.",
-                            code: `<SurfaceCard label="Featured course" padding={1} body={BleedEdgeBody} />`,
+                            code: "<SurfaceCard label=\"Featured course\" padding={1} body={BleedEdgeBody} />",
                             render: (
                                 <SurfaceCard label="Featured course" padding={1} body={BleedEdgeBody} />
                             ),
@@ -393,7 +400,7 @@ export const Padding: Story = {
  * following the same mould as `Variant`/`Padding` (a leaf named AFTER THE PROP,
  * not after a scenario).
  *
- * ⭐ The flag reaches what the FRAME OWNS directly (`label` on the header,
+ * * The flag reaches what the FRAME OWNS directly (`label` on the header,
  * `description` below the card) AND every slot it renders — `body` is a
  * component reference (COMPOSITE-8), so the frame calls `ProfileRow` itself
  * WITH `isSkeleton`, and `ProfileRow` forwards it straight to `Avatar` + two
@@ -414,11 +421,11 @@ export const Skeleton: Story = {
                     {
                         name: "isSkeleton = true",
                         why: "Every line keeps its real box, the label at `sm`, the caption at `xs`, and the row's own two lines, so nothing shifts once the data lands (§8). The frame owns the label and the caption bars, and calls `body` with `isSkeleton` so the row shimmers its own two bars too.",
-                        code: `<SurfaceCard isSkeleton label="My courses" description={…} body={ProfileRow} />`,
+                        code: "<SurfaceCard isSkeleton label=\"My courses\" description={…} body={ProfileRow} />",
                         render: (
                             <SurfaceCard
                                 isSkeleton
-                               
+
                                 label="My courses"
                                 description="Three left to finish this month."
                                 body={ProfileRow}
@@ -449,7 +456,7 @@ export const Pressable: Story = {
                     {
                         name: "onPress set, no actions/href",
                         why: "The card mounts as a single `<button>` where the whole tile is the press target, and `ProfileRow`'s own text becomes its accessible label — the plain navigation-tile shape for when the entire card leads to one action.",
-                        code: `<SurfaceCard onPress={() => {}} body={ProfileRow} />`,
+                        code: "<SurfaceCard onPress={() => {}} body={ProfileRow} />",
                         render: (
                             <SurfaceCard onPress={() => {}} body={ProfileRow} />
                         ),
@@ -473,7 +480,7 @@ export const PressableAsLink: Story = {
                     {
                         name: "href set instead of onPress",
                         why: "The card mounts an `<a>` in place of the `<button>`, keeping the exact same single Content shape as `Pressable`. A caller that only has a destination URL, not a click handler, needs the card to behave as a real navigation link.",
-                        code: `<SurfaceCard href="#" body={ProfileRow} />`,
+                        code: "<SurfaceCard href=\"#\" body={ProfileRow} />",
                         render: (
                             <SurfaceCard href="#" body={ProfileRow} />
                         ),
@@ -516,7 +523,7 @@ export const PressableWithActions: Story = {
                             <SurfaceCard
                                 onPress={() => {}}
                                 ariaLabel="Open the StarCi Academy profile"
-                               
+
                                 actions={(
                                     <Button size="sm" variant="ghost" label="Continue" onPress={() => {}} />
                                 )}
@@ -543,7 +550,7 @@ export const PressableSelected: Story = {
                     {
                         name: "isSelected = true",
                         why: "The card keeps the exact same Content node as `Pressable` and only gains a `ring-2 ring-accent` outline plus `aria-pressed`/`aria-current` — a selection grid needs a way to show which tile is chosen without changing what the tile contains.",
-                        code: `<SurfaceCard isSelected onPress={() => {}} body={ProfileRow} />`,
+                        code: "<SurfaceCard isSelected onPress={() => {}} body={ProfileRow} />",
                         render: (
                             <SurfaceCard isSelected onPress={() => {}} body={ProfileRow} />
                         ),
@@ -567,7 +574,7 @@ export const PressableDisabled: Story = {
                     {
                         name: "isDisabled = true (onPress set)",
                         why: "Nothing mounts or unmounts — the same Content node renders, just dimmed, and the ripple/press-scale feedback stops firing. The option has to stay visible so the reader still knows it exists, even though it can't be chosen right now.",
-                        code: `<SurfaceCard isDisabled onPress={() => {}} body={ProfileRow} />`,
+                        code: "<SurfaceCard isDisabled onPress={() => {}} body={ProfileRow} />",
                         render: (
                             <SurfaceCard isDisabled onPress={() => {}} body={ProfileRow} />
                         ),

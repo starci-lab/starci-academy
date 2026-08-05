@@ -116,7 +116,7 @@ export const Description: Story = {
 />`,
                         render: (
                             <EmptyState
-                               
+
                                 icon={MagnifyingGlassIcon}
                                 title="No results found"
                                 description="Try different filters or a shorter search term."
@@ -324,7 +324,7 @@ export const Compact: Story = {
 />`,
                             render: (
                                 <EmptyState
-                                   
+
                                     size="compact"
                                     title="No submissions yet for this assignment."
                                     icon={WarningIcon}

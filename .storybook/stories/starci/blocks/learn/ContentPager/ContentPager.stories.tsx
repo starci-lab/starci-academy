@@ -54,7 +54,7 @@ export const Full: Story = {
                         render: (
                             <ContentPager
 
-                               
+
                                 ariaLabel="Go to previous or next content"
                                 previous={PREVIOUS}
                                 next={NEXT}
@@ -89,7 +89,7 @@ export const NextOnly: Story = {
                         render: (
                             <ContentPager
 
-                               
+
                                 ariaLabel="Go to previous or next content"
                                 next={NEXT}
                             />
@@ -123,7 +123,7 @@ export const PreviousOnly: Story = {
                         render: (
                             <ContentPager
 
-                               
+
                                 ariaLabel="Go to previous or next content"
                                 previous={PREVIOUS}
                             />
@@ -154,7 +154,7 @@ export const Skeleton: Story = {
                         render: (
                             <ContentPager
 
-                               
+
                                 ariaLabel="Go to previous or next content"
                                 isSkeleton
                             />

@@ -222,7 +222,7 @@ export const TwoGroups: Story = {
                                 defaultLeftKey="overview"
                                 rightItems={LANGUAGE_TABS}
                                 defaultRightKey="vi"
-                               
+
                             />
                         ),
                     },
@@ -264,7 +264,7 @@ export const RightNeutralCollapsed: Story = {
                                 defaultRightKey="vi"
                                 rightTabsNeutral
                                 collapseRightOnMobile
-                               
+
                             />
                         ),
                     },
@@ -310,7 +310,7 @@ export const PrimaryVariant: Story = {
                                 leftAriaLabel="Area"
                                 defaultLeftKey="start"
                                 variant="primary"
-                               
+
                             />
                         ),
                     },
@@ -365,7 +365,7 @@ export const TabStates: Story = {
                                 ]}
                                 leftAriaLabel="Area"
                                 defaultLeftKey="start"
-                               
+
                             />
                         ),
                     },

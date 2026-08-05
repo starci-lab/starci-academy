@@ -19,6 +19,7 @@ export default meta
 
 type Story = StoryObj<typeof CourseContents>
 
+/** Story: resting state for this component. */
 export const Default: Story = {
     render: () => deviceLeaf({ width: W, isSkeleton: true, leaf: "Prop `isSkeleton`", reason: "Tablet 768px · the resting shape, drawn by each block itself." }),
 }

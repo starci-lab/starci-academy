@@ -81,7 +81,7 @@ export const Standalone: Story = {
                         render: (
                             <EnrollGate
 
-                               
+
                                 title="Unlock the Personal Project"
                                 description="Enroll to build a real capstone, graded by AI."
                                 price={PRICE}
@@ -119,7 +119,7 @@ export const WithPreview: Story = {
                         render: (
                             <EnrollGate
 
-                               
+
                                 title="Unlock the Personal Project"
                                 description="Enroll to build a real capstone, graded by AI."
                                 preview={<MockPreview />}
@@ -157,7 +157,7 @@ export const NoScarcity: Story = {
                         render: (
                             <EnrollGate
 
-                               
+
                                 title="Unlock the Personal Project"
                                 description="Enroll to build a real capstone, graded by AI."
                                 price={{ discountedVnd: 1_990_000, originalVnd: 2_990_000 }}
@@ -194,7 +194,7 @@ export const Loading: Story = {
                         render: (
                             <EnrollGate
 
-                               
+
                                 title="Unlock the Personal Project"
                                 description="Enroll to build a real capstone, graded by AI."
                                 onEnroll={() => {}}

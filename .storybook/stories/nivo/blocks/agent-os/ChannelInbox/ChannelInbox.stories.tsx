@@ -51,7 +51,11 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /** A controlled wrapper so the page-nav leaf demonstrates a real client-paged flip. */
-const ControlledChannelInbox = ({ threads, isSkeleton }: { threads: Array<ChannelInboxThread>; isSkeleton?: boolean }) => {
+type ControlledChannelInboxProps = {
+    threads: Array<ChannelInboxThread>
+    isSkeleton?: boolean
+}
+const ControlledChannelInbox = ({ threads, isSkeleton }: ControlledChannelInboxProps) => {
     const [page, setPage] = useState(1)
     const pageSize = 2
     const totalPages = Math.max(1, Math.ceil(threads.length / pageSize))

@@ -62,7 +62,7 @@ export const Default: Story = {
                         render: (
                             <MindMapFullscreenButton
 
-                               
+
                                 onZoomIn={() => {}}
                                 onZoomOut={() => {}}
                                 onToggleFullscreen={() => {}}

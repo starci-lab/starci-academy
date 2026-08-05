@@ -53,19 +53,20 @@ const PLAN_ITEMS: Array<SurfaceCardSelectableGroupItem<PlanValue>> = [
     { value: "enterprise", label: "Enterprise", description: "Custom limits, SSO, and a dedicated success manager", isDisabled: true },
 ]
 /** Owns the selection so the group is interactive (the block is fully controlled). */
+type ControlledGroupProps<T extends string> = {
+    items: Array<SurfaceCardSelectableGroupItem<T>>
+    initialValue: T
+    ariaLabel: string
+    columns?: 1 | 2 | 3
+    width?: string
+}
 const ControlledGroup = <T extends string>({
     items,
     initialValue,
     ariaLabel,
     columns,
     width = "480px",
-}: {
-    items: Array<SurfaceCardSelectableGroupItem<T>>
-    initialValue: T
-    ariaLabel: string
-    columns?: 1 | 2 | 3
-    width?: string
-}) => {
+}: ControlledGroupProps<T>) => {
     const [value, setValue] = useState<T>(initialValue)
     return (
         <div data-tier="fixture" style={{ width }}>

@@ -62,7 +62,7 @@ const PART_FEEDBACK_EMPTY: AnatomyAnnotation = {
     storyId: "composites-feedback-emptystate--description",
 }
 /**
- * ⭐ Rendering is delegated to the house `Accordion` atom (COMPOSITE-3) — this frame
+ * * Rendering is delegated to the house `Accordion` atom (COMPOSITE-3) — this frame
  * composes each trigger's content (leading node + title + subtitle + trailing node)
  * as DATA handed to the atom's `items`, and the atom owns expand/collapse plus its
  * own collapsed-row mirror while loading (COMPOSITE-10). The atom is a REAL DEP with
@@ -76,6 +76,7 @@ const ACCORDION_ANNOTATE: Record<string, AnatomyAnnotation> = {
         storyId: "atoms-navigation-accordion-accordion--default",
     },
 }
+/** Story: resting state for this component. */
 export const Default: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -103,6 +104,7 @@ export const Default: Story = {
         </div>
     ),
 }
+/** Story: surface with a leading label. */
 export const WithLabel: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -149,7 +151,7 @@ export const Variants: Story = {
                         code: "<SurfaceCardAccordion label=\"Resources\" items={[…]} />",
                         render: (
                             <SurfaceCardAccordion
-                               
+
                                 label="Resources"
                                 variant="surface"
                                 items={items}
@@ -186,6 +188,7 @@ export const Variants: Story = {
 const DoneBadge = () => <Chip data-tier="fixture" size="sm" variant="soft" color="success"><Chip.Label>Done</Chip.Label></Chip>
 const InProgressBadge = () => <Chip data-tier="fixture" size="sm" variant="soft" color="warning"><Chip.Label>In progress</Chip.Label></Chip>
 const NotStartedBadge = () => <Chip data-tier="fixture" size="sm" variant="soft" color="default"><Chip.Label>Not started</Chip.Label></Chip>
+/** Story: accordion item with trailing title content. */
 export const WithTitleEnd: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -206,7 +209,7 @@ export const WithTitleEnd: Story = {
 />`,
                         render: (
                             <SurfaceCardAccordion
-                               
+
                                 label="Milestones"
                                 defaultExpandedKeys={new Set(["m2"])}
                                 items={[
@@ -304,7 +307,7 @@ export const Empty: Story = {
 />`,
                         render: (
                             <SurfaceCardAccordion
-                               
+
                                 label="Resources"
                                 items={[]}
                                 emptyState={ResourcesEmptyState}

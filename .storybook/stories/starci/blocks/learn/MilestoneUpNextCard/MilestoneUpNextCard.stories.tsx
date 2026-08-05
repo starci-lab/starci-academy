@@ -7,7 +7,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * unlocked milestone task on a capstone track. Distinct from the challenge
  * flow (no such fixed handoff exists there) — see the component file header.
  *
- * 📐 TWO LEAVES (§14d.2). `showCheck` and `isSkeleton` only toggle a glyph or
+ * [layout] TWO LEAVES (§14d.2). `showCheck` and `isSkeleton` only toggle a glyph or
  * mirror the existing shape — neither changes what is composed, so both are
  * STATES of `Default`. `isHighlight` is different: it adds/removes the
  * highlight streak, a real DOM node, so its two values are the `Default`
@@ -58,7 +58,7 @@ export const Default: Story = {
                         render: (
                             <MilestoneUpNextCard
 
-                               
+
                                 eyebrow="Task 2 completed"
                                 showCheck
                                 title="Task 3 · Deploy to staging"
@@ -132,7 +132,7 @@ export const Plain: Story = {
                         render: (
                             <MilestoneUpNextCard
 
-                               
+
                                 eyebrow="Up next"
                                 title="Do 3 challenges from this lesson"
                                 description="Practice now to remember the lesson longer."

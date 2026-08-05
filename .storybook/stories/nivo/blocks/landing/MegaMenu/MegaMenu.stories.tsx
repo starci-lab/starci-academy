@@ -69,7 +69,7 @@ export const Default: Story = {
                     {
                         name: "two entries",
                         why: "A shorter catalog of entries still lays out cleanly — the panel reflows from real data instead of assuming a fixed four-row shape.",
-                        code: `<MegaMenu triggerLabel="Products" ariaLabel="Browse nivo products" items={fourEntries.slice(0, 2)} defaultOpen />`,
+                        code: "<MegaMenu triggerLabel=\"Products\" ariaLabel=\"Browse nivo products\" items={fourEntries.slice(0, 2)} defaultOpen />",
                         render: <MegaMenu triggerLabel="Products" ariaLabel="Browse nivo products" items={TWO_ENTRIES} defaultOpen />,
                     },
                 ]}

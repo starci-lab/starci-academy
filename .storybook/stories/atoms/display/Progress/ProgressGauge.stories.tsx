@@ -5,11 +5,11 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 /**
  * ATOM — `ProgressGauge`: a static MEASUREMENT (storage, battery, quota), wrapping
  * HeroUI/react-aria Meter directly.
- * 
+ *
  * 1 PROP = 1 LEAF. Leaf set: `Value` (merges `value`+`max` into one shape) · `Colors` ·
  * `Sizes` · `Loading`. No `Indeterminate` leaf — react-aria Meter is always determinate.
  * `ariaLabel` has no leaf: it only feeds `aria-label`, never changing a pixel.
- * 
+ *
  * `Meter` calls its own `HeroMeter` directly; it does NOT recompose `ProgressBar`.
  * `Meter.Track`/`Meter.Fill` are real HeroUI compound components ⇒ `tier: "heroui"`, no `storyId`.
  */

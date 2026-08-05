@@ -45,10 +45,10 @@ const ProfileCard = () => (
 const ProfileCardSkeleton = () => (
     <Card data-tier="fixture">
         <CardContent className="flex-row items-center gap-3">
-            <AtomAvatar isSkeleton size="md" classNames={["shrink-0"]} />
+            <AtomAvatar isSkeleton size="md" />
             <div className="flex min-w-0 grow flex-col">
-                <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
-                <Typography size="xs" isSkeleton classNames={["w-2/3"]} />
+                <Typography size="sm" isSkeleton />
+                <Typography size="xs" isSkeleton />
             </div>
         </CardContent>
     </Card>

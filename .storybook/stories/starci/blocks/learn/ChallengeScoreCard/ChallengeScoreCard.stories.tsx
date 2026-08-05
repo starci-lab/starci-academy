@@ -53,7 +53,7 @@ export const Full: Story = {
                         render: (
                             <ChallengeScoreCard
 
-                               
+
                                 earnedScore={9}
                                 maxScore={10}
                                 passThreshold={0.8}

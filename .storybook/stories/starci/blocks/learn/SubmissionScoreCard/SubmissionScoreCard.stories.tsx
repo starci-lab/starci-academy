@@ -67,7 +67,7 @@ export const ScoreCard: Story = {
                         render: (
                             <SubmissionScoreCard
 
-                               
+
                                 label="Grading result"
                                 score={82}
                                 maxScore={100}

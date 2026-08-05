@@ -66,7 +66,7 @@ export const AttemptRow: Story = {
                         render: (
                             <SubmissionAttemptSelector
 
-                               
+
                                 attempts={[]}
                                 ariaLabel="Select attempt"
                                 isLoading

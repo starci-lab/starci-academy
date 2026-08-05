@@ -10,11 +10,11 @@ type Story = StoryObj
 /**
  * ATOM — `InputCurrency`: money-amount field (HeroUI NumberField + `formatOptions`
  * currency), wrapped internally through `FieldFrame`.
- * 
+ *
  * No component here has its own story ⇒ `annotate` carries no `storyId` — but the HeroUI
  * `NumberField.Group` plus `FieldFrame`'s own `Label`/`Skeleton` still get the `heroui`
  * tier so the two-rule panel doesn't silently miss them.
- * 
+ *
  * a11y: the control is compound (stepper + input), so it can't wire an `htmlFor` — the atom
  * feeds `label`/`ariaLabel` into `aria-label` itself via the `fieldName` helper.
  */

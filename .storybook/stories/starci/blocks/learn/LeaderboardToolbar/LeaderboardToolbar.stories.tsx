@@ -50,7 +50,7 @@ export const Toolbar: Story = {
                         render: (
                             <LeaderboardToolbar
 
-                               
+
                                 categoryLabel="This week's XP"
                                 updatedAt={FIVE_MINUTES_AGO}
                                 refreshLabel="Refresh"

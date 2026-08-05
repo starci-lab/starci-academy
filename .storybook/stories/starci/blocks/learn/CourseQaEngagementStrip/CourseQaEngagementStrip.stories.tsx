@@ -51,7 +51,7 @@ export const Default: Story = {
                         render: (
                             <CourseQaEngagementStrip
 
-                               
+
                                 enrollmentCount={214}
                                 totalQuestions={38}
                                 answeredQuestions={31}

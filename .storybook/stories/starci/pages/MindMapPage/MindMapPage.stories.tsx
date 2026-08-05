@@ -86,7 +86,7 @@ export const WorkspaceDefault: Story = {
 />`,
                     render: (
                         <MindMapPage
-                           
+
                             variant="workspace"
                             query=""
                             onQuery={() => {}}
@@ -121,7 +121,7 @@ export const WorkspaceLoading: Story = {
                     code: "<MindMapPage variant=\"workspace\" {...props} isSkeleton />",
                     render: (
                         <MindMapPage
-                           
+
                             variant="workspace"
                             query=""
                             onQuery={() => {}}
@@ -157,7 +157,7 @@ export const WorkspaceEmpty: Story = {
                     code: "<MindMapPage variant=\"workspace\" {...props} isEmpty />",
                     render: (
                         <MindMapPage
-                           
+
                             variant="workspace"
                             query=""
                             onQuery={() => {}}
@@ -205,7 +205,7 @@ export const StandaloneDefault: Story = {
 />`,
                     render: (
                         <MindMapPage
-                           
+
                             variant="standalone"
                             query=""
                             onQuery={() => {}}
@@ -250,7 +250,7 @@ export const StandaloneLoading: Story = {
                     code: "<MindMapPage variant=\"standalone\" {...props} isSkeleton />",
                     render: (
                         <MindMapPage
-                           
+
                             variant="standalone"
                             query=""
                             onQuery={() => {}}

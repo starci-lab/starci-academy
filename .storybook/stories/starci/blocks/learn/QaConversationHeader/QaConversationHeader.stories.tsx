@@ -51,7 +51,7 @@ export const HasReplies: Story = {
                         render: (
                             <QaConversationHeader
 
-                               
+
                                 asker={ASKER}
                                 isFounderAsker
                                 participants={PARTICIPANTS}

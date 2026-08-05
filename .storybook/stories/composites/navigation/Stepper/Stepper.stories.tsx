@@ -73,7 +73,7 @@ export const Vertical: Story = {
                                 currentIndex={1}
                                 orientation="vertical"
                                 onStepPress={() => {}}
-                               
+
                             />
                         ),
                     },

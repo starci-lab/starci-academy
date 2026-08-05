@@ -50,7 +50,7 @@ export const Default: Story = {
                         render: (
                             <PlaygroundEnterBanner
 
-                               
+
                                 allReady={false}
                                 pendingCount={2}
                                 onEnter={() => {}}

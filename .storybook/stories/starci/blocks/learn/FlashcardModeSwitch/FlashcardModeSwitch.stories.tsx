@@ -48,7 +48,7 @@ export const Full: Story = {
                         render: (
                             <FlashcardModeSwitch
 
-                               
+
                                 ariaLabel="Flashcard mode"
                                 mode="study"
                                 onModeChange={() => {}}

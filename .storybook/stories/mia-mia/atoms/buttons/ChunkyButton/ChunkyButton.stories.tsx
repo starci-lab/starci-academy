@@ -13,7 +13,7 @@ const meta: Meta<typeof ChunkyButton> = {
     component: ChunkyButton,
     args: {
         href: "#",
-        children: "Vào học miễn phí",
+        children: "Start learning free",
         tone: "pink",
         size: "md",
     },
@@ -39,14 +39,14 @@ export const Tones: Story = {
                     <Label>Pink — primary</Label>
                     <Typography type="body-sm" color="muted">the main action on a surface; at most one per beat.</Typography>
                 </div>
-                <ChunkyButton href="#" tone="pink" endIcon={<Arrow />}>Vào học miễn phí</ChunkyButton>
+                <ChunkyButton href="#" tone="pink" endIcon={<Arrow />}>Start learning free</ChunkyButton>
             </div>
             <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
                     <Label>Sun — secondary</Label>
                     <Typography type="body-sm" color="muted">a supporting action paired with a pink primary.</Typography>
                 </div>
-                <ChunkyButton href="#" tone="sun">Xem đề thi thật</ChunkyButton>
+                <ChunkyButton href="#" tone="sun">View a real exam</ChunkyButton>
             </div>
         </div>
     ),
@@ -57,7 +57,7 @@ export const OnDarkBanner: Story = {
     parameters: { usage: "The `lg` size with a `cream` shadow, as used on the dark closing banner — verify the offset shadow stays visible against the ink fill." },
     render: () => (
         <div className="flex flex-col gap-3 rounded-3xl bg-[var(--nb-ink)] p-8">
-            <ChunkyButton href="#" tone="pink" size="lg" shadow="cream" endIcon={<Arrow />}>Vào học miễn phí</ChunkyButton>
+            <ChunkyButton href="#" tone="pink" size="lg" shadow="cream" endIcon={<Arrow />}>Start learning free</ChunkyButton>
         </div>
     ),
 }

@@ -7,7 +7,7 @@ import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/Surface
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ STATE SCOPE: `Grid` is a two-dimensional REPEATED-LIST FRAME. The state it
+ * WARNING: STATE SCOPE: `Grid` is a two-dimensional REPEATED-LIST FRAME. The state it
  * produces = `columns` (column count by CONTAINER breakpoint — a distinctive state no
  * other frame has), and `gap` (§10). No `align`/`justify`: a grid cell stretches to
  * fill by default, aligning content inside the cell is the job of the component

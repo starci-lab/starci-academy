@@ -27,19 +27,20 @@ export default meta
 type Story = StoryObj<typeof Dropzone>
 
 /** Local controlled wrapper — holds `file` so drag-drop / click-to-pick runs for real on the canvas. */
+type ControlledDropzoneProps = {
+    hint: string
+    initialFile?: File | null
+    errorMessage?: string
+    acceptedMimeTypes: Array<string>
+    maxSizeInBytes: number
+}
 const Controlled = ({
     hint,
     initialFile = null,
     errorMessage,
     acceptedMimeTypes,
     maxSizeInBytes,
-}: {
-    hint: string
-    initialFile?: File | null
-    errorMessage?: string
-    acceptedMimeTypes: Array<string>
-    maxSizeInBytes: number
-}) => {
+}: ControlledDropzoneProps) => {
     const [file, setFile] = useState<File | null>(initialFile)
     return (
         <Dropzone
@@ -49,7 +50,7 @@ const Controlled = ({
             acceptedMimeTypes={acceptedMimeTypes}
             maxSizeInBytes={maxSizeInBytes}
             onValueChange={setFile}
-           
+
         />
     )
 }
@@ -66,7 +67,7 @@ const MAX = 5 * 1024 * 1024
  * compose any atom with its own story ⇒ LEAF ATOM, so it carries no `annotate`.
  * `DropBox`/`ErrorMessage`/`Skeleton` are just internal slots, not deps.
  *
- * 📐 Leaf set — each leaf maps to ONE prop with visible shape: `file`
+ * [layout] Leaf set — each leaf maps to ONE prop with visible shape: `file`
  * (the box's content swaps from the hint to the file name), `errorMessage`
  * (red border + error line), `isSkeleton` (a mirror of the box before it's
  * ready). `hint` is always present, so it already lives on the bare leaf
@@ -169,7 +170,7 @@ export const Skeleton: Story = {
                                 acceptedMimeTypes={ACCEPT}
                                 maxSizeInBytes={MAX}
                                 onValueChange={() => {}}
-                               
+
                             />
                         ),
                     },

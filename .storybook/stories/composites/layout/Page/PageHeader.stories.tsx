@@ -81,7 +81,7 @@ export const Minimal: Story = {
                                 <PageHeader
                                     title="Manage students"
                                     description="View and edit every enrolled student."
-                                   
+
                                 />
                             ),
                         },
@@ -121,7 +121,7 @@ export const Full: Story = {
                                     description="A path from the fundamentals to shipping a real product, graded by AI."
                                     actions={FullActions}
                                     meta={FullMeta}
-                                   
+
                                 />
                             ),
                         },
@@ -151,7 +151,7 @@ export const DescriptionClamped: Story = {
                                 <PageHeader
                                     title="Configure payment gateways"
                                     description="Set up SePay and PayOS, choose the default gateway for new students, configure installment plans applied per course, and track transaction status in real time."
-                                   
+
                                 />
                             ),
                         },
@@ -180,7 +180,7 @@ export const SizePage: Story = {
                             <PageHeader
                                 title="Set up your machine"
                                 description="Before entering the playground, install the CLI and connect the StarCi Agent."
-                               
+
                             />
                         ),
                     },
@@ -209,7 +209,7 @@ export const SizeCompact: Story = {
                                 size="compact"
                                 title="Set up your machine"
                                 description="Before entering the playground, install the CLI and connect the StarCi Agent."
-                               
+
                             />
                         ),
                     },

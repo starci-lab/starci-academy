@@ -59,7 +59,7 @@ export const PlainAnswer: Story = {
                         render: (
                             <QaMessageBubble
 
-                               
+
                                 answer={BASE_ANSWER}
                                 currentUserId="viewer"
                                 canAccept={false}
@@ -151,7 +151,7 @@ export const Skeleton: Story = {
                             <QaMessageBubble
                                 isSkeleton
 
-                               
+
                                 currentUserId={null}
                                 canAccept={false}
                                 onAcceptAnswer={() => {}}

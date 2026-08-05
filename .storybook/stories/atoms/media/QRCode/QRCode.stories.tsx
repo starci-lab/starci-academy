@@ -4,15 +4,15 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * ATOM — `QRCode`: an image frame rendering a QR bitmap, with an optional centered icon.
- * 
+ *
  * 1 PROP = 1 LEAF. Every prop with a visual effect gets its own leaf rendering the full set
  * of that prop's values: `size` · `icon` · `isSkeleton`.
- * 
+ *
  * `data` gets no leaf — it is the content the atom renders, not a state to enumerate, so it
  * stays constant across every leaf and only its value in the code snippet changes.
  * `classNames` gets no leaf either: it only places the atom inside its parent, never changing
  * how the atom looks.
- * 
+ *
  * This atom does not yet tag any element with `data-anat-part` (no `showAnatomy` prop on
  * {@link QRCode}), so the Structure tab stays empty for every leaf — expected, not a bug.
  */

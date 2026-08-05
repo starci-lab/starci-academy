@@ -48,7 +48,7 @@ export const ResumeAvailable: Story = {
                         render: (
                             <MindMapContinueButton
 
-                               
+
                                 resumeHref="/courses/devops/learn/optimizing-dockerfiles"
                                 allContentDone={false}
                                 continueAriaLabel="Go to the next content"
@@ -84,7 +84,7 @@ export const AllDone: Story = {
                         render: (
                             <MindMapContinueButton
 
-                               
+
                                 resumeHref={null}
                                 allContentDone
                                 continueAriaLabel="Go to the next content"
@@ -120,7 +120,7 @@ export const Skeleton: Story = {
                         render: (
                             <MindMapContinueButton
 
-                               
+
                                 resumeHref={null}
                                 allContentDone={false}
                                 continueAriaLabel="Go to the next content"

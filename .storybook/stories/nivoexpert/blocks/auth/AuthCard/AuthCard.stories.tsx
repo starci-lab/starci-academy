@@ -144,7 +144,7 @@ export const Default: Story = {
                     {
                         name: "errorMessage set",
                         why: "The last attempt's thrown message (the `AuthResult` envelope's `error`, e.g. a wrong password or a duplicate email) surfaces as a danger alert above the fields — the fields keep their typed values so nothing is lost.",
-                        code: '<AuthCard {...props} errorMessage="Invalid email or password." />',
+                        code: "<AuthCard {...props} errorMessage=\"Invalid email or password.\" />",
                         render: (
                             <AuthCard
                                 mode="login"

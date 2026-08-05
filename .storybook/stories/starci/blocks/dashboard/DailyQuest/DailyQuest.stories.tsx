@@ -83,7 +83,7 @@ export const Loading: Story = {
                         render: (
                             <DailyQuest
 
-                               
+
                                 quest={null}
                                 isLoading
                                 onRetry={() => {}}
@@ -116,7 +116,7 @@ export const ErrorLeaf: Story = {
                         render: (
                             <DailyQuest
 
-                               
+
                                 quest={null}
                                 isLoading={false}
                                 error={new globalThis.Error("network")}
@@ -181,7 +181,7 @@ export const Content: Story = {
                         render: (
                             <DailyQuest
 
-                               
+
                                 quest={INCOMPLETE_QUEST}
                                 isLoading={false}
                                 onRetry={() => {}}

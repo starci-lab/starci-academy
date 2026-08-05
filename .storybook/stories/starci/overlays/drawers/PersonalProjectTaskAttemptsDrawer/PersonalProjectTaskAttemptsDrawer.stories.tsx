@@ -120,7 +120,7 @@ const ControlledDrawer = ({
                 label="View AI grading history"
                 variant="secondary"
                 size="sm"
-                classNames={["self-start"]}
+
                 onPress={() => setIsOpen(true)}
             />
             <BlockAnatomy
@@ -144,7 +144,7 @@ const ControlledDrawer = ({
                                 error={error}
                                 onRetry={() => {}}
                                 retryLabel="Retry"
-                               
+
                             />
                         ),
                     },

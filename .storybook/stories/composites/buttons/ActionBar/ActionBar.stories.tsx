@@ -6,14 +6,14 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ STATE SCOPE: `ActionBar` does not grow new meaning — it composes `Button` per
+ * WARNING: STATE SCOPE: `ActionBar` does not grow new meaning — it composes `Button` per
  * role and hands the row to `ResponsiveCluster`. Stories here render only state that
  * BELONGS TO THE ROW: which roles are present (`primary`/`secondary`/`dismiss`),
  * the row-level `isSkeleton`, and the row-level `at` threshold. Per-button state
  * (`prefixIcon`, `isPending`, `isDisabled`, what a variant looks like) lives on the
  * `Button` story, not repeated here — same split `ButtonGroup`'s stories already draw.
  *
- * 📐 1 PROP = 1 LEAF, with one deliberate exception: `primary`/`secondary`/`dismiss`
+ * [layout] 1 PROP = 1 LEAF, with one deliberate exception: `primary`/`secondary`/`dismiss`
  * share ONE leaf ("Slots") rather than three, because they are not independent
  * axes — they are the one shape decision this component exists to make (which
  * roles are in the row), so the states under that leaf vary which slots are
@@ -58,7 +58,7 @@ export const Slots: Story = {
                     {
                         name: "primary only",
                         why: "`primary` is the only required slot — a row can be just the one emphasized action, e.g. a single-step confirmation with nothing to cancel back to.",
-                        code: `<ActionBar primary={{ label: "Submit", onPress }} />`,
+                        code: "<ActionBar primary={{ label: \"Submit\", onPress }} />",
                         render: <ActionBar primary={primary} />,
                     },
                     {
@@ -100,7 +100,7 @@ export const Skeleton: Story = {
                     {
                         name: "isSkeleton = true, primary + secondary + dismiss",
                         why: "All three roles still render as three shimmer buttons, in the same order and with the same gap — the composite decides the count is three, the atom decides each shimmer's own shape.",
-                        code: `<ActionBar isSkeleton primary={{ label: "Submit" }} secondary={{ label: "Save draft" }} dismiss={{ label: "Cancel" }} />`,
+                        code: "<ActionBar isSkeleton primary={{ label: \"Submit\" }} secondary={{ label: \"Save draft\" }} dismiss={{ label: \"Cancel\" }} />",
                         render: <ActionBar isSkeleton primary={primary} secondary={secondary} dismiss={dismiss} />,
                     },
                 ]}
@@ -147,7 +147,7 @@ export const Responsive: Story = {
                     {
                         name: "narrow container (320px, below @app-md): full-width column",
                         why: "Each button stretches to the row's full width and stacks — dismiss, then secondary, then primary, top to bottom — the shape a phone-width modal needs, never triggered by content wrapping.",
-                        code: `<ActionBar primary={{…}} secondary={{…}} dismiss={{…}} />          // at="md" = default`,
+                        code: "<ActionBar primary={{…}} secondary={{…}} dismiss={{…}} />          // at=\"md\" = default",
                         render: (
                             <ResponsiveFrame width="20rem" label="container 320px, below @app-md, full-width column">
                                 <ActionBar primary={primary} secondary={secondary} dismiss={dismiss} />
@@ -157,7 +157,7 @@ export const Responsive: Story = {
                     {
                         name: "wide container (768px, at or above @app-md = 48rem/768px): packed row",
                         why: "The same three buttons pack into one row, right-aligned (`justify=\"end\"`), at the shared gap step (3 → gap-2) — no re-render, no boolean flag, the same container simply crossed the named width.",
-                        code: `<ActionBar primary={{…}} secondary={{…}} dismiss={{…}} />          // at="md" = default`,
+                        code: "<ActionBar primary={{…}} secondary={{…}} dismiss={{…}} />          // at=\"md\" = default",
                         render: (
                             <ResponsiveFrame width="50rem" label="container 800px, at @app-md, packed row">
                                 <ActionBar primary={primary} secondary={secondary} dismiss={dismiss} />

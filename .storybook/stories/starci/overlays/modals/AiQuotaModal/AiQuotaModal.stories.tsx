@@ -96,7 +96,7 @@ const ControlledAiQuotaModal = ({
                 label={triggerLabel}
                 variant="secondary"
                 size="sm"
-                classNames={["self-start"]}
+
                 onPress={() => setIsOpen(true)}
             />
             <AiQuotaModal
@@ -104,7 +104,7 @@ const ControlledAiQuotaModal = ({
                 onOpenChange={setIsOpen}
                 activeTab={activeTab}
                 onTabChange={setActiveTab}
-               
+
 
                 {...modalProps}
             />

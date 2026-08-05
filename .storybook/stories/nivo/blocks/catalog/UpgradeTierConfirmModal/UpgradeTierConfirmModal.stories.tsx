@@ -72,7 +72,9 @@ const ControlledUpgradeTierConfirmModal = () => {
 
     return (
         <div data-tier="fixture" className="flex flex-col gap-3 p-8">
-            <Button label="Upgrade to Professional" variant="secondary" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label="Upgrade to Professional" variant="secondary" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <BlockAnatomy
                 name="UpgradeTierConfirmModal"
                 tier="block"

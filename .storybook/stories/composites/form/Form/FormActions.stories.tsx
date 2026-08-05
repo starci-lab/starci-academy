@@ -8,7 +8,7 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * (§13b) — and it COMPOSES the atom `ButtonGroup` rather than hand-drawing a
  * button (§13c).
  *
- * ⚠️ STATE SCOPE (§12f): the state the shell ITSELF produces is HORIZONTAL
+ * WARNING: STATE SCOPE (§12f): the state the shell ITSELF produces is HORIZONTAL
  * ALIGNMENT (`align`) and BOTTOM-STICKING (`sticky`). Each button's own
  * role/behaviour (`variant`/`isDisabled`/`icon`) is `Atoms/Buttons/Button`'s
  * state — the shell only forwards it through `items`.
@@ -107,7 +107,7 @@ export const Default: Story = {
 /**
  * Pending — the primary button is running.
  *
- * ⚠️ NOTE §12f: `isPending` is NOT produced by this shell — it only forwards
+ * WARNING: NOTE §12f: `isPending` is NOT produced by this shell — it only forwards
  * through `items` down to `Button` (the state already has a "home" at
  * `Atoms/Buttons/Button`). Kept per group-5's spec request, to show the button
  * row at submit time; if §12f is applied strictly (precedent: `ButtonGroup`
@@ -135,7 +135,7 @@ export const Pending: Story = {
 />`,
                         render: (
                             <FormActions
-                               
+
                                 items={[
                                     { key: "cancel", label: "Cancel", variant: "secondary" },
                                     { key: "save", label: "Saving", isPending: true },

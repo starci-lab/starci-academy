@@ -9,7 +9,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * verbatim from real `src`'s `CommentItem`. See the component's own file
  * header for the massive gap this fills against the earlier flat-list cut.
  *
- * 📐 LEAVES by STRUCTURE (§14d.2). Owner-only actions appearing, the body
+ * [layout] LEAVES by STRUCTURE (§14d.2). Owner-only actions appearing, the body
  * swapping for an edit composer or a deleted placeholder, and the reply
  * subtree expanding each add/remove real nodes ⇒ separate leaves.
  */
@@ -93,7 +93,7 @@ export const Default: Story = {
                         render: (
                             <ContentCommentThread
 
-                               
+
                                 comment={BASE_COMMENT}
                                 currentUserId="someone-else"
                                 depth={0}
@@ -127,7 +127,7 @@ export const OwnerActions: Story = {
                         render: (
                             <ContentCommentThread
 
-                               
+
                                 comment={BASE_COMMENT}
                                 currentUserId={AUTHOR.id}
                                 depth={0}
@@ -161,7 +161,7 @@ export const Editing: Story = {
                         render: (
                             <ClickPreview
 
-                               
+
                                 clickText="Edit"
                                 comment={BASE_COMMENT}
                                 currentUserId={AUTHOR.id}
@@ -196,7 +196,7 @@ export const Replying: Story = {
                         render: (
                             <ClickPreview
 
-                               
+
                                 clickText="Reply"
                                 comment={BASE_COMMENT}
                                 currentUserId="someone-else"
@@ -232,7 +232,7 @@ export const Deleted: Story = {
                         render: (
                             <ContentCommentThread
 
-                               
+
                                 comment={{ ...BASE_COMMENT, isDeleted: true }}
                                 currentUserId={OWNER_ID}
                                 depth={0}
@@ -266,7 +266,7 @@ export const ExpandedWithReplies: Story = {
                         render: (
                             <ClickPreview
 
-                               
+
                                 clickText="View 1 reply"
                                 comment={{ ...BASE_COMMENT, replyCount: 1 }}
                                 currentUserId="someone-else"

@@ -19,13 +19,13 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * ATOM — `ChoiceCheckbox`: boolean tick box, label sits INLINE next to the box
  * (wraps HeroUI Checkbox).
  *
- * 📐 **1 PROP = 1 LEAF** (ATOM TIER law). Leaf set for props WITH their own
+ * [layout] **1 PROP = 1 LEAF** (ATOM TIER law). Leaf set for props WITH their own
  * shape: `isSelected` (`Default`/`Checked`) · `hint` (`WithHint`) · `isRequired`
  * (`Required`) · `isDisabled` (`Disabled`) · `errorMessage` (`Error`) · `isSkeleton`
  * (`Loading`). `label`/`onValueChange`/`className` don't produce a
  * shape of their own, so they get no leaf.
  *
- * ⭐ DEPS: this atom wraps HeroUI Checkbox directly — it doesn't build on top of
+ * * DEPS: this atom wraps HeroUI Checkbox directly — it doesn't build on top of
  * any other atom that has its own story, so it has NO `annotate` prop (a
  * leaf atom that wraps HeroUI directly ⇒ deps is EMPTY, drop the prop entirely).
  * `Control`/`Label` in the DOM are Checkbox's own internal slots; `Description`/
@@ -34,7 +34,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  *
  * The panel keeps Deps · Code — this file has no Deps, so the panel is Code only.
  *
- * ✍️ Text shown in the panel (`leaf`/`reason`/`note`/`code`), the demo labels
+ * [copy] Text shown in the panel (`leaf`/`reason`/`note`/`code`), the demo labels
  * inside the render frame, and this file's own JSDoc/comments are all written
  * in ENGLISH.
  */
@@ -133,7 +133,7 @@ export const WithHint: Story = {
                                         onValueChange={setValue}
                                         label="Receive email updates"
                                         hint="You can turn this off anytime in Settings."
-                                       
+
                                     />
                                 </div>
                             ),
@@ -169,7 +169,7 @@ export const Required: Story = {
                                         onValueChange={setValue}
                                         label="Agree to the Terms of Service"
                                         isRequired
-                                       
+
                                     />
                                 </div>
                             ),
@@ -203,7 +203,7 @@ export const Disabled: Story = {
                                     onValueChange={() => {}}
                                     label="Agree to the Terms of Service"
                                     isDisabled
-                                   
+
                                 />
                             </div>
                         ),
@@ -237,7 +237,7 @@ export const Error: Story = {
                                         onValueChange={setValue}
                                         label="Agree to the Terms of Service"
                                         errorMessage="You must agree to continue."
-                                       
+
                                     />
                                 </div>
                             ),

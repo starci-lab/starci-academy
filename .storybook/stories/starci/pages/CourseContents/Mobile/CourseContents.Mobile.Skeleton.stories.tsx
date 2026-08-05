@@ -20,6 +20,7 @@ export default meta
 
 type Story = StoryObj<typeof CourseContents>
 
+/** Story: resting state for this component. */
 export const Default: Story = {
     render: () => deviceLeaf({ width: W, isSkeleton: true, leaf: "Prop `isSkeleton`", reason: "Mobile 375px · the resting shape. The flag flows into each block and every block draws its own shimmer, which is why this is a leaf at the screen tier too." }),
 }

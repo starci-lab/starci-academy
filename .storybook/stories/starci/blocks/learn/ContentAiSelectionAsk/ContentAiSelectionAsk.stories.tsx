@@ -46,7 +46,7 @@ export const Full: Story = {
                         render: (
                             <ContentAiSelectionAsk
 
-                               
+
                                 anchor={{ x: 220, y: 160 }}
                                 onOpen={() => {}}
                             />

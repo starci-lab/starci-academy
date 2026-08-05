@@ -161,7 +161,7 @@ export const WithBody: Story = {
 </Callout>`,
                         render: (
                             <Callout
-                               
+
                                 status="warning"
                                 title="Submission is missing 2 items"
                                 description="Add them, then resubmit for grading."
@@ -204,7 +204,7 @@ export const WithAction: Story = {
 />`,
                         render: (
                             <Callout
-                               
+
                                 status="accent"
                                 title="Upgrade to unlock AI"
                                 description="The paid plan enables advanced grading."
@@ -239,7 +239,7 @@ export const CustomIcon: Story = {
 />`,
                         render: (
                             <Callout
-                               
+
                                 status="warning"
                                 icon={GithubLogoIcon}
                                 title="You haven't joined the course's GitHub team"
@@ -275,7 +275,7 @@ export const Dismissible: Story = {
 />`,
                         render: (
                             <Callout
-                               
+
                                 status="accent"
                                 title="Tip: highlight text to ask AI"
                                 onClose={() => {}}

@@ -61,7 +61,7 @@ export const Full: Story = {
                         render: (
                             <PersonalProjectGatePreview
 
-                               
+
                                 heroTitle="Doctor appointment booking platform"
                                 heroSubtitle="Capstone project — build an end-to-end booking system"
                                 progress={{ value: 15, max: 100, label: "Capstone progress" }}

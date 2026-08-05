@@ -63,7 +63,7 @@ export const Full: Story = {
                         render: (
                             <InterviewerPresence
 
-                               
+
                                 persona={PERSONA}
                                 speaking={false}
                                 speakingLabel="Reading the question aloud"

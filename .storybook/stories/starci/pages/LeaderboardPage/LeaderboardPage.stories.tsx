@@ -114,7 +114,7 @@ export const Ranked: Story = {
                         render: (
                             <LeaderboardPage
                                 {...BASE}
-                               
+
                                 isEnrollmentKnown
                                 isEnrolled={false}
                             />
@@ -149,7 +149,7 @@ export const Enrolled: Story = {
                         render: (
                             <LeaderboardPage
                                 {...BASE}
-                               
+
                                 isEnrollmentKnown
                                 isEnrolled
                             />
@@ -179,7 +179,7 @@ export const Skeleton: Story = {
                         render: (
                             <LeaderboardPage
                                 {...BASE}
-                               
+
                                 isEnrollmentKnown
                                 isEnrolled={false}
                                 isSkeleton

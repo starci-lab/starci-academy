@@ -133,7 +133,7 @@ export const WithTotal: Story = {
 />`,
                         render: (
                             <KeyValueList
-                               
+
                                 divider
                                 items={[...ITEMS, { key: "total", label: "Total", value: "$41.00", emphasis: true }]}
                             />

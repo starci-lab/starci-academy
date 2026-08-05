@@ -62,7 +62,7 @@ export const Content: Story = {
                         render: (
                             <ContinueLearning
 
-                               
+
                                 items={THREE_ITEMS}
                                 hasCourses
                                 isLoading={false}
@@ -110,7 +110,7 @@ export const Empty: Story = {
                         render: (
                             <ContinueLearning
 
-                               
+
                                 items={[]}
                                 hasCourses
                                 isLoading={false}
@@ -158,7 +158,7 @@ export const Loading: Story = {
                         render: (
                             <ContinueLearning
 
-                               
+
                                 items={[]}
                                 hasCourses
                                 isLoading

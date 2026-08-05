@@ -44,7 +44,10 @@ const REASON =
     "A non-standard AlertDialog shape (a warning banner plus a confirm-text field, beyond the shared `ConfirmDialog` shell's title/description-only body — architecture.md's documented exception for a shape a shell cannot express). The delete action stays disabled until the typed text equals `matchText` exactly, and never closes itself on press — the caller closes it once the delete mutation resolves, keeping the dialog open (and the field locked) for the duration."
 
 /** Shared controlled wrapper — one `isOpen`/field state feeds every leaf state below. */
-const ControlledConfirmDialog = ({ isConfirming = false }: { isConfirming?: boolean }) => {
+type ControlledConfirmDialogProps = {
+    isConfirming?: boolean
+}
+const ControlledConfirmDialog = ({ isConfirming = false }: ControlledConfirmDialogProps) => {
     const [isOpen, setIsOpen] = useState(true)
     const [matchValue, setMatchValue] = useState("")
 
@@ -64,7 +67,9 @@ const ControlledConfirmDialog = ({ isConfirming = false }: { isConfirming?: bool
 
     return (
         <div className="flex flex-col gap-3">
-            <Button label="Delete course" variant="danger-soft" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label="Delete course" variant="danger-soft" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <ConfirmDialog {...base} />
         </div>
     )

@@ -19,17 +19,17 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * COMPOSITE — `ChoiceRadioGroup`: a pick-one group, built from `options` DATA (wraps
  * HeroUI RadioGroup + loops `ChoiceRadio` for each option).
  *
- * 📐 **1 PROP = 1 LEAF**. The full leaf set for props WITH a visual: picked
+ * [layout] **1 PROP = 1 LEAF**. The full leaf set for props WITH a visual: picked
  * or not (`Default`/`Selected`, driven by `value`) · `groupLabel` (`WithLabel`) ·
  * `hint` (`WithHint`) · `isRequired` (`Required`) · `isDisabled` (`Disabled`) ·
  * `errorMessage` (`Error`) · `isSkeleton` (`Loading`). `options`/`onValueChange`/
  * `ariaLabel`/`skeletonRows`/`classNames` get no leaf of their own.
  *
- * ⛔ DON'T repeat the state of EACH ROW (`ChoiceRadio`'s own Disabled/Loading):
+ * [do-not] DON'T repeat the state of EACH ROW (`ChoiceRadio`'s own Disabled/Loading):
  * locking a single option or skeleton-ing one lone row belongs in the
  * `ChoiceRadio` story.
  *
- * ✍️ Text shown on the panel (`leaf`/`reason`/`why`/`code`) and demo labels in the
+ * [copy] Text shown on the panel (`leaf`/`reason`/`why`/`code`) and demo labels in the
  * render frame are written in ENGLISH; JSDoc/comments are ENGLISH too.
  */
 const meta: Meta<typeof ChoiceRadioGroup> = {
@@ -135,7 +135,7 @@ export const WithLabel: Story = {
                                         onValueChange={setValue}
                                         options={OPTIONS}
                                         groupLabel="Current skill level"
-                                       
+
                                     />
                                 </div>
                             ),
@@ -173,7 +173,7 @@ export const WithHint: Story = {
                                         options={OPTIONS}
                                         groupLabel="Current skill level"
                                         hint="Used to personalize your learning path."
-                                       
+
                                     />
                                 </div>
                             ),
@@ -211,7 +211,7 @@ export const Required: Story = {
                                         options={OPTIONS}
                                         groupLabel="Current skill level"
                                         isRequired
-                                       
+
                                     />
                                 </div>
                             ),
@@ -247,7 +247,7 @@ export const Disabled: Story = {
                                     options={OPTIONS}
                                     ariaLabel="Skill level"
                                     isDisabled
-                                   
+
                                 />
                             </div>
                         ),
@@ -283,7 +283,7 @@ export const Error: Story = {
                                         options={OPTIONS}
                                         groupLabel="Current skill level"
                                         errorMessage="Please choose your current skill level."
-                                       
+
                                     />
                                 </div>
                             ),

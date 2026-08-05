@@ -151,7 +151,7 @@ export const Responsive: Story = {
                     {
                         name: "narrow container (320px, below @app-sm): full-width column",
                         why: "Each button stretches to the row's full width and stacks, one per line — the shape a drawer or a phone-width modal needs, never triggered by content wrapping.",
-                        code: `<ButtonGroup items={[…]} />          // at="sm" = default`,
+                        code: "<ButtonGroup items={[…]} />          // at=\"sm\" = default",
                         render: (
                             <ResponsiveFrame width="20rem" label="container 320px, below @app-sm, full-width column">
                                 <ButtonGroup items={items("(narrow)")} />
@@ -161,7 +161,7 @@ export const Responsive: Story = {
                     {
                         name: "wide container (720px, at or above @app-sm = 40rem/640px): packed row",
                         why: "The same three buttons pack into one row at the shared gap step (3 → gap-2), with no re-render, no boolean flag — the same container simply crossed the named width.",
-                        code: `<ButtonGroup items={[…]} />          // at="sm" = default`,
+                        code: "<ButtonGroup items={[…]} />          // at=\"sm\" = default",
                         render: (
                             <ResponsiveFrame width="45rem" label="container 720px, at @app-sm, packed row">
                                 <ButtonGroup items={items("(wide)")} />

@@ -12,9 +12,9 @@ const meta: Meta<typeof FeatureCard> = {
     title: "MiaMia/FeatureCard",
     component: FeatureCard,
     args: {
-        title: "Luyện đề THPT",
-        description: "Đề thật của các Sở, chấm ngay theo đáp án server — không lộ đáp án khi đang làm. Xem lại từng câu sai.",
-        ctaLabel: "Làm thử một đề",
+        title: "National exam practice",
+        description: "Đề thật của các Sở, chấm ngay theo đáp án server — with no lộ đáp án khi đang làm. Xem lại từng câu sai.",
+        ctaLabel: "Try a sample exam",
         ctaHref: "#",
         tone: "white",
         tilt: "left",
@@ -46,7 +46,7 @@ export const Tones: Story = {
                     <Typography type="body-sm" color="muted">the default surface; first and third in the row.</Typography>
                 </div>
                 <div className="max-w-sm">
-                    <FeatureCard icon={<DocIcon />} title="Luyện đề THPT" description="Đề thật của các Sở, chấm ngay theo đáp án server." ctaLabel="Làm thử một đề" ctaHref="#" tone="white" tilt="left" />
+                    <FeatureCard icon={<DocIcon />} title="National exam practice" description="Real provincial exams, graded instantly against the server key." ctaLabel="Try a sample exam" ctaHref="#" tone="white" tilt="left" />
                 </div>
             </div>
             <div className="flex flex-col gap-3">
@@ -55,7 +55,7 @@ export const Tones: Story = {
                     <Typography type="body-sm" color="muted">the accent surface; the middle card of the row.</Typography>
                 </div>
                 <div className="max-w-sm">
-                    <FeatureCard icon={<DocIcon />} title="Ôn từ vựng bằng game" description="Bốn game tốc độ: đánh quái để nhớ từ, thủ thành, ghép cặp." ctaLabel="Chơi ngay" ctaHref="#" tone="blush" tilt="right" />
+                    <FeatureCard icon={<DocIcon />} title="Vocabulary bằng game" description="Four speed games: beat monsters to remember words, defend a base, match pairs." ctaLabel="Play ngay" ctaHref="#" tone="blush" tilt="right" />
                 </div>
             </div>
         </div>

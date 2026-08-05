@@ -72,19 +72,22 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /** Shared controlled wrapper — the trigger reopens the drawer after it closes. */
+type ControlledPostModerationDrawerProps = {
+    triggerLabel: string
+    post?: ModeratedPostDetail
+    isBusy?: boolean
+}
 const ControlledPostModerationDrawer = ({
     triggerLabel,
     post,
     isBusy,
-}: {
-    triggerLabel: string
-    post?: ModeratedPostDetail
-    isBusy?: boolean
-}) => {
+}: ControlledPostModerationDrawerProps) => {
     const [isOpen, setIsOpen] = useState(true)
     return (
         <div data-tier="fixture" className="flex flex-col gap-3 p-8">
-            <Button label={triggerLabel} variant="secondary" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label={triggerLabel} variant="secondary" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <PostModerationDrawer
                 isOpen={isOpen}
                 onOpenChange={setIsOpen}

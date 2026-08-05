@@ -94,7 +94,7 @@ export const Full: Story = {
                         render: (
                             <ChallengeBrief
 
-                               
+
                                 prerequisites={PREREQUISITES}
                                 requirements={REQUIREMENTS}
                                 steps={STEPS}

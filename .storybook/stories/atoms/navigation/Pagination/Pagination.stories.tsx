@@ -8,7 +8,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * `Pagination.Link`/`Pagination.Ellipsis`/`Pagination.Next` are sub-parts of the HeroUI
  * compound). Each is a real import, so they declare `tier: "heroui"` in `ANNOTATE`, the name
  * matching the import identifier exactly (no `storyId`).
- * 
+ *
  * The `Skeleton` leaf carries the prop's name (`isSkeleton`). The windowing axis (Default =
  * every page shown; ManyPages = far pages collapsed into "…") depends on `totalPages`, which
  * is not available while loading, so one representative shape (a row of squares) is enough.

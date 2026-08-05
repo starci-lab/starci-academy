@@ -48,7 +48,7 @@ export const SinglePage: Story = {
                     showAllPages={false}
                     heightClassName="h-[320px]"
 
-                   
+
                 />
             </div>
         </div>
@@ -66,7 +66,7 @@ export const AllPagesScroll: Story = {
                     allowVerticalScroll
                     heightClassName="h-[420px]"
 
-                   
+
                 />
             </div>
         </div>
@@ -85,7 +85,7 @@ export const FitToContainer: Story = {
                     allowVerticalScroll
                     heightClassName="h-[400px]"
 
-                   
+
                 />
             </div>
         </div>
@@ -102,7 +102,7 @@ export const LoadError: Story = {
                     title="Document failed to load"
                     heightClassName="h-[200px]"
 
-                   
+
                 />
             </div>
         </div>

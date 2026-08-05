@@ -43,7 +43,7 @@ export const Default: Story = {
                     {
                         name: "idle",
                         why: "The resting row: muted icon + label, no tint. What every non-current destination looks like in the rail.",
-                        code: `<SidebarNavItem icon={ReceiptIcon} label="Invoices" onPress={onPress} />`,
+                        code: "<SidebarNavItem icon={ReceiptIcon} label=\"Invoices\" onPress={onPress} />",
                         render: (
                             <SidebarNavItem icon={ReceiptIcon} label="Invoices" onPress={() => {}} />
                         ),
@@ -51,7 +51,7 @@ export const Default: Story = {
                     {
                         name: "isActive = true",
                         why: "This row matches the current route: a tonal `bg-accent/10` fill, accent icon and label — never a hard fill, matching `SidebarNavGroup`'s sibling rows exactly.",
-                        code: `<SidebarNavItem icon={ReceiptIcon} label="Invoices" isActive onPress={onPress} />`,
+                        code: "<SidebarNavItem icon={ReceiptIcon} label=\"Invoices\" isActive onPress={onPress} />",
                         render: (
                             <SidebarNavItem icon={ReceiptIcon} label="Invoices" isActive onPress={() => {}} />
                         ),
@@ -59,13 +59,13 @@ export const Default: Story = {
                     {
                         name: "endContent set",
                         why: "A trailing badge pinned to the row's right edge — e.g. an unpaid-invoice count. Hidden entirely once the rail collapses (there is no room, and the destination is already reduced to its icon).",
-                        code: `<SidebarNavItem icon={ReceiptIcon} label="Invoices" endContent={<Badge />} onPress={onPress} />`,
+                        code: "<SidebarNavItem icon={ReceiptIcon} label=\"Invoices\" endContent={<Badge />} onPress={onPress} />",
                         render: (
                             <SidebarNavItem
                                 icon={ReceiptIcon}
                                 label="Invoices"
                                 endContent={
-                                    <span className="rounded-full bg-accent px-1.5 py-0.5 text-[10px] font-bold text-white">1</span>
+                                    <span className="rounded-full bg-accent px-2 py-0 text-[10px] font-bold text-white">1</span>
                                 }
                                 onPress={() => {}}
                             />
@@ -74,7 +74,7 @@ export const Default: Story = {
                     {
                         name: "isCollapsed = true",
                         why: "The rail folds to an icon-only strip: the label disappears, the row centres on its icon alone, and a `Tooltip` (placed toward the trailing edge) carries the destination's name on hover or keyboard focus so it stays reachable.",
-                        code: `<SidebarNavItem icon={ReceiptIcon} label="Invoices" isCollapsed onPress={onPress} />`,
+                        code: "<SidebarNavItem icon={ReceiptIcon} label=\"Invoices\" isCollapsed onPress={onPress} />",
                         render: (
                             <SidebarNavItem icon={ReceiptIcon} label="Invoices" isCollapsed onPress={() => {}} />
                         ),
@@ -82,7 +82,7 @@ export const Default: Story = {
                     {
                         name: "isSkeleton = true",
                         why: "The group's data has not resolved yet: an icon-sized square plus a label bar, mirroring the loaded row so nothing shifts when the real destination arrives.",
-                        code: `<SidebarNavItem icon={ReceiptIcon} label="Invoices" isSkeleton onPress={onPress} />`,
+                        code: "<SidebarNavItem icon={ReceiptIcon} label=\"Invoices\" isSkeleton onPress={onPress} />",
                         render: (
                             <SidebarNavItem icon={ReceiptIcon} label="Invoices" isSkeleton onPress={() => {}} />
                         ),

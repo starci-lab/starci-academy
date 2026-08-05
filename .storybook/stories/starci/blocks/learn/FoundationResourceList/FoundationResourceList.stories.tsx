@@ -93,7 +93,7 @@ export const Default: Story = {
                         render: (
                             <FoundationResourceList
 
-                               
+
                                 ariaLabel="Course resources"
                                 resources={[]}
                                 isLoading={false}
@@ -178,7 +178,7 @@ export const Loading: Story = {
                         render: (
                             <FoundationResourceList
 
-                               
+
                                 ariaLabel="Course resources"
                                 resources={[]}
                                 isLoading
@@ -220,7 +220,7 @@ export const Error: Story = {
                         render: (
                             <FoundationResourceList
 
-                               
+
                                 ariaLabel="Course resources"
                                 resources={[]}
                                 isLoading={false}

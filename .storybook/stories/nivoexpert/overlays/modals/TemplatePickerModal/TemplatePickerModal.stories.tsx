@@ -55,12 +55,18 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /** Controlled wrapper — a trigger reopens the modal after it closes, so the story stays interactive. */
-const ControlledTemplatePickerModal = ({ isApplying, isSkeleton }: { isApplying?: boolean; isSkeleton?: boolean }) => {
+type ControlledTemplatePickerModalProps = {
+    isApplying?: boolean
+    isSkeleton?: boolean
+}
+const ControlledTemplatePickerModal = ({ isApplying, isSkeleton }: ControlledTemplatePickerModalProps) => {
     const [isOpen, setIsOpen] = useState(true)
     const [selected, setSelected] = useState<StarterTemplateId>("crimson")
     return (
         <div data-tier="fixture" className="flex flex-col gap-3 p-8">
-            <Button label="Choose a template" variant="secondary" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label="Choose a template" variant="secondary" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <TemplatePickerModal
                 isOpen={isOpen}
                 onOpenChange={setIsOpen}

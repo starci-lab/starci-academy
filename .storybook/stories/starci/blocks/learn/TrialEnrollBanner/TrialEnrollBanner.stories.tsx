@@ -58,7 +58,7 @@ export const Banner: Story = {
                         render: (
                             <TrialEnrollBanner
 
-                               
+
                                 isVisible
                                 onEnroll={() => {}}
                             />

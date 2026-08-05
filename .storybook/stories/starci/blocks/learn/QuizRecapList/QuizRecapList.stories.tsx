@@ -81,7 +81,7 @@ export const Full: Story = {
                         render: (
                             <QuizRecapList
 
-                               
+
                                 cards={CARDS}
                                 ratingOptions={RATING_OPTIONS}
                                 ratingAriaLabel="How well do you remember this"
@@ -155,7 +155,7 @@ export const Skeleton: Story = {
                         render: (
                             <QuizRecapList
 
-                               
+
                                 ratingOptions={RATING_OPTIONS}
                                 ratingAriaLabel="How well do you remember this"
                                 onRate={() => {}}

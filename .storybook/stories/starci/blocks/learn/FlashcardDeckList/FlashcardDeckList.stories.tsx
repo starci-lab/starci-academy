@@ -77,19 +77,20 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /** A tiny controlled wrapper so a Storybook reader can actually search/page/switch view — matches the `render` pattern other interactive leaves in this tree use. */
+type InteractiveProps = {
+    decks: Array<FlashcardDeckListDeck>
+    initialView: FlashcardDeckListView
+    initialQuery?: string
+    showProgress: boolean
+    isSkeleton?: boolean
+}
 const Interactive = ({
     decks,
     initialView,
     initialQuery = "",
     showProgress,
     isSkeleton,
-}: {
-    decks: Array<FlashcardDeckListDeck>
-    initialView: FlashcardDeckListView
-    initialQuery?: string
-    showProgress: boolean
-    isSkeleton?: boolean
-}) => {
+}: InteractiveProps) => {
     const [view, setView] = useState<FlashcardDeckListView>(initialView)
     const [query, setQuery] = useState(initialQuery)
     const [page, setPage] = useState(1)

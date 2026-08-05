@@ -81,7 +81,7 @@ export const Default: Story = {
                         render: (
                             <PlaygroundDeviceSnapshot
 
-                               
+
                                 deviceInfo={NVIDIA_DEVICE}
                             />
                         ),

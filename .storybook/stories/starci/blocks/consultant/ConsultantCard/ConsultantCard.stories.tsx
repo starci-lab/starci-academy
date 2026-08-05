@@ -69,7 +69,7 @@ export const Default: Story = {
                         render: (
                             <ConsultantCard
 
-                               
+
                                 consultant={FULL_CONSULTANT}
                                 onOpen={() => {}}
                             />
@@ -123,7 +123,7 @@ export const Minimal: Story = {
                         render: (
                             <ConsultantCard
 
-                               
+
                                 consultant={{
                                     id: "consultant-2",
                                     fullName: "Kevin Tran",

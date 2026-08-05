@@ -9,17 +9,17 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * ATOM — `TabsExtended`: the StarCi tab strip, wrapping the HeroUI `Tabs` root. Lives in the
  * `Tabs.*` namespace (see the `TabsExtended.tsx` header for why `children` here is a valid
  * exception rather than debt).
- * 
+ *
  * 1 PROP THAT PRODUCES A SHAPE = 1 LEAF. Leaf set = `Default` (bare) + one leaf per
  * shape-producing prop: `variant` · `size`. `selectedKey`/`onSelectionChange` is the
  * controlled mechanism (no leaf), `className` is an escape hatch (no leaf).
- * 
+ *
  * `children` is a named exception (atom-wrapper): consumers like `Toolbar` attach an
  * `accent`/`muted` class to each tab and hide responsive labels — something a data-only
  * `TabItem` can't carry. A "builds N children" prop has a leaf, and that leaf is `Default`.
  * The `Size` leaf covers the two values of `size` (truncates w-full vs sizes-to-label w-fit);
  * `Variant` covers the variant union.
- * 
+ *
  * `annotate`: the atom wraps HeroUI `Tabs` directly (aliased `HeroTabs`), and the only DOM
  * node it owns is the root `<Tabs>` — the `Tabs.ListContainer > Tabs.List > Tabs.Tab` tree
  * below belongs to the story that builds `children`, so only the root `<Tabs>` is tagged
@@ -40,17 +40,18 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Tabs": { tier: "heroui", role: "the root strip; the Tabs.ListContainer > Tabs.List > Tabs.Tab tree inside is the CALLER's own children" },
 }
 /** Owns the selected-tab state since `TabsExtended` is fully controlled. */
+type ControlledTabsProps = {
+    defaultKey: string
+    variant?: "primary" | "secondary"
+    size?: "sm" | "md"
+    children: ReactNode
+}
 const Controlled = ({
     defaultKey,
     variant,
     size,
     children,
-}: {
-    defaultKey: string
-    variant?: "primary" | "secondary"
-    size?: "sm" | "md"
-    children: ReactNode
-}) => {
+}: ControlledTabsProps) => {
     const [selectedKey, setSelectedKey] = useState(defaultKey)
     return (
         <TabsExtended selectedKey={selectedKey} onSelectionChange={setSelectedKey} variant={variant} size={size}>

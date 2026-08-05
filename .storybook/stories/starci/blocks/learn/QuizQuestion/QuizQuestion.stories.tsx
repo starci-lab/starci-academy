@@ -78,7 +78,7 @@ export const Ungraded: Story = {
                     {
                         name: "isPending = true (grading in flight)",
                         why: "Submitting fires the grading request; the submit control owns its own busy affordance so a second tap is caught while the first is still resolving.",
-                        code: `<QuizQuestion … isPending />`,
+                        code: "<QuizQuestion … isPending />",
                         render: (
                             <QuizQuestion
                                 question={QUESTION}
@@ -145,7 +145,7 @@ export const Graded: Story = {
                     {
                         name: "verdict = \"correct\"",
                         why: "Same shape, the other verdict — the chip switches tone (`success` vs `danger`) and icon, and the expected answer + explanation still ride along underneath so the learner can compare their own wording against it either way.",
-                        code: `<QuizQuestion … verdict="correct" expectedAnswer={expected} explanation={why} />`,
+                        code: "<QuizQuestion … verdict=\"correct\" expectedAnswer={expected} explanation={why} />",
                         render: (
                             <QuizQuestion
                                 question={QUESTION}

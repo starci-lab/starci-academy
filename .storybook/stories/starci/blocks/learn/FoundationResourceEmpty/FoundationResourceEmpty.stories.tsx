@@ -39,7 +39,7 @@ export const Empty: Story = {
                         render: (
                             <FoundationResourceEmpty
 
-                               
+
                             />
                         ),
                     },

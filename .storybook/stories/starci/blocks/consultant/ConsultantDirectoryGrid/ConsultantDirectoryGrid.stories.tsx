@@ -79,7 +79,7 @@ export const Default: Story = {
                         render: (
                             <ConsultantDirectoryGrid
 
-                               
+
                                 isLoading
                                 onOpenConsultant={() => {}}
                                 emptyTitle="No consultants yet for this course"

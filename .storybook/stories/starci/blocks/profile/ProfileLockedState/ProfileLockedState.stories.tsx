@@ -61,7 +61,7 @@ export const Default: Story = {
                         render: (
                             <ProfileLockedState
 
-                               
+
                                 user={USER}
                                 onGoCourses={() => {}}
                             />

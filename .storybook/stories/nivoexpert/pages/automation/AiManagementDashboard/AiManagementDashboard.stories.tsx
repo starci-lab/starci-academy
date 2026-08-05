@@ -119,7 +119,7 @@ const RUNS: Array<AgentRunView> = [
         id: "run-1",
         goal: "Welcome the learners who just signed up",
         toolUsed: "welcome-new-learners",
-        toolOutput: '{"sent": 12, "channel": "email", "template": "welcome-v2"}',
+        toolOutput: "{\"sent\": 12, \"channel\": \"email\", \"template\": \"welcome-v2\"}",
         result: "Ran the welcome workflow: 12 new learners were emailed the welcome-v2 template.",
         error: null,
     },
@@ -315,7 +315,7 @@ export const Empty: Story = {
                     {
                         name: "everything empty",
                         why: "Zero active workflows, zero assistant tasks, zero events wired — the events table still renders its fixed five rows, each reading 'Not listening', inviting the expert to point a workflow at one.",
-                        code: `<AiManagementDashboard activeTab="events" summary={emptySummary} workflows={[]} tools={[]} runs={[]} events={emptyEvents} … />`,
+                        code: "<AiManagementDashboard activeTab=\"events\" summary={emptySummary} workflows={[]} tools={[]} runs={[]} events={emptyEvents} … />",
                         render: (
                             <AiManagementDashboard
                                 activeTab="events"

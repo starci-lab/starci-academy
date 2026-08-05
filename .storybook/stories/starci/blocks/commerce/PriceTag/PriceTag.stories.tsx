@@ -138,7 +138,7 @@ export const WithDiscount: Story = {
                                 discounted={1290000}
                                 original={1990000}
                                 breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "owns 2 courses" }}
-                               
+
                             />
                         ),
                     },
@@ -193,7 +193,7 @@ export const Inline: Story = {
                                 discounted={1490000}
                                 original={1990000}
                                 breakdown={{ phase: 1690000, phaseLabel: "Early-bird", loyaltyPercent: 12 }}
-                               
+
                             />
                         ),
                     },
@@ -202,6 +202,7 @@ export const Inline: Story = {
         ),
 }
 
+/** Story: prominent price treatment. */
 export const Prominent: Story = {
     render: () =>
         shell(
@@ -220,7 +221,7 @@ export const Prominent: Story = {
                                 discounted={1490000}
                                 original={1990000}
                                 breakdown={{ phase: 1690000, phaseLabel: "Early-bird", loyaltyPercent: 12 }}
-                               
+
                             />
                         ),
                     },
@@ -254,7 +255,7 @@ export const CurrencyUsd: Story = {
                                 original={129}
                                 currency="USD"
                                 breakdown={{ phase: 99, phaseLabel: "Early-bird", loyaltyPercent: 20 }}
-                               
+
                             />
                         ),
                     },
@@ -287,7 +288,7 @@ export const NoSavingLine: Story = {
                                 original={1990000}
                                 showSavingLine={false}
                                 breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "owns 2 courses" }}
-                               
+
                             />
                         ),
                     },
@@ -340,7 +341,7 @@ export const BreakdownOpen: Story = {
                                 discounted={1290000}
                                 original={1990000}
                                 breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "owns 2 courses" }}
-                               
+
                             />
                         ),
                     },

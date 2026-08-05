@@ -7,16 +7,16 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * ATOM — `Menu`: the one menu atom, wrapping HeroUI `Dropdown` directly (Trigger · Popover ·
  * Menu · Section · Item). No child atom splits into its own story — `items`/`sections`/icon/
  * disabled are all leaf prop-driven states of `Menu` itself.
- * 
+ *
  * `annotate`: every HeroUI import `Menu.tsx` renders directly declares `tier: "heroui"` (no
  * `storyId`), the node name matching the real import name (`DropdownTrigger`/`DropdownPopover`/
  * `DropdownMenu`/`DropdownSection`/`Header`/`DropdownItem`).
- * 
+ *
  * PORTAL LIMITATION: `DropdownPopover` and everything nested inside it renders into
  * `document.body`, outside the render-box {@link BlockAnatomy} scans, so even with `annotate`
  * declared they do not show up in the Structure tree — declaring the correct name is about
  * data honesty, not visibility. Only `DropdownTrigger` and `Skeleton` actually reach the tree.
- * 
+ *
  * Text shown on the UI (menu labels, `triggerLabel`, `why`/`reason`) is written in English.
  */
 
@@ -68,7 +68,7 @@ export const Default: Story = {
                                     triggerLabel="Account"
                                     ariaLabel="Account"
                                     defaultOpen
-                                   
+
                                     onAction={() => {}}
                                     items={[
                                         { key: "profile", label: "My profile" },
@@ -106,7 +106,7 @@ export const TriggerVariants: Story = {
                                     triggerVariant="primary"
                                     triggerLabel="Primary"
                                     ariaLabel="Primary"
-                                   
+
                                     onAction={() => {}}
                                     items={[
                                         { key: "profile", label: "My profile" },
@@ -126,7 +126,7 @@ export const TriggerVariants: Story = {
                                     triggerVariant="secondary"
                                     triggerLabel="Secondary"
                                     ariaLabel="Secondary"
-                                   
+
                                     onAction={() => {}}
                                     items={[
                                         { key: "profile", label: "My profile" },
@@ -146,7 +146,7 @@ export const TriggerVariants: Story = {
                                     triggerVariant="tertiary"
                                     triggerLabel="Tertiary"
                                     ariaLabel="Tertiary"
-                                   
+
                                     onAction={() => {}}
                                     items={[
                                         { key: "profile", label: "My profile" },
@@ -166,7 +166,7 @@ export const TriggerVariants: Story = {
                                     triggerVariant="ghost"
                                     triggerLabel="Ghost"
                                     ariaLabel="Ghost"
-                                   
+
                                     onAction={() => {}}
                                     items={[
                                         { key: "profile", label: "My profile" },
@@ -202,7 +202,7 @@ export const WithIcons: Story = {
                                     triggerLabel="Actions"
                                     ariaLabel="Actions"
                                     defaultOpen
-                                   
+
                                     onAction={() => {}}
                                     items={[
                                         { key: "edit", label: "Edit", icon: PencilSimpleIcon },
@@ -241,7 +241,7 @@ export const WithTriggerIcon: Story = {
                                     triggerIcon={CaretDownIcon}
                                     ariaLabel="Sort"
                                     defaultOpen
-                                   
+
                                     onAction={() => {}}
                                     items={[
                                         { key: "recent", label: "Newest" },
@@ -278,7 +278,7 @@ export const WithSections: Story = {
                                     triggerLabel="Account menu"
                                     ariaLabel="Account menu"
                                     defaultOpen
-                                   
+
                                     onAction={() => {}}
                                     sections={[
                                         {
@@ -325,7 +325,7 @@ export const DisabledItem: Story = {
                                     triggerLabel="Actions"
                                     ariaLabel="Actions"
                                     defaultOpen
-                                   
+
                                     onAction={() => {}}
                                     items={[
                                         { key: "edit", label: "Edit", icon: PencilSimpleIcon },
@@ -364,7 +364,7 @@ export const Skeleton: Story = {
                                         triggerLabel="Account"
                                         ariaLabel="Account"
                                         isSkeleton
-                                       
+
                                         onAction={() => {}}
                                         items={[
                                             { key: "profile", label: "My profile" },

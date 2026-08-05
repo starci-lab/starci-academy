@@ -204,7 +204,7 @@ const WithHistoryExample = () => {
     return (
         <ChallengeResultPage
             {...BASE}
-           
+
             selectedAttemptId={selectedId}
             onSelectAttempt={setSelectedId}
             attempts={HISTORY_ATTEMPTS.slice(0, 5)}
@@ -217,7 +217,7 @@ const WithHistoryExample = () => {
     )
 }
 
-/** LEAF ⭐ — 8 attempts overflow the selector row; "+N" opens the real history drawer. */
+/** LEAF * — 8 attempts overflow the selector row; "+N" opens the real history drawer. */
 export const WithHistory: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">

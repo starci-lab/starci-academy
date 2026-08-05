@@ -78,7 +78,9 @@ const ControlledAgentDetailDrawer = () => {
 
     return (
         <div data-tier="fixture" className="flex flex-col gap-3 p-8">
-            <Button label="Open agent details" variant="secondary" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label="Open agent details" variant="secondary" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <BlockAnatomy
                 name="AgentDetailDrawer"
                 tier="block"
@@ -111,7 +113,7 @@ const ControlledAgentDetailDrawer = () => {
                     {
                         name: "paused",
                         why: "The agent's own `status` is `paused` — the switch reflects it unselected, same layout otherwise.",
-                        code: `<AgentDetailDrawer status="paused" … />`,
+                        code: "<AgentDetailDrawer status=\"paused\" … />",
                         render: <AgentDetailDrawer {...base} status="paused" />,
                     },
                     {

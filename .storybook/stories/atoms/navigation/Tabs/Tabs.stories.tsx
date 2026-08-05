@@ -9,7 +9,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * HeroUI compound — each declares `tier: "heroui"` in `ANNOTATE` with its name matching the
  * import identifier exactly (no `storyId`). The `Icon` span wrapping the caller-supplied
  * Phosphor glyph is not tagged — it isn't a real component.
- * 
+ *
  * The `Skeleton` leaf carries the prop's name (`isSkeleton`) and renders every step with a
  * known visible shape; `variant` ("primary"/"secondary") is that axis, known ahead of time
  * at call. `secondary` produces a label+underline shimmer instead of a solid pill.
@@ -78,7 +78,7 @@ export const Default: Story = {
                                 selectedKey="overview"
                                 onSelectionChange={() => {}}
                                 items={BASE_ITEMS}
-                               
+
                             />
                         ),
                     },
@@ -96,7 +96,7 @@ export const Default: Story = {
                                     { key: "pro", label: "Pro" },
                                     { key: "premium", label: "Premium", isDisabled: true },
                                 ]}
-                               
+
                             />
                         ),
                     },
@@ -130,7 +130,7 @@ export const WithIcon: Story = {
                                     { key: "stats", label: "Stats", icon: ChartBarIcon },
                                     { key: "history", label: "History", icon: ClockIcon },
                                 ]}
-                               
+
                             />
                         ),
                     },
@@ -164,7 +164,7 @@ export const WithBadge: Story = {
                                     { key: "mentions", label: "Mentions", badge: "9+" },
                                     { key: "archived", label: "Archived" },
                                 ]}
-                               
+
                             />
                         ),
                     },
@@ -210,7 +210,7 @@ export const Skeleton: Story = {
                                 selectedKey="overview"
                                 onSelectionChange={() => {}}
                                 items={BASE_ITEMS}
-                               
+
                             />
                         ),
                     },

@@ -27,7 +27,7 @@ interface ChromeProps {
 
 /** A sample floating-chrome pill — a stand-in for whatever a caller anchors over the canvas. */
 const Chrome = ({ label }: ChromeProps) => (
-    <div data-tier="fixture" className="rounded-full border border-default bg-surface px-3 py-1.5 text-xs text-foreground shadow-sm">{label}</div>
+    <div data-tier="fixture" className="rounded-full border border-default bg-surface px-3 py-2 text-xs text-foreground shadow-sm">{label}</div>
 )
 
 const meta: Meta<typeof Stage> = {
@@ -55,7 +55,7 @@ export const Default: Story = {
                     {
                         name: "canvas only",
                         why: "With no floating slot passed, only `canvas` renders — the frame still opens its positioning context (`relative`) but has no chrome to anchor.",
-                        code: `<Stage canvas={<ReactFlowCanvas />} />`,
+                        code: "<Stage canvas={<ReactFlowCanvas />} />",
                         render: (
                             <div data-tier="fixture" style={{ height: 320 }}>
                                 <Stage canvas={() => <Canvas label="canvas — fills the region" />} />
@@ -117,7 +117,7 @@ export const Fill: Story = {
                     {
                         name: "fill = 'parent' (default)",
                         why: "The stage fills whatever box its own caller frame gives it (`h-full w-full`) — the shape used when `Stage` nests inside another frame's own sizing, the more common case.",
-                        code: `<Stage canvas={<ReactFlowCanvas />} />`,
+                        code: "<Stage canvas={<ReactFlowCanvas />} />",
                         render: (
                             <div data-tier="fixture" style={{ height: 240 }}>
                                 <Stage canvas={() => <Canvas label='fill="parent" — fills the given box' />} />
@@ -127,7 +127,7 @@ export const Fill: Story = {
                     {
                         name: "fill = 'viewport'",
                         why: "The stage hard-owns `h-[calc(100dvh-4rem)] w-full` — the viewport minus the app shell's own 4rem of chrome, the exact shape `MindMapPage`'s `standalone` variant hand-wrote twice.",
-                        code: `<Stage fill="viewport" canvas={<ReactFlowCanvas />} />`,
+                        code: "<Stage fill=\"viewport\" canvas={<ReactFlowCanvas />} />",
                         render: (
                             <div data-tier="fixture" className="overflow-hidden rounded-3xl border border-dashed border-default" style={{ height: 240 }}>
                                 <Stage fill="viewport" canvas={() => <Canvas label='fill="viewport" — 100dvh minus 4rem shell' />} />

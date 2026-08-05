@@ -121,7 +121,7 @@ export const Alignment: Story = {
 ]}`,
                         render: (
                             <Table
-                               
+
                                 ariaLabel="Student list with right-aligned column"
                                 columns={[
                                     { key: "name", header: "Student" },
@@ -164,7 +164,7 @@ export const Empty: Story = {
 />`,
                         render: (
                             <Table
-                               
+
                                 ariaLabel="Student list"
                                 columns={COLUMNS}
                                 items={[]}
@@ -199,7 +199,7 @@ export const Loading: Story = {
 />`,
                         render: (
                             <Table
-                               
+
                                 isSkeleton
                                 ariaLabel="Loading student list"
                                 columns={COLUMNS}
@@ -235,7 +235,7 @@ export const Pressable: Story = {
 />`,
                         render: (
                             <Table
-                               
+
                                 ariaLabel="Clickable student list"
                                 columns={COLUMNS}
                                 items={ITEMS}

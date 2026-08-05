@@ -58,7 +58,7 @@ export const Full: Story = {
                         render: (
                             <FoundationsHeader
 
-                               
+
                                 breadcrumbItems={CRUMBS}
                                 title="Linux & Shell"
                                 description="Master the command line, permissions, and the core system operations every engineer needs."
@@ -104,7 +104,7 @@ export const Skeleton: Story = {
                         render: (
                             <FoundationsHeader
 
-                               
+
                                 title=""
                                 isSkeleton
                             />

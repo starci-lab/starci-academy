@@ -96,7 +96,7 @@ export const Loading: Story = {
                         render: (
                             <CourseQaQuestionList
 
-                               
+
                                 questions={[]}
                                 isLoading
                                 page={1}
@@ -144,7 +144,7 @@ export const ErrorLeaf: Story = {
                         render: (
                             <CourseQaQuestionList
 
-                               
+
                                 questions={[]}
                                 isLoading={false}
                                 error={new globalThis.Error("network")}
@@ -193,7 +193,7 @@ export const Empty: Story = {
                         render: (
                             <CourseQaQuestionList
 
-                               
+
                                 questions={[]}
                                 isLoading={false}
                                 page={1}
@@ -239,7 +239,7 @@ export const Content: Story = {
                         render: (
                             <CourseQaQuestionList
 
-                               
+
                                 questions={QUESTIONS}
                                 isLoading={false}
                                 page={1}

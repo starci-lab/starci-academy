@@ -8,7 +8,7 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * header block (title + optional description, tight `gap-1` because they're a
  * PAIR) followed by the field column, at the `gap` rhythm (§10c).
  *
- * ⚠️ STATE SCOPE (§12f): this shell only produces TWO shapes — with
+ * WARNING: STATE SCOPE (§12f): this shell only produces TWO shapes — with
  * `description` and without. A field's label/hint/error/required is the
  * atom's state (`Atoms/Forms/Input/*`, §12e) — the shell doesn't touch it, so
  * there is NO `Error`/`Required` story here. The `errorMessage` field in the

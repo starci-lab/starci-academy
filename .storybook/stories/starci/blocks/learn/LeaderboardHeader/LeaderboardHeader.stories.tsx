@@ -53,7 +53,7 @@ export const Header: Story = {
                         render: (
                             <LeaderboardHeader
 
-                               
+
                                 breadcrumbItems={CRUMBS}
                                 title="Leaderboard"
                                 description="Ranked by total practice points earned this month"

@@ -55,25 +55,28 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /** Controlled wrapper — a trigger reopens the drawer after it closes, so the story stays interactive. */
+type ControlledAiSuggestionDrawerProps = {
+    suggestion: string
+    isEditingSuggestion?: boolean
+    sources: Array<AiSuggestionSourceView>
+    isSending?: boolean
+    isSkeleton?: boolean
+}
 const ControlledAiSuggestionDrawer = ({
     suggestion,
     isEditingSuggestion,
     sources,
     isSending,
     isSkeleton,
-}: {
-    suggestion: string
-    isEditingSuggestion?: boolean
-    sources: Array<AiSuggestionSourceView>
-    isSending?: boolean
-    isSkeleton?: boolean
-}) => {
+}: ControlledAiSuggestionDrawerProps) => {
     const [isOpen, setIsOpen] = useState(true)
     const [value, setValue] = useState(suggestion)
     const [editing, setEditing] = useState(isEditingSuggestion ?? false)
     return (
         <div data-tier="fixture" className="flex flex-col gap-3 p-8">
-            <Button label="Open suggestion" variant="secondary" size="sm" classNames={["self-start"]} onPress={() => setIsOpen(true)} />
+            <div className="self-start">
+                <Button label="Open suggestion" variant="secondary" size="sm" onPress={() => setIsOpen(true)} />
+            </div>
             <AiSuggestionDrawer
                 isOpen={isOpen}
                 onOpenChange={setIsOpen}

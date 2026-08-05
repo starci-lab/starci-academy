@@ -167,7 +167,7 @@ export const Full: Story = {
                         render: (
                             <ChallengeDeliverableList
 
-                               
+
                                 items={BASE_ITEMS}
                                 onOpenGradingSettings={() => {}}
                             />

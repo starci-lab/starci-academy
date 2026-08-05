@@ -14,6 +14,7 @@ const meta: Meta<typeof ProgressMeter> = {
 }
 export default meta
 type Story = StoryObj<typeof ProgressMeter>
+/** Story: progress meter as a bare bar. */
 export const BareBar: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -23,6 +24,7 @@ export const BareBar: Story = {
         </div>
     ),
 }
+/** Story: progress meter at zero. */
 export const Empty: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -32,6 +34,7 @@ export const Empty: Story = {
         </div>
     ),
 }
+/** Story: progress meter at half. */
 export const Half: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -41,6 +44,7 @@ export const Half: Story = {
         </div>
     ),
 }
+/** Story: progress meter at completion. */
 export const Complete: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -50,6 +54,7 @@ export const Complete: Story = {
         </div>
     ),
 }
+/** Story: progress meter with label only. */
 export const LabelOnly: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -59,6 +64,7 @@ export const LabelOnly: Story = {
         </div>
     ),
 }
+/** Story: progress meter with label and value. */
 export const LabelAndValue: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -68,6 +74,7 @@ export const LabelAndValue: Story = {
         </div>
     ),
 }
+/** Story: progress meter with value only. */
 export const ValueOnly: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -77,6 +84,7 @@ export const ValueOnly: Story = {
         </div>
     ),
 }
+/** Story: accent tone variant. */
 export const ToneAccent: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -86,6 +94,7 @@ export const ToneAccent: Story = {
         </div>
     ),
 }
+/** Story: success tone variant. */
 export const ToneSuccess: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -95,6 +104,7 @@ export const ToneSuccess: Story = {
         </div>
     ),
 }
+/** Story: warning tone variant. */
 export const ToneWarning: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -104,6 +114,7 @@ export const ToneWarning: Story = {
         </div>
     ),
 }
+/** Story: danger tone variant. */
 export const ToneDanger: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">

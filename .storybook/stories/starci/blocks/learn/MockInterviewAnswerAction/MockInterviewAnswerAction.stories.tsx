@@ -45,7 +45,7 @@ export const Full: Story = {
                         render: (
                             <MockInterviewAnswerAction
 
-                               
+
                                 isLastQuestion={false}
                                 onSubmit={() => {}}
                             />

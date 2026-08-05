@@ -8,7 +8,7 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * STATE SCOPE: `AsyncContentEmpty` is the empty-message frame — its own asset is the message
  * slots (icon · title · description · action). Every state here comes from toggling its own
  * slots. When the empty branch gets picked is a state of `AsyncContent`, not repeated here.
- * 
+ *
  * ANATOMY IS PER-LEAF: each story is its own leaf, carrying its own parts tree.
  */
 const meta: Meta<typeof AsyncContentEmpty> = {
@@ -101,7 +101,7 @@ export const WithDescription: Story = {
                             <AsyncContentEmpty
                                 title="List is empty"
                                 description="You haven't saved any items to this list yet."
-                               
+
                             />
                         ),
                     },
@@ -134,7 +134,7 @@ export const WithRetry: Story = {
                                 description="Try changing your filters or reloading to see more."
                                 onRetry={() => {}}
                                 retryLabel="Reload"
-                               
+
                             />
                         ),
                     },
@@ -195,7 +195,7 @@ export const CustomIcon: Story = {
                                 icon={MagnifyingGlassIcon}
                                 title="No matching results"
                                 description="No items match the keyword you entered."
-                               
+
                             />
                         ),
                     },

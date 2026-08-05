@@ -179,7 +179,7 @@ export const Skeleton: Story = {
                                     subtitle="Reading"
                                     href="/courses/nestjs-api/lessons/5"
                                     isSkeleton
-                                   
+
                                 />
                             </div>
                         ),

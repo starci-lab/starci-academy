@@ -60,6 +60,7 @@ const PART_FEEDBACK_EMPTY: AnatomyAnnotation = {
     tier: "composite",
     storyId: "composites-feedback-emptystate--action",
 }
+/** Story: resting state for this component. */
 export const Default: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -142,7 +143,7 @@ export const LeadingMeta: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                               
+
                                 items={[
                                     {
                                         key: "once",
@@ -151,7 +152,7 @@ export const LeadingMeta: Story = {
                                         subtitle: "Pay the full tuition now",
                                         meta: SaveTenPercentMeta,
                                         onPress: () => {},
-                                        
+
                                     },
                                     {
                                         key: "installments",
@@ -160,7 +161,7 @@ export const LeadingMeta: Story = {
                                         subtitle: "No interest",
                                         trailing: Caret,
                                         onPress: () => {},
-                                        
+
                                     },
                                 ]}
                             />
@@ -195,19 +196,19 @@ export const FreeForm: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                               
+
                                 items={[
                                     {
                                         key: "starci",
                                         content: () => profileRow("SC", "StarCi Academy", "Learn fullstack, system design, and DevOps along an interview-prep path."),
                                         onPress: () => {},
-                                        
+
                                     },
                                     {
                                         key: "quang",
                                         content: () => profileRow("QN", "Mentor Quang", "Fullstack mentor — reviews projects and runs mock interviews."),
                                         onPress: () => {},
-                                        
+
                                     },
                                 ]}
                             />
@@ -238,7 +239,7 @@ export const Selected: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                               
+
                                 items={[
                                     { key: "vi", title: "Vietnamese", onPress: () => {} },
                                     { key: "en", title: "English", selected: true, onPress: () => {} },
@@ -271,7 +272,7 @@ export const Disabled: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                               
+
                                 items={[
                                     { key: "pdf", title: "Export PDF invoice", onPress: () => {} },
                                     {
@@ -280,7 +281,7 @@ export const Disabled: Story = {
                                         subtitle: "Not yet available on the current plan",
                                         isDisabled: true,
                                         onPress: () => {},
-                                        
+
                                     },
                                 ]}
                             />
@@ -310,7 +311,7 @@ export const HoverUnderline: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                               
+
                                 items={[
                                     { key: "dropout", title: "Why do learners drop out of courses?", subtitle: "12.4k reads", hover: "underline", href: "#" },
                                     { key: "senior", title: "The path to becoming a Senior Backend engineer", subtitle: "9.1k reads", hover: "underline", href: "#" },
@@ -346,7 +347,7 @@ export const Static: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                               
+
                                 items={[
                                     { key: "resilience", title: "Resilience", meta: ResilienceMeta },
                                     { key: "errors", title: "Error Handling", meta: ErrorHandlingMeta },
@@ -377,7 +378,7 @@ export const Verdict: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                               
+
                                 items={[
                                     { key: "shell", title: "Shell & file system", tone: "success", onPress: () => {} },
                                 ]}
@@ -392,7 +393,7 @@ export const Verdict: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                               
+
                                 items={[
                                     { key: "pipe", title: "Redirect & pipe", tone: "warning", onPress: () => {} },
                                 ]}
@@ -407,7 +408,7 @@ export const Verdict: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                               
+
                                 items={[
                                     { key: "perm", title: "Basic file permissions", tone: "danger", onPress: () => {} },
                                 ]}
@@ -436,7 +437,7 @@ export const SingleRow: Story = {
 />`,
                         render: (
                             <SurfaceCardList
-                               
+
                                 items={[{ key: "only", title: "Just one item", subtitle: "The separator hides itself on the last row", onPress: () => {}, trailing: Caret }]}
                             />
                         ),
@@ -479,7 +480,7 @@ export const Empty: Story = {
                                 label="My courses"
                                 items={[]}
                                 emptyState={CoursesEmptyState}
-                               
+
                             />
                         ),
                     },
@@ -513,7 +514,7 @@ export const Loading: Story = {
                         render: (
                             <SurfaceCardList
                                 label="My courses"
-                               
+
                                 items={courseItems}
                                 isSkeleton
                             />

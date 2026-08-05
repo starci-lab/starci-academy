@@ -1,6 +1,6 @@
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
 
 /**

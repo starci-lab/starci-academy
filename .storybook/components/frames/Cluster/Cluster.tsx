@@ -2,7 +2,7 @@ import React from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { ALIGN_CLASS, gapClassNames, JUSTIFY_CLASS, type AllowedGap, type LayoutAlign, type LayoutJustify, type Responsive } from "@sb-components/frames/_spacing"
 import { principlesAttr, type PrincipleToken } from "@sb-components/frames/_principles"
 

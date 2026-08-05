@@ -79,7 +79,7 @@ export const PinnedProjectCard = ({
 }: PinnedProjectCardProps) => {
     // verified badge + tech-stack chips share the meta row
     const hasMeta = pin.isVerified || (pin.techStack?.length ?? 0) > 0
-    const meta = hasMeta ? (
+    const Meta = hasMeta ? () => (
         <Cluster
             gap={2}
             items={[
@@ -99,7 +99,7 @@ export const PinnedProjectCard = ({
     ) : undefined
 
     // owner controls (manage mode) — reorder + remove, no outbound navigation
-    const manageFooter = manage ? (
+    const ManageFooter = manage ? () => (
         <Cluster
             gap={2}
             items={[
@@ -153,9 +153,9 @@ export const PinnedProjectCard = ({
     return (
         <MediaCard
             title={pin.title ?? labels.untitled}
-            meta={meta}
+            meta={Meta}
             description={pin.description ?? undefined}
-            footer={manageFooter}
+            footer={ManageFooter}
             // display mode: the whole card is the outbound link (only when it has one)
             href={!manage && pin.url ? pin.url : undefined}
         />

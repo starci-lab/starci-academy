@@ -480,7 +480,7 @@ export const PracticeProblemPage = () => {
                 <SurfaceListCardRow
                     key={submission.id}
                     title={new Date(submission.createdAt).toLocaleString()}
-                    meta={(
+                    meta={() => (
                         <>
                             <Typography type="body-xs" color="muted">
                                 {t(`codingPractice.language.${submission.language}`)}

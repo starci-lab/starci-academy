@@ -1112,8 +1112,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                             revealed={showAnswer}
                             questionLabel={t("flashcard.questionLabel")}
                             answerLabel={t("flashcard.answerLabel")}
-                            front={<MarkdownContent plain markdown={card.question} />}
-                            belowFront={card.level || (card.tags?.length ?? 0) > 0 ? (
+                            front={() => <MarkdownContent plain markdown={card.question} />}
+                            belowFront={card.level || (card.tags?.length ?? 0) > 0 ? () => (
                                 <div className="flex flex-wrap items-center gap-2">
                                     {card.level ? (
                                         <Chip size="sm" variant="soft" color={LEVEL_COLOR[card.level] ?? "default"}>
@@ -1127,7 +1127,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                     ))}
                                 </div>
                             ) : undefined}
-                            back={
+                            back={() => (
                                 <>
                                     {card.answer ? (
                                         <MarkdownContent plain markdown={card.answer} arcSections />
@@ -1138,7 +1138,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                     )}
                                     {card.explanation ? <MarkdownContent plain markdown={card.explanation} /> : null}
                                 </>
-                            }
+                            )}
                         />
                         {showAnswer ? (
                             <div className="flex flex-col gap-3">

@@ -390,7 +390,12 @@ export const PlaygroundRagWorkspace = ({
                                                 {turn.sources.map((source, index) => (
                                                     <SurfaceListCardRow
                                                         key={`${turn.id}-${index}`}
-                                                        title={<span className="font-mono">{source.filePath}</span>}
+                                                        // `title` is plain text now (never a built element), and
+                                                        // `titleClassName` stays lint-forbidden — the monospace
+                                                        // face moves to the row itself, which reads fine for the
+                                                        // snippet subtitle too (both are source code).
+                                                        className="font-mono"
+                                                        title={source.filePath}
                                                         subtitle={source.snippet}
                                                     />
                                                 ))}

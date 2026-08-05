@@ -1,5 +1,4 @@
-import React from "react"
-import type { ReactNode } from "react"
+import React, { type ComponentType } from "react"
 import { Accordion, Typography, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
@@ -10,18 +9,18 @@ export interface LabeledAccordionCardItem {
     /** Stable id — also the expand key (matched against `defaultExpandedKeys`). */
     id: string
     /** Trigger headline (the always-visible row). */
-    title: ReactNode
+    title: string
     /** Optional muted second line in the trigger (a count / hint), under the title. */
-    subtitle?: ReactNode
+    subtitle?: string
     /**
-     * Optional trailing node in the trigger row, right of the title and LEFT of the
+     * Optional trailing slot in the trigger row, right of the title and LEFT of the
      * caret — a status chip / score / count that belongs to the collapsed header
      * (e.g. a per-requirement score, a milestone `StatusChip`, a read count). The
      * title truncates to make room; this stays at intrinsic width.
      */
-    titleEnd?: ReactNode
-    /** Panel content, revealed when the item expands. */
-    body: ReactNode
+    titleEnd?: ComponentType
+    /** Panel content, revealed when the item expands — a buildable slot. */
+    body: ComponentType
 }
 
 /** Props for the {@link LabeledAccordionCard} block. */
@@ -33,11 +32,11 @@ export interface LabeledAccordionCardProps extends WithClassNames<undefined> {
      * label-on-label (accordion.md §3d). With no label the card renders bare
      * (just the {@link SurfaceListCard} frame), no section wrapper.
      */
-    label?: ReactNode
+    label?: string
     /** Optional passive right-aligned tag in the label row (count / unit). Ignored without `label`. */
-    labelEnd?: ReactNode
-    /** Optional right-aligned action slot in the label row (a button). Ignored without `label`. */
-    action?: ReactNode
+    labelEnd?: string
+    /** Optional right-aligned action slot in the label row (a button) — a buildable slot. Ignored without `label`. */
+    action?: ComponentType
     /** The collapsible sections, in order. */
     items: ReadonlyArray<LabeledAccordionCardItem>
     /**
@@ -89,39 +88,43 @@ const AccordionFrame = ({
             allowsMultipleExpanded={allowsMultipleExpanded}
             defaultExpandedKeys={defaultExpandedKeys}
         >
-            {items.map((item) => (
-                <Accordion.Item
-                    key={item.id}
-                    id={item.id}
-                    aria-label={typeof item.title === "string" ? item.title : item.id}
-                >
-                    <Accordion.Heading>
-                        <Accordion.Trigger>
-                            <div className="flex min-w-0 flex-1 flex-col gap-0 text-left">
-                                <Typography type="body-sm" weight="medium" truncate>
-                                    {item.title}
-                                </Typography>
-                                {item.subtitle != null ? (
-                                    <Typography type="body-xs" color="muted" truncate>
-                                        {item.subtitle}
+            {items.map((item) => {
+                const TitleEnd = item.titleEnd
+                const Body = item.body
+                return (
+                    <Accordion.Item
+                        key={item.id}
+                        id={item.id}
+                        aria-label={item.title}
+                    >
+                        <Accordion.Heading>
+                            <Accordion.Trigger>
+                                <div className="flex min-w-0 flex-1 flex-col gap-0 text-left">
+                                    <Typography type="body-sm" weight="medium" truncate>
+                                        {item.title}
                                     </Typography>
-                                ) : null}
-                            </div>
-                            {/* titleEnd + caret share one group so the trailing chip/count keeps
-                                a `gap-3` breathing room from the indicator instead of touching it */}
-                            <div className="flex shrink-0 items-center gap-3">
-                                {item.titleEnd}
-                                <Accordion.Indicator />
-                            </div>
-                        </Accordion.Trigger>
-                    </Accordion.Heading>
-                    <Accordion.Panel>
-                        <Accordion.Body className={cn("pt-0")}>
-                            {item.body}
-                        </Accordion.Body>
-                    </Accordion.Panel>
-                </Accordion.Item>
-            ))}
+                                    {item.subtitle != null ? (
+                                        <Typography type="body-xs" color="muted" truncate>
+                                            {item.subtitle}
+                                        </Typography>
+                                    ) : null}
+                                </div>
+                                {/* titleEnd + caret share one group so the trailing chip/count keeps
+                                    a `gap-3` breathing room from the indicator instead of touching it */}
+                                <div className="flex shrink-0 items-center gap-3">
+                                    {TitleEnd ? <TitleEnd /> : null}
+                                    <Accordion.Indicator />
+                                </div>
+                            </Accordion.Trigger>
+                        </Accordion.Heading>
+                        <Accordion.Panel>
+                            <Accordion.Body className={cn("pt-0")}>
+                                <Body />
+                            </Accordion.Body>
+                        </Accordion.Panel>
+                    </Accordion.Item>
+                )
+            })}
         </Accordion>
     </SurfaceListCard>
 )

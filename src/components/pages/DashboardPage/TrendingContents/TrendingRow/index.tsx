@@ -34,7 +34,7 @@ export const TrendingRow = ({ rank, title, globalId }: TrendingRowProps) => {
 
     return (
         <SurfaceListCardRow
-            leading={(
+            leading={() => (
                 <span
                     aria-hidden
                     className={cn(

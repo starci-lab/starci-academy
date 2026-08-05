@@ -10,7 +10,7 @@ import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/type
 /** Props for {@link _RelatedContentList} — presentational; every result already resolved. */
 export interface RelatedContentListProps extends WithClassNames<undefined> {
     /** Section label (translated by the caller — each surface phrases this differently). */
-    label: React.ReactNode
+    label: string
     /**
      * Already-filtered + already-limited results. An EMPTY array (while not
      * `isSkeleton`) renders NOTHING — the connected half folds every hide

@@ -84,7 +84,7 @@ export const _StreakFreezeCard = ({
 
     return (
         <SectionCard
-            icon={<SnowflakeIcon className="size-5 text-accent-soft-foreground" />}
+            icon={() => <SnowflakeIcon className="size-5 text-accent-soft-foreground" />}
             title={labels.title}
         >
             <Typography

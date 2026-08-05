@@ -189,7 +189,7 @@ export const CourseMilestoneOutline = ({
                         return {
                             id: milestone.id,
                             title: milestone.title,
-                            titleEnd: (
+                            titleEnd: () => (
                                 <>
                                     <StatusChip tone={STATE_TONE[state]}>
                                         {t(`profileSettings.learning.outline.milestoneStatus.${state}`)}
@@ -199,7 +199,7 @@ export const CourseMilestoneOutline = ({
                                     </Typography>
                                 </>
                             ),
-                            body: (
+                            body: () => (
                                 <div className="flex flex-col gap-2">
                                     {milestone.tasks.map((task) => {
                                         const attempted = !task.completed && task.lastScore > 0

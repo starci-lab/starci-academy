@@ -82,7 +82,7 @@ export const LessonPager = ({ className }: LessonPagerProps) => {
         items.push({
             key: "previous",
             href: previous.href,
-            content: (
+            content: () => (
                 <div className="flex items-center gap-2">
                     <CaretLeftIcon aria-hidden focusable="false" weight="bold" className="size-4 shrink-0 text-muted" />
                     <div className="flex min-w-0 flex-col gap-0">
@@ -109,7 +109,7 @@ export const LessonPager = ({ className }: LessonPagerProps) => {
             // the previous one; viewport-scoped `sm:` would miss in both directions
             // (narrow slot in a wide window still splits, and vice versa).
             className: "@sm:col-start-2",
-            content: (
+            content: () => (
                 <div className="flex items-center justify-end gap-2">
                     <div className="flex min-w-0 flex-col gap-0">
                         <Typography type="body-xs" color="muted" align="end">

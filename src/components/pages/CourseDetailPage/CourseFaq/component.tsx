@@ -99,7 +99,7 @@ const _CourseFaq = ({
                 items={qnas.map((qna) => ({
                     id: qna.id,
                     title: qna.question,
-                    body: <MarkdownContent markdown={qna.answer} />,
+                    body: () => <MarkdownContent markdown={qna.answer} />,
                 }))}
             />
         )

@@ -1,8 +1,7 @@
 "use client"
 
-import React, { useEffect } from "react"
+import React, { useEffect, type ComponentType } from "react"
 import { cn } from "@heroui/react"
-import type { ReactNode } from "react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { PressableCard } from "@/components/blocks/cards/PressableCard"
 import { type VerdictBand, verdictBandClassName } from "@/components/blocks/cards/verdict-band"
@@ -35,8 +34,8 @@ export interface GroupPressableCardColumns {
 export interface GroupPressableCardItem {
     /** Stable React key. Also fixes the item's position for the 1–N shortcut. */
     key: string
-    /** Card body — composed freely by the caller (icon tiles, text, chips…). */
-    content: ReactNode
+    /** Card body — a buildable slot composed freely by the caller (icon tiles, text, chips…). */
+    content: ComponentType
     /** Press handler. Ignored when {@link GroupPressableCardItem.href} is set. */
     onPress?: () => void
     /** Navigation target — renders this card as an anchor. */
@@ -216,23 +215,26 @@ export const GroupPressableCard = ({
                     }),
                 )}
             >
-                {items.map((item) => (
-                    <PressableCard
-                        key={item.key}
-                        onPress={item.onPress}
-                        href={item.href}
-                        isDisabled={item.isDisabled}
-                        label={item.label}
-                        className={cn(
-                            TILE_CHROME,
-                            // canonical verdict left-band (shape + colour + !important fix)
-                            verdictBandClassName(item.withVerdict),
-                            item.className,
-                        )}
-                    >
-                        {item.content}
-                    </PressableCard>
-                ))}
+                {items.map((item) => {
+                    const Content = item.content
+                    return (
+                        <PressableCard
+                            key={item.key}
+                            onPress={item.onPress}
+                            href={item.href}
+                            isDisabled={item.isDisabled}
+                            label={item.label}
+                            className={cn(
+                                TILE_CHROME,
+                                // canonical verdict left-band (shape + colour + !important fix)
+                                verdictBandClassName(item.withVerdict),
+                                item.className,
+                            )}
+                        >
+                            <Content />
+                        </PressableCard>
+                    )
+                })}
             </div>
         </div>
     )

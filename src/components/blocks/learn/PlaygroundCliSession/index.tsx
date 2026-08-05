@@ -467,10 +467,10 @@ export const PlaygroundCliSession = () => {
                                                 // the kind name already says "Container / Image / Network",
                                                 // so no leading glyph — it would just repeat the label
                                                 title: group.kind,
-                                                titleEnd: (
+                                                titleEnd: () => (
                                                     <Typography type="body-xs" color="muted">{group.items.length}</Typography>
                                                 ),
-                                                body: group.items.map((resource, index) => (
+                                                body: () => group.items.map((resource, index) => (
                                                     <ListRow
                                                         key={`${resource.kind}-${resource.name}`}
                                                         title={resource.name}

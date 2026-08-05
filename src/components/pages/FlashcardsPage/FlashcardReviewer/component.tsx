@@ -275,8 +275,8 @@ export const _FlashcardReviewer = ({
                                 revealed={revealed}
                                 questionLabel={labels.questionLabel}
                                 answerLabel={labels.answerLabel}
-                                front={<MarkdownContent plain markdown={card?.question ?? ""} />}
-                                belowFront={card && (card.level || (card.tags?.length ?? 0) > 0) ? (
+                                front={() => <MarkdownContent plain markdown={card?.question ?? ""} />}
+                                belowFront={card && (card.level || (card.tags?.length ?? 0) > 0) ? () => (
                                     <div className="flex flex-wrap items-center gap-2">
                                         {card.level ? (
                                             <Chip size="sm" variant="soft" color={LEVEL_COLOR[card.level] ?? "default"}>
@@ -290,7 +290,7 @@ export const _FlashcardReviewer = ({
                                         ))}
                                     </div>
                                 ) : undefined}
-                                back={
+                                back={() => (
                                     <>
                                         {isLocked ? (
                                             // premium card, viewer not enrolled → withhold the answer
@@ -318,7 +318,7 @@ export const _FlashcardReviewer = ({
                                             </>
                                         )}
                                     </>
-                                }
+                                )}
                             />
 
                             {/* reveal first, then grade recall (which advances) — unless the card is

@@ -347,7 +347,7 @@ export const NotificationsPage = ({ className }: NotificationsPageProps) => {
                                 {items.map((notification) => (
                                     <SurfaceListCardRow
                                         key={notification.id}
-                                        leading={(
+                                        leading={() => (
                                             <span
                                                 className={cn(
                                                     "flex size-9 shrink-0 items-center justify-center rounded-full [&>svg]:size-4",
@@ -359,26 +359,9 @@ export const NotificationsPage = ({ className }: NotificationsPageProps) => {
                                                 {TYPE_ICONS[notification.type]}
                                             </span>
                                         )}
-                                        title={(
-                                            <span
-                                                className={cn(
-                                                    "flex items-center gap-2",
-                                                    !notification.isRead && "font-medium",
-                                                )}
-                                            >
-                                                {!notification.isRead ? (
-                                                    <CircleIcon
-                                                        weight="fill"
-                                                        aria-hidden
-                                                        focusable="false"
-                                                        className="size-1.5 shrink-0 text-accent-soft-foreground"
-                                                    />
-                                                ) : null}
-                                                {t(
-                                                    notification.title.key,
-                                                    notification.title.params ?? undefined,
-                                                )}
-                                            </span>
+                                        title={t(
+                                            notification.title.key,
+                                            notification.title.params ?? undefined,
                                         )}
                                         subtitle={notification.body
                                             ? t(
@@ -386,11 +369,23 @@ export const NotificationsPage = ({ className }: NotificationsPageProps) => {
                                                 notification.body.params ?? undefined,
                                             )
                                             : undefined}
-                                        meta={(
+                                        meta={() => (
                                             <Typography type="body-xs" color="muted" className="whitespace-nowrap">
                                                 {formatRelative(notification.createdAt)}
                                             </Typography>
                                         )}
+                                        // unread dot moves here from beside the title: `title` is plain
+                                        // text now (never a built element) and `titleClassName` stays
+                                        // lint-forbidden, so the unread signal — already echoed by the
+                                        // leading badge's accent tint — rides the row's one remaining slot.
+                                        trailing={!notification.isRead ? () => (
+                                            <CircleIcon
+                                                weight="fill"
+                                                aria-hidden
+                                                focusable="false"
+                                                className="size-1.5 shrink-0 text-accent-soft-foreground"
+                                            />
+                                        ) : undefined}
                                         onPress={() => onPressItem(notification)}
                                     />
                                 ))}

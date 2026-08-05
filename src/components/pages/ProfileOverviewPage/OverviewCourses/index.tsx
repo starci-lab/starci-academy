@@ -17,11 +17,11 @@ const SKELETON_ROWS = 2
 /** Props for {@link OverviewCourses}. */
 export interface OverviewCoursesProps {
     /** Section label, rendered outside the card (owned here, like every other self-contained section). */
-    label: React.ReactNode
+    label: string
     /** Optional "see more" link on the label row. */
     onSeeMore?: () => void
     /** Text for the see-more link. */
-    seeMoreLabel?: React.ReactNode
+    seeMoreLabel?: string
 }
 
 /**

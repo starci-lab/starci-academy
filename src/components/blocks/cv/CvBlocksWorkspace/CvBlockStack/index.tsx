@@ -91,7 +91,7 @@ export const CvBlockStack = ({
                     <LabeledCard
                         key={block.id}
                         label={block.title || t(meta.titleKey)}
-                        action={(
+                        action={() => (
                             <div className="flex items-center gap-2">
                                 <Button
                                     isIconOnly

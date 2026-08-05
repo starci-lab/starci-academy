@@ -150,22 +150,24 @@ export const _FlashcardReviewStats = ({
     // value the connected half already used (via the same pure function) to pick its text keys.
     const band = retentionColorOf(retentionRate)
 
-    // ZONE 2 rows — while shimmering, placeholder rows keep the SAME `SurfaceListCardRow` shape,
-    // fed through its own `title`/`meta` slots (the row itself has no `isSkeleton`); otherwise
-    // every attempted tag worst-first.
+    // ZONE 2 rows — `title`/`meta` are buildable slots now (never a pre-rendered element), so a
+    // shimmering placeholder can no longer smuggle a `Typography isSkeleton` through `title`; it
+    // hand-mirrors the row's own `p-3` + meta-pushed-right shape instead (the row itself has no
+    // `isSkeleton`). Otherwise every attempted tag worst-first.
     const gapRows = isSkeleton
         ? Array.from({ length: WEAK_TOPIC_SKELETON_ROW_COUNT }, (_unused, index) => (
-            <SurfaceListCardRow
-                key={`pending-${index}`}
-                title={<Typography size="sm" isSkeleton />}
-                meta={<Chip isSkeleton />}
-            />
+            <div key={`pending-${index}`} className="flex items-center gap-3 p-3">
+                <Skeleton.Typography type="body-sm" width="1/3" />
+                <Box principles={["push-end"]} className="ml-auto shrink-0">
+                    <Skeleton.Chip />
+                </Box>
+            </div>
         ))
         : weakTags.map((tagStat) => (
             <SurfaceListCardRow
                 key={tagStat.tag}
                 title={tagStat.tag}
-                meta={<Chip tone={retentionColorOf(tagStat.retention)} text={tagStat.chipLabel} />}
+                meta={() => <Chip tone={retentionColorOf(tagStat.retention)} text={tagStat.chipLabel} />}
             />
         ))
     const showGap = isSkeleton || gapRows.length > 0

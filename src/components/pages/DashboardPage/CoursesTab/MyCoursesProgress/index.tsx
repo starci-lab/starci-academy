@@ -10,7 +10,7 @@ import { _MyCoursesProgress } from "./component"
 /** Props for {@link MyCoursesProgress}. */
 export interface MyCoursesProgressProps {
     /** Section label, rendered outside the card (owned here, like every other self-contained section). */
-    label: React.ReactNode
+    label: string
 }
 
 /**

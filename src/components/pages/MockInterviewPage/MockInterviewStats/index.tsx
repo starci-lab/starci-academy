@@ -181,7 +181,7 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                     <LabeledCard
                         label={t("mockInterview.statsReadinessLabel")}
                         frameless
-                        description={(
+                        description={() => (
                             <Typography type="body-xs" color="muted">
                                 {t("mockInterview.statsModeSplitCaption", {
                                     qna: stats.modeSplit.qnaCount,

@@ -177,7 +177,7 @@ export const CourseOutline = ({
                         return {
                             id: module.id,
                             title: module.title,
-                            titleEnd: (
+                            titleEnd: () => (
                                 <>
                                     {module.isPremium ? (
                                         <LockIcon
@@ -195,7 +195,7 @@ export const CourseOutline = ({
                                     </Typography>
                                 </>
                             ),
-                            body: (
+                            body: () => (
                                 <div className="flex flex-col gap-2">
                                     {module.lessons.map((lesson) => (
                                         <div key={lesson.id} className="flex flex-col gap-2">

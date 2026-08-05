@@ -119,7 +119,7 @@ export const PricingTable = ({
                 period={tier.period}
                 badge={tier.isHighlighted ? highlightLabel : undefined}
                 highlighted={tier.isHighlighted}
-                features={
+                features={() => (
                     <StackV
                         gap={5}
                         items={[
@@ -148,15 +148,15 @@ export const PricingTable = ({
                             ),
                         ]}
                     />
-                }
-                cta={
+                )}
+                cta={() => (
                     <Button
                         variant={tier.isHighlighted ? "primary" : "secondary"}
                         label={tier.ctaLabel}
                         onPress={() => onSelectTier?.(tier.id)}
                         classNames={["w-full"]}
                     />
-                }
+                )}
             />
         ),
     }))

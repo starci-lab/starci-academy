@@ -1,7 +1,6 @@
 "use client"
 
-import React from "react"
-import type { ReactNode } from "react"
+import React, { type ComponentType } from "react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Image } from "@/components/atoms/media/Image"
 import { Typography } from "@/components/atoms/text/Typography"
@@ -20,27 +19,27 @@ export interface MediaCardProps {
      * edge under the card radius (e.g. an `<img>`). When omitted, a 16:9
      * placeholder image fills the same full-bleed slot.
      */
-    cover?: ReactNode
+    cover?: ComponentType
     /**
      * Primary heading of the card (course / lesson / challenge / blog title).
      * Rendered via {@link Typography} weight="medium" (body size).
      */
-    title: ReactNode
+    title: string
     /**
      * Optional metadata row shown directly under the title — typically a row of
      * chips or muted text (category, difficulty, duration, author).
      */
-    meta?: ReactNode
+    meta?: ComponentType
     /**
      * Optional short description / excerpt. Rendered muted, clamped to two
      * lines so grid rows stay uniform.
      */
-    description?: ReactNode
+    description?: string
     /**
      * Optional footer pinned at the bottom of the body — typically a CTA button,
      * price, or progress indicator.
      */
-    footer?: ReactNode
+    footer?: ComponentType
     /**
      * Optional press handler. When provided the whole card becomes pressable and
      * keyboard-accessible. Prefer {@link href} for pure navigation.
@@ -76,16 +75,18 @@ export interface MediaCardProps {
  * @see Story: .storybook/stories/blocks/cards/MediaCard/MediaCard.stories
  */
 export const MediaCard = ({
-    cover,
+    cover: Cover,
     title,
-    meta,
+    meta: Meta,
     description,
-    footer,
+    footer: Footer,
     onPress,
     href,
     classNames,
 }: MediaCardProps) => {
-    const coverNode = cover ?? <Image src={FALLBACK_COVER_SRC} alt="" ratio="video" radius="none" />
+    const coverNode = Cover
+        ? <Cover />
+        : <Image src={FALLBACK_COVER_SRC} alt="" ratio="video" radius="none" />
 
     const body = () => (
         <StackV
@@ -102,9 +103,9 @@ export const MediaCard = ({
                         padding={5}
                         items={[
                             () => <Typography size="base" weight="medium" text={title} />,
-                            ...(meta ? [() => <Cluster gap={3} items={[() => <>{meta}</>]} />] : []),
+                            ...(Meta ? [() => <Cluster gap={3} items={[() => <Meta />]} />] : []),
                             ...(description ? [() => <Typography size="sm" color="muted" lineClamp={2} text={description} />] : []),
-                            ...(footer ? [() => <>{footer}</>] : []),
+                            ...(Footer ? [() => <Footer />] : []),
                         ]}
                     />
                 ),

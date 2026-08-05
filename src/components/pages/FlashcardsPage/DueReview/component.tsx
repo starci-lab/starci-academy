@@ -285,9 +285,9 @@ export const _DueReview = ({
                         revealed={revealed}
                         questionLabel={labels.questionLabel}
                         answerLabel={labels.answerLabel}
-                        front={<MarkdownContent plain markdown={card?.front ?? ""} />}
-                        belowFront={chipItems.length > 0 ? <Cluster gap={3} items={chipItems} /> : undefined}
-                        back={<MarkdownContent plain markdown={card?.back ?? ""} arcSections />}
+                        front={() => <MarkdownContent plain markdown={card?.front ?? ""} />}
+                        belowFront={chipItems.length > 0 ? () => <Cluster gap={3} items={chipItems} /> : undefined}
+                        back={() => <MarkdownContent plain markdown={card?.back ?? ""} arcSections />}
                     />
                 ),
                 // reveal first, then grade recall (which advances)

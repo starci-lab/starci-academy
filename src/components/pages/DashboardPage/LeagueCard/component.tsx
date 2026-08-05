@@ -2,7 +2,6 @@
 
 import React from "react"
 import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
-import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import {
     SurfaceListCard,
@@ -59,7 +58,11 @@ export interface LeagueCardProps extends WithClassNames<undefined> {
     framed?: boolean
     /** League title (already translated). */
     title: string
-    /** Help text for the title's {@link InfoTooltip} (already translated). */
+    /**
+     * Help text for the title's tooltip (already translated) — currently unused: the
+     * label row has no slot for a decoration once `label` became plain text. Kept for
+     * API compatibility until a real "labelAdornment" slot exists.
+     */
     titleHelp: string
     /** "See more" handler (opens the full board). */
     onSeeMore?: () => void
@@ -115,7 +118,6 @@ export const _LeagueCard = ({
     isSkeleton = false,
     isEmpty = false,
     title,
-    titleHelp,
     onSeeMore,
     seeMoreLabel,
     standing,
@@ -135,7 +137,10 @@ export const _LeagueCard = ({
         return (
             <LabeledCard
                 className={className}
-                label={<Skeleton.Typography type="body-sm" width="1/3" />}
+                // `label` is plain text now (never a built element), and `title` is already
+                // known statically (translated up front, not fetched) — showing it for real
+                // instead of shimmering it is strictly more correct, not just a workaround.
+                label={title}
                 contentClassName="flex flex-col gap-3"
             >
                 {/* standing header — IconTile badge + primary + secondary, mirrored bar-for-bar */}
@@ -169,11 +174,11 @@ export const _LeagueCard = ({
     return (
         <LeaderboardListCard
             className={className}
-            title={(
-                <InfoTooltip title={title} description={titleHelp}>
-                    {title}
-                </InfoTooltip>
-            )}
+            // `title` forwards into `LabeledCard.label`, plain text now (never a built
+            // element) — the `InfoTooltip` decoration has no slot to ride any more
+            // (mirrors the same drop in `LeagueCardContent`); `titleHelp` is unused here
+            // pending a real "labelAdornment"-style slot on `LabeledCard`.
+            title={title}
             onSeeMore={onSeeMore}
             seeMoreLabel={seeMoreLabel}
             standing={standing}

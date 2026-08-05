@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { type ComponentType } from "react"
 import {
     cn,
 } from "@heroui/react"
@@ -64,7 +64,7 @@ export interface PressableCardProps extends WithClassNames<undefined> {
      * REQUIRES {@link PressableCardProps.label} — the overlay target no longer
      * wraps the children text, so it needs its own accessible name.
      */
-    actions?: React.ReactNode
+    actions?: ComponentType
     /**
      * Accessible name for the whole-card press target. REQUIRED when
      * {@link PressableCardProps.actions} is set (the stretched overlay covers the
@@ -102,7 +102,7 @@ export const PressableCard = ({
     onPress,
     href,
     isDisabled = false,
-    actions,
+    actions: Actions,
     label,
     className,
 }: PressableCardProps) => {
@@ -119,7 +119,7 @@ export const PressableCard = ({
 
     // ── Simple whole-card target (no secondary actions) — the common case;
     // the whole card is ONE <button>/<a> and its children are its label. ──────
-    if (!actions) {
+    if (!Actions) {
         const base = cn(
             "block w-full outline-none focus-visible:ring-2 focus-visible:ring-accent",
             surface,
@@ -166,7 +166,7 @@ export const PressableCard = ({
                     () => <div className="min-w-0 flex-1">{children}</div>,
                     () => (
                         <div className="relative z-10">
-                            <StackH gap={3} principles={["flex-action"]} classNames={["shrink-0"]} items={[() => actions]} />
+                            <StackH gap={3} principles={["flex-action"]} classNames={["shrink-0"]} items={[() => <Actions />]} />
                         </div>
                     ),
                 ]}

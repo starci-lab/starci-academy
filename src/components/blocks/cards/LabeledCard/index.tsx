@@ -1,4 +1,4 @@
-import React from "react"
+import React, { type ComponentType } from "react"
 import type { ReactNode } from "react"
 import { Card, CardContent, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -11,34 +11,35 @@ import { resolveIdentity, type CallerIdentity } from "@/components/frames/_ident
 /** Props for the {@link LabeledCard} block. */
 export interface LabeledCardProps extends WithClassNames<undefined> {
     /** Section title rendered OUTSIDE (above) the card. */
-    label: ReactNode
+    label: string
     /**
      * Optional secondary label pinned to the RIGHT of the label row (muted) — a
      * passive tag, NOT an action (e.g. a currency "VND", a count, a unit). Rendered
      * only when neither `action` nor `onSeeMore` claim the right slot.
      */
-    labelEnd?: ReactNode
+    labelEnd?: string
     /**
      * When provided, renders a shared {@link SeeMoreLink} on the right of the
      * label (semibold accent text + a caret that slides right on hover).
      */
     onSeeMore?: () => void
     /** Text for the see-more link. Defaults to "See more" — pass `t(...)` to localise. */
-    seeMoreLabel?: ReactNode
+    seeMoreLabel?: string
     /**
      * Arbitrary right-aligned slot in the label row (e.g. an owner "Add / manage"
-     * button). Takes precedence over `onSeeMore` when both are passed.
+     * button) — a buildable slot. Takes precedence over `onSeeMore` when both are passed.
      */
-    action?: ReactNode
+    action?: ComponentType
     /** Card body content. */
     children: ReactNode
     /**
-     * Optional secondary text/node rendered OUTSIDE (below) the card, `gap-2` from
+     * Optional secondary slot rendered OUTSIDE (below) the card, `gap-2` from
      * it — a caption/prompt/status that belongs to the section but not inside the
-     * surface (e.g. a "complete all 3 to claim" prompt, a claim button). Kept below
-     * the card so it never becomes surface-in-surface. Caller owns its alignment.
+     * surface (e.g. a "complete all 3 to claim" prompt, a claim button) — a
+     * buildable slot. Kept below the card so it never becomes surface-in-surface.
+     * Caller owns its alignment.
      */
-    description?: ReactNode
+    description?: ComponentType
     /** Extra classes merged onto the card content wrapper. */
     contentClassName?: string
     /**
@@ -102,9 +103,9 @@ export const LabeledCard = ({
     labelEnd,
     onSeeMore,
     seeMoreLabel = "See more",
-    action,
+    action: Action,
     children,
-    description,
+    description: Description,
     className,
     contentClassName,
     frameless = false,
@@ -115,7 +116,7 @@ export const LabeledCard = ({
     identity,
 }: LabeledCardProps) => {
     // Right slot of the label row — action wins over onSeeMore, which wins over labelEnd.
-    const endSlot = action ?? (onSeeMore ? (
+    const endSlot = Action ? <Action /> : (onSeeMore ? (
         <SeeMoreLink onPress={onSeeMore} size={subtleLabel ? "xs" : "sm"}>
             {seeMoreLabel}
         </SeeMoreLink>
@@ -155,8 +156,8 @@ export const LabeledCard = ({
         >
             <StackH gap={4} justify="between" items={[() => labelSlot, () => endSlot]} />
             {/* description sits OUTSIDE (below) the card, gap-2 — never surface-in-surface */}
-            {description != null ? (
-                <StackV gap={3} items={[() => body, () => description]} />
+            {Description ? (
+                <StackV gap={3} items={[() => body, () => <Description />]} />
             ) : body}
         </section>
     )

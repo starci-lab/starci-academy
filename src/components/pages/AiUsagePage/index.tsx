@@ -84,7 +84,7 @@ export const AiUsagePage = () => {
                 the subscribe/upgrade CTA moved below the card into the upsell prompt. */}
                 <LabeledCard
                     label={t("aiQuota.creditPool")}
-                    action={(
+                    action={() => (
                         <Chip
                             size="sm"
                             variant="soft"

@@ -92,7 +92,7 @@ export const SettingsHomePage = ({
                     key: item.key,
                     onPress: () => router.push(item.href),
                     className: "flex items-center gap-3",
-                    content: (
+                    content: () => (
                         <>
                             <IconTile icon={item.icon} tone="accent" size="sm" />
                             <Typography type="body-sm" weight="medium" truncate>

@@ -19,7 +19,6 @@ import type {
 } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { RankDeltaCaret } from "@/components/blocks/profile/RankDeltaCaret"
-import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
 import {
     LeaderboardListCard,
     LeaderboardRow,
@@ -115,20 +114,10 @@ export const LeagueCardContent = ({
         }
     }
 
-    /** League title (with help tooltip) — the card label. */
-    const titleNode = (
-        <InfoTooltip
-            title={t("DashboardPage.league.title")}
-            description={t("DashboardPage.league.help")}
-        >
-            {t("DashboardPage.league.title")}
-        </InfoTooltip>
-    )
-
     return (
         <LeaderboardListCard
             className={className}
-            title={titleNode}
+            title={t("DashboardPage.league.title")}
             onSeeMore={onSeeMore}
             seeMoreLabel={t("DashboardPage.league.seeMore")}
             standing={myEntry && myPercent !== null ? {

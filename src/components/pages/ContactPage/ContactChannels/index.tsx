@@ -36,19 +36,19 @@ export const ContactChannels = ({ className }: ContactChannelsProps) => {
             <LabeledCard label={t("contact.direct.title")} flushContent>
                 <SurfaceListCard bordered>
                     <SurfaceListCardRow
-                        leading={<IconTile icon={<EnvelopeSimpleIcon />} tone="accent" size="sm" />}
+                        leading={() => <IconTile icon={<EnvelopeSimpleIcon />} tone="accent" size="sm" />}
                         title={CONTACT_EMAIL}
                         subtitle={t("contact.direct.emailLabel")}
                         href={`mailto:${CONTACT_EMAIL}`}
                     />
                     <SurfaceListCardRow
-                        leading={<IconTile icon={<PhoneIcon />} tone="success" size="sm" />}
+                        leading={() => <IconTile icon={<PhoneIcon />} tone="success" size="sm" />}
                         title={CONTACT_PHONE}
                         subtitle={t("contact.direct.phoneLabel")}
                         href={`tel:${CONTACT_PHONE_TEL}`}
                     />
                     <SurfaceListCardRow
-                        leading={<IconTile icon={<ClockIcon />} tone="warning" size="sm" />}
+                        leading={() => <IconTile icon={<ClockIcon />} tone="warning" size="sm" />}
                         title={t("contact.direct.hoursValue")}
                         subtitle={t("contact.direct.hoursLabel")}
                     />

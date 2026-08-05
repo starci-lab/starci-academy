@@ -74,12 +74,12 @@ export const TaskCriteriaList = ({
             items={sortedCriterias.map((criteria, index) => ({
                 id: criteria.id,
                 title: `${index + 1}. ${criteria.text}`,
-                titleEnd: (
+                titleEnd: () => (
                     <Chip size="sm" variant="secondary" color="accent">
                         {t("task.criteriaScore", { score: criteria.score })}
                     </Chip>
                 ),
-                body: criteria.hint ? (
+                body: () => criteria.hint ? (
                     <MarkdownContent markdown={criteria.hint} />
                 ) : (
                     <div className="text-sm text-muted italic">

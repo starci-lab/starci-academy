@@ -150,7 +150,7 @@ export const _WhoToFollow = ({
 
     return (
         <SectionCard
-            icon={<UserPlusIcon className="size-5 text-accent-soft-foreground" />}
+            icon={() => <UserPlusIcon className="size-5 text-accent-soft-foreground" />}
             title={title}
         >
             <StackV gap={3} items={rows} />

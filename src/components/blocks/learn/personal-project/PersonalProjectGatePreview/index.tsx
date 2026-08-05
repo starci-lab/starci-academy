@@ -45,7 +45,7 @@ export const PersonalProjectGatePreview = () => {
             <div className="flex flex-col gap-3">
                 <ContinueCard
                     variant="hero"
-                    icon={<PlayIcon weight="fill" />}
+                    icon={() => <PlayIcon weight="fill" />}
                     title={t(`finalProject.gatePreview.${key}.heroTitle`)}
                     subtitle={taskMeta}
                     ctaLabel={t("finalProject.dashboard.continue")}

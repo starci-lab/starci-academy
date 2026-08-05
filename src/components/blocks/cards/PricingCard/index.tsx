@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { type ComponentType } from "react"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
@@ -9,38 +9,37 @@ import { StackH, StackV } from "@/components/frames/Stack"
 /** Props for {@link PricingCard}. */
 export interface PricingCardProps {
     /** Display name of the pricing tier (e.g. "Pro", "Enterprise"). */
-    name: React.ReactNode
+    name: string
     /**
-     * The current price to display prominently (e.g. "$9" or a formatted node).
+     * The current price to display prominently (e.g. "$9").
      * Rendered large in the price row.
      */
-    price: React.ReactNode
+    price: string
     /**
      * Optional original / strike-through price shown alongside the current price
      * to indicate a discount (e.g. "$19"). Omit when there is no original price.
      */
-    originalPrice?: React.ReactNode
+    originalPrice?: string
     /**
      * Billing period label rendered muted next to the price (e.g. "/mo",
      * "/month"). Omit if not applicable.
      */
-    period?: React.ReactNode
+    period?: string
     /**
-     * Feature list node — typically a `<ul>` with bullet items. Passed in as-is
-     * so callers control the exact markup and icons.
+     * Feature list slot — typically a checklist. A buildable slot so this card
+     * can decide not to render it (e.g. while resting).
      */
-    features: React.ReactNode
+    features: ComponentType
     /**
-     * Call-to-action element — pass a fully configured `<Button>` from HeroUI.
-     * The block pins it to the bottom of the card via flex layout.
+     * Call-to-action slot — a buildable button the card pins to the bottom.
      */
-    cta: React.ReactNode
+    cta: ComponentType
     /**
      * Optional badge label shown beside the tier name to call out a popular or
      * recommended tier (e.g. "Popular", "Best value"). Omit to hide the badge.
      * Rendered as a shrink-to-content {@link Chip} — never full-width.
      */
-    badge?: React.ReactNode
+    badge?: string
     /**
      * When true the card renders with SectionCard's accent variant
      * (tinted border + background) and the badge is visible.
@@ -54,8 +53,8 @@ export interface PricingCardProps {
  * plan with a name, price row, feature list, and a CTA button.
  *
  * Built on {@link SectionCard} with the `accent` variant when `highlighted` is
- * true. All content is received as `ReactNode` props so the caller controls
- * formatting, currency, and button configuration.
+ * true. Text arrives as strings; feature list and CTA arrive uncalled so this
+ * card can decide whether to render them.
  *
  * @example
  * ```tsx
@@ -64,8 +63,8 @@ export interface PricingCardProps {
  *     price="$9"
  *     originalPrice="$19"
  *     period="/month"
- *     features={<ul><li>Feature A</li></ul>}
- *     cta={<Button color="accent">Get started</Button>}
+ *     features={() => <ul><li>Feature A</li></ul>}
+ *     cta={() => <Button color="accent">Get started</Button>}
  *     badge="Most popular"
  *     highlighted
  * />
@@ -78,8 +77,8 @@ export const PricingCard = ({
     price,
     originalPrice,
     period,
-    features,
-    cta,
+    features: Features,
+    cta: Cta,
     badge,
     highlighted = false,
 }: PricingCardProps) => {
@@ -114,10 +113,10 @@ export const PricingCard = ({
             />
 
             {/* Feature list — grows to fill available vertical space; caller controls markup */}
-            <StackV gap={1} classNames={["flex-1"]} body={() => <>{features}</>} />
+            <StackV gap={1} classNames={["flex-1"]} body={() => <Features />} />
 
             {/* CTA pinned to the bottom of the card */}
-            {cta}
+            <Cta />
         </SectionCard>
     )
 }

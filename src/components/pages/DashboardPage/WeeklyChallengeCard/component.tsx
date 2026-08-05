@@ -211,7 +211,7 @@ export const _WeeklyChallengeCard = ({
                             : leaderboard.map((entry) => (
                                 <SurfaceListCardRow
                                     key={entry.username}
-                                    leading={(
+                                    leading={() => (
                                         <UserAvatar
                                             className="size-6 shrink-0"
                                             username={entry.username}
@@ -220,7 +220,7 @@ export const _WeeklyChallengeCard = ({
                                         />
                                     )}
                                     title={entry.username}
-                                    trailing={(
+                                    trailing={() => (
                                         <Typography
                                             size="xs"
                                             color="muted"

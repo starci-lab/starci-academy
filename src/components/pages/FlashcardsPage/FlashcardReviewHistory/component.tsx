@@ -272,10 +272,10 @@ export const _FlashcardReviewHistory = ({
             items={groupedByDeck.map((group) => ({
                 id: group.deckId,
                 title: group.deckTitle,
-                titleEnd: (
+                titleEnd: () => (
                     <Typography size="xs" color="muted" classNames={["shrink-0"]} text={labels.deckRunCount(group.items.length)} />
                 ),
-                body: (
+                body: () => (
                     <StackV gap={1} items={group.items.map((item) => () => (
                         <button
                             key={item.id}

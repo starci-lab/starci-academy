@@ -23,7 +23,7 @@ export interface MyCoursesProgressLabels {
 /** Props for {@link _MyCoursesProgress} — presentational; all data resolved, no fetch/store/i18n. */
 export interface MyCoursesProgressProps {
     /** Section label, rendered outside the card (owned here, like every other self-contained section). */
-    label: React.ReactNode
+    label: string
     /** First load, nothing in hand → the row list shimmers in place (co-located). Owned by the connected file. */
     isSkeleton?: boolean
     /** Settled with zero enrolled courses → the empty message (beats content, loses to loading). */

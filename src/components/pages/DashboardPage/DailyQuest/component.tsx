@@ -101,21 +101,23 @@ export const _DailyQuest = ({
     // claim-state line, rendered BELOW the card (LabeledCard's own `description`
     // slot, never inside the surface) — a generic placeholder while shimmering,
     // since which of the three resolved states will show is not known yet.
-    const claimState = isSkeleton ? (
-        <Typography isSkeleton size="xs" classNames={["w-1/2"]} />
-    ) : claimed ? (
-        <Chip tone="success" text={labels.claimed} classNames={["self-start"]} />
-    ) : allDone ? (
-        <Button
-            variant="primary"
-            size="sm"
-            classNames={["self-start"]}
-            isPending={isClaiming}
-            onPress={onClaim}
-            label={labels.claim}
-        />
-    ) : (
-        <Typography size="xs" color="muted" text={labels.completePrompt} />
+    const ClaimState = () => (
+        isSkeleton ? (
+            <Typography isSkeleton size="xs" classNames={["w-1/2"]} />
+        ) : claimed ? (
+            <Chip tone="success" text={labels.claimed} classNames={["self-start"]} />
+        ) : allDone ? (
+            <Button
+                variant="primary"
+                size="sm"
+                classNames={["self-start"]}
+                isPending={isClaiming}
+                onPress={onClaim}
+                label={labels.claim}
+            />
+        ) : (
+            <Typography size="xs" color="muted" text={labels.completePrompt} />
+        )
     )
 
     return (
@@ -123,7 +125,7 @@ export const _DailyQuest = ({
             identity={IDENTITY}
             label={labels.title}
             frameless
-            description={claimState}
+            description={ClaimState}
         >
             <SurfaceListCard>
                 {isSkeleton
@@ -135,20 +137,17 @@ export const _DailyQuest = ({
                         return (
                             <SurfaceListCardRow
                                 key={task.key}
-                                leading={done ? (
+                                leading={done ? () => (
                                     <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success-soft-foreground" />
-                                ) : (
+                                ) : () => (
                                     <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-foreground" />
                                 )}
-                                // force icon+title to share color by state (icon.md §6): done = success, todo = foreground (default).
-                                // Color it through the title NODE (span), NOT `titleClassName` — lint `no-modal-title-classname` bans that
-                                // prop globally; this row has no underline so the child span is safe (§6 carve-out).
-                                title={done ? (
-                                    <span className="text-success-soft-foreground">{task.title}</span>
-                                ) : (
-                                    task.title
-                                )}
-                                meta={<Typography size="xs" color="muted" text={`${task.current}/${task.target}`} />}
+                                // `title` is plain text now (never a built element), so the done/todo
+                                // colour — banned from `titleClassName` globally by lint
+                                // `no-modal-title-classname` — rides on the leading icon alone
+                                // (icon.md §6: icon+title shared colour by state, icon half of the pair).
+                                title={task.title}
+                                meta={() => <Typography size="xs" color="muted" text={`${task.current}/${task.target}`} />}
                             />
                         )
                     })}

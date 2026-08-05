@@ -200,7 +200,7 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
                                     key={item.id}
                                     title={item.model ?? t("aiQuota.history.autoModel")}
                                     subtitle={`${purposeLabel(item, t)} · ${dayjs(item.createdAt).format("HH:mm DD/MM")}`}
-                                    trailing={(
+                                    trailing={() => (
                                         <Chip
                                             size="sm"
                                             variant="soft"

@@ -57,7 +57,7 @@ export const ProfilePinned = ({
 
     // header action shown only to the owner WHEN there are pins (→ manage). The
     // empty state owns its own add CTA, so we don't repeat an add button up here.
-    const action = isSelf && pins.length > 0 ? (
+    const Action = isSelf && pins.length > 0 ? () => (
         <Link
             onPress={openManage}
             className="inline-flex shrink-0 cursor-pointer items-center gap-1 text-sm text-accent-soft-foreground no-underline transition-opacity hover:opacity-60"
@@ -82,7 +82,7 @@ export const ProfilePinned = ({
         <LabeledCard
             frameless={hasPins}
             label={t("pinnedProjects.heading")}
-            action={action}
+            action={Action}
             className={className}
         >
             <AsyncContent

@@ -18,11 +18,11 @@ import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 /** Props for {@link OverviewCodeSkills}. */
 export interface OverviewCodeSkillsProps extends WithClassNames<undefined> {
     /** Section label, rendered outside the card (owned here, like every other self-contained section). */
-    label: React.ReactNode
+    label: string
     /** Optional "see more" link on the label row. */
     onSeeMore?: () => void
     /** Text for the see-more link. */
-    seeMoreLabel?: React.ReactNode
+    seeMoreLabel?: string
     /** Stretch the section (and its card) to fill the row's height. */
     fillHeight?: boolean
 }

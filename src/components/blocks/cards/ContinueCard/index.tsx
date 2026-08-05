@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { type ComponentType } from "react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Button } from "@/components/atoms/buttons/Button"
@@ -55,12 +55,12 @@ export interface ContinueCardProps {
      * title). Rendered via {@link Typography} weight="medium", truncated to one
      * line.
      */
-    title: React.ReactNode
+    title: string
     /**
      * Optional secondary label under the title — e.g. module name, lesson
      * number, or position in a session. Truncated to one line.
      */
-    subtitle?: React.ReactNode
+    subtitle?: string
     /**
      * Current progress. The {@link ProgressMeter} renders if and only if this is
      * provided — pass it only when real progress data exists. Omit it rather
@@ -75,7 +75,7 @@ export interface ContinueCardProps {
      * `variant="item"` (press + hover on the link only, same as LabeledCard
      * "See more"), and as a chip button for `variant="hero"`.
      */
-    ctaLabel?: React.ReactNode
+    ctaLabel?: string
     /**
      * Optional semantic momentum cue (e.g. `FireIcon` for a daily streak,
      * `ClockCounterClockwiseIcon` for a session left mid-flight). Rendered ONLY
@@ -84,7 +84,7 @@ export interface ContinueCardProps {
      * Decorative for a11y — {@link title} carries the accessible name. Omit when
      * the item has no such concept; never add one for visual symmetry alone.
      */
-    icon?: React.ReactNode
+    icon?: ComponentType
     /**
      * Renders `subtitle` in warning tone instead of muted — only for a REAL
      * time-sensitive fact already present in the subtitle text (e.g. a
@@ -129,7 +129,7 @@ export const ContinueCard = ({
     value,
     max = 100,
     ctaLabel,
-    icon,
+    icon: Icon,
     urgent = false,
     onPress,
     href,
@@ -142,7 +142,7 @@ export const ContinueCard = ({
     // instead of under it. `SectionCard` exposes none of that (missingVocabulary:
     // no overlay/decoration slot, no relative/overflow control on the leaf) —
     // only `hero` with a real `icon` needs any of it, `item` never renders one.
-    const hasWatermark = isHero && Boolean(icon)
+    const hasWatermark = isHero && Boolean(Icon)
 
     // Item CTA is a real SeeMoreLink (own hover + click). Never wrap the card —
     // that would nest interactive controls and steal hover from the link.
@@ -215,7 +215,7 @@ export const ContinueCard = ({
                     aria-hidden
                     className="pointer-events-none absolute -bottom-6 -right-6 text-accent-soft-foreground opacity-40 [&_svg]:size-32"
                 >
-                    {icon}
+                    {Icon ? <Icon /> : null}
                 </Box>
             ) : null}
             {hasWatermark ? <Box className="relative">{titleStack}</Box> : titleStack}

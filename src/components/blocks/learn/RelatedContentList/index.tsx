@@ -25,7 +25,7 @@ export interface RelatedContentListConnectedProps extends WithClassNames<undefin
      */
     query: string
     /** Section label (translated by the caller — each surface phrases this differently). */
-    label: React.ReactNode
+    label: string
     /**
      * The current surface's OWN source id (this lesson / task / deck). Filtered out
      * of the results so the block never suggests the page the learner is already on

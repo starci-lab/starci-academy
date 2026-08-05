@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { type ComponentType } from "react"
 import Link from "next/link"
 import { cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -108,10 +108,10 @@ export const SurfaceListCard = ({ children, bordered = false, className, identit
 
 /** Props for {@link SurfaceListCardRow}. */
 export interface SurfaceListCardRowProps extends WithClassNames<undefined> {
-    /** Optional leading node (thumbnail/icon), kept at intrinsic size. */
-    leading?: React.ReactNode
+    /** Optional leading slot (thumbnail/icon), kept at intrinsic size — a buildable slot. */
+    leading?: ComponentType
     /** Primary line — medium foreground, single-line truncate. */
-    title: React.ReactNode
+    title: string
     /**
      * Extra className applied directly to a wrapper around the title's own
      * `Typography` element (e.g. `text-accent-soft-foreground` for a selected row) —
@@ -125,11 +125,11 @@ export interface SurfaceListCardRowProps extends WithClassNames<undefined> {
      */
     titleClassName?: string
     /** Optional secondary line — muted, smaller, single-line truncate. */
-    subtitle?: React.ReactNode
-    /** Optional right-aligned metadata (chips/counts) before the trailing node. */
-    meta?: React.ReactNode
-    /** Optional far-right node (caret / inline action). */
-    trailing?: React.ReactNode
+    subtitle?: string
+    /** Optional right-aligned metadata slot (chips/counts) before the trailing slot — a buildable slot. */
+    meta?: ComponentType
+    /** Optional far-right slot (caret / inline action) — a buildable slot. */
+    trailing?: ComponentType
     /** Press handler → renders an interactive `<button>` row. */
     onPress?: () => void
     /** Link target → renders an `<a>` row that navigates on click. */
@@ -173,12 +173,12 @@ export interface SurfaceListCardRowProps extends WithClassNames<undefined> {
  * @param props - {@link SurfaceListCardRowProps}
  */
 export const SurfaceListCardRow = ({
-    leading,
+    leading: Leading,
     title,
     titleClassName,
     subtitle,
-    meta,
-    trailing,
+    meta: Meta,
+    trailing: Trailing,
     onPress,
     href,
     selected = false,
@@ -212,7 +212,7 @@ export const SurfaceListCardRow = ({
 
     const content = (
         <>
-            {leading ? <div className="shrink-0">{leading}</div> : null}
+            {Leading ? <div className="shrink-0"><Leading /></div> : null}
             {/* Deliberately NOT `StackV`: the closest step on the frame's gap scale is
                 `gap={1}` (0.25rem) and this column needs a true `gap-0` — the two text
                 lines are meant to sit with no seam between them (missing vocabulary: the
@@ -223,9 +223,9 @@ export const SurfaceListCardRow = ({
                 </div>
                 {subtitle ? <Typography size="xs" color="muted" truncate text={subtitle} /> : null}
             </div>
-            {meta || trailing ? (
+            {Meta || Trailing ? (
                 <Box principles={["push-end"]} className="ml-auto shrink-0">
-                    <StackH gap={2} items={[() => meta, () => trailing]} />
+                    <StackH gap={2} items={[() => (Meta ? <Meta /> : null), () => (Trailing ? <Trailing /> : null)]} />
                 </Box>
             ) : null}
         </>

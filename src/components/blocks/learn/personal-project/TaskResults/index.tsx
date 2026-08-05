@@ -47,7 +47,7 @@ export const TaskResults = () => {
         <LabeledCard
             identity={{ tier: "block", component: "TaskResults" }}
             label={t("task.resultsTitle")}
-            action={<StarCiAIBadge />}
+            action={() => <StarCiAIBadge />}
         >
             <StackV
                 gap={4}

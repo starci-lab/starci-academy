@@ -151,7 +151,7 @@ export const _TalentDirectoryPage = ({
         ? Array.from({ length: SKELETON_COUNT }, (_unused, index) => ({
             key: `pending-${index}`,
             isDisabled: true,
-            content: (
+            content: () => (
                 <StackV gap={3} items={[
                     () => (
                         <StackH gap={3} items={[
@@ -171,7 +171,7 @@ export const _TalentDirectoryPage = ({
         : candidates.map((candidate) => ({
             key: candidate.key,
             href: candidate.href,
-            content: (
+            content: () => (
                 <StackV gap={3} items={[
                     () => (
                         <StackH gap={3} items={[

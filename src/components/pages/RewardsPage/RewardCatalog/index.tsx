@@ -239,12 +239,12 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
                         return (
                             <LabeledCard
                                 key={section.key}
-                                label={(
-                                    <span className="flex items-center gap-2">
-                                        {section.icon}
-                                        {t(`rewards.section.${section.key}`)}
-                                    </span>
-                                )}
+                                // `label` is plain text now (never a built element) — `LabeledCard`
+                                // has no leading-icon slot the way `SectionCard` does, so the
+                                // per-section icon has nowhere left to attach (flagged for a
+                                // follow-up: a real icon slot on `LabeledCard`, or switch this
+                                // section header to `SectionCard`).
+                                label={t(`rewards.section.${section.key}`)}
                                 contentClassName="grid grid-cols-1 gap-3 @app-sm:grid-cols-2"
                             >
                                 {sectionItems.map((reward) => {

@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { type ComponentType } from "react"
 import {
     cn,
 } from "@heroui/react"
@@ -21,14 +21,14 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
  * (BLOCK-7): the folder names a tier the component never earned.
  */
 export interface SummaryCardProps {
-    /** Leading icon for the metric. */
-    icon: React.ReactNode
+    /** Leading icon for the metric — a buildable slot, not a built element. */
+    icon: ComponentType
     /** Headline value (e.g. a count). */
-    value: React.ReactNode
+    value: string
     /** Short label under the value. */
-    label: React.ReactNode
+    label: string
     /** Optional one-line hint under the label. */
-    hint?: React.ReactNode
+    hint?: string
     /** Called when the card is activated (e.g. jump to a tab). */
     onPress?: () => void
     /**
@@ -60,7 +60,7 @@ export const meta = { tier: "composite", name: "SummaryCard" } as const
  * @param props - {@link SummaryCardProps}
  */
 export const SummaryCard = ({
-    icon,
+    icon: Icon,
     value,
     label,
     hint,
@@ -73,7 +73,7 @@ export const SummaryCard = ({
                 gap={4}
                 justify="between"
                 items={[
-                    () => <span className="text-accent-soft-foreground">{icon}</span>,
+                    () => <span className="text-accent-soft-foreground"><Icon /></span>,
                     () => <ChevronRightIcon className="size-5 text-muted" />,
                 ]}
             />

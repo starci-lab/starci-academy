@@ -95,16 +95,18 @@ export const FlashcardReviewModeModal = ({
                         // UNSELECTED → block-native bg-default hover (distinct from the accent-soft
                         // selected tint, no clash). SELECTED → keep hover:bg-accent-soft so the picked
                         // row does NOT flicker to bg-default on hover (same idiom as
-                        // SubmissionResultHistoryDrawer). Selection signal = accent icon+title
-                        // (icon.md §6); title via span-node (`titleClassName` is lint-forbidden).
+                        // SubmissionResultHistoryDrawer). Selection signal = accent icon + the row's
+                        // own `selected` bg-accent-soft tint (icon.md §6); `title` is plain text now
+                        // (never a built element), and `titleClassName` stays lint-forbidden, so the
+                        // per-mode colour rides on the icon + row tint alone.
                         className={mode === "full" ? "hover:bg-accent-soft" : undefined}
-                        leading={<CardsIcon className={cn("size-6", mode === "full" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
-                        title={<span className={mode === "full" ? "text-accent-soft-foreground" : undefined}>{t("flashcard.mode.fullLabel")}</span>}
+                        leading={() => <CardsIcon className={cn("size-6", mode === "full" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
+                        title={t("flashcard.mode.fullLabel")}
                         subtitle={t("flashcard.mode.fullDescription")}
                         selected={mode === "full"}
                         isDisabled={isPending}
                         onPress={() => setMode("full")}
-                        meta={(
+                        meta={() => (
                             <span className="whitespace-nowrap text-xs font-medium text-muted">
                                 {t("flashcard.mode.fullBadge", { count: totalCount })}
                             </span>
@@ -112,13 +114,13 @@ export const FlashcardReviewModeModal = ({
                     />
                     <SurfaceListCardRow
                         className={mode === "due" ? "hover:bg-accent-soft" : undefined}
-                        leading={<ClockCountdownIcon className={cn("size-6", mode === "due" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
-                        title={<span className={mode === "due" ? "text-accent-soft-foreground" : undefined}>{t("flashcard.mode.dueLabel")}</span>}
+                        leading={() => <ClockCountdownIcon className={cn("size-6", mode === "due" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
+                        title={t("flashcard.mode.dueLabel")}
                         subtitle={t("flashcard.mode.dueDescription")}
                         selected={mode === "due"}
                         isDisabled={isPending || dueDisabled}
                         onPress={() => setMode("due")}
-                        meta={(
+                        meta={() => (
                             <span className={`whitespace-nowrap text-xs font-medium ${dueDisabled ? "text-muted" : "text-warning-soft-foreground"}`}>
                                 {dueDisabled
                                     ? t("flashcard.mode.dueBadgeEmpty")

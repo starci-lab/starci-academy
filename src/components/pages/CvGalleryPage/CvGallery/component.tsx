@@ -106,7 +106,7 @@ const SKELETON_TILE_COUNT = 3
  * public-toggle switch and a delete button in the footer.
  */
 const CvGalleryCard = ({ item, labels }: { item: CvGalleryDocument; labels: CvGalleryLabels }) => {
-    const cover = (
+    const Cover = () => (
         <button
             type="button"
             onClick={item.onOpen}
@@ -133,7 +133,7 @@ const CvGalleryCard = ({ item, labels }: { item: CvGalleryDocument; labels: CvGa
         </button>
     )
 
-    const footer = (
+    const Footer = () => (
         <StackV
             gap={3}
             items={[
@@ -177,9 +177,9 @@ const CvGalleryCard = ({ item, labels }: { item: CvGalleryDocument; labels: CvGa
 
     return (
         <MediaCard
-            cover={cover}
+            cover={Cover}
             title={item.label}
-            footer={footer}
+            footer={Footer}
         />
     )
 }

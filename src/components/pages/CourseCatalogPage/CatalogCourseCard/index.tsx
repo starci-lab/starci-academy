@@ -41,7 +41,7 @@ export const CatalogCourseCard = ({ course, layout = "grid" }: CatalogCourseCard
             // evenly with the primary "view/continue" button — without it the
             // row was uneven card-to-card (button width = own content only,
             // not the row's real available width).
-            action={(
+            action={() => (
                 <AddToCartButton
                     course={course}
                     isEnrolled={course.isEnrolled ?? undefined}

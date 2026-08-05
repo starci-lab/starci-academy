@@ -127,12 +127,12 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
             key={attempt.id}
             title={sessionDisplayName(attempt.name, attempt.createdAt, t, locale)}
             subtitle={`${attempt.promptTitle} · ${formatDate(attempt.createdAt)}`}
-            meta={(
+            meta={() => (
                 <Chip size="sm" variant="soft" color={verdictColorOf(attempt.verdict)}>
                     <Chip.Label>{attempt.overallScore}</Chip.Label>
                 </Chip>
             )}
-            trailing={<CaretRightIcon weight="bold" className="size-4 text-muted" aria-hidden focusable="false" />}
+            trailing={() => <CaretRightIcon weight="bold" className="size-4 text-muted" aria-hidden focusable="false" />}
             onPress={() => router.push(
                 pathConfig()
                     .locale(locale)

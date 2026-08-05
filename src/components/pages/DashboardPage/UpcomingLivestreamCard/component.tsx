@@ -86,7 +86,7 @@ export const _UpcomingLivestreamCard = ({
 
     return (
         <SectionCard
-            icon={<VideoCameraIcon className="size-5 text-accent-soft-foreground" />}
+            icon={() => <VideoCameraIcon className="size-5 text-accent-soft-foreground" />}
             title={labels.title}
         >
             <SurfaceListCard bordered>
@@ -97,10 +97,10 @@ export const _UpcomingLivestreamCard = ({
                     : sessions.map((session) => (
                         <SurfaceListCardRow
                             key={session.key}
-                            leading={<IconTile icon={<VideoCameraIcon />} tone="accent" size="sm" />}
+                            leading={() => <IconTile icon={<VideoCameraIcon />} tone="accent" size="sm" />}
                             title={session.title}
                             subtitle={session.subtitle}
-                            meta={(
+                            meta={() => (
                                 <Typography
                                     size="xs"
                                     weight="medium"

@@ -84,7 +84,7 @@ export const RatingBar = ({ options, onRate, ariaLabel, isPending = false, class
             // grade's ONLY colour signal. `pl-4` clears the band from the label.
             withVerdict: { enable: true, color: GRADE_COLOR[option.grade] },
             className: "flex flex-col gap-2 py-2 pr-3 pl-4",
-            content: (
+            content: () => (
                 <>
                     <span className="flex items-center justify-between gap-2">
                         <span className="text-sm font-medium text-foreground">{option.label}</span>

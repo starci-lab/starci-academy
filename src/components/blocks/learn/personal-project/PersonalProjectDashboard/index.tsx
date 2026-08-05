@@ -212,7 +212,7 @@ export const PersonalProjectDashboard = ({
                         {currentTask ? (
                             <ContinueCard
                                 variant="hero"
-                                icon={<PlayIcon weight="fill" />}
+                                icon={() => <PlayIcon weight="fill" />}
                                 title={`${currentTask.sortIndex}. ${currentTask.title}`}
                                 subtitle={t("finalProject.dashboard.nextTask")}
                                 ctaLabel={t("finalProject.dashboard.continue")}

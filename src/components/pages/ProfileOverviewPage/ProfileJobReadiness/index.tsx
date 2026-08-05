@@ -20,7 +20,7 @@ import { pathConfig } from "@/resources/path"
 /** Props for {@link ProfileJobReadiness}. */
 export interface ProfileJobReadinessProps extends WithClassNames<undefined> {
     /** Section label, rendered outside the card (owned here, like every other self-contained section). */
-    label: React.ReactNode
+    label: string
 }
 
 /** Maps a readiness band to the `Chip` color that reads correctly. */

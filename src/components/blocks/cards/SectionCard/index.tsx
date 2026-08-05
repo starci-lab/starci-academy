@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { type ComponentType } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Typography } from "@/components/atoms/text/Typography"
@@ -15,11 +15,11 @@ export interface SectionCardProps {
     /** Card body. */
     children: React.ReactNode
     /** Optional section title rendered in the header row. The atom wraps it in `Typography` itself. */
-    title?: React.ReactNode
-    /** Optional leading icon shown before the title. */
-    icon?: React.ReactNode
-    /** Optional action node pinned to the right of the header (button/link). */
-    action?: React.ReactNode
+    title?: string
+    /** Optional leading icon shown before the title — a buildable slot, not a built element. */
+    icon?: ComponentType
+    /** Optional action slot pinned to the right of the header (button/link) — a buildable slot. */
+    action?: ComponentType
     /** Accent variant: tinted border + background (highlight / "yours"). */
     accent?: boolean
     /**
@@ -85,8 +85,8 @@ export interface SectionCardProps {
 export const SectionCard = ({
     children,
     title,
-    icon,
-    action,
+    icon: Icon,
+    action: Action,
     accent = false,
     withVerdict,
     classNames,
@@ -95,7 +95,7 @@ export const SectionCard = ({
     contentAlign = "stretch",
     identity,
 }: SectionCardProps) => {
-    const hasHeader = Boolean(title || action || icon)
+    const hasHeader = Boolean(title || Action || Icon)
     // BLOCK-5 DEBT, left VISIBLE on purpose: this block decides its own card face —
     // radius · surface · shadow · padding · accent border · verdict band — which is a
     // lower tier's job; read it as "a composite is missing". An earlier pass hid this by
@@ -130,14 +130,14 @@ export const SectionCard = ({
                                                 gap={2}
                                                 classNames={["min-w-0"]}
                                                 items={[
-                                                    ...(icon ? [() => <>{icon}</>] : []),
+                                                    ...(Icon ? [() => <Icon />] : []),
                                                     ...(title ? [() => (
                                                         <Typography size="base" weight="semibold" truncate text={title} />
                                                     )] : []),
                                                 ]}
                                             />
                                         ),
-                                        ...(action ? [() => <span className="shrink-0">{action}</span>] : []),
+                                        ...(Action ? [() => <span className="shrink-0"><Action /></span>] : []),
                                     ]}
                                 />
                             </Box>

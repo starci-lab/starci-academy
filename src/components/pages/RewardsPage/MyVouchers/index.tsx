@@ -3,7 +3,6 @@
 import React from "react"
 import { Chip, Skeleton, cn } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
 import {
     ReceiptIcon,
     TicketIcon,
@@ -15,7 +14,6 @@ import {
     SurfaceListCardRow,
 } from "@/components/blocks/cards/SurfaceListCard"
 import { IconTile } from "@/components/blocks/identity/IconTile"
-import { EntityLink } from "@/components/blocks/feed/EntityLink"
 import { useQueryMyRewardWalletSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr"
 import { useQueryMyVouchersSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr"
 import { pathConfig } from "@/resources/path"
@@ -51,7 +49,6 @@ export type MyVouchersProps = WithClassNames<undefined>
 export const MyVouchers = ({ className }: MyVouchersProps) => {
     const t = useTranslations()
     const locale = useLocale()
-    const router = useRouter()
     const vouchersSwr = useQueryMyVouchersSwr()
     const walletSwr = useQueryMyRewardWalletSwr()
 
@@ -92,35 +89,34 @@ export const MyVouchers = ({ className }: MyVouchersProps) => {
                         {(vouchersSwr.data ?? []).map((voucher) => (
                             <SurfaceListCardRow
                                 key={voucher.id}
-                                leading={(
+                                // `subtitle` is plain text now (never a built element), so the
+                                // course reference can no longer carry its own inline link — the
+                                // whole row becomes the link instead (`href` below), which is a
+                                // bigger, easier-to-hit target than the old inline text anyway.
+                                leading={() => (
                                     <IconTile
                                         size="sm"
                                         tone="accent"
                                         icon={<TicketIcon aria-hidden focusable="false" />}
                                     />
                                 )}
-                                title={<span className="font-mono">{voucher.code}</span>}
+                                title={voucher.code}
                                 subtitle={
                                     voucher.courseId
-                                        ? t.rich("rewards.myVouchers.scopeCourse", {
+                                        ? t("rewards.myVouchers.scopeCourse", {
                                             course: voucher.courseTitle ?? "",
-                                            link: (chunks) => (
-                                                <EntityLink
-                                                    label={String(chunks)}
-                                                    onPress={voucher.courseDisplayId ? () => router.push(
-                                                        pathConfig().locale(locale).course(voucher.courseDisplayId ?? undefined).build(),
-                                                    ) : undefined}
-                                                />
-                                            ),
-                                        })
+                                        }).replace(/<\/?link>/g, "")
                                         : t("rewards.myVouchers.scopeAny")
                                 }
-                                meta={(
+                                href={voucher.courseDisplayId
+                                    ? pathConfig().locale(locale).course(voucher.courseDisplayId).build()
+                                    : undefined}
+                                meta={() => (
                                     <span className="text-sm font-medium text-foreground">
                                         {discountLabel(voucher)}
                                     </span>
                                 )}
-                                trailing={(
+                                trailing={() => (
                                     <Chip color={STATUS_COLOR[voucher.status] ?? "default"} variant="soft" size="sm">
                                         <Chip.Label>
                                             {t(`rewards.myVouchers.status.${voucher.status}`)}
@@ -166,12 +162,12 @@ export const MyVouchers = ({ className }: MyVouchersProps) => {
                                 key={`${redemption.rewardKey}-${redemption.createdAt}-${index}`}
                                 title={redemption.title}
                                 subtitle={new Date(redemption.createdAt).toLocaleDateString(locale)}
-                                meta={(
+                                meta={() => (
                                     <span className="text-xs text-muted">
                                         {t(`rewards.status.${redemption.status}`)}
                                     </span>
                                 )}
-                                trailing={(
+                                trailing={() => (
                                     <span className="text-sm font-medium text-foreground">
                                         {t("rewards.cost", { count: redemption.cost })}
                                     </span>

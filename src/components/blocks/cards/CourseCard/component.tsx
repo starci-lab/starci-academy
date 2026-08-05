@@ -3,6 +3,7 @@
 import React, {
     useMemo,
     useState,
+    type ComponentType,
 } from "react"
 import {
     ArrowRightIcon,
@@ -53,7 +54,7 @@ export interface CourseCardProps extends WithClassNames<undefined> {
      * the View CTA. The block only places it; the caller (a feature) owns its logic
      * so the card stays presentational.
      */
-    action?: React.ReactNode
+    action?: ComponentType
     /** Already-localized primary CTA label ("Continue learning" once enrolled, else "View course"). */
     viewLabel: string
     /** Already-localized secondary "View course" label, shown once enrolled (beside the primary CTA). */
@@ -82,7 +83,7 @@ export const _CourseCard = ({
     loyaltyOriginalVnd,
     loyaltyPending = false,
     layout = "grid",
-    action,
+    action: Action,
     className,
     viewLabel,
     viewCourseLabel,
@@ -136,7 +137,7 @@ export const _CourseCard = ({
         >
             {viewCourseLabel}
         </Button>
-    ) : action
+    ) : Action ? <Action /> : null
 
     const showCover = Boolean(course.coverImageUrl) && !coverFailed
 

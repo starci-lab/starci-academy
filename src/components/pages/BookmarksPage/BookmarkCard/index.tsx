@@ -65,7 +65,7 @@ export const BookmarkCard = ({
         <SurfaceListCardRow
             hover="underline"
             onPress={onPress}
-            leading={(
+            leading={() => (
                 <IconTile
                     size="sm"
                     tone="neutral"
@@ -76,7 +76,7 @@ export const BookmarkCard = ({
             )}
             title={content.title}
             subtitle={content.module?.course?.title}
-            meta={(
+            meta={() => (
                 <>
                     {content.isPremium ? (
                         <Chip size="sm" variant="soft" color="warning">

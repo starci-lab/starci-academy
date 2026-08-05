@@ -15,16 +15,18 @@ import { RailShell } from "@/components/frames/RailShell"
  * file's legacy source as one of the two real call sites that motivated it.
  * Column-first on narrow screens, a row from `@app-md`.
  *
- * `children` is a BUILDABLE slot (`ComponentTypeWithSkeleton`, uncalled) handed
+ * `body` is a BUILDABLE slot (`ComponentTypeWithSkeleton`, uncalled) handed
  * straight to `Container`'s own `body` slot — never a bare `ReactNode` — so the
  * connected {@link SettingsLayout} wraps whatever the Next.js route-group layout
- * hands it once, at the call site.
+ * hands it once, at the call site. It is deliberately NOT named `children`: React
+ * reserves that name for nested elements, and a ComponentType handed in under it
+ * reads as an element to every linter and every reader.
  */
 
 /** Props for {@link _SettingsLayout}. */
 export interface SettingsLayoutProps {
     /** The active settings page for the current route — a buildable slot, mandatory. */
-    children: ComponentTypeWithSkeleton
+    body: ComponentTypeWithSkeleton
     /** Grouped settings destinations, forwarded to {@link SettingsSidebarNav} untouched. */
     groups: Array<SettingsNavGroup>
     /** Which destination's route is active right now. */
@@ -49,7 +51,7 @@ export interface SettingsLayoutProps {
  * @param props - {@link SettingsLayoutProps}
  */
 const _SettingsLayout = ({
-    children: Children,
+    body: Body,
     groups,
     activeHref,
     onNavigate,
@@ -71,7 +73,7 @@ const _SettingsLayout = ({
     )
 
     const contentSlot: ComponentTypeWithSkeleton = () => (
-        <Container size="md" padding={6} body={Children} />
+        <Container size="md" padding={6} body={Body} />
     )
 
     return (

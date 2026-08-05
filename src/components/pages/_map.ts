@@ -3,7 +3,7 @@ import { PricingPhase } from "@/modules/types/enums/pricing-phase"
 import { ReactionType, type CommentNode, type ReactionCount } from "@/modules/api/graphql/queries/types/discussion"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import type { Difficulty } from "@/components/blocks/chips/DifficultyChip"
-import type { ContentCommentNode, ContentReactionCount, ContentReactionType } from "@/components/page/ContentPage/component"
+import type { ContentCommentNode, ContentReactionCount, ContentReactionType } from "@/components/pages/ContentPage/component"
 
 /**
  * Real-data -> storybook-block conversions shared by more than one page. Lives at the

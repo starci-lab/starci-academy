@@ -52,7 +52,7 @@ export const SettingsLayout = ({ children }: SettingsLayoutProps) => {
     // Buildable slot — `Container`'s `body` mounts an uncalled component (COMPOSITE-8),
     // never a handed-in element; this wraps the router-supplied `children` once so it
     // fits that shape without pushing a `ReactNode` prop down into the presentational tree.
-    const ChildrenSlot: ComponentTypeWithSkeleton = () => <>{children}</>
+    const BodySlot: ComponentTypeWithSkeleton = () => <>{children}</>
 
     return (
         <_SettingsLayout
@@ -63,7 +63,7 @@ export const SettingsLayout = ({ children }: SettingsLayoutProps) => {
             collapseLabel={t("profileSettings.collapseMenu")}
             expandLabel={t("profileSettings.expandMenu")}
             storageKey={SIDEBAR_STORAGE_KEY}
-            children={ChildrenSlot}
+            body={BodySlot}
         />
     )
 }

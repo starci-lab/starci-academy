@@ -22,7 +22,7 @@ import { ProfileLockedState } from "@/components/starci/blocks/profile/ProfileLo
  * Not-found copy is fixed; `onGoHome`/`onHire`/`onShare`/`onEditProfile`/`onGoCourses`
  * are the exits. Ported 1:1 from the storybook blueprint
  * (`.storybook/components/starci/layouts/PublicProfileLayout/PublicProfileLayout.tsx`);
- * `children` is a buildable, uncalled `ComponentType` slot (never `ReactNode`) — the
+ * `body` is a buildable, uncalled `ComponentType` slot (never `ReactNode`) — the
  * connected {@link PublicProfileLayout} (`index.tsx`) supplies the active tab's route panel.
  */
 
@@ -119,8 +119,13 @@ export interface PublicProfileLayoutProps {
     onGoHome: () => void
     /** Fired from the locked branch's one way forward (browse courses instead). */
     onGoCourses: () => void
-    /** The active tab's own panel — rendered by that tab's own route. Buildable, uncalled slot — RULE 12 (never `ReactNode`). */
-    children: ComponentType
+    /**
+     * The active tab's own panel — rendered by that tab's own route. Buildable, uncalled
+     * slot — RULE 12 (never `ReactNode`). Named `body`, not `children`: React reserves
+     * `children` for nested elements, so a ComponentType handed in under that name reads
+     * as an element to every linter and every reader.
+     */
+    body: ComponentType
 }
 
 /**
@@ -145,10 +150,10 @@ const _PublicProfileLayout = ({
     onShare,
     onGoHome,
     onGoCourses,
-    children,
+    body,
 }: PublicProfileLayoutProps) => {
     // the active tab's own panel — an uncalled component reference (RULE 12), never a built element
-    const ChildrenSlot = children
+    const BodySlot = body
 
     if (isLoading) {
         return (
@@ -203,7 +208,7 @@ const _PublicProfileLayout = ({
 
                 />
             )}
-            body={() => <ChildrenSlot />}
+            body={() => <BodySlot />}
         />
     )
 

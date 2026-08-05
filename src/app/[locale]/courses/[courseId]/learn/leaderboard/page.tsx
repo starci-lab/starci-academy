@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { LeaderboardPage } from "@/components/page/LeaderboardPage"
+import { LeaderboardPage } from "@/components/pages/LeaderboardPage"
 
 /**
  * Learn / leaderboard: course-level ranking of enrolled learners by total XP.

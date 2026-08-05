@@ -20,7 +20,7 @@ import {
 } from "@/resources/path"
 import {
     toDifficulty,
-} from "@/components/page/_map"
+} from "@/components/pages/_map"
 import { useCourseResume } from "@/components/features/learn/shared/useCourseResume"
 import { useAppSelector } from "@/redux/hooks"
 import { _CourseContents, type CourseContentsLesson } from "./component"

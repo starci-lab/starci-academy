@@ -4,7 +4,7 @@ import { useMemo } from "react"
 import { useLocale } from "next-intl"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
-import { resolveResumeHref } from "@/components/page/CourseContents/map"
+import { resolveResumeHref } from "@/components/pages/CourseContents/map"
 import type {
     MyCourseOutlineCurrentTask,
     MyCourseOutlinePayload,
@@ -30,7 +30,7 @@ export interface UseCourseResumeResult {
 
 /**
  * The single source for the course "Continue learning" (resume) pointer — shared by the
- * content home ({@link import("@/components/page/CourseContents").CourseContents}) and the sidebar
+ * content home ({@link import("@/components/pages/CourseContents").CourseContents}) and the sidebar
  * resume rail ({@link import("../LearnShell/ResumeRail").ResumeRail}) so both read
  * ONE computation off ONE SWR cache (deduped by key). CONTENT-FIRST: prefers
  * `nextContentTask` (next unread lesson / uncompleted challenge) over the capstone,

@@ -178,7 +178,7 @@ export const PublicProfileLayout = ({
 
     // Next hands the nested route segment as already-rendered `children` — wrap it
     // in a zero-prop component so `_PublicProfileLayout` keeps its buildable-slot contract.
-    const ChildrenPanel = useCallback(() => <>{children}</>, [children])
+    const BodyPanel = useCallback(() => <>{children}</>, [children])
 
     return (
         <_PublicProfileLayout
@@ -196,7 +196,7 @@ export const PublicProfileLayout = ({
             onShare={onShare}
             onGoHome={onGoHome}
             onGoCourses={onGoCourses}
-            children={ChildrenPanel}
+            body={BodyPanel}
         />
     )
 }

@@ -6,7 +6,7 @@ import {
 import {
     PersonalProjectTaskPage,
     type PersonalProjectTaskPageProps,
-} from "@/components/page/PersonalProjectTaskPage"
+} from "@/components/pages/PersonalProjectTaskPage"
 import {
     PersonalProjectResultScreen,
     type PersonalProjectResultScreenProps,

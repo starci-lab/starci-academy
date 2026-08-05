@@ -43,7 +43,7 @@ import type {
 import type {
     PersonalProjectTaskLegacyCriterionItem,
     PersonalProjectTaskLegacyCodeImplementationItem,
-} from "@/components/page/PersonalProjectTaskPage"
+} from "@/components/pages/PersonalProjectTaskPage"
 import type { AiModelCategory as SubmissionModelCategory } from "@/components/starci/blocks/learn/SubmissionScoreCard"
 import type { SubmissionAttempt } from "@/components/starci/blocks/learn/SubmissionAttemptSelector"
 import type { SubmissionFinding, SubmissionFeedbackSeverity } from "@/components/starci/blocks/learn/SubmissionFindingsList"

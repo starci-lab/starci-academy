@@ -39,7 +39,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * frame, as well as all JSDoc/comments, are written in ENGLISH.
  */
 const meta: Meta<typeof ChoiceSwitch> = {
-    title: "Atoms/Forms/Choice/ChoiceSwitch",
+    title: "Atoms/Forms/ChoiceSwitch",
     component: ChoiceSwitch,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

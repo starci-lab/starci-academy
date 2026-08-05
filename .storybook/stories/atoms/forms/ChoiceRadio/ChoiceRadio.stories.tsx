@@ -44,7 +44,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * the render frame, and all JSDoc/comments are written in ENGLISH.
  */
 const meta: Meta<typeof ChoiceRadio> = {
-    title: "Atoms/Forms/Choice/ChoiceRadio",
+    title: "Atoms/Forms/ChoiceRadio",
     component: ChoiceRadio,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

@@ -39,7 +39,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * in ENGLISH.
  */
 const meta: Meta<typeof ChoiceCheckbox> = {
-    title: "Atoms/Forms/Choice/ChoiceCheckbox",
+    title: "Atoms/Forms/ChoiceCheckbox",
     component: ChoiceCheckbox,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

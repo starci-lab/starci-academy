@@ -20,7 +20,7 @@ import {
 } from "./kpiMeta"
 import {
     DEFAULT_KPI_TARGETS,
-} from "@/components/features/dashboard/WeeklyGoals/map"
+} from "@/components/pages/DashboardPage/WeeklyGoals/map"
 import { useQueryMyKpisSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyKpisSwr"
 import { useMutateSetKpiTargetSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetKpiTargetSwr"
 import { useMutateClaimKpiRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateClaimKpiRewardSwr"
@@ -62,7 +62,7 @@ export const KpiPage = ({
     // the KPI key currently being claimed, or null when idle
     const [claimingKey, setClaimingKey] = useState<KpiKey | null>(null)
 
-    /** Navigate to the dashboard (breadcrumb root). */
+    /** Navigate to the DashboardPage (breadcrumb root). */
     const onNavigateHome = useCallback(
         () => router.push(pathConfig().locale(locale).build()),
         [router, locale],
@@ -94,7 +94,7 @@ export const KpiPage = ({
                     })
                     const env = result?.data?.setKpiTarget
                     if (!env) {
-                        throw new Error(t("dashboard.kpi.error"))
+                        throw new Error(t("DashboardPage.kpi.error"))
                     }
                     // returned envelope drives the success / error toast
                     return env
@@ -124,7 +124,7 @@ export const KpiPage = ({
                     })
                     const env = result?.data?.claimKpiReward
                     if (!env) {
-                        throw new Error(t("dashboard.kpi.error"))
+                        throw new Error(t("DashboardPage.kpi.error"))
                     }
                     return env
                 })
@@ -153,12 +153,12 @@ export const KpiPage = ({
     // composite-score sentence (or the plain subtitle before any target is set) + the reset countdown
     const description = data
         ? (data.composite.total > 0
-            ? t("dashboard.kpi.summary", {
+            ? t("DashboardPage.kpi.summary", {
                 percent: data.composite.percent,
                 completed: data.composite.completed,
                 total: data.composite.total,
             })
-            : t("dashboard.kpi.subtitle")) + ` · ${t("dashboard.kpi.resetIn", {
+            : t("DashboardPage.kpi.subtitle")) + ` · ${t("DashboardPage.kpi.resetIn", {
             days: countdown.days,
             hours: countdown.hours,
         })}`
@@ -171,12 +171,12 @@ export const KpiPage = ({
         const item = itemByKey.get(key)
         const current = item?.current ?? 0
         // effective target = the learner's custom goal, or a sensible default
-        // (mirrors the dashboard card — meter always runs, never sits empty waiting for config)
+        // (mirrors the DashboardPage card — meter always runs, never sits empty waiting for config)
         const target = item?.target ?? DEFAULT_KPI_TARGETS[key]
         return {
             key,
             icon: Icon,
-            label: t(`dashboard.kpi.labels.${labelKey}`),
+            label: t(`DashboardPage.kpi.labels.${labelKey}`),
             current,
             target,
             presets: presets.map((preset) => ({
@@ -187,7 +187,7 @@ export const KpiPage = ({
                 void onChoose(key, chosenTarget)
             },
             coinRewardText: item?.coinReward != null
-                ? t("dashboard.kpi.coinReward", {
+                ? t("DashboardPage.kpi.coinReward", {
                     count: item.coinReward,
                 })
                 : undefined,
@@ -214,14 +214,14 @@ export const KpiPage = ({
             rows={rows}
             classNames={classNames}
             labels={{
-                title: t("dashboard.kpi.title"),
-                tooltipDescription: t("dashboard.kpi.help"),
+                title: t("DashboardPage.kpi.title"),
+                tooltipDescription: t("DashboardPage.kpi.help"),
                 homeLabel: t("nav.home"),
                 description,
-                errorTitle: t("dashboard.loadError"),
-                retry: t("dashboard.retry"),
-                claimLabel: t("dashboard.kpi.claimReward"),
-                claimedLabel: t("dashboard.kpi.claimed"),
+                errorTitle: t("DashboardPage.loadError"),
+                retry: t("DashboardPage.retry"),
+                claimLabel: t("DashboardPage.kpi.claimReward"),
+                claimedLabel: t("DashboardPage.kpi.claimed"),
             }}
         />
     )

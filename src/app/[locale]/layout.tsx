@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
 import type { Metadata } from "next"
-import { AnalyticsGate } from "@/components/features/cookie-consent/AnalyticsGate"
+import { AnalyticsGate } from "@/components/behaviors/AnalyticsGate"
 import { InnerLayout } from "../InnerLayout"
 import React, { PropsWithChildren } from "react"
 import { Open_Sans } from "next/font/google"

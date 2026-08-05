@@ -2,7 +2,7 @@
 
 import React from "react"
 import { useParams } from "next/navigation"
-import { MockInterview } from "@/components/features/learn/MockInterview"
+import { MockInterviewPage } from "@/components/pages/MockInterviewPage"
 
 /**
  * Learn / mock-interview / interview / [sessionId] / result — the dedicated
@@ -18,7 +18,7 @@ import { MockInterview } from "@/components/features/learn/MockInterview"
 const Page = () => {
     const params = useParams()
     const sessionId = params.sessionId as string | undefined
-    return <MockInterview resultSessionId={sessionId} />
+    return <MockInterviewPage resultSessionId={sessionId} />
 }
 
 export default Page

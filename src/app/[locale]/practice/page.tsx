@@ -1,12 +1,9 @@
-import React from "react"
-import { Practice } from "@/components/features/practice"
+"use client"
 
-/**
- * Route `/[locale]/practice` — the coding-practice catalog (phase 1: list +
- * cockpit). Thin route file: mounts the feature; all logic/UI lives there.
- */
-const Page = () => {
-    return <Practice />
-}
+import React from "react"
+import { PracticeHubPage } from "@/components/pages/PracticeHubPage"
+
+/** Practice hub — the coding problem catalogue. */
+const Page = () => <PracticeHubPage />
 
 export default Page

@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { MockInterview } from "@/components/features/learn/MockInterview"
+import { MockInterviewPage } from "@/components/pages/MockInterviewPage"
 
 /**
  * Learn / mock-interview: a phase-scaffolded mock interview over the course
@@ -9,7 +9,7 @@ import { MockInterview } from "@/components/features/learn/MockInterview"
  * surface behind enrollment internally.
  */
 const Page = () => {
-    return <MockInterview />
+    return <MockInterviewPage />
 }
 
 export default Page

@@ -2,7 +2,7 @@
 
 import React from "react"
 import { useTranslations } from "next-intl"
-import { LearnBreadcrumb } from "../../shared/LearnBreadcrumb"
+import { LearnBreadcrumb } from "@/components/blocks/learn/LearnBreadcrumb"
 
 /**
  * Personal-project breadcrumb (Home › Courses › <course> › Capstone) — the shared

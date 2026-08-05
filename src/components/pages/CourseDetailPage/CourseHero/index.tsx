@@ -3,7 +3,7 @@
 import React from "react"
 import {
     LearnBreadcrumb,
-} from "@/components/features/learn/shared/LearnBreadcrumb"
+} from "@/components/blocks/learn/LearnBreadcrumb"
 import {
     CourseTrustStats,
 } from "../CourseTrustStats"

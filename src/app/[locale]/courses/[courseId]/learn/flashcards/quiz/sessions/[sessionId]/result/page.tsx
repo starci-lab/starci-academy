@@ -2,7 +2,7 @@
 
 import React from "react"
 import { useParams } from "next/navigation"
-import { Flashcards } from "@/components/features/learn/Flashcards"
+import { FlashcardsPage } from "@/components/pages/FlashcardsPage"
 
 /**
  * Learn / flashcards / quiz / sessions / [sessionId] / result — the dedicated
@@ -14,13 +14,13 @@ import { Flashcards } from "@/components/features/learn/Flashcards"
  * identically), so a session whose completion write never landed kept
  * resuming into the last card on every revisit/F5 instead of showing
  * results. `QuizSession` navigates here once `completeFlashcardQuizSession`
- * resolves; `Flashcards` renders `FlashcardQuizResult` directly — no
+ * resolves; `FlashcardsPage` renders `FlashcardQuizResult` directly — no
  * in-progress check, this URL only ever means "show the result".
  */
 const Page = () => {
     const params = useParams()
     const sessionId = params.sessionId as string | undefined
-    return <Flashcards resultQuizSessionId={sessionId} />
+    return <FlashcardsPage resultQuizSessionId={sessionId} />
 }
 
 export default Page

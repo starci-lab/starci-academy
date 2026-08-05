@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { _FlashcardQuizStats, type FlashcardQuizStatsLabels } from "@/components/features/learn/Flashcards/QuizSession/FlashcardQuizStats/component"
+import { _FlashcardQuizStats, type FlashcardQuizStatsLabels } from "@/components/pages/FlashcardsPage/QuizSession/FlashcardQuizStats/component"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**

@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react"
 /**
  * `fluent-emoji-flat` art id for a 1-based leaderboard rank: the podium places
  * (1–3) get their place medal, everyone below gets the trophy/cup. Same art lib
- * as {@link import("@/components/features/dashboard/LeagueTierBadge").LeagueTierBadge}.
+ * as {@link import("@/components/pages/DashboardPage/LeagueTierBadge").LeagueTierBadge}.
  */
 const PLACE_MEDAL: Record<number, string> = {
     1: "fluent-emoji-flat:1st-place-medal",
@@ -30,7 +30,7 @@ export const rankBadgeIcon = (rank: number): React.ReactNode => (
 /**
  * The small place-medal art for a leaderboard ROW's rank cell — `🥇🥈🥉` for rank
  * 1–3, `null` for rank 4+ (the caller shows the plain number). Compact `size-5`
- * for an inline rank column. Used on the dashboard cards' "1,2,3" list (the /league
+ * for an inline rank column. Used on the DashboardPage cards' "1,2,3" list (the /league
  * page shows top-3 on the podium instead).
  */
 export const placeMedalIcon = (rank: number): React.ReactNode | null => (

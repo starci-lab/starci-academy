@@ -8,7 +8,7 @@ import { queryPublicContent } from "@/modules/api/graphql/queries/query-public-c
  *
  * Deliberately resolves only the first match (not every matched id): the RAG
  * retrieval already ranks matches by relevance, and one representative citation is
- * all {@link import("@/components/features/learn/MockInterview/MockInterviewScorecard").MockInterviewScorecard}
+ * all {@link import("@/components/pages/MockInterviewPage/MockInterviewScorecard").MockInterviewScorecard}
  * needs — avoids an N-query fan-out for a feature (`publicContent`) that has no
  * batch-by-ids form today. `null` while there's nothing to resolve; the caller falls
  * back to a plain, un-cited deep link when this query errors or the content is gone

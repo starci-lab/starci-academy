@@ -39,7 +39,7 @@ export type ContinueCardVariant = "item" | "hero"
  * Does NOT take `className` (BLOCK-4 — a block hands out no escape hatch; a
  * caller that needs a specific placement wraps this card in a frame instead,
  * the same treatment `StatusChip` already carries). `ResumeCard`
- * (`@/components/features/dashboard/ContinueLearning/ResumeCard`) still
+ * (`@/components/pages/DashboardPage/ContinueLearning/ResumeCard`) still
  * forwards its own `className` straight into this card — that call site needs
  * a follow-up fix; it sits outside this folder so it isn't touched here.
  */

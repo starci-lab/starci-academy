@@ -1,11 +1,9 @@
-import React from "react"
-import { Dashboard } from "@/components/features/dashboard"
+"use client"
 
-/** Logged-in home (GitHub-style): the dashboard a signed-in user lands on at `/`. */
-const Page = () => {
-    return (
-        <Dashboard />
-    )
-}
+import React from "react"
+import { DashboardPage } from "@/components/pages/DashboardPage"
+
+/** The learner's dashboard. */
+const Page = () => <DashboardPage />
 
 export default Page

@@ -2,7 +2,7 @@
 
 import React from "react"
 import { useParams } from "next/navigation"
-import { Flashcards } from "@/components/features/learn/Flashcards"
+import { FlashcardsPage } from "@/components/pages/FlashcardsPage"
 
 /**
  * Learn / flashcards / review / sessions / [sessionId] / result — the
@@ -13,13 +13,13 @@ import { Flashcards } from "@/components/features/learn/Flashcards"
  * root-cause: "done" is now answered by the ROUTE, not re-derived
  * client-side from `status`/`currentIndex` at the live URL.
  * `DueReview`/`FlashcardReviewer` navigate here once their completion
- * mutation resolves; `Flashcards` renders `FlashcardSessionStats` directly —
+ * mutation resolves; `FlashcardsPage` renders `FlashcardSessionStats` directly —
  * no in-progress check, this URL only ever means "show the result".
  */
 const Page = () => {
     const params = useParams()
     const sessionId = params.sessionId as string | undefined
-    return <Flashcards resultStudySessionId={sessionId} />
+    return <FlashcardsPage resultStudySessionId={sessionId} />
 }
 
 export default Page

@@ -21,7 +21,7 @@ import {
 import {
     toDifficulty,
 } from "@/components/pages/_map"
-import { useCourseResume } from "@/components/features/learn/shared/useCourseResume"
+import { useCourseResume } from "@/hooks/useCourseResume"
 import { useAppSelector } from "@/redux/hooks"
 import { _CourseContents, type CourseContentsLesson } from "./component"
 import type { MyCourseOutlineModule } from "@/modules/api/graphql/queries/types/my-course-outline"

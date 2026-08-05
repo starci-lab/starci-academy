@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Flashcards } from "@/components/features/learn/Flashcards"
+import { FlashcardsPage } from "@/components/pages/FlashcardsPage"
 
 /**
  * Learn / flashcards — QUIZ mode ("Hỏi nhanh"): a fixed-length random voice
@@ -10,7 +10,7 @@ import { Flashcards } from "@/components/features/learn/Flashcards"
  * (`learn/mock-interview`); the old naming collided and caused confusion.
  */
 const Page = () => {
-    return <Flashcards />
+    return <FlashcardsPage />
 }
 
 export default Page

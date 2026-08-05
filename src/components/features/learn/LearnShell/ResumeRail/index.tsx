@@ -20,7 +20,7 @@ import {
 } from "@/components/blocks/navigation/CollapsibleSidebar/context"
 import {
     useCourseResume,
-} from "../../shared/useCourseResume"
+} from "@/hooks/useCourseResume"
 
 /**
  * The persistent "Continue learning" (resume) pill pinned at the TOP of the course-learn

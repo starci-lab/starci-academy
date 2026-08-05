@@ -21,7 +21,7 @@ import { Container } from "@/components/frames/Container"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { DifficultyChip, type Difficulty } from "@/components/blocks/chips/DifficultyChip"
 import { GithubTeamGate } from "@/components/blocks/auth/GithubTeamGate"
-import { LearnBreadcrumb } from "@/components/features/learn/shared/LearnBreadcrumb"
+import { LearnBreadcrumb } from "@/components/blocks/learn/LearnBreadcrumb"
 import { LearnNudges } from "@/components/blocks/learn/LearnNudges"
 import { TrialConversionStrip } from "@/components/blocks/commerce/TrialConversionStrip"
 

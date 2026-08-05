@@ -13,7 +13,7 @@ import type {
 } from "@/modules/types/base/class-name"
 import {
     useProfileUsername,
-} from "../../hooks/useProfileUsername"
+} from "@/hooks/profile/useProfileUsername"
 import {
     buildDifficultySegments,
 } from "./difficultyMeta"

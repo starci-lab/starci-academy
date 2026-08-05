@@ -10,7 +10,7 @@ import { OverviewCourses } from "./OverviewCourses"
 import { OverviewContributions } from "./OverviewContributions"
 import { OverviewChallengeSkills } from "./OverviewChallengeSkills"
 import { OverviewCodeSkills } from "./OverviewCodeSkills"
-import { useProfileUsername } from "../hooks/useProfileUsername"
+import { useProfileUsername } from "@/hooks/profile/useProfileUsername"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { pathConfig } from "@/resources/path"
 

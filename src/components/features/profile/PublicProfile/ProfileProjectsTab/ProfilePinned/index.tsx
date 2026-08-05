@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl"
 import {
     PencilIcon,
 } from "@phosphor-icons/react"
-import { useProfileUsername } from "../../hooks/useProfileUsername"
+import { useProfileUsername } from "@/hooks/profile/useProfileUsername"
 import { PinnedProjectCard } from "./PinnedProjectCard"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePinnedProjectsOverlayState } from "@/hooks/zustand/overlay/hooks"

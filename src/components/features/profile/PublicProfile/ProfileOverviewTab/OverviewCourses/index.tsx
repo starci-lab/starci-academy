@@ -3,7 +3,7 @@
 import React from "react"
 import { useTranslations } from "next-intl"
 import { CourseRow } from "./CourseRow"
-import { useProfileUsername } from "../../hooks/useProfileUsername"
+import { useProfileUsername } from "@/hooks/profile/useProfileUsername"
 import { useQueryUserCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCoursesSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"

@@ -16,7 +16,7 @@ import type {
 } from "@/modules/types/base/class-name"
 import {
     useProfileUsername,
-} from "../../hooks/useProfileUsername"
+} from "@/hooks/profile/useProfileUsername"
 import { useFollowListOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 

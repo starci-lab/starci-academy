@@ -13,7 +13,7 @@ import { pathConfig } from "@/resources/path"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 import { useQueryPublicUserCvSwr } from "@/hooks/swr/api/graphql/queries/useQueryPublicUserCvSwr"
-import { useProfileUsername } from "../hooks/useProfileUsername"
+import { useProfileUsername } from "@/hooks/profile/useProfileUsername"
 
 /**
  * A4 "paper" frame reused from the CV editor's live preview

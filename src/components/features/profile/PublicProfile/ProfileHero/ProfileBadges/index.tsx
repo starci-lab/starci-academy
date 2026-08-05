@@ -6,7 +6,7 @@ import {
 } from "next-intl"
 import {
     useProfileUsername,
-} from "../../hooks/useProfileUsername"
+} from "@/hooks/profile/useProfileUsername"
 import { useQueryUserAchievementsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserAchievementsSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"

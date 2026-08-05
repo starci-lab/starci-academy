@@ -1,25 +1,12 @@
 import React from "react"
-import {
-    SettingsLayout,
-} from "@/components/features/profile/Settings/SettingsLayout"
+import { SettingsLayout } from "@/components/layouts/SettingsLayout"
 
 /**
- * Layout for the `/[locale]/profile/(settings)` route group — wraps every private
- * account-management page (edit, security, sessions, AI settings/subscription/usage,
- * bookmarks, membership) in the shared {@link SettingsLayout} sidebar shell. The
- * `(settings)` group keeps URLs unchanged (`/profile/<page>`) while leaving the
- * public profile (`/profile` and `/profile/[username]`) outside this chrome.
+ * Layout for the `/[locale]/profile/settings` group — every private
+ * account-management page sits inside the shared settings sidebar shell.
  */
-const Layout = ({
-    children,
-}: {
-    children: React.ReactNode
-}) => {
-    return (
-        <SettingsLayout>
-            {children}
-        </SettingsLayout>
-    )
-}
+const Layout = ({ children }: { children: React.ReactNode }) => (
+    <SettingsLayout>{children}</SettingsLayout>
+)
 
 export default Layout

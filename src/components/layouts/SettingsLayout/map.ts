@@ -1,6 +1,6 @@
 import type {
     SettingsNavGroup as RealSettingsNavGroup,
-} from "@/components/features/profile/Settings/nav"
+} from "@/resources/settings-nav"
 import type {
     SettingsDestinationKey,
     SettingsNavGroup,

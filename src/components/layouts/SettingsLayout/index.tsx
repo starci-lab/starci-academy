@@ -9,7 +9,7 @@ import {
     usePathname,
     useRouter,
 } from "next/navigation"
-import { getSettingsGroups } from "@/components/features/profile/Settings/nav"
+import { getSettingsGroups } from "@/resources/settings-nav"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { toBlockSettingsGroups } from "./map"
 import { _SettingsLayout } from "./component"

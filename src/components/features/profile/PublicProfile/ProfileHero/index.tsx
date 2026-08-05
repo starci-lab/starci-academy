@@ -30,10 +30,10 @@ import type {
 } from "@/modules/types/base/class-name"
 import {
     useProfileUsername,
-} from "../hooks/useProfileUsername"
+} from "@/hooks/profile/useProfileUsername"
 import {
     useProfileFollow,
-} from "../hooks/useProfileFollow"
+} from "@/hooks/profile/useProfileFollow"
 import {
     ProfileRankAvatar,
 } from "./ProfileRankAvatar"

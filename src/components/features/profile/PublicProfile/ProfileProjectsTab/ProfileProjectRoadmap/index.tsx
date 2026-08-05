@@ -23,7 +23,7 @@ import {
 } from "@phosphor-icons/react"
 import {
     useProfileUsername,
-} from "../../hooks/useProfileUsername"
+} from "@/hooks/profile/useProfileUsername"
 import { pathConfig } from "@/resources/path"
 import { useQueryUserCapstoneProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCapstoneProgressSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"

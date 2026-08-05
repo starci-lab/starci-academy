@@ -21,7 +21,7 @@ import {
 } from "../SettingsBreadcrumb"
 import {
     getSettingsGroups,
-} from "../nav"
+} from "@/resources/settings-nav"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"

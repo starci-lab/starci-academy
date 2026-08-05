@@ -24,7 +24,7 @@ import {
 } from "next-intl"
 import {
     useProfileUsername,
-} from "../../hooks/useProfileUsername"
+} from "@/hooks/profile/useProfileUsername"
 import {
     difficultyLevel,
 } from "../ProfileChallenges/difficultyMeta"

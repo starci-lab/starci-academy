@@ -10,7 +10,7 @@ import {
 } from "next-intl"
 import {
     useProfileUsername,
-} from "../../hooks/useProfileUsername"
+} from "@/hooks/profile/useProfileUsername"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"

@@ -22,7 +22,7 @@ import { pathConfig } from "@/resources/path"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { AIProcessingText } from "@/components/blocks/learn/AIProcessingText"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { StatusChip, type StatusChipTone } from "@/components/blocks/chips/StatusChip"
@@ -367,10 +367,10 @@ export const PracticeProblemPage = () => {
                         />
                     ) : (
                         <EmptyState
-                            icon={<MagnifyingGlassIcon aria-hidden focusable="false" weight="duotone" />}
+                            icon={MagnifyingGlassIcon}
                             title={t("codingPractice.notFound")}
                             description={t("codingPractice.notFoundHint")}
-                            action={(
+                            action={() => (
                                 <Button variant="primary" size="sm" onPress={onBack}>
                                     {t("codingPractice.backToPractice")}
                                 </Button>

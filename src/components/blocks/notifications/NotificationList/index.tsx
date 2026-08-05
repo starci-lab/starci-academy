@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 import { Button, cn, Typography } from "@heroui/react"
 import { ChecksIcon } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { NotificationItem } from "@/components/blocks/notifications/NotificationItem"
 import type { NotificationItemProps } from "@/components/blocks/notifications/NotificationItem"
 

@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl"
 import { Canvas } from "../Canvas"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { EmptyState } from "@/components/composites/feedback/EmptyState"
 
 /** Props for {@link MindMapCanvas}. */
 export type MindMapCanvasProps = WithClassNames<undefined>

@@ -51,7 +51,7 @@ import { resolveNotificationTargetPath } from "@/modules/notifications/resolve-n
 import { useQueryMyNotificationsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyNotificationsSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
@@ -321,9 +321,9 @@ export const NotificationsPage = ({ className }: NotificationsPageProps) => {
                         <Card>
                             <CardContent>
                                 <EmptyState
-                                    icon={<BellIcon aria-hidden focusable="false" />}
+                                    icon={BellIcon}
                                     title={tab === ALL_TAB ? t("notifications.empty") : t("notifications.emptyFiltered")}
-                                    action={tab === ALL_TAB ? (
+                                    action={() => tab === ALL_TAB ? (
                                         // Genuinely platform-empty (never had any notification) — the CTA must be
                                         // a primary funnel invitation, not a quiet secondary one (canon §Conversion).
                                         <Button size="sm" variant="primary" onPress={goToCourses} className="gap-2">

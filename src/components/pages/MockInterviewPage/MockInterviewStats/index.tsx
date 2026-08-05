@@ -5,7 +5,7 @@ import { Button, Typography, cn } from "@heroui/react"
 import { ArrowRightIcon, ChartLineUpIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
@@ -163,10 +163,10 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
         >
             {!stats || stats.insufficientData ? (
                 <EmptyState
-                    icon={<ChartLineUpIcon aria-hidden focusable="false" />}
+                    icon={ChartLineUpIcon}
                     title={t("mockInterview.statsInsufficientTitle")}
                     description={t("mockInterview.statsInsufficientDescription")}
-                    action={onStartInterview ? (
+                    action={onStartInterview ? () => (
                         <Button size="sm" variant="secondary" onPress={onStartInterview}>
                             {t("mockInterview.begin")}
                         </Button>

@@ -9,7 +9,7 @@ import type { SectionVisibility } from "@/modules/types/entities/user"
 import { useProfileUsername } from "@/hooks/profile/useProfileUsername"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { EmptyState } from "@/components/composites/feedback/EmptyState"
 
 /** Props for {@link ProfileSectionGuard}. */
 export interface ProfileSectionGuardProps extends WithClassNames<undefined> {
@@ -51,7 +51,7 @@ export const ProfileSectionGuard = ({
         return (
             <div className={cn("flex min-w-0 flex-col", className)}>
                 <EmptyState
-                    icon={<LockIcon aria-hidden focusable="false" />}
+                    icon={LockIcon}
                     title={t("publicProfile.sectionPrivate.title")}
                     description={t("publicProfile.sectionPrivate.description")}
                 />

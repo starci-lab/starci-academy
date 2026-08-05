@@ -6,7 +6,7 @@ import { CaretRightIcon, FunnelIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SurfaceListCard, SurfaceListCardRow, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -191,7 +191,7 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                     <CardContent>
                         <EmptyState
                             title={t("mockInterview.historyEmpty")}
-                            action={onStartInterview ? (
+                            action={onStartInterview ? () => (
                                 <Button size="sm" variant="secondary" onPress={onStartInterview}>
                                     {t("mockInterview.begin")}
                                 </Button>

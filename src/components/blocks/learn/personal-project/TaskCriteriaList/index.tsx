@@ -3,7 +3,6 @@
 import React, { useMemo } from "react"
 import {
     Chip,
-    cn,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -14,7 +13,8 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LabeledAccordionCard } from "@/components/blocks/cards/LabeledAccordionCard"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { useAppSelector } from "@/redux/hooks"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { EmptyState } from "@/components/composites/feedback/EmptyState"
+import { Box } from "@/components/frames/Box"
 
 /** Props for {@link TaskCriteriaList}. */
 export type TaskCriteriaListProps = WithClassNames<undefined>
@@ -56,11 +56,12 @@ export const TaskCriteriaList = ({
         // list needs a proper empty-state instead of a silent null (self-hide is
         // only for un-labeled widgets)
         return (
-            <EmptyState
-                className={cn(className)}
-                icon={<ListChecksIcon weight="duotone" />}
-                title={t("task.criteriaEmpty")}
-            />
+            <Box className={className}>
+                <EmptyState
+                    icon={ListChecksIcon}
+                    title={t("task.criteriaEmpty")}
+                />
+            </Box>
         )
     }
 

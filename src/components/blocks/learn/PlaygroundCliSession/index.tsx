@@ -18,7 +18,7 @@ import {
     LinkSimpleIcon,
 } from "@phosphor-icons/react"
 import { ConnectSheet } from "@/components/blocks/layout/ConnectSheet"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 import { LabeledAccordionCard } from "@/components/blocks/cards/LabeledAccordionCard"
@@ -416,7 +416,7 @@ export const PlaygroundCliSession = () => {
                     {!byomState.connected ? (
                         <div className="flex h-full items-center justify-center p-6">
                             <EmptyState
-                                icon={<CubeIcon aria-hidden focusable="false" />}
+                                icon={CubeIcon}
                                 title={t("playground.session.workspaceLockedTitle")}
                                 description={t("playground.session.workspaceLockedHint")}
                             />
@@ -436,7 +436,7 @@ export const PlaygroundCliSession = () => {
                                 {byomState.resources.length === 0 ? (
                                     <div className="flex h-full items-center justify-center">
                                         <EmptyState
-                                            icon={<LinkSimpleIcon aria-hidden focusable="false" />}
+                                            icon={LinkSimpleIcon}
                                             title={t("playground.session.resourcesEmptyTitle")}
                                             description={t("playground.session.resourcesEmptyDescription")}
                                         />

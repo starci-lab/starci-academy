@@ -26,7 +26,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
 import { Callout, STATUS_ACTION_CLASS } from "@/components/blocks/feedback/Callout"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { ModalShell } from "@/components/composites/layout/ModalShell"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
@@ -2024,7 +2024,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                         ) : (
                             <div className="flex min-h-0 flex-1 items-center justify-center">
                                 <EmptyState
-                                    icon={<PenNibIcon aria-hidden focusable="false" />}
+                                    icon={PenNibIcon}
                                     title={t("mockInterview.workspace.emptyTitle")}
                                     description={t("mockInterview.workspace.emptyDescription")}
                                 />

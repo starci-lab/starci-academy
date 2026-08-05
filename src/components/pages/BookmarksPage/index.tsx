@@ -26,7 +26,7 @@ import {
 import { pathConfig } from "@/resources/path"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
@@ -111,7 +111,7 @@ export const BookmarksPage = () => {
                     <EmptyState
                         title={t("bookmarks.empty")}
                         description={t("bookmarks.emptyHint")}
-                        action={(
+                        action={() => (
                             <Button
                                 variant="primary"
                                 onPress={() => router.push(pathConfig().locale().course().build())}

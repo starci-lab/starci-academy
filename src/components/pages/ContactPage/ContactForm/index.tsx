@@ -17,7 +17,8 @@ import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { CONTACT_CATEGORY_KEYS } from "@/resources/contact"
 import { useContactForm } from "@/hooks/rhf/useContactForm"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { EmptyState } from "@/components/composites/feedback/EmptyState"
+import { Box } from "@/components/frames/Box"
 import type { ContactCategory } from "@/modules/api/graphql/mutations/types/contact"
 
 /** Props for {@link ContactForm}. */
@@ -44,17 +45,18 @@ export const ContactForm = ({ className }: ContactFormProps) => {
 
     if (sent) {
         return (
-            <EmptyState
-                icon={<CheckCircleIcon />}
-                title={t("contact.form.successTitle")}
-                description={t("contact.form.successBody")}
-                action={(
-                    <Button variant="secondary" onPress={onSendAnother}>
-                        {t("contact.form.sendAnother")}
-                    </Button>
-                )}
-                className={className}
-            />
+            <Box className={className}>
+                <EmptyState
+                    icon={CheckCircleIcon}
+                    title={t("contact.form.successTitle")}
+                    description={t("contact.form.successBody")}
+                    action={() => (
+                        <Button variant="secondary" onPress={onSendAnother}>
+                            {t("contact.form.sendAnother")}
+                        </Button>
+                    )}
+                />
+            </Box>
         )
     }
 

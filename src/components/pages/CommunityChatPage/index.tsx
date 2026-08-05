@@ -8,7 +8,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { ChatPane } from "./ChatPane"
 import { ChatPaneSkeleton } from "./ChatPane/ChatPaneSkeleton"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { PageContainer } from "@/components/blocks/layout/PageContainer"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
@@ -85,10 +85,10 @@ export const CommunityChatPage = () => {
                             // failed): a non-member must not sit on a perpetual skeleton —
                             // surface a members-only terminal with an upsell to membership.
                             <EmptyState
-                                icon={<UsersThreeIcon aria-hidden focusable="false" />}
+                                icon={UsersThreeIcon}
                                 title={t("community.chat.membersOnly")}
                                 description={t("community.chat.membersOnlyDescription")}
-                                action={(
+                                action={() => (
                                     <Button
                                         variant="primary"
                                         size="sm"
@@ -111,7 +111,7 @@ export const CommunityChatPage = () => {
                 ) : (
                     <EmptyState
                         title={t("community.chat.signInRequired")}
-                        action={(
+                        action={() => (
                             <Button
                                 variant="primary"
                                 size="sm"

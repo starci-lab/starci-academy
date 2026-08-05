@@ -23,7 +23,7 @@ import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query
 import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcard-deck"
 import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-card"
 import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { Callout } from "@/components/blocks/feedback/Callout"
 import { ConfirmDialog } from "@/components/composites/feedback/ConfirmDialog"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
@@ -1022,13 +1022,13 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         return (
             <div className={cn("flex flex-col gap-6", className)}>
                 <EmptyState
-                    icon={<CheckCircleIcon aria-hidden focusable="false" />}
+                    icon={CheckCircleIcon}
                     title={t("flashcard.quiz.emptyAtLevel")}
-                    action={
+                    action={() => (
                         <Button size="sm" variant="secondary" onPress={() => setPhase("setup")}>
                             {t("flashcard.quiz.backToSetup")}
                         </Button>
-                    }
+                    )}
                 />
             </div>
         )

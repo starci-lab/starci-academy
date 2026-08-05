@@ -1,19 +1,17 @@
 "use client"
 
 import React from "react"
-import { Button, Typography } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/useQuerySearchCourseContentSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledList } from "@/components/blocks/lists/LabeledList"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Typography } from "@/components/atoms/text/Typography"
 import { useAppSelector } from "@/redux/hooks"
 import { pathConfig } from "@/resources/path"
 
-/** Props for {@link LessonFlashcards}. */
-export type LessonFlashcardsProps = WithClassNames<undefined>
+/** Placeholder deck rows shown while the RAG search is in flight. */
+const SKELETON_ROWS = 3
 
 /**
  * Right-rail "review this lesson" panel: flashcard decks RAG-related to the
@@ -21,12 +19,15 @@ export type LessonFlashcardsProps = WithClassNames<undefined>
  * `kind: "flashcard"` — the `flashcard_deck_contents` M2M this used to read
  * from was dropped; deck↔lesson association is RAG-derived now, same as
  * `RelatedContentList`), with a primary CTA into the Flashcards page to start
- * a spaced-repetition session. Reads the active course + content title from
- * Redux and self-hides when the lesson has no related decks (AsyncContent
- * empty → null), so it never leaves an empty box in the rail.
- * @param props - {@link LessonFlashcardsProps}
+ * a spaced-repetition session.
+ *
+ * Reads the active course + content title from Redux and self-hides once the
+ * search settles with no related decks, so it never leaves an empty box in the
+ * rail. The label and the CTA are static i18n — known before the search returns —
+ * so only the DECK ROWS shimmer, inside the same `LabeledList` the loaded rows
+ * use (`loading-and-skeleton.md`).
  */
-export const LessonFlashcards = ({ className }: LessonFlashcardsProps) => {
+export const LessonFlashcards = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -59,33 +60,31 @@ export const LessonFlashcards = ({ className }: LessonFlashcardsProps) => {
         )
     }
 
+    const isSkeleton = swr.isLoading
+    // settled with nothing related → the panel self-hides rather than showing an empty box
+    if (!isSkeleton && decks.length === 0) {
+        return null
+    }
+
     return (
-        <AsyncContent
-            isLoading={swr.isLoading}
-            skeleton={
-                <div className="flex flex-col gap-3">
-                    <Skeleton.Typography type="body-sm" width="1/2" />
-                    <Skeleton.Typography type="body-xs" width="3/4" />
-                    <Skeleton.Button />
-                </div>
-            }
-            isEmpty={decks.length === 0}
+        <LabeledList
+            label={t("lessonRail.flashcards.title")}
+            action={(
+                <Button
+                    label={t("lessonRail.flashcards.review")}
+                    size="sm"
+                    variant="secondary"
+                    onPress={onReview}
+                />
+            )}
         >
-            <LabeledList
-                className={className}
-                label={t("lessonRail.flashcards.title")}
-                action={(
-                    <Button size="sm" variant="secondary" className="self-start" onPress={onReview}>
-                        {t("lessonRail.flashcards.review")}
-                    </Button>
-                )}
-            >
-                {decks.map((deck) => (
-                    <Typography key={deck.id} type="body-sm" color="muted" truncate>
-                        {deck.title}
-                    </Typography>
+            {isSkeleton
+                ? Array.from({ length: SKELETON_ROWS }, (_row, index) => (
+                    <Typography key={index} size="sm" color="muted" isSkeleton />
+                ))
+                : decks.map((deck) => (
+                    <Typography key={deck.id} size="sm" color="muted" truncate text={deck.title} />
                 ))}
-            </LabeledList>
-        </AsyncContent>
+        </LabeledList>
     )
 }

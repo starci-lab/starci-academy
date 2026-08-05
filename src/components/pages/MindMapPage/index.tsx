@@ -1,360 +1,195 @@
-import React from "react"
-import { MapTrifoldIcon, ShareNetworkIcon } from "@phosphor-icons/react"
-import { MindMapRail, type MindMapRailItem, type MindMapRailTier } from "@/components/starci/blocks/learn/MindMapRail"
-import { MindMapContinueButton } from "@/components/starci/blocks/learn/MindMapContinueButton"
-import { MindMapFullscreenButton, type MindMapFullscreenButtonAriaLabels } from "@/components/starci/blocks/learn/MindMapFullscreenButton"
-import { Legend, type LegendItem } from "@/components/composites/stats/Legend"
-import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
-import { type SkeletonProps } from "@/components/composites/_slot"
-import { ResizableRail } from "@/components/behaviors/ResizableRail"
-import { StackH, StackV } from "@/components/frames/Stack"
+"use client"
+
+import React, { useCallback, useMemo, useState } from "react"
+import { useLocale, useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
+import { pathConfig } from "@/resources/path"
+import { useAppSelector } from "@/redux/hooks"
+import { useQueryCourseMindMapSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseMindMapSwr"
+import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
+import type { CourseMindMapNodeData } from "@/modules/api/graphql/queries/types"
+import { tierAllows } from "@/modules/utils/mind-map"
+import { AsyncContentError } from "@/components/composites/async/AsyncContent"
+import { ConceptMap } from "@/components/blocks/learn/ConceptMap"
+import { MindMapCanvas } from "@/components/blocks/learn/ConceptMap/MindMapCanvas"
+import type {
+    MindMapPopularity,
+    MindMapRailItem,
+    MindMapRailTier,
+} from "@/components/starci/blocks/learn/MindMapRail"
 import { Stage } from "@/components/frames/Stage"
-import { ScrollArea } from "@/components/frames/ScrollArea"
-import type { CallerIdentity } from "@/components/frames/_identity"
+import { _MindMapPage, type MindMapVariant } from "./component"
 
 /**
- * SCREEN — `MindMapPage`: the course keyword graph, in its two real shapes.
- * See the component's own file header for the full function list, the two
- * corrections against the planner's proposed tree (`MindMapBackButton` and
- * `FloatingActionButton` are both absent, on purpose), and why the canvas
- * region is a documented §B3 gap rather than a faked ReactFlow mount.
- *
- * FIVE LEAVES, by STRUCTURE — `workspace` and `standalone` are different
- * compositions (not one shape with a variant flag flipping paint), so each
- * gets its own leaves; `Empty` and `Loading` each lose or swap real nodes
- * (rail's shimmer vs. its populated list; the three floating blocks present
- * vs. absent), which is a structural change, not a data condition of one leaf.
- *
- * PRESENTATIONAL — every input arrives as a prop; this twin owns no data of
- * its own, so `index.tsx` IS the presentational file (no separate connected
- * wrapper, no `component.tsx` split).
- *
- * Emits its own identity (`data-tier="page"` / `data-component="MindMapPage"`)
- * unconditionally on its root, same as `_ModulePage`/`_ContentPage` — see
- * `split.md`'s "Identity is data-tier + data-component" section.
- *
- * The viewport-relative full-bleed height, the canvas's floating-chrome
- * anchoring, and the rail's scroll region are all composed on `Stage` /
- * `ScrollArea` (`@/components/frames/Stage`, `@/components/frames/ScrollArea`)
- * — the two frames the vocabulary gap this screen flagged in a previous pass
- * was built to close. No raw `className` shape remains on this page.
+ * The graph carries popularity as a free-form string; the rail names a closed set.
+ * Anything else (or nothing) reads as "no tier", which is what structural nodes are.
  */
-
-/** Which shape of the mind map this screen renders — see the file header. */
-export type MindMapVariant = "workspace" | "standalone"
+const toPopularity = (value: string | null | undefined): MindMapPopularity =>
+    value === "high" || value === "medium" || value === "low" ? value : null
 
 /** Props for {@link MindMapPage}. */
 export interface MindMapPageProps {
-    /** Which shape to render — see the file header for how the two differ. */
-    variant: MindMapVariant
-
-    // ── `workspace`: the `MindMapRail` search pane ──
-    /** Current search text (controlled). Ignored outside `workspace`. */
-    query: string
-    /** Fired on every keystroke in the rail's search field. */
-    onQuery: (query: string) => void
-    /** Current popularity-tier filter. */
-    tier: MindMapRailTier
-    /** Fired with the tier the reader picked in the rail's funnel popover. */
-    onTier: (tier: MindMapRailTier) => void
-    /** The current query+tier's matching keywords, in display order. */
-    items: Array<MindMapRailItem>
-    /** Which result is currently focused on the canvas, if any. */
-    selectedId?: string
-    /** Fired with a result's id when its rail row is pressed. */
-    onPick: (id: string) => void
-    /** `true` → the rail's own query/tier fetch is in flight (independent of `isSkeleton`). */
-    isRailLoading?: boolean
-    /** Accessible name for the rail's search field. */
-    railAriaLabel: string
-    /** Accessible name for the rail's tier filter group. */
-    railTierAriaLabel: string
-    /** Accessible name for the rail's drag-to-resize handle. */
-    railResizeAriaLabel: string
-
-    // ── `standalone`: floating chrome over the canvas ──
-    /** Href of the viewer's next unread lesson/challenge, or `null` when none resolves. Ignored outside `standalone`. */
-    resumeHref?: string | null
-    /** `true` → the viewer has read everything the map has to offer. */
-    allContentDone?: boolean
-    /** Fired on a resume press. */
-    onResume?: () => void
-    /** Accessible name for the resume action. */
-    continueAriaLabel?: string
-    /** Legend entries — colour swatch + label, e.g. done/in-progress/not-started/locked/current. */
-    legendItems?: Array<LegendItem>
-    /** Fired on every press of the zoom-in button. */
-    onZoomIn?: () => void
-    /** Fired on every press of the zoom-out button. */
-    onZoomOut?: () => void
-    /** Fired on every press of the fullscreen toggle. */
-    onToggleFullscreen?: () => void
-    /** `true` → canvas is currently fullscreen. */
-    isFullscreen?: boolean
-    /** Per-button accessible names for the zoom/fullscreen rail. */
-    fullscreenAriaLabels?: MindMapFullscreenButtonAriaLabels
-
-    // ── shared ──
-    /** `true` → every block that can mirror itself does; the canvas gap swaps to its loading wording. */
-    isSkeleton?: boolean
-    /** `true` → the course has no authored map/modules yet. `workspace`-ONLY — see the file header. */
-    isEmpty?: boolean
-}
-
-/** localStorage key + bounds the real `MindMapWorkspace` persists the rail width under. */
-const RAIL_STORAGE_KEY = "mindmap-rail-width"
-const RAIL_DEFAULT_WIDTH = 320
-const RAIL_MIN_WIDTH = 264
-const RAIL_MAX_WIDTH = 520
-
-const CANVAS_GAP_TITLE = "Concept map region"
-const CANVAS_GAP_DESCRIPTION = "The real ReactFlow graph (nodes, drawer, minimap) isn't built this pass — this block is where it will mount (§B3)."
-const CANVAS_GAP_LOADING_TITLE = "Loading map…"
-
-const WORKSPACE_EMPTY_TITLE = "This course has no concept map yet"
-const WORKSPACE_EMPTY_DESCRIPTION = "The map is generated automatically once the course has enough modules — check back later."
-
-/** This screen's own identity — handed down to whichever `Stage` is the root, per branch, instead of a wrapping div (BLOCK-2). See `_identity.ts`. */
-const MIND_MAP_PAGE_IDENTITY: CallerIdentity = { tier: "page", component: "MindMapPage" }
-
-/** Props for the {@link MindMapCanvasGap} stand-in below. */
-interface MindMapCanvasGapProps {
-    isLoading?: boolean
+    /**
+     * Which shape to render. `workspace` is the learn-shell third column (rail
+     * beside the graph); `standalone` is the full-bleed map with floating chrome.
+     */
+    variant?: MindMapVariant
 }
 
 /**
- * Stand-in for the out-of-reach ReactFlow engine (§B3) — see the file header's
- * "CANVAS GAP" note for why `AsyncContentEmpty` is the reused shape here.
- */
-const MindMapCanvasGap = ({ isLoading = false}: MindMapCanvasGapProps) => (
-    <StackV
-        gap={1}
-        principles={["sibling-stack"]}
-        align="center"
-        justify="center"
-        classNames={["h-full"]}
-
-        items={[() => (
-            <AsyncContentEmpty
-
-                icon={ShareNetworkIcon}
-                title={isLoading ? CANVAS_GAP_LOADING_TITLE : CANVAS_GAP_TITLE}
-                description={isLoading ? undefined : CANVAS_GAP_DESCRIPTION}
-            />
-        )]}
-    />
-)
-
-/**
- * `workspace` empty state — the course has no authored map yet. Replaces the
- * ENTIRE spine, same "one frame + one composite, each badging itself" shape
- * `CourseContents`/`ModulePage` already established for this exact case. The
- * viewport-relative full-bleed height is `Stage`'s `fill="viewport"` — the
- * same shape the real spine below uses for the same reason.
- */
-const MindMapWorkspaceEmpty = () => (
-    <Stage
-        fill="viewport"
-        identity={MIND_MAP_PAGE_IDENTITY}
-        canvas={() => (
-            <StackV
-                gap={1}
-                principles={["sibling-stack"]}
-                align="center"
-                justify="center"
-                items={[() => (
-                    <AsyncContentEmpty
-
-                        icon={MapTrifoldIcon}
-                        title={WORKSPACE_EMPTY_TITLE}
-                        description={WORKSPACE_EMPTY_DESCRIPTION}
-                    />
-                )]}
-            />
-        )}
-    />
-)
-
-/**
- * The mind-map screen, in its two shapes. See the file header for the function
- * list, the two corrections against the planner's proposed tree, and the
- * canvas gap.
+ * `MindMapPage` — the CONNECTED half of the course keyword graph. Owns the
+ * course fetch (a hard refresh straight into this route has no other loader, so
+ * the graph would otherwise stay empty), the map fetch, and the search + tier +
+ * selection state that drives BOTH panes: the rail lists the matching keywords,
+ * the canvas hides the non-matches. Selecting a keyword — from a canvas node OR
+ * a rail row — recentres the map on it and opens its drawer.
+ *
+ * The filter is a plain in-memory pass over the loaded tree, not a query: the
+ * whole graph is already in hand, so typing has to feel instant.
  *
  * @param props - {@link MindMapPageProps}
  */
-const MindMapPage = ({
-    variant,
-    query,
-    onQuery,
-    tier,
-    onTier,
-    items,
-    selectedId,
-    onPick,
-    isRailLoading = false,
-    railAriaLabel,
-    railTierAriaLabel,
-    railResizeAriaLabel,
-    resumeHref = null,
-    allContentDone = false,
-    onResume,
-    continueAriaLabel = "",
-    legendItems = [],
-    onZoomIn = () => {},
-    onZoomOut = () => {},
-    onToggleFullscreen = () => {},
-    isFullscreen = false,
-    fullscreenAriaLabels = { zoomIn: "", zoomOut: "", toggleFullscreen: "" },
-    isSkeleton = false,
-    isEmpty = false,
-}: MindMapPageProps) => {
-    // Built as a thunk, called only for the non-empty branch below — mirrors
-    // `_ModulePage`'s `spine(isSkeleton)`, so the empty branch never pays for
-    // building a tree it will not render.
-    const workspace = () => {
-        const railSection = (
-            <MindMapRail
+export const MindMapPage = ({ variant = "workspace" }: MindMapPageProps) => {
+    const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
+    const course = useAppSelector((state) => state.course.entity)
+    const displayId = useAppSelector((state) => state.course.displayId)
+    const { isLoading: isCourseLoading, error: courseError, mutate: reloadCourse } = useQueryCourseSwr()
+    const { data, isLoading: isMapLoading } = useQueryCourseMindMapSwr(displayId ?? null)
 
-                query={query}
-                onQuery={onQuery}
-                tier={tier}
-                onTier={onTier}
-                items={items}
-                selectedId={selectedId}
-                onPick={onPick}
-                isLoading={isRailLoading}
-                ariaLabel={railAriaLabel}
-                tierAriaLabel={railTierAriaLabel}
-                isSkeleton={isSkeleton}
+    const [query, setQuery] = useState("")
+    const [tier, setTier] = useState<MindMapRailTier>("all")
+    const [selectedId, setSelectedId] = useState<string | null>(null)
 
-            />
-        )
+    // The rail's result list: concept keywords clearing the tier floor and (while
+    // typing) the substring, each carrying its ancestor breadcrumb for context.
+    const items = useMemo<Array<MindMapRailItem>>(
+        () => {
+            if (!data) {
+                return []
+            }
+            const value = query.trim().toLowerCase()
+            const nodeById = new Map(data.nodes.map((node) => [node.id, node]))
+            const parentOf = new Map(data.edges.map((edge) => [edge.target, edge.source]))
+            const labelOf = (id: string) =>
+                String((nodeById.get(id)?.data as unknown as CourseMindMapNodeData | undefined)?.label ?? "")
+            const breadcrumb = (id: string) => {
+                const parts: Array<string> = []
+                let cursor = parentOf.get(id)
+                while (cursor) {
+                    const ancestor = nodeById.get(cursor)
+                    if (!ancestor || ancestor.type === "course") {
+                        break
+                    }
+                    parts.unshift(labelOf(cursor))
+                    cursor = parentOf.get(cursor)
+                }
+                return parts.join(" › ")
+            }
+            return data.nodes
+                .filter((node) => {
+                    if (node.type !== "concept") {
+                        return false
+                    }
+                    const nodeData = node.data as unknown as CourseMindMapNodeData
+                    return tierAllows(nodeData.popularity, tier)
+                        && (!value || String(nodeData.label).toLowerCase().includes(value))
+                })
+                .map((node) => {
+                    const nodeData = node.data as unknown as CourseMindMapNodeData
+                    return {
+                        id: node.id,
+                        label: String(nodeData.label),
+                        popularity: toPopularity(nodeData.popularity),
+                        breadcrumb: breadcrumb(node.id),
+                    }
+                })
+        },
+        [data, query, tier],
+    )
 
-        // The canvas region's floating chrome — in the real app these render as the
-        // SAME ReactFlow engine's own Panel children. Only present (`standalone`,
-        // resting) — `Stage` skips a slot entirely when it is `undefined`.
-        const showOverlays = variant === "standalone" && !isSkeleton
+    const onPick = useCallback((id: string) => setSelectedId(id), [])
 
-        const topCenterSlot = showOverlays
-            ? ({ isSkeleton }: SkeletonProps) => (
-                <StackV
-                    gap={1}
-                    principles={["sibling-stack"]}
-                    align="center"
-                    isSkeleton={isSkeleton}
-                    items={[() => (
-                        <MindMapContinueButton
+    /** The empty state's funnel: an unauthored map still has modules worth reading. */
+    const onBrowseModules = useCallback(
+        () => {
+            if (!displayId) {
+                return
+            }
+            router.push(pathConfig().locale(locale).course(displayId).learn().content().build())
+        },
+        [displayId, locale, router],
+    )
 
-                            resumeHref={resumeHref}
-                            allContentDone={allContentDone}
-                            onResume={onResume}
-                            continueAriaLabel={continueAriaLabel}
-                            isSkeleton={isSkeleton}
-                        />
-                    )]}
-                />
-            )
-            : undefined
+    // The graph itself — the screen mounts it, and knows nothing about it beyond
+    // "something fills the canvas".
+    const Canvas = useCallback(
+        () => {
+            // `standalone` draws the MODULE graph (progress + floating chrome); `workspace`
+            // draws the KEYWORD graph beside the rail. Two different maps, one slot.
+            if (variant === "standalone") {
+                return <MindMapCanvas />
+            }
+            return data
+                ? (
+                    <ConceptMap
+                        data={data}
+                        query={query}
+                        tier={tier}
+                        selectedId={selectedId}
+                        onSelectId={setSelectedId}
+                    />
+                )
+                : null
+        },
+        [data, query, selectedId, tier, variant],
+    )
 
-        const bottomStartSlot = showOverlays
-            ? ({ isSkeleton }: SkeletonProps) => (
-                <StackV
-                    gap={1}
-                    isSkeleton={isSkeleton}
-                    items={[() => <Legend items={legendItems} />]}
-                />
-            )
-            : undefined
-
-        const bottomEndSlot = showOverlays
-            ? ({ isSkeleton }: SkeletonProps) => (
-                <StackV
-                    gap={1}
-                    isSkeleton={isSkeleton}
-                    items={[() => (
-                        <MindMapFullscreenButton
-
-                            onZoomIn={onZoomIn}
-                            onZoomOut={onZoomOut}
-                            onToggleFullscreen={onToggleFullscreen}
-                            isFullscreen={isFullscreen}
-                            ariaLabels={fullscreenAriaLabels}
-                            isSkeleton={isSkeleton}
-                        />
-                    )]}
-                />
-            )
-            : undefined
-
-        // The canvas region: the out-of-reach engine's gap, plus (standalone only) the
-        // floating chrome that in the real app renders as the SAME engine's own Panel
-        // children. `Stage` owns the positioning context and the three floating anchors —
-        // no page-level `relative`/`absolute` left.
-        const canvasStage = (
-            <Stage
-                canvas={({ isSkeleton }: SkeletonProps) => <MindMapCanvasGap isLoading={isSkeleton} />}
-                topCenter={topCenterSlot}
-                bottomStart={bottomStartSlot}
-                bottomEnd={bottomEndSlot}
-                isSkeleton={isSkeleton}
-                classNames={["min-w-0", "flex-1"]}
-            />
-        )
-
-        const workspaceRail = (
-            <ResizableRail
-                storageKey={RAIL_STORAGE_KEY}
-                defaultWidth={RAIL_DEFAULT_WIDTH}
-                minWidth={RAIL_MIN_WIDTH}
-                maxWidth={RAIL_MAX_WIDTH}
-                ariaLabel={railResizeAriaLabel}
-                handleSide="right"
-                className="h-full shrink-0 border-r border-default"
-
-            >
-                <ScrollArea
-                    axis="y"
-                    isSkeleton={isSkeleton}
-                    body={({ isSkeleton }: SkeletonProps) => (
-                        <StackV
-                            padding={6}
-                            principles={["page-pad"]}
-                            gap={1}
-                            classNames={["h-full"]}
-                            isSkeleton={isSkeleton}
-                            items={[() => railSection]}
-                        />
-                    )}
-                />
-            </ResizableRail>
-        )
-
-        const workspaceSections = (
-            <>
-                {variant === "workspace" ? workspaceRail : null}
-                {canvasStage}
-            </>
-        )
-
-        // The viewport-relative full-bleed height — the shell's own chrome height
-        // subtracted — is `Stage`'s `fill="viewport"`; the rail + canvas row is its
-        // `canvas` slot (a stage need not be a literal drawing surface — see the
-        // frame's own file header for why this is the shape it names).
+    // error beats a stale loading flag (BLOCK-8); the course fetch is the one that
+    // can fail loudly here, so it replaces the whole viewport rather than leaving
+    // an empty canvas the reader would read as "this course has no map".
+    if (courseError && !course) {
         return (
             <Stage
+                identity={{ tier: "page", component: "MindMapPage" }}
                 fill="viewport"
-                isSkeleton={isSkeleton}
-                identity={MIND_MAP_PAGE_IDENTITY}
-                canvas={({ isSkeleton }: SkeletonProps) => (
-                    <StackH gap={1} isSkeleton={isSkeleton} items={[() => workspaceSections]} />
+                canvas={() => (
+                    <AsyncContentError
+                        title={t("courseLanding.errorTitle")}
+                        onRetry={() => { void reloadCourse() }}
+                        retryLabel={t("courseLanding.retry")}
+                    />
                 )}
             />
         )
     }
 
-    return variant === "workspace" && isEmpty
-        ? <MindMapWorkspaceEmpty />
-        : workspace()
-}
+    const isSkeleton = (isCourseLoading && !course) || (isMapLoading && !data)
 
-export { MindMapPage }
+    return (
+        <_MindMapPage
+            variant={variant}
+            query={query}
+            onQuery={setQuery}
+            tier={tier}
+            onTier={setTier}
+            items={items}
+            selectedId={selectedId ?? undefined}
+            onPick={onPick}
+            railAriaLabel={t("mindMap.toolbar.searchAria")}
+            railTierAriaLabel={t("mindMap.toolbar.tierAria")}
+            railResizeAriaLabel={t("mindMap.rail.resizeAria")}
+            canvas={Canvas}
+            isSkeleton={isSkeleton}
+            // settled with a map that has no nodes → the course has nothing authored yet
+            isEmpty={!isMapLoading && (!data || data.nodes.length === 0)}
+            onBrowseModules={displayId ? onBrowseModules : undefined}
+            labels={{
+                emptyTitle: t("mindMap.emptyTitle"),
+                emptyDescription: t("mindMap.emptyDescription"),
+                emptyCta: t("mindMap.emptyCta"),
+            }}
+        />
+    )
+}

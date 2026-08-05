@@ -1,16 +1,12 @@
+"use client"
+
 import React from "react"
-import {
-    MindMap,
-} from "@/components/features/learn/MindMap"
+import { MindMapPage } from "@/components/pages/MindMapPage"
 
 /**
- * Route `/[locale]/courses/[courseId]/learn/mind-map` — renders the course
- * mind-map screen (breadcrumbs + title + interactive canvas).
- *
- * Thin route file: only mounts the component, no logic/UI here.
+ * Learn / mind-map — the course keyword graph as the shell's third column:
+ * the search rail beside the concept canvas.
  */
-const Page = () => {
-    return <MindMap />
-}
+const Page = () => <MindMapPage variant="workspace" />
 
 export default Page

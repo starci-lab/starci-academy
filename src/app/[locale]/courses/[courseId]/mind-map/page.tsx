@@ -1,15 +1,12 @@
+"use client"
+
 import React from "react"
-import { StandaloneMindMap } from "@/components/features/learn/MindMap/StandaloneMindMap"
+import { MindMapPage } from "@/components/pages/MindMapPage"
 
 /**
- * Route `/[locale]/courses/[courseId]/mind-map` — public, full-width course
- * mind-map. Sits beside the `learn` segment (not inside it) so it renders
- * without the authenticated Sidebar shell and requires no login.
- *
- * Thin route file: only mounts the component, no logic/UI here.
+ * Public course mind map — outside the authenticated learn shell, so the module
+ * graph spans the full viewport with its own floating chrome and no rail.
  */
-const Page = () => {
-    return <StandaloneMindMap />
-}
+const Page = () => <MindMapPage variant="standalone" />
 
 export default Page

@@ -23,14 +23,22 @@ import { StackH, StackV } from "@/components/frames/Stack"
 /** The popularity-tier filter this rail's result list is narrowed by. */
 export type MindMapRailTier = "all" | "medium" | "high"
 
+/**
+ * How common a keyword is across the map. The graph carries this as a NAMED tier,
+ * not a score — an earlier version of this block took a 0–100 number and bucketed
+ * it, which no data source ever produced. Structural nodes (the course root) carry
+ * no tier at all, hence `null`.
+ */
+export type MindMapPopularity = "high" | "medium" | "low" | null
+
 /** One keyword result — plain DATA; the block builds the row's tone and check. */
 export interface MindMapRailItem {
     /** Stable id — the React key, and what `onPick` fires with. */
     id: string
     /** The keyword's display label. */
     label: string
-    /** Relevance/popularity score in the map (0–100, higher = more central). Drives the row's tone via {@link popularityTone}. */
-    popularity: number
+    /** How common this keyword is — drives the row's tone via {@link popularityTone}. */
+    popularity: MindMapPopularity
     /** Where this keyword sits in the map's hierarchy, e.g. "Networking > TCP > Handshake". */
     breadcrumb: string
 }
@@ -72,15 +80,10 @@ const TIER_LABEL: Record<MindMapRailTier, string> = {
 
 const TIER_ORDER: Array<MindMapRailTier> = ["all", "medium", "high"]
 
-/** Popularity score at/above which a row earns the "hub term" accent band. */
-const POPULARITY_HIGH_THRESHOLD = 70
-/** Popularity score at/above which a row earns the quieter "worth a look" band. */
-const POPULARITY_MEDIUM_THRESHOLD = 35
-
 /** Popularity → row tone — see file header's judgement call for why only two bands exist. */
-const popularityTone = (popularity: number): VerdictBandVariant | undefined => {
-    if (popularity >= POPULARITY_HIGH_THRESHOLD) return "accent"
-    if (popularity >= POPULARITY_MEDIUM_THRESHOLD) return "warning"
+const popularityTone = (popularity: MindMapPopularity): VerdictBandVariant | undefined => {
+    if (popularity === "high") return "accent"
+    if (popularity === "medium") return "warning"
     return undefined
 }
 

@@ -28,12 +28,12 @@ import type {
     CourseMindMapData,
     CourseMindMapNodeData,
 } from "@/modules/api/graphql/queries/types"
-import type { MindMapTier } from "../MindMapRail"
+import type { MindMapRailTier as MindMapTier } from "@/components/starci/blocks/learn/MindMapRail"
 import {
     POP_RANK,
     TIER_MIN,
     tierAllows,
-} from "../mindMapFilter"
+} from "@/modules/utils/mind-map"
 import { MindMapNodeDrawer } from "@/components/drawers/MindMapNodeDrawer"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 

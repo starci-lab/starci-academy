@@ -2,15 +2,15 @@ import React from "react"
 import {
     ConsultantDirectoryHeader,
     type ConsultantDirectoryHeaderCrumb,
-} from "@/components/starci/blocks/consultant/ConsultantDirectoryHeader"
+} from "@/components/blocks/consultant/ConsultantDirectoryHeader"
 import {
     ConsultantDirectoryCompanySearch,
     type ConsultantCompanySuggestion,
-} from "@/components/starci/blocks/consultant/ConsultantDirectoryCompanySearch"
+} from "@/components/blocks/consultant/ConsultantDirectoryCompanySearch"
 import {
     ConsultantDirectoryGrid,
-} from "@/components/starci/blocks/consultant/ConsultantDirectoryGrid"
-import { type ConsultantCardConsultant } from "@/components/starci/blocks/consultant/ConsultantCard"
+} from "@/components/blocks/consultant/ConsultantDirectoryGrid"
+import { type ConsultantCardConsultant } from "@/components/blocks/consultant/ConsultantCard"
 import { Container } from "@/components/frames/Container"
 import { StackV } from "@/components/frames/Stack"
 

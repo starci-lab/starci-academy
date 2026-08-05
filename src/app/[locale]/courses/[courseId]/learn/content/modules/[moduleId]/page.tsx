@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { ModulePage } from "@/components/features/learn/ModulePage"
+import { ModulePage } from "@/components/pages/ModulePage"
 
 const Page = () => {
     return (

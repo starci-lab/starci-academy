@@ -2,7 +2,10 @@
 
 import React from "react"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { ConsultantCardSkeleton } from "../../Headhuntings/ConsultantCardSkeleton"
+import { ConsultantCard } from "@/components/blocks/consultant/ConsultantCard"
+
+/** Resting tiles hand this as `onOpen` — `ConsultantCard.isSkeleton` refuses presses, so it never fires. */
+const NOOP = () => {}
 
 /**
  * Skeleton placeholder shown while the headhunting company detail loads — mirrors
@@ -23,10 +26,15 @@ export const HeadhuntingCompanyLoadingState = () => (
             </div>
         </div>
 
-        {/* consultants grid — one skeleton card per column */}
+        {/* consultants grid — the REAL tile at rest, so it cannot drift from the loaded one */}
         <div className="grid gap-4 @app-md:grid-cols-2 @app-lg:grid-cols-3">
             {[0, 1, 2].map((index) => (
-                <ConsultantCardSkeleton key={index} />
+                <ConsultantCard
+                    key={index}
+                    consultant={{ id: `pending-${index}`, fullName: "" }}
+                    onOpen={NOOP}
+                    isSkeleton
+                />
             ))}
         </div>
     </div>

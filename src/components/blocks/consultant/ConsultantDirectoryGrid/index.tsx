@@ -3,7 +3,7 @@ import { AsyncContent, type AsyncContentEmptyProps } from "@/components/composit
 import { Grid, type GridItem } from "@/components/frames/Grid"
 import { StackV } from "@/components/frames/Stack"
 import { Typography } from "@/components/atoms/text/Typography"
-import { ConsultantCard, type ConsultantCardConsultant } from "@/components/starci/blocks/consultant/ConsultantCard"
+import { ConsultantCard, type ConsultantCardConsultant } from "@/components/blocks/consultant/ConsultantCard"
 
 /**
  * `ConsultantDirectoryGrid` — the consultant directory's browse surface: a

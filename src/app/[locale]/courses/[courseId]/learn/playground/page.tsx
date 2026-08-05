@@ -1,14 +1,14 @@
 "use client"
 
 import React from "react"
-import { PlaygroundHub } from "@/components/features/learn/Playground/PlaygroundHub"
+import { PlaygroundHubPage } from "@/components/pages/PlaygroundHubPage"
 
 /**
  * Learn / playground: the hub list of hands-on Docker/K8s exercises for the
  * active course.
  */
 const Page = () => {
-    return <PlaygroundHub />
+    return <PlaygroundHubPage />
 }
 
 export default Page

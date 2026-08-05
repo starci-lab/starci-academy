@@ -68,7 +68,7 @@ export const MockInterviewTrackSnapshot = ({ courseId, className }: MockIntervie
 
     return (
         <div className={cn("flex flex-wrap items-center gap-3 rounded-xl bg-default/40 p-4", className)}>
-            <StatPair value={track.interviewScore} label={t("mockInterview.trackSnapshotLabel")} />
+            <StatPair value={String(track.interviewScore)} label={t("mockInterview.trackSnapshotLabel")} />
             <Chip size="md" variant="soft" color={bandColorOf(track.band)}>
                 <Chip.Label>{t(`jobReadiness.band.${track.band}`)}</Chip.Label>
             </Chip>

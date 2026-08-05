@@ -536,7 +536,7 @@ export const PracticeProblemPage = () => {
                 items={[
                     {
                         key: "passed",
-                        content: (
+                        content: () => (
                             <div className="flex flex-col gap-0">
                                 <span className="text-lg font-bold">{latestSubmission.passedCount}/{latestSubmission.totalCount}</span>
                                 <span className="text-xs text-muted">{t("codingPractice.statPassed")}</span>
@@ -545,7 +545,7 @@ export const PracticeProblemPage = () => {
                     },
                     {
                         key: "runtime",
-                        content: (
+                        content: () => (
                             <div className="flex flex-col gap-0">
                                 <span className="text-lg font-bold">{latestSubmission.runtimeMs ?? "—"}<span className="text-xs"> ms</span></span>
                                 <span className="text-xs text-muted">{t("codingPractice.statRuntime")}</span>
@@ -554,7 +554,7 @@ export const PracticeProblemPage = () => {
                     },
                     {
                         key: "memory",
-                        content: (
+                        content: () => (
                             <div className="flex flex-col gap-0">
                                 <span className="text-lg font-bold">{latestSubmission.memoryKb ?? "—"}<span className="text-xs"> KB</span></span>
                                 <span className="text-xs text-muted">{t("codingPractice.statMemory")}</span>

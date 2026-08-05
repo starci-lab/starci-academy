@@ -13,7 +13,7 @@ export interface StatRibbonItem {
     /** Stable key for the React list. */
     key: string
     /** Headline statistic (number / short count), rendered large. */
-    value: React.ReactNode
+    value: string
     /** Caption describing the value, rendered small + muted. */
     label: React.ReactNode
 }

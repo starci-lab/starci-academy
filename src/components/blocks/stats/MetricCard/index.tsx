@@ -13,22 +13,22 @@ import { SectionCard } from "@/components/blocks/cards/SectionCard"
  */
 export interface MetricCardProps {
     /**
-     * The primary metric value to highlight (e.g. "1,204", "98%", a ReactNode
-     * counter). Rendered large and emphasized.
+     * The primary metric value to highlight (e.g. "1,204", "98%").
+     * Rendered large and emphasized.
      */
-    value: React.ReactNode
+    value: string
     /**
      * Short description of what the value measures (e.g. "Total Enrollments",
      * "Completion Rate"). The PROMINENT line: rendered `sm` in the default
      * foreground tone, right below the value.
      */
-    label: React.ReactNode
+    label: string
     /**
      * Optional supplementary note below the label. The QUIET footnote: rendered
      * SMALL and MUTED (`xs`) — deliberately less prominent than the label so
      * the two lines never read as the same thing (teacher 2026-07-16).
      */
-    hint?: React.ReactNode
+    hint?: string
     /**
      * Where this card sits inside its parent. Appearance is not passable — it
      * is already a prop.

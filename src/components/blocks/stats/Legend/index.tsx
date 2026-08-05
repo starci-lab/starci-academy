@@ -1,5 +1,4 @@
 import React from "react"
-import type { ReactNode } from "react"
 import { Typography, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -8,7 +7,7 @@ export interface LegendItem {
     /** Stable key. */
     key: string
     /** Label shown next to the swatch. */
-    label: ReactNode
+    label: string
     /** Swatch colour (a token string, e.g. `var(--success)`). */
     color: string
 }

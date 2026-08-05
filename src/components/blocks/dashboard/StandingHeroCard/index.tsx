@@ -19,7 +19,7 @@ export interface StandingHeroProgress {
     /** Fill ratio, clamped to `0..1`. */
     ratio: number
     /** Muted line above the meter (e.g. "40 more points to reach the promotion zone"). */
-    label: React.ReactNode
+    label: string
 }
 
 /** Props for the {@link StandingHeroCard} block. */

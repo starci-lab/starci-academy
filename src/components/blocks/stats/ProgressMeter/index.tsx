@@ -2,7 +2,6 @@
 
 import React from "react"
 import { ProgressBar, Typography, cn } from "@heroui/react"
-import type { ReactNode } from "react"
 
 import { ProgressMeterTargetMark } from "@/components/blocks/stats/ProgressMeter/TargetMark"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -28,7 +27,7 @@ export interface ProgressMeterProps extends WithClassNames<undefined> {
      * Pass a translated string (e.g. `t("...")`) — the block never calls
      * `useTranslations` itself.
      */
-    label?: ReactNode
+    label?: string
     /**
      * When `true`, renders the rounded completion percentage on the right of
      * the top row. Defaults to `false`.
@@ -52,7 +51,7 @@ export interface ProgressMeterProps extends WithClassNames<undefined> {
      * when {@link ProgressMeterProps.target} is set. Keep it short — it floats
      * over the bar, so a long label collides with the top row.
      */
-    targetLabel?: ReactNode
+    targetLabel?: string
 }
 
 /**

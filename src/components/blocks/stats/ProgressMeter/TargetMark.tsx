@@ -1,5 +1,4 @@
 import React from "react"
-import type { ReactNode } from "react"
 import { Typography, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -8,7 +7,7 @@ export interface ProgressMeterTargetMarkProps extends WithClassNames<undefined> 
     /** Horizontal position on the track, `0..100` (already clamped by the caller). */
     percent: number
     /** Optional short label floating just above the pill (e.g. `"85%"`). Keep it short — it floats over the bar. */
-    label?: ReactNode
+    label?: string
 }
 
 /**

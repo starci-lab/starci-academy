@@ -134,14 +134,14 @@ export const FlashcardReviewStats = ({ courseId, onStartReview }: FlashcardRevie
                     target: RETENTION_TARGET,
                 }),
                 cta: t(ctaKey),
-                matureSplitLabel: (
+                matureSplitLabel: () => (
                     <>
                         {t("flashcard.review.matureSplitLabel")}
                         <br />
                         {t("flashcard.review.matureSplitCaption")}
                     </>
                 ),
-                youngSplitLabel: (
+                youngSplitLabel: () => (
                     <>
                         {t("flashcard.review.youngSplitLabel")}
                         <br />

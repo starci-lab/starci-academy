@@ -71,9 +71,9 @@ export const ProgressCockpit = ({
     const standingPending = standingSwr.isLoading && !standing
 
     // headline metric row; rank + percentile hide when the user is unranked
-    const stats: Array<{ key: string; value: React.ReactNode }> = [
-        { key: "solved", value: solved },
-        { key: "points", value: totalPoints },
+    const stats: Array<{ key: string; value: string | null }> = [
+        { key: "solved", value: String(solved) },
+        { key: "points", value: String(totalPoints) },
     ]
     if (standingPending) {
         stats.push({ key: "rank", value: null }, { key: "percentile", value: null })

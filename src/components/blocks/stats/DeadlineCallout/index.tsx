@@ -1,12 +1,11 @@
 import React from "react"
-import type { ReactNode } from "react"
 import { Typography, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One day's bar in a {@link DeadlineCallout}'s forecast row. */
 export interface DeadlineCalloutForecastBar {
     /** Short label under the bar (e.g. a weekday abbreviation). */
-    label: ReactNode
+    label: string
     /** Fill height as a share of the row, `0..1` — the caller normalizes against the busiest day. */
     ratio: number
     /** True marks this as the overload day ("will pile up") — fills danger instead of the neutral accent tone. */
@@ -18,13 +17,13 @@ export interface DeadlineCalloutProps extends WithClassNames<undefined> {
     /** How many items are about to be lost — rendered large inside the tinted panel. */
     count: number
     /** The deadline sentence (e.g. "12 cards will slip before Thursday"). */
-    title: ReactNode
+    title: string
     /** Optional supporting line under the title, inside the tinted panel (what happens if the learner waits). */
-    hint?: ReactNode
+    hint?: string
     /** Optional per-day forecast bars below the panel — surfaces the load ahead so an overload day doesn't blindside the learner. Omit when there is no lookahead data yet. */
     forecast?: DeadlineCalloutForecastBar[]
     /** Optional closing line under the forecast (e.g. which day is overloaded + what to do about it). */
-    caption?: ReactNode
+    caption?: string
 }
 
 /**

@@ -1,5 +1,4 @@
 import React from "react"
-import type { ReactNode } from "react"
 import { Typography, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -8,7 +7,7 @@ export interface CourseProgressDimension {
     /** Stable key (also used as the i18n label lookup elsewhere). */
     key: string
     /** Legend label. */
-    label: ReactNode
+    label: string
     /** Real completed count for this dimension. */
     completed: number
     /** Real total count for this dimension — dimensions with `total === 0` render no lane at all. */

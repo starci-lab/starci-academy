@@ -1,5 +1,4 @@
-import React from "react"
-import type { ReactNode } from "react"
+import React, { type ComponentType } from "react"
 import { cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -8,7 +7,7 @@ export interface StatGridCardItem {
     /** Stable key. */
     key: string
     /** Cell content — the block owns grid/border structure only, content is free-form. */
-    content: ReactNode
+    content: ComponentType
 }
 
 /** Props for the {@link StatGridCard} block. */
@@ -40,6 +39,7 @@ export const StatGridCard = ({ items, className }: StatGridCardProps) => {
     return (
         <div className={cn("grid grid-cols-2 overflow-hidden rounded-3xl border border-default bg-surface", className)}>
             {items.map((item, index) => {
+                const Content = item.content
                 const isLastOddSpan = isOddTotal && index === total - 1
                 const isRightCol = index % 2 === 1
                 const isLastRow = isLastOddSpan || index >= total - (isOddTotal ? 1 : 2)
@@ -53,7 +53,7 @@ export const StatGridCard = ({ items, className }: StatGridCardProps) => {
                             !isLastRow && "border-b border-default",
                         )}
                     >
-                        {item.content}
+                        <Content />
                     </div>
                 )
             })}

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { type ComponentType } from "react"
 import type { ReactNode } from "react"
 import { ArrowRightIcon, ChartLineUpIcon } from "@phosphor-icons/react"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
@@ -54,9 +54,9 @@ export interface FlashcardReviewStatsLabels {
     /** CTA label — already picked BY BAND ("ease off new cards" vs "review weakest deck"). */
     cta: string
     /** "Well-learned cards (mature)" + its caption, already joined with a line break. */
-    matureSplitLabel: ReactNode
+    matureSplitLabel: ComponentType
     /** "New cards (young)" + its caption, already joined with a line break. */
-    youngSplitLabel: ReactNode
+    youngSplitLabel: ComponentType
     weakTopicMapLabel: string
     studyHeading: string
 }
@@ -235,7 +235,7 @@ export const _FlashcardReviewStats = ({
                                     band: retentionColorOf(youngRetention),
                                 },
                             ]}
-                            action={weakestDeckId ? (
+                            action={weakestDeckId ? () => (
                                 <Button
                                     variant="primary"
                                     size="sm"

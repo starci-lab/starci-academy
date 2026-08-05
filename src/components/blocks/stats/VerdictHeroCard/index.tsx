@@ -1,4 +1,4 @@
-import React from "react"
+import React, { type ComponentType } from "react"
 import type { ReactNode } from "react"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
@@ -20,10 +20,10 @@ export interface VerdictHeroMeter {
 
 /** One mini stat in a {@link VerdictHeroCard}'s optional split row (e.g. "mature vs young" retention). */
 export interface VerdictHeroSplit {
-    /** Muted caption above the value (e.g. "Cards mastered"). */
-    label: ReactNode
+    /** Muted caption above the value (e.g. "Cards mastered") — a buildable slot. */
+    label: ComponentType
     /** The split's own value — pass the unit inline if it needs one (this row has no separate `unit` prop). */
-    value: ReactNode
+    value: string
     /** Colors this split's value by band; omit to keep it neutral foreground (e.g. a split that isn't itself good/bad). */
     band?: VerdictHeroBand
 }
@@ -39,13 +39,13 @@ export interface VerdictHeroCardProps {
     /** The one-line judgment sentence (e.g. "You're overloaded — adding new cards faster than you can retain them."). This is the "verdict" — always render a real verdict, never a bare restatement of the number. */
     verdict: ReactNode
     /** Optional muted line under the verdict, giving the evidence behind it. */
-    sub?: ReactNode
+    sub?: string
     /** Optional progress bar toward {@link VerdictHeroMeter.target}. Omit when the surface has no meaningful bar to show (e.g. a pure count). */
     meter?: VerdictHeroMeter
     /** Optional 2-up mini-stat row that breaks the headline number down (e.g. mature vs young retention) — the "▽" evidence framing. Omit when the number has no natural split. */
     splits?: ReadonlyArray<VerdictHeroSplit>
-    /** Optional primary action slot (caller supplies the actual `<Button>`) — the "→" framing that turns the verdict into a next step. */
-    action?: ReactNode
+    /** Optional primary action slot (caller supplies the actual button) — a buildable slot. */
+    action?: ComponentType
 }
 
 /**
@@ -108,7 +108,7 @@ export const VerdictHeroCard = ({
     sub,
     meter,
     splits,
-    action,
+    action: Action,
 }: VerdictHeroCardProps) => {
     const meterMax = meter?.max ?? 100
 
@@ -149,31 +149,34 @@ export const VerdictHeroCard = ({
                         gap={1}
                         align="stretch"
                         divider
-                        items={splits.map((split) => () => (
-                            // position-keyed: a fixed N-up breakdown of the SAME headline number,
-                            // never reordered/filtered at runtime like a normal list.
-                            <StackV
-                                gap={2}
-                                padding={4}
-                                classNames={["flex-1"]}
-                                items={[
-                                    () => <Typography size="xs" color="muted" text={split.label} />,
-                                    () => (
-                                        <Typography
-                                            size="h4"
-                                            weight="bold"
-                                            color={split.band ? SPLIT_VALUE_COLOR[split.band] : undefined}
-                                            text={split.value}
-                                        />
-                                    ),
-                                ]}
-                            />
-                        ))}
+                        items={splits.map((split) => () => {
+                            const SplitLabel = split.label
+                            return (
+                                // position-keyed: a fixed N-up breakdown of the SAME headline number,
+                                // never reordered/filtered at runtime like a normal list.
+                                <StackV
+                                    gap={2}
+                                    padding={4}
+                                    classNames={["flex-1"]}
+                                    items={[
+                                        () => <Typography size="xs" color="muted" text={<SplitLabel />} />,
+                                        () => (
+                                            <Typography
+                                                size="h4"
+                                                weight="bold"
+                                                color={split.band ? SPLIT_VALUE_COLOR[split.band] : undefined}
+                                                text={split.value}
+                                            />
+                                        ),
+                                    ]}
+                                />
+                            )
+                        })}
                     />
                 </div>
             ) : null}
 
-            {action ? <div>{action}</div> : null}
+            {Action ? <div><Action /></div> : null}
         </SectionCard>
     )
 }

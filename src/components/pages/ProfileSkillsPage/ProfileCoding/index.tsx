@@ -116,9 +116,9 @@ export const ProfileCoding = ({
 
     // headline metric row (count · XP · top percentile · rank), mirroring the Challenges tab.
     // percentile + rank hide when unranked (no solved problems).
-    const stats: Array<{ key: string; value: React.ReactNode }> = [
-        { key: "solved", value: solved },
-        { key: "xp", value: xp?.codingXp ?? 0 },
+    const stats: Array<{ key: string; value: string }> = [
+        { key: "solved", value: String(solved) },
+        { key: "xp", value: String(xp?.codingXp ?? 0) },
     ]
     if (standing?.percentile != null) {
         stats.push({ key: "percentile", value: `${standing.percentile}%` })

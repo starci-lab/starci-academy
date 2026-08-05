@@ -1,5 +1,4 @@
 import React from "react"
-import type { ReactNode } from "react"
 import { Typography, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -8,7 +7,7 @@ export interface SegmentBarSegment {
     /** Stable key. */
     key: string
     /** Legend label (the name; the count is appended automatically). */
-    label: ReactNode
+    label: string
     /** Raw count — segment width is its share of the total. */
     value: number
     /** CSS colour for the slice + legend dot (e.g. `var(--success)`). Falls back to a palette. */
@@ -38,7 +37,7 @@ export interface SegmentBarProps extends WithClassNames<undefined> {
      */
     inlineLabels?: boolean
     /** Optional muted takeaway sentence rendered below the legend (e.g. "only 8% is retained long-term"). */
-    caption?: ReactNode
+    caption?: string
 }
 
 /** Default slice colours (semantic tokens) when a segment has no explicit `color`. */

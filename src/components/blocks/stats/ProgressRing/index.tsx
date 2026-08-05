@@ -27,14 +27,14 @@ export interface ProgressRingProps extends WithClassNames<undefined> {
     value: number
     /**
      * Centered label rendered inside the ring. Defaults to the rounded percentage
-     * (e.g. `"68%"`). Pass a `ReactNode` to show a fraction or a short word instead.
+     * (e.g. `"68%"`). Pass a short fraction or word instead.
      */
-    label?: React.ReactNode
+    label?: string
     /**
      * Optional caption rendered below the ring — small and muted (`body-xs`). Use it
      * to name what the ring measures (e.g. `"Course progress"`).
      */
-    caption?: React.ReactNode
+    caption?: string
     /**
      * Ring diameter. `"sm"` (64px) for inline/compact spots, `"md"` (96px, default)
      * for cards, `"lg"` (128px) for a hero stat. The centered label scales with it.

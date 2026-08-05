@@ -113,7 +113,7 @@ export const _WeeklyGoals = ({
 
     const gridItems: Array<StatGridCardItem> = items.map((item) => ({
         key: item.key,
-        content: renderGoalCell(item, isSkeleton),
+        content: () => renderGoalCell(item, isSkeleton),
     }))
 
     return (

@@ -88,11 +88,11 @@ export const ProfileChallenges = ({
 
     // headline metric row (Coding-tab style): passed + XP + percentile + rank.
     // XP is the REAL ledger sum from the backend (NOT a FE sum of scores).
-    const metricStats: Array<{ key: string; value: React.ReactNode }> = [
-        { key: "passed", value: challenges.length },
+    const metricStats: Array<{ key: string; value: string }> = [
+        { key: "passed", value: String(challenges.length) },
     ]
     if (strength?.xp != null) {
-        metricStats.push({ key: "xp", value: strength.xp })
+        metricStats.push({ key: "xp", value: String(strength.xp) })
     }
     if (strength?.percentile != null) {
         metricStats.push({ key: "percentile", value: `${strength.percentile}%` })

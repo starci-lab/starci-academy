@@ -116,7 +116,7 @@ export const OverviewCodeSkills = ({ className, label, onSeeMore, seeMoreLabel, 
                         <div className="flex flex-col gap-3">
                             {/* total solved headline + difficulty depth (easy→hard, real shares) */}
                             <StatPair
-                                value={totalSolved}
+                                value={String(totalSolved)}
                                 label={t("publicProfile.skillsSnapshot.solvedLabel")}
                             />
                             <SegmentBar

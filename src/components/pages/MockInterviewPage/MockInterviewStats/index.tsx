@@ -216,7 +216,7 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                                         scores: recentScores.join(" → "),
                                     })}
                                     meter={{ value: avgScore, max: 100, target: PASS_BAR }}
-                                    action={band !== "success" && onStartInterview ? (
+                                    action={band !== "success" && onStartInterview ? () => (
                                         <Button variant="primary" size="sm" onPress={onStartInterview}>
                                             {t("mockInterview.statsReadinessPracticeMoreCta", { count: sessionsNeeded })}
                                             <ArrowRightIcon className="size-4" aria-hidden focusable="false" />

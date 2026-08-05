@@ -16,7 +16,7 @@ export interface StatPairProps extends WithClassNames<undefined> {
      * The headline statistic — typically a number or short formatted count
      * (e.g. "1,204" or "12"). Rendered large and emphasized.
      */
-    value: React.ReactNode
+    value: string
     /**
      * The caption describing what the value measures (e.g. "Followers").
      * Rendered small and muted beneath the value.

@@ -102,7 +102,7 @@ export const OverviewChallengeSkills = ({ className, label, onSeeMore, seeMoreLa
                         <div className="flex flex-col gap-3">
                             {/* passed count headline + difficulty distribution (4-tone) */}
                             <StatPair
-                                value={challenges.length}
+                                value={String(challenges.length)}
                                 label={t("publicProfile.challengesCount")}
                             />
                             {difficultySegments.length > 0 ? (

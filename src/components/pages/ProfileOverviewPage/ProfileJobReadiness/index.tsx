@@ -157,7 +157,7 @@ export const ProfileJobReadiness = ({ className, label }: ProfileJobReadinessPro
                         <div className="flex flex-col gap-3">
                             <div className="flex flex-wrap items-center gap-3">
                                 <StatPair
-                                    value={strongestTrack.depthScore ?? 0}
+                                    value={String(strongestTrack.depthScore ?? 0)}
                                     label={strongestTrack.courseTitle}
                                 />
                                 <Chip size="md" variant="soft" color={bandColorOf(strongestTrack.band)}>

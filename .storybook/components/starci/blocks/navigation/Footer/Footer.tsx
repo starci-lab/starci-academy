@@ -6,6 +6,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { IconComponent } from "@sb-components/atoms/buttons/Button/Button"
 import { Container } from "@sb-components/frames/Container/Container"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import { FooterLinkColumn } from "./FooterLinkColumn"
 
 /**
  * BLOCK — `Footer`: the marketing site footer. See the component's own file
@@ -54,39 +55,6 @@ export interface FooterProps {
     onPrivacyPress: () => void
     /** Extra class on the root `<footer>` (placement only). */
     className?: string
-}
-
-/** Props for the internal {@link FooterLinkColumn} — one titled list of link rows. */
-interface FooterLinkColumnProps {
-    title: string
-    links: Array<FooterLinkItem>
-}
-
-/**
- * One titled column of link rows. Internal helper, not its own anatomy node
- * (same convention `Navbar`'s internal `NavbarLanguageMenu`/`NavbarThemeSwitch`
- * use) — its own `StackV`/`Typography`/`Link` parts are tagged directly.
- */
-const FooterLinkColumn = ({ title, links }: FooterLinkColumnProps) => {
-    const rows = links.map((link) => (
-        <HeroUILink
-            key={link.id}
-            onPress={link.onPress}
-            className="w-fit cursor-pointer text-sm text-muted transition-colors hover:text-foreground"
-
-        >
-            {link.label}
-        </HeroUILink>
-    ))
-
-    const column = (
-        <>
-            <Typography size="sm" weight="bold" text={title} />
-            <StackV gap={2} items={[() => rows]} />
-        </>
-    )
-
-    return <StackV gap={4} items={[() => column]} />
 }
 
 /**

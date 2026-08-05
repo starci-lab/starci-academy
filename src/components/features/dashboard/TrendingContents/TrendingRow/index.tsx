@@ -6,7 +6,7 @@ import {
 } from "@heroui/react"
 import {
     useResolveRouteNavigation,
-} from "../../EntityToken/useResolveRouteNavigation"
+} from "@/components/blocks/entity/EntityToken/useResolveRouteNavigation"
 import { SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Props for {@link TrendingRow}. */

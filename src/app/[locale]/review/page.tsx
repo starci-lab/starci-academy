@@ -1,12 +1,9 @@
-import React from "react"
-import { FlashcardReviewPage } from "@/components/features/practice/flashcard-review/FlashcardReviewPage"
+"use client"
 
-/**
- * Route `/[locale]/review` — flashcard review session (SM-2). Thin route file:
- * mounts the review component; all logic/UI lives in the component.
- */
-const Page = () => {
-    return <FlashcardReviewPage />
-}
+import React from "react"
+import { FlashcardReviewPage } from "@/components/pages/FlashcardReviewPage"
+
+/** Cross-course flashcard review. */
+const Page = () => <FlashcardReviewPage />
 
 export default Page

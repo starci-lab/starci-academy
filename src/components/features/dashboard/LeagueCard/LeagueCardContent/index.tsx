@@ -23,7 +23,7 @@ import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
 import {
     LeaderboardListCard,
     LeaderboardRow,
-} from "@/components/features/dashboard/league/LeaderboardListCard"
+} from "@/components/blocks/dashboard/LeaderboardListCard"
 import type { QueryMyLeagueData } from "@/modules/api/graphql/queries/types/league"
 
 /** How many top-of-cohort rows to show before truncating (no inner scroll). */

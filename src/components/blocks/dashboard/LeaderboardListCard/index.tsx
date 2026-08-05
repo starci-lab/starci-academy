@@ -14,7 +14,7 @@ import { UserCell } from "@/components/blocks/identity/UserCell"
 import {
     placeMedalIcon,
     rankBadgeIcon,
-} from "@/components/features/dashboard/league/rankBadge"
+} from "@/components/blocks/dashboard/rankBadge"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One normalised leaderboard row (the container maps its query data into this). */

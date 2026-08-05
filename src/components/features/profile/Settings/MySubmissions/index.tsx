@@ -23,7 +23,7 @@ import {
 } from "../SettingsBreadcrumb"
 import {
     EntityToken,
-} from "@/components/features/dashboard/EntityToken"
+} from "@/components/blocks/entity/EntityToken"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"

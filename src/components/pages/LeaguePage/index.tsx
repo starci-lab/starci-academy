@@ -33,8 +33,8 @@ enum LeagueTab {
     Global = "global",
 }
 
-/** Props for {@link League}. */
-export type LeagueProps = WithClassNames<undefined>
+/** Props for {@link LeaguePage}. */
+export type LeaguePageProps = WithClassNames<undefined>
 
 /**
  * The full leaderboard page behind the dashboard `LeagueCard`'s "see more":
@@ -48,9 +48,9 @@ export type LeagueProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const League = ({
+export const LeaguePage = ({
     className,
-}: LeagueProps) => {
+}: LeaguePageProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()

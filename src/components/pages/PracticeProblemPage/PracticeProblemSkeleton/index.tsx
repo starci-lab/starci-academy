@@ -6,7 +6,7 @@ import { SkeletonParagraph } from "@/components/blocks/skeleton/SkeletonParagrap
 import { SkeletonText } from "@/components/blocks/skeleton/SkeletonText"
 
 /**
- * Loading placeholder for {@link PracticeProblem}. Mirrors the real two-pane
+ * Loading placeholder for {@link PracticeProblemPage}. Mirrors the real two-pane
  * full-bleed IDE shell exactly (`grid h-[calc(100vh-4rem)] grid-cols-1
  * @app-lg:grid-cols-2`, no Card wrapper, `border-r` divider) so the shell never jumps
  * on resolve: left = back link + tab strip + statement + samples; right =

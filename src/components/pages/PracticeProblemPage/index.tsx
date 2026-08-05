@@ -52,8 +52,8 @@ import { JobCategory } from "@/modules/types/enums/job-category"
 import { JobStatus } from "@/modules/types/enums/job-status"
 import { useAppSelector } from "@/redux/hooks"
 
-/** Props for {@link PracticeProblem}. */
-export type PracticeProblemProps = Record<string, never>
+/** Props for {@link PracticeProblemPage}. */
+export type PracticeProblemPageProps = Record<string, never>
 
 /** Seniority level i18n key per difficulty (easy=junior, medium=mid, hard=senior). */
 const LEVEL_KEY: Record<CodingDifficulty, string> = {
@@ -109,7 +109,7 @@ const isTerminalStatus = (status: JobStatus | undefined): boolean =>
  * realtime-verdict flow (SWR + `/job_notifications` socket + anti-cheat
  * telemetry) is unchanged from the prior build; only the shell is new.
  */
-export const PracticeProblem = () => {
+export const PracticeProblemPage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()

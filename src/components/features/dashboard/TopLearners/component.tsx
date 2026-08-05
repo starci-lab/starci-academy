@@ -7,7 +7,7 @@ import {
     LeaderboardListCard,
     type LeaderboardRow,
     type LeaderboardStanding,
-} from "@/components/features/dashboard/league/LeaderboardListCard"
+} from "@/components/blocks/dashboard/LeaderboardListCard"
 import { StackH, StackV } from "@/components/frames/Stack"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 

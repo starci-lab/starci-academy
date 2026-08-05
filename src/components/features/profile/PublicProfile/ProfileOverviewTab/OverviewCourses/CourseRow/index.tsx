@@ -3,7 +3,7 @@
 import React from "react"
 import { BookOpenIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { useResolveRouteNavigation } from "@/components/features/dashboard/EntityToken/useResolveRouteNavigation"
+import { useResolveRouteNavigation } from "@/components/blocks/entity/EntityToken/useResolveRouteNavigation"
 import { CourseTrialChip } from "@/components/blocks/course/CourseTrialChip"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { CourseProgressBar } from "@/components/blocks/stats/CourseProgressBar"

@@ -28,7 +28,7 @@ import {
 } from "@/components/blocks/identity/UserAvatar"
 import {
     EntityToken,
-} from "../EntityToken"
+} from "@/components/blocks/entity/EntityToken"
 import {
     StackH,
     StackV,

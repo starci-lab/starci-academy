@@ -26,7 +26,7 @@ export interface KpiRowPreset {
 }
 
 /**
- * One weekly-KPI row, fully resolved by the connected {@link Kpi}: icon + label,
+ * One weekly-KPI row, fully resolved by the connected {@link KpiPage}: icon + label,
  * current/target, its preset buttons, and its coin-reward claim state.
  */
 export interface KpiRowData {
@@ -58,7 +58,7 @@ export interface KpiRowData {
     onClaim: () => void
 }
 
-/** All display text, already localized by the connected {@link Kpi}; a story passes i18n keys. */
+/** All display text, already localized by the connected {@link KpiPage}; a story passes i18n keys. */
 export interface KpiLabels {
     /** Page title, also the breadcrumb's current crumb and the info-tooltip heading. */
     title: string
@@ -76,8 +76,8 @@ export interface KpiLabels {
     claimedLabel: string
 }
 
-/** Props for {@link _Kpi} — presentational; all data resolved, no fetch/store/i18n. */
-export interface KpiProps {
+/** Props for {@link _KpiPage} — presentational; all data resolved, no fetch/store/i18n. */
+export interface KpiPageProps {
     /** First load, nothing in hand → the whole tree shimmers in place (co-located). Owned by the connected file. */
     isSkeleton?: boolean
     /** Truthy → the error message (beats loading). The connected file passes its settled fetch error. */
@@ -185,7 +185,7 @@ const kpiRowBody = (row: KpiRowData, isSkeleton: boolean, labels: KpiLabels) => 
 )
 
 /**
- * The `/kpi` editor page body — the presentational half of {@link Kpi}: the
+ * The `/kpi` editor page body — the presentational half of {@link KpiPage}: the
  * composite score header, then one joined row per weekly KPI (icon · label ·
  * current/target · progress · preset target buttons · coin-reward claim).
  * `PageHeader`/`ResponsiveBreadcrumb`/`InfoTooltip` carry no `isSkeleton` of their
@@ -194,9 +194,9 @@ const kpiRowBody = (row: KpiRowData, isSkeleton: boolean, labels: KpiLabels) => 
  * See `tiers/split.md` — the connected `index.tsx` owns the fetch, the mutations,
  * and i18n.
  *
- * @param props - {@link KpiProps}
+ * @param props - {@link KpiPageProps}
  */
-export const _Kpi = ({
+export const _KpiPage = ({
     isSkeleton = false,
     error,
     onRetry,
@@ -204,7 +204,7 @@ export const _Kpi = ({
     rows,
     labels,
     classNames,
-}: KpiProps) => {
+}: KpiPageProps) => {
     // error beats a stale loading flag (BLOCK-8) — the shared `AsyncContentError`
     // frame, not hand-written JSX (loading-and-skeleton.md §6).
     if (error) {
@@ -254,7 +254,7 @@ export const _Kpi = ({
 
     return (
         <Container
-            identity={{ tier: "page", component: "Kpi" }}
+            identity={{ tier: "page", component: "KpiPage" }}
             size="sm"
             padding={6}
             isSkeleton={isSkeleton}

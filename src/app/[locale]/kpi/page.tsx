@@ -1,11 +1,9 @@
-import React from "react"
-import { Kpi } from "@/components/features/dashboard/kpi/Kpi"
+"use client"
 
-/** The weekly-KPI editor page (set per-metric targets) behind the dashboard summary. */
-const Page = () => {
-    return (
-        <Kpi />
-    )
-}
+import React from "react"
+import { KpiPage } from "@/components/pages/KpiPage"
+
+/** Personal KPI dashboard. */
+const Page = () => <KpiPage />
 
 export default Page

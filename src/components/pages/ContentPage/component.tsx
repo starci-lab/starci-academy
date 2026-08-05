@@ -5,7 +5,7 @@ import type {
 } from "react"
 import {
     AdBanner,
-} from "@/components/features/dashboard/AdBanner"
+} from "@/components/blocks/marketing/AdBanner"
 import type {
     ContentTabItem,
 } from "@/components/blocks/learn/lesson/types"

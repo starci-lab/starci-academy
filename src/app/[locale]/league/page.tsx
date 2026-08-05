@@ -1,11 +1,9 @@
-import React from "react"
-import { League } from "@/components/features/dashboard/league/League"
+"use client"
 
-/** The full leaderboard page (weekly cohort + global) behind the dashboard card. */
-const Page = () => {
-    return (
-        <League />
-    )
-}
+import React from "react"
+import { LeaguePage } from "@/components/pages/LeaguePage"
+
+/** Weekly league standings. */
+const Page = () => <LeaguePage />
 
 export default Page

@@ -21,7 +21,7 @@ import {
 } from "@/modules/utils/globalId"
 import {
     rankBadgeIcon,
-} from "@/components/features/dashboard/league/rankBadge"
+} from "@/components/blocks/dashboard/rankBadge"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"

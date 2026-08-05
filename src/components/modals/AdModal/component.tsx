@@ -1,5 +1,5 @@
 import React from "react"
-import { AdBanner } from "@/components/features/dashboard/AdBanner"
+import { AdBanner } from "@/components/blocks/marketing/AdBanner"
 import { ModalShell } from "@/components/composites/layout/ModalShell"
 import type { QueryActiveAdvertisementData } from "@/modules/api/graphql/queries/types/active-advertisement"
 import type { CallerIdentity } from "@/components/frames/_identity"

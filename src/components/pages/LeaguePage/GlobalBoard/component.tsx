@@ -26,10 +26,10 @@ import {
 import {
     StandingHeroCard,
     type StandingHeroProgress,
-} from "@/components/features/dashboard/league/StandingHeroCard"
+} from "@/components/blocks/dashboard/StandingHeroCard"
 import {
     Podium,
-} from "@/components/features/dashboard/league/Podium"
+} from "@/components/blocks/dashboard/Podium"
 import {
     IconTile,
 } from "@/components/blocks/identity/IconTile"
@@ -42,7 +42,7 @@ import {
 } from "@/components/blocks/community/FollowButton"
 import {
     Confetti,
-} from "@/components/features/dashboard/league/Confetti"
+} from "@/components/blocks/dashboard/Confetti"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"

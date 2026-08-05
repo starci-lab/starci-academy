@@ -15,7 +15,7 @@ import {
 } from "@/components/blocks/course/CourseTrialChip"
 import {
     useResolveRouteNavigation,
-} from "../../../EntityToken/useResolveRouteNavigation"
+} from "@/components/blocks/entity/EntityToken/useResolveRouteNavigation"
 import type {
     QueryMyDashboardMilestoneProgressItemData,
 } from "@/modules/api/graphql/queries/types/my-dashboard"

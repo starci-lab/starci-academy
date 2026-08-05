@@ -23,7 +23,7 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import type { LeaderboardRow } from "@/components/features/dashboard/league/LeaderboardListCard"
+import type { LeaderboardRow } from "@/components/blocks/dashboard/LeaderboardListCard"
 import { useMutateSetFollowSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetFollowSwr"
 import { useQueryGlobalLeaderboardSwr } from "@/hooks/swr/api/graphql/queries/useQueryGlobalLeaderboardSwr"
 import { useAppSelector } from "@/redux/hooks"

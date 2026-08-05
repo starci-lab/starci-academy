@@ -17,39 +17,39 @@ import {
 } from "@/resources/path"
 import {
     KPI_META,
-} from "../kpiMeta"
+} from "./kpiMeta"
 import {
     DEFAULT_KPI_TARGETS,
-} from "../../WeeklyGoals/map"
+} from "@/components/features/dashboard/WeeklyGoals/map"
 import { useQueryMyKpisSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyKpisSwr"
 import { useMutateSetKpiTargetSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetKpiTargetSwr"
 import { useMutateClaimKpiRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateClaimKpiRewardSwr"
 import type { KpiKey, QueryKpiItemData } from "@/modules/api/graphql/queries/types/my-kpis"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-import { _Kpi, type KpiRowData } from "./component"
+import { _KpiPage, type KpiRowData } from "./component"
 
 /**
- * Props for {@link Kpi}. Only positioning — the route hands this nothing else, it
+ * Props for {@link KpiPage}. Only positioning — the route hands this nothing else, it
  * self-fetches. Renamed from the old `className: string` to the house
  * `classNames: Array<AllowedClassName>` convention every frame/atom already uses.
  */
-export interface KpiProps {
+export interface KpiPageProps {
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
 }
 
 /**
- * The `/kpi` editor page: the connected half of {@link _Kpi}. Self-fetches the
+ * The `/kpi` editor page: the connected half of {@link _KpiPage}. Self-fetches the
  * weekly KPIs, owns the set-target + claim-reward mutations, resolves every
- * label (incl. interpolation), and hands them to the presentational `_Kpi`.
+ * label (incl. interpolation), and hands them to the presentational `_KpiPage`.
  * See `tiers/split.md`.
  *
- * @param props - {@link KpiProps}
+ * @param props - {@link KpiPageProps}
  */
-export const Kpi = ({
+export const KpiPage = ({
     classNames,
-}: KpiProps) => {
+}: KpiPageProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -202,7 +202,7 @@ export const Kpi = ({
     })
 
     return (
-        <_Kpi
+        <_KpiPage
             // first load with no cached data → skeleton; a first-load query error
             // shows the retryable error slot instead of a permanent skeleton
             isSkeleton={!data}

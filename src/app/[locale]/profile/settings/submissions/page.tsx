@@ -1,14 +1,9 @@
-import React from "react"
-import {
-    MySubmissions,
-} from "@/components/features/profile/Settings/MySubmissions"
+"use client"
 
-/**
- * Route `/[locale]/profile/submissions` — renders the learner's challenge
- * submissions. Thin route file: only mounts the component, no logic/UI here.
- */
-const Page = () => {
-    return <MySubmissions />
-}
+import React from "react"
+import { MySubmissionsPage } from "@/components/pages/MySubmissionsPage"
+
+/** Settings — my submissions. */
+const Page = () => <MySubmissionsPage />
 
 export default Page

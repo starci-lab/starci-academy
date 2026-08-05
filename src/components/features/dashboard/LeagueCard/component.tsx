@@ -14,7 +14,7 @@ import {
     type LeaderboardRow,
     type LeaderboardStanding,
 } from "@/components/blocks/dashboard/LeaderboardListCard"
-import { RankDeltaCaret } from "@/components/features/profile/RankDeltaCaret"
+import { RankDeltaCaret } from "@/components/blocks/profile/RankDeltaCaret"
 import { StackH, StackV } from "@/components/frames/Stack"
 import type {
     WithClassNames,

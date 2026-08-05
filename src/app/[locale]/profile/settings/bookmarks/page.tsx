@@ -1,12 +1,9 @@
-import React from "react"
-import { Bookmarks } from "@/components/features/profile/Bookmarks"
+"use client"
 
-/**
- * Route `/[locale]/profile/bookmarks` — renders the saved-content (bookmarks)
- * feature. Thin route file: only mounts the component, no logic/UI here.
- */
-const Page = () => {
-    return <Bookmarks />
-}
+import React from "react"
+import { BookmarksPage } from "@/components/pages/BookmarksPage"
+
+/** Settings — bookmarks. */
+const Page = () => <BookmarksPage />
 
 export default Page

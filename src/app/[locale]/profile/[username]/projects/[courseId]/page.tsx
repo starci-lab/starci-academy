@@ -1,24 +1,9 @@
-import React from "react"
-import {
-    ProfileProjectRoadmap,
-} from "@/components/features/profile/PublicProfile/ProfileProjectsTab/ProfileProjectRoadmap"
+"use client"
 
-/**
- * Route `/[locale]/profile/[username]/projects/[courseId]` — the DETAIL tier of
- * the projects flow: the FULL milestone/task roadmap of ONE capstone course
- * (no inline expand cap, unlike the list's compact card). The shared profile
- * shell (hero, tabs bar, loading/not-found/locked handling) lives in the parent
- * `layout.tsx`; this page only renders the panel.
- */
-const Page = () => {
-    return (
-        <div
-            id="profile-panel-project-roadmap"
-            className="flex flex-col gap-6"
-        >
-            <ProfileProjectRoadmap />
-        </div>
-    )
-}
+import React from "react"
+import { ProfileProjectRoadmapPage } from "@/components/pages/ProfileProjectRoadmapPage"
+
+/** One course's capstone roadmap. */
+const Page = () => <ProfileProjectRoadmapPage />
 
 export default Page

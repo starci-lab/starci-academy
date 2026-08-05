@@ -1,15 +1,9 @@
 "use client"
 
 import React from "react"
-import {
-    Cv,
-} from "@/components/features/profile/CV"
+import { CvGalleryPage } from "@/components/pages/CvGalleryPage"
 
-/**
- * User-level CV route (`/profile/cv`): the résumé tool, no longer nested under a course's Learn shell.
- */
-const Page = () => {
-    return <Cv />
-}
+/** The learner's own CV gallery. */
+const Page = () => <CvGalleryPage />
 
 export default Page

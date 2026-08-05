@@ -1,11 +1,9 @@
-import React from "react"
-import { AiUsage } from "@/components/features/profile/AiUsage"
+"use client"
 
-/**
- * Route `/[locale]/profile/ai-usage` — full AI quota and usage history.
- */
-const Page = () => {
-    return <AiUsage />
-}
+import React from "react"
+import { AiUsagePage } from "@/components/pages/AiUsagePage"
+
+/** Settings — AI usage. */
+const Page = () => <AiUsagePage />
 
 export default Page

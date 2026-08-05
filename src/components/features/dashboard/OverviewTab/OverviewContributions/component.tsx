@@ -1,6 +1,6 @@
 import React from "react"
 import { AsyncContentError } from "@/components/composites/async/AsyncContent"
-import { ContributionCalendarView } from "@/components/features/profile/ContributionCalendarView"
+import { ContributionCalendarView } from "@/components/blocks/profile/ContributionCalendarView"
 import { StackV } from "@/components/frames/Stack"
 import type { CallerIdentity } from "@/components/frames/_identity"
 import type { QueryMyContributionDayData } from "@/modules/api/graphql/queries/types/my-dashboard"

@@ -1,12 +1,9 @@
-import React from "react"
-import { Security } from "@/components/features/profile/Security"
+"use client"
 
-/**
- * Route `/[locale]/profile/security` — renders the security (2FA) feature.
- * Thin route file: only mounts the component, no logic/UI here.
- */
-const Page = () => {
-    return <Security />
-}
+import React from "react"
+import { SecurityPage } from "@/components/pages/SecurityPage"
+
+/** Settings — security. */
+const Page = () => <SecurityPage />
 
 export default Page

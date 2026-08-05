@@ -1,0 +1,253 @@
+"use client"
+
+import React, {
+    useCallback,
+    useMemo,
+} from "react"
+import {
+    Label,
+    Link,
+    Skeleton,
+    Typography,
+} from "@heroui/react"
+import {
+    useLocale,
+    useTranslations,
+} from "next-intl"
+import {
+    useRouter,
+} from "next/navigation"
+import { SettingsBreadcrumb } from "@/components/blocks/settings/SettingsBreadcrumb"
+import { pathConfig } from "@/resources/path"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Callout } from "@/components/blocks/feedback/Callout"
+import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
+import { useMutateSetAiCeilSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetAiCeilSwr"
+import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
+import { AiCeilSurface } from "@/modules/api/graphql/mutations/types/set-ai-ceil"
+
+/** Category ladder cheapest → strongest (mirrors backend CATEGORY_LADDER). */
+const LADDER: Array<AiModelCategory> = [
+    AiModelCategory.Low,
+    AiModelCategory.Medium,
+    AiModelCategory.High,
+]
+
+/** Per-surface override sentinel = follow the global default. */
+const INHERIT = "__inherit__"
+
+/** Surfaces the user can override (mirrors backend AiCeilSurface). */
+const SURFACES: Array<AiCeilSurface> = [
+    AiCeilSurface.Chatbot,
+    AiCeilSurface.Grading,
+    AiCeilSurface.Interview,
+]
+
+/**
+ * AI settings page — set the model CEILING (the "cap") the Auto router may climb to,
+ * for cost control. BYOK was removed from the main flow; grading + the lesson
+ * tutor run only on the StarCi System pool (the system auto-picks a model by
+ * task difficulty + the user's plan). Here the user sets a *lower* ceiling: a
+ * global default + per-surface overrides. The Auto chain climbs to the ceiling,
+ * then stops (hard cap). Caps above the plan max are disabled (need an upgrade).
+ */
+export const AiSettingsPage = () => {
+    const t = useTranslations()
+    const router = useRouter()
+    const locale = useLocale()
+
+    const quota = useQueryMyAiQuotaSwr()
+    const { trigger, isMutating } = useMutateSetAiCeilSwr()
+
+    const data = quota.data
+
+    /** Categories the plan unlocks (the ceiling); default to the free allowance. */
+    const allowed = data?.allowedCategories ?? [
+        AiModelCategory.Low,
+        AiModelCategory.Medium,
+    ]
+    /** Highest category the plan allows = the cap ceiling. */
+    const planMax = LADDER[
+        Math.max(...allowed.map((category) => LADDER.indexOf(category)), 0)
+    ]
+    const planMaxIndex = LADDER.indexOf(planMax)
+    /** Free (no paid tier) caps at Economy → little to cap → show the upsell. */
+    const isPaid = planMaxIndex > LADDER.indexOf(AiModelCategory.Low)
+
+    /** Human label for a category. */
+    const label = useCallback(
+        (category: AiModelCategory) => t(`aiSettings.categories.${category}`),
+        [t],
+    )
+
+    /** Persist a ceiling then revalidate the quota snapshot. */
+    const setCeil = useCallback(
+        async (
+            surface: AiCeilSurface | null,
+            category: AiModelCategory | null,
+        ) => {
+            await trigger({
+                surface,
+                category,
+            })
+            await quota.mutate()
+        },
+        [trigger, quota],
+    )
+
+    /** Ladder buttons (above the plan max are disabled). */
+    const ladderItems = useMemo(
+        () => LADDER.map((category) => ({
+            value: category,
+            content: label(category),
+            isDisabled: LADDER.indexOf(category) > planMaxIndex,
+        })),
+        [label, planMaxIndex],
+    )
+
+    /** Per-surface ladder = "follow default" + the ladder. */
+    const surfaceItems = useMemo(
+        () => [
+            {
+                value: INHERIT,
+                content: t("aiSettings.ceil.inherit"),
+            },
+            ...ladderItems,
+        ],
+        [ladderItems, t],
+    )
+
+    const onNavigateSubscription = useCallback(
+        () => router.push(`${pathConfig().locale(locale).profile().build()}/ai-subscription`),
+        [router, locale],
+    )
+
+    return (
+        <div className="flex flex-col gap-10">
+            <PageHeader
+                breadcrumb={<SettingsBreadcrumb current={t("aiSettings.title")} />}
+                title={t("aiSettings.title")}
+                description={t("aiSettings.ceil.description")}
+            />
+
+            <AsyncContent
+                isLoading={quota.isLoading}
+                skeleton={(
+                    <div className="flex flex-col gap-6">
+                        <Skeleton className="h-16 w-full rounded-2xl" />
+                        <div className="flex flex-col gap-3">
+                            <Skeleton className="h-4 w-32 rounded-lg" />
+                            <Skeleton className="h-9 w-full rounded-xl" />
+                        </div>
+                        <div className="flex flex-col gap-3">
+                            <Skeleton className="h-4 w-40 rounded-lg" />
+                            {SURFACES.map((surface) => (
+                                <Skeleton
+                                    key={surface}
+                                    className="h-9 w-full rounded-xl"
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
+                error={quota.error}
+                errorContent={{
+                    title: t("aiSettings.ceil.error"),
+                    onRetry: () => { void quota.mutate() },
+                    retryLabel: t("common.retry"),
+                }}
+            >
+                <div className="flex flex-col gap-6">
+                    <Callout
+                        title={data?.tier
+                            ? t("aiSettings.ceil.plan", {
+                                tier: data.tier,
+                                max: label(planMax),
+                            })
+                            : t("aiSettings.ceil.planFree", {
+                                max: label(planMax),
+                            })}
+                        description={data
+                            ? t("aiSettings.ceil.creditLine", {
+                                used5h: data.credit.used5h,
+                                limit5h: data.credit.limit5h,
+                                usedWeek: data.credit.usedWeek,
+                                limitWeek: data.credit.limitWeek,
+                            })
+                            : undefined}
+                    />
+
+                    <div className="flex flex-col gap-3">
+                        <Label>{t("aiSettings.ceil.defaultLabel")}</Label>
+                        <FlexWrapButtonRadio
+                            ariaLabel={t("aiSettings.ceil.defaultLabel")}
+                            items={ladderItems}
+                            value={data?.ceil.default ?? planMax}
+                            onChange={(category) =>
+                                setCeil(
+                                    null,
+                                    category === planMax
+                                        ? null
+                                        : (category as AiModelCategory),
+                                )}
+                        />
+                        <Typography type="body-xs" color="muted">
+                            {t("aiSettings.ceil.creditCaption")}
+                            {" · "}
+                            {t("aiSettings.ceil.hardStop")}
+                        </Typography>
+                    </div>
+
+                    <div className="flex flex-col gap-3">
+                        <Label>{t("aiSettings.ceil.surfacesLabel")}</Label>
+                        {SURFACES.map((surface) => (
+                            <div
+                                key={surface}
+                                className="flex flex-col gap-2"
+                            >
+                                <Typography type="body-sm">
+                                    {t(`aiSettings.ceil.surface.${surface}`)}
+                                </Typography>
+                                <FlexWrapButtonRadio
+                                    ariaLabel={t(`aiSettings.ceil.surface.${surface}`)}
+                                    items={surfaceItems}
+                                    value={data?.ceil[surface] ?? INHERIT}
+                                    onChange={(value) =>
+                                        setCeil(
+                                            surface,
+                                            value === INHERIT
+                                                ? null
+                                                : (value as AiModelCategory),
+                                        )}
+                                />
+                            </div>
+                        ))}
+                    </div>
+
+                    {!isPaid
+                        ? (
+                            <div className="flex flex-wrap items-center gap-2">
+                                <Typography type="body-sm" color="muted">
+                                    {t("aiSettings.upgradePrompt")}
+                                </Typography>
+                                <Link onPress={onNavigateSubscription}>
+                                    {t("aiSettings.byok.upsellCta")}
+                                </Link>
+                            </div>
+                        )
+                        : null}
+
+                    {isMutating
+                        ? (
+                            <Typography type="body-xs" color="muted">
+                                {t("aiSettings.ceil.saving")}
+                            </Typography>
+                        )
+                        : null}
+                </div>
+            </AsyncContent>
+        </div>
+    )
+}

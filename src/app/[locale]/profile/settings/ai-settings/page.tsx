@@ -1,12 +1,9 @@
-import React from "react"
-import { AiSettings } from "@/components/features/profile/AiSettings"
+"use client"
 
-/**
- * Route `/[locale]/profile/ai-settings` — renders the AI settings feature.
- * Thin route file: only mounts the component, no logic/UI here.
- */
-const Page = () => {
-    return <AiSettings />
-}
+import React from "react"
+import { AiSettingsPage } from "@/components/pages/AiSettingsPage"
+
+/** Settings — AI preferences. */
+const Page = () => <AiSettingsPage />
 
 export default Page

@@ -10,7 +10,7 @@ import {
 } from "@/components/blocks/identity/UserAvatar"
 import {
     RankDeltaCaret,
-} from "@/components/features/profile/RankDeltaCaret"
+} from "@/components/blocks/profile/RankDeltaCaret"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"

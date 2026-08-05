@@ -1,5 +1,5 @@
 import type { GraphQLResponse } from "../../types"
-import type { CvBlock } from "@/components/features/profile/CV/types"
+import type { CvBlock } from "@/modules/types/entities/cv"
 import type { ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
 
 /** GraphQL `RewriteCvBlockRequest` body. */

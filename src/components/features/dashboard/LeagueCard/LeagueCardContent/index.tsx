@@ -18,7 +18,7 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
-import { RankDeltaCaret } from "@/components/features/profile/RankDeltaCaret"
+import { RankDeltaCaret } from "@/components/blocks/profile/RankDeltaCaret"
 import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
 import {
     LeaderboardListCard,

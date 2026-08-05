@@ -1,12 +1,9 @@
-import React from "react"
-import { EditProfile } from "@/components/features/profile/EditProfile"
+"use client"
 
-/**
- * Route `/[locale]/profile/edit` — renders the edit-profile feature.
- * Thin route file: only mounts the component, no logic/UI here.
- */
-const Page = () => {
-    return <EditProfile />
-}
+import React from "react"
+import { EditProfilePage } from "@/components/pages/EditProfilePage"
+
+/** Settings — edit profile. */
+const Page = () => <EditProfilePage />
 
 export default Page

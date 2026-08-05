@@ -1,46 +1,9 @@
 "use client"
 
-import React, {
-    useEffect,
-} from "react"
-import {
-    useLocale,
-} from "next-intl"
-import {
-    useRouter,
-    useSearchParams,
-} from "next/navigation"
-import {
-    ProfileLoadingState,
-} from "@/components/features/profile/PublicProfile/ProfileLoadingState"
-import { useAppSelector } from "@/redux/hooks"
-import { pathConfig } from "@/resources/path"
+import React from "react"
+import { ProfileRedirectPage } from "@/components/pages/ProfileRedirectPage"
 
-/**
- * Route `/[locale]/profile` — the signed-in user's own profile. Canonicalizes the
- * URL to `/[locale]/profile/<username>` (GitHub-style, now nested-route-driven —
- * `?tab=` is retired) once the viewer is known, preserving the query, so the bare
- * route never lingers in the address bar. This page never mounts the profile
- * shell itself (that lives in `[username]/layout.tsx`) — it only ever redirects,
- * showing {@link ProfileLoadingState} meanwhile so there is no blank flash.
- * Settings live under `/profile/*` sub-pages reached from the account menu.
- */
-const Page = () => {
-    const router = useRouter()
-    const locale = useLocale()
-    const searchParams = useSearchParams()
-    const username = useAppSelector((state) => state.user.user?.username)
-
-    useEffect(() => {
-        if (!username) {
-            return
-        }
-        const query = searchParams.toString()
-        const target = pathConfig().locale(locale).profile(username).build()
-        router.replace(query ? `${target}?${query}` : target)
-    }, [username, locale, searchParams, router])
-
-    return <ProfileLoadingState />
-}
+/** Bare /profile — resolves the signed-in learner then hands off to their own profile. */
+const Page = () => <ProfileRedirectPage />
 
 export default Page

@@ -1,0 +1,39 @@
+"use client"
+
+import React from "react"
+import {
+    cn,
+} from "@heroui/react"
+import type {
+    WithClassNames,
+} from "@/modules/types/base/class-name"
+import {
+    ProfileChallenges,
+} from "./ProfileChallenges"
+import {
+    ProfileSectionGuard,
+} from "@/components/blocks/profile/ProfileSectionGuard"
+
+/** Props for {@link ProfileChallengesPage}. */
+export type ProfileChallengesPageProps = WithClassNames<undefined>
+
+/**
+ * "Challenges" tab of the public profile (SKILLS-TABS-UX-BRAINSTORM.md §4) — the
+ * proof-first, recruiter-facing view of graded-challenge work: a passed count, a
+ * language-breadth bar, and the submission list (each row links out to the
+ * submitted repo). The single section self-fetches the viewed user, so the tab
+ * takes no data props; single centered column, vertical rhythm `gap-6`.
+ *
+ * @param props - {@link ProfileChallengesPageProps}
+ */
+export const ProfileChallengesPage = ({
+    className,
+}: ProfileChallengesPageProps) => {
+    return (
+        <ProfileSectionGuard section="challenges" className={className}>
+            <div className={cn("flex min-w-0 flex-col gap-6", className)}>
+                <ProfileChallenges />
+            </div>
+        </ProfileSectionGuard>
+    )
+}

@@ -1,17 +1,17 @@
 import type { GraphQLResponse } from "../../types"
-import type { CvBlock, CvStyle } from "@/components/features/profile/CV/types"
+import type { CvBlock, CvStyle } from "@/modules/types/entities/cv"
 
 /**
- * One CV block-editor document (`cv_blocks` row) — mirrors the BE
+ * One CvGalleryPage block-editor document (`cv_blocks` row) — mirrors the BE
  * `CvBlocksDocument` GraphQL type. `blocks`/`style` are JSON scalars; Apollo
  * hands them back already parsed into plain JS values, so the FE casts
  * straight to {@link CvBlock}/{@link CvStyle} (the FE-owned shapes — see
- * `components/features/profile/CV/types.ts`) with no `JSON.parse` step.
+ * `components/features/profile/CvGalleryPage/types.ts`) with no `JSON.parse` step.
  */
 export interface CvBlocksDocumentPayload {
     /** `cv_blocks.id`. */
     id: string
-    /** User-facing name for this CV (document-tab label). */
+    /** User-facing name for this CvGalleryPage (document-tab label). */
     label: string
     /** Ordered blocks (JSON scalar). */
     blocks: Array<CvBlock>
@@ -19,9 +19,9 @@ export interface CvBlocksDocumentPayload {
     style: CvStyle
     /** MinIO/CDN key of the last rendered PDF; null until `renderCvBlocks` has run once. */
     pdfCdnKey: string | null
-    /** The CV's LaTeX (`.tex`) source — user-editable; null until the first compile. */
+    /** The CvGalleryPage's LaTeX (`.tex`) source — user-editable; null until the first compile. */
     texSource: string | null
-    /** Whether this CV is the user's ONE public résumé (single-public-per-user). */
+    /** Whether this CvGalleryPage is the user's ONE public résumé (single-public-per-user). */
     isPublic: boolean
     /** ISO 8601 creation timestamp. */
     createdAt: string

@@ -1,12 +1,9 @@
-import React from "react"
-import { InstallmentPlans } from "@/components/features/profile/InstallmentPlans"
+"use client"
 
-/**
- * Route `/[locale]/profile/settings/installments` — renders the viewer's
- * installment (trả góp) plans. Thin route file: only mounts the component.
- */
-const Page = () => {
-    return <InstallmentPlans />
-}
+import React from "react"
+import { InstallmentPlansPage } from "@/components/pages/InstallmentPlansPage"
+
+/** Settings — installment plans. */
+const Page = () => <InstallmentPlansPage />
 
 export default Page

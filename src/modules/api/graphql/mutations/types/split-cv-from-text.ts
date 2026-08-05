@@ -1,9 +1,9 @@
 import type { GraphQLResponse } from "../../types"
-import type { CvBlock } from "@/components/features/profile/CV/types"
+import type { CvBlock } from "@/modules/types/entities/cv"
 
 /** GraphQL `SplitCvFromTextRequest` body. */
 export interface SplitCvFromTextRequest {
-    /** Raw pasted CV text (from an existing résumé) to parse into blocks. */
+    /** Raw pasted CvGalleryPage text (from an existing résumé) to parse into blocks. */
     text: string
 }
 

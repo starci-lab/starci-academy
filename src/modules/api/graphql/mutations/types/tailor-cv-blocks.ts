@@ -1,12 +1,12 @@
 import type { GraphQLResponse } from "../../types"
-import type { CvBlock } from "@/components/features/profile/CV/types"
+import type { CvBlock } from "@/modules/types/entities/cv"
 import type { ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
 
 /** GraphQL `TailorCvBlocksRequest` body. */
 export interface TailorCvBlocksRequest {
-    /** The current CV blocks to adjust toward the job description. */
+    /** The current CvGalleryPage blocks to adjust toward the job description. */
     blocks: Array<CvBlock>
-    /** The job description/posting text to tailor the CV toward. */
+    /** The job description/posting text to tailor the CvGalleryPage toward. */
     jobDescription: string
     /** Pinned model name, or omitted for the Auto lane. */
     selectedModel?: string | null

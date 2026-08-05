@@ -1,13 +1,9 @@
-import React from "react"
-import { Membership } from "@/components/features/profile/Membership"
+"use client"
 
-/**
- * Route `/[locale]/profile/membership` — renders the community membership
- * (single-product purchase) feature. Thin route file: only mounts the
- * component, no logic/UI here.
- */
-const Page = () => {
-    return <Membership />
-}
+import React from "react"
+import { MembershipPage } from "@/components/pages/MembershipPage"
+
+/** Settings — membership. */
+const Page = () => <MembershipPage />
 
 export default Page

@@ -8,7 +8,7 @@ import Decimal from "decimal.js"
 import _ from "lodash"
 import type {
     CoursePriceRow,
-} from "../types"
+} from "@/components/pages/CourseDetailPage/types"
 import { PricingPhase } from "@/modules/types/enums/pricing-phase"
 import { type PricingPhaseEntity } from "@/modules/types/entities/pricing-phase"
 import { computePercentage } from "@/modules/utils/computations/percentage"

@@ -1,15 +1,9 @@
-import React from "react"
-import {
-    SettingsHome,
-} from "@/components/features/profile/Settings/SettingsHome"
+"use client"
 
-/**
- * Route `/[locale]/profile/settings` — the settings hub landing, a card grid of
- * every account-management destination. Thin route file: mounts the component.
- * Inside the `(settings)` group, so it renders within the shared sidebar shell.
- */
-const Page = () => {
-    return <SettingsHome />
-}
+import React from "react"
+import { SettingsHomePage } from "@/components/pages/SettingsHomePage"
+
+/** Settings home. */
+const Page = () => <SettingsHomePage />
 
 export default Page

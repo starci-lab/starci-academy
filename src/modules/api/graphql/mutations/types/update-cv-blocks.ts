@@ -1,12 +1,12 @@
 import type { GraphQLResponse } from "../../types"
 import type { CvBlocksDocumentPayload } from "../../queries/types/cv-blocks"
-import type { CvBlock, CvStyle } from "@/components/features/profile/CV/types"
+import type { CvBlock, CvStyle } from "@/modules/types/entities/cv"
 
 /** GraphQL `UpdateCvBlocksRequest` body — partial update (autosave), all fields but `id` optional. */
 export interface UpdateCvBlocksRequest {
     /** `cv_blocks.id` to update. */
     id: string
-    /** New name for this CV; omit to leave unchanged. */
+    /** New name for this CvGalleryPage; omit to leave unchanged. */
     label?: string
     /** New ordered blocks; omit to leave unchanged. */
     blocks?: Array<CvBlock>

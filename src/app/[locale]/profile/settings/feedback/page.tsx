@@ -1,14 +1,9 @@
-import React from "react"
-import {
-    MyFeedback,
-} from "@/components/features/profile/Settings/MyFeedback"
+"use client"
 
-/**
- * Route `/[locale]/profile/feedback` — renders the learner's received feedback.
- * Thin route file: only mounts the component, no logic/UI here.
- */
-const Page = () => {
-    return <MyFeedback />
-}
+import React from "react"
+import { MyFeedbackPage } from "@/components/pages/MyFeedbackPage"
+
+/** Settings — my feedback. */
+const Page = () => <MyFeedbackPage />
 
 export default Page

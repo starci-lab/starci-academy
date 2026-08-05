@@ -1,14 +1,9 @@
-import React from "react"
-import {
-    LearningHistory,
-} from "@/components/features/profile/Settings/LearningHistory"
+"use client"
 
-/**
- * Route `/[locale]/profile/learning` — renders the learner's course history.
- * Thin route file: only mounts the component, no logic/UI here.
- */
-const Page = () => {
-    return <LearningHistory />
-}
+import React from "react"
+import { LearningHistoryPage } from "@/components/pages/LearningHistoryPage"
+
+/** Settings — learning history. */
+const Page = () => <LearningHistoryPage />
 
 export default Page

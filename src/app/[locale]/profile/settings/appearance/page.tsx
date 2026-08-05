@@ -1,12 +1,9 @@
-import React from "react"
-import { Appearance } from "@/components/features/profile/Appearance"
+"use client"
 
-/**
- * Route `/[locale]/profile/settings/appearance` — accent color + ambient
- * background effect picker.
- */
-const Page = () => {
-    return <Appearance />
-}
+import React from "react"
+import { AppearancePage } from "@/components/pages/AppearancePage"
+
+/** Settings — appearance. */
+const Page = () => <AppearancePage />
 
 export default Page

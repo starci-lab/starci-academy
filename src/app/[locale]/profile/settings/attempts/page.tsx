@@ -1,14 +1,9 @@
-import React from "react"
-import {
-    MyAttempts,
-} from "@/components/features/profile/Settings/MyAttempts"
+"use client"
 
-/**
- * Route `/[locale]/profile/attempts` — renders the learner's milestone-task
- * attempts. Thin route file: only mounts the component, no logic/UI here.
- */
-const Page = () => {
-    return <MyAttempts />
-}
+import React from "react"
+import { MyAttemptsPage } from "@/components/pages/MyAttemptsPage"
+
+/** Settings — my attempts. */
+const Page = () => <MyAttemptsPage />
 
 export default Page

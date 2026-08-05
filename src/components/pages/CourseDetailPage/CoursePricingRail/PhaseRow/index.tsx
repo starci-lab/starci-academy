@@ -17,7 +17,7 @@ import {
 } from "../../constants"
 import type {
     CoursePriceRow,
-} from "../../types"
+} from "@/components/pages/CourseDetailPage/types"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"

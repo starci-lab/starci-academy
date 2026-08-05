@@ -1,13 +1,9 @@
-import React from "react"
-import { AiSubscription } from "@/components/features/profile/AiSubscription"
+"use client"
 
-/**
- * Route `/[locale]/profile/ai-subscription` — renders the AI subscription
- * (plan picker / purchase) feature. Thin route file: only mounts the
- * component, no logic/UI here.
- */
-const Page = () => {
-    return <AiSubscription />
-}
+import React from "react"
+import { AiSubscriptionPage } from "@/components/pages/AiSubscriptionPage"
+
+/** Settings — AI subscription. */
+const Page = () => <AiSubscriptionPage />
 
 export default Page

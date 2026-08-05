@@ -1,18 +1,8 @@
 "use client"
 
-import React, { useCallback, useEffect, useMemo, useState } from "react"
-import {
-    Button,
-    TextArea,
-    TextField,
-    Typography,
-} from "@heroui/react"
-import { SealCheckIcon } from "@phosphor-icons/react"
+import React, { useCallback, useEffect, useMemo } from "react"
 import { useTranslations } from "next-intl"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
-import { UserCell } from "@/components/blocks/identity/UserCell"
-import { ChatPaneSkeleton } from "./ChatPaneSkeleton"
+import { _ChatPane } from "./component"
 import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
 import { SubscriptionEvent } from "@/hooks/socketio/enums/subscription-event"
 import { communityChatSocketIoEventEmitter } from "@/hooks/socketio/useCommunityChatSocketIoLifecycle"
@@ -21,22 +11,23 @@ import { useMutateSendChatMessageSwr } from "@/hooks/swr/api/graphql/mutations/u
 import { useQueryChatMessagesSwr } from "@/hooks/swr/api/graphql/queries/useQueryChatMessagesSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
-/** Props for the {@link ChatPane} feature. */
+/** Props for {@link ChatPane}. */
 export interface ChatPaneProps {
     /** Conversation whose messages are shown + sent to. */
     conversationId: string
 }
 
 /**
- * One chat conversation pane: a scrollable message list (oldest→newest) + a
- * composer. Joins the conversation's Socket.IO room and refetches on every new
- * message, so messages from others appear in real time.
+ * `ChatPane` — the connected half (see `tiers/split.md`) of one chat
+ * conversation pane: fetches the conversation's messages, joins its
+ * Socket.IO room and refetches on every new message (so messages from
+ * others appear in real time), and resolves every label before handing
+ * them to the presentational {@link _ChatPane}.
  *
  * @param props - {@link ChatPaneProps}
  */
 export const ChatPane = ({ conversationId }: ChatPaneProps) => {
     const t = useTranslations()
-    const [body, setBody] = useState("")
     const runGraphQL = useGraphQLWithToast()
     const socket = useCommunityChatSocketIo()
 
@@ -82,88 +73,39 @@ export const ChatPane = ({ conversationId }: ChatPaneProps) => {
         }
     }, [conversationId, mutate])
 
-    /** Send the composed message, then clear + refresh. */
-    const onSend = useCallback(async () => {
-        const trimmed = body.trim()
-        if (!trimmed) {
-            return
-        }
-        // toast-wrapped send; action returns the inner GraphQLResponse
+    /** Send one message (toast-wrapped), then refresh the list on success. */
+    const onSend = useCallback(async (trimmedBody: string) => {
         const ok = await runGraphQL(async () => {
             const result = await sendMessage({
                 conversationId,
-                body: trimmed,
+                body: trimmedBody,
             })
             return result.data!.sendChatMessage
         })
         if (ok) {
-            setBody("")
             await mutate()
         }
-    }, [body, conversationId, sendMessage, runGraphQL, mutate])
+        return ok
+    }, [conversationId, sendMessage, runGraphQL, mutate])
 
     return (
-        <div className="flex flex-col gap-3">
-            <AsyncContent
-                isLoading={isLoading && messages.length === 0}
-                skeleton={<ChatPaneSkeleton />}
-                isEmpty={messages.length === 0}
-                emptyContent={{ title: t("community.chat.empty") }}
-                error={messages.length === 0 ? error : undefined}
-                errorContent={{
-                    title: t("community.chat.error"),
-                    onRetry: () => void mutate(),
-                    retryLabel: t("community.retry"),
-                }}
-            >
-                <div className="flex max-h-[60vh] flex-col gap-3 overflow-y-auto">
-                    {messages.map((message) => (
-                        <div key={message.id} className="flex flex-col gap-1">
-                            {!message.isMine ? (
-                                <UserCell
-                                    username={message.author.username}
-                                    displayName={message.author.displayName ?? undefined}
-                                    avatar={message.author.avatar ?? undefined}
-                                    size="sm"
-                                    trailing={message.isFounderAuthor ? (
-                                        <SealCheckIcon
-                                            weight="fill"
-                                            className="size-3.5 shrink-0 text-accent-soft-foreground"
-                                        />
-                                    ) : null}
-                                />
-                            ) : null}
-                            <ChatBubble role={message.isMine ? "user" : "assistant"}>
-                                <Typography type="body-sm">{message.body}</Typography>
-                            </ChatBubble>
-                        </div>
-                    ))}
-                </div>
-            </AsyncContent>
-
-            <div className="flex flex-col gap-2">
-                <TextField variant="secondary">
-                    <TextArea
-                        rows={2}
-                        value={body}
-                        onChange={(event) => setBody(event.target.value)}
-                        placeholder={t("community.chat.placeholder")}
-                        aria-label={t("community.chat.placeholder")}
-                        className="resize-none"
-                    />
-                </TextField>
-                <div className="flex justify-end">
-                    <Button
-                        variant="primary"
-                        size="sm"
-                        isPending={isMutating}
-                        isDisabled={!body.trim()}
-                        onPress={() => void onSend()}
-                    >
-                        {t("community.chat.send")}
-                    </Button>
-                </div>
-            </div>
-        </div>
+        <_ChatPane
+            // first load, nothing in hand → shimmer (loading-and-skeleton.md)
+            isSkeleton={isLoading && messages.length === 0}
+            isEmpty={messages.length === 0}
+            // only a settled fetch error with nothing cached to show reaches the block
+            error={messages.length === 0 ? error : undefined}
+            onRetry={() => void mutate()}
+            messages={messages}
+            isSending={isMutating}
+            onSend={onSend}
+            labels={{
+                empty: t("community.chat.empty"),
+                error: t("community.chat.error"),
+                retry: t("community.retry"),
+                placeholder: t("community.chat.placeholder"),
+                send: t("community.chat.send"),
+            }}
+        />
     )
 }

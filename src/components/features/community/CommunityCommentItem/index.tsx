@@ -1,25 +1,16 @@
 "use client"
 
 import React, { useCallback, useState } from "react"
-import {
-    Button,
-    Link,
-    TextArea,
-    TextField,
-    Typography,
-} from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { CommunityCommentRow } from "@/components/blocks/feed/CommunityCommentRow"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import type { QueryCommunityCommentNode } from "@/modules/api/graphql/queries/types/community-comments"
 import { useMutateCreateCommunityPostCommentSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCreateCommunityPostCommentSwr"
 import { useMutateReactCommunityPostCommentSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReactCommunityPostCommentSwr"
 import { useQueryCommunityPostCommentsSwr } from "@/hooks/swr/api/graphql/queries/useQueryCommunityPostCommentsSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
+import { _CommunityCommentItem } from "./component"
 
-/** Props for the {@link CommunityCommentItem} feature. */
+/** Props for {@link CommunityCommentItem}. */
 export interface CommunityCommentItemProps {
     /** Post the comment belongs to. */
     postId: string
@@ -32,9 +23,10 @@ export interface CommunityCommentItemProps {
 }
 
 /**
- * A top-level community comment with its reply affordances: react, reply (one
- * level deep), and an expandable list of its replies. Replies load lazily (their
- * own SWR) only when the viewer opens them.
+ * A top-level community comment with its reply affordances — the CONNECTED half: owns the
+ * reply-box/replies-list UI state, the react + create-comment mutations, the replies list's own SWR
+ * (fetched only once the viewer opens it), and every translated label. Hands it all, already resolved,
+ * to the presentational {@link _CommunityCommentItem}. See `tiers/split.md`.
  *
  * @param props - {@link CommunityCommentItemProps}
  */
@@ -102,91 +94,35 @@ export const CommunityCommentItem = ({
     }, [replyBody, postId, comment.id, createComment, runGraphQL, repliesSwr, onChanged])
 
     return (
-        <div className="flex flex-col gap-2">
-            <CommunityCommentRow
-                comment={comment}
-                onReact={authenticated ? onReact : undefined}
-                actions={(
-                    <div className="flex items-center gap-3">
-                        {authenticated && !comment.isDeleted ? (
-                            <Link onPress={() => setReplyOpen((previous) => !previous)}>
-                                <Typography type="body-xs" color="muted">
-                                    {t("community.comments.reply")}
-                                </Typography>
-                            </Link>
-                        ) : null}
-                        {comment.replyCount > 0 ? (
-                            <Link onPress={() => setRepliesOpen((previous) => !previous)}>
-                                <Typography type="body-xs" className="text-accent-soft-foreground">
-                                    {repliesOpen
-                                        ? t("community.comments.hideReplies")
-                                        : t("community.comments.viewReplies", { count: comment.replyCount })}
-                                </Typography>
-                            </Link>
-                        ) : null}
-                    </div>
-                )}
-            />
-
-            {replyOpen && authenticated ? (
-                <div className="flex flex-col gap-2 pl-10">
-                    <TextField variant="secondary">
-                        <TextArea
-                            rows={2}
-                            value={replyBody}
-                            onChange={(event) => setReplyBody(event.target.value)}
-                            placeholder={t("community.comments.replyPlaceholder")}
-                            aria-label={t("community.comments.replyPlaceholder")}
-                            className="resize-none"
-                        />
-                    </TextField>
-                    <div className="flex justify-end">
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            isPending={isMutating}
-                            isDisabled={!replyBody.trim()}
-                            onPress={() => void onSubmitReply()}
-                        >
-                            {t("community.comments.send")}
-                        </Button>
-                    </div>
-                </div>
-            ) : null}
-
-            {repliesOpen ? (
-                <div className="flex flex-col gap-3 pl-10">
-                    <AsyncContent
-                        isLoading={repliesSwr.isLoading && replies.length === 0}
-                        skeleton={(
-                            <div className="flex flex-col gap-3">
-                                <Skeleton.ListRow withSubtitle withTrailing={false} />
-                                <Skeleton.ListRow withSubtitle withTrailing={false} />
-                            </div>
-                        )}
-                        isEmpty={replies.length === 0}
-                        emptyContent={{ title: t("community.comments.empty") }}
-                        error={replies.length === 0 ? repliesSwr.error : undefined}
-                        errorContent={{
-                            title: t("community.comments.error"),
-                            onRetry: () => void repliesSwr.mutate(),
-                            retryLabel: t("community.retry"),
-                        }}
-                    >
-                        <div className="flex flex-col gap-3">
-                            {replies.map((reply) => (
-                                <CommunityCommentRow
-                                    key={reply.id}
-                                    comment={reply}
-                                    onReact={authenticated
-                                        ? (type) => onReactReply(reply.id, type)
-                                        : undefined}
-                                />
-                            ))}
-                        </div>
-                    </AsyncContent>
-                </div>
-            ) : null}
-        </div>
+        <_CommunityCommentItem
+            comment={comment}
+            authenticated={authenticated}
+            onReact={onReact}
+            replyOpen={replyOpen}
+            onToggleReplyOpen={() => setReplyOpen((previous) => !previous)}
+            replyBody={replyBody}
+            onReplyBodyChange={setReplyBody}
+            onSubmitReply={onSubmitReply}
+            isSubmittingReply={isMutating}
+            repliesOpen={repliesOpen}
+            onToggleReplies={() => setRepliesOpen((previous) => !previous)}
+            // first load, nothing in hand → shimmer (loading-and-skeleton.md §2)
+            repliesIsSkeleton={repliesSwr.isLoading && replies.length === 0}
+            repliesIsEmpty={replies.length === 0}
+            repliesError={replies.length === 0 ? repliesSwr.error : undefined}
+            onRetryReplies={() => { void repliesSwr.mutate() }}
+            replies={replies}
+            onReactReply={onReactReply}
+            labels={{
+                replyToggle: t("community.comments.reply"),
+                viewReplies: t("community.comments.viewReplies", { count: comment.replyCount }),
+                hideReplies: t("community.comments.hideReplies"),
+                replyPlaceholder: t("community.comments.replyPlaceholder"),
+                send: t("community.comments.send"),
+                repliesEmptyTitle: t("community.comments.empty"),
+                repliesErrorTitle: t("community.comments.error"),
+                retry: t("community.retry"),
+            }}
+        />
     )
 }

@@ -1,38 +1,21 @@
 "use client"
 
 import React from "react"
-import { Chip, Skeleton, Typography } from "@heroui/react"
-import { RocketLaunchIcon, ChartLineUpIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
-import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import type { UserJobReadinessBand } from "@/modules/api/graphql/queries/types/user-job-readiness"
 import { useQueryCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursesSwr"
 import { useQueryTalentCandidatesSwr } from "@/hooks/swr/api/graphql/queries/useQueryTalentCandidatesSwr"
 import { pathConfig } from "@/resources/path"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { PageHeader } from "@/components/blocks/layout/PageHeader"
-import { GroupPressableCard } from "@/components/blocks/cards/GroupPressableCard"
-import { TabsCard } from "@/components/blocks/navigation/TabsCard"
-
-/** Number of placeholder cards shown while the candidate list loads. */
-const SKELETON_COUNT = 6
-
-/** Maps a readiness band to the `Chip` color that reads correctly. */
-const bandColorOf = (band: UserJobReadinessBand): "success" | "warning" | "default" =>
-    band === "jobReady" ? "success" : band === "building" ? "warning" : "default"
+import { _TalentDirectory } from "./component"
 
 /** Props for {@link TalentDirectory}. */
 export type TalentDirectoryProps = WithClassNames<undefined>
 
 /**
- * Recruiter marketplace — pick ONE track (course) and browse the open-to-work
- * candidates for it, ranked by that track's depth (strongest first). Each card
- * shows the candidate's identity plus the qualitative `band` / `isQualified`
- * badge for the FILTERED track ONLY: never a blended cross-track score, never a
- * raw meaningless number (per the fair-monetization model — see
- * `.workflows/00-INDEX.md`). Ranking is done server-side per `courseId`, so
- * switching the track re-fetches the freshly re-ranked list.
+ * Recruiter marketplace — the CONNECTED half: it fetches the course list and the
+ * ranked candidate page for the selected track, resolves every label (incl. the
+ * three readiness-band chip strings), and hands them to the presentational
+ * {@link _TalentDirectory}. See `design/storybook/architecture/split.md`.
  *
  * @param props - {@link TalentDirectoryProps}
  */
@@ -53,114 +36,51 @@ export const TalentDirectory = ({ className }: TalentDirectoryProps) => {
         }
     }, [selectedCourseId, courses])
 
-    const { data, isLoading, error, mutate } = useQueryTalentCandidatesSwr(selectedCourseId)
-    const candidates = data ?? []
+    const candidatesSwr = useQueryTalentCandidatesSwr(selectedCourseId)
+    const candidates = candidatesSwr.data ?? []
 
     return (
-        <div className={className}>
-            <div className="mx-auto flex max-w-5xl flex-col gap-6 p-6">
-                <PageHeader
-                    title={t("talentDirectory.title")}
-                    description={t("talentDirectory.description")}
-                />
-
-                {/* track filter (single-select nav → underline tabs). Changing the
-                    track re-keys the SWR query below → server-side re-rank. */}
-                {courses.length > 0 && selectedCourseId ? (
-                    <TabsCard
-                        leftTabs={{
-                            items: courses.map((course) => ({
-                                key: course.id,
-                                label: course.title,
-                            })),
-                            selectedKey: selectedCourseId,
-                            ariaLabel: t("talentDirectory.trackFilterAria"),
-                            onSelectionChange: (key) => setSelectedCourseId(String(key)),
-                        }}
-                    />
-                ) : null}
-
-                <AsyncContent
-                    isLoading={(coursesLoading || isLoading || !selectedCourseId) && candidates.length === 0}
-                    skeleton={(
-                        // mirrors the resolved grid below, which reflows on its
-                        // CONTAINER — so the same steps (`@xl`/`@4xl`), not viewport
-                        // ones, or the placeholder count per row won't match what
-                        // replaces it
-                        <div className="@container">
-                            <div className="grid grid-cols-1 gap-3 @xl:grid-cols-2 @4xl:grid-cols-3">
-                                {Array.from({ length: SKELETON_COUNT }).map((_, index) => (
-                                    <Skeleton key={index} className="h-36 w-full rounded-3xl" />
-                                ))}
-                            </div>
-                        </div>
-                    )}
-                    isEmpty={candidates.length === 0}
-                    emptyContent={{
-                        title: t("talentDirectory.empty"),
-                        description: t("talentDirectory.emptyHint"),
-                        icon: <ChartLineUpIcon aria-hidden focusable="false" className="size-8 text-muted" />,
-                    }}
-                    error={candidates.length === 0 ? error : undefined}
-                    errorContent={{
-                        title: t("talentDirectory.error"),
-                        onRetry: () => { void mutate() },
-                        retryLabel: t("common.retry"),
-                    }}
-                >
-                    <GroupPressableCard
-                        ariaLabel={t("talentDirectory.candidatesAria")}
-                        // container steps, not viewport. A candidate card carries a
-                        // 48px avatar + name + chips, so it needs real width: two-up
-                        // from 576px (≈284px each), three-up only from 896px (≈293px
-                        // each) — roughly what the max-w-5xl column gave before.
-                        columns={{ base: 1, xl: 2, xl4: 3 }}
-                        items={candidates.map(({ user, track }) => ({
-                            key: user.id,
-                            href: pathConfig().locale(locale).profile(user.username ?? "").build(),
-                            content: (
-                                <div className="flex flex-col gap-3">
-                                    <div className="flex items-center gap-3">
-                                        <UserAvatar
-                                            username={user.displayName ?? user.username}
-                                            avatar={user.avatar}
-                                            seed={user.username}
-                                            className="size-12"
-                                        />
-                                        <div className="flex min-w-0 flex-col gap-0">
-                                            <Typography type="body-sm" weight="semibold" truncate>
-                                                {user.displayName?.trim() ? user.displayName : user.username}
-                                            </Typography>
-                                            <Typography type="body-xs" color="muted" truncate>
-                                                {user.roleTitle?.trim() ? user.roleTitle : `@${user.username}`}
-                                            </Typography>
-                                        </div>
-                                    </div>
-
-                                    {/* qualitative track badges ONLY — no blended score, no raw number */}
-                                    <div className="flex flex-wrap items-center gap-2">
-                                        {track.isQualified ? (
-                                            <Chip size="sm" variant="soft" color="success">
-                                                <RocketLaunchIcon aria-hidden focusable="false" className="size-4" />
-                                                <Chip.Label>{t("talentDirectory.qualified")}</Chip.Label>
-                                            </Chip>
-                                        ) : null}
-                                        <Chip size="sm" variant="soft" color={bandColorOf(track.band)}>
-                                            <Chip.Label>{t(`jobReadiness.band.${track.band}`)}</Chip.Label>
-                                        </Chip>
-                                    </div>
-
-                                    {user.bio?.trim() ? (
-                                        <Typography type="body-xs" color="muted" className="line-clamp-2">
-                                            {user.bio}
-                                        </Typography>
-                                    ) : null}
-                                </div>
-                            ),
-                        }))}
-                    />
-                </AsyncContent>
-            </div>
-        </div>
+        <_TalentDirectory
+            className={className}
+            // first load, nothing in hand → shimmer (loading-and-skeleton.md); the same
+            // condition the legacy `AsyncContent.isLoading` used
+            isSkeleton={(coursesLoading || candidatesSwr.isLoading || !selectedCourseId) && candidates.length === 0}
+            isEmpty={candidates.length === 0}
+            // only a settled fetch error (nothing in hand) reaches the block
+            error={candidates.length === 0 ? candidatesSwr.error : undefined}
+            onRetry={() => { void candidatesSwr.mutate() }}
+            tracks={courses.map((course) => ({ key: course.id, label: course.title }))}
+            selectedTrackKey={selectedCourseId}
+            onSelectTrack={(key) => setSelectedCourseId(key)}
+            candidates={candidates.map(({ user, track }) => ({
+                key: user.id,
+                href: pathConfig().locale(locale).profile(user.username ?? "").build(),
+                // `?.trim()` alone doesn't narrow `user.displayName` for tsc (the truthy
+                // check is on the CALL result, not the property) — the plain `&&` form does.
+                displayName: user.displayName && user.displayName.trim() ? user.displayName : user.username,
+                roleTitle: user.roleTitle && user.roleTitle.trim() ? user.roleTitle : `@${user.username}`,
+                avatar: user.avatar,
+                seed: user.username,
+                isQualified: track.isQualified,
+                band: track.band,
+                bio: user.bio,
+            }))}
+            labels={{
+                title: t("talentDirectory.title"),
+                description: t("talentDirectory.description"),
+                trackFilterAria: t("talentDirectory.trackFilterAria"),
+                candidatesAria: t("talentDirectory.candidatesAria"),
+                emptyTitle: t("talentDirectory.empty"),
+                emptyDescription: t("talentDirectory.emptyHint"),
+                errorTitle: t("talentDirectory.error"),
+                retry: t("common.retry"),
+                qualified: t("talentDirectory.qualified"),
+                band: {
+                    needsWork: t("jobReadiness.band.needsWork"),
+                    building: t("jobReadiness.band.building"),
+                    jobReady: t("jobReadiness.band.jobReady"),
+                },
+            }}
+        />
     )
 }

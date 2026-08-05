@@ -1,20 +1,13 @@
 "use client"
 
-import React, { useCallback, useState } from "react"
-import {
-    Button,
-    TextArea,
-    TextField,
-} from "@heroui/react"
+import React, { useCallback } from "react"
 import { useTranslations } from "next-intl"
-import { CommunityCommentItem } from "../CommunityCommentItem"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { _CommunityCommentThread } from "./component"
 import { useMutateCreateCommunityPostCommentSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCreateCommunityPostCommentSwr"
 import { useQueryCommunityPostCommentsSwr } from "@/hooks/swr/api/graphql/queries/useQueryCommunityPostCommentsSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
-/** Props for the {@link CommunityCommentThread} feature. */
+/** Props for {@link CommunityCommentThread}. */
 export interface CommunityCommentThreadProps {
     /** Post whose comments are shown. */
     postId: string
@@ -25,10 +18,10 @@ export interface CommunityCommentThreadProps {
 }
 
 /**
- * Expandable comment thread under a community post: lists top-level comments (each
- * with its own reply + nested-replies controls via {@link CommunityCommentItem}),
- * plus a composer for signed-in users. Loads its own data (SWR) so the feed only
- * fetches it when a post is expanded.
+ * Expandable comment thread under a community post — the CONNECTED half (see `tiers/split.md`):
+ * fetches its own page of top-level comments (SWR) so the feed only pays for it once a post is
+ * expanded, wires the create-comment mutation, and hands resolved data + already-translated labels
+ * to the presentational {@link _CommunityCommentThread}.
  *
  * @param props - {@link CommunityCommentThreadProps}
  */
@@ -38,103 +31,57 @@ export const CommunityCommentThread = ({
     onChanged,
 }: CommunityCommentThreadProps) => {
     const t = useTranslations()
-    const [body, setBody] = useState("")
     const runGraphQL = useGraphQLWithToast()
 
-    const { data, isLoading, error, mutate } = useQueryCommunityPostCommentsSwr(postId)
+    const { data, error, mutate } = useQueryCommunityPostCommentsSwr(postId)
     const { trigger: createComment, isMutating } = useMutateCreateCommunityPostCommentSwr()
 
     const comments = data?.comments ?? []
 
-    /** Submit a new top-level comment, then clear + refresh. */
-    const onSubmit = useCallback(async () => {
-        const trimmed = body.trim()
-        if (!trimmed) {
-            return
-        }
-        // toast-wrapped create; action returns the inner GraphQLResponse
-        const ok = await runGraphQL(
-            async () => {
-                const result = await createComment({
-                    postId,
-                    body: trimmed,
-                })
-                return result.data!.createCommunityPostComment
-            },
-            { showSuccessToast: true },
-        )
-        if (ok) {
-            setBody("")
-            // refresh this thread + let the feed bump the post's comment count
-            await mutate()
-            onChanged?.()
-        }
-    }, [body, postId, createComment, runGraphQL, mutate, onChanged])
-
-    // refresh the top-level list, and bubble up so the feed bumps the post count
+    // refresh the top-level list, and bubble up so the feed bumps the post's comment count
     const onItemChanged = useCallback(() => {
         void mutate()
         onChanged?.()
     }, [mutate, onChanged])
 
-    return (
-        <div className="flex flex-col gap-3 border-t border-separator pt-3">
-            {authenticated ? (
-                <div className="flex flex-col gap-2">
-                    <TextField variant="secondary">
-                        <TextArea
-                            rows={2}
-                            value={body}
-                            onChange={(event) => setBody(event.target.value)}
-                            placeholder={t("community.comments.placeholder")}
-                            aria-label={t("community.comments.placeholder")}
-                            className="resize-none"
-                        />
-                    </TextField>
-                    <div className="flex justify-end">
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            isPending={isMutating}
-                            isDisabled={!body.trim()}
-                            onPress={() => void onSubmit()}
-                        >
-                            {t("community.comments.send")}
-                        </Button>
-                    </div>
-                </div>
-            ) : null}
+    /** Submit a new top-level comment, then refresh + bubble up. Resolves `true` on success. */
+    const onSubmit = useCallback(async (body: string) => {
+        // toast-wrapped create; action returns the inner GraphQLResponse
+        const ok = await runGraphQL(
+            async () => {
+                const result = await createComment({ postId, body })
+                return result.data!.createCommunityPostComment
+            },
+            { showSuccessToast: true },
+        )
+        if (ok) {
+            await mutate()
+            onChanged?.()
+        }
+        return Boolean(ok)
+    }, [postId, createComment, runGraphQL, mutate, onChanged])
 
-            <AsyncContent
-                isLoading={isLoading && comments.length === 0}
-                skeleton={(
-                    <div className="flex flex-col gap-3">
-                        <Skeleton.ListRow withSubtitle withTrailing={false} />
-                        <Skeleton.ListRow withSubtitle withTrailing={false} />
-                        <Skeleton.ListRow withSubtitle withTrailing={false} />
-                    </div>
-                )}
-                isEmpty={comments.length === 0}
-                emptyContent={{ title: t("community.comments.empty") }}
-                error={comments.length === 0 ? error : undefined}
-                errorContent={{
-                    title: t("community.comments.error"),
-                    onRetry: () => void mutate(),
-                    retryLabel: t("community.retry"),
-                }}
-            >
-                <div className="flex flex-col gap-3">
-                    {comments.map((comment) => (
-                        <CommunityCommentItem
-                            key={comment.id}
-                            postId={postId}
-                            comment={comment}
-                            authenticated={authenticated}
-                            onChanged={onItemChanged}
-                        />
-                    ))}
-                </div>
-            </AsyncContent>
-        </div>
+    return (
+        <_CommunityCommentThread
+            postId={postId}
+            authenticated={authenticated}
+            // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
+            isSkeleton={!data && !error}
+            // error beats loading + empty; only a settled fetch error (nothing in hand) reaches the block
+            error={comments.length === 0 ? error : undefined}
+            onRetry={() => { void mutate() }}
+            isEmpty={comments.length === 0}
+            comments={comments}
+            onItemChanged={onItemChanged}
+            onSubmit={onSubmit}
+            isSubmitting={isMutating}
+            labels={{
+                composerPlaceholder: t("community.comments.placeholder"),
+                send: t("community.comments.send"),
+                emptyTitle: t("community.comments.empty"),
+                errorTitle: t("community.comments.error"),
+                retry: t("community.retry"),
+            }}
+        />
     )
 }

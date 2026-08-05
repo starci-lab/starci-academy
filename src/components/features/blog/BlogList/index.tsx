@@ -2,17 +2,8 @@
 
 import React, { useMemo, useState } from "react"
 import useSWR from "swr"
-import { Button } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
-import { PageHeader } from "@/components/blocks/layout/PageHeader"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { Masthead } from "./Masthead"
-import { TopicsStrip } from "./TopicsStrip"
-import { StartHereAnchor } from "./StartHereAnchor"
-import { CategoryFilter } from "./CategoryFilter"
-import { FeaturedPost } from "./FeaturedPost"
-import { PostRow } from "../shared/PostRow"
-import { BlogListSkeleton } from "./BlogListSkeleton"
+import { _BlogList } from "./component"
 import { queryBlogPosts } from "@/modules/api/graphql/queries/query-blog-posts"
 import { BlogCategory } from "@/modules/api/graphql/queries/types/blog"
 
@@ -23,11 +14,15 @@ const PAGE_SIZE = 12
 const START_HERE_SLUG = "start-here-monorepo-tour"
 
 /**
- * Public `/blog` — reframed as StarCi's engineering publication ("the backend, taken apart"):
- * an operational 3D infra masthead → reframed header → a real-subsystem topics strip → a pinned
- * "start here" anchor → editorial lead → text-first list. The pillar filter only appears once
- * more than one pillar actually has posts (today every post is a `codebase` deep-dive, so it
- * stays hidden — no dead buckets). Cover images are used only when present.
+ * Public `/blog` — the CONNECTED half: it fetches the page of posts, derives pagination and
+ * the pillar-filter state, formats every date for the current locale, and resolves every
+ * label, handing them to the presentational {@link _BlogList}. See `tiers/split.md`.
+ *
+ * Reframed as StarCi's engineering publication ("the backend, taken apart"): an operational
+ * 3D infra masthead → reframed header → a real-subsystem topics strip → a pinned "start here"
+ * anchor → editorial lead → text-first list. The pillar filter only appears once more than one
+ * pillar actually has posts (today every post is a `codebase` deep-dive, so it stays hidden —
+ * no dead buckets). Cover images are used only when present.
  */
 export const BlogList = () => {
     const t = useTranslations("blog")
@@ -65,6 +60,7 @@ export const BlogList = () => {
     const pinned = category === null ? posts.find((post) => post.slug === START_HERE_SLUG) ?? null : null
     const flow = pinned ? posts.filter((post) => post.slug !== pinned.slug) : posts
     const [featured, ...rest] = flow
+    const restItems = rest.map((post) => ({ post, formattedDate: formatDate(post.publishedAt) }))
 
     // a full page came back → there may be more to load
     const hasMore = posts.length >= limit
@@ -84,88 +80,38 @@ export const BlogList = () => {
     }
 
     return (
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 p-6">
-            {/* masthead — operational 3D showcase of the real backend (the blog's subject) */}
-            <Masthead />
-
-            {/* identity + browse — tier below the masthead, header separated from its content cluster */}
-            <div className="flex flex-col gap-10">
-                <PageHeader title={t("title")} description={t("subtitle")} />
-
-                {/* browse — topics framing + (optional) filter + results, one cluster */}
-                <div className="flex flex-col gap-6">
-                    <TopicsStrip />
-
-                    {showFilter && (
-                        <CategoryFilter
-                            value={category}
-                            onChange={changeCategory}
-                            categories={availableCategories}
-                        />
-                    )}
-
-                    <AsyncContent
-                        isLoading={isLoading && posts.length === 0}
-                        skeleton={<BlogListSkeleton />}
-                        error={error}
-                        errorContent={{
-                            title: t("errorTitle"),
-                            description: t("errorHint"),
-                            onRetry: () => {
-                                void mutate()
-                            },
-                            retryLabel: t("retry"),
-                        }}
-                        isEmpty={posts.length === 0}
-                        emptyContent={
-                            category
-                                ? {
-                                    title: t("emptyInFilter"),
-                                    description: t("emptyInFilterHint"),
-                                    onRetry: () => changeCategory(null),
-                                    retryLabel: t("clearFilter"),
-                                }
-                                : {
-                                    title: t("empty"),
-                                    description: t("emptyHint"),
-                                }
-                        }
-                    >
-                        <div className="flex flex-col gap-3">
-                            {pinned && <StartHereAnchor post={pinned} />}
-                            {featured && (
-                                <FeaturedPost
-                                    post={featured}
-                                    formattedDate={formatDate(featured.publishedAt)}
-                                />
-                            )}
-                            {rest.length > 0 && (
-                                <div className="flex flex-col">
-                                    {rest.map((post) => (
-                                        <PostRow
-                                            key={post.id}
-                                            post={post}
-                                            formattedDate={formatDate(post.publishedAt)}
-                                        />
-                                    ))}
-                                </div>
-                            )}
-                            {hasMore && (
-                                <div className="flex justify-center pt-2">
-                                    <Button
-                                        variant="secondary"
-                                        size="md"
-                                        isPending={isValidating}
-                                        onPress={() => setLimit((current) => current + PAGE_SIZE)}
-                                    >
-                                        {t("loadMore")}
-                                    </Button>
-                                </div>
-                            )}
-                        </div>
-                    </AsyncContent>
-                </div>
-            </div>
-        </div>
+        <_BlogList
+            // first load, nothing in hand → shimmer (loading-and-skeleton.md's first-load formula)
+            isSkeleton={isLoading && posts.length === 0}
+            isEmpty={posts.length === 0}
+            error={error}
+            onRetry={() => {
+                void mutate()
+            }}
+            category={category}
+            onChangeCategory={changeCategory}
+            availableCategories={availableCategories}
+            showFilter={showFilter}
+            pinnedPost={pinned}
+            featuredPost={featured ?? null}
+            featuredFormattedDate={featured ? formatDate(featured.publishedAt) : undefined}
+            restPosts={restItems}
+            hasMore={hasMore}
+            isLoadingMore={isValidating}
+            onLoadMore={() => setLimit((current) => current + PAGE_SIZE)}
+            labels={{
+                title: t("title"),
+                subtitle: t("subtitle"),
+                errorTitle: t("errorTitle"),
+                errorHint: t("errorHint"),
+                retry: t("retry"),
+                empty: t("empty"),
+                emptyHint: t("emptyHint"),
+                emptyInFilter: t("emptyInFilter"),
+                emptyInFilterHint: t("emptyInFilterHint"),
+                clearFilter: t("clearFilter"),
+                loadMore: t("loadMore"),
+            }}
+        />
     )
 }

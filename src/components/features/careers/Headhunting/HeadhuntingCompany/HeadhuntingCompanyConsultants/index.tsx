@@ -1,31 +1,22 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-import { ConsultantCard } from "../../Headhuntings/ConsultantCard"
-import { ConsultantCardSkeleton } from "../../Headhuntings/ConsultantCardSkeleton"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryHeadhunterCompaniesSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhunterCompaniesSwr"
 import { useQueryHeadhuntersSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhuntersSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-
-/** Number of placeholder cards shown while consultants load. */
-const SKELETON_COUNT = 3
-
-/** Props for {@link HeadhuntingCompanyConsultants}. */
-export type HeadhuntingCompanyConsultantsProps = WithClassNames<undefined>
+import { _HeadhuntingCompanyConsultants } from "./component"
 
 /**
- * Grid of consultant cards for one headhunting company.
- *
- * Self-contained section (single-use): reads all consultants and the active
- * company id from the `headhunter` redux slice (synced by the parent hook),
- * so the container renders `<HeadhuntingCompanyConsultants />` with no props.
- * @param props - {@link HeadhuntingCompanyConsultantsProps}
+ * `HeadhuntingCompanyConsultants` — the CONNECTED half: grid of consultant
+ * cards for one headhunting company. Self-contained section (single-use): it
+ * reads all consultants and the active company id from the `headhunter` redux
+ * slice (synced by the parent hook), computes the skeleton/empty/error state,
+ * and hands them to the presentational {@link _HeadhuntingCompanyConsultants}
+ * — so the container renders `<HeadhuntingCompanyConsultants />` with no
+ * props. See `design/storybook/architecture/split.md`.
  */
-export const HeadhuntingCompanyConsultants = ({ className }: HeadhuntingCompanyConsultantsProps) => {
+export const HeadhuntingCompanyConsultants = () => {
     const t = useTranslations()
     const consultants = useAppSelector((state) => state.headhunter.entities)
     const companyId = useAppSelector((state) => state.headhunter.companyId)
@@ -46,35 +37,21 @@ export const HeadhuntingCompanyConsultants = ({ className }: HeadhuntingCompanyC
     }, [companyId, consultants])
 
     return (
-        <AsyncContent
-            isLoading={!consultants}
-            skeleton={(
-                <div className={cn("grid grid-cols-1 gap-3 @app-sm:grid-cols-2 @app-lg:grid-cols-3", className)}>
-                    {Array.from({ length: SKELETON_COUNT }).map((_, index) => (
-                        <ConsultantCardSkeleton key={index} />
-                    ))}
-                </div>
-            )}
+        <_HeadhuntingCompanyConsultants
+            // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
+            isSkeleton={!consultants}
             isEmpty={companyConsultants.length === 0}
-            emptyContent={{ title: t("headhuntings.empty") }}
             error={error}
-            errorContent={{
-                title: t("headhuntings.error"),
-                onRetry: () => {
-                    void mutateCompanies()
-                    void mutateConsultants()
-                },
-                retryLabel: t("common.retry"),
+            onRetry={() => {
+                void mutateCompanies()
+                void mutateConsultants()
             }}
-        >
-            <div className={cn("grid grid-cols-1 gap-3 @app-sm:grid-cols-2 @app-lg:grid-cols-3", className)}>
-                {companyConsultants.map((consultant) => (
-                    <ConsultantCard
-                        key={consultant.id}
-                        consultant={consultant}
-                    />
-                ))}
-            </div>
-        </AsyncContent>
+            consultants={companyConsultants}
+            labels={{
+                emptyTitle: t("headhuntings.empty"),
+                errorTitle: t("headhuntings.error"),
+                retry: t("common.retry"),
+            }}
+        />
     )
 }

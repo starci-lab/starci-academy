@@ -1,20 +1,11 @@
 "use client"
 
 import React, { useCallback, useMemo, useState } from "react"
-import { Button } from "@heroui/react"
 import type { Key } from "react"
-import { ChatCircleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
 import { pathConfig } from "@/resources/path"
-import { CommunityComposer } from "./CommunityComposer"
-import { CommunityFeedSkeleton } from "./CommunityFeedSkeleton"
-import { CommunityPost } from "../CommunityPost"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
-import { PageContainer } from "@/components/blocks/layout/PageContainer"
-import { PageHeader } from "@/components/blocks/layout/PageHeader"
-import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { _CommunityFeed } from "./component"
 import { useMutateReactCommunityPostSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReactCommunityPostSwr"
 import { useQueryCommunityFeedSwr } from "@/hooks/swr/api/graphql/queries/useQueryCommunityFeedSwr"
 import { CommunityChannel } from "@/modules/api/graphql/queries/types/community-feed"
@@ -25,10 +16,10 @@ import { useAppSelector } from "@/redux/hooks"
 const ALL_KEY = "all"
 
 /**
- * Community feed page (Facebook/Twitter-style). Everyone can read; signed-in users
- * get a composer (non-members are quota-limited server-side, surfaced as a toast).
- * Channel tabs switch the scope; posts render as cards with a reaction bar +
- * comment count. Cursor-paginated via SWR infinite with a "load more" button.
+ * Community feed page — the CONNECTED half: fetches the cursor-paginated feed
+ * (SWR infinite), holds the channel filter, reacts to posts, and resolves every
+ * label via `t()`, handing them to the presentational {@link _CommunityFeed}.
+ * See `design/storybook/architecture/split.md`.
  */
 export const CommunityFeed = () => {
     const t = useTranslations()
@@ -82,116 +73,47 @@ export const CommunityFeed = () => {
     const composerChannel = channel ?? CommunityChannel.General
 
     return (
-        <PageContainer>
-            <div className="flex flex-col gap-10">
-                <PageHeader
-                    title={t("community.title")}
-                    description={t("community.description")}
-                    actions={(
-                        <Button
-                            variant="secondary"
-                            size="sm"
-                            onPress={() => router.push(
-                                `${pathConfig().locale().community().build()}/chat`,
-                            )}
-                        >
-                            <ChatCircleIcon className="size-4 shrink-0" />
-                            {t("community.chat.title")}
-                        </Button>
-                    )}
-                />
-
-                <div className="flex flex-col gap-6">
-                    <TabsCard
-                        leftTabs={{
-                            items: channelTabs,
-                            selectedKey: channel ?? ALL_KEY,
-                            ariaLabel: t("community.channelTabsAria"),
-                            onSelectionChange: (key: Key) => {
-                                const value = String(key)
-                                setChannel(value === ALL_KEY ? null : (value as CommunityChannel))
-                            },
-                        }}
-                    />
-
-                    {authenticated ? (
-                        <CommunityComposer
-                            channel={composerChannel}
-                            onPosted={() => void mutate()}
-                        />
-                    ) : null}
-
-                    <AsyncContent
-                        isLoading={isLoading && items.length === 0}
-                        skeleton={<CommunityFeedSkeleton />}
-                        error={items.length === 0 ? error : undefined}
-                        errorContent={{
-                            title: t("community.error"),
-                            onRetry: () => void mutate(),
-                            retryLabel: t("community.retry"),
-                        }}
-                    >
-                        {items.length === 0 ? (
-                            // empty feed is still a conversion surface. Two distinct reasons need
-                            // two distinct empties (§State-matrix): filtered-empty offers a way
-                            // back to "all channels"; platform-empty invites into courses.
-                            channel !== null ? (
-                                <EmptyState
-                                    title={t("community.emptyFiltered")}
-                                    action={(
-                                        <Button
-                                            variant="secondary"
-                                            size="sm"
-                                            onPress={() => setChannel(null)}
-                                        >
-                                            {t("community.viewAllChannels")}
-                                        </Button>
-                                    )}
-                                />
-                            ) : (
-                                <EmptyState
-                                    title={t("community.empty")}
-                                    action={(
-                                        <Button
-                                            variant="secondary"
-                                            size="sm"
-                                            onPress={() => router.push(
-                                                pathConfig().locale().course().build(),
-                                            )}
-                                        >
-                                            {t("cart.browseCourses")}
-                                        </Button>
-                                    )}
-                                />
-                            )
-                        ) : (
-                            <div className="flex flex-col gap-6">
-                                {items.map((post) => (
-                                    <CommunityPost
-                                        key={post.id}
-                                        post={post}
-                                        authenticated={authenticated}
-                                        onReact={authenticated ? onReact : undefined}
-                                        onChanged={() => void mutate()}
-                                    />
-                                ))}
-                                {hasMore ? (
-                                    <div className="flex justify-center">
-                                        <Button
-                                            variant="secondary"
-                                            size="sm"
-                                            isPending={isLoadingMore}
-                                            onPress={() => void setSize(size + 1)}
-                                        >
-                                            {t("community.loadMore")}
-                                        </Button>
-                                    </div>
-                                ) : null}
-                            </div>
-                        )}
-                    </AsyncContent>
-                </div>
-            </div>
-        </PageContainer>
+        <_CommunityFeed
+            // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
+            isSkeleton={isLoading && items.length === 0}
+            // error beats loading + empty; only a settled fetch error (nothing in hand) reaches the block
+            error={items.length === 0 ? error : undefined}
+            onRetry={() => void mutate()}
+            // settled with a resolved page that carries zero posts
+            isEmpty={items.length === 0}
+            isFilteredEmpty={channel !== null}
+            channelTabs={channelTabs}
+            selectedChannelKey={channel ?? ALL_KEY}
+            onChannelChange={(key: Key) => {
+                const value = String(key)
+                setChannel(value === ALL_KEY ? null : (value as CommunityChannel))
+            }}
+            showComposer={authenticated}
+            composerChannel={composerChannel}
+            onPosted={() => void mutate()}
+            onViewAllChannels={() => setChannel(null)}
+            onBrowseCourses={() => router.push(pathConfig().locale().course().build())}
+            onChatClick={() => router.push(`${pathConfig().locale().community().build()}/chat`)}
+            items={items}
+            authenticated={authenticated}
+            onReact={onReact}
+            onChanged={() => void mutate()}
+            hasMore={hasMore}
+            isLoadingMore={isLoadingMore}
+            onLoadMore={() => void setSize(size + 1)}
+            labels={{
+                title: t("community.title"),
+                description: t("community.description"),
+                chatLabel: t("community.chat.title"),
+                channelTabsAriaLabel: t("community.channelTabsAria"),
+                errorTitle: t("community.error"),
+                retryLabel: t("community.retry"),
+                emptyFilteredTitle: t("community.emptyFiltered"),
+                viewAllChannelsLabel: t("community.viewAllChannels"),
+                emptyTitle: t("community.empty"),
+                browseCoursesLabel: t("cart.browseCourses"),
+                loadMoreLabel: t("community.loadMore"),
+            }}
+        />
     )
 }

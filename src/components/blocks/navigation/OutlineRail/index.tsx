@@ -23,9 +23,18 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { ContentMapRow } from "@/components/blocks/navigation/ContentMapRow"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+
+/**
+ * Placeholder group count the co-located skeleton mirrors while `isSkeleton`
+ * is set — the real HeroUI `Accordion` and `ContentMapRow` below take no
+ * `isSkeleton` of their own (missingSkeletonSupport), so this swaps in the
+ * canonical `Skeleton.Accordion` piece right where the real tree sits.
+ */
+const SKELETON_GROUP_COUNT = 3
 
 /** One selectable row inside an {@link OutlineRailGroup}. */
 export interface OutlineRailItem {
@@ -85,19 +94,20 @@ export interface OutlineRailSearch {
     ariaLabel: string
 }
 
-/** The `AsyncContent` wiring for the list region. */
+/**
+ * The list region's error / empty wiring. The loading state is no longer
+ * carried here — it is the top-level {@link OutlineRailProps.isSkeleton},
+ * which the list region mirrors co-located in place (no caller-supplied
+ * `skeleton` tree).
+ */
 export interface OutlineRailAsync {
-    /** First-load gate. */
-    isLoading: boolean
-    /** Skeleton shown while loading. */
-    skeleton: ReactNode
-    /** Empty gate (no data at all). */
+    /** Empty gate (no data at all). Ignored while {@link OutlineRailProps.isSkeleton} is set. */
     isEmpty: boolean
     /** Empty-state title. */
     emptyTitle: string
     /** Error-state title. */
     errorTitle: string
-    /** Error to surface (prefer stale data once loaded). */
+    /** Error to surface (prefer stale data once loaded; beats both skeleton and empty). */
     error?: unknown
     /** Retry handler. */
     onRetry: () => void
@@ -119,7 +129,14 @@ export interface OutlineRailProps extends WithClassNames<undefined> {
     expandedKeys: Set<string>
     /** Fires with the next expanded id set. */
     onExpandedChange: (keys: Set<string>) => void
-    /** Async wiring for the list. */
+    /**
+     * First load, nothing in hand → the list region shimmers in place
+     * (co-located: `Skeleton.Accordion` swaps in for the real `Accordion`
+     * right where it sits — `missingSkeletonSupport`, `loading-and-skeleton.md`).
+     * Owned by the caller's first-load formula, e.g. `!data && !error`.
+     */
+    isSkeleton?: boolean
+    /** Error / empty wiring for the list region. */
     async: OutlineRailAsync
 }
 
@@ -147,6 +164,7 @@ export const OutlineRail = ({
     groups,
     expandedKeys,
     onExpandedChange,
+    isSkeleton = false,
     async,
     className,
 }: OutlineRailProps) => {
@@ -187,95 +205,96 @@ export const OutlineRail = ({
             {/* only the list scrolls — soft fade, header + search stay pinned. Extra bottom
                 padding when the floating action is present so the last row clears it. */}
             <ScrollShadow hideScrollBar className={cn("-mx-1 min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-1", header?.continue && "pb-20")}>
-                <AsyncContent
-                    isLoading={async.isLoading}
-                    skeleton={async.skeleton}
-                    isEmpty={async.isEmpty}
-                    emptyContent={{ title: async.emptyTitle }}
-                    error={async.error}
-                    errorContent={{
-                        title: async.errorTitle,
-                        onRetry: async.onRetry,
-                        retryLabel: async.retryLabel,
-                    }}
-                >
-                    {groups.length > 0 ? (
-                        <Accordion
-                            variant="default"
-                            className="min-w-0 w-full"
-                            expandedKeys={expandedKeys}
-                            onExpandedChange={(keys) => onExpandedChange(new Set([...keys].map(String)))}
-                        >
-                            {groups.map((group) => {
-                                const isExpanded = expandedKeys.has(group.id)
-                                return (
-                                    <Accordion.Item
-                                        key={group.id}
-                                        id={group.id}
-                                        aria-label={group.title}
-                                        className="min-w-0"
-                                    >
-                                        <Accordion.Heading className="min-w-0">
-                                            <Accordion.Trigger className="min-w-0 w-full max-w-full px-0 py-2 hover:bg-transparent">
-                                                {/* title truncates to one line; count/bar on the line below */}
-                                                <div className="flex w-full min-w-0 items-center gap-2 overflow-hidden">
-                                                    <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-                                                        <Typography
-                                                            type="body"
-                                                            weight="semibold"
-                                                            truncate
-                                                            title={group.title}
-                                                            className="w-full min-w-0"
-                                                        >
-                                                            {group.title}
+                {/* error beats a stale skeleton flag; empty only once settled (loading-and-skeleton.md §1) */}
+                {async.error ? (
+                    <AsyncContentError
+                        title={async.errorTitle}
+                        onRetry={async.onRetry}
+                        retryLabel={async.retryLabel}
+                    />
+                ) : !isSkeleton && async.isEmpty ? (
+                    <AsyncContentEmpty title={async.emptyTitle} />
+                ) : isSkeleton ? (
+                    // the real `Accordion` (HeroUI) and `ContentMapRow` below take no `isSkeleton`
+                    // of their own — mirrored right here with the canonical `Skeleton.Accordion`
+                    // piece instead of a caller-supplied parallel skeleton tree (missingSkeletonSupport).
+                    <Skeleton.Accordion className="w-full" items={SKELETON_GROUP_COUNT} />
+                ) : groups.length > 0 ? (
+                    <Accordion
+                        variant="default"
+                        className="min-w-0 w-full"
+                        expandedKeys={expandedKeys}
+                        onExpandedChange={(keys) => onExpandedChange(new Set([...keys].map(String)))}
+                    >
+                        {groups.map((group) => {
+                            const isExpanded = expandedKeys.has(group.id)
+                            return (
+                                <Accordion.Item
+                                    key={group.id}
+                                    id={group.id}
+                                    aria-label={group.title}
+                                    className="min-w-0"
+                                >
+                                    <Accordion.Heading className="min-w-0">
+                                        <Accordion.Trigger className="min-w-0 w-full max-w-full px-0 py-2 hover:bg-transparent">
+                                            {/* title truncates to one line; count/bar on the line below */}
+                                            <div className="flex w-full min-w-0 items-center gap-2 overflow-hidden">
+                                                <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+                                                    <Typography
+                                                        type="body"
+                                                        weight="semibold"
+                                                        truncate
+                                                        title={group.title}
+                                                        className="w-full min-w-0"
+                                                    >
+                                                        {group.title}
+                                                    </Typography>
+                                                    {isExpanded ? (
+                                                        <ProgressMeter
+                                                            value={group.progress.done}
+                                                            max={group.progress.total || 1}
+                                                        />
+                                                    ) : (
+                                                        <Typography type="body-xs" color="muted">
+                                                            {group.collapsedCountLabel}
                                                         </Typography>
-                                                        {isExpanded ? (
-                                                            <ProgressMeter
-                                                                value={group.progress.done}
-                                                                max={group.progress.total || 1}
-                                                            />
-                                                        ) : (
-                                                            <Typography type="body-xs" color="muted">
-                                                                {group.collapsedCountLabel}
-                                                            </Typography>
-                                                        )}
+                                                    )}
+                                                </div>
+                                                <Accordion.Indicator className="shrink-0" />
+                                            </div>
+                                        </Accordion.Trigger>
+                                    </Accordion.Heading>
+                                    <Accordion.Panel>
+                                        <Accordion.Body className="px-0 pb-3">
+                                            <div className="flex flex-col gap-0">
+                                                {group.items.map((item) => (
+                                                    <div
+                                                        key={item.id}
+                                                        ref={item.isActive ? activeRowRef : undefined}
+                                                    >
+                                                        <ContentMapRow
+                                                            title={item.title}
+                                                            isActive={item.isActive}
+                                                            isRead={item.isRead}
+                                                            isLocked={item.isLocked}
+                                                            isPremium={item.isPremium ?? false}
+                                                            onPress={item.onPress}
+                                                            meta={item.meta}
+                                                        />
                                                     </div>
-                                                    <Accordion.Indicator className="shrink-0" />
-                                                </div>
-                                            </Accordion.Trigger>
-                                        </Accordion.Heading>
-                                        <Accordion.Panel>
-                                            <Accordion.Body className="px-0 pb-3">
-                                                <div className="flex flex-col gap-0">
-                                                    {group.items.map((item) => (
-                                                        <div
-                                                            key={item.id}
-                                                            ref={item.isActive ? activeRowRef : undefined}
-                                                        >
-                                                            <ContentMapRow
-                                                                title={item.title}
-                                                                isActive={item.isActive}
-                                                                isRead={item.isRead}
-                                                                isLocked={item.isLocked}
-                                                                isPremium={item.isPremium ?? false}
-                                                                onPress={item.onPress}
-                                                                meta={item.meta}
-                                                            />
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </Accordion.Body>
-                                        </Accordion.Panel>
-                                    </Accordion.Item>
-                                )
-                            })}
-                        </Accordion>
-                    ) : (
-                        <Typography type="body-sm" color="muted" align="center">
-                            {async.noMatchLabel}
-                        </Typography>
-                    )}
-                </AsyncContent>
+                                                ))}
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Panel>
+                                </Accordion.Item>
+                            )
+                        })}
+                    </Accordion>
+                ) : (
+                    <Typography type="body-sm" color="muted" align="center">
+                        {async.noMatchLabel}
+                    </Typography>
+                )}
             </ScrollShadow>
 
             {/* the rail's one primary action — a frosted bottom bar so it stays reachable

@@ -1,35 +1,23 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-import { ConsultantCard } from "../ConsultantCard"
-import { ConsultantCardSkeleton } from "../ConsultantCardSkeleton"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryHeadhunterCompaniesSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhunterCompaniesSwr"
 import { useQueryHeadhuntersSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhuntersSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-
-/** Number of placeholder cards shown while the consultant list loads. */
-const SKELETON_COUNT = 6
-
-/** Props for {@link ConsultantGrid}. */
-export type ConsultantGridProps = WithClassNames<undefined>
+import { _ConsultantGrid } from "./component"
 
 /**
- * Responsive grid of consultant cards with loading + empty states.
- *
- * Container: reads the full consultant list from the `headhunter` redux slice
- * itself and derives the sorted order, so the parent renders `<ConsultantGrid />`.
- * @param props - {@link ConsultantGridProps}
+ * Responsive grid of consultant cards with loading + empty + error states — the CONNECTED half
+ * (`tiers/split.md`). Reads the full consultant list from the `headhunter` redux slice and derives
+ * the sorted order, so the parent renders `<ConsultantGrid />` with no props of its own. The list is
+ * loaded into Redux by these two queries; their error/retry is read here too — a failed query leaves
+ * Redux `undefined`, so surfacing it explicitly avoids an endless skeleton. SWR dedupes with the
+ * parent's own calls to the same queries.
  */
-export const ConsultantGrid = ({ className }: ConsultantGridProps) => {
+export const ConsultantGrid = () => {
     const t = useTranslations()
     const consultants = useAppSelector((state) => state.headhunter.entities)
-    // the list is loaded into Redux by these queries; read their error/retry here
-    // so a failed query surfaces an error+retry instead of an endless skeleton
-    // (Redux stays `undefined` on failure). SWR dedupes with the container's calls.
     const { error: companiesError, mutate: mutateCompanies } = useQueryHeadhunterCompaniesSwr()
     const { error: consultantsError, mutate: mutateConsultants } = useQueryHeadhuntersSwr()
     const error = companiesError ?? consultantsError
@@ -42,35 +30,21 @@ export const ConsultantGrid = ({ className }: ConsultantGridProps) => {
     }, [consultants])
 
     return (
-        <AsyncContent
-            isLoading={!consultants}
-            skeleton={(
-                <div className={cn("grid grid-cols-1 gap-6 @app-sm:grid-cols-2 @app-lg:grid-cols-3", className)}>
-                    {Array.from({ length: SKELETON_COUNT }).map((_, index) => (
-                        <ConsultantCardSkeleton key={index} />
-                    ))}
-                </div>
-            )}
+        <_ConsultantGrid
+            // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
+            isSkeleton={!consultants && !error}
             isEmpty={sortedConsultants.length === 0}
-            emptyContent={{ title: t("headhuntings.empty") }}
             error={error}
-            errorContent={{
-                title: t("headhuntings.error"),
-                onRetry: () => {
-                    void mutateCompanies()
-                    void mutateConsultants()
-                },
-                retryLabel: t("common.retry"),
+            onRetry={() => {
+                void mutateCompanies()
+                void mutateConsultants()
             }}
-        >
-            <div className={cn("grid grid-cols-1 gap-6 @app-sm:grid-cols-2 @app-lg:grid-cols-3", className)}>
-                {sortedConsultants.map((consultant) => (
-                    <ConsultantCard
-                        key={consultant.id}
-                        consultant={consultant}
-                    />
-                ))}
-            </div>
-        </AsyncContent>
+            consultants={sortedConsultants}
+            labels={{
+                emptyTitle: t("headhuntings.empty"),
+                errorTitle: t("headhuntings.error"),
+                retry: t("common.retry"),
+            }}
+        />
     )
 }

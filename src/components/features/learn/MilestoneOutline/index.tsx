@@ -24,9 +24,6 @@ import {
 import {
     MilestoneIndexStrip,
 } from "./MilestoneIndexStrip"
-import {
-    MilestoneOutlineSkeleton,
-} from "./MilestoneOutlineSkeleton"
 import { useQueryMilestonesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestonesSwr"
 import { useQueryMilestoneTaskProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskProgressSwr"
 import { useAppSelector, useAppDispatch } from "@/redux/hooks"
@@ -256,9 +253,8 @@ export const MilestoneOutline = ({ className, collapsed = false }: MilestoneOutl
             groups={groups}
             expandedKeys={expandedKeys}
             onExpandedChange={setExpandedKeys}
+            isSkeleton={isLoading}
             async={{
-                isLoading,
-                skeleton: <MilestoneOutlineSkeleton count={5} />,
                 isEmpty,
                 emptyTitle: t("courseContents.empty"),
                 errorTitle: t("task.loadErrorTitle"),

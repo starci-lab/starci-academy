@@ -22,9 +22,6 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import {
-    ContentMapSkeleton,
-} from "./ContentMapSkeleton"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
 import { OutlineRail } from "@/components/blocks/navigation/OutlineRail"
@@ -241,9 +238,8 @@ export const ContentMap = ({ className }: ContentMapProps) => {
             groups={groups}
             expandedKeys={expandedKeys}
             onExpandedChange={setExpandedKeys}
+            isSkeleton={!outlineSwr.data && !outlineSwr.error}
             async={{
-                isLoading: !outlineSwr.data && !outlineSwr.error,
-                skeleton: <ContentMapSkeleton />,
                 isEmpty: !outline,
                 emptyTitle: t("courseContents.empty"),
                 errorTitle: t("courseContents.error"),

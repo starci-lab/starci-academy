@@ -16,7 +16,7 @@ import {
 import { Divider } from "@/components/atoms/display/Divider"
 import { Typography, type TypographyIcon } from "@/components/atoms/text/Typography"
 import { StackH, StackV } from "@/components/frames/Stack"
-import { CollapsibleSidebar, useSidebarCollapsed } from "@/components/starci/blocks/navigation/CollapsibleSidebar"
+import { CollapsibleSidebar, useSidebarCollapsed } from "@/components/blocks/navigation/CollapsibleSidebar"
 
 /**
  * `SettingsSidebarNav` — the account-settings destination list, drawn as a

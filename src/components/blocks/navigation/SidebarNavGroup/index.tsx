@@ -9,7 +9,7 @@ import {
 } from "@heroui/react"
 import {
     useSidebarCollapsed,
-} from "../CollapsibleSidebar/context"
+} from "../CollapsibleSidebar"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"

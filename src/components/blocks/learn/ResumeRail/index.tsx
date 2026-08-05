@@ -17,7 +17,7 @@ import {
 } from "@phosphor-icons/react"
 import {
     useSidebarCollapsed,
-} from "@/components/blocks/navigation/CollapsibleSidebar/context"
+} from "@/components/blocks/navigation/CollapsibleSidebar"
 import {
     useCourseResume,
 } from "@/hooks/useCourseResume"

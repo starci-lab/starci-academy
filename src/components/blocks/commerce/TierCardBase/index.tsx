@@ -5,6 +5,7 @@ import React from "react"
 import {
     cn,
     Card,
+    Skeleton,
     Typography,
 } from "@heroui/react"
 import {
@@ -30,7 +31,17 @@ export interface TierCardBaseProps extends WithClassNames<undefined> {
     isCurrent: boolean
     /** Call-to-action rendered in place of the "current plan" badge. */
     cta: React.ReactNode
+    /**
+     * First load, nothing in hand → every content slot shimmers while the card keeps
+     * its own boxes, so the grid does not jump on resolve. The resting shape lives
+     * HERE, in the file that owns it: three hand-mirrored twins used to describe this
+     * same card and could drift from it independently.
+     */
+    isSkeleton?: boolean
 }
+
+/** How many feature rows the resting card shows — the paid tiers all list two. */
+const SKELETON_FEATURE_ROWS = 2
 
 /**
  * Shared shell for an AI subscription tier card (paid or free).
@@ -51,29 +62,39 @@ export const TierCardBase = ({
     isCurrent,
     cta,
     className,
+    isSkeleton = false,
 }: TierCardBaseProps) => {
     const t = useTranslations()
+    // resting rows stand in for whatever the caller would have listed
+    const featureRows = isSkeleton
+        ? Array.from({ length: SKELETON_FEATURE_ROWS }, (_row, index) => index)
+        : features.map((_feature, index) => index)
+
     return (
         <Card className={cn("flex h-full flex-col", className)}>
             <Card.Content className="flex flex-1 flex-col gap-3">
                 {/* icon + tier name (+ optional badge) — tight pair */}
                 <div className="flex items-center gap-2">
-                    {icon}
+                    {isSkeleton
+                        ? <Skeleton className="size-6 shrink-0 rounded-full" />
+                        : icon}
                     <Typography type="h5" weight="semibold">
-                        {title}
+                        {isSkeleton ? <Skeleton className="h-5 w-16 rounded" /> : title}
                     </Typography>
-                    {badge}
+                    {isSkeleton ? null : badge}
                 </div>
                 {/* short tagline — fixed slot so cards align */}
                 <div className="h-[2lh]">
                     <Typography type="body-sm" color="muted" className="line-clamp-3">
-                        {description ?? ""}
+                        {isSkeleton ? <Skeleton className="h-4 w-3/4 rounded" /> : (description ?? "")}
                     </Typography>
                 </div>
                 <div className="flex flex-col gap-2">
-                    {price}
+                    {isSkeleton ? <Skeleton className="h-9 w-24 rounded" /> : price}
                 </div>
-                {isCurrent ? (
+                {isSkeleton ? (
+                    <Skeleton className="h-10 w-full rounded-3xl" />
+                ) : isCurrent ? (
                     <div className="flex w-full items-center justify-center rounded-3xl bg-success-soft px-3 py-2">
                         <Typography type="body-sm" weight="medium" className="text-success-soft-foreground">
                             {t("aiSubscription.currentPlan")}
@@ -84,14 +105,20 @@ export const TierCardBase = ({
             <Card.Footer>
                 {/* feature list — seal-check icon + muted text */}
                 <div className="flex flex-col gap-2">
-                    {features.map((feature, index) => (
+                    {featureRows.map((index) => (
                         <div key={index} className="flex items-center gap-2">
-                            <SealCheckIcon
-                                aria-hidden
-                                className="size-5 shrink-0 text-muted"
-                            />
+                            {isSkeleton
+                                ? <Skeleton className="size-5 shrink-0 rounded" />
+                                : (
+                                    <SealCheckIcon
+                                        aria-hidden
+                                        className="size-5 shrink-0 text-muted"
+                                    />
+                                )}
                             <Typography type="body-sm" color="muted">
-                                {feature}
+                                {isSkeleton
+                                    ? <Skeleton className="h-4 w-40 max-w-full rounded" />
+                                    : features[index]}
                             </Typography>
                         </div>
                     ))}

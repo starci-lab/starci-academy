@@ -13,23 +13,24 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    formatVnd,
-    formatUsd,
-} from "../../utils"
+import { formatVnd } from "@/modules/utils/format-vnd"
+import { formatUsd } from "@/modules/utils/format-usd"
 import type { AiSubscriptionTier } from "@/modules/api/graphql/queries/types/ai-subscription-tiers"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 import { type WithClassNames } from "@/modules/types/base/class-name"
 import { TierLevelIcon } from "@/components/svg/TierLevelIcon"
-import { TierCardBase } from "../../TierCardBase"
+import { TierCardBase } from "@/components/blocks/commerce/TierCardBase"
 
 /** Props for {@link TierCard} (list item — per-item tier data only). */
 export interface TierCardProps extends WithClassNames<undefined> {
     /** Tier this card represents. */
-    tier: AiSubscriptionTier
+    /** The tier this card sells. Absent only while {@link TierCardProps.isSkeleton}. */
+    tier?: AiSubscriptionTier
     /** Whether this tier is the user's current plan. */
     isCurrent: boolean
+    /** First load → the shell rests; the twin that used to mirror this card is gone. */
+    isSkeleton?: boolean
 }
 
 /**
@@ -45,22 +46,43 @@ export const TierCard = ({
     tier,
     isCurrent,
     className,
+    isSkeleton = false,
 }: TierCardProps) => {
     const t = useTranslations()
     const { open: openPaymentModal } = usePaymentOverlayState()
 
     const onPress = useCallback(
         () => {
+            if (!tier) {
+                return
+            }
             openPaymentModal({
                 flow: PaymentFlow.AiSubscription,
                 tier: tier.tier,
             })
         },
         [
-            tier.tier,
+            tier,
             openPaymentModal,
         ],
     )
+    // Resting: the SHELL draws every box, so nothing here needs a tier yet. Returning
+    // early is what lets the loaded branch below read `tier` without a guard on each line.
+    if (isSkeleton || !tier) {
+        return (
+            <TierCardBase
+                isSkeleton
+                className={className}
+                icon={null}
+                title={null}
+                price={null}
+                features={[]}
+                isCurrent={false}
+                cta={null}
+            />
+        )
+    }
+
     // ascending tier level — Plus=2, Pro=3, Max=4 (highlighted bars)
     const tierLevel = tier.tier === "max"
         ? 4

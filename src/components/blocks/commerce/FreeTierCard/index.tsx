@@ -10,7 +10,7 @@ import {
 } from "next-intl"
 import { TierLevelIcon } from "@/components/svg/TierLevelIcon"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { TierCardBase } from "../TierCardBase"
+import { TierCardBase } from "@/components/blocks/commerce/TierCardBase"
 
 /**
  * Free-tier base credit allowance — mirrors the backend free auto quota default
@@ -24,6 +24,8 @@ const FREE_CREDITS_PER_WEEK = 500
 export interface FreeTierCardProps extends WithClassNames<undefined> {
     /** True when the user is currently on the free tier (no paid subscription). */
     isCurrent: boolean
+    /** First load → the shell rests; the twin that used to mirror this card is gone. */
+    isSkeleton?: boolean
 }
 
 /**
@@ -36,10 +38,12 @@ export interface FreeTierCardProps extends WithClassNames<undefined> {
 export const FreeTierCard = ({
     isCurrent,
     className,
+    isSkeleton = false,
 }: FreeTierCardProps) => {
     const t = useTranslations()
     return (
         <TierCardBase
+            isSkeleton={isSkeleton}
             className={className}
             icon={(
                 <TierLevelIcon

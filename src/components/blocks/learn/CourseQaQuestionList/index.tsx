@@ -1,11 +1,7 @@
 import React from "react"
 import type { CourseQuestionNode } from "@/modules/api/graphql/queries/types/course-questions"
 import { QaQuestionThread } from "@/components/blocks/learn/QaQuestionThread"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { MagnifyingGlassIcon } from "@phosphor-icons/react"
-import { Avatar } from "@/components/atoms/display/Avatar"
-import { Chip } from "@/components/atoms/chips/Chip"
-import { Typography } from "@/components/atoms/text/Typography"
 import { Pagination } from "@/components/atoms/navigation/Pagination"
 import {
     AsyncContent,
@@ -13,16 +9,8 @@ import {
     type AsyncContentErrorProps,
 } from "@/components/composites/async/AsyncContent"
 import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
-import { StackV, StackH } from "@/components/frames/Stack"
-
-/**
- * `CourseQaQuestionList` — the course-wide Q&A roll-up region: the async
- * lifecycle (loading → error → search-empty → content) around a flush divide-y
- * question list plus a pager. The Content leaf renders one `QaQuestionThread`
- * per question — collapsed until pressed, then the full conversation inline.
- * Four leaves: `Loading`, `Error`, `Empty` (filter matched
- * nothing; true zero-ever is `CourseQaInvite` a layer up), `Content`.
- */
+import { StackV } from "@/components/frames/Stack"
+import { SkeletonQuestionRow } from "./SkeletonQuestionRow"
 
 /** One asker — plain data, the row builds the avatar + name from it. */
 export interface CourseQaQuestionAuthor {
@@ -95,6 +83,15 @@ export interface CourseQaQuestionListProps {
     isSkeleton?: boolean
 }
 
+/**
+ * `CourseQaQuestionList` — the course-wide Q&A roll-up region: the async
+ * lifecycle (loading → error → search-empty → content) around a flush divide-y
+ * question list plus a pager. The Content leaf renders one `QaQuestionThread`
+ * per question — collapsed until pressed, then the full conversation inline.
+ * Four leaves: `Loading`, `Error`, `Empty` (filter matched
+ * nothing; true zero-ever is `CourseQaInvite` a layer up), `Content`.
+ */
+
 /** How many placeholder rows mirror the list while the first page loads — matches `CourseQaSkeleton.tsx`. */
 const SKELETON_ROW_COUNT = 4
 
@@ -103,65 +100,6 @@ const RETRY_LABEL = "Retry"
 const EMPTY_TITLE = "No questions match the current filter"
 const EMPTY_DESCRIPTION = "Try a different filter or search term."
 
-/**
- * One placeholder row for the Loading branch — avatar + 2 text bars +
- * chip-pill row + status dot, ported verbatim from the real
- * `CourseQaSkeleton.tsx` shape (★1).
- *
- * `align="start"` on the outer row (instead of the real file's `mt-2` on the
- * dot) top-aligns all three children without a child pushing its own margin
- * (§10a — the padding gate only allows a parent's `gap`/surface `padding` to
- * own a seam).
- */
-const SkeletonQuestionRow = () => {
-    const previewLines = (
-        <>
-            <Typography size="sm" isSkeleton classNames={["w-full"]} />
-            <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
-        </>
-    )
-
-    const chipRow = (
-        <>
-            <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
-            <Chip isSkeleton />
-        </>
-    )
-
-    const textColumn = (
-        <>
-            {/* asker + time line */}
-            <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
-            {/* two-line preview */}
-            <StackV gap={2} items={[() => previewLines]} />
-            {/* chip-pill row — ONE chip (status, the classification axis) + the scope
-                as a plain shimmer bar, matching the real row's own text-inline treatment
-                (eslint `starci-fe/no-adjacent-chip`, ★7 below). */}
-            <StackH gap={3} items={[() => chipRow]} />
-        </>
-    )
-
-    return (
-        <StackH
-            gap={4}
-            principles={["content-row"]}
-            align="start"
-
-            items={[
-                () => (
-                    <div className="shrink-0">
-                        <Avatar isSkeleton size="sm" />
-                    </div>
-                ),
-                () => <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={[() => textColumn]} />,
-                // status dot — no home atom (★3), same escape hatch `Pagination` uses for its own shimmer squares
-                () => <HeroSkeleton className="size-2 shrink-0 rounded-full" />,
-            ]}
-        />
-    )
-}
-
-
 /** The Loading branch's rows — see ★1 for why these are NOT `SurfaceCardList.isSkeleton`. */
 const skeletonItems = (): Array<SurfaceCardListItem> =>
     Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
@@ -169,7 +107,7 @@ const skeletonItems = (): Array<SurfaceCardListItem> =>
         content: () => <SkeletonQuestionRow />,
     }))
 
-/** The Content branch's real rows — each a {@link QuestionPreviewRow} (★2 gap stand-in). */
+/** The Content branch's real rows — each a {@link QaQuestionThread}. */
 const questionItems = (
     questions: ReadonlyArray<CourseQuestionNode>,
     currentUserId: string | null,

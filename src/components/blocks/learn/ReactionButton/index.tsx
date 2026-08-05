@@ -1,9 +1,13 @@
 import React, { useState } from "react"
 import { type SkeletonProps } from "@/components/frames/_slot"
-import { Button as HeroButton, Popover as HeroPopover, cn } from "@heroui/react"
+import { Button as HeroButton, Popover as HeroPopover } from "@heroui/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import { ReactionPicker } from "@/components/atoms/feedback/ReactionPicker"
 import { StackH } from "@/components/frames/Stack"
+import { ReactionGlyph } from "./ReactionGlyph"
+import { REACTION_BY_TYPE, type ReactionButtonProps, type ReactionType } from "./types"
+
+export type { ReactionType, ReactionCount, ReactionButtonProps } from "./types"
 
 /**
  * BLOCK — `ReactionButton`: the Facebook-style six-emotion reaction control —
@@ -16,76 +20,6 @@ import { StackH } from "@/components/frames/Stack"
  * summary is empty keep the same two-part shape ⇒ states. The caller
  * flipping `isSkeleton` is its own leaf.
  */
-
-/** The six reactions, in the fixed display order real `src` uses. */
-export type ReactionType = "like" | "love" | "haha" | "wow" | "sad" | "angry"
-
-/** One reaction kind's fixed vocabulary — the block's own table (§14d.1), never caller-supplied. */
-interface ReactionDescriptor {
-    type: ReactionType
-    /** Native emoji glyph — `alt` text for the real SVG asset. */
-    emoji: string
-    /** Accessible + summary label, matches `src/messages/vi.json`'s `discussion.reactions.*`. */
-    label: string
-}
-
-const REACTIONS: ReadonlyArray<ReactionDescriptor> = [
-    { type: "like", emoji: "👍", label: "Like" },
-    { type: "love", emoji: "❤️", label: "Love" },
-    { type: "haha", emoji: "😂", label: "Haha" },
-    { type: "wow", emoji: "😮", label: "Wow" },
-    { type: "sad", emoji: "😢", label: "Sad" },
-    { type: "angry", emoji: "😡", label: "Angry" },
-]
-
-const REACTION_BY_TYPE: Record<ReactionType, ReactionDescriptor> = REACTIONS.reduce(
-    (acc, descriptor) => { acc[descriptor.type] = descriptor; return acc },
-    {} as Record<ReactionType, ReactionDescriptor>,
-)
-
-/** Props for the {@link ReactionGlyph} helper below. */
-interface ReactionGlyphProps {
-    type: ReactionType
-    size: "xs" | "sm" | "md"
-    className?: string
-}
-
-const REACTION_GLYPH_CLS: Record<ReactionGlyphProps["size"], string> = {
-    xs: "size-4",
-    sm: "size-5",
-    md: "size-7",
-}
-
-/** Real Fluent Emoji SVG for a reaction (`public/reactions/<type>.svg` — same asset `src` serves). */
-const ReactionGlyph = ({ type, size, className }: ReactionGlyphProps) => (
-    <img
-        src={`/reactions/${type}.svg`}
-        alt={REACTION_BY_TYPE[type].label}
-        aria-hidden
-        draggable={false}
-        className={cn("inline-block select-none", REACTION_GLYPH_CLS[size], className)}
-    />
-)
-
-/** How many times each reaction was picked — one entry per emotion actually present. */
-export interface ReactionCount {
-    type: ReactionType
-    count: number
-}
-
-/** Props for {@link ReactionButton}. */
-export interface ReactionButtonProps {
-    /** The viewer's own reaction, or `null`/omitted if they haven't reacted. */
-    myReaction?: ReactionType | null
-    /** Per-emotion counts. Empty/omitted → the summary is not drawn at all. */
-    counts?: ReadonlyArray<ReactionCount>
-    /** Fired with the picked emotion, or `null` to remove the current one. */
-    onReact: (type: ReactionType | null) => void
-    /** `true` → the reaction is in flight. The trigger owns the busy affordance. */
-    isPending?: boolean
-    /** `true` → the trigger + summary switch to their own shimmer. */
-    isSkeleton?: boolean
-}
 
 /**
  * The reaction trigger + picker + summary. See the file header for the full contract.
@@ -110,7 +44,7 @@ const ReactionButton = ({
         .slice(0, 3)
         .map((entry) => REACTION_BY_TYPE[entry.type])
 
-    const onPick = (type: ReactionType) => {
+    const handlePick = (type: ReactionType) => {
         setIsOpen(false)
         onReact(myReaction === type ? null : type)
     }
@@ -168,9 +102,9 @@ const ReactionButton = ({
                     inset-exception: pill geometry, the same px-2 py-1 HeroUI ships in chip.css. */}
                 <HeroPopover.Content data-principles="pill-pad" className="overflow-visible rounded-full px-2 py-1">
                     <ReactionPicker
-                        items={REACTIONS.map((reaction) => ({ key: reaction.type, imgSrc: `/reactions/${reaction.type}.svg`, label: reaction.label }))}
+                        items={Object.values(REACTION_BY_TYPE).map((reaction) => ({ key: reaction.type, imgSrc: `/reactions/${reaction.type}.svg`, label: reaction.label }))}
                         activeKey={myReaction}
-                        onSelect={(key) => onPick(key as ReactionType)}
+                        onSelect={(key) => handlePick(key as ReactionType)}
                     />
                 </HeroPopover.Content>
             </HeroPopover>

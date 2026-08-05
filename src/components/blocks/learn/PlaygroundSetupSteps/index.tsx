@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useState } from "react"
 import { type SkeletonProps } from "@/components/frames/_slot"
 import type { ReactNode } from "react"
@@ -16,8 +14,12 @@ import { Button } from "@/components/atoms/buttons/Button"
 import { Callout } from "@/components/composites/feedback/Callout"
 import { ConfirmDialog } from "@/components/composites/feedback/ConfirmDialog"
 import { Typography } from "@/components/atoms/text/Typography"
-import { Divider } from "@/components/atoms/display/Divider"
 import { StackV, StackH } from "@/components/frames/Stack"
+import { CommandSkeleton } from "./CommandSkeleton"
+import { OsTabsSkeleton } from "./OsTabsSkeleton"
+import { type PlaygroundSetupOs, type PlaygroundSetupStepsProps } from "./types"
+
+export type { PlaygroundSetupOs, PlaygroundSetupFlavor, PlaygroundSetupStepsProps } from "./types"
 
 /**
  * BLOCK — `PlaygroundSetupSteps`: the ordered setup guide for a playground — pair
@@ -32,50 +34,6 @@ import { StackV, StackH } from "@/components/frames/Stack"
  * needs — the third `SurfaceCard` is a structural fact of the ollama leaf, not a
  * data condition that could show up on the infra one.
  */
-
-/** The three OS guides a `flavor="infra"`/`"ollama"` engine install can offer. */
-export type PlaygroundSetupOs = "mac" | "win" | "linux"
-
-/** Which playground kind this setup guide is for — decides the STEP COUNT (see file header). */
-export type PlaygroundSetupFlavor = "infra" | "ollama"
-
-/** Props for {@link PlaygroundSetupSteps}. */
-export interface PlaygroundSetupStepsProps {
-    /** `"infra"` → 2 steps (pair, install). `"ollama"` → 3 (+ pull models). */
-    flavor: PlaygroundSetupFlavor
-    /** Display name of the engine being installed (e.g. `"Ollama"`, `"Docker Desktop"`). Falls back to a generic "engine" when absent. */
-    engineName?: string
-    /** Install guide markdown, one document per OS. */
-    osGuides: Record<PlaygroundSetupOs, string>
-    /** The command a learner runs on their machine to pair the local agent. */
-    pairCommand: string
-    /** Seconds left before the current pairing code expires. `null` → no expiry countdown to show. */
-    pairingCodeSecondsLeft?: number | null
-    /** `true` → the code has already expired; the countdown note switches to a "get a new code" prompt. */
-    pairingCodeExpired?: boolean
-    /** Requests a fresh pairing code. Omit to hide the rotate action entirely. */
-    onRefreshPairingCode?: () => void
-    /** `true` → the rotate button shows a spinner and blocks further presses. */
-    isRefreshingPairingCode?: boolean
-    /** Whether the local agent is currently paired. Drives the pairing step's chip AND the rotate-code confirm gate. */
-    agentReady: boolean
-    /** Whether the engine is installed and reachable. */
-    engineReady: boolean
-    /** Ollama only: whether the recommended generation model is pulled. */
-    genModelReady?: boolean
-    /** Ollama only: whether the fixed embedding model is pulled. */
-    embedModelReady?: boolean
-    /** Ollama only: the generation model chosen for this device's VRAM. Absent while the device isn't known yet. */
-    recommendedGenModel?: string
-    /** Ollama only: `false` → the pull-models step shows a "device configuration not yet detected" callout instead of commands. Defaults `true`. */
-    deviceKnown?: boolean
-    /** Extra detail shown once the engine is ready (e.g. detected version/path). */
-    engineDetail?: string
-    /** Re-checks every step's readiness. Shared by every step's own re-check button — omit to hide all of them. */
-    onVerify?: () => void
-    /** `true` → every step renders its shimmer mirror (see file header). */
-    isSkeleton?: boolean
-}
 
 /** One `SurfaceCard` step, built by this block before render — named per §"every data shape has a name". */
 interface StepEntry {
@@ -102,59 +60,6 @@ const STEP_STATUS_MAP: Record<StepStatus, EnumChipEntry> = {
 
 /** Wraps a shell command in a fenced ```bash block for `MarkdownContent`. */
 const bashBlock = (command: string): string => "```bash\n" + command + "\n```"
-
-/** Props for the local {@link CommandSkeleton} mirror. */
-interface CommandSkeletonProps {
-    /** How many placeholder code lines to draw. Defaults to 1. */
-    lines?: number
-}
-
-/**
- * Placeholder mirror of the code-block chrome `MarkdownContent`'s `pre` renderer
- * draws (border, header divider, lang label) — see file header for why this
- * block owns it instead of `MarkdownContent` shipping an `isSkeleton`.
- */
-const CommandSkeleton = ({ lines = 1 }: CommandSkeletonProps) => (
-    <div className="overflow-hidden rounded-2xl border border-default bg-default/30">
-        <StackH
-            gap={1}
-            align="center"
-            justify="between"
-            padding={{ x: 4, y: 3 }}
-            principles={["control-pad"]}
-            body={() => <Typography size="xs" isSkeleton classNames={["w-1/4"]} />}
-        />
-        <Divider />
-        <StackV
-            gap={3}
-            padding={4}
-            principles={["sibling-stack", "cell-pad"]}
-            items={Array.from({ length: lines }, (_unused, index) => () => (
-                <Typography size="xs" isSkeleton classNames={[index === lines - 1 ? "w-1/2" : "w-3/4"]} />
-            ))}
-        />
-    </div>
-)
-
-// Depends on the loop variable, so it cannot be hoisted to a const above the
-// return — a small named helper instead, in the style this file already uses.
-const renderOsTabSkeleton = (key: PlaygroundSetupOs) => (
-    <StackV
-        key={key}
-        gap={2}
-        align="center"
-        principles={["title-subtitle"]}
-        items={[
-            () => <Typography size="sm" isSkeleton classNames={["w-1/3"]} />,
-            () => <Typography size="xs" isSkeleton classNames={["w-1/3"]} />,
-        ]}
-    />
-)
-
-/** Placeholder mirror of the OS tab row — label+underline bar per OS, matching `Tabs`'s own `secondary` skeleton shape. */
-const OsTabsSkeleton = () => (
-    <StackH gap={3} items={OS_ORDER.map((key) => () => renderOsTabSkeleton(key))} />
-)
 
 /**
  * The playground setup guide. See the file header for the reuse check, the

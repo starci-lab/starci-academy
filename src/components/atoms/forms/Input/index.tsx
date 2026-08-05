@@ -372,6 +372,14 @@ const InputSearch = ({
     )
 }
 
+/** Props for {@link InputPassword}. */
+type InputPasswordProps = StringFieldProps & {
+    /** Accessible name for the toggle button when it would reveal the password. @default "Show password" */
+    revealLabel?: string
+    /** Accessible name for the toggle button when it would hide the password. @default "Hide password" */
+    hideLabel?: string
+}
+
 /** `InputPassword` — masked text with a reveal/hide button (Phosphor EyeIcon/EyeSlashIcon). */
 const InputPassword = ({
     value,
@@ -386,7 +394,9 @@ const InputPassword = ({
     hint,
     errorMessage,
     isRequired,
-}: StringFieldProps) => {
+    revealLabel = "Show password",
+    hideLabel = "Hide password",
+}: InputPasswordProps) => {
     const [reveal, setReveal] = useState(false)
     const controlId = useId()
     const invalid = isInvalid || errorMessage != null
@@ -414,7 +424,7 @@ const InputPassword = ({
                     />
                     <button
                         type="button"
-                        aria-label={reveal ? "Hide password" : "Show password"}
+                        aria-label={reveal ? hideLabel : revealLabel}
                         onClick={() => setReveal((r) => !r)}
                         className="text-muted absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer [&_svg]:size-4"
                     >

@@ -42,6 +42,8 @@ export const PasswordField = ({
             onValueChange={onChangeValue}
             isInvalid={invalid}
             errorMessage={invalid ? error : undefined}
+            revealLabel={t("auth.signIn.password.show")}
+            hideLabel={t("auth.signIn.password.hide")}
         />
     )
 }

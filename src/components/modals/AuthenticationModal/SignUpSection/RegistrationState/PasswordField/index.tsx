@@ -40,6 +40,8 @@ export const PasswordField = ({
     const t = useTranslations()
     const label = kind === "password" ? t("auth.signUp.password.label") : t("auth.signUp.confirmPassword.label")
     const placeholder = kind === "password" ? t("auth.signUp.password.placeholder") : t("auth.signUp.confirmPassword.placeholder")
+    const revealLabel = kind === "password" ? t("auth.signUp.password.show") : t("auth.signUp.confirmPassword.show")
+    const hideLabel = kind === "password" ? t("auth.signUp.password.hide") : t("auth.signUp.confirmPassword.hide")
     const showError = Boolean(touched && error)
     return (
         <Input.Password
@@ -49,6 +51,8 @@ export const PasswordField = ({
             errorMessage={showError ? error : undefined}
             value={value}
             onValueChange={onChangeValue}
+            revealLabel={revealLabel}
+            hideLabel={hideLabel}
         />
     )
 }

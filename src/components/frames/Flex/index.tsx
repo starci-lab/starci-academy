@@ -3,7 +3,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { ALIGN_CLASS, gapClassNames, JUSTIFY_CLASS, paddingClassNames, type AllowedGap, type LayoutAlign, type LayoutJustify, type PaddingValue, type Responsive } from "@/components/frames/_spacing"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
-import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { principlesAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
@@ -117,6 +117,11 @@ export interface FlexBaseProps {
      */
     principles?: Array<PrincipleToken>
     /**
+     * Why this layer exists — one sentence, emitted as `data-explain` beside the tokens.
+     * A reason, never a restatement of `principles`; see `_principles.ts`.
+     */
+    explain?: ExplainReason
+    /**
      * Caller identity to wear on the ONE element this box renders instead of `Flex`'s own —
      * see `_identity.ts`. Exists here (an internal frame, §the export note below) specifically
      * so `Stack` can forward it: `StackV`/`StackH` render zero DOM of their own — every Stack
@@ -166,6 +171,7 @@ const FlexBase = ({
     body,
     classNames,
     principles,
+    explain,
     identity}: FlexBaseProps) => (
     // No self-name fallback: `Flex` is internal-only (see the export note below) and has
     // no story of its own, so a default badge here would only ever point nowhere (§11a.1 rule
@@ -174,6 +180,7 @@ const FlexBase = ({
     <Tag
         {...resolveIdentity(identity, { tier: "frame", name: "Flex" })}
         data-principles={principlesAttr(principles)}
+        data-explain={explainAttr(explain)}
         className={cn(
             inline ? "inline-flex" : "flex",
             DIRECTION_CLASS[direction],

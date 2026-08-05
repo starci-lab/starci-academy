@@ -1,7 +1,7 @@
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
-import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { principlesAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
@@ -83,6 +83,11 @@ export interface PinnedTrackProps {
      */
     principles?: Array<PrincipleToken>
     /**
+     * Why this layer exists — one sentence, emitted as `data-explain` beside the tokens.
+     * A reason, never a restatement of `principles`; see `_principles.ts`.
+     */
+    explain?: ExplainReason
+    /**
      * Set when a sentence-tier component roots on this frame: the track then emits
      * THAT component's identity instead of its own, so the caller never wraps itself
      * in an identity div (see `_identity.ts`).
@@ -103,12 +108,14 @@ const PinnedTrack = ({
     isSkeleton,
     classNames,
     principles,
+    explain,
     identity}: PinnedTrackProps) => {
     const BodyTag = landmark ? "main" : "div"
     return (
         <div
             {...resolveIdentity(identity, { tier: "frame", name: "PinnedTrack" })}
             data-principles={principlesAttr(principles)}
+            data-explain={explainAttr(explain)}
             className={cn("flex flex-col", classNames)}
         >
             {/* `pinned`/`body` are CALLER SLOTS — the node inside belongs to whoever passed it, not

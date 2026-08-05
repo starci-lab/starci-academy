@@ -2,7 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { paddingClassNames, type PaddingValue, type Responsive } from "@/components/frames/_spacing"
-import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { principlesAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
@@ -140,6 +140,11 @@ export interface ContainerBaseProps {
      * INNER div, so `data-principles` lands there too — the element that actually carries the gap.
      */
     principles?: Array<PrincipleToken>
+    /**
+     * Why this layer exists — one sentence, emitted as `data-explain` beside the tokens.
+     * A reason, never a restatement of `principles`; see `_principles.ts`.
+     */
+    explain?: ExplainReason
 }
 
 /**
@@ -157,6 +162,7 @@ const ContainerBase = ({
     isSkeleton,
     classNames,
     principles,
+    explain,
     identity}: ContainerBaseProps) => {
     return (
         // TWO layers, not one (teacher 2026-07-29, "shouldn't desktop render as
@@ -179,7 +185,8 @@ const ContainerBase = ({
                 SIZE_CLASS[size],
                 classNames)}
         >
-            <div data-principles={principlesAttr(principles)} className={cn(...paddingClassNames(padding))}>
+            <div data-principles={principlesAttr(principles)}
+                data-explain={explainAttr(explain)} className={cn(...paddingClassNames(padding))}>
                 {Body && <Body isSkeleton={isSkeleton} />}
             </div>
         </div>

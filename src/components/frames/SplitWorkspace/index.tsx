@@ -2,7 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
-import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { principlesAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
@@ -79,6 +79,11 @@ export interface SplitWorkspaceProps {
      */
     principles?: Array<PrincipleToken>
     /**
+     * Why this layer exists — one sentence, emitted as `data-explain` beside the tokens.
+     * A reason, never a restatement of `principles`; see `_principles.ts`.
+     */
+    explain?: ExplainReason
+    /**
      * Caller identity to wear on this workspace's root instead of `SplitWorkspace`'s own —
      * pass this when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a
      * shape of its own) is using this workspace AS its root element, instead of wrapping it
@@ -119,10 +124,12 @@ const SplitWorkspace = ({
     isSkeleton,
     classNames,
     principles,
+    explain,
     identity}: SplitWorkspaceProps) => (
     <div
         {...resolveIdentity(identity, { tier: "frame", name: "SplitWorkspace" })}
         data-principles={principlesAttr(principles)}
+        data-explain={explainAttr(explain)}
         className={cn("flex flex-col gap-6", WORKSPACE_SWITCH_CLASS[at], classNames)}
     >
         {/* `main`/`aside` are CALLER SLOTS — the node inside belongs to whoever passed it, not

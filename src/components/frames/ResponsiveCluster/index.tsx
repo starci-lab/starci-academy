@@ -3,7 +3,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { GAP_CLASS, JUSTIFY_CLASS, type AllowedGap, type LayoutJustify } from "@/components/frames/_spacing"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
-import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { principlesAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -64,6 +64,11 @@ export interface ResponsiveClusterProps {
      * `pattern` doc for the full contract.
      */
     principles?: Array<PrincipleToken>
+    /**
+     * Why this layer exists — one sentence, emitted as `data-explain` beside the tokens.
+     * A reason, never a restatement of `principles`; see `_principles.ts`.
+     */
+    explain?: ExplainReason
     /** Renders every cell's skeleton form instead of its content form. */
     isSkeleton?: boolean
 }
@@ -99,12 +104,14 @@ const ResponsiveClusterBase = ({
     "data-tier": dataTier,
     "data-component": dataComponent,
     principles,
+    explain,
     isSkeleton,
 }: ResponsiveClusterProps) => (
     <div
         data-tier={dataTier}
         data-component={dataComponent}
         data-principles={principlesAttr(principles)}
+        data-explain={explainAttr(explain)}
         className={cn(
             "flex w-full flex-col items-center",
             GAP_CLASS[gap],

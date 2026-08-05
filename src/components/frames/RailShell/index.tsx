@@ -2,7 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
-import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { principlesAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
@@ -93,6 +93,11 @@ export interface RailShellProps {
      */
     principles?: Array<PrincipleToken>
     /**
+     * Why this layer exists — one sentence, emitted as `data-explain` beside the tokens.
+     * A reason, never a restatement of `principles`; see `_principles.ts`.
+     */
+    explain?: ExplainReason
+    /**
      * Caller identity to wear on this shell's root instead of the frame's own — pass this when
      * a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
      * is using this shell AS its root element, instead of wrapping it in a raw `<div
@@ -141,10 +146,12 @@ const RailShell = ({
     isSkeleton,
     classNames,
     principles,
+    explain,
     identity}: RailShellProps) => (
     <div
         {...resolveIdentity(identity, { tier: "frame", name: "RailShell" })}
         data-principles={principlesAttr(principles)}
+        data-explain={explainAttr(explain)}
         className={cn("flex flex-col gap-6", SHELL_SWITCH_CLASS[at], classNames)}
     >
         {/* `rail`/`body` are CALLER SLOTS — whatever sits inside belongs to whoever passed

@@ -2,7 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { ALIGN_CLASS, gapClassNames, type AllowedGap, type LayoutAlign, type Responsive } from "@/components/frames/_spacing"
-import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { principlesAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
@@ -57,6 +57,11 @@ export interface SplitBaseProps {
      * A frame does not KNOW its pattern — the caller does — so it is passed in.
      */
     principles?: Array<PrincipleToken>
+    /**
+     * Why this layer exists — one sentence, emitted as `data-explain` beside the tokens.
+     * A reason, never a restatement of `principles`; see `_principles.ts`.
+     */
+    explain?: ExplainReason
     /** `true` mounts both sides in their loading state. */
     isSkeleton?: boolean
     /**
@@ -81,6 +86,7 @@ const SplitBase = ({
     align = "center",
     classNames,
     principles,
+    explain,
     isSkeleton,
     identity}: SplitBaseProps) => {
     const Start = start
@@ -89,6 +95,7 @@ const SplitBase = ({
         <div
             {...resolveIdentity(identity, { tier: "frame", name: "Split" })}
             data-principles={principlesAttr(principles)}
+            data-explain={explainAttr(explain)}
             className={cn(
                 "flex w-full",
                 ...gapClassNames(gap),

@@ -2,7 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { gapClassNames, type AllowedGap, type Responsive } from "@/components/frames/_spacing"
-import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { principlesAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
@@ -78,6 +78,11 @@ export interface ResponsiveRowProps {
      */
     principles?: Array<PrincipleToken>
     /**
+     * Why this layer exists — one sentence, emitted as `data-explain` beside the tokens.
+     * A reason, never a restatement of `principles`; see `_principles.ts`.
+     */
+    explain?: ExplainReason
+    /**
      * Caller identity to wear on this row's root instead of `ResponsiveRow`'s own — pass this
      * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its
      * own) is using this row AS its root element, instead of wrapping it in a raw `<div
@@ -117,10 +122,12 @@ const ResponsiveRowBase = ({
     isSkeleton,
     classNames,
     principles,
+    explain,
     identity}: ResponsiveRowProps) => (
     <div
         {...resolveIdentity(identity, { tier: "frame", name: "ResponsiveRow" })}
         data-principles={principlesAttr(principles)}
+        data-explain={explainAttr(explain)}
         className={cn(
             "grid",
             COLUMNS_CLASS[columns],

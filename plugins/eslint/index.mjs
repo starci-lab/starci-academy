@@ -668,6 +668,108 @@ const noHardcodedUserTextInVocabulary = {
   },
 }
 
+// ── mỗi lớp phải TỰ KHAI nó là gì và VÌ SAO nó tồn tại ──────────────────────────
+// `principles` = lớp này tuyên bố nó là seam gì (tập đóng, khớp `patterns.mjs`, test đi
+// theo được). `explain` = vì sao có lớp này — thứ không ai dựng lại được từ markup về sau,
+// và là thứ quyết định lớp kế tiếp nằm CẠNH hay nằm TRONG lớp này.
+// Atom miễn: nó bọc vendor, nó không dựng layer nào của riêng mình.
+
+/** Frame nào cũng dựng ra một node thật, nên node đó phải tự khai. */
+const FRAME_ELEMENTS = new Set([
+  "Box", "Cluster", "Container", "Flex", "Grid", "PinnedTrack", "RailShell",
+  "ResponsiveCluster", "ResponsiveRow", "ScrollArea", "Split", "SplitWorkspace",
+  "Stage", "StackV", "StackH",
+])
+
+/** Tên element JSX, kể cả dạng `Foo.Bar`. */
+function jsxElementName(node) {
+  const n = node.name
+  if (!n) return null
+  if (n.type === "JSXIdentifier") return n.name
+  if (n.type === "JSXMemberExpression") return n.object?.name ? `${n.object.name}.${n.property?.name}` : null
+  return null
+}
+
+/** Element có prop tên này không (kể cả `{...spread}` — spread thì coi như CÓ, đừng báo oan). */
+function hasJsxProp(node, name) {
+  return node.attributes.some((attr) =>
+    attr.type === "JSXSpreadAttribute" || (attr.name && attr.name.name === name))
+}
+
+const requireFrameSelfDeclare = {
+  meta: {
+    type: "problem",
+    docs: {
+      description: "Every frame instance above the atom tier declares `principles` + `explain`. [[fe-contract]]",
+    },
+    schema: [],
+    messages: {
+      missing: "`<{{name}}>` declares neither `principles` nor `explain` — a layer that says nothing about itself is a layer nobody can test, and nobody can safely delete either. State the seam it is (`principles`) and the reason it exists (`explain`).",
+      noPrinciples: "`<{{name}}>` has `explain` but no `principles` — the reason is there, the claim is not. Tests walk `[data-principles~=\"…\"]`; an unlabelled layer is invisible to every one of them.",
+      noExplain: "`<{{name}}>` declares `principles` but no `explain` — the tokens say WHAT this layer claims to be, which is a label. Say WHY it exists, in one sentence: what breaks, wraps or overflows if this node is removed. That is the part nobody can reconstruct from the markup later.",
+    },
+  },
+  create(context) {
+    const file = (context.filename || context.getFilename()).replace(/\\/g, "/")
+    if (!file.includes("/src/components/")) return {}
+    // atoms wrap vendor components; they build no layer of their own
+    if (file.includes("/src/components/atoms/")) return {}
+    // the frames themselves DECLARE the props — they do not pass them to their own root
+    if (file.includes("/src/components/frames/")) return {}
+    return {
+      JSXOpeningElement(node) {
+        const name = jsxElementName(node)
+        if (!name || !FRAME_ELEMENTS.has(name)) return
+        const principles = hasJsxProp(node, "principles")
+        const explain = hasJsxProp(node, "explain")
+        if (principles && explain) return
+        const messageId = !principles && !explain ? "missing" : (principles ? "noExplain" : "noPrinciples")
+        context.report({ node, messageId, data: { name } })
+      },
+    }
+  },
+}
+
+const noInlineSkeletonBranch = {
+  meta: {
+    type: "problem",
+    docs: {
+      description: "A caller never picks between a resting shape and a real one. [[loading-and-skeleton.md]]",
+    },
+    schema: [],
+    messages: {
+      branch: "`{{flag}} ? … : …` picks between two DIFFERENT elements — that is a resting shape written by hand at the call site, and it drifts from the real one the first time the real one changes. Give the component below an `isSkeleton` prop and pass the flag down; let it rest as ITSELF. A ternary is fine when both arms are the same component.",
+    },
+  },
+  create(context) {
+    const file = (context.filename || context.getFilename()).replace(/\\/g, "/")
+    if (!file.includes("/src/components/")) return {}
+    if (file.includes("/src/components/atoms/")) return {}
+    /** Root JSX element name of an arm, or null when the arm is not an element. */
+    const armName = (expr) => {
+      if (!expr) return null
+      if (expr.type === "JSXElement") return jsxElementName(expr.openingElement)
+      if (expr.type === "JSXFragment") return "<>"
+      return null
+    }
+    return {
+      ConditionalExpression(node) {
+        const test = node.test
+        // `isSkeleton ? … : …` / `isX && isSkeleton ? … : …` — read the flag off the test
+        const source = context.sourceCode || context.getSourceCode()
+        const testText = source.getText(test)
+        if (!/\bis(Skeleton|Loading|Pending)\b/.test(testText)) return
+        const left = armName(node.consequent)
+        const right = armName(node.alternate)
+        // both arms must be real elements, and they must differ — same component on both
+        // sides is the honest shape (one description, two states)
+        if (!left || !right || left === right) return
+        context.report({ node, messageId: "branch", data: { flag: testText.trim().slice(0, 40) } })
+      },
+    }
+  },
+}
+
 // ── một component = MỘT thư mục, và thư mục đó chỉ chứa hai nửa của chính nó ──
 // Ba luật dưới đây khoá cùng một thói quen: nhét cả một cụm vào trong thư mục của
 // một màn hình. Nó luôn bắt đầu vô hại ("con này chỉ trang này dùng") rồi kết thúc
@@ -759,6 +861,8 @@ const noHelperFolderInComponents = {
 export default {
   meta: { name: "eslint-plugin-starci-fe", version: "0.5.0" },
   rules: {
+    "require-frame-self-declare": requireFrameSelfDeclare,
+    "no-inline-skeleton-branch": noInlineSkeletonBranch,
     "page-folder-two-files-only": pageFolderTwoFilesOnly,
     "no-skeleton-twin-component": noSkeletonTwinComponent,
     "no-helper-folder-in-components": noHelperFolderInComponents,

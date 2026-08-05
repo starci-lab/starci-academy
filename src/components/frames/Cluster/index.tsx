@@ -4,7 +4,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Divider } from "@/components/atoms/display/Divider"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { ALIGN_CLASS, gapClassNames, JUSTIFY_CLASS, type AllowedGap, type LayoutAlign, type LayoutJustify, type Responsive } from "@/components/frames/_spacing"
-import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { principlesAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
@@ -74,6 +74,11 @@ export interface ClusterBaseProps {
      * `pattern` doc for the full contract.
      */
     principles?: Array<PrincipleToken>
+    /**
+     * Why this layer exists — one sentence, emitted as `data-explain` beside the tokens.
+     * A reason, never a restatement of `principles`; see `_principles.ts`.
+     */
+    explain?: ExplainReason
     /** `true` mounts every item in its loading state. */
     isSkeleton?: boolean
     /**
@@ -101,11 +106,13 @@ const ClusterBase = ({
     separator = false,
     classNames,
     principles,
+    explain,
     isSkeleton,
     identity}: ClusterBaseProps) => (
     <div
         {...resolveIdentity(identity, { tier: "frame", name: "Cluster" })}
         data-principles={principlesAttr(principles)}
+        data-explain={explainAttr(explain)}
         className={cn(
             "flex flex-wrap",
             ...gapClassNames(gap),

@@ -15,7 +15,7 @@ import { type WithClassNames } from "@/modules/types/base/class-name"
  * Owns the URL + active-type state and action handlers; renders presentational cards.
  * Enter a URL and pick Standard / MpegDash / Youtube to preview.
  */
-export const AdminMpegDashTest = ({ className }: WithClassNames<undefined>) => {
+export const AdminMpegDashTestPage = ({ className }: WithClassNames<undefined>) => {
     const [url, setUrl] = useState("")
     const [activeType, setActiveType] = useState<VideoRendererType>(
         VideoRendererType.MpegDash,

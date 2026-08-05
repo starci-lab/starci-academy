@@ -43,8 +43,8 @@ import { useRestWithToast } from "@/modules/toast/hooks"
 import { useAppSelector } from "@/redux/hooks"
 import type { AdminPresignedUrlItem } from "@/modules/api/rest/admin-presigned-url/types"
 
-/** Props for {@link AdminUploadVideo}. */
-export type AdminUploadVideoProps = WithClassNames<undefined>
+/** Props for {@link AdminUploadVideoPage}. */
+export type AdminUploadVideoPageProps = WithClassNames<undefined>
 
 /**
  * Admin video upload tool container.
@@ -55,9 +55,9 @@ export type AdminUploadVideoProps = WithClassNames<undefined>
  * (XMLHttpRequest, clipboard, drag/drop) and local state.
  * @param props - optional className forwarded to the wrapper div
  */
-export const AdminUploadVideo = ({
+export const AdminUploadVideoPage = ({
     className,
-}: AdminUploadVideoProps = {}) => {
+}: AdminUploadVideoPageProps = {}) => {
     const apiKey = useAppSelector((state) => state.admin.apiKey)
     const router = useRouter()
 

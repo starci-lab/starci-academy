@@ -1,15 +1,9 @@
 "use client"
 
 import React from "react"
-import {
-    AdminAiBalancer,
-} from "@/components/features/admin/AdminAiBalancer"
+import { AdminAiBalancerPage } from "@/components/pages/AdminAiBalancerPage"
 
-/**
- * Route `/[locale]/admin/tools/ai-balancer` — AI balancer key health dashboard.
- */
-const Page = () => {
-    return <AdminAiBalancer />
-}
+/** Admin tool — AI provider balancer health and routing. */
+const Page = () => <AdminAiBalancerPage />
 
 export default Page

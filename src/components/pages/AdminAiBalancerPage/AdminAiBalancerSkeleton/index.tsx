@@ -16,7 +16,7 @@ export interface AdminAiBalancerSkeletonProps extends WithClassNames<undefined> 
 }
 
 /**
- * Loading placeholder for {@link AdminAiBalancer}. Mirrors the provider sections:
+ * Loading placeholder for {@link AdminAiBalancerPage}. Mirrors the provider sections:
  * a glass card with a provider heading + summary pills and a few key-table rows.
  * @param props - {@link AdminAiBalancerSkeletonProps}
  */

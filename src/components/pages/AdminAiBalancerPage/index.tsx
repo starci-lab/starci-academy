@@ -32,7 +32,7 @@ import { useAppSelector } from "@/redux/hooks"
  * Requires admin API key in Redux (same gate as other admin tools) and an
  * authenticated session for the GraphQL query. Polls every 10s.
  */
-export const AdminAiBalancer = () => {
+export const AdminAiBalancerPage = () => {
     const apiKey = useAppSelector((state) => state.admin.apiKey)
     const router = useRouter()
     const t = useTranslations("admin.aiBalancer")

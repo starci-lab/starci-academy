@@ -16,16 +16,16 @@ import { Controller } from "react-hook-form"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAdminApiKeyForm } from "@/hooks/rhf/useAdminApiKeyForm"
 
-/** Props for {@link AdminLogin}. */
-export type AdminLoginProps = WithClassNames<undefined>
+/** Props for {@link AdminLoginPage}. */
+export type AdminLoginPageProps = WithClassNames<undefined>
 
 /**
  * Admin login page — API key entry form.
  *
  * Container: owns the RHF form and submission logic. `"use client"` for form state.
- * @param props - {@link AdminLoginProps}
+ * @param props - {@link AdminLoginPageProps}
  */
-export const AdminLogin = ({ className }: AdminLoginProps) => {
+export const AdminLoginPage = ({ className }: AdminLoginPageProps) => {
     const { control, watch, formState, onSubmit } = useAdminApiKeyForm()
 
     return (

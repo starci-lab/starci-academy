@@ -1,11 +1,9 @@
 "use client"
-import React from "react"
-import { AdminLogin } from "@/components/features/admin/AdminLogin"
 
-const Page = () => {
-    return (
-        <AdminLogin />
-    )
-}
+import React from "react"
+import { AdminLoginPage } from "@/components/pages/AdminLoginPage"
+
+/** Admin sign-in. */
+const Page = () => <AdminLoginPage />
 
 export default Page

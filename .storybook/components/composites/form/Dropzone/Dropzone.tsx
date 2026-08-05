@@ -1,48 +1,41 @@
 import { FolderIcon, FolderOpenIcon } from "@phosphor-icons/react"
-import React, { useCallback } from "react"
+import { useCallback } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { useDropzone } from "react-dropzone"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * `Skeleton` — HeroUI's own component (imported `Skeleton as HeroSkeleton` and rendered
- * directly in the `isSkeleton` branch), so it enters the tree as tier `heroui` with no
- * `storyId`. The drag box and the error line are not badged — they're plain hand-rolled
- * `<div>`s, not real components.
- */
-
-/**
- * Props for Dropzone component.
+ * Props for {@link Dropzone}.
  */
 export interface DropzoneProps {
-    /** Helper text shown below dropzone area. */
+    /** Helper text shown inside the drop box until a file is chosen. */
     hint: string
-    /** Current selected file. */
+    /** Current selected file, or `null` when empty. */
     file: File | null
-    /** Validation error text to render below hint. */
+    /** Validation error text rendered below the box. Hidden when unset. */
     errorMessage?: string
-    /** Accepted mime types for uploaded file. */
+    /** Accepted MIME types for the uploaded file. */
     acceptedMimeTypes: Array<string>
     /** Maximum file size in bytes. */
     maxSizeInBytes: number
-    /** Callback fired when file changes. */
+    /** Fires when the selected file changes, including a clear back to `null`. */
     onValueChange: (file: File | null) => void
-    /** Callback fired when dropzone loses focus. */
+    /** Fires when the dropzone input loses focus or the file dialog is cancelled. */
     onBlur?: () => void
-    /** When true, renders a skeleton mirroring the dashed drop box instead. */
-    isSkeleton?: boolean
     /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
+     * When true, renders a skeleton mirroring the dashed drop box instead of the
+     * live control. @default false
      */
-    classNames?: Array<AllowedClassName>
+    isSkeleton?: boolean
 }
 
 /**
- * Dropzone file input with drag and drop interaction.
- * @param {DropzoneProps} props Dropzone display and validation props.
+ * Dropzone — single-file drag-and-drop input. Owns MIME and size validation via
+ * react-dropzone, drag-active chrome, the hint or file-name region, and an optional
+ * error line. Presentational: the caller holds `file` and `onValueChange`.
+ *
+ * @param props - {@link DropzoneProps}
  */
-const DropzoneBase = ({
+export const Dropzone = ({
     hint,
     file,
     errorMessage,
@@ -51,7 +44,6 @@ const DropzoneBase = ({
     onValueChange,
     onBlur,
     isSkeleton = false,
-    classNames,
 }: DropzoneProps) => {
     const onDrop = useCallback((acceptedFiles: Array<File>) => {
         onValueChange(acceptedFiles[0] ?? null)
@@ -70,20 +62,14 @@ const DropzoneBase = ({
 
     if (isSkeleton) {
         return (
-            <div data-tier="atom" data-component="Dropzone" className={cn("flex flex-col gap-2", classNames)}>
-                <HeroSkeleton
-                    className="h-[68px] w-full rounded-3xl"
-
-                />
+            <div data-tier="composite" data-component="Dropzone" className="flex flex-col gap-2">
+                <HeroSkeleton className="h-[68px] w-full rounded-3xl" />
             </div>
         )
     }
 
-    // `hint` renders as placeholder text inside the dashed box, replaced by the
-    // file name once one is selected. The error line's classes match FieldShell's
-    // error line styling (text-sm text-danger-soft-foreground).
     return (
-        <div data-tier="atom" data-component="Dropzone" className={cn("flex flex-col gap-2", classNames)}>
+        <div data-tier="composite" data-component="Dropzone" className="flex flex-col gap-2">
             <div
                 {...getRootProps()}
                 className={cn(
@@ -111,10 +97,5 @@ const DropzoneBase = ({
     )
 }
 
-/**
- * `Dropzone` — drag-and-drop file namespace; the root itself is `DropzoneBase`,
- * callable directly as `<Dropzone .../>`.
- */
-export { DropzoneBase as Dropzone }
-
-export const meta = { tier: "atom", name: "Dropzone" } as const
+/** Source-level tier metadata. */
+export const meta = { tier: "composite", name: "Dropzone" } as const

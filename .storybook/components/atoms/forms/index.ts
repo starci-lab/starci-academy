@@ -21,5 +21,3 @@ export { SelectMulti } from "./SelectMulti/SelectMulti"
 export { SelectCombobox } from "./SelectCombobox/SelectCombobox"
 
 export { SearchAutocomplete } from "./SearchAutocomplete/SearchAutocomplete"
-export { Dropzone } from "./Dropzone/Dropzone"
-export { ImageDropzone } from "./ImageDropzone/ImageDropzone"

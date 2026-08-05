@@ -1,20 +1,20 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Dropzone } from "@sb-components/atoms/forms/Dropzone/Dropzone"
+import { Dropzone } from "@sb-components/composites/form/Dropzone/Dropzone"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * `Skeleton` — HeroUI's own component (imported `Skeleton as HeroSkeleton` and rendered
  * directly in the `isSkeleton` branch), so it enters the tree as tier `heroui` with no
- * `storyId`. The drag box and the error line are not badged — they're plain hand-rolled
- * `<div>`s, not real components.
+ * `storyId`. The drag box and the error line are not badged — they are plain hand-rolled
+ * regions, not house atoms.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Skeleton": { tier: "heroui", role: "loading placeholder box" },
 }
 
 const meta: Meta<typeof Dropzone> = {
-    title: "Atoms/Forms/Dropzone",
+    title: "Composites/Form/Dropzone",
     component: Dropzone,
     tags: ["autodocs"],
     parameters: {
@@ -50,7 +50,6 @@ const Controlled = ({
             acceptedMimeTypes={acceptedMimeTypes}
             maxSizeInBytes={maxSizeInBytes}
             onValueChange={setFile}
-
         />
     )
 }
@@ -62,19 +61,15 @@ const ACCEPT = ["application/pdf"]
 const MAX = 5 * 1024 * 1024
 
 /**
- * ATOM — `Dropzone`: the system's ONE AND ONLY drag-drop file box, hand-rolled
- * (deliberately NOT `FieldShell` — see the note in the component). It doesn't
- * compose any atom with its own story ⇒ LEAF ATOM, so it carries no `annotate`.
- * `DropBox`/`ErrorMessage`/`Skeleton` are just internal slots, not deps.
+ * COMPOSITE — `Dropzone`: the system's drag-drop file box. It owns validation,
+ * drag state, the hint/file-name region, and the error line. It does not compose
+ * a house atom with its own story except the HeroUI skeleton in the loading leaf.
  *
- * [layout] Leaf set — each leaf maps to ONE prop with visible shape: `file`
- * (the box's content swaps from the hint to the file name), `errorMessage`
- * (red border + error line), `isSkeleton` (a mirror of the box before it's
- * ready). `hint` is always present, so it already lives on the bare leaf
- * (`Empty`) rather than getting its own leaf.
- *
- * Every leaf below carries EXACTLY one state in `states[]` — the atom tier
- * still keeps 1 prop = 1 leaf, only the render/why/code container changes.
+ * [layout] Each leaf maps to ONE prop with visible shape: `file` (the box's
+ * content swaps from the hint to the file name), `errorMessage` (red border +
+ * error line), `isSkeleton` (a mirror of the box before it is ready). `hint` is
+ * always present, so it already lives on the bare leaf (`Empty`) rather than
+ * getting its own leaf.
  */
 
 /** Baseline: entering a form, the drop area shows the hint, no file picked yet. */
@@ -83,7 +78,7 @@ export const Empty: Story = {
         <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Dropzone"
-                tier="atom"
+                tier="composite"
                 leaf="Empty"
                 reason="This is a drag-drop box rather than a labeled field, so the hint text renders as placeholder content inside the box itself. That single spot is also where the file name lands once one is picked, so the box never needs a second line to confirm the pick."
                 states={[
@@ -105,7 +100,7 @@ export const WithFile: Story = {
         <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Dropzone"
-                tier="atom"
+                tier="composite"
                 leaf="Prop `file`"
                 states={[
                     {
@@ -126,7 +121,7 @@ export const Error: Story = {
         <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Dropzone"
-                tier="atom"
+                tier="composite"
                 leaf="Prop `errorMessage`"
                 states={[
                     {
@@ -154,7 +149,7 @@ export const Skeleton: Story = {
         <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="Dropzone"
-                tier="atom"
+                tier="composite"
                 annotate={ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 states={[
@@ -170,7 +165,6 @@ export const Skeleton: Story = {
                                 acceptedMimeTypes={ACCEPT}
                                 maxSizeInBytes={MAX}
                                 onValueChange={() => {}}
-
                             />
                         ),
                     },

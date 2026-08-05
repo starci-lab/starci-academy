@@ -1,33 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CameraIcon } from "@phosphor-icons/react"
-import { ImageDropzone } from "@sb-components/atoms/forms/ImageDropzone/ImageDropzone"
-import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { ImageDropzone } from "@sb-components/composites/form/ImageDropzone/ImageDropzone"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `Typography` — our own atom, with its own story to jump to (the label and, when set, the
- * `hint` line each mount one — see `ImageDropzone.tsx`).
- */
-const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "Typography": { tier: "atom", role: "label / hint text", storyId: "atoms-text-typography-typography--overview" },
-}
-
-/**
- * ATOM — `ImageDropzone`: the system's drop/pick zone for a SINGLE image.
+ * COMPOSITE — `ImageDropzone`: the system's drop/pick zone for a single image.
  *
  * [layout] **1 PROP = 1 LEAF**. Props that produce a shape:
  * `hint` (format/size guidance line), `icon` (swaps the center glyph), and
  * `isDragActive` (pins the drag state from outside). `label` is always present,
- * already shown in `Default`. `onFile`, `className` don't produce
- * a shape, so they have no leaf.
+ * already shown in `Default`. `onFile` does not produce a shape, so it has no leaf.
  *
- *   • Leaf `Icon` passes `icon={CameraIcon}` (a component, not a node) — the atom
- *     forces its own size (`size-8`), and since `size-8 ≥ size-5` it does NOT
- *     pass `weight`, leaving the glyph at its default `regular` stroke (unlike
- *     Chip, whose `size-3` forces `bold`).
- *   • Leaf `DragActive` — the atom accepts `isDragActive?: boolean` to pin the
- *     solid border + background tint + icon/label color change (the drag-over
- *     state) from outside; leaving it unset keeps the internal `useDropzone`
- *     behavior.
+ *   - Leaf `Icon` passes `icon={CameraIcon}` (a component, not a node) — the
+ *     composite forces its own size (`size-8`).
+ *   - Leaf `DragActive` — the composite accepts `isDragActive?: boolean` to pin
+ *     the solid border + background tint + icon/label color change from outside;
+ *     leaving it unset keeps the internal `useDropzone` behavior.
  */
 
 /** Copy shown at the top of the autodocs page. On-screen text is written in ENGLISH. */
@@ -48,8 +36,7 @@ parse just adds friction for no reason.
 
 The default glyph is a plain image icon. Swap it in when the surrounding feature has a
 more specific idea of what's being uploaded — a camera for a profile photo, say. Pass it
-as a **component** (\`icon={CameraIcon}\`), not JSX — the atom owns the size and picks the
-stroke weight itself.
+as a **component** (\`icon={CameraIcon}\`), not JSX — the composite owns the size.
 
 ## Drag and drop
 
@@ -59,7 +46,7 @@ story, but \`isDragActive\` lets you pin it so the state has somewhere to live h
 `
 
 const meta: Meta<typeof ImageDropzone> = {
-    title: "Atoms/Forms/ImageDropzone/ImageDropzone",
+    title: "Composites/Form/ImageDropzone",
     component: ImageDropzone,
     tags: ["autodocs"],
     parameters: {
@@ -78,8 +65,7 @@ export const Default: Story = {
         <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ImageDropzone"
-                tier="atom"
-                annotate={ANNOTATE}
+                tier="composite"
                 leaf="Bare dropzone"
                 reason="This is the one dropzone shape in the system, and every leaf below it differs by exactly one prop, so this is the baseline to compare against."
                 renderClassName="max-w-sm"
@@ -90,7 +76,6 @@ export const Default: Story = {
                         code: "<ImageDropzone onFile={handleFile} label=\"Drag and drop a photo here, or click to browse\" />",
                         render: (
                             <ImageDropzone
-
                                 onFile={() => {}}
                                 label="Drag and drop a photo here, or click to browse"
                             />
@@ -108,8 +93,7 @@ export const Hint: Story = {
         <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ImageDropzone"
-                tier="atom"
-                annotate={ANNOTATE}
+                tier="composite"
                 leaf="Prop `hint`"
                 reason="A hint earns its line whenever the accepted formats or the size limit aren't obvious from the label alone, spelling out the rule instead of letting the reader find out by failing an upload."
                 renderClassName="max-w-sm"
@@ -122,7 +106,7 @@ export const Hint: Story = {
                     },
                     {
                         name: "hint = \"PNG, JPG, WEBP, GIF · up to 5 MB\"",
-                        why: "The hint sits directly under the label as a smaller, muted line, and the atom shows it only because content was passed in. This is the shape a caller reaches for when the accepted formats or the size limit aren't obvious from the label on its own.",
+                        why: "The hint sits directly under the label as a smaller, muted line, and the composite shows it only because content was passed in. This is the shape a caller reaches for when the accepted formats or the size limit aren't obvious from the label on its own.",
                         code: `<ImageDropzone
     onFile={handleFile}
     label="Drag and drop a photo here, or click to browse"
@@ -130,7 +114,6 @@ export const Hint: Story = {
 />`,
                         render: (
                             <ImageDropzone
-
                                 onFile={() => {}}
                                 label="Drag and drop a photo here, or click to browse"
                                 hint="PNG, JPG, WEBP, GIF · up to 5 MB"
@@ -149,19 +132,17 @@ export const Icon: Story = {
         <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ImageDropzone"
-                tier="atom"
-                annotate={ANNOTATE}
+                tier="composite"
                 leaf="Prop `icon`"
                 reason="Swap the glyph in when the surrounding feature has a more specific idea of what's being uploaded than an image in general, a camera for a profile photo, say."
                 renderClassName="max-w-sm"
                 states={[
                     {
                         name: "icon unset (default image glyph)",
-                        why: "The box shows the plain image glyph the atom falls back to when no override is passed. It is the same recolor-on-drag glyph slot that `icon` replaces in the next state, just holding its default value.",
+                        why: "The box shows the plain image glyph the composite falls back to when no override is passed. It is the same recolor-on-drag glyph slot that `icon` replaces in the next state, just holding its default value.",
                         code: "<ImageDropzone onFile={handleFile} label=\"Drag and drop a photo here, or click to browse\" />",
                         render: (
                             <ImageDropzone
-
                                 onFile={() => {}}
                                 label="Drag and drop a photo here, or click to browse"
                             />
@@ -169,7 +150,7 @@ export const Icon: Story = {
                     },
                     {
                         name: "icon = CameraIcon",
-                        why: "The override sits in the exact same glyph slot as the default icon and inherits the same drag-over recolor. Passing a component reference rather than JSX lets the atom keep owning the size (`size-8`) and, being at or above `size-5`, leave the stroke weight at its default regular (§5.0a).",
+                        why: "The override sits in the exact same glyph slot as the default icon and inherits the same drag-over recolor. Passing a component reference rather than JSX lets the composite keep owning the size (`size-8`).",
                         code: `<ImageDropzone
     onFile={handleFile}
     label="Add a profile photo"
@@ -178,7 +159,6 @@ export const Icon: Story = {
 />`,
                         render: (
                             <ImageDropzone
-
                                 onFile={() => {}}
                                 label="Add a profile photo"
                                 hint="Square images look best"
@@ -193,18 +173,15 @@ export const Icon: Story = {
 }
 
 /**
- * Leaf prop `isDragActive` — pins the drag state from outside. Previously (first
- * pass) there was no way to force this shape into a story since it only lived
- * inside `useDropzone`; now the atom accepts a prop to override it, so the solid
- * border + background tint + icon/label color change can show up here.
+ * Leaf prop `isDragActive` — pins the drag state from outside so the solid
+ * border, background tint, and icon/label color change can show up here.
  */
 export const DragActive: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
             <BlockAnatomy
                 name="ImageDropzone"
-                tier="atom"
-                annotate={ANNOTATE}
+                tier="composite"
                 leaf="Prop `isDragActive`"
                 reason="This is what the reader sees mid-drag, right before they let go of the file; pinning it here is the only way to review that moment without actually dragging a file over the canvas."
                 renderClassName="max-w-sm"
@@ -215,7 +192,6 @@ export const DragActive: Story = {
                         code: "<ImageDropzone onFile={handleFile} label=\"Drag and drop a photo here, or click to browse\" />",
                         render: (
                             <ImageDropzone
-
                                 onFile={() => {}}
                                 label="Drag and drop a photo here, or click to browse"
                             />
@@ -223,7 +199,7 @@ export const DragActive: Story = {
                     },
                     {
                         name: "isDragActive = true",
-                        why: "The border turns solid accent, a soft accent tint fills the background, and the icon plus label recolor together as one state moving three parts at once. Leave the prop unset in real use and the atom drives this itself from react-dropzone; the prop only exists so this moment can be pinned for review.",
+                        why: "The border turns solid accent, a soft accent tint fills the background, and the icon plus label recolor together as one state moving three parts at once. Leave the prop unset in real use and the composite drives this itself from react-dropzone; the prop only exists so this moment can be pinned for review.",
                         code: `<ImageDropzone
     onFile={handleFile}
     label="Drag and drop a photo here, or click to browse"
@@ -231,7 +207,6 @@ export const DragActive: Story = {
 />`,
                         render: (
                             <ImageDropzone
-
                                 onFile={() => {}}
                                 label="Drag and drop a photo here, or click to browse"
                                 isDragActive

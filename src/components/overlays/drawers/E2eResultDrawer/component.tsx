@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react"
-import { type SkeletonProps } from "@/components/composites/_slot"
+import { type SkeletonProps } from "@/components/frames/_slot"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { DrawerShell } from "@/components/composites/layout/DrawerShell"
 import { StackV, StackH } from "@/components/frames/Stack"

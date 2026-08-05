@@ -9,7 +9,7 @@ import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 
 /** One kind-bucketed section of RAG hits, already resolved (label + count) by the connected `MindMapNodeDrawer`. */
 export interface MindMapNodeDrawerGroup {

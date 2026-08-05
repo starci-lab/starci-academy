@@ -29,6 +29,85 @@ export interface PinnedProjectCardLabels {
     untitled: string
 }
 
+const PinnedProjectMeta = ({ pin, labels }: Pick<PinnedProjectCardProps, "pin" | "labels">) => (
+    <Cluster
+        gap={2}
+        items={[
+            ...(pin.isVerified ? [() => (
+                <StatusChip
+                    tone="success"
+                    icon={<VerifiedIcon className="size-3" aria-hidden="true" focusable="false" />}
+                >
+                    {labels.verified}
+                </StatusChip>
+            )] : []),
+            ...(pin.techStack ?? []).map((tech) => () => (
+                <Chip key={tech} tone="default" text={tech} />
+            )),
+        ]}
+    />
+)
+
+const PinnedProjectManageFooter = ({
+    pin,
+    canMoveUp,
+    canMoveDown,
+    isBusy,
+    onMoveUp,
+    onMoveDown,
+    onRemove,
+    labels,
+}: Omit<PinnedProjectCardProps, "manage">) => (
+    <Cluster
+        gap={2}
+        items={[
+            () => (
+                <Button
+                    size="sm"
+                    variant="secondary"
+                    isIconOnly
+                    isDisabled={isBusy || !canMoveUp}
+                    ariaLabel={labels.moveUp}
+                    prefixIcon={CaretUpIcon}
+                    onPress={() => onMoveUp?.(pin.id)}
+                />
+            ),
+            () => (
+                <Button
+                    size="sm"
+                    variant="secondary"
+                    isIconOnly
+                    isDisabled={isBusy || !canMoveDown}
+                    ariaLabel={labels.moveDown}
+                    prefixIcon={CaretDownIcon}
+                    onPress={() => onMoveDown?.(pin.id)}
+                />
+            ),
+            ...(pin.url ? [() => (
+                <Button
+                    size="sm"
+                    variant="secondary"
+                    isIconOnly
+                    ariaLabel={labels.open}
+                    prefixIcon={ExternalLinkIcon}
+                    onPress={() => window.open(pin.url as string, "_blank", "noopener,noreferrer")}
+                />
+            )] : []),
+            () => (
+                <Button
+                    size="sm"
+                    variant="danger"
+                    isIconOnly
+                    isPending={isBusy}
+                    ariaLabel={labels.remove}
+                    prefixIcon={TrashIcon}
+                    onPress={() => onRemove?.(pin.id)}
+                />
+            ),
+        ]}
+    />
+)
+
 /** Props for {@link PinnedProjectCard}. */
 export interface PinnedProjectCardProps {
     /** The pinned project to render (list-item data prop — store can't index it). */
@@ -77,85 +156,25 @@ export const PinnedProjectCard = ({
     onRemove,
     labels,
 }: PinnedProjectCardProps) => {
-    // verified badge + tech-stack chips share the meta row
     const hasMeta = pin.isVerified || (pin.techStack?.length ?? 0) > 0
-    const Meta = hasMeta ? () => (
-        <Cluster
-            gap={2}
-            items={[
-                ...(pin.isVerified ? [() => (
-                    <StatusChip
-                        tone="success"
-                        icon={<VerifiedIcon className="size-3" aria-hidden="true" focusable="false" />}
-                    >
-                        {labels.verified}
-                    </StatusChip>
-                )] : []),
-                ...(pin.techStack ?? []).map((tech) => () => (
-                    <Chip key={tech} tone="default" text={tech} />
-                )),
-            ]}
-        />
-    ) : undefined
-
-    // owner controls (manage mode) — reorder + remove, no outbound navigation
-    const ManageFooter = manage ? () => (
-        <Cluster
-            gap={2}
-            items={[
-                () => (
-                    <Button
-                        size="sm"
-                        variant="secondary"
-                        isIconOnly
-                        isDisabled={isBusy || !canMoveUp}
-                        ariaLabel={labels.moveUp}
-                        prefixIcon={CaretUpIcon}
-                        onPress={() => onMoveUp?.(pin.id)}
-                    />
-                ),
-                () => (
-                    <Button
-                        size="sm"
-                        variant="secondary"
-                        isIconOnly
-                        isDisabled={isBusy || !canMoveDown}
-                        ariaLabel={labels.moveDown}
-                        prefixIcon={CaretDownIcon}
-                        onPress={() => onMoveDown?.(pin.id)}
-                    />
-                ),
-                ...(pin.url ? [() => (
-                    <Button
-                        size="sm"
-                        variant="secondary"
-                        isIconOnly
-                        ariaLabel={labels.open}
-                        prefixIcon={ExternalLinkIcon}
-                        onPress={() => window.open(pin.url as string, "_blank", "noopener,noreferrer")}
-                    />
-                )] : []),
-                () => (
-                    <Button
-                        size="sm"
-                        variant="danger"
-                        isIconOnly
-                        isPending={isBusy}
-                        ariaLabel={labels.remove}
-                        prefixIcon={TrashIcon}
-                        onPress={() => onRemove?.(pin.id)}
-                    />
-                ),
-            ]}
-        />
-    ) : undefined
 
     return (
         <MediaCard
             title={pin.title ?? labels.untitled}
-            meta={Meta}
+            meta={hasMeta ? () => <PinnedProjectMeta pin={pin} labels={labels} /> : undefined}
             description={pin.description ?? undefined}
-            footer={ManageFooter}
+            footer={manage ? () => (
+                <PinnedProjectManageFooter
+                    pin={pin}
+                    canMoveUp={canMoveUp}
+                    canMoveDown={canMoveDown}
+                    isBusy={isBusy}
+                    onMoveUp={onMoveUp}
+                    onMoveDown={onMoveDown}
+                    onRemove={onRemove}
+                    labels={labels}
+                />
+            ) : undefined}
             // display mode: the whole card is the outbound link (only when it has one)
             href={!manage && pin.url ? pin.url : undefined}
         />

@@ -13,7 +13,7 @@ import { Box } from "@/components/frames/Box"
 import { ScrollArea } from "@/components/frames/ScrollArea"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { InfiniteScrollSentinel } from "@/components/blocks/async/InfiniteScrollSentinel"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 
 /**
  * `_FollowListModal` — the presentational half of {@link FollowListModal}

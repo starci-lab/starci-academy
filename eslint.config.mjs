@@ -103,6 +103,10 @@ export default defineConfig([
             "starci-fe/no-identity-wrapper-div": "warn", // [[canon components/frames/_identity.ts]] · nợ đo 2026-08-05 = 1
             "starci-fe/no-raw-shape-at-sentence-tier": "warn", // [[canon sentence-tier-composes-not-draws]] · nợ đo 2026-08-05 = 1746
             "starci-fe/no-parallel-skeleton": "warn", // [[canon v2-src-twins-and-gates]] · nợ đo 2026-08-05 = 159
+            // ── một component = MỘT thư mục ─────────────────────────────────────────
+            "starci-fe/page-folder-two-files-only": "warn", // [[canon tiers/split.md]] · nợ đo 2026-08-05 = 356
+            "starci-fe/no-skeleton-twin-component": "warn", // [[canon loading-and-skeleton.md]] · nợ đo 2026-08-05 = 37
+            "starci-fe/no-helper-folder-in-components": "warn", // [[canon fe/sourcetree.md]] · nợ đo 2026-08-05 = 66
             "starci-fe/no-hardcoded-user-text-in-vocabulary": "warn", // [[canon fe-no-custom-from-design-up]] · nợ đo 2026-08-05 = 4
         },
     },

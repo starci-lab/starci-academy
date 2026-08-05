@@ -668,9 +668,100 @@ const noHardcodedUserTextInVocabulary = {
   },
 }
 
+// ── một component = MỘT thư mục, và thư mục đó chỉ chứa hai nửa của chính nó ──
+// Ba luật dưới đây khoá cùng một thói quen: nhét cả một cụm vào trong thư mục của
+// một màn hình. Nó luôn bắt đầu vô hại ("con này chỉ trang này dùng") rồi kết thúc
+// bằng một trang 674 dòng gồm 4 component, 1 folder constants, 1 folder utils và 3
+// bản skeleton chép tay — đúng thứ `pages/AiSubscriptionPage` từng là.
+
+/** Đường dẫn có nằm trong thư mục của MỘT component ở tầng câu không, và tên thư mục đó là gì. */
+function sentenceComponentFolder(filename) {
+  const file = (filename || "").replace(/\\/g, "/")
+  // pages/<Name>/… · layouts/<Name>/… · overlays/<kind>/<Name>/…
+  const m = file.match(/\/src\/components\/(pages|layouts)\/([^/]+)\/(.+)$/)
+    || file.match(/\/src\/components\/(overlays)\/[^/]+\/([^/]+)\/(.+)$/)
+  if (!m) return null
+  return { tier: m[1], name: m[2], rest: m[3] }
+}
+
+const pageFolderTwoFilesOnly = {
+  meta: {
+    type: "problem",
+    docs: {
+      description: "A page/layout/overlay folder holds `component.tsx` + `index.tsx` and nothing else. [[tiers/split.md]]",
+    },
+    schema: [],
+    messages: {
+      extra: "`{{tier}}/{{name}}/` contains `{{rest}}` — a screen folder holds its two halves ONLY (`component.tsx` = the shape, `index.tsx` = the wiring). Whatever this is, it has a real home: a component of its own goes to `blocks/<category>/`, a fetch goes to `hooks/`, a pure helper to `modules/utils/`, a shape to `modules/types/`, copy or a config map to `resources/`. \"Only this screen uses it\" is how a folder becomes a second codebase.",
+    },
+  },
+  create(context) {
+    const folder = sentenceComponentFolder(context.filename || context.getFilename())
+    if (!folder) return {}
+    if (folder.rest === "component.tsx" || folder.rest === "index.tsx") return {}
+    return {
+      Program(node) {
+        context.report({ node, messageId: "extra", data: folder })
+      },
+    }
+  },
+}
+
+const noSkeletonTwinComponent = {
+  meta: {
+    type: "problem",
+    docs: {
+      description: "No component whose whole job is to mirror another one's shape. [[loading-and-skeleton.md]]",
+    },
+    schema: [],
+    messages: {
+      twin: "`{{name}}` is a hand-mirrored twin: a second description of a shape that already has one. Give the component it mirrors an `isSkeleton` prop and let it rest as ITSELF — the twin cannot be kept in step, it can only be noticed after it has already drifted. (The `Skeleton.*` primitives under `blocks/skeleton/` are the pieces you rest WITH, and are exempt.)",
+    },
+  },
+  create(context) {
+    const file = (context.filename || context.getFilename()).replace(/\\/g, "/")
+    if (!file.includes("/src/components/")) return {}
+    // the primitives themselves, and the atoms' own `isSkeleton` plumbing, are the exception
+    if (file.includes("/blocks/skeleton/") || file.includes("/atoms/")) return {}
+    const m = file.match(/\/([A-Za-z0-9]*Skeleton)\/index\.tsx$/) || file.match(/\/([A-Za-z0-9]*Skeleton)\.tsx$/)
+    if (!m) return {}
+    return {
+      Program(node) {
+        context.report({ node, messageId: "twin", data: { name: m[1] } })
+      },
+    }
+  },
+}
+
+const noHelperFolderInComponents = {
+  meta: {
+    type: "problem",
+    docs: {
+      description: "`constants/` `utils/` `types/` `hooks/` are not component folders. [[sourcetree.md]]",
+    },
+    schema: [],
+    messages: {
+      helper: "`{{kind}}/` under `src/components/**` — this is not component code, so it does not live in the component tree. A fetch is a `hooks/`, a pure function is a `modules/utils/`, a shape is a `modules/types/`, a copy or config map is a `resources/`. Left here it stays invisible to everyone who would have reused it, which is how the same difficulty map got written three times.",
+    },
+  },
+  create(context) {
+    const file = (context.filename || context.getFilename()).replace(/\\/g, "/")
+    const m = file.match(/\/src\/components\/.*\/(constants|utils|types|hooks)\//)
+    if (!m) return {}
+    return {
+      Program(node) {
+        context.report({ node, messageId: "helper", data: { kind: m[1] } })
+      },
+    }
+  },
+}
+
 export default {
-  meta: { name: "eslint-plugin-starci-fe", version: "0.4.0" },
+  meta: { name: "eslint-plugin-starci-fe", version: "0.5.0" },
   rules: {
+    "page-folder-two-files-only": pageFolderTwoFilesOnly,
+    "no-skeleton-twin-component": noSkeletonTwinComponent,
+    "no-helper-folder-in-components": noHelperFolderInComponents,
     "no-fractional-spacing": noFractionalSpacing,
     "no-adjacent-chip": noAdjacentChip,
     "no-modal-title-classname": noModalTitleClassname,

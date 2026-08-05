@@ -26,6 +26,11 @@ export interface SplitWorkspaceProps {
      * Defaults to `xl` -- the step both real sources agree on.
      */
     at?: ResponsiveRowSwitch
+    /**
+     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
+     * `data-anat-part`. The frame never names itself.
+     */
+    anatPart?: string
     /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
@@ -33,8 +38,9 @@ export interface SplitWorkspaceProps {
      * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principles` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
      * A frame does not KNOW its pattern -- the caller does -- so it is passed in.
+     * One token per instance.
      */
-    principles?: Array<PrincipleToken>
+    principles?: PrincipleToken
 }
 
 /**
@@ -70,11 +76,12 @@ const SplitWorkspace = ({
     isSkeleton,
     classNames,
     principles,
+    anatPart,
 }: SplitWorkspaceProps) => (
     <div
         data-tier="frame"
         data-component="SplitWorkspace"
-
+        data-anat-part={anatPart}
         data-principles={principlesAttr(principles)}
         className={cn("flex flex-col gap-6", WORKSPACE_SWITCH_CLASS[at], classNames)}
     >

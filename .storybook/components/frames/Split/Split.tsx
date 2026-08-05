@@ -35,10 +35,10 @@ export interface SplitBaseProps {
     /** Cross-axis alignment of the two sides. Default `center` (the split row's normal). */
     align?: LayoutAlign
     /**
-     * Anatomy tag for THIS frame itself -- so the PARENT can badge it as ONE node (§11a.1).
-     * Without this prop the frame never enters the Deps tree: using a `layouts`-tier frame
-     * that the panel can't see counts as not using it at all.
+     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
+     * `data-anat-part`. The frame never names itself.
      */
+    anatPart?: string
     /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
@@ -46,8 +46,9 @@ export interface SplitBaseProps {
      * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principles` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
      * A frame does not KNOW its pattern -- the caller does -- so it is passed in.
+     * One token per instance.
      */
-    principles?: Array<PrincipleToken>
+    principles?: PrincipleToken
     /** `true` mounts both sides in their loading state. */
     isSkeleton?: boolean
 }
@@ -64,6 +65,7 @@ const SplitBase = ({
     align = "center",
     classNames,
     principles,
+    anatPart,
     isSkeleton,
 }: SplitBaseProps) => {
     const Start = start
@@ -72,7 +74,7 @@ const SplitBase = ({
         <div
             data-tier="frame"
             data-component="Split"
-
+            data-anat-part={anatPart}
             data-principles={principlesAttr(principles)}
             className={cn(
                 "flex w-full",
@@ -94,10 +96,7 @@ const SplitBase = ({
     )
 }
 
-/**
- * `Split.*` -- the left↔right row khung namespace. Namespace only -- no bare
- * component export (§13a).
- */
+/** Left-right row frame. Direct named export. */
 export { SplitBase as Split }
 
 /** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */

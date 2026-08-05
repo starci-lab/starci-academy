@@ -14,9 +14,9 @@ import type { PrincipleToken } from "@sb-components/frames/_principles"
  *   - `StackH` -- stacks horizontally (row); only this axis takes `at` (the
  *     container step it wraps below, never a bare boolean).
  *
- * A stack wraps arbitrary content (not a repeating list), so `children` is the
- * road -- a track has exactly one slot. Use `Cluster`/`Grid` for repeat-list
- * frames.
+ * A stack wraps arbitrary content (not a repeating list), so `body` or `items`
+ * is the road -- a track has exactly one region. Use `Cluster`/`Grid` for
+ * repeat-list frames.
  *
  * `gap` is typed {@link Responsive}<{@link AllowedGap}> -- a closed index into the
  * house gap table, so off-scale cannot be typed. It is REQUIRED so the seam is
@@ -69,9 +69,10 @@ export interface StackBaseProps {
      */
     inline?: boolean
     /**
-     * Anatomy tag for THIS frame itself -- so the PARENT can badge it as ONE node (§11a.1).
-     * Missing this prop means the `layouts`-tier frame is used but the panel cannot see it.
+     * Caller-supplied part name for the Storybook anatomy overlay. Forwarded to
+     * `Flex`, which owns the DOM. The frame never names itself.
      */
+    anatPart?: string
     /** A SINGLE buildable child -- an uncalled `ComponentType<{isSkeleton?}>` the track renders itself. Use `items` for several. */
     body?: ComponentTypeWithSkeleton
     /**
@@ -90,9 +91,9 @@ export interface StackBaseProps {
     /**
      * The layout pattern this track's seam realises -- forwarded straight to the `Flex` this
      * track renders through, the same way `gap`/`align`/`justify` are. See `Flex`'s own
-     * `pattern` doc for the full contract.
+     * `principles` doc for the full contract. One token per instance.
      */
-    principles?: Array<PrincipleToken>
+    principles?: PrincipleToken
 }
 
 /** Props for {@link StackV} -- a vertical track (no row-only prop to add). */
@@ -160,6 +161,7 @@ const StackV = ({
     padding,
     classNames,
     principles,
+    anatPart,
 }: StackVProps) => {
     // `items` (buildable) is the preferred path -- the track renders each item itself, threading
     // `isSkeleton`; `body` (a plain node) is the simple fallback when no build/shimmer is needed.
@@ -176,6 +178,7 @@ const StackV = ({
             nested={nested}
             classNames={classNames}
             principles={principles}
+            anatPart={anatPart}
             body={divider ? interleaveDividers(content, "vertical") : content}
         />
     )
@@ -196,6 +199,7 @@ const StackH = ({
     padding,
     classNames,
     principles,
+    anatPart,
 }: StackHProps) => {
     const content = (items ?? (body ? [body] : [])).map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)
     return (
@@ -211,6 +215,7 @@ const StackH = ({
             nested={nested}
             classNames={classNames}
             principles={principles}
+            anatPart={anatPart}
             body={divider ? interleaveDividers(content, "horizontal") : content}
         />
     )

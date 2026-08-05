@@ -1,9 +1,13 @@
 /**
  * PrincipleToken -- the closed set of layout/seam tokens a node may declare via
- * `principles={[...]}`. MUST stay in sync with `.storybook/test-runner/patterns.mjs`
+ * `principles="token"`. MUST stay in sync with `.storybook/test-runner/patterns.mjs`
  * (the registry that maps each token -> the CSS value it must compute to). A typed
  * union so `tsc` rejects a token that isn't in the registry -- a compile-time guard
  * on top of the runtime `check-pattern-coverage` gate.
+ *
+ * One public frame instance carries exactly one token. Multiple tokens on one node
+ * means the seams belong to different owners: split the node or keep the one
+ * correct seam owner. Do not join tokens.
  */
 export type PrincipleToken =
     // gap -- seam intent
@@ -19,9 +23,9 @@ export type PrincipleToken =
     | "reel" | "sticky-top" | "fixed-bar" | "stack-below"
 
 /**
- * Build the `data-principles` attribute value from a token list -- space-separated
- * like `class`, queryable as `[data-principles~="token"]`. Empty/undefined -> the
- * attribute is omitted entirely (never an empty string).
+ * Build the `data-principles` attribute value from one token. Undefined omits the
+ * attribute entirely (never an empty string). The attribute stays queryable as
+ * `[data-principles~="token"]`.
  */
-export const principlesAttr = (principles?: ReadonlyArray<PrincipleToken>): string | undefined =>
-    principles && principles.length > 0 ? principles.join(" ") : undefined
+export const principlesAttr = (principles?: PrincipleToken): string | undefined =>
+    principles || undefined

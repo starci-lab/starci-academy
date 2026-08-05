@@ -36,9 +36,10 @@ export interface ResponsiveClusterProps {
     /** Main-axis distribution once packed into a row. Left out means the browser default. */
     justify?: LayoutJustify
     /**
-     * Anatomy tag for THIS frame itself -- so the PARENT can badge it as ONE node.
-     * Missing this prop means the frame is used but the panel cannot see it.
+     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
+     * `data-anat-part`. The frame never names itself.
      */
+    anatPart?: string
     /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
@@ -52,9 +53,9 @@ export interface ResponsiveClusterProps {
      * The layout pattern this track's seam realises -- a token from `test-runner/patterns.mjs`.
      * Emitted as `data-principles` on this same root, beside `data-tier`/`data-component`, so the
      * rendered-tree test can assert the seam is the step the pattern names. See `Flex`'s own
-     * `pattern` doc for the full contract.
+     * `principles` doc for the full contract. One token per instance.
      */
-    principles?: Array<PrincipleToken>
+    principles?: PrincipleToken
     /** Renders every cell's skeleton form instead of its content form. */
     isSkeleton?: boolean
 }
@@ -90,12 +91,13 @@ const ResponsiveClusterBase = ({
     "data-tier": dataTier,
     "data-component": dataComponent,
     principles,
+    anatPart,
     isSkeleton,
 }: ResponsiveClusterProps) => (
     <div
         data-tier={dataTier}
         data-component={dataComponent}
-
+        data-anat-part={anatPart}
         data-principles={principlesAttr(principles)}
         className={cn(
             "flex w-full flex-col items-center",
@@ -116,8 +118,8 @@ const ResponsiveClusterBase = ({
     </div>
 )
 
-/**
- * `ResponsiveCluster.*` -- namespace only, no bare component export (house convention
- * for every frame in this folder).
- */
+/** Full-width column / packed-row frame. Direct named export. */
 export { ResponsiveClusterBase as ResponsiveCluster }
+
+/** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */
+export const meta = { tier: "frame", name: "ResponsiveCluster" } as const

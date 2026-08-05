@@ -33,6 +33,11 @@ export interface StageProps {
     fill?: StageFill
     /** Renders `canvas` and every floating slot in their skeleton state. */
     isSkeleton?: boolean
+    /**
+     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
+     * `data-anat-part`. The frame never names itself.
+     */
+    anatPart?: string
     /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
@@ -40,8 +45,9 @@ export interface StageProps {
      * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principles` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
      * A frame does not KNOW its pattern -- the caller does -- so it is passed in.
+     * One token per instance.
      */
-    principles?: Array<PrincipleToken>
+    principles?: PrincipleToken
 }
 
 /** {@link StageFill} -> the literal classes that size the stage's own box. */
@@ -63,10 +69,13 @@ const Stage = ({
     fill = "parent",
     isSkeleton,
     classNames,
-    principles}: StageProps) => (
+    principles,
+    anatPart,
+}: StageProps) => (
     <div
         data-tier="frame"
         data-component="Stage"
+        data-anat-part={anatPart}
         data-principles={principlesAttr(principles)}
         className={cn("relative", FILL_CLASS[fill], classNames)}
     >

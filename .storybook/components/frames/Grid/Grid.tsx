@@ -101,9 +101,10 @@ export interface GridBaseProps {
     /** Seam between cells on the house gap scale -- REQUIRED. Both axes. */
     gap: Responsive<AllowedGap>
     /**
-     * Anatomy tag for THIS frame itself -- so the PARENT can badge it as ONE node (§11a.1).
-     * Missing this prop means the frame is used but the panel cannot see it.
+     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
+     * `data-anat-part`. The frame never names itself.
      */
+    anatPart?: string
     /**
      * Where this sits inside its parent. Appearance is not passable -- it is already a prop.
      */
@@ -113,8 +114,9 @@ export interface GridBaseProps {
      * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principles` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
      * A frame does not KNOW its pattern -- the caller does -- so it is passed in.
+     * One token per instance.
      */
-    principles?: Array<PrincipleToken>
+    principles?: PrincipleToken
     /** Renders every cell's skeleton form instead of its content form. */
     isSkeleton?: boolean
 }
@@ -125,11 +127,11 @@ export interface GridBaseProps {
  *
  * @param props - {@link GridBaseProps}
  */
-const GridBase = ({ items, columns, gap, classNames, principles, isSkeleton }: GridBaseProps) => (
+const GridBase = ({ items, columns, gap, classNames, principles, anatPart, isSkeleton }: GridBaseProps) => (
     <div
         data-tier="frame"
         data-component="Grid"
-
+        data-anat-part={anatPart}
         data-principles={principlesAttr(principles)}
         className={cn(
             "grid",
@@ -162,10 +164,7 @@ const GridBase = ({ items, columns, gap, classNames, principles, isSkeleton }: G
     </div>
 )
 
-/**
- * `Grid.*` -- the responsive grid frame namespace. Namespace only -- no bare
- * component export (§13a).
- */
+/** Responsive grid frame. Direct named export. */
 export { GridBase as Grid }
 
 /** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */

@@ -60,6 +60,11 @@ export interface ContainerBaseProps {
     body?: ComponentTypeWithSkeleton
     /** `true` -> passes `isSkeleton` down to `body` so the measure's content shimmers. */
     isSkeleton?: boolean
+    /**
+     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
+     * `data-anat-part` on the identity outer. The frame never names itself.
+     */
+    anatPart?: string
     /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
@@ -72,9 +77,9 @@ export interface ContainerBaseProps {
      * `max-w` measure (see header note on why padding must live on a second, inner div). The
      * padding class is on the INNER div, so `data-principles` lands there too -- the element that
      * actually carries the gap, per this change's own rule, not the element beside the other
-     * data-* markers.
+     * data-* markers. One token per instance.
      */
-    principles?: Array<PrincipleToken>
+    principles?: PrincipleToken
 }
 
 /**
@@ -92,6 +97,7 @@ const ContainerBase = ({
     isSkeleton,
     classNames,
     principles,
+    anatPart,
 }: ContainerBaseProps) => {
     return (
         // TWO layers, not one. A `@container` measures its QUERY CONTAINER'S
@@ -108,7 +114,7 @@ const ContainerBase = ({
         <div
             data-tier="frame"
             data-component="Container"
-
+            data-anat-part={anatPart}
             className={cn(
                 "@container mx-auto w-full",
                 SIZE_CLASS[size],
@@ -122,13 +128,7 @@ const ContainerBase = ({
     )
 }
 
-/**
- * `Container.*` -- CONTENT MEASURE frame. Namespace, no bare component export (§13a).
- *
- * | Member | Content entry point |
- * |---|---|
- * | `.Base` | slot `header`/`body`/`footer` (+ `children` = body) |
- */
+/** Content measure frame. Direct named export. */
 export { ContainerBase as Container }
 
 /** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */

@@ -14,15 +14,18 @@ export default meta
 
 type Story = StoryObj<typeof DrawerRoot>
 
-/** Bare identity root — emits `data-tier="drawer"` + the caller's `data-component`. */
+/** Bare identity root -- emits `data-tier="drawer"` + the caller's `data-component`. */
 export const Default: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
-            <DrawerRoot data-component="ExampleDrawer">
-                <div data-tier="fixture" className="rounded-xl border border-default bg-surface p-3 text-sm text-foreground">
-                    Drawer content placeholder
-                </div>
-            </DrawerRoot>
+            <DrawerRoot
+                data-component="ExampleDrawer"
+                body={() => (
+                    <div data-tier="fixture" className="rounded-xl border border-default bg-surface p-3 text-sm text-foreground">
+                        Drawer content placeholder
+                    </div>
+                )}
+            />
         </div>
     ),
 }

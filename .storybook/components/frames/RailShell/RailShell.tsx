@@ -83,6 +83,11 @@ export interface RailShellProps {
     side?: "start" | "end"
     /** Renders `rail`/`body` in their skeleton state. */
     isSkeleton?: boolean
+    /**
+     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
+     * `data-anat-part` on the identity outer. The frame never names itself.
+     */
+    anatPart?: string
     /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
@@ -90,8 +95,9 @@ export interface RailShellProps {
      * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principles` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
      * A frame does not KNOW its pattern -- the caller does -- so it is passed in.
+     * One token per instance.
      */
-    principles?: Array<PrincipleToken>
+    principles?: PrincipleToken
 }
 
 /**
@@ -123,7 +129,7 @@ const RAIL_STICKY_CLASS: Record<ResponsiveRowSwitch, string> = {
 }
 
 /**
- * The leading-rail shell. See the file header for why this is its own khung and
+ * The leading-rail shell. See the file header for why this is its own frame and
  * why `at` and `isRailSticky` are its only props beyond the two slots.
  *
  * @param props - {@link RailShellProps}
@@ -137,6 +143,7 @@ const RailShell = ({
     isSkeleton,
     classNames,
     principles,
+    anatPart,
 }: RailShellProps) => {
     // `rail`/`body` are CALLER SLOTS -- whatever sits inside belongs to whoever passed
     // it, so neither gets an anatomy badge of its own (same restraint as
@@ -169,7 +176,7 @@ const RailShell = ({
         <div
             data-tier="frame"
             data-component="RailShell"
-
+            data-anat-part={anatPart}
             className={cn("@container w-full", classNames)}
         >
             {/* INNER: a real descendant of the `@container` above, so `@app-md:flex-row`

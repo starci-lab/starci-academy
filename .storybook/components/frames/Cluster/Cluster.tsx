@@ -20,7 +20,7 @@ export interface ClusterBaseProps {
      * the frame mounts itself (`<Item isSkeleton={isSkeleton} />`), never a built
      * `ReactNode` (§ content must be buildable). Repeat list = DATA, never children
      * (§13b). An empty/omitted array renders an empty (zero-height) track: "nothing
-     * to show" is the CALLER's state to phrase, not the khung's.
+     * to show" is the CALLER's state to phrase, not the frame's.
      */
     items?: Array<ComponentTypeWithSkeleton>
     /**
@@ -44,11 +44,10 @@ export interface ClusterBaseProps {
     /** Main-axis distribution of each line. Default `start`. */
     justify?: LayoutJustify
     /**
-     * Anatomy tag for THIS khung itself -- lets the PARENT badge it as ONE node.
-     *
-     * Without this prop the parent can't name the khung, so the khung
-     * doesn't make it into the Deps tree and it counts as unused.
+     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
+     * `data-anat-part`. The frame never names itself.
      */
+    anatPart?: string
     /**
      * Where this sits inside its parent. Appearance is not passable -- it is already a prop.
      */
@@ -57,9 +56,9 @@ export interface ClusterBaseProps {
      * The layout pattern this track's seam realises -- a token from `test-runner/patterns.mjs`.
      * Emitted as `data-principles` on this same root, beside `data-tier`/`data-component`, so the
      * rendered-tree test can assert the seam is the step the pattern names. See `Flex`'s own
-     * `pattern` doc for the full contract.
+     * `principles` doc for the full contract. One token per instance.
      */
-    principles?: Array<PrincipleToken>
+    principles?: PrincipleToken
     /** `true` mounts every item in its loading state. */
     isSkeleton?: boolean
 }
@@ -78,12 +77,13 @@ const ClusterBase = ({
     separator = false,
     classNames,
     principles,
+    anatPart,
     isSkeleton,
 }: ClusterBaseProps) => (
     <div
         data-tier="frame"
         data-component="Cluster"
-
+        data-anat-part={anatPart}
         data-principles={principlesAttr(principles)}
         className={cn(
             "flex flex-wrap",
@@ -111,8 +111,7 @@ const ClusterBase = ({
 )
 
 /**
- * `Cluster.*` -- the wrapping same-kind row khung namespace. Namespace only -- no
- * bare component export (§13a).
+ * Wrapping same-kind row frame. Direct named export.
  */
 export { ClusterBase as Cluster }
 

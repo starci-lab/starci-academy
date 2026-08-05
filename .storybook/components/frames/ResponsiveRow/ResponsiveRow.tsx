@@ -42,9 +42,10 @@ export interface ResponsiveRowProps {
     /** Seam BELOW `at` (the grid gap), on the house gap scale. At/above `at` the row goes flush -- see the file header. */
     gap: Responsive<AllowedGap>
     /**
-     * Anatomy tag for THIS frame itself -- so the PARENT can badge it as ONE node (§11a.1).
-     * Missing this prop means the frame is used but the panel cannot see it.
+     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
+     * `data-anat-part`. The frame never names itself.
      */
+    anatPart?: string
     /**
      * Where this sits inside its parent. Appearance is not passable -- it is already a prop.
      */
@@ -53,9 +54,9 @@ export interface ResponsiveRowProps {
      * The layout pattern this row's seam realises -- a token from `test-runner/patterns.mjs`.
      * Emitted as `data-principles` on this same root, beside `data-tier`/`data-component`, so the
      * rendered-tree test can assert the seam is the step the pattern names. See `Flex`'s own
-     * `pattern` doc for the full contract.
+     * `principles` doc for the full contract. One token per instance.
      */
-    principles?: Array<PrincipleToken>
+    principles?: PrincipleToken
 }
 
 /** Grid column count -> literal class. Tailwind never emits an interpolated `grid-cols-${n}`. */
@@ -90,11 +91,12 @@ const ResponsiveRowBase = ({
     isSkeleton,
     classNames,
     principles,
+    anatPart,
 }: ResponsiveRowProps) => (
     <div
         data-tier="frame"
         data-component="ResponsiveRow"
-
+        data-anat-part={anatPart}
         data-principles={principlesAttr(principles)}
         className={cn(
             "grid",
@@ -110,10 +112,7 @@ const ResponsiveRowBase = ({
     </div>
 )
 
-/**
- * `ResponsiveRow.*` -- the grid-below/flex-above frame namespace. Namespace only -- no bare
- * component export (§13a).
- */
+/** Grid-below / flex-above frame. Direct named export. */
 export { ResponsiveRowBase as ResponsiveRow }
 
 /** Source-level tier marker -- lets a gate read the tier without guessing from the folder path. */

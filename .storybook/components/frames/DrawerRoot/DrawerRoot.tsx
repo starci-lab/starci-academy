@@ -1,12 +1,23 @@
-import type { ReactNode } from "react"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
-/** Bare identity root -- emits `data-tier="drawer"` + the caller's `data-component`. */
+/**
+ * Identity root for a drawer overlay: emits `data-tier="drawer"` and the caller's
+ * `data-component` so every drawer shares one root instead of a raw identity div.
+ * It arranges nothing and carries no spacing -- pure identity, so it declares no
+ * `principles`.
+ */
 export interface DrawerRootProps {
     /** The drawer's `data-component` name -- supplied by the caller, e.g. `"SubmissionAttemptsDrawer"`. */
     "data-component": string
-    /** Optional passthrough classes for the identity root. */
-    className?: string
-    children?: ReactNode
+    /**
+     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
+     * `data-anat-part`. The frame never names itself.
+     */
+    anatPart?: string
+    /** Single buildable region mounted inside the identity root. */
+    body: ComponentTypeWithSkeleton
+    /** When true, the body renders in its skeleton state. */
+    isSkeleton?: boolean
 }
 
 /** Source-level tier metadata. */
@@ -16,8 +27,13 @@ export const meta = { tier: "frame", name: "DrawerRoot" } as const
  * Identity root for a drawer overlay: emits `data-tier="drawer"` and the caller's
  * `data-component` so every drawer shares one root instead of a raw identity div.
  */
-export const DrawerRoot = ({ "data-component": dataComponent, className, children }: DrawerRootProps) => (
-    <div data-tier="drawer" data-component={dataComponent} className={className}>
-        {children}
+export const DrawerRoot = ({
+    "data-component": dataComponent,
+    anatPart,
+    body: Body,
+    isSkeleton,
+}: DrawerRootProps) => (
+    <div data-tier="drawer" data-component={dataComponent} data-anat-part={anatPart}>
+        <Body isSkeleton={isSkeleton} />
     </div>
 )

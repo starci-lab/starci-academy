@@ -99,9 +99,15 @@ export interface FlexBaseProps {
      * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principles` on the
      * element that carries the gap, so the rendered-tree test can assert the seam is the step
      * the pattern names. A frame does not KNOW its pattern -- the caller does -- so it is
-     * passed in.
+     * passed in. One token per instance.
      */
-    principles?: Array<PrincipleToken>
+    principles?: PrincipleToken
+    /**
+     * Caller-supplied part name for the Storybook anatomy overlay. Emitted as
+     * `data-anat-part`. The frame never names itself. Stack forwards its own
+     * `anatPart` here because Flex is the DOM owner.
+     */
+    anatPart?: string
 }
 
 /** Direction to its literal class. Tailwind never emits an interpolated `flex-${x}`. */
@@ -144,11 +150,12 @@ const FlexBase = ({
     body,
     classNames,
     principles,
+    anatPart,
 }: FlexBaseProps) => (
     <Tag
         data-tier="frame"
         data-component="Flex"
-
+        data-anat-part={anatPart}
         data-principles={principlesAttr(principles)}
         className={cn(
             inline ? "inline-flex" : "flex",

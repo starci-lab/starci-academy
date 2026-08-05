@@ -1,50 +1,46 @@
 "use client"
 
 import React from "react"
-import {
-    Card,
-    CardContent,
-    Typography,
-    cn,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
+import type { ReactNode } from "react"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import { Image } from "@/components/atoms/media/Image"
+import { Typography } from "@/components/atoms/text/Typography"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
+import { Box } from "@/components/frames/Box"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackV } from "@/components/frames/Stack"
 
-/** Placeholder when {@link MediaCardProps.cover} is omitted — 16:9. */
+/** Placeholder cover when {@link MediaCardProps.cover} is omitted — 16:9. */
 const FALLBACK_COVER_SRC = "https://placehold.co/640x360"
 
 /** Props for {@link MediaCard}. */
-export interface MediaCardProps extends WithClassNames<undefined> {
+export interface MediaCardProps {
     /**
      * Optional media node rendered flush at the very top of the card, edge-to-
-     * edge under the card radius (e.g. an
-     * `<img className="aspect-video w-full object-cover" />`). When omitted, a
-     * 16:9 placeholder fills the same full-bleed slot.
+     * edge under the card radius (e.g. an `<img>`). When omitted, a 16:9
+     * placeholder image fills the same full-bleed slot.
      */
-    cover?: React.ReactNode
+    cover?: ReactNode
     /**
      * Primary heading of the card (course / lesson / challenge / blog title).
      * Rendered via {@link Typography} weight="medium" (body size).
      */
-    title: React.ReactNode
+    title: ReactNode
     /**
      * Optional metadata row shown directly under the title — typically a row of
-     * HeroUI Chips or muted text (category, difficulty, duration, author).
+     * chips or muted text (category, difficulty, duration, author).
      */
-    meta?: React.ReactNode
+    meta?: ReactNode
     /**
-     * Optional short description / excerpt. Rendered muted via
-     * {@link Typography} type="body-sm" color="muted". Two-line clamp
-     * (className="line-clamp-2") is kept as a documented minimal exception —
-     * it is a layout/overflow constraint, not a style class.
+     * Optional short description / excerpt. Rendered muted, clamped to two
+     * lines so grid rows stay uniform.
      */
-    description?: React.ReactNode
+    description?: ReactNode
     /**
      * Optional footer pinned at the bottom of the body — typically a CTA button,
      * price, or progress indicator.
      */
-    footer?: React.ReactNode
+    footer?: ReactNode
     /**
      * Optional press handler. When provided the whole card becomes pressable and
      * keyboard-accessible. Prefer {@link href} for pure navigation.
@@ -55,20 +51,26 @@ export interface MediaCardProps extends WithClassNames<undefined> {
      * the whole card is a single accessible link.
      */
     href?: string
+    /**
+     * Where this card sits inside its parent. Appearance is not passable — it is
+     * already a prop.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
  * Consolidated, presentational content card — one shape for course / lesson /
- * challenge / blog grids. Built on the HeroUI {@link Card}/{@link CardContent}
- * system (globals supply the 3xl radius, border, and no-shadow flat look), so it
- * never hand-writes rounded / border / background. The cover sits full-bleed at
- * the top in 16:9 (Card is `p-0` + `overflow-hidden` so media kisses the card
- * edges); when {@link cover} is omitted a 16:9 placeholder fills that slot. The
- * padded body (`p-4`) stacks title, meta, description, and footer with a uniform
- * `gap-3`.
+ * challenge / blog grids. Composes {@link SurfaceCard} for the card face itself
+ * (the `nested` variant gives the flat, border-not-shadow look this card has
+ * always had — globals still supply the 3xl radius) so this file owns no card
+ * chrome of its own: a flush 16:9 cover slot on top, and a padded stack of
+ * title / meta / description / footer underneath. When {@link cover} is
+ * omitted a 16:9 placeholder image fills that slot.
  *
- * Pass `href` for navigation or `onPress` for a custom handler — either one makes
- * the entire card pressable and keyboard-accessible.
+ * Pass `href` for navigation or `onPress` for a custom handler — either makes
+ * the whole card pressable and keyboard-accessible via `SurfaceCard`'s own
+ * press handling (ripple + press-scale for `onPress`, a real anchor for
+ * `href`).
  *
  * @param props - {@link MediaCardProps}
  * @see Story: .storybook/stories/blocks/cards/MediaCard/MediaCard.stories
@@ -81,62 +83,43 @@ export const MediaCard = ({
     footer,
     onPress,
     href,
-    className,
+    classNames,
 }: MediaCardProps) => {
-    // HeroUI v3 Card is not pressable itself — wrap it in a real anchor/button
-    // when interactive so the whole card is one accessible target.
-    const interactive = Boolean(onPress || href)
-    const coverNode = cover ?? (
-        <img
-            src={FALLBACK_COVER_SRC}
-            alt=""
-            className="aspect-video w-full object-cover"
+    const coverNode = cover ?? <Image src={FALLBACK_COVER_SRC} alt="" ratio="video" radius="none" />
+
+    const body = () => (
+        <StackV
+            gap={1}
+            items={[
+                () => (
+                    <Box className="aspect-video w-full shrink-0 overflow-hidden [&_img]:block [&_img]:size-full [&_img]:object-cover">
+                        {coverNode}
+                    </Box>
+                ),
+                () => (
+                    <StackV
+                        gap={4}
+                        padding={5}
+                        items={[
+                            () => <Typography size="base" weight="medium" text={title} />,
+                            ...(meta ? [() => <Cluster gap={3} items={[() => <>{meta}</>]} />] : []),
+                            ...(description ? [() => <Typography size="sm" color="muted" lineClamp={2} text={description} />] : []),
+                            ...(footer ? [() => <>{footer}</>] : []),
+                        ]}
+                    />
+                ),
+            ]}
         />
     )
-    const card = (
-        // `p-0`: Card's default padding would inset the cover; body padding lives
-        // on CardContent only so the media can kiss the top/side edges under the
-        // card radius (`overflow-hidden` clips the cover to that radius).
-        <Card className={cn("gap-0 overflow-hidden p-0", !interactive && className)}>
-            <div className="aspect-video w-full shrink-0 overflow-hidden [&_img]:block [&_img]:size-full [&_img]:object-cover">
-                {coverNode}
-            </div>
-            <CardContent className="flex flex-col gap-3 px-4 pb-4 pt-3">
-                <Typography weight="medium">{title}</Typography>
-                {meta ? (
-                    <div className="flex flex-wrap items-center gap-2">{meta}</div>
-                ) : null}
-                {description ? (
-                    // line-clamp-2 is a layout/overflow constraint (minimal exception per LAW 2)
-                    <Typography type="body-sm" color="muted" className="line-clamp-2">
-                        {description}
-                    </Typography>
-                ) : null}
-                {footer ? <div>{footer}</div> : null}
-            </CardContent>
-        </Card>
-    )
 
-    if (href) {
-        return (
-            <a
-                href={href}
-                className={cn("block", className)}
-            >
-                {card}
-            </a>
-        )
-    }
-    if (onPress) {
-        return (
-            <button
-                type="button"
-                onClick={onPress}
-                className={cn("block w-full text-left", className)}
-            >
-                {card}
-            </button>
-        )
-    }
-    return card
+    return (
+        <SurfaceCard
+            variant="nested"
+            padding={1}
+            onPress={onPress}
+            href={href}
+            body={body}
+            classNames={classNames}
+        />
+    )
 }

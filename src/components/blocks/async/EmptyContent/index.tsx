@@ -1,33 +1,40 @@
-import React from "react"
 import type { ReactNode } from "react"
-import { Button, Typography, cn } from "@heroui/react"
 import { TrayIcon } from "@phosphor-icons/react"
-
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Typography } from "@/components/atoms/text/Typography"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import { StackV } from "@/components/frames/Stack"
 
 /**
- * Props for the {@link EmptyContent} block.
+ * Props for the {@link EmptyContent} composite.
  */
-export interface EmptyContentProps extends WithClassNames<undefined> {
+export interface EmptyContentProps {
     /** Primary "nothing here" line. */
     title: ReactNode
     /** Optional supporting line below the title. */
     description?: ReactNode
-    /** Override the default tray icon. */
+    /**
+     * Override the default tray icon. Takes an already-built node (not a
+     * component reference) — every call site hands this a pre-sized glyph
+     * (`<Icon className="size-8 …" />`), so the shape stays a node here too.
+     */
     icon?: ReactNode
     /** Optional retry/refresh handler — renders a button when paired with a label. */
     onRetry?: () => void
     /** Translated label for the retry button (required to render it). */
     retryLabel?: ReactNode
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
- * Standalone empty state — a {@link TrayIcon}, a title + optional description, and
+ * Standalone empty state — a tray icon, a title + optional description, and
  * an optional "try again" button, centered. The standard `emptyContent` for
- * {@link import("../AsyncContent").AsyncContent}. Pure/props-only; the block owns
- * its look, text arrives translated from the caller.
- *
- * @see Story: .storybook/stories/blocks/async/EmptyContent/EmptyContent.stories
+ * {@link import("../AsyncContent").AsyncContent}. Pure/props-only, one file (an
+ * atom/composite never fetches or resolves i18n) — text arrives already
+ * translated from the caller.
  */
 export const EmptyContent = ({
     title,
@@ -35,26 +42,38 @@ export const EmptyContent = ({
     icon,
     onRetry,
     retryLabel,
-    className,
+    classNames,
 }: EmptyContentProps) => {
+    const titleLines = [
+        () => <Typography size="sm" weight="medium" align="center" text={title} />,
+        ...(description
+            ? [() => <Typography size="xs" color="muted" align="center" text={description} />]
+            : []),
+    ]
+
     return (
-        <div className={cn("flex w-full flex-col items-center justify-center gap-3 px-6 py-6 text-center", className)}>
-            {icon ?? <TrayIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />}
-            <div data-principles="title-subtitle" className="flex flex-col gap-1">
-                <Typography type="body-sm" weight="medium" align="center">
-                    {title}
-                </Typography>
-                {description ? (
-                    <Typography type="body-xs" color="muted" align="center">
-                        {description}
-                    </Typography>
-                ) : null}
-            </div>
-            {onRetry && retryLabel ? (
-                <Button variant="secondary" size="sm" onPress={onRetry}>
-                    {retryLabel}
-                </Button>
-            ) : null}
-        </div>
+        <StackV
+            gap={4}
+            align="center"
+            justify="center"
+            padding={6}
+            classNames={["w-full", ...(classNames ?? [])]}
+            items={[
+                () => (
+                    <>
+                        {icon ?? (
+                            <TrayIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />
+                        )}
+                    </>
+                ),
+                () => <StackV gap={2} principles={["title-subtitle"]} items={titleLines} />,
+                ...(onRetry && retryLabel
+                    ? [() => <Button variant="secondary" size="sm" onPress={onRetry} label={retryLabel} />]
+                    : []),
+            ]}
+        />
     )
 }
+
+/** Tier metadata for `EmptyContent`, used by the component registry/Storybook lookup. */
+export const meta = { tier: "composite", name: "EmptyContent" } as const

@@ -13,17 +13,16 @@ A standalone, framed single-metric display built on `SectionCard` — a tier-3 p
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `icon` | `React.ReactNode` | — | Optional leading icon rendered above the value. Size to 20–24 px externally. |
-| `value` | `React.ReactNode` | **required** | The primary metric value (e.g. `"1,204"`, `"98%"`). Styled `text-2xl font-medium text-foreground`. |
-| `label` | `React.ReactNode` | **required** | Short description of what the value measures. Styled `text-xs text-muted`. |
-| `hint` | `React.ReactNode` | — | Optional supplementary note (e.g. `"Updated daily"`). Styled `text-xs text-muted` beneath the label. |
-| `className` | `string` | — | Extra classes merged onto the `SectionCard` wrapper. |
+| `value` | `React.ReactNode` | **required** | The primary metric value (e.g. `"1,204"`, `"98%"`). Rendered `Typography size="h4" weight="semibold"`. |
+| `label` | `React.ReactNode` | **required** | Short description of what the value measures. Rendered `Typography size="sm"`, the prominent line right below the value. |
+| `hint` | `React.ReactNode` | — | Optional supplementary note (e.g. `"Updated daily"`). Rendered `Typography size="xs" color="muted"` beneath the label — a quiet footnote, deliberately less prominent than the label. |
+| `classNames` | `Array<AllowedClassName>` | — | Where this card sits inside its parent (flex/grid child behavior). Forwarded to `SectionCard`'s own `classNames`. Appearance is not passable — there is no `className` escape hatch (BLOCK-4). |
 
 ## Usage
 
 ```tsx
 import React from "react"
-import { MetricCard } from "@/components/blocks"
+import { MetricCard } from "@/components/blocks/stats/MetricCard"
 
 export const EnrollmentKpi = () => (
     <MetricCard
@@ -34,32 +33,15 @@ export const EnrollmentKpi = () => (
 )
 ```
 
-With an icon (using `@gravity-ui/icons`):
-
-```tsx
-import React from "react"
-import { Person } from "@gravity-ui/icons"
-import { MetricCard } from "@/components/blocks"
-
-export const ActiveLearnersKpi = () => (
-    <MetricCard
-        icon={<Person width={20} height={20} />}
-        value="342"
-        label="Active Learners"
-        hint="Last 30 days"
-    />
-)
-```
-
 ## Composes
 
-- `SectionCard` from `@/components/reuseable` — supplies the card frame (border, background, radius, padding).
-- `cn` from `@heroui/react` — class name merging.
+- `SectionCard` from `@/components/blocks/cards/SectionCard` — supplies the card frame (border, background, radius, padding).
+- `Typography` from `@/components/atoms/text/Typography` — renders the value/label/hint lines.
+- `StackV` from `@/components/frames/Stack` — the vertical `gap-2` track between the three lines.
 
 ## Notes
 
-- **No frame duplication**: `SectionCard` already provides `Card` + `CardContent`. Do not wrap `MetricCard` in another `Card`.
-- **Icon sizing**: the block does not constrain icon dimensions — size the icon at the call site (20–24 px is typical). The icon is tinted `text-muted`; override via `className` on the icon element if a different tone is needed.
-- **Token rules**: value uses `text-foreground`, label and hint use `text-muted`. Do not use `text-[Npx]` — stick to the scale (`text-xs`, `text-2xl`).
-- **Accessibility**: `value` and `label` are plain `<span>` elements. If the card needs a semantic heading, pass one as `value` or wrap the card in a landmark at the call site.
+- **No frame duplication**: `SectionCard` already provides the card frame. Do not wrap `MetricCard` in another card.
+- **No icon slot**: removed 2026-07-16 — a leading icon read as competing with the label for prominence. `SectionCard`'s own `icon` prop remains available for a HEADER icon if a future case needs one; `MetricCard` does not thread it through today (missing vocabulary — no local wrapper was needed since no caller currently uses one).
+- **Token rules**: value/label/hint route through `Typography`'s `size`/`color` scale — there is no ad-hoc `text-[Npx]` anywhere in this block.
 - **`hint` vs `label`**: `label` describes *what* the metric is; `hint` adds *context* (source, freshness, comparison). Keep both short — a single line each.

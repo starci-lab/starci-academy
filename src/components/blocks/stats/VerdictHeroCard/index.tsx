@@ -1,9 +1,9 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Typography, cn } from "@heroui/react"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Typography, type TypographyColor } from "@/components/atoms/text/Typography"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Semantic verdict tone — drives the left accent border, the big value's color, and the meter fill. */
 export type VerdictHeroBand = "danger" | "warning" | "success"
@@ -29,7 +29,7 @@ export interface VerdictHeroSplit {
 }
 
 /** Props for the {@link VerdictHeroCard} block. */
-export interface VerdictHeroCardProps extends WithClassNames<undefined> {
+export interface VerdictHeroCardProps {
     /** The headline number, rendered large and colored by {@link VerdictHeroCardProps.band}. */
     value: number
     /** Suffix rendered muted right after the value (e.g. "%", "/100"). */
@@ -48,11 +48,34 @@ export interface VerdictHeroCardProps extends WithClassNames<undefined> {
     action?: ReactNode
 }
 
-/** Same tone pairing the `Score` block uses for a band-colored number on a plain (non-tinted) surface. */
+/**
+ * Same tone pairing the `Score` block hand-rolls for a band-colored number on a plain
+ * (non-tinted) surface (`src/components/blocks/stats/Score/component.tsx`).
+ *
+ * MISSING VOCABULARY: no `Typography` atom `size` renders `text-4xl` (its scale stops at
+ * `h1`, which wraps HeroUI's own proprietary heading treatment, not a raw `text-4xl`), so a
+ * hero stat number can't go through the atom at all — this is the SAME hand-rolled span the
+ * `Score` block already carries for the identical reason, kept minimal and local here rather
+ * than reopening a leaf's `className`.
+ */
 const BAND_TEXT: Record<VerdictHeroBand, string> = {
     danger: "text-danger-soft-foreground",
     warning: "text-warning-soft-foreground",
     success: "text-success-soft-foreground",
+}
+
+/**
+ * `VerdictHeroSplit.band` → the closest {@link TypographyColor} the `Typography` atom exposes.
+ *
+ * MISSING VOCABULARY: `success` has an exact soft-foreground match (`"success-soft"`), but
+ * `TypographyColor` has no `danger-soft` / `warning-soft` member (only `success-soft` and
+ * `accent-soft` exist) — those two bands fall back to the atom's full-strength tone instead of
+ * the softer one `BAND_TEXT` uses for the headline value above.
+ */
+const SPLIT_VALUE_COLOR: Record<VerdictHeroBand, TypographyColor> = {
+    danger: "danger",
+    warning: "warning",
+    success: "success-soft",
 }
 
 /**
@@ -66,12 +89,13 @@ const BAND_TEXT: Record<VerdictHeroBand, string> = {
  *
  * No left accent band (2026-07-18 — the teacher: drop the verdict band; the §3i `SectionCard
  * withVerdict` band was dropped, the `band` prop now only colors the value / meter
- * / split values). The `splits` render as ONE surface-in-surface StatPair card
- * (border, bg-surface, full-height divider), and the meter's target mark is the
- * canonical `ProgressMeter` `target` prop — none hand-rolled here.
+ * / split values). The `splits` render as ONE surface-in-surface bordered row (rounded,
+ * overflow-hidden, `SectionCard`'s own `bg-surface` shows through) with a full-height
+ * divider between cells, `StackH`'s own `divider` (not a hand-rolled `border-l`).
  *
  * Pure/props-only — no store, no fetch, no `useTranslations` (all copy
- * arrives via props from a caller that already translated it).
+ * arrives via props from a caller that already translated it). No `className` (BLOCK-4):
+ * nothing calls this with one today, and a per-call restyle belongs one tier down, named.
  *
  * @param props - {@link VerdictHeroCardProps}
  * @see Story: .storybook/stories/blocks/stats/VerdictHeroCard/VerdictHeroCard.stories
@@ -85,24 +109,23 @@ export const VerdictHeroCard = ({
     meter,
     splits,
     action,
-    className,
 }: VerdictHeroCardProps) => {
     const meterMax = meter?.max ?? 100
 
     return (
-        <SectionCard className={className}>
-            <div className="flex items-baseline gap-1">
-                <span className={cn("text-4xl font-bold tabular-nums", BAND_TEXT[band])}>
-                    {value}
-                </span>
-                {unit ? (
-                    <Typography type="body-sm" color="muted">{unit}</Typography>
-                ) : null}
-            </div>
+        <SectionCard>
+            <StackH
+                gap={2}
+                align="baseline"
+                items={[
+                    () => <span className={`text-4xl font-bold tabular-nums ${BAND_TEXT[band]}`}>{value}</span>,
+                    ...(unit ? [() => <Typography size="sm" color="muted" text={unit} />] : []),
+                ]}
+            />
 
-            <Typography type="body-sm" weight="semibold">{verdict}</Typography>
+            <Typography size="sm" weight="semibold" text={verdict} />
             {sub ? (
-                <Typography type="body-xs" color="muted">{sub}</Typography>
+                <Typography size="xs" color="muted" text={sub} />
             ) : null}
 
             {meter ? (
@@ -116,25 +139,37 @@ export const VerdictHeroCard = ({
             ) : null}
 
             {splits && splits.length > 0 ? (
-                // StatPair: ONE surface-in-surface card — the parent SectionCard's bg-surface shows through, a
-                // border delineates it (surface-in-surface = border, not a bg-default fill). The halves are split by
-                // a FULL-HEIGHT divider that touches the top+bottom border: `flex` + stretch (default) makes each
-                // half fill the height, so its `border-l` reaches both borders.
-                <div className="flex overflow-hidden rounded-2xl border border-default">
-                    {splits.map((split, index) => (
-                        // position-keyed: a fixed N-up breakdown of the SAME headline number,
-                        // never reordered/filtered at runtime like a normal list.
-                        <div key={index} className={cn("flex flex-1 flex-col gap-1 p-3", index > 0 && "border-l border-default")}>
-                            <Typography type="body-xs" color="muted">{split.label}</Typography>
-                            <Typography
-                                type="h4"
-                                weight="bold"
-                                className={split.band ? BAND_TEXT[split.band] : undefined}
-                            >
-                                {split.value}
-                            </Typography>
-                        </div>
-                    ))}
+                // Surface-in-surface: a bordered, rounded, clipped row sitting on top of
+                // SectionCard's own bg-surface. `StackH`'s `divider` inserts a real (atom)
+                // vertical rule between cells with `self-stretch`, so it reaches the full
+                // height of the tallest cell — the FRAME/atom equivalent of the old
+                // hand-rolled `border-l` per cell past the first.
+                <div className="overflow-hidden rounded-2xl border border-default">
+                    <StackH
+                        gap={1}
+                        align="stretch"
+                        divider
+                        items={splits.map((split) => () => (
+                            // position-keyed: a fixed N-up breakdown of the SAME headline number,
+                            // never reordered/filtered at runtime like a normal list.
+                            <StackV
+                                gap={2}
+                                padding={4}
+                                classNames={["flex-1"]}
+                                items={[
+                                    () => <Typography size="xs" color="muted" text={split.label} />,
+                                    () => (
+                                        <Typography
+                                            size="h4"
+                                            weight="bold"
+                                            color={split.band ? SPLIT_VALUE_COLOR[split.band] : undefined}
+                                            text={split.value}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ))}
+                    />
                 </div>
             ) : null}
 

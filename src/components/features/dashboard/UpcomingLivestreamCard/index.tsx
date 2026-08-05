@@ -8,40 +8,22 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    VideoCameraIcon,
-} from "@phosphor-icons/react"
-import {
     pathConfig,
 } from "@/resources/path"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryMyUpcomingLivestreamsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyUpcomingLivestreamsSwr"
-import { SectionCard } from "@/components/blocks/cards/SectionCard"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
-import { IconTile } from "@/components/blocks/identity/IconTile"
-
-/** How many upcoming sessions to list (the soonest plus a few more). */
-const MAX_ROWS = 3
-
-/** Props for {@link UpcomingLivestreamCard}. */
-export type UpcomingLivestreamCardProps = WithClassNames<undefined>
+import {
+    _UpcomingLivestreamCard,
+    MAX_ROWS,
+    type UpcomingLivestreamCardSession,
+} from "./component"
 
 /**
  * Right-rail card surfacing the viewer's next live sessions across enrolled
- * courses (soonest first), so a scheduled stream is visible from the home surface
- * instead of buried in a course page. The soonest session leads with a relative
- * countdown ("in Nd Nh"); a short list of the next few follows. Self-fetches its
- * own leaf query; shows a skeleton while loading, then hides entirely (no
- * emptyContent) when there is nothing upcoming — matches the sibling right-rail
- * widgets (`WhoToFollow`) that self-hide rather than render an empty-state.
- * @param props - optional className for the root element.
+ * courses (soonest first) — the CONNECTED half. Self-fetches its own leaf query,
+ * resolves the relative countdown + locale date for each row, and hands the
+ * result to the presentational `_UpcomingLivestreamCard`. See `tiers/split.md`.
  */
-export const UpcomingLivestreamCard = ({
-    className,
-}: UpcomingLivestreamCardProps) => {
+export const UpcomingLivestreamCard = () => {
     const t = useTranslations()
     const locale = useLocale()
     const { data, isLoading, error, mutate } = useQueryMyUpcomingLivestreamsSwr()
@@ -90,54 +72,30 @@ export const UpcomingLivestreamCard = ({
         })
     }
 
+    /** Sessions resolved into the presentational row shape (relative + absolute labels, course link). */
+    const sessionRows: Array<UpcomingLivestreamCardSession> = sessions.map((session) => ({
+        key: `${session.courseGlobalId}-${session.nextStartAt}`,
+        title: session.sessionTitle ?? session.courseTitle,
+        subtitle: session.sessionTitle ? session.courseTitle : undefined,
+        relativeLabel: relativeLabel(session.nextStartAt),
+        dateLabel: new Date(session.nextStartAt).toLocaleDateString(locale),
+        href: pathConfig().locale(locale).course(session.courseDisplayId).build(),
+    }))
+
     return (
-        <AsyncContent
-            isLoading={data === undefined || isLoading}
-            skeleton={(
-                <SectionCard
-                    icon={<VideoCameraIcon className="size-5 text-accent-soft-foreground" />}
-                    title={t("dashboard.upcomingLive.title")}
-                    className={className}
-                >
-                    <SurfaceListCard bordered>
-                        {[0, 1, 2].map((row) => (
-                            <Skeleton.ListRow key={row} withSubtitle className="px-4" />
-                        ))}
-                    </SurfaceListCard>
-                </SectionCard>
-            )}
+        <_UpcomingLivestreamCard
+            // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
+            isSkeleton={data === undefined && isLoading}
             isEmpty={sessions.length === 0}
+            // only a settled fetch error (nothing in hand) reaches the block
             error={data === undefined ? error : undefined}
-            errorContent={{
-                title: t("dashboard.loadError"),
-                onRetry: () => { void mutate() },
-                retryLabel: t("dashboard.retry"),
+            onRetry={() => { void mutate() }}
+            sessions={sessionRows}
+            labels={{
+                title: t("dashboard.upcomingLive.title"),
+                errorTitle: t("dashboard.loadError"),
+                retry: t("dashboard.retry"),
             }}
-        >
-            <SectionCard
-                icon={<VideoCameraIcon className="size-5 text-accent-soft-foreground" />}
-                title={t("dashboard.upcomingLive.title")}
-                className={className}
-            >
-                <SurfaceListCard bordered>
-                    {sessions.map((session) => (
-                        <SurfaceListCardRow
-                            key={`${session.courseGlobalId}-${session.nextStartAt}`}
-                            leading={<IconTile icon={<VideoCameraIcon />} tone="accent" size="sm" />}
-                            title={session.sessionTitle ?? session.courseTitle}
-                            subtitle={session.sessionTitle ? session.courseTitle : undefined}
-                            meta={(
-                                <span className="text-xs font-medium text-accent-soft-foreground">
-                                    {relativeLabel(session.nextStartAt)}
-                                    {" · "}
-                                    {new Date(session.nextStartAt).toLocaleDateString(locale)}
-                                </span>
-                            )}
-                            href={pathConfig().locale(locale).course(session.courseDisplayId).build()}
-                        />
-                    ))}
-                </SurfaceListCard>
-            </SectionCard>
-        </AsyncContent>
+        />
     )
 }

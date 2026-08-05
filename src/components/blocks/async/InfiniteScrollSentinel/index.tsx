@@ -1,17 +1,23 @@
 "use client"
 
+/** @noSkeleton renders an invisible scroll marker, not a value — there is nothing behind it to wait for. */
+
 import React from "react"
 import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /** Props for {@link InfiniteScrollSentinel}. */
-export interface InfiniteScrollSentinelProps extends WithClassNames<undefined> {
+export interface InfiniteScrollSentinelProps {
     /** Fired once each time the sentinel scrolls into view (and `disabled` is false). */
     onReach: () => void
     /** When true the observer is detached (e.g. no more pages / a load in flight). */
     disabled?: boolean
     /** Scroll root to observe within (defaults to the viewport). */
     root?: Element | null
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -32,12 +38,13 @@ export interface InfiniteScrollSentinelProps extends WithClassNames<undefined> {
  * sentinel, never a bare "loading" line.
  *
  * @see Story: .storybook/stories/blocks/async/InfiniteScrollSentinel/InfiniteScrollSentinel.stories
+ * @param props - {@link InfiniteScrollSentinelProps}
  */
 export const InfiniteScrollSentinel = ({
     onReach,
     disabled = false,
     root = null,
-    className,
+    classNames,
 }: InfiniteScrollSentinelProps) => {
     const ref = React.useRef<HTMLDivElement>(null)
     // keep the latest callback without re-subscribing the observer each render
@@ -61,5 +68,16 @@ export const InfiniteScrollSentinel = ({
         return () => observer.disconnect()
     }, [disabled, root])
 
-    return <div ref={ref} aria-hidden className={cn("h-px w-full", className)} />
+    return (
+        <div
+            ref={ref}
+            aria-hidden
+            data-tier="atom"
+            data-component="InfiniteScrollSentinel"
+            className={cn("h-px w-full", classNames)}
+        />
+    )
 }
+
+/** Tier metadata for `InfiniteScrollSentinel`, used by the component registry/Storybook lookup. */
+export const meta = { tier: "atom", name: "InfiniteScrollSentinel" } as const

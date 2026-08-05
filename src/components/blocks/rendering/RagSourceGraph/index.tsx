@@ -12,9 +12,10 @@ import {
     ReactFlow,
     ReactFlowProvider,
 } from "@xyflow/react"
-import { cn, Typography } from "@heroui/react"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** React Flow node-type id for {@link RagSourceGraph}'s question node. */
 const RAG_SOURCE_GRAPH_QUESTION_NODE_TYPE = "question" as const
@@ -50,11 +51,16 @@ const RagSourceGraphQuestionNode = ({ data }: NodeProps) => {
         <>
             {/* Connection point — required for a CUSTOM node or edges never draw. */}
             <Handle type="target" position={Position.Left} className="!size-2 !border-none !bg-muted" />
-            <div className="max-w-[220px] rounded-large bg-accent px-4 py-3 shadow-sm">
-                <Typography type="body-sm" weight="medium" className="line-clamp-2 text-accent-foreground">
-                    {question}
-                </Typography>
-            </div>
+            {/* `Box`: the frame tier's escape hatch for a foreign-library mount point (here, an
+                `@xyflow/react` custom node) — a plain flex/atom composition can't carry the
+                node's own bg/rounded/shadow skin. */}
+            <Box className="max-w-[220px] rounded-large bg-accent px-4 py-3 shadow-sm">
+                {/* missingVocabulary: `Typography`'s color axis pairs `accent-soft` with a
+                    SOFT-tinted surface but has no foreground for text on a SOLID `bg-accent`
+                    surface, so the atom can't reproduce `text-accent-foreground` here. Kept as
+                    a plain element rather than losing contrast to the atom's default color. */}
+                <p className="line-clamp-2 text-sm font-medium text-accent-foreground">{question}</p>
+            </Box>
             <Handle type="source" position={Position.Right} className="!size-2 !border-none !bg-muted" />
         </>
     )
@@ -69,24 +75,37 @@ const RagSourceGraphQuestionNode = ({ data }: NodeProps) => {
  */
 const RagSourceGraphSourceNode = ({ data }: NodeProps) => {
     const { filePath, snippetPreview, score } = data as RagSourceGraphSourceNodeData
+
+    // `StatusChip` (block tier) exposes no `classNames`/positioning escape hatch at all — not
+    // even the closed `AllowedClassName` set atoms/frames get — so it can no longer be told
+    // `shrink-0`. Worked around from the OTHER side of the row instead: `filePath` below takes
+    // `min-w-0`/`flex-1`, which lets IT shrink/truncate first and leaves the chip its natural size.
+    const filePathRowItems = [
+        () => (
+            // missingVocabulary: `Typography` has no plain monospace body variant — its
+            // `size="code"` wraps HeroUI's `.typography--code`, which pulls in a padded/`bg-default`
+            // pill, not a bare `font-mono` run — so the exact `font-mono text-accent-soft-foreground`
+            // pairing this file path needs can't be expressed through the atom.
+            <span className="min-w-0 flex-1 truncate font-mono text-xs font-medium text-accent-soft-foreground">
+                {filePath}
+            </span>
+        ),
+        ...(score != null ? [() => <StatusChip tone="accent">{score.toFixed(2)}</StatusChip>] : []),
+    ]
+
     return (
         <>
             <Handle type="target" position={Position.Left} className="!size-2 !border-none !bg-muted" />
-            <div className="flex w-[220px] flex-col gap-1 rounded-large border border-default bg-surface px-3 py-2 shadow-sm">
-                <div className="flex items-center justify-between gap-2">
-                    <Typography type="body-xs" weight="medium" truncate className="font-mono text-accent-soft-foreground">
-                        {filePath}
-                    </Typography>
-                    {score != null ? (
-                        <StatusChip tone="accent" className="shrink-0">
-                            {score.toFixed(2)}
-                        </StatusChip>
-                    ) : null}
-                </div>
-                <Typography type="body-xs" color="muted" truncate>
-                    {snippetPreview}
-                </Typography>
-            </div>
+            {/* `Box`: same foreign-library-mount rationale as the question node above. */}
+            <Box className="w-[220px] rounded-large border border-default bg-surface px-3 py-2 shadow-sm">
+                <StackV
+                    gap={2}
+                    items={[
+                        () => <StackH gap={3} justify="between" items={filePathRowItems} />,
+                        () => <Typography size="xs" color="muted" truncate text={snippetPreview} />,
+                    ]}
+                />
+            </Box>
             <Handle type="source" position={Position.Right} className="!size-2 !border-none !bg-muted" />
         </>
     )
@@ -113,8 +132,12 @@ export interface RagSourceGraphSource {
     score?: number
 }
 
-/** Props for the {@link RagSourceGraph} block. */
-export interface RagSourceGraphProps extends WithClassNames<undefined> {
+/**
+ * Props for the {@link RagSourceGraph} block. Does NOT take `className`
+ * (BLOCK-4) — its only caller (`PlaygroundRagWorkspace`) never passed one, so
+ * the escape hatch closes outright rather than being renamed to `classNames`.
+ */
+export interface RagSourceGraphProps {
     /** The question the sources grounded the answer for — shown on the left node. */
     question: string
     /** Retrieved source chunks, fanned out on the right, one node each. */
@@ -137,7 +160,7 @@ export interface RagSourceGraphProps extends WithClassNames<undefined> {
  *
  * @see Story: .storybook/stories/blocks/rendering/RagSourceGraph/RagSourceGraph.stories
  */
-export const RagSourceGraph = ({ question, sources, className }: RagSourceGraphProps) => {
+export const RagSourceGraph = ({ question, sources }: RagSourceGraphProps) => {
     const nodeTypes = useMemo(() => NODE_TYPES, [])
 
     const { nodes, edges } = useMemo<{ nodes: Array<Node>; edges: Array<Edge> }>(() => {
@@ -172,7 +195,14 @@ export const RagSourceGraph = ({ question, sources, className }: RagSourceGraphP
     }, [question, sources])
 
     return (
-        <div className={cn("h-[300px] w-full overflow-hidden rounded-large border border-default", className)}>
+        // Plain `div` rather than `Box`: this root must self-identify as the BLOCK
+        // (`data-tier`/`data-component`), and `Box` hard-codes its own `"frame"`/`"Box"` pair —
+        // the same reason the sibling `FlowDiagram` composite's root stays a hand-written `div`.
+        <div
+            data-tier="block"
+            data-component="RagSourceGraph"
+            className="h-[300px] w-full overflow-hidden rounded-large border border-default"
+        >
             <ReactFlowProvider>
                 <ReactFlow
                     className="text-foreground"

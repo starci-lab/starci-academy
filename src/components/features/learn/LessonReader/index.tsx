@@ -8,11 +8,6 @@ import React, {
     type Key,
 } from "react"
 import {
-    Card,
-    CardContent,
-    cn,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
@@ -21,9 +16,6 @@ import {
     useRouter,
     useSearchParams,
 } from "next/navigation"
-import {
-    AdBanner,
-} from "@/components/features/dashboard/AdBanner"
 import type {
     ContentTabItem,
 } from "./types"
@@ -40,41 +32,13 @@ import {
     AiLab,
 } from "./AiLab"
 import {
-    E2eResultButton,
-} from "./E2eResultButton"
-import {
-    ContentTabBar,
-} from "./ContentTabBar"
-import {
-    ContentHeader,
-} from "./ContentHeader"
-import {
-    LessonPager,
-} from "./LessonPager"
-import {
-    ContentDiscussion,
-} from "./ContentBody/ContentBodyV2/Discussion"
-import {
-    ContentReactionBar,
-} from "./ContentBody/ContentBodyV2/Discussion/ContentReactionBar"
-import {
-    ContentBodySkeleton,
-} from "./ContentBodySkeleton"
-import {
-    ContentHeaderSkeleton,
-} from "./ContentHeaderSkeleton"
-import {
-    PremiumPaywall,
-} from "./PremiumPaywall"
-import { SelectionHintCallout } from "../ContentAiSelectionAsk/SelectionHintCallout"
-import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
+    _LessonReader,
+} from "./component"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
-import { type WithClassNames } from "@/modules/types/base/class-name"
 import { DEFAULT_PROGRAMMING_LANGUAGES, isProgrammingLangAvailable, resolveActiveProgrammingLang } from "@/modules/types/utils/programming-language"
 import { listContentBodyLangs } from "@/modules/types/entities/content-body"
 import { programmingLanguageIconMap } from "@/components/blocks/navigation/ProgrammingLanguageTabs/map"
 import type { TabsCardGroup } from "@/components/blocks/navigation/TabsCard"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { useQueryContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentSwr"
 import { useQueryContentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentStatusSwr"
 import { usePremiumGateOverlayState, useAdModalOverlayState } from "@/hooks/zustand/overlay/hooks"
@@ -82,20 +46,20 @@ import { useQueryActiveAdvertisementSwr } from "@/hooks/swr/api/graphql/queries/
 import { useQueryAiLabPlaygroundSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiLabPlaygroundSwr"
 import { AdvertisementPlacement } from "@/modules/api/graphql/queries/types/active-advertisement"
 import { ContentTab, setContentTab } from "@/redux/slices/tabs"
-import { UpNextCard } from "@/components/blocks/learn/UpNextCard"
 import { setContentSelectedProgrammingLang } from "@/redux/slices/content"
 
-/** Props for {@link LessonReader}. */
-export type LessonReaderProps = WithClassNames<undefined>
-
 /**
- * Learn content page layout for `/modules/[moduleId]/contents/[contentId]`.
+ * Learn content page layout for `/modules/[moduleId]/contents/[contentId]` — the
+ * CONNECTED half: owns data (content + status SWR, redux snapshot, the AI-lab
+ * playground, the interstitial/inline ad queries) and tab navigation, resolves
+ * every label via `t()`, then hands the resolved shape to the presentational
+ * {@link _LessonReader}. See `tiers/split.md`.
  *
- * Owns data (content + status SWR, redux snapshot) and tab navigation, then
- * delegates the header, tab bar and active body to presentational children.
- * @param {LessonReaderProps} props Optional wrapper styling props.
+ * The only caller (`app/.../[contentId]/page.tsx`) renders `<LessonReader />`
+ * with no props — this root takes none of its own (BLOCK-4: no `className`
+ * escape hatch).
  */
-export const LessonReader = ({ className }: LessonReaderProps) => {
+export const LessonReader = () => {
     const t = useTranslations()
     const params = useParams()
     const routeContentId = params.contentId as string | undefined
@@ -272,7 +236,8 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
         [selectedTabKey, langs, activeLang, onSelectLang, t],
     )
 
-    const isLoading = queryContentSwr.isLoading && !content
+    // first load, nothing in hand → shimmer (loading-and-skeleton.md)
+    const isSkeleton = queryContentSwr.isLoading && !content
     /**
      * Switch tabs, but intercept locked premium tabs: open the register modal
      * and keep the current tab selected instead of revealing the gated body.
@@ -292,142 +257,48 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
         [tabItems, openPremiumGate, dispatch, searchParams, router, pathname],
     )
 
+    // mobile/tablet-only "practice this lesson" nudge — only on the Content tab,
+    // only once the lesson actually has challenges; no "already read" claim.
+    const challengesUpNext = selectedTabKey === ContentTab.Content && (content?.challenges?.length ?? 0) > 0
+        ? {
+            eyebrow: t("content.upNext.eyebrow"),
+            title: t("content.upNext.challengesTitle", {
+                count: content?.challenges?.length ?? 0,
+            }),
+            description: t("content.upNext.challengesDesc"),
+            ctaLabel: t("content.upNext.challengesCta"),
+            onPress: () => onTabChange(ContentTab.Challenges),
+        }
+        : undefined
+
+    // quiet, self-hiding "may also want to read" — course-wide RAG search
+    // auto-queried on THIS lesson's own title (no typing).
+    const relatedContent = course?.id && course.displayId && content?.title
+        ? {
+            courseId: course.id,
+            courseDisplayId: course.displayId,
+            query: content.title,
+            excludeId: content.id,
+            label: t("content.relatedContent.label"),
+        }
+        : undefined
+
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
-            {/* header (tier 2) capped to the reading width; skeleton vs real via AsyncContent */}
-            <div className="mx-auto w-full max-w-3xl">
-                <AsyncContent
-                    isLoading={isLoading}
-                    skeleton={<ContentHeaderSkeleton />}
-                >
-                    <ContentHeader />
-                </AsyncContent>
-            </div>
-            {/* REAL tab bar — static chrome, shows immediately (never skeleton-ised) */}
-            <ContentTabBar
-                tabItems={tabItems}
-                selectedKey={selectedTabKey}
-                ariaLabel={t("module.tabListAria")}
-                onSelectionChange={onTabChange}
-                rightTabs={languageTabs}
-            />
-            {/* body (tier 3) — skeleton mirrors the centered reading card while content loads */}
-            <AsyncContent
-                isLoading={isLoading}
-                skeleton={(
-                    <div className="mx-auto w-full max-w-3xl">
-                        <Card>
-                            <CardContent>
-                                <ContentBodySkeleton variant="v2" />
-                            </CardContent>
-                        </Card>
-                    </div>
-                )}
-            >
-                {/* Sandbox / AI Lab span full width (no reading card); everything else
-                    reads inside a centered "paper" card on the page canvas. */}
-                {isFullWidthTab ? (
-                    <div className="relative w-full">
-                        {/* id scopes the "on this page" rail's heading scan (#lesson-article [data-toc]);
-                            data-ai-selectable makes the body a valid "ask AI about this passage" region */}
-                        <div id="lesson-article" data-ai-selectable>
-                            {bodyComponent}
-                        </div>
-                    </div>
-                ) : isCardlessReadingTab ? (
-                    // capped reading width but flat — the Challenges body is already a list
-                    // of cards, so it sits directly on the canvas (no paper card-in-card)
-                    <div className="mx-auto w-full max-w-3xl">
-                        <div id="lesson-article" data-ai-selectable>
-                            {bodyComponent}
-                        </div>
-                    </div>
-                ) : (
-                    <div className="mx-auto w-full max-w-3xl">
-                        <Card>
-                            <CardContent>
-                                {/* one-time tip: highlight a passage to ask AI (selection feature
-                                    is otherwise only discoverable AFTER selecting) */}
-                                {!isLocked ? <SelectionHintCallout /> : null}
-                                <div className="relative">
-                                    <div id="lesson-article" data-ai-selectable className={cn(isLocked && "select-none")}>
-                                        {bodyComponent}
-                                    </div>
-                                    {/* Medium-style teaser: fade the tail of the body into the
-                                        card surface (pure opacity fade) behind the paywall. */}
-                                    {isLocked ? (
-                                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-surface/70 to-surface" />
-                                    ) : null}
-                                </div>
-                                {/* paywall lives INSIDE the body card, under the faded teaser
-                                    (flat — not a 2nd card). */}
-                                {isLocked ? <PremiumPaywall /> : null}
-                            </CardContent>
-                        </Card>
-                    </div>
-                )}
-                {/* engagement + navigation — rendered OUTSIDE the reading card as their own blocks,
-                    each separated by gap-6: reaction (belongs to the lesson) + comments (own surface),
-                    then the prev/next pager, then the quiet E2E-results link. Hidden on locked /
-                    full-width tabs. */}
-                {!isLocked && !isFullWidthTab ? (
-                    <div className="flex flex-col gap-6 pb-6">
-                        <Card className="mx-auto w-full max-w-3xl">
-                            <CardContent>
-                                <ContentReactionBar />
-                            </CardContent>
-                        </Card>
-                        {/* completion handoff: after reading, the natural next rung is
-                            this lesson's own challenges. MOBILE-ONLY (`@app-lg:hidden`): on
-                            desktop the right rail's "Practice this lesson" already surfaces
-                            these challenges with a CTA, so a 2nd accent CTA here would be
-                            a duplicate / accent-flood. Fired only on the Content tab when
-                            the lesson has challenges. No `showCheck`/"already read" claim —
-                            we don't verify read-completion here. */}
-                        {selectedTabKey === ContentTab.Content
-                            && (content?.challenges?.length ?? 0) > 0 ? (
-                                <UpNextCard
-                                    className="mx-auto w-full max-w-3xl @app-lg:hidden"
-                                    eyebrow={t("content.upNext.eyebrow")}
-                                    title={t("content.upNext.challengesTitle", {
-                                        count: content?.challenges?.length ?? 0,
-                                    })}
-                                    description={t("content.upNext.challengesDesc")}
-                                    ctaLabel={t("content.upNext.challengesCta")}
-                                    onPress={() => onTabChange(ContentTab.Challenges)}
-                                />
-                            ) : null}
-                        {/* quiet, self-hiding "may also want to read" — course-wide RAG search
-                            auto-queried on THIS lesson's own title (no typing). Additive to the
-                            chat's on-demand search (opt-in, typed), never a competing CTA. */}
-                        {course?.id && course.displayId && content?.title ? (
-                            <RelatedContentList
-                                className="mx-auto w-full max-w-3xl"
-                                courseId={course.id}
-                                courseDisplayId={course.displayId}
-                                query={content.title}
-                                excludeId={content.id}
-                                label={t("content.relatedContent.label")}
-                            />
-                        ) : null}
-                        <ContentDiscussion className="mx-auto w-full max-w-3xl" />
-                        <LessonPager className="mx-auto w-full max-w-3xl" />
-                        {hasE2e ? (
-                            <div className="mx-auto w-full max-w-3xl">
-                                <E2eResultButton />
-                            </div>
-                        ) : null}
-                    </div>
-                ) : null}
-                {/* inline house/sponsor banner at the foot of the lesson; null
-                    server-side for members + enrolled viewers, so render only
-                    when present and not on full-width (sandbox / AI lab) tabs */}
-                {inlineAd && !isFullWidthTab ? (
-                    <div className="mx-auto w-full max-w-3xl pb-6">
-                        <AdBanner ad={inlineAd} />
-                    </div>
-                ) : null}
-            </AsyncContent>
-        </div>
+        <_LessonReader
+            isSkeleton={isSkeleton}
+            tabItems={tabItems}
+            selectedTabKey={selectedTabKey}
+            tabListAriaLabel={t("module.tabListAria")}
+            onTabChange={onTabChange}
+            rightTabs={languageTabs}
+            isFullWidthTab={isFullWidthTab}
+            isCardlessReadingTab={isCardlessReadingTab}
+            bodyComponent={bodyComponent}
+            isLocked={isLocked}
+            challengesUpNext={challengesUpNext}
+            relatedContent={relatedContent}
+            hasE2e={hasE2e}
+            inlineAd={inlineAd}
+        />
     )
 }

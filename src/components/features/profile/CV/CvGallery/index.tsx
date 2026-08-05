@@ -2,139 +2,32 @@
 
 import React, { useState } from "react"
 import type { ReactNode } from "react"
-import {
-    Button,
-    Switch,
-    Typography,
-    cn,
-} from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
-import {
-    PlusIcon,
-    TrashIcon,
-} from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { MediaCard } from "@/components/blocks/cards/MediaCard"
-import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { pathConfig } from "@/resources/path"
 import { useQueryMyCvBlocksSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCvBlocksSwr"
 import { useMutateCreateCvBlocksSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCreateCvBlocksSwr"
 import { useMutateDeleteCvBlocksSwr } from "@/hooks/swr/api/graphql/mutations/useMutateDeleteCvBlocksSwr"
 import { useMutateSetCvBlocksPublicSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetCvBlocksPublicSwr"
-import {
-    DEFAULT_CV_STYLE,
-    type CvDocument,
-} from "../types"
-import { CvHtmlDocument } from "../CvBlocksWorkspace/CvHtmlDocument"
+import { DEFAULT_CV_STYLE } from "../types"
+import { _CvGallery, type CvGalleryDocument } from "./component"
 
 /** Props for {@link CvGallery}. */
-export interface CvGalleryProps extends WithClassNames<undefined> {
+export interface CvGalleryProps {
     /** Breadcrumb row rendered above the title (standalone page context). */
     breadcrumb?: ReactNode
 }
 
-/** One CV card — a scaled live thumbnail that opens the editor, plus delete. */
-const CvGalleryCard = ({
-    doc,
-    label,
-    onOpen,
-    onDelete,
-    onTogglePublic,
-    isTogglingPublic,
-}: {
-    doc: CvDocument
-    label: string
-    onOpen: () => void
-    onDelete: () => void
-    onTogglePublic: (isPublic: boolean) => void
-    isTogglingPublic: boolean
-}) => {
-    const t = useTranslations()
-    return (
-        <MediaCard
-            className="group"
-            cover={(
-                <button
-                    type="button"
-                    onClick={onOpen}
-                    aria-label={t("cv.builder.editCta", { name: label })}
-                    className="relative block h-52 w-full cursor-pointer overflow-hidden bg-white outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
-                >
-                    {/* Scaled live render of the CV as a thumbnail. */}
-                    <div
-                        aria-hidden
-                        className="pointer-events-none absolute inset-0"
-                        style={{ transform: "scale(0.42)", transformOrigin: "top left", width: "238%" }}
-                    >
-                        <CvHtmlDocument doc={doc} />
-                    </div>
-                    <span className="absolute inset-0 flex items-end justify-center bg-foreground/0 pb-3 opacity-0 transition-opacity group-hover:bg-foreground/5 group-hover:opacity-100">
-                        <span className="rounded-full bg-accent px-4 py-2 text-sm text-accent-foreground">
-                            {t("cv.builder.openEditor")}
-                        </span>
-                    </span>
-                </button>
-            )}
-            title={<span className="block truncate">{label}</span>}
-            footer={(
-                <div className="flex flex-col gap-2">
-                    <div className="flex items-center justify-between gap-2">
-                        {/* "Public" toggle — flags this as the ONE public CV
-                            (single-public-per-user, BE-enforced). Label is a
-                            sibling (not inside Switch.Content) to dodge the
-                            react-aria slot requirement. */}
-                        <div className="flex items-center gap-2">
-                            <Switch
-                                isSelected={doc.isPublic}
-                                isDisabled={isTogglingPublic}
-                                onChange={(value) => onTogglePublic(value)}
-                                aria-label={t("publicProfile.cv.publicToggle")}
-                            >
-                                <Switch.Content>
-                                    <Switch.Control>
-                                        <Switch.Thumb />
-                                    </Switch.Control>
-                                </Switch.Content>
-                            </Switch>
-                            <Typography type="body-sm" color="muted">
-                                {t("publicProfile.cv.publicToggle")}
-                            </Typography>
-                        </div>
-                        <Button
-                            isIconOnly
-                            size="sm"
-                            variant="ghost"
-                            aria-label={t("cv.builder.deleteCta")}
-                            onPress={onDelete}
-                        >
-                            <TrashIcon aria-hidden className="size-4 text-muted" />
-                        </Button>
-                    </div>
-                    {doc.isPublic ? (
-                        <Typography type="body-xs" color="muted">
-                            {t("publicProfile.cv.publicHint")}
-                        </Typography>
-                    ) : null}
-                </div>
-            )}
-        />
-    )
-}
-
 /**
- * The CV GALLERY — the profile `?tab=cv` surface (and the standalone
- * `/profile/cv` page). Renders the user's CV documents as live thumbnails; a
- * click opens the dedicated editor at `/profile/cv/[id]`. Creating a CV
- * immediately opens its editor. Editing lives entirely in {@link CvEditor} on
- * its own route, so this surface stays a light gallery (no cramped editor
- * inside the profile chrome).
+ * The CV GALLERY — the CONNECTED half: it fetches the user's CV documents, drives the
+ * create/delete/public-toggle mutations, resolves every label, and hands them to the
+ * presentational {@link _CvGallery}. See `tiers/split.md`. Creating a CV immediately
+ * opens its editor; editing lives entirely in the dedicated editor route, so this stays
+ * a light gallery.
  *
  * @param props - {@link CvGalleryProps}
  */
-export const CvGallery = ({ className, breadcrumb }: CvGalleryProps) => {
+export const CvGallery = ({ breadcrumb }: CvGalleryProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -187,84 +80,60 @@ export const CvGallery = ({ className, breadcrumb }: CvGalleryProps) => {
         }
     }
 
-    const isLoading = documentsSwr.isLoading && !documentsSwr.data
-    const isEmpty = !documentsSwr.isLoading && documents.length === 0
+    // Resolved per-card entities — labels, the interpolated cover aria-label, and
+    // handlers already bound to this document's id (BLOCK-9: an entity, not loose fields).
+    // Recomputed fresh every render (cheap, N ~ a handful of CVs) — same as the
+    // pre-split file, which built this same row shape inline in JSX.
+    const items: Array<CvGalleryDocument> = documents.map((doc, index) => {
+        const label = doc.label || t("cv.builder.untitled", { number: index + 1 })
+        return {
+            id: doc.id,
+            label,
+            doc,
+            isPublic: doc.isPublic,
+            isTogglingPublic: pendingPublicId === doc.id,
+            editAriaLabel: t("cv.builder.editCta", { name: label }),
+            onOpen: () => openEditor(doc.id),
+            onDelete: () => {
+                if (pendingDeleteId === null) {
+                    void onDelete(doc.id)
+                }
+            },
+            onTogglePublic: (isPublic: boolean) => {
+                if (pendingPublicId === null) {
+                    void onTogglePublic(doc.id, isPublic)
+                }
+            },
+        }
+    })
 
     return (
-        <div className={cn("flex flex-col gap-10", className)}>
-            {breadcrumb ? (
-                <PageHeader
-                    breadcrumb={breadcrumb}
-                    title={t("cv.builder.title")}
-                    description={t("cv.builder.galleryDescription")}
-                />
-            ) : null}
-
-            <AsyncContent
-                isLoading={isLoading}
-                skeleton={(
-                    <div className="grid grid-cols-1 gap-6 @app-sm:grid-cols-2 @app-lg:grid-cols-3">
-                        {[0, 1, 2].map((key) => (
-                            <div key={key} className="h-[19rem] rounded-3xl border border-default bg-surface" />
-                        ))}
-                    </div>
-                )}
-                isEmpty={isEmpty}
-                emptyContent={{
-                    title: t("cv.builder.emptyTitle"),
-                    description: (
-                        <>
-                            {t("cv.builder.emptyHint")}
-                            {" "}
-                            <Link
-                                href={coursesHref}
-                                className="text-accent-soft-foreground underline-offset-4 decoration-[var(--separator-tertiary)] hover:underline"
-                            >
-                                {t("cv.builder.emptyCoursesLinkCta")}
-                            </Link>
-                        </>
-                    ),
-                    onRetry: onCreate,
-                    retryLabel: t("cv.builder.createFirst"),
-                }}
-                error={documentsSwr.error}
-                errorContent={{
-                    title: t("cv.builder.errorTitle"),
-                    onRetry: () => documentsSwr.mutate(),
-                    retryLabel: t("cv.builder.retry"),
-                }}
-            >
-                <div className="grid grid-cols-1 gap-6 @app-sm:grid-cols-2 @app-lg:grid-cols-3">
-                    {documents.map((doc, index) => (
-                        <CvGalleryCard
-                            key={doc.id}
-                            doc={doc}
-                            label={doc.label || t("cv.builder.untitled", { number: index + 1 })}
-                            onOpen={() => openEditor(doc.id)}
-                            onDelete={() => {
-                                if (pendingDeleteId === null) {
-                                    void onDelete(doc.id)
-                                }
-                            }}
-                            onTogglePublic={(isPublic) => {
-                                if (pendingPublicId === null) {
-                                    void onTogglePublic(doc.id, isPublic)
-                                }
-                            }}
-                            isTogglingPublic={pendingPublicId === doc.id}
-                        />
-                    ))}
-                    <button
-                        type="button"
-                        onClick={onCreate}
-                        disabled={isCreating}
-                        className="flex h-[19rem] cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-default text-accent-soft-foreground outline-none transition-colors hover:bg-default focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-60"
-                    >
-                        <PlusIcon aria-hidden className="size-8" />
-                        <span className="text-sm font-medium">{t("cv.builder.createCta")}</span>
-                    </button>
-                </div>
-            </AsyncContent>
-        </div>
+        <_CvGallery
+            breadcrumb={breadcrumb}
+            // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
+            isSkeleton={documentsSwr.isLoading && !documentsSwr.data}
+            isEmpty={!documentsSwr.isLoading && documents.length === 0}
+            error={documentsSwr.error}
+            onRetry={() => { void documentsSwr.mutate() }}
+            documents={items}
+            onCreate={() => { void onCreate() }}
+            isCreating={isCreating}
+            coursesHref={coursesHref}
+            labels={{
+                pageTitle: t("cv.builder.title"),
+                pageDescription: t("cv.builder.galleryDescription"),
+                openEditor: t("cv.builder.openEditor"),
+                deleteCta: t("cv.builder.deleteCta"),
+                publicToggle: t("publicProfile.cv.publicToggle"),
+                publicHint: t("publicProfile.cv.publicHint"),
+                createCta: t("cv.builder.createCta"),
+                emptyTitle: t("cv.builder.emptyTitle"),
+                emptyHint: t("cv.builder.emptyHint"),
+                emptyCoursesLinkCta: t("cv.builder.emptyCoursesLinkCta"),
+                createFirst: t("cv.builder.createFirst"),
+                errorTitle: t("cv.builder.errorTitle"),
+                retry: t("cv.builder.retry"),
+            }}
+        />
     )
 }

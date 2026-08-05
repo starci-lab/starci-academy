@@ -29,7 +29,7 @@ import { useQueryWeeklyChallengeSwr } from "@/hooks/swr/api/graphql/queries/useQ
 import { useMutateClaimWeeklyChallengeRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateClaimWeeklyChallengeRewardSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import {
     SurfaceListCard,
@@ -139,7 +139,7 @@ export const WeeklyChallengeCard = ({
                 contentClassName="flex flex-col gap-3"
             >
                 {!data ? (
-                    <EmptyContent
+                    <AsyncContentEmpty
                         title={t("weeklyChallenge.emptyTitle")}
                         description={t("weeklyChallenge.emptyDescription")}
                     />

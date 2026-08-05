@@ -1,67 +1,78 @@
-import React from "react"
-import type { ReactNode } from "react"
-import { Button, Typography, cn } from "@heroui/react"
-import { WarningOctagonIcon } from "@phosphor-icons/react"
+import { WarningOctagonIcon, type Icon as PhosphorIcon } from "@phosphor-icons/react"
 
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Button } from "@/components/atoms/buttons/Button"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import { StackV } from "@/components/frames/Stack"
 
 /**
- * Props for the {@link ErrorContent} block.
+ * Props for the {@link ErrorContent} composite.
  */
-export interface ErrorContentProps extends WithClassNames<undefined> {
-    /** Primary error line. */
-    title: ReactNode
-    /** Optional supporting line below the title (cause / what to do). */
-    description?: ReactNode
-    /** Override the default warning-octagon icon. */
-    icon?: ReactNode
-    /** Retry handler — renders a button when paired with a label. */
+export interface ErrorContentProps {
+    /** Primary error line, already translated. */
+    title: string
+    /** Optional supporting line below the title (cause / what to do), already translated. */
+    description?: string
+    /** Override the default warning-octagon glyph — a COMPONENT reference (Phosphor), never JSX. */
+    icon?: PhosphorIcon
+    /** Retry handler — renders a button when paired with {@link ErrorContentProps.retryLabel}. */
     onRetry?: () => void
     /** Translated label for the retry button (required to render it). */
-    retryLabel?: ReactNode
+    retryLabel?: string
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
- * Standalone error state — a danger {@link WarningOctagonIcon}, a title + optional
- * description, and a "try again" button, centered. The standard `errorContent`
- * for {@link import("../AsyncContent").AsyncContent}. Pure/props-only; the block
- * owns its look, text arrives translated from the caller.
+ * Standalone error state — a warning glyph, a title + optional description, and a
+ * "try again" button, centered. Used directly by several screens as the retry
+ * state for a failed fetch, and as the `errorContent` of the legacy
+ * {@link import("@/components/blocks/async/AsyncContent").AsyncContent} switch.
+ *
+ * This is a COMPOSITE mislabeled by its folder (BLOCK-7): it takes no domain
+ * entity, only already-resolved strings and a handler, so it never fetches and
+ * never resolves i18n itself — the caller always hands it translated text.
  *
  * @see Story: .storybook/stories/blocks/async/ErrorContent/ErrorContent.stories
+ * @param props - {@link ErrorContentProps}
  */
 export const ErrorContent = ({
     title,
     description,
-    icon,
+    icon: Icon = WarningOctagonIcon,
     onRetry,
     retryLabel,
-    className,
-}: ErrorContentProps) => {
-    return (
-        <div className={cn("flex flex-col items-center gap-3 px-6 py-6 text-center", className)}>
-            {icon ?? (
-                <WarningOctagonIcon
-                    aria-hidden
-                    focusable="false"
-                    weight="duotone"
-                    className="size-8 text-foreground"
-                />
-            )}
-            <div data-principles="title-subtitle" className="flex flex-col gap-1">
-                <Typography type="body-sm" weight="medium" align="center">
-                    {title}
-                </Typography>
-                {description ? (
-                    <Typography type="body-xs" color="muted" align="center">
-                        {description}
-                    </Typography>
-                ) : null}
-            </div>
-            {onRetry && retryLabel ? (
-                <Button variant="secondary" size="sm" onPress={onRetry}>
-                    {retryLabel}
-                </Button>
-            ) : null}
-        </div>
-    )
-}
+    classNames,
+}: ErrorContentProps) => (
+    <div data-tier="composite" data-component="ErrorContent">
+        <StackV
+            gap={4}
+            align="center"
+            padding={6}
+            classNames={classNames}
+            items={[
+                () => <Icon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />,
+                () => (
+                    <StackV
+                        gap={2}
+                        principles={["title-subtitle"]}
+                        items={[
+                            () => <Typography size="sm" weight="medium" align="center" text={title} />,
+                            ...(description
+                                ? [() => <Typography size="xs" color="muted" align="center" text={description} />]
+                                : []),
+                        ]}
+                    />
+                ),
+                ...(onRetry && retryLabel
+                    ? [() => <Button variant="secondary" size="sm" onPress={onRetry} label={retryLabel} />]
+                    : []),
+            ]}
+        />
+    </div>
+)
+
+/** Tier metadata for `ErrorContent`, used by the component registry/Storybook lookup. */
+export const meta = { tier: "composite", name: "ErrorContent" } as const

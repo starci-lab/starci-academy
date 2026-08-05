@@ -1,9 +1,11 @@
 "use client"
 
 import React from "react"
-import { Button, Link, Typography, cn } from "@heroui/react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Box } from "@/components/frames/Box"
+import { StackV } from "@/components/frames/Stack"
 import { HighlightCard } from "@/components/blocks/cards/HighlightCard"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { SeeMoreLink } from "@/components/blocks/navigation/SeeMoreLink"
@@ -32,8 +34,15 @@ export type ContinueCardVariant = "item" | "hero"
  * left off" item. All interactivity is delivered by the caller via
  * {@link onPress} or {@link href}; the block fetches nothing and reads no
  * global store.
+ *
+ * Does NOT take `className` (BLOCK-4 — a block hands out no escape hatch; a
+ * caller that needs a specific placement wraps this card in a frame instead,
+ * the same treatment `StatusChip` already carries). `ResumeCard`
+ * (`@/components/features/dashboard/ContinueLearning/ResumeCard`) still
+ * forwards its own `className` straight into this card — that call site needs
+ * a follow-up fix; it sits outside this folder so it isn't touched here.
  */
-export interface ContinueCardProps extends WithClassNames<undefined> {
+export interface ContinueCardProps {
     /**
      * What this card IS on its surface — see {@link ContinueCardVariant}.
      * Required: it decides icon placement, CTA affordance, and accent together,
@@ -93,7 +102,7 @@ export interface ContinueCardProps extends WithClassNames<undefined> {
 
 /**
  * ContinueCard renders a "pick up where you left off" surface inside a
- * {@link SectionCard} frame: an info row (icon + title + subtitle), then a CTA
+ * {@link SectionCard} frame: an info row (title + subtitle), then a CTA
  * row (both variants render `ctaLabel` here, never inline with the title —
  * see {@link ContinueCardProps.ctaLabel}), then a {@link ProgressMeter} when
  * {@link ContinueCardProps.value} is provided.
@@ -112,30 +121,45 @@ export const ContinueCard = ({
     urgent = false,
     onPress,
     href,
-    className,
 }: ContinueCardProps) => {
     const isHero = variant === "hero"
+    // A watermark icon needs (a) a positioning context sized to the card's own
+    // footprint, (b) that same footprint to CLIP it at the rounded corners, and
+    // (c) its siblings pulled into the same paint layer so they render above it
+    // instead of under it. `SectionCard` exposes none of that (missingVocabulary:
+    // no overlay/decoration slot, no relative/overflow control on the leaf) —
+    // only `hero` with a real `icon` needs any of it, `item` never renders one.
+    const hasWatermark = isHero && Boolean(icon)
+
     // Item CTA is a real SeeMoreLink (own hover + click). Never wrap the card —
     // that would nest interactive controls and steal hover from the link.
     // Hero CTA is also its own control, so the card stays a static frame too.
-
     const ctaNode = ctaLabel
         ? isHero
             ? href
                 ? (
-                    <Link
+                    // missingVocabulary: no atom/leaf renders a filled, pill-shaped
+                    // NAVIGATIONAL link — the `Button` atom only takes `onPress`
+                    // (no `href`), and `SeeMoreLink`/`Link.LinkSeeMore` render plain
+                    // accent text, not a filled chip. Minimal local anchor kept for
+                    // this one named-but-unsupported shape.
+                    <a
                         href={href}
                         className="inline-flex w-fit shrink-0 items-center gap-2 whitespace-nowrap rounded-3xl bg-accent px-4 py-2 text-sm font-medium text-accent-foreground no-underline"
                     >
                         {ctaLabel}
                         <ArrowRightIcon aria-hidden focusable="false" className="size-3.5" />
-                    </Link>
+                    </a>
                 )
                 : (
-                    <Button variant="primary" size="sm" onPress={onPress} className="w-fit shrink-0">
-                        {ctaLabel}
-                        <ArrowRightIcon aria-hidden focusable="false" className="size-3.5" />
-                    </Button>
+                    <Button
+                        variant="primary"
+                        size="sm"
+                        label={ctaLabel}
+                        suffixIcon={ArrowRightIcon}
+                        onPress={onPress}
+                        classNames={["w-fit", "shrink-0"]}
+                    />
                 )
             : (
                 <SeeMoreLink href={href} onPress={onPress}>
@@ -144,45 +168,48 @@ export const ContinueCard = ({
             )
         : null
 
-    const cardNode = (
-        <SectionCard
-            className={cn("relative flex flex-col overflow-hidden", className)}
-            contentClassName="flex flex-col gap-3"
-        >
-            {isHero && icon ? (
-                <div
+    const titleStack = (
+        <StackV
+            gap={3}
+            classNames={["min-w-0"]}
+            items={[
+                () => <Typography weight="medium" truncate text={title} />,
+                ...(subtitle
+                    ? [
+                        () => (
+                            // missingVocabulary: `Typography`'s `color` union has
+                            // `accent-soft`/`success-soft` but no `warning-soft` —
+                            // `urgent` previously read `text-warning-soft-foreground`
+                            // via `className`. Nearest atom-supported token used
+                            // instead of reopening the hatch.
+                            <Typography size="xs" color={urgent ? "warning" : "muted"} truncate text={subtitle} />
+                        ),
+                    ]
+                    : []),
+            ]}
+        />
+    )
+
+    const sectionCard = (
+        <SectionCard>
+            {hasWatermark ? (
+                <Box
                     aria-hidden
                     className="pointer-events-none absolute -bottom-6 -right-6 text-accent-soft-foreground opacity-40 [&_svg]:size-32"
                 >
                     {icon}
-                </div>
+                </Box>
             ) : null}
-
-            <div className="relative flex items-center gap-3">
-                <div className="flex min-w-0 flex-1 flex-col gap-2">
-                    <Typography weight="medium" truncate>
-                        {title}
-                    </Typography>
-                    {subtitle ? (
-                        // Typography's `color` prop has no semantic tones — the warning
-                        // tint has to come through className.
-                        <Typography
-                            type="body-xs"
-                            color={urgent ? undefined : "muted"}
-                            className={cn(urgent && "text-warning-soft-foreground")}
-                            truncate
-                        >
-                            {subtitle}
-                        </Typography>
-                    ) : null}
-                </div>
-            </div>
-
-            {ctaNode ? <div className="relative">{ctaNode}</div> : null}
-
+            {hasWatermark ? <Box className="relative">{titleStack}</Box> : titleStack}
+            {ctaNode ? (hasWatermark ? <Box className="relative">{ctaNode}</Box> : ctaNode) : null}
             {value === undefined ? null : <ProgressMeter value={value} max={max} />}
         </SectionCard>
     )
+
+    // The clip/positioning context the watermark needs (see `hasWatermark` above) —
+    // scoped to just the card's own box so `HighlightCard`'s sweep (which
+    // deliberately bleeds 2px past this same box) stays unclipped.
+    const cardNode = hasWatermark ? <Box className="relative overflow-hidden rounded-3xl">{sectionCard}</Box> : sectionCard
 
     // `hero` = the ONE "resume the in-progress session" standout on its surface — the
     // canonical `HighlightCard` case (`card.md` §3j). `item` stays a static frame

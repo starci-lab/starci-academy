@@ -1,7 +1,6 @@
-import React from "react"
-import { CloseButton, cn } from "@heroui/react"
+import { CloseButton as HeroCloseButton, cn } from "@heroui/react"
 
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * Tone that drives the close button's colour + hover tint. Maps 1:1 to the app's
@@ -25,8 +24,8 @@ const TONE: Record<ElementCloseButtonTone, string> = {
 }
 
 /** Props for {@link ElementCloseButton}. */
-export interface ElementCloseButtonProps extends WithClassNames<undefined> {
-    /** Accessible label (the caller passes a localised string, e.g. `t("common.close")`). */
+export interface ElementCloseButtonProps {
+    /** Accessible label (the caller passes an already-resolved string, e.g. `t("common.close")`). */
     label: string
     /** Fired when the close/dismiss button is pressed. */
     onPress: () => void
@@ -35,6 +34,8 @@ export interface ElementCloseButtonProps extends WithClassNames<undefined> {
      * X reads tonal (a warning callout → warning X, an accent chip → accent X).
      */
     tone?: ElementCloseButtonTone
+    /** Where this sits inside its parent. Appearance is not passable — it is already the `tone` prop. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -50,15 +51,21 @@ export interface ElementCloseButtonProps extends WithClassNames<undefined> {
  * close buttons elsewhere (no global `.close-button` override). Use for a Callout
  * dismiss, a removable chip's cancel-X, a dismissible banner, etc.
  *
+ * No house atom wraps HeroUI's `CloseButton` yet, so the vendor import stays here
+ * (single unwrapped primitive, no atom equivalent to reuse) rather than being
+ * invented as a new shared atom.
+ *
  * @param props - {@link ElementCloseButtonProps}
  * @see Story: .storybook/stories/blocks/buttons/ElementCloseButton/ElementCloseButton.stories
  */
-export const ElementCloseButton = ({ label, onPress, tone = "neutral", className }: ElementCloseButtonProps) => {
+export const ElementCloseButton = ({ label, onPress, tone = "neutral", classNames }: ElementCloseButtonProps) => {
     return (
-        <CloseButton
+        <HeroCloseButton
+            data-tier="atom"
+            data-component="ElementCloseButton"
             aria-label={label}
             onPress={onPress}
-            className={cn("!bg-transparent", TONE[tone], className)}
+            className={cn("!bg-transparent", TONE[tone], classNames)}
         />
     )
 }

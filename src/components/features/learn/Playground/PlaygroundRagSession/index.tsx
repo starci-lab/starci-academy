@@ -5,8 +5,8 @@ import { useLocale, useTranslations } from "next-intl"
 import { useParams, useRouter } from "next/navigation"
 import { Button, Typography } from "@heroui/react"
 import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react"
-import { EmptyContent } from "@/components/blocks/async/EmptyContent"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
+import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 import { PlaygroundRagWorkspace } from "@/components/features/learn/Playground/PlaygroundRagWorkspace"
 import { PlaygroundHeader } from "@/components/features/learn/Playground/PlaygroundHeader"
 import { usePlaygroundSessionContext } from "@/components/features/learn/Playground/PlaygroundSessionProvider"
@@ -89,7 +89,7 @@ export const PlaygroundRagSession = () => {
                             </div>
                         </div>
                     ) : (
-                        <EmptyContent
+                        <AsyncContentEmpty
                             title={t("playground.session.completeTitle")}
                             description={t("playground.session.completeDescription")}
                             onRetry={onLeave}

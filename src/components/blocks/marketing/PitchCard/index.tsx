@@ -1,12 +1,11 @@
 import React from "react"
-import { cn, Typography } from "@heroui/react"
+import { Typography } from "@/components/atoms/text/Typography"
 import { IconTile } from "../../identity/IconTile"
 import type { IconTileTone } from "../../identity/IconTile"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
 
 /** Props for the {@link PitchCard} block. */
-export interface PitchCardProps extends WithClassNames<undefined> {
+export interface PitchCardProps {
     /** Phosphor icon node rendered inside the tinted {@link IconTile}. */
     icon: React.ReactNode
     /** Tint of the icon tile; defaults to accent. */
@@ -25,6 +24,10 @@ export interface PitchCardProps extends WithClassNames<undefined> {
  * — owns all styling, content via props. Reused across the wedge / outcome /
  * methodology beats of the landing page.
  *
+ * No `className` (BLOCK-4): nothing calls this block yet, so there is no
+ * appearance to forward — a caller that needs to place this card in a grid
+ * composes that grid itself, one tier up.
+ *
  * @param props - {@link PitchCardProps}
  */
 export const PitchCard = ({
@@ -33,18 +36,13 @@ export const PitchCard = ({
     title,
     body,
     footer,
-    className,
 }: PitchCardProps) => {
     return (
-        <SectionCard className={cn("h-full", className)} contentClassName="flex flex-col gap-3 h-full">
+        <SectionCard classNames={["h-full"]} contentClassName="flex flex-col gap-3 h-full">
             <IconTile icon={icon} tone={tone} size="md" />
-            <Typography type="h5" weight="semibold">
-                {title}
-            </Typography>
-            <Typography type="body-sm" color="muted" className="flex-1">
-                {body}
-            </Typography>
-            {footer ? <div>{footer}</div> : null}
+            <Typography size="h5" weight="semibold" text={title} />
+            <Typography size="sm" color="muted" classNames={["flex-1"]} text={body} />
+            {footer}
         </SectionCard>
     )
 }

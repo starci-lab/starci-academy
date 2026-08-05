@@ -11,11 +11,8 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { queryResolveRoute } from "@/modules/api/graphql/queries/query-resolve-route"
-import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
+import { _ResumeCard } from "./component"
 
 /** Kind of resume target — drives the subtitle label. */
 export type ResumeKind = "challenge" | "lesson"
@@ -31,20 +28,20 @@ export interface ResumeItem {
 }
 
 /** Props for {@link ResumeCard}. */
-export interface ResumeCardProps extends WithClassNames<undefined> {
+export interface ResumeCardProps {
     /** The resume target rendered by this card. */
     item: ResumeItem
 }
 
 /**
- * A "continue" card — thin wrapper over the canonical {@link ContinueCard}
- * block. Resolves the entity's canonical route via the index on press, then
- * navigates. No BE progress field is available for either kind yet, so the
- * progress meter is hidden (never fabricate a number).
- * @param props - the resume target
+ * `ResumeCard` — the CONNECTED half (see `tiers/split.md`): resolves the entity's
+ * canonical route via the index on press, then navigates, and hands the
+ * already-translated text to the presentational {@link _ResumeCard}. No BE progress
+ * field is available for either kind yet, so the progress meter is hidden (never
+ * fabricate a number).
+ * @param props - {@link ResumeCardProps}
  */
 export const ResumeCard = ({
-    className,
     item,
 }: ResumeCardProps) => {
     const t = useTranslations()
@@ -82,9 +79,7 @@ export const ResumeCard = ({
     )
 
     return (
-        <ContinueCard
-            className={className}
-            variant="item"
+        <_ResumeCard
             title={item.label}
             subtitle={t(`dashboard.continueKind.${item.kind}`)}
             ctaLabel={t("dashboard.continue")}

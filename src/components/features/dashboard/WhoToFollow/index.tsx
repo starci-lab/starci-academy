@@ -9,43 +9,26 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    UserPlusIcon,
-} from "@phosphor-icons/react"
-import Link from "next/link"
-import {
-    FollowButton,
-} from "@/components/features/community/FollowButton"
-import {
-    WhoToFollowSkeleton,
-} from "./WhoToFollowSkeleton"
-import {
     pathConfig,
 } from "@/resources/path"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useMutateSetFollowSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetFollowSwr"
 import { useQuerySuggestedUsersSwr } from "@/hooks/swr/api/graphql/queries/useQuerySuggestedUsersSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { SectionCard } from "@/components/blocks/cards/SectionCard"
-import { UserCell } from "@/components/blocks/identity/UserCell"
-
-/** Props for {@link WhoToFollow}. */
-export type WhoToFollowProps = WithClassNames<undefined>
+import {
+    _WhoToFollow,
+    type WhoToFollowUserItem,
+} from "./component"
 
 /**
- * Right-rail "who to follow" card listing users the backend suggests, so the
- * social graph keeps growing from the home surface. Each row links to the user's
- * public profile and carries a follow button that owns the `setFollow` mutation
- * (FollowButton is presentational); a successfully-followed row flips to the
- * "following" state locally so the action feels instant. Self-fetches its own
- * leaf query; shows a skeleton while loading, then hides when there is nothing
- * to suggest.
- * @param props - optional className for the root element.
+ * `WhoToFollow` — the connected half of `_WhoToFollow` (see `./component.tsx`
+ * for the presentational half). Self-fetches the backend's suggested-users
+ * list, owns the `setFollow` mutation, and tracks which rows the viewer has
+ * just followed / has in flight from THIS card so the toggle feels instant.
+ *
+ * Computes `isSkeleton` from the first-load formula (loading, nothing in hand
+ * yet) and `isEmpty` from the resolved list, then hands both — plus the
+ * already-translated strings and the resolved row data — to `_WhoToFollow`.
  */
-export const WhoToFollow = ({
-    className,
-}: WhoToFollowProps) => {
+export const WhoToFollow = () => {
     const t = useTranslations()
     const locale = useLocale()
     const { data, isLoading } = useQuerySuggestedUsersSwr()
@@ -81,57 +64,27 @@ export const WhoToFollow = ({
         ],
     )
 
+    const users: ReadonlyArray<WhoToFollowUserItem> = (data ?? []).map((user) => ({
+        globalId: user.globalId,
+        username: user.username,
+        displayName: user.displayName ?? undefined,
+        avatar: user.avatar,
+        openToWork: user.openToWork,
+        profileHref: pathConfig().locale(locale).profile(user.username).build(),
+        following: followed.has(user.globalId),
+        isPending: pending.has(user.globalId),
+    }))
+
     return (
-        // skeleton while loading; hide when there is nothing to suggest (empty / error →
-        // no emptyContent/errorContent → renders null).
-        <AsyncContent
-            isLoading={isLoading}
-            skeleton={<WhoToFollowSkeleton className={className} />}
+        <_WhoToFollow
+            title={t("dashboard.whoToFollow.title")}
+            openToWorkLabel={t("dashboard.whoToFollow.openToWork")}
+            users={users}
+            onFollow={onFollow}
+            // first load, nothing in hand yet — a background revalidation must not
+            // re-flash the shimmer over rows the viewer is already reading
+            isSkeleton={isLoading && !data}
             isEmpty={!data || data.length === 0}
-        >
-            <SectionCard
-                icon={<UserPlusIcon className="size-5 text-accent-soft-foreground" />}
-                title={t("dashboard.whoToFollow.title")}
-                className={className}
-            >
-                <div className="flex flex-col gap-2">
-                    {(data ?? []).map((user) => (
-                        <div
-                            key={user.globalId}
-                            className="flex items-center gap-3 rounded-medium px-2 py-1"
-                        >
-                            <Link
-                                href={pathConfig().locale(locale).profile(user.username).build()}
-                                className="flex min-w-0 flex-1 items-center gap-2 text-left"
-                            >
-                                <UserCell
-                                    className="min-w-0 flex-1"
-                                    username={user.username}
-                                    displayName={user.displayName ?? undefined}
-                                    avatar={user.avatar}
-                                    handle={`@${user.username}`}
-                                    trailing={user.openToWork ? (
-                                        <span className="shrink-0 rounded-full bg-success-soft px-2 text-[11px] font-medium text-success-soft-foreground">
-                                            {t("dashboard.whoToFollow.openToWork")}
-                                        </span>
-                                    ) : undefined}
-                                />
-                            </Link>
-                            <FollowButton
-                                className="shrink-0"
-                                following={followed.has(user.globalId)}
-                                isPending={pending.has(user.globalId)}
-                                onToggle={() => {
-                                    // already followed from this card → no-op
-                                    if (!followed.has(user.globalId)) {
-                                        void onFollow(user.globalId)
-                                    }
-                                }}
-                            />
-                        </div>
-                    ))}
-                </div>
-            </SectionCard>
-        </AsyncContent>
+        />
     )
 }

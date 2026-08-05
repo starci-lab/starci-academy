@@ -24,7 +24,7 @@ import {
 } from "../hooks/useSelectedCourse"
 import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 import { LabeledAccordionCard } from "@/components/blocks/cards/LabeledAccordionCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -175,7 +175,7 @@ export const CourseMilestoneOutline = ({
             }}
         >
             {milestones.length === 0 ? (
-                <EmptyContent title={t("profileSettings.learning.outline.noMatch")} />
+                <AsyncContentEmpty title={t("profileSettings.learning.outline.noMatch")} />
             ) : (
                 // NO `label`: the accordion IS the tab content (the tab already names it);
                 // per-milestone status + progress ride in the header via `titleEnd`.

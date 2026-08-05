@@ -2,8 +2,11 @@
 
 import React from "react"
 import Link from "next/link"
-import { cn, Typography } from "@heroui/react"
+import { cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Box } from "@/components/frames/Box"
+import { StackH } from "@/components/frames/Stack"
 import { type VerdictBand, verdictBandClassName } from "../verdict-band"
 
 /**
@@ -14,27 +17,33 @@ import { type VerdictBand, verdictBandClassName } from "../verdict-band"
  * Protocol / external hrefs (`mailto:`, `tel:`, `http(s)://`, `#`) fall back to a
  * native `<a>` (Next `<Link>` is for in-app routes only). Ref feedback 2026-07-17
  * "clicking a row = router.push, not router.replace, even if it's a link".
+ *
+ * Shared by {@link SurfaceListCardRow} and {@link SurfaceListCardItem} — each hands
+ * in its own `dataComponent` so the rendered anchor still carries that caller's own
+ * identity rather than a generic one.
  */
 const RowAnchor = ({
     href,
     onClick,
     className,
+    dataComponent,
     children,
 }: {
     href: string
     onClick?: () => void
     className?: string
+    dataComponent: string
     children: React.ReactNode
 }) => {
     if (href.startsWith("/")) {
         return (
-            <Link href={href} onClick={onClick} className={className}>
+            <Link href={href} onClick={onClick} className={className} data-tier="composite" data-component={dataComponent}>
                 {children}
             </Link>
         )
     }
     return (
-        <a href={href} onClick={onClick} className={className}>
+        <a href={href} onClick={onClick} className={className} data-tier="composite" data-component={dataComponent}>
             {children}
         </a>
     )
@@ -67,6 +76,13 @@ export interface SurfaceListCardProps extends WithClassNames<undefined> {
  * categories/resources, payment methods…), not N separate cards. Style lives
  * here (block); features only feed rows. Ref `elements/card.md` §3c.
  *
+ * REUSE NOTE: `composites/cards/SurfaceCard`'s `.List` member is the newer,
+ * DATA-driven (`items`) sibling of this exact shape (its own header even says
+ * "was `SurfaceListCard` + its two rows"). This folder keeps the original
+ * children-based API on purpose — ~90 call sites across the app compose it with
+ * JSX rows today, and moving them to `items` is a call-site migration outside
+ * this pass's scope, not a rewrite this file can make alone.
+ *
  * @param props - {@link SurfaceListCardProps}
  * @see Story: .storybook/stories/blocks/cards/SurfaceListCard/SurfaceListCard.stories
  */
@@ -77,6 +93,8 @@ export const SurfaceListCard = ({ children, bordered = false, className }: Surfa
             bordered ? "border border-default" : "shadow-surface",
             className,
         )}
+        data-tier="composite"
+        data-component="SurfaceListCard"
     >
         {children}
     </div>
@@ -89,13 +107,15 @@ export interface SurfaceListCardRowProps extends WithClassNames<undefined> {
     /** Primary line — medium foreground, single-line truncate. */
     title: React.ReactNode
     /**
-     * Extra className applied directly to the title's own `Typography` element
-     * (e.g. `text-accent-soft-foreground` for a selected row) — NOT a wrapper span around
-     * `title`. `text-decoration-color` for `hover="underline"` is resolved from
-     * THIS element's own `color` (the one carrying `group-hover:underline`),
-     * not from a nested child's — a child-only color override leaves the
-     * hover underline in the default colour while the text itself changes,
-     * a visible mismatch. Ref `components/icon.md` §6.
+     * Extra className applied directly to a wrapper around the title's own
+     * `Typography` element (e.g. `text-accent-soft-foreground` for a selected row) —
+     * a raw string, not the closed `classNames` union, because it carries arbitrary
+     * one-off colour overrides no fixed vocabulary can enumerate (mirrors
+     * `SurfaceCardListItem.titleClassName`, the same escape hatch on the newer
+     * sibling shape). `text-decoration-color` for `hover="underline"` is resolved
+     * from `Typography`'s own `underlineOnGroupHover`, which reads the SAME
+     * element's `color` — not a nested child's — so the hover underline never
+     * mismatches the text colour. Ref `components/icon.md` §6.
      */
     titleClassName?: string
     /** Optional secondary line — muted, smaller, single-line truncate. */
@@ -135,6 +155,14 @@ export interface SurfaceListCardRowProps extends WithClassNames<undefined> {
  * plain `<div>`, NO hover/focus/cursor); pass `onPress`/`href` to make the whole
  * row a tappable `<button>`/`<a>` with `hover:bg-default` + focus ring. A static
  * row never fakes interactivity with a hover tint (`hover-style-matches-clickable-nature`).
+ *
+ * The row's OWN frame (separator, hover fill, focus ring, verdict band) is a shape
+ * decision this composite owns directly (`cn`) — no frame carries an `after:`
+ * pseudo-element separator or a data-driven inset shadow. The row's INTERIOR —
+ * leading · title/subtitle · meta/trailing — is assembled from `Typography` inside
+ * `Box`/`StackH` frames wherever a frame can express it exactly (title/subtitle
+ * keeps a literal `gap-0` column, one step tighter than `Stack`'s narrowest `gap={1}`
+ * step, so it stays a plain flex column).
  *
  * @param props - {@link SurfaceListCardRowProps}
  */
@@ -179,45 +207,51 @@ export const SurfaceListCardRow = ({
     const content = (
         <>
             {leading ? <div className="shrink-0">{leading}</div> : null}
+            {/* Deliberately NOT `StackV`: the closest step on the frame's gap scale is
+                `gap={1}` (0.25rem) and this column needs a true `gap-0` — the two text
+                lines are meant to sit with no seam between them (missing vocabulary: the
+                frame has no zero step, see `_spacing.ts` `AllowedGap`). */}
             <div className="flex min-w-0 flex-col gap-0">
-                <Typography
-                    type="body-sm"
-                    truncate
-                    className={cn(underlineHover && "underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline", titleClassName)}
-                >
-                    {title}
-                </Typography>
-                {subtitle ? (
-                    <Typography type="body-xs" color="muted" truncate>
-                        {subtitle}
-                    </Typography>
-                ) : null}
+                <div className={titleClassName}>
+                    <Typography size="sm" truncate underlineOnGroupHover={underlineHover} text={title} />
+                </div>
+                {subtitle ? <Typography size="xs" color="muted" truncate text={subtitle} /> : null}
             </div>
             {meta || trailing ? (
-                <div className="ml-auto flex shrink-0 items-center gap-2">
-                    {meta}
-                    {trailing}
-                </div>
+                <Box principles={["push-end"]} className="ml-auto shrink-0">
+                    <StackH gap={2} items={[() => meta, () => trailing]} />
+                </Box>
             ) : null}
         </>
     )
 
     if (href) {
         return (
-            <RowAnchor href={href} onClick={onPress} className={rowClassName}>
+            <RowAnchor href={href} onClick={onPress} className={rowClassName} dataComponent="SurfaceListCardRow">
                 {content}
             </RowAnchor>
         )
     }
     if (onPress) {
         return (
-            <button type="button" onClick={onPress} disabled={isDisabled} className={rowClassName}>
+            <button
+                type="button"
+                onClick={onPress}
+                disabled={isDisabled}
+                className={rowClassName}
+                data-tier="composite"
+                data-component="SurfaceListCardRow"
+            >
                 {content}
             </button>
         )
     }
     // static row (no onPress/href) — a plain div: no button semantics, no hover
-    return <div className={rowClassName}>{content}</div>
+    return (
+        <div className={rowClassName} data-tier="composite" data-component="SurfaceListCardRow">
+            {content}
+        </div>
+    )
 }
 
 /** Props for {@link SurfaceListCardItem}. */
@@ -288,17 +322,28 @@ export const SurfaceListCardItem = ({
 
     if (href) {
         return (
-            <RowAnchor href={href} onClick={onPress} className={itemClassName}>
+            <RowAnchor href={href} onClick={onPress} className={itemClassName} dataComponent="SurfaceListCardItem">
                 {children}
             </RowAnchor>
         )
     }
     if (onPress) {
         return (
-            <button type="button" onClick={onPress} disabled={isDisabled} className={itemClassName}>
+            <button
+                type="button"
+                onClick={onPress}
+                disabled={isDisabled}
+                className={itemClassName}
+                data-tier="composite"
+                data-component="SurfaceListCardItem"
+            >
                 {children}
             </button>
         )
     }
-    return <div className={itemClassName}>{children}</div>
+    return (
+        <div className={itemClassName} data-tier="composite" data-component="SurfaceListCardItem">
+            {children}
+        </div>
+    )
 }

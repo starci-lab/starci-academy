@@ -21,7 +21,6 @@ A tier-3 presentational block that renders a single pricing plan card with a tie
 | `cta` | `React.ReactNode` | — | Call-to-action button — pass a fully configured HeroUI `<Button>`. |
 | `badge` | `React.ReactNode` | `undefined` | Optional badge (e.g. "Phổ biến") shown beside the tier name. Only when `highlighted`. Chip is `w-fit` — never full-width. |
 | `highlighted` | `boolean` | `false` | Enables accent border/background (SectionCard `accent` variant) and reveals the badge. |
-| `className` | `string` | `undefined` | Extra Tailwind classes merged onto the outer SectionCard. |
 
 ## Usage
 
@@ -67,13 +66,18 @@ const ProPlan = () => (
 
 ## Composes
 
-- **`SectionCard`** (`@/components/reuseable`) — outer card frame with optional accent variant.
+- **`SectionCard`** (`@/components/blocks/cards/SectionCard`) — outer card frame with optional accent variant.
+- **`Typography`** (`@/components/atoms/text/Typography`) — name, price, original price (`isStruck`), and period.
+- **`Chip`** (`@/components/atoms/chips/Chip`) — the `highlighted`-only badge (`tone="accent"`).
+- **`StackH`** (`@/components/frames/Stack`) — the name+badge row and the price row (both wrap below `sm`).
+- **`StackV`** (`@/components/frames/Stack`) — the `flex-1` wrapper around `features` so it grows and the CTA pins to the bottom.
 
 ## Notes
 
 - The `badge` is only rendered when **both** `badge` and `highlighted` are truthy — a non-highlighted card never shows its badge even if `badge` is set.
 - Pass a `w-full` class on the `<Button>` CTA for consistent full-width appearance across tiers.
 - `features` is an opaque `ReactNode` — the block applies no list styles itself. Use Tailwind utilities on your own `<ul>/<li>` for icons, spacing, and color.
-- Spacing follows the project scale: `gap-6` between major sections, `gap-1.5` within coupled elements.
-- The price row uses `flex-wrap` so very long price strings (e.g. localised VND amounts) reflow gracefully on narrow viewports.
-- Accessible: the badge `<span>` carries no ARIA role; if you need it announced as a status, wrap it in `<span role="status">`.
+- Spacing follows the project scale: `gap-6` between major sections (via `SectionCard`'s `contentClassName`), `gap-2` within the name/price rows (`StackH gap={3}`).
+- The name+badge row and the price row wrap onto a second line below the `sm` container step (`StackH at="sm"`), so long price strings (e.g. localised VND amounts) reflow gracefully on narrow viewports.
+- `PricingCard` takes no `className`/`classNames` (block tier, BLOCK-4) — where it sits inside a layout (e.g. `flex-1` in a row of tiers) is the caller's frame's job, not this block's.
+- Accessible: the badge chip carries no ARIA role; if you need it announced as a status, wrap the caller's row in `role="status"`.

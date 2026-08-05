@@ -23,7 +23,7 @@ import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { AIProcessingText } from "@/components/features/learn/AIProcessingText"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
-import { ErrorContent } from "@/components/blocks/async/ErrorContent"
+import { AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { StatusChip, type StatusChipTone } from "@/components/blocks/chips/StatusChip"
 import { ExtendedTabs } from "@/components/blocks/navigation/ExtendedTabs"
@@ -359,7 +359,7 @@ export const PracticeProblem = () => {
                 </div>
                 <div className="flex min-h-0 flex-1 items-center justify-center px-6">
                     {problemError ? (
-                        <ErrorContent
+                        <AsyncContentError
                             title={t("codingPractice.detailError")}
                             description={t("codingPractice.detailErrorHint")}
                             onRetry={() => { void mutateProblem() }}

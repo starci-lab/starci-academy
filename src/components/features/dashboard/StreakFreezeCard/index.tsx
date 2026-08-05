@@ -5,51 +5,24 @@ import React, {
     useState,
 } from "react"
 import {
-    Button,
-    Skeleton,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
-import {
-    SnowflakeIcon,
-} from "@phosphor-icons/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useMutateRedeemRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateRedeemRewardSwr"
 import { useQueryMyWeeklyStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyWeeklyStatsSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
-import { SectionCard } from "@/components/blocks/cards/SectionCard"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-
-/** Maximum number of streak freezes a user may own. */
-const MAX_FREEZES = 3
-
-/** Points cost of one streak freeze. */
-const FREEZE_COST = 100
-
-/** Props for {@link StreakFreezeCard}. */
-export type StreakFreezeCardProps = WithClassNames<undefined>
+import { _StreakFreezeCard, FREEZE_COST, MAX_FREEZES } from "./component"
 
 /**
- * Right-rail "streak freeze" card. A freeze keeps the daily streak alive when the
- * viewer misses a single day; this card shows how many they own (of
- * {@link MAX_FREEZES}) and lets them buy another for {@link FREEZE_COST} points.
- * Owns the `buyStreakFreeze` mutation (toasting the result) and revalidates the
- * shared `myWeeklyStats` leaf query on success. Self-fetches its own stats;
- * shows a layout-matching skeleton while loading, a retryable error state on
- * failure, and self-hides when signed out / genuinely no data.
- * @param props - optional className for the root element.
+ * Right-rail "streak freeze" card — the CONNECTED half: self-fetches `myWeeklyStats`, owns the
+ * `buyStreakFreeze` mutation (toasting the result) and revalidates the shared leaf query on success,
+ * and resolves every label (incl. interpolation) before handing them to the presentational
+ * {@link _StreakFreezeCard}. See `tiers/split.md`.
  */
-export const StreakFreezeCard = ({
-    className,
-}: StreakFreezeCardProps) => {
+export const StreakFreezeCard = () => {
     const t = useTranslations()
     const {
         data,
         error,
-        isLoading,
         mutate,
     } = useQueryMyWeeklyStatsSwr()
     const { trigger: triggerRedeem } = useMutateRedeemRewardSwr()
@@ -83,62 +56,34 @@ export const StreakFreezeCard = ({
     )
 
     const owned = data?.streakFreezes ?? 0
-    const full = owned >= MAX_FREEZES
 
     return (
-        <AsyncContent
-            isLoading={isLoading}
-            skeleton={(
-                <SectionCard
-                    icon={<SnowflakeIcon className="size-5 text-accent-soft-foreground" />}
-                    title={t("streakFreeze.title")}
-                    className={className}
-                >
-                    <Skeleton className="h-4 w-32 rounded-lg" />
-                    <Skeleton className="h-3 w-full rounded-lg" />
-                    <Skeleton className="h-8 w-28 rounded-xl" />
-                </SectionCard>
-            )}
+        <_StreakFreezeCard
+            // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
+            isSkeleton={!data && !error}
+            // settled with no data (signed out / genuinely no stats) → self-hide
             isEmpty={!data}
-            // only surface the error slot when there is no cached data to fall
-            // back to (a stale card beats a scary error on a transient blip)
+            // only surface the error slot when there is no cached data to fall back to (a stale
+            // card beats a scary error on a transient blip)
             error={!data ? error : undefined}
-            errorContent={{
-                title: t("dashboard.loadError"),
-                onRetry: () => { void mutate() },
-                retryLabel: t("dashboard.retry"),
+            onRetry={() => { void mutate() }}
+            owned={owned}
+            buying={buying}
+            onBuy={() => void onBuy()}
+            labels={{
+                title: t("streakFreeze.title"),
+                errorTitle: t("dashboard.loadError"),
+                retry: t("dashboard.retry"),
+                owned: t("streakFreeze.owned", {
+                    count: owned,
+                    max: MAX_FREEZES,
+                }),
+                explainer: t("streakFreeze.explainer"),
+                buy: t("streakFreeze.buy", {
+                    cost: FREEZE_COST,
+                }),
+                full: t("streakFreeze.full"),
             }}
-        >
-            {data ? (
-                <SectionCard
-                    icon={<SnowflakeIcon className="size-5 text-accent-soft-foreground" />}
-                    title={t("streakFreeze.title")}
-                    className={className}
-                >
-                    <span className="text-sm font-medium text-foreground">
-                        {t("streakFreeze.owned", {
-                            count: owned,
-                            max: MAX_FREEZES,
-                        })}
-                    </span>
-                    <span className="text-xs text-muted">
-                        {t("streakFreeze.explainer")}
-                    </span>
-                    <Button
-                        variant="tertiary"
-                        size="sm"
-                        isDisabled={full || buying}
-                        isPending={buying}
-                        onPress={() => void onBuy()}
-                    >
-                        {full
-                            ? t("streakFreeze.full")
-                            : t("streakFreeze.buy", {
-                                cost: FREEZE_COST,
-                            })}
-                    </Button>
-                </SectionCard>
-            ) : null}
-        </AsyncContent>
+        />
     )
 }

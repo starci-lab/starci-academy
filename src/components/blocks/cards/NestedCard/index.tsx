@@ -1,82 +1,60 @@
-import React from "react"
-import { Typography, cn } from "@heroui/react"
-import type { ReactNode } from "react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import type { ComponentType, SVGProps } from "react"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import {
+    SurfaceCardNested,
+    type SurfaceCardNestedSection,
+} from "@/components/composites/cards/SurfaceCard"
+
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
+export const meta = { tier: "composite", name: "NestedCard" } as const
+
+/**
+ * One inner section of a {@link NestedCard}, in display order. Re-exported under
+ * this folder's own name so a caller building item data doesn't have to reach
+ * into `composites/cards/SurfaceCard` directly — same shape either way.
+ */
+export type { SurfaceCardNestedSection as NestedCardItem }
 
 /** Props for {@link NestedCard}. */
-export interface NestedCardProps extends WithClassNames<undefined> {
+export interface NestedCardProps {
     /** Header title (quiet eyebrow label, e.g. "Related lessons"). */
-    title: ReactNode
-    /** Optional leading icon (phosphor) before the title, signalling the group kind. */
-    icon?: ReactNode
-    /** Inner sections — typically {@link NestedCardSection} elements. */
-    children: ReactNode
+    title: string
+    /** Optional leading icon before the title, signalling the group kind — a component reference, not a built element. */
+    icon?: ComponentType<SVGProps<SVGSVGElement> & { weight?: "regular" | "bold" }>
+    /** The card's inner sections, in display order. REQUIRED — a repeating list is data. */
+    items: ReadonlyArray<SurfaceCardNestedSection>
     /**
-     * Surface-in-surface: `border border-default bg-transparent` — when the
-     * parent already has a fill (`bg-surface` panel, `bg-surface-secondary`
-     * bubble, modal/page card). Pass `bordered={false}` only when rendering
-     * directly on `bg-background` with no parent surface.
+     * Surface-in-surface: border instead of shadow — when the parent already has a
+     * fill (a `bg-surface` panel, a `bg-surface-secondary` bubble, a modal/page
+     * card). Pass `bordered` only when rendering directly on `bg-background` with
+     * no parent surface underneath.
      */
     bordered?: boolean
+    /** `true` → every part this card owns mirrors itself as a shimmer. */
+    isSkeleton?: boolean
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
  * Card-inside-card WITH HEADERS: quiet header (icon + title) + a flush stack of
- * {@link NestedCardSection}s separated by dividers (no per-row rounded borders).
+ * sections separated by dividers (no per-row rounded borders).
  *
- * Parent context drives the shell: any filled parent surface (chat panel, bubble,
- * modal) → `bordered` ([[card]] §4). Bare `bg-background` only → omit `bordered`
- * → `bg-surface shadow-surface`.
+ * Thin adapter over `SurfaceCardNested` (`composites/cards/SurfaceCard`) — the
+ * ONE canon frame this shape lives under (eight sibling card frames folded into
+ * one namespace, instructor's call, 2026-07-25). Kept as its own named export
+ * under `blocks/cards/NestedCard` for the call sites that still reach for
+ * `NestedCard` by that name.
  *
  * @param props - See {@link NestedCardProps}.
- * @see Story: .storybook/stories/blocks/cards/NestedCard/NestedCard.stories
  */
-export const NestedCard = ({ title, icon, children, bordered = false, className }: NestedCardProps) => (
-    <div
-        className={cn(
-            "overflow-hidden rounded-3xl",
-            bordered ? "border border-default bg-transparent" : "bg-surface shadow-surface",
-            className,
-        )}
-    >
-        <div className="flex min-w-0 items-center gap-2 border-b border-default px-3 py-2 text-sm text-muted">
-            {icon}
-            <Typography type="body-xs" color="muted" truncate>{title}</Typography>
-        </div>
-        <div className="flex flex-col divide-y divide-default">{children}</div>
-    </div>
-)
-
-/** Props for {@link NestedCardSection}. */
-export interface NestedCardSectionProps extends WithClassNames<undefined> {
-    /** Section header title. */
-    title: ReactNode
-    /** Optional muted sub-label above the title (context, e.g. a course/module name). */
-    eyebrow?: ReactNode
-    /** Optional body under the header (description text, meta rows). */
-    children?: ReactNode
-}
-
-/**
- * One inner section of a {@link NestedCard}: a flush row (no own border/radius)
- * with an optional muted eyebrow, a title, and optional body below. Hover
- * underlines the title (nav-link affordance).
- *
- * @param props - See {@link NestedCardSectionProps}.
- */
-export const NestedCardSection = ({ title, eyebrow, children, className }: NestedCardSectionProps) => (
-    <div className={cn("group cursor-pointer px-4 py-3", className)}>
-        {eyebrow ? (
-            <Typography type="body-xs" color="muted" truncate className="mb-1">{eyebrow}</Typography>
-        ) : null}
-        <Typography
-            type="body-sm"
-            weight="medium"
-            truncate
-            className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline"
-        >
-            {title}
-        </Typography>
-        {children ? <div className="mt-1">{children}</div> : null}
-    </div>
+export const NestedCard = ({ title, icon, items, bordered = false, isSkeleton = false, classNames }: NestedCardProps) => (
+    <SurfaceCardNested
+        title={title}
+        icon={icon}
+        items={items}
+        variant={bordered ? "nested" : "surface"}
+        isSkeleton={isSkeleton}
+        classNames={classNames}
+    />
 )

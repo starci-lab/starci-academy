@@ -9,7 +9,7 @@ import { HeadhuntingCompanyConsultants } from "./HeadhuntingCompanyConsultants"
 import { HeadhuntingCompanyProfile } from "./HeadhuntingCompanyProfile"
 import { HeadhuntingCompanyLoadingState } from "./HeadhuntingCompanyLoadingState"
 import { useHeadhuntingCompanyDetail } from "../hooks"
-import { ErrorContent } from "@/components/blocks/async/ErrorContent"
+import { AsyncContentError } from "@/components/composites/async/AsyncContent"
 
 /** Props for {@link HeadhuntingCompany}. */
 export type HeadhuntingCompanyProps = WithClassNames<undefined>
@@ -33,7 +33,7 @@ export const HeadhuntingCompany = ({ className }: HeadhuntingCompanyProps) => {
     // loading gate below would otherwise spin forever; surface a retry instead
     if (error && !companies) {
         return (
-            <ErrorContent
+            <AsyncContentError
                 title={t("headhuntings.error")}
                 onRetry={retry}
                 retryLabel={t("common.retry")}

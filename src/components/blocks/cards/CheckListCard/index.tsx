@@ -1,11 +1,20 @@
-import React from "react"
+import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { CheckCircleIcon } from "@phosphor-icons/react"
-import type { ReactNode } from "react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+
+/**
+ * Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`.
+ * This file has TWO public components, not one, so this is a record (same shape
+ * `Stack.tsx` uses) rather than the single `{ tier, name }` most composite files export.
+ */
+export const meta = {
+    CheckListCard: { tier: "composite", name: "CheckListCard" },
+    CheckListItem: { tier: "composite", name: "CheckListItem" },
+} as const
 
 /** Props for {@link CheckListCard}. */
-export interface CheckListCardProps extends WithClassNames<undefined> {
+export interface CheckListCardProps {
     /** The list rows — typically {@link CheckListItem} elements. */
     children: ReactNode
     /**
@@ -16,6 +25,11 @@ export interface CheckListCardProps extends WithClassNames<undefined> {
      * the top-level shadow look.
      */
     bordered?: boolean
+    /**
+     * Where this list sits inside its parent. Appearance is not passable — it is
+     * already a prop.
+     */
+    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -33,13 +47,15 @@ export interface CheckListCardProps extends WithClassNames<undefined> {
  * @param props - See {@link CheckListCardProps}.
  * @see Story: .storybook/stories/blocks/cards/CheckListCard/CheckListCard.stories
  */
-export const CheckListCard = ({ children, bordered = false, className }: CheckListCardProps) => (
+export const CheckListCard = ({ children, bordered = false, classNames }: CheckListCardProps) => (
     <ul
         className={cn(
             "overflow-hidden rounded-3xl bg-surface",
             bordered ? "border border-default" : "shadow-surface",
-            className,
+            classNames,
         )}
+        data-tier="composite"
+        data-component="CheckListCard"
     >
         {children}
     </ul>
@@ -62,10 +78,21 @@ export interface CheckListItemProps {
  * free body. Rows are divided by a full-bleed separator (the last row hides it) —
  * surface-in-surface also keeps separators edge-to-edge.
  *
+ * The row's flex layout stays a raw `cn()` composition, not a `Stack` frame: the
+ * full-bleed separator is a pseudo-element (`after:…`) on this SAME `<li>`, and a
+ * frame's typed `classNames` (position-only) can't carry it. Same call every other
+ * converted row of this shape makes — `List.Row`, `SurfaceListCardRow`,
+ * `SurfaceCard.Nested`'s `NestedSection` — none of them route their row through a
+ * frame either, for the identical reason.
+ *
  * @param props - See {@link CheckListItemProps}.
  */
 export const CheckListItem = ({ showCheck = true, children }: CheckListItemProps) => (
-    <li className="relative flex items-start gap-3 p-3 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden">
+    <li
+        className="relative flex items-start gap-3 p-3 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
+        data-tier="composite"
+        data-component="CheckListItem"
+    >
         {showCheck ? (
             <CheckCircleIcon
                 aria-hidden

@@ -1,9 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Chip, cn } from "@heroui/react"
+import { Chip } from "@heroui/react"
 import { ElementCloseButton } from "@/components/blocks/buttons/ElementCloseButton"
-
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Semantic tone of the status chip. Each tone maps to a HeroUI Chip color
@@ -13,14 +11,27 @@ export type StatusChipTone = "neutral" | "success" | "warning" | "danger" | "acc
 
 /**
  * Props for the {@link StatusChip} block.
+ *
+ * Does NOT take `className` (BLOCK-4 — a block hands out no escape hatch; a
+ * caller that needs a specific placement uses a frame, not a hole in this
+ * component). `icon` stays a rendered `ReactNode` — see the note on
+ * {@link StatusChipProps.icon} for why the atom `Chip`'s `icon` slot (a
+ * component reference, not an element) isn't a drop-in replacement here.
  */
-export interface StatusChipProps extends WithClassNames<undefined> {
+export interface StatusChipProps {
     /**
      * Semantic tone that drives the chip color. Defaults to "neutral".
      */
     tone?: StatusChipTone
     /**
      * Optional leading icon (typically a Phosphor icon) rendered before the label.
+     * A rendered element (`<VerifiedIcon .../>`), not a component reference — the
+     * atom `Chip`'s `icon` slot takes an `IconComponent` (a component the atom
+     * instantiates itself) instead, so it can't stand in for this prop without
+     * changing every call site that renders its own icon element today
+     * (`missingVocabulary`: no atom/composite offers an element-shaped leading
+     * icon slot on a `Chip`-family component). Root stays HeroUI `Chip` directly
+     * for that reason — see the class docstring.
      */
     icon?: ReactNode
     /**
@@ -60,11 +71,26 @@ const toneToColor: Record<StatusChipTone, "default" | "success" | "warning" | "d
  * HeroUI Chip that maps a semantic tone to a chip color and optionally renders
  * a leading icon before the label. Presentational: the only callback it takes is
  * {@link StatusChipProps.onCancel} for a removable/filter chip (a trailing cancel-X).
+ *
+ * Root stays raw HeroUI `Chip` rather than the design system's `Chip` atom
+ * (`@/components/atoms/chips/Chip`) — the atom's `icon` slot takes an
+ * `IconComponent` it instantiates itself, not a rendered element, so it can't
+ * carry this block's `icon` prop without breaking every existing call site
+ * (see the prop's own docstring). `onCancel` still routes through
+ * {@link ElementCloseButton} for the same reason: swapping to the atom's
+ * built-in `onRemove` would mean dropping `ElementCloseButton` only on the
+ * no-icon branch, splitting the chip's trailing-× styling across two
+ * different implementations for no behavioural gain.
+ *
+ * Does not take `className` (BLOCK-4) — a caller that needs a specific
+ * placement composes a frame (`StackH`/`Cluster`/…) around the chip instead.
  * @see Story: .storybook/stories/blocks/chips/StatusChip/StatusChip.stories
  */
-export const StatusChip = ({ tone = "neutral", icon, children, onCancel, cancelLabel, className }: StatusChipProps) => {
+export const StatusChip = ({ tone = "neutral", icon, children, onCancel, cancelLabel }: StatusChipProps) => {
     return (
         <Chip
+            data-tier="block"
+            data-component="StatusChip"
             color={toneToColor[tone]}
             variant="soft"
             size="sm"
@@ -76,7 +102,7 @@ export const StatusChip = ({ tone = "neutral", icon, children, onCancel, cancelL
             // `--chip-fg`=`<color>-soft-foreground`) — no hand-rolled tint, so the
             // label + icon inherit an accessibility-tuned foreground (the old
             // `bg-<status>/10 + text-<status>` raw-hue formula failed contrast).
-            className={cn("w-fit", className)}
+            className="w-fit"
         >
             {/* leading status icon — DROPPED when the chip is removable (has a
                 trailing cancel-X): a chip carries EITHER a status icon OR a cancel-X,
@@ -91,7 +117,7 @@ export const StatusChip = ({ tone = "neutral", icon, children, onCancel, cancelL
                     label={cancelLabel ?? ""}
                     onPress={onCancel}
                     tone={tone}
-                    className="shrink-0"
+                    classNames={["shrink-0"]}
                 />
             ) : null}
         </Chip>

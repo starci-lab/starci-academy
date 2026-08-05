@@ -31,7 +31,7 @@ import type {
 import { useMutateReviewFlashcardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReviewFlashcardSwr"
 import { useQueryMyDueFlashcardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDueFlashcardsSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
-import { ErrorContent } from "@/components/blocks/async/ErrorContent"
+import { AsyncContentError } from "@/components/composites/async/AsyncContent"
 import type { GraphQLResponse } from "@/modules/api/graphql/types"
 import type { ReviewFlashcardData } from "@/modules/api/graphql/mutations/types/review-flashcard"
 import type { QueryFlashcardNextIntervals } from "@/modules/api/graphql/queries/types/my-due-flashcards"
@@ -125,7 +125,7 @@ export const FlashcardReviewPage = ({
     if (error && !data) {
         return (
             <div className={cn("flex min-h-[60vh] items-center justify-center", className)}>
-                <ErrorContent
+                <AsyncContentError
                     title={t("flashcardReview.loadError")}
                     onRetry={() => { void mutate() }}
                     retryLabel={t("common.retry")}

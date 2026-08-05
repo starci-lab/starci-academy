@@ -5,8 +5,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { useParams, useRouter } from "next/navigation"
 import { Typography } from "@heroui/react"
 import { TerminalWindowIcon } from "@phosphor-icons/react"
-import { ErrorContent } from "@/components/blocks/async/ErrorContent"
-import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { PlaygroundPrepare } from "@/components/features/learn/Playground/PlaygroundPrepare"
@@ -91,7 +90,7 @@ const Page = () => {
     if (error) {
         return (
             <div className="flex h-[calc(100vh-4rem)] items-center justify-center px-6">
-                <ErrorContent
+                <AsyncContentError
                     title={t("playground.session.loadErrorTitle")}
                     description={t("playground.session.loadErrorDescription")}
                     onRetry={refetchPlayground}
@@ -104,8 +103,8 @@ const Page = () => {
     if (!playground) {
         return (
             <div className="flex h-[calc(100vh-4rem)] items-center justify-center px-6">
-                <EmptyContent
-                    icon={<TerminalWindowIcon aria-hidden focusable="false" className="size-8 text-muted" />}
+                <AsyncContentEmpty
+                    icon={TerminalWindowIcon}
                     title={t("playground.session.notFoundTitle")}
                     description={t("playground.session.notFoundDescription")}
                     onRetry={() => router.push(hubPath)}

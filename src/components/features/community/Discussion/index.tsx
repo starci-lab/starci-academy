@@ -8,7 +8,7 @@ import { CommentComposer } from "./CommentComposer"
 import { CommentItem } from "./CommentItem"
 import { ReactionType, type CommentNode } from "@/modules/api/graphql/queries/types/discussion"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 
 export * from "./ReactionBar"
 export * from "./ReactionEmoji"
@@ -119,8 +119,8 @@ export const Discussion = ({
                     <Spinner />
                 </div>
             ) : comments.length === 0 ? (
-                <EmptyContent
-                    icon={<ChatsCircleIcon aria-hidden focusable="false" className="size-8 text-muted" />}
+                <AsyncContentEmpty
+                    icon={ChatsCircleIcon}
                     title={t("discussion.empty")}
                     description={t("discussion.emptyHint")}
                 />

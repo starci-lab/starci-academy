@@ -25,7 +25,7 @@ import {
 } from "./BookmarkCard"
 import { pathConfig } from "@/resources/path"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -41,7 +41,7 @@ import { SAVED_CONTENTS_PAGE_SIZE, useQuerySavedContentsSwr } from "@/hooks/swr/
  * Data states go through {@link AsyncContent}. A truly-empty library (never
  * bookmarked, no active search) renders {@link EmptyState} with a "browse
  * courses" CTA instead of a dead end; a zero-match search stays inline with
- * {@link EmptyContent} so the search box remains reachable. Mounted by
+ * {@link AsyncContentEmpty} so the search box remains reachable. Mounted by
  * `/profile/bookmarks`.
  */
 export const Bookmarks = () => {
@@ -140,7 +140,7 @@ export const Bookmarks = () => {
                         </div>
 
                         {contents.length === 0 ? (
-                            <EmptyContent title={t("bookmarks.noMatch")} />
+                            <AsyncContentEmpty title={t("bookmarks.noMatch")} />
                         ) : (
                             <>
                                 <SurfaceListCard>

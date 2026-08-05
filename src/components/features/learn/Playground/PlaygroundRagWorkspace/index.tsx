@@ -23,7 +23,7 @@ import { ExtendedTabs } from "@/components/blocks/navigation/ExtendedTabs"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { SelectableCardGroup } from "@/components/blocks/navigation/SelectableCardGroup"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
-import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { RagSourceGraph } from "@/components/blocks/rendering/RagSourceGraph"
 import { GithubIcon } from "@/components/svg/GithubIcon"
@@ -327,13 +327,13 @@ export const PlaygroundRagWorkspace = ({
                 className="flex flex-1 flex-col gap-4 overflow-y-auto px-4 py-4"
             >
                 {!imported ? (
-                    <EmptyContent
-                        icon={<CodeIcon aria-hidden focusable="false" className="size-8 text-muted" />}
+                    <AsyncContentEmpty
+                        icon={CodeIcon}
                         title={t("playground.ragWorkspace.emptyNoImportTitle")}
                     />
                 ) : turns.length === 0 ? (
-                    <EmptyContent
-                        icon={<SparkleIcon aria-hidden focusable="false" className="size-8 text-muted" />}
+                    <AsyncContentEmpty
+                        icon={SparkleIcon}
                         title={t("playground.ragWorkspace.emptyReadyTitle")}
                     />
                 ) : (

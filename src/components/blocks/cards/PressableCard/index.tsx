@@ -7,8 +7,33 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { StackH } from "@/components/frames/Stack"
 
-/** Props for the {@link PressableCard} block. */
+/**
+ * Props for the {@link PressableCard} block.
+ *
+ * TIER NOTE: this folder sits under `blocks/cards`, but the component itself
+ * owns no domain entity — every prop here is a shape (`children`, `onPress`,
+ * `href`, `actions`) never a field of something fetched. That is BLOCK-7's
+ * detection signal: it is really a **composite** mis-filed in a block folder.
+ * Left in place (moving the folder breaks every importer below), but treated
+ * as a composite for this pass — one file, `cn()` allowed (COMPOSITE-5), and
+ * `className` kept as a raw string rather than `classNames: Array<AllowedClassName>`
+ * because three real callers outside this folder (`GroupPressableCard`,
+ * `SummaryCard`, `ConsultantCard`) already forward arbitrary skin classes
+ * (radius/border/hover overrides) through it — narrowing the type here would
+ * break them without touching a single one of their files.
+ *
+ * `composites/cards/SurfaceCard` (`SurfaceCard`, exported off `Base`) is the
+ * emerging canonical member for this exact job — same whole-card press target,
+ * same stretched-link `actions` pattern, plus ripple/selection/verdict-band —
+ * and its own header explicitly notes it folds in "was `PressableCard`". It is
+ * NOT swapped in here: its hover/ripple treatment differs from this file's
+ * (tint-on-hover, no ripple), so delegating to it would change the rendered
+ * look for the three live callers above, not just the code shape. Consolidating
+ * onto `SurfaceCard` is a separate migration (each caller needs the `children`
+ * → `body` slot conversion too), left as debt rather than folded in silently.
+ */
 export interface PressableCardProps extends WithClassNames<undefined> {
     /** Card body — composed freely by the caller (icon tiles, text, chips…). */
     children: React.ReactNode
@@ -58,7 +83,7 @@ export interface PressableCardProps extends WithClassNames<undefined> {
  * elevation AT REST — per `card.md` §0, a top-level bounded card, so it must
  * read as a card even before hover) plus a hover affordance and keyboard
  * focus ring. Exists because HeroUI v3 `Card` is a
- * non-interactive `<div>` — this block owns the card styling on a real
+ * non-interactive `<div>` — this component owns the card styling on a real
  * `<button>` / `<a>` so features can compose a clickable card without
  * hand-rolling styles (per the no-style-in-features rule). Use for navigation
  * tiles, selectable option cards, and bookmark rows.
@@ -101,7 +126,7 @@ export const PressableCard = ({
         )
         if (href && !isDisabled) {
             return (
-                <a href={href} aria-label={label} className={base}>
+                <a href={href} aria-label={label} className={base} data-tier="composite" data-component="PressableCard">
                     {children}
                 </a>
             )
@@ -113,6 +138,8 @@ export const PressableCard = ({
                 disabled={isDisabled}
                 aria-label={label}
                 className={cn(base, !isDisabled && "cursor-pointer")}
+                data-tier="composite"
+                data-component="PressableCard"
             >
                 {children}
             </button>
@@ -122,7 +149,9 @@ export const PressableCard = ({
     // ── Card WITH its own buttons — stretched-link pattern. The card is a plain
     // relative <div>; a transparent overlay <a>/<button> covers it (whole-card
     // press), and the actions sit ABOVE the overlay so they stay clickable. No
-    // interactive element is ever nested inside another. ─────────────────────
+    // interactive element is ever nested inside another. Row built with `StackH`
+    // (frame tier) instead of a hand-rolled `flex items-center gap-3` wrapper —
+    // same shape as `composites/cards/SurfaceCard`'s own actions branch. ───────
     const overlay = cn(
         // covers the whole card; the focus ring reads as a card-level ring since
         // the overlay's border-box IS the card's bounds
@@ -130,20 +159,18 @@ export const PressableCard = ({
         isDisabled ? "cursor-not-allowed" : "cursor-pointer",
     )
     return (
-        <div className={cn("relative w-full", surface)}>
-            <div className="flex items-center gap-3">
-                <div className="min-w-0 flex-1">
-                    {children}
-                </div>
-                {/*
-                  Secondary actions — later in source order than the overlay below
-                  AND `relative z-10`, so they paint/hit-test ABOVE the stretched
-                  overlay and remain independently pressable.
-                */}
-                <div data-principles="flex-action" className="relative z-10 flex shrink-0 items-center gap-2">
-                    {actions}
-                </div>
-            </div>
+        <div className={cn("relative w-full", surface)} data-tier="composite" data-component="PressableCard">
+            <StackH
+                gap={4}
+                items={[
+                    () => <div className="min-w-0 flex-1">{children}</div>,
+                    () => (
+                        <div className="relative z-10">
+                            <StackH gap={3} principles={["flex-action"]} classNames={["shrink-0"]} items={[() => actions]} />
+                        </div>
+                    ),
+                ]}
+            />
             {href && !isDisabled ? (
                 <a href={href} aria-label={label} className={overlay} />
             ) : (

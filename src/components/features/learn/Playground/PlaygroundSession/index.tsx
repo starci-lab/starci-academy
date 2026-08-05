@@ -18,13 +18,13 @@ import {
     LinkSimpleIcon,
 } from "@phosphor-icons/react"
 import { ConnectSheet } from "@/components/blocks/layout/ConnectSheet"
-import { EmptyContent } from "@/components/blocks/async/EmptyContent"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 import { LabeledAccordionCard } from "@/components/blocks/cards/LabeledAccordionCard"
 import { StatRibbon } from "@/components/blocks/stats/StatRibbon"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
+import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 import { PlaygroundHeader } from "@/components/features/learn/Playground/PlaygroundHeader"
 import { usePlaygroundSessionContext } from "@/components/features/learn/Playground/PlaygroundSessionProvider"
 import { pathConfig } from "@/resources/path"
@@ -401,7 +401,7 @@ export const PlaygroundSession = () => {
                             </div>
                         </div>
                     ) : (
-                        <EmptyContent
+                        <AsyncContentEmpty
                             title={t("playground.session.completeTitle")}
                             description={t("playground.session.completeDescription")}
                             onRetry={onLeave}

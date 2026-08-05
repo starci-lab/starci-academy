@@ -1,12 +1,13 @@
 "use client"
 
 import React from "react"
-import { cn, Typography, Chip } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Chip } from "@/components/atoms/chips/Chip"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link PricingCard}. */
-export interface PricingCardProps extends WithClassNames<undefined> {
+export interface PricingCardProps {
     /** Display name of the pricing tier (e.g. "Pro", "Enterprise"). */
     name: React.ReactNode
     /**
@@ -37,7 +38,7 @@ export interface PricingCardProps extends WithClassNames<undefined> {
     /**
      * Optional badge label shown beside the tier name to call out a popular or
      * recommended tier (e.g. "Popular", "Best value"). Omit to hide the badge.
-     * Rendered as a shrink-to-content Chip (`w-fit`) — never full-width.
+     * Rendered as a shrink-to-content {@link Chip} — never full-width.
      */
     badge?: React.ReactNode
     /**
@@ -81,54 +82,42 @@ export const PricingCard = ({
     cta,
     badge,
     highlighted = false,
-    className,
 }: PricingCardProps) => {
     return (
         // Use SectionCard's accent variant for the highlighted (recommended) tier
-        <SectionCard
-            accent={highlighted}
-            className={cn("flex flex-col", className)}
-            contentClassName="flex flex-col gap-6 h-full"
-        >
-            {/* Name (+ optional popular chip inline — chip is w-fit, never full-width) */}
-            <div className="flex flex-wrap items-center gap-2">
-                <Typography type="body" weight="semibold">
-                    {name}
-                </Typography>
-                {highlighted && badge ? (
-                    <Chip size="sm" variant="soft" color="accent" className="w-fit shrink-0">
-                        <Chip.Label>{badge}</Chip.Label>
-                    </Chip>
-                ) : null}
-            </div>
+        <SectionCard accent={highlighted} contentClassName="flex flex-col gap-6 h-full">
+            {/* Name (+ optional popular chip inline — chip is shrink-to-content, never full-width) */}
+            <StackH
+                gap={3}
+                at="sm"
+                items={[
+                    () => <Typography size="base" weight="semibold" text={name} />,
+                    ...(highlighted && badge ? [() => <Chip tone="accent" text={badge} />] : []),
+                ]}
+            />
 
             {/* Price row: big price + optional struck original + muted period */}
-            <div className="flex flex-wrap items-baseline gap-2">
-                {/* Main price — h3 size, semibold, prominent */}
-                <Typography type="h3" weight="semibold">
-                    {price}
-                </Typography>
-
-                {/* Strike-through original price — line-through is text-decoration, allowed as className */}
-                {originalPrice ? (
-                    <Typography type="body-sm" color="muted" className="line-through">
-                        {originalPrice}
-                    </Typography>
-                ) : null}
-
-                {/* Billing period label — smallest muted text */}
-                {period ? (
-                    <Typography type="body-xs" color="muted">
-                        {period}
-                    </Typography>
-                ) : null}
-            </div>
+            <StackH
+                gap={3}
+                align="baseline"
+                at="sm"
+                items={[
+                    // Main price — h3 size, semibold, prominent
+                    () => <Typography size="h3" weight="semibold" text={price} />,
+                    // Strike-through original price
+                    ...(originalPrice
+                        ? [() => <Typography size="sm" color="muted" isStruck text={originalPrice} />]
+                        : []),
+                    // Billing period label — smallest muted text
+                    ...(period ? [() => <Typography size="xs" color="muted" text={period} />] : []),
+                ]}
+            />
 
             {/* Feature list — grows to fill available vertical space; caller controls markup */}
-            <div className="flex-1">{features}</div>
+            <StackV gap={1} classNames={["flex-1"]} body={() => <>{features}</>} />
 
             {/* CTA pinned to the bottom of the card */}
-            <div>{cta}</div>
+            {cta}
         </SectionCard>
     )
 }

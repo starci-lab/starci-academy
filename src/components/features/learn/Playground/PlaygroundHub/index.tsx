@@ -6,7 +6,7 @@ import { useParams, useRouter } from "next/navigation"
 import { Typography } from "@heroui/react"
 import { TerminalWindowIcon } from "@phosphor-icons/react"
 import { PlaygroundCard } from "@/components/blocks/cards/PlaygroundCard"
-import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 import { useQueryPlaygroundsSwr } from "@/hooks/swr/api/graphql/queries/useQueryPlaygroundsSwr"
 import { pathConfig } from "@/resources/path"
 
@@ -46,8 +46,8 @@ export const PlaygroundHub = () => {
             </div>
 
             {!isLoading && (playgrounds?.length ?? 0) === 0 ? (
-                <EmptyContent
-                    icon={<TerminalWindowIcon aria-hidden focusable="false" className="size-8 text-muted" />}
+                <AsyncContentEmpty
+                    icon={TerminalWindowIcon}
                     title={t("playground.hub.emptyTitle")}
                     description={t("playground.hub.emptyDescription")}
                 />

@@ -37,7 +37,7 @@ import {
 } from "./CourseDetail"
 import { useQueryMyCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCoursesSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
@@ -154,7 +154,7 @@ export const LearningHistory = ({
                 >
                     {filtered.length === 0 ? (
                     // loaded but the current search matches nothing
-                        <EmptyContent title={t("profileSettings.learning.history.noMatch")} />
+                        <AsyncContentEmpty title={t("profileSettings.learning.history.noMatch")} />
                     ) : (
                         <SurfaceListCard>
                             {filtered.map((course) => {

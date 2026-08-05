@@ -3,7 +3,7 @@ import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/Surface
 import { type SurfaceCardVariant } from "@sb-components/composites/cards/SurfaceCard/surface-card-header"
 import { type AllowedPadding } from "@sb-components/frames/_spacing"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
 /**
  * `DoubleTabsCard` — a `Toolbar` (two tab groups) living inside a `SurfaceCard` face instead of

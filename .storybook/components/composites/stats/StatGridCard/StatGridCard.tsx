@@ -1,7 +1,7 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
 /**
  * COMPOSITE — a bounded surface whose cells sit in a 2-col grid, divided by thin

@@ -4,7 +4,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography, type TypographySize } from "@sb-components/atoms/text/Typography/Typography"
 import { GAP_CLASS, type AllowedGap } from "@sb-components/frames/_spacing"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
 /**
  * `Section` — the frame for one region of a page: it stacks `header` / `body` / `footer` along

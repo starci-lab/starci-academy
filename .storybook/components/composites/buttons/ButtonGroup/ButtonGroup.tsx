@@ -1,5 +1,5 @@
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { type SkeletonProps } from "@sb-components/frames/_slot"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { type ButtonAlign, type ButtonSize, type ButtonVariant, type IconComponent } from "@sb-components/atoms/buttons/Button/button-tokens"
 import { ResponsiveCluster, type ResponsiveClusterItem } from "@sb-components/frames/ResponsiveCluster/ResponsiveCluster"

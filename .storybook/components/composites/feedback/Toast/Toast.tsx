@@ -1,7 +1,7 @@
 import type { ComponentType, SVGProps } from "react"
 import { Alert as AtomAlert } from "@sb-components/atoms/feedback/Alert/Alert"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 /**
  * `Toast` — the one notification surface, composed from `Alert` (`tone="plain"` + glyph `sm`);
  * the HeroUI port lives entirely in `Alert`. Leaves: `Statuses` (the full `ToastStatus` union)

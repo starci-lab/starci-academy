@@ -7,7 +7,7 @@ import { ChoiceSwitch } from "@sb-components/atoms/forms/Choice/Choice"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { Box } from "@sb-components/frames/Box/Box"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/frames/_slot"
 
 /**
  * `List.*` — the row/list frame namespace, arranging elements into a ROW or a LIST.

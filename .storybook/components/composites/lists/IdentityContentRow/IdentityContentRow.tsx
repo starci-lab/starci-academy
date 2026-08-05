@@ -1,7 +1,7 @@
 import { Avatar, type AvatarSize } from "@sb-components/atoms/display/Avatar/Avatar"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
 /**
  * `IdentityContentRow` — avatar + byline + whatever content sits under it, as one row.

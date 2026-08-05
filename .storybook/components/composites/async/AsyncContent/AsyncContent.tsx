@@ -11,7 +11,7 @@ import { EmptyState, type EmptyStateIcon } from "@sb-components/composites/feedb
 // whole dead branch back into the screen.
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
 /**
  * STATE SCOPE: `AsyncContent` is a state-transition scaffold — its own asset is BRANCH

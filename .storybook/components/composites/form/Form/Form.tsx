@@ -5,7 +5,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { GAP_CLASS, type AllowedGap } from "@sb-components/frames/_spacing"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 /**
  * SHELL (composite tier §13) — `Form`: a REAL `<form>` shell (submit on ENTER)
  * + a content column following the `gap` rhythm (§10c) + an `actions` slot at

@@ -3,7 +3,7 @@ import { cn } from "@heroui/react"
 import { LinkSeeMore } from "@sb-components/atoms/navigation/Link/Link"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
 /**
  * The shared header of the `Surface*Card` family. Imported by SurfaceCard,

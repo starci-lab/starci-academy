@@ -2,7 +2,7 @@ import type { ReactNode } from "react"
 import { Table as HeroTable, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { Box } from "@sb-components/frames/Box/Box"
 
 /**

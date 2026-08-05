@@ -1,5 +1,5 @@
 import { cn } from "@heroui/react"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { type SkeletonProps } from "@sb-components/frames/_slot"
 import { XIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Button, type IconComponent } from "@sb-components/atoms/buttons/Button/Button"

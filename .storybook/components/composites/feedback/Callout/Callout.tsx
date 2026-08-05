@@ -2,7 +2,7 @@ import type { ComponentType, SVGProps } from "react"
 import { Alert, type AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
 /**
  * `Callout` — a flat tint strip placed inside a surface (surface-in-surface), not a floating

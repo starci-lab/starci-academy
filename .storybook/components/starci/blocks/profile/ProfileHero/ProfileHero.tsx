@@ -8,14 +8,14 @@ import {
     LinkedinLogoIcon,
     MapPinIcon,
     PencilSimpleIcon,
-    ShareNetworkIcon,
     UserCheckIcon,
     UserPlusIcon,
 } from "@phosphor-icons/react"
-import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
-import type { AvatarRing } from "@sb-components/atoms/display/Avatar/Avatar"
-import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
+import { ProfileRankAvatar } from "./ProfileRankAvatar"
+import { ProfileFollowers } from "./ProfileFollowers"
+import { ProfileBadges } from "./ProfileBadges"
+import { ShareProfileButton } from "./ShareProfileButton"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import type { ButtonVariant } from "@sb-components/atoms/buttons/Button/Button"
@@ -116,146 +116,6 @@ export interface ProfileHeroProps {
     /** `true` → every real part switches to its own shimmer; the profile stops accepting presses. */
     isSkeleton?: boolean
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Leaf — ProfileRankAvatar: the avatar + its rank frame + rank caption.
-// ─────────────────────────────────────────────────────────────────────────────
-
-/**
- * Ring tone for a ranked avatar — top-3 gets the strongest (warning) frame,
- * any other rank a quieter accent frame, no rank at all → no ring. A fact
- * about standing, not decoration chosen for its own sake. The atom (`Avatar`'s
- * `ring` prop) owns the frame's shape; this only picks the tone.
- */
-const rankRingTone = (rank: number | undefined): AvatarRing | undefined => {
-    if (rank == null) return undefined
-    return rank <= 3 ? "warning" : "accent"
-}
-
-interface ProfileRankAvatarProps {
-    name: string
-    avatarUrl?: string
-    rank?: number
-    isSkeleton?: boolean
-}
-
-/** Avatar with an optional rank-tinted ring, plus the "Rank #N" caption underneath. */
-const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false}: ProfileRankAvatarProps) => {
-    const rankBody = (
-        <>
-            <div>
-                <Avatar
-                    name={name}
-                    src={avatarUrl}
-                    size="lg"
-                    isSkeleton={isSkeleton}
-
-                    ring={isSkeleton ? undefined : rankRingTone(rank)}
-                />
-            </div>
-            {isSkeleton || rank != null ? (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    weight="medium"
-                    isSkeleton={isSkeleton}
-                    text={rank != null ? `Rank #${rank}` : undefined}
-
-                />
-            ) : null}
-        </>
-    )
-    return <StackV gap={2} principles={["title-subtitle"]} align="center" isSkeleton={isSkeleton} items={[() => rankBody]} />
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Leaf — ProfileFollowers: the follower count stat.
-// ─────────────────────────────────────────────────────────────────────────────
-
-interface ProfileFollowersProps {
-    followersCount?: number
-    isSkeleton?: boolean
-}
-
-/** Follower count + caption, same "big tabular number over a muted label" idiom `FlashcardDueHero` uses for its due-count (file header, judgement call 4). */
-const ProfileFollowers = ({ followersCount, isSkeleton = false}: ProfileFollowersProps) => {
-    const followersBody = (
-        <>
-            <Typography
-                size="h5"
-                weight="bold"
-                tabularNums
-                isSkeleton={isSkeleton}
-                text={isSkeleton ? undefined : String(followersCount ?? 0)}
-
-            />
-            <Typography
-                size="xs"
-                color="muted"
-                isSkeleton={isSkeleton}
-                text="Followers"
-
-            />
-        </>
-    )
-    return <StackV gap={1} isSkeleton={isSkeleton} items={[() => followersBody]} />
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Leaf — ProfileBadges: the earned-achievement chip row.
-// ─────────────────────────────────────────────────────────────────────────────
-
-interface ProfileBadgesProps {
-    badges?: ReadonlyArray<ProfileBadge>
-    isSkeleton?: boolean
-}
-
-/** Two placeholder pills while loading — enough to read as "a row of badges", not a guess at the real count. */
-const SKELETON_BADGE_KEYS = ["skeleton-badge-1", "skeleton-badge-2"] as const
-
-/** A wrapping row of earned-achievement chips. */
-const ProfileBadges = ({ badges, isSkeleton = false}: ProfileBadgesProps) => {
-    const items = isSkeleton
-        ? SKELETON_BADGE_KEYS.map(() => () => <Chip isSkeleton />)
-        : (badges ?? []).map((badge) => () => (
-            <Chip
-                tone="accent"
-                icon={badge.icon}
-                text={badge.label}
-            />
-        ))
-    return <Cluster items={items} gap={2} />
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Leaf — ShareProfileButton: the icon-only share trigger.
-// ─────────────────────────────────────────────────────────────────────────────
-
-interface ShareProfileButtonProps {
-    onShare?: () => void
-    isSkeleton?: boolean
-}
-
-/** Icon-only share trigger — the caller decides what "share" does (copy link, open a sheet, …). */
-const ShareProfileButton = ({ onShare, isSkeleton = false}: ShareProfileButtonProps) => {
-    if (isSkeleton) {
-        return <Button isSkeleton isIconOnly />
-    }
-    return (
-        <Button
-            isIconOnly
-            variant="tertiary"
-            prefixIcon={ShareNetworkIcon}
-            ariaLabel="Share profile"
-            onPress={onShare}
-
-        />
-    )
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Primary CTA — hire / follow / edit, mutually exclusive (one slot, §ProfileHero brief).
-// ─────────────────────────────────────────────────────────────────────────────
 
 interface PrimaryAction {
     label: string

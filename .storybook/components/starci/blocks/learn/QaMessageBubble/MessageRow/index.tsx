@@ -33,7 +33,7 @@ export const MessageRow = ({
     const authorRow = (
         <StackH
             gap={2}
-            principles={["icon-text", "separator-dot"]}
+            principles="icon-text"
             align="center"
 
             items={[
@@ -48,7 +48,7 @@ export const MessageRow = ({
     const reactionRow = interactive ? (
         <StackH
             gap={3}
-            principles={["flex-action"]}
+            principles="flex-action"
             align="center"
 
             items={[
@@ -91,7 +91,7 @@ export const MessageRow = ({
     return (
         <div className={cn("flex w-full", isMine ? "justify-end" : "justify-start")}>
             <div className="max-w-[92%]">
-                <StackV gap={2} principles={["title-subtitle"]} align={isMine ? "end" : undefined} classNames={["min-w-0"]} items={[() => bubbleBody]} />
+                <StackV gap={2} principles="title-subtitle" align={isMine ? "end" : undefined} classNames={["min-w-0"]} items={[() => bubbleBody]} />
             </div>
         </div>
     )

@@ -104,7 +104,7 @@ const FoundationHeader = ({
         <>
             <StackH
                 gap={3}
-                principles={["chip-row"]}
+                principles="chip-row"
                 align="center"
                 at="sm"
                 isSkeleton={isSkeleton}

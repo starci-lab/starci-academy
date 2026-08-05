@@ -161,7 +161,7 @@ const QuizSetup = ({
     const submitRow = (
         <StackH
             gap={3}
-            principles={["flex-action"]}
+            principles="flex-action"
             justify="end"
             isSkeleton={isSkeleton}
             items={[

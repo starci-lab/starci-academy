@@ -129,7 +129,11 @@ const ThreadRow = ({ thread, onOpen, labels, isSkeleton }: {
                             ]}
                         />
                     ),
-                    () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} classNames={["shrink-0"]} text={thread.timeLabel} />,
+                    () => (
+                        <div className="shrink-0">
+                            <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={thread.timeLabel} />
+                        </div>
+                    ),
                 ]}
             />
         )}

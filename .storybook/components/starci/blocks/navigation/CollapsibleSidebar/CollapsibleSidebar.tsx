@@ -146,7 +146,7 @@ export const CollapsibleSidebar = ({
     // owner for the same seam).
     const panel = (
         <>
-            <StackH gap={3} principles={["flex-action"]} justify={collapsed ? "center" : "between"} items={[() => headerRow]} />
+            <StackH gap={3} principles="flex-action" justify={collapsed ? "center" : "between"} items={[() => headerRow]} />
 
             {/* pinned top slot (e.g. resume pill) — above the scroll area, always
                 visible. min-w-0: a column-flex item defaults to content-width

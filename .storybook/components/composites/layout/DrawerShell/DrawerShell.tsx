@@ -127,7 +127,7 @@ const Base = ({
                                 <div className={cn("pr-8", titleClassName)}>
                                     <StackV
                                         gap={2}
-                                        principles={["title-subtitle"]}
+                                        principles="title-subtitle"
                                         isSkeleton={isSkeleton}
                                         items={[
                                             () => (

@@ -127,11 +127,11 @@ export const FlowDiagram = ({ nodes, edges, isSkeleton = false, classNames}: Flo
             data-component="FlowDiagram"
         >
             {isSkeleton ? (
-                <Box principles={["group-boundary", "page-pad"]} className="flex h-full items-center justify-center gap-4 p-6">
+                <Box principles="group-boundary" className="flex h-full items-center justify-center gap-4 p-6">
                     {Array.from({ length: SKELETON_NODE_COUNT }, (_, index) => (
                         <Box
                             key={index}
-                            principles={["title-subtitle"]} className="flex min-w-[140px] max-w-[220px] flex-col items-center gap-1 rounded-large border border-default bg-surface px-3 py-2 text-center shadow-sm"
+                            principles="title-subtitle" className="flex min-w-[140px] max-w-[220px] flex-col items-center gap-1 rounded-large border border-default bg-surface px-3 py-2 text-center shadow-sm"
                         >
                             <Typography size="sm" weight="medium" isSkeleton />
                             <Typography size="xs" color="muted" isSkeleton />

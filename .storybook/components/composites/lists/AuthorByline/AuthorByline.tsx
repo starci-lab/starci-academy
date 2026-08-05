@@ -53,7 +53,7 @@ const AuthorByline = ({
 }: AuthorBylineProps) => (
     <StackH
         gap={2}
-        principles={["icon-text", "separator-dot"]}
+        principles="icon-text"
         classNames={["min-w-0", ...(classNames ?? [])]}
         isSkeleton={isSkeleton}
 

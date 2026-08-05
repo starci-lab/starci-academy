@@ -92,7 +92,7 @@ const QuotaBar = ({
     const labelRow = (
         <StackH
             gap={3}
-            principles={["value-row"]}
+            principles="value-row"
             align="center"
             justify="between"
             isSkeleton={isSkeleton}

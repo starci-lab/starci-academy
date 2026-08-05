@@ -21,14 +21,14 @@ export const CommandSkeleton = ({ lines = 1 }: CommandSkeletonProps) => (
             align="center"
             justify="between"
             padding={{ x: 4, y: 3 }}
-            principles={["control-pad"]}
+            principles="control-pad"
             body={() => <Typography size="xs" isSkeleton />}
         />
         <Divider />
         <StackV
             gap={3}
             padding={4}
-            principles={["sibling-stack", "cell-pad"]}
+            principles="sibling-stack"
             items={Array.from({ length: lines }, () => () => (
                 <Typography size="xs" isSkeleton />
             ))}

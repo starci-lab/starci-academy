@@ -153,7 +153,7 @@ const TableBase = ({
             renderEmptyState={
                 EmptyContent != null
                     ? () => (
-                        <Box principles={["page-pad"]} className="text-center">
+                        <Box principles="page-pad" className="text-center">
                             <EmptyContent isSkeleton={isSkeleton} />
                         </Box>
                     )

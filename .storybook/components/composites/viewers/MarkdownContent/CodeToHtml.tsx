@@ -153,7 +153,7 @@ export const CodeToHtml = ({ code, language, theme, classNames }: CodeToHtmlProp
             )}
         >
             {/* slim header: language label (left) + copy (right) — orients long lessons with many snippets */}
-            <Box principles={["control-pad"]} className="flex items-center justify-between border-b border-default px-3 py-2">
+            <Box principles="control-pad" className="flex items-center justify-between border-b border-default px-3 py-2">
                 <span className="font-mono text-xs text-muted">{languageLabel(language)}</span>
                 <SnippetIcon copyString={code} />
             </Box>

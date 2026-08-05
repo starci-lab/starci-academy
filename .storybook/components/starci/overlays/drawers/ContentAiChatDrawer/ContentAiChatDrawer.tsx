@@ -115,7 +115,7 @@ const ContentAiChatDrawer = ({
         <div className="pr-8">
             <StackH
                 gap={3}
-                principles={["sibling-stack"]}
+                principles="sibling-stack"
                 justify="between"
                 items={titleAndModeSwitch}
             />

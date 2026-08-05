@@ -395,100 +395,100 @@ const buildKpiItems = (kpis: readonly [AgentOsConsoleKpi, AgentOsConsoleKpi, Age
  */
 const renderSectionItems = (section: AgentOsConsoleSection, labels: AgentOsConsoleLabels): Array<ComponentTypeWithSkeleton> => {
     switch (section.key) {
-        case "overview":
-            return [
-                () => <StatGridCard items={buildKpiItems(section.kpis)} />,
-                () => <HealthCard healthPercent={section.healthPercent} labels={labels.overview.health} />,
-                () => <OpsEventTable events={section.events} labels={labels.overview.events} />,
-            ]
-        case "agents":
-            return [
-                () =>
-                    section.agents.length === 0 ? (
-                        <EmptyState icon={RobotIcon} title={labels.agents.emptyTitle} description={labels.agents.emptyDescription} />
-                    ) : (
-                        <Grid
-                            columns={{ base: 1, sm: 2, lg: 4 }}
-                            gap={4}
-                            items={section.agents.map((agent) => ({
-                                key: agent.id,
-                                content: () => (
-                                    <AgentCard
-                                        name={agent.name}
-                                        model={agent.model}
-                                        channels={agent.channels}
-                                        status={agent.status}
-                                        onOpen={() => section.onOpenAgent(agent.id)}
-                                        labels={labels.agents}
-                                    />
-                                ),
-                            }))}
-                        />
-                    ),
-            ]
-        case "channels":
-            return [
-                () => (
-                    <ChannelList
-                        channels={section.channels}
-                        onViewChannel={section.onViewChannel}
-                        onReconnectChannel={section.onReconnectChannel}
-                        onConnectNew={section.onConnectNew}
-                        labels={labels.channels.list}
+    case "overview":
+        return [
+            () => <StatGridCard items={buildKpiItems(section.kpis)} />,
+            () => <HealthCard healthPercent={section.healthPercent} labels={labels.overview.health} />,
+            () => <OpsEventTable events={section.events} labels={labels.overview.events} />,
+        ]
+    case "agents":
+        return [
+            () =>
+                section.agents.length === 0 ? (
+                    <EmptyState icon={RobotIcon} title={labels.agents.emptyTitle} description={labels.agents.emptyDescription} />
+                ) : (
+                    <Grid
+                        columns={{ base: 1, sm: 2, lg: 4 }}
+                        gap={4}
+                        items={section.agents.map((agent) => ({
+                            key: agent.id,
+                            content: () => (
+                                <AgentCard
+                                    name={agent.name}
+                                    model={agent.model}
+                                    channels={agent.channels}
+                                    status={agent.status}
+                                    onOpen={() => section.onOpenAgent(agent.id)}
+                                    labels={labels.agents}
+                                />
+                            ),
+                        }))}
                     />
                 ),
-                () => (
-                    <ChannelInbox
-                        threads={section.threads}
-                        currentPage={section.currentPage}
-                        totalPages={section.totalPages}
-                        onPageChange={section.onPageChange}
-                        onOpenThread={section.onOpenThread}
-                        labels={labels.channels.inbox}
-                    />
-                ),
-            ]
-        case "workflows":
-            return [
-                () => (
-                    <N8nWorkflowTable
-                        workflows={section.workflows}
-                        onToggleWorkflow={section.onToggleWorkflow}
-                        onEditWorkflow={section.onEditWorkflow}
-                        togglingId={section.togglingId}
-                        labels={labels.workflows}
-                    />
-                ),
-            ]
-        case "knowledge":
-            return [() => <KnowledgeSection sources={section.sources} onAddSource={section.onAddSource} labels={labels.knowledge} />]
-        case "models":
-            return [() => <ModelsSection models={section.models} labels={labels.models} />]
-        case "tools":
-            return [
-                () => (
-                    <ToolsSection
-                        tools={section.tools}
-                        onToggleTool={section.onToggleTool}
-                        togglingId={section.togglingId}
-                        labels={labels.tools}
-                    />
-                ),
-            ]
-        case "playground":
-            return [
-                () => (
-                    <PlaygroundPanel
-                        agentLabel={section.agentLabel}
-                        turns={section.turns}
-                        composerValue={section.composerValue}
-                        onComposerChange={section.onComposerChange}
-                        onSend={section.onSend}
-                        isSending={section.isSending}
-                        labels={labels.playground}
-                    />
-                ),
-            ]
+        ]
+    case "channels":
+        return [
+            () => (
+                <ChannelList
+                    channels={section.channels}
+                    onViewChannel={section.onViewChannel}
+                    onReconnectChannel={section.onReconnectChannel}
+                    onConnectNew={section.onConnectNew}
+                    labels={labels.channels.list}
+                />
+            ),
+            () => (
+                <ChannelInbox
+                    threads={section.threads}
+                    currentPage={section.currentPage}
+                    totalPages={section.totalPages}
+                    onPageChange={section.onPageChange}
+                    onOpenThread={section.onOpenThread}
+                    labels={labels.channels.inbox}
+                />
+            ),
+        ]
+    case "workflows":
+        return [
+            () => (
+                <N8nWorkflowTable
+                    workflows={section.workflows}
+                    onToggleWorkflow={section.onToggleWorkflow}
+                    onEditWorkflow={section.onEditWorkflow}
+                    togglingId={section.togglingId}
+                    labels={labels.workflows}
+                />
+            ),
+        ]
+    case "knowledge":
+        return [() => <KnowledgeSection sources={section.sources} onAddSource={section.onAddSource} labels={labels.knowledge} />]
+    case "models":
+        return [() => <ModelsSection models={section.models} labels={labels.models} />]
+    case "tools":
+        return [
+            () => (
+                <ToolsSection
+                    tools={section.tools}
+                    onToggleTool={section.onToggleTool}
+                    togglingId={section.togglingId}
+                    labels={labels.tools}
+                />
+            ),
+        ]
+    case "playground":
+        return [
+            () => (
+                <PlaygroundPanel
+                    agentLabel={section.agentLabel}
+                    turns={section.turns}
+                    composerValue={section.composerValue}
+                    onComposerChange={section.onComposerChange}
+                    onSend={section.onSend}
+                    isSending={section.isSending}
+                    labels={labels.playground}
+                />
+            ),
+        ]
     }
 }
 

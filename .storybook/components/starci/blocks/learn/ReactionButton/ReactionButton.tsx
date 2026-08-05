@@ -57,7 +57,7 @@ const ReactionButton = ({
     const summaryRow = total > 0 ? (
         <StackH
             gap={3}
-            principles={["value-row"]}
+            principles="value-row"
             align="center"
             isSkeleton={isSkeleton}
             items={[
@@ -114,7 +114,7 @@ const ReactionButton = ({
     )
 
     return (
-        <StackH gap={3} principles={["flex-action"]} align="center" isSkeleton={isSkeleton} items={[() => triggerAndSummary]} />
+        <StackH gap={3} principles="flex-action" align="center" isSkeleton={isSkeleton} items={[() => triggerAndSummary]} />
     )
 }
 

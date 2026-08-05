@@ -38,7 +38,7 @@ const QaMessageBubble = ({
             <>
                 <StackH
                     gap={2}
-                    principles={["icon-text", "separator-dot"]}
+                    principles="icon-text"
                     align="center"
 
                     items={[

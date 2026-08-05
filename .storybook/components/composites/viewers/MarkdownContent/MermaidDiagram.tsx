@@ -83,7 +83,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                 "mermaid" is the label, same as a code fence names its own language. The zoom
                 trigger is icon-only too, matching `SnippetIcon`'s copy button — always visible,
                 not a hover-only overlay. */}
-            <Box principles={["control-pad"]} className="flex items-center justify-between border-b border-default px-3 py-2">
+            <Box principles="control-pad" className="flex items-center justify-between border-b border-default px-3 py-2">
                 <span className="font-mono text-xs text-muted">mermaid</span>
                 {data ? (
                     <button type="button" aria-label={expandLabel} title={expandLabel} onClick={() => setOpen(true)} className="text-muted">
@@ -128,7 +128,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                                         <StackV
                                             as="figure"
                                             gap={3}
-                                            principles={["sibling-stack"]}
+                                            principles="sibling-stack"
                                             align="center"
                                             justify="center"
                                             classNames={["h-full"]}
@@ -155,7 +155,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                     </Modal>
                 </>
             ) : (
-                <Box principles={["cell-pad"]} className="p-3 text-sm text-muted">{loadingLabel}</Box>
+                <Box principles="cell-pad" className="p-3 text-sm text-muted">{loadingLabel}</Box>
             )}
         </figure>
     )

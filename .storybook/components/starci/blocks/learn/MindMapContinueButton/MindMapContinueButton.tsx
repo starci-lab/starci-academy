@@ -89,7 +89,7 @@ const MindMapContinueButton = ({
             // should become an atom/composite (Chip/Button/SurfaceCard) — a frame cannot own it,
             // Wrap with Box + principles for now.
             <Box
-                principles={["control-pad"]} className="rounded-full border border-default bg-surface px-3 py-2 shadow-lg"
+                principles="control-pad" className="rounded-full border border-default bg-surface px-3 py-2 shadow-lg"
             >
                 <Typography
                     size="sm"

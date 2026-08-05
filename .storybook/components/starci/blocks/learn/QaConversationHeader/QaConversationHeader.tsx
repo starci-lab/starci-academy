@@ -69,7 +69,7 @@ const QaConversationHeader = ({
     const nameRow = (
         <StackH
             gap={2}
-            principles={["icon-text"]}
+            principles="icon-text"
             align="center"
             isSkeleton={isSkeleton}
 
@@ -149,7 +149,7 @@ const QaConversationHeader = ({
 
     return (
         <div>
-            <StackH gap={4} principles={["content-row"]} align="center" isSkeleton={isSkeleton} items={[() => headerRow]} />
+            <StackH gap={4} principles="content-row" align="center" isSkeleton={isSkeleton} items={[() => headerRow]} />
         </div>
     )
 }

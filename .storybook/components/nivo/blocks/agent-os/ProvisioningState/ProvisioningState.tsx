@@ -102,8 +102,16 @@ const ProvisioningStepsSkeleton = () => (
                             isSkeleton
                             classNames={["w-full"]}
                             items={[
-                                () => <Typography size="sm" isSkeleton classNames={["w-1/3"]} />,
-                                () => <Typography size="xs" isSkeleton classNames={["w-2/3"]} />,
+                                () => (
+                                    <div className="w-1/3 [&>*]:!w-full">
+                                        <Typography size="sm" isSkeleton />
+                                    </div>
+                                ),
+                                () => (
+                                    <div className="w-2/3 [&>*]:!w-full">
+                                        <Typography size="xs" isSkeleton />
+                                    </div>
+                                ),
                             ]}
                         />
                     ),

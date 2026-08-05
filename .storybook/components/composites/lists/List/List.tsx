@@ -156,7 +156,7 @@ const Row = ({
 
             />
             {!isSkeleton && (MetaSlot || TrailingSlot) ? (
-                <Box principles={["push-end"]} className="ml-auto">
+                <Box principles="push-end" className="ml-auto">
                     <StackH
                         gap={3}
                         isSkeleton={isSkeleton}
@@ -458,7 +458,7 @@ const ToggleRow = ({
             gap={4}
             isSkeleton={isSkeleton}
             classNames={classNames}
-            principles={["label-field"]}
+            principles="label-field"
             items={[
                 () => (
                     <TitledText

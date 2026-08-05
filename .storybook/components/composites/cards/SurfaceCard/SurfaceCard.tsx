@@ -616,7 +616,7 @@ const Nested = ({
                     <StackH
                         gap={3}
                         justify="between"
-                        principles={["content-row"]}
+                        principles="content-row"
                         classNames={["min-w-0"]}
                         padding={{ x: 4, y: 3 }}
                         isSkeleton={isSkeleton}
@@ -644,7 +644,7 @@ const Nested = ({
             ) : null}
             <div className="flex flex-col divide-y divide-default">{innerBody}</div>
             {Footer ? (
-                <Box principles={["control-pad"]} className="border-t border-default px-3 py-2">
+                <Box principles="control-pad" className="border-t border-default px-3 py-2">
                     <Footer isSkeleton={isSkeleton} />
                 </Box>
             ) : null}
@@ -940,7 +940,7 @@ const PressableGroup = ({
                 <Grid
                     columns={columns}
                     gap={gap}
-                    principles={["sibling-stack"]}
+                    principles="sibling-stack"
                     items={items.map((item) => ({
                         key: item.key,
                         content: () => <PressableGroupSkeletonTile classNames={item.classNames} />,
@@ -964,7 +964,7 @@ const PressableGroup = ({
             <Grid
                 columns={columns}
                 gap={gap}
-                principles={["sibling-stack"]}
+                principles="sibling-stack"
                 items={items.map((item) => {
                     // A component reference, not a built node (COMPOSITE-8) — `Base`'s
                     // `body` slot calls this itself; the closure keeps the item's own
@@ -1083,7 +1083,7 @@ const SelectableGroup = <T extends string>({
         >
             <Grid
                 gap={3}
-                principles={["sibling-stack"]}
+                principles="sibling-stack"
                 columns={SELECTABLE_GROUP_COLUMNS[columns]}
                 classNames={classNames}
                 items={items.map((item) => ({
@@ -1106,7 +1106,7 @@ const SelectableGroup = <T extends string>({
                                                 ) : null}
                                             </span>
                                             {item.badge ? (
-                                                <Box as="span" principles={["push-end"]} className="shrink-0">
+                                                <Box as="span" principles="push-end" className="shrink-0">
                                                     <item.badge />
                                                 </Box>
                                             ) : null}
@@ -1396,7 +1396,7 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
                 ]}
             />
             {metaSlot || trailingSlot || selected ? (
-                <Box principles={["push-end"]}>
+                <Box principles="push-end">
                     <StackH
                         gap={3}
                         classNames={["shrink-0"]}
@@ -1495,8 +1495,8 @@ const List = ({
     // outranks the skeleton (a failed fetch is not a loading state); empty only
     // reads once loading is done.
     const inner = error && ErrorState != null
-        ? <Box principles={["page-pad"]}><ErrorState /></Box>
-        : !isSkeleton && isEmpty && EmptyState != null ? <Box principles={["page-pad"]}><EmptyState /></Box> : rows
+        ? <Box principles="page-pad"><ErrorState /></Box>
+        : !isSkeleton && isEmpty && EmptyState != null ? <Box principles="page-pad"><EmptyState /></Box> : rows
     const bare = label == null && description == null
     const surface = (
         <div
@@ -1872,7 +1872,7 @@ const CrossListRow = ({
         <StackH
             gap={4}
             align="start"
-            principles={["content-row"]}
+            principles="content-row"
             padding={4}
             isSkeleton={isSkeleton}
             items={

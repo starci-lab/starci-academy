@@ -104,7 +104,7 @@ const AgentOsSubNav = ({ sections, activeKey, onSelect, variant = "mini-rail", i
             isDisabled: section.isDisabled,
         }))
         return (
-            <div data-tier="block" data-component="AgentOsSubNav">
+            <div data-tier="block" data-component="AgentOsSubNav" className="w-full [&>*]:w-full">
                 <Tabs
                     items={items}
                     selectedKey={activeKey}
@@ -112,7 +112,6 @@ const AgentOsSubNav = ({ sections, activeKey, onSelect, variant = "mini-rail", i
                     ariaLabel="Agent OS sections"
                     variant="primary"
                     isSkeleton={isSkeleton}
-                    classNames={["w-full"]}
                 />
             </div>
         )

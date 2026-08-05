@@ -134,7 +134,7 @@ const Footer = ({
             <div className="max-w-sm">
                 <StackV gap={4} items={[() => brandColumn]} />
             </div>
-            <StackH gap={7} principles={["layout-split"]} at="sm" items={[() => linkColumns]} />
+            <StackH gap={7} principles="layout-split" at="sm" items={[() => linkColumns]} />
         </>
     )
 
@@ -174,7 +174,7 @@ const Footer = ({
         <>
             <StackH
                 gap={7}
-                principles={["layout-split"]}
+                principles="layout-split"
                 justify="between"
                 at="md"
 
@@ -183,7 +183,7 @@ const Footer = ({
             <div className="items-start @app-sm:items-center">
                 <StackH
                     gap={3}
-                    principles={["sibling-stack"]}
+                    principles="sibling-stack"
                     justify="between"
                     at="sm"
 
@@ -194,7 +194,7 @@ const Footer = ({
     )
 
     const footerBody = (
-        <StackV gap={6} principles={["block-boundary"]} divider items={[() => sections]} />
+        <StackV gap={6} principles="block-boundary" divider items={[() => sections]} />
     )
 
     return (

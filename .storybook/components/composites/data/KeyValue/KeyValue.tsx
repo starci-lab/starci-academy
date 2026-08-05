@@ -107,7 +107,7 @@ const KeyValueRow = ({
             <StackV
                 gap={2}
                 classNames={["min-w-0"]}
-                principles={["title-subtitle"]}
+                principles="title-subtitle"
                 isSkeleton={isSkeleton}
                 items={[
                     () => (
@@ -158,7 +158,7 @@ const KeyValueRow = ({
             align="start"
             justify="between"
             gap={3}
-            principles={["value-row"]}
+            principles="value-row"
             classNames={classNames}
             isSkeleton={isSkeleton}
             items={[() => pairContent]}

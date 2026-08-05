@@ -75,7 +75,7 @@ export const InputTags = ({
             skeletonControl={<Box className={cn(classNames)}><FieldSkeleton /></Box>}
         >
             <Box
-                principles={["control-pad", "sibling-stack"]}
+                principles="control-pad"
                 className={cn(
                     "bg-default-100 flex w-full flex-wrap items-center gap-2 rounded-xl border px-3 py-2",
                     invalid ? "border-danger" : "border-default-200",

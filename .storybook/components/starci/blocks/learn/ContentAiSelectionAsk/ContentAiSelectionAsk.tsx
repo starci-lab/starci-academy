@@ -51,7 +51,7 @@ const ContentAiSelectionAsk = ({
     >
         <StackH
             gap={2}
-            principles={["icon-text"]}
+            principles="icon-text"
             align="center"
             items={[
                 () => (

@@ -101,7 +101,7 @@ const groupToAccordionItem = (group: PlaygroundResourceGroup): SurfaceCardAccord
     body: () => (
         <StackV
             gap={1}
-            principles={["sibling-stack"]}
+            principles="sibling-stack"
 
             items={group.resources.map((resource, index) => () => (
                 <ListRow
@@ -163,7 +163,7 @@ const PlaygroundResourcePanel = ({
     const headerRow = (
         <StackH
             gap={3}
-            principles={["value-row"]}
+            principles="value-row"
             justify="between"
             align="center"
 

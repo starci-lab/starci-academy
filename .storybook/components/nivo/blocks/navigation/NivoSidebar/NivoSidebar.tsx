@@ -208,7 +208,7 @@ const NivoSidebar = ({
                 <Avatar size="sm" name={account.name} src={account.avatarUrl ?? undefined} seed={account.email} isSkeleton={isSkeleton} />
                 {!isCollapsed && (
                     <>
-                        <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                        <div className="flex min-w-0 flex-1 flex-col gap-0">
                             <Typography size="sm" weight="medium" truncate isSkeleton={isSkeleton} text={account.name} />
                             <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={account.email} />
                         </div>

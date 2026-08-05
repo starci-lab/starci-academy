@@ -148,9 +148,11 @@ const ExpertSiteLeadForm = ({
     )
 }
 
-// A private wrapper so the file matches the `_slot` skeleton-thread convention used
-// by callers embedding this form (e.g. `ExpertSiteView`) — the form has no async
-// data of its own, so `isSkeleton` simply mirrors the idle field stack.
+/**
+ * Skeleton wrapper matching the `_slot` convention used by callers embedding this
+ * form (e.g. `ExpertSiteView`). The form has no async data of its own, so
+ * `isSkeleton` simply mirrors the idle field stack.
+ */
 export const ExpertSiteLeadFormSkeleton = ({ isSkeleton = true }: SkeletonProps) => (
     <SurfaceCard
         variant="nested"

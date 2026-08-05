@@ -62,14 +62,15 @@ const QuickActionsCard = ({ items, isSkeleton = false, labels }: QuickActionsCar
                     gap={2}
                     isSkeleton={isSkeleton}
                     items={items.map((item) => () => (
-                        <Button
-                            variant="secondary"
-                            prefixIcon={item.icon}
-                            isSkeleton={isSkeleton}
-                            label={item.label}
-                            onPress={isSkeleton ? undefined : item.onPress}
-                            classNames={["w-full"]}
-                        />
+                        <div className="w-full [&>*]:w-full">
+                            <Button
+                                variant="secondary"
+                                prefixIcon={item.icon}
+                                isSkeleton={isSkeleton}
+                                label={item.label}
+                                onPress={isSkeleton ? undefined : item.onPress}
+                            />
+                        </div>
                     ))}
                 />
             )}

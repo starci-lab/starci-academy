@@ -208,7 +208,7 @@ const ContentCommentThread = ({
             )}
 
             {!comment.isDeleted && !editing ? (
-                <StackH gap={4} principles={["content-row"]} at="sm" align="center" items={[() => actionRow]} />
+                <StackH gap={4} principles="content-row" at="sm" align="center" items={[() => actionRow]} />
             ) : null}
         </>
     )
@@ -224,7 +224,7 @@ const ContentCommentThread = ({
             {replying ? (
                 <StackH
                     gap={2}
-                    principles={["icon-text"]}
+                    principles="icon-text"
                     align="start"
 
                     items={[
@@ -304,7 +304,7 @@ const ContentCommentThread = ({
             byline={() => (
                 <StackH
                     gap={2}
-                    principles={["icon-text", "separator-dot"]}
+                    principles="icon-text"
                     at="sm"
                     align="center"
 

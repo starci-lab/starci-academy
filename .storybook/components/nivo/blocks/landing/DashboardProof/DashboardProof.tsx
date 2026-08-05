@@ -84,7 +84,7 @@ const TopBar = ({ panelLabel, insightLabel }: { panelLabel: string; insightLabel
                     align="center"
                     items={[
                         () => (
-                            <span aria-hidden className="flex shrink-0 items-center gap-1.5">
+                            <span aria-hidden className="flex shrink-0 items-center gap-2">
                                 <span className="size-2 rounded-full bg-default" />
                                 <span className="size-2 rounded-full bg-default" />
                                 <span className="size-2 rounded-full bg-default" />
@@ -105,7 +105,7 @@ const TopBar = ({ panelLabel, insightLabel }: { panelLabel: string; insightLabel
  * plain div track rather than a vendor chart.
  */
 const ActivityChart = ({ ariaLabel, bars }: { ariaLabel: string; bars: Array<DashboardProofActivityBar> }) => (
-    <div role="img" aria-label={ariaLabel} className="flex h-24 items-end gap-1.5 rounded-2xl bg-default p-3">
+    <div role="img" aria-label={ariaLabel} className="flex h-24 items-end gap-2 rounded-2xl bg-default p-3">
         {bars.map((bar) => (
             <div
                 key={bar.key}

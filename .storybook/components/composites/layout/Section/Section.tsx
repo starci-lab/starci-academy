@@ -124,7 +124,7 @@ const Header = ({
             classNames={classNames}
             isSkeleton={isSkeleton}
             items={[
-                () => <StackV gap={2} principles={["title-subtitle"]} classNames={["min-w-0"]} isSkeleton={isSkeleton} items={[() => titleBlock]} />,
+                () => <StackV gap={2} principles="title-subtitle" classNames={["min-w-0"]} isSkeleton={isSkeleton} items={[() => titleBlock]} />,
                 ...(Action != null ? [() => (
                     <div className="shrink-0"><Action isSkeleton={isSkeleton} /></div>
                 )] : []),

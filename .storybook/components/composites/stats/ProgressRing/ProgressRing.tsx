@@ -87,7 +87,7 @@ export const ProgressRing = ({
     return (
         <StackV
             gap={3}
-            principles={["sibling-stack"]}
+            principles="sibling-stack"
             align="center"
             classNames={classNames}
             isSkeleton={isSkeleton}

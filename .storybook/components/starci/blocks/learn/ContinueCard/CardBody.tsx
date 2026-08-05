@@ -63,7 +63,7 @@ export const CardBody = ({
             <div className="relative">
                 <StackH
                     gap={4}
-                    principles={["content-row"]}
+                    principles="content-row"
                     align="center"
                     isSkeleton={isSkeleton}
                     items={[

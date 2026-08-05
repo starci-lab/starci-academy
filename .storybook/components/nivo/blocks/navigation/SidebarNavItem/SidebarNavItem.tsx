@@ -79,14 +79,15 @@ const SidebarNavItem = ({
         >
             <Icon aria-hidden focusable="false" className="size-5 shrink-0" />
             {!isCollapsed && (
-                <Typography
-                    size="sm"
-                    weight={isActive ? "medium" : undefined}
-                    color={isActive ? "accent" : "muted"}
-                    truncate
-                    classNames={["flex-1"]}
-                    text={label}
-                />
+                <span className="min-w-0 flex-1">
+                    <Typography
+                        size="sm"
+                        weight={isActive ? "medium" : undefined}
+                        color={isActive ? "accent" : "muted"}
+                        truncate
+                        text={label}
+                    />
+                </span>
             )}
             {!isCollapsed && endContent ? <span className="ml-auto shrink-0">{endContent}</span> : null}
         </button>

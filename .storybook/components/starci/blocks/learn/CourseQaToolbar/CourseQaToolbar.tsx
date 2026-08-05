@@ -117,7 +117,7 @@ const CourseQaToolbar = ({
 
                 />
             </div>
-            <StackH gap={3} principles={["flex-action"]} justify="between" at="sm" isSkeleton={isSkeleton} items={[() => searchAndCount]} />
+            <StackH gap={3} principles="flex-action" justify="between" at="sm" isSkeleton={isSkeleton} items={[() => searchAndCount]} />
         </>
     )
 

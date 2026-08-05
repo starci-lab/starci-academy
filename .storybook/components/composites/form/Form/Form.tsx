@@ -176,7 +176,7 @@ const Section = ({
         <StackV
             gap={2}
             classNames={["min-w-0"]}
-            principles={["title-subtitle"]}
+            principles="title-subtitle"
             isSkeleton={isSkeleton}
             items={[
                 () => (

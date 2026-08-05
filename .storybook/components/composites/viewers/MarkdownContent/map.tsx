@@ -291,7 +291,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
             return (
                 // inset-exception: inline-code geometry, wider than tall by nature, not a surface inset
                 // (same shape as `RichText`'s inline `<code>` — see `RichText.tsx`)
-                <Box as="code" principles={["control-pad"]} className="rounded-md bg-default px-1 py-0 font-mono text-sm text-foreground [overflow-wrap:anywhere]">
+                <Box as="code" principles="control-pad" className="rounded-md bg-default px-1 py-0 font-mono text-sm text-foreground [overflow-wrap:anywhere]">
                     {children}
                 </Box>
             )
@@ -344,7 +344,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
                     as="span"
                     at="sm"
                     gap={3}
-                    principles={["chip-row"]}
+                    principles="chip-row"
                     items={String(items ?? "").split("|").filter(Boolean).map((keyword) => () => (
                         <Chip tone="default" text={keyword} />
                     ))}
@@ -377,7 +377,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
                         <div className="text-start">
                             <StackH
                                 gap={4}
-                                principles={["content-row"]}
+                                principles="content-row"
                                 justify="between"
                                 items={[
                                     () => <span className={reading ? "text-base font-semibold" : "text-sm font-semibold"}>{title}</span>,

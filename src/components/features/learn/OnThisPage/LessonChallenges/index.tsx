@@ -2,44 +2,24 @@
 
 import React from "react"
 import useSWR from "swr"
-import { Button, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
 import { ArrowRightIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
 import { queryChallenges } from "@/modules/api/graphql/queries/query-challenges"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { DifficultyChip } from "@/components/blocks/chips/DifficultyChip"
 import { LabeledList } from "@/components/blocks/lists/LabeledList"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import type { Difficulty } from "@/components/blocks/chips/DifficultyChip"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackH } from "@/components/frames/Stack"
+import { toDifficulty } from "@/components/page/_map"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { ContentTab, setContentTab } from "@/redux/slices/tabs"
 import { useQueryContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryContentSwr"
 import { usePremiumGateOverlayState } from "@/hooks/zustand/overlay/hooks"
 
-/** Props for {@link LessonChallenges}. */
-export type LessonChallengesProps = WithClassNames<undefined>
-
-/**
- * Normalize a raw challenge difficulty (easy | medium | hard | insane) into the
- * `DifficultyChip` enum; unknown values fall back to `beginner`.
- *
- * @param raw - The backend difficulty string.
- */
-const toDifficulty = (raw: string): Difficulty => {
-    switch (raw) {
-    case "medium":
-        return "intermediate"
-    case "hard":
-        return "advanced"
-    case "insane":
-        return "insane"
-    default:
-        return "beginner"
-    }
-}
+/** Placeholder challenge rows shown while the lesson's challenges load. */
+const SKELETON_ROWS = 3
 
 /**
  * Right-rail "practice this lesson" panel: the challenges attached to the lesson
@@ -48,12 +28,13 @@ const toDifficulty = (raw: string): Difficulty => {
  *
  * Uses its OWN read-only SWR for `challenges({ contentId })` (NOT the tab-coupled
  * {@link import("@/hooks").useQueryChallengesSwr}, which gates on the active tab and
- * writes Redux). Self-hides when the lesson has no challenges (AsyncContent empty →
- * null), so it never leaves an empty box.
+ * writes Redux). Self-hides once settled with no challenges, so it never leaves an
+ * empty box.
  *
- * @param props - {@link LessonChallengesProps}
+ * The label and the CTA are static i18n — known before the query returns — so only
+ * the CHALLENGE ROWS rest, inside the same `LabeledList` the loaded rows use.
  */
-export const LessonChallenges = ({ className }: LessonChallengesProps) => {
+export const LessonChallenges = () => {
     const t = useTranslations()
     const dispatch = useAppDispatch()
     const router = useRouter()
@@ -92,39 +73,43 @@ export const LessonChallenges = ({ className }: LessonChallengesProps) => {
         router.replace(`${pathname}?tab=${ContentTab.Challenges}`)
     }
 
+    const isSkeleton = isLoading && !data
+    if (!isSkeleton && challenges.length === 0) {
+        return null
+    }
+
     return (
-        <AsyncContent
-            isLoading={isLoading && !data}
-            skeleton={
-                <div className="flex flex-col gap-3">
-                    <Skeleton.Typography type="body-sm" width="1/2" />
-                    <Skeleton.Typography type="body-xs" width="3/4" />
-                    <Skeleton.Button />
-                </div>
-            }
-            isEmpty={challenges.length === 0}
+        <LabeledList
+            label={t("lessonRail.challenges.title")}
+            action={(
+                <Button
+                    label={t("lessonRail.challenges.practice")}
+                    size="sm"
+                    variant="primary"
+                    suffixIcon={ArrowRightIcon}
+                    onPress={onPractice}
+                    classNames={["self-start"]}
+                />
+            )}
         >
-            <LabeledList
-                className={className}
-                label={t("lessonRail.challenges.title")}
-                action={(
-                    <Button size="sm" variant="primary" className="self-start" onPress={onPractice}>
-                        {t("lessonRail.challenges.practice")}
-                        <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
-                    </Button>
-                )}
-            >
-                {challenges.map((challenge) => (
-                    <div key={challenge.id} className="flex items-center justify-between gap-2">
-                        <Typography type="body-sm" color="muted" truncate>
-                            {challenge.title}
-                        </Typography>
-                        {challenge.difficulty ? (
-                            <DifficultyChip difficulty={toDifficulty(challenge.difficulty)} />
-                        ) : null}
-                    </div>
+            {isSkeleton
+                ? Array.from({ length: SKELETON_ROWS }, (_row, index) => (
+                    <Typography key={index} size="sm" color="muted" isSkeleton />
+                ))
+                : challenges.map((challenge) => (
+                    <StackH
+                        key={challenge.id}
+                        gap={3}
+                        align="center"
+                        justify="between"
+                        items={[
+                            () => <Typography size="sm" color="muted" truncate text={challenge.title} />,
+                            ...(challenge.difficulty
+                                ? [() => <DifficultyChip difficulty={toDifficulty(challenge.difficulty)} />]
+                                : []),
+                        ]}
+                    />
                 ))}
-            </LabeledList>
-        </AsyncContent>
+        </LabeledList>
     )
 }

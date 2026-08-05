@@ -1,82 +1,56 @@
-"use client"
-
 import React from "react"
-import { useLocale, useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
-import { cn, ListBox, Typography } from "@heroui/react"
 import { FlameIcon } from "@phosphor-icons/react"
-import { pathConfig } from "@/resources/path"
-import { useQueryRecommendedCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryRecommendedCoursesSwr"
-import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
-import { WithClassNames } from "@/modules/types/base/class-name"
-import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
+import { PriceTagInline } from "@/components/starci/blocks/commerce/PriceTag"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackV } from "@/components/frames/Stack"
+import type { GlobalSearchModalLabels, GlobalSearchModalPopularCourse } from "../../component"
 
 /** Props for {@link GlobalSearchEmpty}. */
-export interface GlobalSearchEmptyProps extends WithClassNames<undefined> {
-    /** Whether the user has typed a (trimmed) query yet — switches idle hint vs no-match copy. */
+export interface GlobalSearchEmptyProps {
+    /** `true` when a non-blank query is active but matched nothing. */
     hasQuery: boolean
+    /** Popular-course fallback rows — already the viewer's recommendations, priced. */
+    popularCourses: Array<GlobalSearchModalPopularCourse>
+    /** Every translated string this modal renders. */
+    labels: Pick<GlobalSearchModalLabels, "noResults" | "idleHint" | "popular">
+    /** Fired when a popular-course row is pressed. */
+    onSelectCourse: (course: GlobalSearchModalPopularCourse) => void
 }
 
 /**
  * Empty state for the global search palette.
  *
  * - Query typed, no hits → a "no matches" message.
- * - Idle (blank query) → popular courses (the viewer's recommendations, already priced
- *   with their loyalty discount) as quick links, so the palette is never a dead blank.
+ * - Idle (blank query) → popular courses as quick links, so the palette is
+ *   never a dead blank.
  *
- * @param props.hasQuery — `true` when a non-empty query is active.
+ * @param props - {@link GlobalSearchEmptyProps}
  */
-export const GlobalSearchEmpty = ({ hasQuery, className }: GlobalSearchEmptyProps) => {
-    const t = useTranslations()
-    const locale = useLocale()
-    const router = useRouter()
-    const { setOpen } = useSearchOverlayState()
-    const { data } = useQueryRecommendedCoursesSwr()
-    const popular = (data?.items ?? []).slice(0, 4)
-
+export const GlobalSearchEmpty = ({ hasQuery, popularCourses, labels, onSelectCourse }: GlobalSearchEmptyProps) => {
     // No popular courses to fall back on → just the appropriate hint line (never a blank).
-    if (popular.length === 0) {
-        return (
-            <div className={cn("flex flex-col items-center justify-center px-4 py-9 text-center", className)}>
-                <Typography type="body-sm" color="muted">{t(hasQuery ? "search.noResults" : "search.idleHint")}</Typography>
-            </div>
-        )
+    if (popularCourses.length === 0) {
+        return <AsyncContentEmpty title={hasQuery ? labels.noResults : labels.idleHint} />
     }
 
+    const items: Array<SurfaceCardListItem> = popularCourses.map((course) => ({
+        key: course.id,
+        leadingIcon: FlameIcon,
+        title: course.title,
+        meta: () => <PriceTagInline discounted={course.discountedPriceVnd} />,
+        onPress: () => onSelectCourse(course),
+    }))
+
+    // A query WAS typed but matched nothing → keep the "not found" line, then fall
+    // through to the popular list below it, so the palette is never a dead end.
     return (
-        <div className={cn("flex flex-col gap-2 px-2", className)}>
-            {/* query typed but no hits → keep the "not found" line, then fall through to Popular
-                so the palette is never a dead-end */}
-            {hasQuery ? (
-                <div className="px-2 pb-1 text-xs text-muted">{t("search.noResults")}</div>
-            ) : null}
-            <div className="px-2 text-xs font-medium text-muted">{t("search.popular")}</div>
-            <ListBox aria-label={t("search.popular")} className="gap-0">
-                {popular.map((course) => (
-                    <ListBox.Item
-                        key={course.displayId}
-                        id={course.displayId}
-                        textValue={course.title}
-                        className="group rounded-lg py-1 data-[pressed=true]:bg-default"
-                        onAction={() => {
-                            router.push(pathConfig().locale(locale).course(course.displayId).build())
-                            setOpen(false)
-                        }}
-                    >
-                        <div className="flex items-center gap-2 py-1">
-                            <FlameIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
-                            <Typography
-                                type="body-sm"
-                                truncate
-                                className="flex-1 underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline"
-                            >
-                                {course.title}
-                            </Typography>
-                            <PriceTag discounted={course.discountedPriceVnd} size="sm" className="shrink-0" />
-                        </div>
-                    </ListBox.Item>
-                ))}
-            </ListBox>
-        </div>
+        <StackV
+            gap={3}
+            items={[
+                ...(hasQuery ? [() => <Typography size="sm" color="muted" text={labels.noResults} />] : []),
+                () => <SurfaceCardList label={labels.popular} subtleLabel items={items} />,
+            ]}
+        />
     )
 }

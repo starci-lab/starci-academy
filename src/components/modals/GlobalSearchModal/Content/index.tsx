@@ -1,114 +1,82 @@
-"use client"
-import { useTranslations } from "next-intl"
 import React from "react"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackV } from "@/components/frames/Stack"
+import type {
+    GlobalSearchModalLabels,
+    GlobalSearchModalPopularCourse,
+    GlobalSearchModalSection,
+    GlobalSearchResultRow,
+} from "../component"
 import { GlobalSearchContentBlock } from "./Block"
 import { GlobalSearchEmpty } from "./Empty"
-import { ScrollShadow, Typography } from "@heroui/react"
-import { useAppSelector } from "@/redux/hooks"
-import type { AutocompleteGlobalSearchItem } from "@/modules/api/graphql/queries/types/autocomplete-global-search"
 
-/** Entity bucket a pressed search item belongs to — drives how its href is built + its leading icon. */
-export type GlobalSearchKind =
-    | "course"
-    | "module"
-    | "content"
-    | "challenge"
-    | "flashcardDeck"
-    | "milestone"
-    | "milestoneTask"
-    | "foundation"
-
-/** One grouped, collapsible section of the results (header label + hit count + rows). */
-interface GlobalSearchSection {
-    /** Bucket kind — also the accordion item key and the `onItemPress` discriminator. */
-    kind: GlobalSearchKind
-    /** Translated section heading. */
-    label: string
-    /** Hits in this bucket (already deduped + parent-path enriched by the API). */
-    items?: Array<AutocompleteGlobalSearchItem>
+/** Props for {@link GlobalSearchContent}. */
+export interface GlobalSearchContentProps {
+    /** Non-empty result buckets, in display order. */
+    sections: Array<GlobalSearchModalSection>
+    /** `true` once a non-blank query has been committed. */
+    hasQuery: boolean
+    /** Popular-course fallback rows. */
+    popularCourses: Array<GlobalSearchModalPopularCourse>
+    /** Every translated string this modal renders. */
+    labels: GlobalSearchModalLabels
+    /** Fired when a result row is pressed. */
+    onSelectResult: (row: GlobalSearchResultRow) => void
+    /** Fired when a popular-course fallback row is pressed. */
+    onSelectPopularCourse: (course: GlobalSearchModalPopularCourse) => void
 }
 
 /**
- * Grouped command-palette results for global search, rendered as a FLAT grouped list: one
- * section per non-empty bucket (a `Label (count)` header + a React-Aria ListBox of rows).
- * No accordion — every hit is visible and keyboard-navigable (↑↓ within a list, ↵ to open).
+ * The results region: one section per non-empty bucket (a `Label (count)`
+ * heading + its rows), or the popular/no-match fallback when every bucket is
+ * empty. Presentational — every field arrives already resolved.
  *
- * Each result carries a `path` (server-built deep-link); pressing a row navigates there.
+ * @param props - {@link GlobalSearchContentProps}
  */
-export const GlobalSearchContent = () => {
-    const t = useTranslations()
-
-    const courses = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.courses)
-    const modules = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.modules)
-    const challenges = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.challenges)
-    const contents = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.contents)
-    const flashcardDecks = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.flashcardDecks)
-    const milestones = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.milestones)
-    const milestoneTasks = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.milestoneTasks)
-    const foundations = useAppSelector((state) => state.socketIo.globalSearchResults?.data?.foundations)
-    const query = useAppSelector((state) => state.search.query).trim()
-
-    // One section per bucket, in display order; only non-empty buckets are shown.
-    const allSections: Array<GlobalSearchSection> = [
-        {
-            kind: "course",
-            label: t("search.suggestions.courses"),
-            items: courses,
-        },
-        {
-            kind: "module",
-            label: t("search.suggestions.modules"),
-            items: modules,
-        },
-        {
-            kind: "content",
-            label: t("search.suggestions.contents"),
-            items: contents,
-        },
-        {
-            kind: "challenge",
-            label: t("search.suggestions.challenges"),
-            items: challenges,
-        },
-        {
-            kind: "flashcardDeck",
-            label: t("search.suggestions.flashcards"),
-            items: flashcardDecks,
-        },
-        {
-            kind: "milestone",
-            label: t("search.suggestions.milestones"),
-            items: milestones,
-        },
-        {
-            kind: "milestoneTask",
-            label: t("search.suggestions.milestoneTasks"),
-            items: milestoneTasks,
-        },
-        {
-            kind: "foundation",
-            label: t("search.suggestions.foundations"),
-            items: foundations,
-        },
-    ]
-    const sections = allSections.filter((section) => (section.items?.length ?? 0) > 0)
+export const GlobalSearchContent = ({
+    sections,
+    hasQuery,
+    popularCourses,
+    labels,
+    onSelectResult,
+    onSelectPopularCourse,
+}: GlobalSearchContentProps) => {
+    if (sections.length === 0) {
+        return (
+            <GlobalSearchEmpty
+                hasQuery={hasQuery}
+                popularCourses={popularCourses}
+                labels={labels}
+                onSelectCourse={onSelectPopularCourse}
+            />
+        )
+    }
 
     return (
-        <ScrollShadow hideScrollBar className="max-h-[320px] py-2">
-            {sections.length === 0 ? (
-                <GlobalSearchEmpty hasQuery={query.length > 0} />
-            ) : (
-                <div className="flex flex-col gap-3 px-2">
-                    {sections.map((section) => (
-                        <div key={section.kind} className="flex flex-col gap-2">
-                            <Typography type="body-xs" weight="medium" color="muted" className="px-2">
-                                {`${section.label} (${section.items?.length ?? 0})`}
-                            </Typography>
-                            <GlobalSearchContentBlock kind={section.kind} items={section.items ?? []} />
-                        </div>
-                    ))}
-                </div>
-            )}
-        </ScrollShadow>
+        <StackV
+            gap={5}
+            items={sections.map((section) => () => (
+                <StackV
+                    gap={3}
+                    items={[
+                        () => (
+                            <Typography
+                                size="xs"
+                                weight="medium"
+                                color="muted"
+                                text={`${section.label} (${section.items.length})`}
+                            />
+                        ),
+                        () => (
+                            <GlobalSearchContentBlock
+                                items={section.items}
+                                labels={labels}
+                                onSelect={onSelectResult}
+                            />
+                        ),
+                    ]}
+                />
+            ))}
+        />
     )
 }

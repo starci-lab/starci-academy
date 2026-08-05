@@ -1,29 +1,43 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { ScrollShadow } from "@heroui/react"
-import { FeedbackCard } from "./FeedbackCard"
 import { useTranslations } from "next-intl"
-import { FeedbackDetailsEmpty } from "./Empty"
-import { FeedbackCardSkeleton } from "./FeedbackCardSkeleton"
 import { useFeedbackDetailsOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useQuerySubmissionFeedbacksSwr } from "@/hooks/swr/api/graphql/queries/useQuerySubmissionFeedbacksSwr"
 import { useAppSelector } from "@/redux/hooks"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-import { ModalShell } from "@/components/blocks/layout/ModalShell"
+import { SubmissionFeedbackSeverity as RealSubmissionFeedbackSeverity } from "@/modules/types/enums/submission-feedback-severity"
+import { _FeedbackDetailsModal, type SubmissionFinding, type SubmissionFeedbackSeverity } from "./component"
 
 /**
- * Props for {@link FeedbackDetailsModal}.
- */
-export type FeedbackDetailsModalProps = WithClassNames<undefined>
-
-/**
- * Modal listing feedback entries for the current submission attempt.
+ * Real `SubmissionFeedbackSeverity` (a backend-mirroring TS `enum`) → the
+ * `SubmissionFindingsList` block's plain string-union severity. Same bridging
+ * convention as `ChallengeResultPage/map.ts#toBlueprintSeverity` — a TS string
+ * `enum` is not structurally assignable to a matching string-literal union.
  *
- * @param props - Optional styling props.
+ * @param severity - The real, GraphQL-sourced feedback severity.
+ * @returns The equivalent block severity value.
  */
-export const FeedbackDetailsModal = (props: FeedbackDetailsModalProps) => {
-    const { className } = props
+const toFindingSeverity = (severity: RealSubmissionFeedbackSeverity): SubmissionFeedbackSeverity => {
+    switch (severity) {
+    case RealSubmissionFeedbackSeverity.High:
+        return "high"
+    case RealSubmissionFeedbackSeverity.Medium:
+        return "medium"
+    case RealSubmissionFeedbackSeverity.Low:
+        return "low"
+    }
+}
+
+/**
+ * Modal listing feedback entries for the current submission attempt — the
+ * CONNECTED half: reads the overlay open-state ({@link useFeedbackDetailsOverlayState}),
+ * fetches the attempt's feedback rows ({@link useQuerySubmissionFeedbacksSwr}, which
+ * itself only runs while the modal is open), reads the selected attempt's repo
+ * URL from redux, resolves every label, and hands it all to the presentational
+ * {@link _FeedbackDetailsModal}. No findings markup lives here — it delegates to
+ * the shared `SubmissionFindingsList` block. See `tiers/split.md`.
+ */
+export const FeedbackDetailsModal = () => {
     const { isOpen, setOpen } = useFeedbackDetailsOverlayState()
     const querySubmissionFeedbacksSwr = useQuerySubmissionFeedbacksSwr()
     const submissionFeedbacks = useAppSelector((state) => state.submissionFeedback.submissionFeedbacks)
@@ -34,43 +48,36 @@ export const FeedbackDetailsModal = (props: FeedbackDetailsModalProps) => {
         [submissionAttempts, submissionAttemptId],
     )
     const t = useTranslations()
-    const showSkeleton =
-        isOpen
-        && (querySubmissionFeedbacksSwr.isLoading)
-        && submissionFeedbacks.length === 0
+
+    // first load, nothing in hand yet — see `authoring/loading-and-skeleton.md`
+    const isSkeleton = isOpen && querySubmissionFeedbacksSwr.isLoading && submissionFeedbacks.length === 0
+
+    const findings = useMemo<Array<SubmissionFinding>>(
+        () => submissionFeedbacks.map((feedback) => ({
+            id: feedback.id,
+            message: feedback.message,
+            detail: feedback.detail ?? undefined,
+            suggestion: feedback.suggestion ?? undefined,
+            location: feedback.location ?? undefined,
+            severity: toFindingSeverity(feedback.severity),
+            sortIndex: feedback.sortIndex,
+        })),
+        [submissionFeedbacks],
+    )
+
     return (
-        <ModalShell
+        <_FeedbackDetailsModal
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
-            size="lg"
-            title={t("feedback.detailsTitle")}
-        >
-            {showSkeleton ? (
-                <ScrollShadow className="max-h-[500px]" hideScrollBar>
-                    <div className="flex flex-col gap-3 p-3">
-                        {
-                            Array.from({ length: 3 }).map((_, index) => (
-                                <FeedbackCardSkeleton key={index} />
-                            ))
-                        }
-                    </div>
-                </ScrollShadow>
-            ) : submissionFeedbacks.length ? (
-                <ScrollShadow className="max-h-[500px]" hideScrollBar>
-                    <div className="flex flex-col gap-3">
-                        {submissionFeedbacks.map((submissionFeedback) => (
-                            <FeedbackCard
-                                key={submissionFeedback.id}
-                                repositoryUrl={repositoryUrl}
-                                submissionFeedback={submissionFeedback}
-                            />
-                        ))}
-                    </div>
-                </ScrollShadow>
-            ) : (
-                <FeedbackDetailsEmpty />
-            )}
-        </ModalShell>
+            findings={findings}
+            repositoryUrl={repositoryUrl}
+            isEmpty={!querySubmissionFeedbacksSwr.isLoading && submissionFeedbacks.length === 0}
+            isSkeleton={isSkeleton}
+            labels={{
+                title: t("feedback.detailsTitle"),
+                findingsLabel: t("submissionResult.feedbackLabel"),
+                emptyLabel: t("feedback.empty"),
+            }}
+        />
     )
 }

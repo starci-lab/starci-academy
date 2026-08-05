@@ -1,55 +1,41 @@
-import { Button, Typography } from "@heroui/react"
-import { ArrowRightIcon } from "@phosphor-icons/react"
+import React, { useCallback } from "react"
 import { useTranslations } from "next-intl"
-import React from "react"
 import { useRouter } from "next/navigation"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-import { GithubIcon } from "@/components/svg/GithubIcon"
 import { useLinkGithubOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { githubRedirect } from "@/modules/api/redirect/github"
-import { ModalShell } from "@/components/blocks/layout/ModalShell"
+import { _LinkGithubModal } from "./component"
 
-export const LinkGithubModal = ({ className }: WithClassNames<undefined>) => {
+/**
+ * GitHub-linking prompt — the CONNECTED half: reads the overlay open-state
+ * (`useLinkGithubOverlayState`), resolves i18n, and builds the OAuth redirect
+ * URL, handing everything to the presentational {@link _LinkGithubModal}.
+ * Mounted prop-less by `ModalContainer`. See `tiers/split.md`.
+ */
+export const LinkGithubModal = () => {
     const { isOpen, setOpen } = useLinkGithubOverlayState()
     const t = useTranslations()
     const router = useRouter()
+
+    /** Builds the GitHub OAuth redirect URL (current page as the return target) and navigates. */
+    const onLinkPress = useCallback(
+        () => {
+            const url = githubRedirect.redirect
+            url.searchParams.set("redirectUri", window.location.href)
+            router.push(url.toString())
+        },
+        [router],
+    )
+
     return (
-        <ModalShell
+        <_LinkGithubModal
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
-            size="xs"
-            title={t("linkGithub.title")}
-        >
-            <div className="flex flex-col gap-6">
-                <div className="flex items-center justify-center">
-                    <div className="flex flex-col items-center gap-3 justify-center">
-                        <GithubIcon className="w-16 h-16" />
-                        <Typography type="body-sm" color="muted" className="text-center">
-                            {t("linkGithub.description")}
-                        </Typography>
-                    </div>
-                </div>
-                <Button
-                    type="button"
-                    className="w-full"
-                    size="lg"
-                    variant="primary"
-                    onPress={
-                        () => {
-                            const url = githubRedirect.redirect
-                            url.searchParams.set(
-                                "redirectUri",
-                                window.location.href
-                            )
-                            router.push(url.toString())
-                        }
-                    }
-                >
-                    {t("linkGithub.button")}
-                    <ArrowRightIcon className="size-5" />
-                </Button>
-            </div>
-        </ModalShell>
+            onLinkPress={onLinkPress}
+            labels={{
+                title: t("linkGithub.title"),
+                description: t("linkGithub.description"),
+                button: t("linkGithub.button"),
+            }}
+        />
     )
 }

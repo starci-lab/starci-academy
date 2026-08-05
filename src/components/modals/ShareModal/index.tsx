@@ -1,18 +1,21 @@
 "use client"
 
-import { SiFacebook as FacebookLogoIcon, SiTelegram as TelegramLogoIcon, SiX as TwitterLogoIcon } from "@icons-pack/react-simple-icons"
-import { FaLinkedin as LinkedinLogoIcon } from "react-icons/fa6"
 import React, { useMemo } from "react"
-import { pathConfig } from "@/resources/path"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { pathConfig } from "@/resources/path"
 import { useShareOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useAppSelector } from "@/redux/hooks"
-import { QRCode } from "@/components/blocks/media/QRCode"
-import { SnippetIcon } from "@/components/blocks/identity/SnippetIcon"
-import { ModalShell } from "@/components/blocks/layout/ModalShell"
+import { _ShareModal } from "./component"
 
-export const ShareModal = ({ className }: WithClassNames<undefined>) => {
+/**
+ * Share modal: opened via {@link useShareOverlayState}, shares whatever
+ * content the page has loaded into `state.content.entity` (redux). CONNECTED
+ * half — resolves the public share URL (origin + `pathConfig`), the content
+ * title, and both translated labels, then hands them to the presentational
+ * {@link _ShareModal}. See `tiers/split.md`. Mounted prop-less by
+ * `ModalContainer`.
+ */
+export const ShareModal = () => {
     const t = useTranslations()
     const { isOpen, setOpen } = useShareOverlayState()
     const content = useAppSelector((state) => state.content.entity)
@@ -22,73 +25,17 @@ export const ShareModal = ({ className }: WithClassNames<undefined>) => {
         return `${typeof window !== "undefined" ? window.location.origin : ""}${pathConfig().locale().publicContent(content.displayId).build()}`
     }, [content?.displayId])
 
-    const shareTitle = content?.title ?? ""
-
-    const socialLinks = useMemo(() => [
-        {
-            label: "Facebook",
-            icon: <FacebookLogoIcon className="size-6 text-[#1877F2]" />,
-            url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
-        },
-        {
-            label: "Twitter",
-            icon: <TwitterLogoIcon className="size-6 text-[#1DA1F2]" />,
-            url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`,
-        },
-        {
-            label: "Telegram",
-            icon: <TelegramLogoIcon className="size-6 text-[#0088cc]" />,
-            url: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`,
-        },
-        {
-            label: "LinkedIn",
-            icon: <LinkedinLogoIcon className="size-6 text-[#0A66C2]" />,
-            url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
-        },
-    ], [shareUrl, shareTitle])
-
     return (
-        <ModalShell
+        <_ShareModal
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
-            size="md"
-            title={t("content.share")}
-        >
-            <div className="flex flex-col items-center gap-6 pb-4">
-                {shareUrl && (
-                    <>
-                        <div className="flex flex-col items-center gap-3">
-                            <div className="rounded-xl border-default p-2">
-                                <QRCode size={160} data={shareUrl} />
-                            </div>
-                            <div className="text-xs text-muted">
-                                {t("content.scanQr")}
-                            </div>
-                        </div>
-                        <div className="flex gap-2 items-center">
-                            <div className="text-sm text-muted">
-                                {shareUrl}
-                            </div>
-                            <SnippetIcon copyString={shareUrl} />
-                        </div>
-                        <div className="flex items-center gap-3">
-                            {socialLinks.map((socialLink) => (
-                                <a
-                                    key={socialLink.label}
-                                    href={socialLink.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={socialLink.label}
-                                    className="hover:opacity-70 transition-opacity focus-visible:ring-2 ring-accent rounded-md"
-                                >
-                                    {socialLink.icon}
-                                </a>
-                            ))}
-                        </div>
-                    </>
-                )}
-            </div>
-        </ModalShell>
+            shareUrl={shareUrl}
+            shareTitle={content?.title ?? ""}
+            isEmpty={!shareUrl}
+            labels={{
+                share: t("content.share"),
+                scanQr: t("content.scanQr"),
+            }}
+        />
     )
 }

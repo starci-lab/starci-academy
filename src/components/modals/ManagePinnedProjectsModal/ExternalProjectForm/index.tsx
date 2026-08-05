@@ -1,41 +1,32 @@
 "use client"
 
 import React from "react"
-import {
-    Button,
-    Input,
-    Label,
-    Spinner,
-    TextArea,
-    TextField,
-    Typography,
-} from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePinExternalProjectForm } from "@/hooks/rhf/usePinExternalProjectForm"
+import { _ExternalProjectForm, type ExternalProjectFormValues } from "./component"
 
 /** Props for {@link ExternalProjectForm}. */
-export interface ExternalProjectFormProps extends WithClassNames<undefined> {
+export interface ExternalProjectFormProps {
     /** Called after a pin succeeds (close the modal / switch to the list). */
     onSuccess?: () => void
 }
 
 /**
- * Form for pinning a free-form external project (title + optional description /
- * url / tech-stack tags). All form logic lives in the
- * {@link usePinExternalProjectForm} RHF hook; this component only binds the
- * fields and surfaces validation + the in-flight submit state. Reuseable-ish but
- * kept here as it is specific to the manage-pins modal.
+ * Form for pinning a free-form external project — the CONNECTED half. All form
+ * state, validation, and the `pinExternalProject` mutation live in the
+ * {@link usePinExternalProjectForm} RHF hook; this half resolves i18n and adapts
+ * RHF's `watch`/`setValue` into the controlled `values`/`onValueChange` contract
+ * the presentational {@link _ExternalProjectForm} takes. See `tiers/split.md`.
  *
  * @param props - {@link ExternalProjectFormProps}
  */
 export const ExternalProjectForm = ({
     onSuccess,
-    className,
 }: ExternalProjectFormProps) => {
     const t = useTranslations()
     const {
-        register,
+        setValue,
+        watch,
         onSubmit,
         formState: {
             errors,
@@ -43,84 +34,32 @@ export const ExternalProjectForm = ({
         },
     } = usePinExternalProjectForm({ onSuccess })
 
+    const values: ExternalProjectFormValues = watch()
+
     return (
-        <form
-            className={className}
+        <_ExternalProjectForm
+            values={values}
+            onValueChange={(field, value) => setValue(field, value)}
+            errors={{
+                title: Boolean(errors.title),
+                url: Boolean(errors.url),
+            }}
+            isSubmitting={isSubmitting}
             onSubmit={onSubmit}
-        >
-            <div className="flex flex-col gap-3">
-                {/* title (required) */}
-                <TextField variant="secondary" isInvalid={Boolean(errors.title)}>
-                    <Label htmlFor="pin-title">{t("pinnedProjects.form.title")}</Label>
-                    <Input
-                        id="pin-title"
-                        placeholder={t("pinnedProjects.form.titlePlaceholder")}
-                        {...register("title")}
-                    />
-                    {errors.title ? (
-                        <Typography slot="errorMessage" type="body-xs" className="text-danger-soft-foreground">
-                            {t("pinnedProjects.form.titleRequired")}
-                        </Typography>
-                    ) : null}
-                </TextField>
-
-                {/* url (optional, validated) */}
-                <TextField variant="secondary" isInvalid={Boolean(errors.url)}>
-                    <Label htmlFor="pin-url">{t("pinnedProjects.form.url")}</Label>
-                    <Input
-                        id="pin-url"
-                        placeholder={t("pinnedProjects.form.urlPlaceholder")}
-                        {...register("url")}
-                    />
-                    {errors.url ? (
-                        <Typography slot="errorMessage" type="body-xs" className="text-danger-soft-foreground">
-                            {t("pinnedProjects.form.urlInvalid")}
-                        </Typography>
-                    ) : null}
-                </TextField>
-
-                {/* tech stack (comma / newline separated) */}
-                <TextField variant="secondary">
-                    <Label htmlFor="pin-tech">{t("pinnedProjects.form.techStack")}</Label>
-                    <Input
-                        id="pin-tech"
-                        placeholder={t("pinnedProjects.form.techStackPlaceholder")}
-                        {...register("techStack")}
-                    />
-                    <Typography slot="description" type="body-xs" color="muted">
-                        {t("pinnedProjects.form.techStackHint")}
-                    </Typography>
-                </TextField>
-
-                {/* description (optional) */}
-                <TextField variant="secondary">
-                    <Label htmlFor="pin-description">{t("pinnedProjects.form.description")}</Label>
-                    <TextArea
-                        id="pin-description"
-                        rows={3}
-                        placeholder={t("pinnedProjects.form.descriptionPlaceholder")}
-                        className="resize-none"
-                        {...register("description")}
-                    />
-                </TextField>
-
-                <Button
-                    type="submit"
-                    variant="primary"
-                    fullWidth
-                    isDisabled={isSubmitting}
-                    isPending={isSubmitting}
-                >
-                    {({ isPending }) => (
-                        <>
-                            {isPending ? (
-                                <Spinner color="current" size="sm" />
-                            ) : null}
-                            {t("pinnedProjects.form.submit")}
-                        </>
-                    )}
-                </Button>
-            </div>
-        </form>
+            labels={{
+                title: t("pinnedProjects.form.title"),
+                titlePlaceholder: t("pinnedProjects.form.titlePlaceholder"),
+                titleRequired: t("pinnedProjects.form.titleRequired"),
+                url: t("pinnedProjects.form.url"),
+                urlPlaceholder: t("pinnedProjects.form.urlPlaceholder"),
+                urlInvalid: t("pinnedProjects.form.urlInvalid"),
+                techStack: t("pinnedProjects.form.techStack"),
+                techStackPlaceholder: t("pinnedProjects.form.techStackPlaceholder"),
+                techStackHint: t("pinnedProjects.form.techStackHint"),
+                description: t("pinnedProjects.form.description"),
+                descriptionPlaceholder: t("pinnedProjects.form.descriptionPlaceholder"),
+                submit: t("pinnedProjects.form.submit"),
+            }}
+        />
     )
 }

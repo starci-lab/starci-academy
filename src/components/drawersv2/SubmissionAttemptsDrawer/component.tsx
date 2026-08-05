@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { CheckCircleIcon, SparkleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { DrawerShell } from "@/components/composites/layout/DrawerShell"
-import { DrawerRoot } from "@/components/frames/DrawerRoot"
 import {
     AsyncContentEmpty,
     AsyncContentError,
@@ -21,8 +20,8 @@ import { Pagination } from "@/components/atoms/navigation/Pagination"
  * `_SubmissionAttemptsDrawer` — the full graded history of one challenge requirement:
  * every past attempt, client-paginated (6 per page), opened over the result screen.
  * Tapping any row both selects that attempt and closes the drawer. Composes
- * `DrawerRoot` (identity) + `DrawerShell` + `SurfaceCardList` (free-form rows), reusing
- * the model-byline recipe (`EnumChip`/`InlineIconLabel`/`MODEL_CATEGORY_MAP`).
+ * `DrawerShell` + `SurfaceCardList` (free-form rows), reusing the model-byline
+ * recipe (`EnumChip`/`InlineIconLabel`/`MODEL_CATEGORY_MAP`).
  *
  * Loading is the co-located `isSkeleton` idiom (`loading-and-skeleton.md`): one row
  * function, `attemptRowContent`, renders BOTH the real row and the placeholder row —
@@ -269,7 +268,7 @@ const _SubmissionAttemptsDrawer = ({
     ]
 
     return (
-        <DrawerRoot data-component="SubmissionAttemptsDrawer">
+        <div data-tier="overlay" data-component="SubmissionAttemptsDrawer">
             <DrawerShell
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
@@ -277,7 +276,7 @@ const _SubmissionAttemptsDrawer = ({
                 title={`${DRAWER_TITLE} · ${attempts.length}`}
                 body={() => <StackV gap={4} isSkeleton={isSkeleton} items={listAndPager} />}
             />
-        </DrawerRoot>
+        </div>
     )
 }
 

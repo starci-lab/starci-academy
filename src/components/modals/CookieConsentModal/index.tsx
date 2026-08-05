@@ -1,26 +1,20 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
-import {
-    Button,
-    Switch,
-    Typography,
-} from "@heroui/react"
+import React, { useCallback } from "react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useCookieConsentStore } from "@/hooks/zustand/cookieConsent/store"
 import { useCookiePreferencesOverlayState } from "@/hooks/zustand/overlay/hooks"
-import { ModalShell } from "@/components/blocks/layout/ModalShell"
+import { _CookieConsentModal } from "./component"
 
 /**
- * Cookie preferences modal — the granular "Customize" panel: Necessary (locked on) + Analytics (toggle),
- * with Save / Reject / Accept all. Holds its OWN draft toggle (seeded from the committed
- * {@link useCookieConsentStore} value each time it opens); Save commits the choice. Mounted once in
- * `ModalContainer`, opened via {@link useCookiePreferencesOverlayState}.
- *
- * @param props - optional className for the dialog
+ * Cookie preferences modal — the CONNECTED half: reads the overlay open-state
+ * ({@link useCookiePreferencesOverlayState}) and the committed choice
+ * ({@link useCookieConsentStore}), resolves every label, and hands them to the
+ * presentational {@link _CookieConsentModal}. Save / Reject / Accept-all each
+ * commit through the store, then close the modal. Mounted once, prop-less, in
+ * `ModalContainer`. See `tiers/split.md`.
  */
-export const CookieConsentModal = ({ className }: WithClassNames<undefined>) => {
+export const CookieConsentModal = () => {
     const t = useTranslations()
     const { isOpen, setOpen, close } = useCookiePreferencesOverlayState()
     const analyticsAllowed = useCookieConsentStore((state) => state.analyticsAllowed)
@@ -28,85 +22,47 @@ export const CookieConsentModal = ({ className }: WithClassNames<undefined>) => 
     const acceptAll = useCookieConsentStore((state) => state.acceptAll)
     const rejectAll = useCookieConsentStore((state) => state.rejectAll)
 
-    // draft toggle — re-seed from the committed value whenever the modal opens
-    const [analyticsDraft, setAnalyticsDraft] = useState(analyticsAllowed)
-    useEffect(() => {
-        if (isOpen) {
-            setAnalyticsDraft(analyticsAllowed)
-        }
-    }, [isOpen, analyticsAllowed])
+    const onSave = useCallback(
+        (nextAnalyticsAllowed: boolean) => {
+            save(nextAnalyticsAllowed)
+            close()
+        },
+        [save, close],
+    )
+    const onReject = useCallback(
+        () => {
+            rejectAll()
+            close()
+        },
+        [rejectAll, close],
+    )
+    const onAcceptAll = useCallback(
+        () => {
+            acceptAll()
+            close()
+        },
+        [acceptAll, close],
+    )
 
     return (
-        <ModalShell
+        <_CookieConsentModal
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
-            header={(
-                <Typography type="body" weight="semibold" className="pr-8">
-                    {t("cookieConsent.modalTitle")}
-                </Typography>
-            )}
-        >
-            <div className="flex flex-col gap-6">
-                <Typography type="body-sm" color="muted">
-                    {t("cookieConsent.modalBody")}
-                </Typography>
-
-                {/* necessary — always on, locked */}
-                <div className="flex items-start justify-between gap-3">
-                    <div className="flex flex-col gap-0">
-                        <Typography type="body" weight="semibold">
-                            {t("cookieConsent.necessaryLabel")}
-                        </Typography>
-                        <Typography type="body-sm" color="muted">
-                            {t("cookieConsent.necessaryHint")}
-                        </Typography>
-                    </div>
-                    <Switch isSelected isDisabled aria-label={t("cookieConsent.necessaryLabel")} />
-                </div>
-
-                {/* analytics — toggleable */}
-                <div className="flex items-start justify-between gap-3">
-                    <div className="flex flex-col gap-0">
-                        <Typography type="body" weight="semibold">
-                            {t("cookieConsent.analyticsLabel")}
-                        </Typography>
-                        <Typography type="body-sm" color="muted">
-                            {t("cookieConsent.analyticsHint")}
-                        </Typography>
-                    </div>
-                    <Switch
-                        isSelected={analyticsDraft}
-                        onChange={(value) => setAnalyticsDraft(value)}
-                        aria-label={t("cookieConsent.analyticsLabel")}
-                    />
-                </div>
-
-                {/* actions — parity: save / reject equal, accept-all tertiary */}
-                <div className="flex flex-nowrap items-center gap-2">
-                    <Button
-                        variant="primary"
-                        size="sm"
-                        onPress={() => { save(analyticsDraft); close() }}
-                    >
-                        {t("cookieConsent.save")}
-                    </Button>
-                    <Button
-                        variant="secondary"
-                        size="sm"
-                        onPress={() => { rejectAll(); close() }}
-                    >
-                        {t("cookieConsent.reject")}
-                    </Button>
-                    <Button
-                        variant="tertiary"
-                        size="sm"
-                        onPress={() => { acceptAll(); close() }}
-                    >
-                        {t("cookieConsent.acceptAll")}
-                    </Button>
-                </div>
-            </div>
-        </ModalShell>
+            analyticsAllowed={analyticsAllowed}
+            onSave={onSave}
+            onReject={onReject}
+            onAcceptAll={onAcceptAll}
+            labels={{
+                modalTitle: t("cookieConsent.modalTitle"),
+                modalBody: t("cookieConsent.modalBody"),
+                necessaryLabel: t("cookieConsent.necessaryLabel"),
+                necessaryHint: t("cookieConsent.necessaryHint"),
+                analyticsLabel: t("cookieConsent.analyticsLabel"),
+                analyticsHint: t("cookieConsent.analyticsHint"),
+                save: t("cookieConsent.save"),
+                reject: t("cookieConsent.reject"),
+                acceptAll: t("cookieConsent.acceptAll"),
+            }}
+        />
     )
 }

@@ -7,12 +7,6 @@ import React, {
     useState,
 } from "react"
 import {
-    AlertDialog,
-    Button,
-    Spinner,
-    Typography,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
@@ -21,19 +15,17 @@ import {
 import {
     queryPlatformStats,
 } from "@/modules/api/graphql/queries/query-platform-stats"
+import { _MaintenanceModal } from "./component"
 
 /** How often to re-probe the backend while the dialog is open (ms). */
 const POLL_INTERVAL_MS = 9_000
 
 /**
- * MaintenanceModal — the app-wide blocking dialog opened by the Apollo
- * `ErrorLink` when the backend keeps returning a 5xx status (persistent, not a
- * one-off — `RetryLink` already exhausted its retries before `ErrorLink` sees
- * it). Uses HeroUI `AlertDialog`, whose defaults (`isDismissable={false}`,
- * `isKeyboardDismissDisabled`) make it the app's first non-dismissable overlay
- * — no close button, no backdrop-click, no Escape. It clears itself the moment
- * a lightweight probe query succeeds; "Retry" re-probes immediately without
- * waiting for the next poll tick.
+ * `MaintenanceModal` — the CONNECTED half: owns the maintenance overlay store, the
+ * poll loop, the probe fetch, and resolves every string, then hands them to the
+ * presentational {@link _MaintenanceModal}. See that file's header for the full
+ * behavioural contract (non-dismissable, polls while open, "Retry" re-probes
+ * immediately). Mounted prop-less by `ModalContainer`. See `tiers/split.md`.
  *
  * A plain network error (offline/timeout/CORS) carries no HTTP status and never
  * reaches this dialog — that path is unchanged (still just logged).
@@ -67,45 +59,17 @@ export const MaintenanceModal = () => {
     }, [isOpen, probe])
 
     return (
-        <AlertDialog
+        <_MaintenanceModal
             isOpen={isOpen}
             onOpenChange={setOpen}
-        >
-            <AlertDialog.Backdrop
-                isDismissable={false}
-                isKeyboardDismissDisabled
-            >
-                <AlertDialog.Container size="sm">
-                    <AlertDialog.Dialog>
-                        <AlertDialog.Header>
-                            <AlertDialog.Icon status="warning" />
-                            <AlertDialog.Heading>
-                                {t("maintenance.title")}
-                            </AlertDialog.Heading>
-                        </AlertDialog.Header>
-                        <AlertDialog.Body>
-                            <p>{t("maintenance.description")}</p>
-                        </AlertDialog.Body>
-                        <AlertDialog.Footer className="w-full items-center justify-between">
-                            <Typography
-                                type="body-xs"
-                                color="muted"
-                                className="flex items-center gap-2"
-                            >
-                                {isChecking ? <Spinner color="current" size="sm" /> : null}
-                                {t("maintenance.pollStatus")}
-                            </Typography>
-                            <Button
-                                variant="primary"
-                                isDisabled={isChecking}
-                                onPress={probe}
-                            >
-                                {t("maintenance.retry")}
-                            </Button>
-                        </AlertDialog.Footer>
-                    </AlertDialog.Dialog>
-                </AlertDialog.Container>
-            </AlertDialog.Backdrop>
-        </AlertDialog>
+            isChecking={isChecking}
+            onRetry={probe}
+            labels={{
+                title: t("maintenance.title"),
+                description: t("maintenance.description"),
+                pollStatus: t("maintenance.pollStatus"),
+                retry: t("maintenance.retry"),
+            }}
+        />
     )
 }

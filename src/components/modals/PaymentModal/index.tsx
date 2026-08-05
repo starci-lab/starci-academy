@@ -1,14 +1,12 @@
 "use client"
 
 import React, { useEffect, useMemo, useState } from "react"
-import { Button, Label, Modal, Spinner, Tabs, Typography, cn } from "@heroui/react"
 import { toast } from "@/modules/toast/toast"
 import useSWR from "swr"
 import { CombinedGraphQLErrors } from "@apollo/client"
-import { ArrowRightIcon, FlameIcon, GraduationCapIcon, LockIcon } from "@phosphor-icons/react"
+import { FlameIcon, GraduationCapIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { pathConfig } from "@/resources/path"
 import { useMutateCourseEnrollSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCourseEnrollSwr"
 import { useMutateCoursesCheckoutSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCoursesCheckoutSwr"
@@ -27,15 +25,16 @@ import { submitCheckout } from "@/modules/payment/submit-checkout"
 import { queryAiSubscriptionTiers } from "@/modules/api/graphql/queries/query-ai-subscription-tiers"
 import type { DiscountReason } from "@/modules/api/graphql/queries/types/recommended-courses"
 import type { CoursesCheckoutPreviewLine } from "@/modules/api/graphql/queries/types/courses-checkout-preview"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { IconTile } from "@/components/blocks/identity/IconTile"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
-import { PriceTag } from "@/components/blocks/commerce/PriceTag"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { TabsCard } from "@/components/blocks/navigation/TabsCard"
-import { SelectSingle } from "@/components/atoms/forms/Select"
-import type { PriceCurrency } from "@/components/blocks/commerce/PriceTag"
+import type { PriceCurrency } from "@/components/starci/blocks/commerce/PriceTag"
+import {
+    _PaymentModal,
+    type PaymentModalCheckoutLine,
+    type PaymentModalGatewayGroup,
+    type PaymentModalGatewayMethod,
+    type PaymentModalLabels,
+    type PaymentModalLoyaltyRow,
+    type PaymentModalTab,
+} from "./component"
 
 /** GraphQL extension code the BE raises when the viewer already has an enrollment (`CourseAlreadyEnrolledError`). */
 const COURSE_ALREADY_ENROLLED_CODE = "COURSE_ALREADY_ENROLLED_ERROR"
@@ -64,11 +63,6 @@ const formatVnd = (amount: number): string => `${amount.toLocaleString("vi-VN")}
 const formatUsd = (amount: number): string =>
     amount.toLocaleString("en-US", { style: "currency", currency: "USD" })
 
-/** Which of the modal's two panels is showing (mirrors {@link AiQuotaTabBar}'s
- *  raw-HeroUI-`Tabs` pattern) — "summary" = order + loyalty, "payment" =
- *  installment/currency/gateway list. Freely switchable, not a linear wizard. */
-type PaymentModalTab = "summary" | "payment"
-
 /** The unified order shown in the summary, derived per flow. */
 interface PaymentOrder {
     /** Product name (course title / AI tier / membership). */
@@ -95,15 +89,18 @@ interface PaymentOrder {
 
 /**
  * Shared payment modal for every paid flow (course enroll · membership · AI subscription).
+ * CONNECTED half: owns the overlay store, every mutation/query the four flows need, and
+ * resolves i18n; hands everything to the presentational {@link _PaymentModal}. See
+ * `tiers/split.md`.
  *
- * Summary-first: shows WHAT the buyer gets + HOW MUCH (loyalty discount surfaced via the
- * shared {@link PriceTag} + hover breakdown) BEFORE the gateway choice. A currency toggle
+ * Summary-first: shows WHAT the buyer gets + HOW MUCH (loyalty discount surfaced via
+ * `PriceTagProminent` + hover breakdown) BEFORE the gateway choice. A currency toggle
  * (Domestic VND ↔ International USD) drives BOTH the shown price and the gateway list; the
  * USD side appears only when the order has a USD price. The opener stashes a
  * {@link import("@/modules/types").PaymentContext}; this modal reads it to decide which
  * price to preview and which mutation to run on pick.
  */
-export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
+export const PaymentModal = () => {
     const { isOpen, setOpen, context } = usePaymentOverlayState()
     const courseEnrollSwr = useMutateCourseEnrollSwr()
     const coursesCheckoutSwr = useMutateCoursesCheckoutSwr()
@@ -127,6 +124,30 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
     const [selectedTab, setSelectedTab] = useState<PaymentModalTab>("summary")
     const t = useTranslations()
     const runGraphQL = useGraphQLWithToast()
+
+    /**
+     * Loyalty breakdown rows (course flow) — explains WHY the discount applies, not just the %.
+     * Reads the BE `discountReason` + `enrolledCount`: enrolled-count bonus (+5%/owned course)
+     * and/or the diligent bonus (streak/points). One row per active reason.
+     */
+    const loyaltyReasons = (reason: DiscountReason, enrolledCount: number): Array<PaymentModalLoyaltyRow> => {
+        const rows: Array<PaymentModalLoyaltyRow> = []
+        if (reason === "enrolledCount" || reason === "both") {
+            rows.push({
+                key: "enrolled",
+                icon: GraduationCapIcon,
+                label: t("payment.loyalty.enrolled", { count: enrolledCount }),
+            })
+        }
+        if (reason === "diligent" || reason === "both") {
+            rows.push({
+                key: "diligent",
+                icon: FlameIcon,
+                label: t("payment.loyalty.diligent"),
+            })
+        }
+        return rows
+    }
 
     const isCourse = context?.flow === PaymentFlow.CourseEnroll
     const isCoursesCheckout = context?.flow === PaymentFlow.CoursesCheckout
@@ -325,30 +346,6 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
     )
 
     /**
-     * Loyalty breakdown rows (course flow) — explains WHY the discount applies, not just the %.
-     * Reads the BE `discountReason` + `enrolledCount`: enrolled-count bonus (+5%/owned course)
-     * and/or the diligent bonus (streak/points). Renders one row per active reason.
-     */
-    const loyaltyReasons = (reason: DiscountReason, enrolledCount: number) => {
-        const rows: Array<{ key: string, icon: React.ReactNode, label: string }> = []
-        if (reason === "enrolledCount" || reason === "both") {
-            rows.push({
-                key: "enrolled",
-                icon: <GraduationCapIcon aria-hidden focusable="false" className="size-3 text-success-soft-foreground" />,
-                label: t("payment.loyalty.enrolled", { count: enrolledCount }),
-            })
-        }
-        if (reason === "diligent" || reason === "both") {
-            rows.push({
-                key: "diligent",
-                icon: <FlameIcon aria-hidden focusable="false" className="size-3 text-success-soft-foreground" />,
-                label: t("payment.loyalty.diligent"),
-            })
-        }
-        return rows
-    }
-
-    /**
      * Run the purchase for the active flow with the chosen method, then send the user
      * to the gateway (or the Sepay QR page).
      */
@@ -476,7 +473,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
         }
     }
 
-    const activeGroup = isUsd
+    const activeGroupSource = isUsd
         ? paymentGroups.find((group) => group.id === "international")
         : paymentGroups.find((group) => group.id === "domestic")
 
@@ -485,367 +482,118 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
     const summaryOriginal = isUsd ? order?.originalUsd : order?.originalVnd
     const summaryPhase = isUsd ? order?.phaseUsd : order?.phaseVnd
 
-    /**
-     * One gateway as an INTERACTIVE LIST-CARD row — accordion-surface skin: the parent
-     * list owns `bg-surface`/border/radius, each row is a `<button>` with the accordion
-     * hover tint (`bg-default`), inset separator (hidden on the last row), focus ring and
-     * disabled state. Amount shown in the active currency.
-     */
-    const renderMethodRow = (
-        method: { type: PaymentType, name: string, description: string, iconUrl: string },
-    ) => {
-        const amountLabel = installmentActive && selectedInstallment
-            // installments charge only the first cycle now (VND) — show the monthly figure
+    // multi-course cart lines, already resolved to display rows — undefined for every single-product flow
+    const checkoutLines: Array<PaymentModalCheckoutLine> | undefined =
+        isCoursesCheckout && context?.flow === PaymentFlow.CoursesCheckout
+            ? context.lines.map((line) => {
+                const previewLine = checkoutLineByCourse.get(line.courseId)
+                return {
+                    key: line.courseId,
+                    title: line.title,
+                    coverUrl: line.coverImageUrl,
+                    discounted: isUsd ? previewLine?.chargedUsd : previewLine?.chargedVnd,
+                    original: isUsd ? previewLine?.listUsd : previewLine?.listVnd,
+                }
+            })
+            : undefined
+
+    // amount label shown on every gateway row: the installment's monthly figure while an
+    // installment term is active (installments charge only the first cycle, in VND), the
+    // order's price in the active currency otherwise.
+    const gatewayAmountLabel = installmentActive && selectedInstallment
+        ? t("payment.installment.perMonth", { amount: formatVnd(selectedInstallment.monthlyAmountVnd) })
+        : isUsd
+            ? (order?.priceUsd != null ? formatUsd(order.priceUsd) : undefined)
+            : (order?.priceVnd != null ? formatVnd(order.priceVnd) : undefined)
+
+    const activeGroup: PaymentModalGatewayGroup | undefined = activeGroupSource
+        ? {
+            label: activeGroupSource.label,
+            currencyLabel: activeGroupSource.currency,
+            methods: activeGroupSource.methods.map((method): PaymentModalGatewayMethod => ({
+                type: method.type,
+                name: method.name,
+                description: method.description,
+                iconUrl: method.iconUrl,
+                amountLabel: gatewayAmountLabel,
+                isPending: isMutating && selectedPaymentMethod === method.type,
+            })),
+        }
+        : undefined
+
+    const labels: PaymentModalLabels = {
+        title: t("payment.title"),
+        tabsAria: t("payment.tabsAria"),
+        tabSummary: t("payment.tabs.summary"),
+        tabPayment: t("payment.tabs.payment"),
+        continueToPayment: t("payment.continueToPayment"),
+        total: t("cart.total"),
+        priceError: t("payment.priceError"),
+        membershipPrice: t("membership.price"),
+        installmentTitle: t("payment.installment.title"),
+        payFull: t("payment.installment.payFull"),
+        payInstallment: t("payment.installment.payInstallment"),
+        installmentMonths: selectedInstallment
+            ? t("payment.installment.months", { months: selectedInstallment.months })
+            : undefined,
+        installmentPerMonth: selectedInstallment
             ? t("payment.installment.perMonth", { amount: formatVnd(selectedInstallment.monthlyAmountVnd) })
-            : isUsd
-                ? (order?.priceUsd != null ? formatUsd(order.priceUsd) : null)
-                : (order?.priceVnd != null ? formatVnd(order.priceVnd) : null)
-        const rowPending = isMutating && selectedPaymentMethod === method.type
-        return (
-            <SurfaceListCardRow
-                key={method.type}
-                leading={(
-                    <img
-                        alt={method.name}
-                        className="h-8 w-12 shrink-0 object-contain object-left"
-                        src={method.iconUrl}
-                    />
-                )}
-                title={method.name}
-                subtitle={method.description}
-                meta={amountLabel ? (
-                    <Typography type="body-xs" color="muted">{amountLabel}</Typography>
-                ) : undefined}
-                trailing={rowPending ? (
-                    <Spinner size="sm" />
-                ) : (
-                    <ArrowRightIcon aria-hidden focusable="false" className="size-5 text-muted" />
-                )}
-                onPress={() => { void runCheckout(method.type) }}
-                isDisabled={isMutating}
-            />
-        )
+            : undefined,
+        installmentSummary: selectedInstallment
+            ? t("payment.installment.summary", {
+                total: formatVnd(selectedInstallment.totalAmountVnd),
+                markup: selectedInstallment.markupPercent,
+            })
+            : undefined,
+        voucherTitle: t("payment.voucher.title"),
+        voucherNone: t("payment.voucher.none"),
+        voucherVndOnlyHint: t("payment.voucher.vndOnlyHint"),
+        currencyVnd: t("payment.currency.vnd"),
+        currencyUsd: t("payment.currency.usd"),
+        secure: t("payment.secure"),
+        noCardStored: t("payment.noCardStored"),
     }
 
     return (
-        <Modal isOpen={isOpen} onOpenChange={setOpen}>
-            <Modal.Backdrop>
-                <Modal.Container size="sm">
-                    <Modal.Dialog className={cn(className)}>
-                        <Modal.CloseTrigger />
-                        <Modal.Header>
-                            <Typography type="body" weight="semibold">{t("payment.title")}</Typography>
-                        </Modal.Header>
-                        {/* header → tabs = gap-3 (fe/foundations/gap.md's header rule), tighter
-                            than the plain header→content gap-6 below — overrides HeroUI's own
-                            `.modal__header + .modal__body { mt-2 }` default. */}
-                        <Modal.Body className="mt-3!">
-                            <div className="flex flex-col">
-                                {/* 2 panels (raw HeroUI Tabs, mirrors AiQuotaTabBar) instead of one
-                                    long stacked column: "Summary" (order + loyalty) and "Payment"
-                                    (installment/currency/gateways) — freely switchable, not a wizard. */}
-                                <Tabs
-                                    selectedKey={selectedTab}
-                                    onSelectionChange={(key) => setSelectedTab(key as PaymentModalTab)}
-                                >
-                                    <Tabs.ListContainer>
-                                        <Tabs.List aria-label={t("payment.tabsAria")}>
-                                            <Tabs.Tab id="summary">
-                                                {t("payment.tabs.summary")}
-                                                <Tabs.Indicator />
-                                            </Tabs.Tab>
-                                            <Tabs.Tab id="payment">
-                                                {t("payment.tabs.payment")}
-                                                <Tabs.Indicator />
-                                            </Tabs.Tab>
-                                        </Tabs.List>
-                                    </Tabs.ListContainer>
-                                </Tabs>
-                                {/* Tabs (nav) ↔ panel content (content) = 2 different-function zones
-                                    → gap-6, not the panel's own internal gap-3 (mirrors AiQuotaModal's
-                                    dedicated spacer between AiQuotaTabBar and AiQuotaBody). */}
-                                <div className="h-6" />
-
-                                <div className="flex flex-col gap-3">
-                                    {selectedTab === "summary" ? (
-                                        <>
-                                            {/* multi-course cart summary — one row per course (cover + title +
-                                    real charged price) + the charged total (from the checkout
-                                    preview, in the active currency), on the modal surface. */}
-                                            {isCoursesCheckout && context?.flow === PaymentFlow.CoursesCheckout ? (
-                                                <AsyncContent
-                                                    isLoading={Boolean(priceLoading)}
-                                                    skeleton={
-                                                        <div className="flex flex-col gap-3">
-                                                            <div className="flex flex-col gap-2">
-                                                                {context.lines.map((line) => (
-                                                                    <div key={line.courseId} className="flex items-center gap-3">
-                                                                        <Skeleton className="size-12 shrink-0 rounded-xl" />
-                                                                        <Skeleton className="h-4 min-w-0 flex-1 rounded-lg" />
-                                                                        <Skeleton className="h-5 w-20 shrink-0 rounded-lg" />
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                            {/* total row — border-t + label + PriceTag */}
-                                                            <div className="flex items-center justify-between gap-3 border-t border-default pt-3">
-                                                                <Skeleton.Typography type="body-sm" width="1/4" />
-                                                                <Skeleton className="h-6 w-28 shrink-0 rounded-lg" />
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                    error={priceError}
-                                                    errorContent={{ title: t("payment.priceError") }}
-                                                >
-                                                    <div className="flex flex-col gap-3">
-                                                        <div className="flex flex-col gap-2">
-                                                            {context.lines.map((line) => {
-                                                                const previewLine = checkoutLineByCourse.get(line.courseId)
-                                                                const lineDiscounted = isUsd ? previewLine?.chargedUsd : previewLine?.chargedVnd
-                                                                const lineOriginal = isUsd ? previewLine?.listUsd : previewLine?.listVnd
-                                                                return (
-                                                                    <div key={line.courseId} className="flex items-center gap-3">
-                                                                        <IconTile
-                                                                            size="sm"
-                                                                            tone="accent"
-                                                                            icon={<GraduationCapIcon />}
-                                                                            src={line.coverImageUrl ?? undefined}
-                                                                            alt={line.title}
-                                                                        />
-                                                                        <Typography type="body-sm" truncate title={line.title} className="min-w-0 flex-1">
-                                                                            {line.title}
-                                                                        </Typography>
-                                                                        {lineDiscounted != null ? (
-                                                                            <PriceTag
-                                                                                discounted={lineDiscounted}
-                                                                                original={lineOriginal}
-                                                                                currency={activeCurrency}
-                                                                                size="sm"
-                                                                                className="shrink-0"
-                                                                            />
-                                                                        ) : null}
-                                                                    </div>
-                                                                )
-                                                            })}
-                                                        </div>
-                                                        <div className="flex items-center justify-between gap-3 border-t border-default pt-3">
-                                                            <Typography type="body-sm" weight="semibold">{t("cart.total")}</Typography>
-                                                            {summaryDiscounted != null ? (
-                                                                <PriceTag
-                                                                    discounted={summaryDiscounted}
-                                                                    original={summaryOriginal}
-                                                                    currency={activeCurrency}
-                                                                    size="md"
-                                                                    className="shrink-0 justify-end"
-                                                                />
-                                                            ) : null}
-                                                        </div>
-                                                    </div>
-                                                </AsyncContent>
-                                            ) : (
-                                            /* single-item summary — FLAT (no card frame): IconTile + name + price
-                                    (PriceTag with hover breakdown) + loyalty breakdown. */
-                                                <div className="flex flex-col">
-                                                    <div className="flex items-center gap-3">
-                                                        <IconTile
-                                                            size="sm"
-                                                            tone="accent"
-                                                            icon={<GraduationCapIcon />}
-                                                            src={isCourse ? coverImageUrl : undefined}
-                                                            alt={order?.name ?? ""}
-                                                        />
-                                                        <div className="flex min-w-0 flex-1 flex-col">
-                                                            <Typography type="body-xs" color="muted" truncate title={order?.name}>
-                                                                {order?.name}
-                                                            </Typography>
-                                                            <AsyncContent
-                                                                isLoading={Boolean(priceLoading)}
-                                                                skeleton={<Skeleton className="mt-2 h-6 w-28 rounded-lg" />}
-                                                                error={priceError}
-                                                                errorContent={{ title: t("payment.priceError") }}
-                                                            >
-                                                                {summaryDiscounted != null ? (
-                                                                    <PriceTag
-                                                                        discounted={summaryDiscounted}
-                                                                        original={summaryOriginal}
-                                                                        currency={activeCurrency}
-                                                                        size="md"
-                                                                        breakdown={summaryPhase != null ? {
-                                                                            phase: summaryPhase,
-                                                                            loyaltyPercent: order?.discountPercent ?? 0,
-                                                                        } : undefined}
-                                                                    />
-                                                                ) : isMembership ? (
-                                                                    <Typography type="h4" weight="bold">{t("membership.price")}</Typography>
-                                                                ) : null}
-                                                            </AsyncContent>
-                                                        </div>
-                                                    </div>
-                                                    {/* loyalty breakdown — WHY the discount applies (discountReason + enrolledCount) */}
-                                                    {order && order.discountPercent > 0
-                                        && loyaltyReasons(order.discountReason, order.enrolledCount).length > 0 ? (
-                                                            <div className="mt-2 flex flex-col gap-2">
-                                                                {loyaltyReasons(order.discountReason, order.enrolledCount).map((row) => (
-                                                                    <div key={row.key} className="flex items-center gap-2">
-                                                                        {row.icon}
-                                                                        <Typography type="body-xs" color="muted">{row.label}</Typography>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        ) : null}
-                                                </div>
-                                            )}
-
-                                            {/* single primary CTA on this panel — advances to "Payment" */}
-                                            <Button
-                                                variant="primary"
-                                                size="lg"
-                                                className="w-full gap-2"
-                                                onPress={() => setSelectedTab("payment")}
-                                            >
-                                                {t("payment.continueToPayment")}
-                                                <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
-                                            </Button>
-                                        </>
-                                    ) : null}
-
-                                    {selectedTab === "payment" ? (
-                                        <>
-                                            {/* installment plan — pick "pay in full" or a 3/6/12-month plan.
-                                    VND-only (choosing a term forces the domestic gateways). Course
-                                    flows only, and only when the BE offered terms (positive VND price). */}
-                                            {installmentAvailable ? (
-                                                <div className="flex flex-col gap-3">
-                                                    {/* group-label control (fe/components/label.md §1b) — do NOT
-                                                    hand-roll a muted Typography */}
-                                                    <Label>{t("payment.installment.title")}</Label>
-                                                    {/* ONE compact SETTING, IN PLACE — picking it just toggles field
-                                                    state (shows/hides one info row below), it does NOT change the
-                                                    whole panel/route → TabsCard primary (pill), not nested Tabs
-                                                    (tests correctly per segmented-control.md §Gotcha: "does pressing
-                                                    it fling you to a whole different panel? No → TabsCard primary
-                                                    size sm"). size="sm" because this is a SECONDARY choice within
-                                                    the "Payment" panel — it shouldn't take up the full width like a
-                                                    page-level feature. */}
-                                                    <TabsCard
-                                                        variant="primary"
-                                                        size="sm"
-                                                        leftTabs={{
-                                                            selectedKey: installmentActive ? "installment" : "full",
-                                                            ariaLabel: t("payment.installment.title"),
-                                                            onSelectionChange: (key) => setInstallmentMonths(
-                                                            // default straight to the 3-month term (shortest — least
-                                                            // markup) so switching to "Installment" doesn't force another
-                                                            // decision before showing a number; falls back to whatever
-                                                            // the BE offered first if 3-month isn't available.
-                                                                String(key) === "installment"
-                                                                    ? installmentOptions.find((option) => option.months === 3)?.months
-                                                                    ?? installmentOptions[0]?.months
-                                                                    ?? null
-                                                                    : null,
-                                                            ),
-                                                            items: [
-                                                                { key: "full", label: t("payment.installment.payFull") },
-                                                                { key: "installment", label: t("payment.installment.payInstallment") },
-                                                            ],
-                                                        }}
-                                                    />
-                                                    {/* single fixed term (3 months, teacher: "don't allow extending
-                                                    the duration") — nothing to CHOOSE among, so a static info row
-                                                    replaces the old term picker (`FlexWrapButtonRadio`). */}
-                                                    {installmentActive && selectedInstallment ? (
-                                                        <div className="flex items-center justify-between gap-3 rounded-2xl border border-default bg-default px-3 py-2">
-                                                            <Typography type="body-sm" weight="semibold">
-                                                                {t("payment.installment.months", { months: selectedInstallment.months })}
-                                                            </Typography>
-                                                            <Typography type="body-sm" color="muted">
-                                                                {t("payment.installment.perMonth", { amount: formatVnd(selectedInstallment.monthlyAmountVnd) })}
-                                                            </Typography>
-                                                        </div>
-                                                    ) : null}
-                                                    {selectedInstallment ? (
-                                                        <Typography type="body-xs" color="muted">
-                                                            {t("payment.installment.summary", {
-                                                                total: formatVnd(selectedInstallment.totalAmountVnd),
-                                                                markup: selectedInstallment.markupPercent,
-                                                            })}
-                                                        </Typography>
-                                                    ) : null}
-                                                </div>
-                                            ) : null}
-
-                                            {/* apply-voucher field — Coin-shop vouchers the viewer can use on THIS
-                                    course (unused + in-scope). Course flow only (the cart has no voucher
-                                    field). Selecting a Flat voucher clamps the order to VND (the USD
-                                    gateways can't apply a VND-denominated discount), mirroring how an
-                                    installment term forces VND above. */}
-                                            {isCourse && applicableVouchers.length > 0 ? (
-                                                <div className="flex flex-col gap-3">
-                                                    <Label>{t("payment.voucher.title")}</Label>
-                                                    <SelectSingle
-                                                        ariaLabel={t("payment.voucher.title")}
-                                                        placeholder={t("payment.voucher.none")}
-                                                        options={voucherOptions}
-                                                        value={voucherCode ?? ""}
-                                                        onValueChange={(value) => setVoucherCode(value || null)}
-                                                        isDisabled={isMutating}
-                                                    />
-                                                    {flatVoucherActive ? (
-                                                        <Typography type="body-xs" color="muted">
-                                                            {t("payment.voucher.vndOnlyHint")}
-                                                        </Typography>
-                                                    ) : null}
-                                                </div>
-                                            ) : null}
-
-                                            {/* currency / region toggle — drives the summary price + gateway list.
-                                    Only shown when the order HAS a USD price (a real choice exists). */}
-                                            {hasUsd ? (
-                                                <TabsCard
-                                                    variant="primary"
-                                                    leftTabs={{
-                                                        selectedKey: activeCurrency,
-                                                        ariaLabel: t("payment.title"),
-                                                        onSelectionChange: (key) => setCurrency(String(key) as PriceCurrency),
-                                                        items: [
-                                                            { key: "VND", label: t("payment.currency.vnd") },
-                                                            { key: "USD", label: t("payment.currency.usd") },
-                                                        ],
-                                                    }}
-                                                />
-                                            ) : null}
-
-                                            {/* gateways for the active currency — interactive list card */}
-                                            {activeGroup ? (
-                                                <LabeledCard
-                                                    label={activeGroup.label}
-                                                    labelEnd={activeGroup.currency}
-                                                    frameless
-                                                >
-                                                    {/* gateway list = SurfaceListCard bordered + SurfaceListCardRow
-                                                        (nested-in-modal); separator = component's 3%-inset per the
-                                                        Storybook standard (storybook = source of truth). */}
-                                                    <SurfaceListCard bordered>
-                                                        {activeGroup.methods.map((method) => renderMethodRow(method))}
-                                                    </SurfaceListCard>
-                                                </LabeledCard>
-                                            ) : null}
-
-                                            {/* trust line — secure-payment reassurance next to the action (Baymard) */}
-                                            <div className="flex flex-col items-center gap-2">
-                                                <div className="flex items-center justify-center gap-2">
-                                                    <LockIcon aria-hidden focusable="false" className="size-3 text-muted" />
-                                                    <Typography type="body-xs" color="muted">{t("payment.secure")}</Typography>
-                                                </div>
-                                                <Typography type="body-xs" color="muted">{t("payment.noCardStored")}</Typography>
-                                            </div>
-                                        </>
-                                    ) : null}
-                                </div>
-                            </div>
-                        </Modal.Body>
-                    </Modal.Dialog>
-                </Modal.Container>
-            </Modal.Backdrop>
-        </Modal>
+        <_PaymentModal
+            isOpen={isOpen}
+            onOpenChange={setOpen}
+            selectedTab={selectedTab}
+            onSelectedTabChange={setSelectedTab}
+            orderName={order?.name ?? ""}
+            orderCoverUrl={isCourse ? coverImageUrl : undefined}
+            checkoutLines={checkoutLines}
+            discounted={summaryDiscounted}
+            original={summaryOriginal}
+            phase={summaryPhase}
+            discountPercent={order?.discountPercent ?? 0}
+            isMembershipFlow={isMembership}
+            loyaltyRows={order && order.discountPercent > 0 ? loyaltyReasons(order.discountReason, order.enrolledCount) : []}
+            currency={activeCurrency}
+            isSkeleton={Boolean(priceLoading)}
+            priceError={Boolean(priceError)}
+            installmentAvailable={installmentAvailable}
+            installmentActive={installmentActive}
+            onInstallmentActiveChange={(active) => setInstallmentMonths(
+                // default straight to the 3-month term (shortest — least markup) so
+                // switching to "Installment" doesn't force another decision before
+                // showing a number; falls back to whatever the BE offered first if
+                // 3-month isn't available.
+                active
+                    ? installmentOptions.find((option) => option.months === 3)?.months ?? installmentOptions[0]?.months ?? null
+                    : null,
+            )}
+            showVoucher={isCourse && applicableVouchers.length > 0}
+            voucherOptions={voucherOptions}
+            voucherCode={voucherCode}
+            onVoucherCodeChange={setVoucherCode}
+            flatVoucherActive={flatVoucherActive}
+            hasUsd={hasUsd}
+            onCurrencyChange={setCurrency}
+            activeGroup={activeGroup}
+            onSelectMethod={(type) => { void runCheckout(type) }}
+            isMutating={isMutating}
+            labels={labels}
+        />
     )
 }

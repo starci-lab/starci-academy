@@ -1,22 +1,25 @@
 "use client"
 
 import React, { useEffect } from "react"
-import { SignInSection } from "./SignInSection"
-import { SignUpSection } from "./SignUpSection"
-import { cn, Modal } from "@heroui/react"
+import { _AuthenticationModal } from "./component"
 import { useAuthenticationOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
-import { AuthenticationModalTab } from "@/redux/slices/tabs"
 import { resetSignInState, resetSignUpState } from "@/redux/slices/state"
-import { WithClassNames } from "@/modules/types/base/class-name"
 
-/** Props for {@link AuthenticationModal}. */
-type AuthenticationModalProps = WithClassNames<undefined>
-
-export const AuthenticationModal = ({ className }: AuthenticationModalProps = {}) => {
+/**
+ * Authentication modal — sign-in / sign-up dialog opened from anywhere in the
+ * app. Mounted prop-less by `ModalContainer`.
+ *
+ * CONNECTED half: owns the overlay open-state (`useAuthenticationOverlayState`,
+ * zustand) and the active tab (redux `tabs.authenticationModalTab`), resets
+ * both step machines the moment the modal closes, and hands the resolved
+ * shape to the presentational {@link _AuthenticationModal}. See
+ * `tiers/split.md`.
+ */
+export const AuthenticationModal = () => {
     const { isOpen, setOpen } = useAuthenticationOverlayState()
     const dispatch = useAppDispatch()
-    const authenticationModalTab = useAppSelector((state) => state.tabs.authenticationModalTab)
+    const tab = useAppSelector((state) => state.tabs.authenticationModalTab)
 
     useEffect(() => {
         if (!isOpen) {
@@ -24,26 +27,12 @@ export const AuthenticationModal = ({ className }: AuthenticationModalProps = {}
             dispatch(resetSignUpState())
         }
     }, [dispatch, isOpen])
-    const renderSection = () => {
-        switch (authenticationModalTab) {
-        case AuthenticationModalTab.SignIn:
-            return <SignInSection />
-        case AuthenticationModalTab.SignUp:
-            return <SignUpSection />
-        }
-    }
+
     return (
-        <Modal
+        <_AuthenticationModal
             isOpen={isOpen}
             onOpenChange={setOpen}
-        >
-            <Modal.Backdrop>
-                <Modal.Container size="xs">
-                    <Modal.Dialog className={cn(className)}>
-                        {renderSection()}
-                    </Modal.Dialog>
-                </Modal.Container>
-            </Modal.Backdrop>
-        </Modal>
+            tab={tab}
+        />
     )
 }

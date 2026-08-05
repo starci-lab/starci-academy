@@ -1,27 +1,21 @@
 "use client"
 
 import React from "react"
-import {
-    useTranslations,
-} from "next-intl"
-import {
-    AdBanner,
-} from "@/components/features/dashboard/AdBanner"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { useTranslations } from "next-intl"
 import { useAdModalOverlayState } from "@/hooks/zustand/overlay/hooks"
-import { ModalShell } from "@/components/blocks/layout/ModalShell"
+import { _AdModal } from "./component"
 
 /**
  * Interstitial ad modal — shown immediately when a non-enrolled, non-member
- * viewer opens a lesson. Renders the active ad (image / video / carousel) via
- * the shared {@link AdBanner}. Dismissable, so the viewer can close it and keep
- * reading the free lesson.
+ * viewer opens a lesson. CONNECTED half: reads the ad from
+ * {@link useAdModalOverlayState} (stashed by the lesson reader) and resolves the
+ * title, handing both to the presentational {@link _AdModal}. The ad is already
+ * null-filtered server-side (members and enrolled viewers never reach here), so
+ * no ad stashed means nothing to render (modal stays closed). See `tiers/split.md`.
  *
- * Container: reads the ad from {@link useAdModalOverlayState} context (stashed by
- * the lesson reader). The ad is already null-filtered server-side (members and
- * enrolled viewers never reach here), so this only mounts when there is an ad.
+ * Mounted prop-less by {@link ModalContainer}.
  */
-export const AdModal = ({ className }: WithClassNames<undefined>) => {
+export const AdModal = () => {
     const t = useTranslations()
     const { isOpen, setOpen, context } = useAdModalOverlayState()
 
@@ -31,13 +25,13 @@ export const AdModal = ({ className }: WithClassNames<undefined>) => {
     }
 
     return (
-        <ModalShell
+        <_AdModal
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
-            title={t("dashboard.adModalTitle")}
-        >
-            <AdBanner ad={context} />
-        </ModalShell>
+            ad={context}
+            labels={{
+                title: t("dashboard.adModalTitle"),
+            }}
+        />
     )
 }

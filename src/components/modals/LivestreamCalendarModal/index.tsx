@@ -1,24 +1,18 @@
 "use client"
 
-import { ClockIcon } from "@phosphor-icons/react"
-import { Calendar, Chip, Typography } from "@heroui/react"
-import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date"
-import type { DateValue } from "@heroui/react/rac"
-import { useFormatter, useTranslations } from "next-intl"
 import React, { useMemo } from "react"
+import { useFormatter, useTranslations } from "next-intl"
 import dayjs from "dayjs"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { CalendarDate } from "@internationalized/date"
+import type { DateValue } from "@heroui/react/rac"
 import { useLivestreamCalendarOverlayState } from "@/hooks/zustand/overlay/hooks"
 import type { LivestreamSessionEntity } from "@/modules/types/entities/livestream-session"
 import { DayOfWeek } from "@/modules/types/enums/day-of-week"
 import { useAppSelector } from "@/redux/hooks"
-import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
-import { EmptyContent } from "@/components/blocks/async/EmptyContent"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import { ModalShell } from "@/components/blocks/layout/ModalShell"
+import { _LivestreamCalendarModal, type LivestreamCalendarSessionRow } from "./component"
 
 /** JS `Date#getDay()` (0 = Sunday … 6 = Saturday). */
-export const dayOfWeekToNumber: Record<DayOfWeek, number> = {
+const DAY_OF_WEEK_TO_NUMBER: Record<DayOfWeek, number> = {
     [DayOfWeek.Sunday]: 0,
     [DayOfWeek.Monday]: 1,
     [DayOfWeek.Tuesday]: 2,
@@ -31,8 +25,8 @@ export const dayOfWeekToNumber: Record<DayOfWeek, number> = {
 /**
  * Next calendar date (from today) that falls on the given weekday (wall-clock day).
  */
-export const nextOccurrenceForDayOfWeek = (day: DayOfWeek): dayjs.Dayjs => {
-    const targetDow = dayOfWeekToNumber[day]
+const nextOccurrenceForDayOfWeek = (day: DayOfWeek): dayjs.Dayjs => {
+    const targetDow = DAY_OF_WEEK_TO_NUMBER[day]
     const now = dayjs()
     const add = (targetDow - now.day() + 7) % 7
     if (add === 0) {
@@ -41,12 +35,15 @@ export const nextOccurrenceForDayOfWeek = (day: DayOfWeek): dayjs.Dayjs => {
     return now.add(add, "day").startOf("day")
 }
 
-export const toCalendarDate = (d: dayjs.Dayjs): CalendarDate => {
-    return new CalendarDate(d.year(), d.month() + 1, d.date())
-}
+/** `dayjs` day → `@internationalized/date` `CalendarDate` (the `Calendar` grid's own value type). */
+const toCalendarDate = (d: dayjs.Dayjs): CalendarDate => new CalendarDate(d.year(), d.month() + 1, d.date())
+
+/** `"09:00:00"` → `"09:00"`. */
+const formatTime = (hhmmss: string) => hhmmss.slice(0, 5)
 
 /**
- * Recurring weekly slots: weekdays that have a livestream (for calendar styling).
+ * Recurring weekly slots: weekdays (JS `getDay()` numbers) that have a livestream, for
+ * calendar styling (`isDateUnavailable` dims every OTHER weekday).
  */
 const useSessionWeekdaySet = (sessions: Array<LivestreamSessionEntity> | undefined) => {
     return useMemo(() => {
@@ -54,27 +51,37 @@ const useSessionWeekdaySet = (sessions: Array<LivestreamSessionEntity> | undefin
         if (!sessions?.length) {
             return set
         }
-        for (const s of sessions) {
-            if (s.isOverridable) {
+        for (const session of sessions) {
+            if (session.isOverridable) {
                 continue
             }
-            const day = s.dayOfWeek as DayOfWeek
-            if (day in dayOfWeekToNumber) {
-                set.add(dayOfWeekToNumber[day])
+            const day = session.dayOfWeek as DayOfWeek
+            if (day in DAY_OF_WEEK_TO_NUMBER) {
+                set.add(DAY_OF_WEEK_TO_NUMBER[day])
             }
         }
         return set
     }, [sessions])
 }
 
-const formatTime = (hhmmss: string) => hhmmss.slice(0, 5)
-
-export const LivestreamCalendarModal = ({ className }: WithClassNames<undefined>) => {
+/**
+ * Livestream-calendar modal — the CONNECTED half: reads the overlay open-state
+ * ({@link useLivestreamCalendarOverlayState}) and the course's recurring livestream
+ * sessions (redux, `state.livestreamSession.entities`), derives the calendar's
+ * unavailable-weekday predicate + default focused date, resolves every label (incl.
+ * per-row interpolation), and hands the resolved shape to the presentational
+ * {@link _LivestreamCalendarModal}. Mounted PROP-LESS by `ModalContainer` — see
+ * `tiers/split.md`.
+ */
+export const LivestreamCalendarModal = () => {
     const t = useTranslations()
     const format = useFormatter()
     const { isOpen, setOpen } = useLivestreamCalendarOverlayState()
     const sessions = useAppSelector((state) => state.livestreamSession.entities)
     const sessionDow = useSessionWeekdaySet(sessions)
+
+    // Recurring (non-overridden) sessions, in their authored display order — the source
+    // both the calendar's default focus AND the list rows are built from.
     const visibleSessions = useMemo(() => {
         if (!sessions?.length) {
             return []
@@ -93,6 +100,7 @@ export const LivestreamCalendarModal = ({ className }: WithClassNames<undefined>
         return toCalendarDate(day)
     }, [visibleSessions])
 
+    /** `true` for a weekday with no recurring session — dims it in the calendar grid. */
     const isDateUnavailable = (date: DateValue) => {
         if (sessionDow.size === 0) {
             return false
@@ -104,74 +112,46 @@ export const LivestreamCalendarModal = ({ className }: WithClassNames<undefined>
         return !sessionDow.has(js.getDay())
     }
 
+    const rows = useMemo<Array<LivestreamCalendarSessionRow>>(
+        () => [...visibleSessions]
+            .sort((prev, next) => {
+                return DAY_OF_WEEK_TO_NUMBER[next.dayOfWeek as DayOfWeek] - DAY_OF_WEEK_TO_NUMBER[prev.dayOfWeek as DayOfWeek]
+            })
+            .map((session) => {
+                const dow = session.dayOfWeek as DayOfWeek
+                const next = nextOccurrenceForDayOfWeek(dow)
+                // `session.note` is `string | null`; only a non-blank note becomes a row note
+                // (kept UNTRIMMED, same as the original `session.note?.trim() ? session.note : null` check).
+                const noteSource = session.note
+                const note = noteSource != null && noteSource.trim().length > 0 ? noteSource : undefined
+                return {
+                    id: session.id,
+                    dayLabel: t(`livestream.calendar.days.${dow}`),
+                    timeRangeLabel: t("livestream.calendar.sessionTime", {
+                        start: formatTime(session.startTime),
+                        end: formatTime(session.expectedEndTime),
+                    }),
+                    nextOnLabel: t("livestream.calendar.nextOn", {
+                        date: format.dateTime(next.toDate(), { dateStyle: "long" }),
+                    }),
+                    note,
+                }
+            }),
+        [visibleSessions, t, format],
+    )
+
     return (
-        <ModalShell
+        <_LivestreamCalendarModal
             isOpen={isOpen}
             onOpenChange={setOpen}
-            className={className}
-            containerClassName="max-w-lg"
-            size="lg"
-            title={t("livestream.calendar.modalTitle")}
-            bodyClassName="gap-0"
-        >
-            {
-                visibleSessions.length === 0 ? (
-                    <EmptyContent title={t("livestream.calendar.empty")} />
-                ) : (
-                    <div className="flex w-full flex-col gap-3">
-                        <div className="flex w-full flex-col items-center">
-                            <Calendar
-                                aria-label={t("livestream.calendar.aria")}
-                                className="overflow-hidden shadow-none"
-                                defaultFocusedValue={defaultFocusedValue}
-                                defaultValue={today(getLocalTimeZone())}
-                                firstDayOfWeek="mon"
-                                isDateUnavailable={isDateUnavailable}
-                            />
-                        </div>
-                        <SurfaceListCard bordered>
-                            {
-                                visibleSessions
-                                    .sort((prev, next) => {
-                                        return dayOfWeekToNumber[next.dayOfWeek as DayOfWeek] - dayOfWeekToNumber[prev.dayOfWeek as DayOfWeek]
-                                    })
-                                    .map((session) => {
-                                        const dow = session.dayOfWeek as DayOfWeek
-                                        const next = nextOccurrenceForDayOfWeek(dow)
-                                        const dayLabel = t(`livestream.calendar.days.${dow}`)
-                                        return (
-                                            <SurfaceListCardItem key={session.id}>
-                                                <div className="flex flex-col gap-3">
-                                                    <div className="flex flex-wrap items-center gap-2">
-                                                        <Chip size="sm" variant="soft">
-                                                            <Chip.Label>{dayLabel}</Chip.Label>
-                                                        </Chip>
-                                                        <ClockIcon aria-hidden focusable="false" className="size-3 text-muted" />
-                                                        <Typography type="body-sm" color="muted">
-                                                            {t("livestream.calendar.sessionTime", {
-                                                                start: formatTime(session.startTime),
-                                                                end: formatTime(session.expectedEndTime),
-                                                            })}
-                                                        </Typography>
-                                                    </div>
-                                                    <Typography type="body-sm">
-                                                        {t("livestream.calendar.nextOn", {
-                                                            date: format.dateTime(next.toDate(), {
-                                                                dateStyle: "long",
-                                                            }),
-                                                        })}
-                                                    </Typography>
-                                                    {session.note?.trim() ? (
-                                                        <MarkdownContent markdown={session.note} className="text-sm text-muted" />
-                                                    ) : null}
-                                                </div>
-                                            </SurfaceListCardItem>
-                                        )
-                                    })
-                            }
-                        </SurfaceListCard>
-                    </div>
-                )}
-        </ModalShell>
+            defaultFocusedValue={defaultFocusedValue}
+            isDateUnavailable={isDateUnavailable}
+            rows={rows}
+            labels={{
+                modalTitle: t("livestream.calendar.modalTitle"),
+                calendarAriaLabel: t("livestream.calendar.aria"),
+                emptyTitle: t("livestream.calendar.empty"),
+            }}
+        />
     )
 }

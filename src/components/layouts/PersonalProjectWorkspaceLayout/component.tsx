@@ -13,7 +13,7 @@ import {
 } from "@/components/starci/blocks/learn/PersonalProjectResultScreen"
 
 /**
- * `_PersonalProjectWorkspace` — the SRC TWIN of `.storybook/components/starci/
+ * `_PersonalProjectWorkspaceLayout` — the SRC TWIN of `.storybook/components/starci/
  * pages/PersonalProjectWorkspace/PersonalProjectWorkspace.tsx`. Presentational:
  * typed props, already resolved; no fetch/store/i18n (that's the connected half,
  * `./index.tsx`).
@@ -33,8 +33,8 @@ import {
  * happen to be presentational (the children own no data of their own).
  */
 
-/** Props for {@link _PersonalProjectWorkspace} — see the file header for the `view` split. */
-export type PersonalProjectWorkspaceProps =
+/** Props for {@link _PersonalProjectWorkspaceLayout} — see the file header for the `view` split. */
+export type PersonalProjectWorkspaceLayoutProps =
     | ({ view: "dashboard" } & PersonalProjectDashboardProps)
     | ({ view: "task" } & PersonalProjectTaskPageProps)
     | ({ view: "result" } & PersonalProjectResultScreenProps)
@@ -43,9 +43,9 @@ export type PersonalProjectWorkspaceProps =
  * The personal-project route group's content switch. See the file header for
  * why this screen exists and why it owns none of its own DOM.
  *
- * @param props - {@link PersonalProjectWorkspaceProps}
+ * @param props - {@link PersonalProjectWorkspaceLayoutProps}
  */
-const _PersonalProjectWorkspace = (props: PersonalProjectWorkspaceProps) => {
+const _PersonalProjectWorkspaceLayout = (props: PersonalProjectWorkspaceLayoutProps) => {
     // No wrapper div (BLOCK-2): each of the three leaves below is this
     // screen's own root for the branch it renders. None of the three yet
     // accepts the `identity` prop from `_identity.ts` (`PersonalProjectDashboard`,
@@ -60,4 +60,4 @@ const _PersonalProjectWorkspace = (props: PersonalProjectWorkspaceProps) => {
     return <PersonalProjectResultScreen {...props} />
 }
 
-export { _PersonalProjectWorkspace }
+export { _PersonalProjectWorkspaceLayout }

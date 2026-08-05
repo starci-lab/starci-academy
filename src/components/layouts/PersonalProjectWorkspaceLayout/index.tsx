@@ -13,7 +13,7 @@ import {
     useSearchParams,
 } from "next/navigation"
 import {
-    _PersonalProjectWorkspace,
+    _PersonalProjectWorkspaceLayout,
 } from "./component"
 import { pathConfig } from "@/resources/path"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
@@ -69,7 +69,7 @@ import type { ContentRelatedItem } from "@/components/starci/blocks/learn/Conten
  * connected sub-component so its hooks run only when that leaf is mounted (rules of
  * hooks — the three view fetch surfaces never share one component).
  */
-export const PersonalProjectWorkspace = () => {
+export const PersonalProjectWorkspaceLayout = () => {
     const params = useParams()
     const pathname = usePathname()
     const taskId = typeof params?.taskId === "string" ? params.taskId : undefined
@@ -313,7 +313,7 @@ const DashboardView = () => {
     const isEmpty = !hasMilestones && !milestonesSwr.isLoading && !!milestonesSwr.data && !milestonesSwr.error
 
     return (
-        <_PersonalProjectWorkspace
+        <_PersonalProjectWorkspaceLayout
             view="dashboard"
             breadcrumbItems={crumbs}
             title={t("finalProject.dashboard.title")}
@@ -498,7 +498,7 @@ const TaskView = ({ taskId }: { taskId: string }) => {
     const isSkeleton = !displayTask || milestoneTaskQuery.isLoading
 
     return (
-        <_PersonalProjectWorkspace
+        <_PersonalProjectWorkspaceLayout
             view="task"
             breadcrumbItems={crumbs}
             task={{ title: displayTask?.title ?? "", description: displayTask?.description || undefined }}
@@ -666,7 +666,7 @@ const ResultView = ({ taskId }: { taskId: string }) => {
     const attemptsLoading = attemptsSwr.data == null ? !attemptsSwr.error : false
 
     return (
-        <_PersonalProjectWorkspace
+        <_PersonalProjectWorkspaceLayout
             view="result"
             backLabel={t("personalProjectResult.backToTask")}
             onBack={onBack}

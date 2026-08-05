@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
-import type { ComponentTypeWithSkeleton } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"

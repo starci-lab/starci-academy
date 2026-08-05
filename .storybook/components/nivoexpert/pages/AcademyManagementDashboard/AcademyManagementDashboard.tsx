@@ -3,7 +3,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { MetricCard } from "@sb-components/composites/stats/MetricCard/MetricCard"
 import { Toolbar, type ToolbarTabGroup } from "@sb-components/composites/navigation/Toolbar/Toolbar"
-import type { ComponentTypeWithSkeleton, SkeletonProps } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton, SkeletonProps } from "@sb-components/frames/_slot"
 import { Grid } from "@sb-components/frames/Grid/Grid"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import {

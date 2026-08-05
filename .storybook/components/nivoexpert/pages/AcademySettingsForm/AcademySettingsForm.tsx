@@ -6,7 +6,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { Form, FormActions } from "@sb-components/composites/form/Form/Form"
 import { SurfaceCard, SurfaceCardPressableGroup, type SurfaceCardPressableGroupItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { Grid } from "@sb-components/frames/Grid/Grid"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 

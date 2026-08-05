@@ -3,7 +3,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { InputNumber, InputTextarea } from "@sb-components/atoms/forms/Input/Input"
 import { SelectSingle, type SelectOption } from "@sb-components/atoms/forms/Select/Select"
 import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { Grid } from "@sb-components/frames/Grid/Grid"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 

@@ -6,7 +6,7 @@ import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { KeyValueList, type KeyValueListItem } from "@sb-components/composites/data/KeyValue/KeyValue"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**

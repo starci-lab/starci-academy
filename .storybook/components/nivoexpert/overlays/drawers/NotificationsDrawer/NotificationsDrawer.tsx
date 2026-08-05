@@ -4,7 +4,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 
 /**
  * `NotificationsDrawer` — the overlay opened from `ExpertDashboardShell`'s top

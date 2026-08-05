@@ -1,7 +1,7 @@
 import type { ComponentType, SVGProps } from "react"
 import { BellIcon } from "@phosphor-icons/react"
 import { cn } from "@heroui/react"
-import type { ComponentTypeWithSkeleton, SkeletonProps } from "@sb-components/composites/_slot"
+import type { ComponentTypeWithSkeleton, SkeletonProps } from "@sb-components/frames/_slot"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Badge } from "@sb-components/atoms/display/Badge/Badge"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"

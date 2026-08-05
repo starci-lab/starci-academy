@@ -1,7 +1,7 @@
 import { HourglassIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 
 /**
  * `CatalogComingSoonPanel` — the honest 0-course empty state for a brand-new

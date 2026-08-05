@@ -738,13 +738,15 @@ const explainJustifiesTokenChoice = {
           context.report({ node, messageId: "restates" })
           return
         }
+        // EVERY token on the node must be accounted for, not just the first checkable one.
+        // A node claiming two seams is claiming both; an explanation that argues one of them
+        // and stays silent on the other is half an answer wearing the shape of a whole one.
         for (const token of tokens) {
           const family = PRINCIPLE_FAMILIES.find((f) => f.includes(token))
           if (!family) continue
           const siblings = family.filter((t) => t !== token)
           if (siblings.some((s) => normalized.includes(s))) continue
           context.report({ node, messageId: "noAlternative", data: { token, siblings: siblings.join(", ") } })
-          return
         }
       },
     }

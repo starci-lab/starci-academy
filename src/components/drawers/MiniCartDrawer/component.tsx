@@ -11,7 +11,7 @@ import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
-import { CartLine } from "@/components/features/cart/CartView/CartLine"
+import { CartLine } from "@/components/blocks/commerce/CartLine"
 import type { CartItemEntity } from "@/modules/api/graphql/queries/types/my-cart"
 import type { CoursesCheckoutPreviewLine } from "@/modules/api/graphql/queries/types/courses-checkout-preview"
 

@@ -1,12 +1,8 @@
-import React from "react"
-import { RewardsPage } from "@/components/features/rewards/RewardsPage"
+"use client"
 
-/**
- * Route `/[locale]/rewards` — the "điểm quà" gifts store. Thin route file: mounts
- * the store component; all catalog/wallet/redeem logic lives in the component.
- */
-const Page = () => {
-    return <RewardsPage />
-}
+import React from "react"
+import { RewardsPage } from "@/components/pages/RewardsPage"
+
+const Page = () => <RewardsPage />
 
 export default Page

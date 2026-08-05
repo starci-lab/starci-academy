@@ -1,12 +1,8 @@
-import React from "react"
-import { CartView } from "@/components/features/cart/CartView"
+"use client"
 
-/**
- * Route `/[locale]/cart` — the shopping cart: review chosen courses + multi-course
- * checkout. Thin route file: mounts the feature; all logic/UI lives in the component.
- */
-const Page = () => {
-    return <CartView />
-}
+import React from "react"
+import { CartPage } from "@/components/pages/CartPage"
+
+const Page = () => <CartPage />
 
 export default Page

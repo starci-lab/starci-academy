@@ -4,8 +4,8 @@ import React from "react"
 import { Badge, Button, cn } from "@heroui/react"
 import { ShoppingCartIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { useCart } from "@/components/features/cart/hooks/useCart"
-import { useCartEntry } from "@/components/features/cart/hooks/useCartEntry"
+import { useCart } from "@/hooks/useCart"
+import { useCartEntry } from "@/hooks/useCartEntry"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Largest cart count rendered verbatim on the badge before showing "9+". */

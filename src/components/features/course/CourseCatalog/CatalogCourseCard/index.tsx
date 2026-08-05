@@ -2,7 +2,7 @@
 
 import React from "react"
 import { CourseCard } from "@/components/blocks/cards/CourseCard"
-import { AddToCartButton } from "@/components/features/cart/AddToCartButton"
+import { AddToCartButton } from "@/components/blocks/commerce/AddToCartButton"
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
 import type { CourseEntity } from "@/modules/types/entities/course"
 

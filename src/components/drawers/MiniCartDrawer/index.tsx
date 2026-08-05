@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useMemo } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { useCart } from "@/components/features/cart/hooks/useCart"
+import { useCart } from "@/hooks/useCart"
 import { useQueryCoursesCheckoutPreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursesCheckoutPreviewSwr"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import { useMiniCartOverlayState, usePaymentOverlayState, usePendingCartIntent } from "@/hooks/zustand/overlay/hooks"

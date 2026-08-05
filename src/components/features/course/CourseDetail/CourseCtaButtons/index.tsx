@@ -16,7 +16,7 @@ import {
 } from "../hooks/useCourseEnrollment"
 import {
     AddToCartButton,
-} from "@/components/features/cart/AddToCartButton"
+} from "@/components/blocks/commerce/AddToCartButton"
 import {
     useAppSelector,
 } from "@/redux/hooks"

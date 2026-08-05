@@ -59,8 +59,8 @@ import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { pathConfig } from "@/resources/path"
 
-/** Props for {@link NotificationCenter}. */
-export type NotificationCenterProps = WithClassNames<undefined>
+/** Props for {@link NotificationsPage}. */
+export type NotificationsPageProps = WithClassNames<undefined>
 
 /** Page size for the notification center's pager (bigger than the bell's popover page). */
 const PAGE_SIZE = 20
@@ -97,7 +97,7 @@ const TYPE_ICONS: Record<NotificationType, ReactNode> = {
  * and navigation.
  * @param props - optional root class name
  */
-export const NotificationCenter = ({ className }: NotificationCenterProps) => {
+export const NotificationsPage = ({ className }: NotificationsPageProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()

@@ -3,12 +3,12 @@
 import React, { useCallback, useEffect, useMemo } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import { useCart } from "@/components/features/cart/hooks/useCart"
+import { useCart } from "@/hooks/useCart"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useQueryCoursesCheckoutPreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursesCheckoutPreviewSwr"
 import { PaymentFlow } from "@/modules/types/payment"
 import { pathConfig } from "@/resources/path"
-import { _CartView, formatVnd } from "./component"
+import { _CartPage, formatVnd } from "./component"
 
 /**
  * Shopping-cart page: reviews the chosen courses and starts a multi-course
@@ -17,13 +17,13 @@ import { _CartView, formatVnd } from "./component"
  * (keyed on the current cart's course ids, revalidates whenever the cart
  * changes), computes both `isSkeleton` flags from the first-load formula,
  * resolves every label (incl. interpolation), and hands them to the
- * presentational {@link _CartView}. See `tiers/split.md`.
+ * presentational {@link _CartPage}. See `tiers/split.md`.
  *
  * Every amount from the preview is display-ready — it is passed straight
- * through to {@link import("./component")._CartView}, which forwards it into
+ * through to {@link import("./component")._CartPage}, which forwards it into
  * `PriceTag`.
  */
-export const CartView = () => {
+export const CartPage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -72,7 +72,7 @@ export const CartView = () => {
     )
 
     return (
-        <_CartView
+        <_CartPage
             items={items}
             previewLines={preview?.lines ?? []}
             totalChargedVnd={preview?.totalChargedVnd}

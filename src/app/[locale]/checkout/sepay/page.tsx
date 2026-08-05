@@ -1,12 +1,8 @@
-import React from "react"
-import { SepayCheckout } from "@/components/features/checkout/SepayCheckout"
+"use client"
 
-/**
- * Route `/[locale]/checkout/sepay` — renders the SePay QR checkout flow.
- * Thin route file: only mounts the component, no logic/UI here.
- */
-const Page = () => {
-    return <SepayCheckout />
-}
+import React from "react"
+import { SepayCheckoutPage } from "@/components/pages/SepayCheckoutPage"
+
+const Page = () => <SepayCheckoutPage />
 
 export default Page

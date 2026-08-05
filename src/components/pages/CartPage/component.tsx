@@ -10,7 +10,7 @@ import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { CartLine } from "./CartLine"
+import { CartLine } from "@/components/blocks/commerce/CartLine"
 import { publicEnv } from "@/resources/env/public"
 import type { CartItemEntity } from "@/modules/api/graphql/queries/types/my-cart"
 import type { CoursesCheckoutPreviewLine } from "@/modules/api/graphql/queries/types/courses-checkout-preview"
@@ -100,8 +100,8 @@ const ClearCartButton = ({ isDisabled, onClear, clearLabel, confirmLabel }: Clea
     )
 }
 
-/** All display text, already localized by the connected `CartView`; a story passes i18n keys. */
-export interface CartViewLabels {
+/** All display text, already localized by the connected `CartPage`; a story passes i18n keys. */
+export interface CartPageLabels {
     title: string
     description: string
     empty: string
@@ -124,8 +124,8 @@ export interface CartViewLabels {
     addMoreHint?: string
 }
 
-/** Props for {@link _CartView} — presentational; all data resolved, no fetch/store/i18n. */
-export interface CartViewProps {
+/** Props for {@link _CartPage} — presentational; all data resolved, no fetch/store/i18n. */
+export interface CartPageProps {
     /** Every cart row with its full course. */
     items: Array<CartItemEntity>
     /** The checkout preview's per-course lines, for per-line pricing inside {@link CartLine}. */
@@ -157,11 +157,11 @@ export interface CartViewProps {
     onClearCart: () => void
     /** Jumps to course browsing — the empty state's action. */
     onBrowseCourses: () => void
-    labels: CartViewLabels
+    labels: CartPageLabels
 }
 
 /**
- * Shopping-cart page — the presentational half of {@link import("./index").CartView}.
+ * Shopping-cart page — the presentational half of {@link import("./index").CartPage}.
  * Header (always shown) → error/empty/content in that order (`error` beats a stale
  * `isSkeleton`; `isEmpty` only once settled) → cart lines in one `SurfaceListCard` →
  * a footer with the REAL discounted total (progressive loyalty + multi-course bundle
@@ -172,9 +172,9 @@ export interface CartViewProps {
  * both threaded co-located rather than built as a parallel skeleton tree. See
  * `tiers/split.md` — the connected `./index.tsx` owns the fetch and i18n.
  *
- * @param props - {@link CartViewProps}
+ * @param props - {@link CartPageProps}
  */
-export const _CartView = ({
+export const _CartPage = ({
     items,
     previewLines,
     totalChargedVnd,
@@ -190,7 +190,7 @@ export const _CartView = ({
     onClearCart,
     onBrowseCourses,
     labels,
-}: CartViewProps) => {
+}: CartPageProps) => {
     const { savings: savingsLabel, bundleBonus: bundleBonusLabel, installmentHint: installmentHintLabel, addMoreHint: addMoreHintLabel } = labels
 
     // courseId → preview line, for per-line pricing.
@@ -315,7 +315,7 @@ export const _CartView = ({
         <Container
             size="md"
             padding={6}
-            identity={{ tier: "block", component: "CartView" }}
+            identity={{ tier: "block", component: "CartPage" }}
             body={() => (
                 <StackV gap={7} items={[
                     () => <PageHeader title={labels.title} description={labels.description} />,

@@ -58,7 +58,7 @@ const CHECKOUT_EXPIRY_MS = 15 * 60 * 1000
  * read their own query params and own their own handlers — so this container
  * just composes them. `"use client"` because it runs effects + reads params.
  */
-const SepayCheckoutContent = () => {
+const SepayCheckoutPageContent = () => {
     const searchParams = useSearchParams()
     const locale = useLocale()
     const router = useRouter()
@@ -173,11 +173,11 @@ const SepayCheckoutContent = () => {
 /**
  * Public SePay checkout entry point.
  *
- * Wraps {@link SepayCheckoutContent} in a Suspense boundary (required because
+ * Wraps {@link SepayCheckoutPageContent} in a Suspense boundary (required because
  * the content + panels read `useSearchParams`) with a centered spinner fallback.
  * Mounted by the `/[locale]/checkout/sepay` route.
  */
-export const SepayCheckout = () => {
+export const SepayCheckoutPage = () => {
     return (
         <Suspense
             fallback={
@@ -186,7 +186,7 @@ export const SepayCheckout = () => {
                 </div>
             }
         >
-            <SepayCheckoutContent />
+            <SepayCheckoutPageContent />
         </Suspense>
     )
 }

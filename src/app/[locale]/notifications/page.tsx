@@ -1,12 +1,8 @@
-import React from "react"
-import { NotificationCenter } from "@/components/features/notifications/NotificationCenter"
+"use client"
 
-/**
- * Route `/[locale]/notifications` — "Trung tâm thông báo": the bell's "Xem tất
- * cả" destination. Thin route file: only mounts the feature, no logic/UI here.
- */
-const Page = () => {
-    return <NotificationCenter />
-}
+import React from "react"
+import { NotificationsPage } from "@/components/pages/NotificationsPage"
+
+const Page = () => <NotificationsPage />
 
 export default Page

@@ -1,16 +1,38 @@
-"use client"
-
 import React from "react"
-import { Chip, Popover, Typography, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { type SkeletonProps } from "@/components/composites/_slot"
+import { Popover } from "@heroui/react"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackV } from "@/components/frames/Stack"
+import { KeyValueList } from "@/components/composites/data/KeyValue"
+import { Typography } from "@/components/atoms/text/Typography"
+
+/**
+ * DESIGN — a single course/product price: the amount to pay (bold), the struck
+ * list price, a `−X%` success chip, and a breakdown popover.
+ *
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and wraps its render in
+ * its OWN BlockAnatomy (Diagram + Tree) reflecting the parts THAT leaf composes —
+ * there is no separate consolidated "Anatomy" story. The composition shifts with
+ * the shape: no-discount shows only the amount; on-sale adds the struck price,
+ * chip, popover, and saving line; `showSavingLine={false}` drops that last line.
+ */
 
 /** Currency a price is shown in. */
 export type PriceCurrency = "VND" | "USD"
 
-/** Visual size of the price (drives the discounted amount's type scale). */
-export type PriceTagSize = "sm" | "md" | "lg"
+/**
+ * How loud the price is on its surface — decides the amount's font size. INTERNAL,
+ * and deliberately NOT named `role`: that word is a DOM/ARIA attribute, so a prop by
+ * that name reads as an accessibility role to both a reader and to eslint-jsx-a11y
+ * (which flagged `role="prominent"` as an invalid ARIA role three times).
+ * not exposed as a prop (§14d.1): the caller picks a MEMBER (`PriceTagInline` /
+ * `PriceTagProminent`), not a size.
+ */
+type PriceEmphasis = "inline" | "prominent"
 
-/** Breakdown rows for the hover tooltip (amounts in the SAME currency as the price). */
+/** Breakdown rows for the breakdown popover (amounts in the SAME currency as the price). */
 export interface PriceBreakdown {
     /** Active-phase price BEFORE loyalty (the middle step list → phase → charge). */
     phase: number
@@ -22,16 +44,41 @@ export interface PriceBreakdown {
     loyaltyNote?: string
 }
 
-/** Props for {@link _PriceTag} — presentational; all labels already resolved. */
-export interface PriceTagProps extends WithClassNames<undefined> {
+/** Every word the breakdown popover says — resolved by the connected {@link PriceTag}. */
+export interface PriceTagLabels {
+    /** Popover heading, and its accessible name. */
+    breakdownTitle: string
+    /** Row label for the pre-discount price. */
+    listPrice: string
+    /** Row label for the phase discount (already folded with the phase name when there is one). */
+    phaseRow: string
+    /** Row label for the loyalty discount (already folded with the loyalty note when there is one). */
+    loyaltyRow: string
+    /** Row label for the total the buyer actually pays. */
+    youPay: string
+}
+
+/** Props for the {@link PriceTag} block. */
+export interface PriceTagProps {
+    /** Breakdown-popover copy, already localized. A story passes i18n keys. */
+    labels: PriceTagLabels
     /** The price the user actually pays. */
     discounted: number
     /** The pre-discount (list/MSRP) price; struck through when greater than discounted. */
     original?: number | null
     /** Currency to format in. Defaults to "VND". */
     currency?: PriceCurrency
-    /** Size of the discounted amount. Defaults to "md". */
-    size?: PriceTagSize
+    /**
+     * `true` → the price is in its RESTING state: the amount, the struck-through
+     * original price, the `−X%` chip, and the saving line all turn to shimmer,
+     * KEEPING the same line boxes so nothing jumps in layout (§8).
+     *
+     * The flag FLOWS DOWN into the atoms that render each part (`Typography`,
+     * `Chip`), instead of building a second shimmer tree (§12c). The popover
+     * is TURNED OFF while resting — there is no data to open yet, and a pressable
+     * control while loading is a false promise.
+     */
+    isSkeleton?: boolean
     /**
      * Optional phase-tier + loyalty rows for the breakdown {@link Popover}. Whenever
      * there IS a saving the `−X%` chip is ALWAYS a button that opens the popover (at
@@ -44,32 +91,22 @@ export interface PriceTagProps extends WithClassNames<undefined> {
      * the percent). Defaults to `true`; set `false` where space is tight (dense cards).
      */
     showSavingLine?: boolean
-    /** Already-localized breakdown-popover title; doubles as the trigger's aria-label. */
-    breakdownTitleLabel: string
-    /** Already-localized "List price" row label. */
-    listPriceLabel: string
-    /**
-     * Already-localized left-side label for the phase-tier row; omit to hide the row
-     * (mirrors when there's no phase saving to show — `breakdown` + `original` present
-     * and `original > breakdown.phase`).
-     */
-    phaseRowLabel?: string
-    /**
-     * Already-localized left-side label for the loyalty row; omit to hide the row
-     * (mirrors when there's no loyalty saving to show).
-     */
-    loyaltyRowLabel?: string
-    /** Already-localized "You pay" row label. */
-    youPayLabel: string
-    /** Already-localized + fully-interpolated "Saved N₫" line; omit to hide it. */
-    savedLabel?: string
+    /** Where the root sits inside its parent. */
+    classNames?: Array<AllowedClassName>
 }
 
-/** size → discounted-amount type. */
-const AMOUNT_TYPE: Record<PriceTagSize, "body" | "h4" | "h3"> = {
-    sm: "body",
-    md: "h4",
-    lg: "h3",
+/**
+ * Role → amount font size.
+ */
+const AMOUNT_TYPE: Record<PriceEmphasis, "base" | "h4"> = {
+    inline: "base",
+    prominent: "h4",
+}
+
+/** Role → struck-through original-price line size, placed next to {@link AMOUNT_TYPE} so the two scales don't drift apart. */
+const ORIGINAL_TYPE: Record<PriceEmphasis, "xs" | "sm"> = {
+    inline: "xs",
+    prominent: "sm",
 }
 
 /** Format an amount in the given currency. */
@@ -79,125 +116,223 @@ export const formatPrice = (amount: number, currency: PriceCurrency): string =>
         : `${amount.toLocaleString("vi-VN")}₫`
 
 /** Whole-percent saving between a "before" and an "after" amount (0 when none). */
-export const savingPercent = (before: number, after: number): number =>
+const savingPercent = (before: number, after: number): number =>
     before > after ? Math.round((1 - after / before) * 100) : 0
 
 /**
  * The single source of truth for rendering a course/product price: the discounted
  * amount (bold), the list price struck through (only when there IS a saving), and a
  * `−X%` success chip whose percent is the REAL list → charge gap (phase tier +
- * loyalty), not a loyalty flag. Whenever there is a saving the chip is a clickable
- * button opening a {@link Popover} (at minimum list price → you pay; `breakdown` adds
- * the phase + loyalty steps). Works in VND or USD. Use everywhere a price is shown so
- * the discount logic never drifts between copies.
+ * loyalty). Whenever there is a saving the chip is a clickable button opening a
+ * {@link Popover} (at minimum list price → you pay; `breakdown` adds the phase +
+ * loyalty steps). Works in VND or USD.
  *
  * @param props - {@link PriceTagProps}
  */
-export const _PriceTag = ({
+const PriceTagBase = ({
     discounted,
     original,
     currency = "VND",
-    size = "md",
+    emphasis,
+    isSkeleton = false,
     breakdown,
     showSavingLine = true,
-    breakdownTitleLabel,
-    listPriceLabel,
-    phaseRowLabel,
-    loyaltyRowLabel,
-    youPayLabel,
-    savedLabel,
-    className,
-}: PriceTagProps) => {
+    classNames,
+    labels,
+}: PriceTagProps & { emphasis: PriceEmphasis }) => {
     const hasSaving = original != null && original > discounted
     const savePercent = hasSaving ? savingPercent(original, discounted) : 0
 
-    // the −X% saving chip — a plain Chip (span). The pressable/focusable button role
-    // lives on the canonical `Popover.Trigger` wrapper (react-aria: role=button,
-    // aria-expanded/controls, tabindex), so there is exactly ONE interactive element —
-    // NOT a <button> nested inside the trigger's role=button div. No caret; the whole
-    // chip is the affordance.
+    // the −X% saving chip — composed from the `Chip` atom (tone success →
+    // soft-success chip, matching src's raw `<Chip variant="soft" color="success">`).
+    // The pressable/focusable button role lives on the canonical `Popover.Trigger`
+    // wrapper (react-aria: role=button, aria-expanded/controls, tabindex), so there is
+    // exactly ONE interactive element. No caret; the whole chip is the affordance.
     const chip =
         savePercent > 0 ? (
-            <Chip size="sm" variant="soft" color="success">
-                <Chip.Label>{`−${savePercent}%`}</Chip.Label>
-            </Chip>
+            <Chip
+                tone="success"
+                text={`−${savePercent}%`}
+            />
         ) : null
 
     // phase saving = list → phase ; loyalty saving = phase → charge
     const phaseSave = original != null ? savingPercent(original, breakdown?.phase ?? discounted) : 0
     // Popover content — shown for EVERY saving (so the chip is always clickable), at
-    // minimum list price → you pay. The phase-tier & loyalty rows only appear when the
-    // connected half resolved a row label for them (mirrors the presence of real data).
+    // minimum list price → you pay. The phase-tier & loyalty rows only appear when a
+    // full `breakdown` is supplied.
     const breakdownContent = hasSaving ? (
-        <div className="flex flex-col gap-1 p-3">
-            <Typography type="body-xs" color="muted">
-                {breakdownTitleLabel}
-            </Typography>
-            <div className="flex items-center justify-between gap-3">
-                <Typography type="body-sm">{listPriceLabel}</Typography>
-                <Typography type="body-sm">
-                    {formatPrice(original ?? discounted, currency)}
-                </Typography>
-            </div>
-            {phaseRowLabel != null && breakdown && original != null ? (
-                <div className="flex items-center justify-between gap-3">
-                    <Typography type="body-sm" color="muted">
-                        {phaseRowLabel}
-                    </Typography>
-                    <Typography type="body-sm" className="text-success-soft-foreground">
-                        {`−${formatPrice(original - breakdown.phase, currency)} (−${phaseSave}%)`}
-                    </Typography>
-                </div>
-            ) : null}
-            {loyaltyRowLabel != null && breakdown ? (
-                <div className="flex items-center justify-between gap-3">
-                    <Typography type="body-sm" color="muted" className="min-w-0 truncate">
-                        {loyaltyRowLabel}
-                    </Typography>
-                    <Typography type="body-sm" className="shrink-0 text-success-soft-foreground">
-                        {`−${formatPrice(breakdown.phase - discounted, currency)} (−${breakdown.loyaltyPercent}%)`}
-                    </Typography>
-                </div>
-            ) : null}
-            <div className="flex items-center justify-between gap-3 border-t border-default pt-1">
-                <Typography type="body-sm" weight="semibold">{youPayLabel}</Typography>
-                <Typography type="body-sm" weight="semibold">{formatPrice(discounted, currency)}</Typography>
-            </div>
-        </div>
+        // Those four rows are all ONE shape: label left ↔ value right, repeated ⇒
+        // exactly `KeyValueList` (a repeated list ⇒ `items` is DATA). The "you
+        // pay" row is the TOTAL row ⇒ `emphasis`, not a hand-drawn rule: the frame
+        // already knows how to emphasise a total row, and that emphasis looks the same
+        // across every price table in the system.
+        //
+        // ⚠️ The frame does NOT format for you: every money string coming in here
+        // has already gone through `formatPrice`.
+        // ⚠️ This column is NOT badged: the panel groups nodes BY NAME (`firstEl` keeps
+        // only the first element of each name), so two `StackV`s with the same name
+        // would MERGE into one node and the tree would read wrong. The node that
+        // matters inside the popover is `KeyValueList` — that one is badged; the
+        // wrapping column is just `p-3` padding.
+        // Two vertical rows inside a design (the eyebrow and the breakdown list) =
+        // `grouped`, not `tight`. `tight` (1) is reserved for what sits INSIDE a
+        // composite, e.g. the icon+label pair of `InlineIconLabel`.
+        <StackV gap={4} principles={["label-field", "cell-pad"]} padding={4} isSkeleton={isSkeleton} items={[
+            ({ isSkeleton }: SkeletonProps) => <Typography size="xs" color="muted" text={labels.breakdownTitle} isSkeleton={isSkeleton} />,
+            // No `gap` passed: `KeyValueList` already owns its row rhythm (its own default
+            // is the §10b `grouped` step). Passing one from here overrides the composite's
+            // spacing from OUTSIDE, which §10 forbids — a composite owns its internal
+            // spacing and must not receive it.
+            ({ isSkeleton }: SkeletonProps) => (
+                <KeyValueList
+                    isSkeleton={isSkeleton}
+                    items={[
+                        {
+                            key: "list",
+                            label: labels.listPrice,
+                            value: formatPrice(original ?? discounted, currency),
+                        },
+                        ...(breakdown && original != null && original > breakdown.phase
+                            ? [{
+                                key: "phase",
+                                label: labels.phaseRow,
+                                // NOTE: `KeyValueListItem.value` is now a plain `string` — this row
+                                // loses the `color="success-soft"` (green) tint it used to carry via
+                                // its own `Typography`. `KeyValueRow` only renders `value` through the
+                                // emphasis/plain split, no per-row tone prop. Preserving the green
+                                // accent needs either accepting the loss (done here) or a future
+                                // `tone`/`accent` field on `KeyValueListItem` — left for whoever owns
+                                // PriceTag/KeyValue next, not decided in this pass.
+                                value: `−${formatPrice(original - breakdown.phase, currency)} (−${phaseSave}%)`,
+                            }]
+                            : []),
+                        ...(breakdown && breakdown.loyaltyPercent > 0 && breakdown.phase > discounted
+                            ? [{
+                                key: "loyalty",
+                                label: labels.loyaltyRow,
+                                // See the "phase" row's note above — same loss of the green tint,
+                                // same reason.
+                                value: `−${formatPrice(breakdown.phase - discounted, currency)} (−${breakdown.loyaltyPercent}%)`,
+                            }]
+                            : []),
+                        {
+                            key: "total",
+                            label: labels.youPay,
+                            value: formatPrice(discounted, currency),
+                            // the TOTAL row: the frame handles the emphasis, replacing a hand-typed `border-t … pt-1`
+                            emphasis: true,
+                        },
+                    ]}
+                />
+            ),
+        ]} />
+    ) : null
+
+    // The price row aligns on BASELINE (big number, struck number, chip share the
+    // same text baseline) and wraps on its own when tight ⇒ exactly `Cluster`.
+    // The three elements are THREE separate items, not merged into one
+    // fragment — merging them leaves the frame's `gap` with nowhere to apply.
+    const priceRow = (
+        <Cluster
+            gap={3}
+            principles={["value-row"]}
+            align="baseline"
+
+            items={[
+                // The amount goes through the ATOM `Typography` (§9c), NOT raw
+                // HeroUI — thanks to that, `isSkeleton` flows straight into it instead
+                // of branching off to build a separate shimmer bar.
+                () => (
+                    <Typography
+                        size={AMOUNT_TYPE[emphasis]}
+                        weight="bold"
+                        isSkeleton={isSkeleton}
+                        classNames={isSkeleton ? ["w-2/3"] : undefined}
+
+                        text={formatPrice(discounted, currency)}
+                    />
+                ),
+                ...(hasSaving
+                    ? [() => (
+                        <Typography
+                            size={ORIGINAL_TYPE[emphasis]}
+                            color="muted"
+                            isSkeleton={isSkeleton}
+                            isStruck
+                            classNames={isSkeleton ? ["w-1/3"] : undefined}
+
+                            text={formatPrice(original, currency)}
+                        />
+                    )]
+                    : []),
+                // While resting: the chip still holds its place but is NOT wrapped in a
+                // Popover — there's no data yet to open, and a pressable control while
+                // loading is a false promise.
+                ...(isSkeleton
+                    ? [() => <Chip isSkeleton />]
+                    : savePercent > 0
+                        ? [() => (
+                            <Popover>
+                                <Popover.Trigger
+                                    aria-label={labels.breakdownTitle}
+                                    className="cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+
+                                >
+                                    {chip}
+                                </Popover.Trigger>
+                                <Popover.Content
+                                    className="max-w-xs"
+
+                                >
+                                    {breakdownContent}
+                                </Popover.Content>
+                            </Popover>
+                        )]
+                        : []),
+            ]}
+        />
+    )
+
+    const savingLine = showSavingLine && (isSkeleton || hasSaving) ? (
+        <Typography
+            size="xs"
+            color="muted"
+            isSkeleton={isSkeleton}
+            classNames={isSkeleton ? ["w-1/2"] : undefined}
+
+            text={hasSaving ? `Save ${formatPrice(original - discounted, currency)}` : undefined}
+        />
     ) : null
 
     return (
-        <div className={cn("flex flex-col gap-1", className)}>
-            <div className="flex flex-wrap items-baseline gap-2">
-                <Typography type={AMOUNT_TYPE[size]} weight="bold">
-                    {formatPrice(discounted, currency)}
-                </Typography>
-                {hasSaving ? (
-                    <Typography
-                        type={size === "sm" ? "body-xs" : "body-sm"}
-                        color="muted"
-                        className="line-through"
-                    >
-                        {formatPrice(original, currency)}
-                    </Typography>
-                ) : null}
-                {savePercent > 0 ? (
-                    <Popover>
-                        <Popover.Trigger
-                            aria-label={breakdownTitleLabel}
-                            className="cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                        >
-                            {chip}
-                        </Popover.Trigger>
-                        <Popover.Content className="max-w-xs">{breakdownContent}</Popover.Content>
-                    </Popover>
-                ) : null}
-            </div>
-            {showSavingLine && savedLabel != null ? (
-                <Typography type="body-xs" color="muted">
-                    {savedLabel}
-                </Typography>
-            ) : null}
-        </div>
+        // The outer column = two DIFFERENT lines (the price row · the "saving" line) ⇒
+        // `StackV`, NOT `Cluster`: a cluster is ONE track of N PEER elements (§13b).
+        <StackV
+            // `grouped` (§10b): the price row and the saving line are two DIFFERENT vertical
+            // rows of one design. It was `tight` (1), which §10b reserves for pairs sitting
+            // inside a lower-tier component — the saving line read as if it were glued under the number.
+            gap={4}
+            classNames={classNames}
+            isSkeleton={isSkeleton}
+            items={[
+                () => priceRow,
+                () => savingLine,
+            ]}
+        />
     )
 }
+
+/**
+ * `PriceTag.*` — namespace. Members are named by the ROLE a price plays
+ * on a surface, not by font size: a design doesn't expose a shape axis to the caller.
+ *
+ * | Member | Used in | Price plays |
+ * |---|---|---|
+ * | `.Prominent` | `TrialConversionStrip` | the FOCAL POINT of a course-purchase CTA |
+ * | `.Inline` | `CourseCard` | ONE LINE of info inside a card |
+ *
+ * These two cases differ in WHY, not in size for its own sake, so they are SPLIT.
+ */
+export const _PriceTagProminent = (props: PriceTagProps) => <PriceTagBase {...props} emphasis="prominent" />
+export const _PriceTagInline = (props: PriceTagProps) => <PriceTagBase {...props} emphasis="inline" />

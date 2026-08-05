@@ -8,7 +8,7 @@ import { PaymentFlow } from "@/modules/types/payment"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
 import { AsyncContentError } from "@/components/composites/async/AsyncContent"
-import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { PriceTagInline } from "@/components/blocks/commerce/PriceTag"
 import { PhaseScarcityNote } from "@/components/blocks/commerce/PhaseScarcityNote"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -83,10 +83,10 @@ export const EnrollGate = ({ title, description, preview }: EnrollGateProps) => 
             return <Skeleton className="h-7 w-32 rounded-xl" />
         }
         return price?.discountedPriceVnd != null ? (
-            <PriceTag
+            <PriceTagInline
                 discounted={price.discountedPriceVnd}
                 original={price.originalPriceVnd}
-                size="md"
+               
                 breakdown={{
                     phase: price.phasePriceVnd,
                     loyaltyPercent: price.discountPercent,

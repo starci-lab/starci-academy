@@ -8,7 +8,7 @@ import { StackH, StackV } from "@/components/frames/Stack"
 import { Container } from "@/components/frames/Container"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { PriceTagInline } from "@/components/blocks/commerce/PriceTag"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { CartLine } from "@/components/blocks/commerce/CartLine"
 import { publicEnv } from "@/resources/env/public"
@@ -271,12 +271,10 @@ export const _CartPage = ({
                                                 ? <Skeleton className="h-7 w-32 rounded-lg" />
                                                 : (totalChargedVnd != null
                                                     ? (
-                                                        <PriceTag
+                                                        <PriceTagInline
                                                             discounted={totalChargedVnd}
                                                             original={totalListVnd}
                                                             currency="VND"
-                                                            size="md"
-                                                            className="justify-end"
                                                         />
                                                     )
                                                     : <Typography size="h4" weight="bold" text={formatVnd(fallbackTotalVnd)} />)),

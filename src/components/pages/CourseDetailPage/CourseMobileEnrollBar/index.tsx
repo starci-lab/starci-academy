@@ -20,7 +20,7 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { PriceTagInline } from "@/components/blocks/commerce/PriceTag"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StickyBottomBar } from "@/components/blocks/layout/StickyBottomBar"
 import { useAppSelector } from "@/redux/hooks"
@@ -54,16 +54,16 @@ export const CourseMobileEnrollBar = ({ className }: CourseMobileEnrollBarProps)
                 {previewPending ? (
                     <Skeleton.Typography type="body" width="1/4" />
                 ) : hasLoyalty && preview ? (
-                    <PriceTag
+                    <PriceTagInline
                         discounted={preview.discountedPriceVnd}
                         original={preview.originalPriceVnd}
-                        size="sm"
+                       
                     />
                 ) : active ? (
-                    <PriceTag
+                    <PriceTagInline
                         discounted={active.priceVnd}
                         original={active.listPriceVnd}
-                        size="sm"
+                       
                     />
                 ) : null}
                 {isEnrolled ? (

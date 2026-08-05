@@ -4,7 +4,7 @@ import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { Callout } from "@/components/composites/feedback/Callout"
 import { MarkdownContent } from "@/components/composites/viewers/MarkdownContent"
 import { ContentPaywall } from "@/components/blocks/learn/ContentPaywall"
-import type { PricingPhase } from "@/components/starci/blocks/commerce/PhaseScarcityNote"
+import type { PricingPhase } from "@/modules/types/enums/pricing-phase"
 import { StackV } from "@/components/frames/Stack"
 
 /**

@@ -3,9 +3,9 @@ import { ArrowRightIcon, LockIcon } from "@phosphor-icons/react"
 import { Button } from "@/components/atoms/buttons/Button"
 import { IconTile } from "@/components/atoms/display/IconTile"
 import { Typography } from "@/components/atoms/text/Typography"
-import { PhaseScarcityNote } from "@/components/starci/blocks/commerce/PhaseScarcityNote"
-import { PriceTagProminent } from "@/components/starci/blocks/commerce/PriceTag"
-import type { PricingPhase } from "@/components/starci/blocks/commerce/PhaseScarcityNote"
+import { PhaseScarcityNote } from "@/components/blocks/commerce/PhaseScarcityNote"
+import { PriceTagProminent } from "@/components/blocks/commerce/PriceTag"
+import type { PricingPhase } from "@/modules/types/enums/pricing-phase"
 import { StackV } from "@/components/frames/Stack"
 
 /**

@@ -54,15 +54,12 @@ function attrStringLiteral(node) {
 // ── tier map dùng chung — suy tier từ ĐƯỜNG DẪN FILE, không phải nội dung ──
 // vocabulary: atoms/frames/composites (bọc vendor + ghép leaf, không quyết layout/data).
 // sentence: blocks/pages/layouts/overlays (ghép câu, không tự vẽ hình/gọi data).
-// `features`, `starci`, `modals(v2)`, `drawers(v2)` là nhà TẠM đang teo dần; chúng vẫn nằm trong
-// tập này cho tới khi rỗng, vì nếu bỏ ra thì dời một file sang đó là né được cả cổng.
+// Không còn nhà tạm: `features`, `starci`, `modals(v2)`, `drawers(v2)`, `pallettes` đã rỗng và
+// bị xoá, nên bốn tên dưới đây là TOÀN BỘ tầng câu — thêm một thư mục mới cạnh chúng là lách cổng.
 // Bất cứ gì NGOÀI `src/components/**` (route app/, hook, module) KHÔNG PHẢI 1 component tier —
 // mỗi rule dùng helper này tự nói rõ trong comment nó bỏ qua phạm vi đó hay không.
 const VOCAB_TIER_DIRS = new Set(["atoms", "frames", "composites"])
-const SENTENCE_TIER_DIRS = new Set([
-  "blocks", "pages", "layouts", "overlays",
-  "features", "starci", "modals", "modalsv2", "drawers", "drawersv2",
-])
+const SENTENCE_TIER_DIRS = new Set(["blocks", "pages", "layouts", "overlays"])
 
 /** "vocabulary" | "sentence" | null (null = ngoài src/components/** hoặc thư mục tier không xác định). */
 function componentTier(filename) {

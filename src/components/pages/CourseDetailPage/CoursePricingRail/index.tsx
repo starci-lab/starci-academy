@@ -27,7 +27,7 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { CoverImage } from "@/components/blocks/media/CoverImage"
-import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { PriceTagProminent } from "@/components/blocks/commerce/PriceTag"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
@@ -79,20 +79,20 @@ export const CoursePricingRail = ({ className }: CoursePricingRailProps) => {
                                 {previewPending ? (
                                     <Skeleton.Typography type="h3" width="1/3" />
                                 ) : hasLoyalty && preview ? (
-                                    <PriceTag
+                                    <PriceTagProminent
                                         discounted={preview.discountedPriceVnd}
                                         original={preview.originalPriceVnd}
-                                        size="lg"
+                                       
                                         breakdown={{
                                             phase: preview.phasePriceVnd,
                                             loyaltyPercent: preview.discountPercent,
                                         }}
                                     />
                                 ) : active ? (
-                                    <PriceTag
+                                    <PriceTagProminent
                                         discounted={active.priceVnd}
                                         original={active.listPriceVnd}
-                                        size="lg"
+                                       
                                         breakdown={{
                                             phase: active.priceVnd,
                                             loyaltyPercent: 0,

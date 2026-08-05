@@ -9,7 +9,7 @@ import { Typography } from "@/components/atoms/text/Typography"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { PriceTagInline } from "@/components/blocks/commerce/PriceTag"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { CartLine } from "@/components/blocks/commerce/CartLine"
 import type { CartItemEntity } from "@/modules/api/graphql/queries/types/my-cart"
@@ -241,17 +241,17 @@ export const _MiniCartDrawer = ({
                                             () => <Typography size="base" weight="semibold" text={labels.total} />,
                                             ...(preview
                                                 ? [() => (
-                                                    <PriceTag
+                                                    <PriceTagInline
                                                         discounted={preview.totalChargedVnd}
                                                         original={preview.totalListVnd}
                                                         currency="VND"
-                                                        size="md"
+                                                       
                                                     />
                                                 )]
                                                 // preview failed to load — fall back to the plain list
                                                 // total (no bundle discount known) so the total is never blank.
                                                 : previewError
-                                                    ? [() => <PriceTag discounted={fallbackTotalVnd} currency="VND" size="md" />]
+                                                    ? [() => <PriceTagInline discounted={fallbackTotalVnd} currency="VND" />]
                                                     : []),
                                         ]}
                                     />

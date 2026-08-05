@@ -2,31 +2,18 @@ import React from "react"
 import { ArrowRightIcon, LockIcon } from "@phosphor-icons/react"
 import { type SkeletonProps } from "@/components/composites/_slot"
 import { IconTile } from "@/components/atoms/display/IconTile"
-import { PriceTagProminent, type PriceBreakdown } from "@/components/starci/blocks/commerce/PriceTag"
+import { PriceTagProminent, type PriceBreakdown } from "@/components/blocks/commerce/PriceTag"
 // The NON-legacy version (`designs/commerce/…`) — the `_legacy` version of the same
 // name still exists but is a dead end; screens are forbidden from touching `_legacy`
 // so every link in the chain has to move off it.
-import { PhaseScarcityNote, PricingPhase as SbPricingPhase } from "@/components/starci/blocks/commerce/PhaseScarcityNote"
+import { PhaseScarcityNote } from "@/components/blocks/commerce/PhaseScarcityNote"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
 import { TitledText } from "@/components/composites/text/TitledText"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { StackH, StackV } from "@/components/frames/Stack"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-import { PricingPhase } from "@/modules/types/enums/pricing-phase"
 import type { QueryCoursePricePreviewData } from "@/modules/api/graphql/queries/types/course-price-preview"
-
-/**
- * Real backend {@link PricingPhase} → the sb-components `PhaseScarcityNote`'s own local
- * enum — the two are declared separately (different string values, e.g. `earlyBird` vs
- * `early_bird`), so a plain pass-through would silently break the phase label. This is
- * the ONE adapter seam between the domain type and the design-system block.
- */
-const SB_PHASE: Record<PricingPhase, SbPricingPhase> = {
-    [PricingPhase.Pioneer]: SbPricingPhase.Pioneer,
-    [PricingPhase.EarlyBird]: SbPricingPhase.EarlyBird,
-    [PricingPhase.Regular]: SbPricingPhase.Regular,
-}
 
 /** Props for {@link _TrialConversionStrip} — presentational; all text + price resolved, no fetch/store/i18n. */
 export interface TrialConversionStripProps {
@@ -105,7 +92,7 @@ export const _TrialConversionStrip = ({
                 ({ isSkeleton }: SkeletonProps) => (
                     <PhaseScarcityNote
                         isSkeleton={isSkeleton}
-                        currentPhase={SB_PHASE[price.currentPhase]}
+                        currentPhase={price.currentPhase}
                         seatsRemaining={price.seatsRemainingInCurrentPhase}
                         nextPhasePriceVnd={price.nextPhasePriceVnd}
                     />

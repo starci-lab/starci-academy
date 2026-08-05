@@ -7,7 +7,7 @@ import { IconTile } from "@/components/blocks/identity/IconTile"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { PriceTagInline } from "@/components/blocks/commerce/PriceTag"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /** How many placeholder rows the co-located skeleton shows. */
@@ -145,10 +145,10 @@ export const _RecommendedCourses = ({
                                                 <Typography size="xs" color="muted" truncate text={course.description} />
                                             )] : []),
                                             () => (
-                                                <PriceTag
+                                                <PriceTagInline
                                                     discounted={course.discountedPriceVnd}
                                                     original={course.discounted ? course.originalPriceVnd : null}
-                                                    size="sm"
+                                                   
                                                 />
                                             ),
                                             ...(course.reasonText ? [() => (

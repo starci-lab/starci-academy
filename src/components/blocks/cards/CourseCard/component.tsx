@@ -17,9 +17,7 @@ import {
     Typography,
     cn,
 } from "@heroui/react"
-import {
-    PriceTag,
-} from "@/components/blocks/commerce/PriceTag"
+import { PriceTagInline } from "@/components/blocks/commerce/PriceTag"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import type { CourseEntity } from "@/modules/types/entities/course"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -206,10 +204,10 @@ export const _CourseCard = ({
                         {loyaltyPending ? (
                             <Skeleton.Typography type="body-sm" width="1/2" />
                         ) : displayPrice != null ? (
-                            <PriceTag
+                            <PriceTagInline
                                 discounted={displayPrice}
                                 original={displayOriginal}
-                                size="sm"
+                               
                             />
                         ) : null}
                         <div className="flex w-full items-center gap-2">
@@ -291,10 +289,10 @@ export const _CourseCard = ({
                     {loyaltyPending ? (
                         <Skeleton.Typography type="body-sm" width="1/2" />
                     ) : displayPrice != null ? (
-                        <PriceTag
+                        <PriceTagInline
                             discounted={displayPrice}
                             original={displayOriginal}
-                            size="sm"
+                           
                         />
                     ) : (
                         <span />

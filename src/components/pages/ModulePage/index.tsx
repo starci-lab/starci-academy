@@ -20,7 +20,6 @@ import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 import { pathConfig } from "@/resources/path"
 import { ContentTab } from "@/redux/slices/tabs"
-import { toArticlePricingPhase } from "@/components/pages/_map"
 import { toDifficulty } from "@/modules/utils/difficulty"
 import type { ModuleHeaderCrumb } from "@/components/blocks/learn/ModuleHeader"
 import type { ModuleLessonListLesson } from "@/components/blocks/learn/ModuleLessonList"
@@ -194,7 +193,7 @@ export const ModulePage = () => {
             paywallDescription={t("course.paywall.description")}
             discountedPriceVnd={price?.discountedPriceVnd}
             originalPriceVnd={price?.originalPriceVnd}
-            currentPhase={price?.currentPhase ? toArticlePricingPhase(price.currentPhase) : undefined}
+            currentPhase={price?.currentPhase}
             seatsRemaining={price?.seatsRemainingInCurrentPhase}
             nextPhasePriceVnd={price?.nextPhasePriceVnd}
             paywallCtaLabel={t("course.paywall.buy")}

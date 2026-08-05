@@ -5,7 +5,7 @@ import { ModuleContinueBand } from "@/components/blocks/learn/ModuleContinueBand
 import { ModuleLessonList, type ModuleLessonListLesson } from "@/components/blocks/learn/ModuleLessonList"
 import { ModuleChallengeList, type ModuleChallengeItem } from "@/components/blocks/learn/ModuleChallengeList"
 import { ContentPaywall } from "@/components/blocks/learn/ContentPaywall"
-import type { PricingPhase } from "@/components/starci/blocks/commerce/PhaseScarcityNote"
+import type { PricingPhase } from "@/modules/types/enums/pricing-phase"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { Container } from "@/components/frames/Container"
 import { StackV } from "@/components/frames/Stack"

@@ -2,11 +2,9 @@ import React from "react"
 import { type SkeletonProps } from "@/components/composites/_slot"
 import { CheckCircleIcon } from "@phosphor-icons/react"
 import { ModalShell } from "@/components/composites/layout/ModalShell"
-import {
-    PhaseScarcityNote,
-    PricingPhase,
-} from "@/components/starci/blocks/commerce/PhaseScarcityNote"
-import { PriceTagProminent, type PriceBreakdown } from "@/components/starci/blocks/commerce/PriceTag"
+import { PricingPhase } from "@/modules/types/enums/pricing-phase"
+import { PhaseScarcityNote } from "@/components/blocks/commerce/PhaseScarcityNote"
+import { PriceTagProminent, type PriceBreakdown } from "@/components/blocks/commerce/PriceTag"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"

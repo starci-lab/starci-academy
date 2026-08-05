@@ -3,71 +3,55 @@
 import React from "react"
 import { useTranslations } from "next-intl"
 import {
-    _PriceTag,
+    _PriceTagInline,
+    _PriceTagProminent,
     formatPrice,
     type PriceTagProps,
 } from "./component"
 
-export type { PriceCurrency, PriceTagSize, PriceBreakdown } from "./component"
+export type { PriceCurrency, PriceBreakdown } from "./component"
 
-/** Props the connected {@link PriceTag} takes from its caller. */
-export type PriceTagConnectedProps = Omit<
-    PriceTagProps,
-    "breakdownTitleLabel" | "listPriceLabel" | "phaseRowLabel" | "loyaltyRowLabel" | "youPayLabel" | "savedLabel"
->
+/** Props the connected members take — every breakdown label is resolved here. */
+export type PriceTagConnectedProps = Omit<PriceTagProps, "labels">
 
 /**
- * The single source of truth for rendering a course/product price — the
- * CONNECTED half: resolves the breakdown-popover + saved-line labels via
- * `t()` and hands them to the presentational {@link _PriceTag}. See
- * `design/storybook/architecture/split.md`.
+ * The single source of truth for rendering a course/product price — the CONNECTED
+ * half. It resolves the breakdown popover's five labels via `t()` and hands them to
+ * the presentational members, which is the whole reason this half exists: the
+ * presentational file used to bake "Price breakdown" / "List price" / "You pay" in
+ * English, and it was live on the payment modal, the paywall, the premium gate and
+ * the search palette.
  *
- * @param props - {@link PriceTagConnectedProps}
+ * Two members, split by WHY the price is there, not by size (§14d.1):
+ * `.Prominent` is the focal point of a purchase CTA, `.Inline` is one line of info
+ * inside a card. See the presentational file's header for the full table.
  */
-export const PriceTag = ({
-    discounted,
-    original,
-    currency = "VND",
-    breakdown,
-    showSavingLine = true,
-    ...rest
-}: PriceTagConnectedProps) => {
+const useLabels = (breakdown: PriceTagProps["breakdown"]) => {
     const t = useTranslations()
-
-    const hasSaving = original != null && original > discounted
-    const showPhaseRow = breakdown != null && original != null && original > breakdown.phase
-    const showLoyaltyRow = breakdown != null && breakdown.loyaltyPercent > 0 && breakdown.phase > discounted
-
-    const phaseRowLabel = showPhaseRow
-        ? (breakdown!.phaseLabel
-            ? t("priceTag.phaseNamed", { phase: breakdown!.phaseLabel })
-            : t("priceTag.phase"))
-        : undefined
-
-    const loyaltyRowLabel = showLoyaltyRow
-        ? (breakdown!.loyaltyNote
-            ? `${t("priceTag.loyalty")} · ${breakdown!.loyaltyNote}`
-            : t("priceTag.loyalty"))
-        : undefined
-
-    const savedLabel = hasSaving
-        ? t("priceTag.saved", { amount: formatPrice(original - discounted, currency) })
-        : undefined
-
-    return (
-        <_PriceTag
-            {...rest}
-            discounted={discounted}
-            original={original}
-            currency={currency}
-            breakdown={breakdown}
-            showSavingLine={showSavingLine}
-            breakdownTitleLabel={t("priceTag.breakdownTitle")}
-            listPriceLabel={t("priceTag.listPrice")}
-            phaseRowLabel={phaseRowLabel}
-            loyaltyRowLabel={loyaltyRowLabel}
-            youPayLabel={t("priceTag.youPay")}
-            savedLabel={savedLabel}
-        />
-    )
+    return {
+        breakdownTitle: t("priceTag.breakdownTitle"),
+        listPrice: t("priceTag.listPrice"),
+        phaseRow: breakdown?.phaseLabel
+            ? t("priceTag.phaseNamed", { phase: breakdown.phaseLabel })
+            : t("priceTag.phase"),
+        loyaltyRow: breakdown?.loyaltyNote
+            ? `${t("priceTag.loyalty")} · ${breakdown.loyaltyNote}`
+            : t("priceTag.loyalty"),
+        youPay: t("priceTag.youPay"),
+    }
 }
+
+/** The focal price of a purchase CTA. */
+export const PriceTagProminent = (props: PriceTagConnectedProps) => (
+    <_PriceTagProminent {...props} labels={useLabels(props.breakdown)} />
+)
+
+/** One line of price inside a card. */
+export const PriceTagInline = (props: PriceTagConnectedProps) => (
+    <_PriceTagInline {...props} labels={useLabels(props.breakdown)} />
+)
+
+/** The unqualified name keeps meaning the focal one. */
+export const PriceTag = PriceTagProminent
+
+export { formatPrice }

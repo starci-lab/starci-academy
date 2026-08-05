@@ -7,7 +7,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { IconTile } from "@/components/blocks/identity/IconTile"
-import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { PriceTagInline } from "@/components/blocks/commerce/PriceTag"
 import { useCourseDisplayPrice } from "@/hooks/useCourseDisplayPrice"
 import { pathConfig } from "@/resources/path"
 import type { CartItemEntity } from "@/modules/api/graphql/queries/types/my-cart"
@@ -71,7 +71,7 @@ export const CartLine = ({ item, previewLine, onRemove, isMutating }: CartLinePr
                             {item.course.title}
                         </Typography>
                     </Link>
-                    <PriceTag discounted={discounted} original={original} size="sm" />
+                    <PriceTagInline discounted={discounted} original={original} />
                 </div>
                 {/* remove = `danger-soft` (soft red tint), same family as the
                     repeatable-delete / cart-remove ruling (button.md §4/§4b) — reads

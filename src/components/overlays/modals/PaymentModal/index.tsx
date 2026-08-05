@@ -25,7 +25,7 @@ import { submitCheckout } from "@/modules/payment/submit-checkout"
 import { queryAiSubscriptionTiers } from "@/modules/api/graphql/queries/query-ai-subscription-tiers"
 import type { DiscountReason } from "@/modules/api/graphql/queries/types/recommended-courses"
 import type { CoursesCheckoutPreviewLine } from "@/modules/api/graphql/queries/types/courses-checkout-preview"
-import type { PriceCurrency } from "@/components/starci/blocks/commerce/PriceTag"
+import type { PriceCurrency } from "@/components/blocks/commerce/PriceTag"
 import {
     _PaymentModal,
     type PaymentModalCheckoutLine,

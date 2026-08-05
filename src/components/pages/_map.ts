@@ -1,5 +1,3 @@
-import { PricingPhase as SbPricingPhase } from "@/components/starci/blocks/commerce/PhaseScarcityNote"
-import { PricingPhase } from "@/modules/types/enums/pricing-phase"
 import { ReactionType, type CommentNode, type ReactionCount } from "@/modules/api/graphql/queries/types/discussion"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import type { ReactionType as ContentReactionType, ContentReactionCount } from "@/components/blocks/learn/ContentReaction"
@@ -37,18 +35,6 @@ export const toArticleReactionCounts = (
 ): ReadonlyArray<ContentReactionCount> =>
     (counts ?? []).map((count) => ({ type: toArticleReactionType(count.type), count: count.count }))
 
-/** Real course pricing-phase enum -> `PhaseScarcityNote`'s own enum (`EarlyBird` is spelled differently). */
-export const toArticlePricingPhase = (phase: PricingPhase): SbPricingPhase => {
-    switch (phase) {
-    case PricingPhase.Pioneer:
-        return SbPricingPhase.Pioneer
-    case PricingPhase.EarlyBird:
-        return SbPricingPhase.EarlyBird
-    case PricingPhase.Regular:
-    default:
-        return SbPricingPhase.Regular
-    }
-}
 
 /**
  * Real `CommentNode` (from `contentComments`/`createComment`/…) -> the sb

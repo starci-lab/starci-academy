@@ -4819,7 +4819,9 @@
     "title": "Weekly challenge",
     "tryNow": "Try it now",
     "emptyTitle": "No weekly challenge is open right now",
-    "emptyDescription": "Check back at the start of next week for a new challenge, or keep going in your course."
+    "emptyDescription": "Check back at the start of next week for a new challenge, or keep going in your course.",
+    "errorTitle": "Couldn't load this week's challenge",
+    "retry": "Try again"
   },
   "bookmarks": {
     "noMatch": "No bookmarks match your search.",

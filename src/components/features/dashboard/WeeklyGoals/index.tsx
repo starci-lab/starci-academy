@@ -4,50 +4,36 @@ import React, {
     useMemo,
 } from "react"
 import {
-    ProgressBar,
-    Typography,
-    cn,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
+import {
+    _WeeklyGoals,
+    type WeeklyGoalsItem,
+} from "./component"
 import {
     DEFAULT_KPI_TARGETS,
-    KPI_ICON_MAP,
     KPI_ORDER,
 } from "./map"
 import { useQueryMyKpisSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyKpisSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { StatGridCard } from "@/components/blocks/stats/StatGridCard"
 import type { KpiKey, QueryKpiItemData } from "@/modules/api/graphql/queries/types/my-kpis"
 
-/** Props for {@link WeeklyGoals}. */
-export type WeeklyGoalsProps = WithClassNames<undefined>
-
 /**
- * "Weekly goals" content — the composite weekly-goal summary + a per-metric
- * breakdown (lessons / study-days / challenges / coding / flashcards) with a bar
- * when a target is set, plus a link to the editor. The single weekly-goals surface
- * (targets come from `weeklyKpiTargets` via `myKpis`). Content only (the parent
- * {@link import("@/components/blocks").LabeledCard} frames it). Self-fetches.
- * @param props - optional root class name (placement only)
+ * "Weekly goals" content — the CONNECTED half of {@link _WeeklyGoals}: self-fetches the
+ * viewer's weekly KPI snapshot, folds it against the sensible per-metric defaults so the
+ * summary + meters always track this week's activity (even before a custom goal is set),
+ * resolves every label, and hands the resolved rows to the presentational `_WeeklyGoals`.
+ * Content only — the parent {@link import("@/components/blocks").LabeledCard} frames it.
+ * See `tiers/split.md`.
  */
-export const WeeklyGoals = ({
-    className,
-}: WeeklyGoalsProps) => {
+export const WeeklyGoals = () => {
     const t = useTranslations()
     const {
         data: kpis,
-        isLoading,
         error,
         mutate,
     } = useQueryMyKpisSwr()
 
-    /** Index KPI items by key for O(1) lookup while rendering in display order. */
+    /** Index KPI items by key for O(1) lookup while building rows in display order. */
     const itemByKey = useMemo(
         () => {
             const map = new Map<KpiKey, QueryKpiItemData>()
@@ -76,7 +62,7 @@ export const WeeklyGoals = ({
         [kpis],
     )
 
-    // composite over EFFECTIVE targets (custom OR default) so the summary + bars
+    // composite over EFFECTIVE targets (custom OR default) so the summary + meters
     // always track this week's activity, even before a custom goal is set.
     const composite = useMemo(() => {
         let completed = 0
@@ -99,104 +85,49 @@ export const WeeklyGoals = ({
         }
     }, [itemByKey])
 
+    const items: Array<WeeklyGoalsItem> = KPI_ORDER.map((key) => {
+        const item = itemByKey.get(key)
+        const current = item?.current ?? 0
+        // effective target = the learner's custom goal, or a sensible default
+        // (so the meter tracks this week's activity out of the box)
+        const target = item?.target ?? DEFAULT_KPI_TARGETS[key]
+        return {
+            key,
+            label: t(`dashboard.kpi.labels.${key}`),
+            current,
+            target,
+            // only once a REAL target is set server-side (the client-only default above
+            // doesn't persist a floor/reward)
+            coinRewardText: item?.coinReward != null
+                ? t("dashboard.kpi.coinReward", { count: item.coinReward })
+                : undefined,
+            canClaim: item?.canClaim ?? false,
+        }
+    })
+
+    const summaryText = `${t("dashboard.kpi.summary", {
+        percent: composite.percent,
+        completed: composite.completed,
+        total: composite.total,
+    })}${countdown
+        ? ` · ${t("dashboard.kpi.resetIn", {
+            days: countdown.days,
+            hours: countdown.hours,
+        })}`
+        : ""}`
+
     return (
-        <AsyncContent
-            isLoading={kpis === null || kpis === undefined || isLoading}
+        <_WeeklyGoals
+            // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
+            isSkeleton={!kpis && !error}
             error={error}
-            errorContent={{
-                title: t("dashboard.loadError"),
-                onRetry: () => { void mutate() },
-                retryLabel: t("dashboard.retry"),
+            onRetry={() => { void mutate() }}
+            items={items}
+            summaryText={summaryText}
+            labels={{
+                errorTitle: t("dashboard.loadError"),
+                retry: t("dashboard.retry"),
             }}
-            skeleton={(
-                <div className="flex flex-col gap-3">
-                    <Skeleton.Typography type="body-sm" width="2/3" />
-                    <StatGridCard
-                        items={KPI_ORDER.map((key) => ({
-                            key,
-                            content: (
-                                <>
-                                    <div className="flex items-center justify-between gap-2">
-                                        <span className="flex items-center gap-2">
-                                            <Skeleton className="size-5 shrink-0 rounded-full" />
-                                            <Skeleton.Typography type="body-sm" width="1/2" />
-                                        </span>
-                                        <Skeleton.Typography type="body-xs" width="1/4" />
-                                    </div>
-                                    <Skeleton.Meter />
-                                </>
-                            ),
-                        }))}
-                    />
-                </div>
-            )}
-        >
-            <div className={cn("flex flex-col gap-3", className)}>
-                <Typography type="body-sm" weight="medium">
-                    {t("dashboard.kpi.summary", {
-                        percent: composite.percent,
-                        completed: composite.completed,
-                        total: composite.total,
-                    })}
-                    {countdown
-                        ? ` · ${t("dashboard.kpi.resetIn", {
-                            days: countdown.days,
-                            hours: countdown.hours,
-                        })}`
-                        : ""}
-                </Typography>
-                <StatGridCard
-                    items={KPI_ORDER.map((key) => {
-                        const item = itemByKey.get(key)
-                        const current = item?.current ?? 0
-                        // effective target = the learner's custom goal, or a sensible default
-                        // (so the meter tracks this week's activity out of the box)
-                        const target = item?.target ?? DEFAULT_KPI_TARGETS[key]
-                        return {
-                            key,
-                            content: (
-                                <>
-                                    <div className="flex items-center justify-between gap-2">
-                                        <span className="flex items-center gap-2">
-                                            {KPI_ICON_MAP[key]}
-                                            <Typography type="body-sm">
-                                                {t(`dashboard.kpi.labels.${key}`)}
-                                            </Typography>
-                                        </span>
-                                        <Typography type="body-xs" color="muted">
-                                            {current}/{target}
-                                        </Typography>
-                                    </div>
-                                    {/* progress line — current toward the (custom or default) target */}
-                                    <ProgressBar
-                                        aria-label={t(`dashboard.kpi.labels.${key}`)}
-                                        value={current}
-                                        maxValue={target > 0 ? target : 1}
-                                        color="accent"
-                                        size="sm"
-                                    >
-                                        <ProgressBar.Track>
-                                            <ProgressBar.Fill />
-                                        </ProgressBar.Track>
-                                    </ProgressBar>
-                                    {/* coin reward hint — only once a REAL target is set server-side
-                                        (the client-only default above doesn't persist a floor/reward) */}
-                                    {item?.coinReward != null ? (
-                                        <span
-                                            className={cn(
-                                                "text-xs",
-                                                item.canClaim ? "text-accent-soft-foreground" : "text-muted",
-                                            )}
-                                        >
-                                            {t("dashboard.kpi.coinReward", { count: item.coinReward })}
-                                        </span>
-                                    ) : null}
-                                </>
-                            ),
-                        }
-                    })}
-                />
-            </div>
-        </AsyncContent>
+        />
     )
 }

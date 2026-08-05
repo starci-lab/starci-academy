@@ -1,28 +1,16 @@
 "use client"
 
 import React from "react"
-import { Button, Chip, Typography, cn } from "@heroui/react"
-import { ArrowRightIcon, BriefcaseIcon, ChartLineUpIcon } from "@phosphor-icons/react"
+import { BriefcaseIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import type { UserJobReadinessBand, UserJobReadinessTrack } from "@/modules/api/graphql/queries/types/user-job-readiness"
+import type { UserJobReadinessTrack } from "@/modules/api/graphql/queries/types/user-job-readiness"
 import { useQueryMyJobReadinessSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyJobReadinessSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { StatPair } from "@/components/blocks/stats/StatPair"
-import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { pathConfig } from "@/resources/path"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
-/** Props for {@link JobReadinessWidget}. */
-export type JobReadinessWidgetProps = WithClassNames<undefined>
+import { _JobReadinessWidget } from "./component"
 
 /** Which pillar to nudge the learner to complete next, for a given track. */
 type MissingPillar = "capstone" | "interview" | "cv" | null
-
-/** Maps a readiness band to the `Chip` color that reads correctly. */
-const bandColorOf = (band: UserJobReadinessBand): "success" | "warning" | "default" =>
-    band === "jobReady" ? "success" : band === "building" ? "warning" : "default"
 
 /**
  * Picks the single most-impactful missing pillar for a track, in the order a
@@ -41,21 +29,13 @@ const missingPillarOf = (track: UserJobReadinessTrack): MissingPillar => {
 }
 
 /**
- * Dashboard "My job readiness" self-widget — the growth-loop nudge for the
- * viewer's OWN job-readiness snapshot: a headline (strongest track's depth +
- * band, plus the global foundation percentile), its capstone/interview/CV
- * pillar bars (each rendered only when attempted), and a single CTA aimed at
- * whichever pillar is still missing (capstone → mock interview → CV).
- *
- * Deliberately never suggests buying another course to raise a score (see
- * `.workflows/00-INDEX.md` fairness model + WF-06 copy discipline) — the CTA
- * only ever points at completing real work on the track the learner already
- * owns. Content only — the parent {@link import("@/components/blocks").LabeledCard}
- * supplies the frame. Self-fetches via `myJobReadiness` (no props).
- *
- * @param props.className - optional root class name (placement only)
+ * Dashboard "My job readiness" self-widget — the CONNECTED half: self-fetches
+ * the viewer's job-readiness snapshot via `myJobReadiness`, picks the
+ * strongest track, resolves the single missing-pillar CTA's route + label,
+ * and hands every resolved value to the presentational
+ * {@link _JobReadinessWidget}. See `tiers/split.md`.
  */
-export const JobReadinessWidget = ({ className }: JobReadinessWidgetProps) => {
+export const JobReadinessWidget = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -85,94 +65,38 @@ export const JobReadinessWidget = ({ className }: JobReadinessWidgetProps) => {
                 ? t("jobReadiness.ctaCv")
                 : null
 
+    const codingPercentile = data?.foundation.codingPercentile
+
     return (
-        <AsyncContent
-            isLoading={isLoading && tracks.length === 0}
-            skeleton={(
-                <div className="flex flex-col gap-3">
-                    <div className="flex flex-wrap items-center gap-3">
-                        <Skeleton.Metric />
-                        <Skeleton.Chip />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <Skeleton.Typography type="body-xs" width="1/3" />
-                        <Skeleton.Meter />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <Skeleton.Typography type="body-xs" width="1/3" />
-                        <Skeleton.Meter />
-                    </div>
-                    <Skeleton.Button />
-                </div>
-            )}
+        <_JobReadinessWidget
+            // first-load formula (loading-and-skeleton.md §2): nothing to show yet
+            isSkeleton={isLoading && tracks.length === 0}
             isEmpty={tracks.length === 0}
-            emptyContent={{
-                title: t("jobReadiness.myEmpty"),
-                description: t("jobReadiness.emptyHint"),
-                icon: <ChartLineUpIcon aria-hidden focusable="false" className="size-8 text-muted" />,
-            }}
+            // only surface the error slot when there is no cached track to fall back to
             error={tracks.length === 0 ? error : undefined}
-            errorContent={{
-                title: t("jobReadiness.error"),
-                onRetry: () => { void mutate() },
-                retryLabel: t("dashboard.retry"),
+            onRetry={() => { void mutate() }}
+            courseTitle={strongestTrack?.courseTitle}
+            depthScore={strongestTrack?.depthScore ?? undefined}
+            band={strongestTrack?.band}
+            bandLabel={strongestTrack ? t(`jobReadiness.band.${strongestTrack.band}`) : undefined}
+            foundationPercentileText={codingPercentile !== null && codingPercentile !== undefined
+                ? t("jobReadiness.foundationPercentile", { percent: codingPercentile })
+                : undefined}
+            capstoneScore={strongestTrack?.capstoneScore}
+            interviewScore={strongestTrack?.interviewScore}
+            cvScore={strongestTrack?.cvScore}
+            onCtaPress={ctaHref ? () => router.push(ctaHref) : undefined}
+            ctaLabel={ctaLabel ?? undefined}
+            labels={{
+                errorTitle: t("jobReadiness.error"),
+                retry: t("dashboard.retry"),
+                emptyTitle: t("jobReadiness.myEmpty"),
+                emptyDescription: t("jobReadiness.emptyHint"),
+                trackCapstone: t("jobReadiness.trackCapstone"),
+                trackInterview: t("jobReadiness.trackInterview"),
+                trackCv: t("jobReadiness.trackCv"),
             }}
-        >
-            <div className={cn("flex flex-col gap-3", className)}>
-                {strongestTrack ? (
-                    <>
-                        <div className="flex flex-wrap items-center gap-3">
-                            <StatPair
-                                value={strongestTrack.depthScore ?? 0}
-                                label={strongestTrack.courseTitle}
-                            />
-                            <Chip size="md" variant="soft" color={bandColorOf(strongestTrack.band)}>
-                                <Chip.Label>{t(`jobReadiness.band.${strongestTrack.band}`)}</Chip.Label>
-                            </Chip>
-                        </div>
-                        {data?.foundation.codingPercentile !== null && data?.foundation.codingPercentile !== undefined ? (
-                            <Typography type="body-xs" color="muted">
-                                {t("jobReadiness.foundationPercentile", { percent: data.foundation.codingPercentile })}
-                            </Typography>
-                        ) : null}
-                        {strongestTrack.capstoneScore !== null ? (
-                            <ProgressMeter
-                                label={t("jobReadiness.trackCapstone")}
-                                value={strongestTrack.capstoneScore}
-                                max={100}
-                                showValue
-                            />
-                        ) : null}
-                        {strongestTrack.interviewScore !== null ? (
-                            <ProgressMeter
-                                label={t("jobReadiness.trackInterview")}
-                                value={strongestTrack.interviewScore}
-                                max={100}
-                                showValue
-                            />
-                        ) : null}
-                        {strongestTrack.cvScore !== null ? (
-                            <ProgressMeter
-                                label={t("jobReadiness.trackCv")}
-                                value={strongestTrack.cvScore}
-                                max={100}
-                                showValue
-                            />
-                        ) : null}
-                        {ctaHref && ctaLabel ? (
-                            <Button
-                                variant="primary"
-                                className="self-start"
-                                onPress={() => router.push(ctaHref)}
-                            >
-                                {ctaLabel}
-                                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
-                            </Button>
-                        ) : null}
-                    </>
-                ) : null}
-            </div>
-        </AsyncContent>
+        />
     )
 }
 

@@ -7,14 +7,6 @@ import React, {
     useState,
 } from "react"
 import {
-    Link,
-    Typography,
-    cn,
-} from "@heroui/react"
-import {
-    TrophyIcon,
-} from "@phosphor-icons/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -28,39 +20,26 @@ import {
     fromGlobalId,
 } from "@/modules/utils/globalId"
 import {
-    UserCell,
-} from "@/components/blocks/identity/UserCell"
-import {
-    GlobalBoardSkeleton,
-} from "./GlobalBoardSkeleton"
-import { StandingHeroCard } from "@/components/features/dashboard/league/StandingHeroCard"
-import { Podium } from "@/components/features/dashboard/league/Podium"
-import { rankBadgeIcon } from "@/components/features/dashboard/league/rankBadge"
-import { Confetti } from "@/components/features/dashboard/league/Confetti"
-import { IconTile } from "@/components/blocks/identity/IconTile"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import { FollowButton } from "@/components/features/community/FollowButton"
+    rankBadgeIcon,
+} from "@/components/features/dashboard/league/rankBadge"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { useQueryGlobalLeaderboardSwr } from "@/hooks/swr/api/graphql/queries/useQueryGlobalLeaderboardSwr"
 import { useMutateSetFollowSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetFollowSwr"
 import { useAppSelector } from "@/redux/hooks"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { _GlobalBoard } from "./component"
 
 /** Props for {@link GlobalBoard}. */
 export type GlobalBoardProps = WithClassNames<undefined>
 
 /**
- * The global (all-users) leaderboard — same shell as the weekly board: a
- * {@link StandingHeroCard} of the viewer's platform-wide standing (rank-driven
- * {@link IconTile} badge · goal-gradient · climb CTA), the top-3 {@link Podium}
- * (viewer ringed when a finisher), then rank 4+ as a followable
- * {@link SurfaceListCard}. When the viewer sits below the fetched slice, a pinned
- * self-row is appended after an ellipsis. Self-fetches its leaf query and owns the
- * follow mutation (rows stay presentational).
+ * The global (all-users) leaderboard — the CONNECTED half of {@link import("./component")._GlobalBoard}.
+ * Fetches the leaderboard, owns the follow mutation (rows stay presentational), computes the
+ * first-load skeleton flag + the settled-empty flag, resolves every label, and hands the fully
+ * resolved shape to the presentational component. See `tiers/split.md`.
  *
- * @param props - optional className for the root element.
+ * @param props - {@link GlobalBoardProps}
  */
 export const GlobalBoard = ({
     className,
@@ -70,7 +49,7 @@ export const GlobalBoard = ({
     const router = useRouter()
     const { data, isLoading } = useQueryGlobalLeaderboardSwr()
     const me = useAppSelector((state) => state.user.user)
-    // owns the follow mutation; FollowButton rows stay presentational
+    // owns the follow mutation; presentational rows only fire the resolved handler
     const { trigger: triggerSetFollow } = useMutateSetFollowSwr()
     // globalIds the viewer follows from this board (optimistic) + in-flight set
     const [followed, setFollowed] = useState<Set<string>>(new Set())
@@ -142,127 +121,61 @@ export const GlobalBoard = ({
     )
 
     return (
-        <AsyncContent
-            isLoading={isLoading && !data}
-            skeleton={<GlobalBoardSkeleton className={className} />}
-            // nothing to rank yet → funnel to courses
+        <_GlobalBoard
+            className={className}
+            // first load, nothing in hand → shimmer; settled (data OR a resolved error, which
+            // SWR also clears `isLoading` for) stops it (loading-and-skeleton.md §2). Same
+            // formula the retired `AsyncContent` used (`isLoading={isLoading && !data}`).
+            isSkeleton={isLoading && !data}
+            // settled with nothing to rank — also the branch a fetch error falls into, exactly
+            // like the retired `AsyncContent` (it never had a distinct error branch either).
             isEmpty={!data || data.entries.length === 0}
-            emptyContent={{
-                title: t("dashboard.community.topLearners.noLeadersTitle"),
-                description: t("dashboard.community.topLearners.noLeadersDescription"),
-                icon: <TrophyIcon className="size-8 text-muted" aria-hidden focusable="false" />,
-                onRetry: onClimb,
-                retryLabel: t("dashboard.league.climbCta"),
-            }}
-        >
-            {data ? (
-                <div className={cn("flex flex-col gap-6", className)}>
-                    <Confetti fireKey={celebrateKey} />
-                    {/* your platform-wide standing — rank-driven badge · gap-meter · CTA */}
-                    <StandingHeroCard
-                        badge={<IconTile icon={rankBadgeIcon(data.myRank)} tone="neutral" size="sm" />}
-                        rankLabel={t("dashboard.league.globalRankLine", { rank: data.myRank })}
-                        meta={t("dashboard.league.points", { count: data.myPoints })}
-                        progress={above && data.myRank > 1 ? {
-                            ratio: data.myPoints / Math.max(1, above.points),
-                            label: t("dashboard.league.pointsToNext", {
-                                points: pointsToNext,
-                                rank: data.myRank - 1,
-                            }),
-                        } : undefined}
-                        ctaLabel={t("dashboard.league.climbCta")}
-                        onCta={onClimb}
-                    />
-
-                    {/* the winners' dais — top-3 (viewer's own column ringed) */}
-                    <Podium
-                        meLabel={t("dashboard.league.you")}
-                        entries={data.entries.slice(0, 3).map((entry) => ({
-                            rank: entry.rank,
-                            username: entry.username,
-                            avatar: entry.avatar,
-                            pointsLabel: t("dashboard.league.points", { count: entry.points }),
-                            isMe: isMine(entry.username),
-                        }))}
-                    />
-
-                    {/* rank 4+ — a followable list; the runners the podium can't hold */}
-                    {data.entries.length > 3 || !viewerInList ? (
-                        <SurfaceListCard>
-                            {data.entries.slice(3).map((entry) => {
-                                const mine = isMine(entry.username)
-                                return (
-                                    <SurfaceListCardItem key={entry.userGlobalId}>
-                                        <div className="flex items-center gap-3">
-                                            <span
-                                                className={cn(
-                                                    "w-6 shrink-0 text-right text-xs",
-                                                    mine ? "font-semibold text-accent" : "text-muted",
-                                                )}
-                                            >
-                                                {entry.rank}
-                                            </span>
-                                            <Link
-                                                href={pathConfig().locale(locale).profile(entry.username ?? undefined).build()}
-                                                className="flex min-w-0 flex-1 items-center text-foreground no-underline transition-opacity hover:opacity-60"
-                                            >
-                                                <UserCell
-                                                    username={mine ? `${entry.username} · ${t("dashboard.league.you")}` : (entry.username ?? "")}
-                                                    avatar={entry.avatar ?? undefined}
-                                                />
-                                            </Link>
-                                            <Typography
-                                                type="body-sm"
-                                                color={mine ? undefined : "muted"}
-                                                className={cn("shrink-0", mine && "font-semibold text-accent")}
-                                            >
-                                                {t("dashboard.league.points", { count: entry.points })}
-                                            </Typography>
-                                            {!mine ? (
-                                                <FollowButton
-                                                    className="shrink-0"
-                                                    quiet
-                                                    following={followed.has(entry.userGlobalId)}
-                                                    isPending={pending.has(entry.userGlobalId)}
-                                                    onToggle={() => void onToggleFollow(entry.userGlobalId)}
-                                                />
-                                            ) : null}
-                                        </div>
-                                    </SurfaceListCardItem>
-                                )
-                            })}
-
-                            {/* viewer below the fetched slice → ellipsis + pinned self-row */}
-                            {!viewerInList ? (
-                                <>
-                                    <div className="flex items-center justify-center gap-2 bg-surface-secondary px-3 py-2 text-xs text-muted">
-                                        <span className="text-base leading-none tracking-widest">⋯</span>
-                                        {hiddenBetween > 0
-                                            ? t("dashboard.league.othersCount", { count: hiddenBetween })
-                                            : null}
-                                    </div>
-                                    <SurfaceListCardItem>
-                                        <div className="flex items-center gap-3">
-                                            <span className="w-6 shrink-0 text-right text-xs font-semibold text-accent">
-                                                {data.myRank}
-                                            </span>
-                                            <div className="flex min-w-0 flex-1 items-center">
-                                                <UserCell
-                                                    username={`${me?.username ?? ""} · ${t("dashboard.league.you")}`}
-                                                    avatar={me?.avatar ?? undefined}
-                                                />
-                                            </div>
-                                            <Typography type="body-sm" className="shrink-0 font-semibold text-accent">
-                                                {t("dashboard.league.points", { count: data.myPoints })}
-                                            </Typography>
-                                        </div>
-                                    </SurfaceListCardItem>
-                                </>
-                            ) : null}
-                        </SurfaceListCard>
-                    ) : null}
-                </div>
-            ) : null}
-        </AsyncContent>
+            rankBadge={data ? rankBadgeIcon(data.myRank) : undefined}
+            rankLabel={data ? t("dashboard.league.globalRankLine", { rank: data.myRank }) : undefined}
+            pointsMeta={data ? t("dashboard.league.points", { count: data.myPoints }) : undefined}
+            progress={data && above && data.myRank > 1 ? {
+                ratio: data.myPoints / Math.max(1, above.points),
+                label: t("dashboard.league.pointsToNext", {
+                    points: pointsToNext,
+                    rank: data.myRank - 1,
+                }),
+            } : undefined}
+            climbCtaLabel={t("dashboard.league.climbCta")}
+            onClimb={onClimb}
+            meLabel={t("dashboard.league.you")}
+            podiumEntries={data ? data.entries.slice(0, 3).map((entry) => ({
+                rank: entry.rank,
+                username: entry.username,
+                avatar: entry.avatar,
+                pointsLabel: t("dashboard.league.points", { count: entry.points }),
+                isMe: isMine(entry.username),
+            })) : undefined}
+            rows={data ? data.entries.slice(3).map((entry) => {
+                const mine = isMine(entry.username)
+                return {
+                    key: entry.userGlobalId,
+                    rank: entry.rank,
+                    isMine: mine,
+                    displayName: mine ? `${entry.username} · ${t("dashboard.league.you")}` : (entry.username ?? ""),
+                    avatar: entry.avatar,
+                    profileHref: pathConfig().locale(locale).profile(entry.username ?? undefined).build(),
+                    pointsLabel: t("dashboard.league.points", { count: entry.points }),
+                    following: followed.has(entry.userGlobalId),
+                    isPending: pending.has(entry.userGlobalId),
+                    onToggleFollow: () => void onToggleFollow(entry.userGlobalId),
+                }
+            }) : undefined}
+            showRows={data ? (data.entries.length > 3 || !viewerInList) : false}
+            selfRow={data && !viewerInList ? {
+                rank: data.myRank,
+                displayName: `${me?.username ?? ""} · ${t("dashboard.league.you")}`,
+                avatar: me?.avatar ?? null,
+                pointsLabel: t("dashboard.league.points", { count: data.myPoints }),
+            } : undefined}
+            hiddenBetweenLabel={hiddenBetween > 0 ? t("dashboard.league.othersCount", { count: hiddenBetween }) : undefined}
+            celebrateKey={celebrateKey}
+            emptyTitle={t("dashboard.community.topLearners.noLeadersTitle")}
+            emptyDescription={t("dashboard.community.topLearners.noLeadersDescription")}
+        />
     )
 }

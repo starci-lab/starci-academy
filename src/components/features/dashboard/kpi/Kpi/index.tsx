@@ -6,12 +6,6 @@ import React, {
     useState,
 } from "react"
 import {
-    Button,
-    ProgressBar,
-    Skeleton,
-    cn,
-} from "@heroui/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -27,34 +21,34 @@ import {
 import {
     DEFAULT_KPI_TARGETS,
 } from "../../WeeklyGoals/map"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryMyKpisSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyKpisSwr"
 import { useMutateSetKpiTargetSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetKpiTargetSwr"
 import { useMutateClaimKpiRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateClaimKpiRewardSwr"
 import type { KpiKey, QueryKpiItemData } from "@/modules/api/graphql/queries/types/my-kpis"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
-import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
-import { PageHeader } from "@/components/blocks/layout/PageHeader"
-import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-
-/** Props for {@link Kpi}. */
-export type KpiProps = WithClassNames<undefined>
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import { _Kpi, type KpiRowData } from "./component"
 
 /**
- * The `/kpi` editor page body: the composite score header, then one row per
- * weekly KPI (icon · label · current/target · progress · preset target
- * buttons). Picking a preset writes the target via `setKpiTarget` and
- * revalidates. Self-fetches the KPIs + owns the mutation.
+ * Props for {@link Kpi}. Only positioning — the route hands this nothing else, it
+ * self-fetches. Renamed from the old `className: string` to the house
+ * `classNames: Array<AllowedClassName>` convention every frame/atom already uses.
+ */
+export interface KpiProps {
+    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    classNames?: Array<AllowedClassName>
+}
+
+/**
+ * The `/kpi` editor page: the connected half of {@link _Kpi}. Self-fetches the
+ * weekly KPIs, owns the set-target + claim-reward mutations, resolves every
+ * label (incl. interpolation), and hands them to the presentational `_Kpi`.
+ * See `tiers/split.md`.
  *
- * @param props - optional className for the root element.
+ * @param props - {@link KpiProps}
  */
 export const Kpi = ({
-    className,
+    classNames,
 }: KpiProps) => {
     const t = useTranslations()
     const locale = useLocale()
@@ -156,148 +150,79 @@ export const Kpi = ({
         hours: Math.floor((remaining % 86_400_000) / 3_600_000),
     }
 
+    // composite-score sentence (or the plain subtitle before any target is set) + the reset countdown
+    const description = data
+        ? (data.composite.total > 0
+            ? t("dashboard.kpi.summary", {
+                percent: data.composite.percent,
+                completed: data.composite.completed,
+                total: data.composite.total,
+            })
+            : t("dashboard.kpi.subtitle")) + ` · ${t("dashboard.kpi.resetIn", {
+            days: countdown.days,
+            hours: countdown.hours,
+        })}`
+        : ""
+
+    // one resolved row per weekly KPI, meta order — presets carry their disabled
+    // state pre-computed (a global save lock, matching the pre-split behaviour:
+    // saving ANY preset on ANY row locks every OTHER preset everywhere).
+    const rows: Array<KpiRowData> = KPI_META.map(({ key, Icon, labelKey, presets }) => {
+        const item = itemByKey.get(key)
+        const current = item?.current ?? 0
+        // effective target = the learner's custom goal, or a sensible default
+        // (mirrors the dashboard card — meter always runs, never sits empty waiting for config)
+        const target = item?.target ?? DEFAULT_KPI_TARGETS[key]
+        return {
+            key,
+            icon: Icon,
+            label: t(`dashboard.kpi.labels.${labelKey}`),
+            current,
+            target,
+            presets: presets.map((preset) => ({
+                value: preset,
+                isDisabled: savingKey !== null && savingKey !== `${key}:${preset}`,
+            })),
+            onChoosePreset: (chosenTarget: number) => {
+                void onChoose(key, chosenTarget)
+            },
+            coinRewardText: item?.coinReward != null
+                ? t("dashboard.kpi.coinReward", {
+                    count: item.coinReward,
+                })
+                : undefined,
+            claimed: item?.claimed ?? false,
+            canClaim: item?.canClaim ?? false,
+            isClaiming: claimingKey === key,
+            isClaimDisabled: claimingKey !== null && claimingKey !== key,
+            onClaim: () => {
+                void onClaim(key)
+            },
+        }
+    })
+
     return (
-        <AsyncContent
+        <_Kpi
             // first load with no cached data → skeleton; a first-load query error
             // shows the retryable error slot instead of a permanent skeleton
-            isLoading={!data}
+            isSkeleton={!data}
             error={!data ? error : undefined}
-            errorContent={{
-                title: t("dashboard.loadError"),
-                onRetry: () => { void mutate() },
-                retryLabel: t("dashboard.retry"),
+            onRetry={() => {
+                void mutate()
             }}
-            skeleton={(
-                <div className={cn("mx-auto flex w-full max-w-2xl flex-col gap-10 p-6", className)}>
-                    <Skeleton className="h-8 w-40 rounded-medium" />
-                    {Array.from({
-                        length: 6,
-                    }).map((_, index) => (
-                        <Skeleton
-                            key={index}
-                            className="h-20 w-full rounded-3xl"
-                        />
-                    ))}
-                </div>
-            )}
-        >
-            {data ? (
-                <div className={cn("mx-auto flex w-full max-w-2xl flex-col gap-10 p-6", className)}>
-                    <PageHeader
-                        breadcrumb={(
-                            <ResponsiveBreadcrumb
-                                items={[
-                                    {
-                                        key: "home",
-                                        label: t("nav.home"),
-                                        onPress: onNavigateHome,
-                                    },
-                                    {
-                                        key: "kpi",
-                                        label: t("dashboard.kpi.title"),
-                                    },
-                                ]}
-                            />
-                        )}
-                        title={(
-                            <InfoTooltip
-                                title={t("dashboard.kpi.title")}
-                                description={t("dashboard.kpi.help")}
-                            >
-                                {t("dashboard.kpi.title")}
-                            </InfoTooltip>
-                        )}
-                        description={(data.composite.total > 0
-                            ? t("dashboard.kpi.summary", {
-                                percent: data.composite.percent,
-                                completed: data.composite.completed,
-                                total: data.composite.total,
-                            })
-                            : t("dashboard.kpi.subtitle")) + ` · ${t("dashboard.kpi.resetIn", {
-                            days: countdown.days,
-                            hours: countdown.hours,
-                        })}`}
-                    />
-
-                    {/* one editable row per KPI — a single joined surface, not N separate boxes */}
-                    <SurfaceListCard>
-                        {KPI_META.map(({ key, Icon, labelKey, presets }) => {
-                            const item = itemByKey.get(key)
-                            const current = item?.current ?? 0
-                            // effective target = the learner's custom goal, or a sensible default
-                            // (mirrors the dashboard card — meter always runs, never sits empty waiting for config)
-                            const target = item?.target ?? DEFAULT_KPI_TARGETS[key]
-                            return (
-                                <SurfaceListCardItem key={key} className="flex flex-col gap-3">
-                                    <div className="flex items-center justify-between gap-3">
-                                        <div className="flex items-center gap-2">
-                                            {/* icon leading, same color as the label beside it (icon.md §6) */}
-                                            <Icon className="size-5 shrink-0 text-foreground" />
-                                            <span className="text-sm font-medium text-foreground">
-                                                {t(`dashboard.kpi.labels.${labelKey}`)}
-                                            </span>
-                                        </div>
-                                        <span className="shrink-0 text-sm text-muted">
-                                            {current}/{target}
-                                        </span>
-                                    </div>
-
-                                    <ProgressBar
-                                        aria-label={t(`dashboard.kpi.labels.${labelKey}`)}
-                                        value={current}
-                                        maxValue={target || 1}
-                                        color="accent"
-                                        size="sm"
-                                    >
-                                        <ProgressBar.Track>
-                                            <ProgressBar.Fill />
-                                        </ProgressBar.Track>
-                                    </ProgressBar>
-
-                                    {/* preset target — single-select radio (always exactly 1 chosen, no clear) */}
-                                    <FlexWrapButtonRadio
-                                        ariaLabel={t(`dashboard.kpi.labels.${labelKey}`)}
-                                        value={String(target)}
-                                        onChange={(value) => void onChoose(key, Number(value))}
-                                        items={presets.map((preset) => ({
-                                            value: String(preset),
-                                            content: preset,
-                                            isDisabled: savingKey !== null && savingKey !== `${key}:${preset}`,
-                                        }))}
-                                    />
-
-                                    {/* coin reward — only once a REAL target is set server-side */}
-                                    {item?.coinReward != null ? (
-                                        <div className="flex items-center justify-between gap-2">
-                                            <span
-                                                className={cn(
-                                                    "text-xs",
-                                                    item.canClaim ? "text-accent-soft-foreground" : "text-muted",
-                                                )}
-                                            >
-                                                {t("dashboard.kpi.coinReward", { count: item.coinReward })}
-                                            </span>
-                                            {item.claimed ? (
-                                                <span className="text-xs text-muted">{t("dashboard.kpi.claimed")}</span>
-                                            ) : item.canClaim ? (
-                                                <Button
-                                                    variant="primary"
-                                                    size="sm"
-                                                    isPending={claimingKey === key}
-                                                    isDisabled={claimingKey !== null && claimingKey !== key}
-                                                    onPress={() => void onClaim(key)}
-                                                >
-                                                    {t("dashboard.kpi.claimReward")}
-                                                </Button>
-                                            ) : null}
-                                        </div>
-                                    ) : null}
-                                </SurfaceListCardItem>
-                            )
-                        })}
-                    </SurfaceListCard>
-                </div>
-            ) : null}
-        </AsyncContent>
+            onNavigateHome={onNavigateHome}
+            rows={rows}
+            classNames={classNames}
+            labels={{
+                title: t("dashboard.kpi.title"),
+                tooltipDescription: t("dashboard.kpi.help"),
+                homeLabel: t("nav.home"),
+                description,
+                errorTitle: t("dashboard.loadError"),
+                retry: t("dashboard.retry"),
+                claimLabel: t("dashboard.kpi.claimReward"),
+                claimedLabel: t("dashboard.kpi.claimed"),
+            }}
+        />
     )
 }

@@ -4,59 +4,37 @@ import React, {
     useState,
 } from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
-import {
-    ContributionCalendarView,
-} from "@/components/features/profile/ContributionCalendarView"
-import {
-    OverviewContributionsSkeleton,
-} from "./OverviewContributionsSkeleton"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryMyContributionCalendarSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyContributionCalendarSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-
-/** Props for {@link OverviewContributions}. */
-export type OverviewContributionsProps = WithClassNames<undefined>
+import { _OverviewContributions } from "./component"
 
 /**
- * Dashboard contribution heatmap (GitHub-style) for the signed-in viewer — content
- * only (the parent {@link import("@/components/blocks").LabeledCard} frames it). The
- * streak line is intentionally dropped here (the momentum band already shows it).
- * Self-fetches its own contribution leaf query, re-keyed on the selected year.
- * @param props - optional root class name (placement only)
+ * Dashboard contribution heatmap (GitHub-style) for the signed-in viewer — the CONNECTED half: it
+ * self-fetches its own contribution leaf query (re-keyed on the selected year), computes the
+ * first-load skeleton flag and the settled error, and hands them to the presentational
+ * {@link import("./component")._OverviewContributions}. See `tiers/split.md`.
  */
-export const OverviewContributions = ({
-    className,
-}: OverviewContributionsProps) => {
+export const OverviewContributions = () => {
     const t = useTranslations()
     const [year, setYear] = useState(() => new Date().getFullYear())
     const { data, isLoading, error, mutate } = useQueryMyContributionCalendarSwr(year)
     const days = data ?? []
 
     return (
-        <AsyncContent
-            isLoading={isLoading && days.length === 0}
-            skeleton={<OverviewContributionsSkeleton className={className} />}
+        <_OverviewContributions
+            // unchanged from the legacy AsyncContent path: first load, no days in hand yet
+            isSkeleton={isLoading && days.length === 0}
+            // only surface the error slot when there is no cached day to fall back to
             error={days.length === 0 ? error : undefined}
-            errorContent={{
-                title: t("dashboard.loadError"),
-                onRetry: () => { void mutate() },
-                retryLabel: t("dashboard.retry"),
+            onRetry={() => { void mutate() }}
+            days={days}
+            year={year}
+            onYearChange={setYear}
+            labels={{
+                errorTitle: t("dashboard.loadError"),
+                retry: t("dashboard.retry"),
             }}
-        >
-            <div className={cn("flex flex-col gap-3", className)}>
-                <ContributionCalendarView
-                    days={days}
-                    year={year}
-                    onYearChange={setYear}
-                />
-            </div>
-        </AsyncContent>
+        />
     )
 }

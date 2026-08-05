@@ -4819,7 +4819,9 @@
     "title": "Thử thách tuần",
     "tryNow": "Thử ngay",
     "emptyTitle": "Chưa có thử thách tuần nào đang mở",
-    "emptyDescription": "Quay lại vào đầu tuần sau để tham gia thử thách mới, hoặc tiếp tục học ở khoá của bạn."
+    "emptyDescription": "Quay lại vào đầu tuần sau để tham gia thử thách mới, hoặc tiếp tục học ở khoá của bạn.",
+    "errorTitle": "Không tải được thử thách tuần này",
+    "retry": "Thử lại"
   },
   "bookmarks": {
     "noMatch": "Không có mục đã lưu nào khớp tìm kiếm.",

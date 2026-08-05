@@ -2,15 +2,6 @@
 
 import React from "react"
 import {
-    Button,
-    Chip,
-    Typography,
-    cn,
-} from "@heroui/react"
-import {
-    FlameIcon,
-} from "@phosphor-icons/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -20,42 +11,38 @@ import {
 import {
     pathConfig,
 } from "@/resources/path"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryMyWeeklyStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyWeeklyStatsSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-
-/** Props for {@link StreakStrip}. */
-export type StreakStripProps = WithClassNames<undefined>
+import { _StreakStrip, type StreakStripDay } from "./component"
 
 /**
- * "Learning streak" content — the last-7-days streak strip + current/longest streak, and a
- * daily-goal nudge when today is still idle. Content only (the parent
- * {@link import("@/components/blocks").LabeledCard} frames it). Self-fetches the
- * weekly-stats leaf query through {@link AsyncContent}.
- * @param props - optional root class name (placement only)
+ * "Learning streak" — the CONNECTED half: self-fetches the weekly-stats leaf query, resolves each
+ * of the last 7 days into a locale-formatted dot label (native tooltip date + narrow weekday), and
+ * hands the result to the presentational {@link _StreakStrip}. See `tiers/split.md`.
  */
-export const StreakStrip = ({
-    className,
-}: StreakStripProps) => {
+export const StreakStrip = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
     const {
         data: weekly,
-        isLoading,
         error,
         mutate,
     } = useQueryMyWeeklyStatsSwr()
 
     const streak = weekly?.streak ?? 0
     const longest = weekly?.longestStreak ?? 0
-    const days = weekly?.days ?? []
-    const hasAny = streak > 0 || days.some((day) => day.active)
-    const activeToday = days.at(-1)?.active === true
+
+    // locale-dependent formatting is i18n — it stays here, next to the fetch (tiers/split.md),
+    // so `_StreakStrip` only ever renders already-resolved strings.
+    const days: Array<StreakStripDay> = (weekly?.days ?? []).map((day) => {
+        const date = new Date(`${day.date}T00:00:00Z`)
+        return {
+            date: day.date,
+            active: day.active,
+            title: date.toLocaleDateString(locale),
+            weekday: date.toLocaleDateString(locale, { weekday: "narrow" }),
+        }
+    })
 
     /** Navigate to the courses list so the viewer can start some content. */
     const onLearn = () => {
@@ -63,94 +50,25 @@ export const StreakStrip = ({
     }
 
     return (
-        <AsyncContent
-            isLoading={weekly === null || weekly === undefined || isLoading}
+        <_StreakStrip
+            // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
+            isSkeleton={!weekly && !error}
             error={error}
-            errorContent={{
-                title: t("dashboard.streak.error"),
-                onRetry: () => { void mutate() },
-                retryLabel: t("dashboard.streak.retry"),
+            onRetry={() => { void mutate() }}
+            streak={streak}
+            days={days}
+            onLearn={onLearn}
+            labels={{
+                errorTitle: t("dashboard.streak.error"),
+                retry: t("dashboard.streak.retry"),
+                streakLabel: t("dashboard.streakLabel"),
+                streakHelp: t("dashboard.streak.help"),
+                current: t("dashboard.streak.current", { count: streak }),
+                longest: t("dashboard.streak.longest", { count: longest }),
+                empty: t("dashboard.streak.empty"),
+                dailyGoalCta: t("dashboard.dailyGoal.cta"),
+                dailyGoalNudge: t("dashboard.dailyGoal.nudge"),
             }}
-            skeleton={(
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                    {/* 7 day dots, each with a weekday label under it */}
-                    <div className="flex items-center gap-2">
-                        {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-                            <div key={i} className="flex flex-col items-center gap-1">
-                                <Skeleton className="size-6 rounded-full" />
-                                <Skeleton className="h-2 w-4 rounded" />
-                            </div>
-                        ))}
-                    </div>
-                    {/* right cluster: flame + streak text + longest-streak chip */}
-                    <div className="flex items-center gap-2">
-                        <Skeleton className="size-4 shrink-0 rounded-full" />
-                        <Skeleton.Typography type="body-sm" width="1/4" />
-                        <Skeleton className="h-6 w-16 shrink-0 rounded-full" />
-                    </div>
-                </div>
-            )}
-        >
-            <div className={cn("flex flex-col gap-3", className)}>
-                {/* last 7 days + current/longest */}
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div className="flex items-center gap-2">
-                        {days.map((day) => {
-                            const date = new Date(`${day.date}T00:00:00Z`)
-                            return (
-                                <div key={day.date} className="flex flex-col items-center gap-2">
-                                    <div
-                                        title={date.toLocaleDateString(locale)}
-                                        className={cn(
-                                            "size-6 rounded-full",
-                                            day.active ? "bg-accent/80" : "bg-muted/20",
-                                        )}
-                                    />
-                                    <Typography type="body-xs" color="muted">
-                                        {date.toLocaleDateString(locale, { weekday: "narrow" })}
-                                    </Typography>
-                                </div>
-                            )
-                        })}
-                    </div>
-                    {hasAny ? (
-                        <div className="flex items-center gap-2">
-                            <FlameIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent-soft-foreground" />
-                            <InfoTooltip
-                                className="text-sm font-medium"
-                                title={t("dashboard.streakLabel")}
-                                description={t("dashboard.streak.help")}
-                            >
-                                {t("dashboard.streak.current", { count: streak })}
-                            </InfoTooltip>
-                            <Chip color="accent" variant="soft" size="sm">
-                                <Chip.Label>{t("dashboard.streak.longest", { count: longest })}</Chip.Label>
-                            </Chip>
-                        </div>
-                    ) : (
-                        <div className="flex flex-wrap items-center justify-between gap-3">
-                            <Typography type="body-sm" color="muted">
-                                {t("dashboard.streak.empty")}
-                            </Typography>
-                            <Button variant="primary" size="sm" onPress={onLearn}>
-                                {t("dashboard.dailyGoal.cta")}
-                            </Button>
-                        </div>
-                    )}
-                </div>
-
-                {/* daily-goal nudge — only when today is still idle (actionable) */}
-                {hasAny && !activeToday ? (
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                        <Typography type="body-sm" weight="medium">
-                            {t("dashboard.dailyGoal.nudge")}
-                        </Typography>
-                        <Button variant="primary" size="sm" onPress={onLearn}>
-                            {t("dashboard.dailyGoal.cta")}
-                        </Button>
-                    </div>
-                ) : null}
-            </div>
-        </AsyncContent>
+        />
     )
 }

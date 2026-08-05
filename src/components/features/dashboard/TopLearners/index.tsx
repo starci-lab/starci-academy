@@ -5,9 +5,6 @@ import React, {
     useState,
 } from "react"
 import {
-    TrophyIcon,
-} from "@phosphor-icons/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -26,31 +23,24 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import {
-    TopLearnersSkeleton,
-} from "./TopLearnersSkeleton"
+import type { LeaderboardRow } from "@/components/features/dashboard/league/LeaderboardListCard"
 import { useMutateSetFollowSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetFollowSwr"
 import { useQueryGlobalLeaderboardSwr } from "@/hooks/swr/api/graphql/queries/useQueryGlobalLeaderboardSwr"
 import { useAppSelector } from "@/redux/hooks"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import {
-    LeaderboardListCard,
-    LeaderboardRow,
-} from "@/components/features/dashboard/league/LeaderboardListCard"
+import { _TopLearners } from "./component"
 
 /** How many leaders to show. */
-const TOP_N = 5
+export const TOP_N = 5
 
 /** Props for {@link TopLearners}. */
 export type TopLearnersProps = WithClassNames<undefined>
 
 /**
- * Dashboard "Top Learners" card — maps the global leaderboard into the shared
- * {@link LeaderboardListCard} (standing header with a rank-driven medal/cup badge over
- * a medal-ranked list). Renders IDENTICALLY to the weekly "League"
- * {@link import("../LeagueCard/LeagueCardContent").LeagueCardContent}; only the trailing
- * slot differs — here a quiet {@link FollowButton} per stranger row. Owns the follow
- * mutation; the shared card stays presentational (teacher 2026-07-17: "two identical items").
+ * Dashboard "Top Learners" card — the CONNECTED half: fetches the global leaderboard, owns the
+ * follow mutation (rows stay presentational), resolves the viewer's rank-relative slice (top-N +
+ * pinned self-row), and hands the resolved shape + every translated label to the presentational
+ * {@link _TopLearners}. See `tiers/split.md`.
+ *
  * @param props - optional root class name (placement only)
  */
 export const TopLearners = ({
@@ -106,6 +96,8 @@ export const TopLearners = ({
         [followed, triggerSetFollow],
     )
 
+    // first load, nothing in hand → shimmer (loading-and-skeleton.md §2)
+    const isSkeleton = data === null || data === undefined || isLoading
     // empty (after load) when the board has no entries
     const isEmpty = !data || data.entries.length === 0
 
@@ -142,43 +134,43 @@ export const TopLearners = ({
         }
     }
 
+    // standing header + self row + ellipsis are only meaningful once `data` has settled
+    const standing = data ? {
+        rank: data.myRank,
+        primary: t("dashboard.league.globalRankLine", { rank: data.myRank }),
+        secondary: t("dashboard.league.points", { count: data.myPoints }),
+    } : undefined
+
+    const selfRow: LeaderboardRow | undefined = data && showSelfRow ? {
+        key: "self",
+        rank: data.myRank,
+        username: me?.username ?? null,
+        avatar: me?.avatar,
+        valueLabel: t("dashboard.league.points", { count: data.myPoints }),
+        isMe: true,
+    } : undefined
+
+    const ellipsisLabel = data && data.myRank - TOP_N - 1 > 0
+        ? t("dashboard.league.othersCount", { count: data.myRank - TOP_N - 1 })
+        : undefined
+
     return (
-        <AsyncContent
-            isLoading={data === null || data === undefined || isLoading}
-            skeleton={<TopLearnersSkeleton className={className} />}
+        <_TopLearners
+            className={className}
+            isSkeleton={isSkeleton}
             isEmpty={isEmpty}
-            emptyContent={{
-                title: t("dashboard.community.topLearners.noLeadersTitle"),
-                description: t("dashboard.community.topLearners.noLeadersDescription"),
-                icon: <TrophyIcon className="size-8 text-muted" aria-hidden focusable="false" />,
+            onSeeMore={onSeeMore}
+            standing={standing}
+            rows={shown.map(toRow)}
+            selfRow={selfRow}
+            ellipsisLabel={ellipsisLabel}
+            labels={{
+                title: t("dashboard.community.topLearners.title"),
+                seeMoreLabel: t("dashboard.community.topLearners.seeMore"),
+                noLeadersTitle: t("dashboard.community.topLearners.noLeadersTitle"),
+                noLeadersDescription: t("dashboard.community.topLearners.noLeadersDescription"),
+                meLabel: t("dashboard.league.you"),
             }}
-        >
-            {!isEmpty && data ? (
-                <LeaderboardListCard
-                    className={className}
-                    title={t("dashboard.community.topLearners.title")}
-                    onSeeMore={onSeeMore}
-                    seeMoreLabel={t("dashboard.community.topLearners.seeMore")}
-                    standing={{
-                        rank: data.myRank,
-                        primary: t("dashboard.league.globalRankLine", { rank: data.myRank }),
-                        secondary: t("dashboard.league.points", { count: data.myPoints }),
-                    }}
-                    rows={shown.map(toRow)}
-                    selfRow={showSelfRow ? {
-                        key: "self",
-                        rank: data.myRank,
-                        username: me?.username ?? null,
-                        avatar: me?.avatar,
-                        valueLabel: t("dashboard.league.points", { count: data.myPoints }),
-                        isMe: true,
-                    } : undefined}
-                    ellipsisLabel={data.myRank - TOP_N - 1 > 0
-                        ? t("dashboard.league.othersCount", { count: data.myRank - TOP_N - 1 })
-                        : undefined}
-                    meLabel={t("dashboard.league.you")}
-                />
-            ) : null}
-        </AsyncContent>
+        />
     )
 }

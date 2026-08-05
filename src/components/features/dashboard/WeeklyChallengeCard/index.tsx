@@ -5,36 +5,16 @@ import React, {
     useState,
 } from "react"
 import {
-    Button,
-    Chip,
-    Typography,
-} from "@heroui/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
-import {
-    UserAvatar,
-} from "@/components/blocks/identity/UserAvatar"
-import {
-    EntityToken,
-} from "../EntityToken"
-import {
-    WeeklyChallengeCardSkeleton,
-} from "./WeeklyChallengeCardSkeleton"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { useQueryWeeklyChallengeSwr } from "@/hooks/swr/api/graphql/queries/useQueryWeeklyChallengeSwr"
 import { useMutateClaimWeeklyChallengeRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateClaimWeeklyChallengeRewardSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import {
-    SurfaceListCard,
-    SurfaceListCardRow,
-} from "@/components/blocks/cards/SurfaceListCard"
+import { _WeeklyChallengeCard } from "./component"
 
 /** How many leaderboard rows to show before truncating. */
 const TOP_ROWS = 5
@@ -43,11 +23,11 @@ const TOP_ROWS = 5
 export type WeeklyChallengeCardProps = WithClassNames<undefined>
 
 /**
- * "This week's challenge" section — the featured challenge of the week: title (routable),
- * a live countdown, the viewer's pass status, total pass count, and a short
- * leaderboard of recent finishers. Owns its own `LabeledCard` frame (label outside)
- * and shows a standard empty state (frame stays) when no event is active.
- * Self-fetches its leaf query.
+ * "This week's challenge" section — the CONNECTED half: it self-fetches the featured
+ * weekly-challenge event, computes the countdown/claim state and every "x ago" label, resolves
+ * every display string (incl. interpolation), and hands them to the presentational
+ * {@link _WeeklyChallengeCard}. See `design/storybook/architecture/split.md`.
+ *
  * @param props - optional className for the root element.
  */
 export const WeeklyChallengeCard = ({
@@ -55,7 +35,8 @@ export const WeeklyChallengeCard = ({
 }: WeeklyChallengeCardProps) => {
     const t = useTranslations()
     const locale = useLocale()
-    const { data, isLoading, mutate } = useQueryWeeklyChallengeSwr()
+    const challengeSwr = useQueryWeeklyChallengeSwr()
+    const { data } = challengeSwr
     const { trigger: triggerClaimReward } = useMutateClaimWeeklyChallengeRewardSwr()
     const runGraphQL = useGraphQLWithToast()
     const [isClaiming, setIsClaiming] = useState(false)
@@ -73,7 +54,7 @@ export const WeeklyChallengeCard = ({
                 return env
             })
             if (ok) {
-                await mutate()
+                await challengeSwr.mutate()
             }
         } finally {
             setIsClaiming(false)
@@ -122,106 +103,49 @@ export const WeeklyChallengeCard = ({
         return relativeFormatter.format(Math.round(hours / 24), "day")
     }
 
-    const topRows = data?.leaderboard.slice(0, TOP_ROWS) ?? []
+    // recent finishers — sliced + localized here, so the presentational half never resolves i18n
+    const leaderboard = (data?.leaderboard.slice(0, TOP_ROWS) ?? []).map((entry) => ({
+        username: entry.username,
+        avatar: entry.avatar,
+        relativeLabel: formatRelative(entry.passedAt),
+    }))
 
     return (
-        // AsyncContent only owns the loading branch (skeleton mirrors the full
-        // LabeledCard frame). Once resolved, LabeledCard stays mounted and the
-        // empty state (no event active) renders INSIDE it instead of self-hiding,
-        // so the dashboard slot never disappears entirely.
-        <AsyncContent
-            isLoading={isLoading}
-            skeleton={<WeeklyChallengeCardSkeleton className={className} />}
-        >
-            <LabeledCard
-                label={t("weeklyChallenge.title")}
-                className={className}
-                contentClassName="flex flex-col gap-3"
-            >
-                {!data ? (
-                    <AsyncContentEmpty
-                        title={t("weeklyChallenge.emptyTitle")}
-                        description={t("weeklyChallenge.emptyDescription")}
-                    />
-                ) : (
-                    <>
-                        {/* featured challenge title (routable) */}
-                        <EntityToken
-                            globalId={data.challengeGlobalId}
-                            label={data.title}
-                        />
-
-                        {/* countdown + viewer status */}
-                        <div className="flex items-center justify-between gap-3">
-                            {countdown ? (
-                                <Typography type="body-xs" color="muted">
-                                    {t("weeklyChallenge.endsIn", {
-                                        days: countdown.days,
-                                        hours: countdown.hours,
-                                    })}
-                                </Typography>
-                            ) : <span />}
-                            {data.viewerPassed ? (
-                                data.claimed ? (
-                                    <Chip color="success" size="sm" variant="soft">
-                                        <Chip.Label>
-                                            {t("weeklyChallenge.passed")}
-                                        </Chip.Label>
-                                    </Chip>
-                                ) : (
-                                    <Button
-                                        variant="primary"
-                                        size="sm"
-                                        isPending={isClaiming}
-                                        onPress={() => void onClaim()}
-                                    >
-                                        {t("weeklyChallenge.claimReward", {
-                                            count: data.coinReward ?? 0,
-                                        })}
-                                    </Button>
-                                )
-                            ) : (
-                                <EntityToken
-                                    globalId={data.challengeGlobalId}
-                                    label={t("weeklyChallenge.tryNow")}
-                                />
-                            )}
-                        </div>
-
-                        {/* total passers */}
-                        <Typography type="body-xs" color="muted">
-                            {t("weeklyChallenge.passedCount", {
-                                count: data.passedCount,
-                            })}
-                        </Typography>
-
-                        {/* recent finishers */}
-                        {topRows.length > 0 ? (
-                            <SurfaceListCard bordered>
-                                {topRows.map((entry) => (
-                                    <SurfaceListCardRow
-                                        key={entry.username}
-                                        leading={(
-                                            <UserAvatar
-                                                className="size-6 shrink-0"
-                                                username={entry.username}
-                                                avatar={entry.avatar}
-                                                seed={entry.username}
-                                            />
-                                        )}
-                                        title={entry.username}
-                                        trailing={(
-                                            <Typography type="body-xs" color="muted" className="shrink-0">
-                                                {formatRelative(entry.passedAt)}
-                                            </Typography>
-                                        )}
-                                    />
-                                ))}
-                            </SurfaceListCard>
-                        ) : null}
-                    </>
-                )}
-            </LabeledCard>
-        </AsyncContent>
+        <_WeeklyChallengeCard
+            // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
+            isSkeleton={challengeSwr.isLoading && !data}
+            // error beats loading + empty; only a settled fetch error (nothing in hand) reaches the block
+            error={!data ? challengeSwr.error : undefined}
+            onRetry={() => { void challengeSwr.mutate() }}
+            // settled with no active event
+            isEmpty={!data}
+            challengeGlobalId={data?.challengeGlobalId}
+            challengeTitle={data?.title}
+            viewerPassed={data?.viewerPassed}
+            claimed={data?.claimed}
+            isClaiming={isClaiming}
+            onClaim={() => { void onClaim() }}
+            leaderboard={leaderboard}
+            className={className}
+            labels={{
+                title: t("weeklyChallenge.title"),
+                errorTitle: t("weeklyChallenge.errorTitle"),
+                retry: t("weeklyChallenge.retry"),
+                emptyTitle: t("weeklyChallenge.emptyTitle"),
+                emptyDescription: t("weeklyChallenge.emptyDescription"),
+                endsIn: countdown ? t("weeklyChallenge.endsIn", {
+                    days: countdown.days,
+                    hours: countdown.hours,
+                }) : undefined,
+                passed: t("weeklyChallenge.passed"),
+                claimReward: t("weeklyChallenge.claimReward", {
+                    count: data?.coinReward ?? 0,
+                }),
+                tryNow: t("weeklyChallenge.tryNow"),
+                passedCount: t("weeklyChallenge.passedCount", {
+                    count: data?.passedCount ?? 0,
+                }),
+            }}
+        />
     )
 }

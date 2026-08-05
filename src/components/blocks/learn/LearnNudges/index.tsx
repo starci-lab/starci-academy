@@ -7,7 +7,7 @@ import { pathConfig } from "@/resources/path"
 import { useCourseResume } from "@/components/features/learn/shared/useCourseResume"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryMyDueFlashcardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDueFlashcardsSwr"
-import { useLeaderboardSwr } from "@/components/features/learn/Leaderboard/useLeaderboardSwr"
+import { useLeaderboardSwr } from "@/hooks/swr/api/graphql/queries/useLeaderboardSwr"
 import { _LearnNudges, type LearnNudgeItem } from "./component"
 
 /**

@@ -1,16 +1,21 @@
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
+import { ChoiceSwitch } from "@sb-components/atoms/forms/Choice/Choice"
 import { InputText, InputTextarea } from "@sb-components/atoms/forms/Input/Input"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ChipGroup } from "@sb-components/composites/chips/ChipGroup/ChipGroup"
 import { KeyValueList } from "@sb-components/composites/data/KeyValue/KeyValue"
 import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
 import type { SkeletonProps } from "@sb-components/composites/_slot"
-import { StackV } from "@sb-components/frames/Stack/Stack"
+import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * `AgentDetailDrawer` — overlay drawer over one Agent OS agent: read-only
- * model/status/channels, then editable persona name + system prompt, then the
- * tools it may call and the knowledge sources it may cite.
+ * model/channels, an active/paused switch, then editable persona name +
+ * system prompt, then the tools it may call and the knowledge sources it may
+ * cite. `status` moved out of the read-only `KeyValueList` into its own
+ * switch row on 2026-08-05 — `KeyValueList`'s own contract keeps `value` a
+ * plain `string` (never a control), so a toggleable field cannot live inside
+ * it (see that composite's own file header).
  */
 
 /** A channel an agent can be wired to. */
@@ -31,8 +36,12 @@ export interface AgentDetailDrawerProps {
     onPersonaNameChange: (value: string) => void
     /** The model driving this agent (read-only here — model choice is a Models-section concern). */
     model: string
-    /** Whether the agent is currently answering messages (read-only here). */
+    /** Whether the agent is currently answering messages. */
     status: AgentDetailStatusKey
+    /** Fires with the next status when the switch is pressed (`true` = active). */
+    onToggleStatus: (active: boolean) => void
+    /** `true` → the status toggle mutation is in flight (switch busy/disabled). */
+    isTogglingStatus?: boolean
     /** Channels this agent answers on (read-only here — wiring a channel is a Channels-section concern). */
     channels: ReadonlyArray<AgentOsChannelKind>
     /** System prompt (controlled). */
@@ -98,6 +107,8 @@ const AgentDetailDrawer = ({
     onPersonaNameChange,
     model,
     status,
+    onToggleStatus,
+    isTogglingStatus = false,
     channels,
     systemPrompt,
     onSystemPromptChange,
@@ -125,8 +136,27 @@ const AgentDetailDrawer = ({
                             isSkeleton={isSkeleton}
                             items={[
                                 { key: "model", label: labels.modelLabel, value: model },
-                                { key: "status", label: labels.statusLabel, value: labels.statusOptions[status] },
                                 { key: "channels", label: labels.channelsLabel, value: channels.map((channel) => labels.channelOptions[channel]).join(", ") },
+                            ]}
+                        />
+                    ),
+                    () => (
+                        <StackH
+                            align="center"
+                            justify="between"
+                            gap={3}
+                            isSkeleton={isSkeleton}
+                            items={[
+                                () => <Typography size="sm" color="muted" isSkeleton={isSkeleton} text={labels.statusLabel} />,
+                                () => (
+                                    <ChoiceSwitch
+                                        isSelected={status === "active"}
+                                        onValueChange={(next) => onToggleStatus(next)}
+                                        isDisabled={isSkeleton || isTogglingStatus}
+                                        isSkeleton={isSkeleton}
+                                        label={labels.statusOptions[status]}
+                                    />
+                                ),
                             ]}
                         />
                     ),

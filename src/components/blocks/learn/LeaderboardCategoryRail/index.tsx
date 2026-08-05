@@ -15,8 +15,8 @@ import {
     categoryMyXp,
     parseCategoryParam,
     type LeaderboardCategoryKey,
-} from "../categories"
-import { useLeaderboardSwr } from "../useLeaderboardSwr"
+} from "@/modules/utils/leaderboard"
+import { useLeaderboardSwr } from "@/hooks/swr/api/graphql/queries/useLeaderboardSwr"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One row in the category rail. */

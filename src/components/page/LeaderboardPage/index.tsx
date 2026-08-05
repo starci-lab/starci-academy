@@ -9,8 +9,8 @@ import {
     parseCategoryParam,
     rankEntriesByCategory,
     type LeaderboardCategoryKey,
-} from "@/components/features/learn/Leaderboard/categories"
-import { useLeaderboardSwr } from "@/components/features/learn/Leaderboard/useLeaderboardSwr"
+} from "@/modules/utils/leaderboard"
+import { useLeaderboardSwr } from "@/hooks/swr/api/graphql/queries/useLeaderboardSwr"
 import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
 import { useAppSelector } from "@/redux/hooks"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"

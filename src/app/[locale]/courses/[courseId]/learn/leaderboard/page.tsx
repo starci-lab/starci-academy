@@ -1,13 +1,13 @@
 "use client"
 
 import React from "react"
-import { Leaderboard } from "@/components/features/learn/Leaderboard"
+import { LeaderboardPage } from "@/components/page/LeaderboardPage"
 
 /**
  * Learn / leaderboard: course-level ranking of enrolled learners by total XP.
  */
 const Page = () => {
-    return <Leaderboard />
+    return <LeaderboardPage />
 }
 
 export default Page

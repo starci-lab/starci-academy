@@ -33,7 +33,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { SidebarTab, setSidebar } from "@/redux/slices/sidebar"
 import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
 import { useQueryMyDueFlashcardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDueFlashcardsSwr"
-import { useLeaderboardSwr } from "@/components/features/learn/Leaderboard/useLeaderboardSwr"
+import { useLeaderboardSwr } from "@/hooks/swr/api/graphql/queries/useLeaderboardSwr"
 
 /**
  * `displayId` of the DevOps Mastery course — the Docker/Kubernetes Playground

@@ -19,7 +19,7 @@ export interface UseQueryCourseQuestionsSwrArgs {
 /**
  * SWR wrapper for {@link queryCourseQuestions}. `data` is a page of course-wide
  * questions plus the total count, or `null`. Course-scoped — reads the active
- * course id from Redux (mirrors {@link import("@/components/features/learn/Leaderboard/useLeaderboardSwr").useLeaderboardSwr})
+ * course id from Redux (mirrors {@link import("@/hooks/swr/api/graphql/queries/useLeaderboardSwr").useLeaderboardSwr})
  * and suspends until the course hydrates. The key carries courseId + filter +
  * search + page so each filter/search/page combination is cached independently.
  *

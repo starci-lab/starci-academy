@@ -10,8 +10,9 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * `AgentDetailDrawer` — overlay drawer over one Agent OS agent: read-only
- * model/status/channels, then editable persona name + system prompt, then the
- * tools it may call and the knowledge sources it may cite.
+ * model/channels, an active/paused switch, then editable persona name +
+ * system prompt, then the tools it may call and the knowledge sources it may
+ * cite.
  */
 const meta: Meta<typeof AgentDetailDrawer> = {
     title: "Nivo/Blocks/AgentOs/AgentDetailDrawer/AgentDetailDrawer",
@@ -42,18 +43,20 @@ const CHANNELS: ReadonlyArray<AgentOsChannelKind> = ["zalo", "whatsapp"]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Drawer.CloseTrigger": { tier: "heroui", role: "the close button, upper-right" },
-    KeyValueList: { tier: "composite", role: "the read-only model/status/channels summary" },
+    KeyValueList: { tier: "composite", role: "the read-only model/channels summary" },
+    ChoiceSwitch: { tier: "atom", role: "the active/paused status toggle" },
     InputText: { tier: "atom", role: "the editable persona name" },
     InputTextarea: { tier: "atom", role: "the editable system prompt" },
     ChipGroup: { tier: "composite", role: "the tools row, and the knowledge-sources row" },
     Button: { tier: "atom", role: "cancel (ghost) and save (primary, busy while saving)" },
 }
 
-/** Shared controlled wrapper — one `isOpen`/persona/prompt state feeds every leaf state below, matching how `SubmissionAttemptsDrawer`'s story shares its trigger across states. */
+/** Shared controlled wrapper — one `isOpen`/persona/prompt/status state feeds every leaf state below, matching how `SubmissionAttemptsDrawer`'s story shares its trigger across states. */
 const ControlledAgentDetailDrawer = () => {
     const [isOpen, setIsOpen] = useState(true)
     const [personaName, setPersonaName] = useState("Sales — Mai")
     const [systemPrompt, setSystemPrompt] = useState("Advise on products, close orders, and hand order details to the order-sync workflow.")
+    const [status, setStatus] = useState<"active" | "paused">("active")
 
     const base = {
         isOpen,
@@ -61,7 +64,8 @@ const ControlledAgentDetailDrawer = () => {
         personaName,
         onPersonaNameChange: setPersonaName,
         model: "GPT-4o mini",
-        status: "active" as const,
+        status,
+        onToggleStatus: (active: boolean) => setStatus(active ? "active" : "paused"),
         channels: CHANNELS,
         systemPrompt,
         onSystemPromptChange: setSystemPrompt,
@@ -80,18 +84,19 @@ const ControlledAgentDetailDrawer = () => {
                 tier="block"
                 leaf="Agent detail"
                 annotate={ANNOTATE}
-                reason="A presentational overlay drawer over one agent's persona/model/tools/knowledge/prompt. Read-only facts (model, status, channels) sit above the editable fields — changing what an agent answers on or which model runs it belongs to the Channels/Models sections, not this drawer."
+                reason="A presentational overlay drawer over one agent's persona/model/tools/knowledge/prompt. Read-only facts (model, channels) sit above an active/paused switch, then the editable fields — changing what an agent answers on or which model runs it belongs to the Channels/Models sections, not this drawer."
                 states={[
                     {
                         name: "editable, resting",
-                        why: "The common state: persona name and system prompt are editable, tools and knowledge sources are shown as chip rows, and both footer actions are live.",
+                        why: "The common state: the status switch, persona name, and system prompt are all live, tools and knowledge sources are shown as chip rows, and both footer actions are live.",
                         code: `<AgentDetailDrawer
   isOpen={isOpen}
   onOpenChange={setIsOpen}
   personaName={personaName}
   onPersonaNameChange={setPersonaName}
   model="GPT-4o mini"
-  status="active"
+  status={status}
+  onToggleStatus={(active) => setStatus(active ? "active" : "paused")}
   channels={["zalo", "whatsapp"]}
   systemPrompt={systemPrompt}
   onSystemPromptChange={setSystemPrompt}
@@ -104,6 +109,18 @@ const ControlledAgentDetailDrawer = () => {
                         render: <AgentDetailDrawer {...base} />,
                     },
                     {
+                        name: "paused",
+                        why: "The agent's own `status` is `paused` — the switch reflects it unselected, same layout otherwise.",
+                        code: `<AgentDetailDrawer status="paused" … />`,
+                        render: <AgentDetailDrawer {...base} status="paused" />,
+                    },
+                    {
+                        name: "isTogglingStatus = true",
+                        why: "The status toggle mutation is in flight — the switch locks so a second press can't race the first.",
+                        code: "<AgentDetailDrawer isTogglingStatus … />",
+                        render: <AgentDetailDrawer {...base} isTogglingStatus />,
+                    },
+                    {
                         name: "isSaving = true",
                         why: "The save mutation is in flight — both fields lock and the save button shows its busy state so the operator can't double-submit.",
                         code: "<AgentDetailDrawer isSaving … />",
@@ -111,7 +128,7 @@ const ControlledAgentDetailDrawer = () => {
                     },
                     {
                         name: "isSkeleton = true",
-                        why: "The drawer's own first fetch hasn't resolved yet, so the same layout shimmers end to end — the title, the read-only summary, both fields, and both chip rows — matching the loaded drawer so nothing jumps when the agent lands.",
+                        why: "The drawer's own first fetch hasn't resolved yet, so the same layout shimmers end to end — the title, the read-only summary, the switch, both fields, and both chip rows — matching the loaded drawer so nothing jumps when the agent lands.",
                         code: "<AgentDetailDrawer isSkeleton … />",
                         render: <AgentDetailDrawer {...base} isSkeleton />,
                     },

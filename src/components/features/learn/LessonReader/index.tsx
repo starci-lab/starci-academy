@@ -18,19 +18,19 @@ import {
 } from "next/navigation"
 import type {
     ContentTabItem,
-} from "./types"
+} from "@/components/blocks/learn/lesson/types"
 import {
     ContentBody,
-} from "./ContentBody"
+} from "@/components/blocks/learn/lesson/ContentBody"
 import {
     ChallengeBody,
-} from "./ChallengeBody"
+} from "@/components/blocks/learn/lesson/ChallengeBody"
 import {
     SandboxBody,
-} from "./SandboxBody"
+} from "@/components/blocks/learn/lesson/SandboxBody"
 import {
     AiLab,
-} from "./AiLab"
+} from "@/components/blocks/learn/lesson/AiLab"
 import {
     _LessonReader,
 } from "./component"

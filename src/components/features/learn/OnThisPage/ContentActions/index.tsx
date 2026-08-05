@@ -3,7 +3,7 @@
 import React, { useCallback } from "react"
 import { Label, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { ActionToolbar } from "@/components/features/learn/LessonReader/ContentBody/ActionToolbar"
+import { ActionToolbar } from "@/components/blocks/learn/lesson/ContentBody/ActionToolbar"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { useShareOverlayState } from "@/hooks/zustand/overlay/hooks"

@@ -8,34 +8,34 @@ import {
 } from "@/components/features/dashboard/AdBanner"
 import type {
     ContentTabItem,
-} from "./types"
+} from "@/components/blocks/learn/lesson/types"
 import {
     ContentTabBar,
-} from "./ContentTabBar"
+} from "@/components/blocks/learn/lesson/ContentTabBar"
 import {
     ContentBodySkeleton,
-} from "./ContentBodySkeleton"
+} from "@/components/blocks/learn/lesson/ContentBodySkeleton"
 import {
     ContentHeaderSkeleton,
-} from "./ContentHeaderSkeleton"
+} from "@/components/blocks/learn/lesson/ContentHeaderSkeleton"
 import {
     ContentHeader,
-} from "./ContentHeader"
+} from "@/components/blocks/learn/lesson/ContentHeader"
 import {
     ContentDiscussion,
-} from "./ContentBody/ContentBodyV2/Discussion"
+} from "@/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion"
 import {
     ContentReactionBar,
-} from "./ContentBody/ContentBodyV2/Discussion/ContentReactionBar"
+} from "@/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar"
 import {
     LessonPager,
-} from "./LessonPager"
+} from "@/components/blocks/learn/lesson/LessonPager"
 import {
     E2eResultButton,
-} from "./E2eResultButton"
+} from "@/components/blocks/learn/lesson/E2eResultButton"
 import {
     PremiumPaywall,
-} from "./PremiumPaywall"
+} from "@/components/blocks/learn/lesson/PremiumPaywall"
 import { SelectionHintCallout } from "../ContentAiSelectionAsk/SelectionHintCallout"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 import { UpNextCard } from "@/components/blocks/learn/UpNextCard"

@@ -23,7 +23,7 @@ import { useQueryContentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQue
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
 import { useQueryAiLabPlaygroundSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiLabPlaygroundSwr"
 import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/useQuerySearchCourseContentSwr"
-import { useLessonNavigation } from "@/components/features/learn/LessonReader/hooks/useLessonNavigation"
+import { useLessonNavigation } from "@/components/blocks/learn/lesson/hooks/useLessonNavigation"
 import { usePaymentOverlayState, usePremiumGateOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useContentDiscussionSocketIo } from "@/hooks/socketio/useContentDiscussionSocketIo"
 import { contentDiscussionSocketIoEventEmitter } from "@/hooks/socketio/useContentDiscussionSocketIoLifecycle"

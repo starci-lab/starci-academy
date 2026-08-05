@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react"
 import { cn } from "@heroui/react"
-import { ImplementationCard } from "@/components/features/learn/LessonReader/CodeImplementationBody/ImplementationCard"
+import { ImplementationCard } from "@/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGithub/usePersonalProjectGithubForm"
 import { useAppSelector } from "@/redux/hooks"

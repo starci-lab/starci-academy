@@ -59,7 +59,7 @@ export interface DiscussionProps extends WithClassNames<undefined> {
  * threaded comment list, sitting directly on the page canvas (no card) so it doesn't
  * stack a second bordered surface under the reading "paper" card. The content reaction
  * picker is NOT here — it lives in the reading-card footer
- * ({@link import("@/components/features/learn/LessonReader/ContentBody/ContentBodyV2/Discussion/ContentReactionBar").ContentReactionBar}).
+ * ({@link import("@/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar").ContentReactionBar}).
  *
  * Presentational: receives all data + callbacks from a container; holds no data hooks.
  * The archive line is computed from the currently-loaded top-level comments (an honest,

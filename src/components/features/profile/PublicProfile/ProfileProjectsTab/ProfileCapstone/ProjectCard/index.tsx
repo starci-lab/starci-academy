@@ -2,43 +2,44 @@
 
 import React from "react"
 import {
-    Typography,
-    cn,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
     RocketIcon,
     SealCheckIcon,
 } from "@phosphor-icons/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackH, StackV } from "@/components/frames/Stack"
 import type { QueryUserCapstoneCourseProgress } from "@/modules/api/graphql/queries/types/user-capstone-progress"
 
 /** Props for {@link ProjectCard}. */
-export interface ProjectCardProps extends WithClassNames<undefined> {
-    /** The single course capstone progress to showcase (list-item data prop). */
-    project: QueryUserCapstoneCourseProgress
+export interface ProjectCardProps {
+    /** The single course capstone progress to showcase. Absent only while {@link ProjectCardProps.isSkeleton}. */
+    project?: QueryUserCapstoneCourseProgress
+    /**
+     * First load, nothing in hand → this row shimmers in place. The resting state lives
+     * HERE, beside the loaded one, so the two shapes cannot drift the way a placeholder
+     * hand-kept in the list would (`loading-and-skeleton.md`).
+     */
+    isSkeleton?: boolean
 }
 
 /**
  * One personal-project capstone, rendered as a compact ROW (not a nested card —
- * the section's {@link import("@/components/blocks").LabeledCard} is the frame).
- * Layout: a framed rocket {@link IconTile}, the course title with a green
- * "✓ Verified by StarCi" chip + overall percent, a single honest
- * {@link SegmentBar} whose green fill = graded/verified tasks out of all tasks,
- * and a milestone/task summary line. Green (`success`) means "verified"
- * throughout, per the profile spec.
+ * the section's `LabeledCard` is the frame). Layout: a framed rocket
+ * {@link IconTile}, the course title with a green "✓ Verified by StarCi" chip +
+ * overall percent, a single honest {@link SegmentBar} whose green fill =
+ * graded/verified tasks out of all tasks, and a milestone/task summary line.
+ * Green (`success`) means "verified" throughout, per the profile spec.
  *
  * Purely presentational glance content — the parent
  * {@link import("../index").ProfileCapstone} wraps this in a `SurfaceListCardItem`
- * that is itself the nav LINK to `/profile/<u>/projects/<courseGlobalId>` (the
- * full milestone/task roadmap, {@link import("../../ProfileProjectRoadmap").ProfileProjectRoadmap}),
+ * that is itself the nav LINK to `/profile/<u>/projects/<courseGlobalId>`,
  * `hover="underline"` — the title underlines on hover as the row's own go-there
  * affordance (row-as-link; ref `hover-style-matches-clickable-nature`).
  *
@@ -46,66 +47,115 @@ export interface ProjectCardProps extends WithClassNames<undefined> {
  */
 export const ProjectCard = ({
     project,
-    className,
+    isSkeleton = false,
 }: ProjectCardProps) => {
     const t = useTranslations()
 
-    const totalTasks = Math.max(project.totalTasks, 1)
-    const percent = Math.round((project.completedTasks / totalTasks) * 100)
-    const hasVerified = project.completedTasks > 0
+    const resting = isSkeleton || !project
+    const totalTasks = Math.max(project?.totalTasks ?? 1, 1)
+    const percent = Math.round(((project?.completedTasks ?? 0) / totalTasks) * 100)
+    const hasVerified = (project?.completedTasks ?? 0) > 0
 
     return (
-        <div className={cn("flex items-start gap-3", className)}>
-            <IconTile
-                size="sm"
-                icon={<RocketIcon aria-hidden focusable="false" />}
-            />
-            <div className="flex min-w-0 flex-1 flex-col gap-2">
-                <div className="flex items-start justify-between gap-2">
-                    <div className="flex min-w-0 flex-wrap items-center gap-2">
-                        <Typography
-                            type="body-sm"
-                            weight="medium"
-                            truncate
-                            className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline"
-                        >
-                            {project.courseTitle}
-                        </Typography>
-                        {hasVerified ? (
-                            <StatusChip
-                                tone="success"
-                                icon={<SealCheckIcon aria-hidden focusable="false" className="size-4" />}
-                            >
-                                {t("pinnedProjects.verified")}
-                            </StatusChip>
-                        ) : null}
-                    </div>
-                    <Typography type="body-xs" color="muted">
-                        {percent}%
-                    </Typography>
-                </div>
-                <SegmentBar
-                    hideLegend
-                    max={totalTasks}
-                    ariaLabel={`${project.courseTitle} · ${percent}%`}
-                    segments={[
-                        {
-                            key: "verified",
-                            label: t("publicProfile.capstone.projectsHeading"),
-                            value: project.completedTasks,
-                            color: "var(--success)",
-                        },
-                    ]}
-                />
-                <Typography type="body-xs" color="muted">
-                    {t("publicProfile.capstone.roadmapSummary", {
-                        completedMilestones: project.completedMilestones,
-                        totalMilestones: project.totalMilestones,
-                        completedTasks: project.completedTasks,
-                        totalTasks: project.totalTasks,
-                    })}
-                </Typography>
-            </div>
-        </div>
+        <StackH
+            gap={4}
+            align="start"
+            items={[
+                () => (resting
+                    ? <Skeleton className="size-12 shrink-0 rounded-xl" />
+                    : <IconTile size="sm" icon={<RocketIcon aria-hidden focusable="false" />} />),
+                () => (
+                    <StackV
+                        gap={3}
+                        classNames={["min-w-0", "flex-1"]}
+                        items={[
+                            () => (
+                                <StackH
+                                    gap={3}
+                                    align="start"
+                                    justify="between"
+                                    items={[
+                                        () => (
+                                            <Cluster
+                                                gap={3}
+                                                align="center"
+                                                classNames={["min-w-0"]}
+                                                items={[
+                                                    () => (
+                                                        <Typography
+                                                            size="sm"
+                                                            weight="medium"
+                                                            truncate
+                                                            underlineOnGroupHover
+                                                            isSkeleton={resting}
+                                                            classNames={resting ? ["w-1/2"] : undefined}
+                                                            text={project?.courseTitle}
+                                                        />
+                                                    ),
+                                                    ...(resting
+                                                        ? [() => <Skeleton.Chip />]
+                                                        : hasVerified
+                                                            ? [() => (
+                                                                <StatusChip
+                                                                    tone="success"
+                                                                    icon={<SealCheckIcon aria-hidden focusable="false" className="size-4" />}
+                                                                >
+                                                                    {t("pinnedProjects.verified")}
+                                                                </StatusChip>
+                                                            )]
+                                                            : []),
+                                                ]}
+                                            />
+                                        ),
+                                        () => (
+                                            <Typography
+                                                size="xs"
+                                                color="muted"
+                                                isSkeleton={resting}
+                                                classNames={resting ? ["w-fit"] : undefined}
+                                                text={`${percent}%`}
+                                            />
+                                        ),
+                                    ]}
+                                />
+                            ),
+                            () => (resting
+                                ? <Skeleton.ProgressBar />
+                                : (
+                                    <SegmentBar
+                                        hideLegend
+                                        max={totalTasks}
+                                        ariaLabel={`${project.courseTitle} · ${percent}%`}
+                                        segments={[
+                                            {
+                                                key: "verified",
+                                                label: t("publicProfile.capstone.projectsHeading"),
+                                                value: project.completedTasks,
+                                                color: "var(--success)",
+                                            },
+                                        ]}
+                                    />
+                                )),
+                            () => (
+                                <Typography
+                                    size="xs"
+                                    color="muted"
+                                    isSkeleton={resting}
+                                    classNames={resting ? ["w-2/3"] : undefined}
+                                    text={project
+                                        ? t("publicProfile.capstone.roadmapSummary", {
+                                            completedMilestones: project.completedMilestones,
+                                            totalMilestones: project.totalMilestones,
+                                            completedTasks: project.completedTasks,
+                                            totalTasks: project.totalTasks,
+                                        })
+                                        : undefined}
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
 }

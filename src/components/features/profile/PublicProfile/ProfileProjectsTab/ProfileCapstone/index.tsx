@@ -2,9 +2,6 @@
 
 import React from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -14,19 +11,15 @@ import {
 import {
     ProjectCard,
 } from "./ProjectCard"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { pathConfig } from "@/resources/path"
 import { useQueryUserCapstoneProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCapstoneProgressSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 
-/** Props for {@link ProfileCapstone}. */
-export type ProfileCapstoneProps = WithClassNames<undefined>
+/** Placeholder capstone rows shown while the projection loads. */
+const SKELETON_ROWS = 3
 
 /**
  * Projects tab — the profile owner's verified capstone work, framed as
@@ -36,11 +29,10 @@ export type ProfileCapstoneProps = WithClassNames<undefined>
  * separated by dividers. Self-contained container: reads username → entity id,
  * then drives its own projection-backed SWR.
  *
- * @param props - optional className (placement only).
+ * The placeholder rows are the SAME `ProjectCard` resting, in the SAME list, so the
+ * row's shape has one description (`loading-and-skeleton.md`).
  */
-export const ProfileCapstone = ({
-    className,
-}: ProfileCapstoneProps) => {
+export const ProfileCapstone = () => {
     const t = useTranslations()
     const locale = useLocale()
     const username = useProfileUsername()
@@ -54,6 +46,7 @@ export const ProfileCapstone = ({
     } = useQueryUserCapstoneProgressSwr(userId)
 
     const projects = projectsData ?? []
+    const isSkeleton = (isLoading || !userId) && !projectsData
 
     // resolved-empty + no error → hide the whole section (sparse profiles stay clean).
     if (projectsData && projects.length === 0 && !projectsError) {
@@ -62,67 +55,38 @@ export const ProfileCapstone = ({
 
     return (
         <LabeledCard
-            className={cn(className)}
+            identity={{ tier: "block", component: "ProfileCapstone" }}
             label={t("publicProfile.capstone.projectsHeading")}
             frameless
         >
-            <AsyncContent
-                isLoading={(isLoading || !userId) && !projectsData}
-                skeleton={(
-                    // mirror the real list: assume 3 capstone rows, Separator between
-                    // each (like the content), each row = ProjectCard's tree
-                    <SurfaceListCard>
-                        {[0, 1, 2].map((row) => (
-                            <SurfaceListCardItem key={row}>
-                                <div className="flex flex-col gap-3">
-                                    {/* glance row: icon tile + (title+chip+%) + bar + summary */}
-                                    <div className="flex items-start gap-3">
-                                        <Skeleton className="size-12 shrink-0 rounded-xl" />
-                                        <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                            {/* title + verified chip + percent */}
-                                            <div className="flex items-center justify-between gap-2">
-                                                <div className="flex min-w-0 flex-1 items-center gap-2">
-                                                    <Skeleton.Typography type="body-sm" width="1/2" />
-                                                    <Skeleton.Chip />
-                                                </div>
-                                                <Skeleton className="h-3 w-8 shrink-0 rounded" />
-                                            </div>
-                                            {/* verified-progress bar (SegmentBar, legend hidden) */}
-                                            <Skeleton.ProgressBar />
-                                            {/* roadmap summary line */}
-                                            <Skeleton.Typography type="body-xs" width="2/3" />
-                                        </div>
-                                    </div>
-                                </div>
+            {projectsError && !projectsData ? (
+                <AsyncContentError
+                    title={t("publicProfile.capstone.loadErrorTitle")}
+                    description={t("publicProfile.capstone.loadErrorDescription")}
+                    onRetry={() => { void reloadProjects() }}
+                    retryLabel={t("publicProfile.capstone.loadErrorRetry")}
+                />
+            ) : (
+                <SurfaceListCard>
+                    {isSkeleton
+                        ? Array.from({ length: SKELETON_ROWS }, (_row, index) => (
+                            <SurfaceListCardItem key={index}>
+                                <ProjectCard isSkeleton />
+                            </SurfaceListCardItem>
+                        ))
+                        : projects.map((project) => (
+                            <SurfaceListCardItem
+                                key={project.courseGlobalId}
+                                hover="underline"
+                                href={username
+                                    ? pathConfig().locale(locale).profile(username).projects().course(project.courseGlobalId).build()
+                                    : undefined}
+                            >
+                                <ProjectCard project={project} />
                             </SurfaceListCardItem>
                         ))}
-                    </SurfaceListCard>
-                )}
-                isEmpty={projects.length === 0}
-                error={projectsError}
-                errorContent={{
-                    title: t("publicProfile.capstone.loadErrorTitle"),
-                    description: t("publicProfile.capstone.loadErrorDescription"),
-                    onRetry: () => {
-                        void reloadProjects()
-                    },
-                    retryLabel: t("publicProfile.capstone.loadErrorRetry"),
-                }}
-            >
-                <SurfaceListCard>
-                    {projects.map((project) => (
-                        <SurfaceListCardItem
-                            key={project.courseGlobalId}
-                            hover="underline"
-                            href={username
-                                ? pathConfig().locale(locale).profile(username).projects().course(project.courseGlobalId).build()
-                                : undefined}
-                        >
-                            <ProjectCard project={project} />
-                        </SurfaceListCardItem>
-                    ))}
                 </SurfaceListCard>
-            </AsyncContent>
+            )}
         </LabeledCard>
     )
 }

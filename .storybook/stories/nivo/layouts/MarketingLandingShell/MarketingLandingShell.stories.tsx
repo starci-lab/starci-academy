@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { MarketingLandingShell } from "@sb-components/nivo/layouts/MarketingLandingShell/MarketingLandingShell"
 import type { FooterProps } from "@sb-components/nivo/blocks/landing/Footer/Footer"
 import type { MarketingNavbarProps } from "@sb-components/nivo/blocks/landing/MarketingNavbar/MarketingNavbar"

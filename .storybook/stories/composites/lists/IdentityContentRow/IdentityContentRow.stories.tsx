@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { type SkeletonProps } from "@sb-components/frames/_slot"
 import { SealCheckIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"

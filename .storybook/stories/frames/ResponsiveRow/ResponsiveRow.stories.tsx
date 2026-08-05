@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import type { ReactNode } from "react"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { type SkeletonProps } from "@sb-components/frames/_slot"
 import { ResponsiveRow } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"

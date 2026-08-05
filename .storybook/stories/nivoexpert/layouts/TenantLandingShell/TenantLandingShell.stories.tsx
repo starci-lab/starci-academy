@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { TenantLandingShell, type TenantNavLink } from "@sb-components/nivoexpert/layouts/TenantLandingShell/TenantLandingShell"
 import type { LandingFooterLink, LandingFooterProps } from "@sb-components/nivoexpert/blocks/landing/LandingFooter/LandingFooter"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"

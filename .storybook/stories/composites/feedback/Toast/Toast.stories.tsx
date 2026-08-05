@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { type SkeletonProps } from "@sb-components/frames/_slot"
 import { Button as HeroButton } from "@heroui/react"
 import { Toast } from "@sb-components/composites/feedback/Toast/Toast"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"

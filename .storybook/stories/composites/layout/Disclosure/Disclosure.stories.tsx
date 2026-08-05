@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { type SkeletonProps } from "@sb-components/frames/_slot"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Disclosure } from "@sb-components/composites/layout/Disclosure/Disclosure"

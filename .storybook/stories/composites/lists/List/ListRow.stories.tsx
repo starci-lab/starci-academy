@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { type SkeletonProps } from "@sb-components/composites/_slot"
+import { type SkeletonProps } from "@sb-components/frames/_slot"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Chip, Typography } from "@heroui/react"
 // ONE ICON SET ONLY = Phosphor (§5.0). Size scale per §5a: leading ↔ title

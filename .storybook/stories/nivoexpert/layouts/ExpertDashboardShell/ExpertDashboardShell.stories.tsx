@@ -10,7 +10,7 @@ import {
     TargetIcon,
     UsersIcon,
 } from "@phosphor-icons/react"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 import {
     ExpertDashboardShell,
     type ExpertDashboardNavGroup,

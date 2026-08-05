@@ -10,7 +10,7 @@ import {
     UserIcon,
     WalletIcon,
 } from "@phosphor-icons/react"
-import type { SkeletonProps } from "@sb-components/composites/_slot"
+import type { SkeletonProps } from "@sb-components/frames/_slot"
 import { DashboardShell } from "@sb-components/nivo/layouts/DashboardShell/DashboardShell"
 import type { NivoSidebarGroup } from "@sb-components/nivo/blocks/navigation/NivoSidebar/NivoSidebar"
 import type { NivoTopBarProps } from "@sb-components/nivo/blocks/navigation/NivoTopBar/NivoTopBar"

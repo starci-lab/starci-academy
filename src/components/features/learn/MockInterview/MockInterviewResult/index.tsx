@@ -1,22 +1,22 @@
 "use client"
 
 import React from "react"
-import { Button } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Container } from "@/components/frames/Container"
+import { StackV } from "@/components/frames/Stack"
 import { pathConfig } from "@/resources/path"
 import { useQueryMyMockInterviewAttemptBySessionSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyMockInterviewAttemptBySessionSwr"
 import { mapMockInterviewAttemptToGradeResult } from "../mapAttemptToGradeResult"
 import { MockInterviewScorecard } from "../MockInterviewScorecard"
 
 /** Props for {@link MockInterviewResult}. */
-export interface MockInterviewResultProps extends WithClassNames<undefined> {
+export interface MockInterviewResultProps {
     /** The graded session to show. */
     sessionId: string
     /** Owning course id (uuid) — enrollment-guard header + track-snapshot scope. */
@@ -40,76 +40,114 @@ export interface MockInterviewResultProps extends WithClassNames<undefined> {
  * — this is a read-only revisit; "Interview again" goes back to setup instead of
  * silently redrawing a session out from under a URL someone might have shared.
  *
+ * The reading measure is stated ONCE on `Container`; it used to be repeated as the
+ * same `mx-auto w-full max-w-3xl px-4` string on three separate branches.
+ *
  * @param props - {@link MockInterviewResultProps}
  */
 export const MockInterviewResult = ({
     sessionId,
     courseId,
     courseDisplayId,
-    className,
 }: MockInterviewResultProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
 
     const attemptSwr = useQueryMyMockInterviewAttemptBySessionSwr(sessionId, courseId)
+    const attempt = attemptSwr.data
+    const isSkeleton = attemptSwr.isLoading && !attempt
 
     const goToMockInterviewHome = () => {
         router.push(pathConfig().locale(locale).course(courseDisplayId).learn().mockInterview().build())
     }
 
-    return (
-        <div className={className}>
-            <PageHeader
-                className="mx-auto w-full max-w-3xl px-4 pt-6 @app-sm:px-6"
-                breadcrumb={<BackLink label={t("mockInterview.title")} onPress={goToMockInterviewHome} />}
-                title={t("mockInterview.debriefTitle")}
-            />
-            <AsyncContent
-                isLoading={attemptSwr.isLoading && !attemptSwr.data}
-                skeleton={(
-                    // mirrors MockInterviewScorecard's real tree: verdict Alert, track
-                    // snapshot, phase breakdown — each is a bordered card in the real
-                    // render, so Skeleton.Card (not raw pulse bars) matches its box.
-                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 pb-6 @app-sm:px-6">
-                        <Skeleton.Card lines={2} />
-                        <Skeleton.Card lines={3} />
-                        <Skeleton.Card lines={3} />
-                    </div>
-                )}
-                error={!attemptSwr.data ? attemptSwr.error : undefined}
-                errorContent={{
-                    title: t("mockInterview.scorecardPending"),
-                    onRetry: () => { void attemptSwr.mutate() },
-                    retryLabel: t("mockInterview.backToSetup"),
-                }}
-            >
-                {attemptSwr.data ? (
-                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 pb-6 @app-sm:px-6">
+    // error beats a stale loading flag; the pending-scorecard message is the settled
+    // "graded run has no attempt row" case (BLOCK-8 order).
+    const scorecard = () => {
+        if (attemptSwr.error && !attempt) {
+            return (
+                <AsyncContentError
+                    title={t("mockInterview.scorecardPending")}
+                    onRetry={() => { void attemptSwr.mutate() }}
+                    retryLabel={t("mockInterview.backToSetup")}
+                />
+            )
+        }
+        if (isSkeleton) {
+            // each region of the real scorecard is a bordered card, so the resting
+            // state is card-shaped too — verdict, track snapshot, phase breakdown.
+            return (
+                <StackV
+                    gap={6}
+                    items={[
+                        () => <Skeleton.Card lines={2} />,
+                        () => <Skeleton.Card lines={3} />,
+                        () => <Skeleton.Card lines={3} />,
+                    ]}
+                />
+            )
+        }
+        if (!attempt) {
+            return (
+                <AsyncContentEmpty
+                    title={t("mockInterview.scorecardPending")}
+                    action={() => (
+                        <Button
+                            label={t("mockInterview.backToSetup")}
+                            size="sm"
+                            variant="primary"
+                            onPress={goToMockInterviewHome}
+                        />
+                    )}
+                />
+            )
+        }
+        return (
+            <StackV
+                gap={6}
+                items={[
+                    () => (
                         <MockInterviewScorecard
-                            grade={mapMockInterviewAttemptToGradeResult(attemptSwr.data)}
+                            grade={mapMockInterviewAttemptToGradeResult(attempt)}
                             courseId={courseId}
                             courseDisplayId={courseDisplayId}
-                            promptTitle={attemptSwr.data.promptTitle}
-                            createdAt={attemptSwr.data.createdAt}
+                            promptTitle={attempt.promptTitle}
+                            createdAt={attempt.createdAt}
                         />
-                        <Button variant="tertiary" className="self-start" onPress={goToMockInterviewHome}>
-                            {t("mockInterview.backToSetup")}
-                        </Button>
-                    </div>
-                ) : (
-                    <div className="mx-auto flex w-full max-w-3xl px-4 pb-6 @app-sm:px-6">
-                        <EmptyState
-                            title={t("mockInterview.scorecardPending")}
-                            action={(
-                                <Button size="sm" variant="primary" onPress={goToMockInterviewHome}>
-                                    {t("mockInterview.backToSetup")}
-                                </Button>
-                            )}
+                    ),
+                    () => (
+                        <Button
+                            label={t("mockInterview.backToSetup")}
+                            variant="tertiary"
+                            onPress={goToMockInterviewHome}
+                            classNames={["self-start"]}
                         />
-                    </div>
-                )}
-            </AsyncContent>
-        </div>
+                    ),
+                ]}
+            />
+        )
+    }
+
+    return (
+        <Container
+            identity={{ tier: "block", component: "MockInterviewResult" }}
+            size="md"
+            padding={5}
+            body={() => (
+                <StackV
+                    gap={6}
+                    items={[
+                        () => (
+                            <PageHeader
+                                breadcrumb={<BackLink label={t("mockInterview.title")} onPress={goToMockInterviewHome} />}
+                                title={t("mockInterview.debriefTitle")}
+                            />
+                        ),
+                        scorecard,
+                    ]}
+                />
+            )}
+        />
     )
 }

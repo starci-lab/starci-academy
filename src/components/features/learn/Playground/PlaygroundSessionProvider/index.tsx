@@ -12,7 +12,7 @@ import { SiDocker, SiKubernetes } from "react-icons/si"
 // (No Nomic mark exists in the set, so the embedding row keeps a Phosphor glyph.)
 import { Ollama, Qwen } from "@lobehub/icons"
 import type { ReadinessChecklistItem } from "@/components/blocks/feedback/ReadinessChecklist"
-import type { PrepareFlavor } from "@/components/features/learn/Playground/PlaygroundPrepare"
+import type { PlaygroundSetupFlavor } from "@/components/starci/blocks/learn/PlaygroundSetupSteps"
 import { useQueryPlaygroundSwr } from "@/hooks/swr/api/graphql/queries/useQueryPlaygroundSwr"
 import { useMutateCreatePlaygroundSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCreatePlaygroundSessionSwr"
 import { queryMyOpenPlaygroundSession } from "@/modules/api/graphql/queries/playground"
@@ -46,7 +46,7 @@ export interface PlaygroundSessionContextValue {
     /** Latches on the first successful pair — later drops read as "reconnect". */
     everConnected: boolean
     /** Which Setup guide to render. */
-    prepareFlavor: PrepareFlavor
+    prepareFlavor: PlaygroundSetupFlavor
     /**
      * Which lab this is. Drives the per-playground intro copy — Docker/K8s share
      * the `infra` flavor but must NOT share a description, or the Kubernetes page

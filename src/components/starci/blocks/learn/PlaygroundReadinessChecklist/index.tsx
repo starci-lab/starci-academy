@@ -1,5 +1,5 @@
 import React from "react"
-import { CheckCircleIcon, GearSixIcon, RobotIcon, SparkleIcon, VectorTwoIcon } from "@phosphor-icons/react"
+import { CheckCircleIcon, CpuIcon, GearSixIcon, RobotIcon, SparkleIcon, VectorTwoIcon } from "@phosphor-icons/react"
 import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { IconTile, type IconComponent } from "@/components/atoms/display/IconTile"
 import { EnumChip, type EnumChipEntry } from "@/components/composites/chips/EnumChip"
@@ -13,8 +13,12 @@ import { EnumChip, type EnumChipEntry } from "@/components/composites/chips/Enum
  * `Default` (N real rows) and the `isSkeleton` skeleton.
  */
 
-/** The four prerequisites a playground session checks. Closed set — see file header. */
-export type PlaygroundReadinessKind = "agent" | "engine" | "genModel" | "embedModel"
+/**
+ * The prerequisites a playground session checks. Closed set — see file header.
+ * `device` is the paired machine having reported its own snapshot: the infra labs
+ * ask for it by name, so it is a kind here rather than an icon smuggled in as data.
+ */
+export type PlaygroundReadinessKind = "agent" | "engine" | "genModel" | "embedModel" | "device"
 
 /** One row of a {@link PlaygroundReadinessChecklist}. */
 export interface PlaygroundReadinessChecklistItem {
@@ -50,6 +54,7 @@ const KIND_ICON: Record<PlaygroundReadinessKind, IconComponent> = {
     agent: RobotIcon,
     engine: GearSixIcon,
     genModel: SparkleIcon,
+    device: CpuIcon,
     embedModel: VectorTwoIcon,
 }
 

@@ -5,10 +5,9 @@ import React, {
     useMemo,
     useState,
 } from "react"
-import {
-    Button,
-    cn,
-} from "@heroui/react"
+import type {
+    Key,
+} from "react"
 import {
     useLocale,
     useTranslations,
@@ -23,39 +22,24 @@ import {
     UsersIcon,
 } from "@phosphor-icons/react"
 import {
-    TrendingContents,
-} from "../TrendingContents"
-import {
-    FeedTabsSkeleton,
-} from "./FeedTabsSkeleton"
+    _FeedTabs,
+} from "./component"
 import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-import { ActivityFeed } from "@/components/blocks/feed/ActivityFeed"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+    TabsCardItem,
+} from "@/components/blocks/navigation/TabsCard"
 import { useQueryMyFeedSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFeedSwr"
 import { useMutateReactActivitySwr } from "@/hooks/swr/api/graphql/mutations/useMutateReactActivitySwr"
 import { MyFeedTab, MyFeedCategory } from "@/modules/api/graphql/queries/types/my-feed"
 import { queryResolveRoute } from "@/modules/api/graphql/queries/query-resolve-route"
 import type { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 
-/** Props for {@link FeedTabs}. */
-export type FeedTabsProps = WithClassNames<undefined>
-
 /**
- * Explore feed (ContentBody-style TabsCard pattern). CARD 1 = "Trending this week"
- * platform-wide trending discovery (both scopes, self-hiding). Below it, a double-tabs toolbar
- * floats OUTSIDE/above a card: left = audience SCOPE ("Explore / Following"),
- * right = category FILTER (all/courses/achievements/people), one shared {@link TabsCard};
- * the card holds the activity stream they govern ({@link ActivityFeed}). Both axes are
- * `myFeed` params. `"use client"` for tab/filter state + SWR + route resolution.
- *
- * @param props - optional className for the root element
+ * Explore feed (ContentBody-style `TabsCard` pattern) — the CONNECTED half: fetches
+ * the cursor-paginated feed (SWR), holds the audience-scope + category-filter state,
+ * reacts to activities, resolves entity routes, and resolves every label via `t()`,
+ * handing them to the presentational {@link _FeedTabs}. See `tiers/split.md`.
  */
-export const FeedTabs = ({
-    className,
-}: FeedTabsProps = {}) => {
+export const FeedTabs = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -87,14 +71,27 @@ export const FeedTabs = ({
         ],
     )
 
-    /** Single-select category filter chips shown under the scope tabs. */
-    const filters = useMemo(
+    /** Audience-scope tabs (left group). */
+    const scopeTabs = useMemo<Array<TabsCardItem>>(
+        () => [
+            { key: MyFeedTab.ForYou, label: t("dashboard.tabs.forYou") },
+            { key: MyFeedTab.Following, label: t("dashboard.tabs.following") },
+        ],
+        [t],
+    )
+
+    /** Single-select category filter chips (right group), shown under the scope tabs. */
+    const filterTabs = useMemo<Array<TabsCardItem>>(
         () => [
             { key: MyFeedCategory.All, label: t("dashboard.feedFilter.all"), Icon: ListBulletsIcon },
             { key: MyFeedCategory.Courses, label: t("dashboard.feedFilter.courses"), Icon: BookOpenIcon },
             { key: MyFeedCategory.Achievements, label: t("dashboard.feedFilter.achievements"), Icon: MedalIcon },
             { key: MyFeedCategory.People, label: t("dashboard.feedFilter.people"), Icon: UsersIcon },
-        ],
+        ].map(({ key, label, Icon }) => ({
+            key,
+            label,
+            icon: <Icon aria-hidden focusable="false" className="size-5 shrink-0" />,
+        })),
         [t],
     )
 
@@ -129,97 +126,44 @@ export const FeedTabs = ({
     )
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
-            {/* CARD 1 — "Trending this week": platform-wide trending discovery (own query, NOT
-                scope-dependent) → shown on both scopes; self-hides when nothing trends. */}
-            <TrendingContents />
-
-            {/* CARD 2 — TabsCard pattern (like the lesson ContentBody): the double-tabs toolbar
-                (audience SCOPE left + category FILTER right) floats OUTSIDE, above the card; the
-                card holds the activity stream the tabs govern. */}
-            <div className="flex flex-col gap-3">
-                <TabsCard
-                    leftTabs={{
-                        items: [
-                            { key: MyFeedTab.ForYou, label: t("dashboard.tabs.forYou") },
-                            { key: MyFeedTab.Following, label: t("dashboard.tabs.following") },
-                        ],
-                        selectedKey: tab,
-                        ariaLabel: t("dashboard.feedTabsAria"),
-                        onSelectionChange: (key) => setTab(key as MyFeedTab),
-                    }}
-                    rightTabs={{
-                        items: filters.map((filter) => ({
-                            key: filter.key,
-                            label: filter.label,
-                            icon: <filter.Icon aria-hidden focusable="false" className="size-5 shrink-0" />,
-                        })),
-                        selectedKey: category,
-                        ariaLabel: t("dashboard.feedFilterAria"),
-                        onSelectionChange: (key) => setCategory(key as MyFeedCategory),
-                    }}
-                />
-                {/* the feed lives DIRECTLY in the zone — do NOT wrap it in an outer Card (each
-                    day is already a labeled-list-card; an outer Card would nest card-in-card
-                    inside the big zone) */}
-                <AsyncContent
-                    isLoading={isLoading && items.length === 0}
-                    skeleton={<FeedTabsSkeleton />}
-                    isEmpty={items.length === 0}
-                    emptyContent={
-                        category !== MyFeedCategory.All
-                            ? {
-                                // filtered-empty: this filter chip matched nothing — offer to reset it
-                                title: t("dashboard.feedEmptyFiltered.title"),
-                                retryLabel: t("dashboard.feedEmptyFiltered.cta"),
-                                onRetry: () => setCategory(MyFeedCategory.All),
-                            }
-                            : {
-                                // platform-empty: nothing to show at all (feed/following empty) — invite to courses
-                                title: t("dashboard.feedEmptyPlatform.title"),
-                                description: t("dashboard.feedEmptyPlatform.description"),
-                                retryLabel: t("dashboard.feedEmptyPlatform.cta"),
-                                onRetry: () => router.push(`/${locale}/courses`),
-                            }
-                    }
-                    error={items.length === 0 ? error : undefined}
-                    errorContent={{
-                        title: t("dashboard.feedError"),
-                        onRetry: () => { void mutate() },
-                        retryLabel: t("dashboard.feedRetry"),
-                    }}
-                >
-                    <div className="flex flex-col gap-6">
-                        <ActivityFeed items={items} onResolve={onResolve} onReact={onReact} />
-                        {hasMore ? (
-                            <div className="flex flex-col items-center gap-2">
-                                <Button
-                                    variant="secondary"
-                                    size="sm"
-                                    isPending={isLoadingMore}
-                                    onPress={() => setSize(size + 1)}
-                                >
-                                    {t("dashboard.loadMore")}
-                                </Button>
-                                {/* load-more failure (page 2+) doesn't clear existing items — surface an
-                                    inline retry instead of the full errorContent block. */}
-                                {error && items.length > 0 && !isLoadingMore ? (
-                                    <div className="flex items-center gap-2 text-xs text-danger-soft-foreground">
-                                        <span>{t("dashboard.feedError")}</span>
-                                        <Button
-                                            variant="tertiary"
-                                            size="sm"
-                                            onPress={() => { void mutate() }}
-                                        >
-                                            {t("dashboard.feedRetry")}
-                                        </Button>
-                                    </div>
-                                ) : null}
-                            </div>
-                        ) : null}
-                    </div>
-                </AsyncContent>
-            </div>
-        </div>
+        <_FeedTabs
+            // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
+            isSkeleton={isLoading && items.length === 0}
+            // error beats loading + empty; only a settled fetch error (nothing in hand) reaches the block
+            error={items.length === 0 ? error : undefined}
+            onRetry={() => { void mutate() }}
+            // settled with a resolved page that carries zero items
+            isEmpty={items.length === 0}
+            isFilteredEmpty={category !== MyFeedCategory.All}
+            scopeTabs={scopeTabs}
+            selectedScopeKey={tab}
+            onScopeChange={(key: Key) => setTab(key as MyFeedTab)}
+            filterTabs={filterTabs}
+            selectedFilterKey={category}
+            onFilterChange={(key: Key) => setCategory(key as MyFeedCategory)}
+            onResetFilter={() => setCategory(MyFeedCategory.All)}
+            onBrowseCourses={() => router.push(`/${locale}/courses`)}
+            items={items}
+            onResolve={onResolve}
+            onReact={onReact}
+            hasMore={hasMore}
+            isLoadingMore={isLoadingMore}
+            onLoadMore={() => setSize(size + 1)}
+            // load-more failure (page 2+) doesn't clear existing items — the presentational
+            // half shows an inline retry instead of falling back to the full error branch
+            hasLoadMoreError={Boolean(error) && items.length > 0}
+            labels={{
+                scopeTabsAria: t("dashboard.feedTabsAria"),
+                filterTabsAria: t("dashboard.feedFilterAria"),
+                emptyFilteredTitle: t("dashboard.feedEmptyFiltered.title"),
+                emptyFilteredCta: t("dashboard.feedEmptyFiltered.cta"),
+                emptyPlatformTitle: t("dashboard.feedEmptyPlatform.title"),
+                emptyPlatformDescription: t("dashboard.feedEmptyPlatform.description"),
+                emptyPlatformCta: t("dashboard.feedEmptyPlatform.cta"),
+                errorTitle: t("dashboard.feedError"),
+                retryLabel: t("dashboard.feedRetry"),
+                loadMoreLabel: t("dashboard.loadMore"),
+            }}
+        />
     )
 }

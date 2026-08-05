@@ -2,24 +2,18 @@
 
 import React from "react"
 import { useLocale, useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useQueryCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursesSwr"
 import { useQueryTalentCandidatesSwr } from "@/hooks/swr/api/graphql/queries/useQueryTalentCandidatesSwr"
 import { pathConfig } from "@/resources/path"
 import { _TalentDirectory } from "./component"
-
-/** Props for {@link TalentDirectory}. */
-export type TalentDirectoryProps = WithClassNames<undefined>
 
 /**
  * Recruiter marketplace — the CONNECTED half: it fetches the course list and the
  * ranked candidate page for the selected track, resolves every label (incl. the
  * three readiness-band chip strings), and hands them to the presentational
  * {@link _TalentDirectory}. See `design/storybook/architecture/split.md`.
- *
- * @param props - {@link TalentDirectoryProps}
  */
-export const TalentDirectory = ({ className }: TalentDirectoryProps) => {
+export const TalentDirectory = () => {
     const t = useTranslations()
     const locale = useLocale()
 
@@ -41,7 +35,6 @@ export const TalentDirectory = ({ className }: TalentDirectoryProps) => {
 
     return (
         <_TalentDirectory
-            className={className}
             // first load, nothing in hand → shimmer (loading-and-skeleton.md); the same
             // condition the legacy `AsyncContent.isLoading` used
             isSkeleton={(coursesLoading || candidatesSwr.isLoading || !selectedCourseId) && candidates.length === 0}

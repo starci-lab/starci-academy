@@ -54,6 +54,28 @@ export interface TaskSubmissionResult {
     aiBadge?: string
 }
 
+/**
+ * Already-resolved display strings this block cannot invent itself — it is a
+ * `starci/blocks/**` presentational block, so it never calls `useTranslations`;
+ * the connected caller resolves these with `t()` and passes them down.
+ */
+export interface TaskSubmissionPanelLabels {
+    /** Label above the grading-language select in the settings drawer. */
+    languageLabel: string
+    /** Label above the branch field in the settings drawer. */
+    branchLabel: string
+    /** Placeholder for the branch field, e.g. "main". */
+    branchPlaceholder: string
+    /** Label above the GitHub token field in the settings drawer. */
+    tokenLabel: string
+    /** Default hint below the token field, used when `settingsFormProps.tokenHint` is not set. */
+    tokenHintDefault: string
+    /** Accessible name for the token field's reveal toggle when it would SHOW the token. */
+    tokenRevealLabel: string
+    /** Accessible name for the token field's reveal toggle when it would HIDE the token. */
+    tokenHideLabel: string
+}
+
 /** Bindings for the settings drawer's language/branch/token form. */
 export interface GithubGradingSettingsFormProps {
     /** Flat options for the language dropdown. */
@@ -99,6 +121,8 @@ export interface TaskSubmissionPanelProps {
     latestResult?: TaskSubmissionResult
     /** Bindings for the settings drawer's form fields. */
     settingsFormProps: GithubGradingSettingsFormProps
+    /** Already-resolved display strings for the settings drawer's form — see {@link TaskSubmissionPanelLabels}. */
+    labels: TaskSubmissionPanelLabels
     /** `true` → every part this block renders itself mirrors as shimmer. */
     isSkeleton?: boolean
 }
@@ -119,9 +143,6 @@ const AUTOSAVE_LABEL: Record<Exclude<TaskSubmissionAutosaveStatus, "idle">, stri
     saved: "Saved",
     error: "Couldn't save, try again",
 }
-
-/** Default token hint — overridable per {@link GithubGradingSettingsFormProps.tokenHint}. */
-const DEFAULT_TOKEN_HINT = "Only needed when the repo is private — the token is not shown again after saving."
 
 /** Props for the local {@link GithubUrlField} leaf. */
 interface GithubUrlFieldProps {
@@ -363,17 +384,18 @@ const TaskResultSummary = ({ result, isSkeleton }: TaskResultSummaryProps) => {
 /** Props for the local {@link GithubGradingSettingsBody} leaf. */
 interface GithubGradingSettingsBodyProps {
     form: GithubGradingSettingsFormProps
+    labels: TaskSubmissionPanelLabels
 }
 
 /** The `GithubGradingSettings` form body: language / branch / token, mounted inside {@link DrawerShell}. */
-const GithubGradingSettingsBody = ({ form }: GithubGradingSettingsBodyProps) => (
+const GithubGradingSettingsBody = ({ form, labels }: GithubGradingSettingsBodyProps) => (
     <StackV
         gap={4}
 
         items={[
             () => (
                 <SelectSingle
-                    label="Grading language"
+                    label={labels.languageLabel}
                     options={form.languageOptions}
                     value={form.language}
                     onValueChange={form.onLanguageChange}
@@ -382,20 +404,22 @@ const GithubGradingSettingsBody = ({ form }: GithubGradingSettingsBodyProps) => 
             ),
             () => (
                 <InputText
-                    label="Branch"
+                    label={labels.branchLabel}
                     value={form.branch}
                     onValueChange={form.onBranchChange}
-                    placeholder="main"
+                    placeholder={labels.branchPlaceholder}
 
                 />
             ),
             () => (
                 <InputPassword
-                    label="GitHub token"
+                    label={labels.tokenLabel}
                     value={form.token}
                     onValueChange={form.onTokenChange}
-                    hint={form.tokenHint ?? DEFAULT_TOKEN_HINT}
+                    hint={form.tokenHint ?? labels.tokenHintDefault}
                     placeholder="ghp_…"
+                    revealLabel={labels.tokenRevealLabel}
+                    hideLabel={labels.tokenHideLabel}
 
                 />
             ),
@@ -423,10 +447,12 @@ const TaskSubmissionPanel = ({
     aiStatusText,
     latestResult,
     settingsFormProps,
+    labels,
     isSkeleton = false,
 }: TaskSubmissionPanelProps) => (
     <div className="sticky top-4 z-10">
         <SurfaceCard
+            identity={{ tier: "block", component: "TaskSubmissionPanel" }}
             label="Submit project"
             isSkeleton={isSkeleton}
 
@@ -484,7 +510,7 @@ const TaskSubmissionPanel = ({
                 />
             )}
 
-            body={() => <GithubGradingSettingsBody form={settingsFormProps} />}
+            body={() => <GithubGradingSettingsBody form={settingsFormProps} labels={labels} />}
         />
     </div>
 )

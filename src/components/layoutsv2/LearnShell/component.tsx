@@ -137,7 +137,7 @@ const _LearnShell = ({
     ]
 
     return (
-        <div data-tier="layout" data-component="LearnShell">
+        <Box identity={{ tier: "layout", component: "LearnShell" }}>
             {isEnrollGated && enrollGateProps != null ? (
                 <EnrollGate
                     title={enrollGateProps.title}
@@ -170,7 +170,7 @@ const _LearnShell = ({
                     ) : null}
                 </>
             ) : null}
-        </div>
+        </Box>
     )
 }
 

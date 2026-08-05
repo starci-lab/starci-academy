@@ -38,6 +38,7 @@ an arbitrary mix of the three.
 | `urgent` | `boolean` | `false` | Renders `subtitle` in warning tone — only for a REAL server-enforced deadline already stated in the subtitle text. Never fabricate a countdown to trigger this (`principles/persuasion-psychology`: no fake scarcity). |
 | `onPress` | `() => void` | `undefined` | `item`: wires to the `SeeMoreLink` CTA. `hero`: wires to the CTA chip (ignored when `href` is set). Prefer `href` for navigation. |
 | `href` | `string` | `undefined` | Destination URL. Takes priority over `onPress`. |
+| `identity` | `CallerIdentity` | `undefined` | Caller identity (`{ tier, component }`) to wear on this card's root element instead of its own — pass this when a `block`/`layout`/`overlay`/`page` component is using this card AS its root, instead of wrapping it in a raw `data-tier=…`/`data-component=…` div. Lands on exactly one element: the underlying `SectionCard`, or the `Box` wrapping it when `hero`'s watermark is rendered. Omitted → that element keeps emitting its own identity, unchanged. See `_identity.ts`. |
 
 No `className`/`classNames` — this is a block (BLOCK-4: no escape hatch). A caller
 that needs a specific placement (width, margin, grid area) wraps `ContinueCard` in a

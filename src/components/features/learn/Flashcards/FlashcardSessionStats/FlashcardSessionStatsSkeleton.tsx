@@ -16,7 +16,7 @@ export const FlashcardSessionStatsSkeleton = () => {
         <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
             {/* HERO — the 4-grade SM-2 distribution + a rollup line (NO title/subtitle:
                 those sit in the PageHeader above this AsyncContent) */}
-            <SectionCard contentClassName="flex flex-col gap-4">
+            <SectionCard contentGap={5}>
                 <div className="flex flex-col gap-3">
                     {Array.from({ length: 4 }).map((_unused, index) => (
                         <div key={index} className="flex items-center gap-3">

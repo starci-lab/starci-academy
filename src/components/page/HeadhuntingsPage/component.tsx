@@ -124,7 +124,6 @@ const _HeadhuntingsPage = ({
     const headhuntingsSections = (
         <>
             <ConsultantDirectoryHeader
-
                 breadcrumbItems={breadcrumbItems}
                 title={title}
                 description={description}
@@ -138,9 +137,12 @@ const _HeadhuntingsPage = ({
     const headhuntingsBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => headhuntingsSections]} />
 
     return (
-        <div data-tier="page" data-component="HeadhuntingsPage">
-            <Container size="md" padding={6} body={() => headhuntingsBody} />
-        </div>
+        <Container
+            size="md"
+            padding={6}
+            body={() => headhuntingsBody}
+            identity={{ tier: "page", component: "HeadhuntingsPage" }}
+        />
     )
 }
 

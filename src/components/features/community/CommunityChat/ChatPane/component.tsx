@@ -82,7 +82,7 @@ export const _ChatPane = ({
     const [body, setBody] = useState("")
 
     /** Trim + guard, hand off to the connected sender, clear the composer on success. */
-    const handleSend = useCallback(async () => {
+    const onSendPress = useCallback(async () => {
         const trimmed = body.trim()
         if (!trimmed) {
             return
@@ -136,8 +136,10 @@ export const _ChatPane = ({
     ))
 
     return (
-        <div data-tier="block" data-component="ChatPane">
-            <StackV gap={4} items={[
+        <StackV
+            gap={4}
+            identity={{ tier: "block", component: "ChatPane" }}
+            items={[
                 () => (
                     error ? (
                         <AsyncContentError title={labels.error} onRetry={onRetry} retryLabel={labels.retry} />
@@ -174,14 +176,14 @@ export const _ChatPane = ({
                                         label={labels.send}
                                         isPending={isSending}
                                         isDisabled={!body.trim()}
-                                        onPress={() => void handleSend()}
+                                        onPress={() => void onSendPress()}
                                     />
                                 ),
                             ]} />
                         ),
                     ]} />
                 ),
-            ]} />
-        </div>
+            ]}
+        />
     )
 }

@@ -1867,6 +1867,7 @@
     "answeredLine": "{total} câu hỏi · {answered} đã được trả lời",
     "learnersLine": "{count} học viên đang học khóa này",
     "filterAria": "Lọc câu hỏi",
+    "pagerAria": "Điều hướng danh sách câu hỏi",
     "filter": {
       "unanswered": "Chưa trả lời",
       "answered": "Đã trả lời",
@@ -1875,6 +1876,7 @@
       "engagement": "Sôi nổi nhất"
     },
     "searchPlaceholder": "Tìm câu hỏi...",
+    "searchAria": "Tìm câu hỏi",
     "searchEmpty": "Không tìm thấy câu hỏi khớp.",
     "count": "{count} câu hỏi",
     "statusAnswered": "Đã trả lời",

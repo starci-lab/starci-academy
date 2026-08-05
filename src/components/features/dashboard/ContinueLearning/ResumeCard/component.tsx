@@ -28,13 +28,12 @@ export const _ResumeCard = ({
     ctaLabel,
     onPress,
 }: ResumeCardProps) => (
-    <div data-tier="block" data-component="ResumeCard">
-        <ContinueCard
-            variant="item"
-            title={title}
-            subtitle={subtitle}
-            ctaLabel={ctaLabel}
-            onPress={onPress}
-        />
-    </div>
+    <ContinueCard
+        variant="item"
+        title={title}
+        subtitle={subtitle}
+        ctaLabel={ctaLabel}
+        onPress={onPress}
+        identity={{ tier: "block", component: "ResumeCard" }}
+    />
 )

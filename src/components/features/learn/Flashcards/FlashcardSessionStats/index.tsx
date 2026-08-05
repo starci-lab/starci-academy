@@ -178,7 +178,7 @@ export const FlashcardSessionStats = ({
                         return (
                             <>
                                 {/* HERO — the 4-grade SM-2 distribution (outcome first). */}
-                                <SectionCard contentClassName="flex flex-col gap-4">
+                                <SectionCard contentGap={5}>
                                     <div className="flex flex-col gap-3">
                                         {GRADE_ROWS.map((row) => {
                                             const count = stats.gradeCounts[row.key]

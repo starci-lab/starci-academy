@@ -57,6 +57,13 @@ export interface FlashcardDeckListProps {
     query: string
     /** Fired on every keystroke in the search field. */
     onQueryChange: (query: string) => void
+    /**
+     * Placeholder AND accessible name for the deck search field — the atom's
+     * `InputSearch.ariaLabel` takes no English fallback, so this is required
+     * here too; the connected caller resolves it (e.g. the existing
+     * `flashcard.searchPlaceholder` i18n key) and passes the translated string.
+     */
+    searchLabel: string
     /** Which shape the track renders as — a persisted VIEWER SETTING, not a one-off UI toggle. */
     view: FlashcardDeckListView
     /** Fired with the shape the viewer picked. */
@@ -110,6 +117,7 @@ const FlashcardDeckList = ({
     decks,
     query,
     onQueryChange,
+    searchLabel,
     view,
     onViewChange,
     page,
@@ -262,9 +270,8 @@ const FlashcardDeckList = ({
                 <InputSearch
                     value={query}
                     onValueChange={onQueryChange}
-                    placeholder="Search decks"
-                    ariaLabel="Search decks"
-
+                    placeholder={searchLabel}
+                    ariaLabel={searchLabel}
                 />
             </div>
             <div>
@@ -292,7 +299,12 @@ const FlashcardDeckList = ({
     )
 
     return (
-        <StackV gap={4} isSkeleton={isSkeleton} items={[() => listBody]} />
+        <StackV
+            gap={4}
+            isSkeleton={isSkeleton}
+            items={[() => listBody]}
+            identity={{ tier: "block", component: "FlashcardDeckList" }}
+        />
     )
 }
 

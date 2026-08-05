@@ -3,6 +3,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -77,6 +78,14 @@ export interface SplitWorkspaceProps {
      * A frame does not KNOW its pattern — the caller does — so it is passed in.
      */
     principles?: Array<PrincipleToken>
+    /**
+     * Caller identity to wear on this workspace's root instead of `SplitWorkspace`'s own —
+     * pass this when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a
+     * shape of its own) is using this workspace AS its root element, instead of wrapping it
+     * in a raw `<div data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this
+     * workspace keeps emitting `data-tier="frame" data-component="SplitWorkspace"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -109,10 +118,10 @@ const SplitWorkspace = ({
     at = "xl",
     isSkeleton,
     classNames,
-    principles}: SplitWorkspaceProps) => (
+    principles,
+    identity}: SplitWorkspaceProps) => (
     <div
-        data-tier="frame"
-        data-component="SplitWorkspace"
+        {...resolveIdentity(identity, { tier: "frame", name: "SplitWorkspace" })}
         data-principles={principlesAttr(principles)}
         className={cn("flex flex-col gap-6", WORKSPACE_SWITCH_CLASS[at], classNames)}
     >

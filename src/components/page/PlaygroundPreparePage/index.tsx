@@ -16,6 +16,7 @@ import {
 import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 import { Container } from "@/components/frames/Container"
 import { StackV } from "@/components/frames/Stack"
+import type { CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * `PlaygroundPreparePage` — the screen to get one playground exercise ready
@@ -107,16 +108,16 @@ export interface PlaygroundPreparePageProps {
 /**
  * Empty state — the exercise id resolved to nothing.
  *
- * The frame and the content each carry THEIR OWN name (`CourseContents`'
- * precedent): the wrapping `Container` badges itself, `AsyncContentEmpty`
- * inside badges itself too, so neither vanishes from the anatomy tree wearing
- * the other's name.
+ * BLOCK-2: this measure IS the screen's root here, so it wears the screen's
+ * own identity (`identity` prop, see `_identity.ts`) instead of a wrapping
+ * `<div data-tier="page" …>`. `AsyncContentEmpty` inside still badges itself.
  */
-const PlaygroundPreparePageEmpty = () => (
+const PlaygroundPreparePageEmpty = ({ identity }: { identity?: CallerIdentity }) => (
     <Container
 
         size="md"
         padding={6}
+        identity={identity}
         body={() => (
             <AsyncContentEmpty
 
@@ -159,9 +160,7 @@ const PlaygroundPreparePage = ({
 }: PlaygroundPreparePageProps) => {
     if (isEmpty) {
         return (
-            <div data-tier="page" data-component="PlaygroundPreparePage">
-                <PlaygroundPreparePageEmpty />
-            </div>
+            <PlaygroundPreparePageEmpty identity={{ tier: "page", component: "PlaygroundPreparePage" }} />
         )
     }
 
@@ -234,9 +233,12 @@ const PlaygroundPreparePage = ({
     const prepareBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => prepareSections]} />
 
     return (
-        <div data-tier="page" data-component="PlaygroundPreparePage">
-            <Container size="md" padding={6} body={() => prepareBody} />
-        </div>
+        <Container
+            size="md"
+            padding={6}
+            identity={{ tier: "page", component: "PlaygroundPreparePage" }}
+            body={() => prepareBody}
+        />
     )
 }
 

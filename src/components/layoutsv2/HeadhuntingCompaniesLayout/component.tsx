@@ -46,11 +46,14 @@ const NavRail: ComponentTypeWithSkeleton = () => (
 const _HeadhuntingCompaniesLayout = ({
     children,
 }: HeadhuntingCompaniesLayoutProps) => (
-    <div data-tier="layout" data-component="HeadhuntingCompaniesLayout">
-        {/* CALLER SLOT — deliberately unbadged; whatever sits inside belongs to
-            whoever passed it, the same restraint `RailShell`'s own slots take. */}
-        <RailShell at="lg" rail={NavRail} body={() => <>{children}</>} />
-    </div>
+    // CALLER SLOT — deliberately unbadged; whatever sits inside belongs to
+    // whoever passed it, the same restraint `RailShell`'s own slots take.
+    <RailShell
+        at="lg"
+        rail={NavRail}
+        body={() => <>{children}</>}
+        identity={{ tier: "layout", component: "HeadhuntingCompaniesLayout" }}
+    />
 )
 
 export { _HeadhuntingCompaniesLayout }

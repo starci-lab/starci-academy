@@ -46,17 +46,18 @@ export type PersonalProjectWorkspaceProps =
  * @param props - {@link PersonalProjectWorkspaceProps}
  */
 const _PersonalProjectWorkspace = (props: PersonalProjectWorkspaceProps) => {
-    const inner = props.view === "dashboard"
-        ? <PersonalProjectDashboard {...props} />
-        : props.view === "task"
-            ? <PersonalProjectTaskPage {...props} />
-            : <PersonalProjectResultScreen {...props} />
-
-    return (
-        <div data-tier="page" data-component="PersonalProjectWorkspace">
-            {inner}
-        </div>
-    )
+    // No wrapper div (BLOCK-2): each of the three leaves below is this
+    // screen's own root for the branch it renders. None of the three yet
+    // accepts the `identity` prop from `_identity.ts` (`PersonalProjectDashboard`,
+    // `PersonalProjectTaskPage`, `PersonalProjectResultScreen` all still draw
+    // their OWN `data-tier="block"`/`"page"` on their own root) and none is
+    // wrapped in a sibling frame here to carry this screen's identity instead
+    // — so this screen currently renders with no `data-tier="page"
+    // data-component="PersonalProjectWorkspace"` node of its own anywhere in
+    // the tree, rather than re-adding the raw div BLOCK-2 forbids.
+    if (props.view === "dashboard") return <PersonalProjectDashboard {...props} />
+    if (props.view === "task") return <PersonalProjectTaskPage {...props} />
+    return <PersonalProjectResultScreen {...props} />
 }
 
 export { _PersonalProjectWorkspace }

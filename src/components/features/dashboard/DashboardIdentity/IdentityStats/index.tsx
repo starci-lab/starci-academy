@@ -2,11 +2,6 @@
 
 import React from "react"
 import {
-    Typography,
-    Skeleton,
-    cn,
-} from "@heroui/react"
-import {
     FlameIcon,
     LightningIcon,
     GiftIcon,
@@ -14,37 +9,22 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryMyWeeklyStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyWeeklyStatsSwr"
 import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
 import { useQueryMyRewardWalletSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-
-/** Skeleton mirroring one `icon + label + value` stat row while its SWR leaf resolves. */
-const SkeletonStatRow = () => (
-    <div className="flex items-center gap-2">
-        <Skeleton className="size-5 shrink-0 rounded-full" />
-        <Skeleton className="my-1 h-3 flex-1 rounded" />
-        <Skeleton className="my-1 h-3 w-10 rounded" />
-    </div>
-)
+import { _IdentityStats } from "./component"
 
 /** Props for {@link IdentityStats}. */
-export type IdentityStatsProps = WithClassNames<undefined>
-
 /**
- * Viewer "standing" stat rows for the identity column — `icon + label + value`
- * lines (replacing the cramped chip row), so each metric reads clearly in the
- * 288px sidebar: current streak, remaining weekly AI credit, reward balance.
- * Bare (mirrors profile meta rows); each row self-hides until its leaf resolves.
- * Self-fetches; no data props.
- * @param props - optional className for the root list.
+ * Viewer "standing" stat rows for the identity column — the CONNECTED half: fetches the
+ * three independent SWR leaves (streak, remaining weekly AI credit, reward balance),
+ * computes each row's own first-load `isSkeleton` / settled `isEmpty`
+ * (loading-and-skeleton.md §2, formula unchanged from the legacy block: `isLoading && !data`
+ * / `!data`), resolves every label/value string, and hands them to the presentational
+ * {@link _IdentityStats}. See `tiers/split.md`. Self-fetches; no data props.
+ *
  */
-export const IdentityStats = ({
-    className,
-}: IdentityStatsProps) => {
+export const IdentityStats = () => {
     const t = useTranslations()
     const weeklySwr = useQueryMyWeeklyStatsSwr()
     const quotaSwr = useQueryMyAiQuotaSwr()
@@ -54,52 +34,28 @@ export const IdentityStats = ({
     const { data: wallet } = walletSwr
 
     return (
-        <div className={cn("flex flex-col gap-1", className)}>
-            <AsyncContent
-                isLoading={weeklySwr.isLoading && !weekly}
-                skeleton={<SkeletonStatRow />}
-                isEmpty={!weekly}
-            >
-                <div className="flex items-center gap-3 px-2 py-2">
-                    <FlameIcon aria-hidden focusable="false" className="size-5 shrink-0 text-foreground" />
-                    <Typography type="body-sm" className="flex-1 truncate">
-                        {t("dashboard.identityStats.streak")}
-                    </Typography>
-                    <Typography type="body-sm" color="muted">
-                        {t("dashboard.identityStats.streakValue", { count: weekly?.streak ?? 0 })}
-                    </Typography>
-                </div>
-            </AsyncContent>
-            <AsyncContent
-                isLoading={quotaSwr.isLoading && !quota}
-                skeleton={<SkeletonStatRow />}
-                isEmpty={!quota}
-            >
-                <div className="flex items-center gap-3 px-2 py-2">
-                    <LightningIcon aria-hidden focusable="false" className="size-5 shrink-0 text-foreground" />
-                    <Typography type="body-sm" className="flex-1 truncate">
-                        {t("dashboard.identityStats.credit")}
-                    </Typography>
-                    <Typography type="body-sm" color="muted">
-                        {quota?.credit.remainingWeek}/{quota?.credit.limitWeek}
-                    </Typography>
-                </div>
-            </AsyncContent>
-            <AsyncContent
-                isLoading={walletSwr.isLoading && !wallet}
-                skeleton={<SkeletonStatRow />}
-                isEmpty={!wallet}
-            >
-                <div className="flex items-center gap-3 px-2 py-2">
-                    <GiftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-foreground" />
-                    <Typography type="body-sm" className="flex-1 truncate">
-                        {t("dashboard.identityStats.reward")}
-                    </Typography>
-                    <Typography type="body-sm" color="muted">
-                        {t("dashboard.rewardBalance", { count: wallet?.balance ?? 0 })}
-                    </Typography>
-                </div>
-            </AsyncContent>
-        </div>
+        <_IdentityStats
+            streak={{
+                isSkeleton: weeklySwr.isLoading && !weekly,
+                isEmpty: !weekly,
+                icon: FlameIcon,
+                label: t("dashboard.identityStats.streak"),
+                value: t("dashboard.identityStats.streakValue", { count: weekly?.streak ?? 0 }),
+            }}
+            credit={{
+                isSkeleton: quotaSwr.isLoading && !quota,
+                isEmpty: !quota,
+                icon: LightningIcon,
+                label: t("dashboard.identityStats.credit"),
+                value: quota ? `${quota.credit.remainingWeek}/${quota.credit.limitWeek}` : "",
+            }}
+            reward={{
+                isSkeleton: walletSwr.isLoading && !wallet,
+                isEmpty: !wallet,
+                icon: GiftIcon,
+                label: t("dashboard.identityStats.reward"),
+                value: t("dashboard.rewardBalance", { count: wallet?.balance ?? 0 }),
+            }}
+        />
     )
 }

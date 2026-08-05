@@ -3,6 +3,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -91,6 +92,14 @@ export interface RailShellProps {
      * A frame does not KNOW its pattern — the caller does — so it is passed in.
      */
     principles?: Array<PrincipleToken>
+    /**
+     * Caller identity to wear on this shell's root instead of the frame's own — pass this when
+     * a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
+     * is using this shell AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this shell keeps emitting
+     * its own `data-tier="frame" data-component="RailShell"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -131,10 +140,10 @@ const RailShell = ({
     isRailSticky = false,
     isSkeleton,
     classNames,
-    principles}: RailShellProps) => (
+    principles,
+    identity}: RailShellProps) => (
     <div
-        data-tier="frame"
-        data-component="RailShell"
+        {...resolveIdentity(identity, { tier: "frame", name: "RailShell" })}
         data-principles={principlesAttr(principles)}
         className={cn("flex flex-col gap-6", SHELL_SWITCH_CLASS[at], classNames)}
     >

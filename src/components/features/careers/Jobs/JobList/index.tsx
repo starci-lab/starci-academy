@@ -7,7 +7,6 @@ import { pathConfig } from "@/resources/path"
 import { useQueryJobPostingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryJobPostingsSwr"
 import { JobEmploymentType } from "@/modules/types/enums/job-employment-type"
 import { WorkMode } from "@/modules/types/enums/work-mode"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import {
     _JobList,
     type EmploymentTypeFilterValue,
@@ -17,18 +16,14 @@ import {
 /** Postings shown per page before the pager kicks in. */
 const JOBS_PER_PAGE = 20
 
-/** Props for {@link JobList}. */
-export type JobListProps = WithClassNames<undefined>
-
 /**
  * The job board (`/jobs`) — the CONNECTED half: it owns the search/filter/pagination state,
  * fetches the matching postings, resolves every label, and hands them to the presentational
  * {@link _JobList}. See `tiers/split.md`. Public — works for anonymous viewers; called with no
  * props from `app/[locale]/jobs/page.tsx`.
  *
- * @param props - {@link JobListProps}
  */
-export const JobList = ({ className }: JobListProps) => {
+export const JobList = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -101,7 +96,6 @@ export const JobList = ({ className }: JobListProps) => {
 
     return (
         <_JobList
-            className={className}
             // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
             isSkeleton={isLoading && items.length === 0}
             isEmpty={items.length === 0}

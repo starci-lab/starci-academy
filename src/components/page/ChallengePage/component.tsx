@@ -185,9 +185,13 @@ const _ChallengePage = ({
     )
 
     return (
-        <div data-tier="page" data-component="ChallengePage">
-            <Container size="xl" padding={6} isSkeleton={isSkeleton} body={challengeBody} />
-        </div>
+        <Container
+            size="xl"
+            padding={6}
+            isSkeleton={isSkeleton}
+            body={challengeBody}
+            identity={{ tier: "page", component: "ChallengePage" }}
+        />
     )
 }
 

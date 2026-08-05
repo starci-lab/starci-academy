@@ -7,6 +7,7 @@ import { type AllowedGap, type LayoutAlign, type LayoutJustify, type PaddingValu
 import { Flex } from "@/components/frames/Flex"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
 import type { PrincipleToken } from "@/components/frames/_principles"
+import type { CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -104,6 +105,15 @@ export interface StackBaseProps {
      * `pattern` doc for the full contract.
      */
     principles?: Array<PrincipleToken>
+    /**
+     * Caller identity to wear on this track's root instead of `Stack`'s own — pass this when a
+     * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
+     * using this track AS its root element, instead of wrapping it in a raw `<div data-tier=…
+     * data-component=…>`. Forwarded straight to `Flex`, which is what actually renders the DOM
+     * (see `Flex`'s own `identity` doc). See `_identity.ts`. Omitted → this track keeps
+     * emitting `data-tier="frame" data-component="Flex"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /** Props for {@link StackV} — a vertical track (no row-only prop to add). */
@@ -166,7 +176,8 @@ const StackV = ({
     isSkeleton,
     padding,
     classNames,
-    principles}: StackVProps) => {
+    principles,
+    identity}: StackVProps) => {
     // `items` (buildable) wins over legacy `body`: the track renders each item itself, threading
     // `isSkeleton`, so it can shimmer the whole column and interleave dividers on the real children.
     const content = (items ?? (body ? [body] : [])).map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)
@@ -182,6 +193,7 @@ const StackV = ({
             nested={nested}
             classNames={classNames}
             principles={principles}
+            identity={identity}
             body={divider ? interleaveDividers(content, "vertical") : content}
         />
     )
@@ -201,7 +213,8 @@ const StackH = ({
     isSkeleton,
     padding,
     classNames,
-    principles}: StackHProps) => {
+    principles,
+    identity}: StackHProps) => {
     const content = (items ?? (body ? [body] : [])).map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)
     return (
         <Flex
@@ -216,12 +229,22 @@ const StackH = ({
             nested={nested}
             classNames={classNames}
             principles={principles}
+            identity={identity}
             body={divider ? interleaveDividers(content, "horizontal") : content}
         />
     )
 }
 
 export { StackV, StackH }
+
+/**
+ * `Stack` — named export matching this folder (structure-and-naming §5). The two axes have no
+ * single canonical member (see the `meta` note below: neither `StackV` nor `StackH` is "the"
+ * component this file names), so this groups both under the folder's own name rather than
+ * aliasing one of them as `Stack`. Existing call sites keep importing `StackV`/`StackH`
+ * directly, unchanged — this export adds a name, it does not replace either one.
+ */
+export const Stack = { V: StackV, H: StackH } as const
 
 /**
  * Source-level tier marker — lets a gate read the tier without guessing from the folder path.

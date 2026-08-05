@@ -4,6 +4,7 @@ import { Typography } from "@/components/atoms/text/Typography"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Spinner } from "@/components/atoms/display/Spinner"
 import { StackH } from "@/components/frames/Stack"
+import { resolveIdentity } from "@/components/frames/_identity"
 
 /**
  * `MaintenanceModal` — the app-wide blocking dialog opened by the Apollo `ErrorLink`
@@ -65,55 +66,57 @@ export const _MaintenanceModal = ({
     onRetry,
     labels,
 }: MaintenanceModalProps) => (
-    <div data-tier="overlay" data-component="MaintenanceModal">
-        <AlertDialog isOpen={isOpen} onOpenChange={onOpenChange}>
-            <AlertDialog.Backdrop
-                isDismissable={false}
-                isKeyboardDismissDisabled
-            >
-                <AlertDialog.Container size="sm">
-                    <AlertDialog.Dialog>
-                        <AlertDialog.Header>
-                            <AlertDialog.Icon status="warning" />
-                            <AlertDialog.Heading>
-                                {labels.title}
-                            </AlertDialog.Heading>
-                        </AlertDialog.Header>
-                        <AlertDialog.Body>
-                            <Typography text={labels.description} />
-                        </AlertDialog.Body>
-                        <AlertDialog.Footer>
-                            <StackH
-                                gap={3}
-                                align="center"
-                                justify="between"
-                                classNames={["w-full"]}
-                                items={[
-                                    () => (
-                                        <StackH
-                                            gap={2}
-                                            principles={["icon-text"]}
-                                            align="center"
-                                            items={[
-                                                ...(isChecking ? [() => <Spinner tone="current" size="sm" />] : []),
-                                                () => <Typography size="xs" color="muted" text={labels.pollStatus} />,
-                                            ]}
-                                        />
-                                    ),
-                                    () => (
-                                        <Button
-                                            variant="primary"
-                                            isDisabled={isChecking}
-                                            label={labels.retry}
-                                            onPress={onRetry}
-                                        />
-                                    ),
-                                ]}
-                            />
-                        </AlertDialog.Footer>
-                    </AlertDialog.Dialog>
-                </AlertDialog.Container>
-            </AlertDialog.Backdrop>
-        </AlertDialog>
-    </div>
+    <AlertDialog
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        {...resolveIdentity({ tier: "overlay", component: "MaintenanceModal" })}
+    >
+        <AlertDialog.Backdrop
+            isDismissable={false}
+            isKeyboardDismissDisabled
+        >
+            <AlertDialog.Container size="sm">
+                <AlertDialog.Dialog>
+                    <AlertDialog.Header>
+                        <AlertDialog.Icon status="warning" />
+                        <AlertDialog.Heading>
+                            {labels.title}
+                        </AlertDialog.Heading>
+                    </AlertDialog.Header>
+                    <AlertDialog.Body>
+                        <Typography text={labels.description} />
+                    </AlertDialog.Body>
+                    <AlertDialog.Footer>
+                        <StackH
+                            gap={3}
+                            align="center"
+                            justify="between"
+                            classNames={["w-full"]}
+                            items={[
+                                () => (
+                                    <StackH
+                                        gap={2}
+                                        principles={["icon-text"]}
+                                        align="center"
+                                        items={[
+                                            ...(isChecking ? [() => <Spinner tone="current" size="sm" />] : []),
+                                            () => <Typography size="xs" color="muted" text={labels.pollStatus} />,
+                                        ]}
+                                    />
+                                ),
+                                () => (
+                                    <Button
+                                        variant="primary"
+                                        isDisabled={isChecking}
+                                        label={labels.retry}
+                                        onPress={onRetry}
+                                    />
+                                ),
+                            ]}
+                        />
+                    </AlertDialog.Footer>
+                </AlertDialog.Dialog>
+            </AlertDialog.Container>
+        </AlertDialog.Backdrop>
+    </AlertDialog>
 )

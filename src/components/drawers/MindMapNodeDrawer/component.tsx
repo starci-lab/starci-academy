@@ -172,18 +172,17 @@ export const _MindMapNodeDrawer = ({
     }
 
     return (
-        <div data-tier="overlay" data-component="MindMapNodeDrawer">
-            <DrawerShell
-                isOpen={isOpen}
-                onOpenChange={(open) => {
-                    if (!open) {
-                        onClose()
-                    }
-                }}
-                placement={isMobile ? "bottom" : "right"}
-                header={header}
-                body={body}
-            />
-        </div>
+        <DrawerShell
+            identity={{ tier: "overlay", component: "MindMapNodeDrawer" }}
+            isOpen={isOpen}
+            onOpenChange={(open) => {
+                if (!open) {
+                    onClose()
+                }
+            }}
+            placement={isMobile ? "bottom" : "right"}
+            header={header}
+            body={body}
+        />
     )
 }

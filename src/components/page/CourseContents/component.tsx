@@ -214,6 +214,7 @@ export const _CourseContents = ({
     // `spine(false)` the content branch; they cannot drift because they are the same code.
     const spine = (isSkeleton: boolean) => (
         <Container
+            identity={{ tier: "page", component: "CourseContents" }}
             size="md"
             principles={["center-measure"]}
             body={() => (
@@ -339,9 +340,5 @@ export const _CourseContents = ({
             ? <AsyncContentEmpty title={labels.emptyTitle} />
             : spine(isLoading)
 
-    return (
-        <div data-tier="page" data-component="CourseContents">
-            {inner}
-        </div>
-    )
+    return inner
 }

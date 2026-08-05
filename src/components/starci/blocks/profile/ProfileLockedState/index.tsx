@@ -5,7 +5,7 @@ import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { StackV } from "@/components/frames/Stack"
 import { ProfileHero, type ProfileHeroUser } from "@/components/starci/blocks/profile/ProfileHero"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
+import type { CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * `ProfileLockedState` — the non-owner view of a profile its owner has turned
@@ -22,10 +22,14 @@ export interface ProfileLockedStateProps {
     /** Fired when the visitor takes the one way forward (browse courses instead). */
     onGoCourses: () => void
     /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
+     * Caller identity to wear on this block's root `StackV` instead of its own — pass this when
+     * a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
+     * using this block AS its root element, instead of wrapping it in a raw `<div data-tier=…
+     * data-component=…>`. Forwarded straight to `StackV`, which forwards it to `Flex`, the frame
+     * that actually renders the DOM (see `Flex`'s own `identity` doc). See `_identity.ts`.
+     * Omitted → this block keeps emitting `data-tier="frame" data-component="Flex"`, unchanged.
      */
-    classNames?: Array<AllowedClassName>
+    identity?: CallerIdentity
 }
 
 /**
@@ -37,7 +41,7 @@ export interface ProfileLockedStateProps {
 const ProfileLockedState = ({
     user,
     onGoCourses,
-    classNames,
+    identity,
 }: ProfileLockedStateProps) => {
     const lockedBody = (
         <>
@@ -66,7 +70,15 @@ const ProfileLockedState = ({
             />
         </>
     )
-    return <StackV gap={6} principles={["block-boundary"]} padding={6} classNames={classNames} items={[() => lockedBody]} />
+    return (
+        <StackV
+            gap={6}
+            principles={["block-boundary"]}
+            padding={6}
+            identity={identity}
+            items={[() => lockedBody]}
+        />
+    )
 }
 
 export { ProfileLockedState }

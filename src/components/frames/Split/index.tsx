@@ -3,6 +3,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { ALIGN_CLASS, gapClassNames, type AllowedGap, type LayoutAlign, type Responsive } from "@/components/frames/_spacing"
 import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -58,6 +59,14 @@ export interface SplitBaseProps {
     principles?: Array<PrincipleToken>
     /** `true` mounts both sides in their loading state. */
     isSkeleton?: boolean
+    /**
+     * Caller identity to wear on this row's root instead of `Split`'s own — pass this when a
+     * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
+     * using this row AS its root element, instead of wrapping it in a raw `<div data-tier=…
+     * data-component=…>`. See `_identity.ts`. Omitted → this row keeps emitting its own
+     * `data-tier="frame" data-component="Split"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -72,13 +81,13 @@ const SplitBase = ({
     align = "center",
     classNames,
     principles,
-    isSkeleton}: SplitBaseProps) => {
+    isSkeleton,
+    identity}: SplitBaseProps) => {
     const Start = start
     const End = end
     return (
         <div
-            data-tier="frame"
-            data-component="Split"
+            {...resolveIdentity(identity, { tier: "frame", name: "Split" })}
             data-principles={principlesAttr(principles)}
             className={cn(
                 "flex w-full",

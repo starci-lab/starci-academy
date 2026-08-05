@@ -4,79 +4,45 @@ import React from "react"
 import {
     useTranslations,
 } from "next-intl"
-import {
-    CourseRow,
-} from "./CourseRow"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryMyCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCoursesSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { _MyCoursesProgress } from "./component"
 
 /** Props for {@link MyCoursesProgress}. */
-export interface MyCoursesProgressProps extends WithClassNames<undefined> {
+export interface MyCoursesProgressProps {
     /** Section label, rendered outside the card (owned here, like every other self-contained section). */
     label: React.ReactNode
 }
 
 /**
- * Enrolled-course progress — each course as one whole-row clickable item inside a
- * single surface list card. `frameless` is computed HERE (not hardcoded) so the
- * loaded list (self-framed as a `SurfaceListCard`) skips the outer `Card` — but
- * the skeleton/empty/error states, which have no bounded surface of their own,
- * still get one (avoids them rendering bare on the page background). Reads its
- * own `myCourses` leaf query through {@link AsyncContent}.
+ * Enrolled-course progress — the CONNECTED half: reads its own `myCourses` leaf query,
+ * computes `isSkeleton`/`isEmpty`/`error` from the first-load formula, resolves every label,
+ * and hands them to the presentational {@link _MyCoursesProgress}. See
+ * `tiers/split.md` — this file owns the fetch and i18n, `component.tsx` owns the render.
+ *
  * @param props - {@link MyCoursesProgressProps}
  */
 export const MyCoursesProgress = ({
-    className,
     label,
 }: MyCoursesProgressProps) => {
     const t = useTranslations()
     const { data, isLoading, error, mutate } = useQueryMyCoursesSwr()
     const courses = data ?? []
-    const hasCourses = !isLoading && !error && courses.length > 0
 
     return (
-        <LabeledCard className={className} label={label} frameless={hasCourses}>
-            <AsyncContent
-                isLoading={isLoading && courses.length === 0}
-                skeleton={(
-                    <SurfaceListCard>
-                        {[0, 1].map((row) => (
-                            <SurfaceListCardItem key={row}>
-                                <div className="flex items-center gap-3">
-                                    <Skeleton className="size-12 shrink-0 rounded-2xl" />
-                                    <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                        <div className="flex items-center justify-between gap-2">
-                                            <Skeleton.Typography type="body-sm" width="1/2" />
-                                            <Skeleton className="h-3 w-8 rounded" />
-                                        </div>
-                                        <Skeleton.ProgressBar />
-                                    </div>
-                                </div>
-                            </SurfaceListCardItem>
-                        ))}
-                    </SurfaceListCard>
-                )}
-                isEmpty={courses.length === 0}
-                emptyContent={{ title: t("dashboard.enrolledCoursesEmpty") }}
-                error={courses.length === 0 ? error : undefined}
-                errorContent={{
-                    title: t("dashboard.loadError"),
-                    onRetry: () => { void mutate() },
-                    retryLabel: t("dashboard.retry"),
-                }}
-            >
-                <SurfaceListCard>
-                    {courses.map((item) => (
-                        <CourseRow key={item.globalId} item={item} />
-                    ))}
-                </SurfaceListCard>
-            </AsyncContent>
-        </LabeledCard>
+        <_MyCoursesProgress
+            label={label}
+            // first load, nothing in hand → shimmer (loading-and-skeleton.md §2)
+            isSkeleton={isLoading && courses.length === 0}
+            isEmpty={courses.length === 0}
+            // only a settled fetch error (nothing cached to fall back to) reaches the block
+            error={courses.length === 0 ? error : undefined}
+            onRetry={() => { void mutate() }}
+            courses={courses}
+            labels={{
+                errorTitle: t("dashboard.loadError"),
+                retry: t("dashboard.retry"),
+                emptyTitle: t("dashboard.enrolledCoursesEmpty"),
+            }}
+        />
     )
 }

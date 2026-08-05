@@ -2,7 +2,6 @@ import React, { useMemo, useState } from "react"
 import { type SkeletonProps } from "@/components/composites/_slot"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { DrawerShell } from "@/components/composites/layout/DrawerShell"
-import { DrawerRoot } from "@/components/frames/DrawerRoot"
 import { StackV, StackH } from "@/components/frames/Stack"
 import { Typography } from "@/components/atoms/text/Typography"
 import { TabsBase } from "@/components/atoms/navigation/Tabs/TabsBase"
@@ -60,6 +59,9 @@ export type E2eResultDrawerProps = E2eResultDrawerOwnProps &
 /** Fixed, block-owned title — ported 1:1 from `content.e2e.title` (vi.json). */
 const DRAWER_TITLE = "End-to-end testing (Playwright)"
 
+/** This overlay's own identity, handed down to `DrawerShell`'s root instead of a raw wrapper `div` (BLOCK-2). See `_identity.ts`. */
+const DRAWER_IDENTITY = { tier: "overlay", component: "E2eResultDrawer" } as const
+
 /** Bucket for a flow with no recorded `lang` — mirrors the real `E2eBody` (`lang ?? "agnostic"`). */
 const UNSPECIFIED_LANG = "agnostic"
 
@@ -103,9 +105,14 @@ export const _E2eResultDrawer = ({
         ]
 
         body = (
-            <DrawerRoot data-component="E2eResultDrawer">
-                <DrawerShell isOpen={isOpen} onOpenChange={onOpenChange} placement={placement} title={DRAWER_TITLE} body={() => <StackV gap={4} isSkeleton={isSkeleton} items={skeletonRows} />} />
-            </DrawerRoot>
+            <DrawerShell
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                placement={placement}
+                title={DRAWER_TITLE}
+                identity={DRAWER_IDENTITY}
+                body={() => <StackV gap={4} isSkeleton={isSkeleton} items={skeletonRows} />}
+            />
         )
     } else {
         // Root guard — mirrors BOTH real call-sites (see file header). Nothing
@@ -191,22 +198,20 @@ export const _E2eResultDrawer = ({
             ]
 
             body = (
-                <DrawerRoot data-component="E2eResultDrawer">
-                    <DrawerShell
-                        isOpen={isOpen}
-                        onOpenChange={onOpenChange}
-                        placement={placement}
-                        title={DRAWER_TITLE}
-                        body={() => <StackV gap={4} isSkeleton={isSkeleton} items={countFilterAndAccordion} />}
-                    />
-                </DrawerRoot>
+                <DrawerShell
+                    isOpen={isOpen}
+                    onOpenChange={onOpenChange}
+                    placement={placement}
+                    title={DRAWER_TITLE}
+                    identity={DRAWER_IDENTITY}
+                    body={() => <StackV gap={4} isSkeleton={isSkeleton} items={countFilterAndAccordion} />}
+                />
             )
         }
     }
 
-    return (
-        <div data-tier="overlay" data-component="E2eResultDrawer">
-            {body}
-        </div>
-    )
+    // `body` carries the identity itself (via `DRAWER_IDENTITY` on `DrawerShell`,
+    // BLOCK-2) in every branch that renders one; the empty root-guard branch
+    // renders nothing at all rather than an identity-bearing shell around it.
+    return body
 }

@@ -5,6 +5,10 @@ import { FoundationSearchBar, type FoundationSearchSuggestion } from "@/componen
 import { FoundationResourceList, type FoundationResourceItem } from "@/components/starci/blocks/learn/FoundationResourceList"
 import { Container } from "@/components/frames/Container"
 import { StackV } from "@/components/frames/Stack"
+import type { CallerIdentity } from "@/components/frames/_identity"
+
+/** Caller identity this page hands down to `Container`, its root frame. */
+const IDENTITY: CallerIdentity = { tier: "page", component: "FoundationsCategoryPage" }
 
 /**
  * `_FoundationsCategoryPage` — the SRC TWIN of `.storybook/components/starci/
@@ -159,9 +163,7 @@ const _FoundationsCategoryPage = ({
     const categoryBody = <StackV gap={7} isSkeleton={isSkeleton} items={[() => categorySections]} />
 
     return (
-        <div data-tier="page" data-component="FoundationsCategoryPage">
-            <Container size="md" padding={6} body={() => categoryBody} />
-        </div>
+        <Container identity={IDENTITY} size="md" padding={6} body={() => categoryBody} />
     )
 }
 

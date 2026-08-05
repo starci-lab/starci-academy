@@ -268,15 +268,14 @@ const _SubmissionAttemptsDrawer = ({
     ]
 
     return (
-        <div data-tier="overlay" data-component="SubmissionAttemptsDrawer">
-            <DrawerShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                placement={placement}
-                title={`${DRAWER_TITLE} · ${attempts.length}`}
-                body={() => <StackV gap={4} isSkeleton={isSkeleton} items={listAndPager} />}
-            />
-        </div>
+        <DrawerShell
+            identity={{ tier: "overlay", component: "SubmissionAttemptsDrawer" }}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            placement={placement}
+            title={`${DRAWER_TITLE} · ${attempts.length}`}
+            body={() => <StackV gap={4} isSkeleton={isSkeleton} items={listAndPager} />}
+        />
     )
 }
 

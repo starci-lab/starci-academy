@@ -12,31 +12,6 @@ import { StackV } from "@/components/frames/Stack"
 import { Cluster } from "@/components/frames/Cluster"
 import { Box } from "@/components/frames/Box"
 
-/**
- * `_LivestreamCalendarModal` — the presentational half of `LivestreamCalendarModal`:
- * a date-picker calendar (dims any weekday with no recurring session) above a bounded
- * list of the course's recurring livestream sessions (day + time-range chip row, next
- * occurrence, an optional markdown note). Composes `ModalShell` (dialog scaffold) +
- * `SurfaceCardList` (the row list) + `MarkdownContent` (the note); falls to
- * `AsyncContentEmpty` when there are no sessions to show.
- *
- * ⚠️ MISSING VOCABULARY: there is no atom/composite wrapping a STANDALONE, always-visible
- * HeroUI `Calendar` (`atoms/forms/Input`'s `InputDate` only wraps one inside a text-field
- * popover). Kept as a direct `@heroui/react` import here, minimal, pending that atom —
- * see the task's `missingVocabulary` report. Do not spread this pattern elsewhere. The
- * `DateValue` type it needs comes from `@internationalized/date` (the same nominal type
- * `@heroui/react/rac` re-exports) so this stays the ONLY direct HeroUI import in the file;
- * `Box` (the frames escape hatch for "a composite wrapping a foreign library") carries the
- * `overflow-hidden`/`shadow-none` reset instead of a raw `className` on `Calendar` itself.
- *
- * No `isSkeleton`: `rows` comes straight off redux (`state.livestreamSession.entities`,
- * populated synchronously wherever the store is hydrated), so there is no async
- * first-load formula to compute a skeleton from — the original component had no
- * loading state either.
- *
- * @param props - {@link LivestreamCalendarModalProps}
- */
-
 /** One recurring livestream session, fully resolved for display by the connected `LivestreamCalendarModal`. */
 export interface LivestreamCalendarSessionRow {
     /** Stable row key (the session id). */
@@ -99,6 +74,30 @@ const sessionRowContent = (row: LivestreamCalendarSessionRow) => (
     />
 )
 
+/**
+ * `_LivestreamCalendarModal` — the presentational half of `LivestreamCalendarModal`:
+ * a date-picker calendar (dims any weekday with no recurring session) above a bounded
+ * list of the course's recurring livestream sessions (day + time-range chip row, next
+ * occurrence, an optional markdown note). Composes `ModalShell` (dialog scaffold) +
+ * `SurfaceCardList` (the row list) + `MarkdownContent` (the note); falls to
+ * `AsyncContentEmpty` when there are no sessions to show.
+ *
+ * ⚠️ MISSING VOCABULARY: there is no atom/composite wrapping a STANDALONE, always-visible
+ * HeroUI `Calendar` (`atoms/forms/Input`'s `InputDate` only wraps one inside a text-field
+ * popover). Kept as a direct `@heroui/react` import here, minimal, pending that atom —
+ * see the task's `missingVocabulary` report. Do not spread this pattern elsewhere. The
+ * `DateValue` type it needs comes from `@internationalized/date` (the same nominal type
+ * `@heroui/react/rac` re-exports) so this stays the ONLY direct HeroUI import in the file;
+ * `Box` (the frames escape hatch for "a composite wrapping a foreign library") carries the
+ * `overflow-hidden`/`shadow-none` reset instead of a raw `className` on `Calendar` itself.
+ *
+ * No `isSkeleton`: `rows` comes straight off redux (`state.livestreamSession.entities`,
+ * populated synchronously wherever the store is hydrated), so there is no async
+ * first-load formula to compute a skeleton from — the original component had no
+ * loading state either.
+ *
+ * @param props - {@link LivestreamCalendarModalProps}
+ */
 export const _LivestreamCalendarModal = ({
     isOpen,
     onOpenChange,
@@ -141,15 +140,14 @@ export const _LivestreamCalendarModal = ({
     )
 
     return (
-        <div data-tier="overlay" data-component="LivestreamCalendarModal">
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                title={labels.modalTitle}
-                size="lg"
-                containerClassName="max-w-lg"
-                body={bodySlot}
-            />
-        </div>
+        <ModalShell
+            identity={{ tier: "overlay", component: "LivestreamCalendarModal" }}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            title={labels.modalTitle}
+            size="lg"
+            containerClassName="max-w-lg"
+            body={bodySlot}
+        />
     )
 }

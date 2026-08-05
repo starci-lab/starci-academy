@@ -1,13 +1,19 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { Box } from "@/components/frames/Box"
 import { Grid, type GridItem } from "@/components/frames/Grid"
+import { StackH, StackV } from "@/components/frames/Stack"
+import type { CallerIdentity } from "@/components/frames/_identity"
 import { ConsultantCard } from "../ConsultantCard"
-import { ConsultantCardSkeleton } from "../ConsultantCardSkeleton"
 import type { ConsultantEntity } from "@/modules/types/entities/consultant"
 
 /** Number of placeholder cards shown while the consultant list loads (mirrors the real grid's usual row). */
 const SKELETON_COUNT = 6
+
+/** This block's own identity, handed down to whichever frame stands in as its root (`_identity.ts`, BLOCK-2). */
+const IDENTITY: CallerIdentity = { tier: "block", component: "ConsultantGrid" }
 
 /** All display text, already localized by the connected {@link import("./index").ConsultantGrid}; a story passes i18n keys. */
 export interface ConsultantGridLabels {
@@ -33,6 +39,44 @@ export interface ConsultantGridProps {
     consultants: Array<ConsultantEntity>
     labels: ConsultantGridLabels
 }
+
+/**
+ * Loading placeholder for one consultant card — mirrors {@link ConsultantCard}'s
+ * `PressableCard` shape (avatar, name, job title, a company link row, and a
+ * 3-line description) so the grid does not jump when data resolves. Co-located
+ * right here (not a separate hand-kept file) since `ConsultantCard` takes no
+ * `isSkeleton` prop of its own to thread through (`loading-and-skeleton.md`).
+ */
+const ConsultantCardSkeleton = () => (
+    <Box className="rounded-3xl bg-surface px-4 py-3 shadow-surface">
+        <StackV
+            gap={3}
+            items={[
+                () => <Skeleton className="aspect-square w-full rounded-2xl" />,
+                () => (
+                    <StackV
+                        gap={2}
+                        items={[
+                            () => <Skeleton.Typography type="h5" width="3/4" />,
+                            () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                            () => (
+                                <StackH
+                                    gap={2}
+                                    align="center"
+                                    items={[
+                                        () => <Skeleton className="size-5 shrink-0 rounded" />,
+                                        () => <Skeleton.Typography type="body-sm" width="1/3" />,
+                                    ]}
+                                />
+                            ),
+                            () => <Skeleton.Paragraph lines={3} />,
+                        ]}
+                    />
+                ),
+            ]}
+        />
+    </Box>
+)
 
 /**
  * `_ConsultantGrid` — the presentational half of {@link import("./index").ConsultantGrid}
@@ -63,18 +107,18 @@ export const _ConsultantGrid = ({
         }))
 
     // error beats a stale loading flag; empty only once settled (BLOCK-8)
+    // `AsyncContentError`/`AsyncContentEmpty` are composite MESSAGE frames — they
+    // take no `identity` prop, so those two branches' roots stay unowned (BLOCK-2's
+    // fallback: no sibling frame here to carry the identity instead, and a wrapper
+    // div is exactly the shape being removed).
     let body: ReactNode
     if (error) {
         body = <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retry} />
     } else if (!isSkeleton && isEmpty) {
         body = <AsyncContentEmpty title={labels.emptyTitle} />
     } else {
-        body = <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={6} items={items} />
+        body = <Grid identity={IDENTITY} columns={{ base: 1, sm: 2, lg: 3 }} gap={6} items={items} />
     }
 
-    return (
-        <div data-tier="block" data-component="ConsultantGrid">
-            {body}
-        </div>
-    )
+    return body
 }

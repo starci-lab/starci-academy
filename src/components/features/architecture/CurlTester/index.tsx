@@ -4,7 +4,6 @@ import React, { useState } from "react"
 import { useTranslations } from "next-intl"
 import { publicEnv } from "@/resources/env/public"
 import { querySystemHealthStatus } from "@/modules/api/graphql/queries/query-system-health-status"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { _CurlTester } from "./component"
 
 /**
@@ -36,9 +35,6 @@ const buildCurlCommand = (): string => {
     return `curl -X POST ${endpoint} \\\n  -H "Content-Type: application/json" \\\n  -d '${body}'`
 }
 
-/** Props for {@link CurlTester}. */
-export type CurlTesterProps = WithClassNames<undefined>
-
 /**
  * "Try it yourself" panel — an MVP-scoped API explorer that whitelists ONLY
  * the public `systemHealthStatus` query (no free-form query input, no
@@ -47,10 +43,8 @@ export type CurlTesterProps = WithClassNames<undefined>
  * `querySystemHealthStatus` — the same function the live poll uses, not a new
  * fetch layer), resolves every label, and hands them to the presentational
  * {@link _CurlTester}.
- *
- * @param props - {@link CurlTesterProps}
  */
-export const CurlTester = ({ className }: CurlTesterProps) => {
+export const CurlTester = () => {
     const t = useTranslations("architecture")
     const [copied, setCopied] = useState(false)
     const [running, setRunning] = useState(false)
@@ -81,7 +75,6 @@ export const CurlTester = ({ className }: CurlTesterProps) => {
 
     return (
         <_CurlTester
-            className={className}
             curlCommand={curlCommand}
             copied={copied}
             onCopy={onCopy}

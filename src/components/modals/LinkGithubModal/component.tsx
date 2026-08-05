@@ -77,15 +77,14 @@ const _LinkGithubModal = ({
     ]
 
     return (
-        <div data-tier="overlay" data-component="LinkGithubModal">
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                title={labels.title}
-                size="xs"
-                body={() => <StackV gap={6} items={modalBody} />}
-            />
-        </div>
+        <ModalShell
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            title={labels.title}
+            size="xs"
+            body={() => <StackV gap={6} items={modalBody} />}
+            identity={{ tier: "overlay", component: "LinkGithubModal" }}
+        />
     )
 }
 

@@ -237,6 +237,15 @@ export const CourseQaPage = () => {
             onAskQuestion={(body) => { void onAskQuestion(body) }}
             onAnswered={() => { void mutate() }}
             onGoToContent={onGoToContent}
+            labels={{
+                inviteTitle: t("courseQa.empty.title"),
+                inviteHint: t("courseQa.empty.hint"),
+                inviteCta: t("courseQa.emptyCta"),
+                filterAriaLabel: t("courseQa.filterAria"),
+                searchAriaLabel: t("courseQa.searchAria"),
+                pagerAriaLabel: t("courseQa.pagerAria"),
+                composerPlaceholder: t("courseQa.composerPlaceholder"),
+            }}
             isSkeleton={isLoading && rawQuestions.length === 0 && !isPostingQuestion}
         />
     )

@@ -5,7 +5,9 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Box } from "@/components/frames/Box"
-import { StackH } from "@/components/frames/Stack"
+import { StackH, StackV } from "@/components/frames/Stack"
+import { type AllowedGap, type LayoutAlign } from "@/components/frames/_spacing"
+import { type CallerIdentity } from "@/components/frames/_identity"
 import { type VerdictBand, verdictBandClassName } from "../verdict-band"
 
 /** Props for {@link SectionCard}. */
@@ -30,10 +32,43 @@ export interface SectionCardProps {
     /**
      * Where the card sits inside its parent. Appearance is not passable — it is
      * already a prop.
+     *
+     * missingVocabulary (no-classname-at-sentence-tier, BLOCK-4): `QuizCard`, `MetricCard`, and
+     * `PitchCard` all genuinely forward a value through here today. Dropping this prop would
+     * require editing those call sites too, and they sit outside this folder — left in place and
+     * flagged as known debt rather than silently removed.
      */
     classNames?: Array<AllowedClassName>
-    /** Extra classes merged onto the inner content wrapper. */
-    contentClassName?: string
+    /**
+     * Seam between the header row (when present) and `children`, and between items inside
+     * `children` that opt into the same track — the content wrapper's own gap step on the
+     * house scale (`AllowedGap`, `_spacing.ts`). Defaults to `4` (`gap-3`), the shape every
+     * caller got before this prop existed. `PricingCard` needs a roomier `6` (`gap-6`) between
+     * its name/price/features/cta rows.
+     */
+    contentGap?: AllowedGap
+    /**
+     * `true` → the content wrapper stretches to fill the card's height (`h-full`) instead of
+     * hugging its own content. For cards placed side-by-side in a grid (`PricingCard`,
+     * `PitchCard`, the `ContinueLearning` skeleton shell) so the CTA/footer row still pins to
+     * the bottom even when a sibling card's copy runs longer. Defaults to `false`.
+     */
+    fillHeight?: boolean
+    /**
+     * Cross-axis alignment of the content wrapper's track. Defaults to `"stretch"` (every child
+     * takes the full width), matching the shape every caller got before this prop existed. The
+     * `ContinueLearning` empty state needs `"start"` so its CTA button hugs its own width
+     * instead of stretching full-bleed.
+     */
+    contentAlign?: LayoutAlign
+    /**
+     * Caller identity to wear on this card's root element instead of its own — pass this when a
+     * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
+     * using this card AS its root element, instead of wrapping it in a raw `<div data-tier=…
+     * data-component=…>`. See `_identity.ts`. Omitted → this card keeps emitting its own
+     * `data-tier="block" data-component="SectionCard"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -42,7 +77,7 @@ export interface SectionCardProps {
  * `globals.css` gives HeroUI's own `Card`) that adds an optional header row
  * (icon + title on the left, action on the right) so every titled section looks
  * identical. Use `accent` for the viewer's own / highlighted cards. The header
- * row and content wrapper compose the frame tier's `StackH`/`Box`.
+ * row and content wrapper compose the frame tier's `StackH`/`StackV`/`Box`.
  *
  * @param props - {@link SectionCardProps}
  * @see Story: .storybook/stories/blocks/cards/SectionCard/SectionCard.stories
@@ -55,46 +90,62 @@ export const SectionCard = ({
     accent = false,
     withVerdict,
     classNames,
-    contentClassName,
+    contentGap = 4,
+    fillHeight = false,
+    contentAlign = "stretch",
+    identity,
 }: SectionCardProps) => {
     const hasHeader = Boolean(title || action || icon)
+    // BLOCK-5 DEBT, left VISIBLE on purpose: this block decides its own card face —
+    // radius · surface · shadow · padding · accent border · verdict band — which is a
+    // lower tier's job; read it as "a composite is missing". An earlier pass hid this by
+    // hand-joining the array so the `cn` rule would not fire, which changed nothing about
+    // the design. The real fix is to compose `composites/cards/SurfaceCard`'s face, a
+    // migration of its own.
+    const rootClassName = cn(
+        "rounded-3xl bg-surface shadow-surface p-4",
+        accent ? "border-accent" : null,
+        verdictBandClassName(withVerdict),
+        ...(classNames ?? []),
+    )
     return (
-        <div
-            className={cn(
-                "rounded-3xl bg-surface shadow-surface p-4",
-                accent && "border-accent",
-                verdictBandClassName(withVerdict),
-                classNames,
-            )}
-            data-tier="composite"
-            data-component="SectionCard"
+        <Box
+            identity={identity ?? { tier: "block", component: "SectionCard" }}
+            className={rootClassName}
         >
-            <Box className={cn("flex flex-col gap-3", contentClassName)}>
-                {hasHeader ? (
-                    <Box className="border-b border-separator pb-3">
-                        <StackH
-                            gap={3}
-                            justify="between"
-                            items={[
-                                () => (
-                                    <StackH
-                                        gap={2}
-                                        classNames={["min-w-0"]}
-                                        items={[
-                                            ...(icon ? [() => <>{icon}</>] : []),
-                                            ...(title ? [() => (
-                                                <Typography size="base" weight="semibold" truncate text={title} />
-                                            )] : []),
-                                        ]}
-                                    />
-                                ),
-                                ...(action ? [() => <span className="shrink-0">{action}</span>] : []),
-                            ]}
-                        />
-                    </Box>
-                ) : null}
-                {children}
-            </Box>
-        </div>
+            <StackV
+                gap={contentGap}
+                align={contentAlign}
+                classNames={fillHeight ? ["h-full"] : undefined}
+                body={() => (
+                    <>
+                        {hasHeader ? (
+                            <Box className="border-b border-separator pb-3">
+                                <StackH
+                                    gap={3}
+                                    justify="between"
+                                    items={[
+                                        () => (
+                                            <StackH
+                                                gap={2}
+                                                classNames={["min-w-0"]}
+                                                items={[
+                                                    ...(icon ? [() => <>{icon}</>] : []),
+                                                    ...(title ? [() => (
+                                                        <Typography size="base" weight="semibold" truncate text={title} />
+                                                    )] : []),
+                                                ]}
+                                            />
+                                        ),
+                                        ...(action ? [() => <span className="shrink-0">{action}</span>] : []),
+                                    ]}
+                                />
+                            </Box>
+                        ) : null}
+                        {children}
+                    </>
+                )}
+            />
+        </Box>
     )
 }

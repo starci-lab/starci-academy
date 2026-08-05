@@ -199,14 +199,13 @@ export const _PersonalProjectTaskResultHistoryDrawer = ({
     ]
 
     return (
-        <div data-tier="overlay" data-component="PersonalProjectTaskResultHistoryDrawer">
-            <DrawerShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                placement={isMobile ? "bottom" : "right"}
-                title={`${labels.historyLabel} · ${rows.length}`}
-                body={() => <StackV gap={4} items={listAndPager} />}
-            />
-        </div>
+        <DrawerShell
+            identity={{ tier: "overlay", component: "PersonalProjectTaskResultHistoryDrawer" }}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            placement={isMobile ? "bottom" : "right"}
+            title={`${labels.historyLabel} · ${rows.length}`}
+            body={() => <StackV gap={4} items={listAndPager} />}
+        />
     )
 }

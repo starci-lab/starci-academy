@@ -75,9 +75,12 @@ const _SettingsLayout = ({
     )
 
     return (
-        <div data-tier="layout" data-component="SettingsLayout">
-            <RailShell rail={navSlot} body={contentSlot} at="md" />
-        </div>
+        <RailShell
+            rail={navSlot}
+            body={contentSlot}
+            at="md"
+            identity={{ tier: "layout", component: "SettingsLayout" }}
+        />
     )
 }
 

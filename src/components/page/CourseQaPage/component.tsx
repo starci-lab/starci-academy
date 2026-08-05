@@ -31,14 +31,23 @@ export interface CourseQaViewer {
     avatarUrl?: string
 }
 
-/** Fixed board-wide copy for the "nobody has ever asked anything" invitation — see file header. */
-const INVITE_TITLE = "No questions yet"
-const INVITE_HINT = "Browse the course content, then come back to ask the first question."
-const INVITE_CTA = "Browse course content"
-
-/** Fixed accessible names — board-wide, never course-specific (see file header). */
-const FILTER_ARIA_LABEL = "Question filter"
-const PAGER_ARIA_LABEL = "Question list navigation"
+/** All display text, already localized by the connected {@link CourseQaPage}; a story passes i18n keys. */
+export interface CourseQaPageLabels {
+    /** "Nobody has ever asked anything" invitation heading. */
+    inviteTitle: string
+    /** Invitation body — nudges the reader into the course content first. */
+    inviteHint: string
+    /** Invitation's one way forward, into the course content. */
+    inviteCta: string
+    /** Accessible name for the toolbar's filter tab row. */
+    filterAriaLabel: string
+    /** Accessible name for the toolbar's search field. */
+    searchAriaLabel: string
+    /** Accessible name for the question list's pager `<nav>`. */
+    pagerAriaLabel: string
+    /** Composer placeholder for a course-general question. */
+    composerPlaceholder: string
+}
 
 /** Props for {@link _CourseQaPage}. */
 export interface CourseQaPageProps {
@@ -85,6 +94,9 @@ export interface CourseQaPageProps {
     /** Fired from the invitation's one way forward — back into the course content. */
     onGoToContent: () => void
 
+    /** All display text — see {@link CourseQaPageLabels}. */
+    labels: CourseQaPageLabels
+
     /**
      * `true` → every block that can mirror itself does, and the invitation
      * branch is skipped in favour of the populated shape (see file header).
@@ -119,6 +131,7 @@ const _CourseQaPage = ({
     onAskQuestion,
     onAnswered,
     onGoToContent,
+    labels,
     isSkeleton = false,
 }: CourseQaPageProps) => {
     // Screen-local UI state for the composer's in-progress keystrokes — see
@@ -136,7 +149,7 @@ const _CourseQaPage = ({
         ? { username: currentUser.displayName, avatar: currentUser.avatarUrl }
         : null
 
-    const handleAskQuestion = () => {
+    const onSubmit = () => {
         onAskQuestion(draft)
         setDraft("")
     }
@@ -157,8 +170,8 @@ const _CourseQaPage = ({
                 currentUser={composerUser}
                 value={draft}
                 onValueChange={setDraft}
-                placeholder="Ask a question about this course…"
-                onSubmit={handleAskQuestion}
+                placeholder={labels.composerPlaceholder}
+                onSubmit={onSubmit}
                 isSkeleton={isSkeleton}
 
             />
@@ -169,7 +182,8 @@ const _CourseQaPage = ({
                 searchValue={searchValue}
                 onSearchChange={onSearchChange}
                 resultCount={totalQuestions}
-                filterAriaLabel={FILTER_ARIA_LABEL}
+                filterAriaLabel={labels.filterAriaLabel}
+                searchAriaLabel={labels.searchAriaLabel}
                 isSkeleton={isSkeleton}
 
             />
@@ -183,7 +197,7 @@ const _CourseQaPage = ({
                 currentUserId={currentUserId}
                 currentUser={listCurrentUser}
                 onAnswered={onAnswered}
-                pagerAriaLabel={PAGER_ARIA_LABEL}
+                pagerAriaLabel={labels.pagerAriaLabel}
                 isSkeleton={isSkeleton}
 
             />
@@ -203,9 +217,9 @@ const _CourseQaPage = ({
             {isInvitationEmpty ? (
                 <CourseQaInvite
 
-                    title={INVITE_TITLE}
-                    hint={INVITE_HINT}
-                    ctaLabel={INVITE_CTA}
+                    title={labels.inviteTitle}
+                    hint={labels.inviteHint}
+                    ctaLabel={labels.inviteCta}
                     onGoToContent={onGoToContent}
                     isSkeleton={isSkeleton}
 
@@ -219,9 +233,12 @@ const _CourseQaPage = ({
     const courseQaBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => courseQaSections]} />
 
     return (
-        <div data-tier="page" data-component="CourseQaPage">
-            <Container size="md" padding={6} body={() => courseQaBody} />
-        </div>
+        <Container
+            size="md"
+            padding={6}
+            body={() => courseQaBody}
+            identity={{ tier: "page", component: "CourseQaPage" }}
+        />
     )
 }
 

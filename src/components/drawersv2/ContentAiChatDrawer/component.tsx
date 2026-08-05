@@ -129,25 +129,24 @@ const _ContentAiChatDrawer = ({
     )
 
     return (
-        <div data-tier="overlay" data-component="ContentAiChatDrawer">
-            <DrawerShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                placement={placement}
-                header={header}
-                body={() => (
-                    <SurfaceCard
-                        body={() => (
-                            <EmptyState
-                                icon={ChatsCircleIcon}
-                                title={BODY_GAP_TITLE}
-                                description={BODY_GAP_DESCRIPTION}
-                            />
-                        )}
-                    />
-                )}
-            />
-        </div>
+        <DrawerShell
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            placement={placement}
+            header={header}
+            identity={{ tier: "overlay", component: "ContentAiChatDrawer" }}
+            body={() => (
+                <SurfaceCard
+                    body={() => (
+                        <EmptyState
+                            icon={ChatsCircleIcon}
+                            title={BODY_GAP_TITLE}
+                            description={BODY_GAP_DESCRIPTION}
+                        />
+                    )}
+                />
+            )}
+        />
     )
 }
 

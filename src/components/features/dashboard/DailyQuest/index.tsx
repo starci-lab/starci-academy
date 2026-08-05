@@ -4,51 +4,28 @@ import React, {
     useCallback,
 } from "react"
 import {
-    Button,
-    Chip,
-    Typography,
-} from "@heroui/react"
-import {
-    CheckCircleIcon,
-    CircleIcon,
-} from "@phosphor-icons/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
     useSWRConfig,
 } from "swr"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryMyDailyQuestSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDailyQuestSwr"
 import { useMutateClaimDailyQuestRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateClaimDailyQuestRewardSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
-
-/** Props for {@link DailyQuest}. */
-export type DailyQuestProps = WithClassNames<undefined>
+import { _DailyQuest, type DailyQuestTask } from "./component"
 
 /**
- * "Today's quest" content — today's daily-quest checklist (read content · pass
- * challenge · review flashcards), each row showing today's progress, plus a claim
- * action that grants the reward once all tasks are done. Content only (the parent
- * {@link import("@/components/blocks").LabeledCard} frames it). Self-fetches the
- * daily-quest leaf query; claiming refetches the quest + reward wallet.
- * @param props - optional root class name (placement only)
+ * "Today's quest" — the CONNECTED half: self-fetches the daily-quest leaf query,
+ * resolves every task's translated title plus the reward-interpolated claim/prompt
+ * copy, and hands the result to the presentational {@link _DailyQuest}. Claiming
+ * refetches the quest + the reward wallet chip. See `tiers/split.md`.
  */
-export const DailyQuest = ({
-    className,
-}: DailyQuestProps) => {
+export const DailyQuest = () => {
     const t = useTranslations()
     const { mutate: globalMutate } = useSWRConfig()
     const runGraphQL = useGraphQLWithToast()
     const {
         data,
-        isLoading,
         error,
         mutate,
     } = useQueryMyDailyQuestSwr()
@@ -75,86 +52,35 @@ export const DailyQuest = ({
         ],
     )
 
-    // claim state (only meaningful once loaded) → the LabeledCard's `description`,
-    // rendered BELOW the card (gap-2), never inside the surface.
-    const claimState = data ? (
-        data.claimed ? (
-            <Chip color="success" variant="soft" size="sm" className="self-start">
-                <Chip.Label>{t("dashboard.dailyQuest.claimed")}</Chip.Label>
-            </Chip>
-        ) : data.allDone ? (
-            <Button
-                variant="primary"
-                size="sm"
-                className="self-start"
-                isPending={isMutating}
-                onPress={onClaim}
-            >
-                {t("dashboard.dailyQuest.claim", { count: data.reward })}
-            </Button>
-        ) : (
-            <Typography type="body-xs" color="muted">
-                {t("dashboard.dailyQuest.completePrompt", { count: data.reward })}
-            </Typography>
-        )
-    ) : undefined
+    // each task's title is a dynamic i18n key — resolved here, next to the fetch
+    // (tiers/split.md: t() lives in the connected file, never below it).
+    const tasks: Array<DailyQuestTask> = (data?.tasks ?? []).map((task) => ({
+        key: task.key,
+        title: t(`dashboard.dailyQuest.tasks.${task.key}`),
+        current: task.current,
+        target: task.target,
+    }))
 
     return (
-        <LabeledCard
-            label={t("dashboard.dailyQuest.title")}
-            className={className}
-            frameless
-            description={claimState}
-        >
-            <AsyncContent
-                isLoading={data === null || data === undefined || isLoading}
-                skeleton={(
-                    <SurfaceListCard>
-                        {[0, 1, 2, 3, 4].map((row) => (
-                            <Skeleton.ListRow key={row} withSubtitle={false} withTrailing className="px-3" />
-                        ))}
-                    </SurfaceListCard>
-                )}
-                isEmpty={!data}
-                error={!data ? error : undefined}
-                errorContent={{
-                    title: t("dashboard.loadError"),
-                    onRetry: () => { void mutate() },
-                    retryLabel: t("dashboard.retry"),
-                }}
-            >
-                {/* canonical labeled-list-card: frameless LabeledCard → SurfaceListCard → rows (one surface) */}
-                {data ? (
-                    <SurfaceListCard>
-                        {data.tasks.map((task) => {
-                            const done = task.current >= task.target
-                            return (
-                                <SurfaceListCardRow
-                                    key={task.key}
-                                    leading={done ? (
-                                        <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success-soft-foreground" />
-                                    ) : (
-                                        <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-foreground" />
-                                    )}
-                                    // force icon+title to share color by state (icon.md §6): done = success, todo = foreground (default).
-                                    // Color it through the title NODE (span), NOT `titleClassName` — lint `no-modal-title-classname` bans that
-                                    // prop globally; this row has no underline so the child span is safe (§6 carve-out).
-                                    title={done ? (
-                                        <span className="text-success-soft-foreground">{t(`dashboard.dailyQuest.tasks.${task.key}`)}</span>
-                                    ) : (
-                                        t(`dashboard.dailyQuest.tasks.${task.key}`)
-                                    )}
-                                    meta={(
-                                        <Typography type="body-xs" color="muted">
-                                            {task.current}/{task.target}
-                                        </Typography>
-                                    )}
-                                />
-                            )
-                        })}
-                    </SurfaceListCard>
-                ) : null}
-            </AsyncContent>
-        </LabeledCard>
+        <_DailyQuest
+            // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
+            isSkeleton={!data && !error}
+            // only a settled fetch error (nothing in hand) reaches the block
+            error={!data ? error : undefined}
+            onRetry={() => { void mutate() }}
+            claimed={data?.claimed}
+            allDone={data?.allDone}
+            onClaim={() => { void onClaim() }}
+            isClaiming={isMutating}
+            tasks={tasks}
+            labels={{
+                title: t("dashboard.dailyQuest.title"),
+                loadError: t("dashboard.loadError"),
+                retry: t("dashboard.retry"),
+                claimed: t("dashboard.dailyQuest.claimed"),
+                claim: t("dashboard.dailyQuest.claim", { count: data?.reward ?? 0 }),
+                completePrompt: t("dashboard.dailyQuest.completePrompt", { count: data?.reward ?? 0 }),
+            }}
+        />
     )
 }

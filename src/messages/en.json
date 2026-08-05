@@ -1858,6 +1858,7 @@
     "answeredLine": "{total} questions · {answered} answered",
     "learnersLine": "{count} learners enrolled in this course",
     "filterAria": "Filter questions",
+    "pagerAria": "Question list navigation",
     "filter": {
       "unanswered": "Unanswered",
       "answered": "Answered",
@@ -1866,6 +1867,7 @@
       "engagement": "Most active"
     },
     "searchPlaceholder": "Search questions...",
+    "searchAria": "Search questions",
     "searchEmpty": "No matching questions.",
     "count": "{count} questions",
     "statusAnswered": "Answered",

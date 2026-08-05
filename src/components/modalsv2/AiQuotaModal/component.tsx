@@ -196,24 +196,23 @@ const _AiQuotaModal = ({
     ]
 
     return (
-        <div data-tier="overlay" data-component="AiQuotaModal">
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                header={header}
-                size="lg"
-                scroll="inside"
-                footer={() => (
-                    <LinkSeeMore
-                        label="View full usage"
-                        onPress={onViewDetails}
-                        size="sm"
+        <ModalShell
+            identity={{ tier: "overlay", component: "AiQuotaModal" }}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            header={header}
+            size="lg"
+            scroll="inside"
+            footer={() => (
+                <LinkSeeMore
+                    label="View full usage"
+                    onPress={onViewDetails}
+                    size="sm"
 
-                    />
-                )}
-                body={() => <StackV gap={6} items={tabsAndPanel} />}
-            />
-        </div>
+                />
+            )}
+            body={() => <StackV gap={6} items={tabsAndPanel} />}
+        />
     )
 }
 

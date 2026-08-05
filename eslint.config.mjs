@@ -89,6 +89,21 @@ export default defineConfig([
             "starci-fe/export-matches-folder": "warn", // structure-and-naming §1/§5 · index.tsx export trùng tên folder
             // L12 (modal-body-padding) KHÔNG bật: quá nhiều ngoại lệ hợp lệ (Drawer.Body p-0 dialog · p-0 full-bleed
             // · command-palette) → false-positive. Để cho constrained-primitive (ModalShell từ chối bodyClassName p-*), không phải lint.
+
+            // tier rules (2026-08 refactor) — đo nợ trên `src/**` với đúng 1 rule bật/lần trước khi wire.
+            // Cùng ROLLOUT ở trên: 'warn' repo-wide khi nợ > 0 (pre-commit --max-warnings=0 trên STAGED
+            // chặn vi phạm MỚI, nợ cũ burn dần), 'error' khi nợ đo được = 0 (sinh ra sạch, giữ sạch).
+            "starci-fe/no-heroui-outside-vocabulary": "warn", // [[canon atom-layer-heroui-wrappers]] · nợ đo 2026-08-05 = 655
+            "starci-fe/no-classname-at-sentence-tier": "warn", // [[canon BLOCK-4]] · nợ đo 2026-08-05 = 671
+            "starci-fe/no-cn-above-vocabulary": "warn", // [[canon BLOCK-5]] · nợ đo 2026-08-05 = 792
+            "starci-fe/no-retired-async-content": "warn", // [[canon fe-asynccontent-4branch-retired]] · nợ đo 2026-08-05 = 103
+            "starci-fe/no-anatomy-overlay": "warn", // [[canon atom-tightening-migration-and-pos-ruling]] · nợ đo 2026-08-05 = 3
+            "starci-fe/presentational-purity": "error", // [[canon split.md]] · nợ đo 2026-08-05 = 0 — sinh sạch (pilot split đã dọn trước lint), giữ sạch
+            "starci-fe/require-identity-root": "warn", // [[canon components/frames/_identity.ts]] · rewired 2026-08-05 (root mang identity, không phải div bọc) · nợ đo 2026-08-05 = 814
+            "starci-fe/no-identity-wrapper-div": "warn", // [[canon components/frames/_identity.ts]] · nợ đo 2026-08-05 = 1
+            "starci-fe/no-raw-shape-at-sentence-tier": "warn", // [[canon sentence-tier-composes-not-draws]] · nợ đo 2026-08-05 = 1746
+            "starci-fe/no-parallel-skeleton": "warn", // [[canon v2-src-twins-and-gates]] · nợ đo 2026-08-05 = 159
+            "starci-fe/no-hardcoded-user-text-in-vocabulary": "warn", // [[canon fe-no-custom-from-design-up]] · nợ đo 2026-08-05 = 4
         },
     },
     {

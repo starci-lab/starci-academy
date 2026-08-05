@@ -17,6 +17,7 @@ import { PADDING_CLASS, type AllowedGap, type AllowedPadding } from "@/component
 import { Grid, type GridColumns } from "@/components/frames/Grid"
 import { StackV, StackH } from "@/components/frames/Stack"
 import { Box } from "@/components/frames/Box"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `SurfaceCard.*`, the ONE card FRAME namespace
@@ -293,6 +294,14 @@ interface SurfaceCardBaseOwnProps extends SurfaceLabelProps, SlotProps {
     classNames?: Array<AllowedClassName>
     /** Extra classes on the surface (content) wrapper. */
     contentClassName?: string
+    /**
+     * Caller identity to wear on this composite's root `<section>` instead of its own — pass this
+     * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
+     * is using this card AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this section keeps emitting
+     * its own `data-tier="composite" data-component="SurfaceCard"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 /** Full prop shape of `SurfaceCard`'s base — its own props plus the shared pressable-action props. */
 export type SurfaceCardBaseProps = SurfaceCardBaseOwnProps & PressableActionsProps
@@ -326,7 +335,8 @@ const Base = ({
     actions,
     ariaLabel,
     classNames,
-    contentClassName}: SurfaceCardBaseProps) => {
+    contentClassName,
+    identity}: SurfaceCardBaseProps) => {
     const { ripples, add: addRipple, clear: clearRipple } = useRipple()
     const content = composeSlots({ header, body, footer, isSkeleton })
     const paddingCls = padding === 1 ? "overflow-hidden" : PADDING_CLASS[padding]
@@ -488,10 +498,9 @@ const Base = ({
     )
     return (
         <section
+            {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCard" })}
             data-principles={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames)}
-            data-tier="composite"
-            data-component="SurfaceCard"
         >
             {labelRow}
             {cardWithCaption}
@@ -570,6 +579,14 @@ export interface SurfaceCardNestedProps extends SlotProps {
      * already a prop.
      */
     classNames?: Array<AllowedClassName>
+    /**
+     * Caller identity to wear on this composite's root `<div>` instead of its own — pass this
+     * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
+     * is using this card AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this element keeps emitting
+     * its own `data-tier="composite" data-component="SurfaceCardNested"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 /**
  * One inner section row — a flush row (no own border/radius) with an optional
@@ -655,7 +672,8 @@ const Nested = ({
     radius = "3xl",
     variant = "surface",
     isSkeleton = false,
-    classNames}: SurfaceCardNestedProps) => {
+    classNames,
+    identity}: SurfaceCardNestedProps) => {
     const hasHeader = Header != null || title != null || Icon != null || Meta != null
     // The `items` path = the frame builds the row ⇒ the flag FLOWS ON straight into
     // that row (the row switches its own text to shimmer). The `body` slot is a
@@ -666,13 +684,12 @@ const Nested = ({
         : (Body ? <Body isSkeleton={isSkeleton} /> : null)
     return (
         <div
+            {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardNested" })}
             className={cn(
                 "overflow-hidden",
                 radius === "xl" ? "rounded-xl" : "rounded-3xl",
                 variant === "nested" ? "border border-default bg-transparent" : "bg-surface shadow-surface",
                 classNames)}
-            data-tier="composite"
-            data-component="SurfaceCardNested"
         >
             {hasHeader ? (
                 // ⚠️ The header's own border chrome (`border-b border-default`) is not a
@@ -891,6 +908,14 @@ export interface SurfaceCardPressableGroupProps {
      */
     /** Where the grid sits inside its parent. */
     classNames?: Array<AllowedClassName>
+    /**
+     * Caller identity to wear on this composite's root `<div>` instead of its own — pass this
+     * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
+     * is using this group AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this element keeps emitting
+     * its own `data-tier="composite" data-component="SurfaceCardPressableGroup"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 // Compact grid cell, not a standalone top-level card: one step down from
 // `.Pressable`'s own `rounded-3xl`/`shadow-surface` default (concentric
@@ -964,7 +989,8 @@ const PressableGroup = ({
     gap = 4,
     keyboardShortcut = false,
     isSkeleton = false,
-    classNames}: SurfaceCardPressableGroupProps) => {
+    classNames,
+    identity}: SurfaceCardPressableGroupProps) => {
     // Reading `items` through a ref keeps the window listener subscribed ONCE
     // instead of tearing down and re-adding on each render.
     const itemsRef = useRef(items)
@@ -1008,8 +1034,7 @@ const PressableGroup = ({
                 role="group"
                 aria-label={ariaLabel}
                 className={cn(classNames)}
-                data-tier="composite"
-                data-component="SurfaceCardPressableGroup"
+                {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardPressableGroup" })}
             >
                 <Grid
                     columns={columns}
@@ -1032,8 +1057,7 @@ const PressableGroup = ({
             role="group"
             aria-label={ariaLabel}
             className={cn(classNames)}
-            data-tier="composite"
-            data-component="SurfaceCardPressableGroup"
+            {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardPressableGroup" })}
         >
             <Grid
                 columns={columns}
@@ -1106,6 +1130,14 @@ export interface SurfaceCardSelectableGroupProps<T extends string> {
      * Dev/spec: tag each card's own direct parts (`Icon` / `Label` / `Badge`) so a
      * BlockAnatomy panel can badge them.
      */
+    /**
+     * Caller identity to wear on this composite's root `<RadioGroup>` instead of its own — pass
+     * this when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of
+     * its own) is using this group AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this element keeps emitting
+     * its own `data-tier="composite" data-component="SurfaceCardSelectableGroup"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 /**
  * Fixed column count → the responsive {@link GridColumns} step-set that reads as that count
@@ -1144,13 +1176,13 @@ const SelectableGroup = <T extends string>({
     onChange,
     ariaLabel,
     columns = 2,
-    classNames}: SurfaceCardSelectableGroupProps<T>) => (
+    classNames,
+    identity}: SurfaceCardSelectableGroupProps<T>) => (
         <RadioGroup
             aria-label={ariaLabel}
             value={value}
             onChange={(next) => onChange(next as T)}
-            data-tier="composite"
-            data-component="SurfaceCardSelectableGroup"
+            {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardSelectableGroup" })}
         >
             <Grid
                 gap={3}
@@ -1346,6 +1378,14 @@ export interface SurfaceCardListProps extends SurfaceLabelProps {
      * passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
+    /**
+     * Caller identity to wear on this composite's root element instead of its own — pass this
+     * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
+     * is using this list AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this element keeps emitting
+     * its own `data-tier="composite" data-component="SurfaceCardList"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 /** Resolves an item's left DATA band — `withVerdict` (full shape) wins over the `tone` shorthand. */
 /**
@@ -1548,7 +1588,8 @@ const List = ({
     onSeeMore,
     seeMoreLabel,
     action,
-    subtleLabel = false}: SurfaceCardListProps) => {
+    subtleLabel = false,
+    identity}: SurfaceCardListProps) => {
     const isEmpty = items.length === 0
     // The flag FLOWS ON straight into the real row — the row keeps its box/padding/
     // divider and only its text switches to shimmer, so there's no second row to
@@ -1565,14 +1606,18 @@ const List = ({
         ? <Box principles={["page-pad"]}><ErrorState /></Box>
         : !isSkeleton && isEmpty && EmptyState != null ? <Box principles={["page-pad"]}><EmptyState /></Box> : rows
     const bare = label == null && description == null
+    // Whichever of `surface`/`section` is the outer ROOT wears the caller's identity (or this
+    // composite's own fallback); the non-root one keeps its own hardcoded pair unconditionally —
+    // `bare` decides which element that is, same as it decides which element renders at all.
     const surface = (
         <div
             className={cn(
                 "overflow-hidden",
                 surfaceFrame(variant),
                 bare && cn(classNames))}
-            data-tier="composite"
-            data-component="SurfaceCardList"
+            {...(bare
+                ? resolveIdentity(identity, { tier: "composite", name: "SurfaceCardList" })
+                : { "data-tier": "composite", "data-component": "SurfaceCardList" })}
         >
             {inner}
         </div>
@@ -1589,10 +1634,9 @@ const List = ({
     ) : surface
     return (
         <section
+            {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardList" })}
             data-principles={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames)}
-            data-tier="composite"
-            data-component="SurfaceCardList"
         >
             <div>
                 <SurfaceCardHeader
@@ -1688,6 +1732,14 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
      * passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
+    /**
+     * Caller identity to wear on this composite's root element instead of its own — pass this
+     * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
+     * is using this accordion AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this element keeps emitting
+     * its own `data-tier="composite" data-component="SurfaceCardAccordion"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 /**
  * An "Accordion Card": one bounded `bg-surface` frame holding collapsible sections,
@@ -1717,7 +1769,8 @@ const AccordionCard = ({
     emptyState: EmptyState,
     description,
     isSkeleton = false,
-    classNames}: SurfaceCardAccordionProps) => {
+    classNames,
+    identity}: SurfaceCardAccordionProps) => {
     const bare = label == null && description == null
     const atomItems: Array<AccordionAtomItem> = items.map((item) => ({
         key: item.id,
@@ -1777,7 +1830,7 @@ const AccordionCard = ({
         </div>
     )
     // bare = no header AND no caption → render the frame directly
-    if (bare) return <div className={cn(classNames)} data-tier="composite" data-component="SurfaceCardAccordion">{frame}</div>
+    if (bare) return <div className={cn(classNames)} {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardAccordion" })}>{frame}</div>
     // description sits OUTSIDE (below) the card, gap-2 — never surface-in-surface
     const withCaption = description != null ? (
         <StackV
@@ -1787,10 +1840,9 @@ const AccordionCard = ({
     ) : frame
     return (
         <section
+            {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardAccordion" })}
             data-principles={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames)}
-            data-tier="composite"
-            data-component="SurfaceCardAccordion"
         >
             <div>
                 <SurfaceCardHeader
@@ -1901,6 +1953,14 @@ export interface SurfaceCardCrossListProps {
      * `` for the anatomy panel — unless the item
      * carries its own ``.
      */
+    /**
+     * Caller identity to wear on this composite's root `<ul>` instead of its own — pass this
+     * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
+     * is using this list AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this element keeps emitting
+     * its own `data-tier="composite" data-component="SurfaceCardCrossList"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 /**
  * One row of a {@link SurfaceCardCrossList}: an optional leading mark + a free body,
@@ -1964,11 +2024,11 @@ const CrossList = ({
     variant = "surface",
     isSkeleton = false,
     skeletonRows = 3,
-    classNames}: SurfaceCardCrossListProps) => (
+    classNames,
+    identity}: SurfaceCardCrossListProps) => (
     <ul
         className={cn("overflow-hidden", surfaceFrame(variant), classNames)}
-        data-tier="composite"
-        data-component="SurfaceCardCrossList"
+        {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardCrossList" })}
     >
         {isSkeleton
             ? Array.from({ length: skeletonRows }).map((_, index) => (
@@ -2015,6 +2075,14 @@ export interface SurfaceCardPlaceholderProps {
     isSkeleton?: boolean
     /** Where the tile sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
+    /**
+     * Caller identity to wear on this composite's root element instead of its own — pass this
+     * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
+     * is using this tile AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this element keeps emitting
+     * its own `data-tier="composite" data-component="SurfaceCardPlaceholder"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 /**
  * Generic "add new" tile — a pressable, dashed-border `rounded-3xl` card with
@@ -2033,7 +2101,8 @@ const Placeholder = ({
     isSelected = false,
     isDisabled = false,
     isSkeleton = false,
-    classNames}: SurfaceCardPlaceholderProps) => {
+    classNames,
+    identity}: SurfaceCardPlaceholderProps) => {
     // COMPOSITE-10: ONE render path — the tile keeps the same dashed frame, gap and
     // padding in both states; only the interactivity (button vs plain div, since
     // nothing is pressable yet while loading) and the label's shimmer differ. The
@@ -2060,8 +2129,7 @@ const Placeholder = ({
             <div
                 data-principles="icon-text"
                 className={shellClassName}
-                data-tier="composite"
-                data-component="SurfaceCardPlaceholder"
+                {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardPlaceholder" })}
             >
                 {tileBody}
             </div>
@@ -2073,8 +2141,7 @@ const Placeholder = ({
             onClick={onPress}
             disabled={isDisabled}
             aria-pressed={isSelected || undefined}
-            data-tier="composite"
-            data-component="SurfaceCardPlaceholder"
+            {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardPlaceholder" })}
             data-principles="icon-text"
             className={shellClassName}
         >

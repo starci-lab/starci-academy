@@ -3,6 +3,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { gapClassNames, type AllowedGap, type Responsive } from "@/components/frames/_spacing"
 import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -76,6 +77,14 @@ export interface ResponsiveRowProps {
      * `pattern` doc for the full contract.
      */
     principles?: Array<PrincipleToken>
+    /**
+     * Caller identity to wear on this row's root instead of `ResponsiveRow`'s own — pass this
+     * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its
+     * own) is using this row AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this row keeps emitting its
+     * own `data-tier="frame" data-component="ResponsiveRow"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /** Grid column count → literal class. Tailwind never emits an interpolated `grid-cols-${n}`. */
@@ -107,10 +116,10 @@ const ResponsiveRowBase = ({
     gap,
     isSkeleton,
     classNames,
-    principles}: ResponsiveRowProps) => (
+    principles,
+    identity}: ResponsiveRowProps) => (
     <div
-        data-tier="frame"
-        data-component="ResponsiveRow"
+        {...resolveIdentity(identity, { tier: "frame", name: "ResponsiveRow" })}
         data-principles={principlesAttr(principles)}
         className={cn(
             "grid",

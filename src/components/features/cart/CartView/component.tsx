@@ -312,13 +312,16 @@ export const _CartView = ({
     }
 
     return (
-        <div data-tier="block" data-component="CartView">
-            <Container size="md" padding={6} body={() => (
+        <Container
+            size="md"
+            padding={6}
+            identity={{ tier: "block", component: "CartView" }}
+            body={() => (
                 <StackV gap={7} items={[
                     () => <PageHeader title={labels.title} description={labels.description} />,
                     contentBody,
                 ]} />
-            )} />
-        </div>
+            )}
+        />
     )
 }

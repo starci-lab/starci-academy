@@ -162,16 +162,17 @@ export const PricingTable = ({
     }))
 
     return (
-        <div data-tier="block" data-component="PricingTable">
-            {/* Responsive tier comparison: stacked on mobile, one equal-width column per
-                tier from @app-md up. Grid's own CSS default (align-items: stretch) keeps
-                every column the same height so the CTAs align along a single baseline. */}
-            <Grid
-                columns={{ base: 1, md: tierGridColumns(tiers.length) }}
-                gap={6}
-                principles={["block-boundary"]}
-                items={tierItems}
-            />
-        </div>
+        // Responsive tier comparison: stacked on mobile, one equal-width column per
+        // tier from @app-md up. Grid's own CSS default (align-items: stretch) keeps
+        // every column the same height so the CTAs align along a single baseline.
+        // Grid is the root — it wears this block's identity (BLOCK-2) instead of
+        // being wrapped in a raw identity div.
+        <Grid
+            identity={{ tier: "block", component: "PricingTable" }}
+            columns={{ base: 1, md: tierGridColumns(tiers.length) }}
+            gap={6}
+            principles={["block-boundary"]}
+            items={tierItems}
+        />
     )
 }

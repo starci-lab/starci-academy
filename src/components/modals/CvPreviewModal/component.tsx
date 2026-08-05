@@ -38,22 +38,21 @@ export interface CvPreviewModalProps {
  * @param props - {@link CvPreviewModalProps}
  */
 export const _CvPreviewModal = ({ isOpen, onOpenChange, pdfUrl, labels }: CvPreviewModalProps) => (
-    <div data-tier="overlay" data-component="CvPreviewModal">
-        <ModalShell
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-            containerClassName="h-[92vh] w-[96vw] max-w-[96vw]"
-            title={labels.title}
-            body={() => (
-                <PDFView
-                    src={pdfUrl}
-                    title={labels.title}
-                    heightClassName="h-[84vh]"
-                    pageWidth={900}
-                    showAllPages={true}
-                    allowVerticalScroll={true}
-                />
-            )}
-        />
-    </div>
+    <ModalShell
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        containerClassName="h-[92vh] w-[96vw] max-w-[96vw]"
+        title={labels.title}
+        identity={{ tier: "overlay", component: "CvPreviewModal" }}
+        body={() => (
+            <PDFView
+                src={pdfUrl}
+                title={labels.title}
+                heightClassName="h-[84vh]"
+                pageWidth={900}
+                showAllPages={true}
+                allowVerticalScroll={true}
+            />
+        )}
+    />
 )

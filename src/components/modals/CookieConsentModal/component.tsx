@@ -96,36 +96,35 @@ export const _CookieConsentModal = ({
     ]
 
     return (
-        <div data-tier="overlay" data-component="CookieConsentModal">
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                title={labels.modalTitle}
-                description={labels.modalBody}
-                body={() => <StackV gap={6} items={switchRows} />}
-                footer={() => (
-                    <>
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            label={labels.save}
-                            onPress={() => onSave(analyticsDraft)}
-                        />
-                        <Button
-                            variant="secondary"
-                            size="sm"
-                            label={labels.reject}
-                            onPress={onReject}
-                        />
-                        <Button
-                            variant="tertiary"
-                            size="sm"
-                            label={labels.acceptAll}
-                            onPress={onAcceptAll}
-                        />
-                    </>
-                )}
-            />
-        </div>
+        <ModalShell
+            identity={{ tier: "overlay", component: "CookieConsentModal" }}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            title={labels.modalTitle}
+            description={labels.modalBody}
+            body={() => <StackV gap={6} items={switchRows} />}
+            footer={() => (
+                <>
+                    <Button
+                        variant="primary"
+                        size="sm"
+                        label={labels.save}
+                        onPress={() => onSave(analyticsDraft)}
+                    />
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        label={labels.reject}
+                        onPress={onReject}
+                    />
+                    <Button
+                        variant="tertiary"
+                        size="sm"
+                        label={labels.acceptAll}
+                        onPress={onAcceptAll}
+                    />
+                </>
+            )}
+        />
     )
 }

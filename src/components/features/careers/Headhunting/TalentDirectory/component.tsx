@@ -13,7 +13,6 @@ import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { GroupPressableCard, type GroupPressableCardItem } from "@/components/blocks/cards/GroupPressableCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Container } from "@/components/frames/Container"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { UserJobReadinessBand } from "@/modules/api/graphql/queries/types/user-job-readiness"
 
 /** Number of placeholder cards shown while the candidate list first loads. */
@@ -66,7 +65,7 @@ export interface TalentDirectoryLabels {
 }
 
 /** Props for {@link _TalentDirectory} — presentational; all data resolved, no fetch/store/i18n. */
-export interface TalentDirectoryProps extends WithClassNames<undefined> {
+export interface TalentDirectoryProps {
     /** First load, nothing in hand → the whole tree shimmers in place (co-located). Owned by the connected file. */
     isSkeleton?: boolean
     /** Settled with zero candidates for the selected track → the empty message. */
@@ -102,7 +101,6 @@ export interface TalentDirectoryProps extends WithClassNames<undefined> {
  * @param props - {@link TalentDirectoryProps}
  */
 export const _TalentDirectory = ({
-    className,
     isSkeleton = false,
     isEmpty = false,
     error,
@@ -118,24 +116,30 @@ export const _TalentDirectory = ({
     // content renders in below, so the page chrome doesn't jump between states.
     if (error) {
         return (
-            <div data-tier="block" data-component="TalentDirectory" className={className}>
-                <Container size="lg" padding={6} body={() => (
+            <Container
+                identity={{ tier: "block", component: "TalentDirectory" }}
+                size="lg"
+                padding={6}
+                body={() => (
                     <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retry} />
-                )} />
-            </div>
+                )}
+            />
         )
     }
     if (!isSkeleton && isEmpty) {
         return (
-            <div data-tier="block" data-component="TalentDirectory" className={className}>
-                <Container size="lg" padding={6} body={() => (
+            <Container
+                identity={{ tier: "block", component: "TalentDirectory" }}
+                size="lg"
+                padding={6}
+                body={() => (
                     <AsyncContentEmpty
                         icon={ChartLineUpIcon}
                         title={labels.emptyTitle}
                         description={labels.emptyDescription}
                     />
-                )} />
-            </div>
+                )}
+            />
         )
     }
 
@@ -203,11 +207,15 @@ export const _TalentDirectory = ({
             ),
         }))
 
-    const handleTrackSelectionChange = (key: Key) => onSelectTrack(String(key))
+    const onSelectionChange = (key: Key) => onSelectTrack(String(key))
 
     return (
-        <div data-tier="block" data-component="TalentDirectory" className={className}>
-            <Container size="lg" padding={6} isSkeleton={isSkeleton} body={() => (
+        <Container
+            identity={{ tier: "block", component: "TalentDirectory" }}
+            size="lg"
+            padding={6}
+            isSkeleton={isSkeleton}
+            body={() => (
                 <StackV gap={6} items={[
                     () => <PageHeader title={labels.title} description={labels.description} />,
 
@@ -222,7 +230,7 @@ export const _TalentDirectory = ({
                                 items: tracks.map((track) => ({ key: track.key, label: track.label })),
                                 selectedKey: selectedTrackKey,
                                 ariaLabel: labels.trackFilterAria,
-                                onSelectionChange: handleTrackSelectionChange,
+                                onSelectionChange,
                             }}
                         />
                     )] : []),
@@ -238,7 +246,7 @@ export const _TalentDirectory = ({
                         />
                     ),
                 ]} />
-            )} />
-        </div>
+            )}
+        />
     )
 }

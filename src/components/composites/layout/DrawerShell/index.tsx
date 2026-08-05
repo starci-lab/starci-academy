@@ -4,6 +4,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -91,6 +92,14 @@ export interface DrawerShellBaseProps {
      * it the same way it reaches the title/description text).
      */
     isSkeleton?: boolean
+    /**
+     * Caller identity to wear on this shell's root `<Drawer>` instead of its own — pass this
+     * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its
+     * own) is using this shell AS its root element, instead of wrapping it in a raw
+     * `<div data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this shell keeps
+     * emitting its own `data-tier="composite" data-component="DrawerShell"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -116,6 +125,7 @@ const Base = ({
     footerClassName,
     classNames,
     isSkeleton = false,
+    identity,
 }: DrawerShellBaseProps) => {
     const hasHeader = Header != null || title != null
     const main = Body ? <Body isSkeleton={isSkeleton} /> : null
@@ -123,8 +133,7 @@ const Base = ({
         <Drawer
             isOpen={isOpen}
             onOpenChange={onOpenChange}
-            data-tier="composite"
-            data-component="DrawerShell"
+            {...resolveIdentity(identity, { tier: "composite", name: "DrawerShell" })}
         >
             <Drawer.Backdrop>
                 <Drawer.Content className={contentClassName} placement={placement}>

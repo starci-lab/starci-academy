@@ -105,13 +105,12 @@ export const _LanguageModal = ({
     ]
 
     return (
-        <div data-tier="overlay" data-component="LanguageModal">
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                title={labels.title}
-                body={() => <StackV gap={6} items={sections} />}
-            />
-        </div>
+        <ModalShell
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            title={labels.title}
+            body={() => <StackV gap={6} items={sections} />}
+            identity={{ tier: "overlay", component: "LanguageModal" }}
+        />
     )
 }

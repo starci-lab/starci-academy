@@ -156,8 +156,10 @@ export const _CommunityCommentItem = ({
     }
 
     return (
-        <div data-tier="block" data-component="CommunityCommentItem">
-            <StackV gap={3} items={[
+        <StackV
+            gap={3}
+            identity={{ tier: "block", component: "CommunityCommentItem" }}
+            items={[
                 () => (
                     <CommunityCommentRow comment={comment} onReact={authenticated ? onReact : undefined} actions={actions} />
                 ),
@@ -193,6 +195,5 @@ export const _CommunityCommentItem = ({
                     <StackV gap={3} nested body={() => repliesContent} />
                 )] : []),
             ]} />
-        </div>
     )
 }

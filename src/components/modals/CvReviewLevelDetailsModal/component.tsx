@@ -70,24 +70,23 @@ export const _CvReviewLevelDetailsModal = ({
     }))
 
     return (
-        <div data-tier="overlay" data-component="CvReviewLevelDetailsModal">
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                title={labels.selectionTitle}
-                description={labels.subtitle}
-                size="md"
-                scroll="inside"
-                body={() => (
-                    <SelectableCardGroup
-                        items={cardItems}
-                        value={selectedTemplateId}
-                        onChange={onSelect}
-                        ariaLabel={labels.selectionTitle}
-                        columns={1}
-                    />
-                )}
-            />
-        </div>
+        <ModalShell
+            identity={{ tier: "overlay", component: "CvReviewLevelDetailsModal" }}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            title={labels.selectionTitle}
+            description={labels.subtitle}
+            size="md"
+            scroll="inside"
+            body={() => (
+                <SelectableCardGroup
+                    items={cardItems}
+                    value={selectedTemplateId}
+                    onChange={onSelect}
+                    ariaLabel={labels.selectionTitle}
+                    columns={1}
+                />
+            )}
+        />
     )
 }

@@ -7,19 +7,19 @@ import { Badge } from "@/components/atoms/display/Badge"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Popover } from "@/components/atoms/overlay/Popover"
 import { Typography } from "@/components/atoms/text/Typography"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { Cluster } from "@/components/frames/Cluster"
 import { Container } from "@/components/frames/Container"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { FlexWrapButtonRadio, type FlexWrapButtonRadioItem } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { Pagination } from "@/components/blocks/navigation/Pagination"
-import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import type { JobPostingEntity } from "@/modules/types/entities/job-posting"
 import { JobEmploymentType } from "@/modules/types/enums/job-employment-type"
 import { WorkMode } from "@/modules/types/enums/work-mode"
 import { JobListRow } from "./JobListRow"
-import { JobListRowSkeleton } from "./JobListRowSkeleton"
 
 /** Single-select work-mode filter value — `"all"` clears the filter. */
 export type WorkModeFilterValue = "all" | WorkMode
@@ -53,7 +53,7 @@ export interface JobListLabels {
 }
 
 /** Props for {@link _JobList} — presentational; all data resolved, no fetch/store/i18n. */
-export interface JobListProps extends WithClassNames<undefined> {
+export interface JobListProps {
     /** First load, nothing in hand → the row list shimmers in place (co-located). Owned by the connected file. */
     isSkeleton?: boolean
     /** Settled with zero matching postings → the empty branch. */
@@ -99,6 +99,55 @@ export interface JobListProps extends WithClassNames<undefined> {
 }
 
 /**
+ * Loading placeholder for one job-posting row — mirrors {@link JobListRow}'s
+ * IconTile + title/company/meta + salary/time shape so the list does not
+ * collapse or jump when data resolves. Co-located right here (not a separate
+ * hand-kept file) since `JobListRow` takes no `isSkeleton` prop of its own to
+ * thread through (`loading-and-skeleton.md`).
+ */
+const JobListRowSkeleton = () => (
+    <SurfaceListCardItem>
+        <StackH
+            gap={3}
+            align="center"
+            items={[
+                () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
+                () => (
+                    <StackV
+                        gap={1}
+                        classNames={["min-w-0", "flex-1"]}
+                        items={[
+                            () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                            () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                            () => (
+                                <Cluster
+                                    gap={2}
+                                    items={[
+                                        () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                                        () => <Skeleton.Chip />,
+                                    ]}
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+                () => (
+                    <StackV
+                        gap={1}
+                        align="end"
+                        classNames={["shrink-0"]}
+                        items={[
+                            () => <Skeleton.Typography type="body-sm" width="full" className="w-16" />,
+                            () => <Skeleton.Typography type="body-xs" width="full" className="w-12" />,
+                        ]}
+                    />
+                ),
+            ]}
+        />
+    </SurfaceListCardItem>
+)
+
+/**
  * The job board (`/jobs`) — the presentational half of {@link import("./index").JobList}. Search +
  * two single-select filter rows (work mode, employment type) behind a funnel popover drive a
  * paginated ROW LIST (not a card grid — a posting has too many attributes — title, company,
@@ -141,7 +190,6 @@ export const _JobList = ({
     totalPages,
     onPageChange,
     labels,
-    className,
 }: JobListProps) => {
     // funnel popover open state — purely visual, needs no server/store/session (split.md's own test)
     const [filterOpen, setFilterOpen] = useState(false)
@@ -281,8 +329,11 @@ export const _JobList = ({
     )
 
     return (
-        <div data-tier="block" data-component="JobList" className={className}>
-            <Container size="md" padding={6} body={() => jobListBody} />
-        </div>
+        <Container
+            size="md"
+            padding={6}
+            body={() => jobListBody}
+            identity={{ tier: "block", component: "JobList" }}
+        />
     )
 }

@@ -273,59 +273,58 @@ export const _LessonReader = ({
     )
 
     return (
-        <div data-tier="block" data-component="LessonReader">
-            <StackV
-                gap={6}
-                items={[
-                    // 1. header — capped to the reading width; skeleton mirrors it while loading.
-                    () => (
-                        <Container
-                            size="md"
-                            padding={1}
-                            body={() => (isSkeleton ? <ContentHeaderSkeleton /> : <ContentHeader />)}
-                        />
-                    ),
-                    // 2. REAL tab bar — static chrome, shows immediately (never skeleton-ised).
-                    () => (
-                        <ContentTabBar
-                            tabItems={tabItems}
-                            selectedKey={selectedTabKey}
-                            ariaLabel={tabListAriaLabel}
-                            onSelectionChange={onTabChange}
-                            rightTabs={rightTabs}
-                        />
-                    ),
-                    // 3. body — skeleton mirrors the centered reading card while loading; the
-                    // footer/ad only ever render once real content is in hand (matches the
-                    // retired `AsyncContent`'s loading branch, which showed neither). Nested in
-                    // its OWN zero-gap track (`gap={1}` = `gap-0`) rather than a bare fragment —
-                    // a fragment would flatten into the outer track and pick up ITS `gap-6`
-                    // between the reading region, the footer and the ad, which the original
-                    // markup never had (they sat flush, each owning its own trailing space).
-                    () => (
-                        <StackV
-                            gap={1}
-                            items={[
-                                () => (isSkeleton ? (
-                                    <Container
-                                        size="md"
-                                        padding={1}
-                                        body={() => (
-                                            <SurfaceCard body={() => <ContentBodySkeleton variant="v2" />} />
-                                        )}
-                                    />
-                                ) : readingRegion),
-                                ...(!isSkeleton && !isLocked && !isFullWidthTab ? [() => footer] : []),
-                                ...(!isSkeleton && inlineAd && !isFullWidthTab ? [() => (
-                                    <Box className="pb-6">
-                                        <Container size="md" padding={1} body={() => <AdBanner ad={inlineAd} />} />
-                                    </Box>
-                                )] : []),
-                            ]}
-                        />
-                    ),
-                ]}
-            />
-        </div>
+        <StackV
+            gap={6}
+            identity={{ tier: "block", component: "LessonReader" }}
+            items={[
+                // 1. header — capped to the reading width; skeleton mirrors it while loading.
+                () => (
+                    <Container
+                        size="md"
+                        padding={1}
+                        body={() => (isSkeleton ? <ContentHeaderSkeleton /> : <ContentHeader />)}
+                    />
+                ),
+                // 2. REAL tab bar — static chrome, shows immediately (never skeleton-ised).
+                () => (
+                    <ContentTabBar
+                        tabItems={tabItems}
+                        selectedKey={selectedTabKey}
+                        ariaLabel={tabListAriaLabel}
+                        onSelectionChange={onTabChange}
+                        rightTabs={rightTabs}
+                    />
+                ),
+                // 3. body — skeleton mirrors the centered reading card while loading; the
+                // footer/ad only ever render once real content is in hand (matches the
+                // retired `AsyncContent`'s loading branch, which showed neither). Nested in
+                // its OWN zero-gap track (`gap={1}` = `gap-0`) rather than a bare fragment —
+                // a fragment would flatten into the outer track and pick up ITS `gap-6`
+                // between the reading region, the footer and the ad, which the original
+                // markup never had (they sat flush, each owning its own trailing space).
+                () => (
+                    <StackV
+                        gap={1}
+                        items={[
+                            () => (isSkeleton ? (
+                                <Container
+                                    size="md"
+                                    padding={1}
+                                    body={() => (
+                                        <SurfaceCard body={() => <ContentBodySkeleton variant="v2" />} />
+                                    )}
+                                />
+                            ) : readingRegion),
+                            ...(!isSkeleton && !isLocked && !isFullWidthTab ? [() => footer] : []),
+                            ...(!isSkeleton && inlineAd && !isFullWidthTab ? [() => (
+                                <Box className="pb-6">
+                                    <Container size="md" padding={1} body={() => <AdBanner ad={inlineAd} />} />
+                                </Box>
+                            )] : []),
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
 }

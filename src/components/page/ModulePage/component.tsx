@@ -10,6 +10,10 @@ import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/as
 import { Container } from "@/components/frames/Container"
 import { StackV } from "@/components/frames/Stack"
 import type { CourseContentTier } from "@/modules/types/enums/course-content-tier"
+import type { CallerIdentity } from "@/components/frames/_identity"
+
+/** This page's own identity — handed to whichever frame is standing in as its root (`_identity.ts`). */
+const PAGE_IDENTITY: CallerIdentity = { tier: "page", component: "ModulePage" }
 
 /**
  * `_ModulePage` — the SRC TWIN of `.storybook/components/starci/pages/
@@ -165,6 +169,7 @@ export const _ModulePage = ({
         <Container
             size="md"
             padding={6}
+            identity={PAGE_IDENTITY}
             body={() => (
                 <StackV
                     gap={7}
@@ -246,9 +251,5 @@ export const _ModulePage = ({
             ? <AsyncContentEmpty title={emptyTitle} icon={StackIcon} />
             : spine(isLoading)
 
-    return (
-        <div data-tier="page" data-component="ModulePage">
-            {inner}
-        </div>
-    )
+    return inner
 }

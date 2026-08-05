@@ -12,6 +12,7 @@ import { EmptyState, type EmptyStateIcon } from "@/components/composites/feedbac
 import { Button } from "@/components/atoms/buttons/Button"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -77,6 +78,15 @@ interface MessageProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
+    /**
+     * Caller identity to wear on this message frame's root instead of its own — pass this when
+     * a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
+     * is using this empty/error message AS its root element, instead of wrapping it in a raw
+     * `<div data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this frame keeps
+     * emitting no `data-tier`/`data-component` of its own, unchanged (the nested `EmptyState`
+     * still carries ITS OWN composite identity either way — composites always name themselves).
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -217,9 +227,12 @@ export type AsyncContentEmptyProps = MessageProps
  * @param props - {@link AsyncContentEmptyProps}
  */
 const Empty = (props: AsyncContentEmptyProps) => {
-    const { title, description, icon, classNames} = props
+    const { title, description, icon, classNames, identity } = props
+    // The caller's identity is FORWARDED to `EmptyState` — the element actually drawn here —
+    // never wrapped in a div of our own. A wrapper would be a shape this tier must not draw.
     return (
         <EmptyState
+            identity={identity}
             classNames={classNames}
             icon={withDuotone(icon ?? TrayIcon)}
             title={title}
@@ -246,9 +259,11 @@ export type AsyncContentErrorProps = MessageProps
  * @param props - {@link AsyncContentErrorProps}
  */
 const ErrorMessage = (props: AsyncContentErrorProps) => {
-    const { title, description, icon, classNames} = props
+    const { title, description, icon, classNames, identity } = props
+    // Forwarded, not wrapped — same reasoning as `Empty` above.
     return (
         <EmptyState
+            identity={identity}
             classNames={classNames}
             tone="danger"
             icon={withDuotone(icon ?? WarningIcon)}

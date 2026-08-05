@@ -1,13 +1,8 @@
 "use client"
 
-import React from "react"
-import {
-    Button,
-    Card,
-    CardContent,
-    Typography,
-    cn,
-} from "@heroui/react"
+import React, {
+    useCallback,
+} from "react"
 import {
     useLocale,
     useTranslations,
@@ -19,34 +14,18 @@ import {
     pathConfig,
 } from "@/resources/path"
 import {
-    ResumeCard,
-} from "./ResumeCard"
-import {
-    ContinueLearningSkeleton,
-} from "./ContinueLearningSkeleton"
-import {
     useResumeItems,
 } from "./useResumeItems"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-
-/** Props for {@link ContinueLearning}. */
-export type ContinueLearningProps = WithClassNames<undefined>
+import { _ContinueLearning } from "./component"
 
 /**
- * "Continue learning" content — the single most important next-action slot: a capped
- * set of resume cards, CONTENT-FIRST (recently-read lessons lead, mixed with at
- * most one in-progress challenge as a nudge). When the viewer has joined no course it shows an
- * onboarding CTA instead of an empty void. Content only (the parent
+ * "Continue learning" content — the CONNECTED half (see `tiers/split.md`): self-fetches
+ * its leaf queries via {@link useResumeItems}, resolves every label, and hands them to
+ * the presentational {@link _ContinueLearning}. Content only (the parent
  * {@link import("@/components/blocks").LabeledCard} frames it; the greeting lives
- * in the identity column). Self-fetches its own leaf queries (no data props).
- * @param props - optional className for the root element.
+ * in the identity column). Takes no props — self-contained, no escape hatch (BLOCK-4).
  */
-export const ContinueLearning = ({
-    className,
-}: ContinueLearningProps) => {
+export const ContinueLearning = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -56,45 +35,23 @@ export const ContinueLearning = ({
         isLoading,
     } = useResumeItems()
 
-    // the resume slot is loading → onboarding/cards (no generic empty: the "nothing
-    // to resume" case is a designed onboarding CTA, so it lives in the content branch,
-    // not AsyncContent's emptyContent). debug holds the skeleton ~3s for inspection.
+    /** Onboarding CTA — jumps to the course catalog. */
+    const onBrowseCourses = useCallback(
+        () => router.push(pathConfig().locale(locale).course().build()),
+        [router, locale],
+    )
+
     return (
-        <AsyncContent
-            isLoading={isLoading}
-            skeleton={<ContinueLearningSkeleton className={className} />}
-        >
-            <div className={cn("flex flex-col gap-3", className)}>
-                {/* resume cards, or an onboarding CTA when there is nothing to resume */}
-                {resumeItems.length > 0 ? (
-                    <div className="grid gap-3 @app-sm:grid-cols-2 @app-lg:grid-cols-3">
-                        {resumeItems.map((item) => (
-                            <ResumeCard
-                                key={item.globalId}
-                                item={item}
-                            />
-                        ))}
-                    </div>
-                ) : (
-                    // empty / onboarding: a real Card so it matches the framed sibling sections
-                    // (the parent LabeledCard is `frameless` for the self-framed resume cards).
-                    <Card>
-                        <CardContent className="flex flex-col items-start gap-3">
-                            <Typography type="body-sm" color="muted">
-                                {hasCourses
-                                    ? t("dashboard.continueResumeEmpty")
-                                    : t("dashboard.emptyCourses")}
-                            </Typography>
-                            <Button
-                                variant="primary"
-                                onPress={() => router.push(pathConfig().locale(locale).course().build())}
-                            >
-                                {t("dashboard.browseCourses")}
-                            </Button>
-                        </CardContent>
-                    </Card>
-                )}
-            </div>
-        </AsyncContent>
+        <_ContinueLearning
+            isSkeleton={isLoading}
+            resumeItems={resumeItems}
+            hasCourses={hasCourses}
+            onBrowseCourses={onBrowseCourses}
+            labels={{
+                resumeEmpty: t("dashboard.continueResumeEmpty"),
+                coursesEmpty: t("dashboard.emptyCourses"),
+                browseCourses: t("dashboard.browseCourses"),
+            }}
+        />
     )
 }

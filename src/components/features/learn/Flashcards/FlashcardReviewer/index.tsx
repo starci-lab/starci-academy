@@ -654,8 +654,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                                 </div>
                             ) : revealed ? (
                                 <SectionCard
-                                    withVerdict={{ enable: true, variant: "accent" }}
-                                    contentClassName="flex flex-col gap-3"
+                                    withVerdict={{ enable: true, variant: "accent" }}
                                 >
                                     <Label>{t("flashcard.review.rateHint")}</Label>
                                     <RatingBar

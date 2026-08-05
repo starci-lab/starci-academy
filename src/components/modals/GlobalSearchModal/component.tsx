@@ -213,15 +213,14 @@ export const _GlobalSearchModal = ({
     )
 
     return (
-        <div data-tier="overlay" data-component="GlobalSearchModal">
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                size="lg"
-                scroll="inside"
-                header={header}
-                body={body}
-            />
-        </div>
+        <ModalShell
+            identity={{ tier: "overlay", component: "GlobalSearchModal" }}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            size="lg"
+            scroll="inside"
+            header={header}
+            body={body}
+        />
     )
 }

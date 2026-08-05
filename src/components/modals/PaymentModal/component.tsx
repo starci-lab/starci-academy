@@ -557,15 +557,14 @@ const _PaymentModal = (props: PaymentModalProps) => {
     )
 
     return (
-        <div data-tier="overlay" data-component="PaymentModal">
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                title={labels.title}
-                size="sm"
-                body={body}
-            />
-        </div>
+        <ModalShell
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            title={labels.title}
+            size="sm"
+            body={body}
+            identity={{ tier: "overlay", component: "PaymentModal" }}
+        />
     )
 }
 

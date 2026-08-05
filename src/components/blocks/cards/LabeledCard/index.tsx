@@ -1,8 +1,12 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Card, CardContent, Label, cn } from "@heroui/react"
+import { Card, CardContent, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { SeeMoreLink } from "@/components/blocks/navigation/SeeMoreLink"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /** Props for the {@link LabeledCard} block. */
 export interface LabeledCardProps extends WithClassNames<undefined> {
@@ -73,6 +77,14 @@ export interface LabeledCardProps extends WithClassNames<undefined> {
      * convention for every other LabeledCard consumer.
      */
     bordered?: boolean
+    /**
+     * Caller identity to wear on this block's root `<section>` instead of its own — pass this
+     * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its
+     * own) is using this card AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this section keeps emitting
+     * no `data-tier`/`data-component` at all, unchanged (this block has no identity of its own).
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -100,54 +112,52 @@ export const LabeledCard = ({
     fillHeight = false,
     subtleLabel = false,
     bordered = false,
+    identity,
 }: LabeledCardProps) => {
+    // Right slot of the label row — action wins over onSeeMore, which wins over labelEnd.
+    const endSlot = action ?? (onSeeMore ? (
+        <SeeMoreLink onPress={onSeeMore} size={subtleLabel ? "xs" : "sm"}>
+            {seeMoreLabel}
+        </SeeMoreLink>
+    ) : labelEnd != null ? (
+        <Typography size={subtleLabel ? "xs" : "sm"} color="muted" classNames={["shrink-0"]} text={labelEnd} />
+    ) : null)
+    // Non-subtle label goes through the atom instead of HeroUI `Label`: `Label` renders
+    // exactly 14px/500/lh-20 = `size="sm" weight="medium"` (documented equivalence, see
+    // `composites/cards/SurfaceCard/surface-card-header.tsx`), so the shape is unchanged.
+    const labelSlot = subtleLabel ? (
+        <Typography size="xs" color="muted" truncate classNames={["min-w-0"]} text={label} />
+    ) : (
+        <Typography size="sm" weight="medium" classNames={["min-w-0"]} text={label} />
+    )
+    // card body: frameless = content is itself card(s) → no inner Card (avoid nesting)
+    const body = frameless ? (
+        <Box className={contentClassName}>{children}</Box>
+    ) : (
+        <Card
+            className={cn(
+                bordered && "border border-default",
+                fillHeight && "flex-1",
+                // root `.card` bakes p-4 — zero it here or flush children stay inset
+                flushContent && "gap-0 overflow-hidden p-0",
+            )}
+        >
+            <CardContent className={cn(flushContent && "p-0", fillHeight && "h-full", contentClassName)}>
+                {children}
+            </CardContent>
+        </Card>
+    )
     return (
         <section
+            {...resolveIdentity(identity)}
             data-principles={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", subtleLabel ? "gap-2" : "gap-3", fillHeight && "h-full", className)}
         >
-            <div className="flex items-center justify-between gap-3">
-                <div className="flex min-w-0 items-center gap-2">
-                    {subtleLabel ? (
-                        <span className="truncate text-xs text-muted">{label}</span>
-                    ) : (
-                        <Label>{label}</Label>
-                    )}
-                </div>
-                {action ?? (onSeeMore ? (
-                    <SeeMoreLink onPress={onSeeMore} size={subtleLabel ? "xs" : "sm"}>
-                        {seeMoreLabel}
-                    </SeeMoreLink>
-                ) : labelEnd != null ? (
-                    <span className={cn("shrink-0 text-muted", subtleLabel ? "text-xs" : "text-sm")}>{labelEnd}</span>
-                ) : null)}
-            </div>
-            {/* card body: frameless = content is itself card(s) → no inner Card (avoid nesting) */}
-            {(() => {
-                const body = frameless ? (
-                    <div className={cn(contentClassName)}>{children}</div>
-                ) : (
-                    <Card
-                        className={cn(
-                            bordered && "border border-default",
-                            fillHeight && "flex-1",
-                            // root `.card` bakes p-4 — zero it here or flush children stay inset
-                            flushContent && "gap-0 overflow-hidden p-0",
-                        )}
-                    >
-                        <CardContent className={cn(flushContent && "p-0", fillHeight && "h-full", contentClassName)}>
-                            {children}
-                        </CardContent>
-                    </Card>
-                )
-                // description sits OUTSIDE (below) the card, gap-2 — never surface-in-surface
-                return description != null ? (
-                    <div className="flex flex-col gap-2">
-                        {body}
-                        {description}
-                    </div>
-                ) : body
-            })()}
+            <StackH gap={4} justify="between" items={[() => labelSlot, () => endSlot]} />
+            {/* description sits OUTSIDE (below) the card, gap-2 — never surface-in-surface */}
+            {description != null ? (
+                <StackV gap={3} items={[() => body, () => description]} />
+            ) : body}
         </section>
     )
 }

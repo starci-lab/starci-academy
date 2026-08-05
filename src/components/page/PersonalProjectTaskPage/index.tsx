@@ -44,7 +44,9 @@ import {
  * wrapper, no `component.tsx` split) — mirrors `MindMapPage`'s convention.
  *
  * Emits its own identity (`data-tier="page"` / `data-component="PersonalProjectTaskPage"`)
- * unconditionally on its root, same as `MindMapPage`/`ModulePage` — see
+ * unconditionally, handed down to the root `Container` via its `identity` prop
+ * (see `frames/_identity.ts`) rather than drawn on a wrapper `div` of its own
+ * (`tiers/block.md` BLOCK-2: a page never draws a shape of its own) — same as
  * `split.md`'s "Identity is data-tier + data-component" section. The
  * breadcrumb sits in a `StackH inline` (shrink-to-content sizing) rather
  * than a raw `div`.
@@ -476,29 +478,28 @@ const PersonalProjectTaskPage = ({
     submissionPanelProps,
     isSkeleton = false,
 }: PersonalProjectTaskPageProps) => (
-    <div data-tier="page" data-component="PersonalProjectTaskPage">
-        <Container
-            size="xl"
-            padding={6}
-            body={() => (
-                <SplitWorkspace
+    <Container
+        identity={{ tier: "page", component: "PersonalProjectTaskPage" }}
+        size="xl"
+        padding={6}
+        body={() => (
+            <SplitWorkspace
 
-                    main={() => readingColumn({
-                        breadcrumbItems,
-                        task,
-                        isLocked,
-                        brief,
-                        legacyCriteria,
-                        legacyCodeImplementations,
-                        relatedItems,
-                        relatedLabel,
-                        isSkeleton,
-                    })}
-                    aside={() => submissionPanel({ panel: submissionPanelProps, isSkeleton })}
-                />
-            )}
-        />
-    </div>
+                main={() => readingColumn({
+                    breadcrumbItems,
+                    task,
+                    isLocked,
+                    brief,
+                    legacyCriteria,
+                    legacyCodeImplementations,
+                    relatedItems,
+                    relatedLabel,
+                    isSkeleton,
+                })}
+                aside={() => submissionPanel({ panel: submissionPanelProps, isSkeleton })}
+            />
+        )}
+    />
 )
 
 export { PersonalProjectTaskPage }

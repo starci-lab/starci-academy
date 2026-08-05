@@ -4,6 +4,7 @@ import { Typography } from "@/components/atoms/text/Typography"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { StackV } from "@/components/frames/Stack"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -80,6 +81,14 @@ interface EmptyStateOwnProps {
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
+    /**
+     * Caller identity to wear on this composite's root instead of its own — pass this when a
+     * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
+     * using this composite AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this composite keeps
+     * emitting its own `data-tier="composite" data-component="EmptyState"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -113,6 +122,7 @@ export const EmptyState = (props: EmptyStateProps) => {
         tone = "neutral",
         size = "default",
         classNames,
+        identity,
     } = props
     const isSkeleton = props.isSkeleton ?? false
     // Narrowed off the discriminant so `title` stays required in the live branch —
@@ -132,8 +142,7 @@ export const EmptyState = (props: EmptyStateProps) => {
         return (
             <span
                 className={cn("block", classNames)}
-                data-tier="composite"
-                data-component="EmptyState"
+                {...resolveIdentity(identity, { tier: "composite", name: "EmptyState" })}
             >
                 <Typography size="sm" color="muted" {...titleContent} />
             </span>
@@ -150,8 +159,7 @@ export const EmptyState = (props: EmptyStateProps) => {
                     : "flex flex-col items-center gap-3 py-6 text-center",
                 classNames,
             )}
-            data-tier="composite"
-            data-component="EmptyState"
+            {...resolveIdentity(identity, { tier: "composite", name: "EmptyState" })}
         >
             {code != null ? (
                 <div>

@@ -120,8 +120,10 @@ export const _CommunityCommentThread = ({
     }
 
     return (
-        <div data-tier="block" data-component="CommunityCommentThread">
-            <StackV gap={3} items={[
+        <StackV
+            gap={3}
+            identity={{ tier: "block", component: "CommunityCommentThread" }}
+            items={[
                 () => <Divider />,
                 ...(authenticated ? [() => (
                     <StackV gap={2} items={[
@@ -152,7 +154,7 @@ export const _CommunityCommentThread = ({
                     ]} />
                 )] : []),
                 () => listBody,
-            ]} />
-        </div>
+            ]}
+        />
     )
 }

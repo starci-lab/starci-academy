@@ -74,25 +74,24 @@ export const _FeedbackDetailsModal = ({
     isSkeleton = false,
     labels,
 }: FeedbackDetailsModalProps) => (
-    <div data-tier="overlay" data-component="FeedbackDetailsModal">
-        <ModalShell
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-            title={labels.title}
-            size="lg"
-            scroll="inside"
+    <ModalShell
+        identity={{ tier: "overlay", component: "FeedbackDetailsModal" }}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        title={labels.title}
+        size="lg"
+        scroll="inside"
 
-            body={() => (
-                <SubmissionFindingsList
-                    label={labels.findingsLabel}
-                    findings={findings}
-                    repositoryUrl={repositoryUrl}
-                    isEmpty={isEmpty}
-                    emptyLabel={labels.emptyLabel}
-                    isSkeleton={isSkeleton}
+        body={() => (
+            <SubmissionFindingsList
+                label={labels.findingsLabel}
+                findings={findings}
+                repositoryUrl={repositoryUrl}
+                isEmpty={isEmpty}
+                emptyLabel={labels.emptyLabel}
+                isSkeleton={isSkeleton}
 
-                />
-            )}
-        />
-    </div>
+            />
+        )}
+    />
 )

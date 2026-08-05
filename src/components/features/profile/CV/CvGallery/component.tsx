@@ -254,20 +254,19 @@ export const _CvGallery = ({
     }
 
     return (
-        <div data-tier="block" data-component="CvGallery">
-            <StackV
-                gap={7}
-                items={[
-                    ...(breadcrumb ? [() => (
-                        <PageHeader
-                            breadcrumb={breadcrumb}
-                            title={labels.pageTitle}
-                            description={labels.pageDescription}
-                        />
-                    )] : []),
-                    () => body,
-                ]}
-            />
-        </div>
+        <StackV
+            gap={7}
+            identity={{ tier: "block", component: "CvGallery" }}
+            items={[
+                ...(breadcrumb ? [() => (
+                    <PageHeader
+                        breadcrumb={breadcrumb}
+                        title={labels.pageTitle}
+                        description={labels.pageDescription}
+                    />
+                )] : []),
+                () => body,
+            ]}
+        />
     )
 }

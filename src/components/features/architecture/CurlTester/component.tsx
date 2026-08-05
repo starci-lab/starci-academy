@@ -21,7 +21,6 @@ export interface CurlTesterLabels {
 
 /** Props for {@link _CurlTester} — presentational; all data resolved, no fetch/store/i18n. */
 export interface CurlTesterProps {
-    className?: string
     /** The curl command to display and copy — already built by the connected half from the public GraphQL endpoint. */
     curlCommand: string
     /** True right after a successful copy — swaps the copy button's icon/label briefly. */
@@ -53,7 +52,6 @@ export interface CurlTesterProps {
  * @param props - {@link CurlTesterProps}
  */
 export const _CurlTester = ({
-    className,
     curlCommand,
     copied,
     onCopy,
@@ -63,8 +61,10 @@ export const _CurlTester = ({
     errorText,
     labels,
 }: CurlTesterProps) => (
-    <div data-tier="block" data-component="CurlTester" className={className}>
-        <StackV gap={3} items={[
+    <StackV
+        gap={3}
+        identity={{ tier: "block", component: "CurlTester" }}
+        items={[
             () => (
                 <StackV gap={2} items={[
                     () => (
@@ -110,6 +110,6 @@ export const _CurlTester = ({
                     {running ? <Skeleton.Paragraph lines={4} /> : <Typography size="code" text={result ?? ""} preserveWhitespace />}
                 </Box>
             )] : []),
-        ]} />
-    </div>
+        ]}
+    />
 )

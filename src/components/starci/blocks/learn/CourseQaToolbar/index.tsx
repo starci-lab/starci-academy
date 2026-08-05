@@ -45,6 +45,12 @@ export interface CourseQaToolbarProps {
     /** Accessible name for the filter tab row, localized by the caller (blocks carry no i18n). */
     filterAriaLabel: string
     /**
+     * Accessible name for the search field — `Input.Search`'s `ariaLabel` no
+     * longer defaults to English, so the caller must resolve and pass a
+     * translated string (blocks carry no i18n).
+     */
+    searchAriaLabel: string
+    /**
      * `true` → the result count shimmers instead of printing a number. Scoped to
      * the count only — see the file header for why the tabs and search field
      * never skeletonise.
@@ -65,6 +71,7 @@ const CourseQaToolbar = ({
     onSearchChange,
     resultCount,
     filterAriaLabel,
+    searchAriaLabel,
     isSkeleton = false,
 }: CourseQaToolbarProps) => {
     const items = FILTER_ORDER.map((value) => ({
@@ -79,7 +86,7 @@ const CourseQaToolbar = ({
                     value={searchValue}
                     onValueChange={onSearchChange}
                     placeholder="Search questions..."
-                    ariaLabel="Search questions"
+                    ariaLabel={searchAriaLabel}
 
                 />
             </div>
@@ -122,9 +129,12 @@ const CourseQaToolbar = ({
     )
 
     return (
-        <div>
-            <StackV gap={4} isSkeleton={isSkeleton} items={[() => strip]} />
-        </div>
+        <StackV
+            gap={4}
+            isSkeleton={isSkeleton}
+            items={[() => strip]}
+            identity={{ tier: "block", component: "CourseQaToolbar" }}
+        />
     )
 }
 

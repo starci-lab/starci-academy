@@ -10,6 +10,7 @@ import { HighlightCard } from "@/components/blocks/cards/HighlightCard"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { SeeMoreLink } from "@/components/blocks/navigation/SeeMoreLink"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * Shape of a {@link ContinueCard} — derived from what the surface IS, not from
@@ -98,6 +99,17 @@ export interface ContinueCardProps {
     onPress?: () => void
     /** Optional destination URL. Takes priority over {@link onPress}. */
     href?: string
+    /**
+     * Caller identity to wear on this card's root element instead of its own — pass this
+     * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its
+     * own) is using this card AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=… data-component=…>`. See `_identity.ts`. Forwarded to whichever element this
+     * card actually draws as its outer shape — the underlying `SectionCard`, or the `Box` that
+     * wraps it when `hero`'s watermark needs a clipped positioning context — never both, so the
+     * pair lands on exactly one element. Omitted → that element keeps emitting its own identity,
+     * unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -121,6 +133,7 @@ export const ContinueCard = ({
     urgent = false,
     onPress,
     href,
+    identity,
 }: ContinueCardProps) => {
     const isHero = variant === "hero"
     // A watermark icon needs (a) a positioning context sized to the card's own
@@ -190,8 +203,13 @@ export const ContinueCard = ({
         />
     )
 
+    // Identity lands on exactly ONE element — whichever this card actually draws as its
+    // outer shape. `hasWatermark` → the `Box` below is that element (it needs the clip/
+    // positioning context anyway), so `SectionCard` keeps ITS OWN identity nested inside
+    // instead of doubling the caller's pair onto two elements. Otherwise `SectionCard` IS
+    // that element, so it takes the caller's identity directly.
     const sectionCard = (
-        <SectionCard>
+        <SectionCard identity={hasWatermark ? undefined : identity}>
             {hasWatermark ? (
                 <Box
                     aria-hidden
@@ -209,7 +227,9 @@ export const ContinueCard = ({
     // The clip/positioning context the watermark needs (see `hasWatermark` above) —
     // scoped to just the card's own box so `HighlightCard`'s sweep (which
     // deliberately bleeds 2px past this same box) stays unclipped.
-    const cardNode = hasWatermark ? <Box className="relative overflow-hidden rounded-3xl">{sectionCard}</Box> : sectionCard
+    const cardNode = hasWatermark
+        ? <Box identity={identity} className="relative overflow-hidden rounded-3xl">{sectionCard}</Box>
+        : sectionCard
 
     // `hero` = the ONE "resume the in-progress session" standout on its surface — the
     // canonical `HighlightCard` case (`card.md` §3j). `item` stays a static frame

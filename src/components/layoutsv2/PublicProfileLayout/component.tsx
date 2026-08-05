@@ -152,37 +152,31 @@ const _PublicProfileLayout = ({
 
     if (isLoading) {
         return (
-            <div data-tier="layout" data-component="PublicProfileLayout">
-                <ProfileLoadingState
-
-                />
-            </div>
+            <ProfileLoadingState
+                identity={{ tier: "layout", component: "PublicProfileLayout" }}
+            />
         )
     }
 
     if (!user) {
         return (
-            <div data-tier="layout" data-component="PublicProfileLayout">
-                <ProfileNotFoundState
-                    title={NOT_FOUND_TITLE}
-                    description={NOT_FOUND_DESCRIPTION}
-                    onGoHome={onGoHome}
-
-                />
-            </div>
+            <ProfileNotFoundState
+                title={NOT_FOUND_TITLE}
+                description={NOT_FOUND_DESCRIPTION}
+                onGoHome={onGoHome}
+                identity={{ tier: "layout", component: "PublicProfileLayout" }}
+            />
         )
     }
 
     // Locked profile viewed by a non-owner — mirrors the real `isLocked = Boolean(user?.profileLocked) && !isSelf`.
     if (user.profileLocked && !isSelf) {
         return (
-            <div data-tier="layout" data-component="PublicProfileLayout">
-                <ProfileLockedState
-                    user={user}
-                    onGoCourses={onGoCourses}
-
-                />
-            </div>
+            <ProfileLockedState
+                user={user}
+                onGoCourses={onGoCourses}
+                identity={{ tier: "layout", component: "PublicProfileLayout" }}
+            />
         )
     }
 
@@ -236,13 +230,11 @@ const _PublicProfileLayout = ({
     ]
 
     return (
-        <div data-tier="layout" data-component="PublicProfileLayout">
-            <StackV
-                gap={1}
-
-                items={tabsAndBody}
-            />
-        </div>
+        <StackV
+            gap={1}
+            identity={{ tier: "layout", component: "PublicProfileLayout" }}
+            items={tabsAndBody}
+        />
     )
 }
 

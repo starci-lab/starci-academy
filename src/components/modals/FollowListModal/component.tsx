@@ -222,14 +222,13 @@ export const _FollowListModal = ({
     )
 
     return (
-        <div data-tier="overlay" data-component="FollowListModal">
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                size="sm"
-                title={labels.title}
-                body={modalBody}
-            />
-        </div>
+        <ModalShell
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            size="sm"
+            title={labels.title}
+            body={modalBody}
+            identity={{ tier: "overlay", component: "FollowListModal" }}
+        />
     )
 }

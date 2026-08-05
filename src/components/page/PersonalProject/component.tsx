@@ -259,21 +259,20 @@ export const _PersonalProject = ({
             : spine(isLoading)
 
     return (
-        <div data-tier="page" data-component="PersonalProject">
-            <StackV
-                gap={6}
-                items={[
-                    () => (
-                        <PageHeader
-                            breadcrumb={BreadcrumbSlot}
-                            title={title}
-                            description={description}
-                            meta={MetaChip}
-                        />
-                    ),
-                    () => body,
-                ]}
-            />
-        </div>
+        <StackV
+            gap={6}
+            identity={{ tier: "page", component: "PersonalProject" }}
+            items={[
+                () => (
+                    <PageHeader
+                        breadcrumb={BreadcrumbSlot}
+                        title={title}
+                        description={description}
+                        meta={MetaChip}
+                    />
+                ),
+                () => body,
+            ]}
+        />
     )
 }

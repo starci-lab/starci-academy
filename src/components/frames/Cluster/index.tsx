@@ -5,6 +5,7 @@ import { Divider } from "@/components/atoms/display/Divider"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { ALIGN_CLASS, gapClassNames, JUSTIFY_CLASS, type AllowedGap, type LayoutAlign, type LayoutJustify, type Responsive } from "@/components/frames/_spacing"
 import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -75,6 +76,14 @@ export interface ClusterBaseProps {
     principles?: Array<PrincipleToken>
     /** `true` mounts every item in its loading state. */
     isSkeleton?: boolean
+    /**
+     * Caller identity to wear on this track's root instead of `Cluster`'s own — pass this when a
+     * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
+     * using this track AS its root element, instead of wrapping it in a raw `<div data-tier=…
+     * data-component=…>`. See `_identity.ts`. Omitted → this track keeps emitting
+     * `data-tier="frame" data-component="Cluster"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -92,10 +101,10 @@ const ClusterBase = ({
     separator = false,
     classNames,
     principles,
-    isSkeleton}: ClusterBaseProps) => (
+    isSkeleton,
+    identity}: ClusterBaseProps) => (
     <div
-        data-tier="frame"
-        data-component="Cluster"
+        {...resolveIdentity(identity, { tier: "frame", name: "Cluster" })}
         data-principles={principlesAttr(principles)}
         className={cn(
             "flex flex-wrap",

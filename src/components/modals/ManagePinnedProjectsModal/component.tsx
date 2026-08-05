@@ -1,17 +1,68 @@
 import React, { useState } from "react"
 import { ModalShell } from "@/components/composites/layout/ModalShell"
+import { Button } from "@/components/atoms/buttons/Button"
 import { Tabs } from "@/components/atoms/navigation/Tabs"
 import { Typography } from "@/components/atoms/text/Typography"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { Box } from "@/components/frames/Box"
+import { Cluster } from "@/components/frames/Cluster"
 import { StackV } from "@/components/frames/Stack"
 import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 import { PinnedProjectCard, type PinnedProjectCardLabels } from "./PinnedProjectCard"
-import { ManagePinnedListSkeleton } from "./ManagePinnedListSkeleton"
 import { ExternalProjectForm } from "./ExternalProjectForm"
 import { CourseProjectForm } from "./CourseProjectForm"
 import type { QueryUserPinnedProjectItem } from "@/modules/api/graphql/queries/types/user-pinned-projects"
 
 /** Tabs inside the manage-pinned-projects modal. */
 type ManagePinsTab = "manage" | "external" | "course"
+
+/** Rows shown while the owner's pinned list is first loading. */
+const SKELETON_ROW_COUNT = 3
+/** Icon-only footer actions a manage-mode card shows (move-up, move-down, open, remove). */
+const SKELETON_BUTTON_COUNT = 4
+
+/**
+ * Loading mirror for the "manage" tab's pin list — mirrors {@link PinnedProjectCard}'s
+ * `MediaCard` shape (cover, title, meta chip row, description, and a 4-button
+ * footer) row-for-row so the tab does not jump when data resolves. Co-located
+ * right here (not a separate hand-kept file) since `PinnedProjectCard` takes
+ * no `isSkeleton` prop of its own to thread through (`loading-and-skeleton.md`).
+ */
+const ManagePinnedListSkeleton = () => (
+    <StackV
+        gap={4}
+        items={Array.from({ length: SKELETON_ROW_COUNT }).map(() => () => (
+            <Box className="card">
+                <StackV
+                    gap={4}
+                    items={[
+                        () => <Skeleton className="aspect-video w-full rounded-xl" />,
+                        () => <Skeleton.Typography width="1/2" />,
+                        () => (
+                            <Cluster
+                                gap={3}
+                                items={[
+                                    () => <Skeleton.Chip />,
+                                    () => <Skeleton.Chip />,
+                                ]}
+                            />
+                        ),
+                        () => <Skeleton.Typography type="body-sm" width="full" />,
+                        () => <Skeleton.Typography type="body-sm" width="2/3" />,
+                        () => (
+                            <Cluster
+                                gap={3}
+                                items={Array.from({ length: SKELETON_BUTTON_COUNT }).map(() => () => (
+                                    <Button isSkeleton isIconOnly size="sm" />
+                                ))}
+                            />
+                        ),
+                    ]}
+                />
+            </Box>
+        ))}
+    />
+)
 
 /** Already-translated strings {@link _ManagePinnedProjectsModal} renders — resolved by the connected `ManagePinnedProjectsModal`, never `t()` itself. */
 export interface ManagePinnedProjectsModalLabels {
@@ -119,41 +170,40 @@ export const _ManagePinnedProjectsModal = ({
     )
 
     return (
-        <div data-tier="overlay" data-component="ManagePinnedProjectsModal">
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                size="lg"
-                title={labels.manageTitle}
-                body={() => (
-                    <StackV
-                        gap={5}
-                        items={[
-                            () => (
-                                <Tabs
-                                    items={[
-                                        { key: "manage", label: labels.tabManage },
-                                        { key: "external", label: labels.tabExternal, isDisabled: isFull },
-                                        { key: "course", label: labels.tabCourse, isDisabled: isFull },
-                                    ]}
-                                    selectedKey={tab}
-                                    onSelectionChange={(key) => setTab(key as ManagePinsTab)}
-                                    ariaLabel={labels.manageTitle}
-                                />
-                            ),
-                            () => {
-                                if (tab === "external") {
-                                    return <ExternalProjectForm onSuccess={backToManage} />
-                                }
-                                if (tab === "course") {
-                                    return <CourseProjectForm onSuccess={backToManage} />
-                                }
-                                return manageBody
-                            },
-                        ]}
-                    />
-                )}
-            />
-        </div>
+        <ModalShell
+            identity={{ tier: "overlay", component: "ManagePinnedProjectsModal" }}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            size="lg"
+            title={labels.manageTitle}
+            body={() => (
+                <StackV
+                    gap={5}
+                    items={[
+                        () => (
+                            <Tabs
+                                items={[
+                                    { key: "manage", label: labels.tabManage },
+                                    { key: "external", label: labels.tabExternal, isDisabled: isFull },
+                                    { key: "course", label: labels.tabCourse, isDisabled: isFull },
+                                ]}
+                                selectedKey={tab}
+                                onSelectionChange={(key) => setTab(key as ManagePinsTab)}
+                                ariaLabel={labels.manageTitle}
+                            />
+                        ),
+                        () => {
+                            if (tab === "external") {
+                                return <ExternalProjectForm onSuccess={backToManage} />
+                            }
+                            if (tab === "course") {
+                                return <CourseProjectForm onSuccess={backToManage} />
+                            }
+                            return manageBody
+                        },
+                    ]}
+                />
+            )}
+        />
     )
 }

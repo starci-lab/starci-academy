@@ -265,7 +265,7 @@ const InputDate = ({
     maxValue,
     isDisabled,
     isInvalid,
-    ariaLabel = "Pick a date",
+    ariaLabel,
     isSkeleton,
     classNames,
     label,
@@ -279,7 +279,8 @@ const InputDate = ({
     maxValue?: DateValue
     isDisabled?: boolean
     isInvalid?: boolean
-    ariaLabel?: string
+    /** Accessible name for the field and its calendar popover — no English fallback, callers must pass a translated string. */
+    ariaLabel: string
     isSkeleton?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
@@ -325,6 +326,12 @@ const InputDate = ({
     )
 }
 
+/** Props for {@link InputSearch}. */
+type InputSearchProps = StringFieldProps & {
+    /** Accessible name for the search field — no English fallback, callers must pass a translated string. */
+    ariaLabel: string
+}
+
 /** `InputSearch` — search field (HeroUI SearchField: leading icon + built-in clear). */
 const InputSearch = ({
     value,
@@ -332,14 +339,14 @@ const InputSearch = ({
     placeholder,
     isDisabled,
     isInvalid,
-    ariaLabel = "Search",
+    ariaLabel,
     isSkeleton,
     classNames,
     label,
     hint,
     errorMessage,
     isRequired,
-}: StringFieldProps) => {
+}: InputSearchProps) => {
     const controlId = useId()
     const invalid = isInvalid || errorMessage != null
     return (
@@ -374,10 +381,10 @@ const InputSearch = ({
 
 /** Props for {@link InputPassword}. */
 type InputPasswordProps = StringFieldProps & {
-    /** Accessible name for the toggle button when it would reveal the password. @default "Show password" */
-    revealLabel?: string
-    /** Accessible name for the toggle button when it would hide the password. @default "Hide password" */
-    hideLabel?: string
+    /** Accessible name for the toggle button when it would reveal the password — no English fallback, callers must pass a translated string. */
+    revealLabel: string
+    /** Accessible name for the toggle button when it would hide the password — no English fallback, callers must pass a translated string. */
+    hideLabel: string
 }
 
 /** `InputPassword` — masked text with a reveal/hide button (Phosphor EyeIcon/EyeSlashIcon). */
@@ -394,8 +401,8 @@ const InputPassword = ({
     hint,
     errorMessage,
     isRequired,
-    revealLabel = "Show password",
-    hideLabel = "Hide password",
+    revealLabel,
+    hideLabel,
 }: InputPasswordProps) => {
     const [reveal, setReveal] = useState(false)
     const controlId = useId()
@@ -516,7 +523,7 @@ const InputTime = ({
     onValueChange,
     isDisabled,
     isInvalid,
-    ariaLabel = "Pick a time",
+    ariaLabel,
     isSkeleton,
     classNames,
     label,
@@ -528,7 +535,8 @@ const InputTime = ({
     onValueChange: (value: TimeValue | null) => void
     isDisabled?: boolean
     isInvalid?: boolean
-    ariaLabel?: string
+    /** Accessible name for the field — no English fallback, callers must pass a translated string. */
+    ariaLabel: string
     isSkeleton?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.

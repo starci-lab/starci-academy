@@ -108,11 +108,14 @@ export const _BlogPost = ({
     )
 
     const shell = (region: React.ReactNode) => (
-        <div data-tier="block" data-component="BlogPost">
-            <Container size="md" padding={6} body={() => (
+        <Container
+            size="md"
+            padding={6}
+            identity={{ tier: "block", component: "BlogPost" }}
+            body={() => (
                 <StackV gap={6} items={[backLink, () => region]} />
-            )} />
-        </div>
+            )}
+        />
     )
 
     // error beats a stale loading flag; not-found only once settled
@@ -186,11 +189,17 @@ export const _BlogPost = ({
     )
 
     return (
-        <div data-tier="block" data-component="BlogPost">
+        <>
             {!isSkeleton && <ReadingProgress />}
-            <Container size="md" padding={6} isSkeleton={isSkeleton} body={() => (
-                <StackV gap={6} items={[backLink, () => articleTree]} />
-            )} />
-        </div>
+            <Container
+                size="md"
+                padding={6}
+                isSkeleton={isSkeleton}
+                identity={{ tier: "block", component: "BlogPost" }}
+                body={() => (
+                    <StackV gap={6} items={[backLink, () => articleTree]} />
+                )}
+            />
+        </>
     )
 }

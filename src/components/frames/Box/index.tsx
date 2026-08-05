@@ -1,18 +1,9 @@
 import type { CSSProperties, ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
-/**
- * `Box` — the ESCAPE-HATCH primitive: a single element that takes raw `className`
- * (appearance the frames deliberately can't carry — `border`/`bg`/`rounded`/`shadow`,
- * a 3rd-party mount point like Mermaid/PDF/code-highlight) AND declares its spacing
- * via `principles` so the node is still measurable by the rendered-tree test.
- *
- * Use ONLY where a real frame can't reach: a composite wrapping a foreign library, or
- * a skin surface. Blocks/pages should NOT reach for `Box` — they compose frames +
- * atoms (`Divider` for a rule, `SurfaceCard` for a skin surface); a raw skin box in a
- * block is the sign it should be an atom/composite instead.
- */
+/** Props for {@link Box}. */
 export interface BoxProps {
     /** Layout/seam tokens this element embodies → emitted as `data-principles`. */
     principles?: Array<PrincipleToken>
@@ -25,15 +16,33 @@ export interface BoxProps {
     /** Native `aria-hidden`, forwarded straight to the rendered tag. */
     "aria-hidden"?: boolean
     children?: ReactNode
+    /**
+     * Caller identity to wear on this element instead of `Box`'s own — pass this when a
+     * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
+     * using this element AS its root element, instead of wrapping it in a raw `<div data-tier=…
+     * data-component=…>`. See `_identity.ts`. Omitted → this element keeps emitting its own
+     * `data-tier="frame" data-component="Box"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /** Source-level tier metadata. */
 export const meta = { tier: "frame", name: "Box" } as const
 
-export const Box = ({ principles, className, as: Tag = "div", style, "aria-hidden": ariaHidden, children }: BoxProps) => (
+/**
+ * `Box` — the ESCAPE-HATCH primitive: a single element that takes raw `className`
+ * (appearance the frames deliberately can't carry — `border`/`bg`/`rounded`/`shadow`,
+ * a 3rd-party mount point like Mermaid/PDF/code-highlight) AND declares its spacing
+ * via `principles` so the node is still measurable by the rendered-tree test.
+ *
+ * Use ONLY where a real frame can't reach: a composite wrapping a foreign library, or
+ * a skin surface. Blocks/pages should NOT reach for `Box` — they compose frames +
+ * atoms (`Divider` for a rule, `SurfaceCard` for a skin surface); a raw skin box in a
+ * block is the sign it should be an atom/composite instead.
+ */
+export const Box = ({ principles, className, as: Tag = "div", style, "aria-hidden": ariaHidden, children, identity }: BoxProps) => (
     <Tag
-        data-tier="frame"
-        data-component="Box"
+        {...resolveIdentity(identity, meta)}
         data-principles={principlesAttr(principles)}
         className={cn(className)}
         style={style}

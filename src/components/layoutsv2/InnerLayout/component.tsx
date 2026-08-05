@@ -4,6 +4,7 @@ import { Navbar, type NavbarProps } from "@/components/starci/blocks/navigation/
 import { Footer, type FooterProps } from "@/components/starci/blocks/navigation/Footer"
 import { StackV } from "@/components/frames/Stack"
 import { PinnedTrack } from "@/components/frames/PinnedTrack"
+import { Box } from "@/components/frames/Box"
 
 /**
  * `InnerLayout` — the wrapper for every route in the app. `children` is a real
@@ -74,11 +75,9 @@ const _InnerLayout = ({
     ]
 
     return (
-        <div data-tier="layout" data-component="InnerLayout">
-            <div className="min-h-dvh">
-                <StackV gap={1} items={trackAndFooter} />
-            </div>
-        </div>
+        <Box className="min-h-dvh" identity={{ tier: "layout", component: "InnerLayout" }}>
+            <StackV gap={1} items={trackAndFooter} />
+        </Box>
     )
 }
 

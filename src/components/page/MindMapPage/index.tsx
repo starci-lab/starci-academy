@@ -10,6 +10,7 @@ import { ResizableRail } from "@/components/behaviors/ResizableRail"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { Stage } from "@/components/frames/Stage"
 import { ScrollArea } from "@/components/frames/ScrollArea"
+import type { CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * SCREEN — `MindMapPage`: the course keyword graph, in its two real shapes.
@@ -113,6 +114,9 @@ const CANVAS_GAP_LOADING_TITLE = "Loading map…"
 const WORKSPACE_EMPTY_TITLE = "This course has no concept map yet"
 const WORKSPACE_EMPTY_DESCRIPTION = "The map is generated automatically once the course has enough modules — check back later."
 
+/** This screen's own identity — handed down to whichever `Stage` is the root, per branch, instead of a wrapping div (BLOCK-2). See `_identity.ts`. */
+const MIND_MAP_PAGE_IDENTITY: CallerIdentity = { tier: "page", component: "MindMapPage" }
+
 /** Props for the {@link MindMapCanvasGap} stand-in below. */
 interface MindMapCanvasGapProps {
     isLoading?: boolean
@@ -151,6 +155,7 @@ const MindMapCanvasGap = ({ isLoading = false}: MindMapCanvasGapProps) => (
 const MindMapWorkspaceEmpty = () => (
     <Stage
         fill="viewport"
+        identity={MIND_MAP_PAGE_IDENTITY}
         canvas={() => (
             <StackV
                 gap={1}
@@ -339,6 +344,7 @@ const MindMapPage = ({
             <Stage
                 fill="viewport"
                 isSkeleton={isSkeleton}
+                identity={MIND_MAP_PAGE_IDENTITY}
                 canvas={({ isSkeleton }: SkeletonProps) => (
                     <StackH gap={1} isSkeleton={isSkeleton} items={[() => workspaceSections]} />
                 )}
@@ -346,15 +352,9 @@ const MindMapPage = ({
         )
     }
 
-    const inner = variant === "workspace" && isEmpty
+    return variant === "workspace" && isEmpty
         ? <MindMapWorkspaceEmpty />
         : workspace()
-
-    return (
-        <div data-tier="page" data-component="MindMapPage">
-            {inner}
-        </div>
-    )
 }
 
 export { MindMapPage }

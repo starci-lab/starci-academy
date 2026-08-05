@@ -3,6 +3,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { gapClassNames, type AllowedGap, type Responsive } from "@/components/frames/_spacing"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -128,6 +129,14 @@ export interface GridBaseProps {
     principles?: Array<PrincipleToken>
     /** Renders every cell's skeleton form instead of its content form. */
     isSkeleton?: boolean
+    /**
+     * Caller identity to wear on this grid's root instead of the frame's own — pass this when a
+     * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
+     * using this grid AS its root element, instead of wrapping it in a raw `<div data-tier=…
+     * data-component=…>`. See `_identity.ts`. Omitted → this grid keeps emitting its own
+     * `data-tier="frame" data-component="Grid"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -136,10 +145,9 @@ export interface GridBaseProps {
  *
  * @param props - {@link GridBaseProps}
  */
-const GridBase = ({ items, columns, gap, classNames, principles, isSkeleton }: GridBaseProps) => (
+const GridBase = ({ items, columns, gap, classNames, principles, isSkeleton, identity }: GridBaseProps) => (
     <div
-        data-tier="frame"
-        data-component="Grid"
+        {...resolveIdentity(identity, { tier: "frame", name: "Grid" })}
         data-principles={principlesAttr(principles)}
         className={cn(
             "grid",

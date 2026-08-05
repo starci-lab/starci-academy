@@ -183,14 +183,13 @@ export const _SubmissionResultHistoryDrawer = ({
     ]
 
     return (
-        <div data-tier="overlay" data-component="SubmissionResultHistoryDrawer">
-            <DrawerShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                placement={isMobile ? "bottom" : "right"}
-                title={`${labels.historyLabel} · ${rows.length}`}
-                body={() => <StackV gap={4} items={listAndPager} />}
-            />
-        </div>
+        <DrawerShell
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            placement={isMobile ? "bottom" : "right"}
+            title={`${labels.historyLabel} · ${rows.length}`}
+            body={() => <StackV gap={4} items={listAndPager} />}
+            identity={{ tier: "overlay", component: "SubmissionResultHistoryDrawer" }}
+        />
     )
 }

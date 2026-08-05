@@ -1,5 +1,5 @@
 import React from "react"
-import type { ComponentType } from "react"
+import type { ComponentType, SVGProps } from "react"
 import { SiFacebook as FacebookLogoIcon, SiTelegram as TelegramLogoIcon, SiX as TwitterLogoIcon } from "@icons-pack/react-simple-icons"
 import { FaLinkedin as LinkedinLogoIcon } from "react-icons/fa6"
 import { ModalShell } from "@/components/composites/layout/ModalShell"
@@ -58,7 +58,7 @@ interface SharePlatform {
     /** Proper noun — not translated. Doubles as the link's accessible name. */
     label: string
     /** Brand glyph, rendered at a fixed size + the brand's own colour. */
-    icon: ComponentType<{ className?: string }>
+    icon: ComponentType<SVGProps<SVGSVGElement>>
     /** Brand colour class — fixed per platform, not a house token (brand marks keep their own colour). */
     colorClassName: string
     /** Builds the platform's share-intent URL from the resolved `shareUrl`/`shareTitle`. */
@@ -161,17 +161,16 @@ export const _ShareModal = ({
     ]
 
     return (
-        <div data-tier="overlay" data-component="ShareModal">
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                title={labels.share}
-                size="md"
-                // Matches the original's silence when nothing is loaded yet — no
-                // empty-state copy ever shipped for this edge case, so none is
-                // invented here (file header).
-                body={isEmpty ? undefined : () => <StackV gap={6} align="center" items={shareBody} />}
-            />
-        </div>
+        <ModalShell
+            identity={{ tier: "overlay", component: "ShareModal" }}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            title={labels.share}
+            size="md"
+            // Matches the original's silence when nothing is loaded yet — no
+            // empty-state copy ever shipped for this edge case, so none is
+            // invented here (file header).
+            body={isEmpty ? undefined : () => <StackV gap={6} align="center" items={shareBody} />}
+        />
     )
 }

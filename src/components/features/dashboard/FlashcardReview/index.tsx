@@ -2,10 +2,6 @@
 
 import React from "react"
 import {
-    cn,
-    Button,
-} from "@heroui/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -13,73 +9,41 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    CardsIcon as LayersIcon,
-} from "@phosphor-icons/react"
-import {
     pathConfig,
 } from "@/resources/path"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryMyDueFlashcardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDueFlashcardsSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-
-/** Props for {@link FlashcardReview}. */
-export type FlashcardReviewProps = WithClassNames<undefined>
+import { _FlashcardReview } from "./component"
 
 /**
- * Centre-column "flashcards due today" nudge. Surfaces the SM-2 spaced-repetition
- * backlog (`dueCount`) right on the home surface with a primary CTA into the
- * dedicated review page. Self-fetches its own leaf query and hides entirely when
- * nothing is due (or while the count is still loading).
- * @param props - optional className for the root element.
+ * Centre-column "flashcards due today" nudge — the CONNECTED half. Surfaces
+ * the SM-2 spaced-repetition backlog (`dueCount`) right on the home surface
+ * with a primary CTA into the dedicated review page. Self-fetches its own
+ * leaf query, resolves every label, and hands them to the presentational
+ * {@link _FlashcardReview}. See `tiers/split.md`.
  */
-export const FlashcardReview = ({
-    className,
-}: FlashcardReviewProps) => {
+export const FlashcardReview = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
     const { data, error, isLoading } = useQueryMyDueFlashcardsSwr()
 
-    // SECONDARY widget, no label: nothing due, still loading (no cache), or fetch failed → self-hide
-    // (folded into `isEmpty` since AsyncContent's error branch needs an explicit errorContent).
+    const dueCount = data?.dueCount ?? 0
+
     return (
-        <AsyncContent
-            isLoading={isLoading && !data}
-            skeleton={(
-                <div className={cn("flex items-center justify-between gap-3 p-3", className)}>
-                    <div className="flex min-w-0 items-center gap-2">
-                        <Skeleton className="size-5 shrink-0 rounded-medium" />
-                        <Skeleton.Typography type="body-sm" width="3/4" />
-                    </div>
-                    <Skeleton.Button />
-                </div>
+        <_FlashcardReview
+            // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
+            isSkeleton={isLoading && !data}
+            // SECONDARY widget, no error voice of its own: nothing due, still loading (no
+            // cache), or the fetch failed → self-hide (same condition the old `AsyncContent`
+            // `isEmpty` folded `error` into, since no `errorContent` was ever passed).
+            isEmpty={!!error || !data || dueCount === 0}
+            onStartReview={() => router.push(
+                pathConfig().locale(locale).review().build(),
             )}
-            isEmpty={!!error || !data || data.dueCount === 0}
-        >
-            <div className={cn("flex items-center justify-between gap-3 p-3", className)}>
-                <div className="flex min-w-0 items-center gap-2">
-                    <LayersIcon className="size-5 shrink-0 text-accent-soft-foreground" />
-                    <span className="truncate text-sm font-medium text-foreground">
-                        {t("flashcardReview.due", {
-                            count: data?.dueCount ?? 0,
-                        })}
-                    </span>
-                </div>
-                <Button
-                    variant="primary"
-                    size="sm"
-                    onPress={() => router.push(
-                        pathConfig().locale(locale).review().build(),
-                    )}
-                >
-                    {t("flashcardReview.startWithCount", {
-                        count: data?.dueCount ?? 0,
-                    })}
-                </Button>
-            </div>
-        </AsyncContent>
+            labels={{
+                due: t("flashcardReview.due", { count: dueCount }),
+                startWithCount: t("flashcardReview.startWithCount", { count: dueCount }),
+            }}
+        />
     )
 }

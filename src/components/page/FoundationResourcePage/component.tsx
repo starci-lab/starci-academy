@@ -172,9 +172,15 @@ const _FoundationResourcePage = ({
     )
 
     return (
-        <div data-tier="page" data-component="FoundationResourcePage">
-            <Container size="md" padding={6} isSkeleton={isSkeleton} body={resourceBody} />
-        </div>
+        <Container
+
+            identity={{ tier: "page", component: "FoundationResourcePage" }}
+            size="md"
+            padding={6}
+            isSkeleton={isSkeleton}
+            body={resourceBody}
+
+        />
     )
 }
 

@@ -50,19 +50,19 @@ export const _AuthenticationModal = ({ isOpen, onOpenChange, tab }: Authenticati
         }
     }
     return (
-        <div data-tier="overlay" data-component="AuthenticationModal">
-            <Modal
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-            >
-                <Modal.Backdrop>
-                    <Modal.Container size="xs">
-                        <Modal.Dialog>
-                            {renderSection()}
-                        </Modal.Dialog>
-                    </Modal.Container>
-                </Modal.Backdrop>
-            </Modal>
-        </div>
+        <Modal
+            data-tier="overlay"
+            data-component="AuthenticationModal"
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+        >
+            <Modal.Backdrop>
+                <Modal.Container size="xs">
+                    <Modal.Dialog>
+                        {renderSection()}
+                    </Modal.Dialog>
+                </Modal.Container>
+            </Modal.Backdrop>
+        </Modal>
     )
 }

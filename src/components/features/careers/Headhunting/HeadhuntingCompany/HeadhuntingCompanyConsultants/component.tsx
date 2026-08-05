@@ -99,8 +99,11 @@ export const _HeadhuntingCompanyConsultants = ({
         }))
 
     return (
-        <div data-tier="block" data-component="HeadhuntingCompanyConsultants">
-            <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={3} items={items} />
-        </div>
+        <Grid
+            identity={{ tier: "block", component: "HeadhuntingCompanyConsultants" }}
+            columns={{ base: 1, sm: 2, lg: 3 }}
+            gap={3}
+            items={items}
+        />
     )
 }

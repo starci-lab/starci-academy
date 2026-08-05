@@ -2,6 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -51,6 +52,14 @@ export interface ScrollAreaProps {
      * A frame does not KNOW its pattern — the caller does — so it is passed in.
      */
     principles?: Array<PrincipleToken>
+    /**
+     * Caller identity to wear on this region's root instead of the frame's own — pass this when
+     * a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
+     * is using this region AS its root element, instead of wrapping it in a raw `<div
+     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this region keeps emitting
+     * its own `data-tier="frame" data-component="ScrollArea"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /** {@link ScrollAreaAxis} → literal `overflow-*` class. */
@@ -70,10 +79,10 @@ const ScrollArea = ({
     axis = "y",
     isSkeleton,
     classNames,
-    principles}: ScrollAreaProps) => (
+    principles,
+    identity}: ScrollAreaProps) => (
     <div
-        data-tier="frame"
-        data-component="ScrollArea"
+        {...resolveIdentity(identity, { tier: "frame", name: "ScrollArea" })}
         data-principles={principlesAttr(principles)}
         className={cn(AXIS_CLASS[axis], classNames)}
     >

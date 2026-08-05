@@ -197,8 +197,11 @@ const _BlogList = ({
     }
 
     return (
-        <div data-tier="block" data-component="BlogList">
-            <Container size="md" padding={6} body={() => (
+        <Container
+            identity={{ tier: "block", component: "BlogList" }}
+            size="md"
+            padding={6}
+            body={() => (
                 <StackV gap={6} items={[
                     () => <Masthead />,
                     () => (
@@ -222,8 +225,8 @@ const _BlogList = ({
                         ]} />
                     ),
                 ]} />
-            )} />
-        </div>
+            )}
+        />
     )
 }
 

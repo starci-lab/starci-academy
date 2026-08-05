@@ -2,6 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -81,6 +82,12 @@ export interface PinnedTrackProps {
      * A frame does not KNOW its pattern — the caller does — so it is passed in.
      */
     principles?: Array<PrincipleToken>
+    /**
+     * Set when a sentence-tier component roots on this frame: the track then emits
+     * THAT component's identity instead of its own, so the caller never wraps itself
+     * in an identity div (see `_identity.ts`).
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -95,12 +102,12 @@ const PinnedTrack = ({
     landmark = false,
     isSkeleton,
     classNames,
-    principles}: PinnedTrackProps) => {
+    principles,
+    identity}: PinnedTrackProps) => {
     const BodyTag = landmark ? "main" : "div"
     return (
         <div
-            data-tier="frame"
-            data-component="PinnedTrack"
+            {...resolveIdentity(identity, { tier: "frame", name: "PinnedTrack" })}
             data-principles={principlesAttr(principles)}
             className={cn("flex flex-col", classNames)}
         >

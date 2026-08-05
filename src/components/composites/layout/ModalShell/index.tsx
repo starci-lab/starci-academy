@@ -4,6 +4,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -101,6 +102,14 @@ export interface ModalShellBaseProps {
      * it the same way it reaches the title/description text).
      */
     isSkeleton?: boolean
+    /**
+     * Caller identity to wear on this scaffold's root `<Modal>` instead of its own — pass this
+     * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its
+     * own) is using this scaffold AS its root element, instead of wrapping it in a raw
+     * `<div data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this scaffold keeps
+     * emitting its own `data-tier="composite" data-component="ModalShell"`, unchanged.
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -127,6 +136,7 @@ const Base = ({
     footerClassName,
     classNames,
     isSkeleton = false,
+    identity,
 }: ModalShellBaseProps) => {
     const hasHeader = Header != null || title != null
     const main = Body ? <Body isSkeleton={isSkeleton} /> : null
@@ -134,8 +144,7 @@ const Base = ({
         <Modal
             isOpen={isOpen}
             onOpenChange={onOpenChange}
-            data-tier="composite"
-            data-component="ModalShell"
+            {...resolveIdentity(identity, { tier: "composite", name: "ModalShell" })}
         >
             <Modal.Backdrop>
                 <Modal.Container

@@ -3,6 +3,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { paddingClassNames, type PaddingValue, type Responsive } from "@/components/frames/_spacing"
 import { principlesAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -111,6 +112,14 @@ export interface ContainerBaseProps {
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
     classNames?: Array<AllowedClassName>
     /**
+     * Caller identity to wear on this measure's OUTER root instead of the frame's own — pass
+     * this when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of
+     * its own) is using this measure AS its root element, instead of wrapping it in a raw
+     * `<div data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this measure keeps
+     * emitting its own `data-tier="frame" data-component="Container"`, unchanged.
+     */
+    identity?: CallerIdentity
+    /**
      * Name THIS measure itself in the BlockAnatomy panel, so a PARENT composition can badge
      * it as one node (§11a.1) — exactly `SurfaceCard.*`'s own contract: no default guess, the
      * caller states the name explicitly and declares it (with a real `storyId`) wherever it
@@ -147,7 +156,8 @@ const ContainerBase = ({
     body: Body,
     isSkeleton,
     classNames,
-    principles}: ContainerBaseProps) => {
+    principles,
+    identity}: ContainerBaseProps) => {
     return (
         // TWO layers, not one (teacher 2026-07-29, "shouldn't desktop render as
         // flex?" — traced to here). A `@container` measures its QUERY CONTAINER'S
@@ -163,8 +173,7 @@ const ContainerBase = ({
         // OUTER div owns `@container`+`max-w` (unpadded, so it can actually
         // reach the full `size` cap), the INNER div owns padding.
         <div
-            data-tier="frame"
-            data-component="Container"
+            {...resolveIdentity(identity, { tier: "frame", name: "Container" })}
             className={cn(
                 "@container mx-auto w-full",
                 SIZE_CLASS[size],

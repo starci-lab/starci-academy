@@ -2,6 +2,10 @@ import React from "react"
 import { AdBanner } from "@/components/features/dashboard/AdBanner"
 import { ModalShell } from "@/components/composites/layout/ModalShell"
 import type { QueryActiveAdvertisementData } from "@/modules/api/graphql/queries/types/active-advertisement"
+import type { CallerIdentity } from "@/components/frames/_identity"
+
+/** This component's identity — worn by {@link ModalShell}'s root instead of a wrapper div. See `_identity.ts`. */
+const IDENTITY: CallerIdentity = { tier: "overlay", component: "AdModal" }
 
 /** All display text, already localized by the connected `AdModal`; a story passes i18n keys. */
 export interface AdModalLabels {
@@ -37,12 +41,11 @@ export const _AdModal = ({
     ad,
     labels,
 }: AdModalProps) => (
-    <div data-tier="overlay" data-component="AdModal">
-        <ModalShell
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-            title={labels.title}
-            body={() => <AdBanner ad={ad} />}
-        />
-    </div>
+    <ModalShell
+        identity={IDENTITY}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        title={labels.title}
+        body={() => <AdBanner ad={ad} />}
+    />
 )

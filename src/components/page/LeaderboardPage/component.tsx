@@ -191,9 +191,12 @@ const _LeaderboardPage = ({
     const leaderboardBody = <StackV gap={7} isSkeleton={isSkeleton} items={[() => leaderboardSections]} />
 
     return (
-        <div data-tier="page" data-component="LeaderboardPage">
-            <Container size="md" padding={6} body={() => leaderboardBody} />
-        </div>
+        <Container
+            size="md"
+            padding={6}
+            body={() => leaderboardBody}
+            identity={{ tier: "page", component: "LeaderboardPage" }}
+        />
     )
 }
 

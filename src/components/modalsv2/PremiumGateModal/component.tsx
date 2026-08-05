@@ -222,27 +222,26 @@ export const _PremiumGateModal = ({
     ]
 
     return (
-        <div data-tier="overlay" data-component="PremiumGateModal">
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                title={header.title(courseTitle)}
-                description={header.description}
-                size="md"
+        <ModalShell
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            title={header.title(courseTitle)}
+            description={header.description}
+            size="md"
+            identity={{ tier: "overlay", component: "PremiumGateModal" }}
 
-                footer={() => (
-                    <Button
-                        variant="primary"
-                        size="lg"
-                        classNames={["w-full"]}
-                        label="Unlock now"
-                        onPress={onUpgrade}
+            footer={() => (
+                <Button
+                    variant="primary"
+                    size="lg"
+                    classNames={["w-full"]}
+                    label="Unlock now"
+                    onPress={onUpgrade}
 
-                    />
-                )}
-                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={gateBody} />}
-            />
-        </div>
+                />
+            )}
+            body={() => <StackV gap={6} isSkeleton={isSkeleton} items={gateBody} />}
+        />
     )
 }
 

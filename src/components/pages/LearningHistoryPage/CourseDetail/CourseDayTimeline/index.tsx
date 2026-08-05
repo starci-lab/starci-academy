@@ -24,9 +24,7 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import {
-    toDifficulty,
-} from "../../CourseOutline/map"
+import { toDifficulty } from "@/modules/utils/difficulty"
 import { CourseLearningEventType } from "@/modules/api/graphql/queries/types/course-learning-history"
 import type { CourseLearningHistoryItemData } from "@/modules/api/graphql/queries/types/course-learning-history"
 import { useQueryCourseLearningHistorySwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseLearningHistorySwr"

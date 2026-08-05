@@ -231,7 +231,7 @@ export const useContentAiSelection = (): {
 /**
  * A guest's deferred cart action — set when a signed-out viewer taps "add to cart"
  * / the nav cart (which opens the auth modal instead), then replayed by
- * {@link import("@/components/drawers/MiniCartDrawer").MiniCartDrawer} once they sign in.
+ * {@link import("@/components/overlays/drawers/MiniCartDrawer").MiniCartDrawer} once they sign in.
  * @returns the pending intent and its setter (pass `null` to clear).
  */
 export const usePendingCartIntent = (): {

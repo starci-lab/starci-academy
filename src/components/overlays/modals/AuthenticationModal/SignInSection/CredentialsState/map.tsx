@@ -1,7 +1,7 @@
 import {
     GoogleIcon,
     GithubIcon,
-} from "../../../../svg"
+} from "@/components/svg"
 import type {
     OauthButtonItem,
 } from "./types"

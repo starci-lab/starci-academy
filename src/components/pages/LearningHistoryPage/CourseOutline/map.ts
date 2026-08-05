@@ -1,31 +1,5 @@
-import type { Difficulty } from "@/components/blocks/chips/DifficultyChip"
 import type { StatusChipTone } from "@/components/blocks/chips/StatusChip"
 
-/**
- * Normalize a raw difficulty string (lessons: beginner | intermediate |
- * advanced; challenges: easy | medium | hard | insane) into the `DifficultyChip`
- * enum. Unknown / null values fall back to `beginner`.
- *
- * @param raw - The backend difficulty string, possibly null.
- * @returns The matching {@link Difficulty}.
- */
-export const toDifficulty = (raw: string | null): Difficulty => {
-    switch (raw) {
-    case "intermediate":
-    case "medium":
-        return "intermediate"
-    case "advanced":
-    case "hard":
-        return "advanced"
-    case "insane":
-    case "expert":
-        return "insane"
-    case "beginner":
-    case "easy":
-    default:
-        return "beginner"
-    }
-}
 
 /**
  * Map a challenge lifecycle status to a {@link StatusChipTone}:

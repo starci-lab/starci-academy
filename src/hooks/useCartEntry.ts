@@ -27,9 +27,9 @@ export interface UseCartEntryResult {
 /**
  * Guest-aware cart entry points shared by the nav cart button and the catalog /
  * detail "add to cart" affordances. For a signed-out viewer any cart action opens
- * the {@link import("@/components/modals/AuthenticationModal").AuthenticationModal}
+ * the {@link import("@/components/overlays/modals/AuthenticationModal").AuthenticationModal}
  * (sign-in tab) and remembers the intended action as a pending intent; the
- * {@link import("@/components/drawers/MiniCartDrawer").MiniCartDrawer} replays it once
+ * {@link import("@/components/overlays/drawers/MiniCartDrawer").MiniCartDrawer} replays it once
  * the viewer authenticates (adds the course + opens, or just opens the drawer). Reads
  * auth state + the cart directly (no prop-drilling).
  *

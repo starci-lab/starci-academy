@@ -14,7 +14,7 @@ import {
     type Icon,
 } from "@phosphor-icons/react"
 import React, { useMemo } from "react"
-import { Button, Chip, cn } from "@heroui/react"
+import { Button, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useParams } from "next/navigation"
 import { useRouter } from "@/i18n/navigation"
@@ -22,7 +22,8 @@ import { ChallengeDifficulty } from "@/modules/types/enums/challenge-difficulty"
 import { type ChallengeEntity } from "@/modules/types/entities/challenge"
 import { type WithClassNames } from "@/modules/types/base/class-name"
 import type { ChallengeProgressStatus } from "@/modules/api/graphql/queries/types/challenge-submission-progress"
-import { difficultyPalette } from "@/components/pallettes/difficulty"
+import { DifficultyChip } from "@/components/blocks/chips/DifficultyChip"
+import { toDifficulty } from "@/modules/utils/difficulty"
 import { useAppSelector } from "@/redux/hooks"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 
@@ -124,10 +125,12 @@ export const ChallengeCard = ({ challenge, className }: ChallengeCardProps) => {
                     <div className="font-medium">{challenge.title}</div>
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
-                    <Chip color="default" className={difficultyPalette[challenge.difficulty]?.text ?? "text-muted"}>
-                        <FlameIcon className="size-4" />
-                        <Chip.Label>{t(DIFFICULTY_LABEL_KEY[challenge.difficulty] ?? "challenge.difficulty.easy")}</Chip.Label>
-                    </Chip>
+                    {/* the difficulty ramp lives in ONE place (`DifficultyChip`); this row used to
+                        tint a generic chip from a second, raw-Tailwind palette of its own */}
+                    <DifficultyChip
+                        difficulty={toDifficulty(challenge.difficulty)}
+                        label={t(DIFFICULTY_LABEL_KEY[challenge.difficulty] ?? "challenge.difficulty.easy")}
+                    />
                     <span className="inline-flex items-center gap-1 text-xs text-muted">
                         <TrophyIcon className="size-4 shrink-0" />
                         {challenge.score}

@@ -24,9 +24,9 @@ import {
 } from "../hooks/useSelectedCourse"
 import {
     isAttempted,
-    toDifficulty,
     toStatusTone,
 } from "./map"
+import { toDifficulty } from "@/modules/utils/difficulty"
 import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"

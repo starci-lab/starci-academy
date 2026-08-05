@@ -8,7 +8,7 @@ import type {
 } from "@/components/blocks/ai/AiQuotaLane"
 import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
 import { useQueryMyCreditUsageSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCreditUsageSwr"
-import { useWindowResetLabel } from "@/components/modalsv2/AiQuotaModal/hooks"
+import { useWindowResetLabel } from "@/components/overlays/modals/AiQuotaModal/hooks"
 import {
     QuotaLaneVariant,
 } from "./quota-lane-variant"

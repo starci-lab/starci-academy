@@ -18,9 +18,7 @@ import { useCourseTotals } from "@/hooks/useCourseTotals"
 import {
     pathConfig,
 } from "@/resources/path"
-import {
-    toDifficulty,
-} from "@/components/pages/_map"
+import { toDifficulty } from "@/modules/utils/difficulty"
 import { useCourseResume } from "@/hooks/useCourseResume"
 import { useAppSelector } from "@/redux/hooks"
 import { _CourseContents, type CourseContentsLesson } from "./component"

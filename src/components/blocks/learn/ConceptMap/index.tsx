@@ -34,7 +34,7 @@ import {
     TIER_MIN,
     tierAllows,
 } from "@/modules/utils/mind-map"
-import { MindMapNodeDrawer } from "@/components/drawers/MindMapNodeDrawer"
+import { MindMapNodeDrawer } from "@/components/overlays/drawers/MindMapNodeDrawer"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Border-ring tone per popularity tier (green / yellow / red) — the ring signals how common a keyword is. */

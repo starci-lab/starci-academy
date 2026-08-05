@@ -44,7 +44,7 @@ const RELATED_ITEMS_LIMIT = 3
  * DEVIATION FROM THE STORYBOOK SOURCE (see `component.tsx`'s header for the full
  * reasoning): the storybook page's `isHistoryOpen`/`onHistoryOpenChange`/
  * `historyAttempts` props have no counterpart here. The full-history surface is
- * `@/components/drawersv2/SubmissionAttemptsDrawer`, already mounted globally by
+ * `@/components/overlays/drawers/SubmissionAttemptsDrawer`, already mounted globally by
  * `DrawerContainer` (`InnerLayout`) and driven entirely by zustand overlay state
  * — `onOverflowPress` below only has to scope that existing global drawer to this
  * requirement and open it, never render it itself.

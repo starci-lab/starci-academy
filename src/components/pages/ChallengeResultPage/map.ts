@@ -9,7 +9,7 @@ import type { SubmissionFeedbackSeverity as BlueprintSubmissionFeedbackSeverity 
  * "frontier"`). The two have identical string values, but a TS string `enum` is
  * NOT structurally assignable to a matching string-literal union — this switch
  * is the explicit bridge (same convention as
- * `@/components/drawersv2/SubmissionAttemptsDrawer/map.ts#toBlueprintModelCategory`).
+ * `@/components/overlays/drawers/SubmissionAttemptsDrawer/map.ts#toBlueprintModelCategory`).
  *
  * @param category - The real, GraphQL-sourced model category.
  * @returns The equivalent blueprint category value.

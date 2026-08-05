@@ -39,7 +39,7 @@ export type ContentAiFabProps = WithClassNames<undefined>
  * - **rail** — a resizable right-edge side panel that reflows the app column
  *   (see `InnerLayout`'s split); the FAB here is only the draggable toggle,
  *   hidden while the rail is open (the rail carries its close).
- * - **drawer** — the slide-in {@link import("@/components/drawers/ContentAiChatDrawer").ContentAiChatDrawer}
+ * - **drawer** — the slide-in {@link import("@/components/overlays/drawers/ContentAiChatDrawer").ContentAiChatDrawer}
  *   (rendered globally); the FAB is its trigger.
  *
  * MOBILE always uses the drawer regardless of the preference. Open-state lives in

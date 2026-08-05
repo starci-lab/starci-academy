@@ -24,7 +24,7 @@ import { StackV } from "@/components/frames/Stack"
  * `SubmissionAttemptsDrawer` inline as a prop-driven overlay (`isOpen`/`attempts`/
  * `onSelect` all handed in by this screen). The real v1 architecture this app
  * already ships does not compose that drawer per-page — its src twin
- * (`@/components/drawersv2/SubmissionAttemptsDrawer`) is a SELF-MOUNTED GLOBAL
+ * (`@/components/overlays/drawers/SubmissionAttemptsDrawer`) is a SELF-MOUNTED GLOBAL
  * SINGLETON, mounted once by `DrawerContainer` inside `InnerLayout`, driven by
  * zustand overlay state (`useSubmissionAttemptsOverlayState`) rather than props —
  * its connected export takes no props at all. Composing it again here would

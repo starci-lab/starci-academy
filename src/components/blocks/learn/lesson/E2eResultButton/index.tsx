@@ -12,7 +12,7 @@ interface E2eFlowLite {
 }
 
 /**
- * Trigger for the global {@link import("@/components/drawers/E2eResultDrawer").E2eResultDrawer} — a
+ * Trigger for the global {@link import("@/components/overlays/drawers/E2eResultDrawer").E2eResultDrawer} — a
  * quiet text link in the lesson footer ("view E2E proof") that opens the proof drawer via the shared
  * overlay store. Hidden when the active lesson has no recorded flows. Split out from the drawer panel
  * so open-state lives in the store (no local `useState`).

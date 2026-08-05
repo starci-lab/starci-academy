@@ -67,7 +67,7 @@ import { ChatBubble, type ChatRole } from "@/components/blocks/feed/ChatBubble"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { InfiniteScrollSentinel } from "@/components/blocks/async/InfiniteScrollSentinel"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/useQuerySearchCourseContentSwr"
 import { querySearchCourseContent } from "@/modules/api/graphql/queries/query-search-course-content"
 import { defaultChallengesListSorts, queryChallenges } from "@/modules/api/graphql/queries/query-challenges"
@@ -949,6 +949,8 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const drawerSessions = trimmedSearch && isContentScope
         ? infiniteItems.filter((session) => session.originContentId === contentId)
         : infiniteItems
+    // co-located skeleton flag for the conversations list (first load, nothing in hand yet)
+    const isConversationsSkeleton = sessionsInfinite.data === undefined
 
     // the model picker (shared block — composer + settings view). Auto = free
     // chain; a pinned model runs Premium when unlocked. No `floor` → Free is the
@@ -1090,11 +1092,14 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 </label>
                 {/* list — self-bounded ScrollShadow + infinite scroll (mirror OutlineRail + followers infinite) */}
                 <ScrollShadow hideScrollBar className="-mx-1 max-h-[55vh] min-h-0 min-w-0 flex-1 overflow-y-auto px-1">
-                    <AsyncContent
-                        isLoading={sessionsInfinite.data === undefined}
-                        skeleton={
-                            <SurfaceListCard bordered>
-                                {[0, 1, 2].map((row) => (
+                    {sessionsInfinite.error ? (
+                        <AsyncContentError title={t("contentAi.noConversations")} />
+                    ) : !isConversationsSkeleton && drawerSessions.length === 0 ? (
+                        <AsyncContentEmpty title={t("contentAi.noConversations")} />
+                    ) : (
+                        <SurfaceListCard bordered>
+                            {isConversationsSkeleton
+                                ? Array.from({ length: 3 }, (_unused, row) => (
                                     <SurfaceListCardItem key={row}>
                                         <div className="flex items-center gap-2">
                                             <div className="flex min-w-0 flex-1 flex-col gap-0">
@@ -1105,134 +1110,122 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                                             <Skeleton className="size-8 shrink-0 rounded-xl" />
                                         </div>
                                     </SurfaceListCardItem>
+                                ))
+                                : drawerSessions.map((session) => (
+                                    <SurfaceListCardItem key={session.id}>
+                                        <div
+                                            className={cn(
+                                                "group flex items-center gap-2",
+                                                session.id === currentSessionId && "text-accent-soft-foreground",
+                                            )}
+                                        >
+                                            {renamingSessionId === session.id ? (
+                                                // inline rename — replaces the title row while editing;
+                                                // Enter / blur commits, Escape cancels
+                                                <input
+                                                    type="text"
+                                                    autoFocus
+                                                    aria-label={t("contentAi.renameConversation")}
+                                                    className="min-w-0 flex-1 border-b border-default bg-transparent py-1 text-sm text-foreground outline-none focus:border-accent"
+                                                    value={renameDraft}
+                                                    onChange={(event) => setRenameDraft(event.target.value)}
+                                                    onBlur={() => void onCommitRename()}
+                                                    onKeyDown={(event) => {
+                                                        if (event.key === "Enter") {
+                                                            event.preventDefault()
+                                                            void onCommitRename()
+                                                        }
+                                                        if (event.key === "Escape") {
+                                                            event.preventDefault()
+                                                            setRenamingSessionId(null)
+                                                        }
+                                                    }}
+                                                />
+                                            ) : (
+                                                <button
+                                                    type="button"
+                                                    className="flex min-w-0 flex-1 cursor-pointer flex-col text-left"
+                                                    onClick={() => onSwitchConversation(session.id)}
+                                                >
+                                                    <Typography type="body-sm" className="truncate">
+                                                        {session.title ?? t("contentAi.untitled")}
+                                                    </Typography>
+                                                    {/* WHERE this conversation was had + how long it ran.
+                                                        Sessions split per lesson, so without the source a
+                                                        learner sees a pile of fragments with no idea which
+                                                        belongs where. The snippet only replaces it while
+                                                        SEARCHING — that is the one moment it earns the row,
+                                                        by showing which line matched. */}
+                                                    <Typography type="body-xs" color="muted" className="truncate">
+                                                        {/* content rows carry their lesson title; course rows read
+                                                            "Whole course"; task/foundation rows have no origin title (null),
+                                                            so they fall back to just the turn count rather than a
+                                                            misleading course-wide label. */}
+                                                        {searchTerm.trim() && session.snippet
+                                                            ? displayText(session.snippet)
+                                                            : session.originContentTitle
+                                                                ? `${session.originContentTitle} · ${t("contentAi.turnsCount", { count: session.messageCount })}`
+                                                                : session.scope === "course"
+                                                                    ? `${t("contentAi.context.courseWide")} · ${t("contentAi.turnsCount", { count: session.messageCount })}`
+                                                                    : t("contentAi.turnsCount", { count: session.messageCount })}
+                                                    </Typography>
+                                                </button>
+                                            )}
+                                            {/* overflow menu ⋯ — Rename · Archive · Delete (hidden while
+                                                this row is being renamed) */}
+                                            {renamingSessionId === session.id ? null : (
+                                                <Dropdown>
+                                                    <DropdownTrigger className="shrink-0 cursor-pointer">
+                                                        <Button
+                                                            isIconOnly
+                                                            size="sm"
+                                                            variant="tertiary"
+                                                            aria-label={t("contentAi.conversationActions")}
+                                                        >
+                                                            <DotsThreeVerticalIcon weight="bold" className="size-5" />
+                                                        </Button>
+                                                    </DropdownTrigger>
+                                                    <DropdownPopover placement="bottom end" className="min-w-44">
+                                                        <DropdownMenu aria-label={t("contentAi.conversationActions")}>
+                                                            <DropdownSection>
+                                                                <DropdownItem
+                                                                    key="rename"
+                                                                    onPress={() => onStartRename(session.id, session.title)}
+                                                                >
+                                                                    <div className="flex items-center gap-2">
+                                                                        <PencilSimpleIcon className="size-4 shrink-0" />
+                                                                        <span className="text-sm">{t("contentAi.renameConversation")}</span>
+                                                                    </div>
+                                                                </DropdownItem>
+                                                                <DropdownItem
+                                                                    key="archive"
+                                                                    onPress={() => void onArchiveConversation(session.id)}
+                                                                >
+                                                                    <div className="flex items-center gap-2">
+                                                                        <ArchiveIcon className="size-4 shrink-0" />
+                                                                        <span className="text-sm">{t("contentAi.archiveConversation")}</span>
+                                                                    </div>
+                                                                </DropdownItem>
+                                                                <DropdownItem
+                                                                    key="delete"
+                                                                    className="text-danger-soft-foreground"
+                                                                    onPress={() => void onDeleteConversation(session.id)}
+                                                                >
+                                                                    <div className="flex items-center gap-2">
+                                                                        <TrashIcon className="size-4 shrink-0" />
+                                                                        <span className="text-sm">{t("contentAi.deleteConversation")}</span>
+                                                                    </div>
+                                                                </DropdownItem>
+                                                            </DropdownSection>
+                                                        </DropdownMenu>
+                                                    </DropdownPopover>
+                                                </Dropdown>
+                                            )}
+                                        </div>
+                                    </SurfaceListCardItem>
                                 ))}
-                            </SurfaceListCard>
-                        }
-                        isEmpty={drawerSessions.length === 0}
-                        emptyContent={{
-                            title: t("contentAi.noConversations"),
-                        }}
-                        error={sessionsInfinite.error}
-                        errorContent={{
-                            title: t("contentAi.noConversations"),
-                        }}
-                    >
-                        <SurfaceListCard bordered>
-                            {drawerSessions.map((session) => (
-                                <SurfaceListCardItem key={session.id}>
-                                    <div
-                                        className={cn(
-                                            "group flex items-center gap-2",
-                                            session.id === currentSessionId && "text-accent-soft-foreground",
-                                        )}
-                                    >
-                                        {renamingSessionId === session.id ? (
-                                            // inline rename — replaces the title row while editing;
-                                            // Enter / blur commits, Escape cancels
-                                            <input
-                                                type="text"
-                                                autoFocus
-                                                aria-label={t("contentAi.renameConversation")}
-                                                className="min-w-0 flex-1 border-b border-default bg-transparent py-1 text-sm text-foreground outline-none focus:border-accent"
-                                                value={renameDraft}
-                                                onChange={(event) => setRenameDraft(event.target.value)}
-                                                onBlur={() => void onCommitRename()}
-                                                onKeyDown={(event) => {
-                                                    if (event.key === "Enter") {
-                                                        event.preventDefault()
-                                                        void onCommitRename()
-                                                    }
-                                                    if (event.key === "Escape") {
-                                                        event.preventDefault()
-                                                        setRenamingSessionId(null)
-                                                    }
-                                                }}
-                                            />
-                                        ) : (
-                                            <button
-                                                type="button"
-                                                className="flex min-w-0 flex-1 cursor-pointer flex-col text-left"
-                                                onClick={() => onSwitchConversation(session.id)}
-                                            >
-                                                <Typography type="body-sm" className="truncate">
-                                                    {session.title ?? t("contentAi.untitled")}
-                                                </Typography>
-                                                {/* WHERE this conversation was had + how long it ran.
-                                                    Sessions split per lesson, so without the source a
-                                                    learner sees a pile of fragments with no idea which
-                                                    belongs where. The snippet only replaces it while
-                                                    SEARCHING — that is the one moment it earns the row,
-                                                    by showing which line matched. */}
-                                                <Typography type="body-xs" color="muted" className="truncate">
-                                                    {/* content rows carry their lesson title; course rows read
-                                                        "Whole course"; task/foundation rows have no origin title (null),
-                                                        so they fall back to just the turn count rather than a
-                                                        misleading course-wide label. */}
-                                                    {searchTerm.trim() && session.snippet
-                                                        ? displayText(session.snippet)
-                                                        : session.originContentTitle
-                                                            ? `${session.originContentTitle} · ${t("contentAi.turnsCount", { count: session.messageCount })}`
-                                                            : session.scope === "course"
-                                                                ? `${t("contentAi.context.courseWide")} · ${t("contentAi.turnsCount", { count: session.messageCount })}`
-                                                                : t("contentAi.turnsCount", { count: session.messageCount })}
-                                                </Typography>
-                                            </button>
-                                        )}
-                                        {/* overflow menu ⋯ — Rename · Archive · Delete (hidden while
-                                            this row is being renamed) */}
-                                        {renamingSessionId === session.id ? null : (
-                                            <Dropdown>
-                                                <DropdownTrigger className="shrink-0 cursor-pointer">
-                                                    <Button
-                                                        isIconOnly
-                                                        size="sm"
-                                                        variant="tertiary"
-                                                        aria-label={t("contentAi.conversationActions")}
-                                                    >
-                                                        <DotsThreeVerticalIcon weight="bold" className="size-5" />
-                                                    </Button>
-                                                </DropdownTrigger>
-                                                <DropdownPopover placement="bottom end" className="min-w-44">
-                                                    <DropdownMenu aria-label={t("contentAi.conversationActions")}>
-                                                        <DropdownSection>
-                                                            <DropdownItem
-                                                                key="rename"
-                                                                onPress={() => onStartRename(session.id, session.title)}
-                                                            >
-                                                                <div className="flex items-center gap-2">
-                                                                    <PencilSimpleIcon className="size-4 shrink-0" />
-                                                                    <span className="text-sm">{t("contentAi.renameConversation")}</span>
-                                                                </div>
-                                                            </DropdownItem>
-                                                            <DropdownItem
-                                                                key="archive"
-                                                                onPress={() => void onArchiveConversation(session.id)}
-                                                            >
-                                                                <div className="flex items-center gap-2">
-                                                                    <ArchiveIcon className="size-4 shrink-0" />
-                                                                    <span className="text-sm">{t("contentAi.archiveConversation")}</span>
-                                                                </div>
-                                                            </DropdownItem>
-                                                            <DropdownItem
-                                                                key="delete"
-                                                                className="text-danger-soft-foreground"
-                                                                onPress={() => void onDeleteConversation(session.id)}
-                                                            >
-                                                                <div className="flex items-center gap-2">
-                                                                    <TrashIcon className="size-4 shrink-0" />
-                                                                    <span className="text-sm">{t("contentAi.deleteConversation")}</span>
-                                                                </div>
-                                                            </DropdownItem>
-                                                        </DropdownSection>
-                                                    </DropdownMenu>
-                                                </DropdownPopover>
-                                            </Dropdown>
-                                        )}
-                                    </div>
-                                </SurfaceListCardItem>
-                            ))}
                         </SurfaceListCard>
-                    </AsyncContent>
+                    )}
                     {/* grow on scroll instead of a "load more" button */}
                     <InfiniteScrollSentinel
                         onReach={() => sessionsInfinite.setSize((size) => size + 1)}
@@ -1253,6 +1246,8 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         // same exclusion as the in-chat skills: the chat never surfaces capstone
         // tasks, so its own "see all" view must not either (see ContentIntentKind)
         const results = (contentSearchSwr.data ?? []).filter((item) => item.kind !== "milestone")
+        // co-located skeleton flag for the search-result list (first load, nothing in hand yet)
+        const isSearchSkeleton = contentSearchSwr.isLoading && debouncedContentSearchQuery.trim().length > 0
         return (
             <div className={cn("flex h-full flex-col gap-3", className)}>
                 <button
@@ -1269,39 +1264,26 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                     placeholder={t("contentAi.searchContentPlaceholder")}
                 />
                 <ScrollShadow hideScrollBar className="max-h-[55vh] min-h-0 flex-1 overflow-y-auto">
-                    <AsyncContent
-                        isLoading={contentSearchSwr.isLoading && debouncedContentSearchQuery.trim().length > 0}
-                        skeleton={
-                            <SurfaceListCard bordered>
-                                {[0, 1, 2].map((row) => (
-                                    <SurfaceListCardItem key={row}>
-                                        <div className="flex items-center gap-2">
-                                            <div className="flex min-w-0 flex-1 flex-col gap-0">
-                                                <Skeleton.Typography type="body-sm" width="2/3" />
-                                                <Skeleton.Typography type="body-xs" width="1/2" />
-                                            </div>
-                                            <Skeleton className="size-4 shrink-0 rounded" />
-                                        </div>
-                                    </SurfaceListCardItem>
-                                ))}
-                            </SurfaceListCard>
-                        }
-                        isEmpty={debouncedContentSearchQuery.trim().length > 0 && results.length === 0}
-                        emptyContent={{
-                            title: t("contentAi.searchContentEmpty"),
-                        }}
-                        error={contentSearchSwr.error}
-                        errorContent={{
-                            title: t("contentAi.searchContentEmpty"),
-                        }}
-                    >
-                        {debouncedContentSearchQuery.trim().length === 0 ? (
-                            <Typography type="body-sm" color="muted">
-                                {t("contentAi.searchContentHint")}
-                            </Typography>
-                        ) : (
-                            <div className="flex flex-col overflow-hidden rounded-2xl border border-default">
-                                {results.map((item, index) => (
+                    {contentSearchSwr.error ? (
+                        <AsyncContentError title={t("contentAi.searchContentEmpty")} />
+                    ) : !isSearchSkeleton && debouncedContentSearchQuery.trim().length > 0 && results.length === 0 ? (
+                        <AsyncContentEmpty title={t("contentAi.searchContentEmpty")} />
+                    ) : debouncedContentSearchQuery.trim().length === 0 ? (
+                        <Typography type="body-sm" color="muted">
+                            {t("contentAi.searchContentHint")}
+                        </Typography>
+                    ) : (
+                        <div className="flex flex-col overflow-hidden rounded-2xl border border-default">
+                            {isSearchSkeleton
+                                ? Array.from({ length: 3 }, (_unused, row) => (
+                                    // _EntityResultRow has no isSkeleton prop — mirrored inline here,
+                                    // right where the real row sits (see missingSkeletonSupport)
+                                    <div key={row} className="flex flex-col gap-2 px-4 py-3">
+                                        <Skeleton.Typography type="body-sm" width="2/3" />
+                                        <Skeleton.Typography type="body-xs" width="1/2" />
+                                    </div>
+                                ))
+                                : results.map((item, index) => (
                                     <EntityResultRow
                                         key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
                                         item={item}
@@ -1310,9 +1292,8 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                                         onSelect={onSelectSearchResult}
                                     />
                                 ))}
-                            </div>
-                        )}
-                    </AsyncContent>
+                        </div>
+                    )}
                 </ScrollShadow>
             </div>
         )

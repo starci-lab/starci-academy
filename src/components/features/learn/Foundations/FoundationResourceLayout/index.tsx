@@ -10,35 +10,24 @@ import {
 import {
     useRouter,
 } from "next/navigation"
+import {
+    _FoundationResourceLayout,
+} from "./component"
 import type {
     FoundationsBreadcrumbItem,
 } from "../types"
-import {
-    FoundationsBreadcrumbs,
-} from "../shared/FoundationsBreadcrumbs"
-import {
-    FoundationMeta,
-} from "../shared/FoundationMeta"
-import {
-    FoundationResourceBody,
-} from "../FoundationResourceBody"
-import { TrialEnrollHook } from "../../shared/TrialEnrollHook"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryFoundationCategoriesSwr } from "@/hooks/swr/api/graphql/queries/useQueryFoundationCategoriesSwr"
 import { useQueryFoundationsSwr } from "@/hooks/swr/api/graphql/queries/useQueryFoundationsSwr"
 import { pathConfig } from "@/resources/path"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { PageHeader } from "@/components/blocks/layout/PageHeader"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /**
- * Dedicated foundation resource page (replaces the old viewer modal).
- *
- * Route `/foundations/[categoryId]/[foundationId]` renders this instead of the
- * list: breadcrumb → H3 header + full {@link FoundationMeta} → the markdown/video
- * body. The active resource is URL-synced into Redux (`UseEffects`); we load the
- * category's resource list here so a cold deep-link can resolve the entity by id.
- * Capped at `max-w-3xl` like every content page. `"use client"` for redux + routing.
+ * Dedicated foundation resource page (replaces the old viewer modal) — the
+ * CONNECTED half of the split (`tiers/split.md`). Route
+ * `/foundations/[categoryId]/[foundationId]` renders this instead of the
+ * list. The active resource is URL-synced into Redux (`UseEffects`); we load
+ * the category's resource list here so a cold deep-link can resolve the
+ * entity by id. `"use client"` for redux + routing.
  */
 export const FoundationResourceLayout = () => {
     const t = useTranslations()
@@ -54,8 +43,8 @@ export const FoundationResourceLayout = () => {
     useQueryFoundationCategoriesSwr()
     const { data: foundationsData, isLoading } = useQueryFoundationsSwr()
 
-    /** First load: list still in flight and no resolved entity cached yet. */
-    const isFirstLoad = (isLoading && !foundationsData) || !foundation
+    /** First load: list still in flight and no resolved entity cached yet (loading-and-skeleton.md §2). */
+    const isSkeleton = (isLoading && !foundationsData) || !foundation
 
     /** Breadcrumb: home → courses → course → foundations hub → category → this resource. */
     const breadcrumbItems = useMemo((): Array<FoundationsBreadcrumbItem> => [
@@ -104,38 +93,12 @@ export const FoundationResourceLayout = () => {
     ])
 
     return (
-        <div className="mx-auto flex max-w-3xl flex-col gap-10">
-            <FoundationsBreadcrumbs items={breadcrumbItems} />
-            {/* ambient trial → enroll hook (self-hides for paid learners) */}
-            <TrialEnrollHook />
-            <AsyncContent
-                isLoading={isFirstLoad}
-                isEmpty={!isFirstLoad && !foundation}
-                emptyContent={{ title: t("foundations.empty") }}
-                skeleton={(
-                    <div className="flex flex-col gap-6">
-                        <div className="flex flex-col gap-3">
-                            <Skeleton.Typography type="h3" className="w-2/3" />
-                            <Skeleton className="h-4 w-full rounded" />
-                            <Skeleton className="h-5 w-40 rounded-full" />
-                        </div>
-                        <Skeleton.Paragraph lines={6} />
-                    </div>
-                )}
-            >
-                {foundation ? (
-                    <div className="flex flex-col gap-6">
-                        <div className="flex flex-col gap-3">
-                            <PageHeader
-                                title={foundation.title}
-                                description={foundation.description ?? undefined}
-                            />
-                            <FoundationMeta foundation={foundation} />
-                        </div>
-                        <FoundationResourceBody foundation={foundation} />
-                    </div>
-                ) : null}
-            </AsyncContent>
-        </div>
+        <_FoundationResourceLayout
+            breadcrumbItems={breadcrumbItems}
+            isSkeleton={isSkeleton}
+            isEmpty={!isSkeleton && !foundation}
+            foundation={foundation}
+            emptyTitle={t("foundations.empty")}
+        />
     )
 }

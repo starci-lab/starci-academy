@@ -2,32 +2,30 @@
 
 import React from "react"
 import useSWR from "swr"
-import { Button, Spinner, Typography } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { DUE_REVIEW_LIMIT } from "../constants"
 import { useStartFlashcardDueReviewSession } from "../useStartFlashcardDueReviewSession"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due-flashcards"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryMyInProgressFlashcardDueReviewSessionSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyInProgressFlashcardDueReviewSessionSwr"
 import { pathConfig } from "@/resources/path"
-
-/** Props for {@link DueReviewHero}. */
-export type DueReviewHeroProps = WithClassNames<undefined>
+import { _DueReviewHero } from "./component"
 
 /**
- * The flashcards home hero: the spaced-repetition queue. Shows how many cards are
- * due today across every enrolled course and offers the page's PRIMARY action —
- * starting a review session. When nothing is due it collapses to a caught-up
- * empty state. Reads the shared `myDueFlashcards` key directly from SWR.
- * @param props - {@link DueReviewHeroProps}
+ * The flashcards home hero: the spaced-repetition queue. Shows how many cards are due today
+ * across every enrolled course and offers the page's PRIMARY action — starting a review
+ * session. When nothing is due it collapses to a caught-up empty state. This is the
+ * CONNECTED half — it fetches the due queue (and the resumable cross-deck run) directly from
+ * the shared `myDueFlashcards` SWR key, resolves every label, and hands them to the
+ * presentational {@link _DueReviewHero}. See `tiers/split.md`.
+ *
+ * Takes no props: the previous `className` was never used by its one call site
+ * (`Flashcards/index.tsx`, `<DueReviewHero />`) and a block hands out no `className` escape
+ * hatch once it composes entirely through frames (`ContinueCard`'s own doc makes the same
+ * call) — see `apiChanged` in this migration's report.
  */
-export const DueReviewHero = ({ className }: DueReviewHeroProps) => {
+export const DueReviewHero = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -36,7 +34,7 @@ export const DueReviewHero = ({ className }: DueReviewHeroProps) => {
     const courseId = useAppSelector((state) => state.course.entity?.id)
     const displayId = useAppSelector((state) => state.course.displayId)
 
-    const { data, isLoading, error, mutate } = useSWR(
+    const { data, error, mutate } = useSWR(
         ["my-due-flashcards", courseId ?? null, DUE_REVIEW_LIMIT],
         async () => {
             const response = await queryMyDueFlashcards({ request: { courseId, limit: DUE_REVIEW_LIMIT } })
@@ -51,7 +49,7 @@ export const DueReviewHero = ({ className }: DueReviewHeroProps) => {
     // ON this screen, pending, until a real sessionId comes back; no more
     // instant navigation to the bare `?session=due` shim + full-page skeleton.
     const { start: startDueReview, starting } = useStartFlashcardDueReviewSession(courseId)
-    const onPressStart = async () => {
+    const handlePressStart = async () => {
         if (!displayId) {
             return
         }
@@ -62,10 +60,10 @@ export const DueReviewHero = ({ className }: DueReviewHeroProps) => {
         }
     }
 
-    // resumable cross-deck "Due today" run — mirrors QuizSession's own
-    // "Zone 0" resume card. Renders like the mock-interview resume card (per the
-    // teacher's note, 2026-07-17: "render exactly like Mock Interview"): a progress meter (`value`), NO
-    // clock watermark — the `card {current}/{total}` progress carries "in progress".
+    // resumable cross-deck "Due today" run — mirrors QuizSession's own "Zone 0" resume
+    // card. Renders like the mock-interview resume card (per the teacher's note, 2026-07-17:
+    // "render exactly like Mock Interview"): a progress meter (`value`), NO clock watermark —
+    // the `card {current}/{total}` progress carries "in progress".
     const resumeSwr = useQueryMyInProgressFlashcardDueReviewSessionSwr(courseId)
     const resumeData = resumeSwr.data
 
@@ -74,76 +72,41 @@ export const DueReviewHero = ({ className }: DueReviewHeroProps) => {
     const newCount = data?.newCount ?? 0
 
     return (
-        // resume card (Resume review) vs the due-today block below are 2
-        // DIFFERENT-function sections (resume vs start-a-new-batch) — `gap-6`
-        // per `foundations/gap.md` ("between 2 blocks of different function"), not `gap-3`
-        // (same-block/same-function items).
-        <div className="flex flex-col gap-6">
-            {resumeData && displayId ? (
-                <ContinueCard
-                    title={t("flashcard.due.resumeTitle")}
-                    subtitle={t("flashcard.due.resumeSubtitle", {
-                        current: resumeData.currentIndex + 1,
-                        total: resumeData.cardIds.length,
-                    })}
-                    variant="hero"
-                    value={resumeData.currentIndex + 1}
-                    max={resumeData.cardIds.length}
-                    ctaLabel={t("flashcard.due.resumeCta")}
-                    onPress={() => router.push(
-                        pathConfig().locale(locale).course(displayId).learn().flashcards().due(resumeData.sessionId).build(),
-                    )}
-                />
-            ) : null}
-            <LabeledCard className={className} label={t("flashcard.due.label")}>
-                <AsyncContent
-                    isLoading={isLoading && !data}
-                    skeleton={
-                        <div className="flex items-center justify-between gap-3">
-                            <Skeleton.Typography type="body-sm" width="1/2" />
-                            <Skeleton.Button />
-                        </div>
-                    }
-                    isEmpty={dueCount === 0}
-                    emptyContent={{
-                        title: t("flashcard.due.allCaught"),
-                        description: t("flashcard.due.allCaughtHint"),
-                    }}
-                    error={error}
-                    errorContent={{
-                        title: t("flashcard.empty"),
-                        onRetry: () => { void mutate() },
-                    }}
-                >
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                        <div className="flex flex-col gap-0">
-                            {/* PRIMARY stat of this block — `color="default"` (per the teacher's
-                                note, 2026-07-12: "text-foreground; only mute the secondary text") — only the
-                                breakdown line below is secondary/muted. */}
-                            <Typography type="body-sm">
-                                {t("flashcard.due.count", { count: dueCount })}
-                            </Typography>
-                            {/* breaks down the (possibly confusing) total into its 2 parts — only
-                                when it's actually a mix, so a pure-overdue or pure-new queue doesn't
-                                show a redundant "X + 0" (per the teacher's note, 2026-07-09: "where does
-                                that remaining 25-card count come from" — dueCount = overdue reviews + today's
-                                capped new batch, see DAILY_NEW_LIMIT in flashcard-review.service.ts). */}
-                            {dueReviewCount > 0 && newCount > 0 ? (
-                                <Typography type="body-xs" color="muted">
-                                    {t("flashcard.due.countBreakdown", { overdue: dueReviewCount, newCapped: newCount })}
-                                </Typography>
-                            ) : null}
-                        </div>
-                        <Button variant="primary" isPending={starting} onPress={() => { void onPressStart() }}>
-                            {/* `isPending` alone shows no built-in spinner (HeroUI Button ships
-                                no visual for it, only disables interaction) — render one
-                                ourselves, same idiom as `FollowButton`/`TierCard`. */}
-                            {starting ? <Spinner color="current" size="sm" /> : null}
-                            {t("flashcard.due.start", { count: dueCount })}
-                        </Button>
-                    </div>
-                </AsyncContent>
-            </LabeledCard>
-        </div>
+        <_DueReviewHero
+            // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
+            isSkeleton={!data && !error}
+            isEmpty={dueCount === 0}
+            error={error}
+            onRetry={() => { void mutate() }}
+            starting={starting}
+            onPressStart={() => { void handlePressStart() }}
+            resume={resumeData && displayId ? {
+                title: t("flashcard.due.resumeTitle"),
+                subtitle: t("flashcard.due.resumeSubtitle", {
+                    current: resumeData.currentIndex + 1,
+                    total: resumeData.cardIds.length,
+                }),
+                value: resumeData.currentIndex + 1,
+                max: resumeData.cardIds.length,
+                ctaLabel: t("flashcard.due.resumeCta"),
+                onPress: () => router.push(
+                    pathConfig().locale(locale).course(displayId).learn().flashcards().due(resumeData.sessionId).build(),
+                ),
+            } : undefined}
+            labels={{
+                sectionLabel: t("flashcard.due.label"),
+                // NOTE: reuses the "no flashcards for this course" copy for the error title —
+                // carried over verbatim from the pre-migration code, which had no dedicated
+                // `flashcard.due.error` key either; not this migration's call to fix.
+                errorTitle: t("flashcard.empty"),
+                allCaughtTitle: t("flashcard.due.allCaught"),
+                allCaughtHint: t("flashcard.due.allCaughtHint"),
+                count: t("flashcard.due.count", { count: dueCount }),
+                countBreakdown: dueReviewCount > 0 && newCount > 0
+                    ? t("flashcard.due.countBreakdown", { overdue: dueReviewCount, newCapped: newCount })
+                    : undefined,
+                start: t("flashcard.due.start", { count: dueCount }),
+            }}
+        />
     )
 }

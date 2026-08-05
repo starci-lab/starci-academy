@@ -2,22 +2,14 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import useSWR, { useSWRConfig } from "swr"
-import { Button, Chip, Label, Spinner, Typography, cn } from "@heroui/react"
-import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
-import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { DUE_REVIEW_LIMIT, SM2_GRADES } from "../constants"
-import { DueReviewSkeleton } from "./DueReviewSkeleton"
+import { _DueReview, type DueReviewCard, type DueReviewLabels } from "./component"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-review-flashcard"
 import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due-flashcards"
-import type { QueryMyDueFlashcardData } from "@/modules/api/graphql/queries/types/my-due-flashcards"
 import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/types"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { WorkSessionHeader } from "@/components/blocks/navigation/WorkSessionHeader"
-import { FlipCard } from "@/components/blocks/cards/FlipCard"
-import { RatingBar } from "@/components/blocks/buttons/RatingBar"
 import { useQueryFlashcardCardsByIdsSwr } from "@/hooks/swr/api/graphql/queries/useQueryFlashcardCardsByIdsSwr"
 import { useMutateStartFlashcardDueReviewSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateStartFlashcardDueReviewSessionSwr"
 import { useMutateSyncFlashcardDueReviewSessionProgressSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSyncFlashcardDueReviewSessionProgressSwr"
@@ -26,14 +18,6 @@ import { useQueryMyInProgressFlashcardDueReviewSessionSwr } from "@/hooks/swr/ap
 import { useQueryMyFlashcardReviewSessionBySessionIdSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionBySessionIdSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { useAppSelector } from "@/redux/hooks"
-
-/** HeroUI Chip color per quiz seniority level (mirrors `FlashcardReviewer`). */
-const LEVEL_COLOR: Record<string, "success" | "warning" | "danger" | "accent"> = {
-    junior: "success",
-    middle: "warning",
-    senior: "danger",
-    staff: "accent",
-}
 
 /** Props for {@link DueReview}. */
 export interface DueReviewProps extends WithClassNames<undefined> {
@@ -54,25 +38,15 @@ export interface DueReviewProps extends WithClassNames<undefined> {
 }
 
 /**
- * A card as rendered in this session — the live "due" shape (carries
- * `nextIntervals`, used for the RatingBar's day-preview hints) OR a card
- * resolved status-agnostically by id during resume (no `nextIntervals` — see
- * `resumeCardsByIdSwr` in the component body). `RatingBar`'s `hint` is already
- * optional, so a card without `nextIntervals` just renders without the preview.
- */
-type DueReviewCard = Omit<QueryMyDueFlashcardData, "nextIntervals"> & {
-    nextIntervals?: QueryMyDueFlashcardData["nextIntervals"]
-}
-
-/**
  * The spaced-repetition (SM-2) review session over the viewer's due cards, drawn
- * across every enrolled course. One card at a time: flip to reveal the answer,
- * then grade recall (Again / Hard / Good / Easy) — each grade reschedules the card
- * via `reviewFlashcard` and advances. A session summary closes the run. The due
- * count is the page's primary loop, so this is the main entry from the home hero.
+ * across every enrolled course — the CONNECTED half: it fetches the due queue,
+ * runs the resolve-or-start/resume state machine, resolves every label (incl.
+ * interpolation), and hands them to the presentational {@link _DueReview}. The
+ * due count is the page's primary loop, so this is the main entry from the home
+ * hero. See `tiers/split.md`.
  * @param props - {@link DueReviewProps}
  */
-export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
+export const DueReview = ({ onExit, sessionId }: DueReviewProps) => {
     const t = useTranslations()
     const router = useRouter()
     const pathname = usePathname()
@@ -163,12 +137,12 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
     // guards the one-shot resolve-or-start effect to run its work at most once
     // per mount (prevents a duplicate `start` call on re-render).
     const resolveAttemptedRef = useRef(false)
-    // STATE, separate from the ref above — `AsyncContent`'s `isLoading` gate below
-    // reads THIS, so the skeleton stays up until the resumed cards/cursor are
-    // ACTUALLY applied, not just until the underlying query settles (2026-07-12
-    // fix: closes a 1-frame flash — card 1 appears, then jumps to the real resume
-    // position). Stays false on the redirect-away paths (fresh session / no-
-    // sessionId shim) — the skeleton correctly holds through the navigation.
+    // STATE, separate from the ref above — `isSkeleton` below reads THIS, so the
+    // shimmer stays up until the resumed cards/cursor are ACTUALLY applied, not
+    // just until the underlying query settled (2026-07-12 fix: closes a 1-frame
+    // flash — card 1 appears, then jumps to the real resume position). Stays
+    // false on the redirect-away paths (fresh session / no-sessionId shim) — the
+    // shimmer correctly holds through the navigation.
     const [resolveApplied, setResolveApplied] = useState(false)
     // guards the one-shot completion call on reaching `done`
     const completedRef = useRef(false)
@@ -380,7 +354,7 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
     }, [t, card])
 
     // grade the current card, reschedule it (SM-2), then advance to the next
-    const onRate = useCallback(
+    const handleRate = useCallback(
         async (grade: number) => {
             if (!card) {
                 return
@@ -458,6 +432,8 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
         },
         [card, runGraphQL, t, currentIndex, gradedIndexes, runSyncSession, courseHeaders, courseId, globalMutate],
     )
+    // presentational callback contract is sync — `handleRate` is fire-and-forget from the click.
+    const onRate = useCallback((grade: number) => { void handleRate(grade) }, [handleRate])
 
     // step back to re-see an earlier card (question side; no re-grade) — mirrors
     // `FlashcardReviewer`'s own `goPrev` (teacher: sync the UI, both session types should
@@ -485,181 +461,66 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
     // end the session now → the completion effect (`done`) fires + navigates to
     // results. Distinct from "Exit" (back-link: leave, keep resumable).
     const onFinish = useCallback(() => setFinished(true), [])
+    const onReveal = useCallback(() => setRevealed(true), [])
+
+    // first load, nothing in hand → shimmer (loading-and-skeleton.md §2); also holds through the
+    // due-review resolve-or-start/resume state machine (forced skeleton while the bare
+    // `?session=due` shim resolves-or-starts a session and redirects, and — once the batch has
+    // loaded — until the resumed cursor has actually been APPLIED, not just until its underlying
+    // query settled, closing a 1-frame flash: card 1 appears, then jumps to the real resume position).
+    const isSkeleton = (isLoading && !data) || (!sessionId && cards.length > 0) || (Boolean(sessionId) && cards.length > 0 && !resolveApplied)
+    const isEmpty = cards.length === 0
+
+    const levelLabel = card?.level ? t(`flashcard.level.${card.level}`) : undefined
+
+    const labels: DueReviewLabels = {
+        exit: t("flashcard.exit"),
+        modeTitle: t("flashcard.mode.due"),
+        counter: t("flashcard.cardProgress", {
+            current: done ? effectiveCards.length : currentIndex + 1,
+            total: effectiveCards.length,
+        }),
+        finish: t("flashcard.finish"),
+        savingLabel: t("flashcard.review.stats.savingLabel"),
+        // NB: keeps the pre-existing (mismatched) copy verbatim — "No flashcards for this course
+        // yet." doubling as the due-queue error title predates this split, unchanged here.
+        errorTitle: t("flashcard.empty"),
+        emptyTitle: t("flashcard.due.allCaught"),
+        emptyDescription: t("flashcard.due.allCaughtHint"),
+        questionLabel: t("flashcard.questionLabel"),
+        answerLabel: t("flashcard.answerLabel"),
+        rateHint: t("flashcard.review.rateHint"),
+        rateAria: t("flashcard.review.rateAria"),
+        showAnswer: t("flashcard.showAnswer"),
+        previous: t("flashcard.previous"),
+        next: t("flashcard.next"),
+    }
 
     return (
-        <AsyncContent
-            // forced loading while the bare `?session=due` shim resolves-or-starts a
-            // session and redirects (mirrors `FlashcardReviewer`'s own `!sessionId` gate)
-            // — but only when there IS a batch to redirect with; an empty batch (no due
-            // cards) must still fall through to `isEmpty` below instead of spinning forever.
-            // `cards.length > 0 && !resolveApplied` (2026-07-12 fix, mirrors the
-            // identical `FlashcardReviewer` fix): once the due batch itself has
-            // loaded, ALSO hold the skeleton until the resume/start effect has
-            // actually applied the resumed cursor — not just until its underlying
-            // query settled — closing a 1-frame flash (card 1 appears, then jumps
-            // to the real resume position).
-            isLoading={(isLoading && !data) || (!sessionId && cards.length > 0) || (Boolean(sessionId) && cards.length > 0 && !resolveApplied)}
-            skeleton={<DueReviewSkeleton />}
-            isEmpty={cards.length === 0}
-            emptyContent={{
-                title: t("flashcard.due.allCaught"),
-                description: t("flashcard.due.allCaughtHint"),
-            }}
+        <_DueReview
+            isSkeleton={isSkeleton}
+            isEmpty={isEmpty}
             error={error}
-            errorContent={{
-                title: t("flashcard.empty"),
-                onRetry: () => { void mutate() },
-            }}
-        >
-            {done ? (
-                // transient hand-off only — the "finish" effect above
-                // `router.replace`s into the dedicated `.../result` route once
-                // the completion mutation resolves (2026-07-12: "done" is now
-                // answered by the ROUTE, not re-derived client-side here), so
-                // this branch never has a real end state to render — just the
-                // "saving" interim until that navigation lands. KEEP the same
-                // `WorkSessionHeader` chrome the just-finished ACTIVE phase
-                // used (teacher wanted the loading state to render like the
-                // active session's header, not swap to `PageHeader` early).
-                <div className={cn("flex w-full flex-col", className)}>
-                    <WorkSessionHeader
-                        backLabel={t("flashcard.exit")}
-                        onBack={onExit}
-                        title={t("flashcard.mode.due")}
-                        counter={t("flashcard.cardProgress", {
-                            current: effectiveCards.length,
-                            total: effectiveCards.length,
-                        })}
-                        current={effectiveCards.length}
-                        total={effectiveCards.length}
-                    />
-                    <div className="px-4 pb-6 pt-10 @app-sm:px-6">
-                        <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
-                            <Spinner size="lg" />
-                            <Typography type="body-sm" color="muted">
-                                {t("flashcard.review.stats.savingLabel")}
-                            </Typography>
-                        </div>
-                    </div>
-                </div>
-            ) : (
-                <div className={cn("flex w-full flex-col", className)}>
-                    {/* shared header: WorkSessionHeader (current card's OWN deck as identity +
-                        counter + progress segments), same shell as FlashcardReviewer/QuizSession
-                        (teacher, 2026-07-11: "sync the UI, both should render the navbar" + "render
-                        which deck ... whether it's currently due or not"). Identity changes PER CARD here (a due batch
-                        spans multiple decks) — the "Due" chip marks this as the cross-deck
-                        kind, mirroring `FlashcardReviewer`'s level/tag chips slot. `title` disambiguates
-                        this mode from FlashcardReviewer/QuizSession sharing the exact same shell
-                        (teacher, 2026-07-12: "these two pages are identical"). No confirm modal
-                        on back (teacher, 2026-07-09: "why isn't there an early-finish, go-back option"): each grade
-                        is saved immediately via `reviewFlashcard`, AND the batch/position itself
-                        is persisted too (`syncFlashcardDueReviewSessionProgress`) — leaving
-                        mid-run loses nothing, resumes exactly where it left off. */}
-                    <WorkSessionHeader
-                        backLabel={t("flashcard.exit")}
-                        onBack={onExit}
-                        title={t("flashcard.mode.due")}
-                        identity={card ? { name: card.deckTitle } : undefined}
-                        counter={t("flashcard.cardProgress", {
-                            current: currentIndex + 1,
-                            total: effectiveCards.length,
-                        })}
-                        // `current` = the VIEWED card (→ accent/pink follows what
-                        // you're looking at); the green/done state is per-card via
-                        // `doneSet={gradedIndexes}` so a card graded out of order
-                        // (free-nav jump-ahead → grade → jump-back) still reads green
-                        // regardless of where the cursor is (2026-07-12, teacher: free-
-                        // nav "both before and after"). Every segment is clickable
-                        // (`onSegmentClick`), and "Finish" ends the run explicitly.
-                        current={currentIndex}
-                        total={effectiveCards.length}
-                        doneSet={Array.from(gradedIndexes)}
-                        onSegmentClick={goToIndex}
-                        onFinish={onFinish}
-                        finishLabel={t("flashcard.finish")}
-                    />
-
-                    <div className="px-4 pb-6 pt-10 @app-sm:px-6">
-                        <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-                            {/* the flip card: prompt → answer; the level/tag chips ride under
-                                the QUESTION via `belowFront` (teacher, 2026-07-13: "chips gap-3
-                                below the question" + "due should render the chip label the same as the deck side") — same
-                                per-card level+tag chips as `FlashcardReviewer`, NOT the old
-                                generic "Due" chip (the header title already says "Review
-                                due cards"). */}
-                            <FlipCard
-                                revealed={revealed}
-                                questionLabel={t("flashcard.questionLabel")}
-                                answerLabel={t("flashcard.answerLabel")}
-                                front={<MarkdownContent plain markdown={card?.front ?? ""} />}
-                                belowFront={card && (card.level || (card.tags?.length ?? 0) > 0) ? (
-                                    <div className="flex flex-wrap items-center gap-2">
-                                        {card.level ? (
-                                            <Chip size="sm" variant="soft" color={LEVEL_COLOR[card.level] ?? "default"}>
-                                                {t(`flashcard.level.${card.level}`)}
-                                            </Chip>
-                                        ) : null}
-                                        {card.tags?.map((tag) => (
-                                            <Chip key={tag} size="sm" variant="soft" color="default">
-                                                {tag}
-                                            </Chip>
-                                        ))}
-                                    </div>
-                                ) : undefined}
-                                back={<MarkdownContent plain markdown={card?.back ?? ""} arcSections />}
-                            />
-
-                            {/* reveal first, then grade recall (which advances) */}
-                            {revealed ? (
-                                <div className="flex flex-col gap-3">
-                                    <Label>{t("flashcard.review.rateHint")}</Label>
-                                    <RatingBar
-                                        options={ratingOptions}
-                                        onRate={(grade) => void onRate(grade)}
-                                        ariaLabel={t("flashcard.review.rateAria")}
-                                        isPending={reviewing}
-                                    />
-                                </div>
-                            ) : (
-                                // "Show answer" (primary, fills all remaining space) · "Next"/"Previous"
-                                // ICON-ONLY (caret, no text) — mirrors `FlashcardReviewer` exactly
-                                // (teacher, 2026-07-13, devtools, 3rd change). `flex` + `flex-1` replaces the
-                                // fixed-column `grid` (only the primary one grows). gap-2.
-                                <div className="flex flex-wrap items-center gap-2">
-                                    {/* does NOT expand full-width on desktop — hug-content, sits on the left
-                                        alongside the 2 caret buttons (teacher, 2026-07-13: "everything sits on the left, no
-                                        expand unless the card is small"). `w-full` only below `sm:` (mobile, a wider tap
-                                        target is easier to hit), `@app-sm:w-auto` and up is hug-content. */}
-                                    <Button size="sm" variant="primary" className="w-full @app-sm:w-auto" onPress={() => setRevealed(true)}>
-                                        {t("flashcard.showAnswer")}
-                                    </Button>
-                                    <Button
-                                        size="sm"
-                                        variant="secondary"
-                                        isIconOnly
-                                        isDisabled={isFirst}
-                                        aria-label={t("flashcard.previous")}
-                                        onPress={goPrev}
-                                    >
-                                        <CaretLeftIcon weight="bold" className="size-4" aria-hidden focusable="false" />
-                                    </Button>
-                                    <Button
-                                        size="sm"
-                                        variant="secondary"
-                                        isIconOnly
-                                        isDisabled={isLast}
-                                        aria-label={t("flashcard.next")}
-                                        onPress={goNext}
-                                    >
-                                        <CaretRightIcon weight="bold" className="size-4" aria-hidden focusable="false" />
-                                    </Button>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-            )}
-        </AsyncContent>
+            onRetry={() => { void mutate() }}
+            onBack={onExit}
+            done={done}
+            card={card}
+            levelLabel={levelLabel}
+            revealed={revealed}
+            onReveal={onReveal}
+            reviewing={reviewing}
+            ratingOptions={ratingOptions}
+            onRate={onRate}
+            currentIndex={currentIndex}
+            totalCount={effectiveCards.length}
+            gradedIndexes={Array.from(gradedIndexes)}
+            isFirst={isFirst}
+            isLast={isLast}
+            onSegmentClick={goToIndex}
+            onPrev={goPrev}
+            onNext={goNext}
+            onFinish={onFinish}
+            labels={labels}
+        />
     )
 }

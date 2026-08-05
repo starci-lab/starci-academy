@@ -668,6 +668,31 @@ const noHardcodedUserTextInVocabulary = {
   },
 }
 
+const noPerPartClassNameProp = {
+  meta: {
+    type: "problem",
+    docs: {
+      description: "No `<part>ClassName` prop — a caller never restyles a node it does not own. [[BLOCK-4]]",
+    },
+    schema: [],
+    messages: {
+      perPart: "`{{prop}}` lets a caller reach INSIDE this component and restyle a node it does not own — the one escape hatch that makes a component impossible to change, because every internal element becomes public surface. Whatever the caller is trying to say, say it as a NAMED prop instead: `nameClassName={isMe ? \"text-accent\" : undefined}` was really `isOwnRow`, and the component decides what own-row looks like.",
+    },
+  },
+  create(context) {
+    const file = (context.filename || context.getFilename()).replace(/\\/g, "/")
+    if (!file.includes("/src/components/")) return {}
+    return {
+      // the declaration is what creates the hatch; the call site only walks through it
+      TSPropertySignature(node) {
+        const name = node.key && node.key.name
+        if (!name || !/^[a-z][A-Za-z0-9]*ClassName$/.test(name) || name === "className") return
+        context.report({ node, messageId: "perPart", data: { prop: name } })
+      },
+    }
+  },
+}
+
 // ── mỗi lớp phải TỰ KHAI nó là gì và VÌ SAO nó tồn tại ──────────────────────────
 // `principles` = lớp này tuyên bố nó là seam gì (tập đóng, khớp `patterns.mjs`, test đi
 // theo được). `explain` = vì sao có lớp này — thứ không ai dựng lại được từ markup về sau,
@@ -861,6 +886,7 @@ const noHelperFolderInComponents = {
 export default {
   meta: { name: "eslint-plugin-starci-fe", version: "0.5.0" },
   rules: {
+    "no-per-part-classname-prop": noPerPartClassNameProp,
     "require-frame-self-declare": requireFrameSelfDeclare,
     "no-inline-skeleton-branch": noInlineSkeletonBranch,
     "page-folder-two-files-only": pageFolderTwoFilesOnly,

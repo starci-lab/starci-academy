@@ -22,7 +22,7 @@ import {
 } from "@/components/blocks/skeleton/Skeleton"
 import {
     UserCell,
-} from "@/components/blocks/identity/UserCell"
+} from "@/components/composites/lists/UserCell"
 import {
     StandingHeroCard,
     type StandingHeroProgress,

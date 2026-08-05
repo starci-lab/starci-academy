@@ -8,7 +8,7 @@ import { queryCodingLeaderboard } from "@/modules/api/graphql/queries/query-codi
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import { UserCell } from "@/components/blocks/identity/UserCell"
+import { UserCell } from "@/components/composites/lists/UserCell"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Box } from "@/components/frames/Box"
@@ -74,8 +74,8 @@ const LeaderboardRow = ({ rank, entry, isViewer = false, solvedLabel, youLabel, 
                         <UserCell
                             username={entry?.username ?? ""}
                             size="sm"
-                            className="flex-1"
-                            trailing={isViewer ? <Chip tone="accent" text={youLabel} /> : undefined}
+                            classNames={["flex-1"]}
+                            trailing={isViewer ? () => <Chip tone="accent" text={youLabel} /> : undefined}
                         />
                     )),
                 ...(isSkeleton ? [() => <Typography size="sm" isSkeleton classNames={["flex-1"]} />] : []),

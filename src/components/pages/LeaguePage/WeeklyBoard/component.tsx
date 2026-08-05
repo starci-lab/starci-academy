@@ -7,7 +7,7 @@ import { rankBadgeIcon } from "@/components/blocks/dashboard/rankBadge"
 import { Confetti } from "@/components/blocks/dashboard/Confetti"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import { UserCell } from "@/components/blocks/identity/UserCell"
+import { UserCell } from "@/components/composites/lists/UserCell"
 import { RankDeltaCaret } from "@/components/blocks/profile/RankDeltaCaret"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Typography } from "@/components/atoms/text/Typography"
@@ -161,7 +161,7 @@ const Row = ({ row }: { row: WeeklyBoardRowEntry }) => (
         ),
         () => (
             <Box className="min-w-0 flex-1">
-                <UserCell username={row.displayUsername} avatar={row.avatar} nameClassName={row.mine ? "text-accent" : undefined} />
+                <UserCell username={row.displayUsername} avatar={row.avatar} isOwnRow={row.mine } />
             </Box>
         ),
         () => (

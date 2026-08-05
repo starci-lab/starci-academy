@@ -44,7 +44,7 @@ export interface FriendRowProps extends WithClassNames<undefined> {
  * {@link FriendRowProps.onToggleFollow}; presence + copy are passed in so the block
  * stays store-free and locale-agnostic.
  *
- * Mirrors {@link import("@/components/blocks/identity/UserCell").UserCell}'s
+ * Mirrors {@link import("@/components/composites/lists/UserCell").UserCell}'s
  * avatar+name layout but adds a linkable name and a presence dot, which UserCell
  * cannot express (its name is plain text and it has no presence slot).
  *

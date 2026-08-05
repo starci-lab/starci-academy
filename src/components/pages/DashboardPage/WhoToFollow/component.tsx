@@ -7,7 +7,7 @@ import {
     FollowButton,
 } from "@/components/blocks/community/FollowButton"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
-import { UserCell } from "@/components/blocks/identity/UserCell"
+import { UserCell } from "@/components/composites/lists/UserCell"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StackV, StackH } from "@/components/frames/Stack"
@@ -88,9 +88,9 @@ const WhoToFollowRow = ({
                         displayName={user.displayName}
                         avatar={user.avatar}
                         handle={`@${user.username}`}
-                        trailing={user.openToWork ? (
-                            <Chip tone="success" text={openToWorkLabel} />
-                        ) : undefined}
+                        trailing={user.openToWork
+                            ? () => <Chip tone="success" text={openToWorkLabel} />
+                            : undefined}
                     />
                 </Link>
             )),

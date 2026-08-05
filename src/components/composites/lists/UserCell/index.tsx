@@ -19,7 +19,7 @@ import { Box } from "@/components/frames/Box"
  * (COMPOSITE-2/7): `username`/`handle` are strings the caller already resolved,
  * not a `user` object this component reaches into.
  *
- * Ported from `@/components/blocks/identity/UserCell`.
+ * Ported from `@/components/composites/lists/UserCell`.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 

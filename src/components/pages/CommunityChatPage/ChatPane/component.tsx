@@ -9,7 +9,7 @@ import { Box } from "@/components/frames/Box"
 import { ScrollArea } from "@/components/frames/ScrollArea"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
-import { UserCell } from "@/components/blocks/identity/UserCell"
+import { UserCell } from "@/components/composites/lists/UserCell"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import type { ChatMessageNode } from "@/modules/api/graphql/queries/types/chat"
 
@@ -121,9 +121,9 @@ export const _ChatPane = ({
                         displayName={row.author!.displayName ?? undefined}
                         avatar={row.author!.avatar ?? undefined}
                         size="sm"
-                        trailing={row.isFounderAuthor ? (
-                            <SealCheckIcon weight="fill" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-                        ) : null}
+                        trailing={row.isFounderAuthor
+                            ? () => <SealCheckIcon weight="fill" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+                            : undefined}
                     />
                 )
             )] : []),

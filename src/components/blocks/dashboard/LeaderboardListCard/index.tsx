@@ -10,7 +10,7 @@ import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import type { VerdictBand } from "@/components/blocks/cards/verdict-band"
 import { IconTile } from "@/components/blocks/identity/IconTile"
-import { UserCell } from "@/components/blocks/identity/UserCell"
+import { UserCell } from "@/components/composites/lists/UserCell"
 import {
     placeMedalIcon,
     rankBadgeIcon,
@@ -118,7 +118,7 @@ export const LeaderboardListCard = ({
             <UserCell
                 username={displayName}
                 avatar={row.avatar ?? undefined}
-                nameClassName={row.isMe ? "text-accent" : undefined}
+                isOwnRow={row.isMe }
             />
         )
         return (

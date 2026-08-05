@@ -2,7 +2,7 @@ import type { ComponentType, SVGProps } from "react"
 import { Alert, type AlertStatus } from "@/components/atoms/feedback/Alert"
 import { Button } from "@/components/atoms/buttons/Button"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────

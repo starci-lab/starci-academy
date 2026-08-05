@@ -4,7 +4,7 @@ import { ProgressMeterTargetMark } from "./TargetMark"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV, StackH } from "@/components/frames/Stack"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/stats/ProgressMeter`. Authored in Storybook (not `src`);

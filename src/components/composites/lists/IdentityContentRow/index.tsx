@@ -1,7 +1,7 @@
 import { Avatar, type AvatarSize } from "@/components/atoms/display/Avatar"
 import { StackH, StackV } from "@/components/frames/Stack"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────

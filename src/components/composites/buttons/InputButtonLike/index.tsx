@@ -2,7 +2,7 @@ import { Button, cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { IconComponent } from "@/components/atoms/buttons/Button/button-tokens"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { StackH } from "@/components/frames/Stack"
 
 /**

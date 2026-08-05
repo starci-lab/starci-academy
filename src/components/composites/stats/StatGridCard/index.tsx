@@ -1,7 +1,7 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from

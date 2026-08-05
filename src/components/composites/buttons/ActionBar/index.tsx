@@ -1,5 +1,5 @@
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-import { type SkeletonProps } from "@/components/composites/_slot"
+import { type SkeletonProps } from "@/components/frames/_slot"
 import { Button } from "@/components/atoms/buttons/Button"
 import type { IconComponent } from "@/components/atoms/buttons/Button/button-tokens"
 import { ResponsiveCluster, type ResponsiveClusterItem } from "@/components/frames/ResponsiveCluster"

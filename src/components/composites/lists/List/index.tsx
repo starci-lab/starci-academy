@@ -7,7 +7,7 @@ import { ChoiceSwitch } from "@/components/atoms/forms/Choice"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { Box } from "@/components/frames/Box"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────

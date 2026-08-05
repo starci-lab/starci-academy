@@ -3,7 +3,7 @@ import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { type SurfaceCardVariant } from "@/components/composites/cards/SurfaceCard/surface-card-header"
 import { type AllowedPadding } from "@/components/frames/_spacing"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────

@@ -1,7 +1,7 @@
 import type { ComponentType, SVGProps } from "react"
 import { Alert as AtomAlert } from "@/components/atoms/feedback/Alert"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 /**
  * COMPOSITE — `Toast`: the floating notification surface, built entirely from
  * the `Alert` atom. Promoted from the atom tier (ATOM-3: a component whose

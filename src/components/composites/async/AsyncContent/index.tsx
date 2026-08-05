@@ -11,7 +11,7 @@ import { EmptyState, type EmptyStateIcon } from "@/components/composites/feedbac
 // whole dead branch back into the screen (caught by the 2026-07-27 deep-scan).
 import { Button } from "@/components/atoms/buttons/Button"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import type { CallerIdentity } from "@/components/frames/_identity"
 
 /**

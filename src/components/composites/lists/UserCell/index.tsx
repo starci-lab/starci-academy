@@ -4,7 +4,7 @@ import { Avatar } from "@/components/atoms/display/Avatar"
 import { IconTile, type IconComponent, type IconTileTone } from "@/components/atoms/display/IconTile"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { Box } from "@/components/frames/Box"
 
 /**

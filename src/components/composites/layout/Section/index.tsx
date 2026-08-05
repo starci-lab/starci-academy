@@ -4,7 +4,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Typography, type TypographySize } from "@/components/atoms/text/Typography"
 import { GAP_CLASS, type AllowedGap } from "@/components/frames/_spacing"
 import { StackH, StackV } from "@/components/frames/Stack"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────

@@ -3,7 +3,7 @@ import { cn } from "@heroui/react"
 import { LinkSeeMore } from "@/components/atoms/navigation/Link"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackH } from "@/components/frames/Stack"
-import type { ComponentTypeWithSkeleton , SkeletonProps } from "@/components/composites/_slot"
+import type { ComponentTypeWithSkeleton , SkeletonProps } from "@/components/frames/_slot"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────

@@ -4,7 +4,8 @@ import { CourseQaInvite } from "@/components/starci/blocks/learn/CourseQaInvite"
 import { CourseQaEngagementStrip } from "@/components/starci/blocks/learn/CourseQaEngagementStrip"
 import { CourseQaComposer, type CourseQaComposerUser } from "@/components/starci/blocks/learn/CourseQaComposer"
 import { CourseQaToolbar, type CourseQaFilter } from "@/components/starci/blocks/learn/CourseQaToolbar"
-import { CourseQaQuestionList, type CourseQaQuestionItem, type CourseQaCurrentUser } from "@/components/starci/blocks/learn/CourseQaQuestionList"
+import { CourseQaQuestionList, type CourseQaCurrentUser } from "@/components/starci/blocks/learn/CourseQaQuestionList"
+import type { CourseQuestionNode } from "@/modules/api/graphql/queries/types/course-questions"
 import { Container } from "@/components/frames/Container"
 import { StackV } from "@/components/frames/Stack"
 
@@ -79,7 +80,7 @@ export interface CourseQaPageProps {
     currentUserId: string | null
 
     /** The current page's questions, in display order. */
-    questions: ReadonlyArray<CourseQaQuestionItem>
+    questions: ReadonlyArray<CourseQuestionNode>
     /** 1-based current page. */
     page: number
     /** Total page count. */

@@ -1,6 +1,8 @@
 import React from "react"
+import type { CourseQuestionNode } from "@/modules/api/graphql/queries/types/course-questions"
+import { QaQuestionThread } from "@/components/blocks/learn/QaQuestionThread"
 import { Skeleton as HeroSkeleton } from "@heroui/react"
-import { MagnifyingGlassIcon, PushPinIcon, SealCheckIcon } from "@phosphor-icons/react"
+import { MagnifyingGlassIcon } from "@phosphor-icons/react"
 import { Avatar } from "@/components/atoms/display/Avatar"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
@@ -11,16 +13,14 @@ import {
     type AsyncContentErrorProps,
 } from "@/components/composites/async/AsyncContent"
 import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
-import type { ComponentTypeWithSkeleton } from "@/components/composites/_slot"
 import { StackV, StackH } from "@/components/frames/Stack"
-import { Cluster } from "@/components/frames/Cluster"
 
 /**
  * `CourseQaQuestionList` — the course-wide Q&A roll-up region: the async
  * lifecycle (loading → error → search-empty → content) around a flush divide-y
- * question list plus a pager. The Content leaf renders `QuestionPreviewRow`, a
- * marked collapsed-look stand-in with real data, until the real per-question
- * thread block lands. Four leaves: `Loading`, `Error`, `Empty` (filter matched
+ * question list plus a pager. The Content leaf renders one `QaQuestionThread`
+ * per question — collapsed until pressed, then the full conversation inline.
+ * Four leaves: `Loading`, `Error`, `Empty` (filter matched
  * nothing; true zero-ever is `CourseQaInvite` a layer up), `Content`.
  */
 
@@ -70,7 +70,7 @@ export interface CourseQaCurrentUser {
 /** Props for {@link CourseQaQuestionList}. */
 export interface CourseQaQuestionListProps {
     /** The current page's questions, in display order. */
-    questions: ReadonlyArray<CourseQaQuestionItem>
+    questions: ReadonlyArray<CourseQuestionNode>
     /** `true` while this list's own fetch is in flight (feeds the Loading leaf). */
     isLoading: boolean
     /** Truthy → the fetch failed (feeds the Error leaf, outranks loading/empty). */
@@ -102,18 +102,6 @@ const ERROR_TITLE = "Couldn't load the question list"
 const RETRY_LABEL = "Retry"
 const EMPTY_TITLE = "No questions match the current filter"
 const EMPTY_DESCRIPTION = "Try a different filter or search term."
-
-/** The block's own scope→label vocabulary (§14d.1) — never handed in pre-formatted. */
-const scopeLabel = (scope: CourseQaQuestionScope): string =>
-    scope.kind === "lesson" ? `Lesson: ${scope.lessonTitle}` : "General"
-
-/** The block's own status→label vocabulary (§14d.1). */
-const statusLabel = (replyCount: number, answeredByFounder?: boolean): string => {
-    if (replyCount <= 0) {
-        return "Not answered yet"
-    }
-    return answeredByFounder ? "Instructor answered" : "Answered"
-}
 
 /**
  * One placeholder row for the Loading branch — avatar + 2 text bars +
@@ -173,96 +161,6 @@ const SkeletonQuestionRow = () => {
     )
 }
 
-/** Props for the local {@link QuestionPreviewRow}. */
-interface QuestionPreviewRowProps {
-    question: CourseQaQuestionItem
-    currentUserId: string | null
-}
-
-/**
- * TEMPORARY GAP STAND-IN for the not-yet-built `QaQuestionThread` block — see
- * the file header's GAP note (★2). Renders the COLLAPSED look only (real data,
- * real atoms), no expand/reply behaviour: pressing does nothing, because
- * inventing a fake "open the thread" affordance here would be worse than
- * honestly having none yet.
- */
-const QuestionPreviewRow = ({ question, currentUserId }: QuestionPreviewRowProps) => {
-    const isMine = currentUserId != null && currentUserId === question.author.id
-    const isAnswered = question.replyCount > 0
-    const askerName = isMine ? "You" : question.author.displayName
-
-    // ONE chip for the row's classification axis (status — the thing worth scanning
-    // the list for); the scope rides as plain muted text beside it instead of a
-    // second chip (eslint `starci-fe/no-adjacent-chip`, ★7).
-    const chips: Array<ComponentTypeWithSkeleton> = [
-        () => <Typography size="xs" color="muted" text={scopeLabel(question.scope)} />,
-        () => (
-            <Chip
-                tone={isAnswered ? "success" : "default"}
-                text={statusLabel(question.replyCount, question.answeredByFounder)}
-
-            />
-        ),
-    ]
-    if (isAnswered) {
-        // no icon here — §5a.2: a chat-bubble needs an ASSOCIATION step to read as
-        // "replies" (not a universal symbol like ✓/🔒), and the text already carries
-        // the fact on its own (same fix already applied to QaQuestionThread/QaConversationHeader).
-        chips.push(() => (
-            <Typography size="xs" color="muted" text={`${question.replyCount} replies`} />
-        ))
-    }
-
-    const nameLine = (
-        <>
-            {question.isPinned ? (
-                <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-            ) : null}
-            <Typography size="xs" weight="medium" text={askerName} />
-            {question.isFounderAuthor ? (
-                <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-            ) : null}
-            <Typography size="xs" color="muted" text={`· ${question.createdTimeAgo}`} />
-        </>
-    )
-
-    const textColumn = (
-        <>
-            <StackH gap={2} items={[() => nameLine]} />
-            <Typography size="sm" lineClamp={2} text={question.preview} />
-            <Cluster gap={3} items={chips} />
-        </>
-    )
-
-    return (
-        <StackH
-            gap={4}
-            principles={["content-row"]}
-            align="start"
-
-            items={[
-                () => (
-                    <div className="shrink-0">
-                        <Avatar
-                            src={question.author.avatarUrl}
-                            name={question.author.displayName}
-                            seed={question.author.id}
-                            size="sm"
-
-                        />
-                    </div>
-                ),
-                () => <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={[() => textColumn]} />,
-                () => (
-                    <span
-                        aria-hidden
-                        className={`size-2 shrink-0 rounded-full ${isAnswered ? "bg-success" : "bg-warning"}`}
-                    />
-                ),
-            ]}
-        />
-    )
-}
 
 /** The Loading branch's rows — see ★1 for why these are NOT `SurfaceCardList.isSkeleton`. */
 const skeletonItems = (): Array<SurfaceCardListItem> =>
@@ -273,12 +171,21 @@ const skeletonItems = (): Array<SurfaceCardListItem> =>
 
 /** The Content branch's real rows — each a {@link QuestionPreviewRow} (★2 gap stand-in). */
 const questionItems = (
-    questions: ReadonlyArray<CourseQaQuestionItem>,
+    questions: ReadonlyArray<CourseQuestionNode>,
     currentUserId: string | null,
+    currentUser: CourseQaCurrentUser | null,
+    onAnswered?: () => void,
 ): Array<SurfaceCardListItem> =>
     questions.map((question) => ({
         key: question.id,
-        content: () => <QuestionPreviewRow question={question} currentUserId={currentUserId} />,
+        content: () => (
+            <QaQuestionThread
+                question={question}
+                currentUserId={currentUserId}
+                currentUser={currentUser}
+                onAnswered={onAnswered}
+            />
+        ),
     }))
 
 /**
@@ -301,11 +208,6 @@ const CourseQaQuestionList = ({
     pagerAriaLabel,
     isSkeleton = false,
 }: CourseQaQuestionListProps) => {
-    // `currentUser`/`onAnswered` are pure pass-through for the future `QaQuestionThread`
-    // swap (★2/GAP) — `QuestionPreviewRow` (today's stand-in) does not consume them.
-    void currentUser
-    void onAnswered
-
     const emptyContent: AsyncContentEmptyProps = {
         icon: MagnifyingGlassIcon,
         title: EMPTY_TITLE,
@@ -344,7 +246,7 @@ const CourseQaQuestionList = ({
                         items={[
                             () => (
                                 <SurfaceCardList
-                                    items={questionItems(questions, currentUserId)}
+                                    items={questionItems(questions, currentUserId, currentUser, onAnswered)}
 
                                 />
                             ),

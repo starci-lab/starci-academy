@@ -4,18 +4,13 @@ import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useQueryCourseQuestionsSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseQuestionsSwr"
-import {
-    CourseQuestionFilter,
-    type CourseQuestionNode,
-} from "@/modules/api/graphql/queries/types/course-questions"
+import { CourseQuestionFilter } from "@/modules/api/graphql/queries/types/course-questions"
 import { mutateCreateComment } from "@/modules/api/graphql/mutations/mutation-create-comment"
-import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { pathConfig } from "@/resources/path"
 import { useAppSelector } from "@/redux/hooks"
 import { _CourseQaPage } from "./component"
 import type { CourseQaHeaderCrumb } from "@/components/starci/blocks/learn/CourseQaHeader"
 import type { CourseQaFilter } from "@/components/starci/blocks/learn/CourseQaToolbar"
-import type { CourseQaQuestionItem } from "@/components/starci/blocks/learn/CourseQaQuestionList"
 
 /** Questions shown per page before the pager kicks in (mirrors the request limit). */
 const QUESTIONS_PER_PAGE = 20
@@ -55,40 +50,17 @@ const PROP_TO_FILTER: Record<CourseQaFilter, CourseQuestionFilter> = {
 }
 
 /**
- * Adapt one `CourseQuestionNode` (v1's GraphQL shape) into the block's own
- * `CourseQaQuestionItem` vocabulary — ported verbatim from `QuestionRow`/
- * `QaInboxRow`'s own field reads in `src`'s `CourseQa/index.tsx` tree.
- */
-const toQuestionItem = (question: CourseQuestionNode, t: (key: string) => string): CourseQaQuestionItem => ({
-    id: question.id,
-    author: {
-        id: question.author.id,
-        displayName: question.author.displayName || question.author.username,
-        avatarUrl: question.author.avatar ?? undefined,
-    },
-    createdTimeAgo: getTimeAgoLabel(getTimeAgoMessage(question.createdAt), t),
-    isPinned: question.isPinned,
-    isFounderAuthor: question.isFounderAuthor,
-    preview: question.body,
-    scope: question.contentId
-        ? { kind: "lesson", lessonTitle: question.contentTitle ?? "" }
-        : { kind: "general" },
-    replyCount: question.replyCount,
-    answeredByFounder: question.answeredByFounder,
-})
-
-/**
  * Course-wide Q&A roll-up screen — the CONNECTED half of the course Q&A page.
- * Mirrors the data wiring of `@/components/features/learn/CourseQa`: the active
+ * The active
  * filter is URL-synced (`?filter=`), search is debounced then folded into the
  * SWR key, the composer posts a course-general question (`courseId` only, no
  * `contentId`) via the shared `createComment` mutation and revalidates the list,
  * and the empty-board invitation funnels into the course content. Everything is
  * resolved into typed data and handed to the presentational {@link _CourseQaPage}.
  *
- * src twin of `.storybook/components/starci/pages/CourseQaPage/CourseQaPage.tsx`,
- * wired to the same v1 data source as `@/components/features/learn/CourseQa`
- * (`/src/components/features/learn/CourseQa/index.tsx`).
+ * Each question opens its own conversation inline through `QaQuestionThread`, which
+ * owns the answer thread's own fetch and every write — so this file hands the list
+ * whole question nodes rather than a flattened display shape.
  */
 export const CourseQaPage = () => {
     const t = useTranslations()
@@ -146,10 +118,9 @@ export const CourseQaPage = () => {
         [rawQuestions],
     )
 
-    const questions: Array<CourseQaQuestionItem> = useMemo(
-        () => rawQuestions.map((question) => toQuestionItem(question, t)),
-        [rawQuestions, t],
-    )
+    // The list hands each question straight to `QaQuestionThread`, which needs the
+    // whole node (body, answers, lesson route) to open the conversation — so no
+    // display-shape adapter sits in between any more.
 
     /** Write the chosen filter into the URL (`?filter=`); the list re-reads it. */
     const onFilterChange = useCallback(
@@ -230,7 +201,7 @@ export const CourseQaPage = () => {
             onSearchChange={setSearchInput}
             currentUser={currentUser ? { displayName: currentUser.displayName || currentUser.username, avatarUrl: currentUser.avatar } : null}
             currentUserId={currentUserId}
-            questions={questions}
+            questions={rawQuestions}
             page={page}
             totalPages={totalPages}
             onPageChange={setPage}

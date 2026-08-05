@@ -16,13 +16,13 @@ import { ReactionBar } from "@/components/features/community/Discussion/Reaction
 import { QaInboxRow } from "../QaInboxRow"
 import { QaConversationHeader } from "../QaConversationHeader"
 import { QaMessageBubble } from "../QaMessageBubble"
-import { useQuestionAnswers } from "./hooks/useQuestionAnswers"
+import { useQuestionAnswers } from "@/hooks/swr/api/graphql/queries/useQuestionAnswersSwr"
 import { useMutateSetFollowSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetFollowSwr"
 import { pathConfig } from "@/resources/path"
 import { useAppSelector } from "@/redux/hooks"
 
-/** Props for {@link QuestionRow}. */
-export interface QuestionRowProps extends WithClassNames<undefined> {
+/** Props for {@link QaQuestionThread}. */
+export interface QaQuestionThreadProps extends WithClassNames<undefined> {
     /** The question to render. */
     question: CourseQuestionNode
     /** Current viewer id (drives own-bubble alignment + owner-only actions); null when unknown. */
@@ -46,9 +46,9 @@ export interface QuestionRowProps extends WithClassNames<undefined> {
  * Owns the expand state + the answer thread's data/persistence (via
  * {@link useQuestionAnswers}, gated on `expanded` so nothing fetches until opened).
  *
- * @param props - {@link QuestionRowProps}
+ * @param props - {@link QaQuestionThreadProps}
  */
-export const QuestionRow = ({ question, currentUserId, currentUser, onAnswered, className }: QuestionRowProps) => {
+export const QaQuestionThread = ({ question, currentUserId, currentUser, onAnswered, className }: QaQuestionThreadProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()

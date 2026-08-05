@@ -1,14 +1,12 @@
 "use client"
 
 import React from "react"
-import { CourseQa } from "@/components/features/learn/CourseQa"
+import { CourseQaPage } from "@/components/pages/CourseQaPage"
 
 /**
- * Learn / Q&A: course-wide roll-up of learner questions across every lesson,
- * with founder-answered status + filters. See `CourseCommunity/LAYOUT-BRAINSTORM.md` (S2).
+ * Learn / qa — the course-wide question board: ask, filter, and open any
+ * question's full conversation inline.
  */
-const Page = () => {
-    return <CourseQa />
-}
+const Page = () => <CourseQaPage />
 
 export default Page

@@ -11,69 +11,59 @@ import {
     FoundationCategoryCardSkeleton,
 } from "../../FoundationCategoryCard/FoundationCategoryCardSkeleton"
 import type { FoundationCategoryEntity } from "@/modules/types/entities/foundation-category"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Props for {@link FoundationsCategoryGridBody}. */
-export interface FoundationsCategoryGridBodyProps extends WithClassNames<undefined> {
+export interface FoundationsCategoryGridBodyProps {
     /** Raw categories for the current page; `undefined` while still loading. */
     categories?: Array<FoundationCategoryEntity>
     /** Categories sorted for display (by order index). */
     sortedCategories: Array<FoundationCategoryEntity>
-    /** Whether the categories query is in flight. */
-    isLoading: boolean
+    /** First load, nothing in hand → the rows shimmer in place. Owned by the caller. */
+    isSkeleton: boolean
 }
 
-/** Number of skeleton rows shown while the categories load. */
+/** Number of placeholder rows shown while the categories load. */
 const SKELETON_ROWS = 6
 
 /**
- * Foundations category list body: skeleton rows while loading, empty state, or the
+ * Foundations category list body: placeholder rows while loading, the empty state, or the
  * joined link-and-caret list.
  *
- * Rows ({@link FoundationCategoryCard}) own their own selection dispatch + navigation
- * and render as {@link import("@/components/blocks").ListRow}s inside one `p-0` house
- * card surface (a joined list with full-width dividers — the `Accordion
- * variant="surface"` look, not a real accordion); this component only handles the
- * container, ordering, and loading state.
- * @param props.categories - Raw categories for empty-state check.
- * @param props.sortedCategories - Display-ordered categories.
- * @param props.isLoading - Shows skeletons when true and no data cached.
- * @param props.className - Optional root class names.
+ * Rows ({@link FoundationCategoryCard}) own their own selection dispatch + navigation and
+ * render inside one `p-0` house card surface (a joined list with full-width dividers);
+ * this component only handles the container, ordering, and the loading state. The
+ * placeholders render inside the SAME `SurfaceListCard` the loaded rows do — one tree, not
+ * a second one kept in step by hand (`loading-and-skeleton.md`).
  */
 export const FoundationsCategoryGridBody = ({
     categories,
     sortedCategories,
-    isLoading,
-    className,
+    isSkeleton,
 }: FoundationsCategoryGridBodyProps) => {
     const t = useTranslations()
 
+    // empty only once settled — while shimmering there is nothing to call empty yet.
+    if (!isSkeleton && !categories?.length) {
+        return <AsyncContentEmpty title={t("foundations.emptyCategories")} />
+    }
+
     return (
-        <AsyncContent
-            isLoading={isLoading}
-            isEmpty={!categories?.length}
-            emptyContent={{ title: t("foundations.emptyCategories") }}
-            skeleton={(
-                <SurfaceListCard className={className}>
-                    {Array.from({ length: SKELETON_ROWS }).map((_, index) => (
-                        <FoundationCategoryCardSkeleton
-                            key={index}
-                            divider={index < SKELETON_ROWS - 1}
-                        />
-                    ))}
-                </SurfaceListCard>
-            )}
-        >
-            <SurfaceListCard className={className}>
-                {sortedCategories.map((category) => (
+        <SurfaceListCard identity={{ tier: "block", component: "FoundationsCategoryGridBody" }}>
+            {isSkeleton
+                ? Array.from({ length: SKELETON_ROWS }, (_row, index) => (
+                    <FoundationCategoryCardSkeleton
+                        key={index}
+                        divider={index < SKELETON_ROWS - 1}
+                    />
+                ))
+                : sortedCategories.map((category) => (
                     <FoundationCategoryCard
                         key={category.id}
                         category={category}
                     />
                 ))}
-            </SurfaceListCard>
-        </AsyncContent>
+        </SurfaceListCard>
     )
 }

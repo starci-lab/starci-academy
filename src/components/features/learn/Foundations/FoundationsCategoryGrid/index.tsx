@@ -187,7 +187,7 @@ export const FoundationsCategoryGridLayout = () => {
                         <FoundationsCategoryGridBody
                             categories={pageCategories}
                             sortedCategories={pageCategories ?? []}
-                            isLoading={isLoading && !data}
+                            isSkeleton={isLoading && !data}
                         />
                         {isLoading && !data ? (
                             <PaginationSkeleton />

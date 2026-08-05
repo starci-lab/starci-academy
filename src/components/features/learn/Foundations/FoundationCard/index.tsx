@@ -1,7 +1,8 @@
 "use client"
 
 import { CaretRightIcon, StackIcon } from "@phosphor-icons/react"
-import { Chip } from "@heroui/react"
+import { Chip, cn } from "@heroui/react"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import React, { useCallback } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -17,12 +18,20 @@ import { SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Props for {@link FoundationCard}. */
 export interface FoundationCardProps extends WithClassNames<undefined> {
-    /** Foundation resource row from API. */
-    foundation: FoundationEntity
+    /** Foundation resource row from API. Absent only while {@link FoundationCardProps.isSkeleton}. */
+    foundation?: FoundationEntity
     /** 0-based position in the sorted list (for display numbering). */
-    displayIndex: number
+    displayIndex?: number
     /** Whether this card is the active selection. */
     selected?: boolean
+    /**
+     * First load, nothing in hand → this row shimmers in place. The resting state lives
+     * HERE, in the same file as the loaded one, so the two shapes cannot drift apart
+     * (`loading-and-skeleton.md`) — there is no separate `FoundationCardSkeleton` twin.
+     */
+    isSkeleton?: boolean
+    /** Bottom divider — set on every row except the last, while shimmering. */
+    divider?: boolean
 }
 
 /**
@@ -41,8 +50,10 @@ export interface FoundationCardProps extends WithClassNames<undefined> {
  */
 export const FoundationCard = ({
     foundation,
-    displayIndex,
+    displayIndex = 0,
     selected = false,
+    isSkeleton = false,
+    divider = false,
     className,
 }: FoundationCardProps) => {
     const t = useTranslations()
@@ -57,6 +68,9 @@ export const FoundationCard = ({
      * navigate to their dedicated page (no modal).
      */
     const onPress = useCallback(() => {
+        if (!foundation) {
+            return
+        }
         dispatch(setFoundation(foundation))
         dispatch(setFoundationId(foundation.id))
 
@@ -92,6 +106,17 @@ export const FoundationCard = ({
         locale,
         router,
     ])
+
+    // The resting state of THIS row, in THIS file — the shape it mirrors is right below,
+    // so the two cannot drift the way a separate `*Skeleton` twin file does.
+    if (isSkeleton || !foundation) {
+        return (
+            <Skeleton.ListRow
+                withTrailing
+                className={cn("px-3", divider && "border-b border-separator", className)}
+            />
+        )
+    }
 
     return (
         <SurfaceListCardRow

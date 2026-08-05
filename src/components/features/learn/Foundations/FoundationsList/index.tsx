@@ -8,35 +8,29 @@ import {
     FoundationCard,
 } from "../FoundationCard"
 import {
-    FoundationCardSkeleton,
-} from "../FoundationCardSkeleton"
-import {
     compareFoundations,
 } from "../utils"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryFoundationsSwr } from "@/hooks/swr/api/graphql/queries/useQueryFoundationsSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
 
-/** Props for {@link FoundationsList}. */
-export type FoundationsListProps = WithClassNames<undefined>
-
-/** Number of skeleton rows shown while the resources load. */
+/** Number of placeholder rows shown while the resources load. */
 const SKELETON_ROWS = 6
 
 /**
- * Foundations master list: reads from Redux + SWR; shows skeletons while loading,
- * empty state, or the joined link-and-caret list.
- * @param props.className - Optional root class names.
+ * Foundations master list: reads from Redux + SWR.
+ *
+ * The placeholder rows render inside the SAME `SurfaceListCard` the loaded rows do —
+ * one tree, not a second one kept in step by hand (`loading-and-skeleton.md`).
  */
-export const FoundationsList = ({
-    className,
-}: FoundationsListProps) => {
+export const FoundationsList = () => {
     const t = useTranslations()
     const foundations = useAppSelector((state) => state.foundation.entities)
     const { data: foundationsData, isLoading, error } = useQueryFoundationsSwr()
-    const isFirstLoad = (isLoading && !foundationsData) || foundations === undefined
+
+    // First load: the query has not settled, or redux has not hydrated the list yet.
+    const isSkeleton = (isLoading && !foundationsData) || foundations === undefined
 
     /** Foundations sorted into display order (StarCi video → roadmap → cheatsheet → rest). */
     const sortedFoundations = useMemo(() => {
@@ -46,33 +40,32 @@ export const FoundationsList = ({
         return [...foundations].sort(compareFoundations)
     }, [foundations])
 
+    // error beats a stale loading flag; empty only once settled (BLOCK-8 order). Both branches
+    // carry the same line the pre-split code used — only the tone differs.
+    if (error && !foundationsData) {
+        return <AsyncContentError title={t("foundations.empty")} />
+    }
+    if (!isSkeleton && sortedFoundations.length === 0) {
+        return <AsyncContentEmpty title={t("foundations.empty")} />
+    }
+
     return (
-        <AsyncContent
-            isLoading={isFirstLoad}
-            error={!foundationsData ? error : undefined}
-            errorContent={{ title: t("foundations.empty") }}
-            isEmpty={sortedFoundations.length === 0}
-            emptyContent={{ title: t("foundations.empty") }}
-            skeleton={(
-                <SurfaceListCard className={className}>
-                    {Array.from({ length: SKELETON_ROWS }).map((_, index) => (
-                        <FoundationCardSkeleton
-                            key={index}
-                            divider={index < SKELETON_ROWS - 1}
-                        />
-                    ))}
-                </SurfaceListCard>
-            )}
-        >
-            <SurfaceListCard className={className}>
-                {sortedFoundations.map((foundation, index) => (
+        <SurfaceListCard identity={{ tier: "block", component: "FoundationsList" }}>
+            {isSkeleton
+                ? Array.from({ length: SKELETON_ROWS }, (_row, index) => (
+                    <FoundationCard
+                        key={index}
+                        isSkeleton
+                        divider={index < SKELETON_ROWS - 1}
+                    />
+                ))
+                : sortedFoundations.map((foundation, index) => (
                     <FoundationCard
                         key={foundation.id}
                         foundation={foundation}
                         displayIndex={index}
                     />
                 ))}
-            </SurfaceListCard>
-        </AsyncContent>
+        </SurfaceListCard>
     )
 }

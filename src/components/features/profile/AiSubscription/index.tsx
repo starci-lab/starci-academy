@@ -2,8 +2,6 @@
 
 import React from "react"
 import {
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
@@ -17,7 +15,8 @@ import {
 } from "./AiSubscriptionSkeleton"
 import { useQueryAiSubscriptionTiersSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiSubscriptionTiersSwr"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { AsyncContentError } from "@/components/composites/async/AsyncContent"
+import { StackV } from "@/components/frames/Stack"
 
 /**
  * AI subscription feature container.
@@ -33,32 +32,41 @@ export const AiSubscription = () => {
     // need the tiers SWR here only to gate the skeleton vs grid
     const tiersSwr = useQueryAiSubscriptionTiersSwr()
 
-    // gate only the data-dependent tier grid; breadcrumb + header are static
-    // chrome (i18n/router only) so they render immediately, outside the gate.
-    // isValidating is intentionally excluded — background revalidate keeps the
-    // existing grid instead of flashing back to the skeleton
-    const isLoading = tiersSwr.isLoading && !tiersSwr.data
+    // Gate only the data-dependent tier grid; breadcrumb + header are static chrome
+    // (i18n/router only) so they render immediately, outside the gate. `isValidating` is
+    // intentionally excluded — a background revalidate keeps the existing grid instead of
+    // flashing back to the placeholder.
+    const isSkeleton = tiersSwr.isLoading && !tiersSwr.data
+
+    // error beats a stale loading flag (BLOCK-8 order).
+    const grid = () => {
+        if (tiersSwr.error) {
+            return (
+                <AsyncContentError
+                    title={t("aiSubscription.loadError.title")}
+                    description={t("aiSubscription.loadError.description")}
+                    onRetry={() => tiersSwr.mutate()}
+                    retryLabel={t("aiSubscription.loadError.retry")}
+                />
+            )
+        }
+        return isSkeleton ? <AiSubscriptionSkeleton /> : <TierGrid />
+    }
 
     return (
-        <div className="flex flex-col gap-10">
-            <PageHeader
-                breadcrumb={<SettingsBreadcrumb current={t("aiSubscription.title")} />}
-                title={t("aiSubscription.title")}
-                description={t("aiSubscription.subtitle")}
-            />
-            <AsyncContent
-                isLoading={isLoading}
-                skeleton={<AiSubscriptionSkeleton />}
-                error={tiersSwr.error}
-                errorContent={{
-                    title: t("aiSubscription.loadError.title"),
-                    description: t("aiSubscription.loadError.description"),
-                    onRetry: () => tiersSwr.mutate(),
-                    retryLabel: t("aiSubscription.loadError.retry"),
-                }}
-            >
-                <TierGrid />
-            </AsyncContent>
-        </div>
+        <StackV
+            identity={{ tier: "block", component: "AiSubscription" }}
+            gap={8}
+            items={[
+                () => (
+                    <PageHeader
+                        breadcrumb={<SettingsBreadcrumb current={t("aiSubscription.title")} />}
+                        title={t("aiSubscription.title")}
+                        description={t("aiSubscription.subtitle")}
+                    />
+                ),
+                grid,
+            ]}
+        />
     )
 }

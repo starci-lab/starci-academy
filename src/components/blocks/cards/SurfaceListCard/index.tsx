@@ -7,6 +7,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Box } from "@/components/frames/Box"
 import { StackH } from "@/components/frames/Stack"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 import { type VerdictBand, verdictBandClassName } from "../verdict-band"
 
 /**
@@ -62,6 +63,12 @@ export interface SurfaceListCardProps extends WithClassNames<undefined> {
      * Defaults to `false` (existing top-level usages keep the shadow look).
      */
     bordered?: boolean
+    /**
+     * Set when a sentence-tier component roots on this card: it then emits THAT
+     * component's identity instead of its own, so the caller never wraps itself in an
+     * identity div (see `frames/_identity.ts`).
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -86,15 +93,14 @@ export interface SurfaceListCardProps extends WithClassNames<undefined> {
  * @param props - {@link SurfaceListCardProps}
  * @see Story: .storybook/stories/blocks/cards/SurfaceListCard/SurfaceListCard.stories
  */
-export const SurfaceListCard = ({ children, bordered = false, className }: SurfaceListCardProps) => (
+export const SurfaceListCard = ({ children, bordered = false, className, identity }: SurfaceListCardProps) => (
     <div
         className={cn(
             "overflow-hidden rounded-3xl bg-surface",
             bordered ? "border border-default" : "shadow-surface",
             className,
         )}
-        data-tier="composite"
-        data-component="SurfaceListCard"
+        {...resolveIdentity(identity, { tier: "composite", name: "SurfaceListCard" })}
     >
         {children}
     </div>

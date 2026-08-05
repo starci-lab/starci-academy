@@ -3,18 +3,19 @@
 import React from "react"
 import { useTranslations } from "next-intl"
 import { CourseRow } from "./CourseRow"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useProfileUsername } from "../../hooks/useProfileUsername"
 import { useQueryUserCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCoursesSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
 import { useAppSelector } from "@/redux/hooks"
 
+/** Placeholder course rows shown while the list loads. */
+const SKELETON_ROWS = 2
+
 /** Props for {@link OverviewCourses}. */
-export interface OverviewCoursesProps extends WithClassNames<undefined> {
+export interface OverviewCoursesProps {
     /** Section label, rendered outside the card (owned here, like every other self-contained section). */
     label: React.ReactNode
     /** Optional "see more" link on the label row. */
@@ -28,14 +29,16 @@ export interface OverviewCoursesProps extends WithClassNames<undefined> {
  * compact row: a course icon, the title + overall completion %, and a single
  * segmented bar that folds the three dimensions (content / challenge / milestone)
  * into one honest progress bar (filled to the real total, coloured by dimension).
- * Owns its own `LabeledCard`, with `frameless` computed HERE (not hardcoded) so
- * the loaded list (self-framed as a `SurfaceListCard`) skips the outer `Card` —
- * but the skeleton/empty/error states, which have no bounded surface of their
- * own, still get one. Data states go through {@link AsyncContent}.
+ *
+ * Owns its own `LabeledCard`, with `frameless` computed HERE (not hardcoded) so the
+ * list — self-framed as a `SurfaceListCard` — skips the outer card, while the empty
+ * and error states, which have no bounded surface of their own, still get one. The
+ * placeholder rows are the SAME `CourseRow` resting, inside the SAME list, so no
+ * second description of the row exists (`loading-and-skeleton.md`).
  *
  * @param props - {@link OverviewCoursesProps}
  */
-export const OverviewCourses = ({ className, label, onSeeMore, seeMoreLabel }: OverviewCoursesProps) => {
+export const OverviewCourses = ({ label, onSeeMore, seeMoreLabel }: OverviewCoursesProps) => {
     const t = useTranslations()
     const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
@@ -47,55 +50,46 @@ export const OverviewCourses = ({ className, label, onSeeMore, seeMoreLabel }: O
     const { data, isLoading, error, mutate } = useQueryUserCoursesSwr(userId)
 
     const courses = data ?? []
-    const hasCourses = !(isLoading || !userId) && !error && courses.length > 0
+    const isSkeleton = (isLoading || !userId) && courses.length === 0
+    // the list frames itself; every other state needs the card's own surface
+    const hasCourses = !isSkeleton && !error && courses.length > 0
+
+    // error beats a stale loading flag; empty only once settled (BLOCK-8 order).
+    const body = () => {
+        if (error && courses.length === 0) {
+            return (
+                <AsyncContentError
+                    title={t("publicProfile.loadError")}
+                    onRetry={() => { void mutate() }}
+                    retryLabel={t("publicProfile.loadErrorRetry")}
+                />
+            )
+        }
+        if (!isSkeleton && courses.length === 0) {
+            return <AsyncContentEmpty title={t("publicProfile.coursesEmpty")} />
+        }
+        return (
+            <SurfaceListCard>
+                {isSkeleton
+                    ? Array.from({ length: SKELETON_ROWS }, (_row, index) => (
+                        <CourseRow key={index} isSkeleton />
+                    ))
+                    : courses.map((item) => (
+                        <CourseRow key={item.globalId} item={item} isOwnProfile={isOwnProfile} />
+                    ))}
+            </SurfaceListCard>
+        )
+    }
 
     return (
         <LabeledCard
-            className={className}
+            identity={{ tier: "block", component: "OverviewCourses" }}
             label={label}
             onSeeMore={onSeeMore}
             seeMoreLabel={seeMoreLabel}
-            frameless={hasCourses}
+            frameless={hasCourses || isSkeleton}
         >
-            <AsyncContent
-                isLoading={(isLoading || !userId) && courses.length === 0}
-                skeleton={(
-                    // mirror the real list: surface list card with course item rows
-                    <SurfaceListCard>
-                        {[0, 1].map((row) => (
-                            <SurfaceListCardItem key={row}>
-                                <div className="flex items-center gap-3">
-                                    {/* IconTile (sm = size-12 rounded-xl) */}
-                                    <Skeleton className="size-12 shrink-0 rounded-xl" />
-                                    <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                        {/* title + percent row */}
-                                        <div className="flex items-center justify-between gap-2">
-                                            <Skeleton.Typography type="body-sm" width="1/2" />
-                                            <Skeleton className="h-3 w-8 rounded" />
-                                        </div>
-                                        {/* SegmentBar track */}
-                                        <Skeleton.ProgressBar />
-                                    </div>
-                                </div>
-                            </SurfaceListCardItem>
-                        ))}
-                    </SurfaceListCard>
-                )}
-                isEmpty={courses.length === 0}
-                emptyContent={{ title: t("publicProfile.coursesEmpty") }}
-                error={courses.length === 0 ? error : undefined}
-                errorContent={{
-                    title: t("publicProfile.loadError"),
-                    onRetry: () => { void mutate() },
-                    retryLabel: t("publicProfile.loadErrorRetry"),
-                }}
-            >
-                <SurfaceListCard>
-                    {courses.map((item) => (
-                        <CourseRow key={item.globalId} item={item} isOwnProfile={isOwnProfile} />
-                    ))}
-                </SurfaceListCard>
-            </AsyncContent>
+            {body()}
         </LabeledCard>
     )
 }

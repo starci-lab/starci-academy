@@ -1596,6 +1596,42 @@
       "reason": "Only mechanical aliases and pure util moves. BlockRegistry skipped (not a component). ~356 page-folder and ~64 helpers left as non-mechanical.",
       "holdsPreserved": 27,
       "next": "page-folder extraction only with per-file import audit and SB twin plan."
+    },
+    {
+      "id": "contentpage-box-strict-2026-08-07",
+      "date": "2026-08-07",
+      "status": "applied",
+      "summary": "ContentPage Box layout CSS closed: HideAbove, LockedContentMask, PageEndPad; path-scoped no-contentpage-box-classname.",
+      "reason": "Page/layout CSS on Box is not the foreign-mount contract. HideAbove owns @app-*:hidden; LockedContentMask owns relative/select-none/paywall fade; PageEndPad owns trailing pb-6 under the flush reading∥footer track (padding.md forbids single-edge pads as principles). Article id/data-ai-selectable host kept. ContentArticle sibling still has raw lock CSS (out of ContentPage file scope).",
+      "holdsPreserved": 27,
+      "next": "Optional: migrate EnrollGate onto LockedContentMask; LeaderboardPage onto HideAbove."
+    },
+    {
+      "id": "contentarticle-locked-mask-2026-08-07",
+      "date": "2026-08-07",
+      "status": "applied",
+      "summary": "ContentArticle reuses LockedContentMask; path-scoped Box classname rule extended to ContentArticle.",
+      "reason": "Same lock/paywall fade + select-none as ContentPage. No HideAbove/PageEndPad needed. Bare outer div around SurfaceCard left (no layout CSS).",
+      "holdsPreserved": 27,
+      "next": "EnrollGate still duplicates the fade string — migrate when that batch runs."
+    },
+    {
+      "id": "buttongroup-atom11-twin-2026-08-07",
+      "date": "2026-08-07",
+      "status": "applied",
+      "summary": "Mirrored export-matches ButtonGroup namespace into SB twin to clear ATOM-11.",
+      "reason": "Src-only `export const ButtonGroup = { Root, Separator }` from structural burn; SB lacked the three lines. Disjoint from ContentArticle.",
+      "holdsPreserved": 27,
+      "next": null
+    },
+    {
+      "id": "no-runtime-namespace-2026-08-08",
+      "date": "2026-08-08",
+      "status": "applied",
+      "summary": "Removed 16 house runtime namespace objects; export-matches-folder accepts named-export families.",
+      "reason": "Folders are filesystem groupings only. Consumers already used ModalRoot/SelectRoot/…. HeroUI Modal.* / Select.* remain vendor-allowed. Supersedes buttongroup-atom11-twin namespace approach — twins stay equal without the object.",
+      "holdsPreserved": 27,
+      "next": null
     }
   ]
 }

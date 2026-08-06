@@ -43,8 +43,10 @@ import type { TabsCardGroup } from "@/components/blocks/navigation/TabsCard"
 import type { QueryActiveAdvertisementData } from "@/modules/api/graphql/queries/types/active-advertisement"
 import type { ContentTab } from "@/redux/slices/tabs"
 import { Container } from "@/components/frames/Container"
+import { HideAbove } from "@/components/frames/HideAbove"
+import { PageEndPad } from "@/components/frames/PageEndPad"
 import { StackV } from "@/components/frames/Stack"
-import { Box } from "@/components/frames/Box"
+import { LockedContentMask } from "@/components/composites/layout/LockedContentMask"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 
 /** Already-resolved (i18n'd) data behind the mobile-only "practice this lesson" nudge. Omitted → the nudge never mounts. */
@@ -146,16 +148,18 @@ export const _ContentPage = ({
     // the reading region: sandbox/AI-lab (full width) → Challenges (capped, flat) →
     // everything else (capped, inside a "paper" card, with the locked teaser/paywall).
     const readingRegion = isFullWidthTab ? (
-        // `relative` — a positioning scheme, which the frame tier deliberately
-        // excludes (`_allowed-class-name.ts`); `Box` is the documented escape hatch.
-        <Box className="relative w-full">
-            {/* `id` scopes the "on this page" rail's heading scan; `data-ai-selectable`
-                marks the region for "ask AI about this passage" — no frame/atom carries
-                an arbitrary id + data-attribute pair, so this stays a plain anchor div. */}
-            <div id="lesson-article" data-ai-selectable>
-                <Body />
-            </div>
-        </Box>
+        <Container
+            size="full"
+            padding={1}
+            body={() => (
+                // `id` scopes the "on this page" rail's heading scan; `data-ai-selectable`
+                // marks the region for "ask AI about this passage" — no frame/atom carries
+                // an arbitrary id + data-attribute pair, so this stays a plain anchor div.
+                <div id="lesson-article" data-ai-selectable>
+                    <Body />
+                </div>
+            )}
+        />
     ) : isCardlessReadingTab ? (
         <Container
             size="md"
@@ -178,24 +182,14 @@ export const _ContentPage = ({
                             items={[
                                 ...(!isLocked ? [() => <SelectionHintCallout />] : []),
                                 () => (
-                                    <Box className="relative">
-                                        <div
-                                            id="lesson-article"
-                                            data-ai-selectable
-                                            className={isLocked ? "select-none" : undefined}
-                                        >
-                                            <Body />
-                                        </div>
-                                        {/* Medium-style teaser: fade the tail of the body into the
-                                            card surface behind the paywall — an absolute gradient,
-                                            outside the frame tier's vocabulary on purpose. */}
-                                        {isLocked ? (
-                                            <Box
-                                                aria-hidden
-                                                className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-surface/70 to-surface"
-                                            />
-                                        ) : null}
-                                    </Box>
+                                    <LockedContentMask
+                                        isLocked={isLocked}
+                                        body={() => (
+                                            <div id="lesson-article" data-ai-selectable>
+                                                <Body />
+                                            </div>
+                                        )}
+                                    />
                                 ),
                                 ...(isLocked ? [() => <PremiumPaywall />] : []),
                             ]}
@@ -208,70 +202,72 @@ export const _ContentPage = ({
 
     // footer — reaction, mobile up-next, related reading, discussion, pager, E2E link.
     const footer = (
-        // no step on the padding scale carries a BOTTOM-ONLY pad, so the closing
-        // breathing room stays a `Box` escape hatch (missing vocabulary).
-        <Box className="pb-6">
-            <StackV
-                gap={6}
-                principle="block-boundary"
-                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
-                items={[
-                    () => (
-                        <Container
-                            size="md"
-                            padding={1}
-                            body={() => <SurfaceCard body={() => <ContentReactionBar />} />}
-                        />
-                    ),
-                    // MOBILE/TABLET-ONLY via CSS: on desktop the right rail's "Practice
-                    // this lesson" already surfaces this, so `@app-lg:hidden` removes it
-                    // above that width — a visibility switch no `classNames` vocabulary
-                    // carries, so it stays a `Box` escape hatch.
-                    ...(challengesUpNext ? [() => (
-                        <Box className="@app-lg:hidden">
+        <PageEndPad
+            body={() => (
+                <StackV
+                    gap={6}
+                    principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                    items={[
+                        () => (
+                            <Container
+                                size="md"
+                                padding={1}
+                                body={() => <SurfaceCard body={() => <ContentReactionBar />} />}
+                            />
+                        ),
+                        // MOBILE/TABLET-ONLY via HideAbove: on desktop the right rail's
+                        // "Practice this lesson" already surfaces this, so `at="lg"` removes
+                        // it above that width — a visibility switch, not a spacing principle.
+                        ...(challengesUpNext ? [() => (
+                            <HideAbove
+                                at="lg"
+                                body={() => (
+                                    <Container
+                                        size="md"
+                                        padding={1}
+                                        body={() => (
+                                            <UpNextCard
+                                                showCheck
+                                                eyebrow={challengesUpNext.eyebrow}
+                                                title={challengesUpNext.title}
+                                                description={challengesUpNext.description}
+                                                ctaLabel={challengesUpNext.ctaLabel}
+                                                onPress={challengesUpNext.onPress}
+                                            />
+                                        )}
+                                    />
+                                )}
+                            />
+                        )] : []),
+                        ...(relatedContent ? [() => (
                             <Container
                                 size="md"
                                 padding={1}
                                 body={() => (
-                                    <UpNextCard
-                                        showCheck
-                                        eyebrow={challengesUpNext.eyebrow}
-                                        title={challengesUpNext.title}
-                                        description={challengesUpNext.description}
-                                        ctaLabel={challengesUpNext.ctaLabel}
-                                        onPress={challengesUpNext.onPress}
+                                    <RelatedContentList
+                                        courseId={relatedContent.courseId}
+                                        courseDisplayId={relatedContent.courseDisplayId}
+                                        query={relatedContent.query}
+                                        excludeId={relatedContent.excludeId}
+                                        label={relatedContent.label}
                                     />
                                 )}
                             />
-                        </Box>
-                    )] : []),
-                    ...(relatedContent ? [() => (
-                        <Container
-                            size="md"
-                            padding={1}
-                            body={() => (
-                                <RelatedContentList
-                                    courseId={relatedContent.courseId}
-                                    courseDisplayId={relatedContent.courseDisplayId}
-                                    query={relatedContent.query}
-                                    excludeId={relatedContent.excludeId}
-                                    label={relatedContent.label}
-                                />
-                            )}
-                        />
-                    )] : []),
-                    () => (
-                        <Container size="md" padding={1} body={() => <ContentDiscussion />} />
-                    ),
-                    () => (
-                        <Container size="md" padding={1} body={() => <LessonPager />} />
-                    ),
-                    ...(hasE2e ? [() => (
-                        <Container size="md" padding={1} body={() => <E2eResultButton />} />
-                    )] : []),
-                ]}
-            />
-        </Box>
+                        )] : []),
+                        () => (
+                            <Container size="md" padding={1} body={() => <ContentDiscussion />} />
+                        ),
+                        () => (
+                            <Container size="md" padding={1} body={() => <LessonPager />} />
+                        ),
+                        ...(hasE2e ? [() => (
+                            <Container size="md" padding={1} body={() => <E2eResultButton />} />
+                        )] : []),
+                    ]}
+                />
+            )}
+        />
     )
 
     return (
@@ -323,9 +319,11 @@ export const _ContentPage = ({
                             ) : readingRegion),
                             ...(!isSkeleton && !isLocked && !isFullWidthTab ? [() => footer] : []),
                             ...(!isSkeleton && inlineAd && !isFullWidthTab ? [() => (
-                                <Box className="pb-6">
-                                    <Container size="md" padding={1} body={() => <AdBanner ad={inlineAd} />} />
-                                </Box>
+                                <PageEndPad
+                                    body={() => (
+                                        <Container size="md" padding={1} body={() => <AdBanner ad={inlineAd} />} />
+                                    )}
+                                />
                             )] : []),
                         ]}
                     />

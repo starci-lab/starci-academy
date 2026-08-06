@@ -1,7 +1,7 @@
 import React from "react"
-import { cn } from "@heroui/react"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
+import { LockedContentMask } from "@sb-components/composites/layout/LockedContentMask/LockedContentMask"
 import { MarkdownContent } from "@sb-components/composites/viewers/MarkdownContent/MarkdownContent"
 import { ContentPaywall } from "@sb-components/starci/blocks/learn/ContentPaywall/ContentPaywall"
 import type { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
@@ -80,21 +80,18 @@ const ContentArticle = ({
 
                 />
             ) : null}
-            <div className="relative">
-                <div className={cn(isLocked && "select-none")}>
+            {/* Lock fade + select-none owned by LockedContentMask (same owner as ContentPage). */}
+            <LockedContentMask
+                isLocked={isLocked}
+                isSkeleton={isSkeleton}
+                body={() => (
                     <MarkdownContent
                         source={body}
                         measure="reading"
-
+                        isSkeleton={isSkeleton}
                     />
-                </div>
-                {isLocked ? (
-                    // Pure opacity fade over the tail. The body stays mounted so the
-                    // reader can see the lesson CONTINUES — truncating would tell them
-                    // nothing about what they are being asked to buy.
-                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-surface/70 to-surface" />
-                ) : null}
-            </div>
+                )}
+            />
             {isLocked && offer != null ? (
                 <ContentPaywall
                     title={offer.title}

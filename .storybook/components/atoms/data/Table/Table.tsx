@@ -22,15 +22,3 @@ export const TableRow = HeroTable.Row
 export const TableCell = HeroTable.Cell
 
 export const meta = { tier: "atom", name: "TableRoot" } as const
-
-/** Folder-matching compound namespace (export-matches-folder / ATOM-11 sync). */
-export const Table = {
-    Root: TableRoot,
-    ScrollContainer: TableScrollContainer,
-    Content: TableContent,
-    Header: TableHeader,
-    Body: TableBody,
-    Column: TableColumn,
-    Row: TableRow,
-    Cell: TableCell,
-} as const

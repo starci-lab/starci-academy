@@ -293,18 +293,11 @@ const BottomBar = ({
 }
 
 /**
- * The page-chrome frame namespace — the frames a ROUTE is built out of, one
- * import, two members:
+ * Page chrome members — a route imports these by name:
  *
- * | Member | Content channel |
+ * | Export | Content channel |
  * |---|---|
- * | `.Header` | `breadcrumb`/`title`/`description`/`actions`/`meta` (no children) |
- * | `.BottomBar` | `body`/`actions` slots |
+ * | `PageHeader` | `breadcrumb`/`title`/`description`/`actions`/`meta` (no children) |
+ * | `PageBottomBar` | `body`/`actions` slots |
  */
 export { Header as PageHeader, BottomBar as PageBottomBar }
-
-/** Folder-matching compound namespace (export-matches-folder / ATOM-11 sync). */
-export const Page = {
-    Header: Header,
-    BottomBar: BottomBar,
-} as const

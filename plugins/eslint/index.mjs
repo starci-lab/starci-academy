@@ -14,6 +14,8 @@ import {
   noInlineParameterType,
   noVietnameseInSourceAuthoring,
 } from "./authoring.mjs"
+import { noContentPageBoxClassName } from "./contentpage.mjs"
+import { noRuntimeNamespace } from "./namespaces.mjs"
 
 /** Static className string from one JSXAttribute (literal or pure template quasi). */
 function classNameText(node) {
@@ -257,13 +259,21 @@ const handlerOnPrefix = {
   },
 }
 
-// structure-and-naming §1/§5: one PascalCase folder = one `index.tsx` with a named export matching the folder.
+// structure-and-naming §1/§5: PascalCase folder groups a direct named-export family.
+// Exact `export const Folder` OR members like `FolderRoot` / `PageHeader` count —
+// a runtime object named after the folder is forbidden (`no-runtime-namespace`).
 const exportMatchesFolder = {
   meta: {
     type: "suggestion",
-    docs: { description: "PascalCase folder `index.tsx` must export a name matching the folder. [[structure-and-naming §1/§5]]" },
+    docs: {
+      description:
+        "PascalCase folder must export a direct named-export family matching the folder. [[structure-and-naming §1/§5]]",
+    },
     schema: [],
-    messages: { mismatch: "`index.tsx` in folder `{{folder}}` does not export `{{folder}}` (exports: {{names}}) — the named export must match the folder (structure-and-naming §5)." },
+    messages: {
+      mismatch:
+        "`index.tsx` in folder `{{folder}}` has no direct named export matching the folder family (exports: {{names}}) — export `{{folder}}` or `{{folder}}*` members (e.g. `{{folder}}Root`), not a runtime namespace object.",
+    },
   },
   create(context) {
     const file = (context.filename || context.getFilename()).replace(/\\/g, "/")
@@ -271,6 +281,8 @@ const exportMatchesFolder = {
     if (!m) return {}
     const folder = m[1]
     const names = new Set()
+    const matchesFamily = (name) =>
+      name === folder || (name.startsWith(folder) && name.length > folder.length && /^[A-Z]/.test(name.slice(folder.length)))
     return {
       ExportNamedDeclaration(node) {
         const d = node.declaration
@@ -279,7 +291,7 @@ const exportMatchesFolder = {
         if (node.specifiers) node.specifiers.forEach((s) => s.exported && s.exported.name && names.add(s.exported.name))
       },
       "Program:exit"(node) {
-        if (names.size > 0 && !names.has(folder)) {
+        if (names.size > 0 && ![...names].some(matchesFamily)) {
           context.report({ node, messageId: "mismatch", data: { folder, names: [...names].join(", ") } })
         }
       },
@@ -1086,5 +1098,7 @@ export default {
     "no-inline-parameter-type": noInlineParameterType,
     "no-emoji-in-source": noEmojiInSource,
     "no-vietnamese-in-source-authoring": noVietnameseInSourceAuthoring,
+    "no-contentpage-box-classname": noContentPageBoxClassName,
+    "no-runtime-namespace": noRuntimeNamespace,
   },
 }

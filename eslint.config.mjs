@@ -92,6 +92,9 @@ export default defineConfig([
             "starci-fe/no-inline-parameter-type": "warn",
             "starci-fe/no-emoji-in-source": "warn",
             "starci-fe/no-vietnamese-in-source-authoring": "warn",
+            // ContentPage Box layout regression — path-scoped inside the rule.
+            "starci-fe/no-contentpage-box-classname": "error",
+            "starci-fe/no-runtime-namespace": "warn",
         },
     },
     {

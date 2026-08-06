@@ -301,21 +301,14 @@ const BottomBar = ({
 }
 
 /**
- * The page-chrome frame namespace — the frames a ROUTE is built out of, one
- * import, two members:
+ * Page chrome members — a route imports these by name:
  *
- * | Member | Content channel |
+ * | Export | Content channel |
  * |---|---|
- * | `.Header` | `breadcrumb`/`title`/`description`/`actions`/`meta` (no children) |
- * | `.BottomBar` | `body`/`actions` slots |
+ * | `PageHeader` | `breadcrumb`/`title`/`description`/`actions`/`meta` (no children) |
+ * | `PageBottomBar` | `body`/`actions` slots |
  *
  * `.Container` moved to `Container` (`@/components/frames/Container/Container`)
  * on 2026-07-26 — see the history note at the top of this file.
  */
 export { Header as PageHeader, BottomBar as PageBottomBar }
-
-/** Folder-matching compound namespace (export-matches-folder). Existing named exports stay public. */
-export const Page = {
-    Header: Header,
-    BottomBar: BottomBar,
-} as const

@@ -198,7 +198,7 @@ const containerWidth = (width: number | undefined) => (
 /**
  * LEAF — the mobile/tablet-only practice nudge, across THREE container widths. ONE screen, no
  * namespace: `ContentPage` always mounts the nudge when the lesson has challenges, and
- * `@app-lg:hidden` (1024px) hides it once the container is wide enough — same mechanism `src`
+ * `HideAbove at="lg"` (1024px) hides it once the container is wide enough — same mechanism `src`
  * uses. `src` draws exactly ONE real boundary here, so Mobile (375px) and Tablet (768px) both
  * show the card and Desktop (1280px, past `@app-lg`) hides it — not three different treatments.
  */
@@ -230,7 +230,7 @@ export const PracticeNudgeResponsive: Story = {
                     },
                     {
                         name: "Desktop — 1280px",
-                        why: "Past @app-lg, `@app-lg:hidden` removes the nudge from view — the right rail (outside this screen, in `LearnShell`) already surfaces the same offer there, so a second CTA here would be a duplicate.",
+                        why: "Past @app-lg, `HideAbove at=\"lg\"` removes the nudge from view — the right rail (outside this screen, in `LearnShell`) already surfaces the same offer there, so a second CTA here would be a duplicate.",
                         code: "<ContentPage {...props} mode=\"content\" challengeCount={3} />",
                         render: containerWidth(1280),
                     },

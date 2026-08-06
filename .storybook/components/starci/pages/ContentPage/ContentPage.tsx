@@ -10,6 +10,7 @@ import { ContentRelatedList, type ContentRelatedItem } from "@sb-components/star
 import { ContentModeNav, type ContentLanguage, type ContentMode, type ContentModeOption } from "@sb-components/starci/blocks/learn/ContentModeNav/ContentModeNav"
 import { MilestoneUpNextCard } from "@sb-components/starci/blocks/learn/MilestoneUpNextCard/MilestoneUpNextCard"
 import { Container } from "@sb-components/frames/Container/Container"
+import { HideAbove } from "@sb-components/frames/HideAbove/HideAbove"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -198,24 +199,28 @@ const ContentPage = ({
                 isSkeleton={isSkeleton}
 
             />
-            {/* MOBILE/TABLET-ONLY, via CSS not a second component tree: on desktop
-            the right rail's own "Practice this lesson" already surfaces this, so
-            `@app-lg:hidden` removes it from view above that width rather than
-            the screen mounting two different trees. Mode/challenge gate mirrors
-            `src`'s `UpNextCard` exactly; `isHighlight` does NOT — `src`'s own
-            card is unaccented here, but this nudge is
-            the one focal action a mobile reader sees after the reaction bar. */}
+            {/* MOBILE/TABLET-ONLY via HideAbove: on desktop the right rail's own
+            "Practice this lesson" already surfaces this, so `at="lg"` removes it
+            from view above that width rather than the screen mounting two
+            different trees. Mode/challenge gate mirrors `src`'s `UpNextCard`
+            exactly; `isHighlight` does NOT — `src`'s own card is unaccented here,
+            but this nudge is the one focal action a mobile reader sees after the
+            reaction bar. */}
             {!isSkeleton && mode === "content" && (challengeCount ?? 0) > 0 ? (
-                <MilestoneUpNextCard
+                <HideAbove
+                    at="lg"
+                    body={() => (
+                        <MilestoneUpNextCard
 
-                    className="@app-lg:hidden"
-                    isHighlight
-                    eyebrow="Up next · Practice this lesson"
-                    title={`Do this lesson's ${challengeCount} challenges`}
-                    description="Apply what you just learned. Challenges are graded automatically and count toward your progress."
-                    ctaLabel="Start challenges"
-                    onPress={() => onModeChange("challenges")}
+                            isHighlight
+                            eyebrow="Up next · Practice this lesson"
+                            title={`Do this lesson's ${challengeCount} challenges`}
+                            description="Apply what you just learned. Challenges are graded automatically and count toward your progress."
+                            ctaLabel="Start challenges"
+                            onPress={() => onModeChange("challenges")}
 
+                        />
+                    )}
                 />
             ) : null}
             <ContentRelatedList
@@ -303,7 +308,7 @@ const ContentPage = ({
                 isSkeleton={isSkeleton}
 
             />
-            {/* ModeNav↔Article↔(reaction cluster) sit CLOSER together than the identity/outcomes
+            {/* ModeNav / Article / (reaction cluster) sit CLOSER together than the identity/outcomes
                 block above: they are all "reading this lesson", one continuous
                 surface, not separate regions. */}
             <StackV gap={4} isSkeleton={isSkeleton} items={[() => readingSection]} />

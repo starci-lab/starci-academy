@@ -38,15 +38,3 @@ export const DrawerFooter = HeroDrawer.Footer
 export const DrawerCloseTrigger = HeroDrawer.CloseTrigger
 
 export const meta = { tier: "atom", name: "DrawerRoot" } as const
-
-/** Folder-matching compound namespace (export-matches-folder). Existing named exports stay public. */
-export const Drawer = {
-    Root: DrawerRoot,
-    Backdrop: DrawerBackdrop,
-    Content: DrawerContent,
-    Dialog: DrawerDialog,
-    Header: DrawerHeader,
-    Body: DrawerBody,
-    Footer: DrawerFooter,
-    CloseTrigger: DrawerCloseTrigger,
-} as const

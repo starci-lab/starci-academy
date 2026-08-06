@@ -31,12 +31,12 @@ export interface ConnectSheetProps extends WithClassNames<undefined> {
 /**
  * A PERSISTENT, draggable bottom sheet docked to the bottom of a `relative`
  * parent (NOT a modal — no backdrop, the content above stays interactive). Two
- * snap points: COLLAPSED (grabber + peek row only) ↔ EXPANDED (peek + body,
- * capped at {@link MAX_VIEWPORT_FRACTION} of the viewport). Drag the grabber ↕
+ * snap points: COLLAPSED (grabber + peek row only) <-> EXPANDED (peek + body,
+ * capped at {@link MAX_VIEWPORT_FRACTION} of the viewport). Drag the grabber <->
  * to resize then snap on release; a small drag (< {@link TAP_THRESHOLD}) or a tap
  * on the peek row toggles. `open` is CONTROLLED so the feature can auto-snap per
  * phase (e.g. expand while waiting, collapse once connected). Self-contained
- * pointer drag — no framer-motion dependency. Card-like → `rounded-t-3xl`.
+ * pointer drag — no framer-motion dependency. Card-like -> `rounded-t-3xl`.
  *
  * Refs: dock = `StickyBottomBar`; drag = `CollapsibleSidebar`.
  * @param props - {@link ConnectSheetProps}

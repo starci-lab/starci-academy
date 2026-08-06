@@ -20,6 +20,7 @@ export type ButtonVariant =
 /** HeroUI's own variant set. `danger-soft` has no HeroUI equivalent — see {@link HERO_VARIANT}. */
 type HeroVariant = "primary" | "secondary" | "tertiary" | "outline" | "ghost" | "danger"
 
+/** Maps house `ButtonVariant` to the HeroUI fork's `variant` set. */
 export const HERO_VARIANT: Record<ButtonVariant, HeroVariant> = {
     primary: "primary",
     secondary: "secondary",

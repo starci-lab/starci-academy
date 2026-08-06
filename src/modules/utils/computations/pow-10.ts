@@ -12,10 +12,13 @@ type Pow10BNParams = {
 }
 
 // overload signatures
+/** Returns 10^exponent as Decimal or BN. */
 export function pow10(params: Pow10BNParams): BN
+/** Returns 10^exponent as Decimal or BN. */
 export function pow10(params: Pow10DecimalParams): Decimal
 
 // implementation
+/** Returns 10^exponent as Decimal or BN. */
 export function pow10({
     exponent,
     asBN,

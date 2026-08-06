@@ -23,19 +23,22 @@ import { type VerdictBand, verdictBandClassName } from "../verdict-band"
  * in its own `dataComponent` so the rendered anchor still carries that caller's own
  * identity rather than a generic one.
  */
+/** Props for {@link RowAnchor}. */
+interface RowAnchorProps {
+    href: string
+    onClick?: () => void
+    className?: string
+    dataComponent: string
+    children: React.ReactNode
+}
+
 const RowAnchor = ({
     href,
     onClick,
     className,
     dataComponent,
     children,
-}: {
-    href: string
-    onClick?: () => void
-    className?: string
-    dataComponent: string
-    children: React.ReactNode
-}) => {
+}: RowAnchorProps) => {
     if (href.startsWith("/")) {
         return (
             <Link href={href} onClick={onClick} className={className} data-tier="composite" data-component={dataComponent}>

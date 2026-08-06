@@ -15,6 +15,7 @@ export enum GraphQLHeadersKey {
     XMinValiditySeconds = "X-Min-Validity-Seconds",
 }
 
+/** HTTP headers accepted by GraphQL helpers. */
 export type GraphQLHeaders = Partial<Record<GraphQLHeadersKey, string>> & Record<string, string | undefined>
 
 /**
@@ -38,6 +39,7 @@ export interface QueryParams<TQuery, TRequest = undefined> extends GraphQLOperat
     debug?: boolean
 }
 
+/** Shared parameters for GraphQL mutate helpers. */
 export interface MutateParams<TMutation, TRequest> extends GraphQLOperationContext {
     /** The mutation to call. */
     mutation?: TMutation
@@ -51,6 +53,7 @@ export interface MutateParams<TMutation, TRequest> extends GraphQLOperationConte
     debug?: boolean
 }
 
+/** Variables bag accepted by GraphQL mutate helpers. */
 export interface MutateVariables<TRequest> {
     request: TRequest
 }

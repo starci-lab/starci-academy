@@ -134,4 +134,5 @@ const StepBadgeBase = ({
 /** `StepBadge.*` — numbered step-badge namespace. */
 export { StepBadgeBase as StepBadge }
 
+/** Tier metadata for `StepBadge`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "StepBadge" } as const

@@ -13,6 +13,8 @@ export const ListBoxRoot = (props: ListBoxRootProps) => (
     <HeroListBox.Root data-tier="atom" data-component="ListBoxRoot" {...props} />
 )
 
+/** House list box item over HeroUI `ListBox.Item`. */
 export const ListBoxItem = HeroListBox.Item
 
+/** Tier metadata for `ListBoxRoot`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "ListBoxRoot" } as const

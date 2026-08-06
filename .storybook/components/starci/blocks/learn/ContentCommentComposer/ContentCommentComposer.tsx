@@ -61,10 +61,10 @@ export interface ContentCommentComposerProps {
  * @param props - {@link ContentCommentComposerProps}
  */
 const ContentCommentComposer = ({
-    onSubmit,
+    onSubmit: onSubmitAction,
     placeholder = "Ask a question or share your thoughts…",
     submitLabel = "Post",
-    onCancel,
+    onCancel: onCancelAction,
     initialValue,
     isPending = false,
     currentUser,
@@ -77,23 +77,23 @@ const ContentCommentComposer = ({
     const [expanded, setExpanded] = useState(!collapsible)
     const trimmed = body.trim()
 
-    const handleSubmit = () => {
+    const onSubmit = () => {
         if (!trimmed) {
             return
         }
-        onSubmit(trimmed)
+        onSubmitAction(trimmed)
         setBody("")
         if (collapsible) {
             setExpanded(false)
         }
     }
 
-    const handleCancel = () => {
+    const onCancel = () => {
         setBody("")
         if (collapsible) {
             setExpanded(false)
         }
-        onCancel?.()
+        onCancelAction?.()
     }
 
     // collapsed pill: avatar + placeholder, the whole row opens the composer
@@ -128,17 +128,17 @@ const ContentCommentComposer = ({
             <Button
                 label={submitLabel}
                 size="sm"
-                onPress={handleSubmit}
+                onPress={onSubmit}
                 isDisabled={!trimmed}
                 isPending={isPending}
 
             />
-            {onCancel || collapsible ? (
+            {onCancelAction || collapsible ? (
                 <Button
                     label="Cancel"
                     variant="tertiary"
                     size="sm"
-                    onPress={handleCancel}
+                    onPress={onCancel}
                     isDisabled={isPending}
 
                 />

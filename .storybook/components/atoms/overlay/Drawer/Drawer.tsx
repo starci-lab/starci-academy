@@ -13,7 +13,9 @@ export const DrawerRoot = (props: DrawerRootProps) => (
     <HeroDrawer data-tier="atom" data-component="DrawerRoot" {...props} />
 )
 
+/** House backdrop over HeroUI `Drawer.Backdrop`. */
 export const DrawerBackdrop = HeroDrawer.Backdrop
+/** House content over HeroUI `Drawer.Content`. */
 export const DrawerContent = HeroDrawer.Content
 
 /** Props for {@link DrawerDialog}. */
@@ -32,9 +34,14 @@ export const DrawerDialog = ({ className, ...props }: DrawerDialogProps) => (
     />
 )
 
+/** House header over HeroUI `Drawer.Header`. */
 export const DrawerHeader = HeroDrawer.Header
+/** House body over HeroUI `Drawer.Body`. */
 export const DrawerBody = HeroDrawer.Body
+/** House footer over HeroUI `Drawer.Footer`. */
 export const DrawerFooter = HeroDrawer.Footer
+/** House close trigger over HeroUI `Drawer.CloseTrigger`. */
 export const DrawerCloseTrigger = HeroDrawer.CloseTrigger
 
+/** Tier metadata for `DrawerRoot`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "DrawerRoot" } as const

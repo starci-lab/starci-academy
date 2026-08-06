@@ -33,11 +33,7 @@ const JourneyRow = ({
     icon,
     title,
     body,
-}: {
-    icon: React.ReactNode
-    title: string
-    body: string
-}) => (
+}: JourneyRowProps) => (
     <StackH gap={4} align="start" principle="content-row"
         explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
         items={[
@@ -54,7 +50,7 @@ const JourneyRow = ({
 )
 
 /** One label → value stat line inside the sample candidate card. */
-const StatLine = ({ label, value }: { label: string; value: string }) => (
+const StatLine = ({ label, value }: StatLineProps) => (
     <StackH gap={4} justify="between" principle="content-row"
         explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
         items={[
@@ -204,3 +200,10 @@ export const TalentMarketplace = ({ className }: TalentMarketplaceProps) => {
         </section>
     )
 }
+
+type JourneyRowProps = {
+    icon: React.ReactNode
+    title: string
+    body: string
+}
+type StatLineProps = { label: string; value: string }

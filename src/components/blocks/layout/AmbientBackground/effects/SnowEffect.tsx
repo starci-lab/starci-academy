@@ -3,8 +3,14 @@ import {
     useSeededParticles,
 } from "../useSeededParticles"
 
+/** Props for {@link SnowEffect}. */
+interface SnowEffectProps {
+    /** Particle count. */
+    count?: number
+}
+
 /** Snowflakes drifting straight down with a light horizontal wander, tinted by the accent color. */
-export const SnowEffect = ({ count = 50 }: { count?: number }) => {
+export const SnowEffect = ({ count = 50 }: SnowEffectProps) => {
     const particles = useSeededParticles(count, 11)
     return (
         <>

@@ -18,7 +18,7 @@ import { PaymentType } from "@/modules/types/enums/payment-type"
 /**
  * `_PaymentModal` — the SRC TWIN of the shared payment overlay: order summary
  * ("Summary" panel) then gateway pick ("Payment" panel), for every paid flow
- * (course enroll · multi-course checkout · membership · AI subscription).
+ * (course enroll - multi-course checkout - membership - AI subscription).
  * Presentational: typed props, already resolved; no fetch/store/i18n (that's
  * the connected half, `./index.tsx`).
  *
@@ -71,7 +71,7 @@ export interface PaymentModalGatewayMethod {
     isPending: boolean
 }
 
-/** The gateway group for the active currency (domestic VND ↔ international USD). */
+/** The gateway group for the active currency (domestic VND <-> international USD). */
 export interface PaymentModalGatewayGroup {
     /** Group label (e.g. "Domestic"). */
     label: string
@@ -136,7 +136,7 @@ export interface PaymentModalProps {
     phase?: number | null
     /** Loyalty discount percent (0 = no loyalty row). */
     discountPercent: number
-    /** `true` → no numeric price exists yet; shows the flat membership heading instead of a `PriceTag`. */
+    /** `true` -> no numeric price exists yet; shows the flat membership heading instead of a `PriceTag`. */
     isMembershipFlow: boolean
     /** Loyalty breakdown rows (course flow only); empty elsewhere. */
     loyaltyRows: ReadonlyArray<PaymentModalLoyaltyRow>
@@ -144,22 +144,22 @@ export interface PaymentModalProps {
     /** Currency the summary price + gateway list are shown in. */
     currency: PriceCurrency
     /**
-     * `true` → the price region rests: only the `PriceTagInline`/`PriceTagProminent`
+     * `true` -> the price region rests: only the `PriceTagInline`/`PriceTagProminent`
      * leaves shimmer, the rest of the panel (tabs, installment, voucher, gateways)
      * renders immediately.
      */
     isSkeleton?: boolean
-    /** `true` → the price region failed to load; replaces it with an error message. */
+    /** `true` -> the price region failed to load; replaces it with an error message. */
     priceError?: boolean
 
-    /** `true` → the "pay in full / pay in installments" picker shows (course flows with terms offered). */
+    /** `true` -> the "pay in full / pay in installments" picker shows (course flows with terms offered). */
     installmentAvailable: boolean
-    /** `true` → an installment term is the active plan (clamps the order to VND). */
+    /** `true` -> an installment term is the active plan (clamps the order to VND). */
     installmentActive: boolean
     /** Fired when the learner toggles between "pay in full" and "pay in installments". */
     onInstallmentActiveChange: (active: boolean) => void
 
-    /** `true` → the apply-voucher field shows (course flow, with applicable vouchers). */
+    /** `true` -> the apply-voucher field shows (course flow, with applicable vouchers). */
     showVoucher: boolean
     /** Options for the apply-voucher field — a leading "no voucher" row plus one per applicable voucher. */
     voucherOptions: Array<SelectOption>
@@ -167,10 +167,10 @@ export interface PaymentModalProps {
     voucherCode: string | null
     /** Fired when the learner picks a voucher (or clears it). */
     onVoucherCodeChange: (code: string | null) => void
-    /** `true` → the applied voucher is VND-only (clamps the order to the domestic side). */
+    /** `true` -> the applied voucher is VND-only (clamps the order to the domestic side). */
     flatVoucherActive: boolean
 
-    /** `true` → international (USD) gateways are usable for this order — the currency toggle shows. */
+    /** `true` -> international (USD) gateways are usable for this order — the currency toggle shows. */
     hasUsd: boolean
     /** Fired when the learner switches the domestic/international currency. */
     onCurrencyChange: (currency: PriceCurrency) => void
@@ -368,6 +368,18 @@ const summaryContent = (props: PaymentModalProps) => {
     return <StackV gap={4} items={singleSummaryItems} />
 }
 
+/** Trailing control for a gateway row - spinner while pending, else a chevron. */
+interface GatewayTrailingProps {
+    isPending: boolean
+}
+
+const GatewayTrailing = ({ isPending }: GatewayTrailingProps) => {
+    if (isPending) {
+        return <Spinner size="sm" />
+    }
+    return <ArrowRightIcon aria-hidden focusable="false" className="size-5 text-muted" />
+}
+
 /** One gateway row — leading logo, name + description, amount, and a trailing arrow/spinner. */
 const gatewayRow = (
     method: PaymentModalGatewayMethod,
@@ -385,11 +397,7 @@ const gatewayRow = (
     title: method.name,
     subtitle: method.description,
     metaText: method.amountLabel,
-    trailing: () => (
-        method.isPending
-            ? <Spinner size="sm" />
-            : <ArrowRightIcon aria-hidden focusable="false" className="size-5 text-muted" />
-    ),
+    trailing: () => <GatewayTrailing isPending={method.isPending} />,
     onPress: () => onSelectMethod(method.type),
     isDisabled: isMutating,
 })

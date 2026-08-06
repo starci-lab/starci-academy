@@ -94,7 +94,7 @@ export interface ListRowProps {
      */
     href?: string
     /**
-     * `true` → render the skeleton mirror (leading tile only when `leading` is
+     * `true` -> render the skeleton mirror (leading tile only when `leading` is
      * passed, title bar + subtitle bar per the real text column) instead of the
      * live row. The consumer only flips the flag — same as `Button.isSkeleton`.
      */
@@ -241,7 +241,7 @@ export interface ListLabeledProps {
     icon?: ComponentType
     /**
      * The rows, in reading order. REQUIRED — a REPEATING list is DATA, not
-     * children (§13b). Empty → renders {@link ListLabeledProps.emptyState}.
+     * children (§13b). Empty -> renders {@link ListLabeledProps.emptyState}.
      */
     items: ReadonlyArray<ListLabeledItem>
     /**
@@ -257,7 +257,7 @@ export interface ListLabeledProps {
      */
     emptyState?: ComponentType
     /**
-     * `true` → render a skeleton mirror list ({@link ListLabeledProps.skeletonRows}
+     * `true` -> render a skeleton mirror list ({@link ListLabeledProps.skeletonRows}
      * placeholder rows) instead of the live rows. The label header + `gap-2` list
      * frame stay put, so the panel doesn't jump when data arrives.
      */
@@ -271,7 +271,7 @@ export interface ListLabeledProps {
 /**
  * A labeled vertical list — NO card frame: an icon + `Label` header, a `gap-2`
  * stack of {@link ListRow}s built from `items`, and an optional footer action,
- * with the three groups spaced `gap-3` (label ↔ list ↔ action). For rail / panel
+ * with the three groups spaced `gap-3` (label <-> list <-> action). For rail / panel
  * blocks that are a "label + short list (+ CTA)" where a full card would be too
  * heavy (e.g. the lesson rail's review / practice panels).
  *
@@ -426,7 +426,7 @@ export interface ListToggleRowProps {
     isDisabled?: boolean
     /** Layout utilities on the row root, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
-    /** `true` → render the skeleton mirror (label + desc bars, switch pill). Consumer just flips the flag. */
+    /** `true` -> render the skeleton mirror (label + desc bars, switch pill). Consumer just flips the flag. */
     isSkeleton?: boolean
 }
 
@@ -515,11 +515,3 @@ const ToggleRow = ({
  * | `.ToggleRow` | data props (`label`/`description`/`checked`) |
  */
 export { Row as ListRow, Labeled as ListLabeled, Meta as ListMeta, ToggleRow as ListToggleRow }
-
-/** Folder-matching compound namespace (export-matches-folder / ATOM-11 sync). */
-export const List = {
-    Row: Row,
-    Labeled: Labeled,
-    Meta: Meta,
-    ToggleRow: ToggleRow,
-} as const

@@ -110,7 +110,7 @@ const STATUS_DOT_CLASS: Record<"success" | "warning" | "danger", string> = {
  * tone, but never ALONE: `role="img"` + `aria-label` carry the same meaning for a
  * screen reader.
  */
-const StatusDot = ({ tone, label }: { tone: "success" | "warning" | "danger"; label: string }) => (
+const StatusDot = ({ tone, label }: StatusDotProps) => (
     <span className={STATUS_DOT_CLASS[tone]} role="img" aria-label={label} />
 )
 
@@ -344,3 +344,5 @@ export const _FlashcardQuizResult = ({
         />
     )
 }
+
+type StatusDotProps = { tone: "success" | "warning" | "danger"; label: string }

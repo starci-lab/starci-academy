@@ -5,10 +5,10 @@ import { type RewriteCvBlockRequest } from "@/modules/api/graphql/mutations/type
 type MutateRewriteCvBlockResult = Awaited<ReturnType<typeof mutateRewriteCvBlock>>
 
 /**
- * SWR mutation wrapper for {@link mutateRewriteCvBlock} — the "✨ AI viết
- * giúp" per-block rewrite. Each block editor keeps its OWN call/spinner (this
- * hook is instantiated per block-in-flight, never shared), so one block's AI
- * failure never blocks the rest of the form.
+ * SWR mutation wrapper for {@link mutateRewriteCvBlock} — the per-block AI
+ * rewrite helper. Each block editor keeps its OWN call/spinner (this hook is
+ * instantiated per block-in-flight, never shared), so one block's AI failure
+ * never blocks the rest of the form.
  */
 export const useMutateRewriteCvBlockSwr = () => {
     return useSWRMutation<

@@ -4,7 +4,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 
 /**
  * `TitledText` — a primary line + optional muted secondary (and optional hint) stacked
- * vertically as one composite; a title↔subtitle pair is a single semantic unit rather than raw
+ * vertically as one composite; a title<->subtitle pair is a single semantic unit rather than raw
  * `<Typography>` hand-rolled at every row. The composite owns the type scale per `size`; the
  * caller passes nodes only. Leaves: `subtitle`, `hint`, `size`, `weight`, `truncate`, `isSkeleton`.
  */

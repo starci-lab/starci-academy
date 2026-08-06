@@ -34,7 +34,7 @@ export type PriceEmphasis = "inline" | "prominent"
 
 /** Breakdown rows for the breakdown popover (amounts in the SAME currency as the price). */
 export interface PriceBreakdown {
-    /** Active-phase price BEFORE loyalty (the middle step list → phase → charge). */
+    /** Active-phase price BEFORE loyalty (the middle step list -> phase -> charge). */
     phase: number
     /** Localised phase name (e.g. "Early-bird") shown on the phase row. */
     phaseLabel?: string
@@ -53,41 +53,41 @@ export interface PriceTagProps {
     /** Currency to format in. Defaults to "VND". */
     currency?: PriceCurrency
     /**
-     * `true` → the price is in its RESTING state: the amount, the struck-through
-     * original price, the `−X%` chip, and the saving line all turn to shimmer,
-     * KEEPING the same line boxes so nothing jumps in layout (§8).
-     *
-     * The flag FLOWS DOWN into the atoms that render each part (`Typography`,
-     * `Chip`), instead of building a second shimmer tree (§12c). The popover
-     * is TURNED OFF while resting — there is no data to open yet, and a pressable
-     * control while loading is a false promise.
-     */
+ * `true` -> the price is in its RESTING state: the amount, the struck-through
+ * original price, the `−X%` chip, and the saving line all turn to shimmer,
+ * KEEPING the same line boxes so nothing jumps in layout (§8).
+ *
+ * The flag FLOWS DOWN into the atoms that render each part (`Typography`,
+ * `Chip`), instead of building a second shimmer tree (§12c). The popover
+ * is TURNED OFF while resting — there is no data to open yet, and a pressable
+ * control while loading is a false promise.
+ */
     isSkeleton?: boolean
     /**
-     * Optional phase-tier + loyalty rows for the breakdown {@link Popover}. Whenever
-     * there IS a saving the `−X%` chip is ALWAYS a button that opens the popover (at
-     * minimum list price → "you pay"); `breakdown` just adds the middle steps that
-     * explain WHERE the drop came from. Click/tap (not hover) so it works on touch too.
-     */
+ * Optional phase-tier + loyalty rows for the breakdown {@link Popover}. Whenever
+ * there IS a saving the `−X%` chip is ALWAYS a button that opens the popover (at
+ * minimum list price -> "you pay"); `breakdown` just adds the middle steps that
+ * explain WHERE the drop came from. Click/tap (not hover) so it works on touch too.
+ */
     breakdown?: PriceBreakdown
     /**
-     * Show the concrete "save N₫" line under the price (the real VND saved, not just
-     * the percent). Defaults to `true`; set `false` where space is tight (dense cards).
-     */
+ * Show the concrete "save N₫" line under the price (the real VND saved, not just
+ * the percent). Defaults to `true`; set `false` where space is tight (dense cards).
+ */
     showSavingLine?: boolean
     /** Where the root sits inside its parent. */
     classNames?: Array<AllowedClassName>
 }
 
 /**
- * Role → amount font size.
+ * Role -> amount font size.
  */
 const AMOUNT_TYPE: Record<PriceEmphasis, "base" | "h4"> = {
     inline: "base",
     prominent: "h4",
 }
 
-/** Role → struck-through original-price line size, placed next to {@link AMOUNT_TYPE} so the two scales don't drift apart. */
+/** Role -> struck-through original-price line size, placed next to {@link AMOUNT_TYPE} so the two scales don't drift apart. */
 const ORIGINAL_TYPE: Record<PriceEmphasis, "xs" | "sm"> = {
     inline: "xs",
     prominent: "sm",
@@ -106,9 +106,9 @@ const savingPercent = (before: number, after: number): number =>
 /**
  * The single source of truth for rendering a course/product price: the discounted
  * amount (bold), the list price struck through (only when there IS a saving), and a
- * `−X%` success chip whose percent is the REAL list → charge gap (phase tier +
+ * `−X%` success chip whose percent is the REAL list -> charge gap (phase tier +
  * loyalty). Whenever there is a saving the chip is a clickable button opening a
- * {@link Popover} (at minimum list price → you pay; `breakdown` adds the phase +
+ * {@link Popover} (at minimum list price -> you pay; `breakdown` adds the phase +
  * loyalty steps). Works in VND or USD.
  *
  * @param props - {@link PriceTagProps}
@@ -126,7 +126,7 @@ export const PriceTagBase = ({
     const hasSaving = original != null && original > discounted
     const savePercent = hasSaving ? savingPercent(original, discounted) : 0
 
-    // the −X% saving chip — composed from the `Chip` atom (tone success →
+    // the −X% saving chip — composed from the `Chip` atom (tone success ->
     // soft-success chip, matching src's raw `<Chip variant="soft" color="success">`).
     // The pressable/focusable button role lives on the canonical `Popover.Trigger`
     // wrapper (react-aria: role=button, aria-expanded/controls, tabindex), so there is
@@ -139,15 +139,15 @@ export const PriceTagBase = ({
             />
         ) : null
 
-    // phase saving = list → phase ; loyalty saving = phase → charge
+    // phase saving = list -> phase ; loyalty saving = phase -> charge
     const phaseSave = original != null ? savingPercent(original, breakdown?.phase ?? discounted) : 0
     // Popover content — shown for EVERY saving (so the chip is always clickable), at
-    // minimum list price → you pay. The phase-tier & loyalty rows only appear when a
+    // minimum list price -> you pay. The phase-tier & loyalty rows only appear when a
     // full `breakdown` is supplied.
     const breakdownContent = hasSaving ? (
-        // Those four rows are all ONE shape: label left ↔ value right, repeated ⇒
-        // exactly `KeyValueList` (a repeated list ⇒ `items` is DATA). The "you
-        // pay" row is the TOTAL row ⇒ `emphasis`, not a hand-drawn rule: the frame
+        // Those four rows are all ONE shape: label left <-> value right, repeated =>
+        // exactly `KeyValueList` (a repeated list => `items` is DATA). The "you
+        // pay" row is the TOTAL row => `emphasis`, not a hand-drawn rule: the frame
         // already knows how to emphasise a total row, and that emphasis looks the same
         // across every price table in the system.
         //
@@ -219,7 +219,7 @@ export const PriceTagBase = ({
     ) : null
 
     // The price row aligns on BASELINE (big number, struck number, chip share the
-    // same text baseline) and wraps on its own when tight ⇒ exactly `Cluster`.
+    // same text baseline) and wraps on its own when tight => exactly `Cluster`.
     // The three elements are THREE separate items, not merged into one
     // fragment — merging them leaves the frame's `gap` with nowhere to apply.
     const priceRow = (
@@ -295,7 +295,7 @@ export const PriceTagBase = ({
     ) : null
 
     return (
-        // The outer column = two DIFFERENT lines (the price row · the "saving" line) ⇒
+        // The outer column = two DIFFERENT lines (the price row · the "saving" line) =>
         // `StackV`, NOT `Cluster`: a cluster is ONE track of N PEER elements (§13b).
         <StackV
             // `grouped` (§10b): the price row and the saving line are two DIFFERENT vertical

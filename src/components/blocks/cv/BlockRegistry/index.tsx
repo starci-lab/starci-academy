@@ -129,3 +129,14 @@ export const CV_BLOCK_TYPE_DEFAULT_TITLE_EN: Record<CvBlockType, string> = {
     [CvBlockType.Activity]: "Activities",
     [CvBlockType.Interest]: "Interests",
 }
+
+/**
+ * Folder-matching named-export family (export-matches-folder). Existing
+ * `CV_BLOCK_TYPE_*` names stay the public contract; do not introduce a runtime
+ * namespace object.
+ */
+export {
+    CV_BLOCK_TYPE_REGISTRY as BlockRegistry,
+    CV_BLOCK_TYPE_ORDER as BlockRegistryOrder,
+    CV_BLOCK_TYPE_DEFAULT_TITLE_EN as BlockRegistryDefaultTitleEn,
+}

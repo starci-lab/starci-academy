@@ -3,19 +3,30 @@
 import React from "react"
 import { CodePreviewTabs } from "../CodePreviewTabs"
 
+interface TabPaneProps {
+    kind: "code" | "preview"
+    children?: React.ReactNode
+}
+
 /**
  * One pane inside a `:::tab` block: the source code (`:::code` → ` ```tsx ` Shiki) or the live
  * demo (`:::preview` → ` ```mdx ` render). It only renders its children (the fence rendered by the
  * normal `pre` handler); {@link TabsBlock} identifies which pane is which by the original directive
  * tag name (`tabcode`/`tabpreview`), not by this prop.
  */
+
 export const TabPane = (
-    { children }: { kind: "code" | "preview", children?: React.ReactNode },
+    { children }: TabPaneProps,
 ) => <>{children}</>
 
 /** The hast node react-markdown threads onto every element renderer via the `node` prop. */
 interface NodeProp {
     node?: { tagName?: string }
+}
+
+/** Props for {@link TabsBlock}. */
+interface TabsBlockProps {
+    children?: React.ReactNode
 }
 
 /**
@@ -31,7 +42,7 @@ interface NodeProp {
  * the `kind` lives on the `TabPane` they *return*, so it is NOT visible here — match on `node.tagName`.
  * @param props.children - The `:::code` / `:::preview` pane elements.
  */
-export const TabsBlock = ({ children }: { children?: React.ReactNode }) => {
+export const TabsBlock = ({ children }: TabsBlockProps) => {
     let previewNode: React.ReactNode = null
     let codeNode: React.ReactNode = null
     React.Children.forEach(children, (child) => {

@@ -27,13 +27,7 @@ const NodeChip = ({
     healthByName,
     selected,
     onSelect,
-}: {
-    name: string
-    icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>
-    healthByName: HealthByName | null
-    selected: boolean
-    onSelect: () => void
-}) => {
+}: NodeChipProps) => {
     const state = resolveArchitectureStatus(name, healthByName)
     const visual = getArchitectureStatusVisual(state)
     return (
@@ -59,12 +53,7 @@ const ModuleChip = ({
     icon: Icon,
     selected,
     onSelect,
-}: {
-    id: string
-    icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>
-    selected: boolean
-    onSelect: () => void
-}) => {
+}: ModuleChipProps) => {
     const t = useTranslations("architecture")
     return (
         <button
@@ -162,4 +151,18 @@ export const ArchitectureMobileNav = ({ healthByName, selectedId, onSelect, clas
             </div>
         </div>
     )
+}
+
+type NodeChipProps = {
+    name: string
+    icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>
+    healthByName: HealthByName | null
+    selected: boolean
+    onSelect: () => void
+}
+type ModuleChipProps = {
+    id: string
+    icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>
+    selected: boolean
+    onSelect: () => void
 }

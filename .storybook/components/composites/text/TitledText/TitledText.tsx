@@ -8,7 +8,7 @@ export const meta = { tier: "composite", name: "TitledText" } as const
 
 /**
  * `TitledText` — a primary line + optional muted secondary (and optional hint) stacked
- * vertically as one composite; a title↔subtitle pair is a single semantic unit rather than raw
+ * vertically as one composite; a title<->subtitle pair is a single semantic unit rather than raw
  * `<Typography>` hand-rolled at every row. The composite owns the type scale per `size`; the
  * caller passes nodes only. Leaves: `subtitle`, `hint`, `size`, `weight`, `truncate`, `isSkeleton`.
  */
@@ -40,7 +40,7 @@ interface SizeConfig {
     titleSize: "sm" | "h3"
     titleWeight: "medium" | "semibold" | "bold"
     subSize: "xs" | "sm"
-    /** `undefined` → foreground (default); `"muted"` → muted line. */
+    /** `undefined` -> foreground (default); `"muted"` -> muted line. */
     subColor?: "muted"
     subWeight?: "medium"
     /**
@@ -90,7 +90,7 @@ export interface TitledTextProps {
     weight?: "medium" | "semibold" | "bold"
     /** Truncate every line to a single line (needs a bounded parent width). */
     truncate?: boolean
-    /** `true` → render the skeleton mirror (bars sized per line). */
+    /** `true` -> render the skeleton mirror (bars sized per line). */
     isSkeleton?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.

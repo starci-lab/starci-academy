@@ -1,11 +1,18 @@
 import React from "react"
 
+/** Props for {@link AuroraRibbon}. */
+interface AuroraRibbonProps {
+    top: number
+    duration: number
+    delay: number
+}
+
 /** One soft, blurred ribbon swaying slowly, tinted by the accent color. */
 const AuroraRibbon = ({
     top,
     duration,
     delay,
-}: { top: number, duration: number, delay: number }) => (
+}: AuroraRibbonProps) => (
     <div
         className="ambient-aurora absolute inset-x-[-20%]"
         style={{

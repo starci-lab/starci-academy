@@ -27,10 +27,10 @@ import { isGapPrinciple, PRINCIPLE_STYLE } from "@/components/frames/_principle-
  * | `.Actions` | the closing button row                        | **`items` — children FORBIDDEN** |
  *
  * SHELL API LAW (§13b):
- * - `.Base` / `.Section` are WRAPPING shells → the named slot (`body`) is the
+ * - `.Base` / `.Section` are WRAPPING shells -> the named slot (`body`) is the
  *   main path, a COMPONENT reference (COMPOSITE-8) this shell calls itself so
  *   `isSkeleton` can reach inside it.
- * - `.Actions` is a REPEATED LIST (N buttons of the same kind) → `items` DATA
+ * - `.Actions` is a REPEATED LIST (N buttons of the same kind) -> `items` DATA
  *   is REQUIRED, children FORBIDDEN — exactly like `ButtonGroup.items` (§12b).
  * - Namespace only — does NOT export a bare component (§13a).
  *
@@ -42,7 +42,7 @@ import { isGapPrinciple, PRINCIPLE_STYLE } from "@/components/frames/_principle-
  * - It must NOT hand-draw a button — `.Actions` COMPOSES the atom `ButtonGroup` (§13c).
  *
  * SPACING (§10c): every gap goes through {@link AllowedGap} — a union literal
- * `1..8`, a STEP in the scale, never a raw px number (`gap={3}` → `gap-2`, not
+ * `1..8`, a STEP in the scale, never a raw px number (`gap={3}` -> `gap-2`, not
  * `gap-3`). The shell FORCES the scale via the TYPE, it accepts no arbitrary
  * number; off-scale values simply don't compile. Spacing comes from the
  * **parent's gap**, NEVER a child's margin (§10a).
@@ -61,7 +61,7 @@ export interface FormBaseProps {
      * this callback, so pressing ENTER inside a field also submits (native
      * `<form>` behaviour — the reason the shell renders a REAL `<form>` tag
      * instead of a column of stacked `<div>`s).
-     * Omit → the form never submits (page reload is still blocked).
+     * Omit -> the form never submits (page reload is still blocked).
      */
     onSubmit?: () => void
     /** Main content region (the `FormSection`s / fields), as a COMPONENT reference (COMPOSITE-8) — the shell calls it itself so `isSkeleton` can reach inside it. */
@@ -75,26 +75,26 @@ export interface FormBaseProps {
     actions?: ComponentTypeWithSkeleton
     /**
      * Vertical rhythm between the form's sub-regions. Default `{6}` (`gap-6`,
-     * §10b: design ↔ design within one block). Drop to `{4}` (`gap-3`) for a
+     * §10b: design <-> design within one block). Drop to `{4}` (`gap-3`) for a
      * short form inside a modal.
      * Optional when `principle` owns the seam — then the resolver supplies gap.
      */
     gap?: AllowedGap
     /**
-     * Semantic seam for body ↔ actions (and the fieldset column). When set,
+     * Semantic seam for body <-> actions (and the fieldset column). When set,
      * owns gap CSS — do not also pass `gap` / `classNames`. Query as
      * `[data-principle="token"]`.
      */
     principle?: PrincipleToken
     /**
-     * `true` → LOCKS THE WHOLE FORM (submitting / waiting on the server). Uses
+     * `true` -> LOCKS THE WHOLE FORM (submitting / waiting on the server). Uses
      * a native `<fieldset disabled>` so EVERY child control (including the
      * button inside `actions`) disables along with it — the shell never has to
      * thread `isDisabled` down to each field.
      */
     isDisabled?: boolean
     /**
-     * `true` → forwarded into whichever of `body`/`actions` renders
+     * `true` -> forwarded into whichever of `body`/`actions` renders
      * (COMPOSITE-8 — each is a component reference this shell calls itself, so
      * the flag reaches inside every one of them).
      */
@@ -169,19 +169,19 @@ const Base = ({
 export interface FormSectionProps {
     /** Group title — `Typography.Sm` medium (§9b: a working-context emphasis, not a page heading). The shell wraps it in `Typography` itself (COMPOSITE-8). */
     title: string
-    /** Description line under the title — `Typography.Xs` muted (§9a). Omit → title only. Same text contract as {@link FormSectionProps.title}. */
+    /** Description line under the title — `Typography.Xs` muted (§9a). Omit -> title only. Same text contract as {@link FormSectionProps.title}. */
     description?: string
     /** The group's fields, as a COMPONENT reference (COMPOSITE-8) — the shell calls it itself so `isSkeleton` can reach inside it. */
     body?: ComponentTypeWithSkeleton
     /**
-     * Vertical rhythm: used for BOTH of the section's seams (header ↔ body, and
-     * field ↔ field). Default `{4}` (`gap-3`, §10b: rows/blocks stacked within
+     * Vertical rhythm: used for BOTH of the section's seams (header <-> body, and
+     * field <-> field). Default `{4}` (`gap-3`, §10b: rows/blocks stacked within
      * one block). One token, one owner — change the group's rhythm in exactly
      * one place.
      */
     gap?: AllowedGap
     /**
-     * `true` → `title`/`description` switch to shimmer, and `body` (if any) is
+     * `true` -> `title`/`description` switch to shimmer, and `body` (if any) is
      * CALLED with `isSkeleton` too (COMPOSITE-8 — `body` is a component
      * reference this shell calls itself, so the flag reaches inside it the same
      * way it reaches the text lines).
@@ -214,7 +214,7 @@ const Section = ({
         data-component="FormSection"
         data-principle="label-field"
     >
-        {/* tight gap-1: title ↔ description is a PAIR, not two regions (§10b).
+        {/* tight gap-1: title <-> description is a PAIR, not two regions (§10b).
             No `` wrapper: it never helps the reader past what the
             `Typography` nodes inside already say on their own (§11a.1 CASE 2/3 — a
             badge with nowhere to link is worse than no badge; those two atoms keep their
@@ -253,7 +253,7 @@ const Section = ({
 /** Props for {@link FormActions}. */
 export interface FormActionsProps {
     /**
-     * The button row described as DATA (§13b: a repeated list ⇒ `items`,
+     * The button row described as DATA (§13b: a repeated list => `items`,
      * children FORBIDDEN). Same shape as `ButtonGroup` items — the shell passes
      * it straight down to the atom, it does NOT hand-draw a button (§13c).
      */
@@ -269,7 +269,7 @@ export interface FormActionsProps {
      */
     explain?: ExplainReason
     /**
-     * `true` → the button row STICKS to the bottom of the scroll container
+     * `true` -> the button row STICKS to the bottom of the scroll container
      * (`sticky bottom-0`) with a divider + background, for a long form inside a
      * modal/drawer. Chrome only — it doesn't change the button API.
      */
@@ -305,7 +305,7 @@ const Actions = ({
 /**
  * `Form.*` — the form composite namespace (§13). `Base` (the `<form>` shell +
  * content column + button slot) · `Section` (a titled group of fields) ·
- * `Actions` (the button row, `items` data → atom `ButtonGroup`).
+ * `Actions` (the button row, `items` data -> atom `ButtonGroup`).
  *
  * A field's label/hint/error/required does NOT live here — the form atom
  * carries it itself (§12e).

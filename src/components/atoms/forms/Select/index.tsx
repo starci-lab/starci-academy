@@ -13,9 +13,14 @@ export const SelectRoot = (props: SelectRootProps) => (
     <HeroSelect.Root data-tier="atom" data-component="SelectRoot" {...props} />
 )
 
+/** House trigger over HeroUI `Select.Trigger`. */
 export const SelectTrigger = HeroSelect.Trigger
+/** House value over HeroUI `Select.Value`. */
 export const SelectValue = HeroSelect.Value
+/** House indicator over HeroUI `Select.Indicator`. */
 export const SelectIndicator = HeroSelect.Indicator
+/** House popover over HeroUI `Select.Popover`. */
 export const SelectPopover = HeroSelect.Popover
 
+/** Tier metadata for `SelectRoot`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "SelectRoot" } as const

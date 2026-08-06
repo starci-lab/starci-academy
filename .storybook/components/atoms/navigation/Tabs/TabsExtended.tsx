@@ -106,4 +106,5 @@ export const TabsExtended = ({
     )
 }
 
+/** Tier metadata for `TabsExtended`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "TabsExtended" } as const

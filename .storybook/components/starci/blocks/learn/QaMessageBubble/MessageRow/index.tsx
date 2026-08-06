@@ -22,6 +22,7 @@ interface MessageRowProps {
     currentUserId: string | null
     interactive: MessageRowInteractive | null
 }
+/** One message row inside a Q&A bubble thread. */
 export const MessageRow = ({
     answer,
     currentUserId,

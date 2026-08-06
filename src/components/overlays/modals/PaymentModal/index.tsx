@@ -49,7 +49,7 @@ const VOUCHER_NOT_SUPPORTED_CODE = "VOUCHER_NOT_SUPPORTED_FOR_GATEWAY_EXCEPTION"
 const INVALID_VOUCHER_CODE = "INVALID_VOUCHER_EXCEPTION"
 const INSTALLMENT_CURRENCY_CODE = "INSTALLMENT_CURRENCY_NOT_SUPPORTED_EXCEPTION"
 
-/** Typed-rejection code → i18n key for its localized toast description. */
+/** Typed-rejection code -> i18n key for its localized toast description. */
 const TYPED_REJECTION_KEY: Record<string, string> = {
     [VOUCHER_NOT_SUPPORTED_CODE]: "payment.voucher.rejected.notSupported",
     [INVALID_VOUCHER_CODE]: "payment.voucher.rejected.invalid",
@@ -88,14 +88,14 @@ interface PaymentOrder {
 }
 
 /**
- * Shared payment modal for every paid flow (course enroll · membership · AI subscription).
+ * Shared payment modal for every paid flow (course enroll - membership - AI subscription).
  * CONNECTED half: owns the overlay store, every mutation/query the four flows need, and
  * resolves i18n; hands everything to the presentational {@link _PaymentModal}. See
  * `tiers/split.md`.
  *
  * Summary-first: shows WHAT the buyer gets + HOW MUCH (loyalty discount surfaced via
  * `PriceTagProminent` + hover breakdown) BEFORE the gateway choice. A currency toggle
- * (Domestic VND ↔ International USD) drives BOTH the shown price and the gateway list; the
+ * (Domestic VND <-> International USD) drives BOTH the shown price and the gateway list; the
  * USD side appears only when the order has a USD price. The opener stashes a
  * {@link import("@/modules/types").PaymentContext}; this modal reads it to decide which
  * price to preview and which mutation to run on pick.
@@ -160,14 +160,14 @@ export const PaymentModal = () => {
     // (course flow only). Shares the rewards page's SWR cache.
     const vouchersSwr = useQueryMyVouchersSwr()
     // multi-course checkout preview (per-course + summed charged/list, bundle bonus).
-    // Keyed on the context's course ids → shares the cart page's SWR cache.
+    // Keyed on the context's course ids -> shares the cart page's SWR cache.
     const checkoutCourseIds = useMemo(
         () => (isCoursesCheckout && context?.flow === PaymentFlow.CoursesCheckout ? context.courseIds : []),
         [isCoursesCheckout, context],
     )
     const checkoutPreviewSwr = useQueryCoursesCheckoutPreviewSwr(checkoutCourseIds)
     const checkoutPreview = checkoutPreviewSwr.data
-    // courseId → preview line, for per-course prices in the multi-course summary
+    // courseId -> preview line, for per-course prices in the multi-course summary
     const checkoutLineByCourse = useMemo(() => {
         const map = new Map<string, CoursesCheckoutPreviewLine>()
         checkoutPreview?.lines.forEach((line) => map.set(line.courseId, line))
@@ -311,7 +311,7 @@ export const PaymentModal = () => {
             { value: "", label: t("payment.voucher.none") },
             ...applicableVouchers.map((voucher) => ({
                 value: voucher.code,
-                label: `${voucher.code} · ${voucher.discountType === "percent"
+                label: `${voucher.code} - ${voucher.discountType === "percent"
                     ? `-${voucher.value}%`
                     : t("payment.voucher.flatOff", { amount: formatVnd(voucher.value) })}`,
             })),
@@ -465,7 +465,7 @@ export const PaymentModal = () => {
         )
         if (success && checkoutUrl) {
             // an applied voucher is now reserved by this in-flight checkout — refresh
-            // the wallet so its status reflects that (BE: Unused → Reserved).
+            // the wallet so its status reflects that (BE: Unused -> Reserved).
             if (voucherCode) {
                 void vouchersSwr.mutate()
             }

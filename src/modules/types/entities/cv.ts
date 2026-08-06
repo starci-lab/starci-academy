@@ -155,20 +155,20 @@ export const DEFAULT_CV_STYLE: CvStyle = {
  * ```
  *
  * - `block` — the `CvBlock` this instance edits (read-only in, changes flow
- *   back out via `onChange`; never mutate `block` in place).
+ * back out via `onChange`; never mutate `block` in place).
  * - `onChange(next)` — call with a NEW `CvBlock` (same `id`) whenever the user
- *   edits a field, adds/removes/reorders an item. The parent stack persists
- *   the whole `blocks` array via `updateCvBlocks` (debounced autosave — the
- *   editor itself never calls the mutation directly).
+ * edits a field, adds/removes/reorders an item. The parent stack persists
+ * the whole `blocks` array via `updateCvBlocks` (debounced autosave — the
+ * editor itself never calls the mutation directly).
  * - `onRemove()` — the user removed this ENTIRE block from the document (the
- *   "×" on the block's own header, distinct from per-item remove which the
- *   editor handles internally via `onChange`).
+ * "×" on the block's own header, distinct from per-item remove which the
+ * editor handles internally via `onChange`).
  * - `onAiRewrite(itemId, instruction?)` — optional; only blocks with an
- *   "✨ AI writes it for you" affordance (`summary`, `experience`, `project`) wire
- *   this. Resolves to the rewritten `CvBlockItem["fields"]` for that one item
- *   (or the whole block's single fields set for `summary`) — the editor is
- *   responsible for its OWN spinner/retry-in-place UI while the call is in
- *   flight; a failure must never block the rest of the form.
+ * " AI writes it for you" affordance (`summary`, `experience`, `project`) wire
+ * this. Resolves to the rewritten `CvBlockItem["fields"]` for that one item
+ * (or the whole block's single fields set for `summary`) — the editor is
+ * responsible for its OWN spinner/retry-in-place UI while the call is in
+ * flight; a failure must never block the rest of the form.
  */
 export interface CvBlockEditorProps {
     /** The block this editor instance renders/edits. */
@@ -199,6 +199,6 @@ export interface CvBlockTypeMeta {
     repeatable: boolean
     /** Whether this block type may only appear once in a document (e.g. `personal`, `summary`). */
     singleton: boolean
-    /** Whether this block type has an "✨ AI writes it for you" affordance. */
+    /** Whether this block type has an " AI writes it for you" affordance. */
     aiAssisted: boolean
 }

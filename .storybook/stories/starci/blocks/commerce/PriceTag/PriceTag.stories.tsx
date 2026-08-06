@@ -52,7 +52,7 @@ const NO_DISCOUNT_PARTS: Array<AnatomyNode> = [
 ]
 
 /**
- * On-sale composition — amount + struck original + `−X%` chip → popover + saving line,
+ * On-sale composition — amount + struck original + `−X%` chip -> popover + saving line,
  * flattened into the whitelist shape INSTEAD OF a nested `parts` tree.
  *
  * The whitelist shape is a flat `"Name": { … }` record literal — the one
@@ -84,7 +84,7 @@ const DISCOUNT_ANNOTATE: Record<string, AnatomyAnnotation> = {
     },
     "Popover.Content": { tier: "heroui", role: "the price-breakdown table" },
     "KeyValueList": {
-        // The four "label ↔ value" rows go through the `KeyValueList`
+        // The four "label <-> value" rows go through the `KeyValueList`
         // COMPOSITE — the "You pay" row uses `emphasis` so the EMPHASIS is decided by
         // the composite, the same across every price table.
         tier: "composite",
@@ -297,7 +297,7 @@ export const NoSavingLine: Story = {
         ),
 }
 
-/** Discount WITHOUT a `breakdown` — the chip still opens a popover, but it shows only "original price → you pay" (no phase/loyalty rows). */
+/** Discount WITHOUT a `breakdown` — the chip still opens a popover, but it shows only "original price -> you pay" (no phase/loyalty rows). */
 export const DiscountWithoutBreakdown: Story = {
     render: () =>
         shell(

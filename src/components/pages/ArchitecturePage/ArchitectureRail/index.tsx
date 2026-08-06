@@ -27,11 +27,7 @@ const ComponentRow = ({
     name,
     icon: Icon,
     healthByName,
-}: {
-    name: string
-    icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>
-    healthByName: HealthByName | null
-}) => {
+}: ComponentRowProps) => {
     const t = useTranslations("architecture")
     const state = resolveArchitectureStatus(name, healthByName)
     const visual = getArchitectureStatusVisual(state)
@@ -66,10 +62,7 @@ const ComponentRow = ({
 const ModuleRow = ({
     id,
     icon: Icon,
-}: {
-    id: string
-    icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>
-}) => {
+}: ModuleRowProps) => {
     const t = useTranslations("architecture")
     return (
         <span data-principle="identity" className="flex w-full min-w-0 items-center gap-2">
@@ -184,4 +177,14 @@ export const ArchitectureRail = ({ healthByName, selectedId, onSelect, className
             </ScrollShadow>
         </div>
     )
+}
+
+type ComponentRowProps = {
+    name: string
+    icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>
+    healthByName: HealthByName | null
+}
+type ModuleRowProps = {
+    id: string
+    icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>
 }

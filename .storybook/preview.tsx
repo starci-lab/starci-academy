@@ -17,7 +17,7 @@ import "./nivoexpert.css"
  *
  * The canvas is intentionally CLEAN: the story renders JUST the component + its states.
  * A story's JSDoc still becomes its description in the Docs/Overview tab (autodocs), but is
- * NOT painted as a "Usage" alert on the canvas (thầy: bỏ usage khỏi canvas).
+ * NOT painted as a "Usage" alert on the canvas (teacher: drop usage from the canvas).
  */
 /**
  * CSS that hides the anatomy tooling when the `Anatomy` toolbar is off.

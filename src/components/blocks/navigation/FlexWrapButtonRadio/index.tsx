@@ -27,10 +27,10 @@ interface FlexWrapButtonRadioBaseProps<T extends string> extends WithClassNames<
      */
     trailing?: ReactNode
     /**
-     * Optional per-item trailing action(s) — e.g. a delete button and/or a "⋮"
+     * Optional per-item trailing action(s) — e.g. a delete button and/or a "..."
      * (kebab) menu trigger. When provided, the item's select button and these
      * action buttons render as ONE connected {@link ButtonGroup} per item
-     * (`[select | 🗑 | ⋮]`) — touching, a full-height separator at every seam,
+     * (`[select | delete | ...]`) — touching, a full-height separator at every seam,
      * rounded only at the two outer ends — instead of a detached button floating
      * beside the pill. Return the action `<Button>`s as an ARRAY (with `key`s) so
      * each is an individual segment the group can rounded/separate — NOT wrapped in
@@ -84,7 +84,7 @@ export type FlexWrapButtonRadioProps<T extends string> =
  *
  * When `itemAction` is supplied, each item instead renders as one connected
  * {@link ButtonGroup} — the select button + its action button(s) touching, only
- * the two outer ends rounded (`[select | 🗑 | ⋮]`). No bordered frame: the button
+ * the two outer ends rounded (`[select | delete | ...]`). No bordered frame: the button
  * VARIANTS carry the look — EVERY segment is filled `--default` so the cluster
  * reads as one solid control (the select pill is `secondary` = default fill +
  * accent text when chosen, else `tertiary` = default fill + neutral text — NOT a
@@ -113,7 +113,7 @@ export const FlexWrapButtonRadio = <T extends string>(props: FlexWrapButtonRadio
     // the only things that differ between single- and multi-select.
     const isSelected = (candidate: T): boolean =>
         (props.multiple ? props.values.includes(candidate) : props.value === candidate)
-    const handlePress = (candidate: T): void => {
+    const onItemPress = (candidate: T): void => {
         if (props.multiple) {
             props.onToggle(candidate)
         } else {
@@ -135,7 +135,7 @@ export const FlexWrapButtonRadio = <T extends string>(props: FlexWrapButtonRadio
                             variant={selected ? "tertiary" : "ghost"}
                             isDisabled={item.isDisabled}
                             aria-pressed={selected}
-                            onPress={() => handlePress(item.value)}
+                            onPress={() => onItemPress(item.value)}
                         >
                             {item.content}
                         </Button>
@@ -155,7 +155,7 @@ export const FlexWrapButtonRadio = <T extends string>(props: FlexWrapButtonRadio
                             variant={selected ? "secondary" : "tertiary"}
                             isDisabled={item.isDisabled}
                             aria-pressed={selected}
-                            onPress={() => handlePress(item.value)}
+                            onPress={() => onItemPress(item.value)}
                         >
                             {item.content}
                         </Button>

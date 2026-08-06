@@ -2,8 +2,10 @@ import React from "react"
 import { cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link GithubIcon}. */
 export type GithubIconProps = WithClassNames<undefined>
 
+/** GitHub mark SVG icon. */
 export const GithubIcon = ({ className }: GithubIconProps) => {
     return (
         <svg className={cn(className)} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">

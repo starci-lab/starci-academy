@@ -12,8 +12,8 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * `MarkdownContent` — a viewer that paints an authored markdown document faithfully. Unlike
  * other composites it cannot know its shape before rendering — the payload decides it. Handles
  * Shiki-highlighted fenced code, mermaid diagrams (click-to-zoom, caption pairing),
- * `:::tab`/`:::code`/`:::preview` → Preview↔Code tabs, GFM tables → HeroUI `Table`,
- * `::::accordion`/`:::panel` → HeroUI `Accordion`, plus `:::muted`/`:::chip`, image captions,
+ * `:::tab`/`:::code`/`:::preview` -> Preview<->Code tabs, GFM tables -> HeroUI `Table`,
+ * `::::accordion`/`:::panel` -> HeroUI `Accordion`, plus `:::muted`/`:::chip`, image captions,
  * link routing, and heading anchors. Leaves by structure are the two spacing measures.
  */
 
@@ -50,8 +50,8 @@ interface DirectiveTextNode {
 
 /**
  * Recursively rewrites `:::muted` directives (container/leaf/text, parsed by `remark-directive`)
- * into custom hast tags the renderer map styles as small muted text. Container/leaf → block-level
- * `mutedblock`; inline `:muted[…]` → `mutedtext`. Directives with any other name are left untouched
+ * into custom hast tags the renderer map styles as small muted text. Container/leaf -> block-level
+ * `mutedblock`; inline `:muted[…]` -> `mutedtext`. Directives with any other name are left untouched
  * (and dropped by the hast conversion since they have no handler).
  * @param node - Current mdast node being walked.
  */
@@ -79,7 +79,7 @@ const remarkMuted = () => (tree: unknown): void => {
 /**
  * Recursively rewrites the `:::tab` / `:::code` / `:::preview` container directives into custom
  * hast tags the renderer map turns into a [Preview|Code] tabs block (see `TabsBlock`):
- * `tab`→`tabblock`, `code`→`tabcode`, `preview`→`tabpreview`. Each pane's child fence
+ * `tab`->`tabblock`, `code`->`tabcode`, `preview`->`tabpreview`. Each pane's child fence
  * (` ```tsx ` / ` ```mdx `) still renders through the normal `pre` handler. Other directive names
  * are left untouched.
  *
@@ -166,8 +166,8 @@ const remarkChip = () => (tree: unknown): void => {
 
 /**
  * Rewrites the `::::accordion` / `:::panel{title="…"}` container directives into custom hast tags
- * the renderer map turns into a HeroUI Accordion (see `map.tsx`): `accordion`→`accordionblock`;
- * each `:::panel{title="…"}`→`accordionpanel` carrying its `title` attribute. Inner panel content
+ * the renderer map turns into a HeroUI Accordion (see `map.tsx`): `accordion`->`accordionblock`;
+ * each `:::panel{title="…"}`->`accordionpanel` carrying its `title` attribute. Inner panel content
  * (bullets, code fences) still renders through the normal handlers.
  *
  * Note: nesting needs MORE colons on the outer fence — `::::accordion` wraps `:::panel`.
@@ -197,7 +197,7 @@ const remarkAccordion = () => (tree: unknown): void => {
 
 /**
  * Module-level constant — NOT recreated every render. If `remarkPlugins={[...]}` were inline, each
- * `MarkdownContent` re-render would hand `ReactMarkdown` a new array → re-parse the whole markdown.
+ * `MarkdownContent` re-render would hand `ReactMarkdown` a new array -> re-parse the whole markdown.
  */
 const REMARK_PLUGINS = [remarkGfm, remarkDirective, remarkMuted, remarkTab, remarkChip, remarkAccordion]
 
@@ -300,7 +300,7 @@ export interface MarkdownContentProps {
     /** Where the article wrapper sits inside its parent, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /**
-     * `true` → render a 2-line shimmer mirror instead of the real document
+     * `true` -> render a 2-line shimmer mirror instead of the real document
      * (the owner of the shape owns the skeleton).
      */
     isSkeleton?: boolean

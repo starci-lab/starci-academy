@@ -7,7 +7,7 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * COMPOSITE — `IconLabelValueRow`: a leading icon + flex-1 label + trailing
  * value, one `content-row` seam (12px) across all three segments. For a flat
  * "spec line" — a permission row, a plan-limit line, a settings line reporting
- * its current value — where `ListRow`'s own title↔subtitle column would be one
+ * its current value — where `ListRow`'s own title<->subtitle column would be one
  * text line too many.
  *
  * `label` reads as the row's own text (`default`, medium weight); `value`
@@ -38,7 +38,7 @@ export const Default: Story = {
                 states={[
                     {
                         name: "icon + label + value",
-                        why: "One `content-row` seam (12px) across icon↔label↔value — no sub-grouping inside the row, so a single gap value is the honest read. `label` is `default`/medium (the row's own text), `value` is `muted` (the fact it reports).",
+                        why: "One `content-row` seam (12px) across icon<->label<->value — no sub-grouping inside the row, so a single gap value is the honest read. `label` is `default`/medium (the row's own text), `value` is `muted` (the fact it reports).",
                         code: "<IconLabelValueRow icon={UsersIcon} label=\"Members\" value=\"12 / 20\" />",
                         render: (
                             <IconLabelValueRow

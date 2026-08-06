@@ -11,7 +11,7 @@ import { resolveIdentity, type CallerIdentity } from "@/components/frames/_ident
  * STORYBOOK-LOCAL DESIGN SPEC — `EmptyState`, a CENTERED vertical stack that
  * fills an empty/error spot (`code`/`icon`/`title`/`description`/`body`/`action`).
  *
- * ⚠️ Split out of the `Feedback.*` namespace (2026-08-01) back into its own flat
+ * WARNING Split out of the `Feedback.*` namespace (2026-08-01) back into its own flat
  * file — the 2026-07-25 consolidation grouped `Callout`/`Empty`/`Confirm` under
  * one `Feedback` folder; this reverses that so each frame is discoverable by
  * its own name again (this member was `Feedback.Empty` / `FeedbackEmpty`).
@@ -19,7 +19,7 @@ import { resolveIdentity, type CallerIdentity } from "@/components/frames/_ident
  * not a visual or API change.
  *
  * ATOM COMPOSITION (§12): text goes through `Typography.*`, icons come from
- * `@phosphor-icons/react` — ONE SET ONLY (§5⃣0), passed as a component ref, the
+ * `@phosphor-icons/react` — ONE SET ONLY (§50), passed as a component ref, the
  * frame forces size/weight itself (§4/§5).
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -85,7 +85,7 @@ interface EmptyStateOwnProps {
      * Caller identity to wear on this composite's root instead of its own — pass this when a
      * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
      * using this composite AS its root element, instead of wrapping it in a raw `<div
-     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this composite keeps
+     * data-tier=… data-component=…>`. See `_identity.ts`. Omitted -> this composite keeps
      * emitting its own `data-tier="composite" data-component="EmptyState"`, unchanged.
      */
     identity?: CallerIdentity
@@ -106,8 +106,8 @@ export type EmptyStateProps = EmptyStateOwnProps &
 /**
  * Centered placeholder for lists, panels, sections, or whole routes with no content —
  * and for the "failed to load" variant of the same hole (`tone="danger"` + a retry `action`).
- * A vertical, centered stack: optional `code` → optional icon → title → optional
- * description → optional body → optional action. Omits a card wrapper — the caller
+ * A vertical, centered stack: optional `code` -> optional icon -> title -> optional
+ * description -> optional body -> optional action. Omits a card wrapper — the caller
  * wraps it in a surface (e.g. `SurfaceCardList emptyState={…}`) when a frame is wanted.
  *
  * @param props - {@link EmptyStateProps}
@@ -137,7 +137,7 @@ export const EmptyState = (props: EmptyStateProps) => {
     const skeletonAttrs = isSkeleton ? ({ isSkeleton: true } as const) : ({ isSkeleton: false } as const)
 
     if (size === "compact") {
-        // ⚠️ The `Typography.*` atom does NOT accept unknown props (no rest spread) → every
+        // WARNING The `Typography.*` atom does NOT accept unknown props (no rest spread) -> every
         // anatomy tag must sit on a WRAPPING element, not be stuffed into the atom.
         return (
             <span

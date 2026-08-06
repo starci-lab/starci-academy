@@ -116,4 +116,5 @@ export const LinkBack = ({
     )
 }
 
+/** Tier metadata for `LinkBack`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "LinkBack" } as const

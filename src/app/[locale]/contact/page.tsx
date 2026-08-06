@@ -1,5 +1,6 @@
 import React from "react"
 import type { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
 import { ContactPage } from "@/components/pages/ContactPage"
 import { buildPageMetadata } from "@/modules/seo/buildMetadata"
 
@@ -9,17 +10,22 @@ interface ContactParams {
     locale: string
 }
 
+/** Props for {@link generateMetadata}. */
+interface GenerateMetadataProps {
+    /** Promise of the resolved route params. */
+    params: Promise<ContactParams>
+}
+
 /** Per-locale contact-page metadata (canonical + hreflang + share card). */
 export const generateMetadata = async ({
     params,
-}: {
-    params: Promise<ContactParams>
-}): Promise<Metadata> => {
+}: GenerateMetadataProps): Promise<Metadata> => {
     const { locale } = await params
+    const t = await getTranslations({ locale })
     return buildPageMetadata({
         path: "/contact",
         locale,
-        title: locale === "vi" ? "Liên hệ" : "Contact",
+        title: t("contact.title"),
     })
 }
 

@@ -31,7 +31,7 @@ export interface ModuleLessonListLesson {
     isRead: boolean
     /** Behind the paid tier — shows the trailing lock marker. */
     isPremium: boolean
-    /** Difficulty tier — the block builds `VariantChipDifficulty` itself. Omit → no chip. */
+    /** Difficulty tier — the block builds `VariantChipDifficulty` itself. Omit -> no chip. */
     difficulty?: Difficulty
 }
 
@@ -41,13 +41,13 @@ export interface ModuleLessonListProps {
     lessons: Array<ModuleLessonListLesson>
     /** The lesson to mark "resume" — wins over `isRead` for the leading icon (see file header). */
     resumeLessonId?: string
-    /** Fired with the lesson id on ANY row press, premium or not (see the ⛔ note above). */
+    /** Fired with the lesson id on ANY row press, premium or not (see the NO note above). */
     onSelectLesson: (id: string) => void
     /**
-     * `true` → the list draws its own row mirror. `lessons` empty while loading
-     * (§12c) → guesses 3 rows, the SSOT convention this composite's siblings
-     * (`KeepGoingPath`, `LearnNudges`) already use.
-     */
+ * `true` -> the list draws its own row mirror. `lessons` empty while loading
+ * (§12c) -> guesses 3 rows, the SSOT convention this composite's siblings
+ * (`KeepGoingPath`, `LearnNudges`) already use.
+ */
     isSkeleton?: boolean
 }
 
@@ -97,7 +97,7 @@ const ModuleLessonList = ({
     onSelectLesson,
     isSkeleton = false,
 }: ModuleLessonListProps) => {
-    // Empty while loading (no real lessons yet) → guess 3 rows, keeping the right
+    // Empty while loading (no real lessons yet) -> guess 3 rows, keeping the right
     // shape for when real data arrives (§8). Once real `lessons` exist, keep the
     // EXACT row count already there — the placeholder set never mixes with real rows.
     const usingPlaceholders = isSkeleton && lessons.length === 0
@@ -132,7 +132,7 @@ const ModuleLessonList = ({
                 />
             ) : undefined,
             // A quiet trailing marker, riding NEXT TO the chip rather than replacing the
-            // leading icon (see the ⭐ judgement call above).
+            // leading icon (see the * judgement call above).
             trailingIcon: lesson.isPremium ? LockIcon : undefined,
         }
     })

@@ -15,22 +15,22 @@ import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
  * surface fill, no border, no radius, no padding. It only stacks a header, a
  * body and an optional footer at ONE rhythm (§10).
  *
- * ⚠️ NOT `SectionCard` (design tier, `blocks/cards/SectionCard`): that one IS a
+ * WARNING NOT `SectionCard` (design tier, `blocks/cards/SectionCard`): that one IS a
  * card — HeroUI `Card` chrome (border + radius + padding), an `accent` skin, a
  * `withVerdict` DATA band and its own `isSkeleton` mirror. `SectionCard` is the
  * SURFACE a section's body may sit ON; `Section` is the bare frame AROUND it.
- * Rule of thumb: needs a bounded surface ⇒ `SectionCard`/`SurfaceCard.*`; only
- * needs "title + content in one vertical rhythm" ⇒ `Section.*`.
+ * Rule of thumb: needs a bounded surface => `SectionCard`/`SurfaceCard.*`; only
+ * needs "title + content in one vertical rhythm" => `Section.*`.
  *
- * ⚠️ NOT `PageHeader` either: that is the chrome of a whole ROUTE (breadcrumb +
+ * WARNING NOT `PageHeader` either: that is the chrome of a whole ROUTE (breadcrumb +
  * H3 title + meta strip), ONE per page. `SectionHeader` is the header of a
  * region INSIDE that page, many per page, and scales down via `level`.
  *
  * KHUNG API LAW (§13b):
- * - `.Base` is a WRAPPER frame → named slots `header`/`body`/`footer` are the
+ * - `.Base` is a WRAPPER frame -> named slots `header`/`body`/`footer` are the
  *   main road, each a COMPONENT reference (COMPOSITE-8) this frame calls
  *   itself so `isSkeleton` can reach inside it.
- * - `.Header` is NOT a generic wrapper → it owns semantic slots
+ * - `.Header` is NOT a generic wrapper -> it owns semantic slots
  *   (`eyebrow`/`title`/`description`/`action`) and takes no `children`.
  * - No repeating list here, so no `items` member (§13b list clause N/A).
  * - Namespace only — no bare component export.
@@ -65,7 +65,7 @@ export const meta = { tier: "composite", name: "Section" } as const
  */
 export type SectionLevel = 1 | 2 | 3
 
-/** level → the text size each line uses. A DATA table — the call-site never chooses it by hand. */
+/** level -> the text size each line uses. A DATA table — the call-site never chooses it by hand. */
 const TITLE_SIZE: Record<SectionLevel, TypographySize> = { 1: "lg", 2: "base", 3: "sm" }
 const DESCRIPTION_SIZE: Record<SectionLevel, TypographySize> = { 1: "sm", 2: "sm", 3: "xs" }
 const EYEBROW_SIZE: Record<SectionLevel, TypographySize> = { 1: "sm", 2: "xs", 3: "xs" }
@@ -90,10 +90,10 @@ export interface SectionHeaderProps {
      * frame never decides WHAT the action does (that would be a feature, §13).
      */
     action?: ComponentTypeWithSkeleton
-    /** Heading rank → the text scale of every line. Default `2`. */
+    /** Heading rank -> the text scale of every line. Default `2`. */
     level?: SectionLevel
     /**
-     * `true` → `title`/`description`/`eyebrow` switch to shimmer, and `action`
+     * `true` -> `title`/`description`/`eyebrow` switch to shimmer, and `action`
      * (if any) is CALLED with `isSkeleton` too (COMPOSITE-8 — `action` is a
      * component reference this frame calls itself, so the flag reaches inside
      * it the same way it reaches the text lines).
@@ -125,7 +125,7 @@ const Header = ({
     const titleSize = TITLE_SIZE[level]
     const descriptionSize = DESCRIPTION_SIZE[level]
     const eyebrowSize = EYEBROW_SIZE[level]
-    // eyebrow ↔ title ↔ description are ONE text unit → tight gap={2} (§10b
+    // eyebrow <-> title <-> description are ONE text unit -> tight gap={2} (§10b
     // "inside a lower-tier component"), not the grouped gap={4} used BETWEEN regions.
     const titleBlock = (
         <>
@@ -188,13 +188,13 @@ export interface SectionBaseProps {
     /** Bottom region (a closing CTA row, a caption, a "see more" link), as a COMPONENT reference (COMPOSITE-8) — same contract as `body`. */
     footer?: ComponentTypeWithSkeleton
     /**
-     * Vertical rhythm between header ↔ body ↔ footer, on the §10c scale ONLY.
+     * Vertical rhythm between header <-> body <-> footer, on the §10c scale ONLY.
      * Default `{6}` (`gap-6`) — the rhythm between regions of a page. Drop to
      * `{4}` (`gap-3`) when the header is just a label over a tight list.
      */
     gap?: AllowedGap
     /**
-     * `true` → forwarded into whichever of `header`/`body`/`footer` renders
+     * `true` -> forwarded into whichever of `header`/`body`/`footer` renders
      * (COMPOSITE-8 — each is a component reference this frame calls itself, so
      * the flag reaches inside every one of them).
      */
@@ -227,7 +227,7 @@ const Base = ({
     let headerNode: ReactNode = null
     if (header != null) {
         if (isHeaderProps(header)) {
-            // props form → the frame builds ITS OWN SectionHeader (a fixed internal
+            // props form -> the frame builds ITS OWN SectionHeader (a fixed internal
             // choice, not arbitrary caller content) — badge that real component
             // directly rather than the generic wrapping div below.
             headerNode = <Header {...header} isSkeleton={isSkeleton} />

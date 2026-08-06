@@ -90,8 +90,8 @@ const CourseQaComposer = ({
     onValueChange,
     placeholder,
     submitLabel = "Send",
-    onSubmit,
-    onCancel,
+    onSubmit: onSubmitAction,
+    onCancel: onCancelAction,
     isPending = false,
     isSkeleton = false,
 }: CourseQaComposerProps) => {
@@ -101,10 +101,10 @@ const CourseQaComposer = ({
     const [expanded, setExpanded] = useState(() => mode === "plain" || Boolean(initialValue))
 
     const canSubmit = value.trim().length > 0 && !isPending
-    const showCancel = mode === "collapsible" || onCancel != null
+    const showCancel = mode === "collapsible" || onCancelAction != null
 
-    const handleSubmit = () => {
-        onSubmit()
+    const onSubmit = () => {
+        onSubmitAction()
         // Folding back is presentational chrome the block owns; the caller still
         // clears `value` itself (it owns the draft) — see file header.
         if (mode === "collapsible") {
@@ -112,11 +112,11 @@ const CourseQaComposer = ({
         }
     }
 
-    const handleCancel = () => {
+    const onCancel = () => {
         if (mode === "collapsible") {
             setExpanded(false)
         }
-        onCancel?.()
+        onCancelAction?.()
     }
 
     const avatar = currentUser || isSkeleton ? (
@@ -162,7 +162,7 @@ const CourseQaComposer = ({
                     label="Cancel"
                     variant="tertiary"
                     size="sm"
-                    onPress={handleCancel}
+                    onPress={onCancel}
                     isDisabled={isPending}
                     isSkeleton={isSkeleton}
 
@@ -172,7 +172,7 @@ const CourseQaComposer = ({
                 label={submitLabel}
                 variant="primary"
                 size="sm"
-                onPress={handleSubmit}
+                onPress={onSubmit}
                 isDisabled={!canSubmit}
                 isPending={isPending}
                 isSkeleton={isSkeleton}

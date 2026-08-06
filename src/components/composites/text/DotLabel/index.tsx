@@ -14,7 +14,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
  *
  * CHECKED BEFORE BUILDING (per the build brief's "two candidates" audit):
  *
- * ⭐ NOT already covered by `Chip`'s dot variant (`dotColor`/`dotClassName` on
+ * * NOT already covered by `Chip`'s dot variant (`dotColor`/`dotClassName` on
  * `atoms/chips/Chip`, informally "Chip.Dot"). That variant is still a real
  * `HeroChip` underneath — `variant="soft"`, the chip's own background/padding/
  * rounded-full pill shell, just with a coloured dot in the leading-glyph slot
@@ -23,7 +23,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
  * without the `HeroChip` wrapper. Confirmed by reading `ChipBase.tsx` directly
  * — every branch (skeleton and real) returns a `<HeroChip>` root.
  *
- * ⭐ THE SAME BARE SHAPE ALREADY EXISTS, but only INLINED inside `Legend`
+ * * THE SAME BARE SHAPE ALREADY EXISTS, but only INLINED inside `Legend`
  * (`composites/stats/Legend`), one entry of its `items` list, and its own file
  * flags the same thing this composite now fixes: *"ATOM GAP: no swatch/dot
  * atom exists yet, so the dot stays a real plain span"*. `DotLabel` reuses

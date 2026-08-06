@@ -6,4 +6,5 @@ export const FieldSkeleton = ({ heightCls = "h-9", classNames }: FieldSkeletonPr
     <HeroSkeleton data-tier="atom" data-component="FieldSkeleton" className={cn("w-full rounded-xl", heightCls, classNames)} />
 )
 
+/** Tier metadata for `FieldSkeleton`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "FieldSkeleton" } as const

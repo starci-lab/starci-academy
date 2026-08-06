@@ -55,7 +55,7 @@ const CLAIMED_QUEST: DailyQuestData = {
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCardCrossList": { tier: "composite", role: "the checklist — one bounded surface, each row's leading mark check (done, success) or pending (not yet, neutral circle); read-only, no press", storyId: "composites-cards-surfacecard-surfacecardcrosslist--checks" },
-    "Split": { tier: "frame", role: "a row's body — task title (leading) ↔ current/target (trailing), two peers on one line", storyId: "frames-split-split--default" },
+    "Split": { tier: "frame", role: "a row's body — task title (leading) <-> current/target (trailing), two peers on one line", storyId: "frames-split-split--default" },
     "Typography": { tier: "atom", role: "a row's title or progress fraction, or the incomplete-state prompt sentence", storyId: "atoms-text-typography-typography--overview" },
     "StackV": { tier: "frame", role: "stacks the checklist and the claim slot below it", storyId: "frames-stack-stackv--default" },
     "Chip": { tier: "atom", role: "the \"already claimed\" signal — no further action once shown", storyId: "atoms-chips-chip-chip--default" },

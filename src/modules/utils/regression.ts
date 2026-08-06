@@ -1,17 +1,20 @@
 import Decimal from "decimal.js"
 import * as ss from "simple-statistics"
 
+/** A single (x, y) sample for linear regression. */
 export interface RegressionPoint {
     x: number
     y: number
 }
 
+/** Slope/intercept result from {@link getSafeLinearRegression}. */
 export interface RegressionResult {
     m: number
     b: number
     predict: (x: number) => number
 }
 
+/** Safe linear regression over points (empty-safe). */
 export const getSafeLinearRegression = (
     points: Array<RegressionPoint>
 ): RegressionResult | null => {

@@ -1,6 +1,7 @@
 import Decimal from "decimal.js"
 import { publicEnv } from "@/resources/env/public"
 
+/** Inputs for percentage helpers. */
 export interface ComputePercentageParams {
     numerator: Decimal
     denominator: Decimal
@@ -22,6 +23,7 @@ export const computePercentage = (
     return new Decimal(numerator).div(denominator).mul(100).toDecimalPlaces(fractionDigits, Decimal.ROUND_HALF_UP)
 }
 
+/** Inputs for ratio helpers. */
 export interface ComputeRatioParams {
     numerator: Decimal
     denominator: Decimal

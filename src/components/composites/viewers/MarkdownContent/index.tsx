@@ -20,9 +20,9 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
  *
  * SCOPE OF THIS PASS (teacher's call 2026-07-29, in priority order): Shiki
  * syntax-highlighted fenced code · mermaid diagrams (SVG, click-to-zoom, caption
- * pairing, streaming-safe truncation) · `:::tab`/`:::code`/`:::preview` →
- * Preview↔Code tabs (confirmed used in authored lesson content) · GFM tables →
- * real HeroUI `Table` · `::::accordion`/`:::panel` → the CORRECT HeroUI
+ * pairing, streaming-safe truncation) · `:::tab`/`:::code`/`:::preview` ->
+ * Preview<->Code tabs (confirmed used in authored lesson content) · GFM tables ->
+ * real HeroUI `Table` · `::::accordion`/`:::panel` -> the CORRECT HeroUI
  * `Accordion` compound with surface chrome · `:::muted` + `:::chip` + image
  * captions + link routing + heading anchors. Still NOT ported: `arcSections`
  * (flashcard/mock-interview answer boxing), `plain` mode (raw render, no
@@ -30,7 +30,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
  * — each is a viewer/runtime of its own and half-porting one leaves a body that
  * looks finished and renders wrong, which every gate here would pass.
  *
- * ⚠️ THE CLASSES IN `map.tsx` ARE THE ONE PLACE HAND-WRITTEN SPACING IS CORRECT. A
+ * WARNING THE CLASSES IN `map.tsx` ARE THE ONE PLACE HAND-WRITTEN SPACING IS CORRECT. A
  * viewer cannot reach for frames: it never sees its own children as nodes, only
  * as whatever the parser hands back. This is the same exemption §13z gives the
  * atom tier, for the same reason — there is no seam to own when the tree is not
@@ -81,8 +81,8 @@ interface DirectiveTextNode {
 
 /**
  * Recursively rewrites `:::muted` directives (container/leaf/text, parsed by `remark-directive`)
- * into custom hast tags the renderer map styles as small muted text. Container/leaf → block-level
- * `mutedblock`; inline `:muted[…]` → `mutedtext`. Directives with any other name are left untouched
+ * into custom hast tags the renderer map styles as small muted text. Container/leaf -> block-level
+ * `mutedblock`; inline `:muted[…]` -> `mutedtext`. Directives with any other name are left untouched
  * (and dropped by the hast conversion since they have no handler).
  * @param node - Current mdast node being walked.
  */
@@ -110,7 +110,7 @@ const remarkMuted = () => (tree: unknown): void => {
 /**
  * Recursively rewrites the `:::tab` / `:::code` / `:::preview` container directives into custom
  * hast tags the renderer map turns into a [Preview|Code] tabs block (see `TabsBlock`):
- * `tab`→`tabblock`, `code`→`tabcode`, `preview`→`tabpreview`. Each pane's child fence
+ * `tab`->`tabblock`, `code`->`tabcode`, `preview`->`tabpreview`. Each pane's child fence
  * (` ```tsx ` / ` ```mdx `) still renders through the normal `pre` handler. Other directive names
  * are left untouched.
  *
@@ -196,8 +196,8 @@ const remarkChip = () => (tree: unknown): void => {
 
 /**
  * Rewrites the `::::accordion` / `:::panel{title="…"}` container directives into custom hast tags
- * the renderer map turns into a HeroUI Accordion (see `map.tsx`): `accordion`→`accordionblock`;
- * each `:::panel{title="…"}`→`accordionpanel` carrying its `title` attribute. Inner panel content
+ * the renderer map turns into a HeroUI Accordion (see `map.tsx`): `accordion`->`accordionblock`;
+ * each `:::panel{title="…"}`->`accordionpanel` carrying its `title` attribute. Inner panel content
  * (bullets, code fences) still renders through the normal handlers.
  *
  * Note: nesting needs MORE colons on the outer fence — `::::accordion` wraps `:::panel`.
@@ -227,7 +227,7 @@ const remarkAccordion = () => (tree: unknown): void => {
 
 /**
  * Module-level constant — NOT recreated every render. If `remarkPlugins={[...]}` were inline, each
- * `MarkdownContent` re-render would hand `ReactMarkdown` a new array → re-parse the whole markdown.
+ * `MarkdownContent` re-render would hand `ReactMarkdown` a new array -> re-parse the whole markdown.
  */
 const REMARK_PLUGINS = [remarkGfm, remarkDirective, remarkMuted, remarkTab, remarkChip, remarkAccordion]
 
@@ -330,7 +330,7 @@ export interface MarkdownContentProps {
     /** Where the article wrapper sits inside its parent, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /**
-     * `true` → render a 2-line shimmer mirror instead of the real document
+     * `true` -> render a 2-line shimmer mirror instead of the real document
      * (§12c: the owner of the shape owns the skeleton). Added 2026-07-29 —
      * before this, callers faked it by swapping in an unrelated `Typography
      * isSkeleton`, the one call-site left doing that (`MockInterviewScorecard`)

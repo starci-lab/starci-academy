@@ -37,13 +37,13 @@ import type { CallerIdentity } from "@/components/frames/_identity"
 /** Props for {@link ProfileLoadingState}. Pure skeleton — no data props (see file header). */
 export interface ProfileLoadingStateProps {
     /**
-     * Caller identity to wear on this block's root instead of its own — pass this
-     * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape
-     * of its own) is using this block AS its root element, instead of wrapping it in a
-     * raw `<div data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this root
-     * (a `StackV` track) keeps emitting its own underlying `data-tier="frame"
-     * data-component="Flex"`, same as any other unbadged `StackV` instance.
-     */
+ * Caller identity to wear on this block's root instead of its own — pass this
+ * when a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape
+ * of its own) is using this block AS its root element, instead of wrapping it in a
+ * raw `<div data-tier=… data-component=…>`. See `_identity.ts`. Omitted -> this root
+ * (a `StackV` track) keeps emitting its own underlying `data-tier="frame"
+ * data-component="Flex"`, same as any other unbadged `StackV` instance.
+ */
     identity?: CallerIdentity
 }
 
@@ -142,7 +142,7 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
 
     // rank-framed avatar + rank pill — 128px avatar has no matching `Avatar`
     // preset (sm/md/lg cap at 48px), so this spot builds its own shimmer.
-    // ⚠️ couldNotFix (no-heroui-outside-vocabulary): no atom offers a 128px
+    // WARNING️ couldNotFix (no-heroui-outside-vocabulary): no atom offers a 128px
     // circular shimmer, so this stays a raw HeroUI `Skeleton`.
     const rankAvatarRow = (
         <>
@@ -253,7 +253,7 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
     )
 
     // contributions — heatmap grid + streak line
-    // ⚠️ couldNotFix (no-heroui-outside-vocabulary): no atom offers an
+    // WARNING️ couldNotFix (no-heroui-outside-vocabulary): no atom offers an
     // arbitrary-sized rounded rectangle shimmer, so the heatmap placeholder
     // stays a raw HeroUI `Skeleton`.
     const contributionGroup = (
@@ -298,7 +298,7 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
         rail={identityRail} body={overviewContent} at="md"  />
 
     return (
-        // ⚠️ couldNotFix (require-identity-root / no-raw-shape-at-sentence-tier):
+        // WARNING️ couldNotFix (require-identity-root / no-raw-shape-at-sentence-tier):
         // the previous root also carried `aria-busy="true"` and
         // `aria-label="Loading profile"` on a raw `<div>`. No frame in
         // `components/frames/` forwards arbitrary ARIA attributes (`Flex`/`Stack`/
@@ -313,11 +313,11 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
             identity={identity}
         >
             {/* tab strip — full-bleed row under the navbar, same footprint as `ProfileTabsBar`.
-                `px-6 py-3` is a one-off placement wrapper (a full-width strip flush under a sticky
-                navbar, not a repeating list nor a generic card seam), same allowance `ContinueCard`
-                uses for its own content wrapper — both padding digits (6, 3) are on the §10c scale.
-                Carried via `Container`'s own `padding` prop (house-scale {{ x: 6, y: 4 }} = `px-6 py-3`)
-                instead of a raw div — no `patterns.mjs` token names this asymmetric shape yet. */}
+ `px-6 py-3` is a one-off placement wrapper (a full-width strip flush under a sticky
+ navbar, not a repeating list nor a generic card seam), same allowance `ContinueCard`
+ uses for its own content wrapper — both padding digits (6, 3) are on the §10c scale.
+ Carried via `Container`'s own `padding` prop (house-scale {{ x: 6, y: 4 }} = `px-6 py-3`)
+ instead of a raw div — no `patterns.mjs` token names this asymmetric shape yet. */}
             <Container
                 size="full"
                 padding={{ x: 6, y: 4 }}

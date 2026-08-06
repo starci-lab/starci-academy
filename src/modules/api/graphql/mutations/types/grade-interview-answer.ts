@@ -6,11 +6,11 @@ import type { ModelProvider } from "../../queries/query-my-ai-settings"
  * Mirrors backend `InterviewVerdict` (wire values are the lowercase strings).
  */
 export enum InterviewVerdict {
-    /** Answer is solid for the card's level — clear hire signal ("đạt"). */
+    /** Answer is solid for the card's level — clear hire signal ("pass"). */
     Pass = "pass",
-    /** Answer is partial — some substance, notable gaps ("chưa đạt"). */
+    /** Answer is partial — some substance, notable gaps ("borderline"). */
     Borderline = "borderline",
-    /** Answer misses the point or is largely wrong for the level ("không đạt"). */
+    /** Answer misses the point or is largely wrong for the level ("fail"). */
     Fail = "fail",
 }
 

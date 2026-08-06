@@ -54,9 +54,9 @@ export interface ChallengeResolvedRow {
  * @param items - `requirements` from GraphQL/CDN.
  * @returns Sorted language codes for tabs.
  */
-export function listRequirementProgrammingLangs(
+export const listRequirementProgrammingLangs = (
     items: Array<ChallengeRequirementEntity> | undefined,
-): Array<string> {
+): Array<string> => {
     if (!items?.length) {
         return []
     }
@@ -100,9 +100,9 @@ export interface ListChallengeProgrammingLangsParams {
  * @param challenge - V2 section arrays from {@link ChallengeEntity}.
  * @returns Sorted language codes for {@link ProgrammingLanguageTabs}.
  */
-export function listChallengeProgrammingLangs(
+export const listChallengeProgrammingLangs = (
     challenge: ListChallengeProgrammingLangsParams | null | undefined,
-): Array<string> {
+): Array<string> => {
     const seen = new Set<string>()
     const sections: Array<Array<ChallengeSectionItemEntity> | undefined> = [
         challenge?.requirements,
@@ -136,14 +136,14 @@ export function listChallengeProgrammingLangs(
 /**
  * Builds UI rows for one V2 section at a programming language.
  *
- * @param items - Section items (`requirements`, `steps`, …).
+ * @param items - Section items (`requirements`, `steps`, ...).
  * @param programmingLang - Active programming-language tab.
  * @returns Ordered resolved rows.
  */
-export function resolveChallengeSectionRows(
+export const resolveChallengeSectionRows = (
     items: Array<ChallengeSectionItemEntity> | undefined,
     programmingLang: string,
-): Array<ChallengeResolvedRow> {
+): Array<ChallengeResolvedRow> => {
     if (!items?.length) {
         return []
     }
@@ -160,10 +160,10 @@ export function resolveChallengeSectionRows(
  * @param programmingLang - Active tab code.
  * @returns Flattened rows in item order.
  */
-function resolvePositionModelRows(
+const resolvePositionModelRows = (
     items: Array<ChallengeSectionItemEntity>,
     programmingLang: string,
-): Array<ChallengeResolvedRow> {
+): Array<ChallengeResolvedRow> => {
     return items
         .slice()
         .sort((prev, next) => prev.sortIndex - next.sortIndex)
@@ -188,10 +188,10 @@ function resolvePositionModelRows(
  * @param programmingLang - Active tab code.
  * @returns Inner rows for the selected bucket.
  */
-function resolveLangBucketModelRows(
+const resolveLangBucketModelRows = (
     items: Array<ChallengeSectionItemEntity>,
     programmingLang: string,
-): Array<ChallengeResolvedRow> {
+): Array<ChallengeResolvedRow> => {
     const langIndex = STANDARD_PROGRAMMING_LANGS.indexOf(programmingLang)
     const bucket = langIndex >= 0
         ? items.find((item) => item.sortIndex === langIndex)
@@ -220,7 +220,7 @@ function resolveLangBucketModelRows(
  * @param items - Section items from CDN.
  * @returns `true` when lang rows carry real programming-language codes.
  */
-function isPositionModel(items: Array<ChallengeSectionItemEntity>): boolean {
+const isPositionModel = (items: Array<ChallengeSectionItemEntity>): boolean => {
     const codes = items
         .flatMap((item) => item.langs ?? [])
         .map((row) => row.lang)
@@ -241,9 +241,9 @@ function isPositionModel(items: Array<ChallengeSectionItemEntity>): boolean {
  * @param langRow - Matched lang row, if any.
  * @returns Title string or empty.
  */
-function resolveLangRowTitle(
+const resolveLangRowTitle = (
     langRow: ChallengeSectionLangEntity | undefined,
-): string {
+): string => {
     if (!langRow || !("title" in langRow)) {
         return ""
     }
@@ -256,9 +256,9 @@ function resolveLangRowTitle(
  * @param langRow - Matched lang row, if any.
  * @returns Markdown string for UI.
  */
-function resolveLangRowContent(
+const resolveLangRowContent = (
     langRow: ChallengeSectionLangEntity | undefined,
-): string {
+): string => {
     if (!langRow) {
         return ""
     }

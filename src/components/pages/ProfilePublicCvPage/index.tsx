@@ -30,7 +30,7 @@ const RESTING_HEIGHT = "h-[70vh] min-h-[480px]"
 /** Viewport-proportioned height of the loaded sheet. */
 const LOADED_HEIGHT = "h-[80vh] min-h-[520px]"
 
-const PublicCvEditButton = ({ label, onPress }: { label: string; onPress: () => void }) => (
+const PublicCvEditButton = ({ label, onPress }: PublicCvEditButtonProps) => (
     <Button
         label={label}
         variant="secondary"
@@ -143,3 +143,5 @@ export const ProfilePublicCvPage = () => {
         />
     )
 }
+
+type PublicCvEditButtonProps = { label: string; onPress: () => void }

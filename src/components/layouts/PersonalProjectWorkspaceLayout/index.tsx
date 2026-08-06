@@ -342,7 +342,12 @@ const DashboardView = () => {
  * twin (see the recorded debt): `onOpenSettings`/`onOpenAttempts` are chrome-only
  * no-ops here, and the v1 AI-processing status line has no presentational surface.
  */
-const TaskView = ({ taskId }: { taskId: string }) => {
+/** Props for {@link TaskView}. */
+interface TaskViewProps {
+    taskId: string
+}
+
+const TaskView = ({ taskId }: TaskViewProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -540,7 +545,12 @@ const TaskView = ({ taskId }: { taskId: string }) => {
  * The attempts-history overflow drawer is NOT built in this twin (see debt): all
  * attempts are shown inline and no "+N" overflow trigger is surfaced.
  */
-const ResultView = ({ taskId }: { taskId: string }) => {
+/** Props for {@link ResultView}. */
+interface ResultViewProps {
+    taskId: string
+}
+
+const ResultView = ({ taskId }: ResultViewProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()

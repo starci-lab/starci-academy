@@ -3,7 +3,7 @@ import { cn, Typography } from "@heroui/react"
 import type { ReactNode } from "react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
-/** Isometric face palette per tone (top lightest → right darkest, for the 3D read).
+/** Isometric face palette per tone (top lightest -> right darkest, for the 3D read).
  * Hard-coded hexes: it's an illustration (canvas/SVG art), tuned for the dark hero. */
 const TONE = {
     neutral: { top: "#3b4250", left: "#2b313d", right: "#212732", stroke: "#181d25", glyph: "#5b6475" },
@@ -69,12 +69,12 @@ export const MicroservicesScene = ({ caption, className }: MicroservicesScenePro
     return (
         <div className={cn("w-full", className)}>
             <svg viewBox="0 0 680 480" width="100%" role="img" aria-label="Isometric mini infrastructure">
-                {/* connectors (svc → pods → DB) */}
+                {/* connectors (svc -> pods -> DB) */}
                 <g fill="none" strokeLinecap="round">
                     <path d="M340,150 L250,200" stroke="#5b6473" strokeWidth="1.5" />
                     <path d="M340,150 L340,212" stroke="#5b6473" strokeWidth="1.5" />
                     <path d="M340,150 L440,200" stroke="#5b6473" strokeWidth="1.5" />
-                    {/* pods → single DB (the hot path that bottlenecks) */}
+                    {/* pods -> single DB (the hot path that bottlenecks) */}
                     <path d="M340,300 L520,300" stroke="#b23e3e" strokeWidth="1.8" />
                     {/* flowing packet down the entry wire */}
                     <circle r="3.5" fill="#e873a3">
@@ -98,7 +98,7 @@ export const MicroservicesScene = ({ caption, className }: MicroservicesScenePro
 
                 {/* failure flag */}
                 <g transform="translate(470 250)">
-                    <text x={0} y={0} fontFamily="sans-serif" fontSize="11" fill="#e2605f">⚠ single DB → bottleneck</text>
+                    <text x={0} y={0} fontFamily="sans-serif" fontSize="11" fill="#e2605f">{"WARNING single DB → bottleneck"}</text>
                 </g>
 
                 {/* legend */}

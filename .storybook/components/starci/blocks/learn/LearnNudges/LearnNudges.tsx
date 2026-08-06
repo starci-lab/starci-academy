@@ -4,7 +4,7 @@ import { SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/Sur
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 /**
  * `LearnNudges` — the "things to do today" list. The caller passes only `kind`
- * (an enum); the block owns the `kind → icon` table. Shares its `SurfaceCardList`
+ * (an enum); the block owns the `kind -> icon` table. Shares its `SurfaceCardList`
  * layout with `KeepGoingPath`. Full/single/bordered are all states of one tree;
  * `isSkeleton` gets its own leaf even though the DOM is identical.
  */
@@ -20,16 +20,16 @@ const NUDGE_ICON: Record<LearnNudgeKind, typeof CardsIcon> = {
 export interface LearnNudge {
     /** Stable React key. */
     id: string
-    /** Task type → decides the leading icon. */
+    /** Task type -> decides the leading icon. */
     kind: LearnNudgeKind
     /**
-     * The row's text.
-     *
-     *  NO separate `count` field: the title
-     * already contains the number ("Review 12 due flashcards"); showing a `12`
-     * chip on the right too is **saying it twice**. One fact only ever appears
-     * in ONE place within a row.
-     */
+ * The row's text.
+ *
+ * NO separate `count` field: the title
+ * already contains the number ("Review 12 due flashcards"); showing a `12`
+ * chip on the right too is **saying it twice**. One fact only ever appears
+ * in ONE place within a row.
+ */
     title: string
     /** Press the row. */
     onPress?: () => void
@@ -39,13 +39,13 @@ export interface LearnNudgesBaseProps {
     /** The tasks to do. */
     items: Array<LearnNudge>
     /**
-     * ⏳ This strip's source is LATER the page's main data → the waiting stage
-     * must hold its PLACE, not disappear and reappear.
-     *
-     * `dueSwr`/`leaderboardSwr` resolve AFTER `outline`, so while waiting
-     * `dueCount`/`rank` default to 0/null. Without this state the block would
-     * `return null` then pop back in ⇒ the strip FLICKERS.
-     */
+ * (pending) This strip's source is LATER the page's main data -> the waiting stage
+ * must hold its PLACE, not disappear and reappear.
+ *
+ * `dueSwr`/`leaderboardSwr` resolve AFTER `outline`, so while waiting
+ * `dueCount`/`rank` default to 0/null. Without this state the block would
+ * `return null` then pop back in => the strip FLICKERS.
+ */
     isSkeleton?: boolean
     /** Number of placeholder rows when `isSkeleton`. Default 2 — the most common nudge count. */
     skeletonRows?: number
@@ -93,5 +93,5 @@ const LearnNudgesBase = ({
         }
     />
 )
-/** `LearnNudges.*` — single-component namespace ⇒ only `.Base`. */
+/** `LearnNudges.*` — single-component namespace => only `.Base`. */
 export { LearnNudgesBase as LearnNudges }

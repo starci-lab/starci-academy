@@ -58,6 +58,7 @@ const queryMap: Record<QueryConsultants, DocumentNode> = {
     [QueryConsultants.Query1]: query1,
 }
 
+/** Default sort order for the consultants list query. */
 export const defaultConsultantsListSorts: Array<SortInput<ConsultantsSortBy>> = [
     {
         by: ConsultantsSortBy.SortIndex,
@@ -65,8 +66,10 @@ export const defaultConsultantsListSorts: Array<SortInput<ConsultantsSortBy>> = 
     },
 ]
 
+/** Default page size for the consultants list query. */
 export const defaultConsultantsListLimit = 100
 
+/** Fetches the paginated consultants list. */
 export const queryConsultants = async ({
     query = QueryConsultants.Query1,
     request,

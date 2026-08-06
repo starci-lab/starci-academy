@@ -6,7 +6,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * WARNING: STATE SCOPE: `Split` is a LEFT ↔ RIGHT row FRAME. The state it produces is
+ * WARNING: STATE SCOPE: `Split` is a LEFT <-> RIGHT row FRAME. The state it produces is
  * the relationship BETWEEN THE TWO NAMED SIDES: the seam `gap`, the cross-axis
  * alignment `align`. No `wrap`/`justify` — `justify-between` is this frame's
  * DEFINITION, not an option; a row with many items should use `StackH`/`Cluster`

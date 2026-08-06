@@ -75,15 +75,15 @@ export interface FollowListModalProps {
     rows: Array<FollowListRow>
     /** Go to a user's profile — the connected half also closes the modal in the same handler. */
     onOpenUser: (username: string) => void
-    /** `true` → the sentinel below the list can still grow it. */
+    /** `true` -> the sentinel below the list can still grow it. */
     hasMore: boolean
     /** Grow the active list by one page. */
     onLoadMore: () => void
     /** A page is already in flight — the sentinel stays detached meanwhile. */
     isLoadingMore?: boolean
-    /** First load of the active tab, nothing in hand yet → the list mirrors itself. */
+    /** First load of the active tab, nothing in hand yet -> the list mirrors itself. */
     isSkeleton?: boolean
-    /** Truthy → the list falls to its error message (beats the skeleton, per `SurfaceCardList`). */
+    /** Truthy -> the list falls to its error message (beats the skeleton, per `SurfaceCardList`). */
     error?: unknown
     onRetry: () => void
     labels: FollowListModalLabels
@@ -190,7 +190,7 @@ export const _FollowListModal = ({
         />
     )
 
-    // Tabs ↔ list-below = 2 different-function zones (nav vs content) → gap-6,
+    // Tabs <-> list-below = 2 different-function zones (nav vs content) -> gap-6,
     // not gap-3 (fe/foundations/gap.md's between-block rule).
     const modalBody: ComponentTypeWithSkeleton = () => (
         <StackV

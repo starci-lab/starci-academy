@@ -141,4 +141,5 @@ const FieldFrameBase = ({
 /** `FieldFrame` — label/hint/control/error scaffold. */
 export { FieldFrameBase as FieldFrame }
 
+/** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "FieldFrame" } as const

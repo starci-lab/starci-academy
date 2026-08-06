@@ -8,7 +8,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  *
  * Data-driven: pass `items` (id + label + optional `icon`/`badge`/`isDisabled`);
  * the atom renders the full HeroUI compound internally, plus the `sr-only` panels
- * react-aria needs to keep the tab↔tabpanel ARIA relationship valid. Variants
+ * react-aria needs to keep the tab-to-tabpanel ARIA relationship valid. Variants
  * (icon / badge / disabled) are driven by per-item props, not separate components.
  *
  * Only `Tabs`/`TabsExtended` are exported. No `children`; `label` is a `ReactNode`
@@ -172,4 +172,5 @@ export const TabsBase = ({
     )
 }
 
+/** Tier metadata for `Tabs`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Tabs" } as const

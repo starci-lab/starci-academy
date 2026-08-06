@@ -354,7 +354,8 @@ export const DueReview = ({ onExit, sessionId }: DueReviewProps) => {
     }, [t, card])
 
     // grade the current card, reschedule it (SM-2), then advance to the next
-    const handleRate = useCallback(
+    // presentational callback contract is sync — fire-and-forget from the click via void.
+    const onRate = useCallback(
         async (grade: number) => {
             if (!card) {
                 return
@@ -432,9 +433,6 @@ export const DueReview = ({ onExit, sessionId }: DueReviewProps) => {
         },
         [card, runGraphQL, t, currentIndex, gradedIndexes, runSyncSession, courseHeaders, courseId, globalMutate],
     )
-    // presentational callback contract is sync — `handleRate` is fire-and-forget from the click.
-    const onRate = useCallback((grade: number) => { void handleRate(grade) }, [handleRate])
-
     // step back to re-see an earlier card (question side; no re-grade) — mirrors
     // `FlashcardReviewer`'s own `goPrev` (teacher: sync the UI, both session types should
     // have a "Previous" button, due-review was previously missing this button).
@@ -510,7 +508,7 @@ export const DueReview = ({ onExit, sessionId }: DueReviewProps) => {
             onReveal={onReveal}
             reviewing={reviewing}
             ratingOptions={ratingOptions}
-            onRate={onRate}
+            onRate={(grade) => { void onRate(grade) }}
             currentIndex={currentIndex}
             totalCount={effectiveCards.length}
             gradedIndexes={Array.from(gradedIndexes)}

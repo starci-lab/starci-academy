@@ -9,7 +9,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
  * Data-driven: pass `items` (id + label + optional `icon`/`badge`/`isDisabled`);
  * the atom renders the full HeroUI compound internally —
  * `Tabs.ListContainer > Tabs.List > Tabs.Tab` (+ `Tabs.Indicator`) plus the
- * `sr-only` `Tabs.Panel`s react-aria needs to keep the tab↔tabpanel ARIA
+ * `sr-only` `Tabs.Panel`s react-aria needs to keep the tab-to-tabpanel ARIA
  * relationship valid. Variants (icon / badge / disabled) are driven by
  * per-item props, not separate components.
  *

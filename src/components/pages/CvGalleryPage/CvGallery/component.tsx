@@ -101,7 +101,7 @@ export interface CvGalleryProps {
 /** How many placeholder tiles the loading grid shows — mirrors the real grid's usual row. */
 const SKELETON_TILE_COUNT = 3
 
-const CvGalleryCardCover = ({ item, labels }: { item: CvGalleryDocument; labels: CvGalleryLabels }) => (
+const CvGalleryCardCover = ({ item, labels }: CvGalleryCardCoverProps) => (
     <button
         type="button"
         onClick={item.onOpen}
@@ -127,7 +127,7 @@ const CvGalleryCardCover = ({ item, labels }: { item: CvGalleryDocument; labels:
     </button>
 )
 
-const CvGalleryCardFooter = ({ item, labels }: { item: CvGalleryDocument; labels: CvGalleryLabels }) => (
+const CvGalleryCardFooter = ({ item, labels }: CvGalleryCardFooterProps) => (
     <StackV
         gap={3}
         principle="sibling-stack"
@@ -172,7 +172,7 @@ const CvGalleryCardFooter = ({ item, labels }: { item: CvGalleryDocument; labels
  * One CvGalleryPage card — a scaled live thumbnail that opens the editor, plus a
  * public-toggle switch and a delete button in the footer.
  */
-const CvGalleryCard = ({ item, labels }: { item: CvGalleryDocument; labels: CvGalleryLabels }) => (
+const CvGalleryCard = ({ item, labels }: CvGalleryCardProps) => (
     <MediaCard
         cover={() => <CvGalleryCardCover item={item} labels={labels} />}
         title={item.label}
@@ -270,3 +270,7 @@ export const _CvGallery = ({
         />
     )
 }
+
+type CvGalleryCardCoverProps = { item: CvGalleryDocument; labels: CvGalleryLabels }
+type CvGalleryCardFooterProps = { item: CvGalleryDocument; labels: CvGalleryLabels }
+type CvGalleryCardProps = { item: CvGalleryDocument; labels: CvGalleryLabels }

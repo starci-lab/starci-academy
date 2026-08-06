@@ -10,9 +10,9 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
  * permission row, a plan-limit line, a settings line reporting its current
  * value) that `content-row`'s own definition names directly: "a list row's
  * segments — a leading icon, a title/meta block, a trailing action"
- * (`patterns.mjs`). ONE seam, not two: icon↔label and label↔value both ride the
+ * (`patterns.mjs`). ONE seam, not two: icon<->label and label<->value both ride the
  * SAME `content-row` gap (step 4, 12px) — there is no sub-grouping inside the
- * row (unlike `ListRow`, which also carries a title↔subtitle seam inside its
+ * row (unlike `ListRow`, which also carries a title<->subtitle seam inside its
  * text column), so a single gap value between all three segments is the honest
  * read here.
  *
@@ -60,7 +60,7 @@ export interface IconLabelValueRowProps {
      * Wrapped in `Typography` (`muted`), pinned to the row's trailing end.
      */
     value: string
-    /** `true` → render the skeleton mirror (icon placeholder + two bars) instead of the live row. */
+    /** `true` -> render the skeleton mirror (icon placeholder + two bars) instead of the live row. */
     isSkeleton?: boolean
     /** Layout utilities on the root, from the closed positioning union. */
     classNames?: Array<AllowedClassName>

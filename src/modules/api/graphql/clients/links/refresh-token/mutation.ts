@@ -6,6 +6,7 @@ export enum MutationRefreshToken {
     Mutation1 = "mutation1",
 }
 
+/** GraphQL document for the refresh-token mutation. */
 export const mutation1 = gql`
   mutation RefreshToken($request: RefreshTokenRequest!) {
     refreshToken(request: $request) {
@@ -37,6 +38,7 @@ export interface RefreshTokenRequest {
     minValiditySeconds?: number
 }
 
+/** Typed payload returned by the refresh-token mutation. */
 export interface RefreshTokenData {
     accessToken: string
 }

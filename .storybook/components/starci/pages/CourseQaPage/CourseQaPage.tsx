@@ -112,7 +112,7 @@ const CourseQaPage = ({
     page,
     totalPages,
     onPageChange,
-    onAskQuestion,
+    onAskQuestion: askQuestion,
     onAnswered,
     onGoToContent,
     isSkeleton = false,
@@ -132,8 +132,8 @@ const CourseQaPage = ({
         ? { username: currentUser.displayName, avatar: currentUser.avatarUrl }
         : null
 
-    const handleAskQuestion = () => {
-        onAskQuestion(draft)
+    const onAskQuestion = () => {
+        askQuestion(draft)
         setDraft("")
     }
 
@@ -154,7 +154,7 @@ const CourseQaPage = ({
                 value={draft}
                 onValueChange={setDraft}
                 placeholder="Ask a question about this course…"
-                onSubmit={handleAskQuestion}
+                onSubmit={onAskQuestion}
                 isSkeleton={isSkeleton}
 
             />

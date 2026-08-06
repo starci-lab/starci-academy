@@ -43,21 +43,45 @@ const PROSE_SIZE: Record<string, string> = {
  * @param props.className - Extra classes appended after the size class.
  * @param props.children - Inline content.
  */
+interface ProseTextProps {
+    elementType?: React.ElementType
+    size?: keyof typeof PROSE_SIZE
+    className?: string
+    children?: React.ReactNode
+}
+
 const ProseText = ({
     elementType: As = "div",
     size = "sm",
     className,
     children,
-}: {
-    elementType?: React.ElementType
-    size?: keyof typeof PROSE_SIZE
-    className?: string
-    children?: React.ReactNode
-}) => React.createElement(
+}: ProseTextProps) => React.createElement(
     As,
     { className: [PROSE_SIZE[size], className].filter(Boolean).join(" ") },
     children,
 )
+
+/** Props for markdown renderers that only forward `children`. */
+interface MarkdownChildrenProps {
+    children?: React.ReactNode
+}
+
+/** Props for {@link ArcSection}. */
+interface ArcSectionProps {
+    index?: number
+    children?: React.ReactNode
+}
+
+/** Props for the `:::chip` block renderer. */
+interface ChipBlockProps {
+    items?: string
+}
+
+/** Props for the `:::panel` accordion item renderer. */
+interface AccordionPanelProps {
+    title?: string
+    children?: React.ReactNode
+}
 
 /**
  * Recursively flattens a React children tree to its plain-text content — used to
@@ -108,7 +132,7 @@ const slugify = (text: string): string =>
  * @param sizeClass - The prose size class keeping the visual identical to {@link ProseText}.
  */
 const buildTocHeading = (level: 2 | 3 | 4, sizeClass: string, marginClass: string, anchorLabel: string) =>
-    ({ children }: { children?: React.ReactNode }) => {
+    ({ children }: MarkdownChildrenProps) => {
         // real heading tag (not a div) so the body keeps semantic outline for SEO
         const Tag = `h${level}` as "h2" | "h3" | "h4"
         const text = getNodeText(children)
@@ -150,7 +174,7 @@ const buildTocHeading = (level: 2 | 3 | 4, sizeClass: string, marginClass: strin
  * @param props.index - 0-based position among arc sections in this answer.
  * @param props.children - `[label, ...body]`, as grouped by the remark transform.
  */
-const ArcSection = ({ index, children }: { index?: number, children?: React.ReactNode }) => {
+const ArcSection = ({ index, children }: ArcSectionProps) => {
     const position = index ?? 0
     const isCore = position < 2
     const [expanded, setExpanded] = React.useState(isCore)
@@ -240,10 +264,10 @@ export const buildMarkdownRenderers = ({
         ),
         // Custom `:::muted` directive tags (see remarkMuted in ./index): small, muted label text.
         // `[&_*]:text-muted` forces the muted colour onto any inner `<p>` the container wraps.
-        mutedblock: ({ children }: { children?: React.ReactNode }) => (
+        mutedblock: ({ children }: MarkdownChildrenProps) => (
             <ProseText elementType="div" size="sm" className="font-semibold text-muted [&_*]:text-muted">{children}</ProseText>
         ),
-        mutedtext: ({ children }: { children?: React.ReactNode }) => (
+        mutedtext: ({ children }: MarkdownChildrenProps) => (
             <ProseText elementType="span" size="sm" className="font-semibold text-muted">{children}</ProseText>
         ),
         // `:::muted`/bold-label + its body, boxed as one Interview Arc section — opt-in via
@@ -251,7 +275,7 @@ export const buildMarkdownRenderers = ({
         arcsection: ArcSection,
         // Custom `:::chip` directive tag (see remarkChip in ./index): a wrapped row of soft chips,
         // one per authored keyword line. `items` is the `|`-joined keyword list.
-        chipblock: ({ items }: { items?: string }) => (
+        chipblock: ({ items }: ChipBlockProps) => (
             <span data-principle="sibling-stack" className="my-2 flex flex-wrap gap-2">
                 {String(items ?? "").split("|").filter(Boolean).map((keyword, index) => (
                     <HeroUI.Chip key={index} size="sm" variant="soft" color="default">{keyword}</HeroUI.Chip>
@@ -259,23 +283,23 @@ export const buildMarkdownRenderers = ({
             </span>
         ),
         // :::tab → [ Preview | Code ] tabs; code/preview panes carry `kind` so TabsBlock can match them.
-        tabblock: ({ children }: { children?: React.ReactNode }) => <TabsBlock>{children}</TabsBlock>,
-        tabcode: ({ children }: { children?: React.ReactNode }) => <TabPane kind="code">{children}</TabPane>,
-        tabpreview: ({ children }: { children?: React.ReactNode }) => <TabPane kind="preview">{children}</TabPane>,
+        tabblock: ({ children }: MarkdownChildrenProps) => <TabsBlock>{children}</TabsBlock>,
+        tabcode: ({ children }: MarkdownChildrenProps) => <TabPane kind="code">{children}</TabPane>,
+        tabpreview: ({ children }: MarkdownChildrenProps) => <TabPane kind="preview">{children}</TabPane>,
         // ::::accordion / :::panel{title} → HeroUI collapsible accordion (see remarkAccordion in ./index).
         // Matches the `LabeledAccordionCard` skin (accordion.md §3e): `variant="default"` keeps the item
         // separator FULL-BLEED (`left-0 w-full`; surface would inset it to 3%), with the light hairline
         // `--separator` re-point so dividers read the same as the SurfaceListCard family. Default bakes no
         // bg/radius, so add `bg-surface rounded-3xl` here; `border` delineates it as a nested surface
         // (reading column / step card) where a shadow can vanish in dark mode.
-        accordionblock: ({ children }: { children?: React.ReactNode }) => (
+        accordionblock: ({ children }: MarkdownChildrenProps) => (
             <HeroUI.Accordion
                 variant="default"
                 style={{ "--separator": "color-mix(in oklab, var(--surface-foreground) 6%, transparent)" } as React.CSSProperties}
                 className={`${reading ? "my-4" : "my-2"} overflow-hidden rounded-3xl border border-default bg-surface`}
             >{children}</HeroUI.Accordion>
         ),
-        accordionpanel: ({ title, children }: { title?: string, children?: React.ReactNode }) => (
+        accordionpanel: ({ title, children }: AccordionPanelProps) => (
             <HeroUI.Accordion.Item aria-label={String(title ?? "")}>
                 <HeroUI.Accordion.Heading>
                     <HeroUI.Accordion.Trigger>

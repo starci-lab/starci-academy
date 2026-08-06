@@ -32,7 +32,7 @@ export interface FlashcardReviewProps {
 
 /**
  * Centre-column "flashcards due today" nudge — the presentational half of
- * {@link FlashcardReview}. Renders ONE row (icon + due-count label ↔ "start
+ * {@link FlashcardReview}. Renders ONE row (icon + due-count label <-> "start
  * review" CTA), with `isSkeleton` threaded to both sides of the {@link Split}
  * so the shimmer mirrors the loaded shape (loading-and-skeleton.md).
  * Settled-and-empty (or a failed fetch) self-hides instead of showing a

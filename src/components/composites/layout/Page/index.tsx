@@ -15,7 +15,7 @@ import { StackH, StackV } from "@/components/frames/Stack"
  * the content and pinned under it), one import.
  *
  * FRAME API LAW (§13b):
- * - `PageBottomBar` is a WRAPPER frame → named slots `body`/`actions` (a bar
+ * - `PageBottomBar` is a WRAPPER frame -> named slots `body`/`actions` (a bar
  *   is a horizontal row, so `header`/`footer` would be a lie).
  * - `PageHeader` is NOT a generic wrapper — it already owns semantic slots
  *   (`breadcrumb`/`title`/`description`/`actions`/`meta`) and deliberately
@@ -212,8 +212,8 @@ const Header = ({
         </>
     )
     return (
-        // outer gap={4}: breadcrumb ↔ title-block ↔ meta (different header tiers);
-        // title ↔ description stay a related gap={3} pair inside the title block.
+        // outer gap={4}: breadcrumb <-> title-block <-> meta (different header tiers);
+        // title <-> description stay a related gap={3} pair inside the title block.
         <StackV gap={4} classNames={classNames} items={[() => headerBody]} />
     )
 }
@@ -239,7 +239,7 @@ export interface PageBottomBarProps {
     actions?: ComponentTypeWithSkeleton
     /** Shorthand for {@link PageBottomBarProps.body} — same component-reference contract. */
     /**
-     * `true` → forwarded into whichever of `body`/`actions` renders, so a bar
+     * `true` -> forwarded into whichever of `body`/`actions` renders, so a bar
      * whose price/CTA is not known yet (e.g. still loading enrollment status)
      * can shimmer instead of showing stale content.
      */
@@ -272,7 +272,7 @@ const BottomBar = ({
     const Actions = actions
     const chrome = "fixed bottom-0 left-0 right-[var(--app-rail-w,0px)] z-40 border-t border-separator bg-background px-6 py-3"
 
-    // Only ONE side supplied → render it raw: the caller's own width strategy
+    // Only ONE side supplied -> render it raw: the caller's own width strategy
     // (`w-full` CTA, two `flex-1` buttons) must not be boxed by a shrink-0 wrapper.
     if (Main == null || Actions == null) {
         const Only = Main ?? Actions

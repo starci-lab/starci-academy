@@ -13,4 +13,5 @@ export const AvatarFallback = ({ children, ...props }: AvatarFallbackProps) => (
     <HeroAvatarFallback data-tier="atom" data-component="AvatarFallback" {...props}>{children}</HeroAvatarFallback>
 )
 
+/** Tier metadata for `AvatarFallback`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "AvatarFallback" } as const

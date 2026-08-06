@@ -96,10 +96,7 @@ export interface RecapWeakTagsCardProps {
 const WeakTagRow = ({
     tag,
     href,
-}: {
-    tag: QuizSessionWeakTagData
-    href: string
-}) => {
+}: WeakTagRowProps) => {
     const t = useTranslations()
     const router = useRouter()
     return (
@@ -265,4 +262,9 @@ export const RecapReadinessCallout = ({ readiness, mockInterviewHref }: RecapRea
             onAction={() => router.push(mockInterviewHref)}
         />
     )
+}
+
+type WeakTagRowProps = {
+    tag: QuizSessionWeakTagData
+    href: string
 }

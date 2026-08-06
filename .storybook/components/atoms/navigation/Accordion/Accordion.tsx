@@ -133,4 +133,5 @@ const AccordionBase = ({
  */
 export { AccordionBase as Accordion }
 
+/** Tier metadata for `Accordion`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Accordion" } as const

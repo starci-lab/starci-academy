@@ -1,5 +1,6 @@
 import React from "react"
 import type { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
 import { ArchitecturePage } from "@/components/pages/ArchitecturePage"
 import { buildPageMetadata } from "@/modules/seo/buildMetadata"
 
@@ -9,17 +10,22 @@ interface ArchitectureParams {
     locale: string
 }
 
+/** Props for {@link generateMetadata}. */
+interface GenerateMetadataProps {
+    /** Promise of the resolved route params. */
+    params: Promise<ArchitectureParams>
+}
+
 /** Per-locale architecture-atlas metadata (canonical + hreflang + share card). */
 export const generateMetadata = async ({
     params,
-}: {
-    params: Promise<ArchitectureParams>
-}): Promise<Metadata> => {
+}: GenerateMetadataProps): Promise<Metadata> => {
     const { locale } = await params
+    const t = await getTranslations({ locale })
     return buildPageMetadata({
         path: "/architecture",
         locale,
-        title: locale === "vi" ? "Hệ thống StarCi, đang sống" : "StarCi's system, live",
+        title: t("architecture.title"),
     })
 }
 

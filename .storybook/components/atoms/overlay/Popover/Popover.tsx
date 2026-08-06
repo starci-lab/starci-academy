@@ -128,4 +128,5 @@ const PopoverBase = ({
 /** `Popover.*` — the click-panel atom namespace. `heading`/`arrow`/`placement` are all leaf props. */
 export { PopoverBase as Popover }
 
+/** Tier metadata for `Popover`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Popover" } as const

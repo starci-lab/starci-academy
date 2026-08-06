@@ -3,6 +3,16 @@ import type { Metadata } from "next"
 import { LandingPage } from "@/components/pages/LandingPage"
 import { JsonLd, organizationSchema, websiteSchema } from "@/modules/seo/jsonLd"
 import { buildPageMetadata } from "@/modules/seo/buildMetadata"
+/** Props for GenerateMetadata. */
+interface GenerateMetadataProps {
+    params: Promise<HomeParams>
+}
+
+/** Props for Page. */
+interface PageProps {
+    params: Promise<HomeParams>
+}
+
 
 /** Route params for `/[locale]/home`. */
 interface HomeParams {
@@ -13,9 +23,7 @@ interface HomeParams {
 /** Per-locale landing metadata (canonical + hreflang + share card). */
 export const generateMetadata = async ({
     params,
-}: {
-    params: Promise<HomeParams>
-}): Promise<Metadata> => {
+}: GenerateMetadataProps): Promise<Metadata> => {
     const { locale } = await params
     return buildPageMetadata({ path: "/home", locale })
 }
@@ -32,9 +40,7 @@ export const generateMetadata = async ({
  */
 const Page = async ({
     params,
-}: {
-    params: Promise<HomeParams>
-}) => {
+}: PageProps) => {
     const { locale } = await params
     return (
         <>

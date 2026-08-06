@@ -16,7 +16,7 @@ export const DEFAULT_PROGRAMMING_LANGUAGES: Array<ProgrammingLanguage> = [
  * @param lang - Raw language key from API or UI state.
  * @returns Lowercase trimmed key.
  */
-export function normalizeProgrammingLang(lang: string): string {
+export const normalizeProgrammingLang = (lang: string): string => {
     return lang.trim().toLowerCase()
 }
 
@@ -27,10 +27,10 @@ export function normalizeProgrammingLang(lang: string): string {
  * @param availableLangs - Language keys returned by the API.
  * @returns `true` when the language is available and the tab should be enabled.
  */
-export function isProgrammingLangAvailable(
+export const isProgrammingLangAvailable = (
     lang: ProgrammingLanguage,
     availableLangs: Array<string>,
-): boolean {
+): boolean => {
     const normalizedAvailable = new Set(availableLangs.map(normalizeProgrammingLang))
     return normalizedAvailable.has(lang)
 }
@@ -43,10 +43,10 @@ export function isProgrammingLangAvailable(
  * @param availableLangs - Language keys returned by the API.
  * @returns Normalized language key for tab `selectedKey`.
  */
-export function resolveActiveProgrammingLang(
+export const resolveActiveProgrammingLang = (
     selectedLang: string | null | undefined,
     availableLangs: Array<string>,
-): string {
+): string => {
     const normalizedAvailable = new Set(availableLangs.map(normalizeProgrammingLang))
 
     if (selectedLang && normalizedAvailable.has(normalizeProgrammingLang(selectedLang))) {

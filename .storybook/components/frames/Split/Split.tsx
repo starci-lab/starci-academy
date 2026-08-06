@@ -7,11 +7,11 @@ import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_ide
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT (frame) -- `Split.*`: the LEFT ↔ RIGHT row (`items-center justify-between`).
+ * LAYOUT (frame) -- `Split.*`: the LEFT <-> RIGHT row (`items-center justify-between`).
  * One member, `Split`: the shape has no second form -- a split is a split.
  *
  * WHY IT IS ITS OWN FRAME and not "a `StackH` with `justify=between`": the row
- * appears 43× across the app (card title ↔ action, label ↔ value, price ↔ CTA)
+ * appears 43× across the app (card title <-> action, label <-> value, price <-> CTA)
  * and it is not one track of N children -- it is TWO NAMED SIDES with different
  * width strategies: `start` may truncate (`min-w-0`), `end` must never be
  * squeezed (`shrink-0`). Naming the sides is what makes that rule enforceable in
@@ -75,7 +75,7 @@ export interface SplitBaseProps {
 }
 
 /**
- * The LEFT ↔ RIGHT row. See the file header for why the sides are named.
+ * The LEFT <-> RIGHT row. See the file header for why the sides are named.
  *
  * @param props - {@link SplitBaseProps}
  */
@@ -116,7 +116,7 @@ const SplitBase = ({
 }
 
 /**
- * `Split.*` -- the left↔right row frame namespace. Namespace only -- no bare
+ * `Split.*` -- the left<->right row frame namespace. Namespace only -- no bare
  * component export (§13a).
  */
 export { SplitBase as Split }

@@ -126,7 +126,7 @@ export const FlashcardReviewPage = ({
     // forever: `isLoading` is already false and `data` is undefined here)
     if (error && !data) {
         return (
-            <Box principle="center-measure" className={cn("flex min-h-[60vh] items-center justify-center", className)}
+            <Box identity={{ tier: "page", component: "FlashcardReviewPage" }} principle="center-measure" className={cn("flex min-h-[60vh] items-center justify-center", className)}
                 explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
             >
                 <AsyncContentError
@@ -141,7 +141,7 @@ export const FlashcardReviewPage = ({
     // still loading the queue → centred spinner
     if (isLoading || !data) {
         return (
-            <Box principle="center-measure" className={cn("flex min-h-[60vh] items-center justify-center", className)}
+            <Box identity={{ tier: "page", component: "FlashcardReviewPage" }} principle="center-measure" className={cn("flex min-h-[60vh] items-center justify-center", className)}
                 explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
             >
                 <Spinner size="lg" />
@@ -153,7 +153,7 @@ export const FlashcardReviewPage = ({
     if (!current) {
         const empty = cards.length === 0
         return (
-            <Box principle="center-measure" className={cn("mx-auto min-h-[60vh] w-full max-w-xl p-3", className)}
+            <Box identity={{ tier: "page", component: "FlashcardReviewPage" }} principle="center-measure" className={cn("mx-auto min-h-[60vh] w-full max-w-xl p-3", className)}
                 explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
             >
                 <StackV gap={6} principle="block-boundary" align="center" justify="center"
@@ -183,7 +183,7 @@ export const FlashcardReviewPage = ({
     }
 
     return (
-        <Box principle="center-measure" className={cn("mx-auto w-full max-w-xl p-3", className)}
+        <Box identity={{ tier: "page", component: "FlashcardReviewPage" }} principle="center-measure" className={cn("mx-auto w-full max-w-xl p-3", className)}
             explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
         >
             <StackV gap={6} principle="block-boundary"

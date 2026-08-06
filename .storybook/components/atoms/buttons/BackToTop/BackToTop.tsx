@@ -52,4 +52,5 @@ const BackToTopBase = ({ isVisible, onPress, label }: BackToTopProps) => (
 
 export { BackToTopBase as BackToTop }
 
+/** Tier metadata for `BackToTop`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "BackToTop" } as const

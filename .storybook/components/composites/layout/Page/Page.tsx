@@ -71,7 +71,7 @@ interface PageHeaderOwnProps {
      */
     classNames?: Array<AllowedClassName>
     /**
-     * `true` → each part this frame renders carries a ``
+     * `true` -> each part this frame renders carries a ``
      * attribute so a BlockAnatomy panel can badge it on-render. Off in production.
      */
 }
@@ -198,8 +198,8 @@ const Header = ({
         </>
     )
     return (
-        // outer gap={4}: breadcrumb ↔ title-block ↔ meta (different header tiers);
-        // title ↔ description stay a related gap={3} pair inside the title block.
+        // outer gap={4}: breadcrumb <-> title-block <-> meta (different header tiers);
+        // title <-> description stay a related gap={3} pair inside the title block.
         <StackV gap={4} classNames={classNames} isSkeleton={isSkeleton} items={[() => headerBody]} />
     )
 }
@@ -225,7 +225,7 @@ export interface PageBottomBarProps {
     actions?: ComponentTypeWithSkeleton
     /** Shorthand for {@link PageBottomBarProps.body} — same component-reference contract. */
     /**
-     * `true` → forwarded into whichever of `body`/`actions` renders, so a bar
+     * `true` -> forwarded into whichever of `body`/`actions` renders, so a bar
      * whose price/CTA is not known yet (e.g. still loading enrollment status)
      * can shimmer instead of showing stale content.
      */
@@ -235,7 +235,7 @@ export interface PageBottomBarProps {
      */
     classNames?: Array<AllowedClassName>
     /**
-     * `true` → each region emits `` so a BlockAnatomy
+     * `true` -> each region emits `` so a BlockAnatomy
      * panel can badge it on-render. Off in production.
      */
 }
@@ -263,7 +263,7 @@ const BottomBar = ({
     const Actions = actions
     const chrome = "fixed bottom-0 left-0 right-[var(--app-rail-w,0px)] z-40 border-t border-separator bg-background px-6 py-3"
 
-    // Only ONE side supplied → render it raw: the caller's own width strategy
+    // Only ONE side supplied -> render it raw: the caller's own width strategy
     // (`w-full` CTA, two `flex-1` buttons) must not be boxed by a shrink-0 wrapper.
     if (Main == null || Actions == null) {
         const Only = Main ?? Actions

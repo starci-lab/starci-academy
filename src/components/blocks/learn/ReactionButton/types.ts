@@ -10,6 +10,7 @@ interface ReactionDescriptor {
     label: string
 }
 
+/** Public export `REACTIONS` for this module. */
 export const REACTIONS: ReadonlyArray<ReactionDescriptor> = [
     { type: "like", emoji: "👍", label: "Like" },
     { type: "love", emoji: "❤️", label: "Love" },
@@ -19,6 +20,7 @@ export const REACTIONS: ReadonlyArray<ReactionDescriptor> = [
     { type: "angry", emoji: "😡", label: "Angry" },
 ]
 
+/** Public export `REACTION_BY_TYPE` for this module. */
 export const REACTION_BY_TYPE: Record<ReactionType, ReactionDescriptor> = REACTIONS.reduce(
     (acc, descriptor) => { acc[descriptor.type] = descriptor; return acc },
     {} as Record<ReactionType, ReactionDescriptor>,

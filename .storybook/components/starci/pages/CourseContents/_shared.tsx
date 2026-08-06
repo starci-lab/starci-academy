@@ -49,7 +49,7 @@ export const PARTS: Array<AnatomyNode> = [
     {
         name: "StackH",
         tier: "frame",
-        role: "horizontal row — the continue cluster (title ↔ Resume) and each lesson row's meta cluster",
+        role: "horizontal row — the continue cluster (title <-> Resume) and each lesson row's meta cluster",
         storyId: "frames-stack-stackh--default",
     },
     {

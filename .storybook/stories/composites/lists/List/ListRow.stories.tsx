@@ -2,9 +2,9 @@ import { useState } from "react"
 import { type SkeletonProps } from "@sb-components/frames/_slot"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Chip, Typography } from "@heroui/react"
-// ONE ICON SET ONLY = Phosphor (§5.0). Size scale per §5a: leading ↔ title
-// `text-sm` → `size-5` (regular); a glyph smaller than `size-5` (lock next to a
-// `text-xs` chip → `size-4`, navigation caret → `size-3`) must compensate with `weight="bold"` (§5.0a).
+// ONE ICON SET ONLY = Phosphor (§5.0). Size scale per §5a: leading <-> title
+// `text-sm` -> `size-5` (regular); a glyph smaller than `size-5` (lock next to a
+// `text-xs` chip -> `size-4`, navigation caret -> `size-3`) must compensate with `weight="bold"` (§5.0a).
 import {
     CaretRightIcon,
     FileTextIcon,
@@ -37,7 +37,7 @@ export default meta
 
 type Story = StoryObj<typeof ListRow>
 
-// Navigation caret = `size-3` FIXED (exception to §5a) → smaller than `size-5` ⇒ `weight="bold"` (§5.0a).
+// Navigation caret = `size-3` FIXED (exception to §5a) -> smaller than `size-5` => `weight="bold"` (§5.0a).
 // A COMPONENT reference (COMPOSITE-8): `ListRow.trailing` calls this itself, it does not receive a built node.
 const Chevron = () => <CaretRightIcon data-tier="fixture" className="size-3 text-muted" weight="bold" aria-hidden focusable="false" />
 
@@ -342,7 +342,7 @@ export const Clickable: Story = {
 }
 
 // Three status icons SHARE THE SAME round mold (§5.0a): done = FILLED
-// circle (`weight="fill"`), in progress = circle with ▶, not opened =
+// circle (`weight="fill"`), in progress = circle with >, not opened =
 // empty circle. All three are `size-5` (next to `text-sm` title,
 // Phosphor scale §5a) so they do NOT need `weight="bold"` compensation.
 // Each is a COMPONENT reference (COMPOSITE-8) — `ListRow` calls it itself.
@@ -352,7 +352,7 @@ const NotStartedLeading = () => <CircleIcon data-tier="fixture" className="size-
 
 const LoopsMeta = () => <VariantChipDifficulty difficulty="beginner" />
 const FunctionsMeta = () => <VariantChipDifficulty difficulty="intermediate" />
-// Next to a `text-xs` chip → `size-4` (Phosphor scale §5a); smaller than `size-5` ⇒
+// Next to a `text-xs` chip -> `size-4` (Phosphor scale §5a); smaller than `size-5` =>
 // compensate with `weight="bold"` (§5.0a).
 const RecursionMeta = () => (
     <>

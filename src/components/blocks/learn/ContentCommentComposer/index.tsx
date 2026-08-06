@@ -14,9 +14,9 @@ import { StackH, StackV } from "@/components/frames/Stack"
  * header for why `variant="primary"` (real `Discussion` is frameless — no
  * card ever wraps this field) and why the avatar-led row is top-level only.
  *
- * 📐 LEAVES by STRUCTURE (§14d.2). Collapsed-pill vs expanded-field is a real
- * node swap ⇒ separate leaves. Avatar present/absent is also a node swap
- * (top-level vs reply/edit) ⇒ its own leaf.
+ * LEAVES by STRUCTURE (§14d.2). Collapsed-pill vs expanded-field is a real
+ * node swap => separate leaves. Avatar present/absent is also a node swap
+ * (top-level vs reply/edit) => its own leaf.
  */
 
 /** Minimal identity for the avatar-led top-level composer. */
@@ -37,18 +37,18 @@ export interface ContentCommentComposerProps {
     onCancel?: () => void
     /** Initial field value (editing an existing comment). */
     initialValue?: string
-    /** `true` → submit is disabled and shows its busy affordance. */
+    /** `true` -> submit is disabled and shows its busy affordance. */
     isPending?: boolean
     /**
-     * Set → the composer is avatar-led (top-level only; reply/edit omit this).
-     * `null` → signed-out top-level composer, no avatar.
-     */
+ * Set -> the composer is avatar-led (top-level only; reply/edit omit this).
+ * `null` -> signed-out top-level composer, no avatar.
+ */
     currentUser?: ContentCommentComposerViewer | null
     /**
-     * `true` → starts collapsed as a slim avatar + placeholder pill, expands to
-     * the full field on click (the top-level composer pattern). Reply/edit
-     * composers omit this and render expanded.
-     */
+ * `true` -> starts collapsed as a slim avatar + placeholder pill, expands to
+ * the full field on click (the top-level composer pattern). Reply/edit
+ * composers omit this and render expanded.
+ */
     collapsible?: boolean
     /** Accessible name for the field. */
     ariaLabel: string
@@ -62,10 +62,10 @@ export interface ContentCommentComposerProps {
  * @param props - {@link ContentCommentComposerProps}
  */
 const ContentCommentComposer = ({
-    onSubmit,
+    onSubmit: onSubmitAction,
     placeholder = "Ask a question or share your thoughts…",
     submitLabel = "Post",
-    onCancel,
+    onCancel: onCancelAction,
     initialValue,
     isPending = false,
     currentUser,
@@ -78,23 +78,23 @@ const ContentCommentComposer = ({
     const [expanded, setExpanded] = useState(!collapsible)
     const trimmed = body.trim()
 
-    const handleSubmit = () => {
+    const onSubmit = () => {
         if (!trimmed) {
             return
         }
-        onSubmit(trimmed)
+        onSubmitAction(trimmed)
         setBody("")
         if (collapsible) {
             setExpanded(false)
         }
     }
 
-    const handleCancel = () => {
+    const onCancel = () => {
         setBody("")
         if (collapsible) {
             setExpanded(false)
         }
-        onCancel?.()
+        onCancelAction?.()
     }
 
     // collapsed pill: avatar + placeholder, the whole row opens the composer
@@ -129,17 +129,17 @@ const ContentCommentComposer = ({
             <Button
                 label={submitLabel}
                 size="sm"
-                onPress={handleSubmit}
+                onPress={onSubmit}
                 isDisabled={!trimmed}
                 isPending={isPending}
 
             />
-            {onCancel || collapsible ? (
+            {onCancelAction || collapsible ? (
                 <Button
                     label="Cancel"
                     variant="tertiary"
                     size="sm"
-                    onPress={handleCancel}
+                    onPress={onCancel}
                     isDisabled={isPending}
 
                 />

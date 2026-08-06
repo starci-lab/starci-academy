@@ -16,4 +16,5 @@ export const Radio = ({ children, ...props }: RadioProps) => (
 /** House radio content slot over HeroUI `Radio.Content`. */
 export const RadioContent = HeroRadio.Content
 
+/** Tier metadata for `Radio`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Radio" } as const

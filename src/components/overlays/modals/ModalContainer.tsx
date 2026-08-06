@@ -17,6 +17,7 @@ import { FollowListModal } from "./FollowListModal"
 import { CookieConsentModal } from "./CookieConsentModal"
 import { MaintenanceModal } from "./MaintenanceModal"
 
+/** Mounts the app-wide modal overlays (auth, payment, search, consent, etc.). */
 export const ModalContainer = () => {
     return (
         <>

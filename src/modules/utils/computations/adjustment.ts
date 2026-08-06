@@ -3,6 +3,7 @@ import { bnMulDecimal } from "./operation"
 import BN from "bn.js"
 import Decimal from "decimal.js"
 
+/** Applies slippage adjustment to a Decimal amount. */
 export const adjustSlippage = (
     {
         bn,
@@ -19,6 +20,7 @@ export const adjustSlippage = (
     })
 }
 
+/** Inputs for {@link adjustSlippage}. */
 export interface AdjustSlippageParams {
     bn: BN
     slippage: Decimal

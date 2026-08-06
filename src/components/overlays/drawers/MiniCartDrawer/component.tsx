@@ -135,7 +135,7 @@ export const _MiniCartDrawer = ({
                 items={comboLabelRow}
             />
         ),
-        () => (isSkeleton ? <Skeleton.ProgressBar /> : <ProgressMeter value={itemCount} max={3} />),
+        () => <ProgressMeter value={itemCount} max={3} isSkeleton={isSkeleton} />,
         () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.comboHint} />,
     ]
     const comboMeterSection: ComponentTypeWithSkeleton = () => (

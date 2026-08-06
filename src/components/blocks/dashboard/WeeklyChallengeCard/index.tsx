@@ -13,7 +13,7 @@ import { StackH, StackV } from "@/components/frames/Stack"
  * the week. See the component's own file header for the full contract; this
  * file only adds the states.
  *
- * 📐 LEAF by STRUCTURE (§14d.2): whether the viewer already passed, already
+ * LEAF by STRUCTURE (§14d.2): whether the viewer already passed, already
  * claimed, or the leaderboard is short, are all DATA conditions of the same
  * status row/list — never a different shape this block draws — so this block
  * has exactly ONE leaf ("Content"), the same shape `LeaderboardBoard`'s single
@@ -46,7 +46,7 @@ export interface WeeklyChallengeData {
     claimed: boolean
     /** Coin reward for claiming; `null` when the viewer hasn't passed yet. */
     coinReward: number | null
-    /** `true` → the claim mutation is in flight — disables + spins the claim button. */
+    /** `true` -> the claim mutation is in flight — disables + spins the claim button. */
     isClaiming?: boolean
     /** Fired when the viewer presses the claim button. Required whenever `viewerPassed && !claimed`. */
     onClaim?: () => void
@@ -60,15 +60,15 @@ export interface WeeklyChallengeData {
 export interface WeeklyChallengeCardProps {
     /** True while the first load is running — {@link AsyncContent}'s loading branch. */
     isLoading: boolean
-    /** True (once loaded) → no challenge event is currently active. */
+    /** True (once loaded) -> no challenge event is currently active. */
     isEmpty: boolean
-    /** Truthy → the snapshot failed to load. Pass SWR's `error`. */
+    /** Truthy -> the snapshot failed to load. Pass SWR's `error`. */
     error?: unknown
     /** Retry handler for the error branch. */
     onRetry: () => void
     /** The featured challenge. Required once loaded and non-empty. */
     data?: WeeklyChallengeData
-    /** `true` → every atom this block owns switches to its own shimmer (data already loaded). */
+    /** `true` -> every atom this block owns switches to its own shimmer (data already loaded). */
     isSkeleton?: boolean
 }
 

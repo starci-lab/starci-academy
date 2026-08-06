@@ -2,8 +2,10 @@ import React from "react"
 import { cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
+/** Props for {@link Logo}. */
 export type LogoProps = WithClassNames<undefined>
 
+/** StarCi wordmark / logo SVG. */
 export const Logo = ({ className }: LogoProps) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" className={cn(className)} version="1.1" viewBox="0 0 1024 1024" width="1024" height="1024">

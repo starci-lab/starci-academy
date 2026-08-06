@@ -20,7 +20,7 @@ import type { CallerIdentity } from "@/components/frames/_identity"
  * namespace (teacher's call, 2026-07-25). Three sibling frames that used to live as
  * three loose folders (`AsyncContent` · `EmptyContent` · `ErrorContent`) are now
  * MEMBERS of one namespace — same tier, same job (holding the lifecycle of ONE
- * async data region: error → loading → empty → content), one import.
+ * async data region: error -> loading -> empty -> content), one import.
  *
  * | Member | Role | Content channel |
  * |---|---|---|
@@ -29,7 +29,7 @@ import type { CallerIdentity } from "@/components/frames/_identity"
  * | `.Error` | the ERROR-MESSAGE frame   | props `title`/`description`/`action` |
  *
  * FRAME API LAW (§13b):
- * - `.Base` is a WRAPPER frame → the named slot (`content`) is the main path;
+ * - `.Base` is a WRAPPER frame -> the named slot (`content`) is the main path;
  *   the other three branches each get their own named slot (`skeleton` · `emptyContent` ·
  *   `errorContent`).
  * - `.Empty`/`.Error` are props-only MESSAGE frames — NO `children`: they don't
@@ -82,7 +82,7 @@ interface MessageProps {
      * Caller identity to wear on this message frame's root instead of its own — pass this when
      * a `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own)
      * is using this empty/error message AS its root element, instead of wrapping it in a raw
-     * `<div data-tier=… data-component=…>`. See `_identity.ts`. Omitted → this frame keeps
+     * `<div data-tier=… data-component=…>`. See `_identity.ts`. Omitted -> this frame keeps
      * emitting no `data-tier`/`data-component` of its own, unchanged (the nested `EmptyState`
      * still carries ITS OWN composite identity either way — composites always name themselves).
      */
@@ -92,7 +92,7 @@ interface MessageProps {
 /**
  * Force `weight="duotone"` on the message frame's glyph — §4/§5: the FRAME owns
  * how the glyph looks, the caller only picks which glyph. Before 2026-07-25 the
- * frame took `icon?: ReactNode`, so each caller decided its own weight → they had
+ * frame took `icon?: ReactNode`, so each caller decided its own weight -> they had
  * already drifted (story duotone, screen not). The old `nodeAsIcon` adapter was
  * removed per its own debt note.
  */
@@ -146,22 +146,22 @@ export interface AsyncContentBaseProps {
      * `isSkeleton={true}`.
      */
     skeleton: ComponentTypeWithSkeleton
-    /** True (after loading finishes) → the frame falls to the empty branch. */
+    /** True (after loading finishes) -> the frame falls to the empty branch. */
     isEmpty?: boolean
     /**
      * The EMPTY branch slot, passed as PROPS (not a node) — forwarded straight
-     * to {@link AsyncContentEmpty}. Left empty → the empty branch renders null
+     * to {@link AsyncContentEmpty}. Left empty -> the empty branch renders null
      * (the section hides itself).
      */
     emptyContent?: AsyncContentEmptyProps
     /**
-     * Truthy → the frame falls to the error branch (HIGHEST PRIORITY, beats
+     * Truthy -> the frame falls to the error branch (HIGHEST PRIORITY, beats
      * even loading). Pass SWR's `error` (only once there's no cache left to show).
      */
     error?: unknown
     /**
      * The ERROR branch slot, passed as PROPS — forwarded straight to
-     * {@link AsyncContentError}. ⚠️ Left empty, the error branch does NOT
+     * {@link AsyncContentError}. WARNING Left empty, the error branch does NOT
      * activate (the frame falls through to loading/empty/content) — keeping the
      * old contract, no behaviour change in this consolidation.
      */
@@ -179,7 +179,7 @@ export interface AsyncContentBaseProps {
  * The standard STATE-SWITCH frame for every async data region — the ONE place
  * holding the four branches that SWR's render contract demands. Priority order:
  *
- *   error → loading → empty → content
+ *   error -> loading -> empty -> content
  *
  * The two message branches are configured via PROPS (not a node):
  * `emptyContent={{ title, description, onRetry, retryLabel }}`; `skeleton` is a

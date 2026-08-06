@@ -12,6 +12,7 @@ export interface CvSubmissionFormValues {
     cv: File | null
 }
 
+/** Legacy module shape used by older course surfaces. */
 export interface Module {
     id: string
     name: string
@@ -22,6 +23,7 @@ export interface Module {
     order: number
 }
 
+/** Legacy course shape used by older course surfaces. */
 export interface Course {
     id: string
     name: string
@@ -47,6 +49,7 @@ export enum PricingPhase {
     Regular = "regular",
 }
 
+/** Legacy pricing shape used by older course surfaces. */
 export interface Pricing {
     phase: PricingPhase
     name: string

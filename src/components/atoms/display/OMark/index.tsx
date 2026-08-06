@@ -87,4 +87,5 @@ const OMarkBase = ({ size = "inline" }: OMarkProps) => (
 
 export { OMarkBase as OMark }
 
+/** Tier metadata for `OMark`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "OMark" } as const

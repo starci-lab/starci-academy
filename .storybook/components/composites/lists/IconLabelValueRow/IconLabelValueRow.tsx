@@ -7,7 +7,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  * COMPOSITE — `IconLabelValueRow`: a leading icon + flex-1 label + trailing
  * value, one `content-row` seam (12px) across all three segments. For a flat
  * "spec line" — a permission row, a plan-limit line, a settings line reporting
- * its current value — where `ListRow`'s own title↔subtitle column would be one
+ * its current value — where `ListRow`'s own title<->subtitle column would be one
  * text line too many.
  *
  * `label` reads as the row's own text (`default`, medium weight); `value`
@@ -33,7 +33,7 @@ export interface IconLabelValueRowProps {
      * Wrapped in `Typography` (`muted`), pinned to the row's trailing end.
      */
     value: string
-    /** `true` → render the skeleton mirror (icon placeholder + two bars) instead of the live row. */
+    /** `true` -> render the skeleton mirror (icon placeholder + two bars) instead of the live row. */
     isSkeleton?: boolean
     /** Layout utilities on the root, from the closed positioning union. */
     classNames?: Array<AllowedClassName>

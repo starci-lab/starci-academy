@@ -3,8 +3,14 @@ import {
     useSeededParticles,
 } from "../useSeededParticles"
 
+/** Props for {@link EmberEffect}. */
+interface EmberEffectProps {
+    /** Particle count. */
+    count?: number
+}
+
 /** Warm embers drifting upward from a glow pooled at the bottom edge (the app's original ambient look). */
-export const EmberEffect = ({ count = 60 }: { count?: number }) => {
+export const EmberEffect = ({ count = 60 }: EmberEffectProps) => {
     const particles = useSeededParticles(count)
     return (
         <>

@@ -5,6 +5,7 @@ import {
 } from "./pow-10"
 import { publicEnv } from "@/resources/env/public"
 
+/** Inputs for BN × Decimal helpers. */
 export interface BnMulDecimalParams {
     // the amount to convert to a decimal
     bn: BN
@@ -70,6 +71,7 @@ export interface BnDivDecimalParams {
     fractionDigits?: Decimal
 }
 
+/** Divides a BN by a Decimal with fixed precision. */
 export const bnDivDecimal = ({
     bn,
     decimal,
@@ -84,6 +86,7 @@ export const bnDivDecimal = ({
     })
 }
 
+/** Divides two BNs into a Decimal ratio. */
 export const bnDivBn = ({
     bn1,
     bn2,
@@ -103,6 +106,7 @@ export const bnDivBn = ({
         )
 }
 
+/** Inputs for {@link bnDivBn}. */
 export interface BnDivBnParams {
     bn1: BN
     bn2: BN

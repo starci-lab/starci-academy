@@ -144,10 +144,7 @@ const MIND_MAP_PAGE_IDENTITY: CallerIdentity = { tier: "page", component: "MindM
  * viewport-relative full-bleed height is `Stage`'s `fill="viewport"` — the
  * same shape the real spine below uses for the same reason.
  */
-const MindMapWorkspaceEmpty = ({ labels, onBrowseModules }: {
-    labels: MindMapPageLabels
-    onBrowseModules?: () => void
-}) => (
+const MindMapWorkspaceEmpty = ({ labels, onBrowseModules }: MindMapWorkspaceEmptyProps) => (
     <Stage
         fill="viewport"
         identity={MIND_MAP_PAGE_IDENTITY}
@@ -361,3 +358,8 @@ const _MindMapPage = ({
 }
 
 export { _MindMapPage }
+
+type MindMapWorkspaceEmptyProps = {
+    labels: MindMapPageLabels
+    onBrowseModules?: () => void
+}

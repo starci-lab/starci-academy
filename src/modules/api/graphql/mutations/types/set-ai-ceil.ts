@@ -2,15 +2,15 @@ import type { GraphQLResponse } from "../../types"
 import type { AiModelCategory } from "../../queries/query-ai-models"
 
 /**
- * AI surface (hạng mục) a per-feature model ceiling applies to. Mirrors backend
+ * AI surface (category) a per-feature model ceiling applies to. Mirrors backend
  * `AiCeilSurface`. Omit `surface` in the request to set the global default.
  */
 export enum AiCeilSurface {
-    /** Hỏi AI khi đọc bài (lesson tutor). */
+    /** Ask-AI while reading a lesson (lesson tutor). */
     Chatbot = "chatbot",
-    /** Chấm bài (challenge + capstone). */
+    /** Grading (challenge + capstone). */
     Grading = "grading",
-    /** Phỏng vấn thử (mock interview). */
+    /** Mock interview. */
     Interview = "interview",
 }
 

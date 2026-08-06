@@ -93,7 +93,7 @@ export interface TabsCardProps extends WithClassNames<undefined> {
     size?: "sm" | "md"
 }
 
-/** size → extra Tab className override (md = HeroUI's own default, no override). */
+/** size -> extra Tab className override (md = HeroUI's own default, no override). */
 const TAB_SIZE_SM = "h-auto! w-auto! px-3! py-2! text-xs!"
 
 /**
@@ -187,7 +187,7 @@ export const TabsCard = ({
                 an axe-core/Lighthouse-flagged a11y bug. `TabsCard` never shows panel
                 CONTENT here (callers render their own content elsewhere), so these
                 panels stay empty/`sr-only` — they exist purely to satisfy the
-                tab↔tabpanel ARIA relationship. */}
+                tab<->tabpanel ARIA relationship. */}
             {group.items.map((item) => (
                 <Tabs.Panel key={item.key} id={item.key} className="sr-only">{null}</Tabs.Panel>
             ))}

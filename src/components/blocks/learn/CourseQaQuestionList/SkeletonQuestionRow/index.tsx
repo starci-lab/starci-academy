@@ -8,7 +8,7 @@ import { StackV, StackH } from "@/components/frames/Stack"
 /**
  * One placeholder row for the Loading branch — avatar + 2 text bars +
  * chip-pill row + status dot, ported verbatim from the real
- * `CourseQaSkeleton.tsx` shape (★1).
+ * `CourseQaSkeleton.tsx` shape (*1).
  *
  * `align="start"` on the outer row (instead of the real file's `mt-2` on the
  * dot) top-aligns all three children without a child pushing its own margin
@@ -37,8 +37,8 @@ export const SkeletonQuestionRow = () => {
             {/* two-line preview */}
             <StackV gap={2} items={[() => previewLines]} />
             {/* chip-pill row — ONE chip (status, the classification axis) + the scope
-                as a plain shimmer bar, matching the real row's own text-inline treatment
-                (eslint `starci-fe/no-adjacent-chip`, ★7 below). */}
+ as a plain shimmer bar, matching the real row's own text-inline treatment
+ (eslint `starci-fe/no-adjacent-chip`, *7 below). */}
             <StackH gap={3} items={[() => chipRow]} />
         </>
     )
@@ -57,7 +57,7 @@ export const SkeletonQuestionRow = () => {
                     </div>
                 ),
                 () => <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={[() => textColumn]} />,
-                // status dot — no home atom (★3), same escape hatch `Pagination` uses for its own shimmer squares
+                // status dot — no home atom (*3), same escape hatch `Pagination` uses for its own shimmer squares
                 () => <Skeleton className="size-2 shrink-0 rounded-full" />,
             ]}
         />

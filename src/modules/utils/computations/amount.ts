@@ -5,6 +5,7 @@ import {
 } from "./pow-10"
 import { publicEnv } from "@/resources/env/public"
 
+/** Inputs for {@link toDecimalAmount}. */
 export interface ToDecimalAmountParams {
     // the amount to convert to a decimal
     amount: BN
@@ -14,6 +15,7 @@ export interface ToDecimalAmountParams {
     fractionDigits?: Decimal
 }
 
+/** Converts a raw BN amount into a Decimal UI amount. */
 export const toDecimalAmount = ({
     amount,
     decimals,
@@ -37,6 +39,7 @@ export const toDecimalAmount = ({
             Decimal.ROUND_HALF_UP)
 }
 
+/** Inputs for {@link toRawAmount}. */
 export interface ToRawAmountParams {
     // the decimal amount (UI / human-readable)
     amount: Decimal
@@ -46,6 +49,7 @@ export interface ToRawAmountParams {
     fractionDigits?: Decimal
   }
   
+/** Converts a Decimal UI amount into a raw BN amount. */
 export const toRawAmount = ({
     amount,
     decimals,

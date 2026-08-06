@@ -1,12 +1,20 @@
 import React from "react"
 
+/** Props for {@link WaveLayer}. */
+interface WaveLayerProps {
+    duration: number
+    opacity: number
+    bottom: number
+    amplitude: number
+}
+
 /** One tiled, horizontally-scrolling wave layer (two copies side by side loop seamlessly). */
 const WaveLayer = ({
     duration,
     opacity,
     bottom,
     amplitude,
-}: { duration: number, opacity: number, bottom: number, amplitude: number }) => (
+}: WaveLayerProps) => (
     <div
         className="ambient-wave absolute left-0 w-[200%]"
         style={{

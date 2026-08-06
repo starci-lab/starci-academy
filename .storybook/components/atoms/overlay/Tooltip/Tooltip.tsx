@@ -111,4 +111,5 @@ const TooltipBase = ({
 /** `Tooltip.*` — the hover-hint atom namespace. One of two atoms that keep `children` (wrapper required). */
 export { TooltipBase as Tooltip }
 
+/** Tier metadata for `Tooltip`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Tooltip" } as const

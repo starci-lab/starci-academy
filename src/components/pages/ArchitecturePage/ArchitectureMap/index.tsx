@@ -89,7 +89,7 @@ export const ArchitectureMap = ({ healthByName, selectedId, onSelectNode, classN
     )
 
     // nothing is selectable in the future (roadmap) scene
-    const handleSelect = (id: string) => {
+    const onSelect = (id: string) => {
         if (era === "future") return
         onSelectNode(id)
     }
@@ -129,7 +129,7 @@ export const ArchitectureMap = ({ healthByName, selectedId, onSelectNode, classN
             <ArchitectureScene
                 data={data}
                 selectedId={highlightId}
-                onSelectNode={handleSelect}
+                onSelectNode={onSelect}
                 caption={caption}
             />
         </div>

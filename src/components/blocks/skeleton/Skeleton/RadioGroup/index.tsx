@@ -14,7 +14,7 @@ export interface SkeletonRadioGroupProps extends WithClassNames<undefined> {
  * Skeleton matching a HeroUI <RadioGroup/>.
  * Group stacks vertically with gap-2 (matches the house RadioGroup `flex flex-col
  * gap-2`). Each radio is a circular size-4 dot (rounded-full) plus a text-sm
- * (body-sm 14/24) label bar centered in its box, dot↔label separated by gap-3
+ * (body-sm 14/24) label bar centered in its box, dot<->label separated by gap-3
  * (matches `Radio.Content` `items-center gap-3`).
  */
 export const SkeletonRadioGroup = ({

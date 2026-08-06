@@ -165,7 +165,7 @@ const Footer = ({
             <Typography
                 size="xs"
                 color="muted"
-                text={`© ${year} StarCi Academy · Built by Nguyễn Văn Tự Cường`} // vn-ok: the author's real name
+                text={`(c) ${year} StarCi Academy - Built by Nguyen Van Tu Cuong`} // vn-ok: the author's real name
 
             />
             <StackH gap={3} items={[() => legalLinks]} />

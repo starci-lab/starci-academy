@@ -135,10 +135,7 @@ export interface PlaygroundPreparePageLabels {
  * `<div data-tier="page" …>`. The `AsyncContent*` composite inside still
  * badges itself.
  */
-const PlaygroundPreparePageSwap = ({ identity, body: Body }: {
-    identity?: CallerIdentity
-    body: () => React.ReactElement
-}) => (
+const PlaygroundPreparePageSwap = ({ identity, body: Body }: PlaygroundPreparePageSwapProps) => (
     <Container
         size="md"
         padding={6}
@@ -294,3 +291,8 @@ const _PlaygroundPreparePage = ({
 }
 
 export { _PlaygroundPreparePage }
+
+type PlaygroundPreparePageSwapProps = {
+    identity?: CallerIdentity
+    body: () => React.ReactElement
+}

@@ -12,12 +12,12 @@ import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
  * inline — a second real occurrence (`QaQuestionThread`'s own avatar+byline+body
  * row) makes it a genuine repeat, not a premature abstraction.
  *
- * ⭐⭐ GAP HISTORY (teacher, 2026-07-29, both revisions on the SAME day): the
+ * * GAP HISTORY (teacher, 2026-07-29, both revisions on the SAME day): the
  * first decision was "all 3 seams tight" (a deliberate denser override, not a
  * `src`-fidelity port). After seeing the actual render, the teacher corrected
- * avatar↔column back to `grouped` (a visibly wider `gap-3`) — too cramped in
- * practice — while byline↔children stayed `tight`. So: root `StackH`
- * (avatar↔column) = `grouped`, inner `StackV` (byline↔children) = `tight`. This
+ * avatar<->column back to `grouped` (a visibly wider `gap-3`) — too cramped in
+ * practice — while byline<->children stayed `tight`. So: root `StackH`
+ * (avatar<->column) = `grouped`, inner `StackV` (byline<->children) = `tight`. This
  * is STILL the opposite call from `ContentCommentThread`'s own byline-INTERNAL
  * gap (`related`, matched to real `CommentItem.tsx:101` `gap-2`) — that one
  * lives INSIDE the caller-supplied `byline` slot, unaffected by either of this
@@ -45,7 +45,7 @@ import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 
 /** Props for {@link IdentityContentRow}. */
 export interface IdentityContentRowProps {
-    /** Avatar image url. Omitted → `Avatar`'s own generated/initials fallback chain. */
+    /** Avatar image url. Omitted -> `Avatar`'s own generated/initials fallback chain. */
     avatarSrc?: string
     /** Display name driving the avatar's fallback + accessible label. */
     avatarName: string
@@ -68,7 +68,7 @@ export interface IdentityContentRowProps {
      * children" contract is explicit at the call site.
      */
     body: ComponentTypeWithSkeleton
-    /** `true` → the whole row (avatar + byline) renders as its skeleton mirror. */
+    /** `true` -> the whole row (avatar + byline) renders as its skeleton mirror. */
     isSkeleton?: boolean
     /** Layout utilities on the root, from the closed positioning union. */
     classNames?: Array<AllowedClassName>

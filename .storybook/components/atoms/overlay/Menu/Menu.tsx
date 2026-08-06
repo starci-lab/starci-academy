@@ -200,4 +200,5 @@ const MenuBase = ({
 /** `Menu.*` — the action-menu atom namespace. Flat `items` or grouped `sections` are both leaf props. */
 export { MenuBase as Menu }
 
+/** Tier metadata for `Menu`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Menu" } as const

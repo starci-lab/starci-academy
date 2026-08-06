@@ -6,8 +6,8 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * `MarkdownContent` — a viewer that paints an authored markdown document faithfully. Unlike
  * other composites it cannot know its shape before rendering — the payload decides it. Handles
  * Shiki-highlighted fenced code, mermaid diagrams (click-to-zoom, caption pairing),
- * `:::tab`/`:::code`/`:::preview` → Preview↔Code tabs, GFM tables → HeroUI `Table`,
- * `::::accordion`/`:::panel` → HeroUI `Accordion`, plus `:::muted`/`:::chip`, image captions,
+ * `:::tab`/`:::code`/`:::preview` -> Preview<->Code tabs, GFM tables -> HeroUI `Table`,
+ * `::::accordion`/`:::panel` -> HeroUI `Accordion`, plus `:::muted`/`:::chip`, image captions,
  * link routing, and heading anchors. Leaves by structure are the two spacing measures.
  */
 const meta: Meta<typeof MarkdownContent> = {

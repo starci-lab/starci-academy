@@ -24,10 +24,11 @@ export interface BlockPrimitive {
     role?: string
     /** `"block"` (sub-composite, tier `Block/*`) or `"primitive"` (a lower-tier leaf — atom, frame, composite, or design). */
     tier?: "block" | "primitive"
-    /** Only present in ONE state (e.g. `"Đang tải"`) — not a general part. */
+    /** Only present in ONE state (e.g. `"Loading"`) — not a general part. */
     state?: string
 }
 
+/** Props for {@link BlockPreview} / {@link blockShell}: composition inventory + rationale. */
 export interface BlockAnatomyProps {
     /**
      * EVERY part this block composes (blocks + lower-tier parts, in visual order) — a
@@ -44,20 +45,20 @@ const AnatomyContent = ({ primitives, reason }: BlockAnatomyProps) => {
     return (
         <div className="flex max-w-xs flex-col gap-3 p-1">
             <div className="flex flex-col gap-2">
-                <span className="text-xs font-semibold uppercase tracking-wide text-muted">Cấu thành (block + primitive)</span>
+                <span className="text-xs font-semibold uppercase tracking-wide text-muted">Composition (block + primitive)</span>
                 <div className="flex flex-col gap-1">
                     {items.map((p) => (
                         <span key={p.name} className="text-xs">
                             <span className="font-semibold text-foreground">{p.name}</span>
                             {p.tier ? <span className="text-muted">{` (${p.tier})`}</span> : null}
                             {p.role ? <span className="text-muted">{` · ${p.role}`}</span> : null}
-                            {p.state ? <span className="text-muted">{` · [chỉ state: ${p.state}]`}</span> : null}
+                            {p.state ? <span className="text-muted">{` · [state only: ${p.state}]`}</span> : null}
                         </span>
                     ))}
                 </div>
             </div>
             <div className="flex flex-col gap-1">
-                <span className="text-xs font-semibold uppercase tracking-wide text-muted">Vì sao dùng composite này</span>
+                <span className="text-xs font-semibold uppercase tracking-wide text-muted">Why this composite</span>
                 <p className="text-xs text-foreground">{reason}</p>
             </div>
         </div>

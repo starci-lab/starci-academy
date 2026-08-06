@@ -91,7 +91,7 @@ const PlaygroundSetupSteps = ({
 
     // Rotating a code nobody's agent holds yet is free; rotating a code the connected
     // agent depends on is disruptive, so THAT path confirms first (see file header).
-    const handleRotateClick = () => {
+    const onRotateClick = () => {
         if (!onRefreshPairingCode) return
         if (agentReady) {
             setRotateConfirmOpen(true)
@@ -99,7 +99,7 @@ const PlaygroundSetupSteps = ({
             onRefreshPairingCode()
         }
     }
-    const handleConfirmRotate = () => {
+    const onConfirmRotate = () => {
         onRefreshPairingCode?.()
         setRotateConfirmOpen(false)
     }
@@ -129,7 +129,7 @@ const PlaygroundSetupSteps = ({
                 variant="tertiary"
                 size="sm"
                 prefixIcon={ArrowsClockwiseIcon}
-                onPress={handleRotateClick}
+                onPress={onRotateClick}
                 isPending={isRefreshingPairingCode}
 
             />
@@ -402,7 +402,7 @@ const PlaygroundSetupSteps = ({
             description="The agent is currently using the old code to hold its connection — getting a new code will break the current session until you paste the new code into the agent."
             confirmLabel="Get new code"
             cancelLabel="Not now"
-            onConfirm={handleConfirmRotate}
+            onConfirm={onConfirmRotate}
             isConfirming={isRefreshingPairingCode}
 
         />

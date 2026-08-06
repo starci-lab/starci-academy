@@ -18,7 +18,7 @@ export interface CourseQaQuestionAuthor {
     id: string
     /** Display name (or username fallback), already resolved by the caller. */
     displayName: string
-    /** Avatar image; absent → the atom's own generated/initials fallback chain. */
+    /** Avatar image; absent -> the atom's own generated/initials fallback chain. */
     avatarUrl?: string
 }
 
@@ -35,21 +35,21 @@ export interface CourseQaQuestionItem {
     author: CourseQaQuestionAuthor
     /** Already-formatted relative time, e.g. "2 hours ago" (no i18n layer at this tier). */
     createdTimeAgo: string
-    /** `true` → a pin glyph rides beside the asker's name. */
+    /** `true` -> a pin glyph rides beside the asker's name. */
     isPinned?: boolean
-    /** `true` → a founder-verified glyph rides beside the asker's name. */
+    /** `true` -> a founder-verified glyph rides beside the asker's name. */
     isFounderAuthor?: boolean
     /** One/two-line preview of the question body. */
     preview: string
     /** Which lesson (or "general/course-wide") this question belongs to. */
     scope: CourseQaQuestionScope
-    /** How many answers this question has. `0` ⇒ unanswered. */
+    /** How many answers this question has. `0` => unanswered. */
     replyCount: number
-    /** `true` → the (at least one) answer came from the course founder. */
+    /** `true` -> the (at least one) answer came from the course founder. */
     answeredByFounder?: boolean
 }
 
-/** The signed-in viewer's own identity — threaded through for the `QaQuestionThread` swap (★2/★6). */
+/** The signed-in viewer's own identity — threaded through for the `QaQuestionThread` swap (*2/*6). */
 export interface CourseQaCurrentUser {
     username: string
     avatar?: string
@@ -61,9 +61,9 @@ export interface CourseQaQuestionListProps {
     questions: ReadonlyArray<CourseQuestionNode>
     /** `true` while this list's own fetch is in flight (feeds the Loading leaf). */
     isLoading: boolean
-    /** Truthy → the fetch failed (feeds the Error leaf, outranks loading/empty). */
+    /** Truthy -> the fetch failed (feeds the Error leaf, outranks loading/empty). */
     error?: unknown
-    /** Retry the failed fetch. Omit → the error message carries no action. */
+    /** Retry the failed fetch. Omit -> the error message carries no action. */
     onRetry?: () => void
     /** 1-based current page. */
     page: number
@@ -71,21 +71,21 @@ export interface CourseQaQuestionListProps {
     totalPages: number
     /** Fired with the 1-based page the viewer picked. */
     onPageChange: (page: number) => void
-    /** Signed-in viewer's id (drives the "You" swap, ★6); `null` when signed out. */
+    /** Signed-in viewer's id (drives the "You" swap, *6); `null` when signed out. */
     currentUserId: string | null
-    /** Signed-in viewer's identity — pass-through for the `QaQuestionThread` swap (★2). */
+    /** Signed-in viewer's identity — pass-through for the `QaQuestionThread` swap (*2). */
     currentUser: CourseQaCurrentUser | null
-    /** Fired after an answer is posted/edited/deleted — pass-through for the `QaQuestionThread` swap (★2). */
+    /** Fired after an answer is posted/edited/deleted — pass-through for the `QaQuestionThread` swap (*2). */
     onAnswered?: () => void
-    /** Accessible name for the pager region (★4). */
+    /** Accessible name for the pager region (*4). */
     pagerAriaLabel: string
-    /** External skeleton override, distinct from `isLoading` (★5). */
+    /** External skeleton override, distinct from `isLoading` (*5). */
     isSkeleton?: boolean
 }
 
 /**
  * `CourseQaQuestionList` — the course-wide Q&A roll-up region: the async
- * lifecycle (loading → error → search-empty → content) around a flush divide-y
+ * lifecycle (loading -> error -> search-empty -> content) around a flush divide-y
  * question list plus a pager. The Content leaf renders one `QaQuestionThread`
  * per question — collapsed until pressed, then the full conversation inline.
  * Four leaves: `Loading`, `Error`, `Empty` (filter matched
@@ -100,7 +100,7 @@ const RETRY_LABEL = "Retry"
 const EMPTY_TITLE = "No questions match the current filter"
 const EMPTY_DESCRIPTION = "Try a different filter or search term."
 
-/** The Loading branch's rows — see ★1 for why these are NOT `SurfaceCardList.isSkeleton`. */
+/** The Loading branch's rows — see *1 for why these are NOT `SurfaceCardList.isSkeleton`. */
 const skeletonItems = (): Array<SurfaceCardListItem> =>
     Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
         key: `skeleton-${index}`,
@@ -128,7 +128,7 @@ const questionItems = (
 
 /**
  * The course-wide Q&A roll-up list. See the file header for the full contract,
- * the GAP note on `QaQuestionThread` (★2), and the remaining judgement calls.
+ * the GAP note on `QaQuestionThread` (*2), and the remaining judgement calls.
  *
  * @param props - {@link CourseQaQuestionListProps}
  */
@@ -163,7 +163,7 @@ const CourseQaQuestionList = ({
     return (
         <div>
             <AsyncContent
-                // ★5 — an external override (`isSkeleton`) converges on the same Loading
+                // *5 — an external override (`isSkeleton`) converges on the same Loading
                 // branch as the list's own fetch flag (`isLoading`).
                 isLoading={isSkeleton || isLoading}
                 skeleton={() => (
@@ -190,7 +190,7 @@ const CourseQaQuestionList = ({
                             ),
                             ...(totalPages > 1
                                 ? [
-                                    // ★4 — `Pagination` hard-codes its own aria-label; a wrapping
+                                    // *4 — `Pagination` hard-codes its own aria-label; a wrapping
                                     // <nav> is how the caller's `pagerAriaLabel` still names the region.
                                     () => (
                                         <nav aria-label={pagerAriaLabel}>

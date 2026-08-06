@@ -21,7 +21,7 @@ import { resolveIdentity, type CallerIdentity } from "@/components/frames/_ident
  * 72 times across `src`. Content measure is a REAL concept, so it deserves a named
  * khung, not a hand-copied class string.
  *
- * ⭐THIS KHUNG OPENS `@container` (teacher's call, 2026-07-26) -- the single most
+ * *THIS KHUNG OPENS `@container` (teacher's call, 2026-07-26) -- the single most
  * important decision in this file, read carefully before touching it:
  *
  * `@app-sm/md/lg/xl` are container queries -- they measure the NEAREST `@container`.

@@ -24,6 +24,7 @@ export const CardContent = ({ children, ...props }: CardContentProps) => (
     <HeroCardContent data-tier="atom" data-component="CardContent" {...props}>{children}</HeroCardContent>
 )
 
+/** Tier metadata for `component`, used by the component registry/Storybook lookup. */
 export const meta = [
     { tier: "atom", name: "Card" },
     { tier: "atom", name: "CardContent" },

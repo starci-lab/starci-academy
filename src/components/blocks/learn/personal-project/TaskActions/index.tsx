@@ -159,7 +159,7 @@ export const TaskActions = ({
     )
 
     return (
-        // button row ↔ AI processing status = gap-3 (same block), no manual h-* spacer
+        // button row <-> AI processing status = gap-3 (same block), no manual h-* spacer
         <div className={cn("flex flex-col gap-3", className)}>
             <div className="flex flex-wrap items-center gap-2">
                 <Button

@@ -47,4 +47,5 @@ export const ChoiceRadio = ({ value, label, isDisabled, isSkeleton, classNames }
     )
 }
 
+/** Tier metadata for `ChoiceRadio`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "ChoiceRadio" } as const

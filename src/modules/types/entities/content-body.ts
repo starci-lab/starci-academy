@@ -32,27 +32,27 @@ export interface ContentBody extends AbstractEntity {
  * Resolve a body bucket's markdown for the requested locale, falling back to the bucket's
  * default-locale `body` when no matching translation exists.
  */
-export function resolveContentBody(
+export const resolveContentBody = (
     bucket: ContentBody | undefined,
     locale: string,
-): string {
+): string => {
     if (!bucket) return ""
     const translation = bucket.translations?.find((row) => row.locale === locale)
     return (translation?.body ?? bucket.body) ?? ""
 }
 
 /** Pick the body bucket matching a programming language. */
-export function pickContentBodyByLang(
+export const pickContentBodyByLang = (
     bodies: Array<ContentBody> | undefined,
     lang: string,
-): ContentBody | undefined {
+): ContentBody | undefined => {
     return bodies?.find((bucket) => bucket.lang === lang)
 }
 
 /** Distinct programming languages across the body buckets, ordered by `orderIndex`. */
-export function listContentBodyLangs(
+export const listContentBodyLangs = (
     bodies: Array<ContentBody> | undefined,
-): Array<string> {
+): Array<string> => {
     const seen = new Map<string, number>()
     for (const bucket of bodies ?? []) {
         if (!seen.has(bucket.lang)) seen.set(bucket.lang, bucket.sortIndex)

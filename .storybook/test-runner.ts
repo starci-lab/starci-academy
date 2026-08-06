@@ -32,7 +32,7 @@ import { PATTERNS, PROP_READS } from "./test-runner/patterns.mjs"
  *   4. THE RESPONSIVE SWITCH FIRES AT THE NAMED WIDTH — `principles/responsive.md`'s four
  *      `@app-*` container breakpoints, swept for real, not read off a prop.
  *
- * ⚠️ Every section below states, in its own header comment, the thing it CANNOT prove and why —
+ * NOTE: Every section below states, in its own header comment, the thing it CANNOT prove and why —
  * read those before trusting a green run to mean more than it does. The short version, for the
  * one that reaches furthest: nesting can be judged with certainty ONLY down to a `frame`, because
  * a frame's slot (`FRAME-9`) is DESIGNED to hold caller-injected content of any tier, and nothing
@@ -64,7 +64,7 @@ const TRANSPARENT_TIERS = new Set(["fixture"])
  * these is accepted — sub-pixel drift from browser zoom, not a real off-scale value.
  *
  * Step 7 is 32px (`gap-8`), not 40 (`gap-10`) — the layout seam was pulled in one rung when the
- * scale was locked (thầy 2026-08-01). A story still rendering 40px is now off-scale, on purpose:
+ * scale was locked (teacher 2026-08-01). A story still rendering 40px is now off-scale, on purpose:
  * it forces the 56 pending `gap-10` sites to migrate rather than letting the old value pass.
  */
 const ALLOWED_GAP_PX = [0, 4, 8, 12, 16, 24, 32, 48]

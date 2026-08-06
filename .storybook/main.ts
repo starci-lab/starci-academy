@@ -31,8 +31,8 @@ const config: StorybookConfig = {
             // main.ts is loaded as ESM (file:// URL) → no `__dirname`. `storybook dev`
             // runs from the project root, so resolve the components tree off cwd.
             "@sb-components": path.resolve(process.cwd(), ".storybook/components"),
-            // Utils của Storybook (BlockAnatomy…) — KHÔNG phải component của hệ, nên
-            // sống ngoài `components/` (thầy chốt 2026-07-25).
+            // Storybook utils (BlockAnatomy…) — NOT system components, so they
+            // live outside `components/` (teacher ruling 2026-07-25).
             "@sb-utils": path.resolve(process.cwd(), ".storybook/utils"),
         }
         return webpackConfig

@@ -7,7 +7,7 @@ import { Typography } from "@/components/atoms/text/Typography"
  * closed set of values (it is not an enum/status/badge), so it renders as
  * TEXT, never a `Chip`.
  *
- * ⭐ RULING (2026-07-29, teacher's call): the exact same "N points" trailing slot
+ * * RULING (2026-07-29, teacher's call): the exact same "N points" trailing slot
  * used to render as a `Chip` in `ChallengeBrief`/`TaskBriefBody`/
  * `PersonalProjectTaskPage` while `ChallengeDeliverableList` rendered the same
  * info-type as plain text — a §2d violation (same info-type, two elements).
@@ -15,14 +15,14 @@ import { Typography } from "@/components/atoms/text/Typography"
  * drift back to a chip: callers only ever pass a number, never choose the
  * element themselves.
  *
- * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1 — see
+ * * AUDIT 2026-07-30 (feedback ChallengePage/Graded, round-1 — see
  * `.artifacts/feedback/2026-07-29-challengepage-graded/round-1.md`): removed
  * `color="accent"`. The old ruling cited "Canon §2a" to justify accent — that
  * section number belongs to `principles.md`, which is RETIRED. Same-page
  * counter-evidence: `ChallengeHeader.tsx` correctly keeps its total "N points"
  * at `muted`, reasoning "a raw number is not a classifying fact" — the same
  * logic applies to ScoreValue. `color` axis (§3a): a number attached to an
- * active control, carrying real informational value ⇒ `default` (no `color`
+ * active control, carrying real informational value => `default` (no `color`
  * declared), not `accent` nor `muted`.
  */
 
@@ -32,7 +32,7 @@ export interface ScoreValueProps {
     points: number
     /** Unit word appended after the number. Defaults to `"points"`. */
     unit?: string
-    /** `true` → render the skeleton mirror bar instead of the number. */
+    /** `true` -> render the skeleton mirror bar instead of the number. */
     isSkeleton?: boolean
 }
 

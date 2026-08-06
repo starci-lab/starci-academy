@@ -34,4 +34,5 @@ const ThreadConnector = ({ classNames }: ThreadConnectorProps) => (
 
 export { ThreadConnector }
 
+/** Tier metadata for `ThreadConnector`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "ThreadConnector" } as const

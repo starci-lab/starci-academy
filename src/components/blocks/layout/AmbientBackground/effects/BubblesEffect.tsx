@@ -3,8 +3,14 @@ import {
     useSeededParticles,
 } from "../useSeededParticles"
 
+/** Props for {@link BubblesEffect}. */
+interface BubblesEffectProps {
+    /** Particle count. */
+    count?: number
+}
+
 /** Hollow bubbles rising from the bottom edge with a gentle wobble, tinted by the accent color. */
-export const BubblesEffect = ({ count = 30 }: { count?: number }) => {
+export const BubblesEffect = ({ count = 30 }: BubblesEffectProps) => {
     const particles = useSeededParticles(count, 37)
     return (
         <>

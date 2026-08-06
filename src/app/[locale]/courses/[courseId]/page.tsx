@@ -5,6 +5,16 @@ import { SEO_CONFIG } from "@/config/seo"
 import { publicEnv } from "@/resources/env/public"
 import { JsonLd, courseSchema } from "@/modules/seo/jsonLd"
 import { buildPageMetadata } from "@/modules/seo/buildMetadata"
+/** Props for GenerateMetadata. */
+interface GenerateMetadataProps {
+    params: Promise<CourseParams>
+}
+
+/** Props for Page. */
+interface PageProps {
+    params: Promise<CourseParams>
+}
+
 
 /** Route params for `/[locale]/courses/[courseId]`. */
 interface CourseParams {
@@ -52,9 +62,7 @@ const getCourse = cache(async (displayId: string): Promise<CourseMeta | null> =>
 /** Per-course SEO metadata (title/desc/canonical/hreflang/OG cover). */
 export const generateMetadata = async ({
     params,
-}: {
-    params: Promise<CourseParams>
-}): Promise<Metadata> => {
+}: GenerateMetadataProps): Promise<Metadata> => {
     const { locale, courseId } = await params
     const course = await getCourse(courseId)
     if (!course) {
@@ -81,9 +89,7 @@ export const generateMetadata = async ({
  */
 const Page = async ({
     params,
-}: {
-    params: Promise<CourseParams>
-}) => {
+}: PageProps) => {
     const { locale, courseId } = await params
     const course = await getCourse(courseId)
     return (

@@ -2,10 +2,12 @@ import { createAuthApolloClient } from "../clients"
 import { type QueryParams } from "../types"
 import { gql } from "@apollo/client"
 
+/** Request body for {@link querySandboxRepoUrl}. */
 export interface SandboxRepoUrlRequest {
     contentId: string
 }
 
+/** Apollo response shape for {@link querySandboxRepoUrl}. */
 export interface QuerySandboxRepoUrlResponse {
     sandboxRepoUrl: string
 }
@@ -24,6 +26,7 @@ const queryMap = {
     [QuerySandboxRepoUrl.Query1]: query1,
 }
 
+/** Fetches the sandbox repository URL for a playground slug. */
 export const querySandboxRepoUrl = async ({
     query = QuerySandboxRepoUrl.Query1,
     request,

@@ -33,8 +33,8 @@ const MODE_SLUG: Record<FlashcardMode, string> = {
  * scope its lookup, there is no id-only "which session is this" query. The
  * cross-deck due session stays its own query marker (`?session=due`) on the
  * bare shim; once live it carries no `deckId` at all. The LEFT RAIL (rendered
- * by the learn layout) and the work PANE (the page) both read this hook → one
- * source of truth across the layout↔page boundary.
+ * by the learn layout) and the work PANE (the page) both read this hook -> one
+ * source of truth across the layout<->page boundary.
  */
 export const useFlashcardNav = () => {
     const router = useRouter()

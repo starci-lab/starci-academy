@@ -8,11 +8,11 @@ import type { AiModelCategory } from "../query-ai-models"
 export interface QueryMyAiCeilData {
     /** Global default ceiling; null = no cap (plan ceiling only). */
     default: AiModelCategory | null
-    /** Hỏi AI khi đọc bài override; null = follow default. */
+    /** Ask-AI while reading a lesson override; null = follow default. */
     chatbot: AiModelCategory | null
-    /** Chấm bài override; null = follow default. */
+    /** Grading override; null = follow default. */
     grading: AiModelCategory | null
-    /** Phỏng vấn thử override; null = follow default. */
+    /** Mock interview override; null = follow default. */
     interview: AiModelCategory | null
 }
 

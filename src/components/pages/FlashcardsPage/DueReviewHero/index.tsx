@@ -49,7 +49,7 @@ export const DueReviewHero = () => {
     // ON this screen, pending, until a real sessionId comes back; no more
     // instant navigation to the bare `?session=due` shim + full-page skeleton.
     const { start: startDueReview, starting } = useStartFlashcardDueReviewSession(courseId)
-    const handlePressStart = async () => {
+    const onPressStart = async () => {
         if (!displayId) {
             return
         }
@@ -79,7 +79,7 @@ export const DueReviewHero = () => {
             error={error}
             onRetry={() => { void mutate() }}
             starting={starting}
-            onPressStart={() => { void handlePressStart() }}
+            onPressStart={() => { void onPressStart() }}
             resume={resumeData && displayId ? {
                 title: t("flashcard.due.resumeTitle"),
                 subtitle: t("flashcard.due.resumeSubtitle", {

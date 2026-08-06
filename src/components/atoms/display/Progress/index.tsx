@@ -222,6 +222,7 @@ const Meter = ({
  */
 export { ProgressBar, ProgressCircle, Meter as ProgressGauge }
 
+/** Tier metadata for `component`, used by the component registry/Storybook lookup. */
 export const meta = [
     { tier: "atom", name: "ProgressBar" },
     { tier: "atom", name: "ProgressCircle" },

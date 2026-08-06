@@ -4,7 +4,7 @@ import { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcit
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — the trial → enroll conversion strip on the content-home. Bundles a
+ * BLOCK — the trial -> enroll conversion strip on the content-home. Bundles a
  * loss-aversion line (free lessons remaining), the real price (+ phase-scarcity
  * note), and an enroll CTA. `src` is STORE-COUPLED (SWR price fetch + zustand
  * payment overlay) — this port takes the SAME data as PLAIN PROPS (`price`,
@@ -58,7 +58,7 @@ const SURFACE: AnatomyNode = {
     storyId: "composites-cards-surfacecard-surfacecard--default",
 }
 // WARNING: TRIED `Split` and it was WRONG: its contract is "the `start` side is allowed to
-// SHRINK" ⇒ when tight it SQUEEZES the price column and the −33% chip drops to a new
+// SHRINK" => when tight it SQUEEZES the price column and the −33% chip drops to a new
 // line. Price is a number, squeezing it makes no sense — this row must WRAP (the button
 // drops below), i.e. `StackH` with `wrap`.
 // Name differs from the `StackH` node of the lead row: the panel groups nodes BY NAME,
@@ -66,7 +66,7 @@ const SURFACE: AnatomyNode = {
 const PRICE_ROW: AnatomyNode = {
     name: "StackH",
     tier: "frame",
-    role: "price ↔ CTA row — `wrap` so the BUTTON drops to a new line when tight, the price column never gets squeezed",
+    role: "price <-> CTA row — `wrap` so the BUTTON drops to a new line when tight, the price column never gets squeezed",
     storyId: "frames-stack-stackh--default",
 }
 
@@ -75,7 +75,7 @@ const HEADER_PARTS: Array<AnatomyNode> = [
     {
         name: "TitledText",
         tier: "composite",
-        role: "the title↔description pair as ONE unit — it owns the type scale (title sm medium, subtitle xs muted)",
+        role: "the title<->description pair as ONE unit — it owns the type scale (title sm medium, subtitle xs muted)",
         storyId: "composites-texts-titledtext--overview",
     },
 ]
@@ -98,7 +98,7 @@ const framed = (priceSide: Array<AnatomyNode>): Array<AnatomyNode> => [
                     {
                         name: "StackH",
                         tier: "frame",
-                        role: "lead row — icon ↔ text cluster, center-aligned",
+                        role: "lead row — icon <-> text cluster, center-aligned",
                         storyId: "frames-stack-stackh--default",
                         children: HEADER_PARTS,
                     },

@@ -15,6 +15,7 @@ type ScoreRowProps = {
     isSkeleton?: boolean
 }
 
+/** One labeled score meter row inside a mock-interview scorecard. */
 export const ScoreRow = ({
     label,
     score,

@@ -72,22 +72,22 @@ export interface ContentEntity extends AbstractEntity {
 }
 
 /** Code explaining rows from `content` payload. */
-export function getContentCodeExplainings(
+export const getContentCodeExplainings = (
     content: Pick<ContentEntity, "codeExplainings"> | undefined,
-): Array<CodeExplainingEntity> {
+): Array<CodeExplainingEntity> => {
     return content?.codeExplainings ?? []
 }
 
 /** Normalized implementation rows from `content` payload. */
-export function getContentCodeImplementations(
+export const getContentCodeImplementations = (
     content: Pick<ContentEntity, "codeImplementations"> | undefined,
-): Array<CodeImplementationEntity> {
+): Array<CodeImplementationEntity> => {
     return content?.codeImplementations ?? []
 }
 
 /** Challenge count from GraphQL `challenges` relation. */
-export function getContentChallengeCount(
+export const getContentChallengeCount = (
     content: Pick<ContentEntity, "challenges">,
-): number {
+): number => {
     return content.challenges?.length ?? 0
 }

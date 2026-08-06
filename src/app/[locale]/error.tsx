@@ -7,6 +7,14 @@ import { useRouter } from "next/navigation"
 import { ErrorPageState } from "@/components/blocks/feedback/ErrorPageState"
 import { pathConfig } from "@/resources/path"
 
+/** Props for the localized `[locale]` error boundary. */
+interface ErrorBoundaryProps {
+    /** The thrown error (with an optional `digest` for server logs). */
+    error: Error & { digest?: string }
+    /** Re-attempts rendering the errored segment. */
+    reset: () => void
+}
+
 /**
  * Localized 500 / error boundary for the `[locale]` segment — Next renders this
  * (a MANDATORY client component) when a page throws during render. Offers a
@@ -16,13 +24,7 @@ import { pathConfig } from "@/resources/path"
  * @param props.error - The thrown error (with an optional `digest` for server logs).
  * @param props.reset - Re-attempts rendering the errored segment.
  */
-export default function Error({
-    error,
-    reset,
-}: {
-    error: Error & { digest?: string }
-    reset: () => void
-}) {
+const Error = ({ error, reset }: ErrorBoundaryProps) => {
     const t = useTranslations()
     const router = useRouter()
     const locale = useLocale()
@@ -53,3 +55,5 @@ export default function Error({
         />
     )
 }
+
+export default Error

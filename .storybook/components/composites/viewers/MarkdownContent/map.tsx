@@ -30,8 +30,8 @@ import { StackH } from "@sb-components/frames/Stack/Stack"
  * tables, code, mermaid, custom directive tags) in one file.
  *
  * Handles: Shiki syntax highlighting, mermaid diagrams, `:::tab`/`:::code`/
- * `:::preview` → Preview↔Code tabs, GFM tables → house `TableRoot`,
- * `::::accordion`/`:::panel` → house `AccordionTree`, `:::muted`, `:::chip`, image
+ * `:::preview` -> Preview<->Code tabs, GFM tables -> house `TableRoot`,
+ * `::::accordion`/`:::panel` -> house `AccordionTree`, `:::muted`, `:::chip`, image
  * captions, link routing, heading anchors. Not handled here: `arcSections`,
  * `plain` mode, the ` ```mdx ` live-render fence, the ` ```layout ` fence.
  *
@@ -108,7 +108,7 @@ interface TocHeadingConfig {
     sizeClass: string
     /** Tailwind margin class (asymmetric — reading measure only). */
     marginClass: string
-    /** `true` (reading measure only) → render the hover `#` deep-link affordance. */
+    /** `true` (reading measure only) -> render the hover `#` deep-link affordance. */
     showAnchor: boolean
 }
 
@@ -279,7 +279,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
                 <img src={src} alt="" className={cn("w-full rounded-2xl", blockMy)} />
             )
         ),
-        // GFM table → house `TableRoot` compound (see the file header on `MarkdownTableParts.tsx`
+        // GFM table -> house `TableRoot` compound (see the file header on `MarkdownTableParts.tsx`
         // for why this is NOT the config-driven `composites/data/Table`). The block-rhythm margin
         // (COMPOSITE-4: `MarkdownTable` takes no `className`) is owned here, by the plain wrapping
         // `<div>` — margin is a seam between two blocks, not a prop of either one.
@@ -309,7 +309,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
                 </Box>
             )
         },
-        // Fenced block dispatch: `mermaid` → diagram, everything else → Shiki.
+        // Fenced block dispatch: `mermaid` -> diagram, everything else -> Shiki.
         pre: ({ children }: MarkdownNodeProps) => {
             const child = React.Children.only(children) as React.ReactElement<MarkdownCodeRuntimeProps>
             const fenceClass = child.props.className
@@ -366,11 +366,11 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
                 />
             </div>
         ),
-        // :::tab → [ Preview | Code ] tabs; code/preview panes carry `kind` so `TabsBlock` matches them.
+        // :::tab -> [ Preview | Code ] tabs; code/preview panes carry `kind` so `TabsBlock` matches them.
         tabblock: ({ children }: MarkdownNodeProps) => <TabsBlock>{children}</TabsBlock>,
         tabcode: ({ children }: MarkdownNodeProps) => <TabPane kind="code">{children}</TabPane>,
         tabpreview: ({ children }: MarkdownNodeProps) => <TabPane kind="preview">{children}</TabPane>,
-        // ::::accordion / :::panel{title} → house `AccordionTree` compound (incremental panels from
+        // ::::accordion / :::panel{title} -> house `AccordionTree` compound (incremental panels from
         // react-markdown — not the data-driven Disclosure `Accordion` atom). `variant="default"`
         // keeps the item separator FULL-BLEED, with the light hairline `--separator` re-point so
         // dividers read the same as the `SurfaceListCard` family; `border` delineates it as a

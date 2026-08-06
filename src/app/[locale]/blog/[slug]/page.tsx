@@ -5,6 +5,16 @@ import { BlogPostPage } from "@/components/pages/BlogPostPage"
 import { publicEnv } from "@/resources/env/public"
 import { JsonLd, articleSchema } from "@/modules/seo/jsonLd"
 import { buildPageMetadata } from "@/modules/seo/buildMetadata"
+/** Props for GenerateMetadata. */
+interface GenerateMetadataProps {
+    params: Promise<BlogParams>
+}
+
+/** Props for Page. */
+interface PageProps {
+    params: Promise<BlogParams>
+}
+
 
 /** Route params for `/[locale]/blog/[slug]`. */
 interface BlogParams {
@@ -54,9 +64,7 @@ const getPost = cache(async (slug: string): Promise<BlogPostMeta | null> => {
 /** Per-post SEO metadata (title/excerpt/canonical/hreflang/OG cover, article type). */
 export const generateMetadata = async ({
     params,
-}: {
-    params: Promise<BlogParams>
-}): Promise<Metadata> => {
+}: GenerateMetadataProps): Promise<Metadata> => {
     const { locale, slug } = await params
     const post = await getPost(slug)
     if (!post) {
@@ -81,9 +89,7 @@ export const generateMetadata = async ({
  */
 const Page = async ({
     params,
-}: {
-    params: Promise<BlogParams>
-}) => {
+}: PageProps) => {
     const { locale, slug } = await params
     const post = await getPost(slug)
     return (

@@ -3,8 +3,14 @@ import {
     useSeededParticles,
 } from "../useSeededParticles"
 
+/** Props for {@link FirefliesEffect}. */
+interface FirefliesEffectProps {
+    /** Particle count. */
+    count?: number
+}
+
 /** Slow-drifting fireflies scattered across the viewport that flicker in and out, tinted by the accent color. */
-export const FirefliesEffect = ({ count = 24 }: { count?: number }) => {
+export const FirefliesEffect = ({ count = 24 }: FirefliesEffectProps) => {
     const particles = useSeededParticles(count, 53)
     return (
         <>

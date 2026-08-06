@@ -112,7 +112,7 @@ export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<
     // the only things that differ between single- and multi-select.
     const isSelected = (candidate: T): boolean =>
         (props.multiple ? props.values.includes(candidate) : props.value === candidate)
-    const handlePress = (candidate: T): void => {
+    const onPress = (candidate: T): void => {
         if (props.multiple) {
             props.onToggle(candidate)
         } else {
@@ -138,7 +138,7 @@ export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<
                                 size="sm"
                                 variant={selected ? "tertiary" : "ghost"}
                                 isDisabled={item.isDisabled}
-                                onPress={() => handlePress(item.value)}
+                                onPress={() => onPress(item.value)}
                                 label={item.content}
                             />
                         </span>
@@ -153,7 +153,7 @@ export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<
                             size="sm"
                             variant={selected ? "secondary" : "tertiary"}
                             isDisabled={item.isDisabled}
-                            onPress={() => handlePress(item.value)}
+                            onPress={() => onPress(item.value)}
                             label={item.content}
                         />
                         {React.Children.map(itemAction(item), (action) =>

@@ -49,6 +49,11 @@ const tabHref = (locale: string, username: string, tabId: ProfileTab): string =>
 /** Every profile tab, in the order the strip checks a route-prefix match — ported from the real `PROFILE_TABS` minus "overview" (the fallback). */
 const ROUTABLE_TABS: ReadonlyArray<ProfileTab> = ["projects", "challenges", "skills", "cv", "activity"]
 
+/** Props for {@link PublicProfileLayout}. */
+interface PublicProfileLayoutProps {
+    children: ReactNode
+}
+
 /**
  * Public-profile shell — the CONNECTED half of `_PublicProfileLayout`. Mounted by
  * `app/[locale]/profile/[username]/layout.tsx` (the wiring-in is a later step —
@@ -67,9 +72,7 @@ const ROUTABLE_TABS: ReadonlyArray<ProfileTab> = ["projects", "challenges", "ski
  */
 export const PublicProfileLayout = ({
     children,
-}: {
-    children: ReactNode
-}) => {
+}: PublicProfileLayoutProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()

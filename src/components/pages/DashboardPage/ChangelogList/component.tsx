@@ -90,7 +90,7 @@ const SkeletonRow = () => (
 )
 
 /** One real row: date + optional category chip, title (link when `linkUrl` is set), optional body. */
-const EntryRow = ({ entry }: { entry: ChangelogListEntry }) => {
+const EntryRow = ({ entry }: EntryRowProps) => {
     // local consts (not `entry.category` property reads) so narrowing survives into the
     // nested `items` closures below — TS drops property narrowing across a callback boundary.
     const { formattedDate, category, categoryLabel, linkUrl, title, body } = entry
@@ -188,3 +188,5 @@ export const _ChangelogList = ({
         />
     )
 }
+
+type EntryRowProps = { entry: ChangelogListEntry }

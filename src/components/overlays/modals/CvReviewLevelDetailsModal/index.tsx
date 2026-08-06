@@ -35,7 +35,7 @@ export const CvReviewLevelDetailsModal = () => {
     )
 
     /** Select a rubric template, then close the modal. */
-    const handleSelectReviewLevel = (templateId: string) => {
+    const onSelectReviewLevel = (templateId: string) => {
         dispatch(setSelectedCvReviewTemplateId(templateId))
         setOpen(false)
     }
@@ -46,7 +46,7 @@ export const CvReviewLevelDetailsModal = () => {
             onOpenChange={setOpen}
             selectedTemplateId={selectedTemplateId}
             options={options}
-            onSelect={handleSelectReviewLevel}
+            onSelect={onSelectReviewLevel}
             labels={{
                 selectionTitle: t("cv.submission.reviewLevelDetails.selectionTitle"),
                 subtitle: t("cv.submission.reviewLevelDetails.subtitle"),

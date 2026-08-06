@@ -43,11 +43,7 @@ const TrackCard = ({
     track,
     locale,
     t,
-}: {
-    track: UserJobReadinessTrack
-    locale: string
-    t: ReturnType<typeof useTranslations>
-}) => {
+}: TrackCardProps) => {
     const bandChips = [
         ...(track.isQualified
             ? [() => (
@@ -224,4 +220,10 @@ export const ProfileJobReadiness = ({ className, label }: ProfileJobReadinessPro
             </AsyncContent>
         </LabeledCard>
     )
+}
+
+type TrackCardProps = {
+    track: UserJobReadinessTrack
+    locale: string
+    t: ReturnType<typeof useTranslations>
 }

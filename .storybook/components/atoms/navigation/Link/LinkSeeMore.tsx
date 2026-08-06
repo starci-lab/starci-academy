@@ -220,4 +220,5 @@ export const LinkSeeMore = ({
     )
 }
 
+/** Tier metadata for `LinkSeeMore`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "LinkSeeMore" } as const

@@ -6,7 +6,7 @@ import { StackV } from "@/components/frames/Stack"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — TitledText: a primary line + optional muted
  * secondary (and optional hint) stacked vertically as ONE composite. A
- * "title↔subtitle" pair is a semantic UNIT, so it is a single component (one
+ * "title<->subtitle" pair is a semantic UNIT, so it is a single component (one
  * anatomy node), NOT two/three raw `<Typography>` hand-rolled at every row.
  *
  * This is the single most-recurring composite in the app (≥16 call-sites, ≥6
@@ -43,7 +43,7 @@ interface SizeConfig {
     titleSize: "sm" | "h3"
     titleWeight: "medium" | "semibold" | "bold"
     subSize: "xs" | "sm"
-    /** `undefined` → foreground (default); `"muted"` → muted line. */
+    /** `undefined` -> foreground (default); `"muted"` -> muted line. */
     subColor?: "muted"
     subWeight?: "medium"
     /**
@@ -89,7 +89,7 @@ export interface TitledTextProps {
     weight?: "medium" | "semibold" | "bold"
     /** Truncate every line to a single line (needs a bounded parent width). */
     truncate?: boolean
-    /** `true` → render the skeleton mirror (bars sized per line). */
+    /** `true` -> render the skeleton mirror (bars sized per line). */
     isSkeleton?: boolean
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.

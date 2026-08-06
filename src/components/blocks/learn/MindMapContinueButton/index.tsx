@@ -20,28 +20,28 @@ const ALL_DONE_LABEL = "You've completed everything"
 /** Props for {@link MindMapContinueButton}. */
 export interface MindMapContinueButtonProps {
     /**
-     * Href of the viewer's next unread lesson/challenge, or `null` when none
-     * resolves. Non-null is the single source of truth for "show the resume
-     * pill" — see the file header for why it outranks {@link allContentDone}.
-     */
+ * Href of the viewer's next unread lesson/challenge, or `null` when none
+ * resolves. Non-null is the single source of truth for "show the resume
+ * pill" — see the file header for why it outranks {@link allContentDone}.
+ */
     resumeHref: string | null
     /**
-     * `true` → the viewer has read everything the map has to offer. Only
-     * consulted when {@link resumeHref} is `null`; ignored otherwise.
-     */
+ * `true` -> the viewer has read everything the map has to offer. Only
+ * consulted when {@link resumeHref} is `null`; ignored otherwise.
+ */
     allContentDone: boolean
     /**
-     * Fired on a resume press. Optional: the button itself only renders while
-     * {@link resumeHref} is set, so a caller mid-wiring still sees the true shape.
-     */
+ * Fired on a resume press. Optional: the button itself only renders while
+ * {@link resumeHref} is set, so a caller mid-wiring still sees the true shape.
+ */
     onResume?: () => void
     /**
-     * Accessible name for the resume action, localized by the caller (blocks
-     * carry no i18n) — richer than the visible "Continue" label alone, since a
-     * screen reader hears it with no page context around it.
-     */
+ * Accessible name for the resume action, localized by the caller (blocks
+ * carry no i18n) — richer than the visible "Continue" label alone, since a
+ * screen reader hears it with no page context around it.
+ */
     continueAriaLabel: string
-    /** `true` → the block shows its loading shimmer instead of either leaf. */
+    /** `true` -> the block shows its loading shimmer instead of either leaf. */
     isSkeleton?: boolean
 }
 
@@ -85,9 +85,9 @@ const MindMapContinueButton = ({
 
     if (allContentDone) {
         return (
-            // TODO(atom): skin-shape đậm (rounded-full + border + bg + shadow — pill nổi)
-            // nên thành atom/composite (Chip/Button/SurfaceCard) — frame không làm được,
-            // tạm bọc Box + principles.
+            // TODO(atom): heavy skin-shape (rounded-full + border + bg + shadow — raised pill)
+            // should become an atom/composite (Chip/Button/SurfaceCard) — a frame cannot own it,
+            // wrap with Box + principles for now.
             <Box
                 principle="control-pad" className="rounded-full border border-default bg-surface px-3 py-2 shadow-lg"
                 explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row."

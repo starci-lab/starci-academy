@@ -176,7 +176,12 @@ export interface NavbarProps {
     className?: string
 }
 
-const ShortcutHint = ({ shortcutLabel }: { shortcutLabel: string }) => (
+/** Props for {@link ShortcutHint}. */
+interface ShortcutHintProps {
+    shortcutLabel: string
+}
+
+const ShortcutHint = ({ shortcutLabel }: ShortcutHintProps) => (
     <Kbd><Kbd.Content>{shortcutLabel}</Kbd.Content></Kbd>
 )
 

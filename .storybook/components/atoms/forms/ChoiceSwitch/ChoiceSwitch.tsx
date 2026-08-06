@@ -74,4 +74,5 @@ export const ChoiceSwitch = ({
     )
 }
 
+/** Tier metadata for `ChoiceSwitch`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "ChoiceSwitch" } as const

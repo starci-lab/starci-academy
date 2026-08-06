@@ -32,13 +32,13 @@ const queryMap: Record<QueryMyInProgressFlashcardReviewSession, DocumentNode> = 
 
 /** Request body for the my-in-progress-flashcard-review-session query. */
 export interface MyInProgressFlashcardReviewSessionRequest {
-    /** Deck to check for a resumable in-progress "Học thẻ" run. */
+    /** Deck to check for a resumable in-progress flashcard-study run. */
     deckId: string
 }
 
 /**
- * Fetches the viewer's resumable in-progress "Học thẻ" review session for a
- * deck, if any (24h TTL, `status="in_progress"` only) — `null` when there is
+ * Fetches the viewer's resumable in-progress flashcard-study review session for
+ * a deck, if any (24h TTL, `status="in_progress"` only) — `null` when there is
  * none. Mirrors backend `queries/flashcard/my-in-progress-flashcard-review-session`.
  */
 export const queryMyInProgressFlashcardReviewSession = async ({

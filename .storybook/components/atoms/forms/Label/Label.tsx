@@ -13,4 +13,5 @@ export const Label = ({ children, ...props }: LabelProps) => (
     <HeroLabel data-tier="atom" data-component="Label" {...props}>{children}</HeroLabel>
 )
 
+/** Tier metadata for `Label`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Label" } as const

@@ -57,7 +57,7 @@ export const DashboardPage = ({
     const tabsNode = useMemo(() => <DashboardTabsBar />, [])
     useRegisterNavbarBottomLayer(tabsNode)
 
-    // RailShell owns the identity↔content layout seam (stack → row at md, gap-8).
+    // RailShell owns the identity<->content layout seam (stack -> row at md, gap-8).
     const rail = () => <DashboardIdentity />
     const body = () => {
         if (tab === "overview") {

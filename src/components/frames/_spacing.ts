@@ -126,7 +126,7 @@ const isResponsiveValue = <T,>(v: Responsive<T>): v is { base: T; sm?: T; md?: T
  * Centralised here rather than in each of the six frames that take `gap`, so the responsive
  * shape is read the same way everywhere -- see principles/README.md's "one place" rule.
  */
-export function gapClassNames(gap: Responsive<AllowedGap>): Array<string | false> {
+export const gapClassNames = (gap: Responsive<AllowedGap>): Array<string | false> => {
     if (!isResponsiveValue(gap)) return [GAP_CLASS[gap]]
     return [
         GAP_CLASS[gap.base],
@@ -293,7 +293,7 @@ export type PaddingValue = AllowedPadding | { x?: AllowedPadding; y?: AllowedPad
 const isPaddingAxisValue = (v: PaddingValue): v is { x?: AllowedPadding; y?: AllowedPadding } =>
     typeof v === "object" && v !== null
 
-function paddingValueClassNames(value: PaddingValue, table: PaddingTable): Array<string | false> {
+const paddingValueClassNames = (value: PaddingValue, table: PaddingTable): Array<string | false> => {
     if (!isPaddingAxisValue(value)) return [table.all[value]]
     return [value.x != null && table.x[value.x], value.y != null && table.y[value.y]]
 }
@@ -302,7 +302,7 @@ function paddingValueClassNames(value: PaddingValue, table: PaddingTable): Array
  * Resolve a {@link Responsive}<{@link PaddingValue}> into the class list a frame's `cn()`
  * composes. Centralised for the same reason {@link gapClassNames} is.
  */
-export function paddingClassNames(padding: Responsive<PaddingValue>): Array<string | false> {
+export const paddingClassNames = (padding: Responsive<PaddingValue>): Array<string | false> => {
     if (!isResponsiveValue(padding)) return paddingValueClassNames(padding, PADDING_TABLE.base)
     return [
         ...paddingValueClassNames(padding.base, PADDING_TABLE.base),

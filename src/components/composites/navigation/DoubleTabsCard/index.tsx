@@ -11,7 +11,7 @@ import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
  * living inside a `SurfaceCard` face, instead of sitting bare on the page
  * canvas the way `ContentModeNav` does today.
  *
- * ⭐ COMPOSES, DOES NOT REINVENT (teacher's ruling, 2026-07-29, "add a
+ * * COMPOSES, DOES NOT REINVENT (teacher's ruling, 2026-07-29, "add a
  * doubleTabsCard built from Toolbar + Card"). `SurfaceCard.Base`'s own `header` slot is already
  * documented for exactly this shape ("a title row, A TOOLBAR") — this
  * composite is that ONE combination, named, so every caller that needs "tabs
@@ -62,7 +62,7 @@ export interface DoubleTabsCardProps {
     /** Layout utilities on the card's outer section wrapper, from the closed positioning union. */
     classNames?: Array<AllowedClassName>
     /**
-     * `true` → every content-region slot this shell mounts (`leftEnd` / `body`)
+     * `true` -> every content-region slot this shell mounts (`leftEnd` / `body`)
      * is CALLED with `isSkeleton` too (COMPOSITE-8 — each is a component
      * reference this shell calls itself, so the flag reaches inside it), and
      * forwarded to the underlying `SurfaceCard` so its own loading chrome matches.

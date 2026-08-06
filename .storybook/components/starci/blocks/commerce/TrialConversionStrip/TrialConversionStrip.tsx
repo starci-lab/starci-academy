@@ -15,7 +15,7 @@ import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
- * BLOCK — the trial → enroll conversion strip on the content-home. Bundles a
+ * BLOCK — the trial -> enroll conversion strip on the content-home. Bundles a
  * loss-aversion line (free lessons remaining), the real price (+ phase-scarcity
  * note), and an enroll CTA. `src` is STORE-COUPLED (SWR price fetch + zustand
  * payment overlay) — this port takes the SAME data as PLAIN PROPS (`price`,
@@ -46,16 +46,16 @@ export interface TrialConversionStripProps {
     /** Price preview for the course; `undefined`/`null` while absent (see `isSkeleton`). */
     price?: TrialConversionStripPrice | null
     /**
-     * `true` → this block is at REST. Only the PRICE region rests: the header (icon,
-     * title, description) and the CTA do not depend on the price, so they render
-     * immediately and the shimmer stands exactly where PriceTag + PhaseScarcityNote will
-     * land, which is what stops the layout jumping when the price arrives.
-     *
-     * Named `isSkeleton`, not `isPriceLoading` (§12g.0a: ONE vocabulary across all five
-     * tiers). The old name was a second word for the same idea at this tier only, so a
-     * reader crossing the block boundary had to translate it every time — and the screen
-     * had to write `isPriceLoading={isSkeleton}` to bridge the two.
-     */
+ * `true` -> this block is at REST. Only the PRICE region rests: the header (icon,
+ * title, description) and the CTA do not depend on the price, so they render
+ * immediately and the shimmer stands exactly where PriceTag + PhaseScarcityNote will
+ * land, which is what stops the layout jumping when the price arrives.
+ *
+ * Named `isSkeleton`, not `isPriceLoading` (§12g.0a: ONE vocabulary across all five
+ * tiers). The old name was a second word for the same idea at this tier only, so a
+ * reader crossing the block boundary had to translate it every time — and the screen
+ * had to write `isPriceLoading={isSkeleton}` to bridge the two.
+ */
     isSkeleton?: boolean
     /** Fired when the enroll CTA is pressed (caller owns opening the payment flow). */
     onEnroll?: () => void
@@ -64,7 +64,7 @@ export interface TrialConversionStripProps {
 }
 
 /**
- * Trial → enroll conversion strip on the content-home. Bundles three honest
+ * Trial -> enroll conversion strip on the content-home. Bundles three honest
  * levers on the surface they actually land on: (1) LOSS-AVERSION — "you've
  * read N/M free lessons, keep going"; (2) SCARCITY — the real pricing-phase
  * seats + next-tier price via {@link PhaseScarcityNote}; (3) the enroll CTA.
@@ -101,7 +101,7 @@ const TrialConversionStripBase = ({
 
                     />
                 ),
-                // The "title + description" cluster is ONE SEMANTIC UNIT ⇒ goes through
+                // The "title + description" cluster is ONE SEMANTIC UNIT => goes through
                 // ONE frame, not two separate `Typography`.
                 // `TitledText size="row"` (default) already OWNS exactly this scale:
                 // title `sm` medium · subtitle `xs` muted. Hand-building two atoms means
@@ -127,7 +127,7 @@ const TrialConversionStripBase = ({
     // scarcity line is a CAPTION OF THE PRICE, so price + scarcity are one
     // cluster and this is an INTRA-cluster seam. `section` (6) belongs to the
     // seams AROUND this cluster — to the lead cluster above and to the CTA
-    // beside it. Applying "design ↔ design = 6"
+    // beside it. Applying "design <-> design = 6"
     // mechanically here would produce the rhythm 24/12/24/24, i.e. the caption
     // as far from its own price as the CTA is from everything — a uniform
     // rhythm stops reading as groups. With 3 the

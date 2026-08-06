@@ -32,10 +32,10 @@ export interface ToolbarTabItem {
     /** Tab content (text, or an icon + text row). */
     label: ReactNode
     /**
-     * Set → shown INSTEAD of `label` below `@app-sm` (e.g. "TS" for "TypeScript"),
+     * Set -> shown INSTEAD of `label` below `@app-sm` (e.g. "TS" for "TypeScript"),
      * `label` returns from `@app-sm` up: a shortened tab beats collapsing the
      * group behind `collapseRightOnMobile`'s dropdown when every option should
-     * stay reachable in one tap. Omit → unchanged (no compact swap).
+     * stay reachable in one tap. Omit -> unchanged (no compact swap).
      */
     compactLabel?: ReactNode
     /** Optional leading icon rendered before the label. */
@@ -102,7 +102,7 @@ export interface ToolbarBaseProps {
     classNames?: Array<AllowedClassName>
     /** Dev/spec: overlay the anatomy annotation on this toolbar. */
 }
-/** size → extra Tab className override (md = HeroUI's own default, no override). */
+/** size -> extra Tab className override (md = HeroUI's own default, no override). */
 const TAB_SIZE_SM = "h-auto! w-auto! px-3! py-2! text-xs!"
 /**
  * Selected-state TEXT color only (accent tab group) — the underline itself now
@@ -198,7 +198,7 @@ const ToolbarBase = ({
                 a tabpanel with this tab's key, whether or not one is ever rendered.
                 `Toolbar` never shows panel CONTENT here (callers render their own
                 content elsewhere), so these panels stay empty/`sr-only` — they exist
-                purely to satisfy the tab↔tabpanel ARIA relationship. */}
+                purely to satisfy the tab<->tabpanel ARIA relationship. */}
             {group.items.map((item) => (
                 <TabsPanel key={item.key} id={item.key} className="sr-only">{null}</TabsPanel>
             ))}

@@ -5,17 +5,17 @@ import { type AnatomyTier } from "./anatomy-context"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ĐỒ NGHỀ — AnatomyOverlay: đánh dấu MỘT part để cây anatomy nhận ra nó.
+ * TOOLING — AnatomyOverlay: marks ONE part so the anatomy tree can identify it.
  *
- * Rút gọn 2026-07-26 (thầy chốt): anatomy chỉ còn là CÔNG CỤ XEM CÂY DOM, nên
- * overlay KHÔNG vẽ gì lên hình nữa — không viền nét đứt, không nhãn góc, không
- * badge số, không bấm. Nó chỉ còn phát một marker VÔ HÌNH mang `data-anat-part`.
+ * Simplified 2026-07-26 (teacher ruling): anatomy is only a DOM-TREE VIEWING TOOL, so
+ * the overlay no longer paints anything — no dashed outline, no corner label, no
+ * number badge, no click. It only emits an INVISIBLE marker carrying `data-anat-part`.
  *
- * Vì sao bỏ: nhãn phủ đè lên chính component nó chú thích (neo: trùm kín một cái
- * chip 60px, chữ không đọc nổi) — rối hơn là giúp.
+ * Why drop paint: the label covered the component it annotated (anchor: smothering a
+ * 60px chip so the text was unreadable) — more noise than help.
  *
- * Vì sao GIỮ component thay vì xoá: ~20 call-site đang gọi nó, và cây vẫn cần
- * marker để nhận diện part. Muốn đảo lại thì chỉ sửa MỘT chỗ.
+ * Why KEEP the component instead of deleting it: ~20 call-sites still invoke it, and
+ * the tree still needs a marker to identify the part. To reverse course, change ONE place.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -23,15 +23,15 @@ export type { AnatomyTier }
 
 /** Props for the {@link AnatomyOverlay}. */
 export interface AnatomyOverlayProps {
-    /** Tên part — hiện trong cây anatomy. */
+    /** Part name — shown in the anatomy tree. */
     label: string
-    /** Giữ cho tương thích call-site cũ; cây lấy tier từ `annotate`. */
+    /** Kept for legacy call-site compatibility; the tree reads tier from `annotate`. */
     tier?: AnatomyTier
-    /** Giữ cho tương thích call-site cũ; overlay không còn vẽ link. */
+    /** Kept for legacy call-site compatibility; the overlay no longer paints a link. */
     href?: string
 }
 
-/** Marker vô hình đánh dấu part cho cây anatomy. */
+/** Invisible marker that tags a part for the anatomy tree. */
 export const AnatomyOverlay = ({ label }: AnatomyOverlayProps) => (
     <span aria-hidden data-component={label} className="pointer-events-none absolute inset-0" />
 )

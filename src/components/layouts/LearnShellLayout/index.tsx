@@ -19,7 +19,7 @@ import { useAppSelector } from "@/redux/hooks"
 
 /**
  * Learn surfaces that require enrollment. Only the capstone (personal-project) is gated:
- * it's the enrolled-only hands-on outcome. Trial viewers ("Học thử") may freely browse the
+ * it's the enrolled-only hands-on outcome. Trial viewers ("Try for free") may freely browse the
  * rest — flashcards (non-premium), leaderboard, foundations, content + mind-map — so those
  * are NOT gated. Keyed by `segments[0]`.
  */
@@ -37,6 +37,7 @@ const SURFACE_PREVIEW: Record<string, React.ReactNode> = {
     "personal-project": <PersonalProjectGatePreview />,
 }
 
+/** Learn course shell: left/right rails, enroll gate, and full-bleed work surfaces. */
 export const LearnShellLayout = ({ children }: PropsWithChildren) => {
     const t = useTranslations()
     // load the active course here so EVERY learn tab has `course.entity` on a cold refresh
@@ -70,18 +71,17 @@ export const LearnShellLayout = ({ children }: PropsWithChildren) => {
     const isContent = segments[0] === "content"
     const isPersonalProject = segments[0] === "personal-project"
     // the flashcards surface goes RAIL-LESS entirely (per concepts/when-rail: drop the 2nd rail
-    // for the whole Ôn tập surface). The deck list lives IN the pane (study overview) and the
+    // for the whole Flashcards/Review surface). The deck list lives IN the pane (study overview) and the
     // mode switch is in-pane on desktop too. `isFlashcards` only drives the mobile-bar choice.
     const isFlashcards = segments[0] === "flashcards"
-    // the "Hỏi nhanh" quiz goes full-bleed ONLY during a live run (a focused work
+    // the "Quick quiz" surface goes full-bleed ONLY during a live run (a focused work
     // surface: its own `WorkSessionHeader` band IS the header) — detected off the
     // dedicated resumable route (`flashcards/quiz/sessions/[sessionId]`), same
     // pattern as the mock-interview's `isMockInterviewInterviewRoute` below.
     const isFlashcardQuizLive = isFlashcards && segments[1] === "quiz" && segments[2] === "sessions"
-    // "Học thẻ"/"Ôn thẻ đến hạn" review goes full-bleed ONLY during a live session
+    // "Study cards"/"Due review" live session goes full-bleed ONLY during a live session
     // — same idiom, detected off the dedicated resumable route
-    // (`flashcards/review/sessions/[sessionId]`, 2026-07-11 đính chính: "ôn thẻ
-    // giao diện y chang"). This ONE route now serves BOTH FlashcardReviewer
+    // (`flashcards/review/sessions/[sessionId]`, 2026-07-11 correction: "card review UI matches study"). This ONE route now serves BOTH FlashcardReviewer
     // (single-deck) and DueReview (cross-deck) — the old deck-scoped route
     // (`review/decks/[deckId]/sessions/[sessionId]`) was consolidated away; the
     // bare `.../review` overview route (no `sessions` segment) is just the
@@ -89,7 +89,7 @@ export const LearnShellLayout = ({ children }: PropsWithChildren) => {
     // 2026-07-12: the gate still checked the DELETED deck-scoped shape and
     // never matched the real route, so the shell kept applying its `p-6`
     // reading-column padding ON TOP of the surface's own full-bleed padding
-    // (thầy: "bỏ padding-6 ở đây này", pointed at DevTools showing the shell's
+    // (teacher: "drop padding-6 here", pointed at DevTools showing the shell's
     // `p-6 @max-app-lg:pb-16` wrapper still active on a live review session).
     const isFlashcardReviewLive = isFlashcards && segments[1] === "review" && segments[2] === "sessions"
     // the mind-map is a full-bleed interactive canvas (fills the viewport edge-to-edge),
@@ -123,7 +123,7 @@ export const LearnShellLayout = ({ children }: PropsWithChildren) => {
     const isLeaderboard = segments[0] === "leaderboard"
     // a single challenge (`…/contents/<id>/challenges/<id>`) KEEPS the course-tree rail (the
     // learner still navigates the course while solving), but its body is a tabbed single column
-    // (Đề bài / Nộp bài), so it needs no on-this-page outline. Only the right rail is dropped.
+    // (Brief / Submit), so it needs no on-this-page outline. Only the right rail is dropped.
     const isChallenge = segments.includes("challenges")
 
     // persistent left rail (always visible on desktop): the width is drag-resizable
@@ -216,7 +216,7 @@ export const LearnShellLayout = ({ children }: PropsWithChildren) => {
                 `InnerLayout` applies the same `isAssessmentLive` suppression during a
                 live quiz / mock-interview (a course-grounded AI beside a
                 recruiter-facing signal is a cheat channel). Chat returns after the
-                session, on the scorecard, for "ôn tag yếu". */}
+                session, on the scorecard, for "review weak tags". */}
             {/* "ask AI about this passage" button on lesson-article text selection */}
             {!isAssessmentLive ? <ContentAiSelectionAsk /> : null}
             <_LearnShellLayout

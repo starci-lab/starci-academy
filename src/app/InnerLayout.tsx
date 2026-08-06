@@ -24,14 +24,15 @@ import { useContentAiChatOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useContentAiChatModeStore } from "@/hooks/zustand/contentAiChatMode/store"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 
+/** Client app shell: providers, navbar/footer gates, and the content-AI rail. */
 export const InnerLayout = ({ children }: PropsWithChildren) => {
     // Suppress the drifting ember background on Learn routes — it competes with
     // long-form reading. Keep it on marketing / dashboard / the rest of the app.
     const pathname = usePathname()
     const isLearnRoute = pathname?.includes("/learn") ?? false
-    // Footer hiện ở LANDING — cả locale root ("/", "/vi", "/en") LẪN /home ("/home",
-    // "/vi/home"): /home là bản ungated của CÙNG trang landing (user đã login xem ở đây).
-    // Mọi trang khác (dashboard / learn / profile / auth / …) KHÔNG có footer — thầy chốt 2026-06-26.
+    // Footer renders on LANDING — both the locale root ("/", "/vi", "/en") AND /home ("/home",
+    // "/vi/home"): /home is the ungated version of the SAME landing page (signed-in users see it here).
+    // Every other page (dashboard / learn / profile / auth / ...) do NOT have a footer — teacher ruling 2026-06-26.
     const footerPath = pathname ?? ""
     const showFooter = /^\/(?:[a-z]{2})?\/?$/.test(footerPath) || /^\/(?:[a-z]{2}\/)?home\/?$/.test(footerPath)
 

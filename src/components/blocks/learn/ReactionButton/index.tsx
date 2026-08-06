@@ -16,8 +16,8 @@ export type { ReactionType, ReactionCount, ReactionButtonProps } from "./types"
  * `ContentDiscussion`'s thread — the SAME control real `src`'s `ReactionBar`
  * is, reused between `InteractionBar` and `CommentItem`.
  *
- * 📐 LEAF by STRUCTURE (§14d.2). Which emotion is picked and whether the
- * summary is empty keep the same two-part shape ⇒ states. The caller
+ * LEAF by STRUCTURE (§14d.2). Which emotion is picked and whether the
+ * summary is empty keep the same two-part shape => states. The caller
  * flipping `isSkeleton` is its own leaf.
  */
 
@@ -44,7 +44,7 @@ const ReactionButton = ({
         .slice(0, 3)
         .map((entry) => REACTION_BY_TYPE[entry.type])
 
-    const handlePick = (type: ReactionType) => {
+    const onPick = (type: ReactionType) => {
         setIsOpen(false)
         onReact(myReaction === type ? null : type)
     }
@@ -91,21 +91,21 @@ const ReactionButton = ({
                         </span>
                     </HeroButton>
                 </HeroPopover.Trigger>
-                {/* TODO(atom): skin-shape đậm (rounded-full + px-2 py-1 pill) — frame không làm được,
-                    tạm bọc bằng data-principle hand-set. `className` sits on `HeroPopover.Content`
-                    itself (the vendor's OWN rendered surface, react-aria `Popover`), not a raw <div>
-                    we author, so `Box` can't wrap it (moving the shape down onto an inner wrapping
-                    Box would leave the real popover surface with its default non-pill radius showing
-                    behind it — a visible shape regression). `data-principle` on `Content` directly is
-                    type-safe (forwarded through `DOMAttributes`), so tagged in place instead. Needs a
-                    dedicated pill-popover atom/composite to own this shape. Same declared shape
-                    as `QaReactionBar.tsx`'s trigger.
-                    inset-exception: pill geometry, the same px-2 py-1 HeroUI ships in chip.css. */}
+                {/* TODO(atom): heavy skin-shape (rounded-full + px-2 py-1 pill) — a frame cannot own it,
+ wrap with a hand-set data-principle for now. `className` sits on `HeroPopover.Content`
+ itself (the vendor's OWN rendered surface, react-aria `Popover`), not a raw <div>
+ we author, so `Box` can't wrap it (moving the shape down onto an inner wrapping
+ Box would leave the real popover surface with its default non-pill radius showing
+ behind it — a visible shape regression). `data-principle` on `Content` directly is
+ type-safe (forwarded through `DOMAttributes`), so tagged in place instead. Needs a
+ dedicated pill-popover atom/composite to own this shape. Same declared shape
+ as `QaReactionBar.tsx`'s trigger.
+ inset-exception: pill geometry, the same px-2 py-1 HeroUI ships in chip.css. */}
                 <HeroPopover.Content data-principle="pill-pad" className="overflow-visible rounded-full px-2 py-1">
                     <ReactionPicker
                         items={Object.values(REACTION_BY_TYPE).map((reaction) => ({ key: reaction.type, imgSrc: `/reactions/${reaction.type}.svg`, label: reaction.label }))}
                         activeKey={myReaction}
-                        onSelect={(key) => handlePick(key as ReactionType)}
+                        onSelect={(key) => onPick(key as ReactionType)}
                     />
                 </HeroPopover.Content>
             </HeroPopover>

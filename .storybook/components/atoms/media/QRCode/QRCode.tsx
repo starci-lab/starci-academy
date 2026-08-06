@@ -73,4 +73,5 @@ const QRCodeBase = ({ size, data, icon, isSkeleton = false, classNames }: QRCode
 /** `QRCode.*` — QR-code atom namespace; one shape today, grouped under `Base`. */
 export { QRCodeBase as QRCode }
 
+/** Tier metadata for `QRCode`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "QRCode" } as const

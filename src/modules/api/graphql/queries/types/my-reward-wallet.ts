@@ -6,7 +6,7 @@ export interface QueryMyRewardWalletRedemptionData {
     rewardKey: string
     /** Display title at the time of redemption. */
     title: string
-    /** Cost in điểm quà paid for this redemption. */
+    /** Cost in reward points paid for this redemption. */
     cost: number
     /** Fulfilment status — `granted` / `pending` / `fulfilled`. */
     status: string
@@ -16,9 +16,9 @@ export interface QueryMyRewardWalletRedemptionData {
 
 /** Payload inside `myRewardWallet.data` after the standard API wrapper. */
 export interface QueryMyRewardWalletData {
-    /** Current spendable điểm quà balance. */
+    /** Current spendable reward-point balance. */
     balance: number
-    /** Lifetime điểm quà spent. */
+    /** Lifetime reward points spent. */
     spent: number
     /** Past redemptions, newest first. */
     redemptions: QueryMyRewardWalletRedemptionData[]

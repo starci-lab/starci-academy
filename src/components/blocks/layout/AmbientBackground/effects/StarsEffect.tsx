@@ -3,8 +3,14 @@ import {
     useSeededParticles,
 } from "../useSeededParticles"
 
+/** Props for {@link StarsEffect}. */
+interface StarsEffectProps {
+    /** Particle count. */
+    count?: number
+}
+
 /** A twinkling starfield scattered across the viewport, tinted by the accent color. Motion-free (opacity pulse only). */
-export const StarsEffect = ({ count = 70 }: { count?: number }) => {
+export const StarsEffect = ({ count = 70 }: StarsEffectProps) => {
     const particles = useSeededParticles(count, 71)
     return (
         <>

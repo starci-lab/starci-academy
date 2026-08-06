@@ -62,7 +62,7 @@ const buildInitialNodes = (): Node<ConceptNodeData>[] =>
         }
     })
 
-/** Edges — ALL are light connecting lines (solid, thin, faint — like sharding↔cdc); NO dashed, NO accent. */
+/** Edges — ALL are light connecting lines (solid, thin, faint — like sharding<->cdc); NO dashed, NO accent. */
 const buildEdges = (): Edge[] =>
     KNOWLEDGE_EDGES.map((edge, index) => ({
         id: `e${index}`,

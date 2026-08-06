@@ -16,7 +16,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
  *
  * Alias, not a redeclaration (teacher finalized 2026-07-29): the exact same five
  * values `Chip`'s own `ChipTone` already carries — this used to need
- * `COLOR_TO_TONE` to translate `default → neutral` between two hand-typed
+ * `COLOR_TO_TONE` to translate `default -> neutral` between two hand-typed
  * copies of the same vocabulary. Both sides being the same alias makes the
  * translation a no-op, so it is gone, not renamed.
  *
@@ -84,16 +84,16 @@ export interface EnumChipProps<E extends string> {
 }
 
 /**
- * The canonical "enum → soft chip" composite: a `Chip` whose
+ * The canonical "enum -> soft chip" composite: a `Chip` whose
  * tone / label / optional tooltip / optional leading icon come from a per-value map.
  * Domain badges (AI-model category, difficulty, video host …) shrink to just their map
  * table + this delegate. Deliberately does NOT force width.
  *
- * ⭐ AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2): gained `icon` per entry
+ * * AUDIT 2026-07-30 (feedback ChallengePage/Graded round-2): gained `icon` per entry
  * (was "text-only, no leading icon"). Additive, per-value — most maps stay text-only;
  * a value only gets an icon when it is a "universal" symbol (check/cross), not a habit.
  *
- * ⚠️ Changed 2026-07-26: this used to be built on top of `StatusChip` — that component
+ * WARNING Changed 2026-07-26: this used to be built on top of `StatusChip` — that component
  * was removed because it was just `Chip` with `tone` hardcoded, adding no behavior. Now
  * it calls the atom directly.
  *

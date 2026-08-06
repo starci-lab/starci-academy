@@ -24,7 +24,7 @@ export interface ContentDiscussionProps extends ContentCommentThreadCallbacks {
     currentUserId: string | null
     /** Current viewer identity for the composer's avatar; null when signed out. */
     currentUser?: ContentCommentComposerViewer | null
-    /** Top-level comments, newest first. EMPTY → the invitation is drawn instead. */
+    /** Top-level comments, newest first. EMPTY -> the invitation is drawn instead. */
     comments: Array<ContentCommentNode>
     /** Total top-level comment count (drives the label + the archive line). */
     total: number
@@ -32,19 +32,19 @@ export interface ContentDiscussionProps extends ContentCommentThreadCallbacks {
     repliesByParent: Record<string, ReadonlyArray<ContentCommentNode>>
     /** Post a new top-level comment. */
     onSubmitComment: (body: string) => void
-    /** `true` → more top-level comment pages remain to load. */
+    /** `true` -> more top-level comment pages remain to load. */
     hasMore?: boolean
-    /** `true` → the next page is currently loading. */
+    /** `true` -> the next page is currently loading. */
     isLoadingMore?: boolean
     /** Load the next page of top-level comments. */
     onLoadMore?: () => void
     /**
-     * Set → the comment list could not be loaded. The message replaces the
-     * LIST only: the composer stays, because a failed read did not remove
-     * the ability to write.
-     */
+ * Set -> the comment list could not be loaded. The message replaces the
+ * LIST only: the composer stays, because a failed read did not remove
+ * the ability to write.
+ */
     errorMessage?: string
-    /** `true` → two placeholder threads mirror the real row shape while the first page loads. */
+    /** `true` -> two placeholder threads mirror the real row shape while the first page loads. */
     isSkeleton?: boolean
 }
 
@@ -84,7 +84,7 @@ const ContentDiscussion = ({
     const answeredCount = comments.filter((comment) => comment.replyCount > 0).length
 
     // no icon here: a chat-bubble icon needs an ASSOCIATION step to read as
-    // "discussion" (not a universal symbol like ✓/🔒), and the label text already
+    // "discussion" (not a universal symbol like [ok]/(locked)), and the label text already
     // carries the full fact on its own.
     const labelLines = (
         <>
@@ -154,8 +154,8 @@ const ContentDiscussion = ({
     const discussionBody = (
         <>
             {/* These 3 seams match the real-src `Discussion/index.tsx:98-114` exactly:
-                [label+archive]↔composer = grouped (gap-3) · [icon+label]↔archive-line
-                = tight (gap-1) · icon↔label = related (gap-2). */}
+ [label+archive]<->composer = grouped (gap-3) · [icon+label]<->archive-line
+ = tight (gap-1) · icon<->label = related (gap-2). */}
             <StackV gap={4} isSkeleton={isSkeleton} items={[() => discussionHeader]} />
 
             {errorMessage != null ? (

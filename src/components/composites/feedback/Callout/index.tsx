@@ -9,18 +9,18 @@ import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
  * STORYBOOK-LOCAL DESIGN SPEC — `Callout`, a tinted flat strip LIVING INSIDE a
  * surface (`title`/`description`/`body`/`action`).
  *
- * ⚠️ Split out of the `Feedback.*` namespace (2026-08-01) back into its own flat
+ * WARNING Split out of the `Feedback.*` namespace (2026-08-01) back into its own flat
  * file — the 2026-07-25 consolidation grouped `Callout`/`Empty`/`Confirm` under
  * one `Feedback` folder; this reverses that so each frame is discoverable by
  * its own name again. Props/behaviour are UNCHANGED — this is a file-location +
  * naming refactor, not a visual or API change.
  *
  * ATOM COMPOSITION (§12): text goes through `Typography.*`, buttons through
- * `Button.*`, icons come from `@phosphor-icons/react` — ONE SET ONLY (§5⃣0),
+ * `Button.*`, icons come from `@phosphor-icons/react` — ONE SET ONLY (§50),
  * passed as a component ref, the frame forces size/weight itself (§4/§5).
  * DELIBERATE EXCEPTION: keeps HeroUI's `Alert.Title`/`Alert.Description`
  * because HeroUI itself carries the COLOR-BY-STATUS contract (`.alert--warning
- * .alert__title` → `text-warning-soft-foreground`). Swapping in `Typography` would
+ * .alert__title` -> `text-warning-soft-foreground`). Swapping in `Typography` would
  * mean hand-feeding a color table — that's the real "hand-rolled". Switch to the
  * atom once an `Alert` atom exists.
  * ─────────────────────────────────────────────────────────────────────────────
@@ -39,7 +39,7 @@ export type CalloutIcon = ComponentType<SVGProps<SVGSVGElement>>
  * Action button bg/text per status — SOLID `bg-<status>` CTA against the lighter
  * tint. INTERNAL: the CTA lived in the caller's `action` slot in the old shape,
  * so the caller had to hold `Button` and apply the skin itself. Now the frame
- * builds the button ITSELF from `actionLabel`/`onAction` ⇒ the caller
+ * builds the button ITSELF from `actionLabel`/`onAction` => the caller
  * (especially a SCREEN) no longer touches the atom.
  */
 const CALLOUT_ACTION_CLASS: Record<CalloutStatus, string> = {

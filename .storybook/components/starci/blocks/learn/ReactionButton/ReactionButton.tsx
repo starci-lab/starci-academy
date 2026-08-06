@@ -44,7 +44,7 @@ const ReactionButton = ({
         .slice(0, 3)
         .map((entry) => REACTION_BY_TYPE[entry.type])
 
-    const handlePick = (type: ReactionType) => {
+    const onPick = (type: ReactionType) => {
         setIsOpen(false)
         onReact(myReaction === type ? null : type)
     }
@@ -105,7 +105,7 @@ const ReactionButton = ({
                     <ReactionPicker
                         items={Object.values(REACTION_BY_TYPE).map((reaction) => ({ key: reaction.type, imgSrc: `/reactions/${reaction.type}.svg`, label: reaction.label }))}
                         activeKey={myReaction}
-                        onSelect={(key) => handlePick(key as ReactionType)}
+                        onSelect={(key) => onPick(key as ReactionType)}
                     />
                 </HeroPopover.Content>
             </HeroPopover>

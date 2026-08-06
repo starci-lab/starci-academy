@@ -65,4 +65,5 @@ export const ChoiceCheckbox = ({
     )
 }
 
+/** Tier metadata for `ChoiceCheckbox`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "ChoiceCheckbox" } as const

@@ -30,29 +30,29 @@ import React from "react"
  * both superseded by the six-tier split above.
  */
 /**
- * ⭐ `heroui` thêm 2026-07-27. Node đến thẳng từ `@heroui/react` không có story của TA để
- * bấm sang, nên danh sách trắng cũ loại nó ra và cây NÓI DỐI BẰNG CÁCH BỎ SÓT: `PriceTag`
- * render một `Popover` thật, mở được, mà cây không hiện gì.
+ * `heroui` added 2026-07-27. Nodes that come straight from `@heroui/react` have no story of
+ * OURS to click through to, so the old allowlist excluded them and the tree LIED BY OMISSION:
+ * `PriceTag` renders a real `Popover`, openable, and the tree showed nothing.
  *
- * Gọi đúng tên tầng thư viện thì trung thực hơn là giấu. Nó còn làm DRIFT hiện ra: một node
- * tầng design ngồi trên `heroui` nghĩa là atom layer đã bị bỏ qua — đúng thứ §12 sinh ra để
- * chặn, và giờ NHÌN THẤY được thay vì phải grep import.
+ * Naming the library tier honestly is better than hiding it. It also makes DRIFT visible: a
+ * design-tier node sitting on `heroui` means the atom layer was skipped — exactly what §12
+ * exists to catch, and now you can SEE it instead of grepping imports.
  */
 /**
- * ⭐ `design` XOÁ 2026-07-28 (thầy chốt "coi như block import block").
+ * `design` REMOVED 2026-07-28 (teacher ruling "treat it as block importing block").
  *
- * Ranh giới cũ là "chức năng hoàn chỉnh vs chỉ UI/UX", và nó MỜ: `PhaseScarcityNote` tự ẩn
- * theo điều kiện nghiệp vụ (nghe như block) trong khi `PriceTag` chỉ format tiền (nghe như
- * design), nên mỗi ca lại phải phân xử lại.
+ * The old boundary was "complete feature vs UI/UX only", and it was FUZZY: `PhaseScarcityNote`
+ * hid itself on a business condition (sounds like a block) while `PriceTag` only formats money
+ * (sounds like design), so every case needed a fresh judgement call.
  *
- * Bỏ nó đi thì phép thử từng tầng thành CÙNG MỘT DẠNG câu hỏi, lồng nhau:
- *   frame     không biết NỘI DUNG
- *   composite biết nội dung, không biết NGHIỆP VỤ
- *   block     biết NGHIỆP VỤ
- *   screen    ghép các block
+ * Dropping it makes each tier's test the SAME SHAPE of nested question:
+ *   frame     does not know CONTENT
+ *   composite knows content, does not know DOMAIN
+ *   block     knows DOMAIN
+ *   screen    composes blocks
  *
- * Hệ quả đắt giá: `ContinueLearning` mất lý do tồn tại. Nó sinh ra CHỈ vì luật cũ cấm design
- * biết nghiệp vụ, nên phải đẻ một block bọc ngoài để ghép câu.
+ * Costly consequence: `ContinueLearning` lost its reason to exist. It only existed because the
+ * old rule forbade design knowing domain, so a wrapping block had to be invented to compose.
  */
 export type AnatomyTier = "heroui" | "atom" | "frame" | "composite" | "block" | "screen"
 

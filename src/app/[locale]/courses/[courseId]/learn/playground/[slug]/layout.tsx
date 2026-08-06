@@ -1,5 +1,8 @@
 import React from "react"
 import { PlaygroundSessionProvider } from "@/components/providers/PlaygroundSessionProvider"
+/** Props for Layout. */
+interface LayoutProps { children: React.ReactNode }
+
 
 /**
  * Shared shell for ONE playground exercise. Mounts
@@ -7,11 +10,11 @@ import { PlaygroundSessionProvider } from "@/components/providers/PlaygroundSess
  * code the learner already ran `npx` with) survive navigation between the two
  * child routes — Setup (`[slug]`) and Session (`[slug]/session`).
  *
- * Without this layout each route would own its own socket: pressing "Bắt đầu
+ * Without this layout each route would own its own socket: pressing "Start
  * lab" would unmount the connection, mint a NEW pairing code, and force the
  * learner to re-run the agent command.
  */
-const Layout = ({ children }: { children: React.ReactNode }) => (
+const Layout = ({ children }: LayoutProps) => (
     <PlaygroundSessionProvider>
         {children}
     </PlaygroundSessionProvider>

@@ -91,7 +91,7 @@ const _CourseFaq = ({
         }
 
         // content — the accordion card IS the frame + owns its own label (LabeledAccordionCard).
-        // ⚠️ LabeledAccordionCard takes no `identity` prop (unlike LabeledCard) and there is no
+        // WARNING LabeledAccordionCard takes no `identity` prop (unlike LabeledCard) and there is no
         // sibling frame here to carry it instead — this branch's root stays unowned (unownedRoot).
         return (
             <LabeledAccordionCard

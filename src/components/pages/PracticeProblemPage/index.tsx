@@ -163,11 +163,11 @@ export const PracticeProblemPage = () => {
 
     // Track when window loses focus (user switching browser tabs/windows)
     useEffect(() => {
-        const handleBlur = () => {
+        const onBlur = () => {
             telemetryRef.current.tabBlurCount += 1
         }
-        window.addEventListener("blur", handleBlur)
-        return () => window.removeEventListener("blur", handleBlur)
+        window.addEventListener("blur", onBlur)
+        return () => window.removeEventListener("blur", onBlur)
     }, [])
 
     const {

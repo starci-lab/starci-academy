@@ -80,6 +80,7 @@ export type ButtonBaseProps = ButtonBaseOwnProps &
         | { isSkeleton?: false; isIconOnly?: false; label: ReactNode; ariaLabel?: string }
     )
 
+/** Shared button chrome — variants, sizes, icons, skeleton, pending, and press handling. */
 export const ButtonBase = ({
     label,
     prefixIcon: PrefixIcon,
@@ -183,4 +184,5 @@ export const ButtonBase = ({
     )
 }
 
+/** Tier metadata for `Button`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Button" } as const

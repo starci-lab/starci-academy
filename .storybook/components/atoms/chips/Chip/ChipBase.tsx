@@ -95,6 +95,7 @@ export type ChipBaseProps = ChipBaseOwnProps &
     ChipLeadingProps &
     ({ isSkeleton: true; text?: ReactNode } | { isSkeleton?: false; text: ReactNode })
 
+/** Shared chip chrome — tone, leading icon/dot, removable trailing X, and skeleton. */
 export const ChipBase = ({
     tone = "default",
     text,
@@ -204,4 +205,5 @@ export const ChipBase = ({
     )
 }
 
+/** Tier metadata for `Chip`, used by the component registry/Storybook lookup. */
 export const meta = { tier: "atom", name: "Chip" } as const

@@ -3,8 +3,9 @@ import { LocalStorage } from "@/modules/storage/local/storage"
 import { LocalStorageId } from "@/modules/storage/local/enums/id"
 
 // Import from the `local` barrel (NOT via `@/modules/storage` — that barrel pulls in `session` →
-// `@/modules/api` → api↔storage cycle). `local` does not depend on api, so it breaks the cycle.
+// `@/modules/api` → api<->storage cycle). `local` does not depend on api, so it breaks the cycle.
 
+/** Options for {@link createAttachAccessTokenLink}. */
 export interface CreateAttachAccessTokenLinkParams {
     /** When `true`, logs the resolved token (masked). */
     debug?: boolean
@@ -12,6 +13,7 @@ export interface CreateAttachAccessTokenLinkParams {
     getAccessToken?: () => string | undefined
 }
 
+/** Apollo link that attaches the Keycloak access token to outgoing GraphQL ops. */
 export const createAttachAccessTokenLink = (
     params: CreateAttachAccessTokenLinkParams | boolean = false
 ) => {

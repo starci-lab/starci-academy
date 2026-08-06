@@ -281,9 +281,3 @@ const KeyValueList = ({
  * `List` (N pairs, `items`). Visual variants = PROP (`emphasis`/`divider`), §6b.
  */
 export { KeyValueRow, KeyValueList }
-
-/** Folder-matching compound namespace (export-matches-folder). Existing named exports stay public. */
-export const KeyValue = {
-    Row: KeyValueRow,
-    List: KeyValueList,
-} as const

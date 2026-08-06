@@ -22,6 +22,7 @@ export const ButtonGroupSeparator = () => (
     <HeroButtonGroup.Separator className="!top-0 !h-full !bg-border !opacity-100" />
 )
 
+/** Tier metadata for `component`, used by the component registry/Storybook lookup. */
 export const meta = [
     { tier: "atom", name: "ButtonGroupRoot" },
     { tier: "atom", name: "ButtonGroupSeparator" },

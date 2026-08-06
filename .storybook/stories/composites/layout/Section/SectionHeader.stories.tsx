@@ -11,7 +11,7 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  *
  * WARNING: STATE SCOPE (§12f/§13): this file only renders states this component
  * ITSELF produces — toggling each slot + `level` (the type scale). The
- * vertical rhythm header ↔ body ↔ footer belongs to `Section` (`gap`), so it
+ * vertical rhythm header <-> body <-> footer belongs to `Section` (`gap`), so it
  * is NOT repeated here. Tier distinction: `PageHeader` = chrome for the whole
  * ROUTE (breadcrumb + H3 + meta, one per page) · `SectionCard` (design) = a
  * card WITH chrome · `SectionHeader` = a region's title, many per page,

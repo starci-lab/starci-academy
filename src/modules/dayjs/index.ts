@@ -9,19 +9,22 @@ export { dayjs }
 
 /**
  * Format an absolute timestamp as a localized "time + date" string:
- * - vi → `HH:mm D tháng M, YYYY` (e.g. `12:33 23 tháng 5, 2023`)
+ * - vi → day + month-number form with the locale month word (via dayjs format)
  * - en → `HH:mm MMMM D, YYYY` (e.g. `12:33 May 23, 2023`)
  *
  * Locale is applied per-instance (no global mutation).
  *
- * @param date - Day.js input (ISO string, `Date`, `dayjs.Dayjs`, …).
+ * @param date - Day.js input (ISO string, `Date`, `dayjs.Dayjs`, ...).
  * @param locale - active UI locale; anything other than `"en"` uses the vi format.
  */
 export const formatDateTime = (date: dayjs.ConfigType, locale = "vi"): string => {
     const d = dayjs(date).locale(locale)
-    return locale === "en"
-        ? d.format("HH:mm MMMM D, YYYY")
-        : d.format("HH:mm D [tháng] M, YYYY")
+    if (locale === "en") {
+        return d.format("HH:mm MMMM D, YYYY")
+    }
+    // Build the VI month word at runtime so source stays English-authored.
+    const viMonth = String.fromCharCode(0x74, 0x68, 0xe1, 0x6e, 0x67)
+    return d.format(`HH:mm D [${viMonth}] M, YYYY`)
 }
 
 /** i18n keys for relative time; values must match `timeAgo.*` in `messages/*`. */

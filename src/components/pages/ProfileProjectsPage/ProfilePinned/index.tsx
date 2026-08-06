@@ -21,7 +21,9 @@ import { Cluster } from "@/components/frames/Cluster"
 import { Grid } from "@/components/frames/Grid"
 import { StackH, StackV } from "@/components/frames/Stack"
 
-const ProfilePinnedAction = ({ label, onPress }: { label: string; onPress: () => void }) => (
+type ProfilePinnedActionProps = { label: string; onPress: () => void }
+
+const ProfilePinnedAction = ({ label, onPress }: ProfilePinnedActionProps) => (
     <Link
         onPress={onPress}
         className="inline-flex shrink-0 cursor-pointer items-center text-sm text-accent-soft-foreground no-underline transition-opacity hover:opacity-60"

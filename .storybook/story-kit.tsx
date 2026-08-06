@@ -10,7 +10,7 @@ import { Label, Typography } from "@heroui/react"
  * FRAME just to line up five demo chips, which inverts the tiers inside the drawing.
  *
  * Before this, each gallery story hand-rolled its own `flex flex-col gap-6/gap-3`
- * nest, so no two galleries lined up the same way (the "tạp nham" the team saw).
+ * nest, so no two galleries lined up the same way (the jumble the team saw).
  * A story that shows all variants should now be: one `render` returning `<Gallery>`
  * mapping a variant list through `<Variant label>` — no ad-hoc divs, consistent
  * rhythm by construction.
@@ -21,30 +21,32 @@ import { Label, Typography } from "@heroui/react"
  * whole canvas.
  */
 
-/** The outer stack for a gallery story — evenly-spaced variant sections. */
 /** Props for {@link Gallery}. */
 export interface GalleryProps {
     /** The rows being shown side by side. */
     children: React.ReactNode
 }
 
+/** The outer stack for a gallery story — evenly-spaced variant sections. */
 export const Gallery = ({ children }: GalleryProps) => (
     <div className="flex w-full flex-col gap-6">{children}</div>
 )
+
+/** Props for {@link Variant}. */
+export interface VariantProps {
+    /** Specimen label. */
+    label: string
+    /** Optional muted hint saying WHEN to use this specimen. */
+    hint?: string
+    /** The specimen itself. */
+    children: React.ReactNode
+}
 
 /**
  * One labelled specimen inside a {@link Gallery}: a `Label` (+ optional muted
  * hint saying WHEN to use it), then the block itself.
  */
-export const Variant = ({
-    label,
-    hint,
-    children,
-}: {
-    label: string
-    hint?: string
-    children: React.ReactNode
-}) => (
+export const Variant = ({ label, hint, children }: VariantProps) => (
     <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-2">
             <Label>{label}</Label>
@@ -58,19 +60,21 @@ export const Variant = ({
     </div>
 )
 
+/** Props for {@link VariantRow}. */
+export interface VariantRowProps {
+    /** Row label. */
+    label: string
+    /** Optional muted hint saying WHEN to use these specimens. */
+    hint?: string
+    /** The specimens in the wrapping row. */
+    children: React.ReactNode
+}
+
 /**
  * A row of specimens under one label — for compact peers (chips, badges, sizes)
  * that read better in a wrapping row than stacked. Same header as {@link Variant}.
  */
-export const VariantRow = ({
-    label,
-    hint,
-    children,
-}: {
-    label: string
-    hint?: string
-    children: React.ReactNode
-}) => (
+export const VariantRow = ({ label, hint, children }: VariantRowProps) => (
     <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-2">
             <Label>{label}</Label>

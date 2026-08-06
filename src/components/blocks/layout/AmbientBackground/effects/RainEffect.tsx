@@ -3,8 +3,14 @@ import {
     useSeededParticles,
 } from "../useSeededParticles"
 
+/** Props for {@link RainEffect}. */
+interface RainEffectProps {
+    /** Particle count. */
+    count?: number
+}
+
 /** Thin rain streaks falling fast, tilted, tinted by the accent color. */
-export const RainEffect = ({ count = 45 }: { count?: number }) => {
+export const RainEffect = ({ count = 45 }: RainEffectProps) => {
     const particles = useSeededParticles(count, 23)
     return (
         <>

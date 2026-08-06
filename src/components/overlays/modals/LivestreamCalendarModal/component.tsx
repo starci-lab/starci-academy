@@ -83,7 +83,7 @@ const sessionRowContent = (row: LivestreamCalendarSessionRow) => (
  * `SurfaceCardList` (the row list) + `MarkdownContent` (the note); falls to
  * `AsyncContentEmpty` when there are no sessions to show.
  *
- * ⚠️ MISSING VOCABULARY: there is no atom/composite wrapping a STANDALONE, always-visible
+ * WARNING: MISSING VOCABULARY: there is no atom/composite wrapping a STANDALONE, always-visible
  * HeroUI `Calendar` (`atoms/forms/Input`'s `InputDate` only wraps one inside a text-field
  * popover). Kept as a direct `@heroui/react` import here, minimal, pending that atom —
  * see the task's `missingVocabulary` report. Do not spread this pattern elsewhere. The

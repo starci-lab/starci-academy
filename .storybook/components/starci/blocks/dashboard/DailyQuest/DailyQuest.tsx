@@ -31,9 +31,9 @@ export interface DailyQuestTask {
 
 /** The full daily-quest entity for one day. */
 export interface DailyQuestData {
-    /** `true` → the reward was already claimed today; no further action. */
+    /** `true` -> the reward was already claimed today; no further action. */
     claimed: boolean
-    /** `true` → every task has cleared its target (`current >= target`); unlocks the claim button. */
+    /** `true` -> every task has cleared its target (`current >= target`); unlocks the claim button. */
     allDone: boolean
     /** Reward amount, printed inside the claim/prompt wording. */
     reward: number
@@ -47,13 +47,13 @@ export interface DailyQuestProps {
     quest: DailyQuestData | null
     /** `true` while the quest fetch is in flight (feeds the Loading leaf). */
     isLoading: boolean
-    /** Truthy → the fetch failed (feeds the Error leaf, outranks loading/empty). */
+    /** Truthy -> the fetch failed (feeds the Error leaf, outranks loading/empty). */
     error?: unknown
     /** Fired when the error leaf's retry button is pressed. */
     onRetry: () => void
     /** Fired when the claim button is pressed (leaf 4b only). */
     onClaim: () => void
-    /** `true` → the claim mutation is in flight (the block's one `pending` state). */
+    /** `true` -> the claim mutation is in flight (the block's one `pending` state). */
     isClaiming?: boolean
 }
 
@@ -64,7 +64,7 @@ const TASK_LABEL: Record<DailyQuestTaskKey, string> = {
     reviewFlashcards: "Review flashcards",
 }
 
-/** One row's text: title (leading) ↔ current/target (trailing) — plain text, the composite wraps it in `Typography` itself. */
+/** One row's text: title (leading) <-> current/target (trailing) — plain text, the composite wraps it in `Typography` itself. */
 const rowBody = (task: DailyQuestTask): string => `${TASK_LABEL[task.key]} — ${task.current}/${task.target}`
 
 /**

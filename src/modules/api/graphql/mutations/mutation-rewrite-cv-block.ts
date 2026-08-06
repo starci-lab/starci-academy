@@ -32,7 +32,7 @@ export type MutateRewriteCvBlockParams = MutateParams<
 
 /**
  * AI-rewrites one block's prose, grounded (RAG) on the real capstone data when
- * `capstoneAttemptId` is set. Per-block "✨ AI viết giúp" — never blocks the
+ * `capstoneAttemptId` is set. Per-block AI rewrite helper — never blocks the
  * rest of the form; the caller owns that one block's spinner/retry-in-place UI.
  */
 export const mutateRewriteCvBlock = async ({

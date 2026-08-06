@@ -59,39 +59,39 @@ export interface MockInterviewScorecardProps {
     strengths: Array<string>
     /** Concrete gaps framed as "what to add", as markdown. Section self-hides when empty. */
     gaps: Array<string>
-    /** A follow-up an interviewer would ask next, as markdown. Omit → the section does not render. */
+    /** A follow-up an interviewer would ask next, as markdown. Omit -> the section does not render. */
     followUpQuestion?: string | null
-    /** The weakest area, already resolved by the caller (which phase/attribute counts as "weak enough to push" is a screen-level call, not this block's). Omit → the primary CTA reads generically. */
+    /** The weakest area, already resolved by the caller (which phase/attribute counts as "weak enough to push" is a screen-level call, not this block's). Omit -> the primary CTA reads generically. */
     weakAreaLabel?: string
     /** Fired when the learner takes the primary CTA — go study the weak area. */
     onStudyWeakArea: () => void
     /** Fired when the learner picks the capstone hand-off CTA. */
     onCapstone: () => void
-    /** Fired when the learner wants to run the interview again. Omit → the retry action does not render (e.g. a read-only history detail). */
+    /** Fired when the learner wants to run the interview again. Omit -> the retry action does not render (e.g. a read-only history detail). */
     onRetry?: () => void
     /** The system/prompt this run interviewed on, shown as a header line when known. */
     promptTitle?: string
     /** When this attempt was graded, already formatted/localized by the caller (e.g. "Jul 28, 2026 · 14:32"). Omit for a live, just-finished session. */
     createdAt?: string
-    /** `true` → every part this block renders itself mirrors as shimmer. */
+    /** `true` -> every part this block renders itself mirrors as shimmer. */
     isSkeleton?: boolean
 }
 
-/** Verdict → callout tone. */
+/** Verdict -> callout tone. */
 const VERDICT_STATUS: Record<MockInterviewVerdict, "success" | "warning" | "danger"> = {
     pass: "success",
     borderline: "warning",
     fail: "danger",
 }
 
-/** Verdict → callout indicator icon. */
+/** Verdict -> callout indicator icon. */
 const VERDICT_ICON: Record<MockInterviewVerdict, CalloutIcon> = {
     pass: CheckCircleIcon,
     borderline: WarningCircleIcon,
     fail: XCircleIcon,
 }
 
-/** Verdict → the block's own wording (§14d.1 — a caller passes the enum, never a formatted string). */
+/** Verdict -> the block's own wording (§14d.1 — a caller passes the enum, never a formatted string). */
 const VERDICT_LABEL: Record<MockInterviewVerdict, string> = {
     pass: "Pass",
     borderline: "Borderline",
@@ -299,7 +299,7 @@ const MockInterviewScorecard = ({
             {bylineRow}
 
             {/* Verdict banner. `Callout` has no `isSkeleton` of its own (a message
-                frame, not a data-bearing one) — a bare bar stands in, in the same slot. */}
+ frame, not a data-bearing one) — a bare bar stands in, in the same slot. */}
             {isSkeleton ? (
                 <Skeleton className="h-20 w-full rounded-2xl" />
             ) : (
@@ -338,8 +338,8 @@ const MockInterviewScorecard = ({
             ) : null}
 
             {/* no icon here — §5a.2: a chat-bubble needs an ASSOCIATION step to read as
-                "a question" (not a universal symbol like ✓/🔒), and the card's own
-                label="Follow-up question" already carries the fact. */}
+ "a question" (not a universal symbol like [ok]/(locked)), and the card's own
+ label="Follow-up question" already carries the fact. */}
             {hasFollowUp ? (
                 <SurfaceCard
                     label="Follow-up question"

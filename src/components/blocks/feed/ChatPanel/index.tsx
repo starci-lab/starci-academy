@@ -40,8 +40,6 @@ export interface ChatPanelProps extends WithClassNames<undefined> {
     isTyping?: boolean
     /** Rendered centered in the list area when there are no messages. */
     emptyState?: React.ReactNode
-    /** Tailwind height class for the whole panel. Defaults to a sensible `h-[32rem]`. */
-    heightClassName?: string
 }
 
 /**
@@ -70,7 +68,6 @@ export const ChatPanel = ({
     composer,
     isTyping = false,
     emptyState,
-    heightClassName = "h-[32rem]",
     className,
 }: ChatPanelProps) => {
     const listRef = useRef<HTMLDivElement>(null)
@@ -90,7 +87,7 @@ export const ChatPanel = ({
         <div
             className={cn(
                 "flex flex-col overflow-hidden rounded-3xl border border-default bg-surface",
-                heightClassName,
+                "h-[32rem]",
                 className,
             )}
         >

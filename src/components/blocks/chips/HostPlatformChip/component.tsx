@@ -1,7 +1,6 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
 import {
     SiGoogledrive,
     SiYoutube,
@@ -39,5 +38,5 @@ export const _HostPlatformChip = ({ hostPlatform, labels, className }: HostPlatf
         [VideoHostPlatform.Vimeo]: { color: "accent", icon: <SiVimeo size={16} />, label: labels[VideoHostPlatform.Vimeo] ?? "" },
         [VideoHostPlatform.CloudflareStream]: { color: "accent", icon: <SiCloudflare size={16} />, label: labels[VideoHostPlatform.CloudflareStream] ?? "" },
     }
-    return <EnumChip value={hostPlatform} map={map} className={cn(className)} />
+    return <EnumChip value={hostPlatform} map={map} className={className} />
 }

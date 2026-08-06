@@ -6,8 +6,8 @@ type MutateRenderCvBlocksResult = Awaited<ReturnType<typeof mutateRenderCvBlocks
 
 /**
  * SWR mutation wrapper for {@link mutateRenderCvBlocks} — renders a CV
- * document to PDF (feeds the live preview pane, debounced, and the "Tải PDF"
- * download button).
+ * document to PDF (feeds the live preview pane, debounced, and the Download PDF
+ * button).
  */
 export const useMutateRenderCvBlocksSwr = () => {
     return useSWRMutation<

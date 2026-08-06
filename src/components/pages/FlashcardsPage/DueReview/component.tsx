@@ -15,7 +15,6 @@ import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { WorkSessionHeader } from "@/components/blocks/navigation/WorkSessionHeader"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { RatingBar, type RatingOption } from "@/components/blocks/buttons/RatingBar"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { QueryMyDueFlashcardData } from "@/modules/api/graphql/queries/types/my-due-flashcards"
 
 /** HeroUI Chip color per quiz seniority level (mirrors `FlashcardReviewer`). */
@@ -65,7 +64,7 @@ export interface DueReviewLabels {
 }
 
 /** Props for {@link _DueReview} — presentational; all data resolved, no fetch/store/i18n. */
-export interface DueReviewProps extends WithClassNames<undefined> {
+export interface DueReviewProps {
     /** First load, nothing in hand → the whole tree shimmers in place (co-located). Owned by the connected file. */
     isSkeleton?: boolean
     /** Settled with an empty due queue → the empty message. */

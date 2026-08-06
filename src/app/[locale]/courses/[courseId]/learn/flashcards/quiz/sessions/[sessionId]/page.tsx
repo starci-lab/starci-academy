@@ -6,7 +6,7 @@ import { FlashcardsPage } from "@/components/pages/FlashcardsPage"
 
 /**
  * Learn / flashcards / quiz / sessions / [sessionId] — the dedicated, resumable
- * URL for an in-progress "Hỏi nhanh" run. `startFlashcardQuizSession` records
+ * URL for an in-progress "Quick Quiz" run. `startFlashcardQuizSession` records
  * this id server-side right after drawing a session; returning to it later
  * (within its 24h TTL) resumes the persisted progress instead of starting
  * fresh. Threads the route's `sessionId` down as `resumeSessionId` so

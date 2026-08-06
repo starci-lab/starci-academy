@@ -19,6 +19,9 @@ export type MutateToggleFavoriteParams = MutateParams<
     ToggleFavoriteRequest
 >
 
+/**
+ * Toggles favorite status for a content item. Mirrors backend `toggleFavorite`.
+ */
 export const mutateToggleFavorite = async ({
     request,
     debug,

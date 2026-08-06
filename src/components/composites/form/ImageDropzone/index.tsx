@@ -99,26 +99,22 @@ export const ImageDropzone = ({
                     {Icon ? <Icon /> : <ImageIcon focusable="false" />}
                 </span>
             )}
-            {isSkeleton ? (
-                <Typography size="sm" weight="medium" isSkeleton />
-            ) : (
-                <span
-                    className={cn(
-                        "text-sm font-medium text-center",
-                        isDragActive ? "text-accent-soft-foreground" : "text-foreground",
-                    )}
-                >
-                    {label}
-                </span>
-            )}
+            <Typography
+                size="sm"
+                weight="medium"
+                align="center"
+                color={!isSkeleton && isDragActive ? "accent-soft" : "default"}
+                isSkeleton={isSkeleton}
+                text={label}
+            />
             {hint != null && hint !== "" ? (
-                isSkeleton ? (
-                    <Typography size="xs" isSkeleton />
-                ) : (
-                    <span className="text-xs font-normal text-muted text-center">
-                        {hint}
-                    </span>
-                )
+                <Typography
+                    size="xs"
+                    align="center"
+                    color="muted"
+                    isSkeleton={isSkeleton}
+                    text={hint}
+                />
             ) : null}
         </div>
     )

@@ -2,10 +2,6 @@
 
 import React from "react"
 import {
-    Button,
-    cn,
-} from "@heroui/react"
-import {
     ArrowRightIcon,
 } from "@phosphor-icons/react"
 import {
@@ -20,58 +16,84 @@ import {
 import {
     useAppSelector,
 } from "@/redux/hooks"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-
-/** Props for {@link CourseCtaButtons}. */
-export type CourseCtaButtonsProps = WithClassNames<undefined>
+import { Button } from "@/components/atoms/buttons/Button"
+import { StackV } from "@/components/frames/Stack"
 
 /**
  * The course conversion CTA cluster, shared by the hero + pricing rail so every
  * call to action stays in sync. Not enrolled → primary "Enroll" + secondary
  * "Try free"; enrolled → single primary "Continue learning". Self-contained:
  * reads enrollment intent from {@link useCourseEnrollment}.
- *
- * @param props - optional className (placement only).
  */
-export const CourseCtaButtons = ({ className }: CourseCtaButtonsProps) => {
+export const CourseCtaButtons = () => {
     const t = useTranslations()
     const course = useAppSelector((state) => state.course.entity)
     const { isEnrolled, onEnroll, onContinueLearning, onTryLearning } = useCourseEnrollment()
 
     if (isEnrolled) {
         return (
-            <div className={cn("flex flex-col gap-2", className)}>
-                <Button variant="primary" size="lg" className="w-full" onPress={onContinueLearning}>
-                    {t("course.continueLearning")}
-                    <ArrowRightIcon className="size-5" />
-                </Button>
-            </div>
+            <StackV
+                identity={{ tier: "page", component: "CourseCtaButtons" }}
+                gap={2}
+                principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                items={[
+                    () => (
+                        <Button
+                            variant="primary"
+                            size="lg"
+                            classNames={["w-full"]}
+                            label={t("course.continueLearning")}
+                            suffixIcon={ArrowRightIcon}
+                            onPress={onContinueLearning}
+                        />
+                    ),
+                ]}
+            />
         )
     }
 
     return (
-        <div className={cn("flex flex-col gap-2", className)}>
-            <Button variant="primary" size="lg" className="w-full" onPress={onEnroll}>
-                {t("course.enroll")}
-                <ArrowRightIcon className="size-5" />
-            </Button>
-            {course ? (
-                <AddToCartButton
-                    course={course}
-                    isEnrolled={isEnrolled}
-                    variant="secondary"
-                    fullWidth
-                />
-            ) : null}
-            {/* "Try free" is the ACQUISITION entry for a non-payer — a peer secondary
-                CTA (not buried as quiet tertiary), so the funnel's front door is visible.
-                No trailing arrow: arrow marks the ONE primary CTA per surface
-                (button.md §2) — "Enroll" above already carries it. */}
-            <Button variant="secondary" size="lg" className="w-full" onPress={onTryLearning}>
-                {t("course.tryLearning")}
-            </Button>
-        </div>
+        <StackV
+            identity={{ tier: "page", component: "CourseCtaButtons" }}
+            gap={2}
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+            items={[
+                () => (
+                    <Button
+                        variant="primary"
+                        size="lg"
+                        classNames={["w-full"]}
+                        label={t("course.enroll")}
+                        suffixIcon={ArrowRightIcon}
+                        onPress={onEnroll}
+                    />
+                ),
+                ...(course ? [
+                    () => (
+                        <AddToCartButton
+                            course={course}
+                            isEnrolled={isEnrolled}
+                            variant="secondary"
+                            fullWidth
+                        />
+                    ),
+                ] : []),
+                // "Try free" is the ACQUISITION entry for a non-payer — a peer secondary
+                // CTA (not buried as quiet tertiary), so the funnel's front door is visible.
+                // No trailing arrow: arrow marks the ONE primary CTA per surface
+                // (button.md §2) — "Enroll" above already carries it.
+                () => (
+                    <Button
+                        variant="secondary"
+                        size="lg"
+                        classNames={["w-full"]}
+                        label={t("course.tryLearning")}
+                        onPress={onTryLearning}
+                    />
+                ),
+            ]}
+        />
     )
 }

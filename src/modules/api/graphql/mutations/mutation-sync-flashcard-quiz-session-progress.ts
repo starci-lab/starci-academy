@@ -34,7 +34,7 @@ export type MutateSyncFlashcardQuizSessionProgressParams = MutateParams<
 >
 
 /**
- * Best-effort, fire-and-forget persistence of an in-progress "Hỏi nhanh" quiz
+ * Best-effort, fire-and-forget persistence of an in-progress quick-quiz
  * run — called after every card so the session can be resumed later within its
  * 24h TTL (`myInProgressFlashcardQuizSession`). Mirrors backend
  * `mutations/flashcard/sync-flashcard-quiz-session-progress`.

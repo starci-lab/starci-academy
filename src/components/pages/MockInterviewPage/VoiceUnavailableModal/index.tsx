@@ -32,7 +32,7 @@ export interface VoiceUnavailableModalProps extends WithClassNames<undefined> {
 export const VoiceUnavailableModal = ({
     isOpen,
     onOpenChange,
-    onRecheck,
+    onRecheck: recheckVoices,
     hasLocaleVoice,
     className,
 }: VoiceUnavailableModalProps) => {
@@ -51,9 +51,9 @@ export const VoiceUnavailableModal = ({
         return () => window.clearTimeout(timer)
     }, [justChecked, hasLocaleVoice, onOpenChange])
 
-    const handleRecheck = () => {
+    const onRecheck = () => {
         setJustChecked(true)
-        onRecheck()
+        recheckVoices()
     }
 
     return (
@@ -166,7 +166,7 @@ export const VoiceUnavailableModal = ({
                                                     </Button>
                                                 ),
                                                 () => (
-                                                    <Button variant="primary" className="w-full" onPress={handleRecheck}>
+                                                    <Button variant="primary" className="w-full" onPress={onRecheck}>
                                                         {t("mockInterview.voiceUnavailable.recheck")}
                                                     </Button>
                                                 ),

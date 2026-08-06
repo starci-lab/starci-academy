@@ -6,7 +6,7 @@ import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyInProgressFlashcardQuizSession}. `data` is the
- * viewer's resumable in-progress "Hỏi nhanh" quiz session for the given
+ * viewer's resumable in-progress quick-quiz session for the given
  * course (24h TTL, `status="in_progress"` only), or `null` when there is
  * none. Course-scoped and enrolled-only — only runs once a `courseId` is
  * known and the viewer is authenticated. Sends `X-Course-Id` so the backend

@@ -94,6 +94,7 @@ export const SummaryCard = ({
 
     return (
         <PressableCard
+            identity={{ tier: "block", component: "SummaryCard" }}
             onPress={onPress}
             className={cn(
                 "card card--default h-full rounded-xl border border-divider/60 p-4 transition-colors",

@@ -10,12 +10,16 @@ interface PrivacyParams {
     locale: string
 }
 
+/** Props for privacy-page `generateMetadata`. */
+interface PrivacyGenerateMetadataProps {
+    /** Promise of the resolved privacy route params. */
+    params: Promise<PrivacyParams>
+}
+
 /** Per-locale privacy-policy metadata, reusing the `legal.privacy.*` copy. */
 export const generateMetadata = async ({
     params,
-}: {
-    params: Promise<PrivacyParams>
-}): Promise<Metadata> => {
+}: PrivacyGenerateMetadataProps): Promise<Metadata> => {
     const { locale } = await params
     const t = await getTranslations({ locale })
     return buildPageMetadata({

@@ -96,7 +96,7 @@ export const Composer = ({
     }, [value])
 
     // Ctrl/Cmd+Enter submits (plain Enter keeps inserting newlines)
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
             event.preventDefault()
             if (canSubmit) {
@@ -119,7 +119,7 @@ export const Composer = ({
                     rows={1}
                     value={value}
                     onChange={(event) => onChange(event.target.value)}
-                    onKeyDown={handleKeyDown}
+                    onKeyDown={onKeyDown}
                     placeholder={placeholder}
                     className="max-h-40 resize-none"
                 />

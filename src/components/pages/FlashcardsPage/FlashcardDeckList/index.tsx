@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation"
 import { _FlashcardDeckList, type DeckView } from "./component"
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query-flashcard-decks-by-course"
 import { type FlashcardDeckEntity } from "@/modules/types/entities/flashcard-deck"
-import { type WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { pathConfig } from "@/resources/path"
 import { useStartFlashcardReviewSession } from "../useStartFlashcardReviewSession"
@@ -20,7 +19,7 @@ const DECKS_PER_PAGE = 10
 const VIEW_STORAGE_KEY = "starci.flashcard.deckView"
 
 /** Props for {@link FlashcardDeckList}. */
-export interface FlashcardDeckListProps extends WithClassNames<undefined> {
+export interface FlashcardDeckListProps {
     /** Called with the chosen deck id when the learner opens a deck. */
     onSelectDeck: (deckId: string) => void
     /** CTA label on each deck card. Defaults to the study label. */

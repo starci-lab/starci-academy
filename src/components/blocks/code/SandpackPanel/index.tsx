@@ -9,7 +9,6 @@ import {
     SandpackFileExplorer,
 } from "@codesandbox/sandpack-react"
 import type { SandpackFiles, SandpackTheme } from "@codesandbox/sandpack-react"
-import { cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 const sharedFont = {
@@ -97,7 +96,7 @@ const EXTERNAL_RESOURCES = [
 
 /** Live in-browser React sandbox (Sandpack) previewing the lesson's code files. */
 export const SandpackPanel = ({ files, dependencies = {}, isDark = true, className }: SandpackPanelProps) => (
-    <div className={cn(className)}>
+    <div className={className}>
         <SandpackProvider
             template="react-ts"
             theme={isDark ? darkTheme : lightTheme}

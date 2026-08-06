@@ -8,6 +8,7 @@ import {
 import { CvGenerationStatus } from "@/modules/types/enums/cv-generation-status"
 import { useAppSelector } from "@/redux/hooks"
 
+/** Page size for the my-CV-generations list (offset pagination). */
 export const MY_CV_GENERATIONS_PAGE_SIZE = 5
 
 /**

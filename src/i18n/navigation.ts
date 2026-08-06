@@ -5,8 +5,10 @@ import {
     routing
 } from "./routing"
  
-// Lightweight wrappers around Next.js' navigation
-// APIs that consider the routing configuration
+/**
+ * Locale-aware Next.js navigation helpers (`Link`, `redirect`, `usePathname`,
+ * `useRouter`, `getPathname`) bound to this app's next-intl routing config.
+ */
 export const {
     Link, 
     redirect, 

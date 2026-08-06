@@ -21,7 +21,7 @@ export const SEO_CONFIG = {
     googleSiteVerification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ?? "",
     /** Default site description (fallback when a page has none). */
     defaultDescription:
-        "StarCi Academy — học Fullstack, System Design và AI/LLM Engineering qua dự án thật, thực hành chấm điểm và lộ trình rõ ràng.",
+        "StarCi Academy — learn Fullstack, System Design, and AI/LLM Engineering through real projects, graded practice, and a clear roadmap.",
     /** Locales the public site is served under (mirrors the `[locale]` segment). */
     locales: ["vi", "en"] as ReadonlyArray<string>,
     /** Default locale — used for `x-default` hreflang + the canonical sitemap url. */

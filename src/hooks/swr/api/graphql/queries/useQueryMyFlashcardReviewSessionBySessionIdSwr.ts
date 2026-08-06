@@ -6,9 +6,9 @@ import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyFlashcardReviewSessionBySessionId} — resolves a
- * "Học thẻ" session (deck-review or cross-deck due-review) by its id ALONE.
- * The unified `flashcards/review/sessions/[sessionId]` route (thầy
- * 2026-07-11: "bỏ deck đi, only session thôi") uses this to learn which kind
+ * card-review session (deck-review or cross-deck due-review) by its id ALONE.
+ * The unified `flashcards/review/sessions/[sessionId]` route (mentor guidance
+ * 2026-07-11: drop the deck hint — session id alone) uses this to learn which kind
  * it is + the deck identity (when applicable) before rendering
  * `FlashcardReviewer`/`DueReview` — no `deckId` query hint needed, the session
  * row already persists that context server-side.

@@ -120,6 +120,16 @@ const FieldChevronDown = () => (
 )
 const MODEL_ROW_TRIGGER_CLASS = "block w-full min-w-0"
 
+/** Props for {@link ModelRowLayout}. */
+interface ModelRowLayoutProps {
+    leading?: React.ReactNode
+    name: string
+    nameSuffix?: React.ReactNode
+    isSelected?: boolean
+    muted?: boolean
+    trailing: React.ReactNode
+}
+
 /** Model row — name truncates on the left, chips stay pinned on the right. */
 const ModelRowLayout = ({
     leading,
@@ -128,14 +138,7 @@ const ModelRowLayout = ({
     isSelected,
     muted,
     trailing,
-}: {
-    leading?: React.ReactNode
-    name: string
-    nameSuffix?: React.ReactNode
-    isSelected?: boolean
-    muted?: boolean
-    trailing: React.ReactNode
-}) => (
+}: ModelRowLayoutProps) => (
     <div
         className={cn(
             "grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-2",

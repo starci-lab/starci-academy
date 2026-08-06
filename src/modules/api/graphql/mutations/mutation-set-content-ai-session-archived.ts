@@ -25,6 +25,10 @@ export type MutateSetContentAiSessionArchivedParams = MutateParams<
     SetContentAiSessionArchivedRequest
 >
 
+/**
+ * Archives or un-archives a content-AI conversation session. Mirrors backend
+ * `setContentAiSessionArchived`.
+ */
 export const mutateSetContentAiSessionArchived = async ({
     request,
     debug,

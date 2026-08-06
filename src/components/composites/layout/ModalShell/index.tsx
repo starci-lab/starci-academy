@@ -50,8 +50,6 @@ export interface ModalShellBaseProps {
      * Ignored when {@link header} is provided, or when {@link title} is omitted.
      */
     description?: string
-    /** Extra classes on the default title/description wrapper (only with {@link title}). */
-    titleClassName?: string
     /**
      * Full custom header content — use instead of {@link title}/{@link description}
      * for a non-standard header. Takes precedence over both. A COMPONENT
@@ -78,12 +76,6 @@ export interface ModalShellBaseProps {
     scroll?: React.ComponentProps<typeof ModalContainer>["scroll"]
     /** Extra classes merged onto `ModalContainer` (merged after the `scroll="inside"` max-height default). */
     containerClassName?: string
-    /** Extra classes merged onto `ModalDialog`, in addition to {@link ModalShellBaseProps.classNames}. */
-    dialogClassName?: string
-    /** Extra classes merged onto `ModalBody`. */
-    bodyClassName?: string
-    /** Extra classes merged onto `ModalFooter`. */
-    footerClassName?: string
     /**
      * Where this sits inside its parent. Appearance is not passable — it is already a prop.
      */
@@ -116,16 +108,12 @@ const Base = ({
     onOpenChange,
     title,
     description,
-    titleClassName,
     header: Header,
     body: Body,
     footer: Footer,
     size,
     scroll,
     containerClassName,
-    dialogClassName,
-    bodyClassName,
-    footerClassName,
     classNames,
     isSkeleton = false,
     identity,
@@ -150,16 +138,16 @@ const Base = ({
                         (`.modal__header + .modal__body { mt-2 }`, `mt-5` before the footer), not to
                         compete with the parent.
                         Dialog gap + mt-0 on the child: ONE seam, ONE owner. */}
-                    <ModalDialog className={cn(dialogClassName, classNames)}>
+                    <ModalDialog className={cn(classNames)}>
                         <ModalCloseTrigger />
                         {Header ? (
                             <ModalHeader><Header isSkeleton={isSkeleton} /></ModalHeader>
                         ) : title != null ? (
                             <ModalHeader>
-                                {/* `pr-8` (room for the close button) + arbitrary caller `titleClassName`
-                                    ride a plain wrapper — neither is an `AllowedClassName`, so the typed
-                                    `StackV` frame keeps its closed `classNames` union. */}
-                                <div className={cn("pr-8", titleClassName)}>
+                                {/* `pr-8` (room for the close button) rides a plain wrapper —
+                                    not an `AllowedClassName`, so the typed `StackV` frame keeps
+                                    its closed `classNames` union. */}
+                                <div className="pr-8">
                                     <StackV
                                         gap={2}
                                         principle="title-subtitle"
@@ -200,7 +188,6 @@ const Base = ({
                                 // decided by ModalDialog's baked seam. The 0 sits on the scale, so it
                                 // is not an exception.
                                 hasHeader && "mt-0!",
-                                bodyClassName,
                             )}
                         >
                             {main}
@@ -211,7 +198,7 @@ const Base = ({
                         {Footer != null ? (
                             <ModalFooter
 
-                                className={cn("mt-0!", footerClassName)}
+                                className="mt-0!"
                             >
                                 <Footer isSkeleton={isSkeleton} />
                             </ModalFooter>

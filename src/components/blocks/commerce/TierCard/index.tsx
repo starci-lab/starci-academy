@@ -33,6 +33,9 @@ export interface TierCardProps extends WithClassNames<undefined> {
     isSkeleton?: boolean
 }
 
+/** Placeholder for the resting card's slots — the shell shimmers over every one of them. */
+const EmptySlot = () => null
+
 /**
  * One purchasable AI subscription tier card.
  *
@@ -42,9 +45,6 @@ export interface TierCardProps extends WithClassNames<undefined> {
  * shadow per global, `rounded-3xl`); the popular tier gets an accent border + ring.
  * @param props - tier, current state
  */
-/** Placeholder for the resting card's slots — the shell shimmers over every one of them. */
-const EmptySlot = () => null
-
 export const TierCard = ({
     tier,
     isCurrent,
@@ -74,6 +74,7 @@ export const TierCard = ({
     if (isSkeleton || !tier) {
         return (
             <TierCardBase
+                identity={{ tier: "block", component: "TierCard" }}
                 isSkeleton
                 className={className}
                 icon={EmptySlot}
@@ -94,6 +95,7 @@ export const TierCard = ({
             : 2
     return (
         <TierCardBase
+            identity={{ tier: "block", component: "TierCard" }}
             className={cn(
                 tier.popular ? "border-accent ring-2 ring-accent/30" : "",
                 className,

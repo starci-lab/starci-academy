@@ -1,17 +1,17 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { Button, Spinner, Typography, cn } from "@heroui/react"
 import { ArrowRightIcon, CardsIcon, ClockCountdownIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Typography } from "@/components/atoms/text/Typography"
 import { ModalShell } from "@/components/composites/layout/ModalShell"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { StackV } from "@/components/frames/Stack"
 import type { FlashcardReviewMode } from "@/modules/api/graphql/mutations/types/start-flashcard-review-session"
 
 /** Props for {@link FlashcardReviewModeModal}. */
-export interface FlashcardReviewModeModalProps extends WithClassNames<undefined> {
+export interface FlashcardReviewModeModalProps {
     /** Open when true. */
     isOpen: boolean
     /** Close handler (backdrop / Escape / Cancel). */
@@ -89,9 +89,7 @@ export const FlashcardReviewModeModal = ({
                     explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
                     items={[
                         () => (
-                            <Typography type="body-sm" color="muted">
-                                {t("flashcard.mode.subtitle", { deck: deckTitle })}
-                            </Typography>
+                            <Typography size="sm" color="muted" text={t("flashcard.mode.subtitle", { deck: deckTitle })} />
                         ),
                         () => (
                             <SurfaceListCard bordered>
@@ -104,32 +102,52 @@ export const FlashcardReviewModeModal = ({
                                     // (never a built element), and `titleClassName` stays lint-forbidden, so the
                                     // per-mode colour rides on the icon + row tint alone.
                                     className={mode === "full" ? "hover:bg-accent-soft" : undefined}
-                                    leading={() => <CardsIcon className={cn("size-6", mode === "full" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
+                                    leading={() => (
+                                        <CardsIcon
+                                            className={mode === "full" ? "size-6 text-accent-soft-foreground" : "size-6 text-foreground"}
+                                            aria-hidden
+                                            focusable="false"
+                                        />
+                                    )}
                                     title={t("flashcard.mode.fullLabel")}
                                     subtitle={t("flashcard.mode.fullDescription")}
                                     selected={mode === "full"}
                                     isDisabled={isPending}
                                     onPress={() => setMode("full")}
                                     meta={() => (
-                                        <span className="whitespace-nowrap text-xs font-medium text-muted">
-                                            {t("flashcard.mode.fullBadge", { count: totalCount })}
-                                        </span>
+                                        <Typography
+                                            size="xs"
+                                            weight="medium"
+                                            color="muted"
+                                            noWrap
+                                            text={t("flashcard.mode.fullBadge", { count: totalCount })}
+                                        />
                                     )}
                                 />
                                 <SurfaceListCardRow
                                     className={mode === "due" ? "hover:bg-accent-soft" : undefined}
-                                    leading={() => <ClockCountdownIcon className={cn("size-6", mode === "due" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
+                                    leading={() => (
+                                        <ClockCountdownIcon
+                                            className={mode === "due" ? "size-6 text-accent-soft-foreground" : "size-6 text-foreground"}
+                                            aria-hidden
+                                            focusable="false"
+                                        />
+                                    )}
                                     title={t("flashcard.mode.dueLabel")}
                                     subtitle={t("flashcard.mode.dueDescription")}
                                     selected={mode === "due"}
                                     isDisabled={isPending || dueDisabled}
                                     onPress={() => setMode("due")}
                                     meta={() => (
-                                        <span className={`whitespace-nowrap text-xs font-medium ${dueDisabled ? "text-muted" : "text-warning-soft-foreground"}`}>
-                                            {dueDisabled
+                                        <Typography
+                                            size="xs"
+                                            weight="medium"
+                                            color={dueDisabled ? "muted" : "warning"}
+                                            noWrap
+                                            text={dueDisabled
                                                 ? t("flashcard.mode.dueBadgeEmpty")
                                                 : t("flashcard.mode.dueBadge", { count: dueCount })}
-                                        </span>
+                                        />
                                     )}
                                 />
                             </SurfaceListCard>
@@ -138,16 +156,19 @@ export const FlashcardReviewModeModal = ({
             )}
             footer={() => (
                 <>
-                    <Button variant="tertiary" isDisabled={isPending} onPress={onClose}>
-                        {t("common.cancel")}
-                    </Button>
-                    <Button variant="primary" isPending={isPending} onPress={() => onStart(mode)}>
-                        {/* HeroUI Button ships no spinner for `isPending` — render one, same
-                            idiom as every other pending CTA (see `button.md` §6c). */}
-                        {isPending ? <Spinner color="current" size="sm" /> : null}
-                        {t("flashcard.mode.start")}
-                        {!isPending ? <ArrowRightIcon className="size-5" aria-hidden focusable="false" /> : null}
-                    </Button>
+                    <Button
+                        variant="tertiary"
+                        isDisabled={isPending}
+                        label={t("common.cancel")}
+                        onPress={onClose}
+                    />
+                    <Button
+                        variant="primary"
+                        isPending={isPending}
+                        label={t("flashcard.mode.start")}
+                        suffixIcon={isPending ? undefined : ArrowRightIcon}
+                        onPress={() => onStart(mode)}
+                    />
                 </>
             )}
         />

@@ -8,6 +8,7 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { StackH } from "@/components/frames/Stack"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * Props for the {@link PressableCard} block.
@@ -75,6 +76,11 @@ export interface PressableCardProps extends WithClassNames<undefined> {
      * Fullstack Mastery track"), never generic ("click here").
      */
     label?: string
+    /**
+     * Caller identity to wear on this card's root instead of its own — pass this
+     * when a sentence-tier component roots on this card (see `frames/_identity.ts`).
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -105,6 +111,7 @@ export const PressableCard = ({
     actions: Actions,
     label,
     className,
+    identity,
 }: PressableCardProps) => {
     // Shared card surface + disabled dim, identical across both render paths so
     // a card reads the same with or without actions. `shadow-surface` is a
@@ -116,6 +123,7 @@ export const PressableCard = ({
         isDisabled && "cursor-not-allowed opacity-60",
         className,
     )
+    const identityAttrs = resolveIdentity(identity, { tier: "composite", name: "PressableCard" })
 
     // ── Simple whole-card target (no secondary actions) — the common case;
     // the whole card is ONE <button>/<a> and its children are its label. ──────
@@ -126,7 +134,7 @@ export const PressableCard = ({
         )
         if (href && !isDisabled) {
             return (
-                <a href={href} aria-label={label} className={base} data-tier="composite" data-component="PressableCard">
+                <a href={href} aria-label={label} className={base} {...identityAttrs}>
                     {children}
                 </a>
             )
@@ -138,8 +146,7 @@ export const PressableCard = ({
                 disabled={isDisabled}
                 aria-label={label}
                 className={cn(base, !isDisabled && "cursor-pointer")}
-                data-tier="composite"
-                data-component="PressableCard"
+                {...identityAttrs}
             >
                 {children}
             </button>
@@ -159,7 +166,7 @@ export const PressableCard = ({
         isDisabled ? "cursor-not-allowed" : "cursor-pointer",
     )
     return (
-        <div className={cn("relative w-full", surface)} data-tier="composite" data-component="PressableCard">
+        <div className={cn("relative w-full", surface)} {...identityAttrs}>
             <StackH
                 gap={4}
                 items={[

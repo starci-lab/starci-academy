@@ -1266,8 +1266,6 @@ export interface SurfaceCardListItem {
     withVerdict?: VerdictBand
     /** `"fill"` (default) tints the whole row on hover; `"underline"` underlines the TITLE (row-as-link). */
     hover?: "fill" | "underline"
-    /** Extra className on the title's own Typography (e.g. a selected-row colour). */
-    titleClassName?: string
     /**
      * Where this row sits inside its parent. Appearance is not passable — it is
      * already a prop.
@@ -1375,7 +1373,6 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
         leadingIcon: LeadingIcon,
         leadingIconColor,
         title,
-        titleClassName,
         subtitle,
         meta: Meta,
         metaText,
@@ -1436,14 +1433,12 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
                 isSkeleton={isSkeleton}
                 items={[
                     () => (
-                        <div className={titleClassName}>
-                            <Typography size="sm"
-                                truncate
-                                isSkeleton={isSkeleton}
-                                underlineOnGroupHover={underlineHover}
-                                text={title}
-                            />
-                        </div>
+                        <Typography size="sm"
+                            truncate
+                            isSkeleton={isSkeleton}
+                            underlineOnGroupHover={underlineHover}
+                            text={title}
+                        />
                     ),
                     ...(subtitle ? [() => (
                         <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={subtitle} />

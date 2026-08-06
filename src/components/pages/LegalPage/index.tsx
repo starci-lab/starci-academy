@@ -39,11 +39,17 @@ export interface LegalPageProps {
     kind: LegalKind
 }
 
+/** Props for the in-page {@link Section} renderer. */
+interface SectionProps {
+    /** One numbered legal section from the structured document. */
+    section: LegalSection
+}
+
 /**
  * Renders one numbered section: heading + body paragraphs + an optional bullet
  * list whose items may carry a bold lead label. Plain Typography — no markdown.
  */
-const Section = ({ section }: { section: LegalSection }) => {
+const Section = ({ section }: SectionProps) => {
     const sectionItems = [
         () => <Typography.Heading level={4} weight="semibold">{section.heading}</Typography.Heading>,
         ...(section.paragraphs?.map((paragraph) => () => (

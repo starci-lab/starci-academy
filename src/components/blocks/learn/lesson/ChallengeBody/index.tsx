@@ -71,6 +71,7 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
 
     return (
         <LabeledCard
+            identity={{ tier: "block", component: "ChallengeBody" }}
             label={t("challenge.count", { count: count ?? 0 })}
             frameless={hasChallenges}
             className={className}

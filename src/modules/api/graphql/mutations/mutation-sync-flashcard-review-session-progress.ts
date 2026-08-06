@@ -34,7 +34,7 @@ export type MutateSyncFlashcardReviewSessionProgressParams = MutateParams<
 >
 
 /**
- * Best-effort, fire-and-forget persistence of an in-progress "Học thẻ" review
+ * Best-effort, fire-and-forget persistence of an in-progress card-review
  * run — called after every graded card so the session can be resumed later
  * within its 24h TTL (`myInProgressFlashcardReviewSession`). Mirrors backend
  * `mutations/flashcard/sync-flashcard-review-session-progress`.

@@ -8,7 +8,7 @@ export const CREDIT_USAGE_HISTORY_PAGE_LIMIT = 20
 
 /**
  * Infinite (offset-paginated) SWR hook for the viewer's AI credit charge history
- * — the "Lịch sử dùng AI" page list. Each page = `myCreditUsageHistory(limit,
+ * — the AI usage history page list. Each page = `myCreditUsageHistory(limit,
  * offset)` (offset = pageIndex × {@link CREDIT_USAGE_HISTORY_PAGE_LIMIT}); stops
  * once a page returns fewer than a full page. User-scoped (keyed `null` until
  * authenticated). Per the async rule, pagination uses `useSWRInfinite`.

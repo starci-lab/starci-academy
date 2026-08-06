@@ -35,7 +35,7 @@ export type MutateCompleteFlashcardReviewSessionParams = MutateParams<
 >
 
 /**
- * Records a finished "Học thẻ" review run — flips the persisted session to
+ * Records a finished card-review run — flips the persisted session to
  * "completed" and snapshots the final reviewed-count/xpEarned bookkeeping
  * values (no server-side XP grant; `reviewFlashcard` itself grants none).
  * Mirrors backend `mutations/flashcard/complete-flashcard-review-session`.

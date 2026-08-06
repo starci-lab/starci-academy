@@ -32,7 +32,7 @@ const isMaintenanceError = (error: unknown): boolean =>
  * the stale access token and send the user back to the home page (which renders
  * the logged-out state), so they aren't stuck on a half-broken authed view.
  */
-const handleSessionSuperseded = (): void => {
+const onSessionSuperseded = (): void => {
     // only act in the browser — the error link can also run during SSR
     if (typeof window === "undefined") return
     // remove the now-invalid access token so the app treats us as logged out
@@ -59,7 +59,7 @@ export const createErrorLink = (debug = false) =>
             for (const gqlErr of error.errors) {
                 // a newer login elsewhere evicted this session → force logout
                 if (gqlErr.message?.includes(SESSION_SUPERSEDED_MARKER)) {
-                    handleSessionSuperseded()
+                    onSessionSuperseded()
                     return
                 }
                 if (
@@ -72,7 +72,7 @@ export const createErrorLink = (debug = false) =>
                     // token expired mid-session (not superseded) → force logout the
                     // same way, so the user re-authenticates instead of being stranded
                     // on a half-authed shell where every query keeps returning 401.
-                    handleSessionSuperseded()
+                    onSessionSuperseded()
                     return
                 }
             }

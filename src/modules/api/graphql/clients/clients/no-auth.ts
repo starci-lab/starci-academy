@@ -58,6 +58,9 @@ export interface CreateNoAuthApolloClientOptions {
     withCredentials?: boolean
 }
 
+/**
+ * Builds an Apollo Client with no auth token — public/anonymous GraphQL only.
+ */
 export const createNoAuthApolloClient = ({
     uri,
     cache = true,

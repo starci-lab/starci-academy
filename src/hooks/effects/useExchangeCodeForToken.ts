@@ -71,7 +71,7 @@ export const useExchangeCodeForToken = () => {
             return
         }
         processedCodeRef.current = code
-        const handleEffect = async () => {
+        const onEffect = async () => {
             const cleanUrl = stripOauthSearchParams(pathname, searchParams)
             const provider = resolveProvider()
             try {
@@ -103,7 +103,7 @@ export const useExchangeCodeForToken = () => {
                 router.replace(cleanUrl, { scroll: false })
             }
         }
-        handleEffect()
+        onEffect()
     }, [
         dispatch, 
         pathname, 

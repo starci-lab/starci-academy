@@ -28,7 +28,7 @@ const mutationMap: Record<MutationStartTrial, DocumentNode> = {
 export type MutateStartTrialParams = MutateParams<MutationStartTrial, StartTrialRequest>
 
 /**
- * Starts a trial (preview) enrollment for a course — the "Học thử" flow.
+ * Starts a trial (preview) enrollment for a course — the Start trial flow.
  * Idempotent server-side: a no-op when any enrollment already exists.
  *
  * Mirrors `startTrial` (mutations/courses/start-trial).

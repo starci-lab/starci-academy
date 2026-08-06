@@ -72,7 +72,11 @@ export const FounderCard = ({ className }: FounderCardProps) => {
         ),
     ]
     return (
-        <LabeledCard label={t("contact.founder.title")} className={className}>
+        <LabeledCard
+            identity={{ tier: "block", component: "FounderCard" }}
+            label={t("contact.founder.title")}
+            className={className}
+        >
             <StackV gap={4} items={bodyItems} />
         </LabeledCard>
     )

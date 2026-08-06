@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
 import { DUE_REVIEW_LIMIT, SM2_GRADES } from "../constants"
 import { _DueReview, type DueReviewCard, type DueReviewLabels } from "./component"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-review-flashcard"
 import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due-flashcards"
 import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/types"
@@ -20,7 +19,7 @@ import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link DueReview}. */
-export interface DueReviewProps extends WithClassNames<undefined> {
+export interface DueReviewProps {
     /** Leave the session and return to the flashcards home. */
     onExit: () => void
     /**

@@ -25,6 +25,10 @@ export type MutateClearContentAiHistoryParams = MutateParams<
     ClearContentAiHistoryRequest
 >
 
+/**
+ * Clears message history for a content-AI session. Mirrors backend
+ * `clearContentAiHistory`.
+ */
 export const mutateClearContentAiHistory = async ({
     request,
     debug,

@@ -6,7 +6,7 @@ import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyFlashcardQuizSessionBySessionId} — resolves ONE
- * "Hỏi nhanh" quiz session's persisted snapshot by its id alone, owner-scoped and
+ * quick-quiz session's persisted snapshot by its id alone, owner-scoped and
  * status-agnostic. Feeds the URL-addressable quiz RESULT surface and the
  * revisit-a-finished-session-by-URL fork: the returned `status` is how the caller
  * tells a `completed`/`abandoned` session apart from an `in_progress` one (the

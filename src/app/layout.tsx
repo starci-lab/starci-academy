@@ -3,6 +3,11 @@ import "./globals.css"
 import { PropsWithChildren } from "react"
 import { SEO_CONFIG } from "@/config/seo"
 
+/**
+ * Root App Router metadata — site-wide title template, description, OpenGraph /
+ * Twitter defaults, robots, and optional Search Console verification. Locale-
+ * specific overrides live under `[locale]/layout` and per-page `generateMetadata`.
+ */
 export const metadata: Metadata = {
     // absolute base so relative canonical / OG urls resolve to the real origin
     metadataBase: new URL(SEO_CONFIG.siteUrl),

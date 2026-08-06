@@ -38,12 +38,12 @@ export const useCvSubmissionForm = ({ onSubmit }: UseCvSubmissionFormParams) => 
         defaultValues: { cv: null },
     })
 
-    const handleSubmit = form.handleSubmit(async (value) => {
+    const onFormSubmit = form.handleSubmit(async (value) => {
         await onSubmit(value)
     })
 
     return {
         ...form,
-        onSubmit: handleSubmit,
+        onSubmit: onFormSubmit,
     }
 }

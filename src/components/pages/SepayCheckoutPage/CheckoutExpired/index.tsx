@@ -5,7 +5,6 @@ import React, {
     useCallback,
 } from "react"
 import {
-    Button,
     Card,
 } from "@heroui/react"
 import {
@@ -20,8 +19,9 @@ import {
 } from "@/i18n/navigation"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { pathConfig } from "@/resources/path"
+import { Button } from "@/components/atoms/buttons/Button"
 import { Box } from "@/components/frames/Box"
-import { StackV } from "@/components/frames/Stack"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link CheckoutExpired}. */
 export interface CheckoutExpiredProps {
@@ -64,29 +64,52 @@ export const CheckoutExpired = ({ onRecheck }: CheckoutExpiredProps) => {
     )
 
     return (
-        <Box principle="page-pad" className="flex min-h-[80vh] flex-col items-center justify-center p-4"
+        <Box identity={{ tier: "page", component: "CheckoutExpired" }} principle="page-pad" className="flex min-h-[80vh] flex-col items-center justify-center p-4"
             explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
+            {/* Glass Card chrome stays on vendor Card until a house surface owns the frosted look. */}
             <Card className="w-full max-w-md bg-default/40 text-center backdrop-blur-md">
                 <Box principle="card-padding" className="p-8"
                     explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
-                    <Card.Content className="flex flex-col items-center">
-                        <div className="mb-6 flex justify-center">
-                            <IconTile icon={<ClockCountdown aria-hidden focusable="false" />} tone="warning" size="lg" />
-                        </div>
-                        <h1 className="mb-2 text-2xl font-bold">{t("payment.sepay.expired.title")}</h1>
-                        <p className="mb-6 text-muted">{t("payment.sepay.expired.description")}</p>
-                        <StackV gap={4} principle="content-row" classNames={["w-full"]}
-                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                    <Card.Content>
+                        <StackV gap={6} principle="group-boundary" align="center"
+                            explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
                             items={[
                                 () => (
-                                    <Button variant="primary" onPress={onStartOver}>
-                                        {t("payment.sepay.expired.startOver")}
-                                    </Button>
+                                    <StackH gap={1} principle="identity" justify="center"
+                                        explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
+                                        items={[
+                                            () => <IconTile icon={<ClockCountdown aria-hidden focusable="false" />} tone="warning" size="lg" />,
+                                        ]} />
                                 ),
                                 () => (
-                                    <Button variant="secondary" onPress={onRecheck}>
-                                        {t("payment.sepay.expired.recheck")}
-                                    </Button>
+                                    <StackV gap={2} principle="title-subtitle" align="center"
+                                        explain="Title over supporting line — not label-field, because neither line is a form control label."
+                                        items={[
+                                            () => <h1 className="text-2xl font-bold">{t("payment.sepay.expired.title")}</h1>,
+                                            () => <p className="text-muted">{t("payment.sepay.expired.description")}</p>,
+                                        ]} />
+                                ),
+                                () => (
+                                    <StackV gap={4} principle="content-row" classNames={["w-full"]}
+                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                        items={[
+                                            () => (
+                                                <Button
+                                                    variant="primary"
+                                                    classNames={["w-full"]}
+                                                    label={t("payment.sepay.expired.startOver")}
+                                                    onPress={onStartOver}
+                                                />
+                                            ),
+                                            () => (
+                                                <Button
+                                                    variant="secondary"
+                                                    classNames={["w-full"]}
+                                                    label={t("payment.sepay.expired.recheck")}
+                                                    onPress={onRecheck}
+                                                />
+                                            ),
+                                        ]} />
                                 ),
                             ]} />
                     </Card.Content>

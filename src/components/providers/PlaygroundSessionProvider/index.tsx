@@ -89,6 +89,12 @@ export const usePlaygroundSessionContext = (): PlaygroundSessionContextValue => 
     return value
 }
 
+/** Props for {@link PlaygroundSessionProvider}. */
+interface PlaygroundSessionProviderProps {
+    /** Setup / Lab route subtree that shares one playground socket + session. */
+    children: React.ReactNode
+}
+
 /**
  * Owns the ONE socket + session for a playground, mounted at
  * `playground/[slug]/layout.tsx` so it survives navigation between the Setup
@@ -99,7 +105,7 @@ export const usePlaygroundSessionContext = (): PlaygroundSessionContextValue => 
  * the socket and dropped `sessionId`/`pairingCode` — the learner would have had
  * to re-run `npx …` after pressing "Start playground".
  */
-export const PlaygroundSessionProvider = ({ children }: { children: React.ReactNode }) => {
+export const PlaygroundSessionProvider = ({ children }: PlaygroundSessionProviderProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const params = useParams()

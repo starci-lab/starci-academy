@@ -24,6 +24,12 @@ interface LocaleLayoutProps extends PropsWithChildren {
     params: Promise<LocaleRouteParams>
 }
 
+/** Props for locale-level `generateMetadata` (OpenGraph locale only). */
+interface LocaleGenerateMetadataProps {
+    /** Promise of the resolved `[locale]` route params (Next.js App Router). */
+    params: Promise<LocaleRouteParams>
+}
+
 /**
  * Locale-level metadata: sets the OpenGraph locale so inherited (non-builder)
  * pages still unfurl with the right `og:locale`. Per-page `generateMetadata`
@@ -33,9 +39,7 @@ interface LocaleLayoutProps extends PropsWithChildren {
  */
 export const generateMetadata = async ({
     params,
-}: {
-    params: Promise<LocaleRouteParams>
-}): Promise<Metadata> => {
+}: LocaleGenerateMetadataProps): Promise<Metadata> => {
     const { locale } = await params
     return {
         openGraph: {

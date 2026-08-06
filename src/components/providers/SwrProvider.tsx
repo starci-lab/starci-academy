@@ -2,6 +2,12 @@
 import React from "react"
 import { SWRConfig } from "swr"
 
+/** Props for {@link SwrProvider}. */
+interface SwrProviderProps {
+    /** App subtree that shares one SWR cache + revalidation defaults. */
+    children: React.ReactNode
+}
+
 /**
  * Global SWR provider. Centralises revalidation defaults so the ~40 singleton
  * query hooks mounted once in {@link SingletonHookProvider} stop refetching on
@@ -10,7 +16,7 @@ import { SWRConfig } from "swr"
  * Hooks that genuinely need fresh data (e.g. job polling) opt back in locally
  * via their own `refreshInterval` / `revalidateOnFocus` option.
  */
-export const SwrProvider = ({ children }: { children: React.ReactNode }) => {
+export const SwrProvider = ({ children }: SwrProviderProps) => {
     return (
         <SWRConfig value={{
             /** Isolated in-memory cache for this app instance. */

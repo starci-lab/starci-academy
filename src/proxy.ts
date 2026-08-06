@@ -103,7 +103,7 @@ const resolveLocale = (request: NextRequest, urlLocale?: string): string =>
  * @param request - the incoming edge request
  * @returns a redirect, or the next-intl response
  */
-export default function proxy(request: NextRequest) {
+const proxy = (request: NextRequest) => {
     const {pathname} = request.nextUrl
     const isAuthed = request.cookies.has(AUTH_SIGNAL_COOKIE)
     const homeMatch = pathname.match(HOME_ROOT_PATH)
@@ -141,9 +141,12 @@ export default function proxy(request: NextRequest) {
     return intlMiddleware(request)
 }
 
+export default proxy
+
+/**
+ * Next.js middleware matcher — every pathname except `/api`, `/trpc`, `/_next`,
+ * `/_vercel`, and static files (any path containing a dot, e.g. `favicon.ico`).
+ */
 export const config = {
-    // Match all pathnames except for
-    // - … if they start with `/api`, `/trpc`, `/_next` or `/_vercel`
-    // - … the ones containing a dot (e.g. `favicon.ico`)
     matcher: "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
 }

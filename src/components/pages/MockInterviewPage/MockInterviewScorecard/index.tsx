@@ -120,6 +120,14 @@ const SCORE_TEXT_COLOR: Record<"success" | "warning" | "danger", string> = {
 /** The Q&A cognitive frames that carry a localized `mockInterview.kind.*` label — anything else renders raw. */
 const QNA_KINDS: ReadonlyArray<string> = ["theory", "reasoning", "scenario"]
 
+/** Props for {@link MockInterviewQuestionReviewCard}. */
+interface MockInterviewQuestionReviewCardProps {
+    /** One per-question review entry from the scorecard payload. */
+    review: MockInterviewQuestionReview
+    /** Course display id, for building the "view in lesson" deep link. */
+    courseDisplayId: string
+}
+
 /**
  * One per-question model-answer review card (the anti-ChatGPT breakdown): the
  * question, the candidate's own answer (muted), the seed flashcard's model answer,
@@ -129,16 +137,12 @@ const QNA_KINDS: ReadonlyArray<string> = ["theory", "reasoning", "scenario"]
  * scorecard's single-match citation mechanism, just per question instead of
  * per session.
  *
- * @param review - one {@link MockInterviewQuestionReview} entry.
- * @param courseDisplayId - course display id, for building the "view in lesson" deep link.
+ * @param props - {@link MockInterviewQuestionReviewCardProps}
  */
 const MockInterviewQuestionReviewCard = ({
     review,
     courseDisplayId,
-}: {
-    review: MockInterviewQuestionReview
-    courseDisplayId: string
-}) => {
+}: MockInterviewQuestionReviewCardProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()

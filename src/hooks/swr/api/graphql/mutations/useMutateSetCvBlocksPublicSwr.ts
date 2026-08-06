@@ -6,7 +6,7 @@ type MutateSetCvBlocksPublicResult = Awaited<ReturnType<typeof mutateSetCvBlocks
 
 /**
  * SWR mutation wrapper for {@link mutateSetCvBlocksPublic} — flags one CV as the
- * user's public résumé (single-public-per-user, BE-enforced). After triggering,
+ * user's public resume (single-public-per-user, BE-enforced). After triggering,
  * refetch `myCvBlocks` so the whole set reflects the new state (turning one on
  * turns the others off).
  */

@@ -6,8 +6,8 @@ import { FlashcardsPage } from "@/components/pages/FlashcardsPage"
 
 /**
  * Learn / flashcards / review / sessions / [sessionId] / result — the
- * dedicated RESULT URL for a FINISHED "Học thẻ" run (either kind — single-deck
- * review or cross-deck due), separate from the live
+ * dedicated RESULT URL for a FINISHED "Study Cards" run (either kind —
+ * single-deck review or cross-deck due), separate from the live
  * `.../sessions/[sessionId]` route (2026-07-12). Mirrors
  * `flashcards/quiz/sessions/[sessionId]/result`'s own doc for the full
  * root-cause: "done" is now answered by the ROUTE, not re-derived

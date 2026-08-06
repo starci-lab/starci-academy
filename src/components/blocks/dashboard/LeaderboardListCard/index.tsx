@@ -224,6 +224,7 @@ export const LeaderboardListCard = ({
 
     return (
         <LabeledCard
+            identity={{ tier: "block", component: "LeaderboardListCard" }}
             // `title` is only ever omitted in `bare` mode, which already returned above —
             // the fallback here is a type-safety guard, not a real state either caller hits.
             label={title ?? ""}

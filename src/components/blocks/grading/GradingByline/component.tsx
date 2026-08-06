@@ -4,13 +4,21 @@ import { CheckCircleIcon, SparkleIcon, XCircleIcon } from "@phosphor-icons/react
 import { AiCategoryChip } from "@/components/blocks/chips/AiCategoryChip"
 import type { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
 
+/** Props for {@link VerdictIcon}. */
+export interface VerdictIconProps {
+    /** `true` → green check; `false` → red x. */
+    pass: boolean
+    /** Optional className override on the glyph. */
+    className?: string
+}
+
 /**
  * Pass/fail verdict glyph (green check / red x). Shared by the result selector
  * chips, the drawer trigger, the verdict chip, and the history rows.
  *
- * @param props - whether the attempt passed + an optional className override.
+ * @param props - {@link VerdictIconProps}
  */
-export const VerdictIcon = ({ pass, className }: { pass: boolean, className?: string }) =>
+export const VerdictIcon = ({ pass, className }: VerdictIconProps) =>
     pass ? (
         <CheckCircleIcon aria-hidden focusable="false" className={cn("size-4 shrink-0 text-success-soft-foreground", className)} />
     ) : (

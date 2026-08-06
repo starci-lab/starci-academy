@@ -131,11 +131,19 @@ export const _FlashcardReviewStats = ({
     // error → skeleton → empty → content (BLOCK-8): error beats a stale loading flag; the empty
     // and error surfaces are the shared `AsyncContent*` frames, not hand-written JSX (§6).
     if (error) {
-        return <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retry} />
+        return (
+            <AsyncContentError
+                identity={{ tier: "page", component: "FlashcardReviewStats" }}
+                title={labels.errorTitle}
+                onRetry={onRetry}
+                retryLabel={labels.retry}
+            />
+        )
     }
     if (!isSkeleton && isEmpty) {
         return (
             <AsyncContentEmpty
+                identity={{ tier: "page", component: "FlashcardReviewStats" }}
                 icon={ChartLineUpIcon}
                 title={labels.emptyTitle}
                 description={labels.emptyDescription}
@@ -184,7 +192,7 @@ export const _FlashcardReviewStats = ({
     const showActionRow = isSkeleton || Boolean(weakTopicDrillCta) || Boolean(weakTopicAvgCaption)
 
     return (
-        <StackV gap={6} items={[
+        <StackV identity={{ tier: "page", component: "FlashcardReviewStats" }} gap={6} items={[
             // ZONE 1 — "Memory health" hero (◎ vs target). `VerdictHeroCard` has no `isSkeleton`
             // of its own — while shimmering this swaps to a hand-mirrored `Skeleton.*` tree in
             // the exact same position instead (missingSkeletonSupport).

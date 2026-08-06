@@ -29,7 +29,7 @@ export type MutateSetAiCeilParams = MutateParams<
 
 /**
  * Sets the current user's AI model CEILING for a surface (or the global default
- * when `surface` is omitted) — the per-hạng-mục cap for cost control. Clients
+ * when `surface` is omitted) — the per-category cap for cost control. Clients
  * refetch `myAiQuota` after to read the refreshed state.
  *
  * Mirrors backend `setAiCeil` (mutations/ai/set-ai-ceil/set-ai-ceil.resolver.ts).

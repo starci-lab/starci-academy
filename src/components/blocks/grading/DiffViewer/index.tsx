@@ -63,15 +63,27 @@ const LINE_MARKER: Record<DiffLineType, string> = {
     ctx: " ",
 }
 
+/** Props for {@link NumberCell}. */
+interface NumberCellProps {
+    /** Line number to show; omit / undefined renders an empty gutter cell. */
+    value?: number
+}
+
 /** A monospace line-number cell in the gutter (right-aligned, non-selectable). */
-const NumberCell = ({ value }: { value?: number }) => (
+const NumberCell = ({ value }: NumberCellProps) => (
     <span className="w-10 shrink-0 select-none pr-2 text-right tabular-nums text-muted-foreground">
         {value ?? ""}
     </span>
 )
 
+/** Props for {@link UnifiedRow}. */
+interface UnifiedRowProps {
+    /** Pre-parsed diff line to render. */
+    line: DiffLine
+}
+
 /** One rendered line in the UNIFIED layout: [old #][new #][marker][content]. */
-const UnifiedRow = ({ line }: { line: DiffLine }) => (
+const UnifiedRow = ({ line }: UnifiedRowProps) => (
     <div className={cn("flex items-start", LINE_TONE[line.type])}>
         <NumberCell value={line.oldNumber} />
         <NumberCell value={line.newNumber} />
@@ -82,8 +94,16 @@ const UnifiedRow = ({ line }: { line: DiffLine }) => (
     </div>
 )
 
+/** Props for {@link SplitCell}. */
+interface SplitCellProps {
+    /** Line for this side, or `null` for a blank filler cell. */
+    line: DiffLine | null
+    /** Which file side this cell represents. */
+    side: "old" | "new"
+}
+
 /** One side of the SPLIT layout: a single line number + content, or a blank filler row. */
-const SplitCell = ({ line, side }: { line: DiffLine | null; side: "old" | "new" }) => (
+const SplitCell = ({ line, side }: SplitCellProps) => (
     <div
         className={cn(
             "flex items-start",

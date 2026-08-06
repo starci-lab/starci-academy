@@ -34,7 +34,7 @@ export type MutateStartFlashcardReviewSessionParams = MutateParams<
 >
 
 /**
- * Draws a "Học thẻ" review session server-side and returns its id — called
+ * Draws a card-review session server-side and returns its id — called
  * right after the deck's cards are fetched/sorted, before the reviewer opens
  * its first card, so every subsequent call
  * (`syncFlashcardReviewSessionProgress`, `completeFlashcardReviewSession`)

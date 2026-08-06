@@ -25,6 +25,10 @@ export type MutateTouchContentAiSessionParams = MutateParams<
     TouchContentAiSessionRequest
 >
 
+/**
+ * Touches a content-AI session's last-active timestamp. Mirrors backend
+ * `touchContentAiSession`.
+ */
 export const mutateTouchContentAiSession = async ({
     request,
     debug,

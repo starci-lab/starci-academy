@@ -91,6 +91,10 @@ export interface CreateAuthApolloClientOptions {
     resolveAuthenticated?: () => void
 }
 
+/**
+ * Builds an Apollo Client that attaches a Keycloak Bearer token (refreshing
+ * when near expiry) and shares the shared error/retry/timeout/fingerprint links.
+ */
 export const createAuthApolloClient = ({
     cache = true,
     withCredentials = true,

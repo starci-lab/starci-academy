@@ -62,7 +62,11 @@ export const ContactFaq = ({ className }: ContactFaqProps) => {
         ),
     ]
     return (
-        <LabeledCard label={t("contact.faq.title")} className={className}>
+        <LabeledCard
+            identity={{ tier: "block", component: "ContactFaq" }}
+            label={t("contact.faq.title")}
+            className={className}
+        >
             <StackV gap={5} principle="group-boundary"
                 explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
                 items={bodyItems}  />

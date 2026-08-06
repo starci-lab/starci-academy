@@ -10,6 +10,10 @@ const ThemeProvider = dynamic(
     }
 )
 
+/**
+ * Client-only next-themes provider (dynamic, `ssr: false`) — owns light/dark
+ * class application on `<html>` without flashing the wrong theme on first paint.
+ */
 export const NextThemesProvider = ({ children, ...props }: ThemeProviderProps) => {
     return <ThemeProvider {...props}>{children}</ThemeProvider>
 }

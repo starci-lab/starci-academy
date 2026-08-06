@@ -35,7 +35,7 @@ export type MutateStartFlashcardQuizSessionParams = MutateParams<
 >
 
 /**
- * Draws a "Hỏi nhanh" quiz session server-side and returns its id — called right
+ * Draws a quick-quiz session server-side and returns its id — called right
  * after the client draws `sessionCards`, before showing question 1, so every
  * subsequent call (`syncFlashcardQuizSessionProgress`, `completeFlashcardQuizSession`,
  * the resumable `.../quiz/[sessionId]` route) shares one server-issued id instead

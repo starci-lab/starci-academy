@@ -43,6 +43,7 @@ export const FreeTierCard = ({
     const t = useTranslations()
     return (
         <TierCardBase
+            identity={{ tier: "block", component: "FreeTierCard" }}
             isSkeleton={isSkeleton}
             className={className}
             icon={() => (

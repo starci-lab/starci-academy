@@ -66,7 +66,7 @@ export interface AskMockInterviewTurnSocketIoPayload {
         kind?: string | null
         /** Current question's seed text (Q&A kinds) — resent unchanged for the opening ask and every follow-up on that question. */
         currentSeed?: string | null
-        /** 0-based index of the question this turn belongs to (Q&A kinds), for "Câu N" phrasing + first-ask detection. */
+        /** 0-based index of the question this turn belongs to (Q&A kinds), for "Question N" phrasing + first-ask detection. */
         questionIndex?: number | null
     }
     /** Locale (reply language + which body locale the server loads). */

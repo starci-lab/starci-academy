@@ -115,18 +115,6 @@ export interface SurfaceListCardRowProps extends WithClassNames<undefined> {
     leading?: ComponentType
     /** Primary line — medium foreground, single-line truncate. */
     title: string
-    /**
-     * Extra className applied directly to a wrapper around the title's own
-     * `Typography` element (e.g. `text-accent-soft-foreground` for a selected row) —
-     * a raw string, not the closed `classNames` union, because it carries arbitrary
-     * one-off colour overrides no fixed vocabulary can enumerate (mirrors
-     * `SurfaceCardListItem.titleClassName`, the same escape hatch on the newer
-     * sibling shape). `text-decoration-color` for `hover="underline"` is resolved
-     * from `Typography`'s own `underlineOnGroupHover`, which reads the SAME
-     * element's `color` — not a nested child's — so the hover underline never
-     * mismatches the text colour. Ref `components/icon.md` §6.
-     */
-    titleClassName?: string
     /** Optional secondary line — muted, smaller, single-line truncate. */
     subtitle?: string
     /** Optional right-aligned metadata slot (chips/counts) before the trailing slot — a buildable slot. */
@@ -178,7 +166,6 @@ export interface SurfaceListCardRowProps extends WithClassNames<undefined> {
 export const SurfaceListCardRow = ({
     leading: Leading,
     title,
-    titleClassName,
     subtitle,
     meta: Meta,
     trailing: Trailing,
@@ -221,9 +208,7 @@ export const SurfaceListCardRow = ({
                 lines are meant to sit with no seam between them (missing vocabulary: the
                 frame has no zero step, see `_spacing.ts` `AllowedGap`). */}
             <div className="flex min-w-0 flex-col gap-0">
-                <div className={titleClassName}>
-                    <Typography size="sm" truncate underlineOnGroupHover={underlineHover} text={title} />
-                </div>
+                <Typography size="sm" truncate underlineOnGroupHover={underlineHover} text={title} />
                 {subtitle ? <Typography size="xs" color="muted" truncate text={subtitle} /> : null}
             </div>
             {Meta || Trailing ? (
@@ -289,6 +274,11 @@ export interface SurfaceListCardItemProps extends WithClassNames<undefined> {
      * {@link VerdictBand} (same shape as `SectionCard.withVerdict`).
      */
     withVerdict?: VerdictBand
+    /**
+     * Caller identity to wear on this item's root instead of its own — pass this
+     * when a sentence-tier component roots on this item (see `frames/_identity.ts`).
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -311,6 +301,7 @@ export const SurfaceListCardItem = ({
     hover = "fill",
     withVerdict,
     className,
+    identity,
 }: SurfaceListCardItemProps) => {
     const interactive = Boolean(onPress || href)
     const itemClassName = cn(
@@ -329,6 +320,7 @@ export const SurfaceListCardItem = ({
         isDisabled && "cursor-not-allowed opacity-60",
         className,
     )
+    const identityAttrs = resolveIdentity(identity, { tier: "composite", name: "SurfaceListCardItem" })
 
     if (href) {
         return (
@@ -344,15 +336,14 @@ export const SurfaceListCardItem = ({
                 onClick={onPress}
                 disabled={isDisabled}
                 className={itemClassName}
-                data-tier="composite"
-                data-component="SurfaceListCardItem"
+                {...identityAttrs}
             >
                 {children}
             </button>
         )
     }
     return (
-        <div className={itemClassName} data-tier="composite" data-component="SurfaceListCardItem">
+        <div className={itemClassName} {...identityAttrs}>
             {children}
         </div>
     )

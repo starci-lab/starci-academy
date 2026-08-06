@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Label, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import { Label } from "@/components/atoms/forms/Label"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for the {@link LabeledList} block. */
@@ -21,7 +22,7 @@ export interface LabeledListProps extends WithClassNames<undefined> {
 /**
  * A labeled vertical list — NO card frame: an icon + `Label` header, a `gap-2`
  * stack of item rows, and an optional footer action, with the three groups spaced
- * `gap-3` (label ↔ list ↔ action). For rail / panel blocks that are a
+ * `gap-3` (label <-> list <-> action). For rail / panel blocks that are a
  * "label + short list (+ CTA)" where a full card would be too heavy (e.g. the
  * lesson rail's review / practice panels). The block owns spacing + label; the
  * caller passes label / icon / rows / action only.

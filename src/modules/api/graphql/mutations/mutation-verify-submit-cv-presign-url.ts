@@ -27,6 +27,10 @@ const mutationMap: Record<MutationVerifySubmitCvPresignUrl, DocumentNode> = {
 /** Apollo params for {@link mutateVerifySubmitCvPresignUrl}. */
 export type MutateVerifySubmitCvPresignUrlParams = MutateParams<MutationVerifySubmitCvPresignUrl, VerifySubmitCvPresignUrlRequest>
 
+/**
+ * Verifies a CV submission upload completed against its presigned URL.
+ * Mirrors backend `verifySubmitCvPresignUrl`.
+ */
 export const mutateVerifySubmitCvPresignUrl = async ({
     mutation = MutationVerifySubmitCvPresignUrl.Mutation1,
     request,

@@ -46,12 +46,12 @@ const queryMap: Record<QueryMyFlashcardQuizSessionBySessionId, DocumentNode> = {
 
 /** Request body for the my-flashcard-quiz-session-by-session-id query. */
 export interface MyFlashcardQuizSessionBySessionIdRequest {
-    /** Id of the "Hỏi nhanh" session to resolve. */
+    /** Id of the "Quick Quiz" session to resolve. */
     sessionId: string
 }
 
 /**
- * Fetches the persisted snapshot of one "Hỏi nhanh" quiz session by its id alone —
+ * Fetches the persisted snapshot of one "Quick Quiz" session by its id alone —
  * mode, level, coverage, XP, per-card blank breakdown, and weak tags — owner-scoped
  * and status-agnostic (resolves completed/abandoned/in-progress). `null` when not
  * found / not owned. Mirrors backend

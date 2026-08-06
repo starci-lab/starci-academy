@@ -30,8 +30,16 @@ export interface InterviewerPresenceProps extends WithClassNames<undefined> {
     children?: React.ReactNode
 }
 
+/** Props for {@link PulseBar}. */
+interface PulseBarProps {
+    /** Animation delay in milliseconds. */
+    delayMs: number
+    /** Tailwind height class for the bar. */
+    heightClass: string
+}
+
 /** One animated bar of the "speaking" pulse. */
-const PulseBar = ({ delayMs, heightClass }: { delayMs: number; heightClass: string }) => (
+const PulseBar = ({ delayMs, heightClass }: PulseBarProps) => (
     <span
         className={cn("w-[3px] animate-pulse rounded-full bg-accent", heightClass)}
         style={{ animationDelay: `${delayMs}ms` }}

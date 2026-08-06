@@ -1,19 +1,19 @@
 "use client"
 
-import React from "react"
-import type { ReactNode } from "react"
-import { Link, cn } from "@heroui/react"
-import { CaretRightIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { createElement, type ReactNode } from "react"
+import {
+    LinkSeeMore,
+    type LinkSeeMoreSize,
+} from "@/components/atoms/navigation/Link/LinkSeeMore"
 
 /**
  * Visual size for {@link SeeMoreLink} — mirrors the label row it sits beside
  * (`sm` next to a section label, `xs` next to a subtle eyebrow).
  */
-export type SeeMoreLinkSize = "sm" | "xs"
+export type SeeMoreLinkSize = LinkSeeMoreSize
 
-/** Props for the {@link SeeMoreLink} block. */
-export interface SeeMoreLinkProps extends WithClassNames<undefined> {
+/** Props for the {@link SeeMoreLink} block — thin sentence-tier redirect to the `LinkSeeMore` atom. */
+export interface SeeMoreLinkProps {
     /** Link label — e.g. "See more", "Continue", "View all". */
     children: ReactNode
     /**
@@ -27,26 +27,16 @@ export interface SeeMoreLinkProps extends WithClassNames<undefined> {
      * When true, render plain markup (no own `<a>`/`<button>`) — for use inside
      * an already-interactive surface (e.g. ContinueCard `item`, where the whole
      * card is the one press target). Hover still rides on a parent `group`
-     * class: opacity fade + caret slide.
+     * class.
      */
     decorative?: boolean
     /** Text size. Defaults to `sm`. */
     size?: SeeMoreLinkSize
 }
 
-/** Shared look — semibold accent text (matches LabeledCard "See more"). */
-const baseClassName = (size: SeeMoreLinkSize, className?: string) =>
-    cn(
-        "inline-flex w-fit shrink-0 items-center gap-1 font-semibold text-accent-soft-foreground no-underline",
-        size === "xs" ? "text-xs" : "text-sm",
-        className,
-    )
-
 /**
- * The shared "See more →" / "Continue →" affordance: semibold accent text + a
- * caret that slides right on hover, with an opacity fade (no underline). Used by
- * LabeledCard `onSeeMore` and ContinueCard `item` CTA so both read as the same
- * control.
+ * Sentence-tier alias for the vocabulary `LinkSeeMore` atom. Keeps the historical
+ * `children` prop for existing block callers; appearance lives in the atom.
  *
  * @param props - {@link SeeMoreLinkProps}
  */
@@ -56,51 +46,11 @@ export const SeeMoreLink = ({
     href,
     decorative = false,
     size = "sm",
-    className,
-}: SeeMoreLinkProps) => {
-    const caret = (
-        <CaretRightIcon
-            aria-hidden
-            focusable="false"
-            weight="bold"
-            className="size-4 shrink-0 transition-transform group-hover:translate-x-1"
-        />
-    )
-
-    if (decorative) {
-        // Parent supplies `group` (e.g. ContinueCard wrapper) — hover fires from
-        // anywhere on that surface, not a hover zone of this span alone.
-        return (
-            <span
-                className={cn(
-                    baseClassName(size, className),
-                    "transition-opacity group-hover:opacity-60",
-                )}
-            >
-                {children}
-                {caret}
-            </span>
-        )
-    }
-
-    const interactiveClassName = cn(
-        baseClassName(size, className),
-        "group cursor-pointer transition-opacity hover:opacity-60",
-    )
-
-    if (href) {
-        return (
-            <a href={href} className={interactiveClassName}>
-                {children}
-                {caret}
-            </a>
-        )
-    }
-
-    return (
-        <Link onPress={onPress} className={interactiveClassName}>
-            {children}
-            {caret}
-        </Link>
-    )
-}
+}: SeeMoreLinkProps) =>
+    createElement(LinkSeeMore, {
+        label: children,
+        onPress,
+        href,
+        decorative,
+        size,
+    })

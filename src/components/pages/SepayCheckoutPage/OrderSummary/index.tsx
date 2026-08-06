@@ -62,7 +62,7 @@ export const OrderSummary = () => {
     )
 
     return (
-        <StackV gap={6} principle="block-boundary"
+        <StackV identity={{ tier: "page", component: "OrderSummary" }} gap={6} principle="block-boundary"
             explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
             items={[
                 () => (

@@ -36,12 +36,12 @@ const queryMap: Record<QueryMyInProgressFlashcardQuizSession, DocumentNode> = {
 
 /** Request body for the my-in-progress-flashcard-quiz-session query. */
 export interface MyInProgressFlashcardQuizSessionRequest {
-    /** Course to check for a resumable in-progress "Hỏi nhanh" run. */
+    /** Course to check for a resumable in-progress "Quick Quiz" run. */
     courseId: string
 }
 
 /**
- * Fetches the viewer's resumable in-progress "Hỏi nhanh" quiz session for a
+ * Fetches the viewer's resumable in-progress "Quick Quiz" session for a
  * course, if any (24h TTL, `status="in_progress"` only) — `null` when there
  * is none. Mirrors backend `queries/flashcard/my-in-progress-flashcard-quiz-session`.
  */

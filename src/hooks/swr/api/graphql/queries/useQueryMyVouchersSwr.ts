@@ -7,7 +7,7 @@ import { useAppSelector } from "@/redux/hooks"
  * SWR wrapper for {@link queryMyVouchers}. `data` is the viewer's Coin-shop
  * vouchers (newest first), or `null`. User-scoped — only runs once the viewer
  * is authenticated. Shares its key with nothing else — mutate directly after a
- * `voucher`-kind redemption to refresh the "Ví của tôi" list.
+ * `voucher`-kind redemption to refresh the My wallet list.
  */
 export const useQueryMyVouchersSwr = () => {
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)

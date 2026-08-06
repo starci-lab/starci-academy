@@ -12,7 +12,7 @@ import { useAppSelector } from "@/redux/hooks"
  *
  * NOTE: `/learn/content` and `/learn/personal-project` deliberately land on their own
  * dashboards and do NOT auto-forward into an item — the learner resumes via the explicit
- * "Tiếp tục" action.
+ * "Continue" action.
  */
 export const useDefaultRedirect = () => {
     const router = useRouter()

@@ -150,7 +150,7 @@ export const LabeledCard = ({
     )
     return (
         <section
-            {...resolveIdentity(identity)}
+            {...resolveIdentity(identity, { tier: "composite", name: "LabeledCard" })}
             data-principle={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", subtleLabel ? "gap-2" : "gap-3", fillHeight && "h-full", className)}
         >

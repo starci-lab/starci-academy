@@ -36,7 +36,7 @@ export type MutatePayNextInstallmentParams = MutateParams<
 >
 
 /**
- * Pays the current cycle of an installment (trả góp) plan.
+ * Pays the current cycle of an installment plan.
  *
  * Mirrors `payNextInstallment` (mutations/installment-plans/pay-next-installment/pay-next-installment.resolver.ts).
  */

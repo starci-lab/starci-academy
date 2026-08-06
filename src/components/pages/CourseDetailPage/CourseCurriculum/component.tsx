@@ -1,11 +1,9 @@
 import React from "react"
 import type { ReactNode } from "react"
 import {
-    Accordion,
-} from "@heroui/react"
-import {
     ListChecksIcon,
 } from "@phosphor-icons/react"
+import { AccordionTree } from "@/components/atoms/navigation/AccordionTree"
 import {
     ModuleAccordionItem,
 } from "./ModuleAccordionItem"
@@ -89,11 +87,11 @@ export const _CourseCurriculum = ({
         // (frameless, NOT nested inside a Card → avoids a flat surface-in-surface) + a card border.
         // Ref elements/card.md §3 + draft accordion-card-surface-on-standalone-pages.
         body = (
-            <Accordion variant="surface" className="overflow-hidden shadow-surface">
+            <AccordionTree variant="surface">
                 {modules.map((module) => (
                     <ModuleAccordionItem key={module.id} module={module} />
                 ))}
-            </Accordion>
+            </AccordionTree>
         )
     }
 

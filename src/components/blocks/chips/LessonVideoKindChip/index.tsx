@@ -2,7 +2,6 @@
 
 import React from "react"
 import { FilmStripIcon as FilmReelIcon, SparkleIcon } from "@phosphor-icons/react"
-import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { SiTwitch as TwitchLogoIcon } from "@icons-pack/react-simple-icons"
 import { LessonVideoKind } from "@/modules/types/enums/lesson-video-kind"
@@ -46,5 +45,5 @@ export const LessonVideoKindChip = ({ kind, className }: LessonVideoKindChipProp
             tooltip: t("lessonVideoKind.premiumRecord.tooltip"),
         },
     }
-    return <EnumChip value={kind} map={map} className={cn(className)} />
+    return <EnumChip value={kind} map={map} className={className} />
 }

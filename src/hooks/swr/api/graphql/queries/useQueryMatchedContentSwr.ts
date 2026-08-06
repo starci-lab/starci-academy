@@ -3,7 +3,7 @@ import { queryPublicContent } from "@/modules/api/graphql/queries/query-public-c
 
 /**
  * Resolves the FIRST id in a mock-interview session's `matchedContentIds` into its
- * title + owning module id — just enough to render a "Xem trong bài học" citation
+ * title + owning module id — just enough to render a "View in lesson" citation
  * with a working deep link (`learn().module(moduleId).content(contentId)` needs both).
  *
  * Deliberately resolves only the first match (not every matched id): the RAG

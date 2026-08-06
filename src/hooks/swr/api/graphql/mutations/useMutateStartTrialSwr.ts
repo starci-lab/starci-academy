@@ -6,7 +6,7 @@ type MutateStartTrialResult = Awaited<ReturnType<typeof mutateStartTrial>>
 
 /**
  * SWR mutation wrapper for {@link mutateStartTrial} (Bearer from Keycloak).
- * Triggered by the "Học thử" CTA to create a trial enrollment before routing
+ * Triggered by the Start trial CTA to create a trial enrollment before routing
  * into the course content.
  */
 export const useMutateStartTrialSwr = () => {

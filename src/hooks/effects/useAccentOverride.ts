@@ -35,7 +35,7 @@ const foregroundFor = (hex: string): string => {
 }
 
 /**
- * Applies the signed-in user's custom accent color (Settings → "Giao diện")
+ * Applies the signed-in user's custom accent color (Settings → "Appearance")
  * as a `<html>`-level CSS variable override on top of whatever light/dark
  * theme is active — independent axes, so "dark + a custom hue" or
  * "light + a custom hue" both just work. Clears the override (falls back to

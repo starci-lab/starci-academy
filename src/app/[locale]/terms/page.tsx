@@ -10,12 +10,16 @@ interface TermsParams {
     locale: string
 }
 
+/** Props for terms-page `generateMetadata`. */
+interface TermsGenerateMetadataProps {
+    /** Promise of the resolved terms route params. */
+    params: Promise<TermsParams>
+}
+
 /** Per-locale terms-of-service metadata, reusing the `legal.terms.*` copy. */
 export const generateMetadata = async ({
     params,
-}: {
-    params: Promise<TermsParams>
-}): Promise<Metadata> => {
+}: TermsGenerateMetadataProps): Promise<Metadata> => {
     const { locale } = await params
     const t = await getTranslations({ locale })
     return buildPageMetadata({

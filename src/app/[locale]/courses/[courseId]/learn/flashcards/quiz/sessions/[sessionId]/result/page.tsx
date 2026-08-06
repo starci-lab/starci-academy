@@ -6,7 +6,7 @@ import { FlashcardsPage } from "@/components/pages/FlashcardsPage"
 
 /**
  * Learn / flashcards / quiz / sessions / [sessionId] / result — the dedicated
- * RESULT URL for a FINISHED "Hỏi nhanh" run, separate from the live
+ * RESULT URL for a FINISHED "Quick Quiz" run, separate from the live
  * `.../sessions/[sessionId]` route (2026-07-12). Whether a session is "done"
  * is now answered by the ROUTE itself instead of re-derived client-side from
  * `status`/`currentIndex` at the live URL — that inference had no way to tell

@@ -171,8 +171,11 @@ const ConsultantProfileBody = ({
     )
 
     return (
-        <div>
-            <StackV gap={6} isSkeleton={isSkeleton} items={[
+        <StackV
+            gap={6}
+            isSkeleton={isSkeleton}
+            identity={{ tier: "block", component: "ConsultantProfileBody" }}
+            items={[
                 () => identity,
                 // full bio — no clamp, unlike ConsultantCard's directory teaser
                 ...(isSkeleton || description ? [() => (
@@ -185,8 +188,8 @@ const ConsultantProfileBody = ({
                     />
                 )] : []),
                 () => contactFork,
-            ]} />
-        </div>
+            ]}
+        />
     )
 }
 

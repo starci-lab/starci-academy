@@ -34,7 +34,7 @@ interface SeverityVisual {
     /** Trigger icon for this severity. */
     icon: SeverityIconComponent
     /** Tailwind text-color class for the icon (matches the severity's weight). */
-    toneClassName: string
+    iconTone: string
     /** Sort rank — lower sorts first (high = 0). */
     rank: number
 }
@@ -44,9 +44,9 @@ interface SeverityVisual {
  * domain vocabulary, never something a caller hands in.
  */
 const SEVERITY_VISUAL: Record<SubmissionFeedbackSeverity, SeverityVisual> = {
-    high: { icon: WarningCircleIcon, toneClassName: "text-danger", rank: 0 },
-    medium: { icon: WarningCircleIcon, toneClassName: "text-warning", rank: 1 },
-    low: { icon: InfoIcon, toneClassName: "text-muted", rank: 2 },
+    high: { icon: WarningCircleIcon, iconTone: "text-danger", rank: 0 },
+    medium: { icon: WarningCircleIcon, iconTone: "text-warning", rank: 1 },
+    low: { icon: InfoIcon, iconTone: "text-muted", rank: 2 },
 }
 
 /** One quality-gate finding for a graded attempt. */
@@ -125,14 +125,14 @@ const buildLocationHref = (location: string, repositoryUrl?: string): string | u
  * rule as `ChallengeDeliverableList`'s status icon).
  */
 const findingIcon = (finding: SubmissionFinding): ReactNode => {
-    const { icon: Icon, toneClassName } = SEVERITY_VISUAL[finding.severity]
+    const { icon: Icon, iconTone } = SEVERITY_VISUAL[finding.severity]
     return (
         <Icon
             aria-hidden
             focusable="false"
             weight="bold"
 
-            className={cn("size-3.5 shrink-0", toneClassName)}
+            className={cn("size-3.5 shrink-0", iconTone)}
         />
     )
 }
@@ -223,7 +223,13 @@ const findingPanel = (finding: SubmissionFinding, repositoryUrl: string | undefi
     )
 }
 
-const ErrorEmptyState = ({ onRetry, retryLabel }: { onRetry?: () => void; retryLabel?: string }) => (
+/** Props for {@link ErrorEmptyState}. */
+interface ErrorEmptyStateProps {
+    onRetry?: () => void
+    retryLabel?: string
+}
+
+const ErrorEmptyState = ({ onRetry, retryLabel }: ErrorEmptyStateProps) => (
     <AsyncContentError
         title={ERROR_TITLE}
         onRetry={onRetry}
@@ -231,7 +237,12 @@ const ErrorEmptyState = ({ onRetry, retryLabel }: { onRetry?: () => void; retryL
     />
 )
 
-const PlainEmptyState = ({ title }: { title: string }) => (
+/** Props for {@link PlainEmptyState}. */
+interface PlainEmptyStateProps {
+    title: string
+}
+
+const PlainEmptyState = ({ title }: PlainEmptyStateProps) => (
     <AsyncContentEmpty title={title} />
 )
 
@@ -279,16 +290,15 @@ const SubmissionFindingsList = ({
             : undefined
 
     return (
-        <div>
-            <SurfaceCardAccordion
-                label={label}
-                items={items}
-                isSkeleton={skeleton}
-                emptyState={emptyState}
+        <SurfaceCardAccordion
+            identity={{ tier: "block", component: "SubmissionFindingsList" }}
+            label={label}
+            items={items}
+            isSkeleton={skeleton}
+            emptyState={emptyState}
 
 
-            />
-        </div>
+        />
     )
 }
 

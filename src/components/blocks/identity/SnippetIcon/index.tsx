@@ -1,59 +1,11 @@
 "use client"
 
-import { CheckCircleIcon, CopyIcon } from "@phosphor-icons/react"
-import React, { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-
-import { cn } from "@heroui/react"
-import { WithClassNames } from "@/modules/types/base/class-name"
-
-/** Props for {@link SnippetIcon}. */
-export interface SnippetIconProps extends WithClassNames<{
-  copyIcon?: string
-  checkIcon?: string
-}> {
-  copyString: string
-}
-
-/** Copy-to-clipboard icon that swaps to a checkmark briefly after a successful copy. */
-export const SnippetIcon = ({ copyString, classNames = {}, className }: SnippetIconProps) => {
-    const [copied, setCopied] = useState(false)
-
-    const onCopy = async () => {
-        await navigator.clipboard.writeText(copyString)
-        setCopied(true)
-        setTimeout(() => setCopied(false), 350)
-    }
-
-    return (
-        <motion.div
-            onClick={onCopy}
-            className={cn("cursor-pointer", className)}
-            whileTap={{ scale: 0.9 }}
-        >
-            <AnimatePresence mode="wait">
-                {copied ? (
-                    <motion.span
-                        key="check"
-                        initial={{ scale: 0.85, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.85, opacity: 0 }}
-                        transition={{ duration: 0.15, ease: "easeOut" }}
-                    >
-                        <CheckCircleIcon className={cn(classNames.checkIcon, "w-5 h-5")} />
-                    </motion.span>
-                ) : (
-                    <motion.span
-                        key="copy"
-                        initial={{ scale: 0.85, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.85, opacity: 0 }}
-                        transition={{ duration: 0.15, ease: "easeOut" }}
-                    >
-                        <CopyIcon className={cn(classNames.copyIcon, "w-5 h-5")} />
-                    </motion.span>
-                )}
-            </AnimatePresence>
-        </motion.div>
-    )
-}
+/**
+ * Sentence-tier redirect — the copy affordance lives in the vocabulary atom.
+ * Callers that still import this block path keep working without a second
+ * HeroUI/`cn` implementation at block tier.
+ */
+export {
+    SnippetIcon,
+    type SnippetIconProps,
+} from "@/components/atoms/display/SnippetIcon"

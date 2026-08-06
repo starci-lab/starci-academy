@@ -20,7 +20,7 @@ export const CONTENT_AI_SESSIONS_PAGE_LIMIT = 20
  * @param search - optional search query (searches the whole course).
  * @param enabled - when false, no request is made.
  * @param courseId - course to list all conversations of, when no lesson/task/challenge/quiz/foundation anchor is set.
- * @param includeArchived - when true, archived conversations are folded into the list (the "Đã lưu trữ" toggle); defaults false.
+ * @param includeArchived - when true, archived conversations are folded into the list (the Archived toggle); defaults false.
  * @param scope - the active grounding surface ("content" | "task" | "challenge" | "quiz" | "foundation" | "course").
  * @param taskId - capstone task to list conversations of, on the task surface.
  * @param foundationId - foundation doc to list conversations of, on the foundation surface.

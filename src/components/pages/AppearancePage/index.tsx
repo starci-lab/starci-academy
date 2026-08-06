@@ -166,7 +166,10 @@ export const AppearancePage = () => {
     ])
 
     return (
-        <StackV gap={7} principle="layout-split"
+        <StackV
+            identity={{ tier: "page", component: "AppearancePage" }}
+            gap={7}
+            principle="layout-split"
             explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
             items={[
                 () => (

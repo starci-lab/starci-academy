@@ -13,8 +13,8 @@ type MutateSyncMockInterviewSessionTurnsResult = Awaited<
  * fire-and-forget persistence of the in-progress transcript — callers should
  * NOT `await` this before continuing the interview, but must still route
  * failures through `runGraphQL` (`useGraphQLWithToast`, `{ showSuccessToast:
- * false }`) — NEVER a bare `.catch(() => {})` (thầy 2026-07-11: "fe không
- * nuốt lỗi, dùng runGraphQL đi"). A failed sync only degrades resumability, it
+ * false }`) — NEVER a bare `.catch(() => {})` (mentor guidance 2026-07-11: FE
+ * must not swallow errors — route through runGraphQL). A failed sync only degrades resumability, it
  * never blocks the live session — but should still toast. Sends the
  * `X-Course-Id` header for the same `GraphQLMustEnrolledGuard` the rest of the
  * mock-interview mutations use.

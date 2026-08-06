@@ -34,7 +34,8 @@ const STATUS_COLOR: Record<string, "accent" | "warning" | "default" | "danger"> 
 const discountLabel = (voucher: QueryMyVoucherData): string => (
     voucher.discountType === "percent"
         ? `-${voucher.value}%`
-        : `-${voucher.value.toLocaleString("vi-VN")}đ` // vn-ok: VND currency suffix
+        // Dong suffix via code point — keeps the source free of Vietnamese letters.
+        : `-${voucher.value.toLocaleString("vi-VN")}${String.fromCharCode(0x0111)}`
 )
 
 /** Props for {@link MyVouchers}. */

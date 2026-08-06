@@ -27,7 +27,7 @@ import { useAccentOverride } from "./useAccentOverride"
 export const UseEffects = () => {
     /** Initialize FingerprintJS device fingerprint on app mount. */
     useInitializeFingerprint()
-    /** Apply the user's custom accent color (Settings → "Giao diện") as a CSS override. */
+    /** Apply the user's custom accent color (Settings → "Appearance") as a CSS override. */
     useAccentOverride()
     /** Show warning toast if user session was superseded on another device. */
     useSessionSuperseded()

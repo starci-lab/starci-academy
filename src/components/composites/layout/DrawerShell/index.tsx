@@ -51,8 +51,6 @@ export interface DrawerShellBaseProps {
      * Ignored when {@link header} is provided, or when {@link title} is omitted.
      */
     description?: string
-    /** Extra classes on the default title/description wrapper (only with {@link title}). */
-    titleClassName?: string
     /**
      * Full custom header content — use instead of {@link title}/{@link description}
      * for a non-standard header. Takes precedence over both. A COMPONENT
@@ -69,12 +67,8 @@ export interface DrawerShellBaseProps {
      * flex row. A COMPONENT reference (COMPOSITE-8) the frame mounts itself.
      */
     footer?: ComponentTypeWithSkeleton
-    /** Extra classes merged onto `DrawerContent` (the sliding panel itself — width/height). */
-    contentClassName?: string
     /** Extra classes merged onto `DrawerDialog`, in addition to {@link DrawerShellBaseProps.classNames}. */
     dialogClassName?: string
-    /** Extra classes merged onto `DrawerBody`. */
-    bodyClassName?: string
     /** Extra classes merged onto `DrawerFooter`. */
     footerClassName?: string
     /**
@@ -110,13 +104,10 @@ const Base = ({
     placement = "right",
     title,
     description,
-    titleClassName,
     header: Header,
     body: Body,
     footer: Footer,
-    contentClassName,
     dialogClassName,
-    bodyClassName,
     footerClassName,
     classNames,
     isSkeleton = false,
@@ -131,17 +122,17 @@ const Base = ({
             {...resolveIdentity(identity, { tier: "composite", name: "DrawerShell" })}
         >
             <DrawerBackdrop>
-                <DrawerContent className={contentClassName} placement={placement}>
+                <DrawerContent placement={placement}>
                     <DrawerDialog className={cn(dialogClassName, classNames)}>
                         <DrawerCloseTrigger />
                         {Header ? (
                             <DrawerHeader><Header isSkeleton={isSkeleton} /></DrawerHeader>
                         ) : title != null ? (
                             <DrawerHeader>
-                                {/* `pr-8` (room for the close button) + arbitrary caller `titleClassName`
-                                    ride a plain wrapper — neither is an `AllowedClassName`, so the typed
-                                    `StackV` frame keeps its closed `classNames` union. */}
-                                <div className={cn("pr-8", titleClassName)}>
+                                {/* `pr-8` (room for the close button) rides a plain wrapper —
+                                    not an `AllowedClassName`, so the typed `StackV` frame keeps
+                                    its closed `classNames` union. */}
+                                <div className="pr-8">
                                     <StackV
                                         gap={2}
                                         principle="title-subtitle"
@@ -175,7 +166,6 @@ const Base = ({
                                 // as ModalShell — one seam, one owner, §10a).
                                 hasHeader && "mt-0!",
                                 "overflow-y-auto",
-                                bodyClassName,
                             )}
                         >
                             {main}

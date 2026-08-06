@@ -54,7 +54,7 @@ export const useAvatarUploadOverlayState = () => useOverlayHandle("avatarUpload"
 export const useChallengeOverlayState = () => useOverlayHandle("challenge")
 /** Content AI chat drawer overlay state (ask StarCi AI about the current content). */
 export const useContentAiChatOverlayState = () => useOverlayHandle("contentAiChat")
-/** Cookie preferences modal overlay state ("Tùy chỉnh" granular cookie consent). */
+/** Cookie preferences modal overlay state (Customize granular cookie consent). */
 export const useCookiePreferencesOverlayState = () => useOverlayHandle("cookiePreferences")
 /**
  * CV preview overlay state — carries the URL of the CV to show fullscreen (the

@@ -4,9 +4,6 @@ import React, {
     useState,
 } from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     publicEnv,
 } from "@/resources/env/public"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -59,7 +56,7 @@ export const BadgeImage = ({
             width={size}
             height={size}
             loading="lazy"
-            className={cn(className)}
+            className={className}
             onError={() => setFailed(true)}
         />
     )

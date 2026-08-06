@@ -65,6 +65,14 @@ const ATTEMPT_CHIPS_MAX = 6
 /** When overflowing, how many newest buttons stay visible. */
 const ATTEMPT_CHIPS_VISIBLE = 5
 
+/** Props for {@link FindingAccordionItem}. */
+interface FindingAccordionItemProps {
+    /** The graded finding to render. */
+    feedback: UserMilestoneTaskAttemptFeedbackEntity
+    /** Optional repo URL used to deep-link the finding's file location. */
+    repositoryUrl?: string
+}
+
 /**
  * One finding as an accordion item: header = severity icon + (clamped) message +
  * file location; expanding reveals the linked file location and the suggested fix.
@@ -76,10 +84,7 @@ const ATTEMPT_CHIPS_VISIBLE = 5
 const FindingAccordionItem = ({
     feedback,
     repositoryUrl,
-}: {
-    feedback: UserMilestoneTaskAttemptFeedbackEntity
-    repositoryUrl?: string
-}) => {
+}: FindingAccordionItemProps) => {
     const visual = SEVERITY_VISUAL[feedback.severity] ?? SEVERITY_VISUAL[MilestoneSeverity.Medium]
     const { Icon } = visual
     const locationHref = feedback.location && repositoryUrl

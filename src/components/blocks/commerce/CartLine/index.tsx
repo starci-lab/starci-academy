@@ -56,7 +56,7 @@ export const CartLine = ({ item, previewLine, onRemove, isMutating }: CartLinePr
     )
 
     return (
-        <SurfaceListCardItem>
+        <SurfaceListCardItem identity={{ tier: "block", component: "CartLine" }}>
             <div className="flex items-center gap-3">
                 <IconTile
                     size="sm"

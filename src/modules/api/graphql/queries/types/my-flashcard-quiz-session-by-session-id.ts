@@ -1,6 +1,6 @@
 import type { GraphQLResponse } from "../../types"
 
-/** One weak tag from a finished "Hỏi nhanh" run, ranked worst-first, with an
+/** One weak tag from a finished "Quick Quiz" run, ranked worst-first, with an
  *  optional lesson/module to revisit (deep link derived server-side). */
 export interface FlashcardQuizSessionWeakTag {
     /** The tag/topic label. */
@@ -26,7 +26,7 @@ export interface FlashcardQuizSessionResult {
 
 /**
  * Payload inside `myFlashcardQuizSessionBySessionId.data` — the persisted snapshot
- * of ONE "Hỏi nhanh" quiz session, resolved by session id alone, owner-scoped and
+ * of ONE "Quick Quiz" session, resolved by session id alone, owner-scoped and
  * STATUS-AGNOSTIC (resolves `completed`/`abandoned`/`in_progress`). Every field is
  * read straight off the snapshotted row (no recompute); `null` data = not found /
  * not owned by the caller.

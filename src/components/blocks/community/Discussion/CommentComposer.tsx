@@ -44,10 +44,10 @@ export interface CommentComposerProps extends WithClassNames<undefined> {
  * @param props - {@link CommentComposerProps}
  */
 export const CommentComposer = ({
-    onSubmit,
+    onSubmit: onSubmitAction,
     placeholder,
     submitLabel,
-    onCancel,
+    onCancel: onCancelAction,
     initialValue,
     busy,
     currentUser,
@@ -67,23 +67,23 @@ export const CommentComposer = ({
     const resolvedPlaceholder = placeholder ?? t("discussion.placeholder")
 
     // submit only non-empty drafts, then clear (and re-collapse a collapsible composer)
-    const handleSubmit = () => {
+    const onSubmit = () => {
         if (!trimmed) {
             return
         }
-        onSubmit(trimmed)
+        onSubmitAction(trimmed)
         setBody("")
         if (collapsible) {
             setExpanded(false)
         }
     }
 
-    const handleCancel = () => {
+    const onCancel = () => {
         setBody("")
         if (collapsible) {
             setExpanded(false)
         }
-        onCancel?.()
+        onCancelAction?.()
     }
 
     // collapsed pill: avatar + placeholder, the whole row opens the composer
@@ -125,15 +125,15 @@ export const CommentComposer = ({
                 <Button
                     size="sm"
                     variant="primary"
-                    onPress={handleSubmit}
+                    onPress={onSubmit}
                     // spinner + auto-disable while the mutation is in flight (blocks double-submit)
                     isPending={Boolean(busy)}
                     isDisabled={!trimmed}
                 >
                     {submitLabel ?? t("discussion.post")}
                 </Button>
-                {onCancel || collapsible ? (
-                    <Button size="sm" variant="tertiary" onPress={handleCancel} isDisabled={busy}>
+                {onCancelAction || collapsible ? (
+                    <Button size="sm" variant="tertiary" onPress={onCancel} isDisabled={busy}>
                         {t("common.cancel")}
                     </Button>
                 ) : null}

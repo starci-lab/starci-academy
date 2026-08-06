@@ -25,7 +25,7 @@ export const useSyncReduxTaskId = () => {
             // Clear when we've left the capstone task surface — WITHOUT this, a task
             // id set on `personal-project/tasks/[taskId]` lingers into every other
             // learn tab (mind-map, leaderboard, flashcards…), and the content-AI scope
-            // then wrongly resolves to 🎯 Task there (grounding on an unrelated
+            // then wrongly resolves to Task there (grounding on an unrelated
             // capstone, opening the wrong session, hiding the widen-to-course escape).
             // Mirrors `useSyncReduxFoundationId`.
             if (!pathname.includes("/personal-project")) {

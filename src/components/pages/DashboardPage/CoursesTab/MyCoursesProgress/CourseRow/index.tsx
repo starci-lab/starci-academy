@@ -2,9 +2,6 @@
 
 import React from "react"
 import {
-    Typography,
-} from "@heroui/react"
-import {
     BookOpenIcon,
 } from "@phosphor-icons/react"
 import {
@@ -22,6 +19,7 @@ import type {
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { CourseProgressBar } from "@/components/blocks/stats/CourseProgressBar"
 import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { Typography } from "@/components/atoms/text/Typography"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link CourseRow}. */
@@ -75,15 +73,18 @@ export const CourseRow = ({ item }: CourseRowProps) => {
                                         align="center"
                                         items={[
                                             () => (
-                                                <Typography type="body-sm" weight="medium" truncate className="min-w-0 flex-1 underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
-                                                    {item.label}
-                                                </Typography>
+                                                <Typography
+                                                    size="sm"
+                                                    weight="medium"
+                                                    truncate
+                                                    underlineOnGroupHover
+                                                    classNames={["min-w-0", "flex-1"]}
+                                                    text={item.label}
+                                                />
                                             ),
                                             () => <CourseTrialChip isEnrolled={item.isEnrolled} />,
                                             () => (
-                                                <Typography type="body-xs" color="muted">
-                                                    {item.completionPercent}%
-                                                </Typography>
+                                                <Typography size="xs" color="muted" text={`${item.completionPercent}%`} />
                                             ),
                                         ]}
                                     />

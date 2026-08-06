@@ -24,8 +24,16 @@ const TONE_TILE: Record<PreviewCourse["tone"], string> = {
     warning: "bg-warning-soft text-warning-soft-foreground",
 }
 
+/** Props for the marketing-preview {@link FilterRow} tick line. */
+interface FilterRowProps {
+    /** Filter label shown beside the tick box. */
+    label: string
+    /** When true, the tick box renders checked (accent fill). */
+    on?: boolean
+}
+
 /** One filter row with a tick box (checked = accent). */
-const FilterRow = ({ label, on }: { label: string; on?: boolean }) => (
+const FilterRow = ({ label, on }: FilterRowProps) => (
     <span className="flex items-center gap-2 text-muted">
         <span
             className={cn(

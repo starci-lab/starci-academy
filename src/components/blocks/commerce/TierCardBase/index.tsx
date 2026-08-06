@@ -12,6 +12,7 @@ import {
     useTranslations,
 } from "next-intl"
 import { type WithClassNames } from "@/modules/types/base/class-name"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /** Props for {@link TierCardBase} (shared shell for {@link TierCard} and {@link FreeTierCard}). */
 export interface TierCardBaseProps extends WithClassNames<undefined> {
@@ -41,6 +42,11 @@ export interface TierCardBaseProps extends WithClassNames<undefined> {
      * same card and could drift from it independently.
      */
     isSkeleton?: boolean
+    /**
+     * Caller identity to wear on this shell's root instead of its own — pass this
+     * when a sentence-tier card roots on this base (see `frames/_identity.ts`).
+     */
+    identity?: CallerIdentity
 }
 
 /** How many feature rows the resting card shows — the paid tiers all list two. */
@@ -66,6 +72,7 @@ export const TierCardBase = ({
     cta: Cta,
     className,
     isSkeleton = false,
+    identity,
 }: TierCardBaseProps) => {
     const t = useTranslations()
     // resting rows stand in for whatever the caller would have listed
@@ -74,7 +81,10 @@ export const TierCardBase = ({
         : features.map((_feature, index) => index)
 
     return (
-        <Card className={cn("flex h-full flex-col", className)}>
+        <Card
+            className={cn("flex h-full flex-col", className)}
+            {...resolveIdentity(identity, { tier: "composite", name: "TierCardBase" })}
+        >
             <Card.Content className="flex flex-1 flex-col gap-3">
                 {/* icon + tier name (+ optional badge) — tight pair */}
                 <div className="flex items-center gap-2">

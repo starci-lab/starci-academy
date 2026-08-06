@@ -5,13 +5,6 @@ import React, {
     useState,
 } from "react"
 import {
-    cn,
-    Button,
-    Card,
-    CardContent,
-    Spinner,
-} from "@heroui/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -25,9 +18,6 @@ import {
 import {
     pathConfig,
 } from "@/resources/path"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useMutateReviewFlashcardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReviewFlashcardSwr"
 import { useQueryMyDueFlashcardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDueFlashcardsSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
@@ -35,11 +25,13 @@ import { AsyncContentError } from "@/components/composites/async/AsyncContent"
 import type { GraphQLResponse } from "@/modules/api/graphql/types"
 import type { ReviewFlashcardData } from "@/modules/api/graphql/mutations/types/review-flashcard"
 import type { QueryFlashcardNextIntervals } from "@/modules/api/graphql/queries/types/my-due-flashcards"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Card, CardContent } from "@/components/atoms/display/Card"
+import { Divider } from "@/components/atoms/display/Divider"
+import { Spinner } from "@/components/atoms/display/Spinner"
+import { Typography } from "@/components/atoms/text/Typography"
 import { Box } from "@/components/frames/Box"
 import { StackH, StackV } from "@/components/frames/Stack"
-
-/** Props for {@link FlashcardReviewPage}. */
-export type FlashcardReviewPageProps = WithClassNames<undefined>
 
 /** SM-2 grade buttons (value + i18n key + tone), ordered worst → best. */
 const GRADES: Array<{
@@ -61,11 +53,8 @@ const GRADES: Array<{
  * advance. When the queue is exhausted it shows a "done" state with a link back
  * to the dashboard. Current index + flipped state are local (presentational); the
  * grade mutation is owned here.
- * @param props - optional className for the root element.
  */
-export const FlashcardReviewPage = ({
-    className,
-}: FlashcardReviewPageProps) => {
+export const FlashcardReviewPage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -126,7 +115,7 @@ export const FlashcardReviewPage = ({
     // forever: `isLoading` is already false and `data` is undefined here)
     if (error && !data) {
         return (
-            <Box identity={{ tier: "page", component: "FlashcardReviewPage" }} principle="center-measure" className={cn("flex min-h-[60vh] items-center justify-center", className)}
+            <Box identity={{ tier: "page", component: "FlashcardReviewPage" }} principle="center-measure" className="flex min-h-[60vh] items-center justify-center"
                 explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
             >
                 <AsyncContentError
@@ -141,7 +130,7 @@ export const FlashcardReviewPage = ({
     // still loading the queue → centred spinner
     if (isLoading || !data) {
         return (
-            <Box identity={{ tier: "page", component: "FlashcardReviewPage" }} principle="center-measure" className={cn("flex min-h-[60vh] items-center justify-center", className)}
+            <Box identity={{ tier: "page", component: "FlashcardReviewPage" }} principle="center-measure" className="flex min-h-[60vh] items-center justify-center"
                 explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
             >
                 <Spinner size="lg" />
@@ -153,29 +142,31 @@ export const FlashcardReviewPage = ({
     if (!current) {
         const empty = cards.length === 0
         return (
-            <Box identity={{ tier: "page", component: "FlashcardReviewPage" }} principle="center-measure" className={cn("mx-auto min-h-[60vh] w-full max-w-xl p-3", className)}
+            <Box identity={{ tier: "page", component: "FlashcardReviewPage" }} principle="center-measure" className="mx-auto min-h-[60vh] w-full max-w-xl p-3"
                 explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
             >
                 <StackV gap={6} principle="block-boundary" align="center" justify="center"
-                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                    explain="Block-to-block spacing — not group-boundary, because these blocks are distinct groups rather than same-kind peers."
                     items={[
                         () => <CheckCircleIcon className="size-12 text-success-soft-foreground" />,
                         () => (
-                            <span className="text-center text-lg font-semibold text-foreground">
-                                {empty
+                            <Typography
+                                size="lg"
+                                weight="semibold"
+                                align="center"
+                                text={empty
                                     ? t("flashcardReview.empty")
                                     : t("flashcardReview.done")}
-                            </span>
+                            />
                         ),
                         () => (
                             <Button
                                 variant="primary"
+                                label={t("flashcardReview.backToDashboard")}
                                 onPress={() => router.push(
                                     pathConfig().locale(locale).dashboard().build(),
                                 )}
-                            >
-                                {t("flashcardReview.backToDashboard")}
-                            </Button>
+                            />
                         ),
                     ]} />
             </Box>
@@ -183,11 +174,11 @@ export const FlashcardReviewPage = ({
     }
 
     return (
-        <Box identity={{ tier: "page", component: "FlashcardReviewPage" }} principle="center-measure" className={cn("mx-auto w-full max-w-xl p-3", className)}
+        <Box identity={{ tier: "page", component: "FlashcardReviewPage" }} principle="center-measure" className="mx-auto w-full max-w-xl p-3"
             explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
         >
             <StackV gap={6} principle="block-boundary"
-                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                explain="Block-to-block spacing — not group-boundary, because these blocks are distinct groups rather than same-kind peers."
                 items={[
                 // progress header: deck context + position in the queue
                     () => (
@@ -200,19 +191,25 @@ export const FlashcardReviewPage = ({
                                         items={[
                                             () => <StackIcon className="size-5 shrink-0 text-foreground" />,
                                             () => (
-                                                <span className="truncate text-sm font-medium text-foreground">
-                                                    {current.deckTitle}
-                                                </span>
+                                                <Typography
+                                                    size="sm"
+                                                    weight="medium"
+                                                    truncate
+                                                    text={current.deckTitle}
+                                                />
                                             ),
                                         ]} />
                                 ),
                                 () => (
-                                    <span className="shrink-0 text-sm text-muted">
-                                        {t("flashcardReview.progress", {
+                                    <Typography
+                                        size="sm"
+                                        color="muted"
+                                        classNames={["shrink-0"]}
+                                        text={t("flashcardReview.progress", {
                                             current: index + 1,
                                             total: cards.length,
                                         })}
-                                    </span>
+                                    />
                                 ),
                             ]} />
                     ),
@@ -227,17 +224,21 @@ export const FlashcardReviewPage = ({
                                         explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                         items={[
                                             () => (
-                                                <span className="text-xl font-semibold text-foreground">
-                                                    {current.front}
-                                                </span>
+                                                <Typography
+                                                    size="lg"
+                                                    weight="semibold"
+                                                    text={current.front}
+                                                />
                                             ),
                                             () => (flipped ? (
-                                                <>
-                                                    <span className="h-px w-full bg-default" />
-                                                    <span className="text-lg text-foreground">
-                                                        {current.back}
-                                                    </span>
-                                                </>
+                                                <StackV gap={4} principle="sibling-stack"
+                                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                    items={[
+                                                        () => <Divider />,
+                                                        () => (
+                                                            <Typography size="lg" text={current.back} />
+                                                        ),
+                                                    ]} />
                                             ) : null),
                                         ]} />
                                 </CardContent>
@@ -256,28 +257,31 @@ export const FlashcardReviewPage = ({
                                     isDisabled={savingGrade !== null}
                                     isPending={savingGrade === item.grade}
                                     onPress={() => void onGrade(item.grade)}
-                                >
-                                    {/* label over the SM-2 next-interval preview the BE ships
-                                    per grade (`nextIntervals`), so the learner sees how far
-                                    each choice pushes the card before picking. */}
-                                    <span className="flex flex-col items-center leading-tight">
-                                        <span>{t(`flashcardReview.${item.key}`)}</span>
-                                        <span className="text-xs opacity-80">
-                                            {t("flashcardReview.intervalDays", {
-                                                days: current.nextIntervals[item.key],
-                                            })}
-                                        </span>
-                                    </span>
-                                </Button>
+                                    label={(
+                                        <StackV gap={1} principle="title-subtitle" align="center"
+                                            explain="Title over supporting line — not label-field, because neither line is a form control label."
+                                            items={[
+                                                () => <Typography size="sm" text={t(`flashcardReview.${item.key}`)} />,
+                                                () => (
+                                                    <Typography
+                                                        size="xs"
+                                                        color="muted"
+                                                        text={t("flashcardReview.intervalDays", {
+                                                            days: current.nextIntervals[item.key],
+                                                        })}
+                                                    />
+                                                ),
+                                            ]} />
+                                    )}
+                                />
                             ))}
                         </Box>
                     ) : (
                         <Button
                             variant="primary"
+                            label={t("flashcardReview.flip")}
                             onPress={() => setFlipped(true)}
-                        >
-                            {t("flashcardReview.flip")}
-                        </Button>
+                        />
                     )),
                 ]} />
         </Box>

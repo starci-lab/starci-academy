@@ -24,6 +24,10 @@ const mutationMap: Record<MutationSignOut, DocumentNode> = {
 /** Apollo params for {@link mutateSignOut}. */
 export type MutateSignOutParams = MutateParams<MutationSignOut, void>
 
+/**
+ * Signs the viewer out server-side (clears the refresh-token cookie). Mirrors
+ * backend `signOut`.
+ */
 export const mutateSignOut = async ({
     mutation = MutationSignOut.Mutation1,
     debug,

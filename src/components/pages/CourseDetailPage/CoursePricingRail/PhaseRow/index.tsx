@@ -2,9 +2,6 @@
 
 import React from "react"
 import {
-    Typography,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
@@ -17,14 +14,12 @@ import {
 import type {
     CoursePriceRow,
 } from "@/components/pages/CourseDetailPage/types"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
+import { Typography } from "@/components/atoms/text/Typography"
 import { Box } from "@/components/frames/Box"
 import { StackH } from "@/components/frames/Stack"
 
 /** Props for {@link PhaseRow}. */
-export interface PhaseRowProps extends WithClassNames<undefined> {
+export interface PhaseRowProps {
     /** One formatted pricing-phase row (list-item data prop). */
     row: CoursePriceRow
 }
@@ -38,11 +33,11 @@ export interface PhaseRowProps extends WithClassNames<undefined> {
  *
  * @param props - {@link PhaseRowProps}
  */
-export const PhaseRow = ({ row, className }: PhaseRowProps) => {
+export const PhaseRow = ({ row }: PhaseRowProps) => {
     const t = useTranslations()
 
     return (
-        <Box identity={{ tier: "page", component: "PhaseRow" }} className={className}>
+        <Box identity={{ tier: "page", component: "PhaseRow" }}>
             <StackH gap={4} principle="content-row"
                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 justify="between" align="center" items={[
@@ -59,29 +54,21 @@ export const PhaseRow = ({ row, className }: PhaseRowProps) => {
                                 )),
                                 () => (
                                     <Typography
-                                        type="body-sm"
-                                        weight={row.isActive ? "semibold" : "normal"}
-                                        color={row.soldOut ? "muted" : "default"}
-                                        className={row.isActive ? "text-accent-soft-foreground" : undefined}
+                                        size="sm"
+                                        weight={row.isActive ? "semibold" : undefined}
+                                        color={row.soldOut ? "muted" : row.isActive ? "accent-soft" : "default"}
                                         truncate
-                                    >
-                                        {t(PHASE_LABEL_KEY[row.phase])}
-                                    </Typography>
+                                        text={t(PHASE_LABEL_KEY[row.phase])}
+                                    />
                                 ),
                             ]} />
                     ),
                     () => (row.soldOut ? (
-                        <Typography type="body-xs" color="muted">
-                            {t("courseLanding.soldOut")}
-                        </Typography>
+                        <Typography size="xs" color="muted" text={t("courseLanding.soldOut")} />
                     ) : row.isActive ? (
-                        <Typography type="body-xs" className="text-accent-soft-foreground">
-                            {t("courseLanding.currentOpen")}
-                        </Typography>
+                        <Typography size="xs" color="accent-soft" text={t("courseLanding.currentOpen")} />
                     ) : (
-                        <Typography type="body-sm" weight="medium">
-                            {row.formattedPrice}
-                        </Typography>
+                        <Typography size="sm" weight="medium" text={row.formattedPrice} />
                     )),
                 ]} />
         </Box>

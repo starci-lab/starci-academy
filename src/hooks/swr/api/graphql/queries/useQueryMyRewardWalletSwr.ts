@@ -5,7 +5,7 @@ import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyRewardWallet}. `data` is the viewer's reward
- * wallet (điểm quà balance + redemption history), or `null`. User-scoped — only
+ * wallet (reward-points balance + redemption history), or `null`. User-scoped — only
  * runs once the viewer is authenticated.
  */
 export const useQueryMyRewardWalletSwr = () => {

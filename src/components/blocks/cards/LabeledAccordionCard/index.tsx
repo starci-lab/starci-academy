@@ -173,7 +173,14 @@ export const LabeledAccordionCard = ({
         return <div className={cn(className)}>{frame}</div>
     }
     return (
-        <LabeledCard label={label} labelEnd={labelEnd} action={action} frameless className={className}>
+        <LabeledCard
+            identity={{ tier: "block", component: "LabeledAccordionCard" }}
+            label={label}
+            labelEnd={labelEnd}
+            action={action}
+            frameless
+            className={className}
+        >
             {frame}
         </LabeledCard>
     )

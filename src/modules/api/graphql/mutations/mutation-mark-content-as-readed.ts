@@ -24,6 +24,10 @@ const mutationMap: Record<MutationMarkContentAsReaded, DocumentNode> = {
 /** Apollo params for {@link mutateMarkContentAsReaded}. */
 export type MutateMarkContentAsReadedParams = MutateParams<MutationMarkContentAsReaded, MarkContentAsReadedRequest>
 
+/**
+ * Marks a content item as read for the current learner. Mirrors backend
+ * `markContentAsReaded`.
+ */
 export const mutateMarkContentAsReaded = async ({
     mutation = MutationMarkContentAsReaded.Mutation1,
     request,

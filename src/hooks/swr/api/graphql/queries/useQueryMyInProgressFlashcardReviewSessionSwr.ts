@@ -6,7 +6,7 @@ import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR wrapper for {@link queryMyInProgressFlashcardReviewSession}. `data` is
- * the viewer's resumable in-progress "Học thẻ" review session for the given
+ * the viewer's resumable in-progress card-review session for the given
  * deck (24h TTL, `status="in_progress"` only), or `null` when there is none.
  * Deck-scoped and enrolled-only — only runs once a `deckId` is known and the
  * viewer is authenticated. Sends `X-Course-Id` so the backend enrollment

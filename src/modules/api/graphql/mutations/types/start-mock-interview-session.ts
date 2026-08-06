@@ -36,18 +36,18 @@ export interface StartMockInterviewSessionRequest {
     /**
      * Subset of cognitive frames ("theory" | "reasoning" | "scenario") to draw
      * questions from for a `mode="qna"` session. Ignored for `mode="design"`.
-     * Empty/omitted draws from all 3 kinds (the "Tất cả" default).
+     * Empty/omitted draws from all 3 kinds (the "All" default).
      */
     kinds?: Array<string>
     /**
      * Whether this run should count toward job-readiness's rolling interview
-     * average. `true` (default) for an "Tự động" (random, mock-exam) run;
-     * `false` for a "Tùy chỉnh" (configurable, deliberate-practice) run — the
+     * average. `true` (default) for an "Automatic" (random, mock-exam) run;
+     * `false` for a "Custom" (configurable, deliberate-practice) run — the
      * server always forces `true` for `mode="design"` regardless of what's sent.
      */
     countsToReadiness?: boolean
     /**
-     * Learner-chosen name for this session, set at setup ("Tùy chỉnh phiên").
+     * Learner-chosen name for this session, set at setup ("Customize session").
      * Optional — omitted/blank falls back to a TIME-BASED display name derived
      * from the session's `createdAt` (see `sessionDisplayName`), never
      * random-generated.
@@ -90,7 +90,7 @@ export interface StartMockInterviewSessionData {
     sessionId: string
     /** The drawn prompt's id (a milestone-task id for capstone/design, or a classic-prompt slug). */
     promptId: string
-    /** The drawn prompt's title, localized — for Q&A kinds a summary like "4 câu · theory", not a single system name. */
+    /** The drawn prompt's title, localized — for Q&A kinds a summary like "4 questions · theory", not a single system name. */
     promptTitle: string
     /** The drawn prompt's difficulty tier ("easy" | "medium" | "hard" | "insane"). */
     difficulty: string

@@ -35,7 +35,7 @@ export type MutateSetCvBlocksPublicParams = MutateParams<
 >
 
 /**
- * Flags (or un-flags) one CV as the user's PUBLIC CV — the single résumé shown
+ * Flags (or un-flags) one CV as the user's PUBLIC CV — the single resume shown
  * read-only on their public profile. Auth + owner-only + single-public-per-user
  * are enforced BE-side (turning one on turns any other off), so callers should
  * refetch `myCvBlocks` afterwards to reflect the whole set.

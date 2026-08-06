@@ -5,6 +5,7 @@ import type { SandpackFiles } from "@codesandbox/sandpack-react"
 import { publicEnv } from "@/resources/env/public"
 import { querySandboxRepoUrl } from "@/modules/api/graphql/queries/query-sandbox-repo-url"
 
+/** Sandpack files map plus npm dependencies parsed from a synced repo snapshot. */
 export interface RepoSandpackResult {
     files: SandpackFiles
     dependencies: Record<string, string>

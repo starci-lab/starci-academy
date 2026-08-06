@@ -13,7 +13,7 @@ import { pathConfig } from "@/resources/path"
  * (distinct from the profile's own user-not-found state), with a single way back
  * home so it's never a dead end.
  */
-export default function NotFound() {
+const NotFound = () => {
     const t = useTranslations()
     const router = useRouter()
     const locale = useLocale()
@@ -34,3 +34,5 @@ export default function NotFound() {
         />
     )
 }
+
+export default NotFound

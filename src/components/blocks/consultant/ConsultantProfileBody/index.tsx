@@ -56,7 +56,7 @@ export interface ConsultantProfileBodyProps {
     lockedTitle?: string
     /**
      * Locked-callout body — the place to surface the required CV score (e.g.
-     * "cần điểm CV ≥ 70"). Falls back to the block's own English copy when omitted.
+     * "needs CV score >= 70"). Falls back to the block's own English copy when omitted.
      */
     lockedDescription?: string
     /** Locked-callout CTA label. Falls back to the block's own English copy when omitted. */
@@ -183,8 +183,11 @@ const ConsultantProfileBody = ({
     )
 
     return (
-        <div>
-            <StackV gap={6} isSkeleton={isSkeleton} items={[
+        <StackV
+            gap={6}
+            isSkeleton={isSkeleton}
+            identity={{ tier: "block", component: "ConsultantProfileBody" }}
+            items={[
                 () => identity,
                 // full bio — no clamp, unlike ConsultantCard's directory teaser
                 ...(isSkeleton || description ? [() => (
@@ -197,8 +200,8 @@ const ConsultantProfileBody = ({
                     />
                 )] : []),
                 () => contactFork,
-            ]} />
-        </div>
+            ]}
+        />
     )
 }
 

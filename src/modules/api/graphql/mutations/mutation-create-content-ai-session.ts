@@ -25,6 +25,10 @@ export type MutateCreateContentAiSessionParams = MutateParams<
     CreateContentAiSessionRequest
 >
 
+/**
+ * Creates a new content-AI conversation session for the grounded surface.
+ * Mirrors backend `createContentAiSession`.
+ */
 export const mutateCreateContentAiSession = async ({
     request,
     debug,

@@ -22,6 +22,10 @@ export type MutateAskContentAiParams = MutateParams<
     AskContentAiRequest
 >
 
+/**
+ * Asks the content-AI assistant a question for the grounded surface and returns
+ * the answer payload. Mirrors backend `askContentAi`.
+ */
 export const mutateAskContentAi = async ({
     request,
     debug,

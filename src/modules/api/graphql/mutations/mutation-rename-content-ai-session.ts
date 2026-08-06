@@ -25,6 +25,10 @@ export type MutateRenameContentAiSessionParams = MutateParams<
     RenameContentAiSessionRequest
 >
 
+/**
+ * Renames a content-AI conversation session. Mirrors backend
+ * `renameContentAiSession`.
+ */
 export const mutateRenameContentAiSession = async ({
     request,
     debug,

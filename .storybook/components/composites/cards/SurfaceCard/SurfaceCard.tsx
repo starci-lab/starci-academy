@@ -21,6 +21,7 @@ import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 import { Box } from "@sb-components/frames/Box/Box"
 import type { PrincipleToken, ExplainReason } from "@sb-components/frames/_principles"
+import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_identity"
 /**
  * `SurfaceCard` — the general wrapper frame of the card family. Owns the header section
  * (`SurfaceCardHeader`: label/labelEnd/see-more/action/subtleLabel), the `header`/`body`/`footer`
@@ -226,6 +227,12 @@ interface SurfaceCardBaseOwnProps extends SurfaceLabelProps, SlotProps {
     classNames?: Array<AllowedClassName>
     /** Extra classes on the surface (content) wrapper. */
     contentClassName?: string
+    /**
+     * Caller identity to wear on this composite's root instead of its own — pass this
+     * when a block/layout/overlay/page uses this composite as its root element.
+     * Omitted → this composite keeps emitting its own data-tier/data-component.
+     */
+    identity?: CallerIdentity
 }
 /** Shared label, press, highlight and placement props for every SurfaceCard variant. */
 export type SurfaceCardBaseProps = SurfaceCardBaseOwnProps & PressableActionsProps
@@ -260,6 +267,7 @@ const Base = ({
     ariaLabel,
     classNames,
     contentClassName,
+    identity,
 }: SurfaceCardBaseProps) => {
     const { ripples, add: addRipple, clear: clearRipple } = useRipple()
     const content = composeSlots({ header, body, footer, isSkeleton })
@@ -426,8 +434,7 @@ const Base = ({
         <section
             data-principle={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames)}
-            data-tier="composite"
-            data-component="SurfaceCard"
+            {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCard" })}
         >
             {labelRow}
             {cardWithCaption}

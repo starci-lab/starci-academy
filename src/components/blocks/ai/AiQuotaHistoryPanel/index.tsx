@@ -166,8 +166,11 @@ export const AiQuotaHistoryPanel = ({
     )
 
     return (
-        <div>
-            <StackV gap={6} classNames={classNames} items={[() => chart, () => chargesList]} />
-        </div>
+        <StackV
+            identity={{ tier: "block", component: "AiQuotaHistoryPanel" }}
+            gap={6}
+            classNames={classNames}
+            items={[() => chart, () => chargesList]}
+        />
     )
 }

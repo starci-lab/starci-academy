@@ -1,5 +1,4 @@
 import React from "react"
-import { cn } from "@heroui/react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { Button } from "@/components/atoms/buttons/Button"
@@ -13,13 +12,13 @@ import { CTA_LABEL, type ContinueCardHeroProps } from "../types"
  * a surface; two side by side and both lose their emphasis.
  */
 export const ContinueCardHero = (props: ContinueCardHeroProps) => {
-    const { onPress, className, isSkeleton = false } = props
+    const { onPress, isSkeleton = false } = props
     return (
         <SurfaceCard identity={{ tier: "block", component: "ContinueCardHero" }}
             isHighlight
             isSkeleton={isSkeleton}
-
-            contentClassName={cn("relative flex flex-col gap-3 overflow-hidden", className)}
+            // CardBody peers (title / progress / CTA) need a stack until CardBody owns one.
+            contentClassName="relative flex flex-col gap-3 overflow-hidden"
             body={() => (
                 <CardBody
                     {...props}

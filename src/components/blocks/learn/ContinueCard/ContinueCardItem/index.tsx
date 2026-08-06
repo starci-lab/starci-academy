@@ -1,5 +1,4 @@
 import React from "react"
-import { cn } from "@heroui/react"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { LinkSeeMore } from "@/components/atoms/navigation/Link"
 import { CardBody } from "../CardBody"
@@ -13,12 +12,12 @@ import { CTA_LABEL, type ContinueCardItemProps } from "../types"
  * control and hijack hover).
  */
 export const ContinueCardItem = (props: ContinueCardItemProps) => {
-    const { href, onPress, className, isSkeleton = false } = props
+    const { href, onPress, isSkeleton = false } = props
     return (
         <SurfaceCard identity={{ tier: "block", component: "ContinueCardItem" }}
             isSkeleton={isSkeleton}
-
-            contentClassName={cn("relative flex flex-col gap-3 overflow-hidden", className)}
+            // CardBody peers (title / progress / CTA) need a stack until CardBody owns one.
+            contentClassName="relative flex flex-col gap-3 overflow-hidden"
             body={() => (
                 <CardBody
                     {...props}

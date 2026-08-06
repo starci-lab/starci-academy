@@ -224,6 +224,7 @@ const WeeklyChallengeCard = ({
     isSkeleton = false,
 }: WeeklyChallengeCardProps) => (
     <SurfaceCard
+        identity={{ tier: "block", component: "WeeklyChallengeCard" }}
         label="Weekly Challenge"
 
 

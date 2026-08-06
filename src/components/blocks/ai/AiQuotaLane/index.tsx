@@ -47,8 +47,10 @@ const AiQuotaLane = ({ data, isLoading }: AiQuotaLaneProps) => {
     const showSkeleton = isLoading || !data
 
     return (
-        <div>
-            <StackV gap={4} items={[
+        <StackV
+            identity={{ tier: "block", component: "AiQuotaLane" }}
+            gap={4}
+            items={[
                 () => (
                     <QuotaBar
                         label="Next 5 hours"
@@ -56,8 +58,6 @@ const AiQuotaLane = ({ data, isLoading }: AiQuotaLaneProps) => {
                         limit={data?.window5h.limit ?? 0}
                         resetLabel={data?.window5h.resetLabel}
                         isSkeleton={showSkeleton}
-
-
                     />
                 ),
                 () => (
@@ -67,12 +67,10 @@ const AiQuotaLane = ({ data, isLoading }: AiQuotaLaneProps) => {
                         limit={data?.windowWeek.limit ?? 0}
                         resetLabel={data?.windowWeek.resetLabel}
                         isSkeleton={showSkeleton}
-
-
                     />
                 ),
-            ]} />
-        </div>
+            ]}
+        />
     )
 }
 

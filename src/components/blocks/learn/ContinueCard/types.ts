@@ -31,10 +31,6 @@ export interface ContinueCardDataProps {
      */
     href?: string
     /**
-     * PLACEMENT class (`mb-4`, `flex-1`) — NOT for restyling (§14d.1).
-     */
-    className?: string
-    /**
      * `true` → mirror shimmer INSTEAD of waiting for data. Applies to BOTH members
      * (`.Hero`/`.Item`) since both share `ContinueCardDataProps`.
      *

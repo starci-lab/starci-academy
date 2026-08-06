@@ -84,7 +84,7 @@ export const PricingCard = ({
 }: PricingCardProps) => {
     return (
         // Use SectionCard's accent variant for the highlighted (recommended) tier
-        <SectionCard accent={highlighted} contentGap={6} fillHeight>
+        <SectionCard identity={{ tier: "block", component: "PricingCard" }} accent={highlighted} contentGap={6} fillHeight>
             {/* Name (+ optional popular chip inline — chip is shrink-to-content, never full-width) */}
             <StackH
                 gap={3}

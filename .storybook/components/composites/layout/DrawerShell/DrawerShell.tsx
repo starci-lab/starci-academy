@@ -68,7 +68,11 @@ export interface DrawerShellBaseProps {
      * flex row. A COMPONENT reference (COMPOSITE-8) the frame mounts itself.
      */
     footer?: ComponentTypeWithSkeleton
-    /** Extra classes merged onto `DrawerContent` (the sliding panel itself — width/height). */
+    /**
+     * Extra classes merged onto `DrawerContent` (the sliding panel itself — width/height).
+     * Live consumer: nivoexpert `LessonEditorPanel` (`w-full sm:max-w-[560px]`).
+     * Held — do not remove while that caller exists; nivoexpert is out of batch scope.
+     */
     contentClassName?: string
     /** Extra classes merged onto `DrawerDialog`, in addition to {@link DrawerShellBaseProps.classNames}. */
     dialogClassName?: string

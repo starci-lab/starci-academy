@@ -1632,6 +1632,43 @@
       "reason": "Folders are filesystem groupings only. Consumers already used ModalRoot/SelectRoot/…. HeroUI Modal.* / Select.* remain vendor-allowed. Supersedes buttongroup-atom11-twin namespace approach — twins stay equal without the object.",
       "holdsPreserved": 27,
       "next": null
+    },
+    {
+      "id": "heroui-vendor-boundary-batch13-2026-08-08",
+      "date": "2026-08-08",
+      "status": "open",
+      "summary": "BATCH 13 heroui-boundaries: 30 files closed as vendor-boundary — HeroUI→atom APIs non-identical.",
+      "reason": "Button children/className vs atom label/prefixIcon; Typography type+children vs text/size; Chip compounds vs ChipBase; Accordion/Modal/Alert/Tabs/Tooltip compounds; cn vocabulary-only; missing CloseButton/ScrollShadow atoms. No migrations without redesign.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-08-contract-worker-heroui-boundaries.json",
+      "holdsPreserved": 27,
+      "next": "Only migrate when an existing StarCi atom exposes identical props/behavior; otherwise keep HeroUI at the documented boundary."
+    },
+    {
+      "id": "proven-apply-weeklychallenge-surfacecard-identity-2026-08-08",
+      "date": "2026-08-08",
+      "status": "applied",
+      "summary": "BATCH 14: SB SurfaceCard Base accepts identity; WeeklyChallengeCard SB twin stamps identity like src.",
+      "reason": "Src SurfaceCard already supported CallerIdentity; SB twin lacked it (tsc blocked parity). Port is twin sync of an existing API, not a new slot.",
+      "holdsPreserved": 27,
+      "next": "Optional: port identity to remaining SB SurfaceCard members (Nested, List, …) to match src."
+    },
+    {
+      "id": "proven-apply-drawershell-contentclassname-dead-2026-08-08",
+      "date": "2026-08-08",
+      "status": "reverted",
+      "summary": "BATCH 14: attempted dead removal of SB DrawerShell contentClassName — REVERTED; one live consumer.",
+      "reason": "False zero-consumer proof. LessonEditorPanel (nivoexpert) still passes contentClassName=\"w-full sm:max-w-[560px]\". Nivoexpert is out of batch scope, so prop restored on DrawerContent.",
+      "holdsPreserved": 27,
+      "next": "When LessonEditorPanel can migrate: prefer dialogClassName or a designed width principle; then re-prove zero consumers before removal."
+    },
+    {
+      "id": "proven-hold-drawershell-contentclassname-nivo-consumer-2026-08-08",
+      "date": "2026-08-08",
+      "status": "open",
+      "summary": "SB DrawerShell contentClassName held — live nivoexpert LessonEditorPanel consumer; absent from src twin.",
+      "reason": "Per-part prop is SB-only width escape. Do not invent dialogWidth. Do not edit nivoexpert in this batch.",
+      "holdsPreserved": 27,
+      "next": "Migrate LessonEditorPanel off contentClassName in a nivo-allowed batch, then remove if zero consumers remain."
     }
   ]
 }

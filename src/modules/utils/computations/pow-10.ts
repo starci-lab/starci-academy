@@ -11,13 +11,13 @@ type Pow10BNParams = {
   asBN: true
 }
 
-// overload signatures
+// overload signatures — function form required; arrow const cannot express
+// call-signature overloads without a TS2322 implementation mismatch.
 /** Returns 10^exponent as Decimal or BN. */
 export function pow10(params: Pow10BNParams): BN
 /** Returns 10^exponent as Decimal or BN. */
 export function pow10(params: Pow10DecimalParams): Decimal
 
-// implementation
 /** Returns 10^exponent as Decimal or BN. */
 export function pow10({
     exponent,

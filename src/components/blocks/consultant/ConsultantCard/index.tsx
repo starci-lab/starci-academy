@@ -117,16 +117,12 @@ const ConsultantCard = ({
     )
 
     return (
-        <div>
-            <div>
-                <SurfaceCard
-                    onPress={() => onOpen(id)}
-                    isDisabled={isSkeleton}
-
-                    body={() => <StackV gap={4} isSkeleton={isSkeleton} items={[() => consultantInfo]} />}
-                />
-            </div>
-        </div>
+        <SurfaceCard
+            identity={{ tier: "block", component: "ConsultantCard" }}
+            onPress={() => onOpen(id)}
+            isDisabled={isSkeleton}
+            body={() => <StackV gap={4} isSkeleton={isSkeleton} items={[() => consultantInfo]} />}
+        />
     )
 }
 

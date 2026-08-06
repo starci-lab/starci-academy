@@ -147,7 +147,6 @@ export const _LivestreamCalendarModal = ({
             onOpenChange={onOpenChange}
             title={labels.modalTitle}
             size="lg"
-            containerClassName="max-w-lg"
             body={bodySlot}
         />
     )

@@ -50,6 +50,7 @@ export interface NestedCardProps {
  */
 export const NestedCard = ({ title, icon, items, bordered = false, isSkeleton = false, classNames }: NestedCardProps) => (
     <SurfaceCardNested
+        identity={{ tier: "block", component: "NestedCard" }}
         title={title}
         icon={icon}
         items={items}

@@ -132,6 +132,7 @@ const LeadCard = ({ lead, options, onStatusChange, onNoteChange, onNoteSave, onD
         body={() => (
             <StackV
                 gap={2}
+                principle="title-subtitle"
                 isSkeleton={isSkeleton}
                 items={[
                     () => (
@@ -178,6 +179,7 @@ const LeadCard = ({ lead, options, onStatusChange, onNoteChange, onNoteSave, onD
                     () => (
                         <StackH
                             gap={2}
+                            principle="icon-text"
                             at="sm"
                             isSkeleton={isSkeleton}
                             items={[
@@ -324,7 +326,7 @@ const ExpertSiteLeadsPipeline = ({
             ) : (
                 <Grid
                     columns={PIPELINE_COLUMNS}
-                    gap={4}
+                    principle="content-row"
                     isSkeleton={isSkeleton}
                     items={STATUS_ORDER.map((status) => ({
                         key: status,

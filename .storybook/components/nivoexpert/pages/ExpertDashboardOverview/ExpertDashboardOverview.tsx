@@ -151,8 +151,7 @@ const ExpertDashboardOverview = ({ kpis, revenueTrend, funnel, activity, isSkele
     /** The four headline tiles, in a reflowing grid -- same column steps `nivo/blocks/dashboard/KpiRow` uses. */
     const KpiRow = () => (
         <Grid
-            columns={{ base: 1, sm: 2, lg: 4 }}
-            gap={4}
+            principle="content-row" columns={{ base: 1, sm: 2, lg: 4 }}
             isSkeleton={isSkeleton}
             items={(isSkeleton ? SKELETON_KPIS : kpis).map((kpi) => ({
                 key: kpi.key,
@@ -162,12 +161,12 @@ const ExpertDashboardOverview = ({ kpis, revenueTrend, funnel, activity, isSkele
                         isSkeleton={isSkeleton}
                         body={() => (
                             <StackV
-                                gap={3}
+                                principle="sibling-stack" gap={3}
                                 isSkeleton={isSkeleton}
                                 items={[
                                     () => (
                                         <StackH
-                                            gap={3}
+                                            principle="value-row" gap={3}
                                             justify="between"
                                             isSkeleton={isSkeleton}
                                             items={[
@@ -213,11 +212,11 @@ const ExpertDashboardOverview = ({ kpis, revenueTrend, funnel, activity, isSkele
     /** One funnel stage -- its label + count, then a bar filled to its share of the top (`visited`) stage. */
     const FunnelStageRow = (stage: LearnerFunnelStagePoint, baseline: number) => (
         <StackV
-            gap={1}
+            principle="name-handle" gap={1}
             items={[
                 () => (
                     <StackH
-                        gap={3}
+                        principle="value-row" gap={3}
                         justify="between"
                         align="center"
                         items={[
@@ -290,8 +289,7 @@ const ExpertDashboardOverview = ({ kpis, revenueTrend, funnel, activity, isSkele
         <div data-tier="page" data-component="ExpertDashboardOverview" className="flex w-full flex-col gap-6">
             <KpiRow />
             <Grid
-                columns={{ base: 1, lg: 2 }}
-                gap={4}
+                principle="content-row" columns={{ base: 1, lg: 2 }}
                 isSkeleton={isSkeleton}
                 items={[
                     { key: "revenue", content: () => <SurfaceCard padding={3} isSkeleton={isSkeleton} label={labels.revenueTitle} body={() => <RevenueChart />} /> },

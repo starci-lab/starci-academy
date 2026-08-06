@@ -118,7 +118,7 @@ const attemptRowContent = (
                 align="center"
                 justify="between"
                 items={[
-                    ...(bylineParts.length > 0 ? [() => <StackH gap={3} align="center" items={bylineParts} />] : []),
+                    ...(bylineParts.length > 0 ? [() => <StackH gap={3} principle="sibling-stack" align="center" items={bylineParts} />] : []),
                     ...(timeLabel != null ? [() => <Typography size="xs" color="muted" text={timeLabel} />] : []),
                 ]}
             />

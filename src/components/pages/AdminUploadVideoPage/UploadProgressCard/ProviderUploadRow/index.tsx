@@ -13,6 +13,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import type {
     ProviderUploadStatus,
 } from "../../types"
+import { Box } from "@/components/frames/Box"
 import {
     UPLOAD_STATUS_ICON_MAP,
     UPLOAD_STATUS_TRACK_CLASS_MAP,
@@ -50,9 +51,9 @@ export const ProviderUploadRow = ({
         ],
     )
     return (
-        <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 space-y-3">
+        <Box principle="card-padding" className="rounded-xl border border-white/5 bg-white/[0.02] p-4 space-y-3">
             <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
+                <Box principle="chip-row" className="flex items-center gap-2">
                     <Chip
                         size="sm"
                         variant="secondary"
@@ -61,8 +62,8 @@ export const ProviderUploadRow = ({
                         {upload.provider}
                     </Chip>
                     {UPLOAD_STATUS_ICON_MAP[upload.status]}
-                </div>
-                <div className="flex items-center gap-2">
+                </Box>
+                <Box principle="value-row" className="flex items-center gap-2">
                     <span className="text-xs font-mono text-slate-400">
                         {upload.progress}%
                     </span>
@@ -76,7 +77,7 @@ export const ProviderUploadRow = ({
                     >
                         <CopyIcon className="h-3.5 w-3.5" />
                     </Button>
-                </div>
+                </Box>
             </div>
             <ProgressBar
                 aria-label={`${upload.provider} upload progress`}
@@ -101,6 +102,6 @@ export const ProviderUploadRow = ({
             <p className="text-[10px] text-slate-600 font-mono break-all">
                 {upload.url.substring(0, 120)}…
             </p>
-        </div>
+        </Box>
     )
 }

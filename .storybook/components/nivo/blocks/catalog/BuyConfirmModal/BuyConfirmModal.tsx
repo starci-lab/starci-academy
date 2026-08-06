@@ -119,6 +119,7 @@ const BuyConfirmModal = ({
                 body={({ isSkeleton: skeleton }: SkeletonProps) => (
                     <StackV
                         gap={4}
+                        principle="label-field"
                         isSkeleton={skeleton}
                         items={[
                             () => (
@@ -143,6 +144,7 @@ const BuyConfirmModal = ({
                             () => (
                                 <StackH
                                     gap={3}
+                                    principle="flex-action"
                                     justify="between"
                                     isSkeleton={skeleton}
                                     items={[

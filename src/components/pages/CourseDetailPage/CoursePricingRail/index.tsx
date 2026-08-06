@@ -31,6 +31,7 @@ import { PriceTagProminent } from "@/components/blocks/commerce/PriceTag"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link CoursePricingRail}. */
 export type CoursePricingRailProps = WithClassNames<undefined>
@@ -66,73 +67,75 @@ export const CoursePricingRail = ({ className }: CoursePricingRailProps) => {
         <div className={cn("@app-md:sticky @app-md:top-[88px] @app-md:self-start", className)}>
             <Card>
                 <CardContent>
-                    <div className="flex flex-col gap-4">
-                        <CoverImage src={coverImageUrl} alt={title ?? ""} />
+                    <StackV gap={5} principle="group-boundary" items={[
+                        () => <CoverImage src={coverImageUrl} alt={title ?? ""} />,
 
-                        {/* headline: price + ONE discount + ONE scarcity line.
-                            When the viewer has a loyalty discount, the headline is THEIR price
-                            (struck phase price + loyalty chip); otherwise the active phase price. */}
-                        <div className="flex flex-col gap-2">
-                            <div className="flex flex-wrap items-center gap-2">
-                                {/* single-source PriceTag — loyalty price when the viewer has one,
-                                    else the active phase price (struck vs list). USD line stays beside it. */}
-                                {previewPending ? (
-                                    <Skeleton.Typography type="h3" width="1/3" />
-                                ) : hasLoyalty && preview ? (
-                                    <PriceTagProminent
-                                        discounted={preview.discountedPriceVnd}
-                                        original={preview.originalPriceVnd}
-                                       
-                                        breakdown={{
-                                            phase: preview.phasePriceVnd,
-                                            loyaltyPercent: preview.discountPercent,
-                                        }}
-                                    />
-                                ) : active ? (
-                                    <PriceTagProminent
-                                        discounted={active.priceVnd}
-                                        original={active.listPriceVnd}
-                                       
-                                        breakdown={{
-                                            phase: active.priceVnd,
-                                            loyaltyPercent: 0,
-                                        }}
-                                    />
-                                ) : null}
-                                {active?.formattedPriceUsd ? (
-                                    <Typography type="body-sm" color="muted">
-                                        {active.formattedPriceUsd}
+                        // headline: price + ONE discount + ONE scarcity line.
+                        // When the viewer has a loyalty discount, the headline is THEIR price
+                        // (struck phase price + loyalty chip); otherwise the active phase price.
+                        () => (
+                            <StackV gap={3} principle="sibling-stack" items={[
+                                () => (
+                                    <StackH gap={3} principle="value-row" align="center" at="sm" items={[
+                                        // single-source PriceTag — loyalty price when the viewer has one,
+                                        // else the active phase price (struck vs list). USD line stays beside it.
+                                        () => (previewPending ? (
+                                            <Skeleton.Typography type="h3" width="1/3" />
+                                        ) : hasLoyalty && preview ? (
+                                            <PriceTagProminent
+                                                discounted={preview.discountedPriceVnd}
+                                                original={preview.originalPriceVnd}
+
+                                                breakdown={{
+                                                    phase: preview.phasePriceVnd,
+                                                    loyaltyPercent: preview.discountPercent,
+                                                }}
+                                            />
+                                        ) : active ? (
+                                            <PriceTagProminent
+                                                discounted={active.priceVnd}
+                                                original={active.listPriceVnd}
+
+                                                breakdown={{
+                                                    phase: active.priceVnd,
+                                                    loyaltyPercent: 0,
+                                                }}
+                                            />
+                                        ) : null),
+                                        () => (active?.formattedPriceUsd ? (
+                                            <Typography type="body-sm" color="muted">
+                                                {active.formattedPriceUsd}
+                                            </Typography>
+                                        ) : null),
+                                    ]} />
+                                ),
+                                () => (active?.slotAvailable != null ? (
+                                    <Typography type="body-sm" className="text-warning-soft-foreground">
+                                        {t("courseLanding.slotsLeftPhase", {
+                                            count: active.slotAvailable,
+                                            phase: t(PHASE_LABEL_KEY[active.phase]),
+                                        })}
                                     </Typography>
-                                ) : null}
-                            </div>
-                            {active?.slotAvailable != null ? (
-                                <Typography type="body-sm" className="text-warning-soft-foreground">
-                                    {t("courseLanding.slotsLeftPhase", {
-                                        count: active.slotAvailable,
-                                        phase: t(PHASE_LABEL_KEY[active.phase]),
-                                    })}
-                                </Typography>
-                            ) : null}
-                        </div>
+                                ) : null),
+                            ]} />
+                        ),
 
-                        {/* price ladder — minimal, current highlighted, future prices = urgency */}
-                        {rows.length > 0 ? (
+                        // price ladder — minimal, current highlighted, future prices = urgency
+                        () => (rows.length > 0 ? (
                             <>
                                 <Separator />
-                                <div className="flex flex-col gap-3">
-                                    {rows.map((row) => (
-                                        <PhaseRow key={row.id} row={row} />
-                                    ))}
-                                </div>
+                                <StackV gap={4} principle="content-row" items={rows.map((row) => () => <PhaseRow key={row.id} row={row} />)} />
                                 <Separator />
                             </>
-                        ) : null}
+                        ) : null),
 
-                        <CourseCtaButtons />
-                        <Typography type="body-xs" color="muted" align="center">
-                            {t("course.usersEnrolled", { count: enrollmentCount })}
-                        </Typography>
-                    </div>
+                        () => <CourseCtaButtons />,
+                        () => (
+                            <Typography type="body-xs" color="muted" align="center">
+                                {t("course.usersEnrolled", { count: enrollmentCount })}
+                            </Typography>
+                        ),
+                    ]} />
                 </CardContent>
             </Card>
         </div>

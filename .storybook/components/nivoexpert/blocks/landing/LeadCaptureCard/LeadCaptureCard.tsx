@@ -114,7 +114,7 @@ const LeadCaptureCard = ({
                 padding={1}
                 body={() => (
                     <StackV
-                        gap={6}
+                        principle="block-boundary" gap={6}
                         align="center"
                         items={[
                             () => <Typography size="sm" weight="semibold" color="accent" align="center" text={labels.eyebrow} />,
@@ -140,7 +140,7 @@ const LeadCaptureCard = ({
                                             />
                                         ) : (
                                             <StackV
-                                                gap={4}
+                                                principle="label-field" gap={4}
                                                 items={[
                                                     () => (
                                                         <Typography

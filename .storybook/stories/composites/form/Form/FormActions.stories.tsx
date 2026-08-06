@@ -64,40 +64,40 @@ export const Default: Story = {
                 reason="This row never hand-rolls its own buttons: it forwards `items` straight down to the atom `ButtonGroup` and only adds two concepts that belong to the frame itself, horizontal alignment (`align`) and bottom-docking (`sticky`). Because it renders a repeated list of buttons it must take `items` as data, so passing `children` here is forbidden."
                 states={[
                     {
-                        name: "align = \"end\" (default)",
-                        why: "The button cluster sits flush against the row's end edge, with `Cancel` and `Save changes` reading toward that edge. This is the resting alignment most forms want, so a caller who never sets `align` still lands a CTA where the eye expects to find it.",
+                        name: "principle = \"flex-action-end\" (default)",
+                        why: "The button cluster sits flush against the row's end edge, with `Cancel` and `Save changes` reading toward that edge. This is the resting alignment most forms want, so a caller who never sets `principle` still lands a CTA where the eye expects to find it.",
                         code: `<FormActions
-    align="end"
+    principle="flex-action-end"
     items={[
         { key: "cancel", label: "Cancel", variant: "secondary", prefixIcon: XIcon },
         { key: "save", label: "Save changes", prefixIcon: FloppyDiskIcon },
     ]}
 />`,
-                        render: <FormActions align="end" items={SAVE_ITEMS} />,
+                        render: <FormActions principle="flex-action-end" items={SAVE_ITEMS} />,
                     },
                     {
-                        name: "align = \"start\"",
+                        name: "principle = \"flex-action-start\"",
                         why: "The button cluster keeps its natural width and only slides over to the row's start edge instead of its end edge. This fits a form living in a narrow column read from the left (§3), where anchoring at the end edge would leave a visually detached gap.",
                         code: `<FormActions
-    align="start"
+    principle="flex-action-start"
     items={[
         { key: "cancel", label: "Cancel", variant: "secondary", prefixIcon: XIcon },
         { key: "save", label: "Save changes", prefixIcon: FloppyDiskIcon },
     ]}
 />`,
-                        render: <FormActions align="start" items={SAVE_ITEMS} />,
+                        render: <FormActions principle="flex-action-start" items={SAVE_ITEMS} />,
                     },
                     {
-                        name: "align = \"between\"",
+                        name: "principle = \"flex-action-between\"",
                         why: "The frame stretches the button row to the full width of its container, pushing `Cancel` to the start edge and `Save changes` to the end edge. Spreading the two mismatched actions across both edges reads as an escape route on one side and the committing action on the other, and only the frame can claim the full width the split needs.",
                         code: `<FormActions
-    align="between"
+    principle="flex-action-between"
     items={[
         { key: "cancel", label: "Cancel", variant: "secondary", prefixIcon: XIcon },
         { key: "save", label: "Save changes", prefixIcon: FloppyDiskIcon },
     ]}
 />`,
-                        render: <FormActions align="between" items={SAVE_ITEMS} />,
+                        render: <FormActions principle="flex-action-between" items={SAVE_ITEMS} />,
                     },
                 ]}
             />

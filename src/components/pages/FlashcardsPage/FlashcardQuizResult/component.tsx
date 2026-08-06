@@ -13,7 +13,7 @@ import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 import { Container } from "@/components/frames/Container"
-import { StackV, StackH } from "@/components/frames/Stack"
+import { StackV } from "@/components/frames/Stack"
 import { Grid } from "@/components/frames/Grid"
 import { RecapEnrollUpsell, RecapReadinessCallout, RecapWeakTagsCard } from "./recapBlocks"
 
@@ -236,11 +236,13 @@ export const _FlashcardQuizResult = ({
         const showReadiness = !isSkeleton && enrollKnown && enrolled && readiness != null
 
         return (
-            <StackV gap={6} items={[
+            <StackV gap={6} principle="block-boundary" items={[
                 // HERO — three authoritative metric tiles (outcome first).
                 () => (
+                    // teacher-hold: flashcards-remain-quiz-result-metric-grid-gap4-no-token —
+                    // peer metric tiles at preserved step 4; no card-grid token.
                     <Grid
-                        gap={4}
+                        principle="content-row"
                         columns={{ base: 1, sm: 3 }}
                         isSkeleton={isSkeleton}
                         items={[
@@ -322,9 +324,7 @@ export const _FlashcardQuizResult = ({
 
                 // onward path — never a dead end, even with no weak tags.
                 ...(!isSkeleton ? [() => (
-                    <StackH gap={4} justify="center" items={[() => (
-                        <Button variant="tertiary" onPress={onBack} label={backToReviewLabel} />
-                    )]} />
+                    <Button variant="tertiary" onPress={onBack} label={backToReviewLabel} classNames={["self-center"]} />
                 )] : []),
             ]} />
         )
@@ -335,7 +335,7 @@ export const _FlashcardQuizResult = ({
             identity={{ tier: "block", component: "FlashcardQuizResult" }}
             size="md"
             padding={{ base: { x: 5, y: 6 }, sm: { x: 6 } }}
-            body={() => <StackV gap={6} items={[header, body]} />}
+            body={() => <StackV gap={6} principle="block-boundary" items={[header, body]} />}
         />
     )
 }

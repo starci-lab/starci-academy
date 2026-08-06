@@ -106,7 +106,7 @@ interface MemberDetailKvRowProps {
 /** One label/value row -- the row shape every field in this drawer shares. */
 const KvRow = ({ label, value }: MemberDetailKvRowProps) => (
     <StackH
-        gap={3}
+        gap={4}
         align="center"
         justify="between"
         principle="content-row"
@@ -183,7 +183,8 @@ const MemberDetailDrawer = ({
                 body={() => <StackV gap={4} items={rows} />}
                 footer={() => (
                     <StackH
-                        gap={2}
+                        gap={3}
+                        principle="flex-action"
                         justify="end"
                         items={footerButtons.map((buttonProps) => () => <Button {...buttonProps} />)}
                     />

@@ -8,6 +8,7 @@ import type { SubmitJobPostingFormValues } from "@/hooks/rhf/useSubmitJobPosting
 import { JobApplyMethod } from "@/modules/types/enums/job-apply-method"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { StackV } from "@/components/frames/Stack"
 
 /** Max length of a URL field. */
 const URL_MAX = 2048
@@ -40,21 +41,22 @@ export const ApplyMethodSection = ({
         <LabeledCard
             label={t("jobs.post.sections.applyMethod")}
         >
-            <div className="flex flex-col gap-3">
-                <TabsCard
-                    variant="primary"
-                    leftTabs={{
-                        selectedKey: applyMethod,
-                        ariaLabel: t("jobs.post.applyMethod.toggleAria"),
-                        onSelectionChange: (key) => setValue("applyMethod", String(key) as JobApplyMethod),
-                        items: [
-                            { key: JobApplyMethod.ExternalUrl, label: t("jobs.post.applyMethod.externalUrl") },
-                            { key: JobApplyMethod.Email, label: t("jobs.post.applyMethod.email") },
-                        ],
-                    }}
-                />
-
-                {applyMethod === JobApplyMethod.ExternalUrl ? (
+            <StackV gap={4} principle="content-row" items={[
+                () => (
+                    <TabsCard
+                        variant="primary"
+                        leftTabs={{
+                            selectedKey: applyMethod,
+                            ariaLabel: t("jobs.post.applyMethod.toggleAria"),
+                            onSelectionChange: (key) => setValue("applyMethod", String(key) as JobApplyMethod),
+                            items: [
+                                { key: JobApplyMethod.ExternalUrl, label: t("jobs.post.applyMethod.externalUrl") },
+                                { key: JobApplyMethod.Email, label: t("jobs.post.applyMethod.email") },
+                            ],
+                        }}
+                    />
+                ),
+                () => (applyMethod === JobApplyMethod.ExternalUrl ? (
                     <TextField variant="secondary">
                         <Label htmlFor="job-post-apply-url">{t("jobs.post.applyMethod.urlLabel")}</Label>
                         <Input
@@ -77,8 +79,8 @@ export const ApplyMethodSection = ({
                             onChange={(event) => setValue("applyEmail", event.target.value)}
                         />
                     </TextField>
-                )}
-            </div>
+                )),
+            ]} />
         </LabeledCard>
     )
 }

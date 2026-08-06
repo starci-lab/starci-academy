@@ -3,6 +3,7 @@
 import React from "react"
 import { Chip, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
+import { Cluster } from "@/components/frames/Cluster"
 
 /**
  * Real backend subsystems the blog writes about — a curated framing strip (NOT a filter, so it
@@ -14,15 +15,17 @@ const BACKEND_TOPICS = ["CQRS", "Kafka", "RAG · Qdrant", "CDC", "Keycloak", "Ju
 export const TopicsStrip = () => {
     const t = useTranslations("blog")
     return (
-        <div className="flex flex-wrap items-center gap-2">
-            <Typography type="body-sm" color="muted">
-                {t("topics")}
-            </Typography>
-            {BACKEND_TOPICS.map((topic) => (
+        <Cluster gap={3} principle="chip-row" items={[
+            () => (
+                <Typography type="body-sm" color="muted">
+                    {t("topics")}
+                </Typography>
+            ),
+            ...BACKEND_TOPICS.map((topic) => () => (
                 <Chip key={topic} size="sm" variant="soft" className="font-mono">
                     {topic}
                 </Chip>
-            ))}
-        </div>
+            )),
+        ]} />
     )
 }

@@ -88,6 +88,7 @@ export const PricingCard = ({
             {/* Name (+ optional popular chip inline — chip is shrink-to-content, never full-width) */}
             <StackH
                 gap={3}
+                principle="chip-row"
                 at="sm"
                 items={[
                     () => <Typography size="base" weight="semibold" text={name} />,
@@ -98,6 +99,7 @@ export const PricingCard = ({
             {/* Price row: big price + optional struck original + muted period */}
             <StackH
                 gap={3}
+                principle="value-row"
                 align="baseline"
                 at="sm"
                 items={[

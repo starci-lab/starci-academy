@@ -87,7 +87,8 @@ const SetMemberRoleModal = ({
                 )}
                 footer={() => (
                     <StackH
-                        gap={2}
+                        gap={3}
+                        principle="flex-action"
                         justify="end"
                         items={[
                             () => <Button variant="secondary" size="sm" label={labels.cancelLabel} onPress={() => onOpenChange(false)} isDisabled={isSaving} />,

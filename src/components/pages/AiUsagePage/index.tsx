@@ -30,6 +30,7 @@ import { pathConfig } from "@/resources/path"
 import { AiSubTier } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { StackH, StackV } from "@/components/frames/Stack"
 import {
     QuotaLaneVariant,
     useQuotaLaneData,
@@ -70,6 +71,57 @@ export const AiUsagePage = () => {
         : t("aiQuota.subscriptionNone")
     const upsellCta = tier ? t("aiQuota.upgradeCta") : t("aiQuota.subscribeCta")
 
+    const bodyItems = [
+        () => (
+            <LabeledCard
+                label={t("aiQuota.creditPool")}
+                action={() => (
+                    <Chip
+                        size="sm"
+                        variant="soft"
+                        color={quota?.tier === "max" ? "warning" : "default"}
+                    >
+                        <Chip.Label>
+                            {quota?.tier
+                                ? quota.tier.toUpperCase()
+                                : t("aiQuota.freeTier")}
+                        </Chip.Label>
+                    </Chip>
+                )}
+            >
+                <AiQuotaLane data={premiumLane} isLoading={isPremiumLaneLoading} />
+            </LabeledCard>
+        ),
+        ...(showUpsell
+            ? [() => (
+                <StackH
+                    gap={4}
+                    justify="between"
+                    align="center"
+                    at="sm"
+                    principle="content-row"
+                    items={[
+                        () => (
+                            <Typography type="body-sm" className="text-warning-soft-foreground">
+                                {upsellText}
+                            </Typography>
+                        ),
+                        () => (
+                            <Button
+                                variant="primary"
+                                onPress={onSubscribe}
+                                className="@app-sm:shrink-0"
+                            >
+                                {upsellCta}
+                            </Button>
+                        ),
+                    ]}
+                />
+            )]
+            : []),
+        () => <AiUsageHistory />,
+    ]
+
     return (
         <div className="flex flex-col gap-10">
             <PageHeader
@@ -77,49 +129,7 @@ export const AiUsagePage = () => {
                 title={t("aiQuota.fullPageTitle")}
                 description={t("aiQuota.fullPageDescription")}
             />
-            <div className="flex flex-col gap-6">
-
-                {/* one unified credit pool (5h + week windows) — the lane it is billed under is a
-                backend concern, not a display axis. Only the tier chip sits in the label action;
-                the subscribe/upgrade CTA moved below the card into the upsell prompt. */}
-                <LabeledCard
-                    label={t("aiQuota.creditPool")}
-                    action={() => (
-                        <Chip
-                            size="sm"
-                            variant="soft"
-                            color={quota?.tier === "max" ? "warning" : "default"}
-                        >
-                            <Chip.Label>
-                                {quota?.tier
-                                    ? quota.tier.toUpperCase()
-                                    : t("aiQuota.freeTier")}
-                            </Chip.Label>
-                        </Chip>
-                    )}
-                >
-                    <AiQuotaLane data={premiumLane} isLoading={isPremiumLaneLoading} />
-                </LabeledCard>
-
-                {/* upsell prompt — urges free users to buy / paid users to upgrade; hidden on MAX */}
-                {showUpsell ? (
-                    <div className="flex flex-col gap-3 @app-sm:flex-row @app-sm:items-center @app-sm:justify-between">
-                        <Typography type="body-sm" className="text-warning-soft-foreground">
-                            {upsellText}
-                        </Typography>
-                        <Button
-                            variant="primary"
-                            onPress={onSubscribe}
-                            className="@app-sm:shrink-0"
-                        >
-                            {upsellCta}
-                        </Button>
-                    </div>
-                ) : null}
-
-                {/* usage insight — chart / by-provider / history, each its own card */}
-                <AiUsageHistory />
-            </div>
+            <StackV gap={6} items={bodyItems} />
         </div>
     )
 }

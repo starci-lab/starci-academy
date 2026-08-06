@@ -10,6 +10,8 @@ import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { StackH, StackV } from "@/components/frames/Stack"
+import { Box } from "@/components/frames/Box"
 import { groupByTimeBucket, type TimeBucketKey } from "@/modules/utils/history-buckets"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -201,50 +203,66 @@ export const _FlashcardQuizHistory = ({
                 key={row.id}
                 onPress={() => setExpandedId(expanded ? null : row.id)}
             >
-                <div className="flex items-center gap-3">
-                    <div className="flex min-w-0 flex-1 flex-col gap-0">
-                        <Typography type="body-sm" weight="medium" truncate>
-                            {row.displayName}
-                        </Typography>
-                        <Typography type="body-xs" color="muted" truncate>
-                            {row.subtitle}
-                        </Typography>
-                    </div>
-                    <div className="flex shrink-0 items-center gap-2">
-                        {row.levelLabel ? (
-                            <Chip size="sm" variant="soft" color={row.levelColor}>
-                                {row.levelLabel}
-                            </Chip>
-                        ) : null}
-                        {row.coverageLabel ? (
-                            <Chip size="sm" variant="soft" color="default">
-                                {row.coverageLabel}
-                            </Chip>
-                        ) : null}
-                        {row.xpLabel ? (
-                            <Chip size="sm" variant="soft" color="warning">
-                                {row.xpLabel}
-                            </Chip>
-                        ) : null}
-                        <Chip size="sm" variant="soft" color={scoreColorOf(scoreRatio)}>
-                            {`${row.correctCount}/${row.cardCount}`}
-                        </Chip>
-                        <CaretDownIcon
-                            className={cn("size-4 text-muted transition-transform", expanded && "rotate-180")}
-                            weight="bold"
-                            aria-hidden
-                            focusable="false"
-                        />
-                    </div>
-                </div>
+                <StackH gap={4} principle="content-row" align="center" items={[
+                    () => (
+                        <StackV gap={1} classNames={["min-w-0", "flex-1"]} items={[
+                            () => (
+                                <Typography type="body-sm" weight="medium" truncate>
+                                    {row.displayName}
+                                </Typography>
+                            ),
+                            () => (
+                                <Typography type="body-xs" color="muted" truncate>
+                                    {row.subtitle}
+                                </Typography>
+                            ),
+                        ]} />
+                    ),
+                    () => (
+                        <StackH gap={3} principle="chip-row" align="center" classNames={["shrink-0"]} items={[
+                            ...(row.levelLabel ? [() => (
+                                <Chip key="level" size="sm" variant="soft" color={row.levelColor}>
+                                    {row.levelLabel}
+                                </Chip>
+                            )] : []),
+                            ...(row.coverageLabel ? [() => (
+                                <Chip key="coverage" size="sm" variant="soft" color="default">
+                                    {row.coverageLabel}
+                                </Chip>
+                            )] : []),
+                            ...(row.xpLabel ? [() => (
+                                <Chip key="xp" size="sm" variant="soft" color="warning">
+                                    {row.xpLabel}
+                                </Chip>
+                            )] : []),
+                            () => (
+                                <Chip size="sm" variant="soft" color={scoreColorOf(scoreRatio)}>
+                                    {`${row.correctCount}/${row.cardCount}`}
+                                </Chip>
+                            ),
+                            () => (
+                                <CaretDownIcon
+                                    className={cn("size-4 text-muted transition-transform", expanded && "rotate-180")}
+                                    weight="bold"
+                                    aria-hidden
+                                    focusable="false"
+                                />
+                            ),
+                        ]} />
+                    ),
+                ]} />
                 {expanded ? (
-                    <div className="mt-3 flex flex-col gap-2 border-t border-divider pt-3">
-                        {row.weakTags.length === 0 ? (
-                            <Typography type="body-xs" color="muted">
-                                {labels.weakTagsEmpty}
-                            </Typography>
-                        ) : (
-                            row.weakTags.map((tag) => (
+                    <Box className="mt-3 border-t border-divider pt-3">
+                        <StackV
+                            gap={3}
+                            principle="sibling-stack"
+                            items={row.weakTags.length === 0 ? [
+                                () => (
+                                    <Typography type="body-xs" color="muted">
+                                        {labels.weakTagsEmpty}
+                                    </Typography>
+                                ),
+                            ] : row.weakTags.map((tag) => () => (
                                 <button
                                     key={tag.tag}
                                     type="button"
@@ -252,18 +270,24 @@ export const _FlashcardQuizHistory = ({
                                         event.stopPropagation()
                                         onTagPress(tag.href)
                                     }}
-                                    className="group flex items-center justify-between gap-3 rounded-xl border border-default bg-default px-3 py-2 text-left"
+                                    className="group w-full rounded-xl border border-default bg-default text-left"
                                 >
-                                    <Typography type="body-xs" weight="medium" className="truncate underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
-                                        {tag.tag}
-                                    </Typography>
-                                    <Typography type="body-xs" color="muted" className="shrink-0">
-                                        {tag.coverageLabel}
-                                    </Typography>
+                                    <StackH gap={4} principle="control-pad" padding={{ x: 4, y: 3 }} justify="between" align="center" items={[
+                                        () => (
+                                            <Typography type="body-xs" weight="medium" className="truncate underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
+                                                {tag.tag}
+                                            </Typography>
+                                        ),
+                                        () => (
+                                            <Typography type="body-xs" color="muted" className="shrink-0">
+                                                {tag.coverageLabel}
+                                            </Typography>
+                                        ),
+                                    ]} />
                                 </button>
-                            ))
-                        )}
-                    </div>
+                            ))}
+                        />
+                    </Box>
                 ) : null}
             </SurfaceListCardItem>
         )
@@ -298,158 +322,158 @@ export const _FlashcardQuizHistory = ({
     const filteredEmpty = !isSkeleton && filteredRows.length === 0
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
-            {/* toolbar: search (weak-tag) + FUNNEL popover (mode/level facets) + count. Neither
-                `SearchInput` nor `Popover`/`FlexWrapButtonRadio` carry `isSkeleton` (loading-and-skeleton.md
-                §1 fallback), so the shimmer swaps in bare `Skeleton` pieces at the SAME leaf position. */}
-            <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="flex min-w-0 flex-1 items-center gap-3">
-                    {isSkeleton ? (
-                        <>
-                            <Skeleton className="h-9 min-w-0 flex-1 rounded-medium" />
-                            <Skeleton className="size-9 shrink-0 rounded-medium" />
-                        </>
+        <Box className={className}>
+            <StackV gap={4} items={[
+                () => (
+                    <StackH gap={4} principle="content-row" justify="between" at="sm" align="center" items={[
+                        () => (
+                            <StackH gap={4} principle="flex-action" align="center" classNames={["min-w-0", "flex-1"]} items={[
+                                ...(isSkeleton ? [
+                                    () => <Skeleton className="h-9 min-w-0 flex-1 rounded-medium" />,
+                                    () => <Skeleton className="size-9 shrink-0 rounded-medium" />,
+                                ] : [
+                                    () => (
+                                        <SearchInput
+                                            className="min-w-0 flex-1"
+                                            value={search}
+                                            onValueChange={setSearch}
+                                            placeholder={labels.searchPlaceholder}
+                                        />
+                                    ),
+                                    ...(hasFacets ? [() => (
+                                        <Popover isOpen={filterOpen} onOpenChange={setFilterOpen}>
+                                            <Button
+                                                isIconOnly
+                                                variant="ghost"
+                                                aria-label={labels.filterButtonAria}
+                                                className="shrink-0"
+                                            >
+                                                {activeFacetCount > 0 ? (
+                                                    <Badge.Anchor>
+                                                        <FunnelIcon className="size-5" />
+                                                        <Badge size="sm" color="accent" placement="top-left">{activeFacetCount}</Badge>
+                                                    </Badge.Anchor>
+                                                ) : (
+                                                    <FunnelIcon className="size-5" />
+                                                )}
+                                            </Button>
+                                            <Popover.Content className="w-72">
+                                                <StackV gap={1} principle="cell-pad" padding={4} items={[() => (
+                                                    <StackV gap={4} items={[
+                                                        ...(hasModeFacet ? [() => (
+                                                            <StackV gap={3} principle="label-field" items={[
+                                                                () => <Typography type="body-xs" color="muted">{labels.modeHeading}</Typography>,
+                                                                () => (
+                                                                    <FlexWrapButtonRadio
+                                                                        ariaLabel={labels.modeFilterAria}
+                                                                        value={modeFilter}
+                                                                        onChange={setModeFilter}
+                                                                        items={[
+                                                                            { value: "all", content: labels.filterAll },
+                                                                            ...presentModes.map((mode) => ({
+                                                                                value: mode,
+                                                                                content: modeLabelOf[mode] ?? mode,
+                                                                            })),
+                                                                        ]}
+                                                                    />
+                                                                ),
+                                                            ]} />
+                                                        )] : []),
+                                                        ...(hasLevelFacet ? [() => (
+                                                            <StackV gap={3} principle="label-field" items={[
+                                                                () => <Typography type="body-xs" color="muted">{labels.levelHeading}</Typography>,
+                                                                () => (
+                                                                    <FlexWrapButtonRadio
+                                                                        ariaLabel={labels.levelFilterAria}
+                                                                        value={levelFilter}
+                                                                        onChange={setLevelFilter}
+                                                                        items={[
+                                                                            { value: "all", content: labels.filterAll },
+                                                                            ...presentLevels.map((level) => ({
+                                                                                value: level,
+                                                                                content: levelLabelOf[level] ?? level,
+                                                                            })),
+                                                                        ]}
+                                                                    />
+                                                                ),
+                                                            ]} />
+                                                        )] : []),
+                                                        ...(activeFacetCount > 0 ? [() => (
+                                                            <Button variant="danger-soft" size="sm" className="self-start" onPress={clearFacets}>
+                                                                {labels.clearFilters}
+                                                            </Button>
+                                                        )] : []),
+                                                    ]} />
+                                                )]} />
+                                            </Popover.Content>
+                                        </Popover>
+                                    )] : []),
+                                ]),
+                            ]} />
+                        ),
+                        ...(isSkeleton ? [() => <Skeleton className="h-[14px] w-16 shrink-0 rounded" />] : [() => (
+                            <Typography type="body-sm" color="muted" className="shrink-0">
+                                {formatRunCount(shownCount)}
+                            </Typography>
+                        )]),
+                    ]} />
+                ),
+                () => (
+                    isSkeleton ? (
+                        <SurfaceListCard>
+                            {Array.from({ length: SKELETON_ROW_COUNT }).map((_unused, index) => (
+                                <SurfaceListCardItem key={index}>
+                                    <StackH gap={4} principle="content-row" align="center" items={[
+                                        () => (
+                                            <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={[
+                                                () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                                () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                                            ]} />
+                                        ),
+                                        () => <Skeleton className="h-6 w-12 shrink-0 rounded-full" />,
+                                        () => <Skeleton className="size-4 shrink-0 rounded" />,
+                                    ]} />
+                                </SurfaceListCardItem>
+                            ))}
+                        </SurfaceListCard>
+                    ) : filteredEmpty ? (
+                        <Card>
+                            <CardContent>
+                                <Box principle="page-pad" className="py-6">
+                                    <Typography type="body-sm" color="muted" align="center">
+                                        {labels.filterEmptyMessage}
+                                    </Typography>
+                                </Box>
+                            </CardContent>
+                        </Card>
                     ) : (
-                        <>
-                            <SearchInput
-                                className="min-w-0 flex-1"
-                                value={search}
-                                onValueChange={setSearch}
-                                placeholder={labels.searchPlaceholder}
-                            />
-                            {hasFacets ? (
-                                <Popover isOpen={filterOpen} onOpenChange={setFilterOpen}>
-                                    <Button
-                                        isIconOnly
-                                        variant="ghost"
-                                        aria-label={labels.filterButtonAria}
-                                        className="shrink-0"
-                                    >
-                                        {activeFacetCount > 0 ? (
-                                            <Badge.Anchor>
-                                                <FunnelIcon className="size-5" />
-                                                <Badge size="sm" color="accent" placement="top-left">{activeFacetCount}</Badge>
-                                            </Badge.Anchor>
-                                        ) : (
-                                            <FunnelIcon className="size-5" />
-                                        )}
-                                    </Button>
-                                    <Popover.Content className="w-72">
-                                        <div className="flex flex-col gap-3 p-3">
-                                            {hasModeFacet ? (
-                                                <div className="flex flex-col gap-2">
-                                                    <Typography type="body-xs" color="muted">{labels.modeHeading}</Typography>
-                                                    <FlexWrapButtonRadio
-                                                        ariaLabel={labels.modeFilterAria}
-                                                        value={modeFilter}
-                                                        onChange={setModeFilter}
-                                                        items={[
-                                                            { value: "all", content: labels.filterAll },
-                                                            ...presentModes.map((mode) => ({
-                                                                value: mode,
-                                                                content: modeLabelOf[mode] ?? mode,
-                                                            })),
-                                                        ]}
-                                                    />
-                                                </div>
-                                            ) : null}
-                                            {hasLevelFacet ? (
-                                                <div className="flex flex-col gap-2">
-                                                    <Typography type="body-xs" color="muted">{labels.levelHeading}</Typography>
-                                                    <FlexWrapButtonRadio
-                                                        ariaLabel={labels.levelFilterAria}
-                                                        value={levelFilter}
-                                                        onChange={setLevelFilter}
-                                                        items={[
-                                                            { value: "all", content: labels.filterAll },
-                                                            ...presentLevels.map((level) => ({
-                                                                value: level,
-                                                                content: levelLabelOf[level] ?? level,
-                                                            })),
-                                                        ]}
-                                                    />
-                                                </div>
-                                            ) : null}
-                                            {activeFacetCount > 0 ? (
-                                                <Button variant="danger-soft" size="sm" className="self-start" onPress={clearFacets}>
-                                                    {labels.clearFilters}
-                                                </Button>
-                                            ) : null}
-                                        </div>
-                                    </Popover.Content>
-                                </Popover>
-                            ) : null}
-                        </>
-                    )}
-                </div>
-                {isSkeleton ? (
-                    <Skeleton className="h-[14px] w-16 shrink-0 rounded" />
-                ) : (
-                    <Typography type="body-sm" color="muted" className="shrink-0">
-                        {formatRunCount(shownCount)}
-                    </Typography>
-                )}
-            </div>
-
-            {isSkeleton ? (
-                // while shimmering, placeholder rows keep the SAME `SurfaceListCard`/`SurfaceListCardItem`
-                // shape and the SAME count (SKELETON_ROW_COUNT) as the loaded rows below.
-                <SurfaceListCard>
-                    {Array.from({ length: SKELETON_ROW_COUNT }).map((_unused, index) => (
-                        <SurfaceListCardItem key={index}>
-                            <div className="flex items-center gap-3">
-                                <div className="flex min-w-0 flex-1 flex-col gap-1">
-                                    <Skeleton.Typography type="body-sm" width="1/2" />
-                                    <Skeleton.Typography type="body-xs" width="1/3" />
-                                </div>
-                                <Skeleton className="h-6 w-12 shrink-0 rounded-full" />
-                                <Skeleton className="size-4 shrink-0 rounded" />
-                            </div>
-                        </SurfaceListCardItem>
-                    ))}
-                </SurfaceListCard>
-            ) : filteredEmpty ? (
-                // keep the SAME bounded-card shape as the populated `SurfaceListCard` sibling
-                // (`components/card.md` §2 frameless-section-empty-state-needs-card).
-                <Card>
-                    <CardContent>
-                        <Typography type="body-sm" color="muted" align="center" className="py-6">
-                            {labels.filterEmptyMessage}
-                        </Typography>
-                    </CardContent>
-                </Card>
-            ) : (
-                // group by time window — each non-empty bucket is a `LabeledCard frameless`
-                // (time window = label OUTSIDE + run count via `labelEnd`; content is a
-                // `SurfaceListCard` → frameless, no card-in-card).
-                <div className="flex flex-col gap-3">
-                    {timeBuckets.map((bucket) => (
-                        <LabeledCard
-                            key={bucket.key}
-                            frameless
-                            subtleLabel
-                            label={timeBucketLabelOf[bucket.key]}
-                            labelEnd={formatRunCount(bucket.items.length)}
-                        >
-                            <SurfaceListCard>
-                                {bucket.items.map((row) => renderRow(row))}
-                            </SurfaceListCard>
-                        </LabeledCard>
-                    ))}
-                </div>
-            )}
-
-            {!isSkeleton && hasMore ? (
-                <Button
-                    variant="secondary"
-                    size="sm"
-                    className="self-center"
-                    isDisabled={isLoadingMore}
-                    onPress={onLoadMore}
-                >
-                    {labels.loadMore}
-                </Button>
-            ) : null}
-        </div>
+                        <StackV gap={4} items={timeBuckets.map((bucket) => () => (
+                            <LabeledCard
+                                key={bucket.key}
+                                frameless
+                                subtleLabel
+                                label={timeBucketLabelOf[bucket.key]}
+                                labelEnd={formatRunCount(bucket.items.length)}
+                            >
+                                <SurfaceListCard>
+                                    {bucket.items.map((row) => renderRow(row))}
+                                </SurfaceListCard>
+                            </LabeledCard>
+                        ))} />
+                    )
+                ),
+                ...(!isSkeleton && hasMore ? [() => (
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        className="self-center"
+                        isDisabled={isLoadingMore}
+                        onPress={onLoadMore}
+                    >
+                        {labels.loadMore}
+                    </Button>
+                )] : []),
+            ]} />
+        </Box>
     )
 }

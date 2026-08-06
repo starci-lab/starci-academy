@@ -125,17 +125,17 @@ export const _LivestreamCalendarModal = ({
         content: () => sessionRowContent(row),
     }))
 
+    const bodyItems = [
+        // Center via Box — no sibling gap seam; StackV gap={1} align=center was inert.
+        () => <Box className="flex justify-center">{calendarSlot()}</Box>,
+        () => <SurfaceCardList items={listItems} variant="nested" />,
+    ]
+
     const bodySlot = () => (
         isEmpty ? (
             <AsyncContentEmpty title={labels.emptyTitle} />
         ) : (
-            <StackV
-                gap={4}
-                items={[
-                    () => <StackV gap={1} align="center" body={calendarSlot} />,
-                    () => <SurfaceCardList items={listItems} variant="nested" />,
-                ]}
-            />
+            <StackV gap={4} items={bodyItems} />
         )
     )
 

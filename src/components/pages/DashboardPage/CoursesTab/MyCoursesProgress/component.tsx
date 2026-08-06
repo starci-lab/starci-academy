@@ -81,12 +81,12 @@ const _MyCoursesProgress = ({
                 {isSkeleton
                     ? Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => (
                         <SurfaceListCardItem key={`pending-${index}`}>
-                            <StackH gap={4} items={[
+                            <StackH gap={4} principle="content-row" items={[
                                 () => <Skeleton className="size-12 shrink-0 rounded-2xl" />,
                                 () => (
-                                    <StackV gap={3} classNames={["min-w-0", "flex-1"]} items={[
+                                    <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
                                         () => (
-                                            <StackH gap={3} justify="between" items={[
+                                            <StackH gap={3} principle="flex-action" justify="between" items={[
                                                 () => <Skeleton.Typography type="body-sm" width="1/2" />,
                                                 () => <Skeleton className="h-3 w-8 rounded" />,
                                             ]} />

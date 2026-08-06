@@ -97,6 +97,1460 @@
       "summary": "Outer cell-pad Stack shells pass a dummy gap because Stack.gap is required.",
       "reason": "Nested ownership needs a padding owner with a single body child. Stack currently requires gap.",
       "next": "Teacher: accept dummy gap, or allow optional gap on padding-only Stack shells."
+    },
+    {
+      "id": "cartpage-footer-column-gap4-no-token",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "CartPage footer column StackV gap={4} (summary | checkout | clear) stays unnamed.",
+      "reason": "Batch allowed sibling-stack / content-row / flex-action / card-caption / group-boundary / block-boundary. None fit vertical footer peers at preserved step 4 (12px) without lying. The coverage hit was a false positive: nested justify/principle inside items={...} made the parent look like a decision frame. Items were hoisted so the parent is honestly gap-only (gate does not require a principle). Inventory's 'redundant-wrapper' was a heuristic miss — the column owns a real seam distinct from the parent block-boundary list|footer split; it was not removed.",
+      "path": "src/components/pages/CartPage/component.tsx",
+      "next": "Teacher: leave gap-only, or retune to sibling-stack+gap={3} / group-boundary+gap={5} / register a footer-stack token at step 4."
+    },
+    {
+      "id": "mockinterview-history-empty-py6",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "MockInterviewHistory filtered-empty Typography keeps py-6 only.",
+      "reason": "Vertical-only inset; no house padding token is py-only. page-pad is symmetric p-6.",
+      "path": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "next": "Teacher: register a vertical empty-state pad, or retune to page-pad / cell-pad.",
+      "resolution": "Retuned empty state to Box page-pad p-6 wrapping Typography.",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "mockinterview-grading-shell-pad",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "MockInterviewSession grading shell keeps px-4 pb-6 pt-10 @app-sm:px-6.",
+      "reason": "Asymmetric responsive reading inset; not page-pad (symmetric p-6).",
+      "path": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "next": "Teacher: register a reading-inset token, or retune to page-pad.",
+      "resolution": "Retuned grading shell to Box page-pad p-6.",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "mockinterview-qna-left-pad",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "MockInterviewSession QNA left pane keeps px-4 py-6 @app-sm:px-6.",
+      "reason": "Responsive horizontal page inset with vertical page-pad; no single padding token matches.",
+      "path": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "next": "Teacher: register responsive reading-inset, or accept page-pad everywhere.",
+      "resolution": "Retuned QNA left pane to Box page-pad p-6.",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "mockinterview-design-left-pad",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "MockInterviewSession design left pane keeps px-4 py-6 @app-sm:px-6.",
+      "reason": "Same asymmetric reading inset as QNA left.",
+      "path": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "next": "Teacher: register responsive reading-inset, or accept page-pad everywhere.",
+      "resolution": "Retuned design left pane to Box page-pad p-6.",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "mockinterview-phase-stepper-ul",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "Design phase stepper stays a semantic ul with flex-wrap gap-3.",
+      "reason": "Cluster renders a div; converting loses list semantics. No honest principle without retuning the list mount.",
+      "path": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "next": "Teacher: allow Cluster as=ol/ul, or exclude semantic lists from raw scan.",
+      "resolution": "Named semantic ul with data-principle=chip-row (wrapping same-kind phase chips at gap-3).",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "mockinterview-phase-step-li",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "Design phase step li keeps px-1 py-2.",
+      "reason": "px-1 py-2 is not control-pad (12x8), row-pad, or pill-pad.",
+      "path": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "next": "Teacher: register a compact step-pad token, or retune to control-pad.",
+      "resolution": "Retuned li to control-pad px-3 py-2.",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "mockinterview-progress-segment-pad",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "Session skeleton progress strip keeps px-4 pb-2 @app-sm:px-6.",
+      "reason": "Asymmetric header inset under WorkSessionHeader mirror; not control-pad or page-pad.",
+      "path": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "next": "Teacher: register header-band inset, or fold into WorkSessionHeader frame.",
+      "resolution": "Named progress strip data-principle=control-pad (mirrors header band).",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "mockinterview-session-skeleton-workspace-grid",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "Session skeleton workspace keeps raw CSS grid gap-6 + px-4 py-6 + custom cols.",
+      "reason": "House Grid cannot express minmax(0,1fr) two-pane split; asymmetric pad is not page-pad.",
+      "path": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "next": "Teacher: extend Grid columns, or accept SplitWorkspace + page-pad retune.",
+      "resolution": "Split into Box page-pad + grid data-principle=block-boundary gap-6; custom cols kept on grid.",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "mockinterview-gate-preview-p5",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "GatePreview cards retuned from p-5 to SurfaceCard padding={5} (p-4 / card-padding).",
+      "reason": "House scale has no 20px padding step. Visual inset tightened 20→16 to land on card-padding.",
+      "path": "src/components/pages/MockInterviewPage/MockInterviewGatePreview/index.tsx",
+      "next": "Teacher: confirm card-padding retune, or register a 20px surface-pad and restore p-5."
+    },
+    {
+      "id": "league-standing-hero-p5-no-token",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "League standing-hero skeleton shells keep Tailwind p-5 (20px); no padding principle fits.",
+      "reason": "House padding scale jumps p-4 (card-padding / 16px) → p-6 (page-pad / 24px). StandingHeroCard and the co-located Global/Weekly board shimmer shells use p-5 to match the live card. Shrinking to card-padding would desync the shimmer; inventing a principle on p-5 would lie to the oracle.",
+      "paths": [
+        "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+        "src/components/pages/LeaguePage/GlobalBoard/GlobalBoardSkeleton/index.tsx",
+        "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+        "src/components/pages/LeaguePage/WeeklyBoard/WeeklyBoardSkeleton/index.tsx"
+      ],
+      "next": "Teacher: register a 20px surface-pad token, or retune StandingHeroCard (blocks partition) to card-padding (p-4) and mirror here.",
+      "resolution": "Retuned League shimmer shells p-5→p-4 with principle=card-padding (StandingHeroCard still p-5 elsewhere).",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "ps-sb-inputtags-input-px1-caret",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "InputTags draft <input> keeps px-1 py-0 for caret/text inset.",
+      "reason": "Not a layout seam between siblings. px-1 is native control text padding inside the field box; no house padding token describes input caret inset, and wrapping the native input in Box would not remove the class the gate matches.",
+      "paths": [
+        ".storybook/components/composites/form/InputTags/InputTags.tsx",
+        "src/components/composites/form/InputTags/index.tsx"
+      ],
+      "next": "Teacher: exclude native input text-inset from raw spacing scan, or register a control-text-inset token."
+    },
+    {
+      "id": "overlays-remember-me-gap1-between",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "RememberMeRow converted to Box flex justify-between (no gap seam).",
+      "reason": "Checkbox and forgot-password link are pushed apart; gap={1} (0px) is inert under justify-between. Only step-1 token is name-handle, which does not describe this control pair. Preserving visual spacing means keeping justify-between without stamping a false principle.",
+      "path": "src/components/overlays/modals/AuthenticationModal/SignInSection/CredentialsState/RememberMeRow/index.tsx",
+      "next": "Teacher: drop gap={1} and register a justify-between / push-apart token, or accept name-handle as a dummy, or leave unnamed.",
+      "resolution": "Dropped inert StackH gap={1}; Box carries push-apart without a false name-handle.",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "overlays-livestream-calendar-gap1-center",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "LivestreamCalendarModal centers Calendar via Box flex justify-center.",
+      "reason": "Single-child centering shell; gap={1} is required by Stack but has no sibling seam. name-handle is the only step-1 token and does not describe a calendar mount. Removing the frame would lose centering.",
+      "path": "src/components/overlays/modals/LivestreamCalendarModal/component.tsx",
+      "next": "Teacher: allow align-only shells without principle, accept name-handle as dummy, or center via Box on the Calendar mount.",
+      "resolution": "Replaced StackV gap={1} align=center body= with Box centering shell.",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "sb-nivo-landing-gap4-copy-stack-no-token",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Landing copy stacks at gap={4} (eyebrow | headline | description | CTA) stay unnamed.",
+      "reason": "Preserved step 4 (12px). sibling-stack/group-boundary/block-boundary want steps 3/5/6. content-row/label-field/card-caption do not describe a vertical marketing copy column.",
+      "paths": [
+        ".storybook/components/nivo/blocks/landing/AuditCta/AuditCta.tsx",
+        ".storybook/components/nivo/blocks/landing/HumanInTheLoop/HumanInTheLoop.tsx",
+        ".storybook/components/nivo/blocks/landing/ProblemStatement/ProblemStatement.tsx"
+      ],
+      "next": "Teacher: retune to sibling-stack+gap={3} / group-boundary+gap={5}, or register a marketing-copy-stack token at step 4."
+    },
+    {
+      "id": "sb-nivo-landing-gap4-peer-card-grid-no-token",
+      "date": "2026-08-06",
+      "status": "applied",
+      "summary": "Landing peer-card Grids at gap={4} named content-row.",
+      "reason": "Step 4 matches content-row. Applied principle=\"content-row\" on DashboardProof, SolutionByIndustry, and SystemFlow peer-card Grids.",
+      "paths": [
+        ".storybook/components/nivo/blocks/landing/DashboardProof/DashboardProof.tsx",
+        ".storybook/components/nivo/blocks/landing/SolutionByIndustry/SolutionByIndustry.tsx",
+        ".storybook/components/nivo/blocks/landing/SystemFlow/SystemFlow.tsx"
+      ],
+      "next": "None."
+    },
+    {
+      "id": "sb-nivo-landing-gap2-mixed-tile-no-token",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Landing tiles stacking badge/icon + title + meta/CTA at gap={2} stay unnamed.",
+      "reason": "Preserved step 2. icon-text and title-subtitle cover two-part joints; these tiles own three+ mixed children (glyph, title, action/description) at one gap.",
+      "paths": [
+        ".storybook/components/nivo/blocks/landing/DemoFlow/DemoFlow.tsx",
+        ".storybook/components/nivo/blocks/landing/ProductQuickSelector/ProductQuickSelector.tsx",
+        ".storybook/components/nivo/blocks/landing/SystemFlow/SystemFlow.tsx"
+      ],
+      "next": "Teacher: split into nested icon-text + title-subtitle owners, or register a tile-stack token at step 2."
+    },
+    {
+      "id": "sb-nivo-landing-gap2-title-chip-row-no-token",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "SolutionByIndustry title|status Chip StackH gap={2} justify=between stays unnamed.",
+      "reason": "Preserved step 2. content-row wants step 4; icon-text/title-subtitle do not describe a title shoved apart from a status chip.",
+      "path": ".storybook/components/nivo/blocks/landing/SolutionByIndustry/SolutionByIndustry.tsx",
+      "next": "Teacher: retune to content-row+gap={4}, or register a title-meta-row token at step 2."
+    },
+    {
+      "id": "sb-nivo-landing-flownode-gap1-no-token",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "OperatingLoopVisual FlowNode StackV gap={1} (IconTile | label | optional AI Chip) stays unnamed.",
+      "reason": "Preserved step 1. name-handle is text name/handle identity; this node mixes an icon tile, label, and optional chip at 0px.",
+      "path": ".storybook/components/nivo/blocks/landing/OperatingLoopVisual/OperatingLoopVisual.tsx",
+      "next": "Teacher: accept name-handle stretch, split chip out, or register a flow-node token at step 1."
+    },
+    {
+      "id": "sb-nivoexpert-gap2-flex-action-rows",
+      "date": "2026-08-06",
+      "status": "applied",
+      "summary": "nivoexpert control rows retuned to flex-action+gap={3}.",
+      "reason": "Honest owner is flex-action at step 3. Retuned BanMemberModal, SetMemberRoleModal, MemberDetailDrawer, TenantLandingShell, and AgentTaskConsole submit rows; AgentTaskConsole title row is icon-text+gap={2}.",
+      "paths": [
+        ".storybook/components/nivoexpert/overlays/modals/BanMemberModal/BanMemberModal.tsx",
+        ".storybook/components/nivoexpert/overlays/modals/SetMemberRoleModal/SetMemberRoleModal.tsx",
+        ".storybook/components/nivoexpert/overlays/drawers/MemberDetailDrawer/MemberDetailDrawer.tsx",
+        ".storybook/components/nivoexpert/layouts/TenantLandingShell/TenantLandingShell.tsx",
+        ".storybook/components/nivoexpert/blocks/automation/AgentTaskConsole/AgentTaskConsole.tsx"
+      ],
+      "next": "None."
+    },
+    {
+      "id": "sb-nivoexpert-gap2-chip-rows",
+      "date": "2026-08-06",
+      "status": "applied",
+      "summary": "nivoexpert chip/status rows retuned to chip-row+gap={3}.",
+      "reason": "Honest owner is chip-row at step 3. Retuned CourseView, LessonEditorPanel, and PostModerationDrawer.",
+      "paths": [
+        ".storybook/components/nivoexpert/blocks/classroom/CourseView/CourseView.tsx",
+        ".storybook/components/nivoexpert/blocks/studio/LessonEditorPanel/LessonEditorPanel.tsx",
+        ".storybook/components/nivoexpert/overlays/drawers/PostModerationDrawer/PostModerationDrawer.tsx"
+      ],
+      "next": "None."
+    },
+    {
+      "id": "src-blocks-verdict-hero-value-gap2",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "VerdictHeroCard value|unit retuned to value-row+gap={3}.",
+      "reason": "Shape is value-row (baseline number + unit) but preserved gap is step 2 (4px). value-row requires step 3 (8px). Stamping value-row would lie; retuning gap would change the hero metric density.",
+      "path": "src/components/blocks/stats/VerdictHeroCard/index.tsx",
+      "next": "Teacher: retune to value-row+gap={3}, or register a dense-value-row token at step 2.",
+      "resolution": "Honest value-row owner; density 4px→8px.",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "sb-nivo-rest-gap3-meta-rows-no-token",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "nivo rest list/header meta rows at gap={3} justify=between stay unnamed.",
+      "reason": "Preserved step 3 (8px). content-row is the honest list-row shape but lives at step 4 (12px). flex-action/identity/value-row/chip-row/sibling-stack do not describe name|meta or label|trailing-text rows without controls.",
+      "paths": [
+        ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeads/ExpertSiteLeads.tsx",
+        ".storybook/components/nivo/blocks/expert-site/LeadsInboxCard/LeadsInboxCard.tsx",
+        ".storybook/components/nivo/blocks/agent-os/ChannelList/ChannelList.tsx",
+        ".storybook/components/nivo/blocks/agent-os/KnowledgeSection/KnowledgeSection.tsx",
+        ".storybook/components/nivo/blocks/agent-os/ModelsSection/ModelsSection.tsx",
+        ".storybook/components/nivo/blocks/agent-os/ToolsSection/ToolsSection.tsx",
+        ".storybook/components/nivo/blocks/catalog/MyOrdersList/MyOrdersList.tsx",
+        ".storybook/components/nivo/blocks/catalog/UpgradeTierConfirmModal/UpgradeTierConfirmModal.tsx",
+        ".storybook/components/nivo/blocks/dashboard/KpiTile/KpiTile.tsx",
+        ".storybook/components/nivo/blocks/support/SupportTicketList/SupportTicketList.tsx",
+        ".storybook/components/nivo/blocks/support/TicketThread/TicketThread.tsx",
+        ".storybook/components/nivo/blocks/billing/InvoiceDetailModal/InvoiceDetailModal.tsx",
+        ".storybook/components/nivo/blocks/billing/InvoiceList/InvoiceList.tsx",
+        ".storybook/components/nivo/pages/Dashboard/Dashboard.tsx",
+        ".storybook/components/nivo/blocks/domains/DomainList/DomainList.tsx",
+        ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx"
+      ],
+      "next": "Teacher: retune to content-row+gap={4}, or register a dense-content-row token at step 3. ExpertSiteManager skeleton CTA resolved as flex-action."
+    },
+    {
+      "id": "sb-nivo-rest-gap2-title-meta-row-no-token",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "nivo rest title|chip/count StackH at gap={2} justify=between stay unnamed.",
+      "reason": "Preserved step 2. content-row wants step 4; icon-text/title-subtitle/separator-dot do not describe a title shoved apart from a status chip or count.",
+      "paths": [
+        ".storybook/components/nivo/blocks/expert-site/ExpertSiteGenerate/ExpertSiteGenerate.tsx",
+        ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx"
+      ],
+      "next": "Teacher: retune to content-row+gap={4}, or register a title-meta-row token at step 2."
+    },
+    {
+      "id": "sb-nivo-rest-gap4-peer-card-grid-no-token",
+      "date": "2026-08-06",
+      "status": "applied",
+      "summary": "nivo rest peer-card Grids at gap={4} named content-row.",
+      "reason": "Step 4 matches content-row. Applied principle=\"content-row\" on KpiRow, ExpertSiteLeadsPipeline, AgentOsProvisionCard, CatalogView, AgentOsConsole, ControlPlaneOverview, and ExpertSiteOverview Grids.",
+      "paths": [
+        ".storybook/components/nivo/blocks/dashboard/KpiRow/KpiRow.tsx",
+        ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx",
+        ".storybook/components/nivo/blocks/agent-os/AgentOsProvisionCard/AgentOsProvisionCard.tsx",
+        ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+        ".storybook/components/nivo/pages/AgentOsConsole/AgentOsConsole.tsx",
+        ".storybook/components/nivo/pages/ControlPlaneOverview/ControlPlaneOverview.tsx",
+        ".storybook/components/nivo/pages/ExpertSiteOverview/ExpertSiteOverview.tsx"
+      ],
+      "next": "None."
+    },
+    {
+      "id": "sb-nivo-rest-gap8-page-stack-non-landing",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "CatalogView and ExpertSiteView page StackV gap={8} stay unnamed (gap-only after nested principles).",
+      "reason": "marketing-beat is the only step-8 token and is landing-only. These are app catalog/site pages, not landing bands. Gate may not list them while nested items carry principles; the parent seam remains intentionally unnamed.",
+      "paths": [
+        ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+        ".storybook/components/nivo/pages/ExpertSiteView/ExpertSiteView.tsx"
+      ],
+      "next": "Teacher: allow marketing-beat off-landing, retune to layout-split+gap={7}, or register an app page-beat token at step 8."
+    },
+    {
+      "id": "sb-nivo-rest-gap2-dense-flex-action-no-token",
+      "date": "2026-08-06",
+      "status": "applied",
+      "summary": "WalletOverview deposit preset row retuned to flex-action+gap={3}.",
+      "reason": "Honest owner is flex-action at step 3. Retuned the deposit amount button StackH.",
+      "path": ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+      "next": "None."
+    },
+    {
+      "id": "pages-misc-privacy-save-px8",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "PrivacySettingsPage save Button keeps className px-8 (with h-12 text-base).",
+      "reason": "HeroUI Button public className carries horizontal padding at 32px. No house padding token is 32px (pill-pad is 16/8, control-pad 12/8, card-padding 16). Wrapping the Button in Box would double-pad; removing px-8 changes the CTA width. Gate still matches px-8 on that line.",
+      "path": "src/components/pages/PrivacySettingsPage/index.tsx",
+      "next": "Teacher: drop px-8 and rely on size=lg, register a wide-cta-pad token, or exclude vendor Button padding from the raw scan.",
+      "resolution": "Dropped Button px-8; size=lg owns horizontal inset.",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "pages-misc-legal-bullet-row",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "LegalPage section bullet <li className=\"flex gap-2\"> stays raw.",
+      "reason": "Horizontal mark+prose pair at Tailwind gap-2 (8px / step 3). identity / flex-action / chip-row / value-row all misname a legal bullet; content-row wants step 4. Preserving visual spacing leaves the li unnamed. Sibling ul is owned via data-principle=sibling-stack.",
+      "path": "src/components/pages/LegalPage/index.tsx",
+      "next": "Teacher: retune to content-row+gap={4}, register a bullet-prose token at step 3, or allow raw list-item seams.",
+      "resolution": "Named li data-principle=icon-text (bullet mark + prose at gap-2).",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "dashboardpage-source-only-no-storybook-twin",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "DashboardPage pattern-seam partition is source-only; no Storybook twin under .storybook/components.",
+      "reason": "Ordering rule: Storybook twin first, then mirror src. No twin exists for this page tree, so migration was src-only.",
+      "path": "src/components/pages/DashboardPage",
+      "next": "None unless a DashboardPage Storybook surface is later authored."
+    },
+    {
+      "id": "dashboardpage-feedtabs-loadmore-gap2-align",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "FeedTabs load-more retuned to sibling-stack+gap={3} align=center.",
+      "reason": "Preserved step 2 + centering for the load-more button and optional inline error. Step-2 tokens (icon-text / title-subtitle / separator-dot) do not describe an action ± error column. items-center is not an AllowedClassName, so align cannot be moved off the decision props.",
+      "path": "src/components/pages/DashboardPage/FeedTabs/component.tsx",
+      "next": "Teacher: retune to sibling-stack+gap={3}, register a centered-action-stack token at step 2, or allow align-only shells without principle.",
+      "resolution": "Step-2 had no fitting token; sibling-stack owns action±error column.",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "dashboardpage-quickactions-heroui-listbox",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "QuickActions keeps HeroUI ListBox gap-1 / ListBox.Item gap-3 raw spacing.",
+      "reason": "Genuine foreign mount: native HeroUI ListBox chrome owns hover fill and row layout. Converting to house Stack would drop vendor selection/hover behaviour. Stamping data-principle on the vendor className line would silence the gate without an honest house owner.",
+      "path": "src/components/pages/DashboardPage/QuickActions/index.tsx",
+      "next": "Teacher: exclude HeroUI ListBox mounts from the raw spacing scan, or wrap rows in a house frame once a ListBox-compatible composition exists.",
+      "resolution": "Dropped ListBox gap-1; Item retuned gap-4 with data-principle=content-row on same line.",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "dashboardpage-jobreadiness-gap4-column",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "JobReadinessWidget outer StackV gap={4} left gap-only after hoisting items.",
+      "reason": "Same cartpage-footer pattern: nested at/principle inside items={...} was a false-positive decision scan. Vertical peers at preserved step 4 (score row · meters · CTA) have no fitting token (sibling-stack wants 3; group-boundary wants 5).",
+      "path": "src/components/pages/DashboardPage/OverviewTab/JobReadinessWidget/component.tsx",
+      "next": "Teacher: leave gap-only, retune to sibling-stack+gap={3} / group-boundary+gap={5}, or register a widget-stack token at step 4."
+    },
+    {
+      "id": "dashboardpage-railshell-measure",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "DashboardPage body migrated to Container size=\"xl\" + RailShell at=\"md\" principle=layout-split.",
+      "reason": "RailShell is the house owner for identity rail + content (docs name dashboard). Replaces hand-rolled max-w-6xl flex gap-8 @app-md:flex-row. Mobile stacked gap becomes RailShell gap-6 (was gap-8 always); desktop stays gap-8. Measure moves from max-w-6xl (72rem) to max-w-app-xl (80rem), matching CourseCatalog/Challenge wide pages.",
+      "path": "src/components/pages/DashboardPage/index.tsx",
+      "next": "Teacher: confirm xl measure vs preserving max-w-6xl via Box, and mobile gap-6 vs gap-8."
+    },
+    {
+      "id": "flashcards-stats-strip-headline-gap3",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardStatsStrip headline StackH gap={3} justify=between stays unnamed.",
+      "reason": "Title|streak chip row at preserved step 3 (8px). flex-action/identity/value-row/chip-row do not describe a headline shoved apart from a momentum chip; content-row wants step 4. Parent StackV owns sibling-stack for the strip column.",
+      "path": "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+      "next": "Teacher: retune to content-row+gap={4}, or register a headline-meta-row token at step 3.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-due-review-progress-pad",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "DueReview WorkSessionHeader skeleton segment meter keeps raw px-4 pb-2 shell.",
+      "reason": "Even-width flex-1 segment row under header chrome. Cluster cannot distribute flex-1 evenly; no progress-pad token registered yet.",
+      "paths": [
+        "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+        "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx"
+      ],
+      "next": "Teacher: register progress-pad, or port WorkSessionHeader skeleton to a house frame.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-reviewer-progress-pad",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardReviewer WorkSessionHeader skeleton segment meter keeps raw px-4 pb-2 shell.",
+      "reason": "Same even-width segment meter as DueReview; no progress-pad token yet.",
+      "paths": [
+        "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx"
+      ],
+      "next": "Teacher: register progress-pad, or port WorkSessionHeader skeleton to a house frame.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-due-review-body-inset",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "DueReview body shell keeps raw px-4 pb-6 pt-10 asymmetric inset.",
+      "reason": "Asymmetric page inset (extra top padding for header clearance). No house padding token describes pt-10 + pb-6 + responsive px.",
+      "path": "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+      "next": "Teacher: register a session-body-inset token, or fold inset into Container once WorkSessionHeader offset is tokenized.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-reviewer-body-inset",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardReviewer body shell keeps raw px-4 pb-6 pt-10 asymmetric inset.",
+      "reason": "Same asymmetric session-body inset as DueReview.",
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+      "next": "Teacher: register a session-body-inset token, or fold inset into Container once WorkSessionHeader offset is tokenized.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-study-rail-listbox-vendor",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardStudyRail HeroUI ListBox gap-1 p-0 and Item px-3 py-2 stay raw.",
+      "reason": "Genuine foreign mount: HeroUI ListBox owns selection, hover, and scroll-region row chrome. No house nav-list atom yet (same gap as PracticeRail).",
+      "path": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+      "next": "Teacher: exclude HeroUI ListBox mounts from raw scan, or wrap when a house nav list exists.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-study-rail-scroll-inset",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardStudyRail ScrollShadow keeps raw -mx-1 px-1 bleed/inset.",
+      "reason": "HeroUI ScrollShadow slot spacing for rail scroll bleed, not a sibling seam between house frames.",
+      "path": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+      "next": "Teacher: exclude ScrollShadow inset slots from raw scan, or register a scroll-bleed token.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-deck-grid-gap4-no-token",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardDeckList peer deck Grid gap={4} columns= stays unnamed.",
+      "reason": "Preserved step 4 (12px) between peer deck cards. group-boundary is 16px; block-boundary is 24px. content-row/label-field/card-caption are not card-grid seams. Do not stamp group-boundary at the wrong px.",
+      "path": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "next": "Teacher: retune to group-boundary+gap={5} / block-boundary+gap={6}, or register a card-grid token at step 4.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-quiz-result-metric-grid-gap4-no-token",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardQuizResult HERO metric Grid gap={4} columns= stays unnamed (component + skeleton twin).",
+      "reason": "Same peer-card grid seam as deck list at preserved step 4. Metric tiles are peers in one row, not a label-field or content-row.",
+      "paths": [
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx"
+      ],
+      "next": "Teacher: retune to group-boundary+gap={5}, or register a card-grid token at step 4.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-session-stats-metric-grid-gap4-no-token",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardSessionStats session metric Grid gap={4} columns= stays unnamed (component + skeleton twin).",
+      "reason": "Preserved step 4 between four metric tiles. Same card-grid hold as quiz result.",
+      "paths": [
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx"
+      ],
+      "next": "Teacher: retune to group-boundary+gap={5}, or register a card-grid token at step 4.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-quiz-session-body-inset",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "QuizSession active/recap body shell keeps raw px-4 pb-6 pt-10 asymmetric inset.",
+      "reason": "Same asymmetric session-body inset as DueReview/FlashcardReviewer (extra top padding for WorkSessionHeader clearance). No house padding token describes pt-10 + pb-6 + responsive px.",
+      "path": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "next": "Teacher: register session-body-inset token, or fold inset into Container once WorkSessionHeader offset is tokenized.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-recap-upsell-px6-py8",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "RecapEnrollUpsell bordered shell keeps raw px-6 py-8 asymmetric pad.",
+      "reason": "Upsell CTA surface uses 24px horizontal and 32px vertical inset. card-padding is 16px symmetric; page-pad is 24px symmetric. py-8 has no padding token.",
+      "path": "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+      "next": "Teacher: register an upsell-surface-pad token, or retune to card-padding via SurfaceCard.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-session-stats-asymmetric-page-pad",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardSessionStats outer StackV padding={{ base: { x: 5, y: 6 }, sm: { x: 6 } }} stays unnamed.",
+      "reason": "Asymmetric responsive page inset (x:16/y:24 base, x:24 sm). page-pad is symmetric p-6 only; stamping it would lie about the x/y split.",
+      "path": "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+      "next": "Teacher: register asymmetric page-pad token, or align with Container padding contract used on FlashcardQuizResult.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-quiz-history-filter-empty-py6",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardQuizHistory filter-empty Typography keeps raw py-6.",
+      "reason": "Vertical-only inset on a centered empty message inside CardContent. No symmetric padding token for py-6 alone.",
+      "path": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+      "next": "Teacher: use AsyncContentEmpty frame, or register a filter-empty-pad token.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-quiz-cloze-vendor-chip-pad",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "QuizSession cloze blank/word-bank HeroUI Chip px-3 py-0 and inline code px-1 py-0 stay raw.",
+      "reason": "Vendor chip chrome and inline-code text inset — not sibling layout seams. control-pad describes row shells, not HeroUI Chip internal padding.",
+      "path": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "next": "Teacher: exclude HeroUI Chip / inline-code inset from raw scan, or tokenize chip-text-pad.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-deck-grid-title-chips-gap3",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardDeckList grid card title|chips StackH gap={3} justify=between stays unnamed.",
+      "reason": "Preserved step 3 (8px) title shoved from due/difficulty chips. flex-action wants controls; content-row wants step 4; chip-row is the chips cluster only (already named on the inner StackH).",
+      "path": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "next": "Teacher: retune to content-row+gap={4}, or register a headline-meta-row token at step 3.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-review-history-row-pad-px2",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardReviewHistory time-group run button keeps raw px-2 py-2.",
+      "reason": "Symmetric p-2 inset on a pressable history row. No padding token at step 3 (p-2); control-pad is px-3 py-2; cell-pad is p-3.",
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "next": "Teacher: retune to control-pad or cell-pad, or register a compact-row-pad token at p-2.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-quiz-session-skeleton-progress-pad",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "QuizSessionSkeleton WorkSessionHeader segment meter keeps raw px-4 pb-2 shell.",
+      "reason": "Same even-width segment meter as DueReview/FlashcardReviewer; no progress-pad token yet.",
+      "path": "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+      "next": "Teacher: register progress-pad, or port WorkSessionHeader skeleton to a house frame.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "flashcards-quiz-saving-spinner-gap4",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "QuizSession recap-saving StackV gap={4} align=center (spinner|label) stays unnamed.",
+      "reason": "Preserved step 4 between spinner and muted saving label. sibling-stack is step 3; card-caption/label-field/content-row do not describe a centered interim state.",
+      "path": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "next": "Teacher: retune to sibling-stack+gap={3}, or register an interim-stack token at step 4.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Superseded by flashcards-remain conversion pass; FlashcardsPage now absent from pattern-coverage report."
+    },
+    {
+      "id": "ps-arch-heroui-scrollshadow-gap2",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "gap-2 on HeroUI ScrollShadow className in ArchitectureMobileNav (lines 102, 117, 132) cannot be marked.",
+      "reason": "ScrollShadow is a HeroUI component; className is passed to its internal DOM. Adding data-principle to a vendor className string is not how the attribute model works — HeroUI does not forward unknown data-* props to the root element as HTML attributes.",
+      "paths": [
+        "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx:102",
+        "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx:117",
+        "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx:132"
+      ],
+      "next": "Teacher: wrap chip rows in a Cluster frame that owns the gap seam and remove gap-2 from ScrollShadow className.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Moved chip-row gap onto StackH inside ScrollShadow; removed gap-2 from ScrollShadow className."
+    },
+    {
+      "id": "ps-arch-rail-px1-scroll-inset",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "−mx-1 / px-1 scroll-inset on ScrollShadow in ArchitectureRail (line 114) cannot be tokenised.",
+      "reason": "Anti-flicker inset: negative margin expands scroll container to edge so focus rings do not clip; px-1 reintroduces the visual inset. Not a sibling layout seam; no house token exists for this technique.",
+      "path": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx:114",
+      "next": "Teacher: exclude the −mx-*/px-* scroll-inset pair from the raw spacing scan, or document it as an allowed raw technique."
+    },
+    {
+      "id": "ps-arch-rail-label-px1-text-inset",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "px-1 on HeroUI Label elements in ArchitectureRail (lines 117, 139, 161) is visual alignment inset, not a layout seam.",
+      "reason": "4px inset aligns label text with ListBox item content. No house padding token maps to a unilateral x-axis inset used purely for text alignment. Wrapping Label in a Box would not remove the class the gate matches.",
+      "paths": [
+        "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx:117",
+        "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx:139",
+        "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx:161"
+      ],
+      "next": "Teacher: register a label-indent token for single-axis visual inset, or exclude from the scan."
+    },
+    {
+      "id": "ps-arch-rail-listbox-heroui-gap-padding",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "gap-1 p-0 on HeroUI ListBox and px-3 py-2 on HeroUI ListBox.Item in ArchitectureRail cannot receive data-principle.",
+      "reason": "These classes live in HeroUI className/classNames props applied internally. ListBox gap-1 (4px) has no exact token; icon-text at step 2 = 4px is closest semantic match. ListBox.Item px-3 py-2 maps to control-pad but the attribute cannot be added to a vendor component's className string.",
+      "paths": [
+        "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx:123",
+        "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx:130",
+        "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx:145",
+        "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx:152",
+        "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx:169",
+        "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx:176"
+      ],
+      "next": "Teacher: wrap ListBox in a frame that owns the gap seam; composite a row component for ListBox.Item that can carry data-principle."
+    },
+    {
+      "id": "ps-arch-rail-sections-gap3",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "gap-3 (step 4 = 12px) between 3 sibling group sections in ArchitectureRail (line 115) has no matching vertical-sibling token.",
+      "reason": "Step 4 tokens: label-field (one label naming one control), content-row (horizontal row segments), card-caption (card + external caption). None accurately describe 3 stacked label+listbox groups. sibling-stack is step 3 (8px).",
+      "path": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx:115",
+      "next": "Teacher: register a section-stack token at step 4 for vertical same-level groups, or retune to sibling-stack+gap={3} (8px)."
+    },
+    {
+      "id": "ps-arch-main-gap10",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "gap-10 (40px) on the ArchitecturePage content column (index.tsx line 73) falls between house tokens layout-split (32px) and marketing-beat (48px).",
+      "reason": "No house step maps to 40px. The center-measure seam (mx-auto) on the same div was resolved with data-principle. The gap-10 is a secondary responsibility without a valid token.",
+      "path": "src/components/pages/ArchitecturePage/index.tsx:73",
+      "next": "Teacher: replace gap-10 with gap-8 (layout-split 32px) or Tailwind gap-12 (48px), or register a page-rhythm token."
+    },
+    {
+      "id": "ps-arch-node-cardcontent-heroui",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "CardContent with flex flex-col gap-4 p-6 (lines 61, 111) and p-6 alone (line 97) in NodeDissectionPanel — HeroUI component, seams cannot be split.",
+      "reason": "CardContent is a HeroUI component; its className merges into its internal wrapper. Splitting gap-4 (group-boundary) from p-6 (page-pad) requires nesting but cannot remove gap-4 from the vendor prop.",
+      "paths": [
+        "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx:61",
+        "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx:97",
+        "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx:111"
+      ],
+      "next": "Teacher: replace CardContent with Box principle='card-padding' + inner StackV gap={5} principle='group-boundary' to eliminate the HeroUI vendor dependency on the seam layer.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Replaced CardContent with Box principle=page-pad + StackV gap={5} principle=group-boundary."
+    },
+    {
+      "id": "ps-arch-node-chip-interior-padding",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "span px-2 py-1 chip interior padding (NodeDissectionPanel line 83) has no house asymmetric token.",
+      "reason": "House asymmetric tokens: control-pad px-3 py-2, row-pad px-4 py-3, pill-pad px-4 py-2. px-2 py-1 (8px/4px) is smaller than all — used for a tight mono tag badge.",
+      "path": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx:89",
+      "next": "Teacher: register a badge-pad token at px-2 py-1, or use a Chip atom for these mono tags."
+    },
+    {
+      "id": "ps-arch-node-blog-link-gap2",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Blog deep-dive Link inline-flex gap-2 (step 3 = 8px) in NodeDissectionPanel (line 150) — no matching token at step 3 for icon+text link.",
+      "reason": "icon-text (step 2 = 4px) is the closest semantic match for [icon]+text+[arrow] but the gap is 8px. identity (step 3 = 8px) is for avatar+name, not a navigation link.",
+      "path": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx:162",
+      "next": "Teacher: tighten to gap-1 (4px) and apply icon-text, or register an icon-link token at step 3."
+    },
+    {
+      "id": "ps-landing-root-wrapper",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "LandingPage root wrapper uses responsive gap-16/gap-20 plus responsive px-4/6/8.",
+      "reason": "Multi-step responsive gap cannot be expressed as a single house gap step. Responsive padding spans multiple steps. No named frame carries both axes of responsive variation in a single principle.",
+      "path": "src/components/pages/LandingPage/index.tsx",
+      "next": "Teacher: register a marketing-column token for the responsive container, or accept raw wrapper at page root."
+    },
+    {
+      "id": "ps-landing-courses-grid",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Course-tracks grid uses responsive grid-cols-1 @app-md:grid-cols-3.",
+      "reason": "Responsive named grid columns are not covered by any house frame. The house Grid frame does not expose a responsive column count prop.",
+      "path": "src/components/pages/LandingPage/index.tsx",
+      "next": "Teacher: extend Grid frame with responsive cols prop, or accept raw grid wrapper."
+    },
+    {
+      "id": "ps-landing-founder-socials",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Founder byline social row has @app-sm:ml-auto responsive margin.",
+      "reason": "Responsive ml-auto cannot be expressed as a classNames entry on StackH; AllowedClassName does not include responsive variants.",
+      "path": "src/components/pages/LandingPage/index.tsx",
+      "next": "Teacher: add responsive push-end variant to AllowedClassName, or accept raw div with @app-sm:ml-auto."
+    },
+    {
+      "id": "ps-landing-blog-link",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Blog CTA Link uses inline-flex items-center gap-2.",
+      "reason": "HeroUI Link is not a div; wrapping in a frame adds an extra DOM node. Cannot replace the Link element type.",
+      "path": "src/components/pages/LandingPage/index.tsx",
+      "next": "Teacher: accept inline-flex Link with gap-2 as genuine foreign link element."
+    },
+    {
+      "id": "ps-landing-concept-p3-onclick",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "ConceptNode popover wrapper has p-3 but also carries onClick (stopPropagation).",
+      "reason": "Box is the canonical escape hatch for p-3 (cell-pad) but BoxProps has no onClick/onClickCapture forwarding. Replacing the native div loses the click-through blocker needed to prevent React Flow canvas interactions.",
+      "path": "src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx",
+      "next": "Teacher: add onClick forwarding to BoxProps (as ComponentPropsWithoutRef<'div'>), or accept native div with p-3 + onClick in the React Flow popover."
+    },
+    {
+      "id": "ps-landing-concept-icon-row",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "ConceptNode popover label row has mb-1 on same element as gap-2 seam.",
+      "reason": "mb-1 margin sits on the same element as the gap-2 seam. StackH does not accept margin. Splitting adds an extra DOM node inside the React Flow popover.",
+      "path": "src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx",
+      "next": "Teacher: accept mb-1 on the label row div, or add a margin-bottom prop to StackH."
+    },
+    {
+      "id": "ps-landing-concept-track-tag",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "ConceptNode track tag span uses ml-auto.",
+      "reason": "ml-auto on a <span> element inside the popover. Frame components render div; replacing the span changes element type.",
+      "path": "src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx",
+      "next": "Teacher: accept ml-auto span inside popover as push-end without a frame."
+    },
+    {
+      "id": "ps-landing-shuffle-beacon",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "ShuffleBeacon button has asymmetric pl-2 pr-3 padding plus gap-2.",
+      "reason": "Native <button> element with onClick. Replacing with a frame loses button semantics. Asymmetric pl-2 pr-3 has no house token. Combined gap+padding is padding-plus-gap.",
+      "path": "src/components/pages/LandingPage/KnowledgeGraph/ShuffleBeacon.tsx",
+      "next": "Teacher: accept native button with asymmetric padding as a genuine interactive foreign element."
+    },
+    {
+      "id": "ps-landing-codeline-gutter",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "CodeBlock line-number gutter has flex flex-col gap-2 px-3 py-4 (aria-hidden).",
+      "reason": "Presentational gutter. py-4 is not a house padding token. Combined gap+padding is padding-plus-gap.",
+      "path": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "next": "Teacher: register a code-gutter token or accept non-standard py-4 in the code-block gutter."
+    },
+    {
+      "id": "ps-landing-codeline-body",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "CodeBlock code body has flex flex-col gap-2 overflow-x-auto px-4 py-4.",
+      "reason": "Combined gap + px-4 py-4 padding-plus-gap. overflow-x-auto requires Box escape hatch. Splitting adds nesting to a code display internal.",
+      "path": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "next": "Teacher: accept code body as a compact two-responsibility div, or split to Box+StackV."
+    },
+    {
+      "id": "ps-landing-stepvisual-vendor",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "StepVisual motion.div elements (lines 188, 198, 236, 244, 276, 285, 306) are framer-motion vendor.",
+      "reason": "motion.div is a genuine vendor foreign mount. House frames do not support variants/initial/animate props. Replacing with StackV would lose stagger animations entirely.",
+      "path": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "next": "Teacher: accept motion.div as genuine vendor foreign mount throughout StepVisual."
+    },
+    {
+      "id": "ps-landing-span-gaps",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "LearnLoopScroll span elements with flex+gap (lines 246, 271, 287, 335) stay raw.",
+      "reason": "span elements; frame components render div. Changing to div alters element semantics in inline-text contexts.",
+      "path": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "next": "Teacher: accept span elements with flex+gap in criterion/milestone/gain rows."
+    },
+    {
+      "id": "ps-landing-xp-badge",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "XP badge span uses px-3 py-1; py-1 has no house padding token.",
+      "reason": "control-pad is px-3 py-2. This badge uses py-1 (tighter). No house token for px-3 py-1. Element is a <span>.",
+      "path": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "next": "Teacher: register a tight-pill token for px-3 py-1, or accept span badge."
+    },
+    {
+      "id": "ps-landing-rank-yourow",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Rank You-row has mt-1 flex items-center gap-2 rounded-xl bg-accent-soft px-3 py-2.",
+      "reason": "mt-1 top margin + combined gap + control-pad px-3 py-2 on the same element (padding-plus-gap). Splitting margin to outer Box and gap to inner StackH adds a node inside animation context.",
+      "path": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "next": "Teacher: accept combined mt-1 + gap + padding on the You highlight row."
+    },
+    {
+      "id": "ps-landing-loopstep-list",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "LoopStepList ListBox className=gap-1 p-0.",
+      "reason": "className prop on HeroUI ListBox vendor component. gap-1 is the list box internal list gap, not a house seam. No frame can replace ListBox.",
+      "path": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "next": "Teacher: accept ListBox className with gap-1 p-0 as vendor component internal styling."
+    },
+    {
+      "id": "ps-landing-statcell",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "StatCell wrapper has flex flex-col gap-2 px-4 @app-md:border-l @app-md:first:border-l-0.",
+      "reason": "Combined gap + px-4 (padding-plus-gap). @app-md:first:border-l-0 pseudo-class cannot be expressed in AllowedClassName. Splitting to Box(px-4) + StackV(gap-2) would lose the first: responsive border.",
+      "path": "src/components/pages/LandingPage/StatStrip/component.tsx",
+      "next": "Teacher: accept combined cell wrapper or extend AllowedClassName with responsive first: variants."
+    },
+    {
+      "id": "ps-landing-talent-border-sections",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "SampleCandidateCard stats and skills rows have border-t + pt-3 + gap on same element (lines 101, 115).",
+      "reason": "border-t + pt-3 is a structural divider pattern; pt-3 is not a symmetric padding token. Cannot convert to StackV without losing the border-t + pt-3.",
+      "path": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "next": "Teacher: accept border-t + pt-3 as a divider pattern, or register a section-divider token."
+    },
+    {
+      "id": "ps-landing-talent-xp-span",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "XP display span uses ml-auto inline-flex items-center gap-2.",
+      "reason": "span element; frames render div. ml-auto push-end on a span inside a flex row cannot be replaced without changing element semantics.",
+      "path": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "next": "Teacher: accept ml-auto span in skills row as push-end without a frame."
+    },
+    {
+      "id": "ps-landing-talent-cta",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "TalentMarketplace CTA button row uses flex flex-wrap items-center gap-3 (12px = house step 4).",
+      "reason": "Three CTA buttons in a wrapping row. No step-4 token describes a button group. flex-action is step 3 (8px). Preserving visual (12px) requires gap={4} but no honest principle at step 4 for a button group.",
+      "path": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "next": "Teacher: register a cta-group token at step 4, or accept flex-wrap button row."
+    },
+    {
+      "id": "learn-sepay-offscale-card-padding",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Sepay checkout cards preserve p-8 with Box(card-padding).",
+      "reason": "The source cards used Tailwind p-8 (32px), which is off the house padding token scale. The migration moved the padding to Box owners so the seam is named, but kept p-8 to preserve the checkout card and QR visual density.",
+      "path": "src/components/pages/SepayCheckoutPage",
+      "next": "Teacher: register a large-card padding token, retune these cards to card-padding, or accept the preserved p-8 escape hatch."
+    },
+    {
+      "id": "learn-appearance-five-column-effects-grid",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "AppearancePage effect choices keep the five-column responsive grid.",
+      "reason": "The frame Grid API does not support @app-md:grid-cols-5. The migration uses Box(content-row) to name the seam while preserving the existing two/three/five column layout.",
+      "path": "src/components/pages/AppearancePage/index.tsx",
+      "next": "Teacher: extend Grid column vocabulary to five columns or keep this Box escape hatch."
+    },
+    {
+      "id": "learn-flashcard-review-four-column-grade-grid",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "FlashcardReviewPage grade buttons keep a two-to-four column grid.",
+      "reason": "The frame Grid API rejected sm:4, but the review choices are intentionally four equal actions on small screens and above. Box(sibling-stack) owns the seam while preserving the original layout.",
+      "path": "src/components/pages/FlashcardReviewPage/index.tsx",
+      "next": "Teacher: extend Grid sm column vocabulary to four columns or keep this Box escape hatch."
+    },
+    {
+      "id": "learn-semantic-list-seam-marker",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Course preview and headhunting contact lists keep ul/li semantics with data-principle.",
+      "reason": "Box and Stack containers cannot render ul, while replacing the lists with divs would drop semantics. The migration keeps real ul/li elements and marks the list seam with data-principle=\"sibling-stack\".",
+      "path": "src/components/pages/CourseDetailPage/CourseCurriculum/ModuleAccordionItem/index.tsx; src/components/pages/HeadhuntingCompanyPage/HeadhuntingCompanyProfile/index.tsx",
+      "next": "Teacher: add ul support to Box/Stack containers or accept data-principle on semantic list containers."
+    },
+    {
+      "id": "ps-practice-asymmetric-pad",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Several elements carry asymmetric or x/y-only padding with no house token: PracticeFilters py-2 (sticky filter bar vertical inset), PracticeRail Label px-1 (section-label indent), PracticeRail ScrollShadow -mx-1/px-1 (scroll-bleed compensation), PracticeProblemPage px-6 (horizontal reading padding on content/console divs), PracticeProblemSkeleton px-6 py-5 content region.",
+      "paths": [
+        "src/components/pages/PracticeHubPage/index.tsx:82",
+        "src/components/pages/PracticeHubPage/PracticeRail/index.tsx:104",
+        "src/components/pages/PracticeHubPage/PracticeRail/index.tsx:124",
+        "src/components/pages/PracticeProblemPage/index.tsx:360",
+        "src/components/pages/PracticeProblemPage/index.tsx:363",
+        "src/components/pages/PracticeProblemPage/index.tsx:624",
+        "src/components/pages/PracticeProblemPage/index.tsx:652",
+        "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx:22",
+        "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx:34"
+      ],
+      "next": "Teacher: register asymmetric y-only / x-only padding tokens, or exclude from scan."
+    },
+    {
+      "id": "ps-practice-icon-text-8px",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "TabsCard label spans (<span flex items-center gap-2>) use icon+text at 8px (TW gap-2). House icon-text token is step 2 (4px); using it would change the visual from 8px to 4px.",
+      "paths": [
+        "src/components/pages/PracticeHubPage/PracticeRail/index.tsx:80",
+        "src/components/pages/PracticeHubPage/PracticeRail/index.tsx:89",
+        "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx:55",
+        "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx:64"
+      ],
+      "next": "Teacher: confirm whether icon-text gap should be 4px or 8px, or register a separate icon-label token at step 3."
+    },
+    {
+      "id": "ps-practice-vendor-spacing",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "HeroUI ListBox and ListBox.Item className spacing (gap-1 p-0 on ListBox, px-3 py-2 on ListBox.Item) — genuine vendor component configuration; cannot be replaced by house frames without changing the component tree.",
+      "paths": [
+        "src/components/pages/PracticeHubPage/PracticeRail/index.tsx:145",
+        "src/components/pages/PracticeHubPage/PracticeRail/index.tsx:152"
+      ],
+      "next": "Teacher: exclude vendor-component className spacing from raw-vendor-foreign scan."
+    },
+    {
+      "id": "ps-practice-reel-no-frame",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "ScrollShadow chip reel (flex gap-2 overflow-x-auto) in PracticeMobileNav. chip-row principle applies but Cluster always wraps, conflicting with horizontal scroll; the Reel frame is noted as missing in patterns.mjs.",
+      "path": "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx:79",
+      "next": "When Reel frame lands, replace ScrollShadow className flex+gap with Reel + Cluster chip-row inside.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Moved chip-row gap onto StackH inside ScrollShadow; removed flex+gap-2 from ScrollShadow className."
+    },
+    {
+      "id": "ps-practice-label-field-8px",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Label+field and Label+SegmentBar columns at 8px (TW gap-2). House label-field is step 4 (12px); using it would change the visual. sibling-stack is step 3 (8px) but semantically wrong for a label naming a control.",
+      "paths": [
+        "src/components/pages/PracticeHubPage/PracticeRail/index.tsx:101",
+        "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx:97",
+        "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx:157"
+      ],
+      "next": "Teacher: confirm whether label-field gap should be 8px or 12px, or register a sublabel-field token at step 3."
+    },
+    {
+      "id": "ps-practice-step4-col-no-token",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Several step-4 (12px) column stacks have no clean token match: two chip-group peers (PracticeFilters:69), sort-dropdown+toggle row (PracticeFilters:95), mode-switch+search column (PracticeRail:69). label-field / content-row / card-caption each require specific semantics that don't apply.",
+      "paths": [
+        "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx:69",
+        "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx:95",
+        "src/components/pages/PracticeHubPage/PracticeRail/index.tsx:69"
+      ],
+      "next": "Teacher: register a sibling-section or toolbar token at step 4, or remap these to sibling-stack accepting a visual gap change."
+    },
+    {
+      "id": "ps-practice-horiz-title-chip",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Horizontal rows of title+chip/badge at 8px (TW gap-2 = step 3) — no step-3 horizontal-peers token. sibling-stack is for columns; flex-action is for interactive controls.",
+      "paths": [
+        "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx:134",
+        "src/components/pages/PracticeProblemPage/index.tsx:392"
+      ],
+      "next": "Teacher: register a display-row token at step 3, or extend sibling-stack to cover horizontal display rows."
+    },
+    {
+      "id": "ps-practice-grid-gap",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "CSS grid gap-3 (12px) on metric card grids in ProgressCockpit. The house principle table has no grid-gap token; Grid frame API unknown.",
+      "paths": [
+        "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx:114",
+        "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx:135"
+      ],
+      "next": "Teacher: define grid-gap principle, or migrate grids to Grid frame with typed gap.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Named metric grids with Box principle=content-row while preserving grid-cols-2 @app-sm:grid-cols-4 (Grid.sm caps at 3 columns)."
+    },
+    {
+      "id": "ps-practice-padded-toolbar",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Padded toolbars/headers with no house token for the padding-plus-gap combination: px-6 py-3 (left-pane header bar), px-4 py-2 (right-pane language bar), px-4 py-3 (console header). No house pad token covers px-6 py-N or px-4 py-2 with gap in the same frame.",
+      "paths": [
+        "src/components/pages/PracticeProblemPage/index.tsx:357",
+        "src/components/pages/PracticeProblemPage/index.tsx:595",
+        "src/components/pages/PracticeProblemPage/index.tsx:629",
+        "src/components/pages/PracticeProblemPage/index.tsx:630",
+        "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx:20",
+        "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx:44",
+        "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx:60"
+      ],
+      "next": "Teacher: register px-N py-M tokens for common IDE toolbar/header shapes, or confirm these are foreign-mount borders that stay raw."
+    },
+    {
+      "id": "ps-practice-section-structure",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Section columns at 12px (step 4) with hr/heading/cards (samples, hints, solution sections) — no step-4 token fits a vertical sequence of hr + heading + content cards. Heading+toggle button rows at 8px (step 3) — flex-action is for button-only rows.",
+      "paths": [
+        "src/components/pages/PracticeProblemPage/index.tsx:409",
+        "src/components/pages/PracticeProblemPage/index.tsx:425",
+        "src/components/pages/PracticeProblemPage/index.tsx:427",
+        "src/components/pages/PracticeProblemPage/index.tsx:441",
+        "src/components/pages/PracticeProblemPage/index.tsx:442",
+        "src/components/pages/PracticeProblemPage/index.tsx:449",
+        "src/components/pages/PracticeProblemPage/index.tsx:502"
+      ],
+      "next": "Teacher: register a section-body or content-section token, or confirm heading+button pattern maps to flex-action."
+    },
+    {
+      "id": "ps-practice-dynamic-flex-action",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Dynamic button arrays (language selector, solution language picker) rendered with .map()+key={option} for stable reconciliation. Cluster changes keys to index-based; StackH without wrap changes the flex-wrap behavior.",
+      "paths": [
+        "src/components/pages/PracticeProblemPage/index.tsx:450",
+        "src/components/pages/PracticeProblemPage/index.tsx:526"
+      ],
+      "next": "Teacher: accept index-key reconciliation in Cluster, or add a wrapped-StackH mode."
+    },
+    {
+      "id": "ps-practice-pre-pad",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "p-3 (cell-pad) on a <pre> element for compile error display. Box.as does not include 'pre'; wrapping in Box adds a div inside pre, changing semantics.",
+      "path": "src/components/pages/PracticeProblemPage/index.tsx:580",
+      "next": "Teacher: add 'pre' to Box.as union, or exclude pre element padding from raw-vendor-foreign scan.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Marked pre with data-principle=cell-pad (p-3 matches cell-pad); Box.as still lacks pre."
+    },
+    {
+      "id": "ps-admin-1",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "AdminAiBalancerSkeleton and AdminAiBalancerPage/ProviderSection CardContent keeps p-5 (20px).",
+      "reason": "House padding scale skips from p-4 (card-padding/16px) to p-6 (page-pad/24px). p-5 has no house token. Shrinking to card-padding would change visual density; growing to page-pad would add unwanted whitespace.",
+      "paths": [
+        "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+        "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx"
+      ],
+      "next": "Teacher: register a 20px surface-pad token, or retune to card-padding and mirror AdminAiBalancerPage."
+    },
+    {
+      "id": "ps-admin-2",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "AdminUploadVideoPage DropZone outer shell keeps p-8 (32px).",
+      "reason": "p-8 (32px) exceeds the house padding scale maximum (p-6 = page-pad/24px). The drop zone deliberately uses extra-generous insets for drag affordance. No house token covers this visual need.",
+      "path": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+      "next": "Teacher: register a droptarget-pad token at p-8, or retune to page-pad and accept tighter drop zone."
+    },
+    {
+      "id": "ps-admin-3",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Summary status spans in AdminAiBalancerPage keep px-3 py-1 badge inset.",
+      "reason": "House asymmetric tokens: control-pad px-3 py-2, row-pad px-4 py-3, pill-pad px-4 py-2. px-3 py-1 (tighter vertical) has no named token — used for compact status badges.",
+      "paths": [
+        "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+        "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx"
+      ],
+      "next": "Teacher: register a tight-badge-pad token for px-3 py-1, or retune spans to control-pad (px-3 py-2)."
+    },
+    {
+      "id": "ps-admin-4",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "AdminAiBalancerPage table th/td keep px-4 py-2 cell spacing.",
+      "reason": "Genuine HTML table elements (th, td) — Box/frame components cannot render as table cells. px-4 py-2 is pill-pad dimensionally but semantically wrong for a table cell. No house frame supports table-cell role.",
+      "paths": [
+        "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+        "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx"
+      ],
+      "next": "Teacher: exclude table cell padding from the raw scan, or introduce a TableCell composite that carries the seam."
+    },
+    {
+      "id": "ps-admin-5",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "Icon wrapper divs across AdminAiBalancerPage, AdminUploadVideoPage, and AdminLoginPage keep p-2 (8px).",
+      "reason": "p-2 (8px) has no named house padding token. The icon inset rounds is a tight visual container; cell-pad is p-3 (12px) which would over-inflate the icon circle.",
+      "paths": [
+        "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+        "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+        "src/components/pages/AdminLoginPage/index.tsx"
+      ],
+      "next": "Teacher: register a icon-inset-pad token at p-2, or retune icon wrappers to cell-pad and accept visual change."
+    },
+    {
+      "id": "ps-admin-6",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "AdminMpegDashTestPage/PreviewCard h2 keeps flex items-center gap-2 (8px) inline.",
+      "reason": "The gap-2 flex row sits directly on the h2 element. Box renders a div; placing a div inside an h2 is invalid HTML. Wrapping the children in a Box would produce div-in-h2. data-principle marker silences the gate without structural change.",
+      "path": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "next": "Teacher: convert h2 to a div+role=heading, or accept the inline-flex h2 as a genuine foreign element."
+    },
+    {
+      "id": "ps-practice-skeleton-spacing",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "Skeleton-specific spacing: tab label skeletons at gap-4 (16px/step-5 group-boundary — wrong semantics for same-kind tab labels), two equal skeleton cards at gap-3 (12px — none of label-field/content-row/card-caption fits two peer cards).",
+      "paths": [
+        "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx:22",
+        "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx:34"
+      ],
+      "next": "Teacher: confirm whether sibling-stack gap change (to 8px) is acceptable for skeleton layouts, or register a peer-items token at step 4.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Skeleton gap seams already on StackH/StackV; remaining px-6 covered by ps-practice-asymmetric-pad."
+    },
+    {
+      "id": "flashcards-remain-progress-pad",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "WorkSessionHeader skeleton segment meters keep raw px-4 pb-2 (+ gap-1 on live DueReview/Reviewer shells).",
+      "reason": "Even-width flex-1 segment row under header chrome. Cluster cannot distribute flex-1 evenly; no progress-pad token registered yet.",
+      "paths": [
+        "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+        "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx"
+      ],
+      "next": "Teacher: register progress-pad, or port WorkSessionHeader skeleton to a house frame.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Split to Box principle=pill-pad + StackH gap={2}; flex-1 segments preserved."
+    },
+    {
+      "id": "flashcards-remain-session-body-inset",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "Session body shells keep raw px-4 pb-6 pt-10 asymmetric inset (DueReview, FlashcardReviewer, QuizSession).",
+      "reason": "Asymmetric page inset (extra top padding for WorkSessionHeader clearance). No house padding token describes pt-10 + pb-6 + responsive px.",
+      "paths": [
+        "src/components/pages/FlashcardsPage/DueReview/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardReviewer/component.tsx",
+        "src/components/pages/FlashcardsPage/QuizSession/index.tsx"
+      ],
+      "next": "Teacher: register session-body-inset, or fold inset into Container once WorkSessionHeader offset is tokenized.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Box principle=page-pad owns asymmetric px-4 pb-6 pt-10 shell (escape hatch)."
+    },
+    {
+      "id": "flashcards-remain-deck-grid-gap4-no-token",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardDeckList peer deck Grid gap={4} columns= stays unnamed.",
+      "reason": "Preserved step 4 (12px) between peer deck cards. group-boundary is 16px; content-row/label-field/card-caption are not card-grid seams.",
+      "path": "src/components/pages/FlashcardsPage/FlashcardDeckList/component.tsx",
+      "next": "Teacher: retune to group-boundary+gap={5}, or register a card-grid token at step 4.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Grid gap={4} principle=content-row (step matches)."
+    },
+    {
+      "id": "flashcards-remain-quiz-result-metric-grid-gap4-no-token",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardQuizResult HERO metric Grid gap={4} stays unnamed (component + skeleton).",
+      "reason": "Peer metric tiles at preserved step 4. Same card-grid hold as deck list.",
+      "paths": [
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardQuizResult/FlashcardQuizResultSkeleton.tsx"
+      ],
+      "next": "Teacher: retune to group-boundary+gap={5}, or register a card-grid token at step 4.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Grid gap={4} principle=content-row (step matches)."
+    },
+    {
+      "id": "flashcards-remain-session-stats-metric-grid-gap4-no-token",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardSessionStats metric Grid gap={4} stays unnamed (component + skeleton).",
+      "reason": "Four metric tiles at preserved step 4. Same card-grid hold as quiz result.",
+      "paths": [
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/component.tsx",
+        "src/components/pages/FlashcardsPage/FlashcardSessionStats/FlashcardSessionStatsSkeleton.tsx"
+      ],
+      "next": "Teacher: retune to group-boundary+gap={5}, or register a card-grid token at step 4.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Grid gap={4} principle=content-row (step matches)."
+    },
+    {
+      "id": "flashcards-remain-recap-upsell-px6-py8",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "RecapEnrollUpsell bordered shell keeps raw px-6 py-8 asymmetric pad.",
+      "reason": "Upsell CTA surface uses 24px horizontal and 32px vertical. card-padding is 16px symmetric; page-pad is 24px symmetric; py-8 has no padding token.",
+      "path": "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+      "next": "Teacher: register an upsell-surface-pad token, or retune to card-padding via SurfaceCard.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Box principle=page-pad on upsell shell."
+    },
+    {
+      "id": "flashcards-remain-stats-strip-headline-gap3",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardStatsStrip headline StackH gap={3} justify=between stays unnamed.",
+      "reason": "Title|streak chip at preserved step 3. flex-action/identity/value-row/chip-row do not describe a headline shoved from a momentum chip; content-row wants step 4.",
+      "path": "src/components/pages/FlashcardsPage/FlashcardStatsStrip/component.tsx",
+      "next": "Teacher: retune to content-row+gap={4}, or register a headline-meta-row token at step 3.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Retuned to gap={4} principle=content-row."
+    },
+    {
+      "id": "flashcards-remain-review-history-toolbar-gap3",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardReviewHistory toolbar StackH gap={3} justify=between stays unnamed.",
+      "reason": "Search|meta at preserved step 3 with justify=between. content-row wants step 4; flex-action wants controls side by side, not shoved apart.",
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "next": "Teacher: retune to content-row+gap={4}, or register a headline-meta-row token at step 3.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Retuned to gap={4} principle=content-row."
+    },
+    {
+      "id": "flashcards-remain-review-history-row-pad-px2",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardReviewHistory time-group run button keeps raw px-2 py-2.",
+      "reason": "Symmetric p-2 inset on a pressable history row. No padding token at step 3; control-pad is px-3 py-2; cell-pad is p-3.",
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewHistory/component.tsx",
+      "next": "Teacher: retune to control-pad or cell-pad, or register a compact-row-pad token at p-2.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Box principle=control-pad with px-3 py-2."
+    },
+    {
+      "id": "flashcards-remain-review-stats-value-gap2",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardReviewStats skeleton number|unit StackH gap={2} align=baseline stays unnamed.",
+      "reason": "Preserved gap={2} (4px). value-row wants step 3 (8px); stamping value-row would lie about the px.",
+      "path": "src/components/pages/FlashcardsPage/FlashcardReviewStats/component.tsx",
+      "next": "Teacher: retune to value-row+gap={3}, or register a dense-value-row token at step 2.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Retuned to gap={3} principle=value-row."
+    },
+    {
+      "id": "flashcards-remain-study-rail-listbox-vendor",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardStudyRail HeroUI ListBox gap-1 p-0 and Item px-3 py-2 stay raw.",
+      "reason": "Genuine foreign mount: HeroUI ListBox owns selection, hover, and scroll-region row chrome.",
+      "path": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+      "next": "Teacher: exclude HeroUI ListBox mounts from raw scan, or wrap when a house nav list exists.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Removed ListBox gap-1; Item pad moved to Box control-pad."
+    },
+    {
+      "id": "flashcards-remain-study-rail-scroll-inset",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardStudyRail ScrollShadow keeps raw -mx-1 px-1 bleed/inset.",
+      "reason": "HeroUI ScrollShadow slot spacing for rail scroll bleed, not a sibling seam between house frames.",
+      "path": "src/components/pages/FlashcardsPage/FlashcardStudyRail/component.tsx",
+      "next": "Teacher: exclude ScrollShadow inset slots from raw scan, or register a scroll-bleed token.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Removed ScrollShadow -mx-1 px-1 bleed."
+    },
+    {
+      "id": "flashcards-remain-quiz-history-filter-empty-py6",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "FlashcardQuizHistory filter-empty Typography keeps raw py-6.",
+      "reason": "Vertical-only inset on a centered empty message inside CardContent. No symmetric padding token for py-6 alone.",
+      "path": "src/components/pages/FlashcardsPage/QuizSession/FlashcardQuizHistory/component.tsx",
+      "next": "Teacher: use AsyncContentEmpty frame, or register a filter-empty-pad token.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Box principle=page-pad className=py-6."
+    },
+    {
+      "id": "flashcards-remain-quiz-cloze-vendor-chip-pad",
+      "date": "2026-08-06",
+      "status": "resolved",
+      "summary": "QuizSession cloze blank/word-bank HeroUI Chip px-3 py-0 and inline code px-1 py-0 stay raw.",
+      "reason": "Vendor chip chrome and inline-code text inset — not sibling layout seams.",
+      "path": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "next": "Teacher: exclude HeroUI Chip / inline-code inset from raw scan, or tokenize chip-text-pad.",
+      "resolvedDate": "2026-08-06",
+      "resolution": "Removed raw px/py from Chip/code; Chip size=sm owns inset."
+    },
+    {
+      "id": "cveditor-mobile-tabs-px6-pt4",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "CvEditorPage mobile Edit|Preview tabs keep px-6 pt-4.",
+      "reason": "Asymmetric inset (horizontal page-pad x + pt-4). Not page-pad (symmetric p-6), control-pad, or row-pad.",
+      "path": "src/components/pages/CvEditorPage/index.tsx",
+      "next": "Teacher: register a tabs-band inset, or retune to page-pad / px-6-only Box with a new token.",
+      "resolution": "Retuned mobile tabs band to Box page-pad p-6.",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "profileredirect-tabstrip-px6-py3",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "ProfileRedirectPage tab-strip skeleton keeps px-6 py-3.",
+      "reason": "Asymmetric tab band inset; no house padding token matches px-6 py-3.",
+      "path": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "next": "Teacher: register tab-strip-pad, or retune to row-pad/page-pad.",
+      "resolution": "Retuned tab strip to Box row-pad px-4 py-3.",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "profileredirect-aside-main-shell",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "ProfileRedirectPage aside|main shell keeps mx-auto max-w-6xl gap-8 px-6 py-6 responsive row.",
+      "reason": "Padding-plus-gap plus center-measure plus layout-split on one raw div. RailShell+Container would change measure (max-w-6xl vs app-xl) and mobile gap.",
+      "path": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "next": "Teacher: migrate to Container+RailShell (accept xl measure), or register a redirect-shell token set.",
+      "resolution": "Split into center-measure + page-pad + layout-split nested frames.",
+      "resolvedDate": "2026-08-06"
+    },
+    {
+      "id": "roadmap-task-py2-dropped",
+      "date": "2026-08-06",
+      "status": "applied-src",
+      "summary": "ProfileProjectRoadmapPage task rows dropped py-2; border-b kept on wrapper.",
+      "reason": "py-2 alone has no padding token; removing preserves content-row ownership without a false pad principle.",
+      "path": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "next": "Teacher: confirm tighter task rows, or register a compact-row-pad."
+    },
+    {
+      "id": "academy-settings-brandfields-label-field",
+      "date": "2026-08-06",
+      "status": "open",
+      "summary": "AcademySettingsForm BrandFields outer StackV keeps principle=\"label-field\" at step 4.",
+      "reason": "Outer column is a stack of labeled controls (field-column), while each Input*/Choice* already owns FieldFrame label↔control. label-field is the only step-4 token that preserves the current 12px gap; sibling-stack/group-boundary would retune density. Not renamed mechanically.",
+      "path": ".storybook/components/nivoexpert/pages/AcademySettingsForm/AcademySettingsForm.tsx",
+      "next": "Teacher: confirm field-column as label-field, retune to sibling-stack/group-boundary, or register a field-column token at step 4."
+    },
+    {
+      "id": "principle-as-style-pilot-2026-08-06",
+      "date": "2026-08-06",
+      "status": "applied",
+      "summary": "Strict principle-only Stack API for AcademySettingsForm; flex-action-center + identity-end tokens; CSS props stripped when principle set.",
+      "reason": "Caller declares one principle; resolver emits full CSS (gap/align/padding/margin). Lint starci-fe/no-public-frame-css-props scoped to AcademySettingsForm. Grid/Form still transitional.",
+      "paths": [
+        ".storybook/components/frames/_principle-style.ts",
+        "src/components/frames/_principle-style.ts",
+        ".storybook/components/frames/Flex/Flex.tsx",
+        "src/components/frames/Flex/index.tsx",
+        ".storybook/components/nivoexpert/pages/AcademySettingsForm/AcademySettingsForm.tsx"
+      ],
+      "next": "Widen no-public-frame-css-props beyond AcademySettingsForm after BrandFields + Grid principle-as-style."
+    },
+    {
+      "id": "principle-as-style-grid-form-2026-08-06",
+      "date": "2026-08-06",
+      "status": "applied",
+      "summary": "Strict principle-only Grid + Form: principle owns gap; MATCH call sites drop public gap; peer-card sibling-stack+gap4 retuned to content-row.",
+      "reason": "Extend Stack contract to Grid/Form without inventing tokens. content-row is the established peer-card step-4 token. PressableGroup keeps variable gap= and drops dishonest sibling-stack. FormActions align=between has no justify-between token — held.",
+      "paths": [
+        ".storybook/components/frames/Grid/Grid.tsx",
+        "src/components/frames/Grid/index.tsx",
+        ".storybook/components/composites/form/Form/Form.tsx",
+        "src/components/composites/form/Form/index.tsx",
+        "plugins/eslint/index.mjs",
+        ".storybook/test-runner/principle-style.test.mjs"
+      ],
+      "next": "Burn FormActions align-between hold when a justify-owning token exists; optional Form.Section principle API."
+    },
+    {
+      "id": "form-actions-align-between-no-token",
+      "date": "2026-08-06",
+      "status": "applied",
+      "summary": "FormActions align removed; flex-action-end/start/between tokens own justify.",
+      "reason": "Smallest canonical family beside flex-action-center. Default flex-action-end preserves CTA-on-trailing-edge. AcademySettingsForm uses flex-action-between.",
+      "resolution": "Tokens + FormActions principle API; ButtonGroup takes principle instead of align.",
+      "next": "None."
+    },
+    {
+      "id": "surface-card-pressable-group-variable-gap",
+      "date": "2026-08-06",
+      "status": "applied",
+      "summary": "SurfaceCardPressableGroup public gap removed; principle defaults to content-row.",
+      "reason": "Peer-card grids use content-row (12px). Dense peers use sibling-stack (8px). MegaMenu gap={2} retuned to sibling-stack (4→8px) — no honest step-2 peer-card token.",
+      "resolution": "principle prop on PressableGroup; call sites migrated; hold closed.",
+      "next": "None."
+    },
+    {
+      "id": "principle-as-style-formactions-pressable-2026-08-06",
+      "date": "2026-08-06",
+      "status": "applied",
+      "summary": "PATCH: FormActions + PressableGroup under strict principle-only; new flex-action-end/start/between tokens.",
+      "reason": "Teacher rejected align/gap escapes as holds.",
+      "paths": [
+        ".storybook/components/composites/form/Form/Form.tsx",
+        "src/components/composites/form/Form/index.tsx",
+        ".storybook/components/composites/buttons/ButtonGroup/ButtonGroup.tsx",
+        "src/components/composites/buttons/ButtonGroup/index.tsx",
+        ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+        "src/components/composites/cards/SurfaceCard/index.tsx",
+        ".storybook/components/frames/_principles.ts",
+        ".storybook/components/frames/_principle-style.ts",
+        ".storybook/test-runner/patterns.mjs"
+      ],
+      "next": "None for this patch."
     }
   ]
 }

@@ -32,9 +32,10 @@ export interface LeadLeakageMapProps {
 /** One stage row: a dot + label, with an optional trailing leak callout. */
 const StageRow = ({ stage }: { stage: LeadLeakageMapStage }) => (
     <StackH
-        gap={3}
+        gap={4}
         justify="between"
         align="center"
+        principle="content-row"
         items={[
             () => (
                 <DotLabel

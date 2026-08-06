@@ -19,6 +19,8 @@ import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckListCard"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /**
  * Community membership feature container.
@@ -63,55 +65,85 @@ export const MembershipPage = () => {
         ],
     )
 
-    return (
-        <div className="mx-auto flex max-w-2xl flex-col gap-10 p-6">
-            <PageHeader
-                breadcrumb={<SettingsBreadcrumb current={t("membership.title")} />}
-                title={t("membership.title")}
-                description={t("membership.subtitle")}
-            />
-            <Card className="flex flex-col">
-                <Card.Content className="flex flex-col gap-6">
-                    {/* product name + tagline — tight pair */}
-                    <div className="flex flex-col gap-2">
+    const cardItems = [
+        () => (
+            <StackV
+                gap={3}
+                principle="sibling-stack"
+                items={[
+                    () => (
                         <Typography type="h5" weight="semibold">
                             {t("membership.card.title")}
                         </Typography>
+                    ),
+                    () => (
                         <Typography type="body-sm" color="muted">
                             {t("membership.card.desc")}
                         </Typography>
-                    </div>
-                    {/* price block — VND monthly price + hint, with the USD approx below */}
-                    <div className="flex flex-col gap-0">
-                        <div className="flex items-end gap-2">
+                    ),
+                ]}
+            />
+        ),
+        () => (
+            <div className="flex flex-col gap-0">
+                <StackH
+                    gap={3}
+                    align="end"
+                    principle="value-row"
+                    items={[
+                        () => (
                             <Typography type="h3" weight="bold">
                                 {t("membership.price")}
                             </Typography>
+                        ),
+                        () => (
                             <Typography type="body-sm" color="muted" className="pb-1">
                                 {t("membership.priceHint")}
                             </Typography>
-                        </div>
-                        <Typography type="body-xs" color="muted">
-                            {t("membership.priceApprox")}
-                        </Typography>
-                    </div>
-                    {/* perks list — one check row per benefit */}
-                    <CheckListCard>
-                        {perks.map((perk) => (
-                            <CheckListItem key={perk}>
-                                <Typography type="body-sm">{perk}</Typography>
-                            </CheckListItem>
-                        ))}
-                    </CheckListCard>
-                    <Button
-                        variant="primary"
-                        fullWidth
-                        onPress={onSubscribe}
-                    >
-                        {t("membership.cta")}
-                    </Button>
-                </Card.Content>
-            </Card>
-        </div>
+                        ),
+                    ]}
+                />
+                <Typography type="body-xs" color="muted">
+                    {t("membership.priceApprox")}
+                </Typography>
+            </div>
+        ),
+        () => (
+            <CheckListCard>
+                {perks.map((perk) => (
+                    <CheckListItem key={perk}>
+                        <Typography type="body-sm">{perk}</Typography>
+                    </CheckListItem>
+                ))}
+            </CheckListCard>
+        ),
+        () => (
+            <Button
+                variant="primary"
+                fullWidth
+                onPress={onSubscribe}
+            >
+                {t("membership.cta")}
+            </Button>
+        ),
+    ]
+
+    return (
+        <Box principle="center-measure" className="mx-auto max-w-2xl">
+            <Box principle="page-pad" className="p-6">
+                <div className="flex flex-col gap-10">
+                    <PageHeader
+                        breadcrumb={<SettingsBreadcrumb current={t("membership.title")} />}
+                        title={t("membership.title")}
+                        description={t("membership.subtitle")}
+                    />
+                    <Card className="flex flex-col">
+                        <Card.Content>
+                            <StackV gap={6} items={cardItems} />
+                        </Card.Content>
+                    </Card>
+                </div>
+            </Box>
+        </Box>
     )
 }

@@ -51,6 +51,9 @@ import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
 import { JobCategory } from "@/modules/types/enums/job-category"
 import { JobStatus } from "@/modules/types/enums/job-status"
 import { useAppSelector } from "@/redux/hooks"
+import { StackH, StackV } from "@/components/frames/Stack"
+import { Cluster } from "@/components/frames/Cluster"
+import { Box } from "@/components/frames/Box"
 
 /** Props for {@link PracticeProblemPage}. */
 export type PracticeProblemPageProps = Record<string, never>
@@ -354,10 +357,10 @@ export const PracticeProblemPage = () => {
     if (!problem) {
         return (
             <div className="flex h-[calc(100vh-4rem)] flex-col">
-                <div className="flex flex-col gap-3 border-b border-default px-6 py-3">
+                <Box principle="page-pad" className="flex flex-col border-b border-default px-6 py-3">
                     <BackLink target={t("codingPractice.title")} onPress={onBack} />
-                </div>
-                <div className="flex min-h-0 flex-1 items-center justify-center px-6">
+                </Box>
+                <Box principle="page-pad" className="flex min-h-0 flex-1 items-center justify-center px-6">
                     {problemError ? (
                         <AsyncContentError
                             title={t("codingPractice.detailError")}
@@ -377,7 +380,7 @@ export const PracticeProblemPage = () => {
                             )}
                         />
                     )}
-                </div>
+                </Box>
             </div>
         )
     }
@@ -387,68 +390,85 @@ export const PracticeProblemPage = () => {
 
     /** LEFT: problem statement, samples, hint. */
     const descriptionPanel = (
-        <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-wrap items-center gap-2">
-                    <Typography type="h4" weight="bold">{problem.title}</Typography>
-                    <StatusChip tone={DIFFICULTY_TONE[problem.difficulty]}>
-                        {t(`codingPractice.level.${LEVEL_KEY[problem.difficulty]}`)}
-                    </StatusChip>
-                </div>
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
-                    <span>{t("codingPractice.points", { points: problem.points })}</span>
-                    {problem.timeLimitMs ? <span>· {t("codingPractice.timeLimit", { ms: problem.timeLimitMs })}</span> : null}
-                    {memoryMb ? <span>· {t("codingPractice.memoryLimit", { mb: memoryMb })}</span> : null}
-                    {problem.tags.map((tag) => <span key={tag}>· {tag}</span>)}
-                </div>
-            </div>
-
-            <MarkdownContent markdown={problem.statement ?? ""} />
-
-            {samples.length > 0 && (
-                <div className="flex flex-col gap-3">
-                    <hr className="border-default" />
-                    <p className="font-semibold">{t("codingPractice.samples")}</p>
-                    {samples.map((testcase, index) => (
-                        <IOExampleCard
-                            key={testcase.id}
-                            rows={[
-                                { key: "in", label: `${t("codingPractice.example")} ${index + 1} · ${t("codingPractice.input")}`, value: testcase.input },
-                                { key: "out", label: t("codingPractice.output"), value: testcase.expectedOutput },
-                            ]}
-                        />
-                    ))}
-                </div>
-            )}
-
-            {hint && (
-                <div className="flex flex-col gap-3">
-                    <hr className="border-default" />
-                    <div className="flex items-center justify-between gap-2">
-                        <p className="font-semibold">{t("codingPractice.hintTitle")}</p>
-                        <Button size="sm" variant="secondary" onPress={() => setShowHint((prev) => !prev)}>
-                            {showHint ? t("codingPractice.hideHint") : t("codingPractice.showHint")}
-                        </Button>
-                    </div>
-                    {showHint && <MarkdownContent markdown={hint} />}
-                </div>
-            )}
-        </div>
+        <StackV gap={6} principle="block-boundary" items={[
+            () => (
+                <StackV gap={4} principle="card-caption" items={[
+                    () => (
+                        <StackH gap={3} principle="flex-action" items={[
+                            () => <Typography type="h4" weight="bold">{problem.title}</Typography>,
+                            () => (
+                                <StatusChip tone={DIFFICULTY_TONE[problem.difficulty]}>
+                                    {t(`codingPractice.level.${LEVEL_KEY[problem.difficulty]}`)}
+                                </StatusChip>
+                            ),
+                        ]} />
+                    ),
+                    () => (
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
+                            <span>{t("codingPractice.points", { points: problem.points })}</span>
+                            {problem.timeLimitMs ? <span>· {t("codingPractice.timeLimit", { ms: problem.timeLimitMs })}</span> : null}
+                            {memoryMb ? <span>· {t("codingPractice.memoryLimit", { mb: memoryMb })}</span> : null}
+                            {problem.tags.map((tag) => <span key={tag}>· {tag}</span>)}
+                        </div>
+                    ),
+                ]} />
+            ),
+            () => <MarkdownContent markdown={problem.statement ?? ""} />,
+            ...(samples.length > 0 ? [
+                () => (
+                    <StackV gap={4} principle="card-caption" items={[
+                        () => <hr className="border-default" />,
+                        () => <p className="font-semibold">{t("codingPractice.samples")}</p>,
+                        ...samples.map((testcase, index) => () => (
+                            <IOExampleCard
+                                key={testcase.id}
+                                rows={[
+                                    { key: "in", label: `${t("codingPractice.example")} ${index + 1} · ${t("codingPractice.input")}`, value: testcase.input },
+                                    { key: "out", label: t("codingPractice.output"), value: testcase.expectedOutput },
+                                ]}
+                            />
+                        )),
+                    ]} />
+                ),
+            ] : []),
+            ...(hint ? [
+                () => (
+                    <StackV gap={4} principle="card-caption" items={[
+                        () => <hr className="border-default" />,
+                        () => (
+                            <StackH gap={3} principle="flex-action" justify="between" items={[
+                                () => <p className="font-semibold">{t("codingPractice.hintTitle")}</p>,
+                                () => (
+                                    <Button size="sm" variant="secondary" onPress={() => setShowHint((prev) => !prev)}>
+                                        {showHint ? t("codingPractice.hideHint") : t("codingPractice.showHint")}
+                                    </Button>
+                                ),
+                            ]} />
+                        ),
+                        ...(showHint ? [() => <MarkdownContent markdown={hint} />] : []),
+                    ]} />
+                ),
+            ] : []),
+        ]} />
     )
 
     /** LEFT: reveal-gated reference solution, one tab per language. */
     const solutionPanel = (
-        <div className="flex flex-col gap-3">
-            <div className="flex items-center justify-between gap-2">
-                <p className="font-semibold">{t("codingPractice.solutionTitle")}</p>
-                <Button size="sm" variant="secondary" onPress={onToggleSolution}>
-                    {showSolution ? t("codingPractice.hideSolution") : t("codingPractice.showSolution")}
-                </Button>
-            </div>
-            {showSolution && solutionLanguages.length > 0 ? (
-                <div className="flex flex-col gap-3">
-                    <div className="flex flex-wrap items-center gap-2">
-                        {solutionLanguages.map((option) => (
+        <StackV gap={4} principle="card-caption" items={[
+            () => (
+                <StackH gap={3} principle="flex-action" justify="between" items={[
+                    () => <p className="font-semibold">{t("codingPractice.solutionTitle")}</p>,
+                    () => (
+                        <Button size="sm" variant="secondary" onPress={onToggleSolution}>
+                            {showSolution ? t("codingPractice.hideSolution") : t("codingPractice.showSolution")}
+                        </Button>
+                    ),
+                ]} />
+            ),
+            () => showSolution && solutionLanguages.length > 0 ? (
+                <StackV gap={4} principle="card-caption" items={[
+                    () => (
+                        <Cluster gap={3} principle="flex-action" items={solutionLanguages.map((option) => () => (
                             <Button
                                 key={option}
                                 size="sm"
@@ -457,20 +477,22 @@ export const PracticeProblemPage = () => {
                             >
                                 {t(`codingPractice.language.${option}`)}
                             </Button>
-                        ))}
-                    </div>
-                    <MarkdownContent
-                        markdown={`\`\`\`${MONACO_LANGUAGE[solutionLanguage]}\n${
-                            solutionByLanguage.get(solutionLanguage) ?? ""
-                        }\n\`\`\``}
-                    />
-                </div>
+                        ))} />
+                    ),
+                    () => (
+                        <MarkdownContent
+                            markdown={`\`\`\`${MONACO_LANGUAGE[solutionLanguage]}\n${
+                                solutionByLanguage.get(solutionLanguage) ?? ""
+                            }\n\`\`\``}
+                        />
+                    ),
+                ]} />
             ) : (
                 <Typography type="body-sm" color="muted">
                     {t("codingPractice.solutionLocked")}
                 </Typography>
-            )}
-        </div>
+            ),
+        ]} />
     )
 
     /** LEFT: the learner's prior submissions for this problem. */
@@ -499,17 +521,15 @@ export const PracticeProblemPage = () => {
 
     /** CONSOLE: sample testcases (pre-run reference). */
     const testcaseTab = samples.length > 0 ? (
-        <div className="flex flex-col gap-3">
-            {samples.map((testcase, index) => (
-                <IOExampleCard
-                    key={testcase.id}
-                    rows={[
-                        { key: "in", label: `${t("codingPractice.example")} ${index + 1} · ${t("codingPractice.input")}`, value: testcase.input },
-                        { key: "out", label: t("codingPractice.output"), value: testcase.expectedOutput },
-                    ]}
-                />
-            ))}
-        </div>
+        <StackV gap={4} principle="card-caption" items={samples.map((testcase, index) => () => (
+            <IOExampleCard
+                key={testcase.id}
+                rows={[
+                    { key: "in", label: `${t("codingPractice.example")} ${index + 1} · ${t("codingPractice.input")}`, value: testcase.input },
+                    { key: "out", label: t("codingPractice.output"), value: testcase.expectedOutput },
+                ]}
+            />
+        ))} />
     ) : (
         <Typography type="body-sm" color="muted">{t("codingPractice.noSamples")}</Typography>
     )
@@ -522,66 +542,75 @@ export const PracticeProblemPage = () => {
             error={pendingJobError}
         />
     ) : latestSubmission ? (
-        <div className="flex flex-col gap-4">
-            <div className="flex flex-wrap items-center gap-3">
-                <StatusChip tone={VERDICT_TONE[latestSubmission.verdict]}>
-                    {t(`codingPractice.verdict.${latestSubmission.verdict}`)}
-                </StatusChip>
-                <Typography type="body-sm" color="muted">
-                    {t("codingPractice.passed")}: {latestSubmission.passedCount}/{latestSubmission.totalCount}
-                </Typography>
-            </div>
-
-            <StatGridCard
-                items={[
-                    {
-                        key: "passed",
-                        content: () => (
-                            <div className="flex flex-col gap-0">
-                                <span className="text-lg font-bold">{latestSubmission.passedCount}/{latestSubmission.totalCount}</span>
-                                <span className="text-xs text-muted">{t("codingPractice.statPassed")}</span>
-                            </div>
-                        ),
-                    },
-                    {
-                        key: "runtime",
-                        content: () => (
-                            <div className="flex flex-col gap-0">
-                                <span className="text-lg font-bold">{latestSubmission.runtimeMs ?? "—"}<span className="text-xs"> ms</span></span>
-                                <span className="text-xs text-muted">{t("codingPractice.statRuntime")}</span>
-                            </div>
-                        ),
-                    },
-                    {
-                        key: "memory",
-                        content: () => (
-                            <div className="flex flex-col gap-0">
-                                <span className="text-lg font-bold">{latestSubmission.memoryKb ?? "—"}<span className="text-xs"> KB</span></span>
-                                <span className="text-xs text-muted">{t("codingPractice.statMemory")}</span>
-                            </div>
-                        ),
-                    },
-                ]}
-            />
-
-            {resultCases.length > 0 && (
-                <TestCaseResultGrid
-                    cases={resultCases}
-                    labels={{
-                        input: t("codingPractice.input"),
-                        expected: t("codingPractice.expected"),
-                        got: t("codingPractice.got"),
-                        hidden: t("codingPractice.hiddenCase"),
-                    }}
+        <StackV gap={5} principle="group-boundary" items={[
+            () => (
+                <Cluster gap={4} principle="content-row" items={[
+                    () => (
+                        <StatusChip tone={VERDICT_TONE[latestSubmission.verdict]}>
+                            {t(`codingPractice.verdict.${latestSubmission.verdict}`)}
+                        </StatusChip>
+                    ),
+                    () => (
+                        <Typography type="body-sm" color="muted">
+                            {t("codingPractice.passed")}: {latestSubmission.passedCount}/{latestSubmission.totalCount}
+                        </Typography>
+                    ),
+                ]} />
+            ),
+            () => (
+                <StatGridCard
+                    items={[
+                        {
+                            key: "passed",
+                            content: () => (
+                                <div className="flex flex-col gap-0">
+                                    <span className="text-lg font-bold">{latestSubmission.passedCount}/{latestSubmission.totalCount}</span>
+                                    <span className="text-xs text-muted">{t("codingPractice.statPassed")}</span>
+                                </div>
+                            ),
+                        },
+                        {
+                            key: "runtime",
+                            content: () => (
+                                <div className="flex flex-col gap-0">
+                                    <span className="text-lg font-bold">{latestSubmission.runtimeMs ?? "—"}<span className="text-xs"> ms</span></span>
+                                    <span className="text-xs text-muted">{t("codingPractice.statRuntime")}</span>
+                                </div>
+                            ),
+                        },
+                        {
+                            key: "memory",
+                            content: () => (
+                                <div className="flex flex-col gap-0">
+                                    <span className="text-lg font-bold">{latestSubmission.memoryKb ?? "—"}<span className="text-xs"> KB</span></span>
+                                    <span className="text-xs text-muted">{t("codingPractice.statMemory")}</span>
+                                </div>
+                            ),
+                        },
+                    ]}
                 />
-            )}
-
-            {latestSubmission.compileOutput && (
-                <pre className="whitespace-pre-wrap rounded-2xl bg-danger-soft p-3 text-xs text-danger-soft-foreground">
-                    {latestSubmission.compileOutput}
-                </pre>
-            )}
-        </div>
+            ),
+            ...(resultCases.length > 0 ? [
+                () => (
+                    <TestCaseResultGrid
+                        cases={resultCases}
+                        labels={{
+                            input: t("codingPractice.input"),
+                            expected: t("codingPractice.expected"),
+                            got: t("codingPractice.got"),
+                            hidden: t("codingPractice.hiddenCase"),
+                        }}
+                    />
+                ),
+            ] : []),
+            ...(latestSubmission.compileOutput ? [
+                () => (
+                    <pre data-principle="cell-pad" className="whitespace-pre-wrap rounded-2xl bg-danger-soft p-3 text-xs text-danger-soft-foreground">
+                        {latestSubmission.compileOutput}
+                    </pre>
+                ),
+            ] : []),
+        ]} />
     ) : (
         <Typography type="body-sm" color="muted">{t("codingPractice.resultEmpty")}</Typography>
     )
@@ -592,58 +621,60 @@ export const PracticeProblemPage = () => {
 
             {/* ── LEFT: tabbed reading column ── */}
             <div className="flex min-h-0 flex-col overflow-hidden border-r border-default">
-                <div className="flex flex-col gap-3 border-b border-default px-6 py-3">
-                    <BackLink target={t("codingPractice.title")} onPress={onBack} />
-                    <ExtendedTabs
-                        selectedKey={leftTab}
-                        onSelectionChange={(key) => setLeftTab(key as LeftTab)}
-                    >
-                        <Tabs.ListContainer>
-                            <Tabs.List aria-label={problem.title}>
-                                <Tabs.Tab id="description">
-                                    {t("codingPractice.tabDescription")}
-                                    <Tabs.Indicator />
-                                </Tabs.Tab>
-                                <Tabs.Tab id="solution">
-                                    {t("codingPractice.tabSolution")}
-                                    <Tabs.Indicator />
-                                </Tabs.Tab>
-                                <Tabs.Tab id="submissions">
-                                    {t("codingPractice.tabSubmissions")}
-                                    <Tabs.Indicator />
-                                </Tabs.Tab>
-                            </Tabs.List>
-                        </Tabs.ListContainer>
-                    </ExtendedTabs>
-                </div>
-                <div className="min-h-0 flex-1 overflow-auto px-6 py-5">
+                <Box principle="page-pad" className="flex flex-col border-b border-default px-6 py-3">
+                    <StackV gap={4} principle="card-caption" items={[
+                        () => <BackLink target={t("codingPractice.title")} onPress={onBack} />,
+                        () => (
+                            <ExtendedTabs
+                                selectedKey={leftTab}
+                                onSelectionChange={(key) => setLeftTab(key as LeftTab)}
+                            >
+                                <Tabs.ListContainer>
+                                    <Tabs.List aria-label={problem.title}>
+                                        <Tabs.Tab id="description">
+                                            {t("codingPractice.tabDescription")}
+                                            <Tabs.Indicator />
+                                        </Tabs.Tab>
+                                        <Tabs.Tab id="solution">
+                                            {t("codingPractice.tabSolution")}
+                                            <Tabs.Indicator />
+                                        </Tabs.Tab>
+                                        <Tabs.Tab id="submissions">
+                                            {t("codingPractice.tabSubmissions")}
+                                            <Tabs.Indicator />
+                                        </Tabs.Tab>
+                                    </Tabs.List>
+                                </Tabs.ListContainer>
+                            </ExtendedTabs>
+                        ),
+                    ]} />
+                </Box>
+                <Box principle="page-pad" className="min-h-0 flex-1 overflow-auto px-6 py-5">
                     {leftTab === "description" && descriptionPanel}
                     {leftTab === "solution" && solutionPanel}
                     {leftTab === "submissions" && submissionsPanel}
-                </div>
+                </Box>
             </div>
 
             {/* ── RIGHT: editor + console ── */}
             <div className="flex min-h-0 flex-col overflow-hidden">
                 {/* language selector + reset */}
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-default px-4 py-2">
-                    <div className="flex flex-wrap items-center gap-2">
-                        {languages.map((option) => (
-                            <Button
-                                key={option}
-                                size="sm"
-                                variant={language === option ? "primary" : "secondary"}
-                                onPress={() => setLanguage(option)}
-                            >
-                                {t(`codingPractice.language.${option}`)}
-                            </Button>
-                        ))}
-                    </div>
+                <Box principle="pill-pad" className="flex flex-wrap items-center justify-between border-b border-default px-4 py-2">
+                    <Cluster gap={3} principle="flex-action" items={languages.map((option) => () => (
+                        <Button
+                            key={option}
+                            size="sm"
+                            variant={language === option ? "primary" : "secondary"}
+                            onPress={() => setLanguage(option)}
+                        >
+                            {t(`codingPractice.language.${option}`)}
+                        </Button>
+                    ))} />
                     <Button size="sm" variant="tertiary" onPress={onResetCode}>
                         <ArrowCounterClockwiseIcon className="size-4" aria-hidden focusable="false" />
                         {t("codingPractice.resetCode")}
                     </Button>
-                </div>
+                </Box>
 
                 {/* Monaco editor */}
                 <div className="min-h-0 flex-1">

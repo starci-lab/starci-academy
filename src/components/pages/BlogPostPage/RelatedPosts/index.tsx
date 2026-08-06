@@ -4,6 +4,7 @@ import React from "react"
 import useSWR from "swr"
 import { useLocale, useTranslations } from "next-intl"
 import { PostRow } from "@/components/blocks/blog/PostRow"
+import { StackV } from "@/components/frames/Stack"
 import { queryBlogPosts } from "@/modules/api/graphql/queries/query-blog-posts"
 import { BlogCategory } from "@/modules/api/graphql/queries/types/blog"
 
@@ -54,19 +55,24 @@ export const RelatedPosts = ({ category, currentSlug }: RelatedPostsProps) => {
         })
 
     return (
-        <section className="flex flex-col gap-3 border-t border-default pt-6">
-            <h2 className="text-lg font-semibold text-foreground">
-                {t("relatedTitle", { category: t(`categories.${category}`) })}
-            </h2>
-            <div className="flex flex-col">
-                {related.map((post) => (
-                    <PostRow
-                        key={post.id}
-                        post={post}
-                        formattedDate={formatDate(post.publishedAt)}
-                    />
-                ))}
-            </div>
+        <section className="border-t border-default pt-6">
+            <StackV
+                gap={4}
+                principle="card-caption"
+                items={[
+                    () => (
+                        <h2 className="text-lg font-semibold text-foreground">
+                            {t("relatedTitle", { category: t(`categories.${category}`) })}
+                        </h2>
+                    ),
+                    ...related.map((post) => () => (
+                        <PostRow
+                            post={post}
+                            formattedDate={formatDate(post.publishedAt)}
+                        />
+                    )),
+                ]}
+            />
         </section>
     )
 }

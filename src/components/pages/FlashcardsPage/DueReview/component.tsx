@@ -167,21 +167,39 @@ export const _DueReview = ({
     // separately authored parallel tree) — loading-and-skeleton.md §1.
     const header = isSkeleton ? (
         <Box className="sticky top-16 z-10 border-b border-default bg-surface">
-            <Box className="px-4 py-2 @app-sm:px-6">
-                <StackH gap={4} align="center" divider classNames={["w-full"]} items={[
-                    () => <Skeleton className="h-4 w-16 rounded" />,
-                    () => <Skeleton className="h-4 w-24 rounded" />,
-                    () => <Skeleton className="h-4 w-20 rounded" />,
-                ]} />
-            </Box>
-            {/* an even-width meter, not a wrapping chip row — `Cluster` wraps each item in an
-                unstyled cell that can't distribute `flex-1` evenly, so this stays a raw flex row
-                (Box escape hatch, `frames/Box`'s own documented case: "a raw skin box a real
-                frame can't reach"). */}
-            <Box className="flex gap-1 px-4 pb-2 @app-sm:px-6">
-                {Array.from({ length: HEADER_SKELETON_SEGMENT_COUNT }, (_unused, index) => (
-                    <Skeleton key={index} className="h-1 flex-1 rounded-full" />
-                ))}
+            <StackH
+                gap={1}
+                padding={{ base: { x: 5, y: 3 }, sm: { x: 6, y: 3 } }}
+                principle="pill-pad"
+                items={[() => (
+                    <StackH
+                        gap={4}
+                        principle="content-row"
+                        align="center"
+                        divider
+                        classNames={["w-full"]}
+                        items={[
+                            () => <Skeleton className="h-4 w-16 rounded" />,
+                            () => (
+                                <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
+                            ),
+                            () => <Skeleton className="hidden h-4 w-24 rounded @app-sm:block" />,
+                            () => (
+                                <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
+                            ),
+                            () => <Skeleton className="h-4 w-20 rounded" />,
+                        ]}
+                    />
+                )]}
+            />
+            <Box principle="pill-pad" className="px-4 pb-2 @app-sm:px-6">
+                <StackH
+                    gap={2}
+                    classNames={["w-full"]}
+                    items={Array.from({ length: HEADER_SKELETON_SEGMENT_COUNT }, (_unused, index) => () => (
+                        <Skeleton key={index} className="h-1 flex-1 rounded-full" />
+                    ))}
+                />
             </Box>
         </Box>
     ) : done ? (
@@ -268,7 +286,7 @@ export const _DueReview = ({
         // the "saving" interim until that navigation lands. KEEP the same
         // `WorkSessionHeader` chrome the just-finished ACTIVE phase used.
         <Container size="md" padding={1} body={() => (
-            <StackV gap={4} align="center" classNames={["w-full"]} items={[
+            <StackV gap={4} align="center" principle="card-caption" classNames={["w-full"]} items={[
                 () => <Spinner size="lg" />,
                 () => <Typography size="sm" color="muted" text={labels.savingLabel} />,
             ]} />
@@ -331,10 +349,14 @@ export const _DueReview = ({
         )} />
     )
 
+    const bodyShell = (
+        <Box principle="page-pad" className="px-4 pb-6 pt-10 @app-sm:px-6">{body}</Box>
+    )
+
     return (
         <StackV gap={1} identity={{ tier: "block", component: "DueReview" }} items={[
             () => header,
-            () => <Box className="px-4 pb-6 pt-10 @app-sm:px-6">{body}</Box>,
+            () => bodyShell,
         ]} />
     )
 }

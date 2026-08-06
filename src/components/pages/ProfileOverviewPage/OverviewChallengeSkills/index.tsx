@@ -14,6 +14,7 @@ import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StatPair } from "@/components/composites/stats/StatPair"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { StackV } from "@/components/frames/Stack"
 import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 
 /** Props for {@link OverviewChallengeSkills}. */
@@ -76,15 +77,17 @@ export const OverviewChallengeSkills = ({ className, label, onSeeMore, seeMoreLa
                 skeleton={(
                     <SurfaceListCard>
                         <SurfaceListCardItem>
-                            <div className="flex flex-col gap-3">
-                                {/* StatPair (count + label) + difficulty bar + language */}
-                                <Skeleton.Metric />
-                                <Skeleton.SegmentBar legendItems={4} />
-                                <div className="flex flex-col gap-2">
-                                    <Skeleton.Typography type="body-xs" width="1/4" />
-                                    <Skeleton.SegmentBar legendItems={4} />
-                                </div>
-                            </div>
+                            {/* gap-only column: vertical peers at house step 4 (12px) — no step-4 peer-stack token */}
+                            <StackV gap={4} items={[
+                                () => <Skeleton.Metric />,
+                                () => <Skeleton.SegmentBar legendItems={4} />,
+                                () => (
+                                    <StackV gap={3} principle="sibling-stack" items={[
+                                        () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                                        () => <Skeleton.SegmentBar legendItems={4} />,
+                                    ]} />
+                                ),
+                            ]} />
                         </SurfaceListCardItem>
                     </SurfaceListCard>
                 )}
@@ -99,36 +102,44 @@ export const OverviewChallengeSkills = ({ className, label, onSeeMore, seeMoreLa
             >
                 <SurfaceListCard className="h-full">
                     <SurfaceListCardItem>
-                        <div className="flex flex-col gap-3">
-                            {/* passed count headline + difficulty distribution (4-tone) */}
-                            <StatPair
-                                value={String(challenges.length)}
-                                label={t("publicProfile.challengesCount")}
-                            />
-                            {difficultySegments.length > 0 ? (
-                                <SegmentBar
-                                    ariaLabel={`${challenges.length} ${t("publicProfile.challengesCount")}`}
-                                    segments={difficultySegments}
+                        <StackV gap={4} items={[
+                            () => (
+                                <StatPair
+                                    value={String(challenges.length)}
+                                    label={t("publicProfile.challengesCount")}
                                 />
-                            ) : null}
-                            {/* language breadth — same SegmentBar + brand legend as the Challenges tab */}
-                            {langs.length > 0 ? (
-                                <div className="flex flex-col gap-2">
-                                    <Typography type="body-xs" color="muted">
-                                        {t("publicProfile.skillsSnapshot.languagesLabel")}
-                                    </Typography>
+                            ),
+                            ...(difficultySegments.length > 0
+                                ? [() => (
                                     <SegmentBar
-                                        ariaLabel={t("publicProfile.skillsSnapshot.languagesLabel")}
-                                        segments={langs.map(([lang, count]) => ({
-                                            key: lang,
-                                            label: getLanguageLabel(lang),
-                                            value: count,
-                                            color: getLanguageColor(lang),
-                                        }))}
+                                        ariaLabel={`${challenges.length} ${t("publicProfile.challengesCount")}`}
+                                        segments={difficultySegments}
                                     />
-                                </div>
-                            ) : null}
-                        </div>
+                                )]
+                                : []),
+                            ...(langs.length > 0
+                                ? [() => (
+                                    <StackV gap={3} principle="sibling-stack" items={[
+                                        () => (
+                                            <Typography type="body-xs" color="muted">
+                                                {t("publicProfile.skillsSnapshot.languagesLabel")}
+                                            </Typography>
+                                        ),
+                                        () => (
+                                            <SegmentBar
+                                                ariaLabel={t("publicProfile.skillsSnapshot.languagesLabel")}
+                                                segments={langs.map(([lang, count]) => ({
+                                                    key: lang,
+                                                    label: getLanguageLabel(lang),
+                                                    value: count,
+                                                    color: getLanguageColor(lang),
+                                                }))}
+                                            />
+                                        ),
+                                    ]} />
+                                )]
+                                : []),
+                        ]} />
                     </SurfaceListCardItem>
                 </SurfaceListCard>
             </AsyncContent>

@@ -11,6 +11,8 @@ import type { JobPostingEntity } from "@/modules/types/entities/job-posting"
 import { WorkMode } from "@/modules/types/enums/work-mode"
 import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { IconTile } from "@/components/blocks/identity/IconTile"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** i18n key per {@link WorkMode} (reuses the existing profile labels). */
 const WORK_MODE_LABEL_KEY: Record<WorkMode, string> = {
@@ -60,54 +62,94 @@ export const JobListRow = ({ job }: JobListRowProps) => {
 
     const expired = isJobPostingExpired(job)
 
+    const metaItems = [
+        ...(expired ? [() => (
+            <Chip size="sm" variant="soft" color="danger">
+                <Chip.Label>{t("jobs.list.row.expired")}</Chip.Label>
+            </Chip>
+        )] : []),
+        ...(job.location ? [() => (
+            <StackH
+                gap={2}
+                principle="icon-text"
+                inline
+                align="center"
+                items={[
+                    () => <MapPinIcon aria-hidden focusable="false" className="size-3" />,
+                    () => <span className="text-xs text-muted">{job.location}</span>,
+                ]}
+            />
+        )] : []),
+        ...(job.workMode ? [() => (
+            <Chip size="sm" variant="soft" color="default">
+                <Chip.Label>{t(WORK_MODE_LABEL_KEY[job.workMode!])}</Chip.Label>
+            </Chip>
+        )] : []),
+    ]
+
     return (
         <SurfaceListCardItem
             href={pathConfig().locale(locale).jobs(job.displayId).build()}
             hover="underline"
         >
-            <div className="flex items-center gap-3">
-                <IconTile
-                    icon={<BuildingsIcon aria-hidden focusable="false" />}
-                    src={job.company.logoUrl}
-                    alt={job.company.title}
-                    tone="neutral"
-                    size="sm"
-                />
-                <div className="flex min-w-0 flex-1 flex-col gap-1">
-                    <Typography type="body-sm" weight="medium" className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
-                        {job.title}
-                    </Typography>
-                    <Typography type="body-xs" color="muted" truncate>
-                        {job.company.title}
-                    </Typography>
-                    <div className="flex flex-wrap items-center gap-2">
-                        {expired ? (
-                            <Chip size="sm" variant="soft" color="danger">
-                                <Chip.Label>{t("jobs.list.row.expired")}</Chip.Label>
-                            </Chip>
-                        ) : null}
-                        {job.location ? (
-                            <span className="inline-flex items-center gap-1 text-xs text-muted">
-                                <MapPinIcon aria-hidden focusable="false" className="size-3" />
-                                {job.location}
-                            </span>
-                        ) : null}
-                        {job.workMode ? (
-                            <Chip size="sm" variant="soft" color="default">
-                                <Chip.Label>{t(WORK_MODE_LABEL_KEY[job.workMode])}</Chip.Label>
-                            </Chip>
-                        ) : null}
-                    </div>
-                </div>
-                <div className="flex shrink-0 flex-col items-end gap-1">
-                    <Typography type="body-sm" weight="medium">
-                        {salaryLabel}
-                    </Typography>
-                    <Typography type="body-xs" color="muted">
-                        {postedAgo}
-                    </Typography>
-                </div>
-            </div>
+            <StackH
+                gap={4}
+                principle="content-row"
+                align="center"
+                items={[
+                    () => (
+                        <IconTile
+                            icon={<BuildingsIcon aria-hidden focusable="false" />}
+                            src={job.company.logoUrl}
+                            alt={job.company.title}
+                            tone="neutral"
+                            size="sm"
+                        />
+                    ),
+                    () => (
+                        <StackV
+                            gap={2}
+                            principle="title-subtitle"
+                            classNames={["min-w-0", "flex-1"]}
+                            items={[
+                                () => (
+                                    <Typography type="body-sm" weight="medium" className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
+                                        {job.title}
+                                    </Typography>
+                                ),
+                                () => (
+                                    <Typography type="body-xs" color="muted" truncate>
+                                        {job.company.title}
+                                    </Typography>
+                                ),
+                                ...(metaItems.length > 0 ? [() => (
+                                    <Cluster gap={3} principle="chip-row" items={metaItems} />
+                                )] : []),
+                            ]}
+                        />
+                    ),
+                    () => (
+                        <StackV
+                            gap={2}
+                            principle="title-subtitle"
+                            align="end"
+                            classNames={["shrink-0"]}
+                            items={[
+                                () => (
+                                    <Typography type="body-sm" weight="medium">
+                                        {salaryLabel}
+                                    </Typography>
+                                ),
+                                () => (
+                                    <Typography type="body-xs" color="muted">
+                                        {postedAgo}
+                                    </Typography>
+                                ),
+                            ]}
+                        />
+                    ),
+                ]}
+            />
         </SurfaceListCardItem>
     )
 }

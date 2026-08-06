@@ -151,7 +151,7 @@ const LessonEditorPanel = ({
             isSkeleton={isSkeleton}
             body={({ isSkeleton }: SkeletonProps) => (
                 <StackV
-                    gap={4}
+                    principle="label-field" gap={4}
                     isSkeleton={isSkeleton}
                     items={[
                         // A save failure keeps the typed content on screen (no data loss) --
@@ -191,14 +191,15 @@ const LessonEditorPanel = ({
                         ),
                         () => (
                             <StackH
-                                gap={3}
+                                principle="value-row" gap={3}
                                 align="center"
                                 justify="between"
                                 isSkeleton={isSkeleton}
                                 items={[
                                     () => (
                                         <StackH
-                                            gap={2}
+                                            gap={3}
+                                            principle="chip-row"
                                             align="center"
                                             isSkeleton={isSkeleton}
                                             items={

@@ -1,6 +1,9 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Segment count mirrors the setup default question draw (see `QNA_QUESTION_COUNT`
@@ -23,69 +26,127 @@ export const MockInterviewSessionSkeleton = ({ className }: WithClassNames<undef
         <div className={cn("flex h-[calc(100dvh-4rem)] w-full flex-col", className)}>
             {/* sub-navbar band — mirrors WorkSessionHeader */}
             <div className="sticky top-16 z-10 border-b border-default bg-surface">
-                <div className="flex items-center gap-3 px-4 py-2 @app-sm:px-6">
-                    {/* back-link ("Leave") */}
-                    <Skeleton className="h-4 w-14 rounded" />
-                    <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
-                    {/* identity — persona avatar + name */}
-                    <span className="flex min-w-0 items-center gap-2">
-                        <Skeleton className="size-7 shrink-0 rounded-full" />
-                        <Skeleton className="hidden h-4 w-20 rounded @app-sm:block" />
-                    </span>
-                    <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
-                    {/* "Question x/N" counter */}
-                    <Skeleton className="h-4 w-20 rounded" />
-                    <span className="flex-1" />
-                    {/* countdown timer */}
-                    <Skeleton className="h-4 w-14 rounded" />
-                </div>
-                {/* progress-segment bar */}
-                <div className="flex gap-1 px-4 pb-2 @app-sm:px-6" role="presentation">
-                    {Array.from({ length: PROGRESS_SEGMENTS }, (_, position) => (
-                        <Skeleton key={position} className="h-1 flex-1 rounded-full" />
-                    ))}
-                </div>
-            </div>
-
-            <div className="grid min-h-0 flex-1 gap-6 overflow-y-auto px-4 py-6 @app-sm:px-6 @app-lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-                {/* LEFT — the conversation column (presence card + voice hero + action row) */}
-                <div className="flex min-w-0 flex-col gap-6">
-                    {/* interviewer presence card — avatar + name/role + the question body */}
-                    <div className="flex flex-col gap-3 rounded-3xl bg-surface p-4 shadow-surface">
-                        <div className="flex items-center gap-3">
-                            <Skeleton.Avatar />
-                            <div className="flex min-w-0 flex-col gap-1">
-                                <Skeleton.Typography type="body-sm" width="1/3" />
-                                <Skeleton.Typography type="body-xs" width="1/4" />
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-2 border-t border-default pt-3">
-                            <Skeleton.Typography type="body-sm" width="full" />
-                            <Skeleton.Typography type="body-sm" width="full" />
-                            <Skeleton.Typography type="body-sm" width="3/4" />
-                            <Skeleton.Typography type="body-sm" width="1/2" />
-                        </div>
-                    </div>
-
-                    {/* voice hero — big push-to-talk mic */}
-                    <div className="flex flex-col items-center gap-3">
-                        <Skeleton className="size-20 shrink-0 rounded-full" />
-                        <Skeleton.Typography type="body-sm" width="1/4" />
-                    </div>
-
-                    {/* answer action row — primary CTA + the quiet "finish early" link */}
-                    <div className="flex flex-col items-center gap-3">
-                        <Skeleton.Button width="w-48" />
-                        <Skeleton.Typography type="body-xs" width="1/4" />
-                    </div>
-                </div>
-
-                {/* RIGHT — the workspace pane placeholder (no divider — gap-6 alone separates
-                    the panes, mirroring MockInterviewSession's loaded 2-pane split) */}
-                <div className="min-w-0">
-                    <Skeleton className="h-full min-h-64 w-full rounded-2xl" />
+                <Box principle="control-pad" className="px-4 py-2 @app-sm:px-6">
+                    <StackH
+                        gap={4}
+                        principle="content-row"
+                        items={[
+                            () => <Skeleton className="h-4 w-14 rounded" />,
+                            () => <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />,
+                            () => (
+                                <StackH
+                                    gap={3}
+                                    principle="identity"
+                                    classNames={["min-w-0"]}
+                                    items={[
+                                        () => <Skeleton className="size-7 shrink-0 rounded-full" />,
+                                        () => <Skeleton className="hidden h-4 w-20 rounded @app-sm:block" />,
+                                    ]}
+                                />
+                            ),
+                            () => <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />,
+                            () => <Skeleton className="h-4 w-20 rounded" />,
+                            () => <span className="flex-1" />,
+                            () => <Skeleton className="h-4 w-14 rounded" />,
+                        ]}
+                    />
+                </Box>
+                <div data-principle="control-pad" className="px-4 pb-2 @app-sm:px-6" role="presentation">
+                    <StackH
+                        gap={2}
+                        classNames={["w-full"]}
+                        items={Array.from({ length: PROGRESS_SEGMENTS }, (_, position) => () => (
+                            <Skeleton key={position} className="h-1 flex-1 rounded-full" />
+                        ))}
+                    />
                 </div>
             </div>
+
+            <Box principle="page-pad" className="min-h-0 flex-1 overflow-y-auto p-6">
+                <div data-principle="block-boundary" className="grid min-h-0 h-full gap-6 @app-lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+                    <StackV
+                        gap={6}
+                        principle="block-boundary"
+                        classNames={["min-w-0"]}
+                        items={[
+                            () => (
+                                <SurfaceCard
+                                    padding={5}
+                                    body={() => (
+                                        <StackV
+                                            gap={4}
+                                            items={[
+                                                () => (
+                                                    <StackH
+                                                        gap={3}
+                                                        principle="identity"
+                                                        items={[
+                                                            () => <Skeleton.Avatar />,
+                                                            () => (
+                                                                <StackV
+                                                                    gap={2}
+                                                                    principle="title-subtitle"
+                                                                    classNames={["min-w-0"]}
+                                                                    items={[
+                                                                        () => <Skeleton.Typography type="body-sm" width="1/3" />,
+                                                                        () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                                                                    ]}
+                                                                />
+                                                            ),
+                                                        ]}
+                                                    />
+                                                ),
+                                                () => (
+                                                    <div className="border-t border-default pt-3">
+                                                        <StackV
+                                                            gap={3}
+                                                            principle="sibling-stack"
+                                                            items={[
+                                                                () => <Skeleton.Typography type="body-sm" width="full" />,
+                                                                () => <Skeleton.Typography type="body-sm" width="full" />,
+                                                                () => <Skeleton.Typography type="body-sm" width="3/4" />,
+                                                                () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                                            ]}
+                                                        />
+                                                    </div>
+                                                ),
+                                            ]}
+                                        />
+                                    )}
+                                />
+                            ),
+                            () => (
+                                <div className="flex flex-col items-center">
+                                    <StackV
+                                        gap={4}
+                                        principle="card-caption"
+                                        items={[
+                                            () => <Skeleton className="size-20 shrink-0 rounded-full" />,
+                                            () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                                        ]}
+                                    />
+                                </div>
+                            ),
+                            () => (
+                                <div className="flex flex-col items-center">
+                                    <StackV
+                                        gap={4}
+                                        items={[
+                                            () => <Skeleton.Button width="w-48" />,
+                                            () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                                        ]}
+                                    />
+                                </div>
+                            ),
+                        ]}
+                    />
+
+                    {/* RIGHT — workspace pane */}
+                    <div className="min-w-0">
+                        <Skeleton className="h-full min-h-64 w-full rounded-2xl" />
+                    </div>
+                </div>
+            </Box>
         </div>
     )
 }

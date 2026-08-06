@@ -203,7 +203,7 @@ export const _FlashcardReviewHistory = ({
     // carries no `isSkeleton` of its own — its loading state mirrors it inline with a bare
     // `Skeleton`, right where it sits (missingSkeletonSupport), instead of a parallel tree.
     const toolbar = (
-        <StackH gap={3} justify="between" at="sm" items={[
+        <StackH gap={4} principle="content-row" justify="between" at="sm" items={[
             () => (
                 <InputSearch
                     isSkeleton={isSkeleton}
@@ -280,14 +280,15 @@ export const _FlashcardReviewHistory = ({
                 ),
                 body: () => (
                     <StackV gap={1} items={group.items.map((item) => () => (
-                        <button
-                            key={item.id}
-                            type="button"
-                            onClick={() => onOpenDeck(item.deckId)}
-                            className="rounded-lg px-2 py-2 text-left transition-colors hover:bg-default"
-                        >
-                            {runRow(item, false)}
-                        </button>
+                        <Box key={item.id} principle="control-pad" className="rounded-lg px-3 py-2 text-left transition-colors hover:bg-default">
+                            <button
+                                type="button"
+                                onClick={() => onOpenDeck(item.deckId)}
+                                className="w-full text-left"
+                            >
+                                {runRow(item, false)}
+                            </button>
+                        </Box>
                     ))} />
                 ),
             }))}

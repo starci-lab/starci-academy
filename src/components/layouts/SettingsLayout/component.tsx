@@ -81,6 +81,7 @@ const _SettingsLayout = ({
             rail={navSlot}
             body={contentSlot}
             at="md"
+            principle="layout-split"
             identity={{ tier: "layout", component: "SettingsLayout" }}
         />
     )

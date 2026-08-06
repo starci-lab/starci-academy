@@ -30,6 +30,7 @@ import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { StackV } from "@/components/frames/Stack"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Days shown in the per-day spend chart (matches the chart title copy). */
@@ -132,21 +133,32 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
         <AsyncContent
             isLoading={isLoading && items.length === 0}
             skeleton={(
-                <div className="flex flex-col gap-6">
-                    <LabeledCard label={t("aiQuota.history.chartTitle")}>
-                        <Skeleton className="h-44 w-full rounded-xl" />
-                    </LabeledCard>
-                    <LabeledCard label={t("aiQuota.history.breakdownTitle")}>
-                        <Skeleton.SegmentBar legendItems={3} />
-                    </LabeledCard>
-                    <LabeledCard label={t("aiQuota.history.title")}>
-                        <div className="flex flex-col gap-2">
-                            {[0, 1, 2, 3].map((row) => (
-                                <Skeleton key={row} className="h-12 w-full rounded-xl" />
-                            ))}
-                        </div>
-                    </LabeledCard>
-                </div>
+                <StackV
+                    gap={6}
+                    items={[
+                        () => (
+                            <LabeledCard label={t("aiQuota.history.chartTitle")}>
+                                <Skeleton className="h-44 w-full rounded-xl" />
+                            </LabeledCard>
+                        ),
+                        () => (
+                            <LabeledCard label={t("aiQuota.history.breakdownTitle")}>
+                                <Skeleton.SegmentBar legendItems={3} />
+                            </LabeledCard>
+                        ),
+                        () => (
+                            <LabeledCard label={t("aiQuota.history.title")}>
+                                <StackV
+                                    gap={3}
+                                    principle="sibling-stack"
+                                    items={[0, 1, 2, 3].map((row) => () => (
+                                        <Skeleton key={row} className="h-12 w-full rounded-xl" />
+                                    ))}
+                                />
+                            </LabeledCard>
+                        ),
+                    ]}
+                />
             )}
             isEmpty={items.length === 0}
             emptyContent={{ title: t("aiQuota.history.empty") }}
@@ -157,70 +169,75 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
                 retryLabel: t("dashboard.retry"),
             }}
         >
-            <div className={cn("flex flex-col gap-6", className)}>
-                {/* card 1 — per-day spend chart */}
-                <LabeledCard label={t("aiQuota.history.chartTitle")}>
-                    <div className="h-44 w-full text-accent-soft-foreground">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={chartData} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
-                                <CartesianGrid
-                                    strokeDasharray="3 3"
-                                    stroke="currentColor"
-                                    className="text-divider"
-                                    vertical={false}
-                                />
-                                <XAxis dataKey="day" tick={{ fontSize: 10 }} interval={1} tickLine={false} axisLine={false} />
-                                <YAxis allowDecimals={false} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} width={28} />
-                                <Tooltip
-                                    cursor={{ fill: "currentColor", opacity: 0.08 }}
-                                    formatter={(value) => [`${value} ${t("aiQuota.history.creditsUnit")}`, ""]}
-                                />
-                                <Bar dataKey="credits" fill="currentColor" radius={[4, 4, 0, 0]} />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
-                </LabeledCard>
-
-                {/* card 2 — by-provider breakdown (credits) */}
-                {providerSegments.length > 0 ? (
-                    <LabeledCard label={t("aiQuota.history.breakdownTitle")}>
-                        <SegmentBar
-                            ariaLabel={t("aiQuota.history.breakdownTitle")}
-                            segments={providerSegments}
-                        />
-                    </LabeledCard>
-                ) : null}
-
-                {/* card 3 — charge history list */}
-                <LabeledCard label={t("aiQuota.history.title")} frameless>
-                    <ScrollShadow className="max-h-96">
-                        <SurfaceListCard>
-                            {items.map((item) => (
-                                <SurfaceListCardRow
-                                    key={item.id}
-                                    title={item.model ?? t("aiQuota.history.autoModel")}
-                                    subtitle={`${purposeLabel(item, t)} · ${dayjs(item.createdAt).format("HH:mm DD/MM")}`}
-                                    trailing={() => (
-                                        <Chip
-                                            size="sm"
-                                            variant="soft"
-                                            color={item.credits > 0 ? "warning" : "success"}
-                                        >
-                                            <Chip.Label>
-                                                {`${item.credits} ${t("aiQuota.history.creditsUnit")}`}
-                                            </Chip.Label>
-                                        </Chip>
-                                    )}
-                                />
-                            ))}
-                        </SurfaceListCard>
-                        {/* grow the list as the sentinel scrolls into view */}
-                        <InfiniteScrollSentinel
-                            onReach={() => setSize((current) => current + 1)}
-                            disabled={!hasMore || isLoadingMore}
-                        />
-                    </ScrollShadow>
-                </LabeledCard>
+            <div className={cn(className)}>
+                <StackV
+                    gap={6}
+                    items={[
+                        () => (
+                            <LabeledCard label={t("aiQuota.history.chartTitle")}>
+                                <div className="h-44 w-full text-accent-soft-foreground">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <BarChart data={chartData} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
+                                            <CartesianGrid
+                                                strokeDasharray="3 3"
+                                                stroke="currentColor"
+                                                className="text-divider"
+                                                vertical={false}
+                                            />
+                                            <XAxis dataKey="day" tick={{ fontSize: 10 }} interval={1} tickLine={false} axisLine={false} />
+                                            <YAxis allowDecimals={false} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} width={28} />
+                                            <Tooltip
+                                                cursor={{ fill: "currentColor", opacity: 0.08 }}
+                                                formatter={(value) => [`${value} ${t("aiQuota.history.creditsUnit")}`, ""]}
+                                            />
+                                            <Bar dataKey="credits" fill="currentColor" radius={[4, 4, 0, 0]} />
+                                        </BarChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            </LabeledCard>
+                        ),
+                        ...(providerSegments.length > 0
+                            ? [() => (
+                                <LabeledCard label={t("aiQuota.history.breakdownTitle")}>
+                                    <SegmentBar
+                                        ariaLabel={t("aiQuota.history.breakdownTitle")}
+                                        segments={providerSegments}
+                                    />
+                                </LabeledCard>
+                            )]
+                            : []),
+                        () => (
+                            <LabeledCard label={t("aiQuota.history.title")} frameless>
+                                <ScrollShadow className="max-h-96">
+                                    <SurfaceListCard>
+                                        {items.map((item) => (
+                                            <SurfaceListCardRow
+                                                key={item.id}
+                                                title={item.model ?? t("aiQuota.history.autoModel")}
+                                                subtitle={`${purposeLabel(item, t)} · ${dayjs(item.createdAt).format("HH:mm DD/MM")}`}
+                                                trailing={() => (
+                                                    <Chip
+                                                        size="sm"
+                                                        variant="soft"
+                                                        color={item.credits > 0 ? "warning" : "success"}
+                                                    >
+                                                        <Chip.Label>
+                                                            {`${item.credits} ${t("aiQuota.history.creditsUnit")}`}
+                                                        </Chip.Label>
+                                                    </Chip>
+                                                )}
+                                            />
+                                        ))}
+                                    </SurfaceListCard>
+                                    <InfiniteScrollSentinel
+                                        onReach={() => setSize((current) => current + 1)}
+                                        disabled={!hasMore || isLoadingMore}
+                                    />
+                                </ScrollShadow>
+                            </LabeledCard>
+                        ),
+                    ]}
+                />
             </div>
         </AsyncContent>
     )

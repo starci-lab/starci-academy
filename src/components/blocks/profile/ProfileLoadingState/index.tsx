@@ -11,6 +11,7 @@ import { ProgressBar } from "@/components/atoms/display/Progress"
 import { SurfaceCard, SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { Container } from "@/components/frames/Container"
+import { Box } from "@/components/frames/Box"
 import { StackV, StackH } from "@/components/frames/Stack"
 import { Grid, type GridItem } from "@/components/frames/Grid"
 import { RailShell } from "@/components/frames/RailShell"
@@ -268,7 +269,7 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
             <StackV gap={4} items={[() => coursesSection]} />
             <StackV gap={4} items={[() => contributionsSection]} />
             {/* skills — 2-col grid of stat cards */}
-            <Grid columns={{ base: 1, md: 2 }} gap={6} principle="block-boundary" items={skillItems} />
+            <Grid columns={{ base: 1, md: 2 }} principle="block-boundary" items={skillItems} />
         </>
     )
 
@@ -284,7 +285,7 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
         <StackV gap={6} items={[() => overviewSections]} />
     )
 
-    const overviewBody = <RailShell rail={identityRail} body={overviewContent} at="md" />
+    const overviewBody = <RailShell principle="layout-split" rail={identityRail} body={overviewContent} at="md" />
 
     return (
         // ⚠️ couldNotFix (require-identity-root / no-raw-shape-at-sentence-tier):
@@ -295,35 +296,33 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
         // so moving the root onto `StackV` drops those two attributes — flagged
         // rather than silently lost; adding `aria-*` passthrough to `Flex` is out
         // of this file's scope.
-        <StackV
-            gap={1}
-            classNames={["w-full"]}
+        // gap={1} (0px) between tabs and body was intentional no-seam — a StackV
+        // frame was redundant; Box carries identity only.
+        <Box
+            className="w-full"
             identity={identity}
-            items={[
-                () => (
-                    // tab strip — full-bleed row under the navbar, same footprint as `ProfileTabsBar`.
-                    // `px-6 py-3` is a one-off placement wrapper (a full-width strip flush under a sticky
-                    // navbar, not a repeating list nor a generic card seam), same allowance `ContinueCard`
-                    // uses for its own content wrapper — both padding digits (6, 3) are on the §10c scale.
-                    // Carried via `Container`'s own `padding` prop (house-scale {{ x: 6, y: 4 }} = `px-6 py-3`)
-                    // instead of a raw div — no `patterns.mjs` token names this asymmetric shape yet.
-                    <Container
-                        size="full"
-                        padding={{ x: 6, y: 4 }}
-                        body={() => (
-                            <Tabs
-                                items={TAB_ITEMS}
-                                selectedKey={TAB_ITEMS[0].key}
-                                onSelectionChange={() => {}}
-                                ariaLabel="Profile sections loading"
-                                variant="secondary"
-                                isSkeleton
-                            />
-                        )}
+        >
+            {/* tab strip — full-bleed row under the navbar, same footprint as `ProfileTabsBar`.
+                `px-6 py-3` is a one-off placement wrapper (a full-width strip flush under a sticky
+                navbar, not a repeating list nor a generic card seam), same allowance `ContinueCard`
+                uses for its own content wrapper — both padding digits (6, 3) are on the §10c scale.
+                Carried via `Container`'s own `padding` prop (house-scale {{ x: 6, y: 4 }} = `px-6 py-3`)
+                instead of a raw div — no `patterns.mjs` token names this asymmetric shape yet. */}
+            <Container
+                size="full"
+                padding={{ x: 6, y: 4 }}
+                body={() => (
+                    <Tabs
+                        items={TAB_ITEMS}
+                        selectedKey={TAB_ITEMS[0].key}
+                        onSelectionChange={() => {}}
+                        ariaLabel="Profile sections loading"
+                        variant="secondary"
+                        isSkeleton
                     />
-                ),
-                () => <Container size="lg" padding={6} body={() => overviewBody} />,
-            ]}
-        />
+                )}
+            />
+            <Container size="lg" padding={6} body={() => overviewBody} />
+        </Box>
     )
 }

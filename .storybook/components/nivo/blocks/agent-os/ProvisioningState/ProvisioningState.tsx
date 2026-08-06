@@ -149,6 +149,7 @@ const ProvisioningState = ({
                 body={() => (
                     <StackV
                         gap={5}
+                        principle="group-boundary"
                         align="center"
                         isSkeleton={isSkeleton}
                         items={[

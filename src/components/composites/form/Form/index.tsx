@@ -6,6 +6,8 @@ import { GAP_CLASS, type AllowedGap } from "@/components/frames/_spacing"
 import { StackV } from "@/components/frames/Stack"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
+import { principleAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { isGapPrinciple, PRINCIPLE_STYLE } from "@/components/frames/_principle-style"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `Form.*`, the ONE form composite namespace
@@ -75,8 +77,15 @@ export interface FormBaseProps {
      * Vertical rhythm between the form's sub-regions. Default `{6}` (`gap-6`,
      * §10b: design ↔ design within one block). Drop to `{4}` (`gap-3`) for a
      * short form inside a modal.
+     * Optional when `principle` owns the seam — then the resolver supplies gap.
      */
     gap?: AllowedGap
+    /**
+     * Semantic seam for body ↔ actions (and the fieldset column). When set,
+     * owns gap CSS — do not also pass `gap` / `classNames`. Query as
+     * `[data-principle="token"]`.
+     */
+    principle?: PrincipleToken
     /**
      * `true` → LOCKS THE WHOLE FORM (submitting / waiting on the server). Uses
      * a native `<fieldset disabled>` so EVERY child control (including the
@@ -90,7 +99,10 @@ export interface FormBaseProps {
      * the flag reaches inside every one of them).
      */
     isSkeleton?: boolean
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
+    /**
+     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Ignored when `principle` is set (strict principle-only contract).
+     */
     classNames?: Array<AllowedClassName>
 }
 /**
@@ -109,6 +121,7 @@ const Base = ({
     body: Body,
     actions: Actions,
     gap = 6,
+    principle,
     isDisabled = false,
     isSkeleton = false,
     classNames}: FormBaseProps) => {
@@ -117,13 +130,20 @@ const Base = ({
         event.preventDefault()
         onSubmit?.()
     }
+    // Strict: when principle owns a gap seam, ignore public gap/classNames.
+    const ownsLayout = principle != null && isGapPrinciple(principle)
+    const gapStep: AllowedGap = ownsLayout
+        ? (PRINCIPLE_STYLE[principle].kind === "gap" ? PRINCIPLE_STYLE[principle].step : gap)
+        : gap
+    const gapClass = GAP_CLASS[gapStep]
     return (
         <form
             onSubmit={submit}
             noValidate
-            className={cn(classNames)}
+            className={cn(!ownsLayout && classNames)}
             data-tier="composite"
             data-component="Form"
+            data-principle={principleAttr(principle)}
         >
             {/*
                 `<fieldset disabled>` = the NATIVE way to lock the whole cluster: every
@@ -131,9 +151,9 @@ const Base = ({
                 thread a flag down to each field. `min-w-0` because a fieldset defaults
                 to `min-width: min-content` (which would break truncation inside).
             */}
-            <fieldset disabled={isDisabled} className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
+            <fieldset disabled={isDisabled} className={cn("flex min-w-0 flex-col", gapClass)}>
                 {Body != null ? (
-                    <div className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
+                    <div className={cn("flex min-w-0 flex-col", gapClass)}>
                         <Body isSkeleton={isSkeleton} />
                     </div>
                 ) : null}
@@ -200,8 +220,6 @@ const Section = ({
             badge with nowhere to link is worse than no badge; those two atoms keep their
             own badge below and surface as top-level nodes instead). */}
         <StackV
-            gap={2}
-            classNames={["min-w-0"]}
             principle="title-subtitle"
             isSkeleton={isSkeleton}
             items={[
@@ -231,8 +249,6 @@ const Section = ({
 // ─────────────────────────────────────────────────────────────────────────────
 // .Actions — the closing button row
 // ─────────────────────────────────────────────────────────────────────────────
-/** Button row alignment: `end` (default — the CTA sits on the right) · `start` · `between` (cancel left, CTA right). */
-export type FormActionsAlign = "start" | "end" | "between"
 /** Props for {@link FormActions}. */
 export interface FormActionsProps {
     /**
@@ -241,26 +257,23 @@ export interface FormActionsProps {
      * it straight down to the atom, it does NOT hand-draw a button (§13c).
      */
     items: Array<ButtonGroupItem>
-    /** Alignment of the button row across the form's width. Default `end`. */
-    align?: FormActionsAlign
+    /**
+     * Layout meaning for the closing row. Default `flex-action-end` (CTA on the
+     * trailing edge). Use `flex-action-between` for escape|commit, `flex-action-start`
+     * for a left-anchored cluster. Owns gap + justify — do not pass `align`.
+     */
+    principle?: PrincipleToken
     /**
      * `true` → the button row STICKS to the bottom of the scroll container
      * (`sticky bottom-0`) with a divider + background, for a long form inside a
      * modal/drawer. Chrome only — it doesn't change the button API.
      */
     sticky?: boolean
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
-    classNames?: Array<AllowedClassName>
 }
-/** Horizontal alignment → class. `between` needs the button row to OCCUPY the full width for the two edges to actually separate. */
-const ALIGN_CLASS: Record<FormActionsAlign, string> = {
-    start: "justify-start",
-    end: "justify-end",
-    between: "justify-between"}
 /**
  * The form's closing button row. COMPOSES the atom `ButtonGroup` (§13c — the
- * shell does not hand-roll its own buttons): the shell only adds the two real
- * shell concepts — horizontal ALIGNMENT (`align`) and BOTTOM-STICKING (`sticky`).
+ * shell does not hand-roll its own buttons): the shell only adds BOTTOM-STICKING
+ * (`sticky`). Main-axis distribution comes from `principle`.
  *
  * Each button's role/behaviour (`variant`/`isPending`/`isDisabled`) still
  * belongs to the atom — the shell only forwards it through `items`.
@@ -269,26 +282,17 @@ const ALIGN_CLASS: Record<FormActionsAlign, string> = {
  */
 const Actions = ({
     items,
-    align = "end",
-    sticky = false,
-    classNames}: FormActionsProps) => (
+    principle = "flex-action-end",
+    sticky = false}: FormActionsProps) => (
     <div
         className={cn(
-            "flex",
-            ALIGN_CLASS[align],
             // Sticky-shell chrome: divider + solid background so scrolled-under content doesn't show through.
-            sticky && "sticky bottom-0 z-10 border-t border-default bg-background py-3",
-            classNames)}
+            sticky && "sticky bottom-0 z-10 border-t border-default bg-background py-3")}
         data-tier="composite"
         data-component="FormActions"
+        data-principle={principleAttr(principle)}
     >
-        <ButtonGroup
-            items={items}
-            // Forward straight through — `FormActionsAlign` and the atom's own `ButtonAlign`
-            // are the same three-value vocabulary (§ATOM-5, 2026-07-31); the atom now owns
-            // the `between` ⇒ `w-full justify-between` mapping itself (`ALIGN_CLS`).
-            align={align}
-        />
+        <ButtonGroup items={items} principle={principle} />
     </div>
 )
 /**

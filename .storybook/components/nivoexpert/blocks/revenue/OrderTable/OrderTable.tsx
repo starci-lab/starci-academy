@@ -143,7 +143,7 @@ const OrderTable = ({ orders, onSelectOrder, isSkeleton = false, labels }: Order
                 isSkeleton={isSkeleton}
                 body={() => (
                     <StackV
-                        gap={3}
+                        principle="sibling-stack" gap={3}
                         isSkeleton={isSkeleton}
                         items={[
                             () => <Typography size="sm" color="muted" isSkeleton={isSkeleton} text={labels.description} />,

@@ -103,13 +103,12 @@ const ThemeEditorDrawer = ({
 
     const Body = ({ isSkeleton: skeleton }: SkeletonProps) => (
         <StackV
-            gap={4}
+            principle="label-field" gap={4}
             isSkeleton={skeleton}
             items={[
                 () => (
                     <Grid
-                        columns={{ base: 1, sm: 2 }}
-                        gap={4}
+                        principle="content-row" columns={{ base: 1, sm: 2 }}
                         isSkeleton={skeleton}
                         items={[
                             {

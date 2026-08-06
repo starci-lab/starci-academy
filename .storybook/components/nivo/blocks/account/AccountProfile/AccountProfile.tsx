@@ -65,6 +65,7 @@ const AccountProfile = ({ username, email, avatarUrl, preferences, onTogglePref,
     <div data-tier="block" data-component="AccountProfile">
         <StackV
             gap={4}
+            principle="label-field"
             isSkeleton={isSkeleton}
             items={[
                 () => (
@@ -108,6 +109,7 @@ const AccountProfile = ({ username, email, avatarUrl, preferences, onTogglePref,
                         body={() => (
                             <StackV
                                 gap={3}
+                                principle="sibling-stack"
                                 divider
                                 isSkeleton={isSkeleton}
                                 items={PREF_ORDER.map((key) => () => (

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import { Button, Modal, Typography, cn } from "@heroui/react"
 import { ArrowSquareOutIcon, CheckCircleIcon, WarningCircleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
+import { StackH, StackV } from "@/components/frames/Stack"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link VoiceUnavailableModal}. */
@@ -67,73 +68,149 @@ export const VoiceUnavailableModal = ({
                             </Typography>
                         </Modal.Header>
                         <Modal.Body>
-                            <div className="flex flex-col gap-6">
-                                <div className="flex flex-col gap-3">
-                                    <Typography type="body-sm" color="muted">
-                                        {t("mockInterview.voiceUnavailable.description")}
-                                    </Typography>
-
-                                    <ol className="flex flex-col gap-2 border-t border-default pt-3">
-                                        <li className="flex items-start gap-2">
-                                            <Typography type="body-xs" weight="medium" color="muted" className="w-4 shrink-0">1.</Typography>
-                                            <Typography type="body-sm">{t("mockInterview.voiceUnavailable.stepWindows1")}</Typography>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <Typography type="body-xs" weight="medium" color="muted" className="w-4 shrink-0">2.</Typography>
-                                            <Typography type="body-sm">{t("mockInterview.voiceUnavailable.stepWindows2")}</Typography>
-                                        </li>
-                                        <li className="flex items-start gap-2">
-                                            <Typography type="body-xs" weight="medium" color="muted" className="w-4 shrink-0">3.</Typography>
-                                            <Typography type="body-sm">{t("mockInterview.voiceUnavailable.stepWindows3")}</Typography>
-                                        </li>
-                                    </ol>
-
-                                    <Typography type="body-xs" color="muted">
-                                        {t("mockInterview.voiceUnavailable.macNote")}
-                                    </Typography>
-                                </div>
-
-                                <div className="flex flex-col gap-3">
-                                    <Button
-                                        variant="secondary"
-                                        className="w-full"
-                                        onPress={() => {
-                                            // Windows-only deep link into Settings → Speech; a no-op (harmless)
-                                            // on any other OS/browser — never navigates the app away.
-                                            window.location.href = "ms-settings:speech"
-                                        }}
-                                    >
-                                        {t("mockInterview.voiceUnavailable.openSettings")}
-                                        <ArrowSquareOutIcon className="size-4" aria-hidden focusable="false" />
-                                    </Button>
-
-                                    <Button variant="primary" className="w-full" onPress={handleRecheck}>
-                                        {t("mockInterview.voiceUnavailable.recheck")}
-                                    </Button>
-
-                                    {justChecked ? (
-                                        hasLocaleVoice ? (
-                                            <div className="flex items-center gap-2">
-                                                <CheckCircleIcon className="size-4 shrink-0 text-success-soft-foreground" aria-hidden focusable="false" />
-                                                <Typography type="body-xs" className="text-success-soft-foreground">
-                                                    {t("mockInterview.voiceUnavailable.found")}
-                                                </Typography>
-                                            </div>
-                                        ) : (
-                                            <div className="flex items-center gap-2">
-                                                <WarningCircleIcon className="size-4 shrink-0 text-muted" aria-hidden focusable="false" />
-                                                <Typography type="body-xs" color="muted">
-                                                    {t("mockInterview.voiceUnavailable.stillNotFound")}
-                                                </Typography>
-                                            </div>
-                                        )
-                                    ) : null}
-                                </div>
-
-                                <Button variant="tertiary" className="self-start" onPress={() => onOpenChange(false)}>
-                                    {t("mockInterview.voiceUnavailable.dismiss")}
-                                </Button>
-                            </div>
+                            <StackV
+                                gap={6}
+                                principle="block-boundary"
+                                items={[
+                                    () => (
+                                        <StackV
+                                            gap={4}
+                                            items={[
+                                                () => (
+                                                    <Typography type="body-sm" color="muted">
+                                                        {t("mockInterview.voiceUnavailable.description")}
+                                                    </Typography>
+                                                ),
+                                                () => (
+                                                    <ol className="border-t border-default pt-3">
+                                                        <StackV
+                                                            gap={3}
+                                                            principle="sibling-stack"
+                                                            as="div"
+                                                            items={[
+                                                                () => (
+                                                                    <li>
+                                                                        <StackH
+                                                                            gap={3}
+                                                                            items={[
+                                                                                () => (
+                                                                                    <Typography type="body-xs" weight="medium" color="muted" className="w-4 shrink-0">1.</Typography>
+                                                                                ),
+                                                                                () => (
+                                                                                    <Typography type="body-sm">{t("mockInterview.voiceUnavailable.stepWindows1")}</Typography>
+                                                                                ),
+                                                                            ]}
+                                                                        />
+                                                                    </li>
+                                                                ),
+                                                                () => (
+                                                                    <li>
+                                                                        <StackH
+                                                                            gap={3}
+                                                                            items={[
+                                                                                () => (
+                                                                                    <Typography type="body-xs" weight="medium" color="muted" className="w-4 shrink-0">2.</Typography>
+                                                                                ),
+                                                                                () => (
+                                                                                    <Typography type="body-sm">{t("mockInterview.voiceUnavailable.stepWindows2")}</Typography>
+                                                                                ),
+                                                                            ]}
+                                                                        />
+                                                                    </li>
+                                                                ),
+                                                                () => (
+                                                                    <li>
+                                                                        <StackH
+                                                                            gap={3}
+                                                                            items={[
+                                                                                () => (
+                                                                                    <Typography type="body-xs" weight="medium" color="muted" className="w-4 shrink-0">3.</Typography>
+                                                                                ),
+                                                                                () => (
+                                                                                    <Typography type="body-sm">{t("mockInterview.voiceUnavailable.stepWindows3")}</Typography>
+                                                                                ),
+                                                                            ]}
+                                                                        />
+                                                                    </li>
+                                                                ),
+                                                            ]}
+                                                        />
+                                                    </ol>
+                                                ),
+                                                () => (
+                                                    <Typography type="body-xs" color="muted">
+                                                        {t("mockInterview.voiceUnavailable.macNote")}
+                                                    </Typography>
+                                                ),
+                                            ]}
+                                        />
+                                    ),
+                                    () => (
+                                        <StackV
+                                            gap={4}
+                                            items={[
+                                                () => (
+                                                    <Button
+                                                        variant="secondary"
+                                                        className="w-full"
+                                                        onPress={() => {
+                                                            // Windows-only deep link into Settings → Speech; a no-op (harmless)
+                                                            // on any other OS/browser — never navigates the app away.
+                                                            window.location.href = "ms-settings:speech"
+                                                        }}
+                                                    >
+                                                        {t("mockInterview.voiceUnavailable.openSettings")}
+                                                        <ArrowSquareOutIcon className="size-4" aria-hidden focusable="false" />
+                                                    </Button>
+                                                ),
+                                                () => (
+                                                    <Button variant="primary" className="w-full" onPress={handleRecheck}>
+                                                        {t("mockInterview.voiceUnavailable.recheck")}
+                                                    </Button>
+                                                ),
+                                                ...(justChecked
+                                                    ? [() => (
+                                                        hasLocaleVoice ? (
+                                                            <StackH
+                                                                gap={3}
+                                                                items={[
+                                                                    () => (
+                                                                        <CheckCircleIcon className="size-4 shrink-0 text-success-soft-foreground" aria-hidden focusable="false" />
+                                                                    ),
+                                                                    () => (
+                                                                        <Typography type="body-xs" className="text-success-soft-foreground">
+                                                                            {t("mockInterview.voiceUnavailable.found")}
+                                                                        </Typography>
+                                                                    ),
+                                                                ]}
+                                                            />
+                                                        ) : (
+                                                            <StackH
+                                                                gap={3}
+                                                                items={[
+                                                                    () => (
+                                                                        <WarningCircleIcon className="size-4 shrink-0 text-muted" aria-hidden focusable="false" />
+                                                                    ),
+                                                                    () => (
+                                                                        <Typography type="body-xs" color="muted">
+                                                                            {t("mockInterview.voiceUnavailable.stillNotFound")}
+                                                                        </Typography>
+                                                                    ),
+                                                                ]}
+                                                            />
+                                                        )
+                                                    )]
+                                                    : []),
+                                            ]}
+                                        />
+                                    ),
+                                    () => (
+                                        <Button variant="tertiary" className="self-start" onPress={() => onOpenChange(false)}>
+                                            {t("mockInterview.voiceUnavailable.dismiss")}
+                                        </Button>
+                                    ),
+                                ]}
+                            />
                         </Modal.Body>
                     </Modal.Dialog>
                 </Modal.Container>

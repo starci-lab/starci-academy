@@ -74,6 +74,41 @@ export const OtpState = ({ hideCloseButton }: OtpStateProps = {}) => {
 
     const otpInvalid = !!(touched.otp && errors.otp)
 
+    const resendRow = [
+        () => <Typography size="xs" color="muted" text={t("auth.signIn.otp.resend")} />,
+        () => (
+            <Typography
+                size="xs"
+                isLink
+                color={isResending ? "muted" : "accent-soft"}
+                onPress={() => {
+                    if (isResending) return
+                    void onResend()
+                }}
+                text={t("auth.signIn.otp.resendLink")}
+            />
+        ),
+    ]
+
+    const otpFieldItems = [
+        () => (
+            <InputOtp
+                value={values.otp}
+                onValueChange={(value) => setFieldValue("otp", value)}
+                isInvalid={otpInvalid}
+                errorMessage={otpInvalid ? errors.otp : undefined}
+            />
+        ),
+        () => (
+            <StackH
+                gap={3}
+                principle="flex-action"
+                justify="center"
+                items={resendRow}
+            />
+        ),
+    ]
+
     const bodyItems = [
         () => (
             <Typography
@@ -88,42 +123,7 @@ export const OtpState = ({ hideCloseButton }: OtpStateProps = {}) => {
                 })}
             />
         ),
-        () => (
-            <StackV
-                gap={4}
-                items={[
-                    () => (
-                        <InputOtp
-                            value={values.otp}
-                            onValueChange={(value) => setFieldValue("otp", value)}
-                            isInvalid={otpInvalid}
-                            errorMessage={otpInvalid ? errors.otp : undefined}
-                        />
-                    ),
-                    () => (
-                        <StackH
-                            gap={3}
-                            justify="center"
-                            items={[
-                                () => <Typography size="xs" color="muted" text={t("auth.signIn.otp.resend")} />,
-                                () => (
-                                    <Typography
-                                        size="xs"
-                                        isLink
-                                        color={isResending ? "muted" : "accent-soft"}
-                                        onPress={() => {
-                                            if (isResending) return
-                                            void onResend()
-                                        }}
-                                        text={t("auth.signIn.otp.resendLink")}
-                                    />
-                                ),
-                            ]}
-                        />
-                    ),
-                ]}
-            />
-        ),
+        () => <StackV gap={4} items={otpFieldItems} />,
         () => (
             <Button
                 variant="primary"

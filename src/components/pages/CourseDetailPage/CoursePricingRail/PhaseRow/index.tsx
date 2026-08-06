@@ -3,7 +3,6 @@
 import React from "react"
 import {
     Typography,
-    cn,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -21,6 +20,8 @@ import type {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { Box } from "@/components/frames/Box"
+import { StackH } from "@/components/frames/Stack"
 
 /** Props for {@link PhaseRow}. */
 export interface PhaseRowProps extends WithClassNames<undefined> {
@@ -41,38 +42,44 @@ export const PhaseRow = ({ row, className }: PhaseRowProps) => {
     const t = useTranslations()
 
     return (
-        <div className={cn("flex items-center justify-between gap-3", className)}>
-            <div className="flex min-w-0 items-center gap-2">
-                {row.soldOut ? (
-                    <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
+        <Box className={className}>
+            <StackH gap={4} principle="content-row" justify="between" align="center" items={[
+                () => (
+                    <StackH gap={3} principle="identity" classNames={["min-w-0"]} align="center" items={[
+                        () => (row.soldOut ? (
+                            <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
+                        ) : row.isActive ? (
+                            <CircleIcon aria-hidden focusable="false" weight="fill" className="size-4 shrink-0 text-accent-soft-foreground" />
+                        ) : (
+                            <CircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-foreground" />
+                        )),
+                        () => (
+                            <Typography
+                                type="body-sm"
+                                weight={row.isActive ? "semibold" : "normal"}
+                                color={row.soldOut ? "muted" : "default"}
+                                className={row.isActive ? "text-accent-soft-foreground" : undefined}
+                                truncate
+                            >
+                                {t(PHASE_LABEL_KEY[row.phase])}
+                            </Typography>
+                        ),
+                    ]} />
+                ),
+                () => (row.soldOut ? (
+                    <Typography type="body-xs" color="muted">
+                        {t("courseLanding.soldOut")}
+                    </Typography>
                 ) : row.isActive ? (
-                    <CircleIcon aria-hidden focusable="false" weight="fill" className="size-4 shrink-0 text-accent-soft-foreground" />
+                    <Typography type="body-xs" className="text-accent-soft-foreground">
+                        {t("courseLanding.currentOpen")}
+                    </Typography>
                 ) : (
-                    <CircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-foreground" />
-                )}
-                <Typography
-                    type="body-sm"
-                    weight={row.isActive ? "semibold" : "normal"}
-                    color={row.soldOut ? "muted" : "default"}
-                    className={row.isActive ? "text-accent-soft-foreground" : undefined}
-                    truncate
-                >
-                    {t(PHASE_LABEL_KEY[row.phase])}
-                </Typography>
-            </div>
-            {row.soldOut ? (
-                <Typography type="body-xs" color="muted">
-                    {t("courseLanding.soldOut")}
-                </Typography>
-            ) : row.isActive ? (
-                <Typography type="body-xs" className="text-accent-soft-foreground">
-                    {t("courseLanding.currentOpen")}
-                </Typography>
-            ) : (
-                <Typography type="body-sm" weight="medium">
-                    {row.formattedPrice}
-                </Typography>
-            )}
-        </div>
+                    <Typography type="body-sm" weight="medium">
+                        {row.formattedPrice}
+                    </Typography>
+                )),
+            ]} />
+        </Box>
     )
 }

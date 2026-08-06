@@ -216,7 +216,7 @@ export const _TalentDirectoryPage = ({
             padding={6}
             isSkeleton={isSkeleton}
             body={() => (
-                <StackV gap={6} items={[
+                <StackV gap={6} principle="block-boundary" items={[
                     () => <PageHeader title={labels.title} description={labels.description} />,
 
                     // track filter (single-select nav → underline tabs). Changing the track

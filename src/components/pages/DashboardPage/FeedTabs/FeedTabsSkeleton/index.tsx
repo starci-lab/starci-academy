@@ -6,6 +6,7 @@ import type {
 } from "@/modules/types/base/class-name"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Date-grouped activity rows shown while the feed loads. */
 const SKELETON_GROUP_COUNT = 2
@@ -27,28 +28,31 @@ export type FeedTabsSkeletonProps = WithClassNames<undefined>
 export const FeedTabsSkeleton = ({ className }: FeedTabsSkeletonProps) => {
     return (
         <div className={className}>
-            <div className="flex flex-col gap-6">
-                {Array.from({ length: SKELETON_GROUP_COUNT }).map((_group, groupIndex) => (
+            <StackV gap={6} principle="block-boundary" items={
+                Array.from({ length: SKELETON_GROUP_COUNT }, (_group, groupIndex) => () => (
                     // mirrors LabeledCard frameless (date label, gap-3) → SurfaceListCard bordered
-                    <div key={groupIndex} className="flex flex-col gap-3">
-                        {/* date label (subtleLabel eyebrow = text-xs muted) */}
-                        <Skeleton.Typography type="body-xs" width="1/4" />
-                        <SurfaceListCard>
-                            {Array.from({ length: SKELETON_ROW_COUNT }).map((_row, rowIndex) => (
-                                <SurfaceListCardItem key={rowIndex}>
-                                    <div className="flex items-start gap-2">
-                                        <Skeleton className="size-9 shrink-0 rounded-full" />
-                                        <div className="flex flex-1 flex-col gap-0">
-                                            <Skeleton.Typography type="body-sm" width="3/4" />
-                                            <Skeleton.Typography type="body-xs" width="1/4" />
-                                        </div>
-                                    </div>
-                                </SurfaceListCardItem>
-                            ))}
-                        </SurfaceListCard>
-                    </div>
-                ))}
-            </div>
+                    <StackV key={groupIndex} gap={4} principle="label-field" items={[
+                        () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                        () => (
+                            <SurfaceListCard>
+                                {Array.from({ length: SKELETON_ROW_COUNT }).map((_row, rowIndex) => (
+                                    <SurfaceListCardItem key={rowIndex}>
+                                        <StackH gap={3} principle="identity" align="start" items={[
+                                            () => <Skeleton className="size-9 shrink-0 rounded-full" />,
+                                            () => (
+                                                <StackV gap={1} principle="name-handle" classNames={["flex-1"]} items={[
+                                                    () => <Skeleton.Typography type="body-sm" width="3/4" />,
+                                                    () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                                                ]} />
+                                            ),
+                                        ]} />
+                                    </SurfaceListCardItem>
+                                ))}
+                            </SurfaceListCard>
+                        ),
+                    ]} />
+                ))
+            } />
         </div>
     )
 }

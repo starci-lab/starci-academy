@@ -4,6 +4,7 @@ import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { IconComponent } from "@/components/atoms/buttons/Button/button-tokens"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
+import { StackH } from "@/components/frames/Stack"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "InputButtonLike" } as const
@@ -100,12 +101,21 @@ export const InputButtonLike = ({
     )
 
     const label = !isSkeleton && Suffix ? (
-        <span className="flex w-full min-w-0 items-center justify-between gap-3">
-            {placeholderLabel}
-            <span className="shrink-0">
-                <Suffix isSkeleton={isSkeleton} />
-            </span>
-        </span>
+        <StackH
+            gap={4}
+            principle="content-row"
+            justify="between"
+            align="center"
+            classNames={["w-full", "min-w-0"]}
+            items={[
+                () => placeholderLabel,
+                () => (
+                    <span className="shrink-0">
+                        <Suffix isSkeleton={isSkeleton} />
+                    </span>
+                ),
+            ]}
+        />
     ) : (
         placeholderLabel
     )

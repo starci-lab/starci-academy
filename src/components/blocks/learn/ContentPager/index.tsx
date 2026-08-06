@@ -130,13 +130,7 @@ const ContentPager = ({
     return (
         <div>
             <div>
-                <SurfaceCardPressableGroup
-                    ariaLabel={ariaLabel}
-                    columns={{ base: 1, sm: 2 }}
-                    gap={4}
-                    items={items}
-                    isSkeleton={isSkeleton}
-                />
+                <SurfaceCardPressableGroup ariaLabel={ariaLabel} columns={{ base: 1, sm: 2 }} items={items} isSkeleton={isSkeleton} principle="content-row" />
             </div>
         </div>
     )

@@ -37,6 +37,8 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { fromGlobalId } from "@/modules/utils/globalId"
 import type { MyCourseOutlineModule, MyCourseOutlinePayload } from "@/modules/api/graphql/queries/types/my-course-outline"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link CourseOutline}. */
 export interface CourseOutlineProps extends WithClassNames<undefined> {
@@ -146,10 +148,12 @@ export const CourseOutline = ({
             skeleton={(
                 <div className={cn(ACCORDION_CARD_SKELETON, className)}>
                     {Array.from({ length: SKELETON_MODULE_COUNT }).map((_unused, moduleIndex) => (
-                        <div key={moduleIndex} className="flex items-center justify-between gap-3 border-b border-default p-4 last:border-b-0">
-                            <Skeleton.Typography type="body" width="1/2" />
-                            <Skeleton className="h-4 w-16 rounded-medium" />
-                        </div>
+                        <Box key={moduleIndex} principle="row-pad" className="border-b border-default p-4 last:border-b-0">
+                            <StackH gap={4} principle="content-row" justify="between" align="center" items={[
+                                () => <Skeleton.Typography type="body" width="1/2" />,
+                                () => <Skeleton className="h-4 w-16 rounded-medium" />,
+                            ]} />
+                        </Box>
                     ))}
                 </div>
             )}
@@ -196,9 +200,9 @@ export const CourseOutline = ({
                                 </>
                             ),
                             body: () => (
-                                <div className="flex flex-col gap-2">
-                                    {module.lessons.map((lesson) => (
-                                        <div key={lesson.id} className="flex flex-col gap-2">
+                                <StackV gap={3} principle="sibling-stack" items={module.lessons.map((lesson) => () => (
+                                    <StackV key={lesson.id} gap={3} principle="sibling-stack" items={[
+                                        () => (
                                             <ListRow
                                                 title={lesson.title}
                                                 subtitle={t("content.minutesRead", { minutes: lesson.minutesRead })}
@@ -230,35 +234,35 @@ export const CourseOutline = ({
                                                     </>
                                                 )}
                                             />
-                                            {lesson.challenges.length > 0 ? (
-                                                <div className="flex flex-col gap-2 pl-6">
-                                                    {lesson.challenges.map((challenge) => (
-                                                        <ListRow
-                                                            key={challenge.id}
-                                                            leading={(
-                                                                <PuzzlePieceIcon aria-hidden focusable="false" className="size-5 text-foreground" />
-                                                            )}
-                                                            title={challenge.title}
-                                                            meta={(
-                                                                <>
-                                                                    <DifficultyChip difficulty={toDifficulty(challenge.difficulty)} />
-                                                                    <StatusChip tone={toStatusTone(challenge.status)}>
-                                                                        {t(`profileSettings.learning.outline.status.${challenge.status}`)}
-                                                                    </StatusChip>
-                                                                    {isAttempted(challenge.status) ? (
-                                                                        <Typography type="body-xs" color="muted">
-                                                                            {`${challenge.lastScore}/${challenge.maxScore}`}
-                                                                        </Typography>
-                                                                    ) : null}
-                                                                </>
-                                                            )}
-                                                        />
-                                                    ))}
-                                                </div>
-                                            ) : null}
-                                        </div>
-                                    ))}
-                                </div>
+                                        ),
+                                        () => (lesson.challenges.length > 0 ? (
+                                            <Box principle="cell-pad" className="pl-6">
+                                                <StackV gap={3} principle="sibling-stack" items={lesson.challenges.map((challenge) => () => (
+                                                    <ListRow
+                                                        key={challenge.id}
+                                                        leading={(
+                                                            <PuzzlePieceIcon aria-hidden focusable="false" className="size-5 text-foreground" />
+                                                        )}
+                                                        title={challenge.title}
+                                                        meta={(
+                                                            <>
+                                                                <DifficultyChip difficulty={toDifficulty(challenge.difficulty)} />
+                                                                <StatusChip tone={toStatusTone(challenge.status)}>
+                                                                    {t(`profileSettings.learning.outline.status.${challenge.status}`)}
+                                                                </StatusChip>
+                                                                {isAttempted(challenge.status) ? (
+                                                                    <Typography type="body-xs" color="muted">
+                                                                        {`${challenge.lastScore}/${challenge.maxScore}`}
+                                                                    </Typography>
+                                                                ) : null}
+                                                            </>
+                                                        )}
+                                                    />
+                                                ))} />
+                                            </Box>
+                                        ) : null),
+                                    ]} />
+                                ))} />
                             ),
                         }
                     })}

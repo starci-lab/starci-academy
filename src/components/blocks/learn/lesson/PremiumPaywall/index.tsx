@@ -84,6 +84,7 @@ export const PremiumPaywall = () => {
         >
             <StackV
                 gap={4}
+                principle="card-caption"
                 align="center"
                 items={[
                     () => <IconTile icon={<LockIcon aria-hidden focusable="false" />} tone="accent" size="sm" />,

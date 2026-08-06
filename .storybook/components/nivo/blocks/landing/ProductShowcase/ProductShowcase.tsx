@@ -126,6 +126,7 @@ const ProductPanel = ({ product, onSelectProduct, labels, isSkeleton }: {
                 <StackV
                     gap={3}
                     isSkeleton={isSkeleton}
+                    principle="sibling-stack"
                     items={[
                         () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={product.categoryLabel} />,
                         () => <Typography size="lg" weight="bold" isSkeleton={isSkeleton} text={product.name} />,
@@ -147,6 +148,7 @@ const ProductPanel = ({ product, onSelectProduct, labels, isSkeleton }: {
                                 align="center"
                                 justify="between"
                                 isSkeleton={isSkeleton}
+                                principle="value-row"
                                 items={[
                                     () => <Typography size="sm" weight="medium" color="accent" isSkeleton={isSkeleton} text={priceText} />,
                                     () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={product.planCountLabel} />,
@@ -189,11 +191,13 @@ const ProductShowcase = ({ products, onSelectProduct, onExploreAll, isSkeleton =
                 body={() => (
                     <StackV
                         gap={8}
+                        principle="marketing-beat"
                         items={[
                             () => (
                                 <StackV
                                     gap={3}
                                     align="center"
+                                    principle="sibling-stack"
                                     items={[
                                         () => <Chip tone="accent" icon={StorefrontIcon} isSkeleton={isSkeleton} text={labels.hookLabel} />,
                                         () => <SectionHeading eyebrow={labels.eyebrow} title={labels.title} intro={labels.intro} align="center" />,
@@ -211,7 +215,7 @@ const ProductShowcase = ({ products, onSelectProduct, onExploreAll, isSkeleton =
                                 ) : (
                                     <Grid
                                         columns={{ base: 1, lg: 2 }}
-                                        gap={6}
+                                        principle="block-boundary"
                                         items={rows.map((product) => ({
                                             key: product.id,
                                             content: () => (

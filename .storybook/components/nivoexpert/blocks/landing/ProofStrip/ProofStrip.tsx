@@ -65,7 +65,7 @@ interface ProofStripStatProps {
 /** One stat cell: a bold value over a muted label, both threaded with `isSkeleton`. */
 const Stat = ({ value, label, isSkeleton }: ProofStripStatProps) => (
     <StackV
-        gap={1}
+        principle="name-handle" gap={1}
         align="center"
         isSkeleton={isSkeleton}
         items={[
@@ -109,8 +109,7 @@ const ProofStrip = ({ courses, isCommunityEnabled, hasCommunityPost, labels, isS
                 isSkeleton={isSkeleton}
                 body={() => (
                     <Grid
-                        columns={isCommunityEnabled ? { base: 1, sm: 3 } : { base: 1, sm: 2 }}
-                        gap={6}
+                        principle="block-boundary" columns={isCommunityEnabled ? { base: 1, sm: 3 } : { base: 1, sm: 2 }}
                         isSkeleton={isSkeleton}
                         items={[
                             { key: "courses", content: () => <Stat value={String(courseCount)} label={labels.courseLabel} isSkeleton={isSkeleton} /> },

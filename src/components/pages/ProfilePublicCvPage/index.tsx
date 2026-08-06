@@ -8,7 +8,7 @@ import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/as
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Box } from "@/components/frames/Box"
-import { StackH, StackV } from "@/components/frames/Stack"
+import { StackV } from "@/components/frames/Stack"
 import { pathConfig } from "@/resources/path"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
@@ -83,7 +83,7 @@ export const ProfilePublicCvPage = () => {
     if (isSkeleton) {
         return (
             <Box className={RESTING_HEIGHT}>
-                <Box className={PAPER_FRAME}>
+                <Box principle="center-measure" className={PAPER_FRAME}>
                     <Skeleton className="h-full w-full" />
                 </Box>
             </Box>
@@ -116,13 +116,16 @@ export const ProfilePublicCvPage = () => {
         <StackV
             identity={{ tier: "block", component: "ProfilePublicCvPage" }}
             gap={5}
+            principle="group-boundary"
             items={[
                 ...(isSelf ? [() => (
-                    <StackH justify="end" gap={1} body={() => <PublicCvEditButton label={editLabel} onPress={onEdit} />} />
+                    <div className="flex justify-end">
+                        <PublicCvEditButton label={editLabel} onPress={onEdit} />
+                    </div>
                 )] : []),
                 () => (
                     <Box className={LOADED_HEIGHT}>
-                        <Box className={PAPER_FRAME}>
+                        <Box principle="center-measure" className={PAPER_FRAME}>
                             <iframe
                                 title={pdfTitle}
                                 src={pdfUrl}

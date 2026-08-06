@@ -71,6 +71,7 @@ export const SummaryCard = ({
         () => (
             <StackH
                 gap={4}
+                principle="content-row"
                 justify="between"
                 items={[
                     () => <span className="text-accent-soft-foreground"><Icon /></span>,

@@ -45,22 +45,22 @@ export const KeyRow = ({
 
     return (
         <tr className="border-t border-separator text-sm text-foreground">
-            <td className="px-4 py-2 font-mono text-foreground">
+            <td data-principle="ps-admin-4" className="px-4 py-2 font-mono text-foreground">
                 …{keyHealth.keySuffix}
             </td>
-            <td className="px-4 py-2">
+            <td data-principle="ps-admin-4" className="px-4 py-2">
                 <KeyStatusChip
                     status={keyHealth.status}
                     label={statusLabel(keyHealth.status)}
                 />
             </td>
-            <td className="px-4 py-2 text-center tabular-nums">
+            <td data-principle="ps-admin-4" className="px-4 py-2 text-center tabular-nums">
                 {keyHealth.failCount}
             </td>
-            <td className="px-4 py-2 text-muted">
+            <td data-principle="ps-admin-4" className="px-4 py-2 text-muted">
                 {formatBalancerTimestamp(keyHealth.lastHealthCheckAt, locale)}
             </td>
-            <td className="px-4 py-2 text-muted">
+            <td data-principle="ps-admin-4" className="px-4 py-2 text-muted">
                 {formatBalancerTimestamp(keyHealth.lastUsedAt, locale)}
             </td>
         </tr>

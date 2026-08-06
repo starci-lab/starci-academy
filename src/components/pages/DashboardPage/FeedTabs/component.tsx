@@ -35,16 +35,16 @@ const SKELETON_ROW_COUNT = 3
  * separate skeleton tree (loading-and-skeleton.md; `missingSkeletonSupport`).
  */
 const FeedSkeletonGroup = () => (
-    <StackV gap={3} items={[
+    <StackV gap={3} principle="sibling-stack" items={[
         () => <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} />,
         () => (
             <SurfaceListCard>
                 {Array.from({ length: SKELETON_ROW_COUNT }, (_row, index) => (
                     <SurfaceListCardItem key={index}>
-                        <StackH gap={2} align="start" items={[
+                        <StackH gap={2} principle="icon-text" align="start" items={[
                             () => <Skeleton className="size-9 shrink-0 rounded-full" />,
                             () => (
-                                <StackV gap={1} classNames={["min-w-0", "flex-1"]} items={[
+                                <StackV gap={1} principle="name-handle" classNames={["min-w-0", "flex-1"]} items={[
                                     () => <Typography size="sm" isSkeleton classNames={["w-3/4"]} />,
                                     () => <Typography size="xs" isSkeleton classNames={["w-1/4"]} />,
                                 ]} />
@@ -168,8 +168,85 @@ export const _FeedTabs = ({
     labels,
 }: FeedTabsProps) => {
     const identity: CallerIdentity = { tier: "block", component: "FeedTabs" }
+
+    // Hoisted so outer gap-only / named frames are not scanned as owning nested decisions.
+    const feedStreamItems = [
+        ...(isSkeleton
+            ? Array.from({ length: SKELETON_GROUP_COUNT }, () => () => <FeedSkeletonGroup />)
+            : [() => <ActivityFeed items={items} onResolve={onResolve} onReact={onReact} />]),
+        ...(!isSkeleton && hasMore ? [() => (
+            <StackV gap={3} principle="sibling-stack" align="center" items={[
+                () => (
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        isPending={isLoadingMore}
+                        label={labels.loadMoreLabel}
+                        onPress={onLoadMore}
+                    />
+                ),
+                ...(hasLoadMoreError && !isLoadingMore ? [() => (
+                    <StackH gap={2} principle="icon-text" items={[
+                        () => <Typography size="xs" color="danger" text={labels.errorTitle} />,
+                        () => <Button variant="tertiary" size="sm" label={labels.retryLabel} onPress={onRetry} />,
+                    ]} />
+                )] : []),
+            ]} />
+        )] : []),
+    ]
+
+    const tabsZoneItems = [
+        () => (
+            <TabsCard
+                leftTabs={{
+                    items: scopeTabs,
+                    selectedKey: selectedScopeKey,
+                    ariaLabel: labels.scopeTabsAria,
+                    onSelectionChange: onScopeChange,
+                }}
+                rightTabs={{
+                    items: filterTabs,
+                    selectedKey: selectedFilterKey,
+                    ariaLabel: labels.filterTabsAria,
+                    onSelectionChange: onFilterChange,
+                }}
+            />
+        ),
+        () => {
+            // error beats a stale loading flag; empty only once settled
+            if (error) {
+                return <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retryLabel} />
+            }
+            if (!isSkeleton && isEmpty) {
+                // two distinct reasons need two distinct empties: filtered-empty
+                // offers a way back to "all"; platform-empty invites into courses.
+                return isFilteredEmpty ? (
+                    <AsyncContentEmpty
+                        title={labels.emptyFilteredTitle}
+                        action={() => (
+                            <Button variant="secondary" size="sm" label={labels.emptyFilteredCta} onPress={onResetFilter} />
+                        )}
+                    />
+                ) : (
+                    <AsyncContentEmpty
+                        title={labels.emptyPlatformTitle}
+                        description={labels.emptyPlatformDescription}
+                        action={() => (
+                            <Button variant="secondary" size="sm" label={labels.emptyPlatformCta} onPress={onBrowseCourses} />
+                        )}
+                    />
+                )
+            }
+
+            // the feed lives DIRECTLY in the zone — do NOT wrap it in an outer
+            // Card (each day is already a labeled-list-card; an outer Card
+            // would nest card-in-card inside the big zone)
+            return <StackV gap={6} principle="block-boundary" items={feedStreamItems} />
+        },
+    ]
+
     return (
-        <StackV gap={6} identity={identity} items={[
+        <StackV gap={6} principle="block-boundary" identity={identity} items={[
             // CARD 1 — "Trending this week": platform-wide trending discovery (own
             // query, NOT scope-dependent) → shown on both scopes; self-hides when
             // nothing trends.
@@ -178,82 +255,7 @@ export const _FeedTabs = ({
             // toolbar floats OUTSIDE, above the card; the card holds the activity
             // stream the tabs govern.
             () => (
-                <StackV gap={3} items={[
-                    () => (
-                        <TabsCard
-                            leftTabs={{
-                                items: scopeTabs,
-                                selectedKey: selectedScopeKey,
-                                ariaLabel: labels.scopeTabsAria,
-                                onSelectionChange: onScopeChange,
-                            }}
-                            rightTabs={{
-                                items: filterTabs,
-                                selectedKey: selectedFilterKey,
-                                ariaLabel: labels.filterTabsAria,
-                                onSelectionChange: onFilterChange,
-                            }}
-                        />
-                    ),
-                    () => {
-                        // error beats a stale loading flag; empty only once settled
-                        if (error) {
-                            return <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retryLabel} />
-                        }
-                        if (!isSkeleton && isEmpty) {
-                            // two distinct reasons need two distinct empties: filtered-empty
-                            // offers a way back to "all"; platform-empty invites into courses.
-                            return isFilteredEmpty ? (
-                                <AsyncContentEmpty
-                                    title={labels.emptyFilteredTitle}
-                                    action={() => (
-                                        <Button variant="secondary" size="sm" label={labels.emptyFilteredCta} onPress={onResetFilter} />
-                                    )}
-                                />
-                            ) : (
-                                <AsyncContentEmpty
-                                    title={labels.emptyPlatformTitle}
-                                    description={labels.emptyPlatformDescription}
-                                    action={() => (
-                                        <Button variant="secondary" size="sm" label={labels.emptyPlatformCta} onPress={onBrowseCourses} />
-                                    )}
-                                />
-                            )
-                        }
-
-                        // the feed lives DIRECTLY in the zone — do NOT wrap it in an outer
-                        // Card (each day is already a labeled-list-card; an outer Card
-                        // would nest card-in-card inside the big zone)
-                        return (
-                            <StackV gap={6} items={[
-                                ...(isSkeleton
-                                    ? Array.from({ length: SKELETON_GROUP_COUNT }, () => () => <FeedSkeletonGroup />)
-                                    : [() => <ActivityFeed items={items} onResolve={onResolve} onReact={onReact} />]),
-                                ...(!isSkeleton && hasMore ? [() => (
-                                    <StackV gap={2} align="center" items={[
-                                        () => (
-                                            <Button
-                                                variant="secondary"
-                                                size="sm"
-                                                isPending={isLoadingMore}
-                                                label={labels.loadMoreLabel}
-                                                onPress={onLoadMore}
-                                            />
-                                        ),
-                                        // load-more failure (page 2+) doesn't clear existing items —
-                                        // surface an inline retry instead of the full error branch.
-                                        ...(hasLoadMoreError && !isLoadingMore ? [() => (
-                                            <StackH gap={2} items={[
-                                                () => <Typography size="xs" color="danger" text={labels.errorTitle} />,
-                                                () => <Button variant="tertiary" size="sm" label={labels.retryLabel} onPress={onRetry} />,
-                                            ]} />
-                                        )] : []),
-                                    ]} />
-                                )] : []),
-                            ]} />
-                        )
-                    },
-                ]} />
+                <StackV gap={3} principle="sibling-stack" items={tabsZoneItems} />
             ),
         ]} />
     )

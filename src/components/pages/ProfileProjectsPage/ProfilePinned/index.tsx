@@ -16,14 +16,20 @@ import { useAppSelector } from "@/redux/hooks"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { Box } from "@/components/frames/Box"
+import { Cluster } from "@/components/frames/Cluster"
+import { Grid } from "@/components/frames/Grid"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 const ProfilePinnedAction = ({ label, onPress }: { label: string; onPress: () => void }) => (
     <Link
         onPress={onPress}
-        className="inline-flex shrink-0 cursor-pointer items-center gap-1 text-sm text-accent-soft-foreground no-underline transition-opacity hover:opacity-60"
+        className="inline-flex shrink-0 cursor-pointer items-center text-sm text-accent-soft-foreground no-underline transition-opacity hover:opacity-60"
     >
-        <PencilIcon className="size-4" aria-hidden="true" focusable="false" />
-        {label}
+        <StackH gap={2} principle="icon-text" inline items={[
+            () => <PencilIcon className="size-4" aria-hidden="true" focusable="false" />,
+            () => <span>{label}</span>,
+        ]} />
     </Link>
 )
 
@@ -88,31 +94,34 @@ export const ProfilePinned = ({
             <AsyncContent
                 isLoading={isLoading && !data}
                 skeleton={(
-                    // mirror the responsive two-column pinned grid (bounded surface cards)
-                    <div className="grid grid-cols-1 gap-3 @app-sm:grid-cols-2">
-                        {[0, 1, 2, 3].map((index) => (
-                            <div
-                                key={index}
-                                className="flex flex-col gap-2 rounded-2xl border border-default bg-surface p-4"
-                            >
-                                {/* top row: type badge + outbound icon */}
-                                <div className="flex items-center justify-between gap-2">
-                                    <Skeleton.Chip />
-                                    <Skeleton className="size-4 shrink-0 rounded" />
-                                </div>
-                                {/* title */}
-                                <Skeleton.Typography type="body-sm" width="3/4" />
-                                {/* one-line description */}
-                                <Skeleton.Typography type="body-xs" width="1/2" />
-                                {/* tech-stack chip row */}
-                                <div className="flex flex-wrap gap-2">
-                                    {[0, 1, 2].map((chip) => (
-                                        <Skeleton.Chip key={chip} />
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                    <Grid
+                        principle="content-row"
+                        columns={{ base: 1, sm: 2 }}
+                        items={[0, 1, 2, 3].map((index) => ({
+                            key: `pin-skel-${index}`,
+                            content: () => (
+                                <Box principle="card-padding" className="rounded-2xl border border-default bg-surface p-4">
+                                    <StackV gap={3} principle="sibling-stack" items={[
+                                        () => (
+                                            <StackH gap={3} principle="flex-action" justify="between" items={[
+                                                () => <Skeleton.Chip />,
+                                                () => <Skeleton className="size-4 shrink-0 rounded" />,
+                                            ]} />
+                                        ),
+                                        () => <Skeleton.Typography type="body-sm" width="3/4" />,
+                                        () => <Skeleton.Typography type="body-xs" width="1/2" />,
+                                        () => (
+                                            <Cluster gap={3} principle="chip-row" items={
+                                                [0, 1, 2].map((chip) => (
+                                                    () => <Skeleton.Chip key={chip} />
+                                                ))
+                                            } />
+                                        ),
+                                    ]} />
+                                </Box>
+                            ),
+                        }))}
+                    />
                 )}
                 isEmpty={pins.length === 0}
                 // owner sees an add CTA; a visitor sees nothing (clean profile)
@@ -130,15 +139,14 @@ export const ProfilePinned = ({
                     retryLabel: t("pinnedProjects.retry"),
                 }}
             >
-                {/* responsive two-column grid like GitHub pinned repos */}
-                <div className="grid grid-cols-1 gap-3 @app-sm:grid-cols-2">
-                    {pins.map((pin) => (
-                        <PinnedProjectCard
-                            key={pin.id}
-                            pin={pin}
-                        />
-                    ))}
-                </div>
+                <Grid
+                    principle="content-row"
+                    columns={{ base: 1, sm: 2 }}
+                    items={pins.map((pin) => ({
+                        key: pin.id,
+                        content: () => <PinnedProjectCard pin={pin} />,
+                    }))}
+                />
             </AsyncContent>
         </LabeledCard>
     )

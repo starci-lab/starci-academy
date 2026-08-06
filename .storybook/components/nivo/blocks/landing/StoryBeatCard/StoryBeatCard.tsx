@@ -41,6 +41,7 @@ const StoryBeatCard = ({ eyebrow, title, description, unitCountLabel, ctaLabel, 
             body={() => (
                 <StackV
                     gap={3}
+                    principle="sibling-stack"
                     items={[
                         () => (
                             <StackV
@@ -57,6 +58,7 @@ const StoryBeatCard = ({ eyebrow, title, description, unitCountLabel, ctaLabel, 
                                 gap={3}
                                 align="center"
                                 justify="between"
+                                principle="flex-action"
                                 items={[
                                     () => <Chip tone="default" text={unitCountLabel} />,
                                     () => (

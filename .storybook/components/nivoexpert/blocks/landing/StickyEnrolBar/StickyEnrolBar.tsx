@@ -64,7 +64,7 @@ const StickyEnrolBar = ({ offer, onEnrol, isVisible, isSkeleton = false, labels 
         )}
     >
         <StackH
-            gap={4}
+            principle="content-row" gap={4}
             justify="between"
             isSkeleton={isSkeleton}
             items={[

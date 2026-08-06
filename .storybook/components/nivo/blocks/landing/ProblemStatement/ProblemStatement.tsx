@@ -55,7 +55,7 @@ const ProblemStatement = ({
     <div data-tier="block" data-component="ProblemStatement">
         <Grid
             columns={{ base: 1, lg: 2 }}
-            gap={8}
+            principle="marketing-beat"
             items={[
                 {
                     key: "copy",

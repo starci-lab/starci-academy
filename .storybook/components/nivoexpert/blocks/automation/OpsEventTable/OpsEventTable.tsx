@@ -99,7 +99,7 @@ const OpsEventTable = ({ events, labels }: OpsEventTableProps) => {
                 label={labels.title}
                 body={() => (
                     <StackV
-                        gap={3}
+                        principle="sibling-stack" gap={3}
                         items={[
                             () => <Typography size="sm" color="muted" text={labels.description} />,
                             () => <Table columns={columns} items={rows} ariaLabel={labels.tableAriaLabel} />,

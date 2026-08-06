@@ -15,6 +15,8 @@ import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { MyVouchers } from "./MyVouchers"
 import { RewardCatalog } from "./RewardCatalog"
+import { Box } from "@/components/frames/Box"
+import { StackV } from "@/components/frames/Stack"
 
 /** The Coin shop's two tabs: buying new rewards vs owning/using them. */
 enum RewardsTab {
@@ -49,59 +51,65 @@ export const RewardsPage = ({ className }: RewardsPageProps) => {
 
     return (
         <div className={cn(className)}>
-            <div className="mx-auto flex w-full max-w-3xl flex-col gap-10 p-6">
-                <PageHeader
-                    breadcrumb={(
-                        <ResponsiveBreadcrumb
-                            items={[
-                                {
-                                    key: "home",
-                                    label: t("nav.home"),
-                                    onPress: () => router.push(pathConfig().locale(locale).build()),
-                                },
-                                {
-                                    key: "rewards",
-                                    label: t("rewards.title"),
-                                },
-                            ]}
+            <Box principle="center-measure" className="mx-auto w-full max-w-3xl p-6">
+                <StackV gap={7} principle="layout-split" items={[
+                    () => (
+                        <PageHeader
+                            breadcrumb={(
+                                <ResponsiveBreadcrumb
+                                    items={[
+                                        {
+                                            key: "home",
+                                            label: t("nav.home"),
+                                            onPress: () => router.push(pathConfig().locale(locale).build()),
+                                        },
+                                        {
+                                            key: "rewards",
+                                            label: t("rewards.title"),
+                                        },
+                                    ]}
+                                />
+                            )}
+                            title={t("rewards.title")}
+                            description={t("rewards.description")}
+                            meta={(
+                                <HighlightChip
+                                    tone="accent"
+                                    icon={CoinsIcon}
+                                    value={balance}
+                                    label={t("rewards.balanceLabel")}
+                                />
+                            )}
                         />
-                    )}
-                    title={t("rewards.title")}
-                    description={t("rewards.description")}
-                    meta={(
-                        <HighlightChip
-                            tone="accent"
-                            icon={CoinsIcon}
-                            value={balance}
-                            label={t("rewards.balanceLabel")}
-                        />
-                    )}
-                />
-
-                <div className="flex flex-col gap-6">
-                    <TabsCard
-                        leftTabs={{
-                            items: [
-                                {
-                                    key: RewardsTab.Shop,
-                                    label: t("rewards.tabs.shop"),
-                                },
-                                {
-                                    key: RewardsTab.Wallet,
-                                    label: unusedVoucherCount > 0
-                                        ? t("rewards.tabs.walletWithCount", { count: unusedVoucherCount })
-                                        : t("rewards.tabs.wallet"),
-                                },
-                            ],
-                            selectedKey: tab,
-                            ariaLabel: t("rewards.tabsAria"),
-                            onSelectionChange: (key) => setTab(key as RewardsTab),
-                        }}
-                    />
-
-                    {tab === RewardsTab.Shop ? <RewardCatalog /> : <MyVouchers />}
-                </div>
-            </div>
+                    ),
+                    () => (
+                        <StackV gap={6} principle="block-boundary" items={[
+                            () => (
+                                <TabsCard
+                                    leftTabs={{
+                                        items: [
+                                            {
+                                                key: RewardsTab.Shop,
+                                                label: t("rewards.tabs.shop"),
+                                            },
+                                            {
+                                                key: RewardsTab.Wallet,
+                                                label: unusedVoucherCount > 0
+                                                    ? t("rewards.tabs.walletWithCount", { count: unusedVoucherCount })
+                                                    : t("rewards.tabs.wallet"),
+                                            },
+                                        ],
+                                        selectedKey: tab,
+                                        ariaLabel: t("rewards.tabsAria"),
+                                        onSelectionChange: (key) => setTab(key as RewardsTab),
+                                    }}
+                                />
+                            ),
+                            () => (tab === RewardsTab.Shop ? <RewardCatalog /> : <MyVouchers />),
+                        ]} />
+                    ),
+                ]} />
+            </Box>
         </div>
     )
 }

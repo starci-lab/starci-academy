@@ -70,7 +70,7 @@ const PostComposer = ({
                 padding={3}
                 body={() => (
                     <StackV
-                        gap={3}
+                        principle="sibling-stack" gap={3}
                         items={[
                             () => (
                                 <InputText
@@ -95,7 +95,7 @@ const PostComposer = ({
                             ),
                             () => (
                                 <StackH
-                                    gap={3}
+                                    principle="flex-action" gap={3}
                                     justify="end"
                                     items={[
                                         () => (

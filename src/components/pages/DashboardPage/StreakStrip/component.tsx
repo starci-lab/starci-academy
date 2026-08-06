@@ -62,7 +62,7 @@ export interface StreakStripProps {
     onRetry?: () => void
     /** Current streak length, in days. */
     streak?: number
-    /** Longest streak ever reached, in days. */
+    /** Longest streak ever reached, in days. */
     /** The last 7 days, oldest first. */
     days?: Array<StreakStripDay>
     /** Fired by both daily-goal CTAs (empty state + idle-today nudge) — jumps to the course list. */
@@ -88,7 +88,7 @@ export const _StreakStrip = ({
     isSkeleton = false,
     error,
     onRetry,
-    streak = 0,
+    streak = 0,
     days = [],
     onLearn,
     labels,
@@ -110,13 +110,13 @@ export const _StreakStrip = ({
     // here, co-located, rather than in a parallel tree.
     const dayItems: Array<ComponentTypeWithSkeleton> = isSkeleton
         ? Array.from({ length: SKELETON_DAY_COUNT }, () => () => (
-            <StackV gap={3} align="center" items={[
+            <StackV gap={3} principle="sibling-stack" align="center" items={[
                 () => <Skeleton className="size-6 shrink-0 rounded-full" />,
                 () => <Typography isSkeleton size="xs" classNames={["w-1/2"]} />,
             ]} />
         ))
         : days.map((day) => () => (
-            <StackV gap={3} align="center" items={[
+            <StackV gap={3} principle="sibling-stack" align="center" items={[
                 () => (
                     // No `title`: the dot is `aria-hidden`, so a tooltip string on it would be
                     // announced to nobody — the weekday label below carries the meaning.

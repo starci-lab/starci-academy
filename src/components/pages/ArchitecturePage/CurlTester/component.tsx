@@ -64,11 +64,12 @@ export const _CurlTester = ({
     <StackV
         gap={3}
         identity={{ tier: "block", component: "CurlTester" }}
+        principle="sibling-stack"
         items={[
             () => (
-                <StackV gap={2} items={[
+                <StackV gap={2} principle="title-subtitle" items={[
                     () => (
-                        <StackH gap={2} justify="between" align="center" items={[
+                        <StackH gap={2} justify="between" align="center" principle="icon-text" items={[
                             () => <Typography size="xs" color="muted" text={labels.commandLabel} />,
                             () => (
                                 <Button
@@ -82,7 +83,7 @@ export const _CurlTester = ({
                         ]} />
                     ),
                     () => (
-                        <Box className="overflow-x-auto rounded-xl bg-default p-3">
+                        <Box principle="cell-pad" className="overflow-x-auto rounded-xl bg-default p-3">
                             <Typography size="code" text={curlCommand} preserveWhitespace />
                         </Box>
                     ),
@@ -106,7 +107,7 @@ export const _CurlTester = ({
             // multi-line JSON blob, so the swap is hand-mirrored right where it sits rather than
             // threaded through a leaf prop.
             ...(running || result ? [() => (
-                <Box className="overflow-x-auto rounded-xl bg-default p-3">
+                <Box principle="cell-pad" className="overflow-x-auto rounded-xl bg-default p-3">
                     {running ? <Skeleton.Paragraph lines={4} /> : <Typography size="code" text={result ?? ""} preserveWhitespace />}
                 </Box>
             )] : []),

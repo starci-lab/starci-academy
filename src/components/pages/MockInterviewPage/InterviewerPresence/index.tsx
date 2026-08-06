@@ -3,6 +3,8 @@
 import React from "react"
 import { Typography, cn } from "@heroui/react"
 import { SpeakerHighIcon, SpeakerSlashIcon } from "@phosphor-icons/react"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
+import { StackH, StackV } from "@/components/frames/Stack"
 import type { MockInterviewPersona } from "../interviewPersona"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -60,52 +62,110 @@ export const InterviewerPresence = ({
     className,
 }: InterviewerPresenceProps) => {
     return (
-        <div className={cn("rounded-3xl bg-surface p-4 shadow-surface", className)}>
-            <div className="flex items-center gap-3">
-                <img
-                    src={persona.avatarSrc}
-                    alt=""
-                    className="size-10 shrink-0 rounded-full object-cover"
-                    aria-hidden
-                />
-                <div className="flex min-w-0 flex-col">
-                    <div className="flex items-center gap-2">
-                        <Typography type="body-sm" weight="medium" className="truncate">{persona.name}</Typography>
-                        {speaking ? (
-                            <span className="flex items-center gap-2 text-accent-soft-foreground">
-                                <span className="flex items-end gap-[2px]" aria-hidden>
-                                    <PulseBar delayMs={0} heightClass="h-2" />
-                                    <PulseBar delayMs={150} heightClass="h-3" />
-                                    <PulseBar delayMs={300} heightClass="h-1.5" />
-                                </span>
-                                <Typography type="body-xs" className="text-accent-soft-foreground">{speakingLabel}</Typography>
-                            </span>
+        <div className={className}>
+            <SurfaceCard
+                padding={5}
+                body={() => (
+                    <>
+                        <StackH
+                            gap={4}
+                            principle="content-row"
+                            justify="between"
+                            classNames={["w-full"]}
+                            items={[
+                                () => (
+                                    <StackH
+                                        gap={4}
+                                        classNames={["min-w-0", "flex-1"]}
+                                        items={[
+                                            () => (
+                                                <img
+                                                    src={persona.avatarSrc}
+                                                    alt=""
+                                                    className="size-10 shrink-0 rounded-full object-cover"
+                                                    aria-hidden
+                                                />
+                                            ),
+                                            () => (
+                                                <StackV
+                                                    gap={1}
+                                                    principle="name-handle"
+                                                    classNames={["min-w-0"]}
+                                                    items={[
+                                                        () => (
+                                                            <StackH
+                                                                gap={3}
+                                                                principle="flex-action"
+                                                                items={[
+                                                                    () => (
+                                                                        <Typography type="body-sm" weight="medium" className="truncate">
+                                                                            {persona.name}
+                                                                        </Typography>
+                                                                    ),
+                                                                    ...(speaking
+                                                                        ? [() => (
+                                                                            // Pulse + label at preserved 8px — no step-3 token fits icon-text (4px).
+                                                                            <StackH
+                                                                                gap={3}
+                                                                                items={[
+                                                                                    () => (
+                                                                                        <span className="flex items-end gap-[2px]" aria-hidden>
+                                                                                            <PulseBar delayMs={0} heightClass="h-2" />
+                                                                                            <PulseBar delayMs={150} heightClass="h-3" />
+                                                                                            <PulseBar delayMs={300} heightClass="h-1.5" />
+                                                                                        </span>
+                                                                                    ),
+                                                                                    () => (
+                                                                                        <Typography type="body-xs" className="text-accent-soft-foreground">
+                                                                                            {speakingLabel}
+                                                                                        </Typography>
+                                                                                    ),
+                                                                                ]}
+                                                                            />
+                                                                        )]
+                                                                        : []),
+                                                                ]}
+                                                            />
+                                                        ),
+                                                        () => (
+                                                            <Typography type="body-xs" color="muted" className="truncate">
+                                                                {persona.role}
+                                                            </Typography>
+                                                        ),
+                                                    ]}
+                                                />
+                                            ),
+                                        ]}
+                                    />
+                                ),
+                                ...(ttsSupported
+                                    ? [() => (
+                                        <button
+                                            type="button"
+                                            aria-label={ttsEnabled ? muteLabel : unmuteLabel}
+                                            aria-pressed={ttsEnabled}
+                                            onClick={onToggleTts}
+                                            className={cn(
+                                                "flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors",
+                                                ttsEnabled ? "text-accent-soft-foreground hover:bg-accent-soft" : "text-muted hover:bg-default hover:text-foreground",
+                                            )}
+                                        >
+                                            {ttsEnabled ? (
+                                                <SpeakerHighIcon className="size-5" aria-hidden focusable="false" />
+                                            ) : (
+                                                <SpeakerSlashIcon className="size-5" aria-hidden focusable="false" />
+                                            )}
+                                        </button>
+                                    )]
+                                    : []),
+                            ]}
+                        />
+                        {children ? (
+                            <div className="mt-3 border-t border-default pt-3">{children}</div>
                         ) : null}
-                    </div>
-                    <Typography type="body-xs" color="muted" className="truncate">{persona.role}</Typography>
-                </div>
-                {ttsSupported ? (
-                    <button
-                        type="button"
-                        aria-label={ttsEnabled ? muteLabel : unmuteLabel}
-                        aria-pressed={ttsEnabled}
-                        onClick={onToggleTts}
-                        className={cn(
-                            "ml-auto flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors",
-                            ttsEnabled ? "text-accent-soft-foreground hover:bg-accent-soft" : "text-muted hover:bg-default hover:text-foreground",
-                        )}
-                    >
-                        {ttsEnabled ? (
-                            <SpeakerHighIcon className="size-5" aria-hidden focusable="false" />
-                        ) : (
-                            <SpeakerSlashIcon className="size-5" aria-hidden focusable="false" />
-                        )}
-                    </button>
-                ) : null}
-            </div>
-            {children ? (
-                <div className="mt-3 border-t border-default pt-3">{children}</div>
-            ) : null}
+                    </>
+                )}
+            />
         </div>
     )
 }

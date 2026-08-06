@@ -12,6 +12,8 @@ import { ContactFaq } from "./ContactFaq"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { PageContainer } from "@/components/blocks/layout/PageContainer"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { Grid } from "@/components/frames/Grid"
+import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link Contact}. */
 export type ContactPageProps = WithClassNames<undefined>
@@ -30,26 +32,40 @@ export const ContactPage = ({ className }: ContactPageProps) => {
     return (
         <PageContainer className={className}>
             <div className="flex flex-col gap-10">
-                {/* header: title + intro + honest response-time expectation */}
-                <div className="flex flex-col gap-2">
-                    <PageHeader
-                        title={t("contact.title")}
-                        description={t("contact.intro")}
-                    />
-                    <Typography type="body-sm" color="muted">
-                        {t("contact.responseTime")}
-                    </Typography>
-                </div>
+                <StackV
+                    gap={3}
+                    principle="sibling-stack"
+                    items={[
+                        () => (
+                            <PageHeader
+                                title={t("contact.title")}
+                                description={t("contact.intro")}
+                            />
+                        ),
+                        () => (
+                            <Typography type="body-sm" color="muted">
+                                {t("contact.responseTime")}
+                            </Typography>
+                        ),
+                    ]}
+                />
 
-                {/* left: real channels + founder · right: the working form */}
-                <div className="grid grid-cols-1 gap-6 @app-lg:grid-cols-2">
-                    <ContactChannels />
-                    <LabeledCard label={t("contact.form.title")}>
-                        <ContactForm />
-                    </LabeledCard>
-                </div>
+                <Grid
+                    columns={{ base: 1, lg: 2 }}
+                    principle="block-boundary"
+                    items={[
+                        { key: "channels", content: () => <ContactChannels /> },
+                        {
+                            key: "form",
+                            content: () => (
+                                <LabeledCard label={t("contact.form.title")}>
+                                    <ContactForm />
+                                </LabeledCard>
+                            ),
+                        },
+                    ]}
+                />
 
-                {/* deflect: contact-specific FAQ + link to the funnel FAQ */}
                 <ContactFaq />
             </div>
         </PageContainer>

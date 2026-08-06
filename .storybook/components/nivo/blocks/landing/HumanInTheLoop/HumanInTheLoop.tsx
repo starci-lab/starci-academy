@@ -64,7 +64,7 @@ const HumanInTheLoop = ({
     <div data-tier="block" data-component="HumanInTheLoop">
         <Grid
             columns={{ base: 1, lg: 2 }}
-            gap={8}
+            principle="marketing-beat"
             items={[
                 {
                     key: "copy",

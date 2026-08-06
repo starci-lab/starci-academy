@@ -90,6 +90,7 @@ const KpiTile = ({ icon, label, value, format, footer, isSkeleton = false }: Kpi
                 body={() => (
                     <StackV
                         gap={3}
+                        principle="sibling-stack"
                         isSkeleton={isSkeleton}
                         items={[
                             () => (

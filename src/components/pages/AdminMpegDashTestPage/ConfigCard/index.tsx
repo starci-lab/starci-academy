@@ -6,6 +6,7 @@ import { RENDERER_TYPE_OPTIONS } from "../map"
 import { RendererTypeButton } from "./RendererTypeButton"
 import type { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Box } from "@/components/frames/Box"
 
 /** Props for {@link ConfigCard}. */
 export interface ConfigCardProps extends WithClassNames<undefined> {
@@ -34,29 +35,31 @@ export const ConfigCard = ({
     className,
 }: ConfigCardProps) => (
     <Card className={cn("border-slate-700/50 bg-slate-800/50 backdrop-blur-xl", className)}>
-        <CardContent className="space-y-3 p-6">
-            <h2 className="text-lg font-semibold text-white">
-                Configuration
-            </h2>
+        <CardContent>
+            <Box principle="page-pad" className="space-y-3 p-6">
+                <h2 className="text-lg font-semibold text-white">
+                    Configuration
+                </h2>
 
-            <Input
-                id="mpegdash-url-input"
-                placeholder="https://example.com/stream/manifest.mpd"
-                value={url}
-                onChange={(e) => onChangeUrl(e.target.value)}
-                className="text-white"
-            />
+                <Input
+                    id="mpegdash-url-input"
+                    placeholder="https://example.com/stream/manifest.mpd"
+                    value={url}
+                    onChange={(e) => onChangeUrl(e.target.value)}
+                    className="text-white"
+                />
 
-            <div className="flex flex-wrap gap-2">
-                {RENDERER_TYPE_OPTIONS.map((option) => (
-                    <RendererTypeButton
-                        key={option.type}
-                        option={option}
-                        isActive={activeType === option.type}
-                        onSelect={onSelectType}
-                    />
-                ))}
-            </div>
+                <Box principle="chip-row" className="flex flex-wrap gap-2">
+                    {RENDERER_TYPE_OPTIONS.map((option) => (
+                        <RendererTypeButton
+                            key={option.type}
+                            option={option}
+                            isActive={activeType === option.type}
+                            onSelect={onSelectType}
+                        />
+                    ))}
+                </Box>
+            </Box>
         </CardContent>
     </Card>
 )

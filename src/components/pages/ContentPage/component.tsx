@@ -213,6 +213,7 @@ export const _ContentPage = ({
         <Box className="pb-6">
             <StackV
                 gap={6}
+                principle="block-boundary"
                 items={[
                     () => (
                         <Container
@@ -275,6 +276,7 @@ export const _ContentPage = ({
     return (
         <StackV
             gap={6}
+            principle="block-boundary"
             identity={{ tier: "block", component: "LessonReader" }}
             items={[
                 // 1. header — capped to the reading width; skeleton mirrors it while loading.
@@ -305,6 +307,7 @@ export const _ContentPage = ({
                 () => (
                     <StackV
                         gap={1}
+                        principle="name-handle"
                         items={[
                             () => (isSkeleton ? (
                                 <Container

@@ -124,12 +124,12 @@ const PostCard = ({ post, hasLiked, onToggleLike, isSkeleton = false, labels }: 
                 isSkeleton={isSkeleton}
                 body={() => (
                     <StackV
-                        gap={3}
+                        principle="sibling-stack" gap={3}
                         isSkeleton={isSkeleton}
                         items={[
                             () => (
                                 <StackH
-                                    gap={3}
+                                    principle="value-row" gap={3}
                                     justify="between"
                                     align="center"
                                     isSkeleton={isSkeleton}
@@ -143,7 +143,7 @@ const PostCard = ({ post, hasLiked, onToggleLike, isSkeleton = false, labels }: 
                             () => <Typography size="sm" color="muted" preserveWhitespace isSkeleton={isSkeleton} text={post.body} />,
                             () => (
                                 <StackH
-                                    gap={3}
+                                    principle="flex-action" gap={3}
                                     align="center"
                                     isSkeleton={isSkeleton}
                                     items={[

@@ -42,6 +42,8 @@ import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { fromGlobalId } from "@/modules/utils/globalId"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link CourseDetail}. */
 export type CourseDetailProps = WithClassNames<undefined>
@@ -104,73 +106,96 @@ export const CourseDetail = ({
 
     return (
         <div className={cn("flex flex-col gap-6", className)}>
-            <Link
-                onPress={() => { setSelectedCourse(null) }}
-                className="flex w-fit items-center gap-2 text-sm text-muted"
-            >
-                <ArrowLeftIcon aria-hidden focusable="false" className="size-5" />
-                {t("profileSettings.learning.history.title")}
+            <Link onPress={() => { setSelectedCourse(null) }} className="text-sm text-muted">
+                <StackH
+                    inline
+                    gap={3}
+                    principle="identity"
+                    align="center"
+                    items={[
+                        () => <ArrowLeftIcon aria-hidden focusable="false" className="size-5" />,
+                        () => <>{t("profileSettings.learning.history.title")}</>,
+                    ]}
+                />
             </Link>
 
             {/* sticky course header — title + progress + meta */}
-            <div className="sticky top-16 z-30 -mx-4 flex flex-col gap-3 bg-background px-4 py-3">
-                <AsyncContent
-                    isLoading={outlineSwr.data === null || outlineSwr.data === undefined ? !outlineSwr.error : false}
-                    skeleton={(
-                        <div className="flex items-center gap-3">
-                            <Skeleton className="size-12 shrink-0 rounded-xl" />
-                            <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                <Skeleton.Typography type="h4" width="1/2" />
-                                <Skeleton.ProgressBar />
-                            </div>
-                        </div>
-                    )}
-                    isEmpty={!outline}
-                    emptyContent={{ title: t("profileSettings.learning.outline.empty") }}
-                    error={!outlineSwr.data ? outlineSwr.error : undefined}
-                    errorContent={{
-                        title: t("profileSettings.learning.outline.error"),
-                        onRetry: () => { void outlineSwr.mutate() },
-                        retryLabel: t("profileSettings.learning.loadMore"),
-                    }}
-                >
-                    {outline && progress ? (
-                        <div className="flex items-center gap-3">
-                            <IconTile size="sm" src={courseThumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />
-                            <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                <div className="flex items-center justify-between gap-2">
-                                    <Typography type="h5" weight="bold" truncate className="min-w-0 flex-1">
-                                        {outline.course.title}
-                                    </Typography>
-                                    {selectedCourseItem ? <CourseTrialChip isEnrolled={selectedCourseItem.isEnrolled} /> : null}
-                                    <Typography type="body-xs" color="muted">
-                                        {`${progress.completionPercent}%`}
-                                    </Typography>
-                                </div>
-                                <SegmentBar
-                                    max={headerTotal || 1}
-                                    hideLegend
-                                    ariaLabel={`${outline.course.title} · ${progress.completionPercent}%`}
-                                    segments={headerDims.map((dim) => ({
-                                        key: dim.key,
-                                        label: t(`dashboard.courseProgress.${dim.key}`),
-                                        value: dim.completed,
-                                        color: DIM_COLOR[dim.key],
-                                    }))}
-                                />
-                                <Typography type="body-xs" color="muted">
-                                    {t("profileSettings.learning.detail.meta", {
-                                        lessonsRead: progress.lessonsRead,
-                                        lessonsTotal: progress.lessonsTotal,
-                                        challenges: progress.challengesCompleted,
-                                        milestones: progress.tasksCompleted,
-                                    })}
-                                </Typography>
-                            </div>
-                        </div>
-                    ) : null}
-                </AsyncContent>
-            </div>
+            <Box principle="row-pad" className="sticky top-16 z-30 -mx-4 bg-background px-4 py-3">
+                <StackV gap={4} principle="content-row" items={[
+                    () => (
+                        <AsyncContent
+                            isLoading={outlineSwr.data === null || outlineSwr.data === undefined ? !outlineSwr.error : false}
+                            skeleton={(
+                                <StackH gap={4} principle="content-row" align="center" items={[
+                                    () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
+                                    () => (
+                                        <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
+                                            () => <Skeleton.Typography type="h4" width="1/2" />,
+                                            () => <Skeleton.ProgressBar />,
+                                        ]} />
+                                    ),
+                                ]} />
+                            )}
+                            isEmpty={!outline}
+                            emptyContent={{ title: t("profileSettings.learning.outline.empty") }}
+                            error={!outlineSwr.data ? outlineSwr.error : undefined}
+                            errorContent={{
+                                title: t("profileSettings.learning.outline.error"),
+                                onRetry: () => { void outlineSwr.mutate() },
+                                retryLabel: t("profileSettings.learning.loadMore"),
+                            }}
+                        >
+                            {outline && progress ? (
+                                <StackH gap={4} principle="content-row" align="center" items={[
+                                    () => <IconTile size="sm" src={courseThumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />,
+                                    () => (
+                                        <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
+                                            () => (
+                                                <StackH gap={3} principle="value-row" justify="between" align="center" items={[
+                                                    () => (
+                                                        <Typography type="h5" weight="bold" truncate className="min-w-0 flex-1">
+                                                            {outline.course.title}
+                                                        </Typography>
+                                                    ),
+                                                    () => (selectedCourseItem ? <CourseTrialChip isEnrolled={selectedCourseItem.isEnrolled} /> : null),
+                                                    () => (
+                                                        <Typography type="body-xs" color="muted">
+                                                            {`${progress.completionPercent}%`}
+                                                        </Typography>
+                                                    ),
+                                                ]} />
+                                            ),
+                                            () => (
+                                                <SegmentBar
+                                                    max={headerTotal || 1}
+                                                    hideLegend
+                                                    ariaLabel={`${outline.course.title} · ${progress.completionPercent}%`}
+                                                    segments={headerDims.map((dim) => ({
+                                                        key: dim.key,
+                                                        label: t(`dashboard.courseProgress.${dim.key}`),
+                                                        value: dim.completed,
+                                                        color: DIM_COLOR[dim.key],
+                                                    }))}
+                                                />
+                                            ),
+                                            () => (
+                                                <Typography type="body-xs" color="muted">
+                                                    {t("profileSettings.learning.detail.meta", {
+                                                        lessonsRead: progress.lessonsRead,
+                                                        lessonsTotal: progress.lessonsTotal,
+                                                        challenges: progress.challengesCompleted,
+                                                        milestones: progress.tasksCompleted,
+                                                    })}
+                                                </Typography>
+                                            ),
+                                        ]} />
+                                    ),
+                                ]} />
+                            ) : null}
+                        </AsyncContent>
+                    ),
+                ]} />
+            </Box>
 
             {/* search over the active tab (lessons or milestone tasks) */}
             <TextField variant="secondary">
@@ -184,32 +209,34 @@ export const CourseDetail = ({
 
             {/* Contents vs Personal Project — TabsCard pattern: tabs float ABOVE, each
                 tab below is its own accordion-card (Card p-0 skin owned by the view). */}
-            <div className="flex flex-col gap-3">
-                <TabsCard
-                    leftTabs={{
-                        items: [
-                            {
-                                key: "contents",
-                                label: t("profileSettings.learning.detail.contents"),
-                                icon: <ListBulletsIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
-                            },
-                            {
-                                key: "personalProject",
-                                label: t("profileSettings.learning.detail.personalProject"),
-                                icon: <FlagIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
-                            },
-                        ],
-                        selectedKey: tab,
-                        ariaLabel: t("profileSettings.learning.detail.viewToggle"),
-                        onSelectionChange: (key) => setTab(key as DetailTab),
-                    }}
-                />
-                {tab === "contents" ? (
+            <StackV gap={4} principle="content-row" items={[
+                () => (
+                    <TabsCard
+                        leftTabs={{
+                            items: [
+                                {
+                                    key: "contents",
+                                    label: t("profileSettings.learning.detail.contents"),
+                                    icon: <ListBulletsIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
+                                },
+                                {
+                                    key: "personalProject",
+                                    label: t("profileSettings.learning.detail.personalProject"),
+                                    icon: <FlagIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
+                                },
+                            ],
+                            selectedKey: tab,
+                            ariaLabel: t("profileSettings.learning.detail.viewToggle"),
+                            onSelectionChange: (key) => setTab(key as DetailTab),
+                        }}
+                    />
+                ),
+                () => (tab === "contents" ? (
                     <CourseOutline search={query} />
                 ) : (
                     <CourseMilestoneOutline search={query} />
-                )}
-            </div>
+                )),
+            ]} />
         </div>
     )
 }

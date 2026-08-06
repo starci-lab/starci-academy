@@ -51,11 +51,12 @@ const Footer = ({ wordmark, tagline, linksHeading, links, contact }: FooterProps
             body={() => (
                 <StackV
                     gap={8}
+                    principle="marketing-beat"
                     items={[
                         () => (
                             <Grid
                                 columns={{ base: 1, md: 2 }}
-                                gap={8}
+                                principle="marketing-beat"
                                 items={[
                                     {
                                         key: "brand",

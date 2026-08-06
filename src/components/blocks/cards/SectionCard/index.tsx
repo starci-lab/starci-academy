@@ -115,6 +115,7 @@ export const SectionCard = ({
         >
             <StackV
                 gap={contentGap}
+                principle={contentGap === 6 ? "block-boundary" : contentGap === 5 ? "group-boundary" : "card-caption"}
                 align={contentAlign}
                 classNames={fillHeight ? ["h-full"] : undefined}
                 body={() => (
@@ -123,11 +124,13 @@ export const SectionCard = ({
                             <Box className="border-b border-separator pb-3">
                                 <StackH
                                     gap={3}
+                                    principle="flex-action"
                                     justify="between"
                                     items={[
                                         () => (
                                             <StackH
                                                 gap={2}
+                                                principle="icon-text"
                                                 classNames={["min-w-0"]}
                                                 items={[
                                                     ...(Icon ? [() => <Icon />] : []),

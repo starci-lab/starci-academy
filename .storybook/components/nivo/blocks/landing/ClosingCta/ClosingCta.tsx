@@ -48,12 +48,14 @@ const ClosingCta = ({ eyebrow, title, description, primaryCta, secondaryCta }: C
                 <StackV
                     gap={6}
                     align="center"
+                    principle="block-boundary"
                     items={[
                         () => <SectionHeading eyebrow={eyebrow} title={title} intro={description} align="center" />,
                         () => (
                             <Cluster
                                 gap={3}
                                 justify="center"
+                                principle="flex-action"
                                 items={[
                                     () => (
                                         <Button

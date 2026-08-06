@@ -99,14 +99,21 @@ export const MediaCard = ({
                 ),
                 () => (
                     <StackV
-                        gap={4}
+                        gap={1}
                         padding={5}
-                        items={[
-                            () => <Typography size="base" weight="medium" text={title} />,
-                            ...(Meta ? [() => <Cluster gap={3} items={[() => <Meta />]} />] : []),
-                            ...(description ? [() => <Typography size="sm" color="muted" lineClamp={2} text={description} />] : []),
-                            ...(Footer ? [() => <Footer />] : []),
-                        ]}
+                        principle="card-padding"
+                        body={() => (
+                            <StackV
+                                gap={4}
+                                principle="card-caption"
+                                items={[
+                                    () => <Typography size="base" weight="medium" text={title} />,
+                                    ...(Meta ? [() => <Cluster gap={3} principle="chip-row" items={[() => <Meta />]} />] : []),
+                                    ...(description ? [() => <Typography size="sm" color="muted" lineClamp={2} text={description} />] : []),
+                                    ...(Footer ? [() => <Footer />] : []),
+                                ]}
+                            />
+                        )}
                     />
                 ),
             ]}

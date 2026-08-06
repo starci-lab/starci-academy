@@ -15,6 +15,8 @@ import { StatPair } from "@/components/composites/stats/StatPair"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackV } from "@/components/frames/Stack"
 import { pathConfig } from "@/resources/path"
 
 /** Props for {@link ProfileJobReadiness}. */
@@ -46,50 +48,68 @@ const TrackCard = ({
     locale: string
     t: ReturnType<typeof useTranslations>
 }) => {
+    const bandChips = [
+        ...(track.isQualified
+            ? [() => (
+                <Chip size="sm" variant="soft" color="success">
+                    <RocketLaunchIcon aria-hidden focusable="false" className="size-4" />
+                    <Chip.Label>{t("jobReadiness.qualified")}</Chip.Label>
+                </Chip>
+            )]
+            : []),
+        () => (
+            <Chip size="sm" variant="soft" color={bandColorOf(track.band)}>
+                <Chip.Label>{t(`jobReadiness.band.${track.band}`)}</Chip.Label>
+            </Chip>
+        ),
+    ]
+
+    const headerItems = [
+        () => (
+            <Typography type="body-sm" weight="medium" truncate className="min-w-0">
+                {track.courseTitle}
+            </Typography>
+        ),
+        () => <Cluster gap={3} principle="chip-row" items={bandChips} />,
+    ]
+
     return (
         <SurfaceListCardItem href={pathConfig().locale(locale).course(track.courseSlug).build()}>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                    <Typography type="body-sm" weight="medium" truncate className="min-w-0">
-                        {track.courseTitle}
-                    </Typography>
-                    <div className="flex shrink-0 items-center gap-2">
-                        {track.isQualified ? (
-                            <Chip size="sm" variant="soft" color="success">
-                                <RocketLaunchIcon aria-hidden focusable="false" className="size-4" />
-                                <Chip.Label>{t("jobReadiness.qualified")}</Chip.Label>
-                            </Chip>
-                        ) : null}
-                        <Chip size="sm" variant="soft" color={bandColorOf(track.band)}>
-                            <Chip.Label>{t(`jobReadiness.band.${track.band}`)}</Chip.Label>
-                        </Chip>
-                    </div>
-                </div>
-                {track.capstoneScore !== null ? (
-                    <ProgressMeter
-                        label={t("jobReadiness.trackCapstone")}
-                        value={track.capstoneScore}
-                        max={100}
-                        showValue
-                    />
-                ) : null}
-                {track.interviewScore !== null ? (
-                    <ProgressMeter
-                        label={t("jobReadiness.trackInterview")}
-                        value={track.interviewScore}
-                        max={100}
-                        showValue
-                    />
-                ) : null}
-                {track.cvScore !== null ? (
-                    <ProgressMeter
-                        label={t("jobReadiness.trackCv")}
-                        value={track.cvScore}
-                        max={100}
-                        showValue
-                    />
-                ) : null}
-            </div>
+            <StackV gap={4} items={[
+                () => (
+                    <Cluster gap={3} principle="flex-action" justify="between" items={headerItems} />
+                ),
+                ...(track.capstoneScore !== null
+                    ? [() => (
+                        <ProgressMeter
+                            label={t("jobReadiness.trackCapstone")}
+                            value={track.capstoneScore ?? 0}
+                            max={100}
+                            showValue
+                        />
+                    )]
+                    : []),
+                ...(track.interviewScore !== null
+                    ? [() => (
+                        <ProgressMeter
+                            label={t("jobReadiness.trackInterview")}
+                            value={track.interviewScore ?? 0}
+                            max={100}
+                            showValue
+                        />
+                    )]
+                    : []),
+                ...(track.cvScore !== null
+                    ? [() => (
+                        <ProgressMeter
+                            label={t("jobReadiness.trackCv")}
+                            value={track.cvScore ?? 0}
+                            max={100}
+                            showValue
+                        />
+                    )]
+                    : []),
+            ]} />
         </SurfaceListCardItem>
     )
 }
@@ -125,18 +145,20 @@ export const ProfileJobReadiness = ({ className, label }: ProfileJobReadinessPro
             <AsyncContent
                 isLoading={(isLoading || !userId) && tracks.length === 0}
                 skeleton={(
-                    <div className="flex flex-col gap-3">
-                        <Skeleton.Metric />
-                        <SurfaceListCard>
-                            <SurfaceListCardItem>
-                                <div className="flex flex-col gap-3">
-                                    <Skeleton.Typography type="body-sm" width="1/2" />
-                                    <Skeleton.ProgressBar />
-                                    <Skeleton.ProgressBar />
-                                </div>
-                            </SurfaceListCardItem>
-                        </SurfaceListCard>
-                    </div>
+                    <StackV gap={4} items={[
+                        () => <Skeleton.Metric />,
+                        () => (
+                            <SurfaceListCard>
+                                <SurfaceListCardItem>
+                                    <StackV gap={4} items={[
+                                        () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                        () => <Skeleton.ProgressBar />,
+                                        () => <Skeleton.ProgressBar />,
+                                    ]} />
+                                </SurfaceListCardItem>
+                            </SurfaceListCard>
+                        ),
+                    ]} />
                 )}
                 isEmpty={tracks.length === 0}
                 emptyContent={{
@@ -151,36 +173,49 @@ export const ProfileJobReadiness = ({ className, label }: ProfileJobReadinessPro
                     retryLabel: t("publicProfile.loadErrorRetry"),
                 }}
             >
-                <div className="flex flex-col gap-3">
-                    {/* headline: strongest track + its band + the global foundation strip */}
-                    {strongestTrack ? (
-                        <div className="flex flex-col gap-3">
-                            <div className="flex flex-wrap items-center gap-3">
-                                <StatPair
-                                    value={String(strongestTrack.depthScore ?? 0)}
-                                    label={strongestTrack.courseTitle}
-                                />
-                                <Chip size="md" variant="soft" color={bandColorOf(strongestTrack.band)}>
-                                    <Chip.Label>{t(`jobReadiness.band.${strongestTrack.band}`)}</Chip.Label>
-                                </Chip>
-                            </div>
-                            {data?.foundation.codingPercentile !== null && data?.foundation.codingPercentile !== undefined ? (
-                                <Typography type="body-xs" color="muted">
-                                    {t("jobReadiness.foundationPercentile", { percent: data.foundation.codingPercentile })}
-                                </Typography>
-                            ) : null}
-                        </div>
-                    ) : null}
-
-                    {/* one bounded card per track — never blended, strongest first */}
-                    {tracks.length > 0 ? (
-                        <SurfaceListCard>
-                            {tracks.map((track) => (
-                                <TrackCard key={track.courseId} track={track} locale={locale} t={t} />
-                            ))}
-                        </SurfaceListCard>
-                    ) : null}
-                </div>
+                <StackV gap={4} items={[
+                    ...(strongestTrack
+                        ? [() => (
+                            <StackV gap={4} items={[
+                                () => (
+                                    <Cluster
+                                        gap={4}
+                                        principle="content-row"
+                                        items={[
+                                            () => (
+                                                <StatPair
+                                                    value={String(strongestTrack.depthScore ?? 0)}
+                                                    label={strongestTrack.courseTitle}
+                                                />
+                                            ),
+                                            () => (
+                                                <Chip size="md" variant="soft" color={bandColorOf(strongestTrack.band)}>
+                                                    <Chip.Label>{t(`jobReadiness.band.${strongestTrack.band}`)}</Chip.Label>
+                                                </Chip>
+                                            ),
+                                        ]}
+                                    />
+                                ),
+                                ...(data?.foundation.codingPercentile !== null && data?.foundation.codingPercentile !== undefined
+                                    ? [() => (
+                                        <Typography type="body-xs" color="muted">
+                                            {t("jobReadiness.foundationPercentile", { percent: data.foundation.codingPercentile ?? 0 })}
+                                        </Typography>
+                                    )]
+                                    : []),
+                            ]} />
+                        )]
+                        : []),
+                    ...(tracks.length > 0
+                        ? [() => (
+                            <SurfaceListCard>
+                                {tracks.map((track) => (
+                                    <TrackCard key={track.courseId} track={track} locale={locale} t={t} />
+                                ))}
+                            </SurfaceListCard>
+                        )]
+                        : []),
+                ]} />
             </AsyncContent>
         </LabeledCard>
     )

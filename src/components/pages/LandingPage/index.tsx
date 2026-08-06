@@ -57,6 +57,8 @@ import { IconTile } from "@/components/blocks/identity/IconTile"
 import { SectionHeading } from "@/components/blocks/marketing/SectionHeading"
 import { TrackCard } from "@/components/blocks/marketing/TrackCard"
 import { TruthList } from "@/components/blocks/marketing/TruthList"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Icon per featured course track. */
 const COURSE_TRACK_ICONS: Record<string, React.ReactNode> = {
@@ -123,7 +125,7 @@ export const LandingPage = ({ className }: LandingPageProps) => {
                 min-h-screen; other beats shrink to their content → this small gap is REAL
                 whitespace, enough to separate sections without a short section (stats,
                 learn-loop) drifting in the middle of a half-empty screen. */}
-            <div className="mx-auto flex max-w-6xl flex-col gap-16 px-4 pt-8 pb-16 @app-sm:px-6 @app-md:gap-20 @app-md:pb-20 @app-md:pt-10 @app-lg:px-8">
+            <Box principle="center-measure" className="mx-auto flex max-w-6xl flex-col gap-16 px-4 pt-8 pb-16 @app-sm:px-6 @app-md:gap-20 @app-md:pb-20 @app-md:pt-10 @app-lg:px-8">
                 {/* 1 — Hero */}
                 <div className={screen}>
                     <HeroBanner
@@ -188,7 +190,7 @@ export const LandingPage = ({ className }: LandingPageProps) => {
                         a VERTICAL 4-tier path foundation→application + "Enter course" → the real
                         course). 3 cards side by side to read + compare; the same 4-tier structure
                         = "one mindset". */}
-                    <div className="grid grid-cols-1 gap-6 @app-md:grid-cols-3">
+                    <Box principle="block-boundary" className="grid grid-cols-1 gap-6 @app-md:grid-cols-3">
                         {LANDING_COURSE_TRACKS.map((key) => (
                             <TrackCard
                                 key={key}
@@ -201,7 +203,7 @@ export const LandingPage = ({ className }: LandingPageProps) => {
                                 onView={() => router.push(pathConfig().locale(locale).course(LANDING_TRACK_COURSE_SLUG[key]).build())}
                             />
                         ))}
-                    </div>
+                    </Box>
                 </section>
 
                 {/* Skill map — SPLIT: "flex your skills" copy (left) + knowledge graph contained
@@ -210,43 +212,53 @@ export const LandingPage = ({ className }: LandingPageProps) => {
                 <section id="treasure" className="scroll-mt-24">
                     <div className="grid grid-cols-1 items-center gap-10 @app-lg:grid-cols-[0.85fr_1.15fr] @app-lg:gap-12">
                         {/* LEFT — flex copy: heading + editorial stat + interconnection line + CTA */}
-                        <div className="flex flex-col gap-6">
-                            <SectionHeading
-                                anchorId="treasure"
-                                align="start"
-                                eyebrow={t("landing.treasure.eyebrow")}
-                                title={t("landing.treasure.title")}
-                                intro={t("landing.treasure.intro")}
-                            />
-                            {/* editorial stat: big number + small label + divider (grounded: node count + track count) */}
-                            <div className="flex items-center gap-6">
-                                <div className="flex flex-col">
-                                    <span className="text-3xl font-medium tracking-tight text-foreground @app-sm:text-4xl">
-                                        {KNOWLEDGE_NODES.length}
-                                    </span>
-                                    <Typography type="body-xs" color="muted">
-                                        {t("landing.treasure.statConcepts")}
-                                    </Typography>
-                                </div>
-                                <span aria-hidden className="h-10 w-px bg-default" />
-                                <div className="flex flex-col">
-                                    <span className="text-3xl font-medium tracking-tight text-foreground @app-sm:text-4xl">
-                                        {LANDING_COURSE_TRACKS.length}
-                                    </span>
-                                    <Typography type="body-xs" color="muted">
-                                        {t("landing.treasure.statTracks")}
-                                    </Typography>
-                                </div>
-                            </div>
-                            {/* keeps the "interconnected" idea via 1 line (in place of an edge animation that must read as such) */}
-                            <Typography type="body-sm" color="muted">
-                                {t("landing.treasure.interconnect")}
-                            </Typography>
-                            <Button variant="primary" size="lg" onPress={onSeeCourses} className="self-start">
-                                {t("landing.treasure.cta")}
-                                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
-                            </Button>
-                        </div>
+                        <StackV gap={6} principle="block-boundary" items={[
+                            () => (
+                                <SectionHeading
+                                    anchorId="treasure"
+                                    align="start"
+                                    eyebrow={t("landing.treasure.eyebrow")}
+                                    title={t("landing.treasure.title")}
+                                    intro={t("landing.treasure.intro")}
+                                />
+                            ),
+                            () => (
+                                <StackH gap={6} principle="block-boundary" items={[
+                                    () => (
+                                        <div className="flex flex-col">
+                                            <span className="text-3xl font-medium tracking-tight text-foreground @app-sm:text-4xl">
+                                                {KNOWLEDGE_NODES.length}
+                                            </span>
+                                            <Typography type="body-xs" color="muted">
+                                                {t("landing.treasure.statConcepts")}
+                                            </Typography>
+                                        </div>
+                                    ),
+                                    () => <span aria-hidden className="h-10 w-px bg-default" />,
+                                    () => (
+                                        <div className="flex flex-col">
+                                            <span className="text-3xl font-medium tracking-tight text-foreground @app-sm:text-4xl">
+                                                {LANDING_COURSE_TRACKS.length}
+                                            </span>
+                                            <Typography type="body-xs" color="muted">
+                                                {t("landing.treasure.statTracks")}
+                                            </Typography>
+                                        </div>
+                                    ),
+                                ]} />
+                            ),
+                            () => (
+                                <Typography type="body-sm" color="muted">
+                                    {t("landing.treasure.interconnect")}
+                                </Typography>
+                            ),
+                            () => (
+                                <Button variant="primary" size="lg" onPress={onSeeCourses} className="self-start">
+                                    {t("landing.treasure.cta")}
+                                    <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                                </Button>
+                            ),
+                        ]} />
                         {/* RIGHT — knowledge graph contained: ~38 REAL concepts (nodes) linked by
                             builds-on + cross-track relations (d3-force live, drag/zoom). Node colour
                             follows its track, click → the course containing it. "Interconnected
@@ -279,15 +291,19 @@ export const LandingPage = ({ className }: LandingPageProps) => {
                                     alt={t("landing.founder.name")}
                                     icon={<UserIcon aria-hidden focusable="false" />}
                                 />
-                                <div className="flex min-w-0 flex-col gap-2">
-                                    <Typography type="body-sm" weight="semibold">
-                                        {t("landing.founder.name")}
-                                    </Typography>
-                                    <Typography type="body-xs" color="muted">
-                                        {t("landing.founder.titles")}
-                                    </Typography>
-                                </div>
-                                <div className="flex items-center gap-3 @app-sm:ml-auto">
+                                <StackV gap={3} principle="sibling-stack" classNames={["min-w-0"]} items={[
+                                    () => (
+                                        <Typography type="body-sm" weight="semibold">
+                                            {t("landing.founder.name")}
+                                        </Typography>
+                                    ),
+                                    () => (
+                                        <Typography type="body-xs" color="muted">
+                                            {t("landing.founder.titles")}
+                                        </Typography>
+                                    ),
+                                ]} />
+                                <div data-principle="content-row" className="flex items-center gap-3 @app-sm:ml-auto">
                                     {/* social proof — brand icons (GitHub · LinkedIn · Facebook) */}
                                     {FOUNDER_SOCIALS.map(({ key, href, icon: Icon, label }) => (
                                         <Link
@@ -301,7 +317,7 @@ export const LandingPage = ({ className }: LandingPageProps) => {
                                         </Link>
                                     ))}
                                     {/* blog = "go read + judge the quality yourself" CTA */}
-                                    <Link href={pathConfig().locale(locale).blog().build()} className="inline-flex items-center gap-2 text-accent-soft-foreground">
+                                    <Link href={pathConfig().locale(locale).blog().build()} data-principle="flex-action" className="inline-flex items-center gap-2 text-accent-soft-foreground">
                                         {t("landing.founder.blog")}
                                         <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
                                     </Link>
@@ -344,21 +360,29 @@ export const LandingPage = ({ className }: LandingPageProps) => {
                 </section>
 
                 {/* 10 — Closing CTA */}
-                <section className="flex flex-col items-center gap-6">
-                    <div className="flex flex-col items-center gap-3">
-                        <Typography.Heading level={2} weight="bold" align="center" className="max-w-2xl">
-                            {t("landing.closing.title")}
-                        </Typography.Heading>
-                        <Typography type="body" color="muted" align="center" className="max-w-xl">
-                            {t("landing.closing.subtitle")}
-                        </Typography>
-                    </div>
-                    <Button variant="primary" size="lg" onPress={onSeeCourses}>
-                        {t("landing.closing.cta")}
-                        <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4" />
-                    </Button>
-                </section>
-            </div>
+                <StackV as="section" align="center" gap={6} principle="block-boundary" items={[
+                    () => (
+                        <StackV align="center" gap={4} principle="card-caption" items={[
+                            () => (
+                                <Typography.Heading level={2} weight="bold" align="center" className="max-w-2xl">
+                                    {t("landing.closing.title")}
+                                </Typography.Heading>
+                            ),
+                            () => (
+                                <Typography type="body" color="muted" align="center" className="max-w-xl">
+                                    {t("landing.closing.subtitle")}
+                                </Typography>
+                            ),
+                        ]} />
+                    ),
+                    () => (
+                        <Button variant="primary" size="lg" onPress={onSeeCourses}>
+                            {t("landing.closing.cta")}
+                            <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4" />
+                        </Button>
+                    ),
+                ]} />
+            </Box>
 
             {/* Back-to-top FAB — floats bottom-right (primary accent), shows after scrolling past the first screen */}
             {showTop ? (

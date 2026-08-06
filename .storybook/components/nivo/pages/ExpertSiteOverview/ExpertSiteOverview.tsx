@@ -241,6 +241,7 @@ const ExpertSiteOverview = (props: ExpertSiteOverviewProps) => {
     return shell(
         <StackV
             gap={6}
+            principle="block-boundary"
             items={[
                 () => header,
                 // ── FAILED-DEPLOY BANNER: only in the `failed` state, never the
@@ -261,7 +262,7 @@ const ExpertSiteOverview = (props: ExpertSiteOverviewProps) => {
                 () => (
                     <Grid
                         columns={{ base: 1, sm: 2, lg: 4 }}
-                        gap={4}
+                        principle="content-row"
                         isSkeleton={isSkeleton}
                         items={[
                             { key: "leads", span: 2, content: LeadsTile },

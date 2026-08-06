@@ -124,6 +124,7 @@ export const _FollowListModal = ({
         label: (
             <StackH
                 gap={3}
+                principle="value-row"
                 align="center"
                 items={[
                     () => <>{tabLabel[tabId]}</>,

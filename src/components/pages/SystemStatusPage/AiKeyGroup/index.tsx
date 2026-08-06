@@ -4,6 +4,9 @@ import React, { useMemo } from "react"
 import { Card, CardContent, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { CpuIcon } from "@phosphor-icons/react"
+import { Box } from "@/components/frames/Box"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackH, StackV } from "@/components/frames/Stack"
 import type { AiKeyHealthGroup } from "@/modules/api/graphql/queries/types/ai-key-health"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -35,38 +38,58 @@ export const AiKeyGroup = ({ group }: AiKeyGroupProps) => {
         })
     }, [group, t])
 
+    const chipItems = group.keys.map((key, index) => () => (
+        <span
+            key={`${key.keyMask}-${index}`}
+            className={cn(
+                "inline-flex items-center rounded-full px-2 py-0 font-mono text-xs font-medium",
+                key.healthy
+                    ? "bg-success-soft text-success-soft-foreground"
+                    : "bg-danger-soft text-danger-soft-foreground",
+            )}
+        >
+            {key.keyMask}
+        </span>
+    ))
+
     return (
         <Card className="border border-default bg-surface">
-            <CardContent className="gap-3 p-4">
-                <div className="flex items-center gap-2">
-                    <CpuIcon
-                        aria-hidden
-                        focusable="false"
-                        className="size-4 shrink-0 text-muted"
+            {/* Vendor CardContent padding cleared so house card-padding owns the inset. */}
+            <CardContent className="p-0">
+                <Box principle="card-padding" className="p-4">
+                    <StackV
+                        gap={4}
+                        principle="label-field"
+                        items={[
+                            () => (
+                                <StackH
+                                    gap={3}
+                                    principle="identity"
+                                    align="center"
+                                    items={[
+                                        () => (
+                                            <CpuIcon
+                                                aria-hidden
+                                                focusable="false"
+                                                className="size-4 shrink-0 text-muted"
+                                            />
+                                        ),
+                                        () => (
+                                            <span className="text-sm font-medium text-foreground">
+                                                {header}
+                                            </span>
+                                        ),
+                                    ]}
+                                />
+                            ),
+                            () => (group.keys.length > 0 ? (
+                                <Cluster gap={3} principle="chip-row" items={chipItems} />
+                            ) : (
+                                <span className="text-xs text-muted">{t("noKeys")}</span>
+                            )),
+                        ]}
                     />
-                    <span className="text-sm font-medium text-foreground">
-                        {header}
-                    </span>
-                </div>
-                {group.keys.length > 0 ? (
-                    <div className="flex flex-wrap gap-2">
-                        {group.keys.map((key, index) => (
-                            <span
-                                key={`${key.keyMask}-${index}`}
-                                className={cn(
-                                    "inline-flex items-center rounded-full px-2 py-0 font-mono text-xs font-medium",
-                                    key.healthy
-                                        ? "bg-success-soft text-success-soft-foreground"
-                                        : "bg-danger-soft text-danger-soft-foreground",
-                                )}
-                            >
-                                {key.keyMask}
-                            </span>
-                        ))}
-                    </div>
-                ) : (
-                    <span className="text-xs text-muted">{t("noKeys")}</span>
-                )}
+                </Box>
             </CardContent>
         </Card>
     )

@@ -174,8 +174,7 @@ const AcademyManagementDashboard = ({
     /** The four headline tiles, in a reflowing grid -- the one part of the header that IS data. */
     const KpiGrid = () => (
         <Grid
-            columns={{ base: 1, sm: 2, lg: 4 }}
-            gap={4}
+            principle="content-row" columns={{ base: 1, sm: 2, lg: 4 }}
             items={[
                 {
                     key: "members",

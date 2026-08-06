@@ -137,7 +137,7 @@ export const QuickActions = ({
                 aria-label={t("DashboardPage.quickActions")}
                 selectionMode="none"
                 onAction={onAction}
-                className="gap-1 p-0"
+                className="p-0"
             >
                 {actions.map(({
                     key,
@@ -150,7 +150,8 @@ export const QuickActions = ({
                         // icon + label share the row's `text-foreground` (icon.md §leading:
                         // leading icon same colour as its title, not a stray `text-muted`);
                         // hover fill is native ListBox chrome, no hand-rolled hover class.
-                        className="flex cursor-pointer items-center gap-3 rounded-large px-2 py-2 text-foreground outline-none data-[focus-visible=true]:ring-2 data-[focus-visible=true]:ring-accent data-[hovered=true]:bg-default"
+                        // content-row: leading icon · label · trailing chip (retuned gap-3→gap-4).
+                        className="flex cursor-pointer items-center gap-4 rounded-large px-2 py-2 text-foreground outline-none data-[focus-visible=true]:ring-2 data-[focus-visible=true]:ring-accent data-[hovered=true]:bg-default" data-principle="content-row"
                     >
                         <Icon aria-hidden focusable="false" className="size-5 shrink-0" />
                         <span className="min-w-0 flex-1 truncate text-sm">

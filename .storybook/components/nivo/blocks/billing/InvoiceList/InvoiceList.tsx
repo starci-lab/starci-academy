@@ -182,6 +182,7 @@ const InvoiceRowItem = ({ invoice, onPay, onOpenInvoice, labels, isSkeleton }: {
             body={() => (
                 <StackH
                     gap={3}
+                    principle="flex-action"
                     justify="between"
                     isSkeleton={isSkeleton}
                     items={[

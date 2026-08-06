@@ -156,12 +156,16 @@ export const _FlashcardReviewStats = ({
     // `isSkeleton`). Otherwise every attempted tag worst-first.
     const gapRows = isSkeleton
         ? Array.from({ length: WEAK_TOPIC_SKELETON_ROW_COUNT }, (_unused, index) => (
-            <div key={`pending-${index}`} className="flex items-center gap-3 p-3">
-                <Skeleton.Typography type="body-sm" width="1/3" />
-                <Box principle="push-end" className="ml-auto shrink-0">
-                    <Skeleton.Chip />
-                </Box>
-            </div>
+            <Box key={`pending-${index}`} principle="cell-pad" className="p-3">
+                <StackH gap={4} principle="content-row" align="center" items={[
+                    () => <Skeleton.Typography type="body-sm" width="1/3" />,
+                    () => (
+                        <Box principle="push-end" className="ml-auto shrink-0">
+                            <Skeleton.Chip />
+                        </Box>
+                    ),
+                ]} />
+            </Box>
         ))
         : weakTags.map((tagStat) => (
             <SurfaceListCardRow
@@ -184,9 +188,9 @@ export const _FlashcardReviewStats = ({
                 <LabeledCard label={labels.memoryHealthLabel} frameless>
                     {isSkeleton ? (
                         <SectionCard>
-                            <StackV gap={4} items={[
+                            <StackV gap={4} principle="sibling-stack" items={[
                                 () => (
-                                    <StackH gap={2} align="baseline" items={[
+                                    <StackH gap={3} principle="value-row" align="baseline" items={[
                                         () => <Skeleton className="h-9 w-20 rounded" />,
                                         () => <Skeleton className="h-[14px] w-6 rounded" />,
                                     ]} />
@@ -196,18 +200,22 @@ export const _FlashcardReviewStats = ({
                                 () => <Skeleton.ProgressBar />,
                                 () => (
                                     <Box className="overflow-hidden rounded-2xl border border-default">
-                                        <StackH gap={1} align="stretch" divider items={[
+                                        <StackH gap={1} principle="name-handle" align="stretch" divider items={[
                                             () => (
-                                                <StackV gap={2} padding={4} classNames={["flex-1"]} items={[
-                                                    () => <Skeleton.Typography type="body-xs" width="2/3" />,
-                                                    () => <Skeleton className="h-5 w-14 rounded" />,
-                                                ]} />
+                                                <Box principle="card-padding" className="flex-1 p-4">
+                                                    <StackV gap={2} principle="title-subtitle" items={[
+                                                        () => <Skeleton.Typography type="body-xs" width="2/3" />,
+                                                        () => <Skeleton className="h-5 w-14 rounded" />,
+                                                    ]} />
+                                                </Box>
                                             ),
                                             () => (
-                                                <StackV gap={2} padding={4} classNames={["flex-1"]} items={[
-                                                    () => <Skeleton.Typography type="body-xs" width="2/3" />,
-                                                    () => <Skeleton className="h-5 w-14 rounded" />,
-                                                ]} />
+                                                <Box principle="card-padding" className="flex-1 p-4">
+                                                    <StackV gap={2} principle="title-subtitle" items={[
+                                                        () => <Skeleton.Typography type="body-xs" width="2/3" />,
+                                                        () => <Skeleton className="h-5 w-14 rounded" />,
+                                                    ]} />
+                                                </Box>
                                             ),
                                         ]} />
                                     </Box>

@@ -28,6 +28,8 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { Box } from "@/components/frames/Box"
+import { StackV } from "@/components/frames/Stack"
 
 /** Already-translated copy {@link _CourseDetailPage} needs — resolved by the connected `CourseDetailPage`. */
 export interface CourseDetailLabels {
@@ -92,7 +94,7 @@ const _CourseDetailPage = ({
 
     return (
         <div className={className} data-tier="page" data-component="CourseDetailPage">
-            <div className="mx-auto w-full max-w-6xl px-6 py-6 pb-24 @app-md:pb-6">
+            <Box principle="center-measure" className="mx-auto w-full max-w-6xl px-6 py-6 pb-24 @app-md:pb-6">
                 {/* ONE grid from the top so the sticky purchase card's top lines up with the
                     breadcrumb/header: header = row 1 (cols 1-2), card = col 3 spanning rows 1-2,
                     narrative = row 2 (cols 1-2). Row gap = 10 (header → content, layouts/gap.md),
@@ -101,11 +103,13 @@ const _CourseDetailPage = ({
                 <>
                     <div className="grid grid-cols-1 items-start gap-x-6 gap-y-10 @app-md:grid-cols-3">
                         {isSkeleton ? (
-                            <div className="flex flex-col gap-3 @app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1">
-                                <Skeleton.Typography type="h2" />
-                                <Skeleton.Typography type="body" />
-                                <Skeleton.Metric />
-                            </div>
+                            <Box className="@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1">
+                                <StackV gap={4} principle="content-row" items={[
+                                    () => <Skeleton.Typography type="h2" />,
+                                    () => <Skeleton.Typography type="body" />,
+                                    () => <Skeleton.Metric />,
+                                ]} />
+                            </Box>
                         ) : (
                             <CourseHero className="@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1" />
                         )}
@@ -117,12 +121,14 @@ const _CourseDetailPage = ({
                         {isSkeleton ? (
                             <Skeleton.Accordion items={3} className="@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-2" />
                         ) : (
-                            <div className="flex flex-col gap-6 @app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-2">
-                                <CourseValueProps />
-                                <CourseCurriculum />
-                                <CoursePrerequisites />
-                                <CourseFaq />
-                            </div>
+                            <Box className="@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-2">
+                                <StackV gap={6} principle="block-boundary" items={[
+                                    CourseValueProps,
+                                    CourseCurriculum,
+                                    CoursePrerequisites,
+                                    CourseFaq,
+                                ]} />
+                            </Box>
                         )}
                     </div>
                     {/* mobile-only sticky enroll bar — reads course/price itself, so it only
@@ -130,7 +136,7 @@ const _CourseDetailPage = ({
                         content branch, which never rendered it during loading either). */}
                     {!isSkeleton && <CourseMobileEnrollBar className="@app-md:hidden" />}
                 </>
-            </div>
+            </Box>
         </div>
     )
 }

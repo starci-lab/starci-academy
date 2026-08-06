@@ -52,46 +52,44 @@ const renderEmText = (text: string) => {
 /** One row's free-form body: kind icon + title + state badges, then any matched snippet lines. */
 const resultRowContent = (row: GlobalSearchResultRow, labels: GlobalSearchContentBlockProps["labels"]) => {
     const Icon = GLOBAL_SEARCH_KIND_ICON[row.kind]
-    return (
-        <StackV
-            gap={2}
-            items={[
-                () => (
-                    <StackH
-                        gap={3}
-                        align="center"
-                        items={[
-                            () => (
-                                <Typography
-                                    size="sm"
-                                    prefixIcon={Icon}
-                                    truncate
-                                    classNames={["flex-1", "min-w-0"]}
-                                    text={row.title}
-                                />
-                            ),
-                            ...(row.showEnrolledChip ? [() => <Chip tone="success" text={labels.enrolled} />] : []),
-                            ...(row.showFreeChip ? [() => <Chip tone="success" text={labels.free} />] : []),
-                            ...(row.showPremiumLock ? [() => (
-                                <LockIcon aria-label={labels.premiumLock} focusable="false" className="size-4 shrink-0 text-muted" />
-                            )] : []),
-                            ...(row.showViewCourseHint ? [() => (
-                                <Typography
-                                    size="xs"
-                                    color="accent-soft"
-                                    suffixIcon={CaretRightIcon}
-                                    text={labels.viewCourse}
-                                />
-                            )] : []),
-                        ]}
-                    />
-                ),
-                ...(row.textLines.length > 0 ? row.textLines.map((line) => () => (
-                    <Typography size="xs" color="muted" text={renderEmText(line)} />
-                )) : []),
-            ]}
-        />
-    )
+    const titleRow = [
+        () => (
+            <Typography
+                size="sm"
+                prefixIcon={Icon}
+                truncate
+                classNames={["flex-1", "min-w-0"]}
+                text={row.title}
+            />
+        ),
+        ...(row.showEnrolledChip ? [() => <Chip tone="success" text={labels.enrolled} />] : []),
+        ...(row.showFreeChip ? [() => <Chip tone="success" text={labels.free} />] : []),
+        ...(row.showPremiumLock ? [() => (
+            <LockIcon aria-label={labels.premiumLock} focusable="false" className="size-4 shrink-0 text-muted" />
+        )] : []),
+        ...(row.showViewCourseHint ? [() => (
+            <Typography
+                size="xs"
+                color="accent-soft"
+                suffixIcon={CaretRightIcon}
+                text={labels.viewCourse}
+            />
+        )] : []),
+    ]
+    const rowItems = [
+        () => (
+            <StackH
+                gap={3}
+                principle="sibling-stack"
+                align="center"
+                items={titleRow}
+            />
+        ),
+        ...(row.textLines.length > 0 ? row.textLines.map((line) => () => (
+            <Typography size="xs" color="muted" text={renderEmText(line)} />
+        )) : []),
+    ]
+    return <StackV gap={2} items={rowItems} />
 }
 
 /**

@@ -79,6 +79,7 @@ const ExpertSiteManager = (props: ExpertSiteManagerProps) => {
                     body={() => (
                         <StackV
                             gap={3}
+                            principle="sibling-stack"
                             isSkeleton
                             items={[
                                 () => <Typography size="base" weight="semibold" isSkeleton text="Claim your site" />,
@@ -95,6 +96,7 @@ const ExpertSiteManager = (props: ExpertSiteManagerProps) => {
                                 () => (
                                     <StackH
                                         gap={3}
+                                        principle="flex-action"
                                         justify="end"
                                         isSkeleton
                                         items={[
@@ -135,6 +137,7 @@ const ExpertSiteManager = (props: ExpertSiteManagerProps) => {
                 body={() => (
                     <StackV
                         gap={3}
+                        principle="sibling-stack"
                         items={[
                             () => <Typography size="base" weight="semibold" text={labels.title} />,
                             () => <Typography size="sm" color="muted" text={labels.description} />,
@@ -152,6 +155,7 @@ const ExpertSiteManager = (props: ExpertSiteManagerProps) => {
                             () => (
                                 <StackH
                                     gap={3}
+                                    principle="flex-action"
                                     justify="end"
                                     items={[
                                         () => (

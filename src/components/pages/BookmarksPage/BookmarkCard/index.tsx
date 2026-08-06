@@ -23,6 +23,7 @@ import {
 } from "@/resources/path"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { StackH } from "@/components/frames/Stack"
 import { type ContentEntity, getContentChallengeCount } from "@/modules/types/entities/content"
 import { type WithClassNames } from "@/modules/types/base/class-name"
 
@@ -83,19 +84,37 @@ export const BookmarkCard = ({
                             <Chip.Label>{t("bookmarks.premium")}</Chip.Label>
                         </Chip>
                     ) : null}
-                    <span className="flex items-center gap-1 text-muted">
-                        <ClockIcon aria-hidden className="size-4" />
-                        <Typography type="body-xs" color="muted">
-                            {t("content.minutesRead", { minutes: content.minutesRead })}
-                        </Typography>
-                    </span>
+                    <StackH
+                        as="span"
+                        inline
+                        gap={2}
+                        align="center"
+                        principle="icon-text"
+                        items={[
+                            () => <ClockIcon aria-hidden className="size-4 text-muted" />,
+                            () => (
+                                <Typography type="body-xs" color="muted">
+                                    {t("content.minutesRead", { minutes: content.minutesRead })}
+                                </Typography>
+                            ),
+                        ]}
+                    />
                     {challengeCount > 0 ? (
-                        <span className="flex items-center gap-1 text-muted">
-                            <FlameIcon aria-hidden className="size-4" />
-                            <Typography type="body-xs" color="muted">
-                                {challengeCount}
-                            </Typography>
-                        </span>
+                        <StackH
+                            as="span"
+                            inline
+                            gap={2}
+                            align="center"
+                            principle="icon-text"
+                            items={[
+                                () => <FlameIcon aria-hidden className="size-4 text-muted" />,
+                                () => (
+                                    <Typography type="body-xs" color="muted">
+                                        {challengeCount}
+                                    </Typography>
+                                ),
+                            ]}
+                        />
                     ) : null}
                 </>
             )}

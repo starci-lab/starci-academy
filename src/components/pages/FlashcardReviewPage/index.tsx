@@ -35,6 +35,8 @@ import { AsyncContentError } from "@/components/composites/async/AsyncContent"
 import type { GraphQLResponse } from "@/modules/api/graphql/types"
 import type { ReviewFlashcardData } from "@/modules/api/graphql/mutations/types/review-flashcard"
 import type { QueryFlashcardNextIntervals } from "@/modules/api/graphql/queries/types/my-due-flashcards"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link FlashcardReviewPage}. */
 export type FlashcardReviewPageProps = WithClassNames<undefined>
@@ -124,22 +126,22 @@ export const FlashcardReviewPage = ({
     // forever: `isLoading` is already false and `data` is undefined here)
     if (error && !data) {
         return (
-            <div className={cn("flex min-h-[60vh] items-center justify-center", className)}>
+            <Box principle="center-measure" className={cn("flex min-h-[60vh] items-center justify-center", className)}>
                 <AsyncContentError
                     title={t("flashcardReview.loadError")}
                     onRetry={() => { void mutate() }}
                     retryLabel={t("common.retry")}
                 />
-            </div>
+            </Box>
         )
     }
 
     // still loading the queue → centred spinner
     if (isLoading || !data) {
         return (
-            <div className={cn("flex min-h-[60vh] items-center justify-center", className)}>
+            <Box principle="center-measure" className={cn("flex min-h-[60vh] items-center justify-center", className)}>
                 <Spinner size="lg" />
-            </div>
+            </Box>
         )
     }
 
@@ -147,93 +149,117 @@ export const FlashcardReviewPage = ({
     if (!current) {
         const empty = cards.length === 0
         return (
-            <div className={cn("mx-auto flex min-h-[60vh] w-full max-w-xl flex-col items-center justify-center gap-6 p-3", className)}>
-                <CheckCircleIcon className="size-12 text-success-soft-foreground" />
-                <span className="text-center text-lg font-semibold text-foreground">
-                    {empty
-                        ? t("flashcardReview.empty")
-                        : t("flashcardReview.done")}
-                </span>
-                <Button
-                    variant="primary"
-                    onPress={() => router.push(
-                        pathConfig().locale(locale).dashboard().build(),
-                    )}
-                >
-                    {t("flashcardReview.backToDashboard")}
-                </Button>
-            </div>
+            <Box principle="center-measure" className={cn("mx-auto min-h-[60vh] w-full max-w-xl p-3", className)}>
+                <StackV gap={6} principle="block-boundary" align="center" justify="center" items={[
+                    () => <CheckCircleIcon className="size-12 text-success-soft-foreground" />,
+                    () => (
+                        <span className="text-center text-lg font-semibold text-foreground">
+                            {empty
+                                ? t("flashcardReview.empty")
+                                : t("flashcardReview.done")}
+                        </span>
+                    ),
+                    () => (
+                        <Button
+                            variant="primary"
+                            onPress={() => router.push(
+                                pathConfig().locale(locale).dashboard().build(),
+                            )}
+                        >
+                            {t("flashcardReview.backToDashboard")}
+                        </Button>
+                    ),
+                ]} />
+            </Box>
         )
     }
 
     return (
-        <div className={cn("mx-auto flex w-full max-w-xl flex-col gap-6 p-3", className)}>
-            {/* progress header: deck context + position in the queue */}
-            <div className="flex items-center justify-between gap-3">
-                <span className="flex min-w-0 items-center gap-2">
-                    <StackIcon className="size-5 shrink-0 text-foreground" />
-                    <span className="truncate text-sm font-medium text-foreground">
-                        {current.deckTitle}
-                    </span>
-                </span>
-                <span className="shrink-0 text-sm text-muted">
-                    {t("flashcardReview.progress", {
-                        current: index + 1,
-                        total: cards.length,
-                    })}
-                </span>
-            </div>
-
-            {/* the card: front always, back after flip */}
-            <Card>
-                <CardContent className="flex flex-col gap-3 p-6 @app-sm:p-7">
-                    <span className="text-xl font-semibold text-foreground">
-                        {current.front}
-                    </span>
-                    {flipped ? (
-                        <>
-                            <span className="h-px w-full bg-default" />
-                            <span className="text-lg text-foreground">
-                                {current.back}
+        <Box principle="center-measure" className={cn("mx-auto w-full max-w-xl p-3", className)}>
+            <StackV gap={6} principle="block-boundary" items={[
+                // progress header: deck context + position in the queue
+                () => (
+                    <StackH gap={4} principle="content-row" justify="between" align="center" items={[
+                        () => (
+                            <StackH gap={3} principle="identity" classNames={["min-w-0"]} align="center" items={[
+                                () => <StackIcon className="size-5 shrink-0 text-foreground" />,
+                                () => (
+                                    <span className="truncate text-sm font-medium text-foreground">
+                                        {current.deckTitle}
+                                    </span>
+                                ),
+                            ]} />
+                        ),
+                        () => (
+                            <span className="shrink-0 text-sm text-muted">
+                                {t("flashcardReview.progress", {
+                                    current: index + 1,
+                                    total: cards.length,
+                                })}
                             </span>
-                        </>
-                    ) : null}
-                </CardContent>
-            </Card>
+                        ),
+                    ]} />
+                ),
 
-            {/* flip → reveal; revealed → grade buttons */}
-            {flipped ? (
-                <div className="grid grid-cols-2 gap-2 @app-sm:grid-cols-4">
-                    {GRADES.map((item) => (
-                        <Button
-                            key={item.grade}
-                            variant={item.variant}
-                            isDisabled={savingGrade !== null}
-                            isPending={savingGrade === item.grade}
-                            onPress={() => void onGrade(item.grade)}
-                        >
-                            {/* label over the SM-2 next-interval preview the BE ships
-                                per grade (`nextIntervals`), so the learner sees how far
-                                each choice pushes the card before picking. */}
-                            <span className="flex flex-col items-center leading-tight">
-                                <span>{t(`flashcardReview.${item.key}`)}</span>
-                                <span className="text-xs opacity-80">
-                                    {t("flashcardReview.intervalDays", {
-                                        days: current.nextIntervals[item.key],
-                                    })}
+                // the card: front always, back after flip
+                () => (
+                    <Card>
+                        <Box principle="card-padding" className="p-6 @app-sm:p-7">
+                            <CardContent>
+                                <StackV gap={4} principle="content-row" items={[
+                                    () => (
+                                        <span className="text-xl font-semibold text-foreground">
+                                            {current.front}
+                                        </span>
+                                    ),
+                                    () => (flipped ? (
+                                        <>
+                                            <span className="h-px w-full bg-default" />
+                                            <span className="text-lg text-foreground">
+                                                {current.back}
+                                            </span>
+                                        </>
+                                    ) : null),
+                                ]} />
+                            </CardContent>
+                        </Box>
+                    </Card>
+                ),
+
+                // flip → reveal; revealed → grade buttons
+                () => (flipped ? (
+                    <Box principle="sibling-stack" className="grid grid-cols-2 gap-2 @app-sm:grid-cols-4">
+                        {GRADES.map((item) => (
+                            <Button
+                                key={item.grade}
+                                variant={item.variant}
+                                isDisabled={savingGrade !== null}
+                                isPending={savingGrade === item.grade}
+                                onPress={() => void onGrade(item.grade)}
+                            >
+                                {/* label over the SM-2 next-interval preview the BE ships
+                                    per grade (`nextIntervals`), so the learner sees how far
+                                    each choice pushes the card before picking. */}
+                                <span className="flex flex-col items-center leading-tight">
+                                    <span>{t(`flashcardReview.${item.key}`)}</span>
+                                    <span className="text-xs opacity-80">
+                                        {t("flashcardReview.intervalDays", {
+                                            days: current.nextIntervals[item.key],
+                                        })}
+                                    </span>
                                 </span>
-                            </span>
-                        </Button>
-                    ))}
-                </div>
-            ) : (
-                <Button
-                    variant="primary"
-                    onPress={() => setFlipped(true)}
-                >
-                    {t("flashcardReview.flip")}
-                </Button>
-            )}
-        </div>
+                            </Button>
+                        ))}
+                    </Box>
+                ) : (
+                    <Button
+                        variant="primary"
+                        onPress={() => setFlipped(true)}
+                    >
+                        {t("flashcardReview.flip")}
+                    </Button>
+                )),
+            ]} />
+        </Box>
     )
 }

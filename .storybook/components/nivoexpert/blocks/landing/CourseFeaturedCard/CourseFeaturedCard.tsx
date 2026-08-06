@@ -67,8 +67,7 @@ const CourseFeaturedCard = ({ course, onOpenCourse, isSkeleton = false, labels }
                 onPress={() => onOpenCourse(course.slug)}
                 body={() => (
                     <Grid
-                        columns={{ base: 1, md: 2 }}
-                        gap={6}
+                        principle="block-boundary" columns={{ base: 1, md: 2 }}
                         isSkeleton={isSkeleton}
                         items={[
                             {

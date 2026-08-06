@@ -25,6 +25,7 @@ import type {
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryUserAchievementsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserAchievementsSwr"
 import { rankInfo, resolveSeniorityRank } from "@/modules/utils/rank"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link ProfileMenuCard}. */
 export type ProfileMenuCardProps = WithClassNames<undefined>
@@ -98,28 +99,47 @@ export const ProfileMenuCard = ({
             )}
         >
             {/* avatar + name = left cluster; caret pinned right by justify-between */}
-            <div className="flex min-w-0 items-center gap-3">
-                {/* avatar with a thin 2px seniority ring — beginner/unranked → neutral `--border` token */}
-                <div
-                    className="shrink-0 rounded-full ring-2"
-                    style={{ "--tw-ring-color": ringColor } as React.CSSProperties}
-                >
-                    <UserAvatar
-                        className="size-10"
-                        username={displayName}
-                        avatar={user.avatar}
-                        seed={user.username}
-                    />
-                </div>
-                <div className="flex min-w-0 flex-col gap-0">
-                    <span className="truncate text-sm font-semibold text-foreground">
-                        {displayName}
-                    </span>
-                    <span className="truncate text-xs text-muted">
-                        @{user.username}
-                    </span>
-                </div>
-            </div>
+            <StackH
+                gap={4}
+                principle="content-row"
+                align="center"
+                classNames={["min-w-0"]}
+                items={[
+                    () => (
+                        // avatar with a thin 2px seniority ring — beginner/unranked → neutral `--border` token
+                        <div
+                            className="shrink-0 rounded-full ring-2"
+                            style={{ "--tw-ring-color": ringColor } as React.CSSProperties}
+                        >
+                            <UserAvatar
+                                className="size-10"
+                                username={displayName}
+                                avatar={user.avatar}
+                                seed={user.username}
+                            />
+                        </div>
+                    ),
+                    () => (
+                        <StackV
+                            gap={1}
+                            principle="name-handle"
+                            classNames={["min-w-0"]}
+                            items={[
+                                () => (
+                                    <span className="truncate text-sm font-semibold text-foreground">
+                                        {displayName}
+                                    </span>
+                                ),
+                                () => (
+                                    <span className="truncate text-xs text-muted">
+                                        @{user.username}
+                                    </span>
+                                ),
+                            ]}
+                        />
+                    ),
+                ]}
+            />
             {/* trailing caret at the right edge; weight bold + slides on hover (mirrors "Continue →") */}
             <CaretRightIcon weight="bold" className="size-4 shrink-0 text-muted transition-transform group-hover:translate-x-1" />
         </Link>

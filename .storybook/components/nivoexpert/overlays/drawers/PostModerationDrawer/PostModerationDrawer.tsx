@@ -105,7 +105,7 @@ const PostModerationDrawer = ({
                 isSkeleton={isSkeleton}
                 body={() => (
                     <StackV
-                        gap={4}
+                        principle="label-field" gap={4}
                         isSkeleton={isSkeleton}
                         items={[
                             () => <UserCell username={post?.authorName ?? ""} size="md" isSkeleton={isSkeleton} />,
@@ -113,7 +113,8 @@ const PostModerationDrawer = ({
                             () => <Typography size="sm" color="muted" preserveWhitespace isSkeleton={isSkeleton} text={post?.body} />,
                             () => (
                                 <StackH
-                                    gap={2}
+                                    gap={3}
+                                    principle="chip-row"
                                     align="center"
                                     isSkeleton={isSkeleton}
                                     items={[

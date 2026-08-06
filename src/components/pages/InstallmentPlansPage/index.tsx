@@ -34,6 +34,8 @@ import { PaymentType } from "@/modules/types/enums/payment-type"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { submitCheckout } from "@/modules/payment/submit-checkout"
 import { pathConfig } from "@/resources/path"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Format an integer VND amount as "1.275.000₫". */
 const formatVnd = (amount: number): string => `${amount.toLocaleString("vi-VN")}₫`
@@ -134,156 +136,176 @@ export const InstallmentPlansPage = () => {
     )
 
     return (
-        <div className="flex flex-col gap-10">
-            <PageHeader
-                breadcrumb={<SettingsBreadcrumb current={t("installmentPlans.title")} />}
-                title={t("installmentPlans.title")}
-                description={t("installmentPlans.subtitle")}
-            />
+        <StackV gap={7} principle="layout-split" items={[
+            () => (
+                <PageHeader
+                    breadcrumb={<SettingsBreadcrumb current={t("installmentPlans.title")} />}
+                    title={t("installmentPlans.title")}
+                    description={t("installmentPlans.subtitle")}
+                />
+            ),
 
-            <AsyncContent
-                isLoading={isLoading && !plans}
-                skeleton={(
-                    <div className="flex flex-col gap-3">
-                        {[0, 1].map((row) => (
+            () => (
+                <AsyncContent
+                    isLoading={isLoading && !plans}
+                    skeleton={(
+                        <StackV gap={4} principle="content-row" items={[0, 1].map((row) => () => (
                             <Skeleton key={row} className="h-40 w-full rounded-2xl" />
-                        ))}
-                    </div>
-                )}
-                isEmpty={planList.length === 0}
-                emptyContent={{
-                    title: t("installmentPlans.empty"),
-                    description: t("installmentPlans.emptyDesc"),
-                    onRetry: () => router.push(pathConfig().locale().course().build()),
-                    retryLabel: t("installmentPlans.emptyCta"),
-                }}
-                error={error}
-                errorContent={{
-                    title: t("installmentPlans.empty"),
-                    onRetry: () => { void mutate() },
-                }}
-            >
-                <div className="flex flex-col gap-3">
-                    {planList.map((plan) => {
+                        ))} />
+                    )}
+                    isEmpty={planList.length === 0}
+                    emptyContent={{
+                        title: t("installmentPlans.empty"),
+                        description: t("installmentPlans.emptyDesc"),
+                        onRetry: () => router.push(pathConfig().locale().course().build()),
+                        retryLabel: t("installmentPlans.emptyCta"),
+                    }}
+                    error={error}
+                    errorContent={{
+                        title: t("installmentPlans.empty"),
+                        onRetry: () => { void mutate() },
+                    }}
+                >
+                    <StackV gap={4} principle="content-row" items={planList.map((plan) => () => {
                         const isFixed = plan.planType === "Fixed"
                         const isLocked = plan.status === "Defaulted"
                         const statusColor = STATUS_COLOR[plan.status] ?? "muted"
                         const isPaying = payingId === plan.id
                         return (
                             <Card key={plan.id}>
-                                <CardContent className="flex flex-col gap-3">
-                                    <div className="flex items-center justify-between gap-3">
-                                        <Chip
-                                            size="sm"
-                                            variant="soft"
-                                            color={statusColor === "muted" ? "default" : statusColor}
-                                        >
-                                            <Chip.Label>{t(`installmentPlans.status.${plan.status}`)}</Chip.Label>
-                                        </Chip>
-                                        <Typography type="body-xs" color="muted">
-                                            {isFixed
-                                                ? t("installmentPlans.termMonths", { months: plan.months ?? 0 })
-                                                : t("installmentPlans.flexiblePool")}
-                                        </Typography>
-                                    </div>
+                                <CardContent>
+                                    <StackV gap={4} principle="content-row" items={[
+                                        () => (
+                                            <StackH gap={4} principle="content-row" justify="between" align="center" items={[
+                                                () => (
+                                                    <Chip
+                                                        size="sm"
+                                                        variant="soft"
+                                                        color={statusColor === "muted" ? "default" : statusColor}
+                                                    >
+                                                        <Chip.Label>{t(`installmentPlans.status.${plan.status}`)}</Chip.Label>
+                                                    </Chip>
+                                                ),
+                                                () => (
+                                                    <Typography type="body-xs" color="muted">
+                                                        {isFixed
+                                                            ? t("installmentPlans.termMonths", { months: plan.months ?? 0 })
+                                                            : t("installmentPlans.flexiblePool")}
+                                                    </Typography>
+                                                ),
+                                            ]} />
+                                        ),
 
-                                    {plan.courses.length > 0 ? (
-                                        <div className="flex flex-wrap items-center gap-2">
-                                            {plan.courses.map((course) => (
+                                        () => (plan.courses.length > 0 ? (
+                                            <Cluster gap={3} principle="chip-row" items={plan.courses.map((course) => () => (
                                                 <Chip key={course.id} size="sm" variant="soft" color="default">
                                                     <Chip.Label>{course.title}</Chip.Label>
                                                 </Chip>
-                                            ))}
-                                        </div>
-                                    ) : null}
+                                            ))} />
+                                        ) : null),
 
-                                    {isFixed ? (
-                                        <>
-                                            <div className="flex items-center justify-between gap-3">
-                                                <Typography type="body-sm" weight="semibold">
-                                                    {formatVnd(plan.monthlyAmountVnd ?? 0)}
-                                                    <Typography type="body-xs" color="muted" className="ml-1 inline">
-                                                        {t("installmentPlans.perCycle")}
+                                        () => (isFixed ? (
+                                            <>
+                                                <StackH gap={4} principle="content-row" justify="between" align="center" items={[() => (
+                                                    <Typography type="body-sm" weight="semibold">
+                                                        {formatVnd(plan.monthlyAmountVnd ?? 0)}
+                                                        <Typography type="body-xs" color="muted" className="ml-1 inline">
+                                                            {t("installmentPlans.perCycle")}
+                                                        </Typography>
                                                     </Typography>
-                                                </Typography>
-                                            </div>
-                                            <ProgressMeter
-                                                value={plan.installmentsPaid ?? 0}
-                                                max={plan.months ?? 1}
-                                                label={t("installmentPlans.progress", {
-                                                    paid: plan.installmentsPaid ?? 0,
-                                                    months: plan.months ?? 0,
-                                                })}
-                                            />
-                                        </>
-                                    ) : (
-                                        <>
-                                            <div className="flex items-center justify-between gap-3">
-                                                <Typography type="body-sm" color="muted">
-                                                    {t("installmentPlans.remaining")}
-                                                </Typography>
-                                                <Typography type="body-sm" weight="semibold">
-                                                    {formatVnd(plan.remainingVnd ?? 0)}
-                                                </Typography>
-                                            </div>
-                                            <Typography type="body-xs" color="muted">
-                                                {t("installmentPlans.minPaymentFormula", {
-                                                    percent: plan.minPaymentPercent ?? 0,
-                                                    floor: formatVnd(plan.minPaymentFloorVnd ?? 0),
-                                                })}
-                                            </Typography>
-                                            <div className="flex items-center gap-2">
-                                                <TextField
-                                                    className="max-w-[160px]"
-                                                    value={amountFor(plan).toLocaleString("vi-VN")}
-                                                    onChange={(value) => onAmountChange(plan, value)}
-                                                    isDisabled={isPaying}
-                                                    aria-label={t("installmentPlans.amountLabel")}
+                                                )]} />
+                                                <ProgressMeter
+                                                    value={plan.installmentsPaid ?? 0}
+                                                    max={plan.months ?? 1}
+                                                    label={t("installmentPlans.progress", {
+                                                        paid: plan.installmentsPaid ?? 0,
+                                                        months: plan.months ?? 0,
+                                                    })}
                                                 />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <StackH gap={4} principle="content-row" justify="between" align="center" items={[
+                                                    () => (
+                                                        <Typography type="body-sm" color="muted">
+                                                            {t("installmentPlans.remaining")}
+                                                        </Typography>
+                                                    ),
+                                                    () => (
+                                                        <Typography type="body-sm" weight="semibold">
+                                                            {formatVnd(plan.remainingVnd ?? 0)}
+                                                        </Typography>
+                                                    ),
+                                                ]} />
                                                 <Typography type="body-xs" color="muted">
-                                                    {t("installmentPlans.minLabel", { amount: formatVnd(plan.minPaymentVnd) })}
+                                                    {t("installmentPlans.minPaymentFormula", {
+                                                        percent: plan.minPaymentPercent ?? 0,
+                                                        floor: formatVnd(plan.minPaymentFloorVnd ?? 0),
+                                                    })}
                                                 </Typography>
-                                            </div>
-                                        </>
-                                    )}
+                                                <StackH gap={3} principle="identity" align="center" items={[
+                                                    () => (
+                                                        <TextField
+                                                            className="max-w-[160px]"
+                                                            value={amountFor(plan).toLocaleString("vi-VN")}
+                                                            onChange={(value) => onAmountChange(plan, value)}
+                                                            isDisabled={isPaying}
+                                                            aria-label={t("installmentPlans.amountLabel")}
+                                                        />
+                                                    ),
+                                                    () => (
+                                                        <Typography type="body-xs" color="muted">
+                                                            {t("installmentPlans.minLabel", { amount: formatVnd(plan.minPaymentVnd) })}
+                                                        </Typography>
+                                                    ),
+                                                ]} />
+                                            </>
+                                        )),
 
-                                    {isLocked ? (
-                                        <Callout
-                                            status="danger"
-                                            title={t("installmentPlans.lockedTitle")}
-                                            description={t("installmentPlans.lockedDesc")}
-                                        />
-                                    ) : null}
+                                        () => (isLocked ? (
+                                            <Callout
+                                                status="danger"
+                                                title={t("installmentPlans.lockedTitle")}
+                                                description={t("installmentPlans.lockedDesc")}
+                                            />
+                                        ) : null),
 
-                                    <div className="flex items-center justify-between gap-3 border-t border-default pt-3">
-                                        <Typography type="body-xs" color="muted">
-                                            {plan.nextDueAt
-                                                ? t("installmentPlans.nextDue", { date: new Date(plan.nextDueAt).toLocaleDateString("vi-VN") })
-                                                : ""}
-                                        </Typography>
-                                        <Button
-                                            variant={isLocked ? "danger" : "primary"}
-                                            size="sm"
-                                            isDisabled={isPaying}
-                                            onPress={() => { void onPay(plan) }}
-                                        >
-                                            {isPaying ? (
-                                                <Spinner size="sm" color="current" />
-                                            ) : isLocked ? (
-                                                t("installmentPlans.unlock")
-                                            ) : isFixed ? (
-                                                t("installmentPlans.payThisCycle")
-                                            ) : (
-                                                t("installmentPlans.pay")
-                                            )}
-                                        </Button>
-                                    </div>
+                                        () => (
+                                            <StackH gap={4} principle="content-row" justify="between" align="center" items={[
+                                                () => (
+                                                    <Typography type="body-xs" color="muted">
+                                                        {plan.nextDueAt
+                                                            ? t("installmentPlans.nextDue", { date: new Date(plan.nextDueAt).toLocaleDateString("vi-VN") })
+                                                            : ""}
+                                                    </Typography>
+                                                ),
+                                                () => (
+                                                    <Button
+                                                        variant={isLocked ? "danger" : "primary"}
+                                                        size="sm"
+                                                        isDisabled={isPaying}
+                                                        onPress={() => { void onPay(plan) }}
+                                                    >
+                                                        {isPaying ? (
+                                                            <Spinner size="sm" color="current" />
+                                                        ) : isLocked ? (
+                                                            t("installmentPlans.unlock")
+                                                        ) : isFixed ? (
+                                                            t("installmentPlans.payThisCycle")
+                                                        ) : (
+                                                            t("installmentPlans.pay")
+                                                        )}
+                                                    </Button>
+                                                ),
+                                            ]} />
+                                        ),
+                                    ]} />
                                 </CardContent>
                             </Card>
                         )
-                    })}
-                </div>
-            </AsyncContent>
-        </div>
+                    })} />
+                </AsyncContent>
+            ),
+        ]} />
     )
 }

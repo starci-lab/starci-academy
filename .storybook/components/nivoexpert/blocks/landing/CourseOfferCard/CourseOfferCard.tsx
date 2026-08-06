@@ -75,12 +75,12 @@ const CourseOfferCard = ({ course, onOpenCourse, isSkeleton = false, labels }: C
                 onPress={() => onOpenCourse(course.slug)}
                 body={() => (
                     <StackV
-                        gap={3}
+                        principle="sibling-stack" gap={3}
                         isSkeleton={isSkeleton}
                         items={[
                             () => (
                                 <StackH
-                                    gap={3}
+                                    principle="value-row" gap={3}
                                     justify="between"
                                     align="start"
                                     isSkeleton={isSkeleton}

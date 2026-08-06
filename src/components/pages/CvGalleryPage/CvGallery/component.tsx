@@ -119,7 +119,7 @@ const CvGalleryCardCover = ({ item, labels }: { item: CvGalleryDocument; labels:
             as="span"
             className="absolute inset-0 flex items-end justify-center bg-foreground/0 pb-3 opacity-0 transition-opacity group-hover:bg-foreground/5 group-hover:opacity-100"
         >
-            <Box as="span" className="rounded-full bg-accent px-4 py-2 text-sm text-accent-foreground">
+            <Box as="span" principle="pill-pad" className="rounded-full bg-accent px-4 py-2 text-sm text-accent-foreground">
                 {labels.openEditor}
             </Box>
         </Box>
@@ -129,10 +129,12 @@ const CvGalleryCardCover = ({ item, labels }: { item: CvGalleryDocument; labels:
 const CvGalleryCardFooter = ({ item, labels }: { item: CvGalleryDocument; labels: CvGalleryLabels }) => (
     <StackV
         gap={3}
+        principle="sibling-stack"
         items={[
             () => (
                 <StackH
                     gap={3}
+                    principle="flex-action"
                     justify="between"
                     items={[
                         () => (
@@ -205,6 +207,7 @@ export const _CvGallery = ({
     const emptyAction: ComponentTypeWithSkeleton = () => (
         <StackV
             gap={3}
+            principle="sibling-stack"
             align="center"
             items={[
                 () => <Button label={labels.createFirst} variant="tertiary" size="sm" onPress={onCreate} />,
@@ -241,12 +244,13 @@ export const _CvGallery = ({
     } else if (!isSkeleton && isEmpty) {
         body = <AsyncContentEmpty title={labels.emptyTitle} description={labels.emptyHint} action={emptyAction} />
     } else {
-        body = <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={6} items={gridItems} />
+        body = <Grid columns={{ base: 1, sm: 2, lg: 3 }} principle="block-boundary" items={gridItems} />
     }
 
     return (
         <StackV
             gap={7}
+            principle="layout-split"
             identity={{ tier: "block", component: "CvGallery" }}
             items={[
                 ...(breadcrumb ? [() => (

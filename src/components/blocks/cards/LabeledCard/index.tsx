@@ -154,7 +154,7 @@ export const LabeledCard = ({
             data-principle={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", subtleLabel ? "gap-2" : "gap-3", fillHeight && "h-full", className)}
         >
-            <StackH gap={4} justify="between" items={[() => labelSlot, () => endSlot]} />
+            <StackH gap={4} principle="content-row" justify="between" items={[() => labelSlot, () => endSlot]} />
             {/* description sits OUTSIDE (below) the card, gap-2 — never surface-in-surface */}
             {Description ? (
                 <StackV gap={3} items={[() => body, () => <Description />]} />

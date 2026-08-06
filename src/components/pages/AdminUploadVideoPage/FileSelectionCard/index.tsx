@@ -12,6 +12,7 @@ import {
     Label,
     TextField,
 } from "@heroui/react"
+import { Box } from "@/components/frames/Box"
 import type {
     ProcessResult,
 } from "../types"
@@ -92,96 +93,99 @@ export const FileSelectionCard = ({
     )
     return (
         <Card className="bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl shadow-indigo-500/5">
-            <CardContent className="space-y-6 p-6">
-                {/* Section header */}
-                <div className="flex items-center gap-2 pb-2">
-                    <div className="rounded-lg bg-indigo-500/10 p-2">
-                        <FilmSlateIcon className="h-5 w-5 text-indigo-400" />
-                    </div>
-                    <div>
-                        <h2 className="text-base font-semibold text-white">
+            <CardContent>
+                <Box principle="page-pad" className="p-6 space-y-6">
+                    {/* Section header */}
+                    <Box principle="identity" className="flex items-center gap-2 pb-2">
+                        {/* ps-admin-5: p-2 not in named house token set — teacher-hold */}
+                        <div data-principle="ps-admin-5" className="rounded-lg bg-indigo-500/10 p-2">
+                            <FilmSlateIcon className="h-5 w-5 text-indigo-400" />
+                        </div>
+                        <div>
+                            <h2 className="text-base font-semibold text-white">
                             Video File
-                        </h2>
-                        <p className="text-xs text-slate-400">
+                            </h2>
+                            <p className="text-xs text-slate-400">
                             Select and configure the file to upload
-                        </p>
-                    </div>
-                </div>
+                            </p>
+                        </div>
+                    </Box>
 
-                <DropZone
-                    file={file}
-                    fileInputRef={fileInputRef}
-                    onClickZone={onClickZone}
-                    onDragOver={onDragOver}
-                    onDrop={onDrop}
-                    onFileChange={onFileChange}
-                />
+                    <DropZone
+                        file={file}
+                        fileInputRef={fileInputRef}
+                        onClickZone={onClickZone}
+                        onDragOver={onDragOver}
+                        onDrop={onDrop}
+                        onFileChange={onFileChange}
+                    />
 
-                {/* Object Key Input */}
-                <TextField variant="secondary">
-                    <Label htmlFor="admin-object-key-input" className="text-sm text-slate-300">
+                    {/* Object Key Input */}
+                    <TextField variant="secondary">
+                        <Label htmlFor="admin-object-key-input" className="text-sm text-slate-300">
                         Object Key (S3 Path)
-                    </Label>
-                    <div className="relative">
-                        <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 pointer-events-none" />
-                        <Input
-                            id="admin-object-key-input"
-                            placeholder="videos/my-lecture.mp4"
-                            className="pl-9 bg-white/5 border-white/10 hover:border-indigo-400/40 text-white placeholder:text-slate-500"
-                            value={objectKey}
-                            onChange={onObjectKeyInputChange}
-                        />
-                    </div>
-                </TextField>
+                        </Label>
+                        <div className="relative">
+                            <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 pointer-events-none" />
+                            <Input
+                                id="admin-object-key-input"
+                                placeholder="videos/my-lecture.mp4"
+                                className="pl-9 bg-white/5 border-white/10 hover:border-indigo-400/40 text-white placeholder:text-slate-500"
+                                value={objectKey}
+                                onChange={onObjectKeyInputChange}
+                            />
+                        </div>
+                    </TextField>
 
-                {/* Action Buttons */}
-                <div className="flex gap-3">
+                    {/* Action Buttons */}
+                    <Box principle="content-row" className="flex gap-3">
 
-                    <Button
-                        id="admin-upload-button"
-                        variant="primary"
-                        size="lg"
-                        className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 font-semibold shadow-lg shadow-indigo-500/25 transition-all hover:shadow-indigo-500/40 hover:scale-[1.01]"
-                        onPress={onUpload}
-                        isDisabled={
-                            !file || !objectKey || isUploading
-                        }
-                        isPending={isRequesting}
-                    >
-                        {({isPending}) => (
-                            <>
-                                {!isPending && <UploadIcon className="h-5 w-5" />}
-                                {isPending
-                                    ? "Getting URLs…"
-                                    : isUploading
-                                        ? "Uploading…"
-                                        : "Upload"}
-                            </>
-                        )}
-                    </Button>
-                    <Button
-                        id="admin-process-button"
-                        variant="primary"
-                        size="lg"
-                        className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 font-semibold shadow-lg shadow-emerald-500/25 transition-all hover:shadow-emerald-500/40 hover:scale-[1.01]"
-                        onPress={onProcess}
-                        isDisabled={!uploadDone || isProcessing}
-                        isPending={isProcessing}
-                    >
-                        {({isPending}) => (
-                            <>
-                                {!isPending && <GearIcon className="h-5 w-5" />}
-                                {isPending
-                                    ? "Processing…"
-                                    : processResult
-                                        ? "Re-process"
-                                        : "Process Video"}
-                            </>
-                        )}
-                    </Button>
-                </div>
+                        <Button
+                            id="admin-upload-button"
+                            variant="primary"
+                            size="lg"
+                            className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 font-semibold shadow-lg shadow-indigo-500/25 transition-all hover:shadow-indigo-500/40 hover:scale-[1.01]"
+                            onPress={onUpload}
+                            isDisabled={
+                                !file || !objectKey || isUploading
+                            }
+                            isPending={isRequesting}
+                        >
+                            {({isPending}) => (
+                                <>
+                                    {!isPending && <UploadIcon className="h-5 w-5" />}
+                                    {isPending
+                                        ? "Getting URLs…"
+                                        : isUploading
+                                            ? "Uploading…"
+                                            : "Upload"}
+                                </>
+                            )}
+                        </Button>
+                        <Button
+                            id="admin-process-button"
+                            variant="primary"
+                            size="lg"
+                            className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 font-semibold shadow-lg shadow-emerald-500/25 transition-all hover:shadow-emerald-500/40 hover:scale-[1.01]"
+                            onPress={onProcess}
+                            isDisabled={!uploadDone || isProcessing}
+                            isPending={isProcessing}
+                        >
+                            {({isPending}) => (
+                                <>
+                                    {!isPending && <GearIcon className="h-5 w-5" />}
+                                    {isPending
+                                        ? "Processing…"
+                                        : processResult
+                                            ? "Re-process"
+                                            : "Process Video"}
+                                </>
+                            )}
+                        </Button>
+                    </Box>
 
-                <ProcessResultBanner processResult={processResult} />
+                    <ProcessResultBanner processResult={processResult} />
+                </Box>
             </CardContent>
         </Card>
     )

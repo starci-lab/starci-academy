@@ -109,6 +109,7 @@ const MessageBubble = ({ message, labels, isSkeleton }: {
 }) => (
     <StackH
         gap={3}
+        principle="flex-action"
         justify={message.authorRole === "user" ? "end" : "start"}
         isSkeleton={isSkeleton}
         items={[
@@ -171,6 +172,7 @@ const TicketThread = ({ subject, status, messages, replyValue, onReplyChange, on
                 body={() => (
                     <StackV
                         gap={4}
+                        principle="label-field"
                         isSkeleton={isSkeleton}
                         items={[
                             () => (

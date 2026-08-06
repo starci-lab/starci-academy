@@ -20,6 +20,8 @@ import {
 import { useTranslations } from "next-intl"
 import { CODING_DOMAIN_ORDER } from "@/modules/api/graphql/queries/types/coding"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 import { usePracticeView } from "../hooks/usePracticeView"
 import { usePracticeFilters } from "../hooks/usePracticeFilters"
 import type { PracticeView } from "../hooks/usePracticeView"
@@ -66,63 +68,67 @@ export const PracticeRail = ({ className }: PracticeRailProps) => {
     return (
         <div className={cn("relative flex min-h-0 min-w-0 flex-col gap-3 p-6", className)}>
             {/* pinned header: mode switch + topic search */}
-            <div className="flex flex-col gap-3">
-                <TabsCard
-                    variant="primary"
-                    leftTabs={{
-                        selectedKey: view,
-                        ariaLabel: t("PracticeHubPage.rail.modeAria"),
-                        onSelectionChange: (key) => setView(String(key) as PracticeView),
-                        items: [
-                            {
-                                key: "problems",
-                                label: (
-                                    <span className="flex items-center gap-2">
-                                        <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />
-                                        {t("PracticeHubPage.tabs.problems")}
-                                    </span>
-                                ),
-                            },
-                            {
-                                key: "leaderboard",
-                                label: (
-                                    <span className="flex items-center gap-2">
-                                        <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />
-                                        {t("PracticeHubPage.tabs.leaderboard")}
-                                    </span>
-                                ),
-                            },
-                        ],
-                    }}
-                />
-
-                {/* topic search — problems mode only (the leaderboard is topic-agnostic) */}
-                {view === "problems" ? (
-                    <div className="flex flex-col gap-2">
-                        <Label className="px-1 text-xs text-muted">{t("PracticeHubPage.rail.topicsLabel")}</Label>
-                        <TextField>
-                            <Input
-                                type="search"
-                                aria-label={t("PracticeHubPage.rail.searchTopic")}
-                                placeholder={t("PracticeHubPage.rail.searchTopic")}
-                                value={query}
-                                onChange={(event) => setQuery(event.target.value)}
-                            />
-                        </TextField>
-                    </div>
-                ) : null}
-            </div>
+            <StackV gap={4} principle="card-caption" items={[
+                () => (
+                    <TabsCard
+                        variant="primary"
+                        leftTabs={{
+                            selectedKey: view,
+                            ariaLabel: t("PracticeHubPage.rail.modeAria"),
+                            onSelectionChange: (key) => setView(String(key) as PracticeView),
+                            items: [
+                                {
+                                    key: "problems",
+                                    label: (
+                                        <StackH gap={3} principle="flex-action" as="span" items={[
+                                            () => <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+                                            () => <>{t("PracticeHubPage.tabs.problems")}</>,
+                                        ]} />
+                                    ),
+                                },
+                                {
+                                    key: "leaderboard",
+                                    label: (
+                                        <StackH gap={3} principle="flex-action" as="span" items={[
+                                            () => <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+                                            () => <>{t("PracticeHubPage.tabs.leaderboard")}</>,
+                                        ]} />
+                                    ),
+                                },
+                            ],
+                        }}
+                    />
+                ),
+                () => view === "problems" ? (
+                    <StackV gap={3} principle="sibling-stack" items={[
+                        () => <Label className="px-1 text-xs text-muted" data-principle="control-pad">{t("PracticeHubPage.rail.topicsLabel")}</Label>,
+                        () => (
+                            <TextField>
+                                <Input
+                                    type="search"
+                                    aria-label={t("PracticeHubPage.rail.searchTopic")}
+                                    placeholder={t("PracticeHubPage.rail.searchTopic")}
+                                    value={query}
+                                    onChange={(event) => setQuery(event.target.value)}
+                                />
+                            </TextField>
+                        ),
+                    ]} />
+                ) : null,
+            ]} />
 
             {/* scroll region: the topic nav list (problems mode only) */}
             {view === "problems" ? (
                 <ScrollShadow
                     hideScrollBar
-                    className="-mx-1 min-h-0 min-w-0 flex-1 overflow-y-auto px-1"
+                    className="-mx-1 min-h-0 min-w-0 flex-1 overflow-y-auto px-1" data-principle="control-pad"
                 >
                     {topics.length === 0 ? (
-                        <Typography type="body-sm" color="muted" className="px-3 py-2">
-                            {t("PracticeHubPage.rail.searchTopicEmpty", { query: query.trim() })}
-                        </Typography>
+                        <Box principle="control-pad" className="px-3 py-2">
+                            <Typography type="body-sm" color="muted">
+                                {t("PracticeHubPage.rail.searchTopicEmpty", { query: query.trim() })}
+                            </Typography>
+                        </Box>
                     ) : (
                         <ListBox
                             aria-label={t("PracticeHubPage.rail.topicsAria")}
@@ -136,14 +142,14 @@ export const PracticeRail = ({ className }: PracticeRailProps) => {
                                     setFilters({ domain: key as DomainFilter })
                                 }
                             }}
-                            className="gap-1 p-0"
+                            className="gap-1 p-0" data-principle="title-subtitle"
                         >
                             {topics.map((domain) => (
                                 <ListBox.Item
                                     key={domain}
                                     id={domain}
                                     textValue={topicLabel(domain)}
-                                    className="cursor-pointer rounded-2xl px-3 py-2 text-foreground data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft data-[selected=true]:text-accent-soft-foreground"
+                                    className="cursor-pointer rounded-2xl px-3 py-2 text-foreground data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft data-[selected=true]:text-accent-soft-foreground" data-principle="control-pad"
                                 >
                                     <Typography type="body-sm" className="min-w-0 flex-1 truncate text-inherit">
                                         {topicLabel(domain)}

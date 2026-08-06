@@ -36,7 +36,7 @@ const KpiRow = ({ items, isSkeleton = false }: KpiRowProps) => (
     <div data-tier="block" data-component="KpiRow">
         <Grid
             columns={{ base: 1, sm: 2, lg: 4 }}
-            gap={4}
+            principle="content-row"
             isSkeleton={isSkeleton}
             items={items.map(({ key, ...tile }) => ({
                 key,

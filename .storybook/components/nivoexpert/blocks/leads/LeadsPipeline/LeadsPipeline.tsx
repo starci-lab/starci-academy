@@ -127,7 +127,7 @@ const LeadsPipeline = ({ leads, onSelectLead, isSkeleton = false, labels }: Lead
             {!isSkeleton && leads.length === 0 ? (
                 <EmptyState icon={UsersThreeIcon} title={labels.emptyTitle} description={labels.emptyDescription} />
             ) : (
-                <Grid columns={{ base: 1, md: 4 }} gap={4} items={columns} isSkeleton={isSkeleton} />
+                <Grid principle="content-row" columns={{ base: 1, md: 4 }} items={columns} isSkeleton={isSkeleton} />
             )}
         </div>
     )

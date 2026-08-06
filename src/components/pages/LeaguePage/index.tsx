@@ -22,6 +22,7 @@ import {
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { StackV } from "@/components/frames/Stack"
 import { pathConfig } from "@/resources/path"
 import type {
     WithClassNames,
@@ -57,45 +58,54 @@ export const LeaguePage = ({
     const [tab, setTab] = useState<LeagueTab>(LeagueTab.Weekly)
 
     return (
-        <div className={cn("mx-auto w-full max-w-2xl p-3", className)}>
-            <PageHeader
-                breadcrumb={(
-                    <ResponsiveBreadcrumb
-                        items={[
-                            {
-                                key: "home",
-                                label: t("nav.home"),
-                                onPress: () => router.push(pathConfig().locale(locale).build()),
-                            },
-                            { key: "league", label: t("dashboard.league.pageTitle") },
-                        ]}
-                    />
-                )}
-                title={t("dashboard.league.pageTitle")}
+        <div className={cn("mx-auto w-full max-w-2xl p-3", className)} data-principle="cell-pad">
+            <StackV
+                gap={7}
+                principle="layout-split"
+                items={[
+                    () => (
+                        <PageHeader
+                            breadcrumb={(
+                                <ResponsiveBreadcrumb
+                                    items={[
+                                        {
+                                            key: "home",
+                                            label: t("nav.home"),
+                                            onPress: () => router.push(pathConfig().locale(locale).build()),
+                                        },
+                                        { key: "league", label: t("dashboard.league.pageTitle") },
+                                    ]}
+                                />
+                            )}
+                            title={t("dashboard.league.pageTitle")}
+                        />
+                    ),
+                    // tabs + board grouped at block-boundary; only the active board mounts
+                    () => (
+                        <StackV
+                            gap={6}
+                            principle="block-boundary"
+                            items={[
+                                () => (
+                                    <TabsCard
+                                        variant="primary"
+                                        leftTabs={{
+                                            items: [
+                                                { key: LeagueTab.Weekly, label: t("dashboard.league.tabWeekly") },
+                                                { key: LeagueTab.Global, label: t("dashboard.league.tabGlobal") },
+                                            ],
+                                            selectedKey: tab,
+                                            ariaLabel: t("dashboard.league.pageTitle"),
+                                            onSelectionChange: (key) => setTab(String(key) as LeagueTab),
+                                        }}
+                                    />
+                                ),
+                                () => (tab === LeagueTab.Weekly ? <WeeklyBoard /> : <GlobalBoard />),
+                            ]}
+                        />
+                    ),
+                ]}
             />
-
-            {/* header → content = gap-10 (header.md §2); tabs + board grouped at gap-6 */}
-            <div className="mt-10 flex flex-col gap-6">
-                <TabsCard
-                    variant="primary"
-                    leftTabs={{
-                        items: [
-                            { key: LeagueTab.Weekly, label: t("dashboard.league.tabWeekly") },
-                            { key: LeagueTab.Global, label: t("dashboard.league.tabGlobal") },
-                        ],
-                        selectedKey: tab,
-                        ariaLabel: t("dashboard.league.pageTitle"),
-                        onSelectionChange: (key) => setTab(String(key) as LeagueTab),
-                    }}
-                />
-
-                {/* only the active board mounts, so the inactive leaf query stays idle */}
-                {tab === LeagueTab.Weekly ? (
-                    <WeeklyBoard />
-                ) : (
-                    <GlobalBoard />
-                )}
-            </div>
         </div>
     )
 }

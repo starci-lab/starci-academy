@@ -129,12 +129,7 @@ const TemplatePickerModal = ({
             ),
         }))
         return (
-            <SurfaceCardPressableGroup
-                items={items}
-                ariaLabel={labels.groupAriaLabel}
-                columns={{ base: 1, sm: 2 }}
-                isSkeleton={skeleton}
-            />
+            <SurfaceCardPressableGroup items={items} ariaLabel={labels.groupAriaLabel} columns={{ base: 1, sm: 2 }} isSkeleton={skeleton} principle="content-row" />
         )
     }
 

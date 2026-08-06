@@ -25,6 +25,7 @@ import { FlashcardSessionStatsSkeleton } from "./FlashcardSessionStats/Flashcard
 import { useFlashcardNav, type FlashcardMode } from "./useFlashcardNav"
 import { type WithClassNames } from "@/modules/types/base/class-name"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { StackV } from "@/components/frames/Stack"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
@@ -339,101 +340,99 @@ export const FlashcardsPage = ({
                     description={t("flashcard.subtitle")}
                 />
 
-                <div className="flex flex-col gap-6">
-                    {/* mobile fallback for the hidden left rail: mode switch + deck picker */}
-                    <FlashcardMobileNav />
-
-                    {/* the flashcards surface is rail-less — the desktop mode switch lives in-pane
-                        for BOTH study and quiz (study's deck list is now in the pane too).
-                        This is a page-FEATURE switch (swaps the ENTIRE pane — study vs quiz are
-                        separate routes) → TabsCard variant="primary" (fe/components/tabs.md §0b),
-                        NOT a TabsCard pill-toggle (that's for an in-place SETTING that doesn't change
-                        the panel — see tabs.md §0 / segmented-control.md). Correction 2026-07-09:
-                        this was on a pill toggle before, which is what let QuizSession's OWN
-                        inner setup tabs (also variant="primary") render at the exact same visual
-                        weight as this outer mode switch — see tabs.md §0d for the fix. */}
-                    <div className="hidden @app-lg:block">
-                        <TabsCard
-                            variant="primary"
-                            leftTabs={{
-                                items: [
-                                    { key: "study", label: t("flashcard.mode.study") },
-                                    { key: "quiz", label: t("flashcard.mode.quiz") },
-                                ],
-                                selectedKey: mode,
-                                ariaLabel: t("flashcard.title"),
-                                onSelectionChange: (key) => goMode(key as FlashcardMode),
-                            }}
-                        />
-                    </div>
-
-                    {mode === "study" ? (
-                        session === "due" ? (
-                            <DueReview onExit={goOverview} />
-                        ) : deckId ? (
-                            // keyed so switching decks resets the reviewer's local state
-                            <FlashcardReviewer key={deckId} deckId={deckId} onBack={goOverview} />
-                        ) : (
-                            <div className="flex flex-col gap-6">
-                                {/* NESTED under the outer "Study cards/Quick quiz" mode switch above —
-                                    same variant="secondary" + w-full demotion QuizSession's own
-                                    setup tabs use, for the same reason (tabs.md §0d). */}
+                <StackV
+                    gap={6}
+                    items={[
+                        () => <FlashcardMobileNav />,
+                        () => (
+                            <div className="hidden @app-lg:block">
                                 <TabsCard
-                                    variant="secondary"
-                                    className="w-full"
+                                    variant="primary"
                                     leftTabs={{
                                         items: [
-                                            { key: "overview", label: t("flashcard.review.overviewTabOverview") },
-                                            { key: "history", label: t("flashcard.review.overviewTabHistory") },
-                                            { key: "stats", label: t("flashcard.review.overviewTabStats") },
+                                            { key: "study", label: t("flashcard.mode.study") },
+                                            { key: "quiz", label: t("flashcard.mode.quiz") },
                                         ],
-                                        selectedKey: overviewTab,
-                                        ariaLabel: t("flashcard.review.overviewTabOverview"),
-                                        onSelectionChange: (key) => setOverviewTab(key as "overview" | "history" | "stats"),
+                                        selectedKey: mode,
+                                        ariaLabel: t("flashcard.title"),
+                                        onSelectionChange: (key) => goMode(key as FlashcardMode),
                                     }}
                                 />
-
-                                {overviewTab === "history" ? (
-                                    courseId ? (
-                                        <FlashcardReviewHistory
-                                            courseId={courseId}
-                                            onStartReview={() => setOverviewTab("overview")}
-                                        />
-                                    ) : null
-                                ) : overviewTab === "stats" ? (
-                                    courseId ? (
-                                        <FlashcardReviewStats
-                                            courseId={courseId}
-                                            onStartReview={() => setOverviewTab("overview")}
-                                        />
-                                    ) : null
-                                ) : (
-                                    <>
-                                        {/* today's spaced-repetition queue + mastery overview */}
-                                        <DueReviewHero />
-                                        <FlashcardStatsStrip />
-                                        {/* deck topic picker — now in the pane (rail dropped) */}
-                                        <FlashcardDeckList onSelectDeck={goDeck} />
-                                    </>
-                                )}
                             </div>
-                        )
-                    ) : !isEnrolled ? (
-                        // trial viewer → lock the quiz behind an enroll CTA
-                        <EnrollGate
-                            title={t("flashcard.quiz.gateTitle")}
-                            description={t("flashcard.quiz.gateDescription")}
-                        />
-                    ) : courseId ? (
-                        // a fixed-length random session over the whole course (no per-deck
-                        // topic pick); keyed by course so it resets
-                        <QuizSession
-                            key={courseId}
-                            courseId={courseId}
-                            resumeSessionId={resumeQuizSessionId}
-                        />
-                    ) : null}
-                </div>
+                        ),
+                        () => (
+                            mode === "study" ? (
+                                session === "due" ? (
+                                    <DueReview onExit={goOverview} />
+                                ) : deckId ? (
+                                    // keyed so switching decks resets the reviewer's local state
+                                    <FlashcardReviewer key={deckId} deckId={deckId} onBack={goOverview} />
+                                ) : (
+                                    <StackV
+                                        gap={6}
+                                        items={[
+                                            () => (
+                                                <TabsCard
+                                                    variant="secondary"
+                                                    className="w-full"
+                                                    leftTabs={{
+                                                        items: [
+                                                            { key: "overview", label: t("flashcard.review.overviewTabOverview") },
+                                                            { key: "history", label: t("flashcard.review.overviewTabHistory") },
+                                                            { key: "stats", label: t("flashcard.review.overviewTabStats") },
+                                                        ],
+                                                        selectedKey: overviewTab,
+                                                        ariaLabel: t("flashcard.review.overviewTabOverview"),
+                                                        onSelectionChange: (key) => setOverviewTab(key as "overview" | "history" | "stats"),
+                                                    }}
+                                                />
+                                            ),
+                                            () => (
+                                                overviewTab === "history" ? (
+                                                    courseId ? (
+                                                        <FlashcardReviewHistory
+                                                            courseId={courseId}
+                                                            onStartReview={() => setOverviewTab("overview")}
+                                                        />
+                                                    ) : null
+                                                ) : overviewTab === "stats" ? (
+                                                    courseId ? (
+                                                        <FlashcardReviewStats
+                                                            courseId={courseId}
+                                                            onStartReview={() => setOverviewTab("overview")}
+                                                        />
+                                                    ) : null
+                                                ) : (
+                                                    <>
+                                                        {/* today's spaced-repetition queue + mastery overview */}
+                                                        <DueReviewHero />
+                                                        <FlashcardStatsStrip />
+                                                        {/* deck topic picker — now in the pane (rail dropped) */}
+                                                        <FlashcardDeckList onSelectDeck={goDeck} />
+                                                    </>
+                                                )
+                                            ),
+                                        ]}
+                                    />
+                                )
+                            ) : !isEnrolled ? (
+                                // trial viewer → lock the quiz behind an enroll CTA
+                                <EnrollGate
+                                    title={t("flashcard.quiz.gateTitle")}
+                                    description={t("flashcard.quiz.gateDescription")}
+                                />
+                            ) : courseId ? (
+                                // a fixed-length random session over the whole course (no per-deck
+                                // topic pick); keyed by course so it resets
+                                <QuizSession
+                                    key={courseId}
+                                    courseId={courseId}
+                                    resumeSessionId={resumeQuizSessionId}
+                                />
+                            ) : null
+                        ),
+                    ]}
+                />
             </div>
         </div>
     )

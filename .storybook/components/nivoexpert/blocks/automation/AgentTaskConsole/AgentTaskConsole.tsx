@@ -178,12 +178,13 @@ const AgentTaskConsole = ({
             isSkeleton={isSkeleton}
             body={() => (
                 <StackV
-                    gap={3}
+                    principle="sibling-stack" gap={3}
                     isSkeleton={isSkeleton}
                     items={[
                         () => (
                             <StackH
                                 gap={2}
+                                principle="icon-text"
                                 isSkeleton={isSkeleton}
                                 items={[
                                     () => (
@@ -201,7 +202,8 @@ const AgentTaskConsole = ({
                         () => <Typography size="sm" color="muted" isSkeleton={isSkeleton} text={labels.description} />,
                         () => (
                             <StackH
-                                gap={2}
+                                gap={3}
+                                principle="flex-action"
                                 align="end"
                                 isSkeleton={isSkeleton}
                                 items={[
@@ -271,7 +273,7 @@ const AgentTaskConsole = ({
                 isSkeleton={rowSkeleton}
                 body={() => (
                     <StackV
-                        gap={2}
+                        principle="title-subtitle" gap={2}
                         isSkeleton={rowSkeleton}
                         items={[
                             () => <Typography size="xs" color="muted" isSkeleton={rowSkeleton} text={labels.taskLabel} />,
@@ -361,7 +363,7 @@ const AgentTaskConsole = ({
                     />
                 ) : (
                     <StackV
-                        gap={2}
+                        principle="title-subtitle" gap={2}
                         isSkeleton={isSkeleton}
                         items={toolRows.map((tool) => () => (
                             <SurfaceCard

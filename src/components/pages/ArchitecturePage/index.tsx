@@ -69,8 +69,8 @@ export const ArchitecturePage = () => {
             </ResizableRail>
 
             {/* content column — owns the canonical p-6 reading padding */}
-            <div className="min-h-0 min-w-0 flex-1 p-6">
-                <div className="mx-auto flex max-w-5xl flex-col gap-10">
+            <div data-principle="page-pad" className="min-h-0 min-w-0 flex-1 p-6">
+                <div data-principle="center-measure" className="mx-auto flex max-w-5xl flex-col gap-10">
                     <PageHeader
                         breadcrumb={(
                             <ResponsiveBreadcrumb
@@ -90,7 +90,7 @@ export const ArchitecturePage = () => {
                         title={t("title")}
                         description={t("subtitle")}
                         actions={(
-                            <div className="flex flex-wrap items-center gap-2">
+                            <div data-principle="flex-action" className="flex flex-wrap items-center gap-2">
                                 <Link href={BACKEND_REPO_URL} target="_blank" rel="noopener noreferrer">
                                     <Button variant="tertiary" size="sm">
                                         {t("header.viewSource")}
@@ -105,7 +105,7 @@ export const ArchitecturePage = () => {
                         )}
                     />
 
-                    <div className="flex flex-col gap-6">
+                    <div data-principle="block-boundary" className="flex flex-col gap-6">
                         {/* mobile: component chips (the rail is desktop-only) */}
                         <ArchitectureMobileNav healthByName={healthByName} selectedId={node} onSelect={setNode} />
 
@@ -143,15 +143,17 @@ export const ArchitecturePage = () => {
 
                         {/* course-CTA band — closes the loop: this real, live system is
                             exactly what the courses teach you to build → go learn to build it */}
-                        <div className="flex flex-col items-start gap-3 rounded-3xl bg-accent-soft p-6 @app-sm:flex-row @app-sm:items-center @app-sm:justify-between">
-                            <div className="flex flex-col gap-1">
-                                <Typography type="body" weight="semibold">{t("courseCta.title")}</Typography>
-                                <Typography type="body-sm" color="muted">{t("courseCta.body")}</Typography>
+                        <div data-principle="page-pad" className="rounded-3xl bg-accent-soft p-6">
+                            <div data-principle="content-row" className="flex flex-col items-start gap-3 @app-sm:flex-row @app-sm:items-center @app-sm:justify-between">
+                                <div data-principle="title-subtitle" className="flex flex-col gap-1">
+                                    <Typography type="body" weight="semibold">{t("courseCta.title")}</Typography>
+                                    <Typography type="body-sm" color="muted">{t("courseCta.body")}</Typography>
+                                </div>
+                                <Button variant="primary" size="lg" className="shrink-0" onPress={onOpenCourses}>
+                                    {t("courseCta.cta")}
+                                    <ArrowRightIcon className="size-5" aria-hidden />
+                                </Button>
                             </div>
-                            <Button variant="primary" size="lg" className="shrink-0" onPress={onOpenCourses}>
-                                {t("courseCta.cta")}
-                                <ArrowRightIcon className="size-5" aria-hidden />
-                            </Button>
                         </div>
                     </div>
                 </div>

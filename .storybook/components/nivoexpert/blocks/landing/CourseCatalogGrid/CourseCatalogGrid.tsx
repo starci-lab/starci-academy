@@ -62,8 +62,7 @@ const CourseCatalogGrid = ({ courses, onOpenCourse, isSkeleton = false, labels }
     return (
         <div data-tier="block" data-component="CourseCatalogGrid">
             <Grid
-                columns={{ base: 1, md: 2, lg: 3 }}
-                gap={5}
+                principle="group-boundary" columns={{ base: 1, md: 2, lg: 3 }}
                 isSkeleton={isSkeleton}
                 items={cards.map((course) => ({
                     key: course.slug,

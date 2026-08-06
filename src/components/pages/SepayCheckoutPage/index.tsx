@@ -34,6 +34,8 @@ import {
     OrderSummary,
 } from "./OrderSummary"
 import { pathConfig } from "@/resources/path"
+import { Box } from "@/components/frames/Box"
+import { Grid } from "@/components/frames/Grid"
 
 /** How often (ms) to re-poll the enrollment status while waiting for payment. */
 const POLL_INTERVAL_MS = 5000
@@ -161,12 +163,18 @@ const SepayCheckoutPageContent = () => {
     }
 
     return (
-        <div className="flex min-h-screen flex-col items-center px-4 py-12">
-            <div className="grid w-full max-w-4xl grid-cols-1 gap-8 @app-md:grid-cols-2">
-                <QrPanel />
-                <OrderSummary />
-            </div>
-        </div>
+        <Box principle="page-pad" className="flex min-h-screen flex-col items-center px-4 py-12">
+            <Box principle="center-measure" className="w-full max-w-4xl">
+                <Grid
+                    columns={{ base: 1, md: 2 }}
+                    principle="layout-split"
+                    items={[
+                        { key: "qr", content: QrPanel },
+                        { key: "summary", content: OrderSummary },
+                    ]}
+                />
+            </Box>
+        </Box>
     )
 }
 

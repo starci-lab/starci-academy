@@ -23,6 +23,7 @@ import { IconTile } from "@/components/blocks/identity/IconTile"
 import { SectionHeading } from "@/components/blocks/marketing/SectionHeading"
 import { ShowcaseMockup, SHOWCASE_THEMES } from "@/components/blocks/marketing/ShowcaseMockup"
 import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link TalentMarketplace}. */
 export type TalentMarketplaceProps = WithClassNames<undefined>
@@ -37,29 +38,23 @@ const JourneyRow = ({
     title: string
     body: string
 }) => (
-    <div className="flex items-start gap-3">
-        <IconTile icon={icon} tone="accent" size="md" />
-        <div className="flex flex-col gap-2">
-            <Typography type="h5" weight="semibold">
-                {title}
-            </Typography>
-            <Typography type="body-sm" color="muted">
-                {body}
-            </Typography>
-        </div>
-    </div>
+    <StackH gap={4} align="start" principle="content-row" items={[
+        () => <IconTile icon={icon} tone="accent" size="md" />,
+        () => (
+            <StackV gap={3} principle="sibling-stack" items={[
+                () => <Typography type="h5" weight="semibold">{title}</Typography>,
+                () => <Typography type="body-sm" color="muted">{body}</Typography>,
+            ]} />
+        ),
+    ]} />
 )
 
 /** One label → value stat line inside the sample candidate card. */
 const StatLine = ({ label, value }: { label: string; value: string }) => (
-    <div className="flex items-center justify-between gap-3">
-        <Typography type="body-sm" color="muted">
-            {label}
-        </Typography>
-        <Typography type="body-sm" weight="medium">
-            {value}
-        </Typography>
-    </div>
+    <StackH gap={4} justify="between" principle="content-row" items={[
+        () => <Typography type="body-sm" color="muted">{label}</Typography>,
+        () => <Typography type="body-sm" weight="medium">{value}</Typography>,
+    ]} />
 )
 
 /**
@@ -81,24 +76,26 @@ const SampleCandidateCard = () => {
             backdrop="glow"
             contentClassName="flex flex-col gap-3 p-4"
         >
-            <div className="flex items-center gap-3">
-                <UserAvatar username={c.name} avatar={c.avatarUrl} seed={c.name} className="size-14 !rounded-full" />
-                <div className="flex min-w-0 flex-col gap-0">
-                    <Typography type="body" weight="semibold" truncate>
-                        {c.name}
-                    </Typography>
-                    <Typography type="body-xs" color="muted" truncate>
-                        {t("landing.outcome.card.role")}
-                    </Typography>
-                </div>
-            </div>
+            <StackH gap={4} principle="content-row" items={[
+                () => <UserAvatar username={c.name} avatar={c.avatarUrl} seed={c.name} className="size-14 !rounded-full" />,
+                () => (
+                    <div className="flex min-w-0 flex-col gap-0">
+                        <Typography type="body" weight="semibold" truncate>
+                            {c.name}
+                        </Typography>
+                        <Typography type="body-xs" color="muted" truncate>
+                            {t("landing.outcome.card.role")}
+                        </Typography>
+                    </div>
+                ),
+            ]} />
 
             <Chip variant="soft" color="success" size="sm" className="self-start">
                 <CheckCircleIcon aria-hidden focusable="false" className="size-4" />
                 <Chip.Label>{t("landing.outcome.card.openToWork")}</Chip.Label>
             </Chip>
 
-            <div className="flex flex-col gap-2 border-t border-default pt-3">
+            <div data-principle="sibling-stack" className="flex flex-col gap-2 border-t border-default pt-3">
                 <StatLine
                     label={t("landing.outcome.card.cvScore")}
                     value={`${c.cvScore} / 100`}
@@ -112,13 +109,13 @@ const SampleCandidateCard = () => {
                 />
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 border-t border-default pt-3">
+            <div data-principle="chip-row" className="flex flex-wrap items-center gap-2 border-t border-default pt-3">
                 {c.skills.map((skill) => (
                     <Chip key={skill} variant="soft" color="default" size="sm">
                         <Chip.Label>{skill}</Chip.Label>
                     </Chip>
                 ))}
-                <span className="ml-auto inline-flex items-center gap-2 text-sm text-muted">
+                <span data-principle="push-end" className="ml-auto inline-flex items-center gap-2 text-sm text-muted">
                     <LightningIcon aria-hidden focusable="false" className="size-4 text-muted" />
                     {t("landing.outcome.card.xp", { xp: c.xp.toLocaleString(locale) })}
                 </span>
@@ -152,34 +149,42 @@ export const TalentMarketplace = ({ className }: TalentMarketplaceProps) => {
             />
             <div className="grid grid-cols-1 gap-x-12 gap-y-20 @app-lg:grid-cols-2 @app-lg:items-center">
                 {/* Left — two journeys + separate CTAs */}
-                <div className="flex flex-col gap-6">
-                    <div className="flex flex-col gap-6">
-                        <JourneyRow
-                            icon={<RocketLaunchIcon aria-hidden focusable="false" />}
-                            title={t("landing.outcome.items.engineer.title")}
-                            body={t("landing.outcome.items.engineer.body")}
-                        />
-                        <JourneyRow
-                            icon={<BuildingsIcon aria-hidden focusable="false" />}
-                            title={t("landing.outcome.items.enterprise.title")}
-                            body={t("landing.outcome.items.enterprise.body")}
-                        />
-                    </div>
-                    <div className="flex flex-wrap items-center gap-3">
-                        <Button variant="primary" size="lg" onPress={onBuildPortfolio}>
-                            <RocketLaunchIcon aria-hidden focusable="false" className="size-5" />
-                            {t("landing.outcome.items.engineer.cta")}
-                        </Button>
-                        <Button variant="secondary" size="md" onPress={onBrowseTalents}>
-                            {t("landing.outcome.items.enterprise.cta")}
-                            <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4" />
-                        </Button>
-                        <Button variant="tertiary" onPress={onBrowseJobs}>
-                            {t("landing.outcome.items.engineer.jobsCta")}
-                            <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4" />
-                        </Button>
-                    </div>
-                </div>
+                <StackV gap={6} principle="block-boundary" items={[
+                    () => (
+                        <StackV gap={6} principle="block-boundary" items={[
+                            () => (
+                                <JourneyRow
+                                    icon={<RocketLaunchIcon aria-hidden focusable="false" />}
+                                    title={t("landing.outcome.items.engineer.title")}
+                                    body={t("landing.outcome.items.engineer.body")}
+                                />
+                            ),
+                            () => (
+                                <JourneyRow
+                                    icon={<BuildingsIcon aria-hidden focusable="false" />}
+                                    title={t("landing.outcome.items.enterprise.title")}
+                                    body={t("landing.outcome.items.enterprise.body")}
+                                />
+                            ),
+                        ]} />
+                    ),
+                    () => (
+                        <div data-principle="content-row" className="flex flex-wrap items-center gap-3">
+                            <Button variant="primary" size="lg" onPress={onBuildPortfolio}>
+                                <RocketLaunchIcon aria-hidden focusable="false" className="size-5" />
+                                {t("landing.outcome.items.engineer.cta")}
+                            </Button>
+                            <Button variant="secondary" size="md" onPress={onBrowseTalents}>
+                                {t("landing.outcome.items.enterprise.cta")}
+                                <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4" />
+                            </Button>
+                            <Button variant="tertiary" onPress={onBrowseJobs}>
+                                {t("landing.outcome.items.engineer.jobsCta")}
+                                <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4" />
+                            </Button>
+                        </div>
+                    ),
+                ]} />
 
                 {/* Right — sample candidate card (static) */}
                 <SampleCandidateCard />

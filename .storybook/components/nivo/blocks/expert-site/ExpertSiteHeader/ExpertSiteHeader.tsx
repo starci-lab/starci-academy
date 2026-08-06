@@ -95,6 +95,7 @@ const ExpertSiteHeader = (props: ExpertSiteHeaderProps) => {
                     body={() => (
                         <StackH
                             gap={4}
+                            principle="content-row"
                             justify="between"
                             at="sm"
                             isSkeleton
@@ -186,6 +187,7 @@ const ExpertSiteHeader = (props: ExpertSiteHeaderProps) => {
                 body={() => (
                     <StackH
                         gap={4}
+                        principle="content-row"
                         justify="between"
                         at="sm"
                         items={[

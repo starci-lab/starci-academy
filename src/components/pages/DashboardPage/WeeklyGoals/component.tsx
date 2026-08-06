@@ -52,7 +52,7 @@ export interface WeeklyGoalsProps {
  * coin-reward hint below it.
  */
 const renderGoalCell = (item: WeeklyGoalsItem, isSkeleton: boolean) => (
-    <StackV gap={3} isSkeleton={isSkeleton} items={[
+    <StackV gap={3} principle="sibling-stack" isSkeleton={isSkeleton} items={[
         // ATOM GAP: `ProgressMeter`'s discriminated `isSkeleton` union needs a literal branch
         // to narrow at compile time — a runtime boolean can't satisfy it directly.
         () => (isSkeleton

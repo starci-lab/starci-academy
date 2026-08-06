@@ -196,6 +196,7 @@ const SolutionCard = ({ labels, onSolutionCta }: SolutionCardProps) => (
                     <StackV
                         gap={3}
                         align="center"
+                        principle="sibling-stack"
                         items={[
                             () => <Chip tone="default" text={labels.solutionBadgeLabel} />,
                             () => <Typography size="lg" weight="bold" align="center" text={labels.solutionTitle} />,
@@ -237,6 +238,7 @@ const PricingTeaser = ({
                 body={() => (
                     <StackV
                         gap={8}
+                        principle="marketing-beat"
                         items={[
                             () => <SectionHeading eyebrow={labels.eyebrow} title={labels.title} intro={labels.intro} align="center" />,
                             () => (
@@ -263,7 +265,7 @@ const PricingTeaser = ({
                                 ) : (
                                     <Grid
                                         columns={{ base: 1, md: 2 }}
-                                        gap={6}
+                                        principle="block-boundary"
                                         items={rows.map((product) => ({
                                             key: product.id,
                                             content: () => (

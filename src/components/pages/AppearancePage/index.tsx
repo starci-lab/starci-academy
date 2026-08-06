@@ -48,6 +48,8 @@ import {
 import {
     AmbientBackground,
 } from "@/components/blocks/layout/AmbientBackground"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Fallback accent (matches the default brand `--accent` token) when the user has never set one. */
 const DEFAULT_ACCENT_HEX = "#e84393"
@@ -164,76 +166,92 @@ export const AppearancePage = () => {
     ])
 
     return (
-        <div className="flex flex-col gap-10">
-            <PageHeader
-                breadcrumb={<SettingsBreadcrumb current={t("appearance.title")} />}
-                title={t("appearance.title")}
-                description={t("appearance.description")}
-            />
-            <div className="flex flex-col gap-6">
-                <LabeledCard label={t("appearance.accentLabel")}>
-                    <div className="flex flex-col gap-3">
-                        <ColorSwatchPicker value={color} onChange={onColorChange} size="lg">
-                            {ACCENT_PRESETS.map((preset) => (
-                                <ColorSwatchPicker.Item key={preset.hex} color={preset.hex}>
-                                    <ColorSwatchPicker.Swatch />
-                                    <ColorSwatchPicker.Indicator />
-                                </ColorSwatchPicker.Item>
-                            ))}
-                        </ColorSwatchPicker>
-                        <div className="flex flex-wrap items-center gap-3">
-                            <ColorPicker value={color} onChange={onColorChange}>
-                                <ColorPicker.Trigger>
-                                    <ColorSwatch size="lg" />
-                                    <Label>{t("appearance.customColor")}</Label>
-                                </ColorPicker.Trigger>
-                                <ColorPicker.Popover className="gap-2">
-                                    <ColorArea
-                                        aria-label={t("appearance.customColor")}
-                                        className="max-w-full"
-                                        colorSpace="hsb"
-                                        xChannel="saturation"
-                                        yChannel="brightness"
-                                    >
-                                        <ColorArea.Thumb />
-                                    </ColorArea>
-                                    <ColorSlider channel="hue" className="gap-1 px-1" colorSpace="hsb">
-                                        <ColorSlider.Track>
-                                            <ColorSlider.Thumb />
-                                        </ColorSlider.Track>
-                                    </ColorSlider>
-                                </ColorPicker.Popover>
-                            </ColorPicker>
-                            <Button variant="tertiary" size="sm" onPress={onResetAccent}>
-                                {t("appearance.resetAccent")}
-                            </Button>
-                        </div>
-                    </div>
-                </LabeledCard>
+        <StackV gap={7} principle="layout-split" items={[
+            () => (
+                <PageHeader
+                    breadcrumb={<SettingsBreadcrumb current={t("appearance.title")} />}
+                    title={t("appearance.title")}
+                    description={t("appearance.description")}
+                />
+            ),
+            () => (
+                <StackV gap={6} principle="block-boundary" items={[
+                    () => (
+                        <LabeledCard label={t("appearance.accentLabel")}>
+                            <StackV gap={4} principle="content-row" items={[
+                                () => (
+                                    <ColorSwatchPicker value={color} onChange={onColorChange} size="lg">
+                                        {ACCENT_PRESETS.map((preset) => (
+                                            <ColorSwatchPicker.Item key={preset.hex} color={preset.hex}>
+                                                <ColorSwatchPicker.Swatch />
+                                                <ColorSwatchPicker.Indicator />
+                                            </ColorSwatchPicker.Item>
+                                        ))}
+                                    </ColorSwatchPicker>
+                                ),
+                                () => (
+                                    <StackH gap={4} principle="content-row" at="sm" align="center" items={[
+                                        () => (
+                                            <ColorPicker value={color} onChange={onColorChange}>
+                                                <ColorPicker.Trigger>
+                                                    <ColorSwatch size="lg" />
+                                                    <Label>{t("appearance.customColor")}</Label>
+                                                </ColorPicker.Trigger>
+                                                <ColorPicker.Popover>
+                                                    <ColorArea
+                                                        aria-label={t("appearance.customColor")}
+                                                        className="max-w-full"
+                                                        colorSpace="hsb"
+                                                        xChannel="saturation"
+                                                        yChannel="brightness"
+                                                    >
+                                                        <ColorArea.Thumb />
+                                                    </ColorArea>
+                                                    <ColorSlider channel="hue" colorSpace="hsb">
+                                                        <ColorSlider.Track>
+                                                            <ColorSlider.Thumb />
+                                                        </ColorSlider.Track>
+                                                    </ColorSlider>
+                                                </ColorPicker.Popover>
+                                            </ColorPicker>
+                                        ),
+                                        () => (
+                                            <Button variant="tertiary" size="sm" onPress={onResetAccent}>
+                                                {t("appearance.resetAccent")}
+                                            </Button>
+                                        ),
+                                    ]} />
+                                ),
+                            ]} />
+                        </LabeledCard>
+                    ),
 
-                <LabeledCard label={t("appearance.effectLabel")}>
-                    <div className="grid grid-cols-2 gap-3 @app-sm:grid-cols-3 @app-md:grid-cols-5">
-                        {EFFECT_OPTIONS.map((option) => (
-                            <button
-                                key={option}
-                                type="button"
-                                onClick={() => onSelectEffect(option)}
-                                className={cn(
-                                    "relative flex h-24 flex-col justify-end overflow-hidden rounded-2xl border p-2 text-left transition-colors",
-                                    effect === option
-                                        ? "border-accent ring-2 ring-accent"
-                                        : "border-default hover:bg-default",
-                                )}
-                            >
-                                <AmbientBackground effect={option} className="absolute inset-0 -z-0" />
-                                <span className="relative z-10 text-xs font-medium text-foreground">
-                                    {t(`appearance.effects.${option}`)}
-                                </span>
-                            </button>
-                        ))}
-                    </div>
-                </LabeledCard>
-            </div>
-        </div>
+                    () => (
+                        <LabeledCard label={t("appearance.effectLabel")}>
+                            <Box principle="content-row" className="grid grid-cols-2 gap-3 @app-sm:grid-cols-3 @app-md:grid-cols-5">
+                                {EFFECT_OPTIONS.map((option) => (
+                                    <button
+                                        key={option}
+                                        type="button"
+                                        onClick={() => onSelectEffect(option)}
+                                        className={cn(
+                                            "relative flex h-24 flex-col justify-end overflow-hidden rounded-2xl border p-2 text-left transition-colors",
+                                            effect === option
+                                                ? "border-accent ring-2 ring-accent"
+                                                : "border-default hover:bg-default",
+                                        )}
+                                    >
+                                        <AmbientBackground effect={option} className="absolute inset-0 -z-0" />
+                                        <span className="relative z-10 text-xs font-medium text-foreground">
+                                            {t(`appearance.effects.${option}`)}
+                                        </span>
+                                    </button>
+                                ))}
+                            </Box>
+                        </LabeledCard>
+                    ),
+                ]} />
+            ),
+        ]} />
     )
 }

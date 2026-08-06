@@ -107,6 +107,7 @@ const ExpertSiteGenerate = ({
                 body={() => (
                     <StackV
                         gap={2}
+                        principle="title-subtitle"
                         items={[
                             () => (
                                 <StackH
@@ -170,10 +171,12 @@ const ExpertSiteGenerate = ({
                 body={() => (
                     <StackV
                         gap={3}
+                        principle="sibling-stack"
                         items={[
                             () => (
                                 <StackH
                                     gap={2}
+                                    principle="icon-text"
                                     items={[
                                         () => (
                                             <SparkleIcon
@@ -203,6 +206,7 @@ const ExpertSiteGenerate = ({
                             () => (
                                 <StackH
                                     gap={3}
+                                    principle="flex-action"
                                     justify="end"
                                     items={[
                                         () => (

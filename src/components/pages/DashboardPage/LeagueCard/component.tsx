@@ -144,10 +144,10 @@ export const _LeagueCard = ({
                 contentClassName="flex flex-col gap-3"
             >
                 {/* standing header — IconTile badge + primary + secondary, mirrored bar-for-bar */}
-                <StackH gap={4} align="center" items={[
+                <StackH gap={4} principle="content-row" align="center" items={[
                     () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
                     () => (
-                        <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={[
+                        <StackV gap={2} principle="title-subtitle" classNames={["min-w-0", "flex-1"]} items={[
                             () => <Skeleton.Typography type="body-sm" width="1/2" />,
                             () => <Skeleton.Typography type="body-xs" width="1/3" />,
                         ]} />
@@ -157,7 +157,7 @@ export const _LeagueCard = ({
                 <SurfaceListCard bordered>
                     {Array.from({ length: SKELETON_ROWS }, (_row, index) => (
                         <SurfaceListCardItem key={index}>
-                            <StackH gap={4} align="center" items={[
+                            <StackH gap={4} principle="content-row" align="center" items={[
                                 () => <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />,
                                 () => <Skeleton.Avatar size="sm" />,
                                 () => <Skeleton.Typography type="body-sm" width="1/2" className="min-w-0 flex-1" />,

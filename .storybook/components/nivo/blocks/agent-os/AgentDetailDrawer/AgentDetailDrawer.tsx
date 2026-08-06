@@ -128,6 +128,7 @@ const AgentDetailDrawer = ({
         body={({ isSkeleton }: SkeletonProps) => (
             <StackV
                 gap={6}
+                principle="block-boundary"
                 isSkeleton={isSkeleton}
                 items={[
                     () => (
@@ -144,6 +145,7 @@ const AgentDetailDrawer = ({
                             align="center"
                             justify="between"
                             gap={3}
+                            principle="flex-action"
                             isSkeleton={isSkeleton}
                             items={[
                                 () => <Typography size="sm" color="muted" isSkeleton={isSkeleton} text={labels.statusLabel} />,

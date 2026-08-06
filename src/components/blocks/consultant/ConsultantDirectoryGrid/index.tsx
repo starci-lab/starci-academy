@@ -97,7 +97,7 @@ const ConsultantDirectoryGrid = ({
                 isLoading={isLoading}
                 skeleton={() => (
                     <div>
-                        <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={4} principle="sibling-stack" items={skeletonTiles} />
+                        <Grid columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row" items={skeletonTiles} />
                     </div>
                 )}
                 isEmpty={isEmpty}
@@ -109,7 +109,7 @@ const ConsultantDirectoryGrid = ({
                         )] : []),
                         () => (
                             <div>
-                                <Grid columns={{ base: 1, sm: 2, lg: 3 }} gap={4} principle="sibling-stack" items={tiles} />
+                                <Grid columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row" items={tiles} />
                             </div>
                         ),
                     ]} />

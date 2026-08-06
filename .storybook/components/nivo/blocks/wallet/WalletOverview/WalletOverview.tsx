@@ -148,6 +148,7 @@ const WalletOverview = ({ balanceVnd, depositPresets, onDeposit, transactions, i
         <div data-tier="block" data-component="WalletOverview">
             <StackV
                 gap={4}
+                principle="label-field"
                 isSkeleton={isSkeleton}
                 items={[
                     () => (
@@ -157,11 +158,13 @@ const WalletOverview = ({ balanceVnd, depositPresets, onDeposit, transactions, i
                             body={() => (
                                 <StackV
                                     gap={3}
+                                    principle="sibling-stack"
                                     isSkeleton={isSkeleton}
                                     items={[
                                         () => (
                                             <StackV
                                                 gap={1}
+                                                principle="name-handle"
                                                 isSkeleton={isSkeleton}
                                                 items={[
                                                     () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.balanceLabel} />,
@@ -180,12 +183,14 @@ const WalletOverview = ({ balanceVnd, depositPresets, onDeposit, transactions, i
                                         () => (
                                             <StackV
                                                 gap={2}
+                                                principle="title-subtitle"
                                                 isSkeleton={isSkeleton}
                                                 items={[
                                                     () => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text={labels.depositLabel} />,
                                                     () => (
                                                         <StackH
-                                                            gap={2}
+                                                            gap={3}
+                                                            principle="flex-action"
                                                             at="sm"
                                                             isSkeleton={isSkeleton}
                                                             items={depositPresets.map((amount) => () => (

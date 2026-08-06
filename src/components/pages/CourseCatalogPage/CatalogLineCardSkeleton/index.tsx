@@ -23,6 +23,7 @@ export const CatalogLineCardSkeleton = () => (
         body={() => (
             <StackH
                 gap={4}
+                principle="content-row"
                 items={[
                     () => (
                         <Skeleton className="hidden aspect-video w-36 shrink-0 rounded-2xl @app-sm:block" />
@@ -30,6 +31,7 @@ export const CatalogLineCardSkeleton = () => (
                     () => (
                         <StackV
                             gap={2}
+                            principle="title-subtitle"
                             classNames={["min-w-0", "flex-1"]}
                             items={[
                                 () => <Skeleton.Typography type="h6" width="1/2" />,
@@ -40,6 +42,7 @@ export const CatalogLineCardSkeleton = () => (
                     () => (
                         <StackV
                             gap={2}
+                            principle="title-subtitle"
                             align="end"
                             classNames={["shrink-0"]}
                             items={[

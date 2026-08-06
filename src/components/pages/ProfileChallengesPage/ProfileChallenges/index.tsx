@@ -3,7 +3,6 @@
 import React from "react"
 import {
     Label,
-    cn,
 } from "@heroui/react"
 import {
     useTranslations,
@@ -33,6 +32,8 @@ import { StatRibbon } from "@/components/composites/stats/StatRibbon"
 import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { StackH, StackV } from "@/components/frames/Stack"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 
 /** Props for {@link ProfileChallenges}. */
@@ -101,47 +102,61 @@ export const ProfileChallenges = ({
         metricStats.push({ key: "rank", value: `#${strength.rank}` })
     }
 
+    const rootClassNames: Array<AllowedClassName> = []
+    if (className) {
+        rootClassNames.push(className as AllowedClassName)
+    }
+
     return (
         <AsyncContent
             isLoading={(isLoading || !userId) && challenges.length === 0}
             skeleton={(
-                <div className={cn("flex flex-col gap-6", className)}>
-                    {/* headline stat ribbon — label + one card (StatPair cells) */}
-                    <div className="flex flex-col gap-3">
-                        <Skeleton.Typography type="body-sm" width="1/4" />
-                        <Skeleton className="h-20 w-full rounded-2xl" />
-                    </div>
-                    {/* distribution card: difficulty + language as surface list items */}
-                    <div className="flex flex-col gap-3">
-                        <Skeleton.Typography type="body-sm" width="1/4" />
-                        <SurfaceListCard>
-                            <SurfaceListCardItem>
-                                <Skeleton.SegmentBar legendItems={4} />
-                            </SurfaceListCardItem>
-                            <SurfaceListCardItem>
-                                <Skeleton.SegmentBar legendItems={4} />
-                            </SurfaceListCardItem>
-                        </SurfaceListCard>
-                    </div>
-                    {/* submission section — surface list card with course rows */}
-                    <div className="flex flex-col gap-3">
-                        <Skeleton.Typography type="body-sm" width="1/4" />
-                        <SurfaceListCard>
-                            {[0, 1, 2].map((row) => (
-                                <SurfaceListCardItem key={row}>
-                                    <div className="flex items-start gap-3">
-                                        <Skeleton className="size-12 shrink-0 rounded-xl" />
-                                        <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                            <Skeleton.Typography type="body-sm" width="1/2" />
-                                            <Skeleton.ProgressBar />
-                                            <Skeleton.Typography type="body-xs" width="1/3" />
-                                        </div>
-                                    </div>
-                                </SurfaceListCardItem>
-                            ))}
-                        </SurfaceListCard>
-                    </div>
-                </div>
+                <StackV gap={6} principle="block-boundary" classNames={rootClassNames} items={[
+                    () => (
+                        <StackV gap={4} items={[
+                            () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                            () => <Skeleton className="h-20 w-full rounded-2xl" />,
+                        ]} />
+                    ),
+                    () => (
+                        <StackV gap={4} items={[
+                            () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                            () => (
+                                <SurfaceListCard>
+                                    <SurfaceListCardItem>
+                                        <Skeleton.SegmentBar legendItems={4} />
+                                    </SurfaceListCardItem>
+                                    <SurfaceListCardItem>
+                                        <Skeleton.SegmentBar legendItems={4} />
+                                    </SurfaceListCardItem>
+                                </SurfaceListCard>
+                            ),
+                        ]} />
+                    ),
+                    () => (
+                        <StackV gap={4} items={[
+                            () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                            () => (
+                                <SurfaceListCard>
+                                    {[0, 1, 2].map((row) => (
+                                        <SurfaceListCardItem key={row}>
+                                            <StackH gap={4} principle="content-row" align="start" items={[
+                                                () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
+                                                () => (
+                                                    <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
+                                                        () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                                        () => <Skeleton.ProgressBar />,
+                                                        () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                                                    ]} />
+                                                ),
+                                            ]} />
+                                        </SurfaceListCardItem>
+                                    ))}
+                                </SurfaceListCard>
+                            ),
+                        ]} />
+                    ),
+                ]} />
             )}
             isEmpty={challenges.length === 0}
             emptyContent={{
@@ -155,78 +170,80 @@ export const ProfileChallenges = ({
                 retryLabel: t("publicProfile.loadErrorRetry"),
             }}
         >
-            <div className={cn("flex flex-col gap-6", className)}>
-                {/* headline stat ribbon (passed · XP · top · rank) — labeled section, StatPair row in ONE card */}
-                <LabeledCard label={t("publicProfile.challengesTab.metricsHeading")} frameless>
-                    <StatRibbon
-                        items={metricStats.map((stat) => ({
-                            key: stat.key,
-                            value: stat.value,
-                            label: t(`publicProfile.challengesTab.metric.${stat.key}`),
-                        }))}
-                    />
-                </LabeledCard>
-
-                {/* distribution card — by difficulty + by language */}
-                <LabeledCard
-                    label={t("publicProfile.challengesTab.statsHeading")}
-                    frameless
-                >
-                    <SurfaceListCard>
-                        {difficultySegments.length > 0 ? (
-                            <SurfaceListCardItem>
-                                <div className="flex flex-col gap-2">
-                                    <Label>{t("publicProfile.challengesTab.difficultyHeading")}</Label>
-                                    <SegmentBar
-                                        ariaLabel={t("publicProfile.challengesTab.difficultyHeading")}
-                                        segments={difficultySegments}
-                                    />
-                                </div>
-                            </SurfaceListCardItem>
-                        ) : null}
-                        {langs.length > 0 ? (
-                            <SurfaceListCardItem>
-                                <div className="flex flex-col gap-2">
-                                    <Label>{t("publicProfile.challengesTab.languageHeading")}</Label>
-                                    {/* same proportion-bar primitive as difficulty above (and the
-                                        Overview tab) — length reads better than a donut's angles at
-                                        small N; brand colour + label (csharp→C#) via the shared map */}
-                                    <SegmentBar
-                                        ariaLabel={t("publicProfile.challengesTab.languageHeading")}
-                                        segments={langs.map(([lang, count]) => ({
-                                            key: lang,
-                                            label: getLanguageLabel(lang),
-                                            value: count,
-                                            color: getLanguageColor(lang),
-                                        }))}
-                                    />
-                                </div>
-                            </SurfaceListCardItem>
-                        ) : null}
-                    </SurfaceListCard>
-                </LabeledCard>
-
-                {/* submission list — one collapsible row per course, shared legend at the foot */}
-                <LabeledCard
-                    label={t("publicProfile.challengesTab.repoHeading")}
-                    frameless
-                >
-                    <SurfaceListCard>
-                        {groups.map((group, groupIndex) => (
-                            <ChallengeCourseRow
-                                key={group.courseTitle ?? `__ungrouped-${groupIndex}`}
-                                username={username}
-                                courseTitle={group.courseTitle}
-                                courseSlug={group.courseSlug}
-                                items={group.items}
-                                totalChallenges={group.courseTitle
-                                    ? totalChallengesByCourse.get(group.courseTitle)
-                                    : undefined}
-                            />
-                        ))}
-                    </SurfaceListCard>
-                </LabeledCard>
-            </div>
+            <StackV gap={6} principle="block-boundary" classNames={rootClassNames} items={[
+                () => (
+                    <LabeledCard label={t("publicProfile.challengesTab.metricsHeading")} frameless>
+                        <StatRibbon
+                            items={metricStats.map((stat) => ({
+                                key: stat.key,
+                                value: stat.value,
+                                label: t(`publicProfile.challengesTab.metric.${stat.key}`),
+                            }))}
+                        />
+                    </LabeledCard>
+                ),
+                () => (
+                    <LabeledCard
+                        label={t("publicProfile.challengesTab.statsHeading")}
+                        frameless
+                    >
+                        <SurfaceListCard>
+                            {difficultySegments.length > 0 ? (
+                                <SurfaceListCardItem>
+                                    <StackV gap={3} principle="sibling-stack" items={[
+                                        () => <Label>{t("publicProfile.challengesTab.difficultyHeading")}</Label>,
+                                        () => (
+                                            <SegmentBar
+                                                ariaLabel={t("publicProfile.challengesTab.difficultyHeading")}
+                                                segments={difficultySegments}
+                                            />
+                                        ),
+                                    ]} />
+                                </SurfaceListCardItem>
+                            ) : null}
+                            {langs.length > 0 ? (
+                                <SurfaceListCardItem>
+                                    <StackV gap={3} principle="sibling-stack" items={[
+                                        () => <Label>{t("publicProfile.challengesTab.languageHeading")}</Label>,
+                                        () => (
+                                            <SegmentBar
+                                                ariaLabel={t("publicProfile.challengesTab.languageHeading")}
+                                                segments={langs.map(([lang, count]) => ({
+                                                    key: lang,
+                                                    label: getLanguageLabel(lang),
+                                                    value: count,
+                                                    color: getLanguageColor(lang),
+                                                }))}
+                                            />
+                                        ),
+                                    ]} />
+                                </SurfaceListCardItem>
+                            ) : null}
+                        </SurfaceListCard>
+                    </LabeledCard>
+                ),
+                () => (
+                    <LabeledCard
+                        label={t("publicProfile.challengesTab.repoHeading")}
+                        frameless
+                    >
+                        <SurfaceListCard>
+                            {groups.map((group, groupIndex) => (
+                                <ChallengeCourseRow
+                                    key={group.courseTitle ?? `__ungrouped-${groupIndex}`}
+                                    username={username}
+                                    courseTitle={group.courseTitle}
+                                    courseSlug={group.courseSlug}
+                                    items={group.items}
+                                    totalChallenges={group.courseTitle
+                                        ? totalChallengesByCourse.get(group.courseTitle)
+                                        : undefined}
+                                />
+                            ))}
+                        </SurfaceListCard>
+                    </LabeledCard>
+                ),
+            ]} />
         </AsyncContent>
     )
 }

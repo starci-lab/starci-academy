@@ -24,6 +24,8 @@ import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
+import { StackH, StackV } from "@/components/frames/Stack"
+import { Cluster } from "@/components/frames/Cluster"
 import { useQueryMatchedContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryMatchedContentSwr"
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -158,54 +160,108 @@ const MockInterviewQuestionReviewCard = ({
         <Accordion.Item id={`question-review-${review.questionIndex}`} aria-label={t("mockInterview.questionReview.heading", { index: review.questionIndex + 1, kind: kindLabel })}>
             <Accordion.Heading>
                 <Accordion.Trigger className="w-full">
-                    <div className="flex w-full items-center justify-between gap-3 text-start">
-                        <Typography type="body-sm" weight="medium" className="min-w-0">
-                            {t("mockInterview.questionReview.heading", { index: review.questionIndex + 1, kind: kindLabel })}
-                        </Typography>
-                        <div className="flex shrink-0 items-center gap-2">
-                            <Typography type="body-sm" weight="medium" className={scoreColor}>
-                                {t("mockInterview.questionReview.scoreOf", { score: review.score, max: review.max })}
-                            </Typography>
-                            <Accordion.Indicator />
-                        </div>
-                    </div>
+                    <StackH
+                        gap={4}
+                        principle="content-row"
+                        justify="between"
+                        classNames={["w-full"]}
+                        items={[
+                            () => (
+                                <Typography type="body-sm" weight="medium" className="min-w-0">
+                                    {t("mockInterview.questionReview.heading", { index: review.questionIndex + 1, kind: kindLabel })}
+                                </Typography>
+                            ),
+                            () => (
+                                <StackH
+                                    gap={3}
+                                    principle="flex-action"
+                                    classNames={["shrink-0"]}
+                                    items={[
+                                        () => (
+                                            <Typography type="body-sm" weight="medium" className={scoreColor}>
+                                                {t("mockInterview.questionReview.scoreOf", { score: review.score, max: review.max })}
+                                            </Typography>
+                                        ),
+                                        () => <Accordion.Indicator />,
+                                    ]}
+                                />
+                            ),
+                        ]}
+                    />
                 </Accordion.Trigger>
             </Accordion.Heading>
             <Accordion.Panel>
                 <Accordion.Body>
-                    <div className="flex flex-col gap-2">
-                        <MarkdownContent plain markdown={review.question} />
-
-                        <div className="flex flex-col gap-1">
-                            <Typography type="body-xs" color="muted">{t("mockInterview.questionReview.yourAnswer")}</Typography>
-                            <MarkdownContent plain markdown={review.candidateAnswer} className="text-muted" />
-                        </div>
-
-                        {review.modelAnswer ? (
-                            <div className="flex flex-col gap-1">
-                                <Typography type="body-xs" color="muted">{t("mockInterview.questionReview.modelAnswer")}</Typography>
-                                <MarkdownContent plain markdown={review.modelAnswer} />
-                            </div>
-                        ) : null}
-
-                        <div className="flex items-start gap-2">
-                            <WarningCircleIcon className="size-4 shrink-0 text-warning-soft-foreground" aria-hidden focusable="false" />
-                            <Typography type="body-sm" className="min-w-0 flex-1">
-                                <span className="text-muted">{t("mockInterview.questionReview.feedback")} </span>
-                                {review.feedback}
-                            </Typography>
-                        </div>
-
-                        {lessonHref ? (
-                            <Link
-                                onPress={() => router.push(lessonHref)}
-                                className="group inline-flex cursor-pointer items-center gap-1 text-accent-soft-foreground"
-                            >
-                                {t("mockInterview.viewInLesson")}
-                                <ArrowRightIcon aria-hidden focusable="false" className="size-4 transition-transform group-hover:translate-x-1" />
-                            </Link>
-                        ) : null}
-                    </div>
+                    <StackV
+                        gap={3}
+                        principle="sibling-stack"
+                        items={[
+                            () => <MarkdownContent plain markdown={review.question} />,
+                            () => (
+                                <StackV
+                                    gap={2}
+                                    principle="title-subtitle"
+                                    items={[
+                                        () => (
+                                            <Typography type="body-xs" color="muted">{t("mockInterview.questionReview.yourAnswer")}</Typography>
+                                        ),
+                                        () => (
+                                            <MarkdownContent plain markdown={review.candidateAnswer} className="text-muted" />
+                                        ),
+                                    ]}
+                                />
+                            ),
+                            ...(review.modelAnswer
+                                ? [() => (
+                                    <StackV
+                                        gap={2}
+                                        principle="title-subtitle"
+                                        items={[
+                                            () => (
+                                                <Typography type="body-xs" color="muted">{t("mockInterview.questionReview.modelAnswer")}</Typography>
+                                            ),
+                                            () => <MarkdownContent plain markdown={review.modelAnswer ?? ""} />,
+                                        ]}
+                                    />
+                                )]
+                                : []),
+                            () => (
+                                <StackH
+                                    gap={3}
+                                    items={[
+                                        () => (
+                                            <WarningCircleIcon className="size-4 shrink-0 text-warning-soft-foreground" aria-hidden focusable="false" />
+                                        ),
+                                        () => (
+                                            <Typography type="body-sm" className="min-w-0 flex-1">
+                                                <span className="text-muted">{t("mockInterview.questionReview.feedback")} </span>
+                                                {review.feedback}
+                                            </Typography>
+                                        ),
+                                    ]}
+                                />
+                            ),
+                            ...(lessonHref
+                                ? [() => (
+                                    <Link
+                                        onPress={() => router.push(lessonHref)}
+                                        className="group inline-flex cursor-pointer items-center text-accent-soft-foreground"
+                                    >
+                                        <StackH
+                                            gap={2}
+                                            principle="icon-text"
+                                            items={[
+                                                () => <>{t("mockInterview.viewInLesson")}</>,
+                                                () => (
+                                                    <ArrowRightIcon aria-hidden focusable="false" className="size-4 transition-transform group-hover:translate-x-1" />
+                                                ),
+                                            ]}
+                                        />
+                                    </Link>
+                                )]
+                                : []),
+                        ]}
+                    />
                 </Accordion.Body>
             </Accordion.Panel>
         </Accordion.Item>
@@ -292,190 +348,230 @@ export const MockInterviewScorecard = ({
         && grade.phaseScores.every((phaseScore) => (DESIGN_PHASE_KEYS as ReadonlyArray<string>).includes(phaseScore.phase))
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
-            {(promptTitle || formattedDate) ? (
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                    {promptTitle ? (
-                        <Typography type="body" weight="medium">{promptTitle}</Typography>
-                    ) : null}
-                    {formattedDate ? (
-                        <Typography type="body-xs" color="muted">{formattedDate}</Typography>
-                    ) : null}
-                </div>
-            ) : null}
-
-            {/* B1 — verdict = HeroUI Alert (status by verdict), NOT a hand-tinted div.
-                Title carries the score; Description folds in the course-grounding line
-                (moat) + the "not yet server-verified" honesty note as plain text — no
-                second chip beside the verdict. */}
-            <Alert status={verdictStatusOf(grade.verdict)} className={cn("shadow-none", VERDICT_TINT[verdictStatusOf(grade.verdict)])}>
-                <Alert.Indicator>
-                    {React.createElement(VERDICT_ICON[grade.verdict], { className: "size-6", "aria-hidden": true })}
-                </Alert.Indicator>
-                <Alert.Content>
-                    <Alert.Title>
-                        <span className="text-2xl font-medium">{grade.overallScore}</span>
-                        <span className="text-muted">/100</span>
-                        {" · "}
-                        {t(`mockInterview.verdict.${grade.verdict}`)}
-                    </Alert.Title>
-                    <Alert.Description>
-                        <span className="block">
-                            {firstMatchedContentId
-                                ? (matchedContent?.title
-                                    ? t("mockInterview.moatCalloutTitled", { title: matchedContent.title })
-                                    : t("mockInterview.moatCalloutUntitled"))
-                                : t("mockInterview.moatCalloutGeneric")}
-                        </span>
-                        <span className="block text-muted">{t("mockInterview.serverUnverifiedHint")}</span>
-                    </Alert.Description>
-                </Alert.Content>
-            </Alert>
-
-            {/* B3 — rolling readiness snapshot (retention hook, Hole 6). Shares the exact
-                same component + data the setup screen shows (single source). */}
-            <MockInterviewTrackSnapshot courseId={courseId} />
-
-            {/* qna sends "Question N" phases → "Score by question"; design sends the 5
-                canonical phase keys → "Score by phase". */}
-            <LabeledCard label={isDesignScore ? t("mockInterview.perPhaseTitle") : t("mockInterview.perQuestionTitle")}>
-                <div className="flex flex-col gap-3">
-                    {grade.phaseScores.map((phaseScore) => (
-                        <div key={phaseScore.phase} className="flex items-center gap-3">
-                            <Typography type="body-sm" className="w-40 shrink-0">
-                                {phaseDisplayLabel(phaseScore.phase, t)}
-                            </Typography>
-                            <ProgressMeter
-                                value={phaseScore.score}
-                                max={phaseScore.max}
-                                color={scoreColorOf(phaseScore.score, phaseScore.max)}
-                                classNames={["flex-1"]}
+        <div className={className}>
+            <StackV
+                gap={6}
+                principle="block-boundary"
+                items={[
+                    ...((promptTitle || formattedDate)
+                        ? [() => (
+                            <StackH
+                                gap={4}
+                                principle="content-row"
+                                justify="between"
+                                classNames={["w-full"]}
+                                items={[
+                                    ...(promptTitle
+                                        ? [() => <Typography type="body" weight="medium">{promptTitle}</Typography>]
+                                        : []),
+                                    ...(formattedDate
+                                        ? [() => <Typography type="body-xs" color="muted">{formattedDate}</Typography>]
+                                        : []),
+                                ]}
                             />
-                        </div>
-                    ))}
-                </div>
-            </LabeledCard>
-
-            {/* Per-question model-answer breakdown (the anti-ChatGPT surface) — one
-                ACCORDION item per Q&A question (2026-07-13, the teacher: "the answers run
-                on forever, render them as an accordion"), collapsed by default so the question+score stay
-                scannable without walls of text; comparing the candidate's own answer to
-                the seed model answer only once expanded. `variant="surface"` +
-                `border border-default` = standalone-page accordion skin ([[accordion]]
-                §3). Self-hides for a design run or an older attempt (empty list). */}
-            {grade.questionReviews.length > 0 ? (
-                <LabeledCard label={t("mockInterview.questionReview.title")} frameless>
-                    <Accordion variant="surface" className="overflow-hidden border border-default" allowsMultipleExpanded>
-                        {grade.questionReviews.map((review) => (
-                            <MockInterviewQuestionReviewCard
-                                key={review.questionIndex}
-                                review={review}
-                                courseDisplayId={courseDisplayId}
+                        )]
+                        : []),
+                    () => (
+                        <Alert status={verdictStatusOf(grade.verdict)} className={cn("shadow-none", VERDICT_TINT[verdictStatusOf(grade.verdict)])}>
+                            <Alert.Indicator>
+                                {React.createElement(VERDICT_ICON[grade.verdict], { className: "size-6", "aria-hidden": true })}
+                            </Alert.Indicator>
+                            <Alert.Content>
+                                <Alert.Title>
+                                    <span className="text-2xl font-medium">{grade.overallScore}</span>
+                                    <span className="text-muted">/100</span>
+                                    {" · "}
+                                    {t(`mockInterview.verdict.${grade.verdict}`)}
+                                </Alert.Title>
+                                <Alert.Description>
+                                    <span className="block">
+                                        {firstMatchedContentId
+                                            ? (matchedContent?.title
+                                                ? t("mockInterview.moatCalloutTitled", { title: matchedContent.title })
+                                                : t("mockInterview.moatCalloutUntitled"))
+                                            : t("mockInterview.moatCalloutGeneric")}
+                                    </span>
+                                    <span className="block text-muted">{t("mockInterview.serverUnverifiedHint")}</span>
+                                </Alert.Description>
+                            </Alert.Content>
+                        </Alert>
+                    ),
+                    () => <MockInterviewTrackSnapshot courseId={courseId} />,
+                    () => (
+                        <LabeledCard label={isDesignScore ? t("mockInterview.perPhaseTitle") : t("mockInterview.perQuestionTitle")}>
+                            <StackV
+                                gap={4}
+                                items={grade.phaseScores.map((phaseScore) => () => (
+                                    <StackH
+                                        gap={4}
+                                        principle="content-row"
+                                        classNames={["w-full"]}
+                                        items={[
+                                            () => (
+                                                <Typography type="body-sm" className="w-40 shrink-0">
+                                                    {phaseDisplayLabel(phaseScore.phase, t)}
+                                                </Typography>
+                                            ),
+                                            () => (
+                                                <ProgressMeter
+                                                    value={phaseScore.score}
+                                                    max={phaseScore.max}
+                                                    color={scoreColorOf(phaseScore.score, phaseScore.max)}
+                                                    classNames={["flex-1"]}
+                                                />
+                                            ),
+                                        ]}
+                                    />
+                                ))}
                             />
-                        ))}
-                    </Accordion>
-                </LabeledCard>
-            ) : null}
+                        </LabeledCard>
+                    ),
 
-            {orderedAttributes.length > 0 ? (
-                <LabeledCard label={t("mockInterview.attributesTitle")}>
-                    <div className="flex flex-col gap-3">
-                        {orderedAttributes.map((attribute) => (
-                            <div key={attribute.key} className="flex items-center gap-3">
-                                <Typography type="body-sm" className="w-40 shrink-0">
-                                    {attributeLabel(attribute.key)}
-                                </Typography>
-                                <ProgressMeter
-                                    value={attribute.score}
-                                    max={100}
-                                    color={scoreColorOf(attribute.score, 100)}
-                                    classNames={["flex-1"]}
+                    ...(grade.questionReviews.length > 0
+                        ? [() => (
+                            <LabeledCard label={t("mockInterview.questionReview.title")} frameless>
+                                <Accordion variant="surface" className="overflow-hidden border border-default" allowsMultipleExpanded>
+                                    {grade.questionReviews.map((review) => (
+                                        <MockInterviewQuestionReviewCard
+                                            key={review.questionIndex}
+                                            review={review}
+                                            courseDisplayId={courseDisplayId}
+                                        />
+                                    ))}
+                                </Accordion>
+                            </LabeledCard>
+                        )]
+                        : []),
+                    ...(orderedAttributes.length > 0
+                        ? [() => (
+                            <LabeledCard label={t("mockInterview.attributesTitle")}>
+                                <StackV
+                                    gap={4}
+                                    items={orderedAttributes.map((attribute) => () => (
+                                        <StackH
+                                            gap={4}
+                                            principle="content-row"
+                                            classNames={["w-full"]}
+                                            items={[
+                                                () => (
+                                                    <Typography type="body-sm" className="w-40 shrink-0">
+                                                        {attributeLabel(attribute.key)}
+                                                    </Typography>
+                                                ),
+                                                () => (
+                                                    <ProgressMeter
+                                                        value={attribute.score}
+                                                        max={100}
+                                                        color={scoreColorOf(attribute.score, 100)}
+                                                        classNames={["flex-1"]}
+                                                    />
+                                                ),
+                                            ]}
+                                        />
+                                    ))}
                                 />
-                            </div>
-                        ))}
-                    </div>
-                </LabeledCard>
-            ) : null}
-
-            {grade.strengths.length > 0 ? (
-                <LabeledCard label={t("mockInterview.strengthsTitle")} frameless>
-                    <CheckListCard>
-                        {grade.strengths.map((strength, position) => (
-                            <CheckListItem key={position}>
-                                <MarkdownContent plain markdown={strength} />
-                            </CheckListItem>
-                        ))}
-                    </CheckListCard>
-                </LabeledCard>
-            ) : null}
-
-            {/* B5 — gaps: plain "what to add" list. The single course deep-link lives on
-                the primary CTA below (no per-row floating link). */}
-            {grade.gaps.length > 0 ? (
-                <LabeledCard label={t("mockInterview.gapsTitle")} frameless>
-                    <SurfaceListCard>
-                        {grade.gaps.map((gap, position) => (
-                            <SurfaceListCardItem key={position}>
-                                <div className="flex items-start gap-2">
-                                    <WarningCircleIcon className="size-4 shrink-0 text-warning-soft-foreground" aria-hidden focusable="false" />
-                                    <MarkdownContent plain markdown={gap} className="min-w-0 flex-1" />
-                                </div>
-                            </SurfaceListCardItem>
-                        ))}
-                    </SurfaceListCard>
-                </LabeledCard>
-            ) : null}
-
-            {grade.followUpQuestion ? (
-                <LabeledCard label={t("mockInterview.followUpTitle")}>
-                    <div className="flex items-start gap-2">
-                        <ChatCircleIcon className="size-4 shrink-0 text-accent-soft-foreground" aria-hidden focusable="false" />
-                        <MarkdownContent plain markdown={grade.followUpQuestion} className="min-w-0 flex-1 italic" />
-                    </div>
-                </LabeledCard>
-            ) : null}
-
-            {/* B6/B7 — the demand-loop fix: the PRIMARY action now studies the weak spot in
-                the course, not "run it again"; retry is demoted to a tertiary action so
-                re-running to chase a better number isn't the path of least resistance. */}
-            <div className="flex flex-wrap items-center gap-3">
-                <Button
-                    variant="primary"
-                    size="lg"
-                    onPress={() => router.push(studyHref)}
-                >
-                    {weakPhaseLabel
-                        ? t("mockInterview.weakPhaseCta", { phase: weakPhaseLabel })
-                        : t("mockInterview.weakPhaseCtaGeneric")}
-                    <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
-                </Button>
-                {/* next rung in the loop: turn the interview into a built artifact —
-                    a quiet handoff to the course's capstone (personal project).
-                    No trailing arrow: arrow marks the ONE primary CTA per surface
-                    (button.md §2) — the weak-phase button above already carries it;
-                    the sibling "retry" tertiary button below already has none. */}
-                <Button
-                    variant="tertiary"
-                    onPress={() => router.push(
-                        pathConfig().locale(locale).course(courseDisplayId).learn().personalProject().build(),
-                    )}
-                >
-                    {t("mockInterview.capstoneCta")}
-                </Button>
-                {onRetry ? (
-                    <Button variant="tertiary" onPress={onRetry}>
-                        {t("mockInterview.retry")}
-                    </Button>
-                ) : null}
-            </div>
-
-            {/* quiet, self-hiding "worth re-reading" — a passive list below the primary CTA,
-                never a competing button. */}
-            <RelatedContentList
-                courseId={courseId}
-                courseDisplayId={courseDisplayId}
-                query={relatedContentQuery}
-                label={t("mockInterview.relatedContentLabel")}
+                            </LabeledCard>
+                        )]
+                        : []),
+                    ...(grade.strengths.length > 0
+                        ? [() => (
+                            <LabeledCard label={t("mockInterview.strengthsTitle")} frameless>
+                                <CheckListCard>
+                                    {grade.strengths.map((strength, position) => (
+                                        <CheckListItem key={position}>
+                                            <MarkdownContent plain markdown={strength} />
+                                        </CheckListItem>
+                                    ))}
+                                </CheckListCard>
+                            </LabeledCard>
+                        )]
+                        : []),
+                    ...(grade.gaps.length > 0
+                        ? [() => (
+                            <LabeledCard label={t("mockInterview.gapsTitle")} frameless>
+                                <SurfaceListCard>
+                                    {grade.gaps.map((gap, position) => (
+                                        <SurfaceListCardItem key={position}>
+                                            <StackH
+                                                gap={3}
+                                                items={[
+                                                    () => (
+                                                        <WarningCircleIcon className="size-4 shrink-0 text-warning-soft-foreground" aria-hidden focusable="false" />
+                                                    ),
+                                                    () => (
+                                                        <MarkdownContent plain markdown={gap} className="min-w-0 flex-1" />
+                                                    ),
+                                                ]}
+                                            />
+                                        </SurfaceListCardItem>
+                                    ))}
+                                </SurfaceListCard>
+                            </LabeledCard>
+                        )]
+                        : []),
+                    ...(grade.followUpQuestion
+                        ? [() => (
+                            <LabeledCard label={t("mockInterview.followUpTitle")}>
+                                <StackH
+                                    gap={3}
+                                    items={[
+                                        () => (
+                                            <ChatCircleIcon className="size-4 shrink-0 text-accent-soft-foreground" aria-hidden focusable="false" />
+                                        ),
+                                        () => (
+                                            <MarkdownContent plain markdown={grade.followUpQuestion ?? ""} className="min-w-0 flex-1 italic" />
+                                        ),
+                                    ]}
+                                />
+                            </LabeledCard>
+                        )]
+                        : []),
+                    () => (
+                        <Cluster
+                            gap={3}
+                            principle="flex-action"
+                            items={[
+                                () => (
+                                    <Button
+                                        variant="primary"
+                                        size="lg"
+                                        onPress={() => router.push(studyHref)}
+                                    >
+                                        {weakPhaseLabel
+                                            ? t("mockInterview.weakPhaseCta", { phase: weakPhaseLabel })
+                                            : t("mockInterview.weakPhaseCtaGeneric")}
+                                        <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
+                                    </Button>
+                                ),
+                                () => (
+                                    <Button
+                                        variant="tertiary"
+                                        onPress={() => router.push(
+                                            pathConfig().locale(locale).course(courseDisplayId).learn().personalProject().build(),
+                                        )}
+                                    >
+                                        {t("mockInterview.capstoneCta")}
+                                    </Button>
+                                ),
+                                ...(onRetry
+                                    ? [() => (
+                                        <Button variant="tertiary" onPress={onRetry}>
+                                            {t("mockInterview.retry")}
+                                        </Button>
+                                    )]
+                                    : []),
+                            ]}
+                        />
+                    ),
+                    () => (
+                        <RelatedContentList
+                            courseId={courseId}
+                            courseDisplayId={courseDisplayId}
+                            query={relatedContentQuery}
+                            label={t("mockInterview.relatedContentLabel")}
+                        />
+                    ),
+                ]}
             />
         </div>
     )

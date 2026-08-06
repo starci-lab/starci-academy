@@ -19,6 +19,7 @@ import { setUser } from "@/redux/slices/user"
 import { useMutateUpdateProfileSwr } from "@/hooks/swr/api/graphql/mutations/useMutateUpdateProfileSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { StackH, StackV } from "@/components/frames/Stack"
 import type { SectionVisibility } from "@/modules/types/entities/user"
 
 /**
@@ -105,123 +106,168 @@ export const PrivacySettingsPage = () => {
     // signed-out guard
     if (!user) {
         return (
-            <div className="flex flex-col items-center gap-2 py-12">
-                <Typography type="h5" weight="semibold" align="center">
-                    {t("profile.signedOut.title")}
-                </Typography>
-                <Typography type="body-sm" color="muted" align="center">
-                    {t("profile.signedOut.desc")}
-                </Typography>
+            <div className="flex flex-col items-center py-12">
+                <StackV
+                    gap={3}
+                    align="center"
+                    principle="sibling-stack"
+                    items={[
+                        () => (
+                            <Typography type="h5" weight="semibold" align="center">
+                                {t("profile.signedOut.title")}
+                            </Typography>
+                        ),
+                        () => (
+                            <Typography type="body-sm" color="muted" align="center">
+                                {t("profile.signedOut.desc")}
+                            </Typography>
+                        ),
+                    ]}
+                />
             </div>
         )
     }
 
-    return (
-        <div className="flex flex-col gap-10">
-            <PageHeader
-                breadcrumb={<SettingsBreadcrumb current={t("profileSettings.privacy.title")} />}
-                title={t("profileSettings.privacy.title")}
-                description={t("profileSettings.privacy.description")}
+    const lockRow = () => (
+        <div className="my-2">
+            <StackH
+                gap={4}
+                align="start"
+                justify="between"
+                principle="content-row"
+                items={[
+                    () => (
+                        <div className="flex flex-col gap-0">
+                            <Label htmlFor="profile-locked">{t("profileEdit.lockProfile")}</Label>
+                            <Typography type="body-xs" color="muted">
+                                {t("profileEdit.lockProfileHint")}
+                            </Typography>
+                        </div>
+                    ),
+                    () => (
+                        <Switch
+                            className="shrink-0"
+                            isSelected={profileLocked}
+                            onChange={(selected) => setProfileLocked(selected)}
+                            aria-label={t("profileEdit.lockProfile")}
+                        >
+                            <Switch.Content>
+                                <Switch.Control>
+                                    <Switch.Thumb />
+                                </Switch.Control>
+                            </Switch.Content>
+                        </Switch>
+                    ),
+                ]}
             />
-            <div className="flex flex-col gap-6">
-
-                {/* privacy: lock profile (FB-style) */}
-                <div className="flex items-start justify-between gap-3 my-2">
-                    <div className="flex flex-col gap-0">
-                        <Label htmlFor="profile-locked">{t("profileEdit.lockProfile")}</Label>
-                        <Typography type="body-xs" color="muted">
-                            {t("profileEdit.lockProfileHint")}
-                        </Typography>
-                    </div>
-                    <Switch
-                        className="shrink-0"
-                        isSelected={profileLocked}
-                        onChange={(selected) => setProfileLocked(selected)}
-                        aria-label={t("profileEdit.lockProfile")}
-                    >
-                        <Switch.Content>
-                            <Switch.Control>
-                                <Switch.Thumb />
-                            </Switch.Control>
-                        </Switch.Content>
-                    </Switch>
-                </div>
-
-                {/* per-section visibility — one toggle row per gateable tab, mirroring
-                    the lock row above. "Lock profile" OVERRIDES this whole group (it
-                    already hides everything from visitors), so when the lock is on the
-                    group is greyed + disabled. Overview + CV are never listed here
-                    (Overview always shows; CV keeps its own public gate). */}
-                <div className="flex flex-col gap-6" aria-disabled={profileLocked}>
-                    <div className="flex flex-col gap-0">
-                        <Label htmlFor="profile-section-visibility">
-                            {t("profileEdit.sectionVisibility")}
-                        </Label>
-                        <Typography type="body-xs" color="muted">
-                            {profileLocked
-                                ? t("profileEdit.sectionVisibilityLockedHint")
-                                : t("profileEdit.sectionVisibilityHint")}
-                        </Typography>
-                    </div>
-                    <div
-                        id="profile-section-visibility"
-                        className={`flex flex-col gap-3${profileLocked ? " pointer-events-none opacity-50" : ""}`}
-                    >
-                        {SECTION_VISIBILITY_OPTIONS.map((option) => (
-                            <div
-                                key={option.key}
-                                className="flex items-start justify-between gap-3 my-2"
-                            >
-                                <div className="flex min-w-0 flex-col gap-0">
-                                    <Label htmlFor={`profile-section-${option.key}`}>
-                                        {t(option.labelKey)}
-                                    </Label>
-                                    <Typography type="body-xs" color="muted">
-                                        {t(option.descKey)}
-                                    </Typography>
-                                </div>
-                                <Switch
-                                    className="shrink-0"
-                                    isSelected={sectionVisibility[option.key]}
-                                    isDisabled={profileLocked}
-                                    onChange={(selected) => setSectionVisibility((prev) => ({
-                                        ...prev,
-                                        [option.key]: selected,
-                                    }))}
-                                    aria-label={t(option.labelKey)}
-                                >
-                                    <Switch.Content>
-                                        <Switch.Control>
-                                            <Switch.Thumb />
-                                        </Switch.Control>
-                                    </Switch.Content>
-                                </Switch>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
-                <Button
-                    variant="primary"
-                    size="lg"
-                    className="h-12 self-end px-8 text-base"
-                    isDisabled={isSubmitting}
-                    isPending={isSubmitting}
-                    onPress={() => onSubmit()}
-                >
-                    {({ isPending }) => (
-                        <>
-                            {isPending ? (
-                                <Spinner
-                                    color="current"
-                                    size="sm"
-                                />
-                            ) : null}
-                            {t("profileEdit.save")}
-                        </>
-                    )}
-                </Button>
-            </div>
         </div>
+    )
+
+    const sectionRows = SECTION_VISIBILITY_OPTIONS.map((option) => () => (
+        <div key={option.key} className="my-2">
+            <StackH
+                gap={4}
+                align="start"
+                justify="between"
+                principle="content-row"
+                items={[
+                    () => (
+                        <div className="flex min-w-0 flex-col gap-0">
+                            <Label htmlFor={`profile-section-${option.key}`}>
+                                {t(option.labelKey)}
+                            </Label>
+                            <Typography type="body-xs" color="muted">
+                                {t(option.descKey)}
+                            </Typography>
+                        </div>
+                    ),
+                    () => (
+                        <Switch
+                            className="shrink-0"
+                            isSelected={sectionVisibility[option.key]}
+                            isDisabled={profileLocked}
+                            onChange={(selected) => setSectionVisibility((prev) => ({
+                                ...prev,
+                                [option.key]: selected,
+                            }))}
+                            aria-label={t(option.labelKey)}
+                        >
+                            <Switch.Content>
+                                <Switch.Control>
+                                    <Switch.Thumb />
+                                </Switch.Control>
+                            </Switch.Content>
+                        </Switch>
+                    ),
+                ]}
+            />
+        </div>
+    ))
+
+    const sectionGroupItems = [
+        () => (
+            <div className="flex flex-col gap-0">
+                <Label htmlFor="profile-section-visibility">
+                    {t("profileEdit.sectionVisibility")}
+                </Label>
+                <Typography type="body-xs" color="muted">
+                    {profileLocked
+                        ? t("profileEdit.sectionVisibilityLockedHint")
+                        : t("profileEdit.sectionVisibilityHint")}
+                </Typography>
+            </div>
+        ),
+        () => (
+            <div
+                id="profile-section-visibility"
+                className={profileLocked ? "pointer-events-none opacity-50" : undefined}
+            >
+                <StackV gap={4} items={sectionRows} />
+            </div>
+        ),
+    ]
+
+    const formItems = [
+        lockRow,
+        () => (
+            <div aria-disabled={profileLocked}>
+                <StackV gap={6} items={sectionGroupItems} />
+            </div>
+        ),
+        () => (
+            <Button
+                variant="primary"
+                size="lg"
+                className="h-12 self-end text-base"
+                isDisabled={isSubmitting}
+                isPending={isSubmitting}
+                onPress={() => onSubmit()}
+            >
+                {({ isPending }) => (
+                    <>
+                        {isPending ? (
+                            <Spinner
+                                color="current"
+                                size="sm"
+                            />
+                        ) : null}
+                        {t("profileEdit.save")}
+                    </>
+                )}
+            </Button>
+        ),
+    ]
+
+    return (
+        <StackV gap={7} principle="layout-split" items={[
+            () => (
+                <PageHeader
+                    breadcrumb={<SettingsBreadcrumb current={t("profileSettings.privacy.title")} />}
+                    title={t("profileSettings.privacy.title")}
+                    description={t("profileSettings.privacy.description")}
+                />
+            ),
+            () => <StackV gap={6} items={formItems} />,
+        ]} />
     )
 }

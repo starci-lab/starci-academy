@@ -11,6 +11,7 @@ import { UserCell } from "@/components/composites/lists/UserCell"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StackV, StackH } from "@/components/frames/Stack"
+import { Box } from "@/components/frames/Box"
 
 /** Placeholder row count shown while the first suggestion load is in flight. */
 const SKELETON_ROW_COUNT = 4
@@ -75,42 +76,45 @@ const WhoToFollowRow = ({
     onFollow,
     isSkeleton = false,
 }: WhoToFollowRowProps) => (
-    <StackH
-        gap={4}
-        padding={{ x: 3, y: 2 }}
-        items={[
-            () => (isSkeleton || !user ? (
-                <Skeleton.UserCell className="min-w-0 flex-1" />
-            ) : (
-                <Link href={user.profileHref} className="min-w-0 flex-1">
-                    <UserCell
-                        username={user.username}
-                        displayName={user.displayName}
-                        avatar={user.avatar}
-                        handle={`@${user.username}`}
-                        trailing={user.openToWork
-                            ? () => <Chip tone="success" text={openToWorkLabel} />
-                            : undefined}
+    // padding-plus-gap: outer control-pad owns the inset; inner content-row owns the seam
+    <Box principle="control-pad" className="px-3 py-2">
+        <StackH
+            gap={4}
+            principle="content-row"
+            items={[
+                () => (isSkeleton || !user ? (
+                    <Skeleton.UserCell className="min-w-0 flex-1" />
+                ) : (
+                    <Link href={user.profileHref} className="min-w-0 flex-1">
+                        <UserCell
+                            username={user.username}
+                            displayName={user.displayName}
+                            avatar={user.avatar}
+                            handle={`@${user.username}`}
+                            trailing={user.openToWork
+                                ? () => <Chip tone="success" text={openToWorkLabel} />
+                                : undefined}
+                        />
+                    </Link>
+                )),
+                () => (isSkeleton || !user ? (
+                    <Skeleton.Button className="shrink-0" />
+                ) : (
+                    <FollowButton
+                        className="shrink-0"
+                        following={user.following}
+                        isPending={user.isPending}
+                        onToggle={() => {
+                            // already followed from this card → no-op
+                            if (!user.following) {
+                                onFollow(user.globalId)
+                            }
+                        }}
                     />
-                </Link>
-            )),
-            () => (isSkeleton || !user ? (
-                <Skeleton.Button className="shrink-0" />
-            ) : (
-                <FollowButton
-                    className="shrink-0"
-                    following={user.following}
-                    isPending={user.isPending}
-                    onToggle={() => {
-                        // already followed from this card → no-op
-                        if (!user.following) {
-                            onFollow(user.globalId)
-                        }
-                    }}
-                />
-            )),
-        ]}
-    />
+                )),
+            ]}
+        />
+    </Box>
 )
 
 /**

@@ -13,6 +13,7 @@ import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StatPair } from "@/components/composites/stats/StatPair"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { StackV } from "@/components/frames/Stack"
 import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 
 /** Props for {@link OverviewCodeSkills}. */
@@ -87,15 +88,16 @@ export const OverviewCodeSkills = ({ className, label, onSeeMore, seeMoreLabel, 
                 skeleton={(
                     <SurfaceListCard>
                         <SurfaceListCardItem>
-                            <div className="flex flex-col gap-3">
-                                {/* StatPair (total solved + label) + difficulty bar + language */}
-                                <Skeleton.Metric />
-                                <Skeleton.SegmentBar legendItems={2} />
-                                <div className="flex flex-col gap-2">
-                                    <Skeleton.Typography type="body-xs" width="1/4" />
-                                    <Skeleton.SegmentBar legendItems={4} />
-                                </div>
-                            </div>
+                            <StackV gap={4} items={[
+                                () => <Skeleton.Metric />,
+                                () => <Skeleton.SegmentBar legendItems={2} />,
+                                () => (
+                                    <StackV gap={3} principle="sibling-stack" items={[
+                                        () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                                        () => <Skeleton.SegmentBar legendItems={4} />,
+                                    ]} />
+                                ),
+                            ]} />
                         </SurfaceListCardItem>
                     </SurfaceListCard>
                 )}
@@ -113,39 +115,47 @@ export const OverviewCodeSkills = ({ className, label, onSeeMore, seeMoreLabel, 
             >
                 <SurfaceListCard className="h-full">
                     <SurfaceListCardItem>
-                        <div className="flex flex-col gap-3">
-                            {/* total solved headline + difficulty depth (easy→hard, real shares) */}
-                            <StatPair
-                                value={String(totalSolved)}
-                                label={t("publicProfile.skillsSnapshot.solvedLabel")}
-                            />
-                            <SegmentBar
-                                ariaLabel={`${totalSolved} ${t("publicProfile.skillsSnapshot.solvedLabel")}`}
-                                segments={byDifficulty.map((d) => ({
-                                    key: d.key,
-                                    label: diffLabel(d.key),
-                                    value: d.solved,
-                                    color: DIFF_COLOR[d.key],
-                                }))}
-                            />
-                            {/* language breadth — same SegmentBar + brand legend as the Skills tab */}
-                            {orderedLanguages.length > 0 ? (
-                                <div className="flex flex-col gap-2">
-                                    <Typography type="body-xs" color="muted">
-                                        {t("publicProfile.skillsSnapshot.languagesLabel")}
-                                    </Typography>
-                                    <SegmentBar
-                                        ariaLabel={t("publicProfile.skillsSnapshot.languagesLabel")}
-                                        segments={orderedLanguages.map((lang) => ({
-                                            key: lang.key,
-                                            label: getLanguageLabel(lang.key),
-                                            value: lang.solved,
-                                            color: getLanguageColor(lang.key),
-                                        }))}
-                                    />
-                                </div>
-                            ) : null}
-                        </div>
+                        <StackV gap={4} items={[
+                            () => (
+                                <StatPair
+                                    value={String(totalSolved)}
+                                    label={t("publicProfile.skillsSnapshot.solvedLabel")}
+                                />
+                            ),
+                            () => (
+                                <SegmentBar
+                                    ariaLabel={`${totalSolved} ${t("publicProfile.skillsSnapshot.solvedLabel")}`}
+                                    segments={byDifficulty.map((d) => ({
+                                        key: d.key,
+                                        label: diffLabel(d.key),
+                                        value: d.solved,
+                                        color: DIFF_COLOR[d.key],
+                                    }))}
+                                />
+                            ),
+                            ...(orderedLanguages.length > 0
+                                ? [() => (
+                                    <StackV gap={3} principle="sibling-stack" items={[
+                                        () => (
+                                            <Typography type="body-xs" color="muted">
+                                                {t("publicProfile.skillsSnapshot.languagesLabel")}
+                                            </Typography>
+                                        ),
+                                        () => (
+                                            <SegmentBar
+                                                ariaLabel={t("publicProfile.skillsSnapshot.languagesLabel")}
+                                                segments={orderedLanguages.map((lang) => ({
+                                                    key: lang.key,
+                                                    label: getLanguageLabel(lang.key),
+                                                    value: lang.solved,
+                                                    color: getLanguageColor(lang.key),
+                                                }))}
+                                            />
+                                        ),
+                                    ]} />
+                                )]
+                                : []),
+                        ]} />
                     </SurfaceListCardItem>
                 </SurfaceListCard>
             </AsyncContent>

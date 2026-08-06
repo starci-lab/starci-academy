@@ -139,6 +139,7 @@ export const _ChatPane = ({
     return (
         <StackV
             gap={4}
+            principle="content-row"
             identity={{ tier: "block", component: "ChatPane" }}
             items={[
                 () => (
@@ -157,7 +158,7 @@ export const _ChatPane = ({
                     )
                 ),
                 () => (
-                    <StackV gap={3} items={[
+                    <StackV gap={3} principle="flex-action" items={[
                         () => (
                             <InputTextarea
                                 variant="secondary"
@@ -169,7 +170,7 @@ export const _ChatPane = ({
                             />
                         ),
                         () => (
-                            <StackH gap={1} justify="end" items={[
+                            <StackH gap={1} principle="name-handle" justify="end" items={[
                                 () => (
                                     <Button
                                         variant="primary"

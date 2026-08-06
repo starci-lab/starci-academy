@@ -119,6 +119,7 @@ export const _ShareModal = ({
         () => (
             <StackV
                 gap={3}
+                principle="sibling-stack"
                 align="center"
                 items={[
                     () => (
@@ -133,6 +134,7 @@ export const _ShareModal = ({
         () => (
             <StackH
                 gap={2}
+                principle="icon-text"
                 align="center"
                 justify="center"
                 items={[
@@ -144,6 +146,7 @@ export const _ShareModal = ({
         () => (
             <Cluster
                 gap={3}
+                principle="chip-row"
                 justify="center"
                 items={SHARE_PLATFORMS.map((platform) => () => (
                     <a
@@ -170,7 +173,7 @@ export const _ShareModal = ({
             // Matches the original's silence when nothing is loaded yet — no
             // empty-state copy ever shipped for this edge case, so none is
             // invented here (file header).
-            body={isEmpty ? undefined : () => <StackV gap={6} align="center" items={shareBody} />}
+            body={isEmpty ? undefined : () => <StackV gap={6} principle="block-boundary" align="center" items={shareBody} />}
         />
     )
 }

@@ -10,6 +10,8 @@ import { HeadhuntingCompanyProfile } from "./HeadhuntingCompanyProfile"
 import { HeadhuntingCompanyLoadingState } from "./HeadhuntingCompanyLoadingState"
 import { useHeadhuntingCompanyDetail } from "@/hooks/headhunting"
 import { AsyncContentError } from "@/components/composites/async/AsyncContent"
+import { Box } from "@/components/frames/Box"
+import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link HeadhuntingCompanyPage}. */
 export type HeadhuntingCompanyPageProps = WithClassNames<undefined>
@@ -54,13 +56,13 @@ export const HeadhuntingCompanyPage = ({ className }: HeadhuntingCompanyPageProp
     }
 
     return (
-        <div className={className}>
-            <div className="flex flex-col gap-6">
-                <HeadhuntingCompanyBreadcrumbs />
-                <HeadhuntingCompanyProfile />
-                <HeadhuntingCompanyConsultants />
-            </div>
-        </div>
+        <Box className={className}>
+            <StackV gap={6} principle="block-boundary" items={[
+                HeadhuntingCompanyBreadcrumbs,
+                HeadhuntingCompanyProfile,
+                HeadhuntingCompanyConsultants,
+            ]} />
+        </Box>
     )
 }
 

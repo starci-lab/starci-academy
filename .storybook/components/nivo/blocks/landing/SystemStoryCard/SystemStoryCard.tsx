@@ -63,6 +63,7 @@ const SystemStoryCard = ({ eyebrow, title, before, after, disclaimer }: SystemSt
     <div data-tier="block" data-component="SystemStoryCard">
         <StackV
             gap={6}
+            principle="block-boundary"
             items={[
                 () => <SectionHeading eyebrow={eyebrow} title={title} align="center" />,
                 () => (
@@ -70,6 +71,7 @@ const SystemStoryCard = ({ eyebrow, title, before, after, disclaimer }: SystemSt
                         gap={6}
                         at="md"
                         align="stretch"
+                        principle="block-boundary"
                         items={[
                             () => <StoryPanel side={before} tone="warning" />,
                             () => (

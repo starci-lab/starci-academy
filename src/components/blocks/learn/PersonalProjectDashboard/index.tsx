@@ -256,8 +256,7 @@ const Body = ({
                         body={() => (
                             <Grid
                                 columns={{ base: 1, sm: 2 }}
-                                gap={4}
-                                principle="sibling-stack"
+                                principle="content-row"
 
                                 items={tasks.map((task) => ({
                                     key: task.id,

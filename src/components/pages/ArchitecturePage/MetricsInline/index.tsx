@@ -37,19 +37,19 @@ export const MetricsInline = ({ metrics, className }: MetricsInlineProps) => {
     return (
         <span className={cn("flex flex-wrap items-center gap-x-3 gap-y-1", className)}>
             {cpu != null ? (
-                <span className="inline-flex items-center gap-1 tabular-nums">
+                <span data-principle="icon-text" className="inline-flex items-center gap-1 tabular-nums">
                     <CpuIcon aria-hidden focusable="false" className="size-3 shrink-0" />
                     {cpu}
                 </span>
             ) : null}
             {memory != null ? (
-                <span className="inline-flex items-center gap-1 tabular-nums">
+                <span data-principle="icon-text" className="inline-flex items-center gap-1 tabular-nums">
                     <MemoryIcon aria-hidden focusable="false" className="size-3 shrink-0" />
                     {memory}
                 </span>
             ) : null}
             {rx != null || tx != null ? (
-                <span className="inline-flex items-center gap-1 tabular-nums">
+                <span data-principle="icon-text" className="inline-flex items-center gap-1 tabular-nums">
                     <ArrowsDownUpIcon aria-hidden focusable="false" className="size-3 shrink-0" />
                     {rx != null ? `↓ ${rx}` : null}
                     {rx != null && tx != null ? " " : null}

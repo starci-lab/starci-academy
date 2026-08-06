@@ -186,6 +186,7 @@ const CatalogView = ({ products, orders, onSelectTier, buyConfirm, labels, isSke
                     ...Array.from({ length: SKELETON_PRODUCT_COUNT }, (_unused, productIndex) => () => (
                         <StackV
                             gap={4}
+                            principle="label-field"
                             isSkeleton
                             items={[
                                 () => (
@@ -199,7 +200,7 @@ const CatalogView = ({ products, orders, onSelectTier, buyConfirm, labels, isSke
                                 () => (
                                     <Grid
                                         columns={{ base: 1, sm: 2, lg: 3 }}
-                                        gap={4}
+                                        principle="content-row"
                                         isSkeleton
                                         items={Array.from({ length: SKELETON_TIER_COUNT }, (_unused2, tierIndex) => ({
                                             key: `s-${productIndex}-${tierIndex}`,
@@ -233,6 +234,7 @@ const CatalogView = ({ products, orders, onSelectTier, buyConfirm, labels, isSke
                         <StackV
                             key={product.id}
                             gap={4}
+                            principle="label-field"
                             items={[
                                 () => (
                                     <CatalogProductCard
@@ -256,7 +258,7 @@ const CatalogView = ({ products, orders, onSelectTier, buyConfirm, labels, isSke
                                 () => (
                                     <Grid
                                         columns={{ base: 1, sm: 2, lg: 3 }}
-                                        gap={4}
+                                        principle="content-row"
                                         items={product.tiers.map((tier) => ({
                                             key: tier.id,
                                             content: () => (

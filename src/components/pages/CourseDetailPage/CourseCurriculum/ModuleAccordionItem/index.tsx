@@ -19,6 +19,8 @@ import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { CourseContentTier } from "@/modules/types/enums/course-content-tier"
 import { type ModuleEntity } from "@/modules/types/entities/module"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Chip tone per learning tier (foundation → advanced reads easy → hard). */
 const TIER_TONE: Record<CourseContentTier, "success" | "warning" | "danger"> = {
@@ -49,52 +51,66 @@ export const ModuleAccordionItem = ({ module }: ModuleAccordionItemProps) => {
     const previews = _.cloneDeep(module.previewContents ?? []).sort(
         (a, b) => a.sortIndex - b.sortIndex,
     )
+    const contentTier = module.contentTier
 
     return (
         <Accordion.Item aria-label={module.title}>
             <Accordion.Heading>
                 <Accordion.Trigger>
-                    <div className="flex min-w-0 flex-1 items-center justify-between gap-3">
-                        <Typography type="body-sm" weight="medium" truncate className="min-w-0">
-                            {module.title}
-                        </Typography>
-                        <div className="flex shrink-0 items-center gap-2">
-                            {module.contentTier ? (
-                                <StatusChip tone={TIER_TONE[module.contentTier]}>
-                                    {t(`courseLanding.tier.${module.contentTier}`)}
-                                </StatusChip>
-                            ) : null}
-                            {previews.length > 0 ? (
-                                <StatusChip tone="neutral">
-                                    {t("courseLanding.previewCount", { count: previews.length })}
-                                </StatusChip>
-                            ) : null}
-                        </div>
-                    </div>
+                    <StackH gap={4} principle="content-row" classNames={["min-w-0", "flex-1"]} justify="between" align="center" items={[
+                        () => (
+                            <Typography type="body-sm" weight="medium" truncate className="min-w-0">
+                                {module.title}
+                            </Typography>
+                        ),
+                        () => (
+                            <Cluster
+                                gap={3}
+                                principle="chip-row"
+                                classNames={["shrink-0"]}
+                                items={[
+                                    ...(contentTier ? [() => (
+                                        <StatusChip tone={TIER_TONE[contentTier]}>
+                                            {t(`courseLanding.tier.${contentTier}`)}
+                                        </StatusChip>
+                                    )] : []),
+                                    ...(previews.length > 0 ? [() => (
+                                        <StatusChip tone="neutral">
+                                            {t("courseLanding.previewCount", { count: previews.length })}
+                                        </StatusChip>
+                                    )] : []),
+                                ]}
+                            />
+                        ),
+                    ]} />
                 </Accordion.Trigger>
             </Accordion.Heading>
             <Accordion.Panel>
                 <Accordion.Body>
-                    <div className="flex flex-col gap-3">
-                        <Typography type="body-xs" color="muted">
-                            {t("courseLanding.moduleMeta", { lessons: lessonCount, minutes })}
-                        </Typography>
-                        {module.description ? (
+                    <StackV gap={4} principle="card-caption" items={[
+                        () => (
+                            <Typography type="body-xs" color="muted">
+                                {t("courseLanding.moduleMeta", { lessons: lessonCount, minutes })}
+                            </Typography>
+                        ),
+                        () => (module.description ? (
                             <MarkdownContent markdown={module.description} />
-                        ) : null}
-                        {previews.length > 0 ? (
-                            <ul className="flex flex-col gap-2">
+                        ) : null),
+                        () => (previews.length > 0 ? (
+                            <ul data-principle="sibling-stack" className="flex flex-col gap-2">
                                 {previews.map((preview) => (
-                                    <li key={preview.id} className="flex items-start gap-2">
-                                        <CaretRightIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
-                                        <Typography type="body-sm" color="muted">
-                                            {preview.text}
-                                        </Typography>
-                                    </li>
+                                    <StackH key={preview.id} as="li" gap={3} principle="identity" align="start" items={[
+                                        () => <CaretRightIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />,
+                                        () => (
+                                            <Typography type="body-sm" color="muted">
+                                                {preview.text}
+                                            </Typography>
+                                        ),
+                                    ]} />
                                 ))}
                             </ul>
-                        ) : null}
-                    </div>
+                        ) : null),
+                    ]} />
                 </Accordion.Body>
             </Accordion.Panel>
         </Accordion.Item>

@@ -7,6 +7,7 @@ import { ARCHITECTURE_COMPONENTS } from "../../constants"
 import { ARCHITECTURE_MODULES } from "../../modules"
 import type { HealthByName } from "../../hooks/useSystemHealthPoll"
 import { getArchitectureStatusVisual, resolveArchitectureStatus } from "../../statusVisual"
+import { StackH } from "@/components/frames/Stack"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ArchitectureMobileNav}. */
@@ -97,48 +98,63 @@ export const ArchitectureMobileNav = ({ healthByName, selectedId, onSelect, clas
 
     return (
         <div className={cn("flex flex-col gap-3 @app-lg:hidden", className)}>
-            <div className="flex flex-col gap-2">
+            <div data-principle="sibling-stack" className="flex flex-col gap-2">
                 <Typography type="body-xs" color="muted">{t("rail.ownGroup")}</Typography>
-                <ScrollShadow orientation="horizontal" hideScrollBar className="flex gap-2 overflow-x-auto pb-1">
-                    {ownComponents.map((component) => (
-                        <NodeChip
-                            key={component.name}
-                            name={component.name}
-                            icon={component.icon}
-                            healthByName={healthByName}
-                            selected={selectedId === component.name}
-                            onSelect={() => onSelect(component.name)}
-                        />
-                    ))}
+                <ScrollShadow orientation="horizontal" hideScrollBar className="overflow-x-auto pb-1">
+                    <StackH
+                        gap={3}
+                        principle="chip-row"
+                        items={ownComponents.map((component) => (
+                            () => (
+                                <NodeChip
+                                    name={component.name}
+                                    icon={component.icon}
+                                    healthByName={healthByName}
+                                    selected={selectedId === component.name}
+                                    onSelect={() => onSelect(component.name)}
+                                />
+                            )
+                        ))}
+                    />
                 </ScrollShadow>
             </div>
-            <div className="flex flex-col gap-2">
+            <div data-principle="sibling-stack" className="flex flex-col gap-2">
                 <Typography type="body-xs" color="muted">{t("rail.externalGroup")}</Typography>
-                <ScrollShadow orientation="horizontal" hideScrollBar className="flex gap-2 overflow-x-auto pb-1">
-                    {externalComponents.map((component) => (
-                        <NodeChip
-                            key={component.name}
-                            name={component.name}
-                            icon={component.icon}
-                            healthByName={healthByName}
-                            selected={selectedId === component.name}
-                            onSelect={() => onSelect(component.name)}
-                        />
-                    ))}
+                <ScrollShadow orientation="horizontal" hideScrollBar className="overflow-x-auto pb-1">
+                    <StackH
+                        gap={3}
+                        principle="chip-row"
+                        items={externalComponents.map((component) => (
+                            () => (
+                                <NodeChip
+                                    name={component.name}
+                                    icon={component.icon}
+                                    healthByName={healthByName}
+                                    selected={selectedId === component.name}
+                                    onSelect={() => onSelect(component.name)}
+                                />
+                            )
+                        ))}
+                    />
                 </ScrollShadow>
             </div>
-            <div className="flex flex-col gap-2">
+            <div data-principle="sibling-stack" className="flex flex-col gap-2">
                 <Typography type="body-xs" color="muted">{t("rail.moduleGroup", { count: ARCHITECTURE_MODULES.length })}</Typography>
-                <ScrollShadow orientation="horizontal" hideScrollBar className="flex gap-2 overflow-x-auto pb-1">
-                    {ARCHITECTURE_MODULES.map((module) => (
-                        <ModuleChip
-                            key={module.id}
-                            id={module.id}
-                            icon={module.icon}
-                            selected={selectedId === module.id}
-                            onSelect={() => onSelect(module.id)}
-                        />
-                    ))}
+                <ScrollShadow orientation="horizontal" hideScrollBar className="overflow-x-auto pb-1">
+                    <StackH
+                        gap={3}
+                        principle="chip-row"
+                        items={ARCHITECTURE_MODULES.map((module) => (
+                            () => (
+                                <ModuleChip
+                                    id={module.id}
+                                    icon={module.icon}
+                                    selected={selectedId === module.id}
+                                    onSelect={() => onSelect(module.id)}
+                                />
+                            )
+                        ))}
+                    />
                 </ScrollShadow>
             </div>
         </div>

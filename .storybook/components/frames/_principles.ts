@@ -12,7 +12,8 @@
 export type PrincipleToken =
     // gap - seam intent
     | "name-handle" | "icon-text" | "separator-dot" | "title-subtitle"
-    | "flex-action" | "identity" | "value-row" | "chip-row" | "sibling-stack"
+    | "flex-action" | "flex-action-center" | "flex-action-end" | "flex-action-start" | "flex-action-between"
+    | "identity" | "identity-end" | "value-row" | "chip-row" | "sibling-stack"
     | "label-field" | "content-row" | "card-caption"
     | "group-boundary" | "block-boundary" | "layout-split" | "marketing-beat"
     // padding

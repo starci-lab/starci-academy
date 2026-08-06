@@ -118,7 +118,7 @@ const HeroIdentity = ({
                 padding={1}
                 body={() => (
                     <StackV
-                        gap={4}
+                        principle="label-field" gap={4}
                         align="center"
                         items={[
                             () => (
@@ -139,7 +139,7 @@ const HeroIdentity = ({
                                 ? [
                                     () => (
                                         <Cluster
-                                            gap={3}
+                                            principle="chip-row" gap={3}
                                             justify="center"
                                             items={[
                                                 () => (

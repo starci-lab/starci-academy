@@ -90,7 +90,7 @@ export const _HeadhuntingCompanyConsultants = ({
         <Grid
             identity={{ tier: "block", component: "HeadhuntingCompanyConsultants" }}
             columns={{ base: 1, sm: 2, lg: 3 }}
-            gap={3}
+            principle="sibling-stack"
             items={items}
         />
     )

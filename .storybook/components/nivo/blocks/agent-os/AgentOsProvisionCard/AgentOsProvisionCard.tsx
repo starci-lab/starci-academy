@@ -78,6 +78,7 @@ const AgentOsProvisionCard = ({
             body={() => (
                 <StackV
                     gap={5}
+                    principle="group-boundary"
                     align="center"
                     isSkeleton={isSkeleton}
                     items={[
@@ -86,7 +87,7 @@ const AgentOsProvisionCard = ({
                         () => (
                             <Grid
                                 columns={{ base: 1, md: 3 }}
-                                gap={4}
+                                principle="content-row"
                                 items={tiers.map((tier) => ({
                                     key: tier.id,
                                     content: () => (

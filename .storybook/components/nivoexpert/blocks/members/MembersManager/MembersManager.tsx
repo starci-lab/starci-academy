@@ -9,7 +9,7 @@ import { Table, type TableColumnSpec, type TableRowItem } from "@sb-components/c
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
 import { UserCell } from "@sb-components/composites/lists/UserCell/UserCell"
 import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
-import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * `MembersManager` -- the expert's community roster: one row per member (identity,
@@ -213,24 +213,14 @@ const MembersManager = ({
             [COLUMN_KEY.status]: <Chip tone={STATUS_TONE[member.status]} isSkeleton={isSkeleton} text={labels.statusLabels[member.status]} />,
             [COLUMN_KEY.role]: <Chip tone={ROLE_TONE[member.role]} isSkeleton={isSkeleton} text={labels.roleLabels[member.role]} />,
             [COLUMN_KEY.actions]: (
-                <StackH
-                    gap={2}
-                    align="center"
-                    justify="end"
+                <Button
+                    variant="secondary"
+                    size="sm"
+                    prefixIcon={UserCheckIcon}
+                    label={labels.grantLabel}
+                    onPress={() => onGrantAccess(member.id)}
+                    isDisabled={isBusy}
                     isSkeleton={isSkeleton}
-                    items={[
-                        () => (
-                            <Button
-                                variant="secondary"
-                                size="sm"
-                                prefixIcon={UserCheckIcon}
-                                label={labels.grantLabel}
-                                onPress={() => onGrantAccess(member.id)}
-                                isDisabled={isBusy}
-                                isSkeleton={isSkeleton}
-                            />
-                        ),
-                    ]}
                 />
             ),
         }
@@ -247,7 +237,7 @@ const MembersManager = ({
                 )}
                 body={() => (
                     <StackV
-                        gap={4}
+                        principle="label-field" gap={4}
                         isSkeleton={isSkeleton}
                         items={[
                             () => <Tabs items={tabItems} selectedKey={activeTab} onSelectionChange={(key) => setActiveTab(key as MembersManagerTab)} ariaLabel={labels.tabsAriaLabel} variant="secondary" isSkeleton={isSkeleton} />,

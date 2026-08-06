@@ -213,7 +213,7 @@ export const _CartPage = ({
         ? [() => <Skeleton className="h-4 w-40 rounded-lg" />]
         : [
             ...(savingsLabel ? [() => (
-                <StackH gap={3} justify="between" items={[
+                <StackH gap={3} principle="flex-action" justify="between" items={[
                     () => <Typography size="sm" color="success-soft" text={savingsLabel} />,
                     () => (bundleBonusLabel ? <Chip tone="accent" text={bundleBonusLabel} /> : null),
                 ]} />
@@ -240,7 +240,7 @@ export const _CartPage = ({
             )
         }
         return (
-            <StackV gap={6} items={[
+            <StackV gap={6} principle="block-boundary" items={[
                 () => (
                     <SurfaceListCard>
                         {isSkeleton
@@ -258,14 +258,16 @@ export const _CartPage = ({
                             ))}
                     </SurfaceListCard>
                 ),
-                () => (
-                    <StackV gap={4} items={isSkeleton
+                () => {
+                    // Items hoisted so this gap-only column is not scanned as owning nested
+                    // justify/principle from its children (check-pattern-coverage opens to `>`).
+                    const footerColumnItems = isSkeleton
                         ? [() => <Skeleton className="h-12 w-full rounded-2xl" />]
                         : [
                             () => (
-                                <StackV gap={3} isSkeleton={isPreviewSkeleton} items={[
+                                <StackV gap={3} principle="sibling-stack" isSkeleton={isPreviewSkeleton} items={[
                                     () => (
-                                        <StackH gap={4} justify="between" items={[
+                                        <StackH gap={4} principle="content-row" justify="between" items={[
                                             () => <Typography size="base" weight="semibold" text={labels.total} isSkeleton={isPreviewSkeleton} />,
                                             () => (isPreviewSkeleton
                                                 ? <Skeleton className="h-7 w-32 rounded-lg" />
@@ -302,9 +304,9 @@ export const _CartPage = ({
                                     confirmLabel={labels.clearConfirm}
                                 />
                             ),
-                        ]}
-                    />
-                ),
+                        ]
+                    return <StackV gap={4} items={footerColumnItems} />
+                },
             ]} />
         )
     }

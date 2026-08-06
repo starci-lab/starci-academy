@@ -114,10 +114,9 @@ export const _FlashcardStatsStrip = ({
 
     return (
         <LabeledCard className={className} identity={IDENTITY} label={labels.label}>
-            <StackV gap={3} isSkeleton={isSkeleton} items={[
-                // headline: mastered / total (+%) balanced by the streak chip
+            <StackV gap={3} principle="sibling-stack" isSkeleton={isSkeleton} items={[
                 () => (
-                    <StackH gap={3} justify="between" isSkeleton={isSkeleton} items={[
+                    <StackH gap={4} principle="content-row" justify="between" isSkeleton={isSkeleton} items={[
                         () => (
                             <Typography
                                 size="sm"

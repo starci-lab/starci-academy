@@ -100,12 +100,12 @@ const MyCoursesGrid = ({ courses, onOpenCourse, onBrowseCourses, isSkeleton = fa
                 isSkeleton={isSkeleton}
                 body={() => (
                     <StackV
-                        gap={3}
+                        principle="sibling-stack" gap={3}
                         isSkeleton={isSkeleton}
                         items={[
                             () => (
                                 <StackH
-                                    gap={3}
+                                    principle="value-row" gap={3}
                                     justify="between"
                                     align="center"
                                     isSkeleton={isSkeleton}
@@ -154,7 +154,7 @@ const MyCoursesGrid = ({ courses, onOpenCourse, onBrowseCourses, isSkeleton = fa
     return (
         <div data-tier="block" data-component="MyCoursesGrid">
             <StackV
-                gap={4}
+                principle="label-field" gap={4}
                 isSkeleton={isSkeleton}
                 items={[
                     () => <Typography size="h5" weight="semibold" isSkeleton={isSkeleton} text={labels.title} />,
@@ -163,8 +163,7 @@ const MyCoursesGrid = ({ courses, onOpenCourse, onBrowseCourses, isSkeleton = fa
                             <EmptyState icon={BookOpenIcon} title={labels.emptyTitle} description={labels.emptyDescription} action={BrowseAction} />
                         ) : (
                             <Grid
-                                columns={{ base: 1, sm: 2, lg: 3 }}
-                                gap={4}
+                                principle="content-row" columns={{ base: 1, sm: 2, lg: 3 }}
                                 items={cards.map((course) => ({ key: course.slug, content: () => CourseCard(course) }))}
                             />
                         ),

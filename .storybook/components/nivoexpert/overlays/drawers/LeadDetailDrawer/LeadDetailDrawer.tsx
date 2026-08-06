@@ -112,7 +112,7 @@ const LeadDetailDrawer = ({
 
     const Body = ({ isSkeleton: skeleton }: SkeletonProps) => (
         <StackV
-            gap={4}
+            principle="label-field" gap={4}
             isSkeleton={skeleton}
             items={[
                 () => (
@@ -132,19 +132,19 @@ const LeadDetailDrawer = ({
                         isSkeleton={skeleton}
                         body={() => (
                             <StackV
-                                gap={3}
+                                principle="sibling-stack" gap={3}
                                 isSkeleton={skeleton}
                                 items={[
                                     () => (
                                         <StackH
-                                            gap={2}
+                                            principle="icon-text" gap={2}
                                             align="center"
                                             justify="between"
                                             isSkeleton={skeleton}
                                             items={[
                                                 () => (
                                                     <StackH
-                                                        gap={2}
+                                                        principle="icon-text" gap={2}
                                                         align="center"
                                                         isSkeleton={skeleton}
                                                         items={[

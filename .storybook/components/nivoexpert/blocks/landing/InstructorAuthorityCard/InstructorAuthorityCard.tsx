@@ -86,7 +86,7 @@ const InstructorAuthorityCard = ({
         <Card data-tier="block" data-component="InstructorAuthorityCard">
             <CardContent>
                 <StackV
-                    gap={4}
+                    principle="label-field" gap={4}
                     divider
                     isSkeleton={isSkeleton}
                     items={[

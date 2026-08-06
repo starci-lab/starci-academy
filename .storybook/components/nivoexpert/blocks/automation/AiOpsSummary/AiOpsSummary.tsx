@@ -50,8 +50,7 @@ export interface AiOpsSummaryProps {
 const AiOpsSummary = ({ metrics, isSkeleton = false }: AiOpsSummaryProps) => (
     <div data-tier="block" data-component="AiOpsSummary">
         <Grid
-            columns={{ base: 1, sm: 3 }}
-            gap={4}
+            principle="content-row" columns={{ base: 1, sm: 3 }}
             items={[
                 {
                     key: "activeWorkflows",

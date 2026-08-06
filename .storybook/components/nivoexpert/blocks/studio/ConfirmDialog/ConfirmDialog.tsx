@@ -122,7 +122,7 @@ const ConfirmDialog = ({
                         </AlertDialog.Body>
                         <AlertDialog.Footer className="w-full">
                             <ButtonGroup
-                                align="end"
+                                principle="flex-action-end"
                                 classNames={["w-full"]}
                                 items={[
                                     {

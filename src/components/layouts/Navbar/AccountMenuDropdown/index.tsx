@@ -53,6 +53,7 @@ export const AccountMenuDropdown = () => {
                 <StackV
                     padding={4}
                     gap={1}
+                    principle="cell-pad"
                     body={() => (isSkeleton
                         ? <Skeleton.UserCell />
                         : isAuthed ? <UserSummary /> : <GuestHeader />)}

@@ -34,6 +34,7 @@ import { DifficultyChip } from "@/components/blocks/chips/DifficultyChip"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link CourseDayTimeline}. */
 export interface CourseDayTimelineProps extends WithClassNames<undefined> {
@@ -157,16 +158,18 @@ export const CourseDayTimeline = ({
             <AsyncContent
                 isLoading={isLoading && items.length === 0}
                 skeleton={(
-                    <div className="flex flex-col gap-6">
-                        {[0, 1].map((group) => (
-                            <div key={group} className="flex flex-col gap-3">
-                                <Skeleton.Typography type="body-xs" width="1/4" />
-                                {[0, 1, 2].map((row) => (
-                                    <Skeleton.ListRow key={row} withTrailing />
-                                ))}
-                            </div>
-                        ))}
-                    </div>
+                    <StackV gap={6} principle="block-boundary" items={[0, 1].map(() => () => (
+                        <StackV
+                            gap={4}
+                            principle="sibling-stack"
+                            items={[
+                                () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                                () => <Skeleton.ListRow withTrailing />,
+                                () => <Skeleton.ListRow withTrailing />,
+                                () => <Skeleton.ListRow withTrailing />,
+                            ]}
+                        />
+                    ))} />
                 )}
                 isEmpty={items.length === 0}
                 emptyContent={{
@@ -184,59 +187,72 @@ export const CourseDayTimeline = ({
                 // loaded but the current search matches no event
                     <AsyncContentEmpty title={t("profileSettings.learning.day.noMatch")} />
                 ) : (
-                    <div className="flex flex-col gap-6">
-                        {dayGroups.map((group) => (
-                            <div key={group.key} className="flex flex-col gap-3">
-                                <Typography type="body-xs" color="muted" weight="medium">
-                                    {group.label}
-                                </Typography>
-                                <div className="flex flex-col gap-2">
-                                    {group.items.map((item) => {
-                                        const Icon = EVENT_ICON[item.type]
-                                        const relative = getTimeAgoLabel(getTimeAgoMessage(item.at), t)
-                                        const subtitle = item.moduleTitle
-                                        ?? t(`profileSettings.learning.day.eventType.${item.type}`)
-                                        return (
-                                            <ListRow
-                                                key={item.id}
-                                                leading={(
-                                                    <IconTile
-                                                        size="sm"
-                                                        tone={EVENT_TONE[item.type]}
-                                                        icon={<Icon aria-hidden focusable="false" />}
-                                                    />
-                                                )}
-                                                title={item.label}
-                                                subtitle={subtitle}
-                                                meta={(
-                                                    <>
-                                                        {item.difficulty ? (
-                                                            <DifficultyChip difficulty={toDifficulty(item.difficulty)} />
-                                                        ) : null}
-                                                        <Typography type="body-xs" color="muted">
-                                                            <span title={formatDateTime(item.at, locale)}>{relative}</span>
-                                                        </Typography>
-                                                    </>
-                                                )}
+                    <StackV
+                        gap={6}
+                        principle="block-boundary"
+                        items={[
+                            ...dayGroups.map((group) => () => (
+                                <StackV
+                                    gap={4}
+                                    principle="sibling-stack"
+                                    items={[
+                                        () => (
+                                            <Typography type="body-xs" color="muted" weight="medium">
+                                                {group.label}
+                                            </Typography>
+                                        ),
+                                        () => (
+                                            <StackV
+                                                gap={3}
+                                                principle="sibling-stack"
+                                                items={group.items.map((item) => () => {
+                                                    const Icon = EVENT_ICON[item.type]
+                                                    const relative = getTimeAgoLabel(getTimeAgoMessage(item.at), t)
+                                                    const subtitle = item.moduleTitle
+                                                        ?? t(`profileSettings.learning.day.eventType.${item.type}`)
+                                                    return (
+                                                        <ListRow
+                                                            leading={(
+                                                                <IconTile
+                                                                    size="sm"
+                                                                    tone={EVENT_TONE[item.type]}
+                                                                    icon={<Icon aria-hidden focusable="false" />}
+                                                                />
+                                                            )}
+                                                            title={item.label}
+                                                            subtitle={subtitle}
+                                                            meta={(
+                                                                <>
+                                                                    {item.difficulty ? (
+                                                                        <DifficultyChip difficulty={toDifficulty(item.difficulty)} />
+                                                                    ) : null}
+                                                                    <Typography type="body-xs" color="muted">
+                                                                        <span title={formatDateTime(item.at, locale)}>{relative}</span>
+                                                                    </Typography>
+                                                                </>
+                                                            )}
+                                                        />
+                                                    )
+                                                })}
                                             />
-                                        )
-                                    })}
+                                        ),
+                                    ]}
+                                />
+                            )),
+                            ...(hasMore ? [() => (
+                                <div className="flex justify-center">
+                                    <Button
+                                        variant="secondary"
+                                        size="sm"
+                                        isPending={isLoadingMore}
+                                        onPress={() => setSize(size + 1)}
+                                    >
+                                        {t("profileSettings.learning.loadMore")}
+                                    </Button>
                                 </div>
-                            </div>
-                        ))}
-                        {hasMore ? (
-                            <div className="flex justify-center">
-                                <Button
-                                    variant="secondary"
-                                    size="sm"
-                                    isPending={isLoadingMore}
-                                    onPress={() => setSize(size + 1)}
-                                >
-                                    {t("profileSettings.learning.loadMore")}
-                                </Button>
-                            </div>
-                        ) : null}
-                    </div>
+                            )] : []),
+                        ]}
+                    />
                 )}
             </AsyncContent>
         </div>

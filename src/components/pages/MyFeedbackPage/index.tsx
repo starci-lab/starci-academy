@@ -27,6 +27,9 @@ import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { Box } from "@/components/frames/Box"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link MyFeedbackPage}. */
 export type MyFeedbackPageProps = WithClassNames<undefined>
@@ -69,6 +72,107 @@ export const MyFeedbackPage = ({
             day: "numeric",
         })
 
+    const skeletonItems = [0, 1, 2].map((row) => () => (
+        <Card key={row}>
+            <CardContent>
+                <StackV
+                    gap={3}
+                    principle="sibling-stack"
+                    items={[
+                        () => (
+                            <StackH
+                                gap={4}
+                                align="center"
+                                principle="content-row"
+                                items={[
+                                    () => <Skeleton.Chip />,
+                                    () => <Skeleton.Typography type="body-sm" width="1/3" />,
+                                ]}
+                            />
+                        ),
+                        () => <Skeleton.Typography type="body-sm" width="3/4" />,
+                    ]}
+                />
+            </CardContent>
+        </Card>
+    ))
+
+    const feedbackItems = [
+        ...items.map((item) => () => (
+            <Card key={item.id}>
+                <CardContent>
+                    <StackV
+                        gap={3}
+                        principle="sibling-stack"
+                        items={[
+                            () => (
+                                <Cluster
+                                    gap={4}
+                                    align="center"
+                                    principle="content-row"
+                                    items={[
+                                        () => (
+                                            <Chip
+                                                size="sm"
+                                                variant="soft"
+                                                color={SOURCE_COLOR_MAP[item.source] ?? "accent"}
+                                            >
+                                                <Chip.Label>
+                                                    {t(`profileSettings.learning.feedback.source.${item.source}`)}
+                                                </Chip.Label>
+                                            </Chip>
+                                        ),
+                                        () => (
+                                            <Typography type="body-sm" weight="medium">
+                                                {item.title}
+                                            </Typography>
+                                        ),
+                                        () => (
+                                            <Box principle="push-end" className="ml-auto">
+                                                <Typography type="body-xs" color="muted">
+                                                    {formatDate(item.createdAt)}
+                                                </Typography>
+                                            </Box>
+                                        ),
+                                    ]}
+                                />
+                            ),
+                            ...(item.courseTitle
+                                ? [() => (
+                                    <Typography type="body-xs" color="muted">
+                                        {item.courseTitle}
+                                    </Typography>
+                                )]
+                                : []),
+                            () => (
+                                <Typography type="body-sm" color="muted">
+                                    {item.summary}
+                                </Typography>
+                            ),
+                        ]}
+                    />
+                </CardContent>
+            </Card>
+        )),
+        ...(hasMore
+            ? [() => (
+                <div className="flex justify-center">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        isDisabled={swr.isValidating}
+                        onPress={() => setPageCount((count) => count + 1)}
+                    >
+                        {swr.isValidating ? (
+                            <Spinner color="current" size="sm" />
+                        ) : null}
+                        {t("profileSettings.learning.loadMore")}
+                    </Button>
+                </div>
+            )]
+            : []),
+    ]
+
     return (
         <div className={cn("flex flex-col gap-10", className)}>
             <PageHeader
@@ -82,21 +186,7 @@ export const MyFeedbackPage = ({
             >
                 <AsyncContent
                     isLoading={!swr.data && !swr.error}
-                    skeleton={(
-                        <div className="flex flex-col gap-3">
-                            {[0, 1, 2].map((row) => (
-                                <Card key={row}>
-                                    <CardContent className="flex flex-col gap-2">
-                                        <div className="flex items-center gap-3">
-                                            <Skeleton.Chip />
-                                            <Skeleton.Typography type="body-sm" width="1/3" />
-                                        </div>
-                                        <Skeleton.Typography type="body-sm" width="3/4" />
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
-                    )}
+                    skeleton={<StackV gap={4} items={skeletonItems} />}
                     isEmpty={items.length === 0}
                     emptyContent={{
                         title: t("profileSettings.learning.feedback.empty"),
@@ -108,54 +198,7 @@ export const MyFeedbackPage = ({
                         retryLabel: t("profileSettings.learning.loadMore"),
                     }}
                 >
-                    <div className="flex flex-col gap-3">
-                        {items.map((item) => (
-                            <Card key={item.id}>
-                                <CardContent className="flex flex-col gap-2">
-                                    <div className="flex flex-wrap items-center gap-3">
-                                        <Chip
-                                            size="sm"
-                                            variant="soft"
-                                            color={SOURCE_COLOR_MAP[item.source] ?? "accent"}
-                                        >
-                                            <Chip.Label>
-                                                {t(`profileSettings.learning.feedback.source.${item.source}`)}
-                                            </Chip.Label>
-                                        </Chip>
-                                        <Typography type="body-sm" weight="medium">
-                                            {item.title}
-                                        </Typography>
-                                        <Typography type="body-xs" color="muted" className="ml-auto">
-                                            {formatDate(item.createdAt)}
-                                        </Typography>
-                                    </div>
-                                    {item.courseTitle ? (
-                                        <Typography type="body-xs" color="muted">
-                                            {item.courseTitle}
-                                        </Typography>
-                                    ) : null}
-                                    <Typography type="body-sm" color="muted">
-                                        {item.summary}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        ))}
-                        {hasMore ? (
-                            <div className="flex justify-center">
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    isDisabled={swr.isValidating}
-                                    onPress={() => setPageCount((count) => count + 1)}
-                                >
-                                    {swr.isValidating ? (
-                                        <Spinner color="current" size="sm" />
-                                    ) : null}
-                                    {t("profileSettings.learning.loadMore")}
-                                </Button>
-                            </div>
-                        ) : null}
-                    </div>
+                    <StackV gap={4} items={feedbackItems} />
                 </AsyncContent>
             </LabeledCard>
         </div>

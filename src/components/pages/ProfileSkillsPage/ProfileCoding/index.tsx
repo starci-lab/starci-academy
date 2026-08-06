@@ -10,7 +10,6 @@ import {
     Label,
     Popover,
     Typography,
-    cn,
 } from "@heroui/react"
 import {
     FunnelIcon,
@@ -47,6 +46,9 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { TopicMasteryGrid } from "@/components/blocks/stats/TopicMasteryGrid"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackH, StackV } from "@/components/frames/Stack"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 
 /** Solve-history rows shown before the "see more" link kicks in. */
@@ -200,62 +202,79 @@ export const ProfileCoding = ({
         || (standingSwr.isLoading && !standing)
         || (xpSwr.isLoading && !xp)
 
+    const rootClassNames: Array<AllowedClassName> = []
+    if (className) {
+        rootClassNames.push(className as AllowedClassName)
+    }
+
     return (
         <AsyncContent
             isLoading={isFirstLoad}
             skeleton={(
-                <div className={cn("flex flex-col gap-6", className)}>
-                    {/* headline stat ribbon — label + one card (StatPair cells) */}
-                    <div className="flex flex-col gap-3">
-                        <Skeleton.Typography type="body-sm" width="1/4" />
-                        <Skeleton className="h-20 w-full rounded-2xl" />
-                    </div>
-                    {/* stats card: difficulty / topic / language as surface list items */}
-                    <div className="flex flex-col gap-3">
-                        <Skeleton.Typography type="body-sm" width="1/4" />
-                        <SurfaceListCard>
-                            <SurfaceListCardItem>
-                                <Skeleton.SegmentBar legendItems={3} />
-                            </SurfaceListCardItem>
-                            <SurfaceListCardItem>
-                                <div className="flex flex-wrap gap-2">
-                                    {[0, 1, 2, 3, 4, 5, 6, 7].map((chip) => (
-                                        <Skeleton key={chip} className="h-7 w-20 rounded-full" />
+                <StackV gap={6} principle="block-boundary" classNames={rootClassNames} items={[
+                    () => (
+                        <StackV gap={4} items={[
+                            () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                            () => <Skeleton className="h-20 w-full rounded-2xl" />,
+                        ]} />
+                    ),
+                    () => (
+                        <StackV gap={4} items={[
+                            () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                            () => (
+                                <SurfaceListCard>
+                                    <SurfaceListCardItem>
+                                        <Skeleton.SegmentBar legendItems={3} />
+                                    </SurfaceListCardItem>
+                                    <SurfaceListCardItem>
+                                        <Cluster gap={3} principle="chip-row" items={
+                                            [0, 1, 2, 3, 4, 5, 6, 7].map((chip) => (
+                                                () => <Skeleton key={chip} className="h-7 w-20 rounded-full" />
+                                            ))
+                                        } />
+                                    </SurfaceListCardItem>
+                                    <SurfaceListCardItem>
+                                        <Skeleton.SegmentBar legendItems={3} />
+                                    </SurfaceListCardItem>
+                                </SurfaceListCard>
+                            ),
+                        ]} />
+                    ),
+                    () => (
+                        <StackV gap={4} items={[
+                            () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                            () => (
+                                <Cluster gap={4} principle="content-row" justify="between" items={[
+                                    () => (
+                                        <StackH gap={4} principle="content-row" classNames={["min-w-0", "flex-1"]} items={[
+                                            () => <Skeleton className="h-9 min-w-0 flex-1 rounded-medium" />,
+                                            () => <Skeleton className="size-9 shrink-0 rounded-full" />,
+                                        ]} />
+                                    ),
+                                    () => <Skeleton.Typography type="body-sm" className="w-16 shrink-0" />,
+                                ]} />
+                            ),
+                            () => (
+                                <SurfaceListCard>
+                                    {[0, 1, 2].map((row) => (
+                                        <SurfaceListCardItem key={row}>
+                                            <StackH gap={4} principle="content-row" items={[
+                                                () => (
+                                                    <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
+                                                        () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                                        () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                                                    ]} />
+                                                ),
+                                                () => <Skeleton.Chip />,
+                                                () => <Skeleton.Chip />,
+                                            ]} />
+                                        </SurfaceListCardItem>
                                     ))}
-                                </div>
-                            </SurfaceListCardItem>
-                            <SurfaceListCardItem>
-                                <Skeleton.SegmentBar legendItems={3} />
-                            </SurfaceListCardItem>
-                        </SurfaceListCard>
-                    </div>
-                    {/* solve history — search/filter toolbar + surface list card with item rows */}
-                    <div className="flex flex-col gap-3">
-                        <Skeleton.Typography type="body-sm" width="1/4" />
-                        {/* search/filter toolbar (search bar + funnel + found count) */}
-                        <div className="flex flex-wrap items-center justify-between gap-3">
-                            <div className="flex min-w-0 flex-1 items-center gap-3">
-                                <Skeleton className="h-9 min-w-0 flex-1 rounded-medium" />
-                                <Skeleton className="size-9 shrink-0 rounded-full" />
-                            </div>
-                            <Skeleton.Typography type="body-sm" className="w-16 shrink-0" />
-                        </div>
-                        <SurfaceListCard>
-                            {[0, 1, 2].map((row) => (
-                                <SurfaceListCardItem key={row}>
-                                    <div className="flex items-center gap-3">
-                                        <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                            <Skeleton.Typography type="body-sm" width="1/2" />
-                                            <Skeleton.Typography type="body-xs" width="1/3" />
-                                        </div>
-                                        <Skeleton.Chip />
-                                        <Skeleton.Chip />
-                                    </div>
-                                </SurfaceListCardItem>
-                            ))}
-                        </SurfaceListCard>
-                    </div>
-                </div>
+                                </SurfaceListCard>
+                            ),
+                        ]} />
+                    ),
+                ]} />
             )}
             isEmpty={solved === 0 && !hasStats && solvedHistory.length === 0}
             emptyContent={{
@@ -269,227 +288,267 @@ export const ProfileCoding = ({
                 retryLabel: t("publicProfile.loadErrorRetry"),
             }}
         >
-            <div className={cn("flex flex-col gap-6", className)}>
-                {/* headline stat ribbon (solved · XP · top · rank) — labeled section, StatPair row in ONE card */}
-                <LabeledCard label={t("publicProfile.coding.metricsHeading")} frameless>
-                    <StatRibbon
-                        items={stats.map((stat) => ({
-                            key: stat.key,
-                            value: stat.value,
-                            label: t(`publicProfile.coding.metric.${stat.key}`),
-                        }))}
-                    />
-                </LabeledCard>
-
-                {/* gathered stats card — by difficulty + by topic + by language */}
-                {hasStats ? (
-                    <LabeledCard
-                        label={t("publicProfile.coding.statsHeading")}
-                        frameless
-                    >
-                        <SurfaceListCard>
-                            {difficultySegments.length > 0 ? (
-                                <SurfaceListCardItem>
-                                    <div className="flex flex-col gap-2">
-                                        <Label>{t("publicProfile.coding.byDifficulty")}</Label>
-                                        <SegmentBar
-                                            ariaLabel={t("publicProfile.coding.byDifficulty")}
-                                            segments={difficultySegments}
-                                        />
-                                    </div>
-                                </SurfaceListCardItem>
-                            ) : null}
-                            {orderedDomain.length > 0 ? (
-                                <SurfaceListCardItem>
-                                    <div className="flex flex-col gap-2">
-                                        <Label>{t("publicProfile.coding.byDomain")}</Label>
-                                        {/* topic mastery — all solved topics, tint deepens with count */}
-                                        <TopicMasteryGrid
-                                            ariaLabel={t("publicProfile.coding.byDomain")}
-                                            topics={orderedDomain.map((item) => ({
-                                                key: item.key,
-                                                label: domainLabel(item.key),
-                                                solved: item.solved,
-                                            }))}
-                                        />
-                                    </div>
-                                </SurfaceListCardItem>
-                            ) : null}
-                            {byLanguage.length > 0 ? (
-                                <SurfaceListCardItem>
-                                    <div className="flex flex-col gap-2">
-                                        <Label>{t("publicProfile.coding.byLanguage")}</Label>
-                                        {/* language → SegmentBar (one viz per metric, matches difficulty) */}
-                                        <SegmentBar
-                                            ariaLabel={t("publicProfile.coding.byLanguage")}
-                                            segments={byLanguage.map((item) => ({
-                                                key: item.key,
-                                                label: getLanguageLabel(item.key),
-                                                value: item.solved,
-                                                color: getLanguageColor(item.key),
-                                            }))}
-                                        />
-                                    </div>
-                                </SurfaceListCardItem>
-                            ) : null}
-                        </SurfaceListCard>
+            <StackV gap={6} principle="block-boundary" classNames={rootClassNames} items={[
+                () => (
+                    <LabeledCard label={t("publicProfile.coding.metricsHeading")} frameless>
+                        <StatRibbon
+                            items={stats.map((stat) => ({
+                                key: stat.key,
+                                value: stat.value,
+                                label: t(`publicProfile.coding.metric.${stat.key}`),
+                            }))}
+                        />
                     </LabeledCard>
-                ) : null}
-
-                {/* solve history — search/filter toolbar (the "manage" layer) + surface list card */}
-                {solvedHistory.length > 0 ? (
-                    <LabeledCard
-                        label={t("publicProfile.coding.history")}
-                        frameless
-                    >
-                        {/* search + a FUNNEL popover (difficulty/language facets), one row.
-                            Facets live behind the funnel so the toolbar stays a single clean
-                            line regardless of how many facet values exist (mirrors
-                            ProfileChallengeManage). */}
-                        <div className="flex flex-wrap items-center justify-between gap-3">
-                            <div className="flex min-w-0 flex-1 items-center gap-3">
-                                <SearchInput
-                                    className="min-w-0 flex-1"
-                                    value={search}
-                                    onValueChange={setSearch}
-                                    placeholder={t("publicProfile.coding.manage.searchPlaceholder")}
-                                />
-                                {(difficultyOptions.length > 0 || languageOptions.length > 0) ? (
-                                    <Popover isOpen={filterOpen} onOpenChange={setFilterOpen}>
-                                        <Button
-                                            isIconOnly
-                                            variant="ghost"
-                                            aria-label={t("publicProfile.coding.manage.filterButton")}
-                                            className="shrink-0"
-                                        >
-                                            {activeFacetCount > 0 ? (
-                                                <Badge.Anchor>
-                                                    <FunnelIcon className="size-5" />
-                                                    <Badge size="sm" color="accent" placement="top-left">{activeFacetCount}</Badge>
-                                                </Badge.Anchor>
-                                            ) : (
-                                                <FunnelIcon className="size-5" />
-                                            )}
-                                        </Button>
-                                        <Popover.Content className="w-72">
-                                            <div className="flex flex-col gap-3 p-3">
-                                                {difficultyOptions.length > 0 ? (
-                                                    <div className="flex flex-col gap-2">
-                                                        <Typography type="body-xs" color="muted">{t("publicProfile.coding.manage.difficultyHeading")}</Typography>
-                                                        <FlexWrapButtonRadio<DifficultyFilterValue>
-                                                            ariaLabel={t("publicProfile.coding.manage.difficultyFilterAria")}
-                                                            value={difficultyFilter}
-                                                            onChange={setDifficultyFilter}
-                                                            items={[
-                                                                { value: "all", content: t("publicProfile.coding.manage.allDifficulties") },
-                                                                ...difficultyOptions.map((raw) => {
-                                                                    const meta = CODING_DIFFICULTY_CHIP[raw]
-                                                                    return {
-                                                                        value: raw,
-                                                                        content: meta ? <StatusChip tone={meta.tone}>{t(meta.labelKey)}</StatusChip> : raw,
-                                                                    }
-                                                                }),
-                                                            ]}
-                                                        />
-                                                    </div>
-                                                ) : null}
-                                                {languageOptions.length > 0 ? (
-                                                    <div className="flex flex-col gap-2">
-                                                        <Typography type="body-xs" color="muted">{t("publicProfile.coding.manage.languageHeading")}</Typography>
-                                                        <FlexWrapButtonRadio<LanguageFilterValue>
-                                                            ariaLabel={t("publicProfile.coding.manage.languageFilterAria")}
-                                                            value={languageFilter}
-                                                            onChange={setLanguageFilter}
-                                                            items={[
-                                                                { value: "all", content: t("publicProfile.coding.manage.allLanguages") },
-                                                                ...languageOptions.map((lang) => ({
-                                                                    value: lang,
-                                                                    content: <LanguageChip language={lang} />,
-                                                                })),
-                                                            ]}
-                                                        />
-                                                    </div>
-                                                ) : null}
-                                                {activeFacetCount > 0 ? (
-                                                    <Button variant="danger-soft" size="sm" className="self-start" onPress={clearFacets}>
-                                                        {t("publicProfile.coding.manage.clearFilters")}
-                                                    </Button>
-                                                ) : null}
-                                            </div>
-                                        </Popover.Content>
-                                    </Popover>
+                ),
+                ...(hasStats
+                    ? [() => (
+                        <LabeledCard
+                            label={t("publicProfile.coding.statsHeading")}
+                            frameless
+                        >
+                            <SurfaceListCard>
+                                {difficultySegments.length > 0 ? (
+                                    <SurfaceListCardItem>
+                                        <StackV gap={3} principle="sibling-stack" items={[
+                                            () => <Label>{t("publicProfile.coding.byDifficulty")}</Label>,
+                                            () => (
+                                                <SegmentBar
+                                                    ariaLabel={t("publicProfile.coding.byDifficulty")}
+                                                    segments={difficultySegments}
+                                                />
+                                            ),
+                                        ]} />
+                                    </SurfaceListCardItem>
                                 ) : null}
-                            </div>
-                            <Typography type="body-sm" color="muted" className="shrink-0">
-                                {t("publicProfile.coding.manage.found", { count: filteredHistory.length })}
-                            </Typography>
-                        </div>
-
-                        {filteredHistory.length === 0 ? (
-                            <Typography type="body-sm" color="muted" className="mt-3">
-                                {t("publicProfile.coding.manage.emptyFiltered")}
-                            </Typography>
-                        ) : (
-                            <SurfaceListCard className="mt-3">
-                                {visibleHistory.map((item, index) => {
-                                    const difficulty = CODING_DIFFICULTY_CHIP[item.difficulty]
-                                    const solvedAt = item.firstSolvedAt
-                                        ? new Date(item.firstSolvedAt).toLocaleDateString(locale)
-                                        : undefined
-                                    return (
-                                        <SurfaceListCardItem
-                                            key={`${item.slug}-${index}`}
-                                            hover="underline"
-                                            href={username
-                                                ? pathConfig().locale(locale).profile(username).skills().problem(item.slug).build()
-                                                : undefined}
-                                        >
-                                            <div className="flex items-center gap-3">
-                                                {/* title + date */}
-                                                <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                                    <Typography type="body-sm" weight="medium" truncate className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
-                                                        {item.problemTitle}
-                                                    </Typography>
-                                                    {solvedAt ? (
-                                                        <Typography type="body-xs" color="muted">
-                                                            {solvedAt}
-                                                        </Typography>
-                                                    ) : null}
-                                                </div>
-                                                {/* difficulty · topic · languages — pushed right */}
-                                                <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
-                                                    {difficulty ? (
-                                                        <StatusChip tone={difficulty.tone}>
-                                                            {t(difficulty.labelKey)}
-                                                        </StatusChip>
-                                                    ) : null}
-                                                    {item.domain ? (
-                                                        <StatusChip tone="neutral">
-                                                            {domainLabel(item.domain)}
-                                                        </StatusChip>
-                                                    ) : null}
-                                                    {item.languages.map((language) => (
-                                                        <LanguageChip key={language} language={language} />
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </SurfaceListCardItem>
-                                    )
-                                })}
-                                {hiddenHistory > 0 ? (
-                                    <SurfaceListCardItem onPress={() => setShowAllHistory((open) => !open)}>
-                                        <span className="inline-flex items-center gap-2 text-muted">
-                                            {showAllHistory
-                                                ? t("publicProfile.coding.showLess")
-                                                : t("publicProfile.coding.showMore", { count: hiddenHistory })}
-                                        </span>
+                                {orderedDomain.length > 0 ? (
+                                    <SurfaceListCardItem>
+                                        <StackV gap={3} principle="sibling-stack" items={[
+                                            () => <Label>{t("publicProfile.coding.byDomain")}</Label>,
+                                            () => (
+                                                <TopicMasteryGrid
+                                                    ariaLabel={t("publicProfile.coding.byDomain")}
+                                                    topics={orderedDomain.map((item) => ({
+                                                        key: item.key,
+                                                        label: domainLabel(item.key),
+                                                        solved: item.solved,
+                                                    }))}
+                                                />
+                                            ),
+                                        ]} />
+                                    </SurfaceListCardItem>
+                                ) : null}
+                                {byLanguage.length > 0 ? (
+                                    <SurfaceListCardItem>
+                                        <StackV gap={3} principle="sibling-stack" items={[
+                                            () => <Label>{t("publicProfile.coding.byLanguage")}</Label>,
+                                            () => (
+                                                <SegmentBar
+                                                    ariaLabel={t("publicProfile.coding.byLanguage")}
+                                                    segments={byLanguage.map((item) => ({
+                                                        key: item.key,
+                                                        label: getLanguageLabel(item.key),
+                                                        value: item.solved,
+                                                        color: getLanguageColor(item.key),
+                                                    }))}
+                                                />
+                                            ),
+                                        ]} />
                                     </SurfaceListCardItem>
                                 ) : null}
                             </SurfaceListCard>
-                        )}
-                    </LabeledCard>
-                ) : null}
-            </div>
+                        </LabeledCard>
+                    )]
+                    : []),
+                ...(solvedHistory.length > 0
+                    ? [() => {
+                        const facetBodyItems = [
+                            ...(difficultyOptions.length > 0
+                                ? [() => (
+                                    <StackV gap={3} principle="sibling-stack" items={[
+                                        () => <Typography type="body-xs" color="muted">{t("publicProfile.coding.manage.difficultyHeading")}</Typography>,
+                                        () => (
+                                            <FlexWrapButtonRadio<DifficultyFilterValue>
+                                                ariaLabel={t("publicProfile.coding.manage.difficultyFilterAria")}
+                                                value={difficultyFilter}
+                                                onChange={setDifficultyFilter}
+                                                items={[
+                                                    { value: "all", content: t("publicProfile.coding.manage.allDifficulties") },
+                                                    ...difficultyOptions.map((raw) => {
+                                                        const meta = CODING_DIFFICULTY_CHIP[raw]
+                                                        return {
+                                                            value: raw,
+                                                            content: meta ? <StatusChip tone={meta.tone}>{t(meta.labelKey)}</StatusChip> : raw,
+                                                        }
+                                                    }),
+                                                ]}
+                                            />
+                                        ),
+                                    ]} />
+                                )]
+                                : []),
+                            ...(languageOptions.length > 0
+                                ? [() => (
+                                    <StackV gap={3} principle="sibling-stack" items={[
+                                        () => <Typography type="body-xs" color="muted">{t("publicProfile.coding.manage.languageHeading")}</Typography>,
+                                        () => (
+                                            <FlexWrapButtonRadio<LanguageFilterValue>
+                                                ariaLabel={t("publicProfile.coding.manage.languageFilterAria")}
+                                                value={languageFilter}
+                                                onChange={setLanguageFilter}
+                                                items={[
+                                                    { value: "all", content: t("publicProfile.coding.manage.allLanguages") },
+                                                    ...languageOptions.map((lang) => ({
+                                                        value: lang,
+                                                        content: <LanguageChip language={lang} />,
+                                                    })),
+                                                ]}
+                                            />
+                                        ),
+                                    ]} />
+                                )]
+                                : []),
+                            ...(activeFacetCount > 0
+                                ? [() => (
+                                    <Button variant="danger-soft" size="sm" className="self-start" onPress={clearFacets}>
+                                        {t("publicProfile.coding.manage.clearFilters")}
+                                    </Button>
+                                )]
+                                : []),
+                        ]
+                        return (
+                            <LabeledCard
+                                label={t("publicProfile.coding.history")}
+                                frameless
+                            >
+                                <StackV gap={4} items={[
+                                    () => (
+                                        <Cluster gap={4} principle="content-row" justify="between" items={[
+                                            () => (
+                                                <StackH gap={4} principle="content-row" classNames={["min-w-0", "flex-1"]} items={[
+                                                    () => (
+                                                        <SearchInput
+                                                            className="min-w-0 flex-1"
+                                                            value={search}
+                                                            onValueChange={setSearch}
+                                                            placeholder={t("publicProfile.coding.manage.searchPlaceholder")}
+                                                        />
+                                                    ),
+                                                    ...((difficultyOptions.length > 0 || languageOptions.length > 0)
+                                                        ? [() => (
+                                                            <Popover isOpen={filterOpen} onOpenChange={setFilterOpen}>
+                                                                <Button
+                                                                    isIconOnly
+                                                                    variant="ghost"
+                                                                    aria-label={t("publicProfile.coding.manage.filterButton")}
+                                                                    className="shrink-0"
+                                                                >
+                                                                    {activeFacetCount > 0 ? (
+                                                                        <Badge.Anchor>
+                                                                            <FunnelIcon className="size-5" />
+                                                                            <Badge size="sm" color="accent" placement="top-left">{activeFacetCount}</Badge>
+                                                                        </Badge.Anchor>
+                                                                    ) : (
+                                                                        <FunnelIcon className="size-5" />
+                                                                    )}
+                                                                </Button>
+                                                                <Popover.Content className="w-72">
+                                                                    <StackV gap={1} padding={4} principle="cell-pad" items={[
+                                                                        () => (
+                                                                            <StackV gap={4} items={facetBodyItems} />
+                                                                        ),
+                                                                    ]} />
+                                                                </Popover.Content>
+                                                            </Popover>
+                                                        )]
+                                                        : []),
+                                                ]} />
+                                            ),
+                                            () => (
+                                                <Typography type="body-sm" color="muted" className="shrink-0">
+                                                    {t("publicProfile.coding.manage.found", { count: filteredHistory.length })}
+                                                </Typography>
+                                            ),
+                                        ]} />
+                                    ),
+                                    () => (filteredHistory.length === 0 ? (
+                                        <Typography type="body-sm" color="muted">
+                                            {t("publicProfile.coding.manage.emptyFiltered")}
+                                        </Typography>
+                                    ) : (
+                                        <SurfaceListCard>
+                                            {visibleHistory.map((item, index) => {
+                                                const difficulty = CODING_DIFFICULTY_CHIP[item.difficulty]
+                                                const solvedAt = item.firstSolvedAt
+                                                    ? new Date(item.firstSolvedAt).toLocaleDateString(locale)
+                                                    : undefined
+                                                const chipItems = [
+                                                    ...(difficulty
+                                                        ? [() => (
+                                                            <StatusChip tone={difficulty.tone}>
+                                                                {t(difficulty.labelKey)}
+                                                            </StatusChip>
+                                                        )]
+                                                        : []),
+                                                    ...(item.domain
+                                                        ? [() => (
+                                                            <StatusChip tone="neutral">
+                                                                {domainLabel(item.domain!)}
+                                                            </StatusChip>
+                                                        )]
+                                                        : []),
+                                                    ...item.languages.map((language) => (
+                                                        () => <LanguageChip key={language} language={language} />
+                                                    )),
+                                                ]
+                                                return (
+                                                    <SurfaceListCardItem
+                                                        key={`${item.slug}-${index}`}
+                                                        hover="underline"
+                                                        href={username
+                                                            ? pathConfig().locale(locale).profile(username).skills().problem(item.slug).build()
+                                                            : undefined}
+                                                    >
+                                                        <StackH gap={4} principle="content-row" items={[
+                                                            () => (
+                                                                <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
+                                                                    () => (
+                                                                        <Typography type="body-sm" weight="medium" truncate className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
+                                                                            {item.problemTitle}
+                                                                        </Typography>
+                                                                    ),
+                                                                    ...(solvedAt
+                                                                        ? [() => (
+                                                                            <Typography type="body-xs" color="muted">
+                                                                                {solvedAt}
+                                                                            </Typography>
+                                                                        )]
+                                                                        : []),
+                                                                ]} />
+                                                            ),
+                                                            () => (
+                                                                <Cluster gap={3} principle="chip-row" justify="end" classNames={["shrink-0"]} items={chipItems} />
+                                                            ),
+                                                        ]} />
+                                                    </SurfaceListCardItem>
+                                                )
+                                            })}
+                                            {hiddenHistory > 0 ? (
+                                                <SurfaceListCardItem onPress={() => setShowAllHistory((open) => !open)}>
+                                                    <span className="text-muted">
+                                                        {showAllHistory
+                                                            ? t("publicProfile.coding.showLess")
+                                                            : t("publicProfile.coding.showMore", { count: hiddenHistory })}
+                                                    </span>
+                                                </SurfaceListCardItem>
+                                            ) : null}
+                                        </SurfaceListCard>
+                                    )),
+                                ]} />
+                            </LabeledCard>
+                        )
+                    }]
+                    : []),
+            ]} />
         </AsyncContent>
     )
 }

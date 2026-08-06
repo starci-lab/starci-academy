@@ -56,6 +56,7 @@ const HeroBanner = ({
                 <StackV
                     gap={6}
                     align="center"
+                    principle="block-boundary"
                     items={[
                         () => <Typography size="sm" weight="semibold" color="accent" align="center" text={eyebrow} />,
                         () => <Typography size="h1" weight="bold" align="center" text={headline} />,
@@ -64,6 +65,7 @@ const HeroBanner = ({
                             <Cluster
                                 gap={3}
                                 justify="center"
+                                principle="flex-action"
                                 items={[
                                     () => (
                                         <Button

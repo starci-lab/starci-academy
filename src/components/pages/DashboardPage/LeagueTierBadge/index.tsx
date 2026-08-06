@@ -11,6 +11,7 @@ import {
     BadgeImage,
 } from "@/components/blocks/identity/BadgeImage"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { StackH } from "@/components/frames/Stack"
 
 /**
  * Weekly-league tiers, lowest → highest. Mirrors the backend `LeagueTier` enum.
@@ -103,28 +104,35 @@ export const LeagueTierBadge = ({
     const visual = TIER_VISUAL[tier]
     return (
         <div className={cn("shrink-0", className)}>
-            <div className="flex items-center gap-2">
-                {/* real art from MinIO (badges/league/<tier>.png) once uploaded; until
-                then fall back to the multicolor fluent-emoji placeholder */}
-                <BadgeImage
-                    objectKey={`badges/league/${tier}.png`}
-                    size={size}
-                    alt={visual.label}
-                    fallback={(
-                        <Icon
-                            icon={visual.icon}
-                            width={size}
-                            height={size}
-                            aria-label={visual.label}
+            <StackH
+                gap={3}
+                principle="identity"
+                align="center"
+                items={[
+                    () => (
+                        // real art from MinIO (badges/league/<tier>.png) once uploaded; until
+                        // then fall back to the multicolor fluent-emoji placeholder
+                        <BadgeImage
+                            objectKey={`badges/league/${tier}.png`}
+                            size={size}
+                            alt={visual.label}
+                            fallback={(
+                                <Icon
+                                    icon={visual.icon}
+                                    width={size}
+                                    height={size}
+                                    aria-label={visual.label}
+                                />
+                            )}
                         />
-                    )}
-                />
-                {showLabel ? (
-                    <span className="text-sm font-medium text-foreground">
-                        {visual.label}
-                    </span>
-                ) : null}
-            </div>
+                    ),
+                    ...(showLabel ? [() => (
+                        <span className="text-sm font-medium text-foreground">
+                            {visual.label}
+                        </span>
+                    )] : []),
+                ]}
+            />
         </div>
     )
 }

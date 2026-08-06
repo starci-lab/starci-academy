@@ -44,6 +44,7 @@ const MarketingNavbar = ({ wordmark, anchors, signInLabel, onSignIn }: Marketing
         <StackH
             gap={8}
             align="center"
+            principle="marketing-beat"
             items={[
                 () => <Typography size="lg" weight="bold" color="accent" text={wordmark} />,
                 () => (

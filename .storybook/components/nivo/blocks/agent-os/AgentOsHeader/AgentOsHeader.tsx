@@ -94,6 +94,7 @@ const AgentOsHeader = (props: AgentOsHeaderProps) => {
                     body={() => (
                         <StackH
                             gap={4}
+                            principle="content-row"
                             justify="between"
                             at="sm"
                             isSkeleton
@@ -188,6 +189,7 @@ const AgentOsHeader = (props: AgentOsHeaderProps) => {
                 body={() => (
                     <StackH
                         gap={4}
+                        principle="content-row"
                         justify="between"
                         at="sm"
                         items={[

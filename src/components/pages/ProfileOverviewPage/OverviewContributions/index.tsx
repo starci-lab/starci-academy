@@ -46,10 +46,34 @@ export const OverviewContributions = () => {
         )
     }
 
+    // Hoist streak items so the outer calendar|streak column is scanned as
+    // gap-only (no nested align/principle leaking into the opening tag).
+    const streakItems = [
+        () => (
+            <FireIcon
+                aria-hidden
+                focusable="false"
+                className="size-5 text-accent-soft-foreground"
+            />
+        ),
+        () => (
+            <Typography
+                size="sm"
+                weight="medium"
+                isSkeleton={isSkeleton}
+                text={t("profile.streakLine", {
+                    streak: weekly?.streak ?? 0,
+                    longest: weekly?.longestStreak ?? 0,
+                })}
+            />
+        ),
+    ]
+
     return (
         <StackV
             identity={{ tier: "block", component: "OverviewContributions" }}
             gap={4}
+            principle="card-caption"
             items={[
                 () => (
                     <ContributionCalendarView
@@ -59,32 +83,8 @@ export const OverviewContributions = () => {
                         onYearChange={setYear}
                     />
                 ),
-                () => (
-                    <StackH
-                        gap={3}
-                        align="center"
-                        items={[
-                            () => (
-                                <FireIcon
-                                    aria-hidden
-                                    focusable="false"
-                                    className="size-5 text-accent-soft-foreground"
-                                />
-                            ),
-                            () => (
-                                <Typography
-                                    size="sm"
-                                    weight="medium"
-                                    isSkeleton={isSkeleton}
-                                    text={t("profile.streakLine", {
-                                        streak: weekly?.streak ?? 0,
-                                        longest: weekly?.longestStreak ?? 0,
-                                    })}
-                                />
-                            ),
-                        ]}
-                    />
-                ),
+                // gap-only row: icon+text at house step 3 (8px); icon-text is step 2
+                () => <StackH gap={3} items={streakItems} />,
             ]}
         />
     )

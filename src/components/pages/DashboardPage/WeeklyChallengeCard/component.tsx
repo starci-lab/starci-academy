@@ -147,92 +147,88 @@ export const _WeeklyChallengeCard = ({
         // `SurfaceListCardItem` + `Skeleton.*` pieces sized to match the real row instead.
         const showLeaderboard = isSkeleton || leaderboard.length > 0
 
-        return (
-            <StackV gap={3} items={[
-                // featured challenge title (routable) — EntityToken has no isSkeleton (missingSkeletonSupport)
-                () => (isSkeleton
-                    ? <Skeleton.Typography type="body-sm" width="2/3" />
-                    : <EntityToken globalId={challengeGlobalId} label={challengeTitle ?? ""} />),
-
-                // countdown (left) + viewer status (right)
-                () => (
-                    <StackH gap={3} justify="between" items={[
-                        () => (
-                            <Typography
-                                size="xs"
-                                color="muted"
-                                text={labels.endsIn ?? ""}
-                                isSkeleton={isSkeleton}
-                                classNames={isSkeleton ? ["w-1/3"] : undefined}
+        // Hoisted so outer sibling-stack is not scanned as owning nested justify.
+        const challengeItems = [
+            () => (isSkeleton
+                ? <Skeleton.Typography type="body-sm" width="2/3" />
+                : <EntityToken globalId={challengeGlobalId} label={challengeTitle ?? ""} />),
+            () => (
+                <StackH gap={3} principle="flex-action" justify="between" items={[
+                    () => (
+                        <Typography
+                            size="xs"
+                            color="muted"
+                            text={labels.endsIn ?? ""}
+                            isSkeleton={isSkeleton}
+                            classNames={isSkeleton ? ["w-1/3"] : undefined}
+                        />
+                    ),
+                    () => (isSkeleton
+                        ? <Skeleton className="h-6 w-16 shrink-0 rounded-full" />
+                        : viewerPassed
+                            ? (claimed
+                                ? <Chip tone="success" text={labels.passed} />
+                                : (
+                                    <Button
+                                        variant="primary"
+                                        size="sm"
+                                        isPending={isClaiming}
+                                        onPress={onClaim}
+                                        label={labels.claimReward}
+                                    />
+                                ))
+                            : <EntityToken globalId={challengeGlobalId} label={labels.tryNow} />),
+                ]} />
+            ),
+            () => (
+                <Typography
+                    size="xs"
+                    color="muted"
+                    text={labels.passedCount}
+                    isSkeleton={isSkeleton}
+                    classNames={isSkeleton ? ["w-1/4"] : undefined}
+                />
+            ),
+            ...(showLeaderboard ? [() => (
+                <SurfaceListCard bordered>
+                    {isSkeleton
+                        ? Array.from({ length: SKELETON_ROW_COUNT }, (_row, index) => (
+                            <SurfaceListCardItem key={index}>
+                                <StackH gap={3} principle="content-row" items={[
+                                    () => <Skeleton className="size-6 shrink-0 rounded-full" />,
+                                    () => <Skeleton.Typography type="body-sm" width="1/2" className="min-w-0 flex-1" />,
+                                    () => <Skeleton className="h-3 w-12 shrink-0 rounded-sm" />,
+                                ]} />
+                            </SurfaceListCardItem>
+                        ))
+                        : leaderboard.map((entry) => (
+                            <SurfaceListCardRow
+                                key={entry.username}
+                                leading={() => (
+                                    <UserAvatar
+                                        className="size-6 shrink-0"
+                                        username={entry.username}
+                                        avatar={entry.avatar}
+                                        seed={entry.username}
+                                    />
+                                )}
+                                title={entry.username}
+                                trailing={() => (
+                                    <Typography
+                                        size="xs"
+                                        color="muted"
+                                        text={entry.relativeLabel}
+                                        classNames={["shrink-0"]}
+                                    />
+                                )}
                             />
-                        ),
-                        () => (isSkeleton
-                            ? <Skeleton className="h-6 w-16 shrink-0 rounded-full" />
-                            : viewerPassed
-                                ? (claimed
-                                    ? <Chip tone="success" text={labels.passed} />
-                                    : (
-                                        <Button
-                                            variant="primary"
-                                            size="sm"
-                                            isPending={isClaiming}
-                                            onPress={onClaim}
-                                            label={labels.claimReward}
-                                        />
-                                    ))
-                                : <EntityToken globalId={challengeGlobalId} label={labels.tryNow} />),
-                    ]} />
-                ),
+                        ))}
+                </SurfaceListCard>
+            )] : []),
+        ]
 
-                // total passers
-                () => (
-                    <Typography
-                        size="xs"
-                        color="muted"
-                        text={labels.passedCount}
-                        isSkeleton={isSkeleton}
-                        classNames={isSkeleton ? ["w-1/4"] : undefined}
-                    />
-                ),
-
-                // recent finishers — joined bordered SurfaceListCard (not loose rows)
-                ...(showLeaderboard ? [() => (
-                    <SurfaceListCard bordered>
-                        {isSkeleton
-                            ? Array.from({ length: SKELETON_ROW_COUNT }, (_row, index) => (
-                                <SurfaceListCardItem key={index}>
-                                    <StackH gap={3} items={[
-                                        () => <Skeleton className="size-6 shrink-0 rounded-full" />,
-                                        () => <Skeleton.Typography type="body-sm" width="1/2" className="min-w-0 flex-1" />,
-                                        () => <Skeleton className="h-3 w-12 shrink-0 rounded-sm" />,
-                                    ]} />
-                                </SurfaceListCardItem>
-                            ))
-                            : leaderboard.map((entry) => (
-                                <SurfaceListCardRow
-                                    key={entry.username}
-                                    leading={() => (
-                                        <UserAvatar
-                                            className="size-6 shrink-0"
-                                            username={entry.username}
-                                            avatar={entry.avatar}
-                                            seed={entry.username}
-                                        />
-                                    )}
-                                    title={entry.username}
-                                    trailing={() => (
-                                        <Typography
-                                            size="xs"
-                                            color="muted"
-                                            text={entry.relativeLabel}
-                                            classNames={["shrink-0"]}
-                                        />
-                                    )}
-                                />
-                            ))}
-                    </SurfaceListCard>
-                )] : []),
-            ]} />
+        return (
+            <StackV gap={3} principle="sibling-stack" items={challengeItems} />
         )
     }
 

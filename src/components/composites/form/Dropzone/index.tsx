@@ -3,6 +3,7 @@ import { useCallback } from "react"
 import { cn } from "@heroui/react"
 import { useDropzone } from "react-dropzone"
 import { Typography } from "@/components/atoms/text/Typography"
+import { StackV } from "@/components/frames/Stack"
 
 /**
  * Props for {@link Dropzone}.
@@ -62,33 +63,54 @@ export const Dropzone = ({
     })
 
     return (
-        <div data-tier="composite" data-component="Dropzone" className="flex flex-col gap-2">
-            <div
-                {...(isSkeleton ? {} : getRootProps())}
-                className={cn(
-                    "border-2 border-dashed rounded-3xl bg-surface p-2 transition-colors",
-                    !isSkeleton && "cursor-pointer",
-                    !isSkeleton && isDragActive ? "border-accent" : "",
-                    !isSkeleton && errorMessage ? "border-danger" : "",
-                )}
-            >
-                {isSkeleton ? null : <input {...getInputProps({ onBlur })} />}
-                <div className="flex flex-col items-center gap-2 text-center">
-                    {isSkeleton ? null : isDragActive ? (
-                        <FolderOpenIcon className="size-6 text-accent" />
-                    ) : (
-                        <FolderIcon className="size-6 text-muted" />
-                    )}
-                    <Typography
-                        size="sm"
-                        isSkeleton={isSkeleton}
-                        text={isSkeleton ? undefined : (file?.name ?? hint)}
-                    />
-                </div>
-            </div>
-            {!isSkeleton && errorMessage ? (
-                <div className="text-sm text-danger-soft-foreground">{errorMessage}</div>
-            ) : null}
+        <div data-tier="composite" data-component="Dropzone">
+            <StackV
+                gap={3}
+                principle="sibling-stack"
+                items={[
+                    () => (
+                        <div
+                            {...(isSkeleton ? {} : getRootProps())}
+                            className={cn(
+                                "border-2 border-dashed rounded-3xl bg-surface p-2 transition-colors",
+                                !isSkeleton && "cursor-pointer",
+                                !isSkeleton && isDragActive ? "border-accent" : "",
+                                !isSkeleton && errorMessage ? "border-danger" : "",
+                            )}
+                        >
+                            {isSkeleton ? null : <input {...getInputProps({ onBlur })} />}
+                            <StackV
+                                gap={3}
+                                principle="sibling-stack"
+                                align="center"
+                                classNames={["w-full"]}
+                                items={[
+                                    ...(isSkeleton
+                                        ? []
+                                        : [
+                                            () =>
+                                                isDragActive ? (
+                                                    <FolderOpenIcon className="size-6 text-accent" />
+                                                ) : (
+                                                    <FolderIcon className="size-6 text-muted" />
+                                                ),
+                                        ]),
+                                    () => (
+                                        <Typography
+                                            size="sm"
+                                            isSkeleton={isSkeleton}
+                                            text={isSkeleton ? undefined : (file?.name ?? hint)}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        </div>
+                    ),
+                    ...(!isSkeleton && errorMessage
+                        ? [() => <div className="text-sm text-danger-soft-foreground">{errorMessage}</div>]
+                        : []),
+                ]}
+            />
         </div>
     )
 }

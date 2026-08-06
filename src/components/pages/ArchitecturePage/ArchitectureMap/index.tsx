@@ -105,7 +105,7 @@ export const ArchitectureMap = ({ healthByName, selectedId, onSelectNode, classN
     return (
         <div className={cn("flex flex-col gap-3", className)}>
             {/* era switch (present ⇄ future) — no pod/layout toggle anymore */}
-            <div className="flex flex-wrap items-center justify-between gap-3">
+            <div data-principle="content-row" className="flex flex-wrap items-center justify-between gap-3">
                 <TabsCard
                     variant="primary"
                     className="w-full max-w-xs"

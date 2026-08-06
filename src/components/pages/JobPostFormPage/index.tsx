@@ -11,6 +11,8 @@ import { useSubmitJobPostingForm } from "@/hooks/rhf/useSubmitJobPostingForm"
 import { useAppSelector } from "@/redux/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { Box } from "@/components/frames/Box"
+import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link JobPostFormPage}. */
 export type JobPostFormPageProps = WithClassNames<undefined>
@@ -62,66 +64,86 @@ export const JobPostFormPage = ({ className }: JobPostFormPageProps) => {
 
     if (!authenticated) {
         return (
-            <div className={cn("mx-auto flex max-w-2xl flex-col items-center gap-2 p-6 py-16 text-center", className)}>
-                <Typography type="h5" weight="semibold" align="center">
-                    {t("jobs.post.signedOut.title")}
-                </Typography>
-                <Typography type="body-sm" color="muted" align="center">
-                    {t("jobs.post.signedOut.description")}
-                </Typography>
-            </div>
+            <Box principle="center-measure" className={cn("mx-auto max-w-2xl p-6 py-16 text-center", className)}>
+                <StackV gap={3} principle="sibling-stack" align="center" items={[
+                    () => (
+                        <Typography type="h5" weight="semibold" align="center">
+                            {t("jobs.post.signedOut.title")}
+                        </Typography>
+                    ),
+                    () => (
+                        <Typography type="body-sm" color="muted" align="center">
+                            {t("jobs.post.signedOut.description")}
+                        </Typography>
+                    ),
+                ]} />
+            </Box>
         )
     }
 
     return (
-        <div className={cn("mx-auto flex max-w-2xl flex-col gap-10 p-6", className)}>
-            <PageHeader
-                title={t("jobs.post.title")}
-                description={t("jobs.post.description")}
-            />
-
-            <form className="flex flex-col gap-6" onSubmit={onSubmit}>
-                <CompanySection
-                    companyId={companyId}
-                    companyLabel={companyLabel}
-                    newCompanyTitle={newCompanyTitle}
-                    newCompanyLogoUrl={newCompanyLogoUrl}
-                    newCompanyWebsiteUrl={newCompanyWebsiteUrl}
-                    setValue={setValue}
-                />
-                <PositionSection
-                    title={title}
-                    employmentType={employmentType}
-                    workMode={workMode}
-                    location={location}
-                    salaryMin={salaryMin}
-                    salaryMax={salaryMax}
-                    description={description}
-                    requirements={requirements}
-                    setValue={setValue}
-                />
-                <ApplyMethodSection
-                    applyMethod={applyMethod}
-                    applyUrl={applyUrl}
-                    applyEmail={applyEmail}
-                    setValue={setValue}
-                />
-
-                <Button
-                    type="submit"
-                    variant="primary"
-                    size="lg"
-                    isDisabled={isSubmitting}
-                    isPending={isSubmitting}
-                >
-                    {({ isPending }) => (
-                        <>
-                            {isPending ? <Spinner color="current" size="sm" /> : null}
-                            {t("jobs.post.submit")}
-                        </>
-                    )}
-                </Button>
-            </form>
-        </div>
+        <Box principle="center-measure" className={cn("mx-auto max-w-2xl p-6", className)}>
+            <StackV gap={7} principle="layout-split" items={[
+                () => (
+                    <PageHeader
+                        title={t("jobs.post.title")}
+                        description={t("jobs.post.description")}
+                    />
+                ),
+                () => (
+                    <form onSubmit={onSubmit}>
+                        <StackV gap={6} principle="block-boundary" items={[
+                            () => (
+                                <CompanySection
+                                    companyId={companyId}
+                                    companyLabel={companyLabel}
+                                    newCompanyTitle={newCompanyTitle}
+                                    newCompanyLogoUrl={newCompanyLogoUrl}
+                                    newCompanyWebsiteUrl={newCompanyWebsiteUrl}
+                                    setValue={setValue}
+                                />
+                            ),
+                            () => (
+                                <PositionSection
+                                    title={title}
+                                    employmentType={employmentType}
+                                    workMode={workMode}
+                                    location={location}
+                                    salaryMin={salaryMin}
+                                    salaryMax={salaryMax}
+                                    description={description}
+                                    requirements={requirements}
+                                    setValue={setValue}
+                                />
+                            ),
+                            () => (
+                                <ApplyMethodSection
+                                    applyMethod={applyMethod}
+                                    applyUrl={applyUrl}
+                                    applyEmail={applyEmail}
+                                    setValue={setValue}
+                                />
+                            ),
+                            () => (
+                                <Button
+                                    type="submit"
+                                    variant="primary"
+                                    size="lg"
+                                    isDisabled={isSubmitting}
+                                    isPending={isSubmitting}
+                                >
+                                    {({ isPending }) => (
+                                        <>
+                                            {isPending ? <Spinner color="current" size="sm" /> : null}
+                                            {t("jobs.post.submit")}
+                                        </>
+                                    )}
+                                </Button>
+                            ),
+                        ]} />
+                    </form>
+                ),
+            ]} />
+        </Box>
     )
 }

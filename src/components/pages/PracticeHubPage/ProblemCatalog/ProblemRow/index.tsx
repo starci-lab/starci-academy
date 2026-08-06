@@ -17,6 +17,8 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import type { CodingProblem } from "@/modules/api/graphql/queries/types/coding"
+import { StackH, StackV } from "@/components/frames/Stack"
+import { Box } from "@/components/frames/Box"
 
 /** Props for {@link ProblemRow}. A list-item, so it accepts its data as props. */
 export interface ProblemRowProps extends WithClassNames<undefined> {
@@ -75,59 +77,64 @@ export const ProblemRow = ({
             hover="underline"
             className={className}
         >
-            <div className="flex min-w-0 items-center gap-3">
-                {/* status icon — colour + aria-label so status isn't conveyed by colour alone */}
-                <StatusIcon
-                    weight={status === "unsolved" ? "regular" : "fill"}
-                    aria-label={t(statusMeta.labelKey)}
-                    className={cn("size-5 shrink-0", statusMeta.className)}
-                />
-
-                {/* title + tags column */}
-                <div className="flex min-w-0 flex-col gap-2">
-                    <Typography
-                        type="body-sm"
-                        weight="medium"
-                        truncate
-                        className="w-fit underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline"
-                    >
-                        {problem.title}
-                    </Typography>
-                    {problem.tags.length > 0 ? (
-                        <div className="flex flex-wrap items-center gap-2">
-                            {problem.tags.slice(0, 4).map((tag) => (
-                                <Typography key={tag} type="body-xs" color="muted">
-                                    {tag}
-                                </Typography>
-                            ))}
-                            {problem.tags.length > 4 ? (
-                                <Typography
-                                    type="body-xs"
-                                    color="muted"
-                                    title={problem.tags.slice(4).join(", ")}
-                                >
-                                    {t("PracticeHubPage.row.moreTags", {
-                                        count: problem.tags.length - 4,
-                                    })}
-                                </Typography>
-                            ) : null}
-                        </div>
-                    ) : null}
-                </div>
-
-                {/* right cluster: difficulty + domain chips + points */}
-                <div className="ml-auto flex shrink-0 items-center gap-2">
-                    <StatusChip tone={difficultyMeta.tone}>
-                        {t(difficultyMeta.labelKey)}
-                    </StatusChip>
-                    <StatusChip tone="neutral">
-                        {t(`codingPractice.domain.${problem.domain}`)}
-                    </StatusChip>
-                    <Typography type="body-xs" color="muted">
-                        {t("codingPractice.points", { points: problem.points })}
-                    </Typography>
-                </div>
-            </div>
+            <StackH gap={4} align="center" principle="content-row" classNames={["min-w-0"]} items={[
+                () => (
+                    <StatusIcon
+                        weight={status === "unsolved" ? "regular" : "fill"}
+                        aria-label={t(statusMeta.labelKey)}
+                        className={cn("size-5 shrink-0", statusMeta.className)}
+                    />
+                ),
+                () => (
+                    <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
+                        () => (
+                            <Typography
+                                type="body-sm"
+                                weight="medium"
+                                truncate
+                                className="w-fit underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline"
+                            >
+                                {problem.title}
+                            </Typography>
+                        ),
+                        ...(problem.tags.length > 0 ? [
+                            () => (
+                                <Box principle="chip-row" className="flex flex-wrap items-center gap-2">
+                                    {problem.tags.slice(0, 4).map((tag) => (
+                                        <Typography key={tag} type="body-xs" color="muted">
+                                            {tag}
+                                        </Typography>
+                                    ))}
+                                    {problem.tags.length > 4 ? (
+                                        <Typography
+                                            type="body-xs"
+                                            color="muted"
+                                            title={problem.tags.slice(4).join(", ")}
+                                        >
+                                            {t("PracticeHubPage.row.moreTags", {
+                                                count: problem.tags.length - 4,
+                                            })}
+                                        </Typography>
+                                    ) : null}
+                                </Box>
+                            ),
+                        ] : []),
+                    ]} />
+                ),
+                () => (
+                    <Box principle="push-end" className="ml-auto flex shrink-0 items-center gap-2">
+                        <StatusChip tone={difficultyMeta.tone}>
+                            {t(difficultyMeta.labelKey)}
+                        </StatusChip>
+                        <StatusChip tone="neutral">
+                            {t(`codingPractice.domain.${problem.domain}`)}
+                        </StatusChip>
+                        <Typography type="body-xs" color="muted">
+                            {t("codingPractice.points", { points: problem.points })}
+                        </Typography>
+                    </Box>
+                ),
+            ]} />
         </SurfaceListCardItem>
     )
 }

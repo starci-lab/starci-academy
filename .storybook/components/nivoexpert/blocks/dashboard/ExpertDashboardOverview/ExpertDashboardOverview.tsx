@@ -91,8 +91,7 @@ const ExpertDashboardOverview = ({ metrics, funnel, isSkeleton = false, labels }
     /** The three headline tiles, in a reflowing grid. */
     const MetricsGrid = () => (
         <Grid
-            columns={{ base: 1, sm: 3 }}
-            gap={4}
+            principle="content-row" columns={{ base: 1, sm: 3 }}
             items={[
                 {
                     key: "members",
@@ -131,11 +130,11 @@ const ExpertDashboardOverview = ({ metrics, funnel, isSkeleton = false, labels }
         const pct = course.learners > 0 ? Math.round((value / course.learners) * 100) : 0
         return (
             <StackV
-                gap={1}
+                principle="name-handle" gap={1}
                 items={[
                     () => (
                         <StackH
-                            gap={3}
+                            principle="value-row" gap={3}
                             justify="between"
                             align="center"
                             items={[
@@ -164,11 +163,11 @@ const ExpertDashboardOverview = ({ metrics, funnel, isSkeleton = false, labels }
             padding={3}
             body={() => (
                 <StackV
-                    gap={3}
+                    principle="sibling-stack" gap={3}
                     items={[
                         () => (
                             <StackH
-                                gap={3}
+                                principle="value-row" gap={3}
                                 justify="between"
                                 align="center"
                                 items={[
@@ -189,7 +188,7 @@ const ExpertDashboardOverview = ({ metrics, funnel, isSkeleton = false, labels }
         if (isSkeleton) {
             return (
                 <StackV
-                    gap={3}
+                    principle="sibling-stack" gap={3}
                     items={Array.from({ length: SKELETON_FUNNEL_COUNT }, () => () => (
                         <SurfaceCard
                             variant="nested"
@@ -217,7 +216,7 @@ const ExpertDashboardOverview = ({ metrics, funnel, isSkeleton = false, labels }
     return (
         <div data-tier="block" data-component="ExpertDashboardOverview">
             <StackV
-                gap={4}
+                principle="label-field" gap={4}
                 items={[
                     () => <MetricsGrid />,
                     () => <SurfaceCard padding={3} label={labels.funnelTitle} body={() => <FunnelBody />} />,

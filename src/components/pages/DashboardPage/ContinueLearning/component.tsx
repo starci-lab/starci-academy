@@ -80,7 +80,7 @@ export const _ContinueLearning = ({
         <Grid
             items={gridItems}
             columns={{ sm: 2, lg: 3 }}
-            gap={3}
+            principle="sibling-stack"
             isSkeleton={isSkeleton}
             identity={{ tier: "block", component: "ContinueLearning" }}
         />

@@ -75,7 +75,7 @@ interface OutcomeRowProps {
  */
 const OutcomeRow = ({ item, isSkeleton }: OutcomeRowProps) => (
     <StackH
-        gap={3}
+        principle="flex-action" gap={3}
         align="start"
         isSkeleton={isSkeleton}
         items={[
@@ -102,11 +102,11 @@ const OutcomesList = ({ items, isSkeleton = false, labels }: OutcomesListProps) 
                 padding={1}
                 body={() => (
                     <StackV
-                        gap={8}
+                        principle="marketing-beat" gap={8}
                         items={[
                             () => (
                                 <StackV
-                                    gap={3}
+                                    principle="sibling-stack" gap={3}
                                     align="center"
                                     items={[
                                         () => <Typography size="sm" weight="bold" color="accent" align="center" text={labels.eyebrow} />,
@@ -122,8 +122,7 @@ const OutcomesList = ({ items, isSkeleton = false, labels }: OutcomesListProps) 
                                     <EmptyState icon={SparkleIcon} title={labels.emptyTitle} description={labels.emptyDescription} />
                                 ) : (
                                     <Grid
-                                        columns={{ base: 1, md: 2 }}
-                                        gap={6}
+                                        principle="block-boundary" columns={{ base: 1, md: 2 }}
                                         items={rows.map((item) => ({
                                             key: item.id,
                                             content: () => <OutcomeRow item={item} isSkeleton={isSkeleton} />,

@@ -27,5 +27,5 @@ export const SignUpPrompt = ({
         () => <Typography size="xs" color="muted" text={t("auth.signIn.noAccount")} />,
         () => <Typography size="xs" isLink onPress={onSwitchToSignUp} text={t("auth.signIn.signUp")} />,
     ]
-    return <StackH gap={3} justify="center" items={items} />
+    return <StackH gap={3} principle="flex-action" justify="center" items={items} />
 }

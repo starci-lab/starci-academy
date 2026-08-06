@@ -37,7 +37,12 @@ export const PATTERNS = {
 
     // ── gap · step 3 (8px) · the WITHIN-A-UNIT seam ───────────────────────────────────────
     "flex-action": { prop: "gap", step: 3, px: 8, what: "a row of controls a person acts on — buttons side by side, an input and its button" },
+    "flex-action-center": { prop: "gap", step: 3, px: 8, what: "a flex-action row cross-aligned to center — title+badge headers, control rows that sit on one midline (private CSS: items-center)" },
+    "flex-action-end": { prop: "gap", step: 3, px: 8, what: "a flex-action row main-axis anchored to the end — form CTA clusters on the trailing edge (private CSS: justify-end)" },
+    "flex-action-start": { prop: "gap", step: 3, px: 8, what: "a flex-action row main-axis anchored to the start — form actions in a left-reading narrow column (private CSS: justify-start)" },
+    "flex-action-between": { prop: "gap", step: 3, px: 8, what: "a flex-action row with escape left and commit right — cancel/discard shoved from save (private CSS: justify-between)" },
     "identity": { prop: "gap", step: 3, px: 8, what: "an avatar and the name/handle beside it — a person's identity as one unit (the inner name↔handle seam is `name-handle`, 0px)" },
+    "identity-end": { prop: "gap", step: 3, px: 8, what: "identity row cross-aligned to end — avatar beside a labeled field that shares the control's baseline (private CSS: items-end)" },
     "value-row": { prop: "gap", step: 3, px: 8, what: "numbers read together on one baseline — a price, its struck original, its period. ALWAYS items-baseline (the cleanest signal in the app, 0 outliers)" },
     "chip-row": { prop: "gap", step: 3, px: 8, what: "a wrapping row of same-kind chips/tags — filters, keywords (display, not controls-you-act-on)" },
     "sibling-stack": { prop: "gap", step: 3, px: 8, what: "a column of peers, none subordinate — accordion panels, a list of options" },

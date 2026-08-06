@@ -67,41 +67,33 @@ export const _LanguageModal = ({
     onSelect,
     labels,
 }: LanguageModalProps) => {
+    const popularSectionItems = [
+        () => <Typography size="sm" color="muted" text={labels.popular} />,
+        () => (
+            <SurfaceCardSelectableGroup
+                ariaLabel={labels.popular}
+                columns={3}
+                value={selectedCode}
+                onChange={onSelect}
+                items={toSelectableItems(popularLanguages)}
+            />
+        ),
+    ]
+    const allSectionItems = [
+        () => <Typography size="sm" color="muted" text={labels.all} />,
+        () => (
+            <SurfaceCardSelectableGroup
+                ariaLabel={labels.all}
+                columns={3}
+                value={selectedCode}
+                onChange={onSelect}
+                items={toSelectableItems(allLanguages)}
+            />
+        ),
+    ]
     const sections = [
-        () => (
-            <StackV
-                gap={3}
-                items={[
-                    () => <Typography size="sm" color="muted" text={labels.popular} />,
-                    () => (
-                        <SurfaceCardSelectableGroup
-                            ariaLabel={labels.popular}
-                            columns={3}
-                            value={selectedCode}
-                            onChange={onSelect}
-                            items={toSelectableItems(popularLanguages)}
-                        />
-                    ),
-                ]}
-            />
-        ),
-        () => (
-            <StackV
-                gap={3}
-                items={[
-                    () => <Typography size="sm" color="muted" text={labels.all} />,
-                    () => (
-                        <SurfaceCardSelectableGroup
-                            ariaLabel={labels.all}
-                            columns={3}
-                            value={selectedCode}
-                            onChange={onSelect}
-                            items={toSelectableItems(allLanguages)}
-                        />
-                    ),
-                ]}
-            />
-        ),
+        () => <StackV gap={3} items={popularSectionItems} />,
+        () => <StackV gap={3} items={allSectionItems} />,
     ]
 
     return (

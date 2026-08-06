@@ -100,29 +100,78 @@ export interface KpiPageProps {
  * (`missingSkeletonSupport`), so the preset row is mirrored inline with `Skeleton.Button`
  * right where it sits rather than built as a second, hand-kept tree.
  */
-const kpiRowBody = (row: KpiRowData, isSkeleton: boolean, labels: KpiLabels) => (
-    <StackV gap={4} items={[
-        () => (
-            <StackH justify="between" gap={4} items={[
-                () => (
-                    <StackH gap={3} items={[
-                        () => <row.icon className="size-5 shrink-0 text-foreground" />,
-                        () => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text={row.label} />,
-                    ]}
-                    />
-                ),
-                () => (
-                    <Typography
-                        size="sm"
-                        color="muted"
-                        isSkeleton={isSkeleton}
-                        classNames={isSkeleton ? ["w-1/4"] : undefined}
-                        text={`${row.current}/${row.target}`}
-                    />
-                ),
-            ]}
+const kpiRowBody = (row: KpiRowData, isSkeleton: boolean, labels: KpiLabels) => {
+    const labelValueRow = () => (
+        <StackH justify="between" gap={4} principle="content-row" items={[
+            () => (
+                <StackH gap={3} principle="identity" items={[
+                    () => <row.icon className="size-5 shrink-0 text-foreground" />,
+                    () => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text={row.label} />,
+                ]}
+                />
+            ),
+            () => (
+                <Typography
+                    size="sm"
+                    color="muted"
+                    isSkeleton={isSkeleton}
+                    classNames={isSkeleton ? ["w-1/4"] : undefined}
+                    text={`${row.current}/${row.target}`}
+                />
+            ),
+        ]}
+        />
+    )
+
+    const presetRow = () => (
+        isSkeleton ? (
+            <StackH gap={3} principle="flex-action" items={row.presets.map((preset) => () => (
+                <Skeleton.Button key={preset.value} width="w-16" />
+            ))}
             />
-        ),
+        ) : (
+            <FlexWrapButtonRadio
+                ariaLabel={row.label}
+                value={String(row.target)}
+                onChange={(value) => row.onChoosePreset(Number(value))}
+                items={row.presets.map((preset) => ({
+                    value: String(preset.value),
+                    content: preset.value,
+                    isDisabled: preset.isDisabled,
+                }))}
+            />
+        )
+    )
+
+    const coinRow = () => (
+        <StackH justify="between" gap={3} principle="flex-action" items={[
+            () => (
+                <Typography
+                    size="xs"
+                    color={row.canClaim ? "accent-soft" : "muted"}
+                    text={row.coinRewardText as string}
+                />
+            ),
+            ...(row.claimed
+                ? [() => <Typography size="xs" color="muted" text={labels.claimedLabel} />]
+                : row.canClaim
+                    ? [() => (
+                        <Button
+                            variant="primary"
+                            size="sm"
+                            isPending={row.isClaiming}
+                            isDisabled={row.isClaimDisabled}
+                            onPress={row.onClaim}
+                            label={labels.claimLabel}
+                        />
+                    )]
+                    : []),
+        ]}
+        />
+    )
+
+    const rowItems = [
+        labelValueRow,
         () => (
             <ProgressBar
                 ariaLabel={row.label}
@@ -133,56 +182,12 @@ const kpiRowBody = (row: KpiRowData, isSkeleton: boolean, labels: KpiLabels) => 
                 isSkeleton={isSkeleton}
             />
         ),
-        () => (
-            isSkeleton ? (
-                <StackH gap={3} items={row.presets.map((preset) => () => (
-                    <Skeleton.Button key={preset.value} width="w-16" />
-                ))}
-                />
-            ) : (
-                <FlexWrapButtonRadio
-                    ariaLabel={row.label}
-                    value={String(row.target)}
-                    onChange={(value) => row.onChoosePreset(Number(value))}
-                    items={row.presets.map((preset) => ({
-                        value: String(preset.value),
-                        content: preset.value,
-                        isDisabled: preset.isDisabled,
-                    }))}
-                />
-            )
-        ),
-        // coin reward — only once a REAL target is set server-side; unknown while
-        // loading, so the whole row is skipped rather than showing a stale figure.
-        ...(!isSkeleton && row.coinRewardText ? [() => (
-            <StackH justify="between" gap={3} items={[
-                () => (
-                    <Typography
-                        size="xs"
-                        color={row.canClaim ? "accent-soft" : "muted"}
-                        text={row.coinRewardText as string}
-                    />
-                ),
-                ...(row.claimed
-                    ? [() => <Typography size="xs" color="muted" text={labels.claimedLabel} />]
-                    : row.canClaim
-                        ? [() => (
-                            <Button
-                                variant="primary"
-                                size="sm"
-                                isPending={row.isClaiming}
-                                isDisabled={row.isClaimDisabled}
-                                onPress={row.onClaim}
-                                label={labels.claimLabel}
-                            />
-                        )]
-                        : []),
-            ]}
-            />
-        )] : []),
-    ]}
-    />
-)
+        presetRow,
+        ...(!isSkeleton && row.coinRewardText ? [coinRow] : []),
+    ]
+
+    return <StackV gap={4} items={rowItems} />
+}
 
 /**
  * The `/kpi` editor page body — the presentational half of {@link KpiPage}: the

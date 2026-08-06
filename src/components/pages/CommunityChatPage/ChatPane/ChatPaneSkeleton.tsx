@@ -1,5 +1,7 @@
 import React from "react"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link ChatPaneSkeleton}. */
 export interface ChatPaneSkeletonProps {
@@ -21,22 +23,28 @@ export interface ChatPaneSkeletonProps {
  */
 export const ChatPaneSkeleton = ({ withComposer = false }: ChatPaneSkeletonProps) => {
     return (
-        <div className="flex flex-col gap-3">
-            <div className="flex max-h-[60vh] flex-col gap-3 overflow-y-auto">
-                {[0, 1, 2].map((row) => (
-                    <div key={row} className="flex flex-col gap-1" style={row % 2 === 1 ? { alignItems: "flex-end" } : undefined}>
-                        <Skeleton className="h-14 w-2/3 rounded-2xl" />
-                    </div>
-                ))}
-            </div>
-            {withComposer ? (
-                <div className="flex flex-col gap-2">
-                    <Skeleton className="h-14 w-full rounded-xl" />
-                    <div className="flex justify-end">
-                        <Skeleton.Button width="w-20" />
-                    </div>
-                </div>
-            ) : null}
-        </div>
+        <StackV gap={4} principle="content-row" items={[
+            () => (
+                <Box className="max-h-[60vh] overflow-y-auto">
+                    <StackV gap={4} principle="content-row" items={[0, 1, 2].map((row) => () => (
+                        <StackV key={row} gap={2} principle="title-subtitle" align={row % 2 === 1 ? "end" : "stretch"} items={[
+                            () => <Skeleton className="h-14 w-2/3 rounded-2xl" />,
+                        ]} />
+                    ))} />
+                </Box>
+            ),
+            ...(withComposer ? [
+                () => (
+                    <StackV gap={3} principle="sibling-stack" items={[
+                        () => <Skeleton className="h-14 w-full rounded-xl" />,
+                        () => (
+                            <StackH gap={1} principle="name-handle" justify="end" items={[
+                                () => <Skeleton.Button width="w-20" />,
+                            ]} />
+                        ),
+                    ]} />
+                )
+            ] : []),
+        ]} />
     )
 }

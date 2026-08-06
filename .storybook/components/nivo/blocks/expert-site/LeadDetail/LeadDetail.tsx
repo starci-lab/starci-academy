@@ -137,10 +137,12 @@ const LeadDetail = ({
             body={() => (
                 <StackV
                     gap={6}
+                    principle="block-boundary"
                     items={[
                         () => (
                             <StackH
                                 gap={3}
+                                principle="flex-action"
                                 justify="between"
                                 at="sm"
                                 items={[

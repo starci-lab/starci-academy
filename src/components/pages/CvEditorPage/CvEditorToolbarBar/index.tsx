@@ -14,6 +14,7 @@ import {
 } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
+import { StackH } from "@/components/frames/Stack"
 import { CvExportFormat } from "@/modules/types/enums/cv-export-format"
 import { useCvEditorToolbarStore } from "@/hooks/zustand/cvEditorToolbar/store"
 
@@ -59,24 +60,28 @@ export const CvEditorToolbarBar = ({ className }: CvEditorToolbarBarProps) => {
                     onChange={(event) => onLabelChange(event.target.value)}
                 />
             </TextField>
-            <div className="flex shrink-0 items-center gap-3">
-                <Button
-                    variant="secondary"
-                    isDisabled={!canExport}
-                    onPress={onDownloadTex}
-                >
-                    <FileTextIcon aria-hidden className="size-5" />
-                    {t("cv.builder.downloadTexCta")}
-                </Button>
-                <Button
-                    variant="primary"
-                    isDisabled={!canExport || exportingFormat !== null}
-                    onPress={() => onExport(CvExportFormat.Pdf)}
-                >
-                    <FilePdfIcon aria-hidden className="size-5" />
-                    {t("cv.builder.downloadCta")}
-                </Button>
-            </div>
+            <StackH gap={4} principle="flex-action" classNames={["shrink-0"]} items={[
+                () => (
+                    <Button
+                        variant="secondary"
+                        isDisabled={!canExport}
+                        onPress={onDownloadTex}
+                    >
+                        <FileTextIcon aria-hidden className="size-5" />
+                        {t("cv.builder.downloadTexCta")}
+                    </Button>
+                ),
+                () => (
+                    <Button
+                        variant="primary"
+                        isDisabled={!canExport || exportingFormat !== null}
+                        onPress={() => onExport(CvExportFormat.Pdf)}
+                    >
+                        <FilePdfIcon aria-hidden className="size-5" />
+                        {t("cv.builder.downloadCta")}
+                    </Button>
+                ),
+            ]} />
         </div>
     )
 }

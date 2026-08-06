@@ -28,12 +28,12 @@ const SKELETON_ROW_COUNT = 3
  */
 const CommunityFeedSkeletonRow = () => (
     <SurfaceCard body={() => (
-        <StackV gap={4} items={[
+        <StackV gap={4} principle="card-caption" items={[
             () => (
-                <StackH gap={4} items={[
+                <StackH gap={4} principle="content-row" items={[
                     () => <Avatar isSkeleton size="md" />,
                     () => (
-                        <StackV gap={3} classNames={["min-w-0", "flex-1"]} items={[
+                        <StackV gap={3} principle="identity" classNames={["min-w-0", "flex-1"]} items={[
                             () => <Typography size="sm" isSkeleton classNames={["w-1/2"]} />,
                             () => <Typography size="xs" isSkeleton classNames={["w-3/4"]} />,
                         ]} />
@@ -42,7 +42,7 @@ const CommunityFeedSkeletonRow = () => (
             ),
             () => <Skeleton className="h-16 w-full rounded-xl" />,
             () => (
-                <StackH gap={6} items={[
+                <StackH gap={6} principle="block-boundary" items={[
                     () => <Skeleton className="h-7 w-24 rounded-full" />,
                     () => <Skeleton className="h-7 w-14 rounded-full" />,
                 ]} />
@@ -163,7 +163,7 @@ export const _CommunityFeedPage = ({
 }: CommunityFeedPageProps) => {
     return (
         <PageContainer>
-            <StackV gap={7} items={[
+            <StackV gap={7} principle="layout-split" items={[
                 () => (
                     <PageHeader
                         title={labels.title}
@@ -180,7 +180,7 @@ export const _CommunityFeedPage = ({
                     />
                 ),
                 () => (
-                    <StackV gap={6} items={[
+                    <StackV gap={6} principle="block-boundary" items={[
                         () => (
                             <TabsCard
                                 leftTabs={{
@@ -234,10 +234,10 @@ export const _CommunityFeedPage = ({
                                 ))
 
                             return (
-                                <StackV gap={6} items={[
+                                <StackV gap={6} principle="block-boundary" items={[
                                     ...rowItems,
                                     ...(!isSkeleton && hasMore ? [() => (
-                                        <StackH gap={1} justify="center" body={() => (
+                                        <div className="flex justify-center">
                                             <Button
                                                 variant="secondary"
                                                 size="sm"
@@ -245,7 +245,7 @@ export const _CommunityFeedPage = ({
                                                 label={labels.loadMoreLabel}
                                                 onPress={onLoadMore}
                                             />
-                                        )} />
+                                        </div>
                                     )] : []),
                                 ]} />
                             )

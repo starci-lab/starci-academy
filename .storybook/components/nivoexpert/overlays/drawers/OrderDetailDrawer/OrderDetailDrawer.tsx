@@ -98,7 +98,7 @@ const OrderDetailDrawer = ({ isOpen, onOpenChange, order, onRefund, isSkeleton =
                 isSkeleton={isSkeleton}
                 body={() => (
                     <StackV
-                        gap={4}
+                        principle="label-field" gap={4}
                         isSkeleton={isSkeleton}
                         items={[
                             () => (
@@ -115,7 +115,7 @@ const OrderDetailDrawer = ({ isOpen, onOpenChange, order, onRefund, isSkeleton =
                             ),
                             () => (
                                 <StackH
-                                    gap={3}
+                                    principle="value-row" gap={3}
                                     justify="between"
                                     align="center"
                                     isSkeleton={isSkeleton}

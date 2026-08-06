@@ -8,6 +8,7 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { StackH } from "@/components/frames/Stack"
 
 /** Representative week columns shown (the real grid is ~53, draggable past the viewport). */
 const WEEK_COLUMNS = 26
@@ -30,16 +31,18 @@ export const OverviewContributionsSkeleton = ({ className }: WithClassNames<unde
     return (
         <div className={cn("flex flex-col gap-3", className)}>
             {/* header: count text (left) + year switcher (right) */}
-            <div className="flex items-center justify-between gap-3">
-                <Skeleton.Typography type="body-sm" width="1/3" />
-                <div className="flex items-center gap-2">
-                    {Array.from({ length: YEAR_BUTTONS }).map((_, index) => (
-                        <Skeleton key={index} className="h-5 w-10 rounded-medium" />
-                    ))}
-                </div>
-            </div>
+            <StackH gap={4} principle="content-row" justify="between" align="center" items={[
+                () => <Skeleton.Typography type="body-sm" width="1/3" />,
+                () => (
+                    <StackH gap={3} principle="flex-action" align="center" items={
+                        Array.from({ length: YEAR_BUTTONS }, (_, index) => () => (
+                            <Skeleton key={index} className="h-5 w-10 rounded-medium" />
+                        ))
+                    } />
+                ),
+            ]} />
 
-            {/* grid: weekday label column + N week columns of 7 cells */}
+            {/* grid: weekday label column + N week columns of 7 cells — gap-[3px] is calendar cell pitch, not a house seam */}
             <div className="flex gap-[3px] overflow-hidden">
                 <div className="w-8 shrink-0" />
                 {Array.from({ length: WEEK_COLUMNS }).map((_, columnIndex) => (
@@ -52,11 +55,11 @@ export const OverviewContributionsSkeleton = ({ className }: WithClassNames<unde
             </div>
 
             {/* legend: Less → More (5 cells, right-aligned) */}
-            <div className="flex items-center justify-end gap-2">
-                {Array.from({ length: 5 }).map((_, index) => (
+            <StackH gap={3} principle="chip-row" justify="end" align="center" items={
+                Array.from({ length: 5 }, (_, index) => () => (
                     <Skeleton key={index} className="size-3 shrink-0 rounded-sm" />
-                ))}
-            </div>
+                ))
+            } />
         </div>
     )
 }

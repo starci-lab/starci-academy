@@ -160,13 +160,7 @@ const PlaygroundExerciseGrid = ({
     return (
         <div>
             <div>
-                <SurfaceCardPressableGroup
-                    items={items}
-                    ariaLabel={ariaLabel}
-                    columns={{ base: 1, sm: 2 }}
-                    isSkeleton={isSkeleton}
-
-                />
+                <SurfaceCardPressableGroup items={items} ariaLabel={ariaLabel} columns={{ base: 1, sm: 2 }} isSkeleton={isSkeleton} principle="content-row" />
             </div>
         </div>
     )

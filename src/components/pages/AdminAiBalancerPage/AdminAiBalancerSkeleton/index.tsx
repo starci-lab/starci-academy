@@ -7,6 +7,9 @@ import {
     Skeleton,
     cn,
 } from "@heroui/react"
+import { StackH, StackV } from "@/components/frames/Stack"
+import { Cluster } from "@/components/frames/Cluster"
+import { Box } from "@/components/frames/Box"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link AdminAiBalancerSkeleton}. */
@@ -31,28 +34,36 @@ export const AdminAiBalancerSkeleton = ({
                     key={cardIndex}
                     className="border border-white/10 bg-white/5 backdrop-blur-xl"
                 >
-                    <CardContent className="gap-3 p-5">
-                        {/* provider heading + summary pills */}
-                        <div className="flex flex-wrap items-start justify-between gap-3">
-                            <div className="flex flex-col gap-2">
-                                <Skeleton className="h-5 w-32 rounded" />
-                                <Skeleton className="h-3 w-48 rounded-sm" />
-                            </div>
-                            <div className="flex flex-wrap gap-2">
-                                <Skeleton className="h-6 w-20 rounded-full" />
-                                <Skeleton className="h-6 w-20 rounded-full" />
-                                <Skeleton className="h-6 w-20 rounded-full" />
-                            </div>
-                        </div>
-                        {/* key table */}
-                        <div className="flex flex-col gap-2 rounded-lg border border-white/5 p-3">
-                            {Array.from({ length: 3 }).map((_unusedRow, rowIndex) => (
-                                <Skeleton
-                                    key={rowIndex}
-                                    className="h-8 w-full rounded-lg"
-                                />
-                            ))}
-                        </div>
+                    {/* ps-admin-1: p-5 has no house token (dropped from padding scale) — teacher-hold */}
+                    <CardContent data-principle="ps-admin-1" className="p-5">
+                        <StackV gap={4} principle="card-caption" items={[
+                            () => (
+                                <StackH gap={4} principle="content-row" align="start" justify="between" items={[
+                                    () => (
+                                        <StackV gap={3} principle="sibling-stack" items={[
+                                            () => <Skeleton className="h-5 w-32 rounded" />,
+                                            () => <Skeleton className="h-3 w-48 rounded-sm" />,
+                                        ]} />
+                                    ),
+                                    () => (
+                                        <Cluster gap={3} principle="chip-row" items={[
+                                            () => <Skeleton className="h-6 w-20 rounded-full" />,
+                                            () => <Skeleton className="h-6 w-20 rounded-full" />,
+                                            () => <Skeleton className="h-6 w-20 rounded-full" />,
+                                        ]} />
+                                    ),
+                                ]} />
+                            ),
+                            () => (
+                                <Box principle="cell-pad" className="rounded-lg border border-white/5">
+                                    <StackV gap={3} principle="sibling-stack" items={
+                                        Array.from({ length: 3 }).map((_unusedRow, rowIndex) =>
+                                            () => <Skeleton key={rowIndex} className="h-8 w-full rounded-lg" />,
+                                        )
+                                    } />
+                                </Box>
+                            ),
+                        ]} />
                     </CardContent>
                 </Card>
             ))}

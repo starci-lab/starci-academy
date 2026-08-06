@@ -11,6 +11,8 @@ import { AuthenticationModalTab, resetAuthenticationModalTab } from "@/redux/sli
 import { resetSignInState, resetSignUpState } from "@/redux/slices/state"
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link LoginPage}. */
 export type LoginPageProps = WithClassNames<undefined>
@@ -69,27 +71,35 @@ export const LoginPage = ({ className }: LoginPageProps) => {
     }
 
     return (
-        <div className={cn("mx-auto flex max-w-2xl flex-col gap-6 p-6 py-16", className)}>
-            <Link
-                href={pathConfig().locale(locale).home().build()}
-                className="mx-auto font-semibold text-lg"
-            >
-                {t("nav.brand")}
-            </Link>
-
-            {redirectTarget && (
-                <div className="text-center text-xs text-muted">
-                    {authenticationModalTab === AuthenticationModalTab.SignUp
-                        ? t("auth.signUp.desc")
-                        : t("auth.signIn.desc")}
-                </div>
-            )}
-
-            <Card>
-                <CardContent>
-                    {renderSection()}
-                </CardContent>
-            </Card>
-        </div>
+        <Box principle="center-measure" className={cn("mx-auto max-w-2xl p-6 py-16", className)}>
+            <StackV gap={6} principle="block-boundary" items={[
+                () => (
+                    <StackH gap={1} principle="name-handle" justify="center" items={[
+                        () => (
+                            <Link
+                                href={pathConfig().locale(locale).home().build()}
+                                className="font-semibold text-lg"
+                            >
+                                {t("nav.brand")}
+                            </Link>
+                        ),
+                    ]} />
+                ),
+                () => (redirectTarget ? (
+                    <div className="text-center text-xs text-muted">
+                        {authenticationModalTab === AuthenticationModalTab.SignUp
+                            ? t("auth.signUp.desc")
+                            : t("auth.signIn.desc")}
+                    </div>
+                ) : null),
+                () => (
+                    <Card>
+                        <CardContent>
+                            {renderSection()}
+                        </CardContent>
+                    </Card>
+                ),
+            ]} />
+        </Box>
     )
 }

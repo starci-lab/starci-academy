@@ -77,11 +77,13 @@ const AgentCard = ({ name, model, channels, status, onOpen, isSkeleton = false, 
                 body={() => (
                     <StackV
                         gap={4}
+                        principle="label-field"
                         isSkeleton={isSkeleton}
                         items={[
                             () => (
                                 <StackH
                                     gap={3}
+                                    principle="identity"
                                     align="center"
                                     isSkeleton={isSkeleton}
                                     items={[

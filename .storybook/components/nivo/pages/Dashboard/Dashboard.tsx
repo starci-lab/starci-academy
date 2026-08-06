@@ -74,6 +74,7 @@ const Dashboard = ({ user, invoices, onPayInvoice, labels, invoiceLabels, isLoad
         return shell(
             <StackV
                 gap={6}
+                principle="block-boundary"
                 items={[
                     () => (
                         <StackH
@@ -100,6 +101,7 @@ const Dashboard = ({ user, invoices, onPayInvoice, labels, invoiceLabels, isLoad
                             body={() => (
                                 <StackV
                                     gap={2}
+                                    principle="title-subtitle"
                                     isSkeleton
                                     items={Array.from({ length: SKELETON_ROW_COUNT }, () => ({ isSkeleton }: SkeletonProps) => (
                                         <SurfaceCard

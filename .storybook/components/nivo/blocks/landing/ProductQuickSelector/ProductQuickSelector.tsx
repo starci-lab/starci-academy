@@ -78,12 +78,7 @@ const ProductQuickSelector = ({ items }: ProductQuickSelectorProps) => {
 
     return (
         <div data-tier="block" data-component="ProductQuickSelector">
-            <SurfaceCardPressableGroup
-                ariaLabel="Choose where to start"
-                columns={{ base: 1, md: 3 }}
-                gap={4}
-                items={groupItems}
-            />
+            <SurfaceCardPressableGroup ariaLabel="Choose where to start" columns={{ base: 1, md: 3 }} items={groupItems} principle="content-row" />
         </div>
     )
 }

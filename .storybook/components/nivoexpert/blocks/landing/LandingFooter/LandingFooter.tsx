@@ -53,11 +53,13 @@ const LandingFooter = ({ brandName, links, markLabel }: LandingFooterProps) => (
             body={() => (
                 <StackV
                     gap={2}
+                    principle="title-subtitle"
                     align="center"
                     items={[
                         () => (
                             <Cluster
                                 gap={3}
+                                principle="chip-row"
                                 justify="center"
                                 separator
                                 items={[

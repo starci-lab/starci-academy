@@ -62,62 +62,66 @@ export const CourseRow = ({ item, isOwnProfile = false, isSkeleton = false }: Co
         >
             <StackH
                 gap={4}
-                align="center"
+                principle="content-row"
                 items={[
                     () => (resting
                         ? <Skeleton className="size-12 shrink-0 rounded-xl" />
                         : <IconTile size="sm" src={item.thumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />),
-                    () => (
-                        <StackV
-                            gap={3}
-                            classNames={["min-w-0", "flex-1"]}
-                            items={[
-                                () => (
-                                    <StackH
-                                        gap={3}
-                                        align="center"
-                                        justify="between"
-                                        items={[
-                                            () => (
-                                                <Typography
-                                                    size="sm"
-                                                    weight="medium"
-                                                    truncate
-                                                    underlineOnGroupHover
-                                                    isSkeleton={resting}
-                                                    classNames={resting ? ["w-1/2"] : ["min-w-0", "flex-1"]}
-                                                    text={item?.label}
-                                                />
-                                            ),
-                                            ...(!resting && isOwnProfile
-                                                ? [() => <CourseTrialChip isEnrolled={item.isEnrolled} />]
-                                                : []),
-                                            () => (
-                                                <Typography
-                                                    size="xs"
-                                                    color="muted"
-                                                    isSkeleton={resting}
-                                                    classNames={resting ? ["w-fit"] : undefined}
-                                                    text={`${percent}%`}
-                                                />
-                                            ),
-                                        ]}
-                                    />
-                                ),
-                                () => (resting
-                                    ? <Skeleton.ProgressBar />
-                                    : (
-                                        <CourseProgressBar
-                                            ariaLabel={`${item.label} · ${percent}%`}
-                                            dims={dims.map((d) => ({
-                                                ...d,
-                                                label: t(`dashboard.courseProgress.${d.key}`),
-                                            }))}
+                    () => {
+                        const titleRowItems = [
+                            () => (
+                                <Typography
+                                    size="sm"
+                                    weight="medium"
+                                    truncate
+                                    underlineOnGroupHover
+                                    isSkeleton={resting}
+                                    classNames={resting ? ["w-1/2"] : ["min-w-0", "flex-1"]}
+                                    text={item?.label}
+                                />
+                            ),
+                            ...(!resting && isOwnProfile
+                                ? [() => <CourseTrialChip isEnrolled={item.isEnrolled} />]
+                                : []),
+                            () => (
+                                <Typography
+                                    size="xs"
+                                    color="muted"
+                                    isSkeleton={resting}
+                                    classNames={resting ? ["w-fit"] : undefined}
+                                    text={`${percent}%`}
+                                />
+                            ),
+                        ]
+                        return (
+                            <StackV
+                                gap={3}
+                                principle="sibling-stack"
+                                classNames={["min-w-0", "flex-1"]}
+                                items={[
+                                    () => (
+                                        <StackH
+                                            gap={3}
+                                            principle="flex-action"
+                                            justify="between"
+                                            items={titleRowItems}
                                         />
-                                    )),
-                            ]}
-                        />
-                    ),
+                                    ),
+                                    () => (resting
+                                        ? <Skeleton.ProgressBar />
+                                        : (
+                                            <CourseProgressBar
+                                                ariaLabel={`${item.label} · ${percent}%`}
+                                                dims={dims.map((d) => ({
+                                                    ...d,
+                                                    label: t(`dashboard.courseProgress.${d.key}`),
+                                                }))}
+                                            />
+                                        )),
+                                ]}
+                            />
+                        )
+                    },
                 ]}
             />
         </SurfaceListCardItem>

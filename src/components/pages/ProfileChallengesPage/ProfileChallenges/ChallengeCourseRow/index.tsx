@@ -21,6 +21,7 @@ import { pathConfig } from "@/resources/path"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { StackH, StackV } from "@/components/frames/Stack"
 import type { QueryUserSolvedChallengeItemData } from "@/modules/api/graphql/queries/types/user-solved-challenges"
 
 /** Props for {@link ChallengeCourseRow}. */
@@ -71,33 +72,43 @@ export const ChallengeCourseRow = ({
             hover="underline"
             className={className}
         >
-            <div className="flex items-start gap-3">
-                <IconTile
-                    size="sm"
-                    icon={<PuzzlePieceIcon aria-hidden focusable="false" />}
-                />
-                <div className="flex min-w-0 flex-1 flex-col gap-2">
-                    <Typography
-                        type="body-sm"
-                        weight="medium"
-                        truncate
-                        className={href ? "underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline" : undefined}
-                    >
-                        {courseTitle ?? t("publicProfile.challengesTab.ungrouped")}
-                    </Typography>
-                    <SegmentBar
-                        hideLegend
-                        max={totalChallenges && totalChallenges > 0 ? totalChallenges : undefined}
-                        ariaLabel={t("publicProfile.challengesTab.submissionCount", { count: items.length })}
-                        segments={segments}
+            <StackH gap={4} principle="content-row" align="start" items={[
+                () => (
+                    <IconTile
+                        size="sm"
+                        icon={<PuzzlePieceIcon aria-hidden focusable="false" />}
                     />
-                    <Typography type="body-xs" color="muted">
-                        {totalChallenges && totalChallenges > 0
-                            ? t("publicProfile.challengesTab.submissionProgress", { passed: items.length, total: totalChallenges })
-                            : t("publicProfile.challengesTab.submissionCount", { count: items.length })}
-                    </Typography>
-                </div>
-            </div>
+                ),
+                () => (
+                    <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
+                        () => (
+                            <Typography
+                                type="body-sm"
+                                weight="medium"
+                                truncate
+                                className={href ? "underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline" : undefined}
+                            >
+                                {courseTitle ?? t("publicProfile.challengesTab.ungrouped")}
+                            </Typography>
+                        ),
+                        () => (
+                            <SegmentBar
+                                hideLegend
+                                max={totalChallenges && totalChallenges > 0 ? totalChallenges : undefined}
+                                ariaLabel={t("publicProfile.challengesTab.submissionCount", { count: items.length })}
+                                segments={segments}
+                            />
+                        ),
+                        () => (
+                            <Typography type="body-xs" color="muted">
+                                {totalChallenges && totalChallenges > 0
+                                    ? t("publicProfile.challengesTab.submissionProgress", { passed: items.length, total: totalChallenges })
+                                    : t("publicProfile.challengesTab.submissionCount", { count: items.length })}
+                            </Typography>
+                        ),
+                    ]} />
+                ),
+            ]} />
         </SurfaceListCardItem>
     )
 }

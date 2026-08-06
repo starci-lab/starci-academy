@@ -32,6 +32,7 @@ const SectionHeading = ({ eyebrow, title, intro, align = "center" }: SectionHead
         <StackV
             gap={3}
             align={align === "center" ? "center" : "start"}
+            principle="sibling-stack"
             items={[
                 ...(eyebrow ? [() => <Typography size="sm" weight="semibold" color="accent" align={align} text={eyebrow} />] : []),
                 () => <Typography size="h2" weight="bold" align={align} text={title} />,

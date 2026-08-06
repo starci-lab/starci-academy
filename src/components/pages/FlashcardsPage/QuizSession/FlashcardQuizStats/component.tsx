@@ -147,12 +147,12 @@ export const _FlashcardQuizStats = ({
     const showGap = isSkeleton || gapRows.length > 0
 
     return (
-        <StackV gap={6} items={[
+        <StackV gap={6} principle="block-boundary" items={[
             // ZONE 1 — HERO "Coverage vs target": coverage judged against COVERAGE_TARGET (not a bare %).
             ...(showCoverage ? [() => (
                 <Section header={{ title: labels.coverageZone, level: 3 }} isSkeleton={isSkeleton} body={() => (
                     <SurfaceCard isSkeleton={isSkeleton} body={() => (
-                        <StackV gap={3} items={[
+                        <StackV gap={3} principle="sibling-stack" items={[
                             () => <ScoreValue points={coveragePercent ?? 0} unit="%" isSkeleton={isSkeleton} />,
                             () => <Typography text={labels.coverageVerdict} isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-3/4"] : undefined} />,
                             () => <Typography size="sm" color="muted" text={labels.coverageSub} isSkeleton={isSkeleton} classNames={isSkeleton ? ["w-1/2"] : undefined} />,

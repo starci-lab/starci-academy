@@ -81,15 +81,11 @@ const DemoFlow = ({ eyebrow, title, intro, steps }: DemoFlowProps) => {
         <div data-tier="block" data-component="DemoFlow">
             <StackV
                 gap={8}
+                principle="marketing-beat"
                 items={[
                     () => <SectionHeading eyebrow={eyebrow} title={title} intro={intro} align="center" />,
                     () => (
-                        <SurfaceCardPressableGroup
-                            ariaLabel="Watch a step of the lead flow demo"
-                            columns={{ base: 2, md: 4 }}
-                            gap={4}
-                            items={items}
-                        />
+                        <SurfaceCardPressableGroup ariaLabel="Watch a step of the lead flow demo" columns={{ base: 2, md: 4 }} items={items} principle="content-row" />
                     ),
                 ]}
             />

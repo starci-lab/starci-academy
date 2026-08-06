@@ -6,7 +6,7 @@ import {
 } from "next-intl"
 import { ChoiceCheckbox } from "@/components/atoms/forms"
 import { Typography } from "@/components/atoms/text/Typography"
-import { StackH } from "@/components/frames/Stack"
+import { Box } from "@/components/frames/Box"
 
 /** Props for {@link RememberMeRow}. */
 export interface RememberMeRowProps {
@@ -21,6 +21,8 @@ export interface RememberMeRowProps {
  *
  * Presentational: checked state is driven by props; the forgot-password link
  * is display-only (no handler in the original). No business logic.
+ * Spacing is justify-between (push apart), not a gap seam — Box carries the
+ * distribution without a false step-1 principle.
  * @param props - selected state and the change callback
  */
 export const RememberMeRow = ({
@@ -28,17 +30,14 @@ export const RememberMeRow = ({
     onChangeSelected,
 }: RememberMeRowProps) => {
     const t = useTranslations()
-    const items = [
-        () => (
+    return (
+        <Box className="flex items-center justify-between">
             <ChoiceCheckbox
                 isSelected={isSelected}
                 onValueChange={onChangeSelected}
                 label={<Typography size="xs" color="muted" text={t("auth.signIn.rememberMe")} />}
             />
-        ),
-        () => (
             <Typography size="xs" isLink text={t("auth.signIn.forgotPassword")} />
-        ),
-    ]
-    return <StackH gap={1} justify="between" items={items} />
+        </Box>
+    )
 }

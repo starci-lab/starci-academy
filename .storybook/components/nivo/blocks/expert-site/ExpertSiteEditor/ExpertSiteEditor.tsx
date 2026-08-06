@@ -134,6 +134,7 @@ const ExpertSiteEditor = ({
             body={() => (
                 <StackH
                     gap={3}
+                    principle="flex-action"
                     justify="between"
                     at="sm"
                     items={[
@@ -207,6 +208,7 @@ const ExpertSiteEditor = ({
         <div data-tier="block" data-component="ExpertSiteEditor">
             <StackV
                 gap={3}
+                principle="sibling-stack"
                 items={[
                     () => <AddressCard />,
                     () => (
@@ -231,6 +233,7 @@ const ExpertSiteEditor = ({
                             body={() => (
                                 <StackV
                                     gap={3}
+                                    principle="sibling-stack"
                                     items={[
                                         () => (
                                             <InputText
@@ -260,6 +263,7 @@ const ExpertSiteEditor = ({
                                         () => (
                                             <StackH
                                                 gap={3}
+                                                principle="flex-action"
                                                 justify="end"
                                                 items={[
                                                     () => (

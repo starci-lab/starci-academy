@@ -32,6 +32,8 @@ import type {
 } from "@/modules/types/base/class-name"
 import { useDashboardTabStore } from "@/hooks/zustand/dashboardTab/store"
 import { useRegisterNavbarBottomLayer } from "@/hooks/zustand/navbarBottomLayer/store"
+import { Container } from "@/components/frames/Container"
+import { RailShell } from "@/components/frames/RailShell"
 
 /** Props for {@link DashboardPage}. */
 export type DashboardPageProps = WithClassNames<undefined>
@@ -54,59 +56,73 @@ export const DashboardPage = ({
     // the DashboardPage tab strip renders as the global Navbar's bottom layer
     const tabsNode = useMemo(() => <DashboardTabsBar />, [])
     useRegisterNavbarBottomLayer(tabsNode)
+
+    // RailShell owns the identity↔content layout seam (stack → row at md, gap-8).
+    const rail = () => <DashboardIdentity />
+    const body = () => {
+        if (tab === "overview") {
+            return (
+                <div
+                    id="DashboardPage-panel-overview"
+                    role="tabpanel"
+                    aria-labelledby="overview"
+                >
+                    <OverviewTab />
+                </div>
+            )
+        }
+        if (tab === "explore") {
+            return (
+                <div
+                    id="DashboardPage-panel-explore"
+                    role="tabpanel"
+                    aria-labelledby="explore"
+                >
+                    <ExploreTab />
+                </div>
+            )
+        }
+        if (tab === "courses") {
+            return (
+                <div
+                    id="DashboardPage-panel-courses"
+                    role="tabpanel"
+                    aria-labelledby="courses"
+                >
+                    <CoursesTab />
+                </div>
+            )
+        }
+        if (tab === "community") {
+            return (
+                <div
+                    id="DashboardPage-panel-community"
+                    role="tabpanel"
+                    aria-labelledby="community"
+                >
+                    <CommunityTab />
+                </div>
+            )
+        }
+        return null
+    }
+
     return (
         <div className={cn("flex w-full flex-col", className)}>
             {/* tab strip is registered as the Navbar bottom layer above (not here) */}
-            {/* 2-col body (starci concept): left identity BARE, right content cards */}
-            <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-6 @app-md:flex-row @app-md:items-start">
-                {/* LEFT: identity + standing, bare, scrolls with the page */}
-                <aside className="flex w-full flex-col gap-4 @app-md:w-72 @app-md:shrink-0">
-                    <DashboardIdentity />
-                </aside>
-                {/* RIGHT: the open tab's content (only the active panel mounts) */}
-                <main className="flex min-w-0 flex-1 flex-col gap-6">
-                    {tab === "overview" ? (
-                        <div
-                            id="DashboardPage-panel-overview"
-                            role="tabpanel"
-                            aria-labelledby="overview"
-                            className="flex flex-col gap-6"
-                        >
-                            <OverviewTab />
-                        </div>
-                    ) : null}
-                    {tab === "explore" ? (
-                        <div
-                            id="DashboardPage-panel-explore"
-                            role="tabpanel"
-                            aria-labelledby="explore"
-                            className="flex flex-col gap-6"
-                        >
-                            <ExploreTab />
-                        </div>
-                    ) : null}
-                    {tab === "courses" ? (
-                        <div
-                            id="DashboardPage-panel-courses"
-                            role="tabpanel"
-                            aria-labelledby="courses"
-                            className="flex flex-col gap-6"
-                        >
-                            <CoursesTab />
-                        </div>
-                    ) : null}
-                    {tab === "community" ? (
-                        <div
-                            id="DashboardPage-panel-community"
-                            role="tabpanel"
-                            aria-labelledby="community"
-                            className="flex flex-col gap-6"
-                        >
-                            <CommunityTab />
-                        </div>
-                    ) : null}
-                </main>
-            </div>
+            <Container
+                size="xl"
+                padding={6}
+                identity={{ tier: "block", component: "DashboardPage" }}
+                body={() => (
+                    <RailShell
+                        at="md"
+                        principle="layout-split"
+                        rail={rail}
+                        body={body}
+                    />
+                )}
+            />
         </div>
     )
 }

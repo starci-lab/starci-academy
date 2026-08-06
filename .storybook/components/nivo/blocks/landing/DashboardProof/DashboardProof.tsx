@@ -74,14 +74,16 @@ export interface DashboardProofProps {
 /** The mockup's own window-chrome top bar: decorative traffic dots, the panel title, and a trailing insight chip. */
 const TopBar = ({ panelLabel, insightLabel }: { panelLabel: string; insightLabel: string }) => (
     <StackH
-        gap={3}
+        gap={4}
         justify="between"
         align="center"
+        principle="content-row"
         items={[
             () => (
                 <StackH
                     gap={3}
                     align="center"
+                    principle="sibling-stack"
                     items={[
                         () => (
                             <span aria-hidden className="flex shrink-0 items-center gap-2">
@@ -134,76 +136,78 @@ const DashboardProof = ({
     pipelineLabel,
     pipelineStages,
     disclaimer,
-}: DashboardProofProps) => (
-    <div data-tier="block" data-component="DashboardProof">
-        <StackV
-            gap={6}
-            items={[
-                () => <SectionHeading eyebrow={eyebrow} title={title} align="center" />,
-                () => (
-                    <SurfaceCard
-                        padding={4}
-                        body={() => (
+}: DashboardProofProps) => {
+    const panelBodyItems = [
+        () => <TopBar panelLabel={panelLabel} insightLabel={insightLabel} />,
+        () => (
+            <Grid
+                columns={{ base: 1, lg: 2 }}
+                principle="content-row"
+                items={[
+                    {
+                        key: "activity",
+                        content: () => (
                             <StackV
-                                gap={4}
+                                gap={3}
                                 items={[
-                                    () => <TopBar panelLabel={panelLabel} insightLabel={insightLabel} />,
                                     () => (
-                                        <Grid
-                                            columns={{ base: 1, lg: 2 }}
-                                            gap={4}
-                                            items={[
-                                                {
-                                                    key: "activity",
-                                                    content: () => (
-                                                        <StackV
-                                                            gap={3}
-                                                            items={[
-                                                                () => (
-                                                                    <StatGridCard
-                                                                        items={metrics.map((metric) => ({
-                                                                            key: metric.key,
-                                                                            content: () => <StatPair value={metric.value} label={metric.label} />,
-                                                                        }))}
-                                                                    />
-                                                                ),
-                                                                () => <ActivityChart ariaLabel={activityAriaLabel} bars={activityBars} />,
-                                                            ]}
-                                                        />
-                                                    ),
-                                                },
-                                                {
-                                                    key: "pipeline",
-                                                    content: () => (
-                                                        <StackV
-                                                            gap={3}
-                                                            items={[
-                                                                () => <Typography size="xs" weight="semibold" color="muted" text={pipelineLabel} />,
-                                                                () => (
-                                                                    <StackV
-                                                                        gap={3}
-                                                                        items={pipelineStages.map((stage) => () => (
-                                                                            <ProgressMeter label={stage.label} value={stage.percent} />
-                                                                        ))}
-                                                                    />
-                                                                ),
-                                                            ]}
-                                                        />
-                                                    ),
-                                                },
-                                            ]}
+                                        <StatGridCard
+                                            items={metrics.map((metric) => ({
+                                                key: metric.key,
+                                                content: () => <StatPair value={metric.value} label={metric.label} />,
+                                            }))}
+                                        />
+                                    ),
+                                    () => <ActivityChart ariaLabel={activityAriaLabel} bars={activityBars} />,
+                                ]}
+                            />
+                        ),
+                    },
+                    {
+                        key: "pipeline",
+                        content: () => (
+                            <StackV
+                                gap={3}
+                                items={[
+                                    () => <Typography size="xs" weight="semibold" color="muted" text={pipelineLabel} />,
+                                    () => (
+                                        <StackV
+                                            gap={3}
+                                            items={pipelineStages.map((stage) => () => (
+                                                <ProgressMeter label={stage.label} value={stage.percent} />
+                                            ))}
                                         />
                                     ),
                                 ]}
                             />
-                        )}
-                    />
-                ),
-                () => <Typography size="xs" color="muted" align="center" text={disclaimer} />,
-            ]}
-        />
-    </div>
-)
+                        ),
+                    },
+                ]}
+            />
+        ),
+    ]
+
+    return (
+        <div data-tier="block" data-component="DashboardProof">
+            <StackV
+                gap={6}
+                principle="block-boundary"
+                items={[
+                    () => <SectionHeading eyebrow={eyebrow} title={title} align="center" />,
+                    () => (
+                        <SurfaceCard
+                            padding={4}
+                            body={() => (
+                                <StackV gap={4} items={panelBodyItems} />
+                            )}
+                        />
+                    ),
+                    () => <Typography size="xs" color="muted" align="center" text={disclaimer} />,
+                ]}
+            />
+        </div>
+    )
+}
 
 export { DashboardProof }
 

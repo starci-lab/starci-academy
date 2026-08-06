@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useMemo, useRef, useState } from "react"
-import { Badge, Button, Card, CardContent, Chip, Popover, Typography, cn } from "@heroui/react"
+import { Badge, Button, Card, CardContent, Chip, Popover, Typography } from "@heroui/react"
 import { CaretRightIcon, FunnelIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -12,6 +12,8 @@ import { SurfaceListCard, SurfaceListCardRow, SurfaceListCardItem } from "@/comp
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 import { useQueryMyMockInterviewAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyMockInterviewAttemptsSwr"
 import { groupByTimeBucket } from "@/modules/utils/history-buckets"
 import { sessionDisplayName } from "@/modules/utils/session-display-name"
@@ -153,29 +155,61 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                 // MIRROR the loaded tree: a funnel toolbar (search + funnel button + count)
                 // above a SurfaceListCard of attempt rows (name/subtitle + verdict score
                 // chip + caret).
-                <div className="flex flex-col gap-3">
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                        <div className="flex min-w-0 flex-1 items-center gap-3">
-                            <Skeleton className="h-9 min-w-0 flex-1 rounded-medium" />
-                            <Skeleton className="size-9 shrink-0 rounded-medium" />
-                        </div>
-                        <Skeleton className="h-[14px] w-16 shrink-0 rounded" />
-                    </div>
-                    <SurfaceListCard>
-                        {Array.from({ length: 4 }).map((_unused, index) => (
-                            <SurfaceListCardItem key={index}>
-                                <div className="flex items-center gap-3">
-                                    <div className="flex min-w-0 flex-1 flex-col gap-1">
-                                        <Skeleton.Typography type="body-sm" width="1/2" />
-                                        <Skeleton.Typography type="body-xs" width="1/3" />
-                                    </div>
-                                    <Skeleton className="h-6 w-10 shrink-0 rounded-full" />
-                                    <Skeleton className="size-4 shrink-0 rounded" />
-                                </div>
-                            </SurfaceListCardItem>
-                        ))}
-                    </SurfaceListCard>
-                </div>
+                <StackV
+                    gap={4}
+                    items={[
+                        () => (
+                            <StackH
+                                gap={4}
+                                principle="content-row"
+                                justify="between"
+                                classNames={["w-full"]}
+                                items={[
+                                    () => (
+                                        <StackH
+                                            gap={4}
+                                            principle="content-row"
+                                            classNames={["min-w-0", "flex-1"]}
+                                            items={[
+                                                () => <Skeleton className="h-9 min-w-0 flex-1 rounded-medium" />,
+                                                () => <Skeleton className="size-9 shrink-0 rounded-medium" />,
+                                            ]}
+                                        />
+                                    ),
+                                    () => <Skeleton className="h-[14px] w-16 shrink-0 rounded" />,
+                                ]}
+                            />
+                        ),
+                        () => (
+                            <SurfaceListCard>
+                                {Array.from({ length: 4 }).map((_unused, index) => (
+                                    <SurfaceListCardItem key={index}>
+                                        <StackH
+                                            gap={4}
+                                            principle="content-row"
+                                            classNames={["w-full"]}
+                                            items={[
+                                                () => (
+                                                    <StackV
+                                                        gap={2}
+                                                        principle="title-subtitle"
+                                                        classNames={["min-w-0", "flex-1"]}
+                                                        items={[
+                                                            () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                                            () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                                                        ]}
+                                                    />
+                                                ),
+                                                () => <Skeleton className="h-6 w-10 shrink-0 rounded-full" />,
+                                                () => <Skeleton className="size-4 shrink-0 rounded" />,
+                                            ]}
+                                        />
+                                    </SurfaceListCardItem>
+                                ))}
+                            </SurfaceListCard>
+                        ),
+                    ]}
+                />
             )}
             error={items.length === 0 ? attemptsSwr.error : undefined}
             errorContent={{
@@ -200,104 +234,147 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                     </CardContent>
                 </Card>
             ) : (
-                <div className={cn("flex flex-col gap-3", className)}>
-                    {/* toolbar: search (prompt title) + FUNNEL popover (mode facet) + count */}
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                        <div className="flex min-w-0 flex-1 items-center gap-3">
-                            <SearchInput
-                                className="min-w-0 flex-1"
-                                value={search}
-                                onValueChange={setSearch}
-                                placeholder={t("mockInterview.historySearchPlaceholder")}
-                            />
-                            {hasFacets ? (
-                                <Popover isOpen={filterOpen} onOpenChange={setFilterOpen}>
+                <div className={className}>
+                    <StackV
+                        gap={4}
+                        items={[
+                            () => (
+                                <StackH
+                                    gap={4}
+                                    principle="content-row"
+                                    justify="between"
+                                    classNames={["w-full"]}
+                                    items={[
+                                        () => (
+                                            <StackH
+                                                gap={4}
+                                                principle="content-row"
+                                                classNames={["min-w-0", "flex-1"]}
+                                                items={[
+                                                    () => (
+                                                        <SearchInput
+                                                            className="min-w-0 flex-1"
+                                                            value={search}
+                                                            onValueChange={setSearch}
+                                                            placeholder={t("mockInterview.historySearchPlaceholder")}
+                                                        />
+                                                    ),
+                                                    ...(hasFacets
+                                                        ? [() => (
+                                                            <Popover isOpen={filterOpen} onOpenChange={setFilterOpen}>
+                                                                <Button
+                                                                    isIconOnly
+                                                                    variant="ghost"
+                                                                    aria-label={t("mockInterview.historyFilterButton")}
+                                                                    className="shrink-0"
+                                                                >
+                                                                    {activeFacetCount > 0 ? (
+                                                                        <Badge.Anchor>
+                                                                            <FunnelIcon className="size-5" />
+                                                                            <Badge size="sm" color="accent" placement="top-left">{activeFacetCount}</Badge>
+                                                                        </Badge.Anchor>
+                                                                    ) : (
+                                                                        <FunnelIcon className="size-5" />
+                                                                    )}
+                                                                </Button>
+                                                                <Popover.Content className="w-72">
+                                                                    <Box principle="cell-pad" className="p-3">
+                                                                        <StackV
+                                                                            gap={4}
+                                                                            items={[
+                                                                                () => (
+                                                                                    <StackV
+                                                                                        gap={4}
+                                                                                        principle="label-field"
+                                                                                        items={[
+                                                                                            () => (
+                                                                                                <Typography type="body-xs" color="muted">{t("mockInterview.historyFilterHeading")}</Typography>
+                                                                                            ),
+                                                                                            () => (
+                                                                                                <FlexWrapButtonRadio<HistoryModeFilter>
+                                                                                                    ariaLabel={t("mockInterview.historyFilterHeading")}
+                                                                                                    value={modeFilter}
+                                                                                                    onChange={setModeFilter}
+                                                                                                    items={[
+                                                                                                        { value: "all", content: t("mockInterview.historyFilterAll") },
+                                                                                                        { value: "qna", content: t("mockInterview.historyFilterQna") },
+                                                                                                        { value: "design", content: t("mockInterview.historyFilterDesign") },
+                                                                                                    ]}
+                                                                                                />
+                                                                                            ),
+                                                                                        ]}
+                                                                                    />
+                                                                                ),
+                                                                                ...(activeFacetCount > 0
+                                                                                    ? [() => (
+                                                                                        <Button variant="danger-soft" size="sm" className="self-start" onPress={() => setModeFilter("all")}>
+                                                                                            {t("mockInterview.historyClearFilters")}
+                                                                                        </Button>
+                                                                                    )]
+                                                                                    : []),
+                                                                            ]}
+                                                                        />
+                                                                    </Box>
+                                                                </Popover.Content>
+                                                            </Popover>
+                                                        )]
+                                                        : []),
+                                                ]}
+                                            />
+                                        ),
+                                        () => (
+                                            <Typography type="body-sm" color="muted" className="shrink-0">
+                                                {t("mockInterview.historyCount", { count: shownCount })}
+                                            </Typography>
+                                        ),
+                                    ]}
+                                />
+                            ),
+                            () => (
+                                filteredItems.length === 0 ? (
+                                    <Card>
+                                        <CardContent>
+                                            <Box principle="page-pad" className="p-6">
+                                                <Typography type="body-sm" color="muted" align="center">
+                                                    {t("mockInterview.historyEmptyFiltered")}
+                                                </Typography>
+                                            </Box>
+                                        </CardContent>
+                                    </Card>
+                                ) : (
+                                    <StackV
+                                        gap={4}
+                                        items={timeBuckets.map((bucket) => () => (
+                                            <LabeledCard
+                                                key={bucket.key}
+                                                frameless
+                                                subtleLabel
+                                                label={t(`flashcard.timeBucket.${bucket.key}`)}
+                                                labelEnd={t("flashcard.runCount", { count: bucket.items.length })}
+                                            >
+                                                <SurfaceListCard>
+                                                    {bucket.items.map((attempt) => renderRow(attempt))}
+                                                </SurfaceListCard>
+                                            </LabeledCard>
+                                        ))}
+                                    />
+                                )
+                            ),
+                            ...(hasMore
+                                ? [() => (
                                     <Button
-                                        isIconOnly
-                                        variant="ghost"
-                                        aria-label={t("mockInterview.historyFilterButton")}
-                                        className="shrink-0"
+                                        variant="secondary"
+                                        size="sm"
+                                        className="self-center"
+                                        isDisabled={attemptsSwr.isLoading}
+                                        onPress={() => setOffset((previous) => previous + PAGE_SIZE)}
                                     >
-                                        {activeFacetCount > 0 ? (
-                                            <Badge.Anchor>
-                                                <FunnelIcon className="size-5" />
-                                                <Badge size="sm" color="accent" placement="top-left">{activeFacetCount}</Badge>
-                                            </Badge.Anchor>
-                                        ) : (
-                                            <FunnelIcon className="size-5" />
-                                        )}
+                                        {t("mockInterview.historyLoadMore")}
                                     </Button>
-                                    <Popover.Content className="w-72">
-                                        <div className="flex flex-col gap-3 p-3">
-                                            <div className="flex flex-col gap-2">
-                                                <Typography type="body-xs" color="muted">{t("mockInterview.historyFilterHeading")}</Typography>
-                                                <FlexWrapButtonRadio<HistoryModeFilter>
-                                                    ariaLabel={t("mockInterview.historyFilterHeading")}
-                                                    value={modeFilter}
-                                                    onChange={setModeFilter}
-                                                    items={[
-                                                        { value: "all", content: t("mockInterview.historyFilterAll") },
-                                                        { value: "qna", content: t("mockInterview.historyFilterQna") },
-                                                        { value: "design", content: t("mockInterview.historyFilterDesign") },
-                                                    ]}
-                                                />
-                                            </div>
-                                            {activeFacetCount > 0 ? (
-                                                <Button variant="danger-soft" size="sm" className="self-start" onPress={() => setModeFilter("all")}>
-                                                    {t("mockInterview.historyClearFilters")}
-                                                </Button>
-                                            ) : null}
-                                        </div>
-                                    </Popover.Content>
-                                </Popover>
-                            ) : null}
-                        </div>
-                        <Typography type="body-sm" color="muted" className="shrink-0">
-                            {t("mockInterview.historyCount", { count: shownCount })}
-                        </Typography>
-                    </div>
-
-                    {filteredItems.length === 0 ? (
-                        // filter/search excluded everything — keep the bounded-card shape.
-                        <Card>
-                            <CardContent>
-                                <Typography type="body-sm" color="muted" align="center" className="py-6">
-                                    {t("mockInterview.historyEmptyFiltered")}
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    ) : (
-                        // group by time window — each non-empty bucket is a `LabeledCard frameless`
-                        // (time window = label OUTSIDE + run count via `labelEnd`; content = a
-                        // `SurfaceListCard` → frameless, no card-in-card).
-                        <div className="flex flex-col gap-3">
-                            {timeBuckets.map((bucket) => (
-                                <LabeledCard
-                                    key={bucket.key}
-                                    frameless
-                                    subtleLabel
-                                    label={t(`flashcard.timeBucket.${bucket.key}`)}
-                                    labelEnd={t("flashcard.runCount", { count: bucket.items.length })}
-                                >
-                                    <SurfaceListCard>
-                                        {bucket.items.map((attempt) => renderRow(attempt))}
-                                    </SurfaceListCard>
-                                </LabeledCard>
-                            ))}
-                        </div>
-                    )}
-
-                    {hasMore ? (
-                        <Button
-                            variant="secondary"
-                            size="sm"
-                            className="self-center"
-                            isDisabled={attemptsSwr.isLoading}
-                            onPress={() => setOffset((previous) => previous + PAGE_SIZE)}
-                        >
-                            {t("mockInterview.historyLoadMore")}
-                        </Button>
-                    ) : null}
+                                )]
+                                : []),
+                        ]}
+                    />
                 </div>
             )}
         </AsyncContent>

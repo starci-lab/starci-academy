@@ -221,14 +221,14 @@ export const _FlashcardSessionStats = ({
         ]
 
         contentNode = (
-            <StackV gap={6} isSkeleton={isSkeleton} items={[
+            <StackV gap={6} principle="block-boundary" isSkeleton={isSkeleton} items={[
                 // HERO — the 4-grade SM-2 distribution (outcome first).
                 () => (
                     <SurfaceCard isSkeleton={isSkeleton} body={() => (
-                        <StackV gap={5} isSkeleton={isSkeleton} items={[
+                        <StackV gap={5} principle="group-boundary" isSkeleton={isSkeleton} items={[
                             () => (
-                                <StackV gap={3} isSkeleton={isSkeleton} items={gradeRows.map((row) => () => (
-                                    <StackH gap={3} isSkeleton={isSkeleton} items={[
+                                <StackV gap={3} principle="sibling-stack" isSkeleton={isSkeleton} items={gradeRows.map((row) => () => (
+                                    <StackH gap={3} principle="content-row" isSkeleton={isSkeleton} items={[
                                         () => <Typography size="sm" classNames={["shrink-0"]} isSkeleton={isSkeleton} text={row.label} />,
                                         () => (isSkeleton
                                             ? <ProgressMeter isSkeleton color={row.color} classNames={["flex-1"]} />
@@ -245,10 +245,12 @@ export const _FlashcardSessionStats = ({
 
                 // session metric tiles
                 () => (
+                    // teacher-hold: flashcards-remain-session-stats-metric-grid-gap4-no-token —
+                    // four metric tiles at preserved step 4; no card-grid token.
                     <Section
                         header={{ title: labels.metricsLabel, level: 3 }}
                         isSkeleton={isSkeleton}
-                        body={() => <Grid columns={{ base: 2, md: 4 }} gap={4} isSkeleton={isSkeleton} items={metricItems} />}
+                        body={() => <Grid columns={{ base: 2, md: 4 }} principle="content-row" isSkeleton={isSkeleton} items={metricItems} />}
                     />
                 ),
 
@@ -272,19 +274,17 @@ export const _FlashcardSessionStats = ({
 
                 // onward path — never a dead end, even with no weak tags
                 ...(!isSkeleton ? [() => (
-                    <StackH gap={3} justify="center" items={[
-                        () => <Button variant="tertiary" label={labels.backToReviewLabel} onPress={onBack} />,
-                    ]} />
+                    <Button variant="tertiary" label={labels.backToReviewLabel} onPress={onBack} classNames={["self-center"]} />
                 )] : []),
             ]} />
         )
     }
 
     return (
-        <StackV gap={6} padding={{ base: { x: 5, y: 6 }, sm: { x: 6 } }} items={[
+        <StackV gap={1} padding={{ base: { x: 5, y: 6 }, sm: { x: 6 } }} items={[
             () => (
                 <Container size="md" padding={1} body={() => (
-                    <StackV gap={6} items={[() => header, () => contentNode]} />
+                    <StackV gap={6} principle="block-boundary" items={[() => header, () => contentNode]} />
                 )} />
             ),
         ]} />

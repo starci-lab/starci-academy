@@ -110,6 +110,7 @@ const LeadRowItem = ({ lead, options, onStatusChange, labels, isSkeleton }: {
         body={() => (
             <StackV
                 gap={3}
+                principle="sibling-stack"
                 isSkeleton={isSkeleton}
                 items={[
                     () => (

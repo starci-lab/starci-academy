@@ -105,6 +105,7 @@ const ControlPlaneOverview = ({ heading, kpis, loop, section, labels, isSkeleton
     return shell(
         <StackV
             gap={6}
+            principle="block-boundary"
             items={[
                 () => (
                     <StackV
@@ -137,7 +138,7 @@ const ControlPlaneOverview = ({ heading, kpis, loop, section, labels, isSkeleton
                     ) : (
                         <Grid
                             columns={{ base: 1, lg: 2 }}
-                            gap={4}
+                            principle="content-row"
                             items={[
                                 {
                                     key: "activity",

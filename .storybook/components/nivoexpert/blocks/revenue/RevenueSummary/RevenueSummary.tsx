@@ -52,8 +52,7 @@ export interface RevenueSummaryProps {
 const RevenueSummary = ({ metrics, isSkeleton = false }: RevenueSummaryProps) => (
     <div data-tier="block" data-component="RevenueSummary">
         <Grid
-            columns={{ base: 1, sm: 2, lg: 4 }}
-            gap={4}
+            principle="content-row" columns={{ base: 1, sm: 2, lg: 4 }}
             items={[
                 {
                     key: "monthlyRevenue",

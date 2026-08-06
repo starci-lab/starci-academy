@@ -58,6 +58,8 @@ import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveB
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { pathConfig } from "@/resources/path"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link NotificationsPage}. */
 export type NotificationsPageProps = WithClassNames<undefined>
@@ -198,232 +200,255 @@ export const NotificationsPage = ({ className }: NotificationsPageProps) => {
     const goToCourses = () => router.push(pathConfig().locale(locale).course().build())
 
     return (
-        <div className={cn("mx-auto flex max-w-3xl flex-col gap-10 p-6", className)}>
-            <PageHeader
-                breadcrumb={(
-                    <ResponsiveBreadcrumb
-                        items={[
-                            {
-                                key: "home",
-                                label: t("nav.home"),
-                                onPress: () => router.push(pathConfig().locale(locale).build()),
-                            },
-                            {
-                                key: "notifications",
-                                label: t("notifications.title"),
-                            },
-                        ]}
+        <Box principle="center-measure" className={cn("mx-auto max-w-3xl p-6", className)}>
+            <StackV gap={7} principle="layout-split" items={[
+                () => (
+                    <PageHeader
+                        breadcrumb={(
+                            <ResponsiveBreadcrumb
+                                items={[
+                                    {
+                                        key: "home",
+                                        label: t("nav.home"),
+                                        onPress: () => router.push(pathConfig().locale(locale).build()),
+                                    },
+                                    {
+                                        key: "notifications",
+                                        label: t("notifications.title"),
+                                    },
+                                ]}
+                            />
+                        )}
+                        title={t("notifications.title")}
+                        description={t("notifications.description")}
+                        actions={unreadCount > 0 ? (
+                            <Button
+                                variant="secondary"
+                                size="sm"
+                                onPress={onMarkAllRead}
+                            >
+                                <CheckDoubleIcon className="size-4" aria-hidden focusable="false" />
+                                {t("notifications.markAllRead")}
+                            </Button>
+                        ) : undefined}
                     />
-                )}
-                title={t("notifications.title")}
-                description={t("notifications.description")}
-                actions={unreadCount > 0 ? (
-                    <Button
-                        variant="secondary"
-                        size="sm"
-                        onPress={onMarkAllRead}
-                        className="gap-2"
-                    >
-                        <CheckDoubleIcon className="size-4" aria-hidden focusable="false" />
-                        {t("notifications.markAllRead")}
-                    </Button>
-                ) : undefined}
-            />
+                ),
 
-            <div className="flex flex-col gap-6">
-                <TabsCard
-                    leftTabs={{
-                        items: [
-                            { key: ALL_TAB, label: t("notifications.tabs.all") },
-                            {
-                                key: NotificationType.CommentReply,
-                                label: t("notifications.tabs.commentReply"),
-                                icon: <ChatCircleIcon className="size-4" aria-hidden focusable="false" />,
-                            },
-                            {
-                                key: NotificationType.CommunityReply,
-                                label: t("notifications.tabs.communityReply"),
-                                icon: <UsersThreeIcon className="size-4" aria-hidden focusable="false" />,
-                            },
-                            {
-                                key: NotificationType.MilestoneGraded,
-                                label: t("notifications.tabs.milestoneGraded"),
-                                icon: <FlagIcon className="size-4" aria-hidden focusable="false" />,
-                            },
-                            {
-                                key: NotificationType.ChallengeGraded,
-                                label: t("notifications.tabs.challengeGraded"),
-                                icon: <PuzzlePieceIcon className="size-4" aria-hidden focusable="false" />,
-                            },
-                            {
-                                key: NotificationType.CodingGraded,
-                                label: t("notifications.tabs.codingGraded"),
-                                icon: <CodeIcon className="size-4" aria-hidden focusable="false" />,
-                            },
-                            {
-                                key: NotificationType.NewFollower,
-                                label: t("notifications.tabs.newFollower"),
-                                icon: <UserPlusIcon className="size-4" aria-hidden focusable="false" />,
-                            },
-                            {
-                                key: NotificationType.SubscriptionGranted,
-                                label: t("notifications.tabs.subscriptionGranted"),
-                                icon: <SparkleIcon className="size-4" aria-hidden focusable="false" />,
-                            },
-                            {
-                                key: NotificationType.StreakMilestone,
-                                label: t("notifications.tabs.streakMilestone"),
-                                icon: <FlameIcon className="size-4" aria-hidden focusable="false" />,
-                            },
-                            {
-                                key: NotificationType.Announcement,
-                                label: t("notifications.tabs.announcement"),
-                                icon: <MegaphoneIcon className="size-4" aria-hidden focusable="false" />,
-                            },
-                            {
-                                key: NotificationType.System,
-                                label: t("notifications.tabs.system"),
-                                icon: <BellIcon className="size-4" aria-hidden focusable="false" />,
-                            },
-                        ],
-                        selectedKey: tab,
-                        ariaLabel: t("notifications.tabsAria"),
-                        onSelectionChange: onSelectTab,
-                    }}
-                    className="overflow-x-auto"
-                />
+                () => (
+                    <StackV gap={6} principle="block-boundary" items={[
+                        () => (
+                            <TabsCard
+                                leftTabs={{
+                                    items: [
+                                        { key: ALL_TAB, label: t("notifications.tabs.all") },
+                                        {
+                                            key: NotificationType.CommentReply,
+                                            label: t("notifications.tabs.commentReply"),
+                                            icon: <ChatCircleIcon className="size-4" aria-hidden focusable="false" />,
+                                        },
+                                        {
+                                            key: NotificationType.CommunityReply,
+                                            label: t("notifications.tabs.communityReply"),
+                                            icon: <UsersThreeIcon className="size-4" aria-hidden focusable="false" />,
+                                        },
+                                        {
+                                            key: NotificationType.MilestoneGraded,
+                                            label: t("notifications.tabs.milestoneGraded"),
+                                            icon: <FlagIcon className="size-4" aria-hidden focusable="false" />,
+                                        },
+                                        {
+                                            key: NotificationType.ChallengeGraded,
+                                            label: t("notifications.tabs.challengeGraded"),
+                                            icon: <PuzzlePieceIcon className="size-4" aria-hidden focusable="false" />,
+                                        },
+                                        {
+                                            key: NotificationType.CodingGraded,
+                                            label: t("notifications.tabs.codingGraded"),
+                                            icon: <CodeIcon className="size-4" aria-hidden focusable="false" />,
+                                        },
+                                        {
+                                            key: NotificationType.NewFollower,
+                                            label: t("notifications.tabs.newFollower"),
+                                            icon: <UserPlusIcon className="size-4" aria-hidden focusable="false" />,
+                                        },
+                                        {
+                                            key: NotificationType.SubscriptionGranted,
+                                            label: t("notifications.tabs.subscriptionGranted"),
+                                            icon: <SparkleIcon className="size-4" aria-hidden focusable="false" />,
+                                        },
+                                        {
+                                            key: NotificationType.StreakMilestone,
+                                            label: t("notifications.tabs.streakMilestone"),
+                                            icon: <FlameIcon className="size-4" aria-hidden focusable="false" />,
+                                        },
+                                        {
+                                            key: NotificationType.Announcement,
+                                            label: t("notifications.tabs.announcement"),
+                                            icon: <MegaphoneIcon className="size-4" aria-hidden focusable="false" />,
+                                        },
+                                        {
+                                            key: NotificationType.System,
+                                            label: t("notifications.tabs.system"),
+                                            icon: <BellIcon className="size-4" aria-hidden focusable="false" />,
+                                        },
+                                    ],
+                                    selectedKey: tab,
+                                    ariaLabel: t("notifications.tabsAria"),
+                                    onSelectionChange: onSelectTab,
+                                }}
+                                className="overflow-x-auto"
+                            />
+                        ),
 
-                <AsyncContent
-                    isLoading={isLoading && !data}
-                    skeleton={(
-                        <SurfaceListCard>
-                            {[0, 1, 2, 3, 4].map((row) => (
-                                <div key={row} className="flex items-center gap-3 px-4 py-4">
-                                    <Skeleton className="size-9 shrink-0 rounded-full" />
-                                    <div className="flex flex-1 flex-col gap-2">
-                                        <Skeleton className="h-4 w-2/3 rounded-medium" />
-                                        <Skeleton className="h-3 w-1/3 rounded-medium" />
-                                    </div>
-                                </div>
-                            ))}
-                        </SurfaceListCard>
-                    )}
-                    error={error}
-                    errorContent={{
-                        title: t("notifications.loadError"),
-                        onRetry: () => { void mutate() },
-                        retryLabel: t("notifications.retry"),
-                    }}
-                >
-                    {items.length === 0 ? (
-                        // `EmptyState` intentionally omits its own frame — wrap it in `<Card>` to
-                        // match the shape of the list card when there is data (`components/card.md` §2).
-                        <Card>
-                            <CardContent>
-                                <EmptyState
-                                    icon={BellIcon}
-                                    title={tab === ALL_TAB ? t("notifications.empty") : t("notifications.emptyFiltered")}
-                                    action={() => tab === ALL_TAB ? (
-                                        // Genuinely platform-empty (never had any notification) — the CTA must be
-                                        // a primary funnel invitation, not a quiet secondary one (canon §Conversion).
-                                        <Button size="sm" variant="primary" onPress={goToCourses} className="gap-2">
-                                            {t("notifications.emptyCta")}
-                                            <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
-                                        </Button>
-                                    ) : (
-                                        // Filtered-empty (a filtered tab that's empty) — the CTA must go back to
-                                        // viewing everything (clear the filter), not push out to the course page
-                                        // (canon §State-matrix: 2 different reasons for empty → 2 CTAs with different meaning).
-                                        <Button size="sm" variant="secondary" onPress={() => onSelectTab(ALL_TAB)}>
-                                            {t("notifications.clearFilters")}
-                                        </Button>
-                                    )}
-                                />
-                            </CardContent>
-                        </Card>
-                    ) : (
-                        <div className="flex flex-col gap-3">
-                            <SurfaceListCard>
-                                {items.map((notification) => (
-                                    <SurfaceListCardRow
-                                        key={notification.id}
-                                        leading={() => (
-                                            <span
-                                                className={cn(
-                                                    "flex size-9 shrink-0 items-center justify-center rounded-full [&>svg]:size-4",
-                                                    notification.isRead
-                                                        ? "bg-default text-muted"
-                                                        : "bg-accent-soft text-accent-soft-foreground",
+                        () => (
+                            <AsyncContent
+                                isLoading={isLoading && !data}
+                                skeleton={(
+                                    <SurfaceListCard>
+                                        {[0, 1, 2, 3, 4].map((row) => (
+                                            <Box key={row} principle="row-pad" className="px-4 py-4">
+                                                <StackH gap={4} principle="content-row" align="center" items={[
+                                                    () => <Skeleton className="size-9 shrink-0 rounded-full" />,
+                                                    () => (
+                                                        <StackV gap={3} principle="sibling-stack" classNames={["flex-1"]} items={[
+                                                            () => <Skeleton className="h-4 w-2/3 rounded-medium" />,
+                                                            () => <Skeleton className="h-3 w-1/3 rounded-medium" />,
+                                                        ]} />
+                                                    ),
+                                                ]} />
+                                            </Box>
+                                        ))}
+                                    </SurfaceListCard>
+                                )}
+                                error={error}
+                                errorContent={{
+                                    title: t("notifications.loadError"),
+                                    onRetry: () => { void mutate() },
+                                    retryLabel: t("notifications.retry"),
+                                }}
+                            >
+                                {items.length === 0 ? (
+                                // `EmptyState` intentionally omits its own frame — wrap it in `<Card>` to
+                                // match the shape of the list card when there is data (`components/card.md` §2).
+                                    <Card>
+                                        <CardContent>
+                                            <EmptyState
+                                                icon={BellIcon}
+                                                title={tab === ALL_TAB ? t("notifications.empty") : t("notifications.emptyFiltered")}
+                                                action={() => tab === ALL_TAB ? (
+                                                // Genuinely platform-empty (never had any notification) — the CTA must be
+                                                // a primary funnel invitation, not a quiet secondary one (canon §Conversion).
+                                                    <Button size="sm" variant="primary" onPress={goToCourses}>
+                                                        {t("notifications.emptyCta")}
+                                                        <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
+                                                    </Button>
+                                                ) : (
+                                                // Filtered-empty (a filtered tab that's empty) — the CTA must go back to
+                                                // viewing everything (clear the filter), not push out to the course page
+                                                // (canon §State-matrix: 2 different reasons for empty → 2 CTAs with different meaning).
+                                                    <Button size="sm" variant="secondary" onPress={() => onSelectTab(ALL_TAB)}>
+                                                        {t("notifications.clearFilters")}
+                                                    </Button>
                                                 )}
-                                            >
-                                                {TYPE_ICONS[notification.type]}
-                                            </span>
-                                        )}
-                                        title={t(
-                                            notification.title.key,
-                                            notification.title.params ?? undefined,
-                                        )}
-                                        subtitle={notification.body
-                                            ? t(
-                                                notification.body.key,
-                                                notification.body.params ?? undefined,
-                                            )
-                                            : undefined}
-                                        meta={() => (
-                                            <Typography type="body-xs" color="muted" className="whitespace-nowrap">
-                                                {formatRelative(notification.createdAt)}
-                                            </Typography>
-                                        )}
-                                        // unread dot moves here from beside the title: `title` is plain
-                                        // text now (never a built element) and `titleClassName` stays
-                                        // lint-forbidden, so the unread signal — already echoed by the
-                                        // leading badge's accent tint — rides the row's one remaining slot.
-                                        trailing={!notification.isRead ? () => (
-                                            <CircleIcon
-                                                weight="fill"
-                                                aria-hidden
-                                                focusable="false"
-                                                className="size-1.5 shrink-0 text-accent-soft-foreground"
                                             />
-                                        ) : undefined}
-                                        onPress={() => onPressItem(notification)}
-                                    />
-                                ))}
-                            </SurfaceListCard>
+                                        </CardContent>
+                                    </Card>
+                                ) : (
+                                    <StackV gap={4} principle="content-row" items={[
+                                        () => (
+                                            <SurfaceListCard>
+                                                {items.map((notification) => (
+                                                    <SurfaceListCardRow
+                                                        key={notification.id}
+                                                        leading={() => (
+                                                            <span
+                                                                className={cn(
+                                                                    "flex size-9 shrink-0 items-center justify-center rounded-full [&>svg]:size-4",
+                                                                    notification.isRead
+                                                                        ? "bg-default text-muted"
+                                                                        : "bg-accent-soft text-accent-soft-foreground",
+                                                                )}
+                                                            >
+                                                                {TYPE_ICONS[notification.type]}
+                                                            </span>
+                                                        )}
+                                                        title={t(
+                                                            notification.title.key,
+                                                            notification.title.params ?? undefined,
+                                                        )}
+                                                        subtitle={notification.body
+                                                            ? t(
+                                                                notification.body.key,
+                                                                notification.body.params ?? undefined,
+                                                            )
+                                                            : undefined}
+                                                        meta={() => (
+                                                            <Typography type="body-xs" color="muted" className="whitespace-nowrap">
+                                                                {formatRelative(notification.createdAt)}
+                                                            </Typography>
+                                                        )}
+                                                        // unread dot moves here from beside the title: `title` is plain
+                                                        // text now (never a built element) and `titleClassName` stays
+                                                        // lint-forbidden, so the unread signal — already echoed by the
+                                                        // leading badge's accent tint — rides the row's one remaining slot.
+                                                        trailing={!notification.isRead ? () => (
+                                                            <CircleIcon
+                                                                weight="fill"
+                                                                aria-hidden
+                                                                focusable="false"
+                                                                className="size-1.5 shrink-0 text-accent-soft-foreground"
+                                                            />
+                                                        ) : undefined}
+                                                        onPress={() => onPressItem(notification)}
+                                                    />
+                                                ))}
+                                            </SurfaceListCard>
+                                        ),
 
-                            {totalPages > 1 ? (
-                                <div className="flex items-center justify-between gap-3">
-                                    <Typography type="body-xs" color="muted">
-                                        {t("notifications.pageInfo", {
-                                            from: offset + 1,
-                                            to: Math.min(offset + PAGE_SIZE, total),
-                                            total,
-                                        })}
-                                    </Typography>
-                                    <div className="flex items-center gap-2">
-                                        <Button
-                                            variant="secondary"
-                                            size="sm"
-                                            isDisabled={page <= 1}
-                                            onPress={() => setPage((current) => Math.max(1, current - 1))}
-                                        >
-                                            {t("common.pagination.previous")}
-                                        </Button>
-                                        <Button
-                                            variant="secondary"
-                                            size="sm"
-                                            isDisabled={page >= totalPages}
-                                            onPress={() => setPage((current) => Math.min(totalPages, current + 1))}
-                                        >
-                                            {t("common.pagination.next")}
-                                        </Button>
-                                    </div>
-                                </div>
-                            ) : null}
-                        </div>
-                    )}
-                </AsyncContent>
-            </div>
-        </div>
+                                        () => (totalPages > 1 ? (
+                                            <StackH gap={4} principle="content-row" justify="between" align="center" items={[
+                                                () => (
+                                                    <Typography type="body-xs" color="muted">
+                                                        {t("notifications.pageInfo", {
+                                                            from: offset + 1,
+                                                            to: Math.min(offset + PAGE_SIZE, total),
+                                                            total,
+                                                        })}
+                                                    </Typography>
+                                                ),
+                                                () => (
+                                                    <StackH gap={3} principle="flex-action" align="center" items={[
+                                                        () => (
+                                                            <Button
+                                                                variant="secondary"
+                                                                size="sm"
+                                                                isDisabled={page <= 1}
+                                                                onPress={() => setPage((current) => Math.max(1, current - 1))}
+                                                            >
+                                                                {t("common.pagination.previous")}
+                                                            </Button>
+                                                        ),
+                                                        () => (
+                                                            <Button
+                                                                variant="secondary"
+                                                                size="sm"
+                                                                isDisabled={page >= totalPages}
+                                                                onPress={() => setPage((current) => Math.min(totalPages, current + 1))}
+                                                            >
+                                                                {t("common.pagination.next")}
+                                                            </Button>
+                                                        ),
+                                                    ]} />
+                                                ),
+                                            ]} />
+                                        ) : null),
+                                    ]} />
+                                )}
+                            </AsyncContent>
+                        ),
+                    ]} />
+                ),
+            ]} />
+        </Box>
     )
 }

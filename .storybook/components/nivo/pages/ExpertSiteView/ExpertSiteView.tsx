@@ -126,6 +126,7 @@ const ExpertSiteView = ({ slug, config, offerings, leadForm, labels, isLoading =
                     () => (
                         <StackV
                             gap={3}
+                            principle="sibling-stack"
                             align="center"
                             items={[
                                 () => <Avatar isSkeleton size="lg" />,
@@ -138,7 +139,7 @@ const ExpertSiteView = ({ slug, config, offerings, leadForm, labels, isLoading =
                     () => (
                         <Grid
                             columns={{ base: 1, sm: 2 }}
-                            gap={3}
+                            principle="sibling-stack"
                             isSkeleton
                             items={Array.from({ length: SKELETON_OFFERING_COUNT }, (_unused, index) => ({
                                 key: `offering-skeleton-${index}`,
@@ -173,6 +174,7 @@ const ExpertSiteView = ({ slug, config, offerings, leadForm, labels, isLoading =
         <StackV
             key="hero"
             gap={3}
+            principle="sibling-stack"
             align="center"
             items={[
                 () => <Avatar size="lg" name={displayName} src={config.avatarUrl ?? undefined} fallback="initials" />,
@@ -196,12 +198,13 @@ const ExpertSiteView = ({ slug, config, offerings, leadForm, labels, isLoading =
         <StackV
             key="offerings"
             gap={3}
+            principle="sibling-stack"
             items={[
                 () => <Typography size="base" weight="semibold" text={labels.offeringsTitle} />,
                 () => (
                     <Grid
                         columns={{ base: 1, sm: 2 }}
-                        gap={3}
+                        principle="sibling-stack"
                         items={offerings.map((offering) => ({
                             key: offering.id,
                             content: () => (

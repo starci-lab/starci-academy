@@ -82,8 +82,7 @@ const LearnerOverview = ({ learnerName, stats, xp, isSkeleton = false, labels }:
     /** The two headline tiles, in a reflowing grid. */
     const StatsGrid = () => (
         <Grid
-            columns={{ base: 1, sm: 2 }}
-            gap={4}
+            principle="content-row" columns={{ base: 1, sm: 2 }}
             items={[
                 {
                     key: "enrolled",
@@ -129,12 +128,12 @@ const LearnerOverview = ({ learnerName, stats, xp, isSkeleton = false, labels }:
                 isSkeleton={isSkeleton}
                 body={() => (
                     <StackV
-                        gap={2}
+                        principle="title-subtitle" gap={2}
                         isSkeleton={isSkeleton}
                         items={[
                             () => (
                                 <StackH
-                                    gap={3}
+                                    principle="value-row" gap={3}
                                     justify="between"
                                     align="center"
                                     isSkeleton={isSkeleton}

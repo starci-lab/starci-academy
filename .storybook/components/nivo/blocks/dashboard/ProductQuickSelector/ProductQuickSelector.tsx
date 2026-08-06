@@ -42,6 +42,7 @@ export interface ProductQuickSelectorProps {
 const cardBody = (item: ProductQuickSelectorItem) => (
     <StackV
         gap={2}
+        principle="title-subtitle"
         align="start"
         items={[
             () => <Typography size="sm" weight="semibold" text={item.label} />,
@@ -75,12 +76,7 @@ const ProductQuickSelector = ({ items }: ProductQuickSelectorProps) => {
 
     return (
         <div data-tier="block" data-component="ProductQuickSelector">
-            <SurfaceCardPressableGroup
-                ariaLabel="Choose where to start"
-                columns={{ base: 1, md: 3 }}
-                gap={4}
-                items={groupItems}
-            />
+            <SurfaceCardPressableGroup ariaLabel="Choose where to start" columns={{ base: 1, md: 3 }} items={groupItems} principle="content-row" />
         </div>
     )
 }

@@ -6,6 +6,7 @@ import {
     cn,
 } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Box } from "@/components/frames/Box"
 
 
 /** Props for {@link AdminUploadVideoHeader}. */
@@ -23,16 +24,18 @@ export const AdminUploadVideoHeader = ({
 }: AdminUploadVideoHeaderProps = {}) => {
     return (
         <div className={cn("text-center space-y-2 pb-2", className)}>
-            <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-2 text-xs font-semibold tracking-wider text-indigo-300 uppercase">
+            <Box principle="pill-pad" className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-2 text-xs font-semibold tracking-wider text-indigo-300 uppercase">
                 <VideoCameraIcon className="h-3.5 w-3.5" />
                 Admin Tools
-            </div>
+            </Box>
             <h1 className="text-3xl @app-md:text-4xl font-bold bg-gradient-to-r from-white via-indigo-200 to-purple-300 bg-clip-text text-transparent">
                 Video Upload
             </h1>
-            <p className="text-sm text-slate-400 max-w-md mx-auto">
-                Upload videos via S3 presigned URLs. Files are sent directly to storage providers.
-            </p>
+            <Box principle="center-measure" className="mx-auto">
+                <p className="text-sm text-slate-400 max-w-md">
+                    Upload videos via S3 presigned URLs. Files are sent directly to storage providers.
+                </p>
+            </Box>
         </div>
     )
 }

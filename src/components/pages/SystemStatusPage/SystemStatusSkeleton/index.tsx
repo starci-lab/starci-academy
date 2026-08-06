@@ -1,5 +1,9 @@
 import React from "react"
 import { Skeleton } from "@heroui/react"
+import { Box } from "@/components/frames/Box"
+import { Cluster } from "@/components/frames/Cluster"
+import { Grid, type GridItem } from "@/components/frames/Grid"
+import { StackH, StackV } from "@/components/frames/Stack"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link SystemStatusSkeleton}. */
@@ -10,31 +14,70 @@ export interface SystemStatusSkeletonProps extends WithClassNames<undefined> {
 
 /** A single component-card placeholder mirroring {@link ComponentCard}. */
 const ComponentCardSkeleton = () => (
-    <div className="flex flex-col gap-2 rounded-large bg-surface shadow-surface p-4">
-        <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-                <Skeleton className="size-2.5 rounded-full" />
-                <Skeleton className="h-4 w-20 rounded" />
-            </div>
-            <Skeleton className="h-5 w-16 rounded-full" />
-        </div>
-        <div className="flex items-center justify-between gap-2">
-            <Skeleton className="h-3 w-10 rounded" />
-            <Skeleton className="h-3 w-24 rounded" />
-        </div>
-    </div>
+    <Box principle="card-padding" className="rounded-large bg-surface p-4 shadow-surface">
+        <StackV
+            gap={3}
+            principle="sibling-stack"
+            items={[
+                () => (
+                    <StackH
+                        gap={3}
+                        principle="flex-action"
+                        align="center"
+                        justify="between"
+                        items={[
+                            () => (
+                                <StackH
+                                    gap={3}
+                                    principle="identity"
+                                    align="center"
+                                    items={[
+                                        () => <Skeleton className="size-2.5 rounded-full" />,
+                                        () => <Skeleton className="h-4 w-20 rounded" />,
+                                    ]}
+                                />
+                            ),
+                            () => <Skeleton className="h-5 w-16 rounded-full" />,
+                        ]}
+                    />
+                ),
+                () => (
+                    <StackH
+                        gap={3}
+                        principle="flex-action"
+                        align="center"
+                        justify="between"
+                        items={[
+                            () => <Skeleton className="h-3 w-10 rounded" />,
+                            () => <Skeleton className="h-3 w-24 rounded" />,
+                        ]}
+                    />
+                ),
+            ]}
+        />
+    </Box>
 )
 
 /** A single AI key group placeholder mirroring {@link AiKeyGroup}. */
 const AiKeyGroupSkeleton = () => (
-    <div className="flex flex-col gap-3 rounded-large bg-surface shadow-surface p-4">
-        <Skeleton className="h-4 w-2/3 rounded" />
-        <div className="flex flex-wrap gap-2">
-            {Array.from({ length: 5 }).map((_, index) => (
-                <Skeleton key={index} className="h-5 w-20 rounded-full" />
-            ))}
-        </div>
-    </div>
+    <Box principle="card-padding" className="rounded-large bg-surface p-4 shadow-surface">
+        <StackV
+            gap={4}
+            principle="label-field"
+            items={[
+                () => <Skeleton className="h-4 w-2/3 rounded" />,
+                () => (
+                    <Cluster
+                        gap={3}
+                        principle="chip-row"
+                        items={Array.from({ length: 5 }, (_, index) => () => (
+                            <Skeleton key={index} className="h-5 w-20 rounded-full" />
+                        ))}
+                    />
+                ),
+            ]}
+        />
+    </Box>
 )
 
 /**
@@ -45,27 +88,44 @@ const AiKeyGroupSkeleton = () => (
 export const SystemStatusSkeleton = ({ aiOnly = false }: SystemStatusSkeletonProps) => {
     if (aiOnly) {
         return (
-            <div className="flex flex-col gap-3">
-                {Array.from({ length: 2 }).map((_, index) => (
+            <StackV
+                gap={4}
+                principle="content-row"
+                items={Array.from({ length: 2 }, (_, index) => () => (
                     <AiKeyGroupSkeleton key={index} />
                 ))}
-            </div>
+            />
         )
     }
 
+    const gridItems: Array<GridItem> = Array.from({ length: 6 }, (_, index) => ({
+        key: String(index),
+        content: () => <ComponentCardSkeleton />,
+    }))
+
     return (
-        <div className="flex flex-col gap-6">
-            {/* overall banner */}
-            <Skeleton className="h-14 w-full rounded-2xl" />
-            {/* infrastructure grid */}
-            <div className="flex flex-col gap-3">
-                <Skeleton className="h-4 w-32 rounded" />
-                <div className="grid grid-cols-1 gap-3 @app-sm:grid-cols-2 @app-lg:grid-cols-3">
-                    {Array.from({ length: 6 }).map((_, index) => (
-                        <ComponentCardSkeleton key={index} />
-                    ))}
-                </div>
-            </div>
-        </div>
+        <StackV
+            gap={6}
+            principle="block-boundary"
+            items={[
+                () => <Skeleton className="h-14 w-full rounded-2xl" />,
+                () => (
+                    <StackV
+                        gap={4}
+                        principle="label-field"
+                        items={[
+                            () => <Skeleton className="h-4 w-32 rounded" />,
+                            () => (
+                                <Grid
+                                    columns={{ base: 1, sm: 2, lg: 3 }}
+                                    principle="content-row"
+                                    items={gridItems}
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
 }

@@ -7,6 +7,7 @@ import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import type { CallerIdentity } from "@/components/frames/_identity"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { Box } from "@/components/frames/Box"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
@@ -143,7 +144,9 @@ export const _DailyQuest = ({
             <SurfaceListCard>
                 {isSkeleton
                     ? Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => (
-                        <Skeleton.ListRow key={index} withSubtitle={false} withTrailing className="px-3" />
+                        <Box key={index} principle="cell-pad" className="px-3">
+                            <Skeleton.ListRow withSubtitle={false} withTrailing />
+                        </Box>
                     ))
                     : tasks.map((task) => {
                         const done = task.current >= task.target

@@ -973,6 +973,72 @@ const noHelperFolderInComponents = {
   },
 }
 
+/**
+ * Public layout frames under the strict principle-only contract must not take
+ * CSS-shaped layout props when `principle` owns the seam.
+ * - StackH/StackV: AcademySettingsForm pilot (always forbid listed props).
+ * - Grid / Form: forbid listed props when `principle` is present on the element.
+ * Diagnostics refer to singular `principle` / `data-principle` (never plural).
+ * Box remains the documented foreign-mount escape hatch. Flex is internal.
+ */
+const PUBLIC_FRAMES = new Set(["StackH", "StackV", "Grid", "Form", "FormActions", "SurfaceCardPressableGroup"])
+const FORBIDDEN_FRAME_CSS_PROPS = new Set([
+  "gap",
+  "padding",
+  "align",
+  "justify",
+  "className",
+  "classNames",
+  "style",
+  "inline",
+  "nested",
+])
+
+const noPublicFrameCssProps = {
+  meta: {
+    type: "problem",
+    docs: {
+      description:
+        "Public frames take one semantic principle; CSS layout props are not public frame decisions when principle owns the seam.",
+    },
+    schema: [],
+    messages: {
+      cssProp:
+        "Use one semantic `principle` (emitted as `data-principle`). CSS layout props are not public frame decisions (forbid `{{prop}}` on {{frame}}).",
+    },
+  },
+  create(context) {
+    const file = (context.filename || context.getFilename()).replace(/\\/g, "/")
+    // Frame / Form / SurfaceCard implementations may still name the props in their own files.
+    if (/\/frames\/(Stack|Flex|Grid)\//.test(file)) return {}
+    if (/\/composites\/form\/Form\//.test(file)) return {}
+    if (/\/composites\/cards\/SurfaceCard\//.test(file)) return {}
+    if (/\/composites\/buttons\/ButtonGroup\//.test(file)) return {}
+    const stackPilot = /\/AcademySettingsForm\//.test(file)
+    return {
+      JSXOpeningElement(node) {
+        const name = elementName(node)
+        if (!name || !PUBLIC_FRAMES.has(name)) return
+        const hasPrinciple = hasJsxProp(node, "principle")
+        // Stack pilot: always strict in AcademySettingsForm.
+        // Grid/Form: strict when principle is declared.
+        // FormActions / SurfaceCardPressableGroup: always strict (principle owns layout).
+        if (name === "StackH" || name === "StackV") {
+          if (!stackPilot) return
+        } else if (name === "Grid" || name === "Form") {
+          if (!hasPrinciple) return
+        }
+        for (const attr of node.attributes || []) {
+          if (attr.type !== "JSXAttribute" || !attr.name || attr.name.type !== "JSXIdentifier") continue
+          const prop = attr.name.name
+          if (!FORBIDDEN_FRAME_CSS_PROPS.has(prop)) continue
+          context.report({ node: attr, messageId: "cssProp", data: { prop, frame: name } })
+        }
+      },
+    }
+  },
+}
+
 export default {
   meta: { name: "eslint-plugin-starci-fe", version: "0.5.0" },
   rules: {
@@ -1003,5 +1069,6 @@ export default {
     "no-raw-shape-at-sentence-tier": noRawShapeAtSentenceTier,
     "no-parallel-skeleton": noParallelSkeleton,
     "no-hardcoded-user-text-in-vocabulary": noHardcodedUserTextInVocabulary,
+    "no-public-frame-css-props": noPublicFrameCssProps,
   },
 }

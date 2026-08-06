@@ -73,12 +73,13 @@ const SystemFlow = ({ eyebrow, title, intro, layers }: SystemFlowProps) => (
     <div data-tier="block" data-component="SystemFlow">
         <StackV
             gap={8}
+            principle="marketing-beat"
             items={[
                 () => <SectionHeading eyebrow={eyebrow} title={title} intro={intro} align="center" />,
                 () => (
                     <Grid
                         columns={{ base: 1, sm: 2, lg: 3 }}
-                        gap={4}
+                        principle="content-row"
                         items={layers.map((layer) => ({
                             key: layer.key,
                             content: () => <LayerTile layer={layer} />,

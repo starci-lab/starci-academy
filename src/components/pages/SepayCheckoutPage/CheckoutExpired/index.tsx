@@ -20,6 +20,8 @@ import {
 } from "@/i18n/navigation"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { pathConfig } from "@/resources/path"
+import { Box } from "@/components/frames/Box"
+import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link CheckoutExpired}. */
 export interface CheckoutExpiredProps {
@@ -62,24 +64,30 @@ export const CheckoutExpired = ({ onRecheck }: CheckoutExpiredProps) => {
     )
 
     return (
-        <div className="flex min-h-[80vh] flex-col items-center justify-center p-4">
-            <Card className="w-full max-w-md bg-default/40 p-8 text-center backdrop-blur-md">
-                <Card.Content className="flex flex-col items-center">
-                    <div className="mb-6 flex justify-center">
-                        <IconTile icon={<ClockCountdown aria-hidden focusable="false" />} tone="warning" size="lg" />
-                    </div>
-                    <h1 className="mb-2 text-2xl font-bold">{t("payment.sepay.expired.title")}</h1>
-                    <p className="mb-6 text-muted">{t("payment.sepay.expired.description")}</p>
-                    <div className="flex w-full flex-col gap-3">
-                        <Button variant="primary" onPress={onStartOver}>
-                            {t("payment.sepay.expired.startOver")}
-                        </Button>
-                        <Button variant="secondary" onPress={onRecheck}>
-                            {t("payment.sepay.expired.recheck")}
-                        </Button>
-                    </div>
-                </Card.Content>
+        <Box principle="page-pad" className="flex min-h-[80vh] flex-col items-center justify-center p-4">
+            <Card className="w-full max-w-md bg-default/40 text-center backdrop-blur-md">
+                <Box principle="card-padding" className="p-8">
+                    <Card.Content className="flex flex-col items-center">
+                        <div className="mb-6 flex justify-center">
+                            <IconTile icon={<ClockCountdown aria-hidden focusable="false" />} tone="warning" size="lg" />
+                        </div>
+                        <h1 className="mb-2 text-2xl font-bold">{t("payment.sepay.expired.title")}</h1>
+                        <p className="mb-6 text-muted">{t("payment.sepay.expired.description")}</p>
+                        <StackV gap={4} principle="content-row" classNames={["w-full"]} items={[
+                            () => (
+                                <Button variant="primary" onPress={onStartOver}>
+                                    {t("payment.sepay.expired.startOver")}
+                                </Button>
+                            ),
+                            () => (
+                                <Button variant="secondary" onPress={onRecheck}>
+                                    {t("payment.sepay.expired.recheck")}
+                                </Button>
+                            ),
+                        ]} />
+                    </Card.Content>
+                </Box>
             </Card>
-        </div>
+        </Box>
     )
 }

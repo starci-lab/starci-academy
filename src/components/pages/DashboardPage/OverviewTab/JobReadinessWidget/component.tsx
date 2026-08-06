@@ -125,46 +125,50 @@ export const _JobReadinessWidget = ({
     const showCv = isSkeleton || cvScore !== null
     const showCta = isSkeleton || (onCtaPress !== undefined && ctaLabel !== undefined)
 
+    // Hoisted so the outer gap={4} column is gap-only (no nested `at` false-positive).
+    // Step 4 vertical peers (score row · meters · CTA) have no fitting token — see ledger.
+    const widgetItems = [
+        () => (
+            <StackH gap={4} principle="content-row" at="sm" items={[
+                () => (isSkeleton
+                    ? <StatPair isSkeleton />
+                    : <StatPair value={String(depthScore ?? 0)} label={courseTitle ?? ""} />),
+                () => (isSkeleton
+                    ? <Chip isSkeleton />
+                    : <Chip tone={band ? BAND_CHIP_TONE[band] : "default"} text={bandLabel ?? ""} />),
+            ]} />
+        ),
+        ...(showFoundation ? [() => (
+            <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={foundationPercentileText} />
+        )] : []),
+        ...(showCapstone ? [() => (
+            isSkeleton
+                ? <ProgressMeter isSkeleton showValue label={labels.trackCapstone} />
+                : <ProgressMeter value={capstoneScore ?? 0} max={100} showValue label={labels.trackCapstone} />
+        )] : []),
+        ...(showInterview ? [() => (
+            isSkeleton
+                ? <ProgressMeter isSkeleton showValue label={labels.trackInterview} />
+                : <ProgressMeter value={interviewScore ?? 0} max={100} showValue label={labels.trackInterview} />
+        )] : []),
+        ...(showCv ? [() => (
+            isSkeleton
+                ? <ProgressMeter isSkeleton showValue label={labels.trackCv} />
+                : <ProgressMeter value={cvScore ?? 0} max={100} showValue label={labels.trackCv} />
+        )] : []),
+        ...(showCta ? [() => (
+            isSkeleton
+                ? <Button isSkeleton variant="primary" classNames={["self-start"]} />
+                : <Button variant="primary" classNames={["self-start"]} label={ctaLabel ?? ""} suffixIcon={ArrowRightIcon} onPress={onCtaPress} />
+        )] : []),
+    ]
+
     return (
         <StackV
             gap={4}
             isSkeleton={isSkeleton}
             identity={{ tier: "block", component: "JobReadinessWidget" }}
-            items={[
-                () => (
-                    <StackH gap={4} at="sm" items={[
-                        () => (isSkeleton
-                            ? <StatPair isSkeleton />
-                            : <StatPair value={String(depthScore ?? 0)} label={courseTitle ?? ""} />),
-                        () => (isSkeleton
-                            ? <Chip isSkeleton />
-                            : <Chip tone={band ? BAND_CHIP_TONE[band] : "default"} text={bandLabel ?? ""} />),
-                    ]} />
-                ),
-                ...(showFoundation ? [() => (
-                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={foundationPercentileText} />
-                )] : []),
-                ...(showCapstone ? [() => (
-                    isSkeleton
-                        ? <ProgressMeter isSkeleton showValue label={labels.trackCapstone} />
-                        : <ProgressMeter value={capstoneScore ?? 0} max={100} showValue label={labels.trackCapstone} />
-                )] : []),
-                ...(showInterview ? [() => (
-                    isSkeleton
-                        ? <ProgressMeter isSkeleton showValue label={labels.trackInterview} />
-                        : <ProgressMeter value={interviewScore ?? 0} max={100} showValue label={labels.trackInterview} />
-                )] : []),
-                ...(showCv ? [() => (
-                    isSkeleton
-                        ? <ProgressMeter isSkeleton showValue label={labels.trackCv} />
-                        : <ProgressMeter value={cvScore ?? 0} max={100} showValue label={labels.trackCv} />
-                )] : []),
-                ...(showCta ? [() => (
-                    isSkeleton
-                        ? <Button isSkeleton variant="primary" classNames={["self-start"]} />
-                        : <Button variant="primary" classNames={["self-start"]} label={ctaLabel ?? ""} suffixIcon={ArrowRightIcon} onPress={onCtaPress} />
-                )] : []),
-            ]}
+            items={widgetItems}
         />
     )
 }

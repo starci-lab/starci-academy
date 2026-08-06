@@ -3,6 +3,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { gapClassNames, type AllowedGap, type Responsive } from "@sb-components/frames/_spacing"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { principleAttr, type PrincipleToken } from "@sb-components/frames/_principles"
+import { resolvePrincipleSpacing, resolvedSpacingClassNames } from "@sb-components/frames/_principle-style"
 import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_identity"
 
 /**
@@ -25,7 +26,9 @@ import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_ide
  * Storybook preview) already provides -- this frame deliberately does NOT open its
  * own container, or every grid would answer to its own width instead of the shell's.
  *
- * `gap` is a {@link Responsive}<{@link AllowedGap}> and REQUIRED.
+ * `gap` is a {@link Responsive}<{@link AllowedGap}> — REQUIRED when there is no
+ * `principle`. When `principle` is set, the resolver owns the gap seam and the
+ * public `gap` / `classNames` props are not forwarded (strict principle-only).
  * §13: no domain content, no behaviour -- placement only.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -110,21 +113,22 @@ export interface GridBaseProps {
      * decision. Steps are emitted in ascending width order (later wins).
      */
     columns: GridColumns
-    /** Seam between cells on the house gap scale -- REQUIRED. Both axes. */
-    gap: Responsive<AllowedGap>
     /**
-     * Anatomy tag for THIS frame itself -- so the PARENT can badge it as ONE node (§11a.1).
-     * Missing this prop means the frame is used but the panel cannot see it.
+     * Seam between cells on the house gap scale. Both axes.
+     * Optional when `principle` owns spacing — the resolver supplies the gap class.
+     * Still required when there is no principle.
      */
+    gap?: Responsive<AllowedGap>
     /**
      * Where this sits inside its parent. Appearance is not passable -- it is already a prop.
+     * Ignored when `principle` is set (strict principle-only contract).
      */
     classNames?: Array<AllowedClassName>
     /**
      * The layout pattern this frame's seam realises - one token from `test-runner/patterns.mjs`
      * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principle` on the element
      * that carries the gap, so the rendered-tree test can assert the seam is the step the pattern names.
-     * Query as `[data-principle="token"]`. A frame does not KNOW its pattern - the caller does - so it is passed in.
+     * Query as `[data-principle="token"]`. When set, owns gap CSS — do not also pass `gap`/`classNames`.
      */
     principle?: PrincipleToken
     /** Renders every cell's skeleton form instead of its content form. */
@@ -145,48 +149,57 @@ export interface GridBaseProps {
  *
  * @param props - {@link GridBaseProps}
  */
-const GridBase = ({ items, columns, gap, classNames, principle, isSkeleton, identity }: GridBaseProps) => (
-    <div
-        {...resolveIdentity(identity, { tier: "frame", name: "Grid" })}
-        data-principle={principleAttr(principle)}
-        className={cn(
-            "grid",
-            ...gapClassNames(gap),
-            BASE_COLUMNS_CLASS[columns.base ?? 1],
-            // Ascending order: a later (wider) step must be able to win.
-            columns.sm != null && SM_COLUMNS_CLASS[columns.sm],
-            columns.md != null && MD_COLUMNS_CLASS[columns.md],
-            columns.lg != null && LG_COLUMNS_CLASS[columns.lg],
-            classNames)}
-    >
-        {items.map((item) => {
-            const Content = item.content
-            const spanClass = item.span === 2 ? SPAN_CLASS[2] : undefined
-            // A spanning cell needs a real wrapper to hang `col-span-2` on, even
-            // when `` is off -- a `Fragment` cannot carry a class. A
-            // plain (non-spanning) cell keeps the old behaviour untouched.
-            //
-            // 2026-07-28: this wrapper used to ALSO grow under `` alone (not
-            // just `spanClass`) so it could carry ``. Dropped: "Cell"
-            // had no component or story of its own -- it is just this `min-w-0`/`col-span`
-            // box, the frame's own geometry (§13z's logic one tier up), not a separate part
-            // a reader could click through to. No story ever declared it, so the badge only
-            // ever rendered into the DOM invisibly -- a name with nowhere to send the reader
-            // is worse than no name, so the wrapper now only grows for the reason it
-            // actually needs to: hanging `col-span-2` on a spanning cell.
-            if (spanClass) {
-                return (
-                    // `min-w-0` keeps a long-text cell from blowing out its track
-                    // (grid items default to `min-width:auto`).
-                    <div key={item.key} className={cn("min-w-0", spanClass)}>
-                        <Content isSkeleton={isSkeleton} />
-                    </div>
-                )
-            }
-            return <Content key={item.key} isSkeleton={isSkeleton} />
-        })}
-    </div>
-)
+const GridBase = ({ items, columns, gap, classNames, principle, isSkeleton, identity }: GridBaseProps) => {
+    const resolved = resolvePrincipleSpacing(principle, gap, undefined)
+    const gapClasses = resolved.principleOwnsLayout
+        ? resolvedSpacingClassNames(resolved)
+        : gap != null
+            ? gapClassNames(gap)
+            : []
+    return (
+        <div
+            {...resolveIdentity(identity, { tier: "frame", name: "Grid" })}
+            data-principle={principleAttr(principle)}
+            className={cn(
+                "grid",
+                ...gapClasses,
+                BASE_COLUMNS_CLASS[columns.base ?? 1],
+                // Ascending order: a later (wider) step must be able to win.
+                columns.sm != null && SM_COLUMNS_CLASS[columns.sm],
+                columns.md != null && MD_COLUMNS_CLASS[columns.md],
+                columns.lg != null && LG_COLUMNS_CLASS[columns.lg],
+                // Strict: principle owns layout CSS — do not forward caller classNames.
+                !resolved.principleOwnsLayout && classNames)}
+        >
+            {items.map((item) => {
+                const Content = item.content
+                const spanClass = item.span === 2 ? SPAN_CLASS[2] : undefined
+                // A spanning cell needs a real wrapper to hang `col-span-2` on, even
+                // when `` is off -- a `Fragment` cannot carry a class. A
+                // plain (non-spanning) cell keeps the old behaviour untouched.
+                //
+                // 2026-07-28: this wrapper used to ALSO grow under `` alone (not
+                // just `spanClass`) so it could carry ``. Dropped: "Cell"
+                // had no component or story of its own -- it is just this `min-w-0`/`col-span`
+                // box, the frame's own geometry (§13z's logic one tier up), not a separate part
+                // a reader could click through to. No story ever declared it, so the badge only
+                // ever rendered into the DOM invisibly -- a name with nowhere to send the reader
+                // is worse than no name, so the wrapper now only grows for the reason it
+                // actually needs to: hanging `col-span-2` on a spanning cell.
+                if (spanClass) {
+                    return (
+                        // `min-w-0` keeps a long-text cell from blowing out its track
+                        // (grid items default to `min-width:auto`).
+                        <div key={item.key} className={cn("min-w-0", spanClass)}>
+                            <Content isSkeleton={isSkeleton} />
+                        </div>
+                    )
+                }
+                return <Content key={item.key} isSkeleton={isSkeleton} />
+            })}
+        </div>
+    )
+}
 
 /**
  * `Grid.*` -- the responsive grid frame namespace. Namespace only -- no bare

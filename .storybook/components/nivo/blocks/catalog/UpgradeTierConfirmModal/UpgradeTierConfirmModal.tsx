@@ -137,6 +137,7 @@ const UpgradeTierConfirmModal = ({
                 body={({ isSkeleton: skeleton }: SkeletonProps) => (
                     <StackV
                         gap={4}
+                        principle="label-field"
                         isSkeleton={skeleton}
                         items={[
                             () => (
@@ -171,6 +172,7 @@ const UpgradeTierConfirmModal = ({
                             () => (
                                 <StackH
                                     gap={3}
+                                    principle="flex-action"
                                     justify="between"
                                     isSkeleton={skeleton}
                                     items={[

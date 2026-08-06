@@ -44,13 +44,15 @@ const AiSuggestionCard = ({ badgeLabel, suggestion, status, statusLabel, reviewe
             body={() => (
                 <StackV
                     gap={3}
+                    principle="sibling-stack"
                     items={[
                         () => <Callout status="accent" icon={SparkleIcon} title={badgeLabel} description={suggestion} />,
                         () => (
                             <StackH
-                                gap={3}
+                                gap={4}
                                 justify="between"
                                 align="center"
+                                principle="content-row"
                                 items={[
                                     () => (
                                         <Chip
@@ -63,6 +65,7 @@ const AiSuggestionCard = ({ badgeLabel, suggestion, status, statusLabel, reviewe
                                         <StackH
                                             gap={2}
                                             align="center"
+                                            principle="icon-text"
                                             items={[
                                                 () => <Avatar name={reviewerName} size="sm" />,
                                                 () => <Typography size="xs" weight="semibold" text={reviewerName} />,

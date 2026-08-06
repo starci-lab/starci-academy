@@ -180,11 +180,13 @@ const AccountSecurity = ({
                         return (
                             <StackV
                                 gap={3}
+                                principle="sibling-stack"
                                 items={[
                                     () => <Typography size="sm" text={labels.enrollingInstruction} />,
                                     () => (
                                         <StackH
                                             gap={3}
+                                            principle="identity"
                                             align="start"
                                             items={[
                                                 () => <QRCode size={160} data={enrollment.otpauthUri} />,

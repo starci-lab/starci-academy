@@ -6,6 +6,7 @@ import { QUICK_TEST_URLS } from "../constants"
 import { QuickTestUrlButton } from "./QuickTestUrlButton"
 import type { QuickTestUrl } from "../types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Box } from "@/components/frames/Box"
 
 /** Props for {@link QuickTestUrls}. */
 export interface QuickTestUrlsProps extends WithClassNames<undefined> {
@@ -19,19 +20,21 @@ export interface QuickTestUrlsProps extends WithClassNames<undefined> {
  */
 export const QuickTestUrls = ({ onSelect, className }: QuickTestUrlsProps) => (
     <Card className={cn("border-slate-700/50 bg-slate-800/50 backdrop-blur-xl", className)}>
-        <CardContent className="space-y-3 p-6">
-            <h2 className="text-sm font-medium text-slate-400">
-                Quick Test URLs
-            </h2>
-            <div className="space-y-2">
-                {QUICK_TEST_URLS.map((item) => (
-                    <QuickTestUrlButton
-                        key={item.url}
-                        item={item}
-                        onSelect={onSelect}
-                    />
-                ))}
-            </div>
+        <CardContent>
+            <Box principle="page-pad" className="space-y-3 p-6">
+                <h2 className="text-sm font-medium text-slate-400">
+                    Quick Test URLs
+                </h2>
+                <div className="space-y-2">
+                    {QUICK_TEST_URLS.map((item) => (
+                        <QuickTestUrlButton
+                            key={item.url}
+                            item={item}
+                            onSelect={onSelect}
+                        />
+                    ))}
+                </div>
+            </Box>
         </CardContent>
     </Card>
 )

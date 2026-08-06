@@ -5,6 +5,8 @@ import { MapPinIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
 import { type QueryBlogPostListItem } from "@/modules/api/graphql/queries/types/blog"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link StartHereAnchor}. */
 export interface StartHereAnchorProps {
@@ -21,15 +23,23 @@ export const StartHereAnchor = ({ post }: StartHereAnchorProps) => {
     return (
         <Link
             href={`/blog/${post.slug}`}
-            className="group flex cursor-pointer items-center gap-3 rounded-2xl border border-accent/40 bg-accent/5 px-4 py-3 transition-colors hover:bg-accent-soft"
+            className="group cursor-pointer rounded-2xl border border-accent/40 bg-accent/5 transition-colors hover:bg-accent-soft"
         >
-            <MapPinIcon className="size-5 shrink-0 text-accent-soft-foreground" aria-hidden />
-            <div className="flex flex-col">
-                <span className="text-xs font-medium text-accent-soft-foreground">{t("startHere")}</span>
-                <span className="text-sm font-semibold text-foreground underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
-                    {post.title}
-                </span>
-            </div>
+            <Box principle="row-pad" className="px-4 py-3">
+                <StackH gap={4} principle="content-row" align="center" items={[
+                    () => <MapPinIcon className="size-5 shrink-0 text-accent-soft-foreground" aria-hidden />,
+                    () => (
+                        <StackV gap={1} principle="name-handle" items={[
+                            () => <span className="text-xs font-medium text-accent-soft-foreground">{t("startHere")}</span>,
+                            () => (
+                                <span className="text-sm font-semibold text-foreground underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
+                                    {post.title}
+                                </span>
+                            ),
+                        ]} />
+                    ),
+                ]} />
+            </Box>
         </Link>
     )
 }

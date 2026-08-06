@@ -8,7 +8,10 @@ import { useRouter } from "next/navigation"
 import { type QuizSessionReadinessData, type QuizSessionWeakTagData } from "@/modules/api/graphql/mutations/types/complete-flashcard-quiz-session"
 import { Callout } from "@/components/composites/feedback/Callout"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { IconTile } from "@/components/blocks/identity/IconTile"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 
@@ -35,26 +38,36 @@ export const RecapEnrollUpsell = () => {
     )
 
     return (
-        <div className="flex flex-col items-center gap-3 rounded-2xl border border-default bg-default px-6 py-8 text-center">
-            <IconTile icon={<FlameIcon aria-hidden focusable="false" />} tone="accent" size="sm" />
-            <div className="flex flex-col gap-1">
-                <Typography type="h4" weight="semibold">
-                    {t("flashcard.quiz.upsellTitle")}
-                </Typography>
-                <Typography type="body-sm" color="muted">
-                    {t("flashcard.quiz.upsellDescription")}
-                </Typography>
-            </div>
-            <Button
-                variant="primary"
-                size="lg"
-                className="mt-1 w-full max-w-xs"
-                onPress={onEnroll}
-            >
-                {t("flashcard.quiz.upsellCta")}
-                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
-            </Button>
-        </div>
+        <Box principle="page-pad" className="rounded-2xl border border-default bg-default px-6 py-8 text-center">
+            <StackV gap={4} align="center" items={[
+                () => <IconTile icon={<FlameIcon aria-hidden focusable="false" />} tone="accent" size="sm" />,
+                () => (
+                    <StackV gap={2} principle="title-subtitle" items={[
+                        () => (
+                            <Typography type="h4" weight="semibold">
+                                {t("flashcard.quiz.upsellTitle")}
+                            </Typography>
+                        ),
+                        () => (
+                            <Typography type="body-sm" color="muted">
+                                {t("flashcard.quiz.upsellDescription")}
+                            </Typography>
+                        ),
+                    ]} />
+                ),
+                () => (
+                    <Button
+                        variant="primary"
+                        size="lg"
+                        className="mt-1 w-full max-w-xs"
+                        onPress={onEnroll}
+                    >
+                        {t("flashcard.quiz.upsellCta")}
+                        <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                    </Button>
+                ),
+            ]} />
+        </Box>
     )
 }
 
@@ -87,28 +100,24 @@ const WeakTagRow = ({
     const t = useTranslations()
     const router = useRouter()
     return (
-        <button
-            type="button"
-            onClick={() => router.push(href)}
-            className="group flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl border border-default bg-default px-4 py-3 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent"
-        >
-            <div className="flex min-w-0 flex-col gap-0">
-                <Typography type="body-sm" weight="medium" className="truncate underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
-                    {tag.tag}
-                </Typography>
-                <Typography type="body-xs" color="muted">
-                    {t("flashcard.quiz.weakTagCoverage", { percent: Math.round(tag.coverage * 100) })}
-                </Typography>
-            </div>
-            <span className="flex shrink-0 items-center gap-1 text-sm font-medium text-accent-soft-foreground">
-                {t("flashcard.quiz.reviewLesson")}
-                <ArrowRightIcon
-                    aria-hidden
-                    focusable="false"
-                    className="size-4 transition-transform group-hover:translate-x-1"
-                />
-            </span>
-        </button>
+        <SurfaceListCardRow
+            title={tag.tag}
+            subtitle={t("flashcard.quiz.weakTagCoverage", { percent: Math.round(tag.coverage * 100) })}
+            trailing={() => (
+                <StackH gap={2} principle="icon-text" align="center" classNames={["shrink-0"]} items={[
+                    () => <span className="text-sm font-medium text-accent-soft-foreground">{t("flashcard.quiz.reviewLesson")}</span>,
+                    () => (
+                        <ArrowRightIcon
+                            aria-hidden
+                            focusable="false"
+                            className="size-4 transition-transform group-hover:translate-x-1"
+                        />
+                    ),
+                ]} />
+            )}
+            hover="underline"
+            onPress={() => router.push(href)}
+        />
     )
 }
 
@@ -134,18 +143,24 @@ export const RecapWeakTagsCard = ({
     // is a full primary button; when it's demoted (trial), it's a standalone tertiary link.
     if (weakTags.length === 0) {
         return primary ? (
-            <LabeledCard label={t("flashcard.quiz.weakTagsTitle")} contentClassName="flex flex-col gap-3">
-                <Typography type="body-sm" color="muted">
-                    {t("flashcard.quiz.weakTagsEmpty")}
-                </Typography>
-                <Button
-                    variant="primary"
-                    className="self-start"
-                    onPress={() => router.push(genericHref)}
-                >
-                    {t("flashcard.quiz.continueLearning")}
-                    <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
-                </Button>
+            <LabeledCard label={t("flashcard.quiz.weakTagsTitle")}>
+                <StackV gap={4} items={[
+                    () => (
+                        <Typography type="body-sm" color="muted">
+                            {t("flashcard.quiz.weakTagsEmpty")}
+                        </Typography>
+                    ),
+                    () => (
+                        <Button
+                            variant="primary"
+                            className="self-start"
+                            onPress={() => router.push(genericHref)}
+                        >
+                            {t("flashcard.quiz.continueLearning")}
+                            <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
+                        </Button>
+                    ),
+                ]} />
             </LabeledCard>
         ) : (
             <Button
@@ -180,21 +195,21 @@ export const RecapWeakTagsCard = ({
     }
 
     return (
-        <LabeledCard label={t("flashcard.quiz.weakTagsTitle")} contentClassName="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                {weakTags.map((tag) => (
-                    <WeakTagRow key={tag.tag} tag={tag} href={resolveTagHref(tag) ?? genericHref} />
-                ))}
-            </div>
-            {overflowWeakTags.length > 0 ? (
-                <ScrollShadow hideScrollBar className="max-h-40 overflow-y-auto">
-                    <div className="flex flex-col gap-2 pt-0">
-                        {overflowWeakTags.map((tag) => (
+        <LabeledCard label={t("flashcard.quiz.weakTagsTitle")}>
+            <StackV gap={4} items={[
+                () => (
+                    <StackV gap={3} principle="sibling-stack" items={weakTags.map((tag) => () => (
+                        <WeakTagRow key={tag.tag} tag={tag} href={resolveTagHref(tag) ?? genericHref} />
+                    ))} />
+                ),
+                ...(overflowWeakTags.length > 0 ? [() => (
+                    <ScrollShadow hideScrollBar className="max-h-40 overflow-y-auto">
+                        <StackV gap={3} principle="sibling-stack" items={overflowWeakTags.map((tag) => () => (
                             <WeakTagRow key={tag.tag} tag={tag} href={resolveTagHref(tag) ?? genericHref} />
-                        ))}
-                    </div>
-                </ScrollShadow>
-            ) : null}
+                        ))} />
+                    </ScrollShadow>
+                )] : []),
+            ]} />
         </LabeledCard>
     )
 }

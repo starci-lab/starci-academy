@@ -109,12 +109,12 @@ const AnalyticsView = ({ growth, topLessons, dropOffDescription, isSkeleton = fa
     /** One week's row: its label + count, then a bar filled to its share of the series' max. */
     const GrowthRow = (point: WeeklyGrowthPointView) => (
         <StackV
-            gap={1}
+            principle="name-handle" gap={1}
             isSkeleton={isSkeleton}
             items={[
                 () => (
                     <StackH
-                        gap={3}
+                        principle="value-row" gap={3}
                         justify="between"
                         align="center"
                         isSkeleton={isSkeleton}
@@ -209,14 +209,13 @@ const AnalyticsView = ({ growth, topLessons, dropOffDescription, isSkeleton = fa
     return (
         <div data-tier="block" data-component="AnalyticsView">
             <StackV
-                gap={4}
+                principle="label-field" gap={4}
                 isSkeleton={isSkeleton}
                 items={[
                     () => <GrowthSection />,
                     () => (
                         <Grid
-                            columns={{ base: 1, lg: 2 }}
-                            gap={4}
+                            principle="content-row" columns={{ base: 1, lg: 2 }}
                             isSkeleton={isSkeleton}
                             items={[
                                 { key: "top-lessons", content: () => <TopLessonsSection /> },

@@ -108,20 +108,23 @@ export interface JobListPageProps {
 const JobListRowSkeleton = () => (
     <SurfaceListCardItem>
         <StackH
-            gap={3}
+            gap={4}
+            principle="content-row"
             align="center"
             items={[
                 () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
                 () => (
                     <StackV
-                        gap={1}
+                        gap={2}
+                        principle="title-subtitle"
                         classNames={["min-w-0", "flex-1"]}
                         items={[
                             () => <Skeleton.Typography type="body-sm" width="1/2" />,
                             () => <Skeleton.Typography type="body-xs" width="1/3" />,
                             () => (
                                 <Cluster
-                                    gap={2}
+                                    gap={3}
+                                    principle="chip-row"
                                     items={[
                                         () => <Skeleton.Typography type="body-xs" width="1/4" />,
                                         () => <Skeleton.Chip />,
@@ -133,7 +136,8 @@ const JobListRowSkeleton = () => (
                 ),
                 () => (
                     <StackV
-                        gap={1}
+                        gap={2}
+                        principle="title-subtitle"
                         align="end"
                         classNames={["shrink-0"]}
                         items={[
@@ -235,9 +239,9 @@ export const _JobListPage = ({
     // toolbar: search + funnel popover on the left, the resolved count on the right —
     // always rendered, unaffected by the row-list region's own error/empty/content switch
     const toolbar = (
-        <StackH gap={3} justify="between" align="center" at="sm" items={[
+        <StackH gap={3} principle="flex-action" justify="between" align="center" at="sm" items={[
             () => (
-                <StackH gap={3} align="center" classNames={["min-w-0", "flex-1"]} items={[
+                <StackH gap={3} principle="flex-action" align="center" classNames={["min-w-0", "flex-1"]} items={[
                     () => (
                         <SearchInput
                             className="min-w-0 flex-1"

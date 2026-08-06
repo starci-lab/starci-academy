@@ -59,6 +59,7 @@ export const ProjectCard = ({
     return (
         <StackH
             gap={4}
+            principle="content-row"
             align="start"
             items={[
                 () => (resting
@@ -67,18 +68,20 @@ export const ProjectCard = ({
                 () => (
                     <StackV
                         gap={3}
+                        principle="sibling-stack"
                         classNames={["min-w-0", "flex-1"]}
                         items={[
                             () => (
                                 <StackH
                                     gap={3}
+                                    principle="flex-action"
                                     align="start"
                                     justify="between"
                                     items={[
                                         () => (
                                             <Cluster
                                                 gap={3}
-                                                align="center"
+                                                principle="chip-row"
                                                 classNames={["min-w-0"]}
                                                 items={[
                                                     () => (

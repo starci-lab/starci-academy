@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Button } from "@/components/atoms/buttons/Button"
 
 import { Typography } from "@/components/atoms/text/Typography"
+import { Box } from "@/components/frames/Box"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import type { QueryCommunityCommentNode } from "@/modules/api/graphql/queries/types/community-comments"
@@ -159,13 +160,14 @@ export const _CommunityCommentItem = ({
     return (
         <StackV
             gap={3}
+            principle="sibling-stack"
             identity={{ tier: "block", component: "CommunityCommentItem" }}
             items={[
                 () => (
                     <CommunityCommentRow comment={comment} onReact={authenticated ? onReact : undefined} actions={actions} />
                 ),
                 ...(replyOpen && authenticated ? [() => (
-                    <StackV gap={3} nested items={[
+                    <StackV gap={3} principle="sibling-stack" nested items={[
                         () => (
                             <InputTextarea
                                 rows={2}
@@ -177,23 +179,21 @@ export const _CommunityCommentItem = ({
                             />
                         ),
                         () => (
-                            <StackH gap={4} justify="end" items={[
-                                () => (
-                                    <Button
-                                        variant="primary"
-                                        size="sm"
-                                        isPending={isSubmittingReply}
-                                        isDisabled={!replyBody.trim()}
-                                        onPress={onSubmitReply}
-                                        label={labels.send}
-                                    />
-                                ),
-                            ]} />
+                            <Box principle="push-end" className="ml-auto w-fit">
+                                <Button
+                                    variant="primary"
+                                    size="sm"
+                                    isPending={isSubmittingReply}
+                                    isDisabled={!replyBody.trim()}
+                                    onPress={onSubmitReply}
+                                    label={labels.send}
+                                />
+                            </Box>
                         ),
                     ]} />
                 )] : []),
                 ...(repliesOpen ? [() => (
-                    <StackV gap={3} nested body={() => repliesContent} />
+                    <StackV gap={3} principle="sibling-stack" nested body={() => repliesContent} />
                 )] : []),
             ]} />
     )

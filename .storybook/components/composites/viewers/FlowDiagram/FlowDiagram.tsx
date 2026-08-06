@@ -16,7 +16,7 @@ import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Box } from "@sb-components/frames/Box/Box"
-import { StackH } from "@sb-components/frames/Stack/Stack"
+import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "FlowDiagram" } as const
@@ -140,12 +140,16 @@ export const FlowDiagram = ({ nodes, edges, isSkeleton = false, classNames}: Flo
                             principle="group-boundary"
                             align="center"
                             items={Array.from({ length: SKELETON_NODE_COUNT }, () => () => (
-                                <Box
-                                    principle="title-subtitle"
-                                    className="flex min-w-[140px] max-w-[220px] flex-col items-center gap-1 rounded-large border border-default bg-surface px-3 py-2 text-center shadow-sm"
-                                >
-                                    <Typography size="sm" weight="medium" isSkeleton />
-                                    <Typography size="xs" color="muted" isSkeleton />
+                                <Box principle="control-pad" className="min-w-[140px] max-w-[220px] rounded-large border border-default bg-surface px-3 py-2 text-center shadow-sm">
+                                    <StackV
+                                        gap={2}
+                                        principle="title-subtitle"
+                                        align="center"
+                                        items={[
+                                            () => <Typography size="sm" weight="medium" isSkeleton />,
+                                            () => <Typography size="xs" color="muted" isSkeleton />,
+                                        ]}
+                                    />
                                 </Box>
                             ))}
                         />

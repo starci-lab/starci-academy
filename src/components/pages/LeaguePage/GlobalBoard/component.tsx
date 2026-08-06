@@ -189,6 +189,7 @@ export const _GlobalBoard = ({
         <Box className={className}>
             <StackV
                 gap={6}
+                principle="block-boundary"
                 identity={{ tier: "block", component: "GlobalBoard" }}
                 items={[
                     // celebrate a top-3 platform finish — only meaningful once real data has settled
@@ -197,21 +198,27 @@ export const _GlobalBoard = ({
                     // ── your platform-wide standing ── `StandingHeroCard` has no `isSkeleton` of its
                     // own (missingSkeletonSupport): mirrored in place with `Skeleton.*`, same box.
                     () => (isSkeleton ? (
-                        <Box className="flex flex-col gap-4 rounded-3xl bg-surface p-5 shadow-surface">
-                            <StackH gap={5} align="center" items={[
-                                () => <Skeleton className="size-10 shrink-0 rounded-2xl" />,
+                        <Box principle="card-padding" className="rounded-3xl bg-surface p-4 shadow-surface">
+                            <StackV gap={5} principle="group-boundary" items={[
                                 () => (
-                                    <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={[
-                                        () => <Skeleton.Typography type="h6" width="1/2" />,
-                                        () => <Skeleton.Typography type="body-sm" width="1/3" />,
+                                    <StackH gap={5} principle="group-boundary" align="center" items={[
+                                        () => <Skeleton className="size-10 shrink-0 rounded-2xl" />,
+                                        () => (
+                                            <StackV gap={2} principle="title-subtitle" classNames={["min-w-0", "flex-1"]} items={[
+                                                () => <Skeleton.Typography type="h6" width="1/2" />,
+                                                () => <Skeleton.Typography type="body-sm" width="1/3" />,
+                                            ]} />
+                                        ),
                                     ]} />
                                 ),
+                                () => (
+                                    <StackV gap={2} principle="title-subtitle" items={[
+                                        () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                                        () => <Skeleton.ProgressBar />,
+                                    ]} />
+                                ),
+                                () => <Skeleton className="h-10 w-40 rounded-full" />,
                             ]} />
-                            <StackV gap={2} items={[
-                                () => <Skeleton.Typography type="body-xs" width="1/3" />,
-                                () => <Skeleton.ProgressBar />,
-                            ]} />
-                            <Skeleton className="h-10 w-40 rounded-full" />
                         </Box>
                     ) : (
                         <StandingHeroCard
@@ -227,11 +234,11 @@ export const _GlobalBoard = ({
                     // ── the winners' dais ── `Podium` has no `isSkeleton` of its own
                     // (missingSkeletonSupport): mirrored in place, champion centered + raised.
                     () => (isSkeleton ? (
-                        <StackH gap={4} align="end" justify="center" items={podiumRows.map((isChampion) => () => (
-                            <StackV gap={2} align="center" items={[
+                        <StackH gap={4} principle="content-row" align="end" justify="center" items={podiumRows.map((isChampion) => () => (
+                            <StackV gap={2} principle="title-subtitle" align="center" items={[
                                 () => <Skeleton className={isChampion ? "size-14 shrink-0 rounded-full" : "size-12 shrink-0 rounded-full"} />,
                                 () => (
-                                    <StackV gap={2} align="center" classNames={["w-full"]} items={[
+                                    <StackV gap={2} principle="title-subtitle" align="center" classNames={["w-full"]} items={[
                                         () => <Skeleton.Typography type="body-sm" width="3/4" />,
                                         () => <Skeleton.Typography type="body-xs" width="1/2" />,
                                     ]} />
@@ -267,7 +274,7 @@ export const _GlobalBoard = ({
                             {isSkeleton
                                 ? skeletonRows.map((row) => (
                                     <SurfaceListCardItem key={row}>
-                                        <StackH gap={4} align="center" items={[
+                                        <StackH gap={4} principle="content-row" align="center" items={[
                                             () => <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />,
                                             () => <Skeleton.UserCell className="min-w-0 flex-1" withHandle={false} />,
                                             () => <Skeleton className="h-3 w-10 shrink-0 rounded-sm" />,
@@ -276,7 +283,7 @@ export const _GlobalBoard = ({
                                 ))
                                 : rows.map((row) => (
                                     <SurfaceListCardItem key={row.key}>
-                                        <StackH gap={4} align="center" items={[
+                                        <StackH gap={4} principle="content-row" align="center" items={[
                                             () => (
                                                 <Box className="w-6 shrink-0">
                                                     <Typography
@@ -321,14 +328,14 @@ export const _GlobalBoard = ({
                             {/* viewer below the fetched slice → ellipsis + pinned self-row (hidden while shimmering) */}
                             {!isSkeleton && selfRow ? (
                                 <>
-                                    <Box className="bg-surface-secondary px-3 py-2 text-xs text-muted">
-                                        <StackH gap={3} align="center" justify="center" items={[
+                                    <Box principle="control-pad" className="bg-surface-secondary px-3 py-2 text-xs text-muted">
+                                        <StackH gap={3} principle="sibling-stack" align="center" justify="center" items={[
                                             () => <span className="text-base leading-none tracking-widest">⋯</span>,
                                             ...(hiddenBetweenLabel ? [() => <Typography size="xs" color="muted" text={hiddenBetweenLabel} />] : []),
                                         ]} />
                                     </Box>
                                     <SurfaceListCardItem>
-                                        <StackH gap={4} align="center" items={[
+                                        <StackH gap={4} principle="content-row" align="center" items={[
                                             () => (
                                                 <Box className="w-6 shrink-0">
                                                     <Typography size="xs" align="end" color="accent" weight="semibold" text={String(selfRow.rank)} />

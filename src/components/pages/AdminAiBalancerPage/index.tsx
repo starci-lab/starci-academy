@@ -25,6 +25,7 @@ import {
 } from "./AdminAiBalancerSkeleton"
 import { useQueryAiBalancerHealthSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiBalancerHealthSwr"
 import { useAppSelector } from "@/redux/hooks"
+import { Box } from "@/components/frames/Box"
 
 /**
  * Admin dashboard for live AI balancer API key health (Redis ping cache + pool).
@@ -74,53 +75,57 @@ export const AdminAiBalancerPage = () => {
     const ready = !isLoading && !!data && !error
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 p-4 pb-12">
-            <div className="mx-auto flex max-w-5xl flex-col gap-6">
-                <TopBar />
-                <div className="space-y-2">
-                    <h1 className="text-2xl font-bold text-white">
-                        {t("title")}
-                    </h1>
-                    <p className="text-sm text-slate-400">
-                        {t("subtitle")}
-                    </p>
-                    {isValidating ? (
-                        <p className="text-xs text-indigo-300">
-                            {t("refreshing")}
+        <Box principle="card-padding" className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 p-4 pb-12">
+            <Box principle="center-measure" className="mx-auto max-w-5xl">
+                <Box principle="block-boundary" className="flex flex-col gap-6">
+                    <TopBar />
+                    <div className="space-y-2">
+                        <h1 className="text-2xl font-bold text-white">
+                            {t("title")}
+                        </h1>
+                        <p className="text-sm text-slate-400">
+                            {t("subtitle")}
                         </p>
-                    ) : null}
-                </div>
-                {!ready ? (
-                    <AdminAiBalancerSkeleton />
-                ) : (
-                    <div className="flex flex-col gap-6">
-                        {sortedProviders.map((providerHealth) => (
-                            <ProviderSection
-                                key={providerHealth.provider}
-                                providerHealth={providerHealth}
-                            />
-                        ))}
-                        {sortedProviders.length === 0 ? (
-                            <p className="text-center text-sm text-slate-400">
-                                {t("empty")}
+                        {isValidating ? (
+                            <p className="text-xs text-indigo-300">
+                                {t("refreshing")}
                             </p>
                         ) : null}
                     </div>
-                )}
-                {error ? (
-                    <p className="text-center text-sm text-rose-300">
-                        {t("error")}
-                    </p>
-                ) : null}
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    className="mx-auto text-indigo-300"
-                    onPress={onRefresh}
-                >
-                    {t("refreshNow")}
-                </Button>
-            </div>
-        </div>
+                    {!ready ? (
+                        <AdminAiBalancerSkeleton />
+                    ) : (
+                        <Box principle="block-boundary" className="flex flex-col gap-6">
+                            {sortedProviders.map((providerHealth) => (
+                                <ProviderSection
+                                    key={providerHealth.provider}
+                                    providerHealth={providerHealth}
+                                />
+                            ))}
+                            {sortedProviders.length === 0 ? (
+                                <p className="text-center text-sm text-slate-400">
+                                    {t("empty")}
+                                </p>
+                            ) : null}
+                        </Box>
+                    )}
+                    {error ? (
+                        <p className="text-center text-sm text-rose-300">
+                            {t("error")}
+                        </p>
+                    ) : null}
+                    <Box principle="center-measure" className="mx-auto">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-indigo-300"
+                            onPress={onRefresh}
+                        >
+                            {t("refreshNow")}
+                        </Button>
+                    </Box>
+                </Box>
+            </Box>
+        </Box>
     )
 }

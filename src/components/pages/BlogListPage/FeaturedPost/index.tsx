@@ -6,6 +6,8 @@ import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
 import { CATEGORY_COLOR } from "@/modules/utils/blog-category"
 import { type QueryBlogPostListItem } from "@/modules/api/graphql/queries/types/blog"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link FeaturedPost}. */
 export interface FeaturedPostProps {
@@ -22,50 +24,61 @@ export interface FeaturedPostProps {
  */
 export const FeaturedPost = ({ post, formattedDate }: FeaturedPostProps) => {
     const t = useTranslations("blog")
+    const readingMinutes = post.readingMinutes
     return (
         <Link
             href={`/blog/${post.slug}`}
-            className="group flex cursor-pointer flex-col gap-3 border-b border-default pb-6"
+            className="group cursor-pointer border-b border-default pb-6"
         >
-            {/* eyebrow: pillar chip · "latest" · optional premium */}
-            <div className="flex flex-wrap items-center gap-2">
-                <Chip size="sm" variant="soft" color={CATEGORY_COLOR[post.category]}>
-                    {t(`categories.${post.category}`)}
-                </Chip>
-                <span className="text-xs font-medium text-accent-soft-foreground">
-                    {t("latest")}
-                </span>
-                {post.isPremium && (
-                    <Chip size="sm" variant="soft" color="warning">
-                        {t("premium")}
-                    </Chip>
-                )}
-            </div>
+            <StackV gap={4} principle="content-row" items={[
+                // eyebrow: pillar chip · "latest" · optional premium
+                () => (
+                    <Cluster gap={3} principle="chip-row" items={[
+                        () => (
+                            <Chip size="sm" variant="soft" color={CATEGORY_COLOR[post.category]}>
+                                {t(`categories.${post.category}`)}
+                            </Chip>
+                        ),
+                        () => (
+                            <span className="text-xs font-medium text-accent-soft-foreground">
+                                {t("latest")}
+                            </span>
+                        ),
+                        ...(post.isPremium ? [() => (
+                            <Chip size="sm" variant="soft" color="warning">
+                                {t("premium")}
+                            </Chip>
+                        )] : []),
+                    ]} />
+                ),
 
-            {/* optional cover — only when the post actually has one */}
-            {post.coverImageUrl && (
-                <img
-                    src={post.coverImageUrl}
-                    alt=""
-                    className="aspect-[16/9] w-full rounded-large object-cover"
-                />
-            )}
+                // optional cover — only when the post actually has one
+                () => (post.coverImageUrl ? (
+                    <img
+                        src={post.coverImageUrl}
+                        alt=""
+                        className="aspect-[16/9] w-full rounded-large object-cover"
+                    />
+                ) : null),
 
-            {/* serif display title — the page's visual hero */}
-            <h2 className="text-3xl font-semibold leading-tight text-foreground underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
-                {post.title}
-            </h2>
-            {post.excerpt && <p className="text-base text-muted">{post.excerpt}</p>}
+                // serif display title — the page's visual hero
+                () => (
+                    <h2 className="text-3xl font-semibold leading-tight text-foreground underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
+                        {post.title}
+                    </h2>
+                ),
+                () => (post.excerpt ? <p className="text-base text-muted">{post.excerpt}</p> : null),
 
-            <div className="flex items-center gap-2 text-sm text-muted">
-                <span>{formattedDate}</span>
-                {post.readingMinutes != null && (
-                    <>
-                        <span aria-hidden>·</span>
-                        <span>{t("readingMinutes", { minutes: post.readingMinutes })}</span>
-                    </>
-                )}
-            </div>
+                () => (
+                    <StackH gap={3} principle="identity" align="center" items={[
+                        () => <span className="text-sm text-muted">{formattedDate}</span>,
+                        ...(readingMinutes != null ? [
+                            () => <span aria-hidden className="text-sm text-muted">·</span>,
+                            () => <span className="text-sm text-muted">{t("readingMinutes", { minutes: readingMinutes })}</span>,
+                        ] : []),
+                    ]} />
+                ),
+            ]} />
         </Link>
     )
 }

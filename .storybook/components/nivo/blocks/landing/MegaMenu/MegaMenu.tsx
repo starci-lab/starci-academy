@@ -44,6 +44,7 @@ const itemBody = (item: MegaMenuItem) => (
     <StackV
         gap={1}
         align="start"
+        principle="name-handle"
         items={[
             () => <Typography size="sm" weight="semibold" text={item.title} />,
             () => <Typography size="xs" color={item.isRoadmap ? "warning" : "muted"} text={item.description} />,
@@ -72,7 +73,7 @@ const MegaMenu = ({ triggerLabel, ariaLabel, items, defaultOpen = false }: MegaM
                 triggerVariant="ghost"
                 placement="bottom start"
                 defaultOpen={defaultOpen}
-                content={<SurfaceCardPressableGroup ariaLabel={ariaLabel} gap={2} items={groupItems} />}
+                content={<SurfaceCardPressableGroup ariaLabel={ariaLabel} items={groupItems} principle="sibling-stack" />}
             />
         </div>
     )

@@ -91,6 +91,7 @@ const LeadsInboxCard = ({ counts, onOpenCrm, isSkeleton = false, labels }: Leads
                 body={() => (
                     <StackV
                         gap={3}
+                        principle="sibling-stack"
                         isSkeleton={isSkeleton}
                         items={[
                             () => (
@@ -136,6 +137,7 @@ const LeadsInboxCard = ({ counts, onOpenCrm, isSkeleton = false, labels }: Leads
                                     () => (
                                         <StackH
                                             gap={2}
+                                            principle="icon-text"
                                             at="sm"
                                             isSkeleton={isSkeleton}
                                             items={STATUS_ORDER.map((status) => () => (

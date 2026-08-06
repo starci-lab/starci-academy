@@ -70,14 +70,14 @@ export const ConceptNode = ({ id, data }: NodeProps) => {
 
             {selected ? (
                 <div
-                    className="nodrag nopan absolute bottom-full left-1/2 z-50 mb-2 w-60 -translate-x-1/2 cursor-default rounded-2xl border border-default bg-surface p-3 text-left"
-                    // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- only blocks click-through to the canvas; there is no action, so no keyboard duplicate is needed
+                    data-principle="cell-pad" className="nodrag nopan absolute bottom-full left-1/2 z-50 mb-2 w-60 -translate-x-1/2 cursor-default rounded-2xl border border-default bg-surface p-3 text-left"
+
                     onClick={(event) => event.stopPropagation()}
                 >
-                    <div className="mb-1 flex items-center gap-2">
+                    <div data-principle="identity" className="mb-1 flex items-center gap-2">
                         <span aria-hidden className={cn("size-1.5 shrink-0 rounded-full", cfg.dot)} />
                         <span className="text-xs font-semibold text-foreground">{label}</span>
-                        <span className="ml-auto text-[10px] text-muted">{LANDING_TRACK_TAG[track]}</span>
+                        <span data-principle="push-end" className="ml-auto text-[10px] text-muted">{LANDING_TRACK_TAG[track]}</span>
                     </div>
                     <Typography type="body-xs" color="muted" className="whitespace-normal">
                         {t(`landing.treasure.graph.${id}`)}

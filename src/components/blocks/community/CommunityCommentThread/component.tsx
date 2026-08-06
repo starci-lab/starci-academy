@@ -7,7 +7,8 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Divider } from "@/components/atoms/display/Divider"
 
-import { StackH, StackV } from "@/components/frames/Stack"
+import { Box } from "@/components/frames/Box"
+import { StackV } from "@/components/frames/Stack"
 import { CommunityCommentItem } from "@/components/blocks/community/CommunityCommentItem"
 import type { QueryCommunityCommentNode } from "@/modules/api/graphql/queries/types/community-comments"
 
@@ -123,6 +124,7 @@ export const _CommunityCommentThread = ({
     return (
         <StackV
             gap={3}
+            principle="sibling-stack"
             identity={{ tier: "block", component: "CommunityCommentThread" }}
             items={[
                 () => <Divider />,
@@ -139,18 +141,16 @@ export const _CommunityCommentThread = ({
                             />
                         ),
                         () => (
-                            <StackH gap={2} justify="end" items={[
-                                () => (
-                                    <Button
-                                        variant="primary"
-                                        size="sm"
-                                        label={labels.send}
-                                        isPending={isSubmitting}
-                                        isDisabled={!composerValue.trim()}
-                                        onPress={() => void onComposerSubmit()}
-                                    />
-                                ),
-                            ]} />
+                            <Box principle="push-end" className="ml-auto w-fit">
+                                <Button
+                                    variant="primary"
+                                    size="sm"
+                                    label={labels.send}
+                                    isPending={isSubmitting}
+                                    isDisabled={!composerValue.trim()}
+                                    onPress={() => void onComposerSubmit()}
+                                />
+                            </Box>
                         ),
                     ]} />
                 )] : []),

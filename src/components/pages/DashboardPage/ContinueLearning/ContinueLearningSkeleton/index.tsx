@@ -10,6 +10,7 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link ContinueLearningSkeleton}. */
 export type ContinueLearningSkeletonProps = WithClassNames<undefined>
@@ -31,13 +32,17 @@ export const ContinueLearningSkeleton = ({
     <div className={cn("grid gap-3 @app-sm:grid-cols-2 @app-lg:grid-cols-3", className)}>
         {[0, 1, 2].map((card) => (
             <Card key={card} className="h-full">
-                <CardContent className="flex h-full flex-col gap-3">
-                    <div className="flex min-w-0 flex-col gap-1">
-                        <Skeleton.Typography type="body-sm" width="3/4" />
-                        <Skeleton.Typography type="body-xs" width="1/2" />
-                    </div>
-                    {/* CTA "Continue →" — own row below the title (SeeMoreLink), not inline-right */}
-                    <Skeleton.Typography type="body-sm" width="1/3" />
+                <CardContent>
+                    <StackV gap={4} principle="sibling-stack" classNames={["h-full"]} items={[
+                        () => (
+                            <StackV gap={2} principle="title-subtitle" classNames={["min-w-0"]} items={[
+                                () => <Skeleton.Typography type="body-sm" width="3/4" />,
+                                () => <Skeleton.Typography type="body-xs" width="1/2" />,
+                            ]} />
+                        ),
+                        // CTA "Continue →" — own row below the title (SeeMoreLink), not inline-right
+                        () => <Skeleton.Typography type="body-sm" width="1/3" />,
+                    ]} />
                 </CardContent>
             </Card>
         ))}

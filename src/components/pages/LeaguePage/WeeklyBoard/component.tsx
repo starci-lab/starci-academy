@@ -98,19 +98,19 @@ export interface WeeklyBoardProps {
  * (badge · rank/meta lines · goal meter · CTA) since the block has no `isSkeleton` of its own.
  */
 const HeroSkeleton = () => (
-    <Box className="rounded-3xl bg-surface p-5 shadow-surface">
-        <StackV gap={5} items={[
+    <Box principle="card-padding" className="rounded-3xl bg-surface p-4 shadow-surface">
+        <StackV gap={5} principle="group-boundary" items={[
             () => (
-                <StackH gap={5} items={[
+                <StackH gap={5} principle="group-boundary" items={[
                     () => <Skeleton className="size-10 shrink-0 rounded-2xl" />,
-                    () => <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={[
+                    () => <StackV gap={2} principle="title-subtitle" classNames={["min-w-0", "flex-1"]} items={[
                         () => <Skeleton.Typography type="h6" width="1/2" />,
                         () => <Skeleton.Typography type="body-sm" width="1/3" />,
                     ]} />,
                 ]} />
             ),
             () => (
-                <StackV gap={2} items={[
+                <StackV gap={2} principle="title-subtitle" items={[
                     () => <Skeleton.Typography type="body-xs" width="1/3" />,
                     () => <Skeleton.ProgressBar />,
                 ]} />
@@ -125,13 +125,13 @@ const HeroSkeleton = () => (
  * raised) since the block has no `isSkeleton` of its own.
  */
 const PodiumSkeleton = () => (
-    <StackH gap={4} justify="center" items={[false, true, false].map((isChampion) => () => (
-        <StackV gap={3} align="center" items={[
+    <StackH gap={4} principle="content-row" justify="center" items={[false, true, false].map((isChampion) => () => (
+        <StackV gap={3} principle="sibling-stack" align="center" items={[
             () => <Skeleton className={isChampion ? "size-14 shrink-0 rounded-full" : "size-12 shrink-0 rounded-full"} />,
             // The podium column's fixed width is not a member of the closed AllowedClassName
             // union, so it sits on Box — the frame tier's sanctioned escape hatch — rather than
             // widening that union for one skeleton.
-            () => <Box className="w-20"><StackV gap={2} align="center" items={[
+            () => <Box className="w-20"><StackV gap={2} principle="title-subtitle" align="center" items={[
                 () => <Skeleton.Typography type="body-sm" width="3/4" />,
                 () => <Skeleton.Typography type="body-xs" width="1/2" />,
             ]} /></Box>,
@@ -142,7 +142,7 @@ const PodiumSkeleton = () => (
 
 /** Loading placeholder for one rank 4+ row — mirrors the [rank · avatar · name · points · caret] shape. */
 const RowSkeleton = () => (
-    <StackH gap={4} items={[
+    <StackH gap={4} principle="content-row" items={[
         () => <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />,
         () => <Skeleton.Avatar size="sm" />,
         () => <Skeleton.Typography type="body-sm" width="1/3" className="min-w-0 flex-1" />,
@@ -153,7 +153,7 @@ const RowSkeleton = () => (
 
 /** One resolved rank 4+ row: rank cell · profile-linked user cell · points · movement caret. */
 const Row = ({ row }: { row: WeeklyBoardRowEntry }) => (
-    <StackH gap={4} items={[
+    <StackH gap={4} principle="content-row" items={[
         () => (
             <Box as="span" className="w-6 shrink-0 text-right">
                 <Typography size="xs" color={row.mine ? "accent" : "muted"} weight={row.mine ? "semibold" : undefined} text={String(row.rank)} />
@@ -232,7 +232,7 @@ export const _WeeklyBoard = ({
 
     return (
         <Box className={className} identity={{ tier: "block", component: "WeeklyBoard" }}>
-            <StackV gap={6} items={[
+            <StackV gap={6} principle="block-boundary" items={[
                 () => <Confetti fireKey={celebrateKey} />,
 
                 // your standing hero — rank-driven badge · rank/meta · goal meter · CTA
@@ -260,15 +260,15 @@ export const _WeeklyBoard = ({
 
                 // promote / demote legend
                 () => (
-                    <StackH gap={4} items={[
+                    <StackH gap={4} principle="content-row" items={[
                         () => (
-                            <StackH gap={3} items={[
+                            <StackH gap={3} principle="sibling-stack" items={[
                                 () => <Box as="span" className="size-2 shrink-0 rounded-full bg-success" />,
                                 () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.legendPromote} />,
                             ]} />
                         ),
                         () => (
-                            <StackH gap={3} items={[
+                            <StackH gap={3} principle="sibling-stack" items={[
                                 () => <Box as="span" className="size-2 shrink-0 rounded-full bg-danger" />,
                                 () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.legendDemote} />,
                             ]} />

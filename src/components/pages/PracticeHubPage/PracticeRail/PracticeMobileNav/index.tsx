@@ -13,6 +13,7 @@ import {
 import { useTranslations } from "next-intl"
 import { CODING_DOMAIN_ORDER } from "@/modules/api/graphql/queries/types/coding"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import { StackH } from "@/components/frames/Stack"
 import { usePracticeView } from "../../hooks/usePracticeView"
 import { usePracticeFilters } from "../../hooks/usePracticeFilters"
 import type { PracticeView } from "../../hooks/usePracticeView"
@@ -52,19 +53,19 @@ export const PracticeMobileNav = ({ className }: PracticeMobileNavProps) => {
                         {
                             key: "problems",
                             label: (
-                                <span className="flex items-center gap-2">
-                                    <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />
-                                    {t("PracticeHubPage.tabs.problems")}
-                                </span>
+                                <StackH gap={3} principle="flex-action" as="span" items={[
+                                    () => <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+                                    () => <>{t("PracticeHubPage.tabs.problems")}</>,
+                                ]} />
                             ),
                         },
                         {
                             key: "leaderboard",
                             label: (
-                                <span className="flex items-center gap-2">
-                                    <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />
-                                    {t("PracticeHubPage.tabs.leaderboard")}
-                                </span>
+                                <StackH gap={3} principle="flex-action" as="span" items={[
+                                    () => <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+                                    () => <>{t("PracticeHubPage.tabs.leaderboard")}</>,
+                                ]} />
                             ),
                         },
                     ],
@@ -76,22 +77,27 @@ export const PracticeMobileNav = ({ className }: PracticeMobileNavProps) => {
                 <ScrollShadow
                     orientation="horizontal"
                     hideScrollBar
-                    className="flex gap-2 overflow-x-auto"
+                    className="overflow-x-auto"
                 >
-                    {MOBILE_TOPICS.map((domain) => (
-                        <Button
-                            key={domain}
-                            size="sm"
-                            variant={filters.domain === domain ? "secondary" : "ghost"}
-                            aria-pressed={filters.domain === domain}
-                            className="shrink-0"
-                            onPress={() => setFilters({ domain })}
-                        >
-                            {domain === "all"
-                                ? t("PracticeHubPage.filters.allDomains")
-                                : t(`codingPractice.domain.${domain}`)}
-                        </Button>
-                    ))}
+                    <StackH
+                        gap={3}
+                        principle="chip-row"
+                        items={MOBILE_TOPICS.map((domain) => (
+                            () => (
+                                <Button
+                                    size="sm"
+                                    variant={filters.domain === domain ? "secondary" : "ghost"}
+                                    aria-pressed={filters.domain === domain}
+                                    className="shrink-0"
+                                    onPress={() => setFilters({ domain })}
+                                >
+                                    {domain === "all"
+                                        ? t("PracticeHubPage.filters.allDomains")
+                                        : t(`codingPractice.domain.${domain}`)}
+                                </Button>
+                            )
+                        ))}
+                    />
                 </ScrollShadow>
             ) : null}
         </div>

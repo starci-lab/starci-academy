@@ -14,6 +14,8 @@ import { DASHBOARD_TABS } from "../types"
 import type { DashboardTab } from "../types"
 import { ExtendedTabs } from "@/components/blocks/navigation/ExtendedTabs"
 import { useDashboardTabStore } from "@/hooks/zustand/dashboardTab/store"
+import { Box } from "@/components/frames/Box"
+import { StackH } from "@/components/frames/Stack"
 
 /** Leading icon shown on each DashboardPage tab, keyed by tab id. */
 const TAB_ICONS: Record<DashboardTab, typeof HouseIcon> = {
@@ -41,7 +43,8 @@ export const DashboardTabsBar = ({ className }: DashboardTabsBarProps) => {
 
     return (
         <div className={cn("w-full", className)}>
-            <div className="w-full px-6">
+            {/* page-pad owns the horizontal inset; py stays 0 so the strip hugs the navbar */}
+            <Box principle="page-pad" className="w-full px-6">
                 <ExtendedTabs
                     selectedKey={tab}
                     onSelectionChange={(key) => setTab(key as DashboardTab)}
@@ -56,16 +59,25 @@ export const DashboardTabsBar = ({ className }: DashboardTabsBarProps) => {
                                         id={tabId}
                                         aria-controls={`DashboardPage-panel-${tabId}`}
                                     >
-                                        <span className="flex items-center gap-2">
-                                            <TabIcon
-                                                aria-hidden
-                                                focusable="false"
-                                                className="size-5 shrink-0"
-                                            />
-                                            <span className="hidden @app-md:inline">
-                                                {t(`DashboardPage.tabs.${tabId}`)}
-                                            </span>
-                                        </span>
+                                        <StackH
+                                            gap={2}
+                                            principle="icon-text"
+                                            align="center"
+                                            items={[
+                                                () => (
+                                                    <TabIcon
+                                                        aria-hidden
+                                                        focusable="false"
+                                                        className="size-5 shrink-0"
+                                                    />
+                                                ),
+                                                () => (
+                                                    <span className="hidden @app-md:inline">
+                                                        {t(`DashboardPage.tabs.${tabId}`)}
+                                                    </span>
+                                                ),
+                                            ]}
+                                        />
                                         <Tabs.Indicator />
                                     </Tabs.Tab>
                                 )
@@ -73,7 +85,7 @@ export const DashboardTabsBar = ({ className }: DashboardTabsBarProps) => {
                         </Tabs.List>
                     </Tabs.ListContainer>
                 </ExtendedTabs>
-            </div>
+            </Box>
         </div>
     )
 }

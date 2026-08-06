@@ -67,6 +67,7 @@ const OperatingLoopVisual = ({ nodes, activeNodeId }: OperatingLoopVisualProps) 
             gap={5}
             justify="center"
             separator
+            principle="group-boundary"
             items={nodes.map((node) => () => (
                 <FlowNode node={node} isActive={node.id === activeNodeId} />
             ))}

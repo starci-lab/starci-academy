@@ -38,10 +38,11 @@ import type { CallerIdentity } from "@/components/frames/_identity"
 /** Props shared by both axes of {@link Stack}. */
 export interface StackBaseProps {
     /**
-     * Seam between children on the house gap scale -- REQUIRED.
-     * The PARENT owns this seam (§10a), so children must not carry margin.
+     * Seam between children on the house gap scale.
+     * Optional when `principle` is a gap-owning token — the principle resolves the class.
+     * Still required when there is no gap principle (Flex enforces at render via ownership).
      */
-    gap: Responsive<AllowedGap>
+    gap?: Responsive<AllowedGap>
     /** Cross-axis alignment (`V` → horizontal, `H` → vertical). */
     align?: LayoutAlign
     /** Main-axis distribution (`V` → vertical, `H` → horizontal). */
@@ -181,6 +182,19 @@ const StackV = ({
     // `items` (buildable) wins over legacy `body`: the track renders each item itself, threading
     // `isSkeleton`, so it can shimmer the whole column and interleave dividers on the real children.
     const content = (items ?? (body ? [body] : [])).map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)
+    // Strict contract: when `principle` is set it owns the full CSS — do not forward
+    // gap/padding/align/justify/classNames/inline/nested from the caller.
+    if (principle) {
+        return (
+            <Flex
+                as={Tag}
+                direction="col"
+                principle={principle}
+                identity={identity}
+                body={divider ? interleaveDividers(content, "vertical") : content}
+            />
+        )
+    }
     return (
         <Flex
             as={Tag}
@@ -192,7 +206,6 @@ const StackV = ({
             justify={justify}
             nested={nested}
             classNames={classNames}
-            principle={principle}
             identity={identity}
             body={divider ? interleaveDividers(content, "vertical") : content}
         />
@@ -216,6 +229,19 @@ const StackH = ({
     principle,
     identity}: StackHProps) => {
     const content = (items ?? (body ? [body] : [])).map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)
+    if (principle) {
+        return (
+            <Flex
+                as={Tag}
+                direction="row"
+                principle={principle}
+                identity={identity}
+                // `at` is a named width switch (FRAME-10), not a free CSS boolean — still forwarded.
+                at={at}
+                body={divider ? interleaveDividers(content, "horizontal") : content}
+            />
+        )
+    }
     return (
         <Flex
             as={Tag}
@@ -228,7 +254,6 @@ const StackH = ({
             at={at}
             nested={nested}
             classNames={classNames}
-            principle={principle}
             identity={identity}
             body={divider ? interleaveDividers(content, "horizontal") : content}
         />

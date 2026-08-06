@@ -7,6 +7,7 @@ import React, {
 import {
     Button,
 } from "@heroui/react"
+import { StackH } from "@/components/frames/Stack"
 
 import {
     useRouter,
@@ -42,25 +43,31 @@ export const TopBar = () => {
     )
 
     return (
-        <div className="flex flex-wrap items-center gap-3 pt-4">
-            <Button
-                variant="ghost"
-                size="sm"
-                className="text-slate-400 hover:text-white"
-                onPress={onBack}
-            >
-                <ArrowLeftIcon className="h-5 w-5" />
-                {t("backToAdmin")}
-            </Button>
-            <Button
-                variant="ghost"
-                size="sm"
-                className="text-slate-400 hover:text-white"
-                onPress={onOpenUploadVideo}
-            >
-                <FilmStripIcon className="h-5 w-5" />
-                {t("uploadVideoTool")}
-            </Button>
+        <div className="pt-4">
+            <StackH gap={4} principle="content-row" align="center" items={[
+                () => (
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-slate-400 hover:text-white"
+                        onPress={onBack}
+                    >
+                        <ArrowLeftIcon className="h-5 w-5" />
+                        {t("backToAdmin")}
+                    </Button>
+                ),
+                () => (
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-slate-400 hover:text-white"
+                        onPress={onOpenUploadVideo}
+                    >
+                        <FilmStripIcon className="h-5 w-5" />
+                        {t("uploadVideoTool")}
+                    </Button>
+                ),
+            ]} />
         </div>
     )
 }

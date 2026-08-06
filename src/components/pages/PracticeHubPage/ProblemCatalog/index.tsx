@@ -23,6 +23,8 @@ import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { CODING_DOMAIN_ORDER, type CodingDomain, type CodingProblem } from "@/modules/api/graphql/queries/types/coding"
+import { StackH, StackV } from "@/components/frames/Stack"
+import { Box } from "@/components/frames/Box"
 
 /** Props for {@link ProblemCatalog}. */
 export type ProblemCatalogProps = WithClassNames<undefined>
@@ -89,24 +91,27 @@ export const ProblemCatalog = ({
                 <SurfaceListCard className={className}>
                     {[0, 1, 2, 3, 4].map((row) => (
                         <SurfaceListCardItem key={row}>
-                            <div className="flex min-w-0 items-center gap-3">
-                                {/* status icon */}
-                                <Skeleton className="size-5 shrink-0 rounded-full" />
-                                {/* title + tags */}
-                                <div className="flex min-w-0 flex-col gap-2">
-                                    <Skeleton.Typography type="body-sm" width="1/2" />
-                                    <div className="flex flex-wrap items-center gap-2">
-                                        <Skeleton.Typography type="body-xs" width="1/4" />
-                                        <Skeleton.Typography type="body-xs" width="1/4" />
-                                    </div>
-                                </div>
-                                {/* right cluster: difficulty + domain chips + points */}
-                                <div className="ml-auto flex shrink-0 items-center gap-2">
-                                    <Skeleton.Chip />
-                                    <Skeleton.Chip />
-                                    <Skeleton.Typography type="body-xs" width="1/4" className="w-10" />
-                                </div>
-                            </div>
+                            <StackH gap={4} align="center" principle="content-row" classNames={["min-w-0"]} items={[
+                                () => <Skeleton className="size-5 shrink-0 rounded-full" />,
+                                () => (
+                                    <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
+                                        () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                        () => (
+                                            <Box principle="chip-row" className="flex flex-wrap items-center gap-2">
+                                                <Skeleton.Typography type="body-xs" width="1/4" />
+                                                <Skeleton.Typography type="body-xs" width="1/4" />
+                                            </Box>
+                                        ),
+                                    ]} />
+                                ),
+                                () => (
+                                    <Box principle="push-end" className="ml-auto flex shrink-0 items-center gap-2">
+                                        <Skeleton.Chip />
+                                        <Skeleton.Chip />
+                                        <Skeleton.Typography type="body-xs" width="1/4" className="w-10" />
+                                    </Box>
+                                ),
+                            ]} />
                         </SurfaceListCardItem>
                     ))}
                 </SurfaceListCard>
@@ -129,26 +134,33 @@ export const ProblemCatalog = ({
             {filters.group ? (
                 <div className={cn("flex flex-col gap-6", className)}>
                     {groups.map((group) => (
-                        <section key={group.domain} className="flex flex-col gap-2">
-                            {/* domain header + count */}
-                            <div className="flex items-center gap-2">
-                                <Typography type="h5" weight="semibold">
-                                    {t(`codingPractice.domain.${group.domain}`)}
-                                </Typography>
-                                <Chip size="sm" variant="soft" color="default">
-                                    <Chip.Label>{group.problems.length}</Chip.Label>
-                                </Chip>
-                            </div>
-                            <SurfaceListCard>
-                                {group.problems.map((problem) => (
-                                    <ProblemRow
-                                        key={problem.id}
-                                        problem={problem}
-                                        status={deriveStatus(problem.id, progress)}
-                                    />
-                                ))}
-                            </SurfaceListCard>
-                        </section>
+                        <StackV key={group.domain} gap={3} principle="sibling-stack" as="section" items={[
+                            () => (
+                                <StackH gap={3} principle="flex-action" items={[
+                                    () => (
+                                        <Typography type="h5" weight="semibold">
+                                            {t(`codingPractice.domain.${group.domain}`)}
+                                        </Typography>
+                                    ),
+                                    () => (
+                                        <Chip size="sm" variant="soft" color="default">
+                                            <Chip.Label>{group.problems.length}</Chip.Label>
+                                        </Chip>
+                                    ),
+                                ]} />
+                            ),
+                            () => (
+                                <SurfaceListCard>
+                                    {group.problems.map((problem) => (
+                                        <ProblemRow
+                                            key={problem.id}
+                                            problem={problem}
+                                            status={deriveStatus(problem.id, progress)}
+                                        />
+                                    ))}
+                                </SurfaceListCard>
+                            ),
+                        ]} />
                     ))}
                 </div>
             ) : (

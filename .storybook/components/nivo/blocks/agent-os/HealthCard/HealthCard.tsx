@@ -60,6 +60,7 @@ const HealthCard = ({ healthPercent, isSkeleton = false, labels }: HealthCardPro
             body={() => (
                 <StackH
                     gap={4}
+                    principle="content-row"
                     isSkeleton={isSkeleton}
                     items={[
                         () => <HealthIconTile />,

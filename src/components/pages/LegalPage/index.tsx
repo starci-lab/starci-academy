@@ -27,6 +27,8 @@ import type {
 } from "@/resources/legal"
 import { PageContainer } from "@/components/blocks/layout/PageContainer"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { Box } from "@/components/frames/Box"
+import { StackV } from "@/components/frames/Stack"
 
 /** Which legal document this page renders. */
 export type LegalKind = "terms" | "privacy"
@@ -41,31 +43,36 @@ export interface LegalPageProps {
  * Renders one numbered section: heading + body paragraphs + an optional bullet
  * list whose items may carry a bold lead label. Plain Typography — no markdown.
  */
-const Section = ({ section }: { section: LegalSection }) => (
-    <section className="flex flex-col gap-3">
-        <Typography.Heading level={4} weight="semibold">{section.heading}</Typography.Heading>
-        {section.paragraphs?.map((paragraph) => (
+const Section = ({ section }: { section: LegalSection }) => {
+    const sectionItems = [
+        () => <Typography.Heading level={4} weight="semibold">{section.heading}</Typography.Heading>,
+        ...(section.paragraphs?.map((paragraph) => () => (
             <Typography key={paragraph} type="body" color="muted" className="leading-relaxed">
                 {paragraph}
             </Typography>
-        ))}
-        {section.items ? (
-            <ul className="flex flex-col gap-2">
-                {section.items.map((item) => (
-                    <li key={item.label ?? item.text} className="flex gap-2">
-                        <span className="mt-2 size-1.5 shrink-0 rounded-full bg-default-400" aria-hidden />
-                        <Typography type="body" color="muted" className="leading-relaxed">
-                            {item.label ? (
-                                <span className="font-semibold text-foreground">{`${item.label} `}</span>
-                            ) : null}
-                            {item.text}
-                        </Typography>
-                    </li>
-                ))}
-            </ul>
-        ) : null}
-    </section>
-)
+        )) ?? []),
+        ...(section.items
+            ? [() => (
+                <ul data-principle="sibling-stack" className="flex flex-col gap-2">
+                    {section.items!.map((item) => (
+                        <li key={item.label ?? item.text} data-principle="icon-text" className="flex gap-2">
+                            <span className="mt-2 size-1.5 shrink-0 rounded-full bg-default-400" aria-hidden />
+                            <Typography type="body" color="muted" className="leading-relaxed">
+                                {item.label ? (
+                                    <span className="font-semibold text-foreground">{`${item.label} `}</span>
+                                ) : null}
+                                {item.text}
+                            </Typography>
+                        </li>
+                    ))}
+                </ul>
+            )]
+            : []),
+    ]
+    return (
+        <StackV as="section" gap={4} items={sectionItems} />
+    )
+}
 
 /**
  * Shared legal document page (`/terms`, `/privacy`): a 3-tier reading column —
@@ -88,46 +95,56 @@ export const LegalPage = ({ kind }: LegalPageProps) => {
         locale === "vi" ? "vi-VN" : "en-GB",
         { day: "numeric", month: "long", year: "numeric" },
     )
+
+    const docItems = [
+        () => (
+            <Typography type="body" className="leading-relaxed">
+                {doc.intro}
+            </Typography>
+        ),
+        ...doc.sections.map((section) => () => (
+            <Section key={section.heading} section={section} />
+        )),
+    ]
+
     return (
         <PageContainer>
-            <div className="mx-auto flex max-w-3xl flex-col gap-10">
-                <PageHeader
-                    breadcrumb={(
-                        <Breadcrumbs>
-                            <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale().build())}>
-                                {t("nav.home")}
-                            </Breadcrumbs.Item>
-                            <Breadcrumbs.Item>
-                                {t(`legal.${kind}.title`)}
-                            </Breadcrumbs.Item>
-                        </Breadcrumbs>
-                    )}
-                    title={t(`legal.${kind}.title`)}
-                    description={t(`legal.${kind}.description`)}
-                    meta={(
-                        <Typography type="body-xs" color="muted">
-                            {t("legal.lastUpdated", { date: lastUpdated })}
-                        </Typography>
-                    )}
-                />
-                <div className="flex flex-col gap-8">
-                    <Typography type="body" className="leading-relaxed">
-                        {doc.intro}
-                    </Typography>
-                    {doc.sections.map((section) => (
-                        <Section key={section.heading} section={section} />
-                    ))}
-                </div>
-                {/* quiet funnel out of the legal doc — never a dead end (§Conversion) */}
-                <Button
-                    variant="tertiary"
-                    size="sm"
-                    className="self-start"
-                    onPress={() => router.push(pathConfig().locale().course().build())}
-                >
-                    {`${t("cart.browseCourses")} →`}
-                </Button>
-            </div>
+            <Box principle="center-measure" className="mx-auto max-w-3xl">
+                <StackV gap={7} principle="layout-split" items={[
+                    () => (
+                        <PageHeader
+                            breadcrumb={(
+                                <Breadcrumbs>
+                                    <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale().build())}>
+                                        {t("nav.home")}
+                                    </Breadcrumbs.Item>
+                                    <Breadcrumbs.Item>
+                                        {t(`legal.${kind}.title`)}
+                                    </Breadcrumbs.Item>
+                                </Breadcrumbs>
+                            )}
+                            title={t(`legal.${kind}.title`)}
+                            description={t(`legal.${kind}.description`)}
+                            meta={(
+                                <Typography type="body-xs" color="muted">
+                                    {t("legal.lastUpdated", { date: lastUpdated })}
+                                </Typography>
+                            )}
+                        />
+                    ),
+                    () => <StackV gap={7} principle="layout-split" items={docItems} />,
+                    () => (
+                        <Button
+                            variant="tertiary"
+                            size="sm"
+                            className="self-start"
+                            onPress={() => router.push(pathConfig().locale().course().build())}
+                        >
+                            {`${t("cart.browseCourses")} →`}
+                        </Button>
+                    ),
+                ]} />
+            </Box>
         </PageContainer>
     )
 }

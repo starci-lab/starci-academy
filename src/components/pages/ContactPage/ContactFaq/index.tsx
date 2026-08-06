@@ -13,6 +13,7 @@ import {
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { CONTACT_FAQ_INDEXES } from "@/resources/contact"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link ContactFaq}. */
 export type ContactFaqProps = WithClassNames<undefined>
@@ -28,36 +29,41 @@ export type ContactFaqProps = WithClassNames<undefined>
 export const ContactFaq = ({ className }: ContactFaqProps) => {
     const t = useTranslations()
     const locale = useLocale()
+    const bodyItems = [
+        () => (
+            <Accordion variant="surface">
+                {CONTACT_FAQ_INDEXES.map((index) => (
+                    <Accordion.Item
+                        key={index}
+                        aria-label={t(`contact.faq.q${index}`)}
+                    >
+                        <Accordion.Heading>
+                            <Accordion.Trigger>
+                                <Typography type="body-sm" weight="medium">
+                                    {t(`contact.faq.q${index}`)}
+                                </Typography>
+                            </Accordion.Trigger>
+                        </Accordion.Heading>
+                        <Accordion.Panel>
+                            <Accordion.Body>
+                                <Typography type="body-sm" color="muted">
+                                    {t(`contact.faq.a${index}`)}
+                                </Typography>
+                            </Accordion.Body>
+                        </Accordion.Panel>
+                    </Accordion.Item>
+                ))}
+            </Accordion>
+        ),
+        () => (
+            <Link href={`/${locale}#faq`}>
+                {t("contact.faq.landingLink")}
+            </Link>
+        ),
+    ]
     return (
         <LabeledCard label={t("contact.faq.title")} className={className}>
-            <div className="flex flex-col gap-4">
-                <Accordion variant="surface">
-                    {CONTACT_FAQ_INDEXES.map((index) => (
-                        <Accordion.Item
-                            key={index}
-                            aria-label={t(`contact.faq.q${index}`)}
-                        >
-                            <Accordion.Heading>
-                                <Accordion.Trigger>
-                                    <Typography type="body-sm" weight="medium">
-                                        {t(`contact.faq.q${index}`)}
-                                    </Typography>
-                                </Accordion.Trigger>
-                            </Accordion.Heading>
-                            <Accordion.Panel>
-                                <Accordion.Body>
-                                    <Typography type="body-sm" color="muted">
-                                        {t(`contact.faq.a${index}`)}
-                                    </Typography>
-                                </Accordion.Body>
-                            </Accordion.Panel>
-                        </Accordion.Item>
-                    ))}
-                </Accordion>
-                <Link href={`/${locale}#faq`}>
-                    {t("contact.faq.landingLink")}
-                </Link>
-            </div>
+            <StackV gap={5} principle="group-boundary" items={bodyItems} />
         </LabeledCard>
     )
 }

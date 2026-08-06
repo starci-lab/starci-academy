@@ -262,7 +262,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
             <StackV gap={4} items={[() => coursesSection]} />
             <StackV gap={4} items={[() => contributionsSection]} />
             {/* skills — 2-col grid of stat cards */}
-            <Grid columns={{ base: 1, md: 2 }} gap={6} principle="block-boundary" items={skillItems} />
+            <Grid columns={{ base: 1, md: 2 }} principle="block-boundary" items={skillItems} />
         </>
     )
 

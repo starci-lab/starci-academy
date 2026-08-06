@@ -84,7 +84,7 @@ const ContinueLearning = ({
         <div>
             <AsyncContent
                 isLoading={isLoading && items.length === 0}
-                skeleton={() => <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap={4} principle="sibling-stack" />}
+                skeleton={() => <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row" />}
                 isEmpty={!isLoading && items.length === 0}
                 emptyContent={{
                     title: hasCourses
@@ -104,7 +104,7 @@ const ContinueLearning = ({
                     ),
 
                 }}
-                content={() => <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} gap={4} principle="sibling-stack" />}
+                content={() => <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row" />}
             />
         </div>
     )

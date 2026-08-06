@@ -18,6 +18,8 @@ import {
     FOUNDER_LINKEDIN,
 } from "@/resources/contact"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link FounderCard}. */
 export type FounderCardProps = WithClassNames<undefined>
@@ -38,31 +40,39 @@ const SOCIALS = [
  */
 export const FounderCard = ({ className }: FounderCardProps) => {
     const t = useTranslations()
+    const bodyItems = [
+        () => (
+            <div className="flex flex-col">
+                <Typography type="body" weight="semibold">
+                    {t("contact.founder.name")}
+                </Typography>
+                <Typography type="body-sm" color="muted">
+                    {t("contact.founder.role")}
+                </Typography>
+            </div>
+        ),
+        () => (
+            <Cluster
+                gap={4}
+                align="center"
+                principle="chip-row"
+                items={SOCIALS.map(({ key, href, icon: Icon }) => () => (
+                    <Link
+                        key={key}
+                        href={href}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={t(`contact.founder.${key}`)}
+                    >
+                        <Icon className="size-5" aria-hidden />
+                    </Link>
+                ))}
+            />
+        ),
+    ]
     return (
         <LabeledCard label={t("contact.founder.title")} className={className}>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col">
-                    <Typography type="body" weight="semibold">
-                        {t("contact.founder.name")}
-                    </Typography>
-                    <Typography type="body-sm" color="muted">
-                        {t("contact.founder.role")}
-                    </Typography>
-                </div>
-                <div className="flex items-center gap-3">
-                    {SOCIALS.map(({ key, href, icon: Icon }) => (
-                        <Link
-                            key={key}
-                            href={href}
-                            target="_blank"
-                            rel="noreferrer"
-                            aria-label={t(`contact.founder.${key}`)}
-                        >
-                            <Icon className="size-5" aria-hidden />
-                        </Link>
-                    ))}
-                </div>
-            </div>
+            <StackV gap={4} items={bodyItems} />
         </LabeledCard>
     )
 }

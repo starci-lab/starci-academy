@@ -26,6 +26,9 @@ import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { Box } from "@/components/frames/Box"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackH, StackV } from "@/components/frames/Stack"
 import { useQueryMySessionsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMySessionsSwr"
 import { useMutateRevokeSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateRevokeSessionSwr"
 import type { LoginSession } from "@/modules/api/graphql/queries/types/my-sessions"
@@ -102,6 +105,32 @@ export const SessionsPage = () => {
 
     const sessionList = sessions ?? []
 
+    const skeletonRows = [0, 1, 2].map((row) => () => (
+        <SurfaceListCardItem key={row}>
+            <div className="h-12">
+                <StackH
+                    gap={4}
+                    align="center"
+                    principle="content-row"
+                    items={[
+                        () => <Skeleton className="size-5 shrink-0 rounded" />,
+                        () => (
+                            <StackV
+                                gap={3}
+                                principle="sibling-stack"
+                                classNames={["min-w-0", "flex-1"]}
+                                items={[
+                                    () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                    () => <Skeleton className="h-3 w-1/3 rounded" />,
+                                ]}
+                            />
+                        ),
+                    ]}
+                />
+            </div>
+        </SurfaceListCardItem>
+    ))
+
     return (
         <div className="flex flex-col gap-10">
             <PageHeader
@@ -114,16 +143,8 @@ export const SessionsPage = () => {
                 isLoading={isLoading && !sessions}
                 skeleton={(
                     <SurfaceListCard>
-                        {[0, 1, 2].map((row) => (
-                            <SurfaceListCardItem key={row}>
-                                <div className="flex h-12 items-center gap-3">
-                                    <Skeleton className="size-5 shrink-0 rounded" />
-                                    <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                        <Skeleton.Typography type="body-sm" width="1/2" />
-                                        <Skeleton className="h-3 w-1/3 rounded" />
-                                    </div>
-                                </div>
-                            </SurfaceListCardItem>
+                        {skeletonRows.map((Row, index) => (
+                            <Row key={index} />
                         ))}
                     </SurfaceListCard>
                 )}
@@ -150,38 +171,48 @@ export const SessionsPage = () => {
                         ]
                             .filter(Boolean)
                             .join(" • ") || t("sessions.unknownDevice")
-                        return (
-                            <SurfaceListCardItem key={session.id}>
-                                <div className="flex items-center gap-3">
-                                    <DeviceIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent-soft-foreground" />
-                                    <div className="flex min-w-0 flex-1 flex-col gap-0">
-                                        {/* device name + "this device" chip right next to it */}
-                                        <div className="flex flex-wrap items-center gap-2">
-                                            <Typography type="body-sm" weight="medium" truncate>
-                                                {headline}
-                                            </Typography>
-                                            {session.current ? (
-                                                <Chip color="accent" variant="soft" size="sm">
-                                                    <Chip.Label>{t("sessions.thisDevice")}</Chip.Label>
-                                                </Chip>
-                                            ) : null}
-                                        </div>
-                                        {/* meta: location · ip · last seen */}
-                                        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                                            {session.location ? (
-                                                <Typography type="body-xs" color="muted">{session.location}</Typography>
-                                            ) : null}
-                                            {session.ipAddress ? (
-                                                <Typography type="body-xs" color="muted">{session.ipAddress}</Typography>
-                                            ) : null}
-                                            <Typography type="body-xs" color="muted">{formatSeen(session.lastSeenAt)}</Typography>
-                                        </div>
+
+                        const rowItems = [
+                            () => <DeviceIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent-soft-foreground" />,
+                            () => (
+                                <div className="flex min-w-0 flex-1 flex-col gap-0">
+                                    <Cluster
+                                        gap={3}
+                                        align="center"
+                                        principle="chip-row"
+                                        items={[
+                                            () => (
+                                                <Typography type="body-sm" weight="medium" truncate>
+                                                    {headline}
+                                                </Typography>
+                                            ),
+                                            ...(session.current
+                                                ? [() => (
+                                                    <Chip color="accent" variant="soft" size="sm">
+                                                        <Chip.Label>{t("sessions.thisDevice")}</Chip.Label>
+                                                    </Chip>
+                                                )]
+                                                : []),
+                                        ]}
+                                    />
+                                    <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                                        {session.location ? (
+                                            <Typography type="body-xs" color="muted">{session.location}</Typography>
+                                        ) : null}
+                                        {session.ipAddress ? (
+                                            <Typography type="body-xs" color="muted">{session.ipAddress}</Typography>
+                                        ) : null}
+                                        <Typography type="body-xs" color="muted">{formatSeen(session.lastSeenAt)}</Typography>
                                     </div>
-                                    {!session.current ? (
+                                </div>
+                            ),
+                            ...(!session.current
+                                ? [() => (
+                                    <Box principle="push-end" className="ml-auto shrink-0">
                                         <Button
                                             variant="ghost"
                                             size="sm"
-                                            className="ml-auto shrink-0 text-danger-soft-foreground"
+                                            className="text-danger-soft-foreground"
                                             isDisabled={revokingId === session.sessionId}
                                             onPress={() => onRevoke(session.sessionId)}
                                             aria-label={t("sessions.revoke")}
@@ -193,8 +224,14 @@ export const SessionsPage = () => {
                                             )}
                                             {t("sessions.revoke")}
                                         </Button>
-                                    ) : null}
-                                </div>
+                                    </Box>
+                                )]
+                                : []),
+                        ]
+
+                        return (
+                            <SurfaceListCardItem key={session.id}>
+                                <StackH gap={4} align="center" principle="content-row" items={rowItems} />
                             </SurfaceListCardItem>
                         )
                     })}

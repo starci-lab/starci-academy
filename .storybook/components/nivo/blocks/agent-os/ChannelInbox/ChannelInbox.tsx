@@ -104,6 +104,7 @@ const ThreadRow = ({ thread, onOpen, labels, isSkeleton }: {
         body={() => (
             <StackH
                 gap={3}
+                principle="identity"
                 align="center"
                 isSkeleton={isSkeleton}
                 items={[
@@ -111,12 +112,14 @@ const ThreadRow = ({ thread, onOpen, labels, isSkeleton }: {
                     () => (
                         <StackV
                             gap={1}
+                            principle="name-handle"
                             classNames={["min-w-0", "flex-1"]}
                             isSkeleton={isSkeleton}
                             items={[
                                 () => (
                                     <StackH
                                         gap={2}
+                                        principle="icon-text"
                                         align="center"
                                         isSkeleton={isSkeleton}
                                         items={[

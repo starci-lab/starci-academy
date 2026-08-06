@@ -21,6 +21,8 @@ import { MascotBadge } from "@/components/blocks/profile/MascotBadge"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackH, StackV } from "@/components/frames/Stack"
 import { getRank } from "@/modules/utils/rank"
 
 /** One labelled achievement bucket: a group key plus the badge slugs it holds. */
@@ -109,16 +111,20 @@ export const ProfileAchievements = ({
         const rankLabel = labelKey ? t(labelKey) : null
         // shared meta line: rank in its ring colour + rarity muted, or locked progress
         const meta = item.earned && rankLabel ? (
-            <div className="flex items-center gap-2">
-                <Typography type="body-xs" weight="medium" style={{ color: ring }}>
-                    {rankLabel}
-                </Typography>
-                {item.rarityPercent != null ? (
-                    <Typography type="body-xs" color="muted">
-                        · {item.rarityPercent}%
+            <StackH gap={3} items={[
+                () => (
+                    <Typography type="body-xs" weight="medium" style={{ color: ring }}>
+                        {rankLabel}
                     </Typography>
-                ) : null}
-            </div>
+                ),
+                ...(item.rarityPercent != null
+                    ? [() => (
+                        <Typography type="body-xs" color="muted">
+                            · {item.rarityPercent}%
+                        </Typography>
+                    )]
+                    : []),
+            ]} />
         ) : (
             <Typography type="body-xs" color="muted">
                 {item.currentValue}/{item.threshold}
@@ -130,18 +136,24 @@ export const ProfileAchievements = ({
                 delay={200}
             >
                 <Tooltip.Trigger>
-                    <div className="flex max-w-32 min-w-0 cursor-default flex-col items-center gap-2 text-center">
-                        <MascotBadge
-                            objectKey={item.iconKey}
-                            name={item.name}
-                            earned={item.earned}
-                            tierReached={item.tierReached}
-                            size={48}
-                        />
-                        <Typography type="body-xs" truncate className="w-full">
-                            {item.name}
-                        </Typography>
-                        {meta}
+                    <div className="max-w-32 min-w-0 cursor-default text-center">
+                        <StackV gap={3} principle="sibling-stack" align="center" items={[
+                            () => (
+                                <MascotBadge
+                                    objectKey={item.iconKey}
+                                    name={item.name}
+                                    earned={item.earned}
+                                    tierReached={item.tierReached}
+                                    size={48}
+                                />
+                            ),
+                            () => (
+                                <Typography type="body-xs" truncate className="w-full">
+                                    {item.name}
+                                </Typography>
+                            ),
+                            () => meta,
+                        ]} />
                     </div>
                 </Tooltip.Trigger>
                 <Tooltip.Content
@@ -150,24 +162,28 @@ export const ProfileAchievements = ({
                     className="max-w-[240px]"
                 >
                     <Tooltip.Arrow />
-                    {/* hover card: big mascot + name + how-to-earn + rank/progress
-                        (Tooltip.Content self-pads → no inner p-*) */}
-                    <div className="flex flex-col items-center gap-2 text-center">
-                        <MascotBadge
-                            objectKey={item.iconKey}
-                            name={item.name}
-                            earned={item.earned}
-                            tierReached={item.tierReached}
-                            size={56}
-                        />
-                        <Typography type="body-sm" weight="semibold">
-                            {item.name}
-                        </Typography>
-                        <Typography type="body-xs" color="muted">
-                            {item.description}
-                        </Typography>
-                        {meta}
-                    </div>
+                    <StackV gap={3} principle="sibling-stack" align="center" items={[
+                        () => (
+                            <MascotBadge
+                                objectKey={item.iconKey}
+                                name={item.name}
+                                earned={item.earned}
+                                tierReached={item.tierReached}
+                                size={56}
+                            />
+                        ),
+                        () => (
+                            <Typography type="body-sm" weight="semibold">
+                                {item.name}
+                            </Typography>
+                        ),
+                        () => (
+                            <Typography type="body-xs" color="muted">
+                                {item.description}
+                            </Typography>
+                        ),
+                        () => meta,
+                    ]} />
                 </Tooltip.Content>
             </Tooltip>
         )
@@ -218,28 +234,26 @@ export const ProfileAchievements = ({
             <AsyncContent
                 isLoading={(isLoading || !userId) && items.length === 0}
                 skeleton={
-                    <div className="flex flex-col gap-6">
-                        {[0, 1].map((groupIndex) => (
-                            <section
-                                key={groupIndex}
-                                className="flex flex-col gap-3"
-                            >
-                                <Skeleton.Typography type="body-sm" width="1/4" />
-                                <div className="flex flex-wrap gap-4">
-                                    {[0, 1, 2, 3].map((cellIndex) => (
-                                        <div
-                                            key={cellIndex}
-                                            className="flex w-24 flex-col items-center gap-2 text-center"
-                                        >
-                                            <Skeleton className="size-12 rounded-full" />
-                                            <Skeleton.Typography type="body-xs" width="3/4" />
-                                            <Skeleton.Typography type="body-xs" width="1/2" />
-                                        </div>
-                                    ))}
-                                </div>
-                            </section>
-                        ))}
-                    </div>
+                    <StackV gap={6} principle="block-boundary" items={
+                        [0, 1].map(() => () => (
+                            <StackV gap={4} items={[
+                                () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                                () => (
+                                    <Cluster gap={5} principle="group-boundary" items={
+                                        [0, 1, 2, 3].map(() => () => (
+                                            <div className="w-24 text-center">
+                                                <StackV gap={3} principle="sibling-stack" align="center" items={[
+                                                    () => <Skeleton className="size-12 rounded-full" />,
+                                                    () => <Skeleton.Typography type="body-xs" width="3/4" />,
+                                                    () => <Skeleton.Typography type="body-xs" width="1/2" />,
+                                                ]} />
+                                            </div>
+                                        ))
+                                    } />
+                                ),
+                            ]} />
+                        ))
+                    } />
                 }
                 isEmpty={items.length === 0}
                 emptyContent={{
@@ -252,22 +266,22 @@ export const ProfileAchievements = ({
                     retryLabel: t("publicProfile.loadErrorRetry"),
                 }}
             >
-                <div className="flex flex-col gap-6">
-                    {groups.map((group) => (
-                        <section
-                            key={group.key}
-                            className="flex flex-col gap-3"
-                        >
-                            {/* sub-section label inside the card → HeroUI Label (matches LabeledCard) */}
-                            <Label>
-                                {t(`publicProfile.achievementGroups.${group.key}`)}
-                            </Label>
-                            <div className="flex flex-wrap gap-4">
-                                {group.items.map(renderItem)}
-                            </div>
-                        </section>
-                    ))}
-                </div>
+                <StackV gap={6} principle="block-boundary" items={
+                    groups.map((group) => () => (
+                        <StackV gap={4} items={[
+                            () => (
+                                <Label>
+                                    {t(`publicProfile.achievementGroups.${group.key}`)}
+                                </Label>
+                            ),
+                            () => (
+                                <Cluster gap={5} principle="group-boundary" items={
+                                    group.items.map((item) => () => renderItem(item))
+                                } />
+                            ),
+                        ]} />
+                    ))
+                } />
             </AsyncContent>
         </LabeledCard>
     )

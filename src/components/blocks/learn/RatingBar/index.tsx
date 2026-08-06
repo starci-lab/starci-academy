@@ -109,14 +109,7 @@ const RatingBar = ({
     return (
         <div>
             <div>
-                <SurfaceCardPressableGroup
-                    ariaLabel={ariaLabel}
-                    columns={{ base: 2, md: 4 }}
-                    gap={4}
-                    keyboardShortcut
-                    items={items}
-                    isSkeleton={isSkeleton}
-                />
+                <SurfaceCardPressableGroup ariaLabel={ariaLabel} columns={{ base: 2, md: 4 }} keyboardShortcut items={items} isSkeleton={isSkeleton} principle="content-row" />
             </div>
         </div>
     )

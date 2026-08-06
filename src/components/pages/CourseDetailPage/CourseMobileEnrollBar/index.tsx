@@ -25,6 +25,7 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StickyBottomBar } from "@/components/blocks/layout/StickyBottomBar"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
+import { StackH } from "@/components/frames/Stack"
 
 /** Props for {@link CourseMobileEnrollBar}. */
 export type CourseMobileEnrollBarProps = WithClassNames<undefined>
@@ -50,23 +51,23 @@ export const CourseMobileEnrollBar = ({ className }: CourseMobileEnrollBarProps)
 
     return (
         <StickyBottomBar className={className}>
-            <div className="flex items-center justify-between gap-3">
-                {previewPending ? (
+            <StackH gap={4} principle="content-row" justify="between" align="center" items={[
+                () => (previewPending ? (
                     <Skeleton.Typography type="body" width="1/4" />
                 ) : hasLoyalty && preview ? (
                     <PriceTagInline
                         discounted={preview.discountedPriceVnd}
                         original={preview.originalPriceVnd}
-                       
+
                     />
                 ) : active ? (
                     <PriceTagInline
                         discounted={active.priceVnd}
                         original={active.listPriceVnd}
-                       
+
                     />
-                ) : null}
-                {isEnrolled ? (
+                ) : null),
+                () => (isEnrolled ? (
                     <Button variant="primary" onPress={onContinueLearning}>
                         <GraduationCapIcon className="size-5" />
                         {t("course.continueLearning")}
@@ -76,8 +77,8 @@ export const CourseMobileEnrollBar = ({ className }: CourseMobileEnrollBarProps)
                         {t("course.enroll")}
                         <ArrowRightIcon className="size-5" />
                     </Button>
-                )}
-            </div>
+                )),
+            ]} />
         </StickyBottomBar>
     )
 }

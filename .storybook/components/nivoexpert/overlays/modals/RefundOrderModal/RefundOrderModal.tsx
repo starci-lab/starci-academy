@@ -110,7 +110,7 @@ const RefundOrderModal = ({ isOpen, onOpenChange, order, onConfirm, isConfirming
                     ? undefined
                     : () => (
                         <ButtonGroup
-                            align="end"
+                            principle="flex-action-end"
                             classNames={["w-full"]}
                             items={[
                                 {

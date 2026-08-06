@@ -115,6 +115,14 @@ export default defineConfig([
         },
     },
     {
+        // principle-as-style: Stack pilot in AcademySettingsForm; Grid/Form whenever principle owns the seam.
+        files: ["src/**/*.{ts,tsx}", ".storybook/**/*.{ts,tsx}"],
+        plugins: { "starci-fe": starciFe },
+        rules: {
+            "starci-fe/no-public-frame-css-props": "error",
+        },
+    },
+    {
         // ── A11Y tier (L9) — eslint-plugin-jsx-a11y, tầng LINT thay Storybook-axe (nhẹ, 0 friction) ──
         // Curated rule cao-giá-trị, 'warn' rollout (nợ a11y cũ burn dần; gate pre-commit chặn code mới).
         files: ["src/**/*.{ts,tsx}", ".storybook/**/*.{ts,tsx}"],

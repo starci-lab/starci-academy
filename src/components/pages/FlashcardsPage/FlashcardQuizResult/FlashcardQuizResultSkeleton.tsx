@@ -2,6 +2,9 @@ import React from "react"
 import { Card, CardContent } from "@heroui/react"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { Container } from "@/components/frames/Container"
+import { Grid } from "@/components/frames/Grid"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /**
  * Loading placeholder for {@link import("./index").FlashcardQuizResult} — mirrors its
@@ -13,42 +16,86 @@ import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/
  */
 export const FlashcardQuizResultSkeleton = () => {
     return (
-        <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-            {/* HERO — 3 MetricCard tiles (value + label), each Skeleton.Metric shares the real card's box */}
-            <div className="grid grid-cols-1 gap-3 @app-sm:grid-cols-3">
-                <Skeleton.Metric />
-                <Skeleton.Metric />
-                <Skeleton.Metric />
-            </div>
-
-            {/* PER-CARD breakdown — LabeledCard label → SurfaceListCard of rows
-                (status dot + card front + n/m score chip) */}
-            <section className="flex flex-col gap-3">
-                <Skeleton className="h-[14px] w-40 rounded" />
-                <SurfaceListCard>
-                    {Array.from({ length: 5 }).map((_unused, index) => (
-                        <SurfaceListCardItem key={index}>
-                            <div className="flex items-center gap-3">
-                                <Skeleton className="size-2.5 shrink-0 rounded-full" />
-                                <Skeleton.Typography type="body-sm" width="1/2" className="min-w-0 flex-1" />
-                                <Skeleton className="h-5 w-12 shrink-0 rounded-full" />
-                            </div>
-                        </SurfaceListCardItem>
-                    ))}
-                </SurfaceListCard>
-            </section>
-
-            {/* weak-tags recap card — LabeledCard label → framed card of "review this lesson" link rows */}
-            <section className="flex flex-col gap-3">
-                <Skeleton className="h-[14px] w-40 rounded" />
-                <Card>
-                    <CardContent className="flex flex-col gap-2">
-                        {Array.from({ length: 3 }).map((_unused, index) => (
-                            <Skeleton key={index} className="h-16 w-full rounded-xl" />
-                        ))}
-                    </CardContent>
-                </Card>
-            </section>
-        </div>
+        <Container
+            size="md"
+            padding={1}
+            body={() => (
+                <StackV
+                    gap={6}
+                    items={[
+                        () => (
+                            // teacher-hold: flashcards-remain-quiz-result-metric-grid-gap4-no-token —
+                            // peer metric tiles at preserved step 4; no card-grid token.
+                            <Grid
+                                principle="content-row"
+                                columns={{ base: 1, sm: 3 }}
+                                items={[
+                                    { key: "metric-1", content: () => <Skeleton.Metric /> },
+                                    { key: "metric-2", content: () => <Skeleton.Metric /> },
+                                    { key: "metric-3", content: () => <Skeleton.Metric /> },
+                                ]}
+                            />
+                        ),
+                        () => (
+                            <StackV
+                                as="section"
+                                gap={4}
+                                principle="label-field"
+                                items={[
+                                    () => <Skeleton className="h-[14px] w-40 rounded" />,
+                                    () => (
+                                        <SurfaceListCard>
+                                            {Array.from({ length: 5 }).map((_unused, index) => (
+                                                <SurfaceListCardItem key={index}>
+                                                    <StackH
+                                                        gap={4}
+                                                        principle="content-row"
+                                                        align="center"
+                                                        items={[
+                                                            () => <Skeleton className="size-2.5 shrink-0 rounded-full" />,
+                                                            () => (
+                                                                <Skeleton.Typography
+                                                                    type="body-sm"
+                                                                    width="1/2"
+                                                                    className="min-w-0 flex-1"
+                                                                />
+                                                            ),
+                                                            () => <Skeleton className="h-5 w-12 shrink-0 rounded-full" />,
+                                                        ]}
+                                                    />
+                                                </SurfaceListCardItem>
+                                            ))}
+                                        </SurfaceListCard>
+                                    ),
+                                ]}
+                            />
+                        ),
+                        () => (
+                            <StackV
+                                as="section"
+                                gap={4}
+                                principle="label-field"
+                                items={[
+                                    () => <Skeleton className="h-[14px] w-40 rounded" />,
+                                    () => (
+                                        <Card>
+                                            <CardContent>
+                                                <StackV
+                                                    gap={3}
+                                                    principle="sibling-stack"
+                                                    items={Array.from({ length: 3 }).map((_unused, index) => () => (
+                                                        <Skeleton key={index} className="h-16 w-full rounded-xl" />
+                                                    ))}
+                                                />
+                                            </CardContent>
+                                        </Card>
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]}
+                />
+            )}
+        />
     )
 }

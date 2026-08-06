@@ -1,12 +1,14 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { Card, CardContent, Link, Typography, cn } from "@heroui/react"
+import { Card, Link, Typography, cn } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { ArrowUpRightIcon, BookOpenTextIcon } from "@phosphor-icons/react"
 import { Callout } from "@/components/composites/feedback/Callout"
 import { SimpleEmptyState } from "@/components/blocks/feedback/SimpleEmptyState"
 import { IconTile } from "@/components/blocks/identity/IconTile"
+import { Box } from "@/components/frames/Box"
+import { StackV } from "@/components/frames/Stack"
 import { pathConfig } from "@/resources/path"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { ARCHITECTURE_COMPONENT_MAP } from "../constants"
@@ -58,35 +60,41 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
         const infraNames = module.usesInfra.map((id) => ARCHITECTURE_COMPONENT_MAP[id]?.name ?? id)
         return (
             <Card className={cn(className)}>
-                <CardContent className="flex flex-col gap-4 p-6">
-                    <div className="flex min-w-0 items-center gap-3">
-                        <IconTile icon={<ModuleIcon aria-hidden />} tone="neutral" size="sm" />
-                        <div className="flex min-w-0 flex-col">
-                            <Typography type="h4" weight="semibold" className="min-w-0 truncate">
-                                {t(`module.${module.id}.name`)}
-                            </Typography>
-                            <Typography type="body-sm" color="muted">
-                                {t(`module.${module.id}.sub`)}
-                            </Typography>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col gap-2 border-t border-default pt-3">
-                        <Typography type="body-sm" weight="medium">{t("panel.whyHeading")}</Typography>
-                        <Typography type="body-sm" color="muted">{t(`module.${module.id}.role`)}</Typography>
-                    </div>
-
-                    <div className="flex flex-col gap-2 border-t border-default pt-3">
-                        <Typography type="body-sm" weight="medium">{t("panel.runsOn")}</Typography>
-                        <div className="flex flex-wrap gap-2">
-                            {infraNames.map((name) => (
-                                <span key={name} className="rounded-full bg-default px-2 py-1 font-mono text-xs text-muted">
-                                    {name}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-                </CardContent>
+                <Box principle="page-pad" className="p-6">
+                    <StackV gap={5} principle="group-boundary" items={[
+                        () => (
+                            <div data-principle="content-row" className="flex min-w-0 items-center gap-3">
+                                <IconTile icon={<ModuleIcon aria-hidden />} tone="neutral" size="sm" />
+                                <div className="flex min-w-0 flex-col">
+                                    <Typography type="h4" weight="semibold" className="min-w-0 truncate">
+                                        {t(`module.${module.id}.name`)}
+                                    </Typography>
+                                    <Typography type="body-sm" color="muted">
+                                        {t(`module.${module.id}.sub`)}
+                                    </Typography>
+                                </div>
+                            </div>
+                        ),
+                        () => (
+                            <div data-principle="sibling-stack" className="flex flex-col gap-2 border-t border-default pt-3">
+                                <Typography type="body-sm" weight="medium">{t("panel.whyHeading")}</Typography>
+                                <Typography type="body-sm" color="muted">{t(`module.${module.id}.role`)}</Typography>
+                            </div>
+                        ),
+                        () => (
+                            <div data-principle="sibling-stack" className="flex flex-col gap-2 border-t border-default pt-3">
+                                <Typography type="body-sm" weight="medium">{t("panel.runsOn")}</Typography>
+                                <div data-principle="chip-row" className="flex flex-wrap gap-2">
+                                    {infraNames.map((name) => (
+                                        <span key={name} data-principle="control-pad" className="rounded-full bg-default px-2 py-1 font-mono text-xs text-muted">
+                                            {name}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        ),
+                    ]} />
+                </Box>
             </Card>
         )
     }
@@ -94,9 +102,9 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
     if (!component) {
         return (
             <Card className={cn(className)}>
-                <CardContent className="p-6">
+                <Box principle="page-pad" className="p-6">
                     <SimpleEmptyState>{t("panel.notFound")}</SimpleEmptyState>
-                </CardContent>
+                </Box>
             </Card>
         )
     }
@@ -108,56 +116,65 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
 
     return (
         <Card className={cn(className)}>
-            <CardContent className="flex flex-col gap-4 p-6">
-                <div className="flex items-start justify-between gap-3">
-                    <div className="flex min-w-0 items-center gap-3">
-                        <IconTile icon={<Icon aria-hidden />} tone="neutral" size="sm" />
-                        <div className="flex min-w-0 flex-col">
-                            <Typography type="h4" weight="semibold" className="min-w-0 truncate font-mono">
-                                {component.name}
-                            </Typography>
-                            <Typography type="body-sm" color="muted">
-                                {t(`role.${component.name}`)}
-                            </Typography>
+            <Box principle="page-pad" className="p-6">
+                <StackV gap={5} principle="group-boundary" items={[
+                    () => (
+                        <div data-principle="content-row" className="flex items-start justify-between gap-3">
+                            <div data-principle="content-row" className="flex min-w-0 items-center gap-3">
+                                <IconTile icon={<Icon aria-hidden />} tone="neutral" size="sm" />
+                                <div className="flex min-w-0 flex-col">
+                                    <Typography type="h4" weight="semibold" className="min-w-0 truncate font-mono">
+                                        {component.name}
+                                    </Typography>
+                                    <Typography type="body-sm" color="muted">
+                                        {t(`role.${component.name}`)}
+                                    </Typography>
+                                </div>
+                            </div>
+                            <span className={cn("flex shrink-0 items-center gap-2 rounded-full px-2 py-1", visual.chipClassName)}>
+                                <span className={cn("size-2 shrink-0 rounded-full", visual.dotClassName, visual.pulse && "animate-pulse")} aria-hidden />
+                                <Typography type="body-xs" weight="medium" className="whitespace-nowrap">
+                                    {t(`status.${state}`)}
+                                </Typography>
+                            </span>
                         </div>
-                    </div>
-                    <span className={cn("flex shrink-0 items-center gap-2 rounded-full px-2 py-1", visual.chipClassName)}>
-                        <span className={cn("size-2 shrink-0 rounded-full", visual.dotClassName, visual.pulse && "animate-pulse")} aria-hidden />
-                        <Typography type="body-xs" weight="medium" className="whitespace-nowrap">
-                            {t(`status.${state}`)}
-                        </Typography>
-                    </span>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
-                    <span className="tabular-nums">
-                        {health?.latencyMs == null ? "—" : t("panel.latency", { ms: health.latencyMs })}
-                    </span>
-                    {checkedAgo ? <span>{t("panel.checked", { ago: checkedAgo })}</span> : null}
-                    <MetricsInline metrics={health?.metrics} />
-                </div>
-
-                {health?.message ? (
-                    <Callout status="danger" title={health.message} />
-                ) : null}
-
-                <div className="flex flex-col gap-2 border-t border-default pt-3">
-                    <Typography type="body-sm" weight="medium">{t("panel.whyHeading")}</Typography>
-                    <Typography type="body-sm" color="muted">{t(`why.${component.name}`)}</Typography>
-                </div>
-
-                {blogHref ? (
-                    <Link href={blogHref} className="group inline-flex items-center gap-2 text-accent-soft-foreground">
-                        <BookOpenTextIcon aria-hidden focusable="false" className="size-4" />
-                        {t("panel.deepDive")}
-                        <ArrowUpRightIcon
-                            aria-hidden
-                            focusable="false"
-                            className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                        />
-                    </Link>
-                ) : null}
-            </CardContent>
+                    ),
+                    () => (
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
+                            <span className="tabular-nums">
+                                {health?.latencyMs == null ? "—" : t("panel.latency", { ms: health.latencyMs })}
+                            </span>
+                            {checkedAgo ? <span>{t("panel.checked", { ago: checkedAgo })}</span> : null}
+                            <MetricsInline metrics={health?.metrics} />
+                        </div>
+                    ),
+                    ...(health?.message ? [
+                        () => {
+                            const message = health.message!
+                            return <Callout status="danger" title={message} />
+                        },
+                    ] : []),
+                    () => (
+                        <div data-principle="sibling-stack" className="flex flex-col gap-2 border-t border-default pt-3">
+                            <Typography type="body-sm" weight="medium">{t("panel.whyHeading")}</Typography>
+                            <Typography type="body-sm" color="muted">{t(`why.${component.name}`)}</Typography>
+                        </div>
+                    ),
+                    ...(blogHref ? [
+                        () => (
+                            <Link href={blogHref} data-principle="flex-action" className="group inline-flex items-center gap-2 text-accent-soft-foreground">
+                                <BookOpenTextIcon aria-hidden focusable="false" className="size-4" />
+                                {t("panel.deepDive")}
+                                <ArrowUpRightIcon
+                                    aria-hidden
+                                    focusable="false"
+                                    className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                                />
+                            </Link>
+                        ),
+                    ] : []),
+                ]} />
+            </Box>
         </Card>
     )
 }

@@ -100,8 +100,9 @@ const RagSourceGraphSourceNode = ({ data }: NodeProps) => {
             <Box className="w-[220px] rounded-large border border-default bg-surface px-3 py-2 shadow-sm">
                 <StackV
                     gap={2}
+                    principle="title-subtitle"
                     items={[
-                        () => <StackH gap={3} justify="between" items={filePathRowItems} />,
+                        () => <StackH gap={3} principle="chip-row" justify="between" items={filePathRowItems} />,
                         () => <Typography size="xs" color="muted" truncate text={snippetPreview} />,
                     ]}
                 />

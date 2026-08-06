@@ -22,6 +22,7 @@ import type {
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { CourseProgressBar } from "@/components/blocks/stats/CourseProgressBar"
 import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link CourseRow}. */
 export interface CourseRowProps {
@@ -49,27 +50,55 @@ export const CourseRow = ({ item }: CourseRowProps) => {
 
     return (
         <SurfaceListCardItem onPress={onPress} isDisabled={!routable || pending} hover="underline">
-            <div className="flex items-center gap-3">
-                <IconTile size="sm" src={item.thumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />
-                <div className="flex min-w-0 flex-1 flex-col gap-2">
-                    <div className="flex items-center justify-between gap-2">
-                        <Typography type="body-sm" weight="medium" truncate className="min-w-0 flex-1 underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
-                            {item.label}
-                        </Typography>
-                        <CourseTrialChip isEnrolled={item.isEnrolled} />
-                        <Typography type="body-xs" color="muted">
-                            {item.completionPercent}%
-                        </Typography>
-                    </div>
-                    <CourseProgressBar
-                        ariaLabel={`${item.label} · ${item.completionPercent}%`}
-                        dims={dims.map((d) => ({
-                            ...d,
-                            label: t(`DashboardPage.courseProgress.${d.key}`),
-                        }))}
-                    />
-                </div>
-            </div>
+            <StackH
+                gap={4}
+                principle="content-row"
+                align="center"
+                items={[
+                    () => (
+                        <IconTile size="sm" src={item.thumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />
+                    ),
+                    () => (
+                        <StackV
+                            gap={3}
+                            principle="sibling-stack"
+                            classNames={["min-w-0", "flex-1"]}
+                            items={[
+                                () => (
+                                    <StackH
+                                        gap={3}
+                                        principle="flex-action"
+                                        justify="between"
+                                        align="center"
+                                        items={[
+                                            () => (
+                                                <Typography type="body-sm" weight="medium" truncate className="min-w-0 flex-1 underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
+                                                    {item.label}
+                                                </Typography>
+                                            ),
+                                            () => <CourseTrialChip isEnrolled={item.isEnrolled} />,
+                                            () => (
+                                                <Typography type="body-xs" color="muted">
+                                                    {item.completionPercent}%
+                                                </Typography>
+                                            ),
+                                        ]}
+                                    />
+                                ),
+                                () => (
+                                    <CourseProgressBar
+                                        ariaLabel={`${item.label} · ${item.completionPercent}%`}
+                                        dims={dims.map((d) => ({
+                                            ...d,
+                                            label: t(`DashboardPage.courseProgress.${d.key}`),
+                                        }))}
+                                    />
+                                ),
+                            ]}
+                        />
+                    ),
+                ]}
+            />
         </SurfaceListCardItem>
     )
 }

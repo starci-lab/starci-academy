@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Button, Typography, cn } from "@heroui/react"
+import { Button, Typography } from "@heroui/react"
 import { ArrowRightIcon, ChartLineUpIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
@@ -13,6 +13,7 @@ import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { VerdictHeroCard } from "@/components/blocks/stats/VerdictHeroCard"
 import type { VerdictHeroBand } from "@/components/blocks/stats/VerdictHeroCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { StackH, StackV } from "@/components/frames/Stack"
 import { useQueryMyMockInterviewStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyMockInterviewStatsSwr"
 import type { MockInterviewStatsBreakdownItem } from "@/modules/api/graphql/queries/types/my-mock-interview-stats"
 import { ProgrammingLanguage } from "@/modules/types/enums/programming-language"
@@ -91,27 +92,46 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
         axis: BreakdownAxis,
         subtitleFor?: (item: MockInterviewStatsBreakdownItem) => React.ReactNode,
     ) => (
-        <div className="flex flex-col gap-3">
-            {items.map((item) => (
-                <div key={item.key} className="flex items-center gap-3">
-                    <div className="flex w-40 shrink-0 flex-col">
-                        <Typography type="body-sm">
-                            {axisLabel(axis, item.key)}
-                        </Typography>
-                        <Typography type="body-xs" color="muted">
-                            {subtitleFor ? subtitleFor(item) : t("mockInterview.statsWeakRatioCaption", { weak: item.weakCount, total: item.attemptCount })}
-                        </Typography>
-                    </div>
-                    <ProgressMeter
-                        value={Math.round(item.avgScore)}
-                        max={Math.round(item.avgMax) || 100}
-                        color={scoreColorOf(item.avgScore, item.avgMax)}
-                        showValue
-                        classNames={["flex-1"]}
-                    />
-                </div>
+        <StackV
+            gap={4}
+            items={items.map((item) => () => (
+                <StackH
+                    gap={4}
+                    principle="content-row"
+                    classNames={["w-full"]}
+                    items={[
+                        () => (
+                            <StackV
+                                gap={1}
+                                principle="name-handle"
+                                classNames={["shrink-0"]}
+                                items={[
+                                    () => (
+                                        <Typography type="body-sm" className="w-40">
+                                            {axisLabel(axis, item.key)}
+                                        </Typography>
+                                    ),
+                                    () => (
+                                        <Typography type="body-xs" color="muted" className="w-40">
+                                            {subtitleFor ? subtitleFor(item) : t("mockInterview.statsWeakRatioCaption", { weak: item.weakCount, total: item.attemptCount })}
+                                        </Typography>
+                                    ),
+                                ]}
+                            />
+                        ),
+                        () => (
+                            <ProgressMeter
+                                value={Math.round(item.avgScore)}
+                                max={Math.round(item.avgMax) || 100}
+                                color={scoreColorOf(item.avgScore, item.avgMax)}
+                                showValue
+                                classNames={["flex-1"]}
+                            />
+                        ),
+                    ]}
+                />
             ))}
-        </div>
+        />
     )
 
     return (
@@ -121,38 +141,72 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                 // MIRROR the loaded tree: ZONE 1 label + readiness verdict hero (value ·
                 // verdict · trend sub · meter · CTA), ZONE 2 label + per-phase breakdown of
                 // label/caption + ProgressMeter rows.
-                <div className="flex flex-col gap-6">
-                    {/* ZONE 1 — readiness hero */}
-                    <section className="flex flex-col gap-3">
-                        <Skeleton className="h-[14px] w-40 rounded" />
-                        <SectionCard>
-                            <div className="flex items-baseline gap-1">
-                                <Skeleton className="h-9 w-20 rounded" />
-                                <Skeleton className="h-[14px] w-8 rounded" />
-                            </div>
-                            <Skeleton.Typography type="body-sm" width="3/4" />
-                            <Skeleton.Typography type="body-xs" width="1/2" />
-                            <Skeleton.ProgressBar />
-                            <Skeleton.Button width="w-44" />
-                        </SectionCard>
-                    </section>
-
-                    {/* ZONE 2 — per-phase breakdown rows (label/caption + meter) */}
-                    <section className="flex flex-col gap-3">
-                        <Skeleton className="h-[14px] w-32 rounded" />
-                        <div className="flex flex-col gap-3">
-                            {Array.from({ length: 4 }).map((_unused, index) => (
-                                <div key={index} className="flex items-center gap-3">
-                                    <div className="flex w-40 shrink-0 flex-col gap-1">
-                                        <Skeleton.Typography type="body-sm" width="2/3" />
-                                        <Skeleton.Typography type="body-xs" width="1/2" />
-                                    </div>
-                                    <Skeleton.ProgressBar className="flex-1" />
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-                </div>
+                <StackV
+                    gap={6}
+                    principle="block-boundary"
+                    items={[
+                        () => (
+                            <StackV
+                                gap={4}
+                                items={[
+                                    () => <Skeleton className="h-[14px] w-40 rounded" />,
+                                    () => (
+                                        <SectionCard>
+                                            <StackH
+                                                gap={3}
+                                                principle="value-row"
+                                                align="baseline"
+                                                items={[
+                                                    () => <Skeleton className="h-9 w-20 rounded" />,
+                                                    () => <Skeleton className="h-[14px] w-8 rounded" />,
+                                                ]}
+                                            />
+                                            <Skeleton.Typography type="body-sm" width="3/4" />
+                                            <Skeleton.Typography type="body-xs" width="1/2" />
+                                            <Skeleton.ProgressBar />
+                                            <Skeleton.Button width="w-44" />
+                                        </SectionCard>
+                                    ),
+                                ]}
+                            />
+                        ),
+                        () => (
+                            <StackV
+                                gap={4}
+                                items={[
+                                    () => <Skeleton className="h-[14px] w-32 rounded" />,
+                                    () => (
+                                        <StackV
+                                            gap={4}
+                                            items={Array.from({ length: 4 }).map((_unused, index) => () => (
+                                                <StackH
+                                                    key={index}
+                                                    gap={4}
+                                                    principle="content-row"
+                                                    classNames={["w-full"]}
+                                                    items={[
+                                                        () => (
+                                                            <StackV
+                                                                gap={2}
+                                                                principle="title-subtitle"
+                                                                classNames={["shrink-0"]}
+                                                                items={[
+                                                                    () => <Skeleton.Typography type="body-sm" width="2/3" />,
+                                                                    () => <Skeleton.Typography type="body-xs" width="1/2" />,
+                                                                ]}
+                                                            />
+                                                        ),
+                                                        () => <Skeleton.ProgressBar className="flex-1" />,
+                                                    ]}
+                                                />
+                                            ))}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]}
+                />
             )}
             error={!stats ? statsSwr.error : undefined}
             errorContent={{
@@ -173,79 +227,77 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                     ) : undefined}
                 />
             ) : (
-                <div className={cn("flex flex-col gap-6", className)}>
-                    {/* ZONE 1 — readiness hero: verdict (vs PASS_BAR, projected from the
-                        recent trend delta) → evidence (trend sub-line) → action (practice
-                        more). Replaces the old bare "avg/100 + meter" SectionCard — a number
-                        alone is exactly the "pointless" pattern this redesign removes. */}
-                    <LabeledCard
-                        label={t("mockInterview.statsReadinessLabel")}
-                        frameless
-                        description={() => (
-                            <Typography type="body-xs" color="muted">
-                                {t("mockInterview.statsModeSplitCaption", {
-                                    qna: stats.modeSplit.qnaCount,
-                                    design: stats.modeSplit.designCount,
-                                })}
-                            </Typography>
-                        )}
-                    >
-                        {(() => {
-                            const avgScore = Math.round(
-                                stats.trend.reduce((sum, point) => sum + point.overallScore, 0) / Math.max(1, stats.trend.length),
-                            )
-                            // "recent trend delta" — the last up-to-3 points' own rate of
-                            // change projects how many more sessions at that pace it takes
-                            // to cross PASS_BAR; a flat/declining trend still frames as "one
-                            // more strong session" rather than an undefined/negative count.
-                            const recentScores = stats.trend.slice(-3).map((point) => point.overallScore)
-                            const trendDelta = recentScores.length >= 2
-                                ? (recentScores[recentScores.length - 1] - recentScores[0]) / (recentScores.length - 1)
-                                : 0
-                            const sessionsNeeded = Math.max(1, trendDelta > 0 ? Math.ceil((PASS_BAR - avgScore) / trendDelta) : 1)
-                            const band = readinessBandOf(avgScore)
-                            return (
-                                <VerdictHeroCard
-                                    value={avgScore}
-                                    unit="/100"
-                                    band={band}
-                                    verdict={band === "success" ? t("mockInterview.statsVerdictPass") : t("mockInterview.statsReadinessAlmostSentence", { sessionsNeeded })}
-                                    sub={t("mockInterview.statsReadinessTrendCaption", {
-                                        passBar: PASS_BAR,
-                                        count: recentScores.length,
-                                        scores: recentScores.join(" → "),
-                                    })}
-                                    meter={{ value: avgScore, max: 100, target: PASS_BAR }}
-                                    action={band !== "success" && onStartInterview ? () => (
-                                        <Button variant="primary" size="sm" onPress={onStartInterview}>
-                                            {t("mockInterview.statsReadinessPracticeMoreCta", { count: sessionsNeeded })}
-                                            <ArrowRightIcon className="size-4" aria-hidden focusable="false" />
-                                        </Button>
-                                    ) : undefined}
+                <div className={className}>
+                    <StackV
+                        gap={6}
+                        principle="block-boundary"
+                        items={[
+                            () => (
+                                <LabeledCard
+                                    label={t("mockInterview.statsReadinessLabel")}
+                                    frameless
+                                    description={() => (
+                                        <Typography type="body-xs" color="muted">
+                                            {t("mockInterview.statsModeSplitCaption", {
+                                                qna: stats.modeSplit.qnaCount,
+                                                design: stats.modeSplit.designCount,
+                                            })}
+                                        </Typography>
+                                    )}
+                                >
+                                    {(() => {
+                                        const avgScore = Math.round(
+                                            stats.trend.reduce((sum, point) => sum + point.overallScore, 0) / Math.max(1, stats.trend.length),
+                                        )
+                                        const recentScores = stats.trend.slice(-3).map((point) => point.overallScore)
+                                        const trendDelta = recentScores.length >= 2
+                                            ? (recentScores[recentScores.length - 1] - recentScores[0]) / (recentScores.length - 1)
+                                            : 0
+                                        const sessionsNeeded = Math.max(1, trendDelta > 0 ? Math.ceil((PASS_BAR - avgScore) / trendDelta) : 1)
+                                        const band = readinessBandOf(avgScore)
+                                        return (
+                                            <VerdictHeroCard
+                                                value={avgScore}
+                                                unit="/100"
+                                                band={band}
+                                                verdict={band === "success" ? t("mockInterview.statsVerdictPass") : t("mockInterview.statsReadinessAlmostSentence", { sessionsNeeded })}
+                                                sub={t("mockInterview.statsReadinessTrendCaption", {
+                                                    passBar: PASS_BAR,
+                                                    count: recentScores.length,
+                                                    scores: recentScores.join(" → "),
+                                                })}
+                                                meter={{ value: avgScore, max: 100, target: PASS_BAR }}
+                                                action={band !== "success" && onStartInterview ? () => (
+                                                    <Button variant="primary" size="sm" onPress={onStartInterview}>
+                                                        {t("mockInterview.statsReadinessPracticeMoreCta", { count: sessionsNeeded })}
+                                                        <ArrowRightIcon className="size-4" aria-hidden focusable="false" />
+                                                    </Button>
+                                                ) : undefined}
+                                            />
+                                        )
+                                    })()}
+                                </LabeledCard>
+                            ),
+                            ...(stats.byPhase.length > 0
+                                ? [() => (
+                                    <LabeledCard label={t("mockInterview.statsByPhaseTitle")}>
+                                        {renderBreakdown(stats.byPhase, "phase")}
+                                    </LabeledCard>
+                                )]
+                                : []),
+                            () => (
+                                <RelatedContentList
+                                    courseId={courseId}
+                                    courseDisplayId={courseDisplayId}
+                                    query={[...stats.byPhase]
+                                        .sort((a, b) => a.avgScore - b.avgScore)
+                                        .slice(0, 3)
+                                        .map((item) => axisLabel("phase", item.key))
+                                        .join(" ")}
+                                    label={t("mockInterview.statsStudyHeading")}
                                 />
-                            )
-                        })()}
-                    </LabeledCard>
-
-                    {stats.byPhase.length > 0 ? (
-                        <LabeledCard label={t("mockInterview.statsByPhaseTitle")}>
-                            {renderBreakdown(stats.byPhase, "phase")}
-                        </LabeledCard>
-                    ) : null}
-
-                    {/* ZONE 3 — passive RAG "Study suggestions": the weakest phases (by avg score) →
-                        course-wide content search, keyed off their human phase labels
-                        (self-hiding when empty / no match). Same study payoff the flashcard
-                        stats surfaces carry. */}
-                    <RelatedContentList
-                        courseId={courseId}
-                        courseDisplayId={courseDisplayId}
-                        query={[...stats.byPhase]
-                            .sort((a, b) => a.avgScore - b.avgScore)
-                            .slice(0, 3)
-                            .map((item) => axisLabel("phase", item.key))
-                            .join(" ")}
-                        label={t("mockInterview.statsStudyHeading")}
+                            ),
+                        ]}
                     />
                 </div>
             )}

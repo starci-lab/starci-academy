@@ -33,6 +33,7 @@ import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link MySubmissionsPage}. */
 export type MySubmissionsPageProps = WithClassNames<undefined>
@@ -75,6 +76,84 @@ export const MySubmissionsPage = ({
             day: "numeric",
         })
 
+    const listItems = [
+        () => (
+            <div className="flex flex-col gap-0">
+                {items.map((item, index) => (
+                    <ListRow
+                        key={item.id}
+                        title={item.challengeTitle}
+                        divider={index < items.length - 1}
+                        meta={(
+                            <>
+                                <EntityToken
+                                    globalId={item.courseGlobalId}
+                                    label={item.courseTitle}
+                                />
+                                <Chip
+                                    size="sm"
+                                    variant="soft"
+                                    color={STATUS_COLOR_MAP[item.status] ?? "warning"}
+                                >
+                                    <Chip.Label>
+                                        {t(`profileSettings.learning.submissions.status.${item.status}`)}
+                                    </Chip.Label>
+                                </Chip>
+                                <Typography type="body-sm">
+                                    {item.score}
+                                </Typography>
+                                <Typography type="body-xs" color="muted">
+                                    {item.selectedLang ?? "—"}
+                                </Typography>
+                                <Typography type="body-xs" color="muted">
+                                    {formatDate(item.submittedAt)}
+                                </Typography>
+                            </>
+                        )}
+                        trailing={item.submissionUrl ? (
+                            <Link
+                                href={item.submissionUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-accent-soft-foreground"
+                            >
+                                <StackH
+                                    inline
+                                    gap={3}
+                                    align="center"
+                                    principle="identity"
+                                    items={[
+                                        () => <FaGithub aria-hidden focusable="false" className="size-5" />,
+                                        () => <>{t("profileSettings.learning.submissions.open")}</>,
+                                    ]}
+                                />
+                            </Link>
+                        ) : (
+                            <Typography type="body-xs" color="muted">—</Typography>
+                        )}
+                    />
+                ))}
+            </div>
+        ),
+        ...(hasMore
+            ? [() => (
+                <div className="flex justify-center">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        isDisabled={swr.isValidating}
+                        onPress={() => setPageCount((count) => count + 1)}
+                    >
+                        {swr.isValidating ? (
+                            <Spinner color="current" size="sm" />
+                        ) : null}
+                        {t("profileSettings.learning.loadMore")}
+                    </Button>
+                </div>
+            )]
+            : []),
+    ]
+
     return (
         <div className={cn("flex flex-col gap-10", className)}>
             <PageHeader
@@ -89,11 +168,13 @@ export const MySubmissionsPage = ({
                 <AsyncContent
                     isLoading={!swr.data && !swr.error}
                     skeleton={(
-                        <div className="flex flex-col gap-2">
-                            {[0, 1, 2].map((row) => (
+                        <StackV
+                            gap={3}
+                            principle="sibling-stack"
+                            items={[0, 1, 2].map((row) => () => (
                                 <Skeleton.ListRow key={row} withTrailing />
                             ))}
-                        </div>
+                        />
                     )}
                     isEmpty={items.length === 0}
                     emptyContent={{
@@ -107,71 +188,7 @@ export const MySubmissionsPage = ({
                         retryLabel: t("profileSettings.learning.loadMore"),
                     }}
                 >
-                    <div className="flex flex-col gap-3">
-                        <div className="flex flex-col gap-0">
-                            {items.map((item, index) => (
-                                <ListRow
-                                    key={item.id}
-                                    title={item.challengeTitle}
-                                    divider={index < items.length - 1}
-                                    meta={(
-                                        <>
-                                            <EntityToken
-                                                globalId={item.courseGlobalId}
-                                                label={item.courseTitle}
-                                            />
-                                            <Chip
-                                                size="sm"
-                                                variant="soft"
-                                                color={STATUS_COLOR_MAP[item.status] ?? "warning"}
-                                            >
-                                                <Chip.Label>
-                                                    {t(`profileSettings.learning.submissions.status.${item.status}`)}
-                                                </Chip.Label>
-                                            </Chip>
-                                            <Typography type="body-sm">
-                                                {item.score}
-                                            </Typography>
-                                            <Typography type="body-xs" color="muted">
-                                                {item.selectedLang ?? "—"}
-                                            </Typography>
-                                            <Typography type="body-xs" color="muted">
-                                                {formatDate(item.submittedAt)}
-                                            </Typography>
-                                        </>
-                                    )}
-                                    trailing={item.submissionUrl ? (
-                                        <Link
-                                            href={item.submissionUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline-flex items-center gap-2 text-accent-soft-foreground"
-                                        >
-                                            <FaGithub aria-hidden focusable="false" className="size-5" />
-                                            {t("profileSettings.learning.submissions.open")}
-                                        </Link>
-                                    ) : (
-                                        <Typography type="body-xs" color="muted">—</Typography>
-                                    )}
-                                />
-                            ))}
-                        </div>
-                        {hasMore ? (
-                            <div className="flex justify-center">
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    isDisabled={swr.isValidating}
-                                    onPress={() => setPageCount((count) => count + 1)}
-                                >
-                                    {swr.isValidating ? (
-                                        <Spinner color="current" size="sm" />
-                                    ) : null}
-                                    {t("profileSettings.learning.loadMore")}
-                                </Button>
-                            </div>
-                        ) : null}
-                    </div>
+                    <StackV gap={4} items={listItems} />
                 </AsyncContent>
             </LabeledCard>
         </div>

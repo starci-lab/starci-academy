@@ -3,8 +3,8 @@ import { CardsIcon as LayersIcon } from "@phosphor-icons/react"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { SkeletonProps } from "@/components/frames/_slot"
+import { Box } from "@/components/frames/Box"
 import { Split } from "@/components/frames/Split"
-import { StackV } from "@/components/frames/Stack"
 
 /** Already-localized text for {@link _FlashcardReview}; the connected `FlashcardReview` interpolates `dueCount`. */
 export interface FlashcardReviewLabels {
@@ -53,35 +53,30 @@ export const _FlashcardReview = ({
         return null
     }
     return (
-        <StackV
-            gap={1}
-            padding={4}
-            identity={{ tier: "block", component: "FlashcardReview" }}
-            body={() => (
-                <Split
-                    gap={3}
-                    isSkeleton={isSkeleton}
-                    start={({ isSkeleton }: SkeletonProps) => (
-                        <Typography
-                            size="sm"
-                            weight="medium"
-                            prefixIcon={LayersIcon}
-                            truncate
-                            text={labels.due}
-                            isSkeleton={isSkeleton}
-                        />
-                    )}
-                    end={({ isSkeleton }: SkeletonProps) => (
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            label={labels.startWithCount}
-                            onPress={onStartReview}
-                            isSkeleton={isSkeleton}
-                        />
-                    )}
-                />
-            )}
-        />
+        <Box principle="cell-pad" className="p-3" identity={{ tier: "block", component: "FlashcardReview" }}>
+            <Split
+                gap={3}
+                isSkeleton={isSkeleton}
+                start={({ isSkeleton }: SkeletonProps) => (
+                    <Typography
+                        size="sm"
+                        weight="medium"
+                        prefixIcon={LayersIcon}
+                        truncate
+                        text={labels.due}
+                        isSkeleton={isSkeleton}
+                    />
+                )}
+                end={({ isSkeleton }: SkeletonProps) => (
+                    <Button
+                        variant="primary"
+                        size="sm"
+                        label={labels.startWithCount}
+                        onPress={onStartReview}
+                        isSkeleton={isSkeleton}
+                    />
+                )}
+            />
+        </Box>
     )
 }

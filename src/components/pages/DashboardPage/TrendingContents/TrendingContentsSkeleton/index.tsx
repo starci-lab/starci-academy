@@ -10,6 +10,7 @@ import type {
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { StackH } from "@/components/frames/Stack"
 
 /** Number of placeholder rows shown while trending contents load (mirrors resolver DEFAULT_LIMIT). */
 const SKELETON_ROW_COUNT = 6
@@ -39,11 +40,10 @@ export const TrendingContentsSkeleton = ({ className }: TrendingContentsSkeleton
             <SurfaceListCard>
                 {ROW_WIDTHS.slice(0, SKELETON_ROW_COUNT).map((width, index) => (
                     <SurfaceListCardItem key={index}>
-                        <div className="flex items-center gap-3">
-                            {/* leading rank NUMBER (a w-5 text span), not a filled box */}
-                            <Skeleton className="h-4 w-5 shrink-0 rounded" />
-                            <Skeleton.Typography type="body-sm" width={width} />
-                        </div>
+                        <StackH gap={4} principle="content-row" align="center" items={[
+                            () => <Skeleton className="h-4 w-5 shrink-0 rounded" />,
+                            () => <Skeleton.Typography type="body-sm" width={width} />,
+                        ]} />
                     </SurfaceListCardItem>
                 ))}
             </SurfaceListCard>

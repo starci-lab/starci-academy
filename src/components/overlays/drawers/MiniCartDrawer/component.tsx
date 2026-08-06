@@ -116,33 +116,29 @@ export const _MiniCartDrawer = ({
     onViewFullCart,
     labels,
 }: MiniCartDrawerProps) => {
-    // Combo-discount meter — StarCi's bundle differentiator: label + bonus chip row,
-    // the meter, and a hint line. `ProgressMeter` (block) has no co-located skeleton
-    // of its own, so this leaf mirrors it by hand with `Skeleton.ProgressBar` while
-    // the rest of the row threads `isSkeleton` straight down (loading-and-skeleton.md §1).
+    const comboLabelRow = [
+        () => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text={labels.comboLabel} />,
+        ...(isSkeleton
+            ? [() => <Chip isSkeleton tone="accent" />]
+            : bundlePercent > 0
+                ? [() => <Chip tone="accent" text={labels.bundleBonusChip} />]
+                : []),
+    ]
+    const comboMeterItems = [
+        () => (
+            <StackH
+                gap={3}
+                principle="flex-action"
+                align="center"
+                justify="between"
+                items={comboLabelRow}
+            />
+        ),
+        () => (isSkeleton ? <Skeleton.ProgressBar /> : <ProgressMeter value={itemCount} max={3} />),
+        () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.comboHint} />,
+    ]
     const comboMeterSection: ComponentTypeWithSkeleton = () => (
-        <StackV
-            gap={3}
-            items={[
-                () => (
-                    <StackH
-                        gap={3}
-                        align="center"
-                        justify="between"
-                        items={[
-                            () => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text={labels.comboLabel} />,
-                            ...(isSkeleton
-                                ? [() => <Chip isSkeleton tone="accent" />]
-                                : bundlePercent > 0
-                                    ? [() => <Chip tone="accent" text={labels.bundleBonusChip} />]
-                                    : []),
-                        ]}
-                    />
-                ),
-                () => (isSkeleton ? <Skeleton.ProgressBar /> : <ProgressMeter value={itemCount} max={3} />),
-                () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.comboHint} />,
-            ]}
-        />
+        <StackV gap={3} items={comboMeterItems} />
     )
 
     // Line list — reuses the SAME `CartLine` as the `/cart` page. `bordered`: this
@@ -152,29 +148,37 @@ export const _MiniCartDrawer = ({
     // un-bordered (top-level on `bg-background`, shadow shows). `CartLine` has no
     // co-located skeleton of its own, so the loading rows are mirrored by hand,
     // same shape (leading tile · two text lines · trailing action).
+    const cartLineSkeletonItems = [
+        () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
+        () => (
+            <StackV
+                gap={3}
+                classNames={["min-w-0", "flex-1"]}
+                items={[
+                    () => <Skeleton className="h-4 w-1/2 rounded-lg" />,
+                    () => <Skeleton className="h-4 w-24 rounded-lg" />,
+                ]}
+            />
+        ),
+        () => <Skeleton className="size-9 shrink-0 rounded-lg" />,
+    ]
     const cartListSection: ComponentTypeWithSkeleton = () => (
         <SurfaceListCard bordered>
             {isSkeleton
                 ? Array.from({ length: 2 }).map((_row, index) => (
                     <StackH
                         key={index}
-                        gap={4}
-                        align="center"
+                        gap={1}
+                        principle="card-padding"
                         padding={5}
-                        items={[
-                            () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
-                            () => (
-                                <StackV
-                                    gap={3}
-                                    classNames={["min-w-0", "flex-1"]}
-                                    items={[
-                                        () => <Skeleton className="h-4 w-1/2 rounded-lg" />,
-                                        () => <Skeleton className="h-4 w-24 rounded-lg" />,
-                                    ]}
-                                />
-                            ),
-                            () => <Skeleton className="size-9 shrink-0 rounded-lg" />,
-                        ]}
+                        body={() => (
+                            <StackH
+                                gap={4}
+                                principle="content-row"
+                                align="center"
+                                items={cartLineSkeletonItems}
+                            />
+                        )}
                     />
                 ))
                 : items.map((item) => (
@@ -211,82 +215,77 @@ export const _MiniCartDrawer = ({
         return <StackV gap={6} isSkeleton={isSkeleton} items={[comboMeterSection, cartListSection]} />
     }
 
-    // Footer — real charged total + saving; falls back to the plain list total on
-    // preview error. Total + price grouped on the LEFT (not spread edge-to-edge) so
-    // the whole summary stack — total · saving · installment — reads as one
-    // left-aligned column, per teacher feedback.
+    const previewSkeletonTotalRow = [
+        () => <Skeleton className="h-5 w-20 rounded-lg" />,
+        () => <Skeleton className="h-7 w-32 rounded-lg" />,
+    ]
+    const totalPriceRow = [
+        () => <Typography size="base" weight="semibold" text={labels.total} />,
+        ...(preview
+            ? [() => (
+                <PriceTagInline
+                    discounted={preview.totalChargedVnd}
+                    original={preview.totalListVnd}
+                    currency="VND"
+                />
+            )]
+            // preview failed to load — fall back to the plain list
+            // total (no bundle discount known) so the total is never blank.
+            : previewError
+                ? [() => <PriceTagInline discounted={fallbackTotalVnd} currency="VND" />]
+                : []),
+    ]
+    const totalSummaryItems = [
+        () => (
+            <StackH
+                gap={4}
+                principle="content-row"
+                align="center"
+                items={totalPriceRow}
+            />
+        ),
+        ...(preview && preview.savingsVnd > 0
+            ? [() => <Typography size="sm" color="success-soft" text={labels.savings} />]
+            : []),
+        ...(cheapestMonthlyLabel != null
+            ? [() => <Typography size="xs" color="muted" text={labels.installmentHint} />]
+            : []),
+    ]
+    const footerItems = [
+        () => (
+            isPreviewSkeleton ? (
+                <StackH
+                    gap={4}
+                    principle="content-row"
+                    align="center"
+                    items={previewSkeletonTotalRow}
+                />
+            ) : (
+                <StackV gap={2} items={totalSummaryItems} />
+            )
+        ),
+        () => (
+            <Button
+                variant="primary"
+                size="lg"
+                suffixIcon={ArrowRightIcon}
+                isDisabled={isMutating}
+                onPress={onCheckout}
+                label={labels.checkout}
+                classNames={["w-full"]}
+            />
+        ),
+        () => (
+            <Button
+                variant="tertiary"
+                onPress={onViewFullCart}
+                label={labels.viewFullCart}
+                classNames={["w-full"]}
+            />
+        ),
+    ]
     const footerSection: ComponentTypeWithSkeleton = () => (
-        <StackV
-            gap={4}
-            items={[
-                () => (
-                    isPreviewSkeleton ? (
-                        <StackH
-                            gap={4}
-                            align="center"
-                            items={[
-                                () => <Skeleton className="h-5 w-20 rounded-lg" />,
-                                () => <Skeleton className="h-7 w-32 rounded-lg" />,
-                            ]}
-                        />
-                    ) : (
-                        <StackV
-                            gap={2}
-                            items={[
-                                () => (
-                                    <StackH
-                                        gap={4}
-                                        align="center"
-                                        items={[
-                                            () => <Typography size="base" weight="semibold" text={labels.total} />,
-                                            ...(preview
-                                                ? [() => (
-                                                    <PriceTagInline
-                                                        discounted={preview.totalChargedVnd}
-                                                        original={preview.totalListVnd}
-                                                        currency="VND"
-                                                       
-                                                    />
-                                                )]
-                                                // preview failed to load — fall back to the plain list
-                                                // total (no bundle discount known) so the total is never blank.
-                                                : previewError
-                                                    ? [() => <PriceTagInline discounted={fallbackTotalVnd} currency="VND" />]
-                                                    : []),
-                                        ]}
-                                    />
-                                ),
-                                ...(preview && preview.savingsVnd > 0
-                                    ? [() => <Typography size="sm" color="success-soft" text={labels.savings} />]
-                                    : []),
-                                ...(cheapestMonthlyLabel != null
-                                    ? [() => <Typography size="xs" color="muted" text={labels.installmentHint} />]
-                                    : []),
-                            ]}
-                        />
-                    )
-                ),
-                () => (
-                    <Button
-                        variant="primary"
-                        size="lg"
-                        suffixIcon={ArrowRightIcon}
-                        isDisabled={isMutating}
-                        onPress={onCheckout}
-                        label={labels.checkout}
-                        classNames={["w-full"]}
-                    />
-                ),
-                () => (
-                    <Button
-                        variant="tertiary"
-                        onPress={onViewFullCart}
-                        label={labels.viewFullCart}
-                        classNames={["w-full"]}
-                    />
-                ),
-            ]}
-        />
+        <StackV gap={4} items={footerItems} />
     )
 
     return (

@@ -112,12 +112,12 @@ const CourseView = ({ course, lessons, isSkeleton = false, labels }: CourseViewP
     /** The course header row -- title on the left, the optional price chip on the right. */
     const Header = () => (
         <StackV
-            gap={2}
+            principle="title-subtitle" gap={2}
             isSkeleton={isSkeleton}
             items={[
                 () => (
                     <StackH
-                        gap={3}
+                        principle="value-row" gap={3}
                         justify="between"
                         align="center"
                         isSkeleton={isSkeleton}
@@ -172,7 +172,8 @@ const CourseView = ({ course, lessons, isSkeleton = false, labels }: CourseViewP
                 subtitle={`${labels.lessonPrefix} ${index + 1}`}
                 meta={() => (
                     <StackH
-                        gap={2}
+                        gap={3}
+                        principle="chip-row"
                         align="center"
                         items={[
                             () => <Chip tone={STATUS_CHIP_TONE[lesson.status]} text={labels.statusLabels[lesson.status]} />,
@@ -193,7 +194,7 @@ const CourseView = ({ course, lessons, isSkeleton = false, labels }: CourseViewP
                 isSkeleton={isSkeleton}
                 body={() => (
                     <StackV
-                        gap={4}
+                        principle="label-field" gap={4}
                         isSkeleton={isSkeleton}
                         items={[
                             () => <Header />,
@@ -203,7 +204,7 @@ const CourseView = ({ course, lessons, isSkeleton = false, labels }: CourseViewP
                             () =>
                                 isSkeleton ? (
                                     <StackV
-                                        gap={1}
+                                        principle="name-handle" gap={1}
                                         isSkeleton
                                         items={Array.from({ length: SKELETON_LESSON_COUNT }, (_unused, index) => () => (
                                             <ListRow

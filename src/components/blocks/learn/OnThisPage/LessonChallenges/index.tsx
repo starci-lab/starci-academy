@@ -100,6 +100,7 @@ export const LessonChallenges = () => {
                     <StackH
                         key={challenge.id}
                         gap={3}
+                        principle="chip-row"
                         align="center"
                         justify="between"
                         items={[

@@ -409,7 +409,7 @@ const renderSectionItems = (section: AgentOsConsoleSection, labels: AgentOsConso
                 ) : (
                     <Grid
                         columns={{ base: 1, sm: 2, lg: 4 }}
-                        gap={4}
+                        principle="content-row"
                         items={section.agents.map((agent) => ({
                             key: agent.id,
                             content: () => (
@@ -608,7 +608,12 @@ const AgentOsConsole = (props: AgentOsConsoleProps) => {
     const body: ReactNode = subNavVariant === "segmented" ? (
         <StackV gap={4} items={[() => subNav, () => sectionBody]} />
     ) : (
-        <StackH gap={4} align="start" items={[() => subNav, () => sectionBody]} />
+        <StackH
+            gap={4}
+            principle="content-row"
+            align="start"
+            items={[() => subNav, () => sectionBody]}
+        />
     )
 
     return shell(

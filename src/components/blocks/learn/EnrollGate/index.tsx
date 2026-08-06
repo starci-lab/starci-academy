@@ -41,6 +41,7 @@ const EnrollCard = ({ title, description, priceRegion, scarcity, ctaLabel, onEnr
     <Box className={CARD_SURFACE}>
         <StackV
             gap={4}
+            principle="card-caption"
             align="center"
             items={[
                 () => <IconTile icon={<LockIcon aria-hidden focusable="false" />} tone="accent" size="sm" />,
@@ -147,24 +148,24 @@ export const EnrollGate = ({ title, description, preview }: EnrollGateProps) => 
         : undefined
 
     // no teaser → just the centred enroll card.
+    // Asymmetric page inset {x:5,y:6} has no padding principle token; a StackV
+    // that also carried gap={1} was padding-plus-gap with no honest owner — Box
+    // keeps the same inset without a false seam token.
     if (!preview) {
         return (
-            <StackV
+            <Box
                 identity={{ tier: "block", component: "EnrollGate" }}
-                gap={1}
-                align="center"
-                padding={{ x: 5, y: 6 }}
-                body={() => (
-                    <EnrollCard
-                        title={title}
-                        description={description}
-                        priceRegion={priceRegion}
-                        scarcity={scarcity}
-                        ctaLabel={t("enrollGate.cta")}
-                        onEnroll={onEnroll}
-                    />
-                )}
-            />
+                className="flex justify-center px-5 py-6"
+            >
+                <EnrollCard
+                    title={title}
+                    description={description}
+                    priceRegion={priceRegion}
+                    scarcity={scarcity}
+                    ctaLabel={t("enrollGate.cta")}
+                    onEnroll={onEnroll}
+                />
+            </Box>
         )
     }
 

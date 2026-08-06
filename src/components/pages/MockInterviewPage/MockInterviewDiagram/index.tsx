@@ -16,6 +16,8 @@ import {
 import { Button, cn } from "@heroui/react"
 import { PlusIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
+import { Box } from "@/components/frames/Box"
+import { StackH } from "@/components/frames/Stack"
 import { BoxNode, MOCK_INTERVIEW_BOX_NODE_TYPE, type MockInterviewBoxNode } from "./BoxNode"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -114,13 +116,25 @@ const MockInterviewDiagramCanvas = ({ className, onChange }: MockInterviewDiagra
 
     return (
         <div className={cn("relative flex h-full w-full flex-col overflow-hidden rounded-xl", className)}>
-            <div className="flex items-center justify-between gap-2 border-b border-divider bg-surface px-3 py-2">
-                <span className="text-sm font-medium text-foreground">{t("mockInterview.diagram.title")}</span>
-                <Button onPress={addBox} size="sm" variant="secondary">
-                    <PlusIcon aria-hidden className="size-4" focusable="false" />
-                    {t("mockInterview.diagram.addBox")}
-                </Button>
-            </div>
+            <Box principle="control-pad" className="border-b border-divider bg-surface px-3 py-2">
+                <StackH
+                    gap={3}
+                    principle="flex-action"
+                    justify="between"
+                    classNames={["w-full"]}
+                    items={[
+                        () => (
+                            <span className="text-sm font-medium text-foreground">{t("mockInterview.diagram.title")}</span>
+                        ),
+                        () => (
+                            <Button onPress={addBox} size="sm" variant="secondary">
+                                <PlusIcon aria-hidden className="size-4" focusable="false" />
+                                {t("mockInterview.diagram.addBox")}
+                            </Button>
+                        ),
+                    ]}
+                />
+            </Box>
             <div className="relative min-h-0 flex-1">
                 <ReactFlow
                     aria-label={t("mockInterview.diagram.canvasAria")}

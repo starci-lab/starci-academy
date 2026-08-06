@@ -17,6 +17,8 @@ import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { useAppSelector } from "@/redux/hooks"
 import { CodingDifficulty } from "@/modules/api/graphql/queries/types/coding"
+import { Box } from "@/components/frames/Box"
+import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link ProgressCockpit}. */
 export type ProgressCockpitProps = WithClassNames<undefined>
@@ -111,16 +113,16 @@ export const ProgressCockpit = ({
             skeleton={(
                 <div className={cn("flex flex-col gap-6", className)}>
                     {/* metric row — solved · points · rank · percentile */}
-                    <div className="grid grid-cols-2 gap-3 @app-sm:grid-cols-4">
+                    <Box principle="content-row" className="grid grid-cols-2 gap-3 @app-sm:grid-cols-4">
                         {[0, 1, 2, 3].map((index) => (
                             <Skeleton key={index} className="h-24 w-full rounded-2xl" />
                         ))}
-                    </div>
+                    </Box>
                     {/* difficulty distribution bar */}
-                    <div className="flex flex-col gap-2">
-                        <Skeleton.Typography type="body-sm" width="1/4" />
-                        <Skeleton.SegmentBar legendItems={3} />
-                    </div>
+                    <StackV gap={3} principle="sibling-stack" items={[
+                        () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                        () => <Skeleton.SegmentBar legendItems={3} />,
+                    ]} />
                 </div>
             )}
             error={error}
@@ -132,7 +134,7 @@ export const ProgressCockpit = ({
         >
             <div className={cn("flex flex-col gap-6", className)}>
                 {/* headline metric row — pending rank/percentile cards skeleton in place */}
-                <div className="grid grid-cols-2 gap-3 @app-sm:grid-cols-4">
+                <Box principle="content-row" className="grid grid-cols-2 gap-3 @app-sm:grid-cols-4">
                     {stats.map((stat) => (
                         stat.value === null ? (
                             <Skeleton key={stat.key} className="h-24 w-full rounded-2xl" />
@@ -144,23 +146,25 @@ export const ProgressCockpit = ({
                             />
                         )
                     ))}
-                </div>
+                </Box>
 
                 {/* difficulty distribution — skeleton while resolving, hidden once
                     resolved with nothing solved yet, real bar otherwise */}
                 {skillsPending ? (
-                    <div className="flex flex-col gap-2">
-                        <Skeleton.Typography type="body-sm" width="1/4" />
-                        <Skeleton.SegmentBar legendItems={3} />
-                    </div>
+                    <StackV gap={3} principle="sibling-stack" items={[
+                        () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                        () => <Skeleton.SegmentBar legendItems={3} />,
+                    ]} />
                 ) : difficultySegments.length > 0 ? (
-                    <div className="flex flex-col gap-2">
-                        <Label>{t("PracticeHubPage.cockpit.byDifficulty")}</Label>
-                        <SegmentBar
-                            ariaLabel={t("PracticeHubPage.cockpit.byDifficulty")}
-                            segments={difficultySegments}
-                        />
-                    </div>
+                    <StackV gap={3} principle="sibling-stack" items={[
+                        () => <Label>{t("PracticeHubPage.cockpit.byDifficulty")}</Label>,
+                        () => (
+                            <SegmentBar
+                                ariaLabel={t("PracticeHubPage.cockpit.byDifficulty")}
+                                segments={difficultySegments}
+                            />
+                        ),
+                    ]} />
                 ) : null}
             </div>
         </AsyncContent>

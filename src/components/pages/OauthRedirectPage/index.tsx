@@ -13,6 +13,7 @@ import { Spacer } from "@/components/blocks/layout/Spacer"
 import { SessionStorage } from "@/modules/storage/session/storage"
 import { SessionStorageId } from "@/modules/storage/session/enums/id"
 import { type SessionStoragePostLoginRedirect } from "@/modules/storage/session/types/post-login-redirect"
+import { StackV } from "@/components/frames/Stack"
 
 export * from "./enums"
 
@@ -71,43 +72,59 @@ export const OauthRedirectPage = ({ action, className }: OauthRedirectPageProps)
     }, [action, locale, router, hasOauthError])
 
     if (hasOauthError) {
+        const errorItems = [
+            () => (
+                <Typography type="h5" weight="semibold" align="center">
+                    {t("auth.oauth.failedTitle")}
+                </Typography>
+            ),
+            () => (
+                <Typography type="body-sm" color="muted" align="center">
+                    {t("auth.oauth.failedDescription")}
+                </Typography>
+            ),
+            () => <Spacer y={3} />,
+            () => (
+                <Button
+                    variant="primary"
+                    onPress={() => router.replace(pathConfig().locale(locale).login().build())}
+                >
+                    {t("auth.oauth.retry")}
+                </Button>
+            ),
+        ]
         return (
             <div className={cn("flex min-h-[60vh] flex-col items-center justify-center", className)}>
-                <div className="flex max-w-sm flex-col items-center gap-2 text-center">
-                    <Typography type="h5" weight="semibold" align="center">
-                        {t("auth.oauth.failedTitle")}
-                    </Typography>
-                    <Typography type="body-sm" color="muted" align="center">
-                        {t("auth.oauth.failedDescription")}
-                    </Typography>
-                    <Spacer y={3} />
-                    <Button
-                        variant="primary"
-                        onPress={() => router.replace(pathConfig().locale(locale).login().build())}
-                    >
-                        {t("auth.oauth.retry")}
-                    </Button>
+                <div className="max-w-sm text-center">
+                    <StackV
+                        gap={3}
+                        align="center"
+                        principle="sibling-stack"
+                        items={errorItems}
+                    />
                 </div>
             </div>
         )
     }
 
+    const loadingItems = [
+        () => (
+            <Spinner
+                color="accent"
+                size="lg"
+            />
+        ),
+        () => <Spacer y={3} />,
+        () => (
+            <div className="text-sm">
+                {t(OAUTH_ACTION_MESSAGE_KEY_MAP[action])}
+            </div>
+        ),
+    ]
+
     return (
         <div className={cn("flex min-h-[60vh] flex-col items-center justify-center", className)}>
-            <div
-                className="flex flex-col items-center gap-2"
-            >
-                <Spinner
-                    color="accent"
-                    size="lg"
-                />
-                <Spacer y={3} />
-                <div
-                    className="text-sm"
-                >
-                    {t(OAUTH_ACTION_MESSAGE_KEY_MAP[action])}
-                </div>
-            </div>
+            <StackV gap={3} align="center" principle="sibling-stack" items={loadingItems} />
         </div>
     )
 }

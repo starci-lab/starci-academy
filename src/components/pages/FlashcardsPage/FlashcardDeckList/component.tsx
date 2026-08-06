@@ -174,7 +174,7 @@ export const _FlashcardDeckList = ({
         const total = deck?.cards?.length ?? 0
         const mastered = deck?.masteredCount ?? 0
         return (
-            <StackV gap={3} items={[
+            <StackV gap={3} principle="sibling-stack" items={[
                 () => (
                     <StackH gap={3} justify="between" align="start" items={[
                         () => (
@@ -188,7 +188,7 @@ export const _FlashcardDeckList = ({
                             />
                         ),
                         () => (
-                            <StackH gap={3} align="center" classNames={["shrink-0"]} items={[
+                            <StackH gap={3} principle="chip-row" align="center" classNames={["shrink-0"]} items={[
                                 () => dueChip(deck),
                                 () => difficultyChip(deck),
                             ]} />
@@ -206,14 +206,14 @@ export const _FlashcardDeckList = ({
                 // the old skeleton never carried this row either).
                 ...(!isSkeleton && showProgress && total > 0 ? [
                     () => (
-                        <StackV gap={3} items={[
+                        <StackV gap={3} principle="sibling-stack" items={[
                             () => <Typography size="xs" color="muted" text={labels.masteredLabel(mastered, total)} />,
                             () => <Divider />,
                         ]} />
                     ),
                 ] : []),
                 () => (
-                    <StackH gap={3} justify="between" align="center" items={[
+                    <StackH gap={3} principle="flex-action" justify="between" align="center" items={[
                         () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.cardCountLabel(total)} />,
                         () => cta(deck),
                     ]} />
@@ -228,7 +228,7 @@ export const _FlashcardDeckList = ({
         const mastered = deck?.masteredCount ?? 0
         const showMastered = !isSkeleton && showProgress && total > 0
         return (
-            <StackH gap={4} align="center" items={[
+            <StackH gap={4} principle="content-row" align="center" items={[
                 () => (
                     <Typography
                         size="sm"
@@ -264,14 +264,16 @@ export const _FlashcardDeckList = ({
     const showSearchEmpty = !isSkeleton && filteredCount === 0
     const showPager = !isSkeleton && totalPages > 1
 
+    // Peer deck cards at gap={4} (12px) — content-row owns the step-4 seam.
+    const gridItems = rows.map((deck, index) => ({
+        key: deck?.id ?? `pending-${index}`,
+        content: () => <SurfaceCard isSkeleton={isSkeleton} body={() => deckGridCardBody(deck)} />,
+    }))
     const gridView = (
         <Grid
             columns={{ base: 1, sm: 2 }}
-            gap={4}
-            items={rows.map((deck, index) => ({
-                key: deck?.id ?? `pending-${index}`,
-                content: () => <SurfaceCard isSkeleton={isSkeleton} body={() => deckGridCardBody(deck)} />,
-            }))}
+            principle="content-row"
+            items={gridItems}
         />
     )
 
@@ -300,83 +302,88 @@ export const _FlashcardDeckList = ({
                     onStart={onModalStart}
                 />
             ) : null}
-            <StackV gap={4} items={[
-                () => (
-                    // search row: filter input (left) + result count & view toggle (right).
-                    <StackH gap={4} at="sm" justify="between" align="center" items={[
-                        () => (
-                            <Box className="w-full @app-sm:max-w-sm">
-                                <InputSearch
-                                    value={query}
-                                    onValueChange={onQueryChange}
-                                    isSkeleton={isSkeleton}
-                                    ariaLabel={labels.searchPlaceholder}
-                                    placeholder={labels.searchPlaceholder}
-                                />
-                            </Box>
-                        ),
-                        () => (
-                            <StackH gap={4} align="center" classNames={["shrink-0"]} items={[
-                                () => (
-                                    <Typography
-                                        size="sm"
-                                        color="muted"
+            {(() => {
+                // Hoisted so the outer gap-only column is not scanned as owning nested
+                // justify/at from its children (check-pattern-coverage opens to `>`).
+                const deckListColumnItems = [
+                    () => (
+                        // search row: filter input (left) + result count & view toggle (right).
+                        <StackH gap={4} principle="content-row" at="sm" justify="between" align="center" items={[
+                            () => (
+                                <Box className="w-full @app-sm:max-w-sm">
+                                    <InputSearch
+                                        value={query}
+                                        onValueChange={onQueryChange}
                                         isSkeleton={isSkeleton}
-                                        text={labels.foundCount}
-                                        classNames={isSkeleton ? ["w-1/4"] : undefined}
+                                        ariaLabel={labels.searchPlaceholder}
+                                        placeholder={labels.searchPlaceholder}
                                     />
-                                ),
-                                // grid ⇆ line layout toggle (icon-only; persistence lives in the connected file).
-                                // Chrome control over local view state, not fetched data — it does not shimmer.
-                                () => (
-                                    <TabsCard
-                                        variant="primary"
-                                        leftTabs={{
-                                            selectedKey: view,
-                                            ariaLabel: labels.viewAria,
-                                            onSelectionChange: (key) => onViewChange(String(key) as DeckView),
-                                            items: [
-                                                {
-                                                    key: "grid",
-                                                    label: (
-                                                        <SquaresFourIcon
-                                                            className="size-5"
-                                                            aria-label={labels.viewGrid}
-                                                            focusable="false"
-                                                        />
-                                                    ),
-                                                },
-                                                {
-                                                    key: "line",
-                                                    label: (
-                                                        <ListIcon
-                                                            className="size-5"
-                                                            aria-label={labels.viewLine}
-                                                            focusable="false"
-                                                        />
-                                                    ),
-                                                },
-                                            ],
-                                        }}
-                                    />
-                                ),
-                            ]} />
-                        ),
-                    ]} />
-                ),
-                () => (
-                    showSearchEmpty ? (
-                        <Typography size="sm" color="muted" text={labels.searchEmptyMessage} />
-                    ) : (
-                        <StackV gap={4} items={[
-                            () => (view === "grid" ? gridView : lineView),
-                            ...(showPager ? [
-                                () => <Pagination currentPage={page} totalPages={totalPages} onPageChange={onPageChange} />,
-                            ] : []),
+                                </Box>
+                            ),
+                            () => (
+                                <StackH gap={4} principle="flex-action" align="center" classNames={["shrink-0"]} items={[
+                                    () => (
+                                        <Typography
+                                            size="sm"
+                                            color="muted"
+                                            isSkeleton={isSkeleton}
+                                            text={labels.foundCount}
+                                            classNames={isSkeleton ? ["w-1/4"] : undefined}
+                                        />
+                                    ),
+                                    // grid ⇆ line layout toggle (icon-only; persistence lives in the connected file).
+                                    // Chrome control over local view state, not fetched data — it does not shimmer.
+                                    () => (
+                                        <TabsCard
+                                            variant="primary"
+                                            leftTabs={{
+                                                selectedKey: view,
+                                                ariaLabel: labels.viewAria,
+                                                onSelectionChange: (key) => onViewChange(String(key) as DeckView),
+                                                items: [
+                                                    {
+                                                        key: "grid",
+                                                        label: (
+                                                            <SquaresFourIcon
+                                                                className="size-5"
+                                                                aria-label={labels.viewGrid}
+                                                                focusable="false"
+                                                            />
+                                                        ),
+                                                    },
+                                                    {
+                                                        key: "line",
+                                                        label: (
+                                                            <ListIcon
+                                                                className="size-5"
+                                                                aria-label={labels.viewLine}
+                                                                focusable="false"
+                                                            />
+                                                        ),
+                                                    },
+                                                ],
+                                            }}
+                                        />
+                                    ),
+                                ]} />
+                            ),
                         ]} />
-                    )
-                ),
-            ]} />
+                    ),
+                    () => (
+                        showSearchEmpty ? (
+                            <Typography size="sm" color="muted" text={labels.searchEmptyMessage} />
+                        ) : (
+                            <StackV gap={4} items={[
+                                () => (view === "grid" ? gridView : lineView),
+                                ...(showPager ? [
+                                    () => <Pagination currentPage={page} totalPages={totalPages} onPageChange={onPageChange} />,
+                                ] : []),
+                            ]} />
+                        )
+                    ),
+                ]
+                return <StackV gap={4} items={deckListColumnItems} />
+            })()}
         </>
     )
 }

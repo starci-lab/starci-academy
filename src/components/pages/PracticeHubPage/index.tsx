@@ -7,6 +7,8 @@ import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
 import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
 import { pathConfig } from "@/resources/path"
+import { Box } from "@/components/frames/Box"
+import { StackV } from "@/components/frames/Stack"
 import { PracticeRail } from "./PracticeRail"
 import { PracticeMobileNav } from "./PracticeRail/PracticeMobileNav"
 import { ProgressCockpit } from "./ProgressCockpit"
@@ -50,8 +52,8 @@ export const PracticeHubPage = () => {
             </ResizableRail>
 
             {/* content column — owns the canonical p-6 reading padding */}
-            <div className="min-h-0 min-w-0 flex-1 p-6">
-                <div className="mx-auto flex max-w-5xl flex-col gap-10">
+            <Box principle="page-pad" className="min-h-0 min-w-0 flex-1 p-6">
+                <Box principle="center-measure" className="mx-auto flex max-w-5xl flex-col gap-10">
                     <PageHeader
                         breadcrumb={(
                             <ResponsiveBreadcrumb
@@ -72,26 +74,22 @@ export const PracticeHubPage = () => {
                         description={t("codingPractice.subtitle")}
                     />
 
-                    <div className="flex flex-col gap-6">
-                        {/* mobile: mode + topic chips (the rail is desktop-only) */}
-                        <PracticeMobileNav />
-
-                        {/* the viewer's own standing — stays above both views */}
-                        <ProgressCockpit />
-
-                        {/* only the active view mounts, so the idle one's query stays idle */}
-                        {view === "problems" ? (
+                    <StackV gap={6} principle="block-boundary" items={[
+                        () => <PracticeMobileNav />,
+                        () => <ProgressCockpit />,
+                        () => (view === "problems" ? (
                             <>
-                                {/* filter bar sticks below the navbar while scrolling the catalog */}
-                                <PracticeFilters className="sticky top-16 z-40 bg-background py-2" />
+                                <Box principle="pill-pad" className="sticky top-16 z-40 bg-background py-2">
+                                    <PracticeFilters />
+                                </Box>
                                 <ProblemCatalog />
                             </>
                         ) : (
                             <CodingLeaderboard />
-                        )}
-                    </div>
-                </div>
-            </div>
+                        )),
+                    ]} />
+                </Box>
+            </Box>
         </div>
     )
 }

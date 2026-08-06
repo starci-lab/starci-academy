@@ -44,6 +44,7 @@ const _HeadhuntingCompaniesLayout = ({
     // whoever passed it, the same restraint `RailShell`'s own slots take.
     <RailShell
         at="lg"
+        principle="layout-split"
         rail={NavRail}
         body={() => <>{children}</>}
         identity={{ tier: "layout", component: "HeadhuntingCompaniesLayout" }}

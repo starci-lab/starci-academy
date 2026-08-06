@@ -16,10 +16,11 @@ import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { RichText } from "@sb-components/composites/viewers/RichText/RichText"
-import { PADDING_CLASS, type AllowedGap, type AllowedPadding } from "@sb-components/frames/_spacing"
+import { PADDING_CLASS, type AllowedPadding } from "@sb-components/frames/_spacing"
 import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 import { Box } from "@sb-components/frames/Box/Box"
+import type { PrincipleToken } from "@sb-components/frames/_principles"
 /**
  * `SurfaceCard` — the general wrapper frame of the card family. Owns the header section
  * (`SurfaceCardHeader`: label/labelEnd/see-more/action/subtleLabel), the `header`/`body`/`footer`
@@ -800,9 +801,10 @@ export interface SurfaceCardPressableGroupProps {
      */
     columns?: GridColumns
     /**
-     * Gap between cards. Defaults to `{4}` (`gap-3`).
+     * Peer-card seam for the grid. Default `content-row` (12px). Use
+     * `sibling-stack` for a denser peer tile grid (8px). Owns gap — do not pass `gap`.
      */
-    gap?: AllowedGap
+    principle?: PrincipleToken
     /**
      * Binds number keys `1`–`N` to the items in order, so the group can be driven
      * without the mouse. Off by default — only opt in where the group IS the
@@ -890,7 +892,7 @@ const PressableGroup = ({
     items,
     ariaLabel,
     columns = {},
-    gap = 4,
+    principle = "content-row",
     keyboardShortcut = false,
     isSkeleton = false,
     classNames,
@@ -944,8 +946,7 @@ const PressableGroup = ({
             >
                 <Grid
                     columns={columns}
-                    gap={gap}
-                    principle="sibling-stack"
+                    principle={principle}
                     items={items.map((item) => ({
                         key: item.key,
                         content: () => <PressableGroupSkeletonTile classNames={item.classNames} />,
@@ -968,8 +969,7 @@ const PressableGroup = ({
         >
             <Grid
                 columns={columns}
-                gap={gap}
-                principle="sibling-stack"
+                principle={principle}
                 items={items.map((item) => {
                     // A component reference, not a built node (COMPOSITE-8) — `Base`'s
                     // `body` slot calls this itself; the closure keeps the item's own
@@ -1087,7 +1087,6 @@ const SelectableGroup = <T extends string>({
             data-component="SurfaceCardSelectableGroup"
         >
             <Grid
-                gap={3}
                 principle="sibling-stack"
                 columns={SELECTABLE_GROUP_COLUMNS[columns]}
                 classNames={classNames}

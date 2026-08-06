@@ -116,7 +116,7 @@ const LessonViewer = ({ lesson, video, isCompleted, isMarking = false, onMarkCom
                 isSkeleton={isSkeleton}
                 body={() => (
                     <StackV
-                        gap={4}
+                        principle="label-field" gap={4}
                         isSkeleton={isSkeleton}
                         items={[
                             () => <Typography size="h4" weight="semibold" isSkeleton={isSkeleton} text={lesson.title} />,
@@ -124,7 +124,7 @@ const LessonViewer = ({ lesson, video, isCompleted, isMarking = false, onMarkCom
                             // stays stable when the real player wiring resolves.
                             ...(isSkeleton || video ? [() => <VideoRegion />] : []),
                             () => <Typography size="sm" preserveWhitespace isSkeleton={isSkeleton} text={lesson.body} />,
-                            () => <StackH gap={3} align="center" isSkeleton={isSkeleton} items={[() => <CompleteAction />]} />,
+                            () => <StackH principle="flex-action" gap={3} align="center" isSkeleton={isSkeleton} items={[() => <CompleteAction />]} />,
                         ]}
                     />
                 )}

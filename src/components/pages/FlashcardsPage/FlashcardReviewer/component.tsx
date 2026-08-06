@@ -1,19 +1,30 @@
 "use client"
 
 import React, { useState } from "react"
-import { Button, Chip, Label, Spinner, Typography, cn } from "@heroui/react"
+import { Button, Chip, Label, Spinner, Typography } from "@heroui/react"
 import { CaretLeftIcon, CaretRightIcon, LockIcon } from "@phosphor-icons/react"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { WorkSessionHeader } from "@/components/blocks/navigation/WorkSessionHeader"
 import { ConfirmDialog } from "@/components/composites/feedback/ConfirmDialog"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { RatingBar, type RatingOption } from "@/components/blocks/buttons/RatingBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { Box } from "@/components/frames/Box"
+import { Cluster } from "@/components/frames/Cluster"
+import { Container } from "@/components/frames/Container"
+import { StackH, StackV } from "@/components/frames/Stack"
 import { LEVEL_COLOR } from "../constants"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-card"
+
+/** How many segments the header's progress meter mirrors while shimmering. */
+const HEADER_SKELETON_SEGMENT_COUNT = 6
+
+/** How many placeholder chips the level/tag row mirrors while shimmering. */
+const SKELETON_CHIP_COUNT = 2
 
 /** Every translated string {@link _FlashcardReviewer} needs — resolved by the connected `FlashcardReviewer`. */
 export interface FlashcardReviewerLabels {
@@ -165,215 +176,257 @@ export const _FlashcardReviewer = ({
 
     const identity = deckTitle ? { name: deckTitle } : undefined
 
-    return (
-        <div className={cn("flex w-full flex-col", className)}>
-            {isSkeleton ? (
-                // Mirrors the real shape top-to-bottom: the WorkSessionHeader band
-                // (back-link · identity · counter · progress segments), then the
-                // max-w-3xl body — level/tag chips, the FlipCard face, and the
-                // prev/show-answer controls. Inline, not a second file — the leaves
-                // below carry no `isSkeleton` of their own (missingSkeletonSupport).
-                <>
-                    <div className="border-b border-default bg-surface">
-                        <div className="flex items-center gap-3 px-4 py-2 @app-sm:px-6">
-                            <Skeleton className="h-4 w-16 rounded" />
-                            <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
-                            <Skeleton className="hidden h-4 w-24 rounded @app-sm:block" />
-                            <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
-                            <Skeleton className="h-4 w-20 rounded" />
-                        </div>
-                        <div className="flex gap-1 px-4 pb-2 @app-sm:px-6">
-                            {Array.from({ length: 6 }, (_unused, index) => (
-                                <Skeleton key={index} className="h-1 flex-1 rounded-full" />
-                            ))}
-                        </div>
-                    </div>
-                    <div className="px-4 pb-6 pt-10 @app-sm:px-6">
-                        <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-                            <div className="flex flex-wrap items-center gap-2">
-                                <Skeleton.Chip />
-                                <Skeleton.Chip />
-                            </div>
-                            <div className="flex flex-col gap-3">
-                                <Skeleton.Typography type="body-xs" width="1/4" />
-                                <div className="flex flex-col gap-3 rounded-3xl bg-surface p-6 shadow-surface">
-                                    <Skeleton.Typography type="body" width="3/4" />
-                                    <Skeleton.Typography type="body" width="2/3" />
-                                </div>
-                            </div>
-                            <div className="flex items-center justify-between gap-3">
-                                <Skeleton.Button />
-                                <Skeleton.Button />
-                            </div>
-                        </div>
-                    </div>
-                </>
-            ) : done ? (
-                // transient hand-off only — the connected file's "finish" effect
-                // navigates to the dedicated `.../result` route once the completion
-                // mutation resolves; this never has a real end state to render, just
-                // the "saving" interim. KEEPS the active phase's own header chrome.
-                <>
-                    <WorkSessionHeader
-                        backLabel={labels.exit}
-                        onBack={onBack ?? (() => {})}
-                        title={labels.title}
-                        identity={identity}
-                        counter={labels.counter}
-                        current={totalCards}
-                        total={totalCards}
+    const header = isSkeleton ? (
+        <Box className="sticky top-16 z-10 border-b border-default bg-surface">
+            <StackH
+                gap={1}
+                padding={{ base: { x: 5, y: 3 }, sm: { x: 6, y: 3 } }}
+                principle="pill-pad"
+                items={[() => (
+                    <StackH
+                        gap={4}
+                        principle="content-row"
+                        align="center"
+                        divider
+                        classNames={["w-full"]}
+                        items={[
+                            () => <Skeleton className="h-4 w-16 rounded" />,
+                            () => (
+                                <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
+                            ),
+                            () => <Skeleton className="hidden h-4 w-24 rounded @app-sm:block" />,
+                            () => (
+                                <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
+                            ),
+                            () => <Skeleton className="h-4 w-20 rounded" />,
+                        ]}
                     />
-                    <div className="px-4 pb-6 pt-10 @app-sm:px-6">
-                        <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
-                            <Spinner size="lg" />
-                            <Typography type="body-sm" color="muted">
-                                {labels.savingLabel}
-                            </Typography>
-                        </div>
-                    </div>
-                </>
-            ) : (
-                <>
-                    {/* shared header: back-link + deck identity + card counter +
-                        level/tag meta chips inline + progress segments. */}
-                    <WorkSessionHeader
-                        backLabel={labels.exit}
-                        onBack={() => setConfirmAction("leave")}
-                        title={labels.title}
-                        identity={identity}
-                        counter={labels.counter}
-                        current={currentIndex}
-                        total={totalCards}
-                        doneSet={gradedIndexes}
-                        onSegmentClick={onSegmentClick}
-                        onFinish={() => setConfirmAction("endEarly")}
-                        finishLabel={labels.finishEarly}
-                    />
-                    <ConfirmDialog
-                        isOpen={confirmAction !== null}
-                        onOpenChange={(open) => { if (!open) { setConfirmAction(null) } }}
-                        title={confirmAction === "leave" ? labels.leaveTitle : labels.finishEarlyTitle}
-                        description={confirmAction === "leave" ? labels.leaveConfirm : labels.finishEarlyConfirm}
-                        confirmLabel={confirmAction === "leave" ? labels.leaveCta : labels.finishEarlyCta}
-                        cancelLabel={labels.stayIn}
-                        onConfirm={() => {
-                            const action = confirmAction
-                            setConfirmAction(null)
-                            if (action === "leave") {
-                                onBack?.()
-                            } else if (action === "endEarly") {
-                                onFinishEarly()
-                            }
-                        }}
-                    />
+                )]}
+            />
+            <Box principle="pill-pad" className="px-4 pb-2 @app-sm:px-6">
+                <StackH
+                    gap={2}
+                    classNames={["w-full"]}
+                    items={Array.from({ length: HEADER_SKELETON_SEGMENT_COUNT }, (_unused, index) => () => (
+                        <Skeleton key={index} className="h-1 flex-1 rounded-full" />
+                    ))}
+                />
+            </Box>
+        </Box>
+    ) : done ? (
+        <WorkSessionHeader
+            backLabel={labels.exit}
+            onBack={onBack ?? (() => {})}
+            title={labels.title}
+            identity={identity}
+            counter={labels.counter}
+            current={totalCards}
+            total={totalCards}
+        />
+    ) : (
+        <>
+            <WorkSessionHeader
+                backLabel={labels.exit}
+                onBack={() => setConfirmAction("leave")}
+                title={labels.title}
+                identity={identity}
+                counter={labels.counter}
+                current={currentIndex}
+                total={totalCards}
+                doneSet={gradedIndexes}
+                onSegmentClick={onSegmentClick}
+                onFinish={() => setConfirmAction("endEarly")}
+                finishLabel={labels.finishEarly}
+            />
+            <ConfirmDialog
+                isOpen={confirmAction !== null}
+                onOpenChange={(open) => { if (!open) { setConfirmAction(null) } }}
+                title={confirmAction === "leave" ? labels.leaveTitle : labels.finishEarlyTitle}
+                description={confirmAction === "leave" ? labels.leaveConfirm : labels.finishEarlyConfirm}
+                confirmLabel={confirmAction === "leave" ? labels.leaveCta : labels.finishEarlyCta}
+                cancelLabel={labels.stayIn}
+                onConfirm={() => {
+                    const action = confirmAction
+                    setConfirmAction(null)
+                    if (action === "leave") {
+                        onBack?.()
+                    } else if (action === "endEarly") {
+                        onFinishEarly()
+                    }
+                }}
+            />
+        </>
+    )
 
-                    <div className="px-4 pb-6 pt-10 @app-sm:px-6">
-                        <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-                            {/* the flip card: question → answer (+ optional depth); the
-                                level/tag chips ride under the QUESTION via `belowFront`. */}
-                            <FlipCard
-                                revealed={revealed}
-                                questionLabel={labels.questionLabel}
-                                answerLabel={labels.answerLabel}
-                                front={() => <MarkdownContent plain markdown={card?.question ?? ""} />}
-                                belowFront={card && (card.level || (card.tags?.length ?? 0) > 0) ? () => (
-                                    <div className="flex flex-wrap items-center gap-2">
-                                        {card.level ? (
-                                            <Chip size="sm" variant="soft" color={LEVEL_COLOR[card.level] ?? "default"}>
-                                                {cardLevelLabel}
-                                            </Chip>
-                                        ) : null}
-                                        {card.tags?.map((tag) => (
-                                            <Chip key={tag} size="sm" variant="soft" color="default">
-                                                {tag}
-                                            </Chip>
-                                        ))}
-                                    </div>
-                                ) : undefined}
-                                back={() => (
+    const cardLevel = card?.level ?? null
+    const chipItems = isSkeleton
+        ? Array.from({ length: SKELETON_CHIP_COUNT }, () => () => <Skeleton.Chip />)
+        : card && (cardLevel || (card.tags?.length ?? 0) > 0)
+            ? [
+                ...(cardLevel ? [() => (
+                    <Chip size="sm" variant="soft" color={LEVEL_COLOR[cardLevel] ?? "default"}>
+                        {cardLevelLabel}
+                    </Chip>
+                )] : []),
+                ...(card.tags ?? []).map((tag) => () => (
+                    <Chip key={tag} size="sm" variant="soft" color="default">
+                        {tag}
+                    </Chip>
+                )),
+            ]
+            : []
+
+    const body = isSkeleton ? (
+        <Container size="md" padding={1} body={() => (
+            <StackV gap={6} items={[
+                () => <Cluster gap={3} principle="chip-row" align="center" items={chipItems} />,
+                () => (
+                    <StackV gap={4} principle="label-field" items={[
+                        () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                        () => (
+                            <SurfaceCard padding={6} body={() => (
+                                <StackV gap={4} principle="sibling-stack" items={[
+                                    () => <Skeleton.Typography type="body" width="3/4" />,
+                                    () => <Skeleton.Typography type="body" width="2/3" />,
+                                ]} />
+                            )} />
+                        ),
+                    ]} />
+                ),
+                () => (
+                    <StackH gap={4} principle="flex-action" justify="between" align="center" items={[
+                        () => <Skeleton.Button />,
+                        () => <Skeleton.Button />,
+                    ]} />
+                ),
+            ]} />
+        )} />
+    ) : done ? (
+        <Container size="md" padding={1} body={() => (
+            <Box className="py-10">
+                <StackV gap={4} align="center" principle="card-caption" classNames={["w-full"]} items={[
+                    () => <Spinner size="lg" />,
+                    () => (
+                        <Typography type="body-sm" color="muted">
+                            {labels.savingLabel}
+                        </Typography>
+                    ),
+                ]} />
+            </Box>
+        )} />
+    ) : (
+        <Container size="md" padding={1} body={() => (
+            <StackV gap={6} items={[
+                () => (
+                    <FlipCard
+                        revealed={revealed}
+                        questionLabel={labels.questionLabel}
+                        answerLabel={labels.answerLabel}
+                        front={() => <MarkdownContent plain markdown={card?.question ?? ""} />}
+                        belowFront={chipItems.length > 0 ? () => (
+                            <Cluster gap={3} principle="chip-row" align="center" items={chipItems} />
+                        ) : undefined}
+                        back={() => (
+                            <>
+                                {isLocked ? (
+                                    <StackV gap={4} principle="sibling-stack" align="center" classNames={["flex-1"]} items={[
+                                        () => <LockIcon aria-hidden focusable="false" className="size-8 text-muted" />,
+                                        () => (
+                                            <Typography type="body-sm" weight="semibold">
+                                                {labels.premiumLockedTitle}
+                                            </Typography>
+                                        ),
+                                        () => (
+                                            <Typography type="body-xs" color="muted">
+                                                {labels.premiumLockedHint}
+                                            </Typography>
+                                        ),
+                                    ]} />
+                                ) : (
                                     <>
-                                        {isLocked ? (
-                                            // premium card, viewer not enrolled → withhold the answer
-                                            <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
-                                                <LockIcon aria-hidden focusable="false" className="size-8 text-muted" />
-                                                <Typography type="body-sm" weight="semibold">
-                                                    {labels.premiumLockedTitle}
-                                                </Typography>
-                                                <Typography type="body-xs" color="muted">
-                                                    {labels.premiumLockedHint}
-                                                </Typography>
-                                            </div>
+                                        {card?.answer ? (
+                                            <MarkdownContent plain markdown={card.answer} arcSections />
                                         ) : (
-                                            <>
-                                                {card?.answer ? (
-                                                    <MarkdownContent plain markdown={card.answer} arcSections />
-                                                ) : (
-                                                    <Typography type="body-sm" color="muted">
-                                                        {labels.noAnswer}
-                                                    </Typography>
-                                                )}
-                                                {card?.explanation ? (
-                                                    <MarkdownContent plain markdown={card.explanation} />
-                                                ) : null}
-                                            </>
+                                            <Typography type="body-sm" color="muted">
+                                                {labels.noAnswer}
+                                            </Typography>
                                         )}
+                                        {card?.explanation ? (
+                                            <MarkdownContent plain markdown={card.explanation} />
+                                        ) : null}
                                     </>
                                 )}
-                            />
+                            </>
+                        )}
+                    />
+                ),
+                ...(revealed && isLocked ? [() => (
+                    <StackH gap={3} principle="flex-action" justify="center" items={[() => (
+                        <Button size="sm" variant="primary" onPress={onUnlock}>
+                            {labels.premiumCta}
+                        </Button>
+                    )]} />
+                )] : revealed ? [() => (
+                    <SectionCard withVerdict={{ enable: true, variant: "accent" }}>
+                        <Label>{labels.rateHint}</Label>
+                        <RatingBar
+                            options={ratingOptions}
+                            onRate={onRate}
+                            ariaLabel={labels.rateAria}
+                            isPending={reviewing}
+                        />
+                    </SectionCard>
+                )] : [() => (
+                    <Cluster gap={3} principle="flex-action" align="center" items={[
+                        () => (
+                            <Button size="sm" variant="primary" className="w-full @app-sm:w-auto" onPress={onReveal}>
+                                {labels.showAnswer}
+                            </Button>
+                        ),
+                        () => (
+                            <Button
+                                size="sm"
+                                variant="secondary"
+                                isIconOnly
+                                isDisabled={isFirst}
+                                aria-label={labels.previous}
+                                onPress={onPrev}
+                            >
+                                <CaretLeftIcon weight="bold" className="size-4" aria-hidden focusable="false" />
+                            </Button>
+                        ),
+                        () => (
+                            <Button
+                                size="sm"
+                                variant="secondary"
+                                isIconOnly
+                                isDisabled={isLast}
+                                aria-label={labels.next}
+                                onPress={onNext}
+                            >
+                                <CaretRightIcon weight="bold" className="size-4" aria-hidden focusable="false" />
+                            </Button>
+                        ),
+                    ]} />
+                )]),
+            ]} />
+        )} />
+    )
 
-                            {/* reveal first, then grade recall (which advances) — unless the card is
-                                locked premium, where we surface an enrol CTA instead of grading */}
-                            {revealed && isLocked ? (
-                                <div className="flex justify-center">
-                                    <Button size="sm" variant="primary" onPress={onUnlock}>
-                                        {labels.premiumCta}
-                                    </Button>
-                                </div>
-                            ) : revealed ? (
-                                <SectionCard
-                                    withVerdict={{ enable: true, variant: "accent" }}
-                                >
-                                    <Label>{labels.rateHint}</Label>
-                                    <RatingBar
-                                        options={ratingOptions}
-                                        onRate={onRate}
-                                        ariaLabel={labels.rateAria}
-                                        isPending={reviewing}
-                                    />
-                                </SectionCard>
-                            ) : (
-                                // "Show answer" (primary, fills the rest of the space) · "Next"/"Previous"
-                                // ICON-ONLY (caret, no text).
-                                <div className="flex flex-wrap items-center gap-2">
-                                    <Button size="sm" variant="primary" className="w-full @app-sm:w-auto" onPress={onReveal}>
-                                        {labels.showAnswer}
-                                    </Button>
-                                    <Button
-                                        size="sm"
-                                        variant="secondary"
-                                        isIconOnly
-                                        isDisabled={isFirst}
-                                        aria-label={labels.previous}
-                                        onPress={onPrev}
-                                    >
-                                        <CaretLeftIcon weight="bold" className="size-4" aria-hidden focusable="false" />
-                                    </Button>
-                                    <Button
-                                        size="sm"
-                                        variant="secondary"
-                                        isIconOnly
-                                        isDisabled={isLast}
-                                        aria-label={labels.next}
-                                        onPress={onNext}
-                                    >
-                                        <CaretRightIcon weight="bold" className="size-4" aria-hidden focusable="false" />
-                                    </Button>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </>
-            )}
-        </div>
+    const bodyShell = (
+        <Box principle="page-pad" className="px-4 pb-6 pt-10 @app-sm:px-6">{body}</Box>
+    )
+
+    return (
+        <Box className={className}>
+            <StackV
+                gap={1}
+                identity={{ tier: "block", component: "FlashcardReviewer" }}
+                items={[
+                    () => header,
+                    () => bodyShell,
+                ]}
+            />
+        </Box>
     )
 }

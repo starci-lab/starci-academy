@@ -126,6 +126,7 @@ const ChannelRow = ({ channel, onView, onReconnect, labels, isSkeleton }: {
                     () => (
                         <StackH
                             gap={3}
+                            principle="identity"
                             align="center"
                             classNames={["min-w-0"]}
                             isSkeleton={isSkeleton}

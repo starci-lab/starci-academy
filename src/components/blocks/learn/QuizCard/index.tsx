@@ -332,12 +332,19 @@ export const QuizCard = ({
                         ? [() => (
                             <div className="rounded-2xl bg-surface-secondary">
                                 <StackV
-                                    gap={2}
+                                    gap={1}
                                     padding={{ x: 5, y: 4 }}
-                                    items={[
-                                        () => <Typography size="sm" weight="semibold" text="Explanation" />,
-                                        () => <Typography size="sm" color="muted" text={explanation} />,
-                                    ]}
+                                    principle="row-pad"
+                                    body={() => (
+                                        <StackV
+                                            gap={2}
+                                            principle="title-subtitle"
+                                            items={[
+                                                () => <Typography size="sm" weight="semibold" text="Explanation" />,
+                                                () => <Typography size="sm" color="muted" text={explanation} />,
+                                            ]}
+                                        />
+                                    )}
                                 />
                             </div>
                         )]

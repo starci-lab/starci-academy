@@ -1,9 +1,12 @@
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { type SkeletonProps } from "@/components/frames/_slot"
 import { Button } from "@/components/atoms/buttons/Button"
-import { type ButtonAlign, type ButtonSize, type ButtonVariant, type IconComponent } from "@/components/atoms/buttons/Button/button-tokens"
+import { type ButtonSize, type ButtonVariant, type IconComponent } from "@/components/atoms/buttons/Button/button-tokens"
 import { ResponsiveCluster, type ResponsiveClusterItem } from "@/components/frames/ResponsiveCluster"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
+import type { PrincipleToken } from "@/components/frames/_principles"
+import { PRINCIPLE_STYLE } from "@/components/frames/_principle-style"
+import type { AllowedGap, LayoutJustify } from "@/components/frames/_spacing"
 
 /**
  * `ButtonGroup` — a row of buttons described by `items` data: the HOMOGENEOUS case
@@ -42,11 +45,11 @@ export interface ButtonGroupProps {
     /** `true` renders a skeleton mirroring the item count (pill/square per item). */
     isSkeleton?: boolean
     /**
-     * Main-axis distribution once the row is packed — same three-value vocabulary as
-     * `Button`'s own `align` and `Form`'s `FormActionsAlign`. Left out means the browser
-     * default (`start`).
+     * Layout seam for this control row. Default `flex-action`.
+     * Use `flex-action-end` / `flex-action-start` / `flex-action-between` when the
+     * main-axis distribution is part of the meaning (form closing rows).
      */
-    align?: ButtonAlign
+    principle?: PrincipleToken
     /**
      * Container step this row leaves the full-width column for the packed row at.
      * Default `sm` — a button row needs far less room than a page split to pack.
@@ -66,51 +69,56 @@ export const ButtonGroup = ({
     items,
     size = "md",
     isSkeleton = false,
-    align,
+    principle = "flex-action",
     at = "sm",
     classNames,
-}: ButtonGroupProps) => (
-    <ResponsiveCluster
-        data-tier="composite"
-        data-component="ButtonGroup"
-        at={at}
-        gap={3}
-        principle="flex-action"
-        justify={align}
-        classNames={classNames}
-        isSkeleton={isSkeleton}
-        items={items.map((item): ResponsiveClusterItem => {
-            const shared = {
-                variant: item.variant,
-                size,
-                onPress: item.onPress,
-                isDisabled: item.isDisabled,
-                isPending: item.isPending,
-            } as const
-            const { label, prefixIcon, ariaLabel } = item
-            if (label != null) {
-                return {
-                    key: item.key,
-                    content: ({ isSkeleton }: SkeletonProps) => (
-                        <Button label={label} prefixIcon={prefixIcon} isSkeleton={isSkeleton} {...shared} />
-                    ),
+}: ButtonGroupProps) => {
+    const entry = PRINCIPLE_STYLE[principle]
+    const gap: AllowedGap = entry.kind === "gap" ? entry.step : 3
+    const justify: LayoutJustify | undefined = entry.kind === "gap" ? entry.justify : undefined
+    return (
+        <ResponsiveCluster
+            data-tier="composite"
+            data-component="ButtonGroup"
+            at={at}
+            gap={gap}
+            principle={principle}
+            justify={justify}
+            classNames={classNames}
+            isSkeleton={isSkeleton}
+            items={items.map((item): ResponsiveClusterItem => {
+                const shared = {
+                    variant: item.variant,
+                    size,
+                    onPress: item.onPress,
+                    isDisabled: item.isDisabled,
+                    isPending: item.isPending,
+                } as const
+                const { label, prefixIcon, ariaLabel } = item
+                if (label != null) {
+                    return {
+                        key: item.key,
+                        content: ({ isSkeleton: skeleton }: SkeletonProps) => (
+                            <Button label={label} prefixIcon={prefixIcon} isSkeleton={skeleton} {...shared} />
+                        ),
+                    }
                 }
-            }
-            if (prefixIcon != null) {
-                return {
-                    key: item.key,
-                    content: ({ isSkeleton }: SkeletonProps) => (
-                        <Button
-                            isIconOnly
-                            prefixIcon={prefixIcon}
-                            ariaLabel={ariaLabel ?? ""}
-                            isSkeleton={isSkeleton}
-                            {...shared}
-                        />
-                    ),
+                if (prefixIcon != null) {
+                    return {
+                        key: item.key,
+                        content: ({ isSkeleton: skeleton }: SkeletonProps) => (
+                            <Button
+                                isIconOnly
+                                prefixIcon={prefixIcon}
+                                ariaLabel={ariaLabel ?? ""}
+                                isSkeleton={skeleton}
+                                {...shared}
+                            />
+                        ),
+                    }
                 }
-            }
-            return { key: item.key, content: () => null }
-        })}
-    />
-)
+                return { key: item.key, content: () => null }
+            })}
+        />
+    )
+}

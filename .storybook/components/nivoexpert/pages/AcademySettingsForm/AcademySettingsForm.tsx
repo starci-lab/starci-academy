@@ -6,6 +6,7 @@ import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { Form, FormActions } from "@sb-components/composites/form/Form/Form"
 import { SurfaceCard, SurfaceCardPressableGroup, type SurfaceCardPressableGroupItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import type { SkeletonProps } from "@sb-components/frames/_slot"
+import { Box } from "@sb-components/frames/Box/Box"
 import { Grid } from "@sb-components/frames/Grid/Grid"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -157,16 +158,23 @@ const AcademySettingsForm = ({
     isSkeleton = false,
     labels,
 }: AcademySettingsFormProps) => {
-    /** The brand-identity fields -- the card's `body` slot, a component reference so `isSkeleton` reaches every field. */
+    /**
+     * The brand-identity fields -- the card's `body` slot, a component reference so `isSkeleton` reaches every field.
+     *
+     * principle="label-field": outer column of labeled controls at step 4 (12px). Inner
+     * labeled inputs already own FieldFrame label-to-control. Teacher hold
+     * academy-settings-brandfields-label-field — keep until a field-column token exists;
+     * do not rename mechanically to sibling-stack / group-boundary (would change density).
+     */
     const BrandFields = ({ isSkeleton: skeleton }: SkeletonProps) => (
         <StackV
-            gap={4}
+            principle="label-field"
             isSkeleton={skeleton}
             items={[
                 () => (
                     <Grid
                         columns={{ base: 1, sm: 2 }}
-                        gap={4}
+                        principle="content-row"
                         items={[
                             {
                                 key: "displayName",
@@ -207,13 +215,12 @@ const AcademySettingsForm = ({
                 ),
                 () => (
                     <StackH
-                        gap={3}
-                        align="end"
+                        principle="identity-end"
                         isSkeleton={skeleton}
                         items={[
                             () => <Avatar src={values.avatarUrl || undefined} name={values.displayName} fallback="initials" size="lg" isSkeleton={skeleton} />,
                             () => (
-                                <div className="min-w-0 flex-1">
+                                <Box className="min-w-0 flex-1">
                                     <InputText
                                         label={labels.logoLabel}
                                         hint={labels.logoHint}
@@ -221,7 +228,7 @@ const AcademySettingsForm = ({
                                         onValueChange={onAvatarUrlChange}
                                         isSkeleton={skeleton}
                                     />
-                                </div>
+                                </Box>
                             ),
                         ]}
                     />
@@ -277,9 +284,9 @@ const AcademySettingsForm = ({
             label: labels.templateLabels[template],
             content: () => (
                 <StackV
-                    gap={2}
+                    principle="title-subtitle"
                     items={[
-                        () => <div aria-hidden className={`h-12 w-full rounded-lg ${TEMPLATE_SWATCH_CLASS[template]}`} />,
+                        () => <Box aria-hidden className={`h-12 w-full rounded-lg ${TEMPLATE_SWATCH_CLASS[template]}`} />,
                         () => <Typography size="sm" weight="semibold" text={labels.templateLabels[template]} />,
                         () => <Typography size="xs" color="muted" text={labels.templateDescriptions[template]} />,
                     ]}
@@ -287,89 +294,112 @@ const AcademySettingsForm = ({
             ),
         }))
         return (
-            <SurfaceCardPressableGroup
-                items={items}
-                ariaLabel={labels.templateGroupAriaLabel}
-                columns={{ base: 1, sm: 3 }}
-                isSkeleton={skeleton}
-            />
+            <SurfaceCardPressableGroup items={items} ariaLabel={labels.templateGroupAriaLabel} columns={{ base: 1, sm: 3 }} isSkeleton={skeleton} principle="content-row" />
         )
     }
 
     return (
-        <div data-tier="page" data-component="AcademySettingsForm" className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-8">
-            <StackH
-                gap={3}
-                align="center"
-                isSkeleton={isSkeleton}
-                items={[
-                    () => (
+        // Page shell: center-measure (mx-auto + w-full) and page-pad (p-6) are nested
+        // one-token frames. max-w-2xl is a foreign measure width on Box (escape hatch).
+        <StackV
+            principle="center-measure"
+            identity={{ tier: "page", component: "AcademySettingsForm" }}
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <Box className="w-full max-w-2xl">
                         <StackV
-                            gap={1}
+                            principle="page-pad"
                             isSkeleton={isSkeleton}
                             items={[
-                                () => <Typography size="h3" weight="semibold" text={labels.title} isSkeleton={isSkeleton} />,
-                                () => <Typography size="sm" color="muted" text={labels.subtitle} isSkeleton={isSkeleton} />,
+                                () => (
+                                    <StackV
+                                        principle="block-boundary"
+                                        isSkeleton={isSkeleton}
+                                        items={[
+                                            () => (
+                                                <StackH
+                                                    principle="flex-action-center"
+                                                    isSkeleton={isSkeleton}
+                                                    items={[
+                                                        () => (
+                                                            <StackV
+                                                                principle="title-subtitle"
+                                                                isSkeleton={isSkeleton}
+                                                                items={[
+                                                                    () => <Typography size="h3" weight="semibold" text={labels.title} isSkeleton={isSkeleton} />,
+                                                                    () => <Typography size="sm" color="muted" text={labels.subtitle} isSkeleton={isSkeleton} />,
+                                                                ]}
+                                                            />
+                                                        ),
+                                                        ...(!isSkeleton && isDirty && !isSaving ? [() => <Chip tone="warning" text={labels.unsavedBadge} />] : []),
+                                                    ]}
+                                                />
+                                            ),
+                                            ...(!isSkeleton && saveError
+                                                ? [() => <Callout status="danger" title={labels.saveErrorTitle} description={saveError} />]
+                                                : []),
+                                            () => (
+                                                <Form
+                                                    onSubmit={onSave}
+                                                    isDisabled={isSaving}
+                                                    isSkeleton={isSkeleton}
+                                                    principle="block-boundary"
+                                                    body={({ isSkeleton: skeleton }: SkeletonProps) => (
+                                                        <StackV
+                                                            principle="block-boundary"
+                                                            isSkeleton={skeleton}
+                                                            items={[
+                                                                () => (
+                                                                    <SurfaceCard
+                                                                        label={labels.brandSectionTitle}
+                                                                        description={labels.brandSectionDescription}
+                                                                        isSkeleton={skeleton}
+                                                                        body={({ isSkeleton: cardSkeleton }: SkeletonProps) => <BrandFields isSkeleton={cardSkeleton} />}
+                                                                    />
+                                                                ),
+                                                                () => (
+                                                                    <SurfaceCard
+                                                                        label={labels.templateSectionTitle}
+                                                                        description={labels.templateSectionDescription}
+                                                                        isSkeleton={skeleton}
+                                                                        body={({ isSkeleton: cardSkeleton }: SkeletonProps) => <TemplatePicker isSkeleton={cardSkeleton} />}
+                                                                    />
+                                                                ),
+                                                            ]}
+                                                        />
+                                                    )}
+                                                    actions={
+                                                        isSkeleton
+                                                            ? undefined
+                                                            : () => (
+                                                                <FormActions
+                                                                    principle="flex-action-between"
+                                                                    items={[
+                                                                        { key: "discard", label: labels.discardLabel, variant: "outline", onPress: onDiscard, isDisabled: !isDirty },
+                                                                        {
+                                                                            key: "save",
+                                                                            label: isSaving ? labels.savingLabel : labels.saveLabel,
+                                                                            variant: "primary",
+                                                                            onPress: onSave,
+                                                                            isPending: isSaving,
+                                                                            isDisabled: !isDirty && !isSaving,
+                                                                        },
+                                                                    ]}
+                                                                />
+                                                            )
+                                                    }
+                                                />
+                                            ),
+                                        ]}
+                                    />
+                                ),
                             ]}
                         />
-                    ),
-                    ...(!isSkeleton && isDirty && !isSaving ? [() => <Chip tone="warning" text={labels.unsavedBadge} />] : []),
-                ]}
-            />
-            {!isSkeleton && saveError ? (
-                <Callout status="danger" title={labels.saveErrorTitle} description={saveError} />
-            ) : null}
-            <Form
-                onSubmit={onSave}
-                isDisabled={isSaving}
-                isSkeleton={isSkeleton}
-                gap={6}
-                body={({ isSkeleton: skeleton }: SkeletonProps) => (
-                    <StackV
-                        gap={6}
-                        isSkeleton={skeleton}
-                        items={[
-                            () => (
-                                <SurfaceCard
-                                    label={labels.brandSectionTitle}
-                                    description={labels.brandSectionDescription}
-                                    isSkeleton={skeleton}
-                                    body={({ isSkeleton: cardSkeleton }: SkeletonProps) => <BrandFields isSkeleton={cardSkeleton} />}
-                                />
-                            ),
-                            () => (
-                                <SurfaceCard
-                                    label={labels.templateSectionTitle}
-                                    description={labels.templateSectionDescription}
-                                    isSkeleton={skeleton}
-                                    body={({ isSkeleton: cardSkeleton }: SkeletonProps) => <TemplatePicker isSkeleton={cardSkeleton} />}
-                                />
-                            ),
-                        ]}
-                    />
-                )}
-                actions={
-                    isSkeleton
-                        ? undefined
-                        : () => (
-                            <FormActions
-                                align="between"
-                                items={[
-                                    { key: "discard", label: labels.discardLabel, variant: "outline", onPress: onDiscard, isDisabled: !isDirty },
-                                    {
-                                        key: "save",
-                                        label: isSaving ? labels.savingLabel : labels.saveLabel,
-                                        variant: "primary",
-                                        onPress: onSave,
-                                        isPending: isSaving,
-                                        isDisabled: !isDirty && !isSaving,
-                                    },
-                                ]}
-                            />
-                        )
-                }
-            />
-        </div>
+                    </Box>
+                ),
+            ]}
+        />
     )
 }
 

@@ -46,6 +46,10 @@ import { sessionDisplayName } from "@/modules/utils/session-display-name"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
 import { WorkSessionHeader } from "@/components/blocks/navigation/WorkSessionHeader"
 import { QuizSessionSkeleton } from "./QuizSessionSkeleton"
+import { Box } from "@/components/frames/Box"
+import { Cluster } from "@/components/frames/Cluster"
+import { Container } from "@/components/frames/Container"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link QuizSession}. */
 export interface QuizSessionProps extends WithClassNames<undefined> {
@@ -802,175 +806,149 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         const resumeData = inProgressSessionSwr.data
         const learnPath = pathConfig().locale(locale).course(displayId).learn()
         return (
-            <div className={cn("flex flex-col gap-6", className)}>
-                {/* NESTED under the outer "Study Cards/Quick Quiz" mode switch (FlashcardsPage/index.tsx,
-                    also variant="primary") — a SECOND primary-weight pill here would render at
-                    the exact same visual weight as that outer mode switch, erasing the
-                    parent/child hierarchy (fe/components/tabs.md §0d, corrected 2026-07-09).
-                    variant="secondary" + explicit `className="w-full"` gives the lighter,
-                    full-width UNDERLINE treatment appropriate for a sub-panel switch nested
-                    inside an already-selected top-level mode (mirrors `ContentTabBar`). */}
-                <TabsCard
-                    variant="secondary"
-                    className="w-full"
-                    leftTabs={{
-                        items: [
-                            { key: "begin", label: t("flashcard.quiz.setupTabBegin") },
-                            { key: "history", label: t("flashcard.quiz.setupTabHistory") },
-                            { key: "stats", label: t("flashcard.quiz.setupTabStats") },
-                        ],
-                        selectedKey: setupTab,
-                        ariaLabel: t("flashcard.quiz.setupTabBegin"),
-                        onSelectionChange: (key) => setSetupTab(key as "begin" | "history" | "stats"),
-                    }}
-                />
-
-                {setupTab === "history" ? (
-                    <FlashcardQuizHistory courseId={courseId} onStartQuiz={() => setSetupTab("begin")} />
-                ) : setupTab === "stats" ? (
-                    <FlashcardQuizStats courseId={courseId} onStartQuiz={() => setSetupTab("begin")} />
-                ) : (
-                    <>
-                        {/* Zone 0 — resume: a "Quick Quiz" run left in progress (24h TTL) deep-links
-                    straight back into it via the dedicated `.../quiz/[sessionId]` route,
-                    ABOVE the ordinary setup zones. Demotes Zone 3's CTA to secondary below
-                    so this reads as the screen's primary action while it's shown. */}
-                        {resumeData ? (() => {
-                            // "session time limit" — HONEST urgency: minutes left derived from
-                            // the SAME server `deadlineAt` the live run enforces (never a made-up
-                            // countdown), same idiom as MockInterviewSession's own resume card.
-                            // The resume QUERY already hard-filters `createdAt >= now - duration`
-                            // (lazy-expiry, no cron), so an expired session simply never reaches
-                            // here — no "time's up" branch needed, unlike mock-interview's 2-gate resume.
-                            const resumeRemainingMinutes = Math.max(
-                                0,
-                                Math.ceil((new Date(resumeData.deadlineAt).getTime() - Date.now()) / 60_000),
-                            )
-                            // session name — resume's own timestamp is `updatedAt` (no
-                            // `createdAt` in this query shape), the closest available server
-                            // timestamp for the time-based fallback (see `sessionDisplayName`).
-                            const resumeName = sessionDisplayName(resumeData.name, resumeData.updatedAt, t, locale)
-                            return (
-                                <ContinueCard
-                                    title={resumeName}
-                                    subtitle={t("flashcard.quiz.resumeSubtitle", {
-                                        current: resumeData.currentIndex + 1,
-                                        total: resumeData.cardIds.length,
-                                        minutes: resumeRemainingMinutes,
-                                    })}
-                                    urgent={resumeRemainingMinutes <= 15}
-                                    variant="hero"
-                                    value={resumeData.currentIndex + 1}
-                                    max={resumeData.cardIds.length}
-                                    ctaLabel={t("flashcard.quiz.resumeCta")}
-                                    onPress={() => router.push(learnPath.flashcards().quiz(resumeData.sessionId).build())}
-                                />
-                            )
-                        })() : null}
-
-                        {resumeError ? (
-                            <Callout status="danger" title={resumeError} />
-                        ) : null}
-
-                        {/* Zone 1 — progress: reuse the sibling "Study Cards" tab's stats block (shares
-                    its SWR keys, so this adds no extra fetch) instead of a bespoke readout — teacher
-                    2026-07-09 reversed the earlier split ("QuizProgressStrip", 1 turn prior): "meaning:
-                    the 'Quick-quiz Progress' => just 'Progress', and reuse the same 'Progress' component from the study tab"
-                    (rename back to plain "Progress" + share the ONE component again). */}
-                        <FlashcardStatsStrip />
-
-                        {/* Zone 2 — config: mode + level, its own labeled card so it reads as a
-                    distinct block from the progress zone above (was one dense card before). */}
-                        <LabeledCard label={t("flashcard.quiz.configLabel")} contentClassName="flex flex-col gap-3">
-                            {/* session name — optional, time-based fallback (see `sessionDisplayName`);
-                                lets a learner tell runs apart in "History"/resume without forcing a name. */}
-                            <div className="flex flex-col gap-2">
-                                <Label>{t("common.sessionNameLabel")}</Label>
-                                <TextField variant="secondary" className="w-full">
-                                    <Input
-                                        className="w-full"
-                                        placeholder={t("common.sessionNamePlaceholder")}
-                                        name="sessionName"
-                                        value={sessionName}
-                                        onChange={(event) => setSessionName(event.target.value)}
-                                        maxLength={80}
-                                    />
-                                </TextField>
-                            </div>
-
-                            {/* Scope — same 2 options/wording as `FlashcardReviewModeModal`
-                                ("Review all" / "Only cards due for review"), reused verbatim rather than
-                                duplicated copy (teacher 2026-07-13: "add review-all and
-                                only-cards-due to the practice config"). Disabled + auto-reset to "all" when
-                                nothing is due, same guard as the modal's `dueDisabled`. */}
-                            <div className="flex flex-col gap-2">
-                                <Label>{t("flashcard.quiz.scopeLabel")}</Label>
-                                <FlexWrapButtonRadio
-                                    ariaLabel={t("flashcard.quiz.scopeLabel")}
-                                    value={scope}
-                                    onChange={setScope}
-                                    items={[
-                                        { value: "all", content: t("flashcard.mode.fullLabel") },
-                                        { value: "due", isDisabled: dueDisabled, content: t("flashcard.mode.dueLabel") },
-                                    ]}
-                                />
-                            </div>
-
-                            <div className="flex flex-col gap-2">
-                                <Label>{t("flashcard.quiz.modeLabel")}</Label>
-                                <FlexWrapButtonRadio
-                                    ariaLabel={t("flashcard.quiz.modeLabel")}
-                                    value={mode}
-                                    onChange={setMode}
-                                    items={[
-                                        { value: "quick", content: t("flashcard.quiz.modeQuick") },
-                                        { value: "deep", content: t("flashcard.quiz.modeDeep") },
-                                    ]}
-                                />
-                            </div>
-
-                            <div className="flex flex-col gap-2">
-                                <Label>{t("flashcard.quiz.levelLabel")}</Label>
-                                <FlexWrapButtonRadio
-                                    ariaLabel={t("flashcard.quiz.levelLabel")}
-                                    value={level ?? "all"}
-                                    onChange={(value) => setLevel(value === "all" ? null : value)}
-                                    items={[
-                                        { value: "all", content: t("flashcard.quiz.levelAll") },
-                                        ...LEVELS.map((value) => ({
-                                            value,
-                                            content: t(`flashcard.level.${value}`),
-                                        })),
-                                    ]}
-                                />
-                            </div>
-                        </LabeledCard>
-
-                        {/* Zone 3 — CTA, standalone (matches the sibling tab's stacked-block rhythm
-                    rather than being boxed inside Zone 2's card). Demoted to secondary/ghost
-                    while Zone 0's resume card is shown — that card is the primary action then.
-                    `isPending` while `startSession` draws + persists the run — the button stays
-                    ON this screen and pending until either the destination page takes over
-                    (success) or `startError` surfaces (failure); no more instant jump to a
-                    separate building-skeleton screen (teacher, 2026-07-09). */}
-                        <Button
-                            variant={resumeData ? "secondary" : "primary"}
-                            size="lg"
-                            className="self-start"
-                            isDisabled={!decks || totalCards === 0}
-                            isPending={starting}
-                            onPress={() => { void startSession() }}
-                        >
-                            {t("flashcard.quiz.begin")}
-                            <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
-                        </Button>
-
-                        {startError ? (
-                            <Callout status="danger" title={startError} />
-                        ) : null}
-                    </>
-                )}
-            </div>
+            <Box className={className}>
+                <StackV gap={6} principle="block-boundary" items={[
+                    () => (
+                        <TabsCard
+                            variant="secondary"
+                            className="w-full"
+                            leftTabs={{
+                                items: [
+                                    { key: "begin", label: t("flashcard.quiz.setupTabBegin") },
+                                    { key: "history", label: t("flashcard.quiz.setupTabHistory") },
+                                    { key: "stats", label: t("flashcard.quiz.setupTabStats") },
+                                ],
+                                selectedKey: setupTab,
+                                ariaLabel: t("flashcard.quiz.setupTabBegin"),
+                                onSelectionChange: (key) => setSetupTab(key as "begin" | "history" | "stats"),
+                            }}
+                        />
+                    ),
+                    () => (
+                        setupTab === "history" ? (
+                            <FlashcardQuizHistory courseId={courseId} onStartQuiz={() => setSetupTab("begin")} />
+                        ) : setupTab === "stats" ? (
+                            <FlashcardQuizStats courseId={courseId} onStartQuiz={() => setSetupTab("begin")} />
+                        ) : (
+                            <StackV gap={6} items={[
+                                ...(resumeData ? [() => {
+                                    const resumeRemainingMinutes = Math.max(
+                                        0,
+                                        Math.ceil((new Date(resumeData.deadlineAt).getTime() - Date.now()) / 60_000),
+                                    )
+                                    const resumeName = sessionDisplayName(resumeData.name, resumeData.updatedAt, t, locale)
+                                    return (
+                                        <ContinueCard
+                                            title={resumeName}
+                                            subtitle={t("flashcard.quiz.resumeSubtitle", {
+                                                current: resumeData.currentIndex + 1,
+                                                total: resumeData.cardIds.length,
+                                                minutes: resumeRemainingMinutes,
+                                            })}
+                                            urgent={resumeRemainingMinutes <= 15}
+                                            variant="hero"
+                                            value={resumeData.currentIndex + 1}
+                                            max={resumeData.cardIds.length}
+                                            ctaLabel={t("flashcard.quiz.resumeCta")}
+                                            onPress={() => router.push(learnPath.flashcards().quiz(resumeData.sessionId).build())}
+                                        />
+                                    )
+                                }] : []),
+                                ...(resumeError ? [() => <Callout status="danger" title={resumeError} />] : []),
+                                () => <FlashcardStatsStrip />,
+                                () => (
+                                    <LabeledCard label={t("flashcard.quiz.configLabel")}>
+                                        <StackV gap={4} principle="group-boundary" items={[
+                                            () => (
+                                                <StackV gap={3} principle="label-field" items={[
+                                                    () => <Label>{t("common.sessionNameLabel")}</Label>,
+                                                    () => (
+                                                        <TextField variant="secondary" className="w-full">
+                                                            <Input
+                                                                className="w-full"
+                                                                placeholder={t("common.sessionNamePlaceholder")}
+                                                                name="sessionName"
+                                                                value={sessionName}
+                                                                onChange={(event) => setSessionName(event.target.value)}
+                                                                maxLength={80}
+                                                            />
+                                                        </TextField>
+                                                    ),
+                                                ]} />
+                                            ),
+                                            () => (
+                                                <StackV gap={3} principle="label-field" items={[
+                                                    () => <Label>{t("flashcard.quiz.scopeLabel")}</Label>,
+                                                    () => (
+                                                        <FlexWrapButtonRadio
+                                                            ariaLabel={t("flashcard.quiz.scopeLabel")}
+                                                            value={scope}
+                                                            onChange={setScope}
+                                                            items={[
+                                                                { value: "all", content: t("flashcard.mode.fullLabel") },
+                                                                { value: "due", isDisabled: dueDisabled, content: t("flashcard.mode.dueLabel") },
+                                                            ]}
+                                                        />
+                                                    ),
+                                                ]} />
+                                            ),
+                                            () => (
+                                                <StackV gap={3} principle="label-field" items={[
+                                                    () => <Label>{t("flashcard.quiz.modeLabel")}</Label>,
+                                                    () => (
+                                                        <FlexWrapButtonRadio
+                                                            ariaLabel={t("flashcard.quiz.modeLabel")}
+                                                            value={mode}
+                                                            onChange={setMode}
+                                                            items={[
+                                                                { value: "quick", content: t("flashcard.quiz.modeQuick") },
+                                                                { value: "deep", content: t("flashcard.quiz.modeDeep") },
+                                                            ]}
+                                                        />
+                                                    ),
+                                                ]} />
+                                            ),
+                                            () => (
+                                                <StackV gap={3} principle="label-field" items={[
+                                                    () => <Label>{t("flashcard.quiz.levelLabel")}</Label>,
+                                                    () => (
+                                                        <FlexWrapButtonRadio
+                                                            ariaLabel={t("flashcard.quiz.levelLabel")}
+                                                            value={level ?? "all"}
+                                                            onChange={(value) => setLevel(value === "all" ? null : value)}
+                                                            items={[
+                                                                { value: "all", content: t("flashcard.quiz.levelAll") },
+                                                                ...LEVELS.map((value) => ({
+                                                                    value,
+                                                                    content: t(`flashcard.level.${value}`),
+                                                                })),
+                                                            ]}
+                                                        />
+                                                    ),
+                                                ]} />
+                                            ),
+                                        ]} />
+                                    </LabeledCard>
+                                ),
+                                () => (
+                                    <Button
+                                        variant={resumeData ? "secondary" : "primary"}
+                                        size="lg"
+                                        className="self-start"
+                                        isDisabled={!decks || totalCards === 0}
+                                        isPending={starting}
+                                        onPress={() => { void startSession() }}
+                                    >
+                                        {t("flashcard.quiz.begin")}
+                                        <ArrowRightIcon className="size-5" aria-hidden focusable="false" />
+                                    </Button>
+                                ),
+                                ...(startError ? [() => <Callout status="danger" title={startError} />] : []),
+                            ]} />
+                        )
+                    ),
+                ]} />
+            </Box>
         )
     }
 
@@ -988,28 +966,45 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
             // `PageHeader` early). Segment bar reads full "done"
             // (`current === total` → every segment `success`), no `rightSlot`
             // (timer no longer meaningful once the run has ended).
-            <div className={cn("flex w-full flex-col", className)}>
-                <WorkSessionHeader
-                    backLabel={t("flashcard.exit")}
-                    onBack={exitToSetup}
-                    title={t("flashcard.mode.quiz")}
-                    identity={course?.title ? { name: course.title } : undefined}
-                    counter={t("flashcard.quiz.progress", {
-                        current: sessionLength,
-                        total: sessionLength,
-                    })}
-                    current={sessionLength}
-                    total={sessionLength}
-                />
-                <div className="px-4 pb-6 pt-10 @app-sm:px-6">
-                    <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
-                        <Spinner size="lg" />
-                        <Typography type="body-sm" color="muted">
-                            {t("flashcard.quiz.result.savingLabel")}
-                        </Typography>
-                    </div>
-                </div>
-            </div>
+            <Box className={className}>
+                {(() => {
+                    const recapChromeItems = [
+                        () => (
+                            <WorkSessionHeader
+                                backLabel={t("flashcard.exit")}
+                                onBack={exitToSetup}
+                                title={t("flashcard.mode.quiz")}
+                                identity={course?.title ? { name: course.title } : undefined}
+                                counter={t("flashcard.quiz.progress", {
+                                    current: sessionLength,
+                                    total: sessionLength,
+                                })}
+                                current={sessionLength}
+                                total={sessionLength}
+                            />
+                        ),
+                        () => (
+                            // teacher-hold: flashcards-remain-quiz-session-body-inset — asymmetric session-body
+                            // inset owned via Box page-pad escape hatch (pt-10 not in the padding scale).
+                            <Box principle="page-pad" className="px-4 pb-6 pt-10 @app-sm:px-6">
+                                <Container size="md" padding={1} body={() => (
+                                    <Box className="py-10">
+                                        <StackV gap={4} align="center" principle="card-caption" items={[
+                                            () => <Spinner size="lg" />,
+                                            () => (
+                                                <Typography type="body-sm" color="muted">
+                                                    {t("flashcard.quiz.result.savingLabel")}
+                                                </Typography>
+                                            ),
+                                        ]} />
+                                    </Box>
+                                )} />
+                            </Box>
+                        ),
+                    ]
+                    return <StackV gap={1} items={recapChromeItems} />
+                })()}
+            </Box>
         )
     }
 
@@ -1020,17 +1015,19 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     // is a resume-only guard, e.g. every persisted card was since deleted.)
     if (!card) {
         return (
-            <div className={cn("flex flex-col gap-6", className)}>
-                <EmptyState
-                    icon={CheckCircleIcon}
-                    title={t("flashcard.quiz.emptyAtLevel")}
-                    action={() => (
-                        <Button size="sm" variant="secondary" onPress={() => setPhase("setup")}>
-                            {t("flashcard.quiz.backToSetup")}
-                        </Button>
-                    )}
-                />
-            </div>
+            <Box className={className}>
+                <StackV gap={6} items={[() => (
+                    <EmptyState
+                        icon={CheckCircleIcon}
+                        title={t("flashcard.quiz.emptyAtLevel")}
+                        action={() => (
+                            <Button size="sm" variant="secondary" onPress={() => setPhase("setup")}>
+                                {t("flashcard.quiz.backToSetup")}
+                            </Button>
+                        )}
+                    />
+                )]} />
+            </Box>
         )
     }
 
@@ -1058,27 +1055,30 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                 current={index}
                 total={sessionLength}
                 rightSlot={
-                    <span className="flex shrink-0 items-center gap-3">
-                        {remainingSeconds !== null ? (
-                            <span
-                                className={cn(
-                                    "flex shrink-0 items-center gap-2",
-                                    remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning-soft-foreground",
-                                )}
-                            >
-                                <ClockIcon className="size-4" aria-hidden focusable="false" />
-                                <Typography type="body-sm" weight="medium" className="tabular-nums">
-                                    {formatElapsed(remainingSeconds)}
-                                </Typography>
-                            </span>
-                        ) : null}
-                        {combo > 1 ? (
+                    <StackH gap={4} align="center" classNames={["shrink-0"]} items={[
+                        ...(remainingSeconds !== null ? [() => (
+                            <StackH
+                                gap={3}
+                                principle="icon-text"
+                                align="center"
+                                classNames={["shrink-0"]}
+                                items={[
+                                    () => <ClockIcon className={cn("size-4", remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning-soft-foreground")} aria-hidden focusable="false" />,
+                                    () => (
+                                        <Typography type="body-sm" weight="medium" className={cn("tabular-nums", remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning-soft-foreground")}>
+                                            {formatElapsed(remainingSeconds)}
+                                        </Typography>
+                                    ),
+                                ]}
+                            />
+                        )] : []),
+                        ...(combo > 1 ? [() => (
                             <Chip size="sm" variant="soft" color="warning">
                                 <FlameIcon className="size-4" aria-hidden focusable="false" />
                                 {t("flashcard.quiz.comboChip", { combo })}
                             </Chip>
-                        ) : null}
-                    </span>
+                        )] : []),
+                    ]} />
                 }
             />
             <ConfirmDialog
@@ -1104,62 +1104,77 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     // ── FALLBACK: card has no clozable key terms → plain flip + self-grade ──
     if (!cloze) {
         return (
-            <div className={cn("flex w-full flex-col", className)}>
-                {header}
-                <div className="px-4 pb-6 pt-10 @app-sm:px-6">
-                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-                        <FlipCard
-                            revealed={showAnswer}
-                            questionLabel={t("flashcard.questionLabel")}
-                            answerLabel={t("flashcard.answerLabel")}
-                            front={() => <MarkdownContent plain markdown={card.question} />}
-                            belowFront={card.level || (card.tags?.length ?? 0) > 0 ? () => (
-                                <div className="flex flex-wrap items-center gap-2">
-                                    {card.level ? (
-                                        <Chip size="sm" variant="soft" color={LEVEL_COLOR[card.level] ?? "default"}>
-                                            {t(`flashcard.level.${card.level}`)}
-                                        </Chip>
-                                    ) : null}
-                                    {card.tags?.map((tag) => (
-                                        <Chip key={tag} size="sm" variant="soft" color="default">
-                                            {tag}
-                                        </Chip>
-                                    ))}
-                                </div>
-                            ) : undefined}
-                            back={() => (
-                                <>
-                                    {card.answer ? (
-                                        <MarkdownContent plain markdown={card.answer} arcSections />
-                                    ) : (
-                                        <Typography type="body-sm" color="muted">
-                                            {t("flashcard.noAnswer")}
-                                        </Typography>
-                                    )}
-                                    {card.explanation ? <MarkdownContent plain markdown={card.explanation} /> : null}
-                                </>
-                            )}
-                        />
-                        {showAnswer ? (
-                            <div className="flex flex-col gap-3">
-                                <Label>{t("flashcard.review.rateHint")}</Label>
-                                <RatingBar
-                                    options={ratingOptions}
-                                    onRate={(grade) => void commitCard(grade, null)}
-                                    ariaLabel={t("flashcard.review.rateAria")}
-                                    isPending={rating}
-                                />
-                            </div>
-                        ) : (
-                            <div className="flex items-center justify-end gap-3">
-                                <Button size="sm" variant="outline" onPress={() => setShowAnswer(true)}>
-                                    {t("flashcard.showAnswer")}
-                                </Button>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
+            <Box className={className}>
+                <StackV gap={1} items={[
+                    () => header,
+                    () => (
+                        // teacher-hold: flashcards-remain-quiz-session-body-inset — asymmetric session-body
+                        // inset owned via Box page-pad escape hatch (pt-10 not in the padding scale).
+                        <Box principle="page-pad" className="px-4 pb-6 pt-10 @app-sm:px-6">
+                            <Container size="md" padding={1} body={() => (
+                                <StackV gap={6} items={[
+                                    () => (
+                                        <FlipCard
+                                            revealed={showAnswer}
+                                            questionLabel={t("flashcard.questionLabel")}
+                                            answerLabel={t("flashcard.answerLabel")}
+                                            front={() => <MarkdownContent plain markdown={card.question} />}
+                                            belowFront={card.level || (card.tags?.length ?? 0) > 0 ? () => {
+                                                const level = card.level
+                                                return (
+                                                    <Cluster gap={3} principle="chip-row" align="center" items={[
+                                                        ...(level ? [() => (
+                                                            <Chip size="sm" variant="soft" color={LEVEL_COLOR[level] ?? "default"}>
+                                                                {t(`flashcard.level.${level}`)}
+                                                            </Chip>
+                                                        )] : []),
+                                                        ...(card.tags ?? []).map((tag) => () => (
+                                                            <Chip key={tag} size="sm" variant="soft" color="default">
+                                                                {tag}
+                                                            </Chip>
+                                                        )),
+                                                    ]} />
+                                                )
+                                            } : undefined}
+                                            back={() => (
+                                                <>
+                                                    {card.answer ? (
+                                                        <MarkdownContent plain markdown={card.answer} arcSections />
+                                                    ) : (
+                                                        <Typography type="body-sm" color="muted">
+                                                            {t("flashcard.noAnswer")}
+                                                        </Typography>
+                                                    )}
+                                                    {card.explanation ? <MarkdownContent plain markdown={card.explanation} /> : null}
+                                                </>
+                                            )}
+                                        />
+                                    ),
+                                    ...(showAnswer ? [() => (
+                                        <StackV gap={4} principle="label-field" items={[
+                                            () => <Label>{t("flashcard.review.rateHint")}</Label>,
+                                            () => (
+                                                <RatingBar
+                                                    options={ratingOptions}
+                                                    onRate={(grade) => void commitCard(grade, null)}
+                                                    ariaLabel={t("flashcard.review.rateAria")}
+                                                    isPending={rating}
+                                                />
+                                            ),
+                                        ]} />
+                                    )] : [() => (
+                                        <StackH gap={4} principle="flex-action" justify="end" items={[() => (
+                                            <Button size="sm" variant="outline" onPress={() => setShowAnswer(true)}>
+                                                {t("flashcard.showAnswer")}
+                                            </Button>
+                                        )]} />
+                                    )]),
+                                ]} />
+                            )} />
+                        </Box>
+                    ),
+                ]} />
+            </Box>
         )
     }
 
@@ -1184,81 +1199,80 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         // scoped per-card (`card.id`) so the word-bank ↔ blank `layoutId` FLIP never
         // leaks its animation into the NEXT card's chips once `cloze` recomputes.
         <LayoutGroup id={`quiz-cloze-${card.id}`}>
-            <div className={cn("flex w-full flex-col", className)}>
-                {header}
-
-                <div className="px-4 pb-6 pt-10 @app-sm:px-6">
-                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-                        {/* question — plain Card shell (rounded corners + shadow-surface), SAME style as
-                    FlipCard — the earlier accent/5 + left-border tint (2026-07-09) was
-                    reverted the same day (teacher: "meaning: drop that pink bg + border
-                    look... just render a plain Card like usual") — ONE single Card throughout the
-                    feature, not each screen with its own "visual language". Split SEPARATELY from
-                    the cloze-fill section below (teacher 2026-07-11: "split the fill-in part and
-                    the question into 2 different labeled cards") — these are 2 bounded objects
-                    different in NATURE (STATIC reading content vs INTERACTIVE fill-in exercise),
-                    different from the rule "1 item + its own properties share 1 card"
-                    ([[concepts/card]] — that case is 1 item + metadata OF ITSELF, not content +
-                    a separate exercise based on that content). */}
-                        {/* question card + its level/tag chips as a `gap-3` group — chips
-                            ride OUTSIDE/BELOW the card (teacher: "sits outside the card,
-                            gap-3 away from the card"), not inside its content — mirrors `FlipCard`'s own
-                            internal `belowFront` structure (question + chips = gap-3,
-                            that whole group ↔ next card = the outer gap-6). */}
-                        <div className="flex flex-col gap-3">
-                            <LabeledCard label={t("flashcard.questionLabel")} bordered>
-                                <MarkdownContent plain markdown={card.question} />
-                            </LabeledCard>
-                            {card.level || (card.tags?.length ?? 0) > 0 ? (
-                                <div className="flex flex-wrap items-center gap-2">
-                                    {card.level ? (
-                                        <Chip size="sm" variant="soft" color={LEVEL_COLOR[card.level] ?? "default"}>
-                                            {t(`flashcard.level.${card.level}`)}
-                                        </Chip>
-                                    ) : null}
-                                    {card.tags?.map((tag) => (
-                                        <Chip key={tag} size="sm" variant="soft" color="default">
-                                            {tag}
-                                        </Chip>
-                                    ))}
-                                </div>
-                            ) : null}
-                        </div>
-
-                        <LabeledCard label={t("flashcard.quiz.fillLabel")} bordered contentClassName="flex flex-col gap-3">
-                            <Typography type="body-xs" weight="medium" color="muted">
-                                {t("flashcard.quiz.clozeInstruction")}
-                            </Typography>
-                            <p className="text-base leading-loose text-foreground">
-                                {cloze.segments.map((segment, position) =>
-                                    segment.kind === "text" ? (
-                                        <span key={position}>{segment.text}</span>
-                                    ) : segment.kind === "code" ? (
-                                    // same inline-code styling as MarkdownContent's own renderer
-                                    // (reuseable/MarkdownContent/map.tsx) — kept consistent since this
-                                    // sentence sits right next to the question's own MarkdownContent.
-                                        <code
-                                            key={position}
-                                            className="rounded-md bg-default px-1 py-0 font-mono text-sm text-foreground [overflow-wrap:anywhere]"
-                                        >
-                                            {segment.text}
-                                        </code>
-                                    ) : segment.kind === "bold" ? (
-                                        <strong key={position} className="font-semibold">{segment.text}</strong>
-                                    ) : segment.kind === "italic" ? (
-                                        <em key={position}>{segment.text}</em>
-                                    ) : (
-                                        (() => {
-                                            // `?? null` guards a real crash: for one render tick right after
-                                            // `commitCard` advances `index` (before the card-change effect
-                                            // resets `filled`), `cloze` has ALREADY recomputed for the new
-                                            // (possibly longer) card while `filled` still holds the previous
-                                            // card's (possibly shorter) array — `filled[segment.index]` then
-                                            // reads `undefined`, which slips past a `!== null` guard and
-                                            // crashes on `.toLowerCase()`. Coercing to `null` here makes every
-                                            // downstream `=== null` check treat it the same as "not filled yet".
-                                            const value = filled[segment.index] ?? null
-                                            const isCorrect =
+            <Box className={className}>
+                <StackV gap={1} items={[
+                    () => header,
+                    () => (
+                        // teacher-hold: flashcards-remain-quiz-session-body-inset — asymmetric session-body
+                        // inset owned via Box page-pad escape hatch (pt-10 not in the padding scale).
+                        <Box principle="page-pad" className="px-4 pb-6 pt-10 @app-sm:px-6">
+                            <Container size="md" padding={1} body={() => (
+                                <StackV gap={6} items={[
+                                    () => (
+                                        <StackV gap={4} principle="card-caption" items={[
+                                            () => (
+                                                <LabeledCard label={t("flashcard.questionLabel")} bordered>
+                                                    <MarkdownContent plain markdown={card.question} />
+                                                </LabeledCard>
+                                            ),
+                                            ...(card.level || (card.tags?.length ?? 0) > 0 ? [() => {
+                                                const level = card.level
+                                                return (
+                                                    <Cluster gap={3} principle="chip-row" align="center" items={[
+                                                        ...(level ? [() => (
+                                                            <Chip size="sm" variant="soft" color={LEVEL_COLOR[level] ?? "default"}>
+                                                                {t(`flashcard.level.${level}`)}
+                                                            </Chip>
+                                                        )] : []),
+                                                        ...(card.tags ?? []).map((tag) => () => (
+                                                            <Chip key={tag} size="sm" variant="soft" color="default">
+                                                                {tag}
+                                                            </Chip>
+                                                        )),
+                                                    ]} />
+                                                )
+                                            }] : []),
+                                        ]} />
+                                    ),
+                                    () => (
+                                        <LabeledCard label={t("flashcard.quiz.fillLabel")} bordered>
+                                            <StackV gap={4} principle="sibling-stack" items={[
+                                                () => (
+                                                    <Typography type="body-xs" weight="medium" color="muted">
+                                                        {t("flashcard.quiz.clozeInstruction")}
+                                                    </Typography>
+                                                ),
+                                                () => (
+                                                    <p className="text-base leading-loose text-foreground">
+                                                        {cloze.segments.map((segment, position) =>
+                                                            segment.kind === "text" ? (
+                                                                <span key={position}>{segment.text}</span>
+                                                            ) : segment.kind === "code" ? (
+                                                            // same inline-code styling as MarkdownContent's own renderer
+                                                            // (reuseable/MarkdownContent/map.tsx) — kept consistent since this
+                                                            // sentence sits right next to the question's own MarkdownContent.
+                                                                <code
+                                                                    key={position}
+                                                                    className="rounded-md bg-default font-mono text-sm text-foreground [overflow-wrap:anywhere]"
+                                                                >
+                                                                    {segment.text}
+                                                                </code>
+                                                            ) : segment.kind === "bold" ? (
+                                                                <strong key={position} className="font-semibold">{segment.text}</strong>
+                                                            ) : segment.kind === "italic" ? (
+                                                                <em key={position}>{segment.text}</em>
+                                                            ) : (
+                                                                (() => {
+                                                                    // `?? null` guards a real crash: for one render tick right after
+                                                                    // `commitCard` advances `index` (before the card-change effect
+                                                                    // resets `filled`), `cloze` has ALREADY recomputed for the new
+                                                                    // (possibly longer) card while `filled` still holds the previous
+                                                                    // card's (possibly shorter) array — `filled[segment.index]` then
+                                                                    // reads `undefined`, which slips past a `!== null` guard and
+                                                                    // crashes on `.toLowerCase()`. Coercing to `null` here makes every
+                                                                    // downstream `=== null` check treat it the same as "not filled yet".
+                                                                    const value = filled[segment.index] ?? null
+                                                                    const isCorrect =
                                         checked
                                         && value !== null
                                         && value.toLowerCase() === cloze.blanks[segment.index].toLowerCase()
@@ -1269,163 +1283,168 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                         // unchecked = solid accent (primary-solid — canon
                                         // `elements/color.md` §3, NOT a `/10` tint); checked = keep the
                                         // existing success/danger tint + shake/pop animation.
-                                            const chipToneClassName = value === null
-                                                ? "border border-dashed border-default bg-surface text-muted"
-                                                : !checked
-                                                    ? "border-0 bg-accent text-accent-foreground"
-                                                    : isCorrect
-                                                        ? "border border-success/60 bg-success-soft text-success-soft-foreground motion-safe:[animation:blankPop_0.35s_ease]"
-                                                        : "border border-danger/60 bg-danger-soft text-danger-soft-foreground motion-safe:[animation:blankShake_0.4s_ease]"
-                                            // shared `layoutId` with the SAME term's word-bank chip below — when
-                                            // `placeTerm`/`clearBlank` swaps `value`, framer-motion FLIPs the
-                                            // chip's bounding box across the two positions ("flies" into/out of
-                                            // the slot). `undefined` while empty — nothing to morph from/to yet.
-                                            const layoutId = value !== null ? `quiz-term-${card.id}-${value}` : undefined
-                                            return (
-                                                <motion.span
-                                                    key={position}
-                                                    layout
-                                                    layoutId={layoutId}
-                                                    transition={reduceMotion ? { duration: 0 } : CLOZE_CHIP_TRANSITION}
-                                                    className="mx-1 inline-block align-middle"
-                                                >
-                                                    <button
-                                                        type="button"
-                                                        disabled={checked || value === null}
-                                                        onClick={() => clearBlank(segment.index)}
-                                                        className={!checked && value !== null ? "cursor-pointer" : undefined}
-                                                    >
-                                                        <Chip
-                                                            size="sm"
-                                                            // HeroUI bakes `.chip`/`.chip--sm`'s font-size as an
-                                                            // UNLAYERED style (same trap as radius.md's rounded-*
-                                                            // warning) — a `text-sm` utility class silently loses
-                                                            // to it. Only an inline style (always highest
-                                                            // specificity) actually overrides it; reuse the
-                                                            // design system's own `--text-sm` token, not a raw px.
-                                                            style={{ fontSize: "var(--text-sm)" }}
-                                                            className={cn(
-                                                                "min-w-16 justify-center rounded-full px-3 py-0 font-medium transition-colors",
-                                                                chipToneClassName,
-                                                            )}
-                                                        >
-                                                            {value ?? "···"}
-                                                        </Chip>
-                                                    </button>
-                                                </motion.span>
-                                            )
-                                        })()
+                                                                    const chipToneClassName = value === null
+                                                                        ? "border border-dashed border-default bg-surface text-muted"
+                                                                        : !checked
+                                                                            ? "border-0 bg-accent text-accent-foreground"
+                                                                            : isCorrect
+                                                                                ? "border border-success/60 bg-success-soft text-success-soft-foreground motion-safe:[animation:blankPop_0.35s_ease]"
+                                                                                : "border border-danger/60 bg-danger-soft text-danger-soft-foreground motion-safe:[animation:blankShake_0.4s_ease]"
+                                                                    // shared `layoutId` with the SAME term's word-bank chip below — when
+                                                                    // `placeTerm`/`clearBlank` swaps `value`, framer-motion FLIPs the
+                                                                    // chip's bounding box across the two positions ("flies" into/out of
+                                                                    // the slot). `undefined` while empty — nothing to morph from/to yet.
+                                                                    const layoutId = value !== null ? `quiz-term-${card.id}-${value}` : undefined
+                                                                    return (
+                                                                        <motion.span
+                                                                            key={position}
+                                                                            layout
+                                                                            layoutId={layoutId}
+                                                                            transition={reduceMotion ? { duration: 0 } : CLOZE_CHIP_TRANSITION}
+                                                                            className="mx-1 inline-block align-middle"
+                                                                        >
+                                                                            <button
+                                                                                type="button"
+                                                                                disabled={checked || value === null}
+                                                                                onClick={() => clearBlank(segment.index)}
+                                                                                className={!checked && value !== null ? "cursor-pointer" : undefined}
+                                                                            >
+                                                                                <Chip
+                                                                                    size="sm"
+                                                                                    // HeroUI bakes `.chip`/`.chip--sm`'s font-size as an
+                                                                                    // UNLAYERED style (same trap as radius.md's rounded-*
+                                                                                    // warning) — a `text-sm` utility class silently loses
+                                                                                    // to it. Only an inline style (always highest
+                                                                                    // specificity) actually overrides it; reuse the
+                                                                                    // design system's own `--text-sm` token, not a raw px.
+                                                                                    // teacher-hold: flashcards-remain-quiz-cloze-vendor-chip-pad
+                                                                                    style={{ fontSize: "var(--text-sm)" }}
+                                                                                    className={cn(
+                                                                                        "min-w-16 justify-center rounded-full font-medium transition-colors",
+                                                                                        chipToneClassName,
+                                                                                    )}
+                                                                                >
+                                                                                    {value ?? "···"}
+                                                                                </Chip>
+                                                                            </button>
+                                                                        </motion.span>
+                                                                    )
+                                                                })()
+                                                            ),
+                                                        )}
+                                                    </p>
+                                                ),
+                                                ...(checked && correctCount < cloze.blanks.length ? [() => (
+                                                    <Typography type="body-xs" color="muted">
+                                                        {t("flashcard.quiz.clozeResult", {
+                                                            correct: correctCount,
+                                                            total: cloze.blanks.length,
+                                                        })}
+                                                    </Typography>
+                                                )] : []),
+                                            ]} />
+                                        </LabeledCard>
                                     ),
-                                )}
-                            </p>
-                            {/* after checking, surface the right term for any blank got wrong */}
-                            {checked && correctCount < cloze.blanks.length ? (
-                                <Typography type="body-xs" color="muted">
-                                    {t("flashcard.quiz.clozeResult", {
-                                        correct: correctCount,
-                                        total: cloze.blanks.length,
-                                    })}
-                                </Typography>
-                            ) : null}
-                        </LabeledCard>
-
-                        {/* the word bank: correct terms + sibling distractors — a used term is
-                    REMOVED here entirely (not just dimmed): it "flew" into its blank via
-                    the shared `layoutId` above, so leaving a disabled ghost behind would
-                    read as 2 copies of the same chip. loose on the page (no card wrapper)
-                    — it's a bank of CHIPS to pick from, not a content surface; the tinted
-                    question block above is the only card here (teacher 2026-07-09: "why put
-                    the word bank inside a card? take it out of the card"). */}
-                        {!checked ? (
-                            <div className="flex flex-col gap-6">
-                                <div className="flex flex-col gap-3">
-                                    {/* label for a group of pickable chips below — canon `label.md`
-                                §1b: a section header naming a control/option GROUP uses `<Label>`,
-                                never a hand-rolled muted Typography caption. */}
-                                    <Label>{t("flashcard.quiz.wordBankLabel")}</Label>
-                                    <div className="flex flex-wrap items-center gap-2">
-                                        {cloze.bank
-                                            .filter((term) => !filled.includes(term))
-                                            .map((term) => (
-                                                <motion.button
-                                                    key={term}
-                                                    type="button"
-                                                    layout
-                                                    layoutId={`quiz-term-${card.id}-${term}`}
-                                                    transition={reduceMotion ? { duration: 0 } : CLOZE_CHIP_TRANSITION}
-                                                    onClick={() => placeTerm(term)}
-                                                    // a "pick me" tile feel (Quizlet/Duolingo token
-                                                    // convention) — lift on hover instead of sitting flat.
-                                                    className="cursor-pointer transition-transform hover:-translate-y-0.5"
+                                    ...(!checked ? [() => (
+                                        <StackV gap={6} items={[
+                                            () => (
+                                                <StackV gap={4} principle="label-field" items={[
+                                                    () => <Label>{t("flashcard.quiz.wordBankLabel")}</Label>,
+                                                    () => (
+                                                        <Cluster gap={3} principle="chip-row" align="center" items={
+                                                            cloze.bank
+                                                                .filter((term) => !filled.includes(term))
+                                                                .map((term) => () => (
+                                                                    <motion.button
+                                                                        key={term}
+                                                                        type="button"
+                                                                        layout
+                                                                        layoutId={`quiz-term-${card.id}-${term}`}
+                                                                        transition={reduceMotion ? { duration: 0 } : CLOZE_CHIP_TRANSITION}
+                                                                        onClick={() => placeTerm(term)}
+                                                                        className="cursor-pointer transition-transform hover:-translate-y-0.5"
+                                                                    >
+                                                                        <Chip
+                                                                            size="sm"
+                                                                            // teacher-hold: flashcards-remain-quiz-cloze-vendor-chip-pad —
+                                                                            // HeroUI Chip internal pad, not a sibling layout seam.
+                                                                            className="rounded-full border border-default bg-surface text-sm font-medium"
+                                                                        >
+                                                                            {term}
+                                                                        </Chip>
+                                                                    </motion.button>
+                                                                ))
+                                                        } />
+                                                    ),
+                                                ]} />
+                                            ),
+                                            () => (
+                                                <Button
+                                                    variant="primary"
+                                                    className="self-start"
+                                                    isDisabled={!allFilled}
+                                                    onPress={() => setChecked(true)}
                                                 >
-                                                    <Chip
-                                                        size="sm"
-                                                        className="rounded-full border border-default bg-surface px-3 py-0 text-sm font-medium"
-                                                    >
-                                                        {term}
-                                                    </Chip>
-                                                </motion.button>
-                                            ))}
-                                    </div>
-                                </div>
-                                <Button
-                                    variant="primary"
-                                    className="self-start"
-                                    isDisabled={!allFilled}
-                                    onPress={() => setChecked(true)}
-                                >
-                                    {t("flashcard.quiz.checkAnswer")}
-                                </Button>
-                            </div>
-                        ) : (
-                            <div className="flex flex-col gap-6">
-                                {/* verdict line */}
-                                <div className="flex items-center gap-2">
-                                    {correctCount === cloze.blanks.length ? (
-                                        <CheckCircleIcon className="size-5 text-success-soft-foreground" aria-hidden focusable="false" />
-                                    ) : (
-                                        <XCircleIcon className="size-5 text-danger-soft-foreground" aria-hidden focusable="false" />
-                                    )}
-                                    <Typography type="body-sm" weight="medium">
-                                        {t("flashcard.quiz.clozeResult", {
-                                            correct: correctCount,
-                                            total: cloze.blanks.length,
-                                        })}
-                                    </Typography>
-                                </div>
-
-                                {/* read the full model answer (the 5-layer reasoning), then self-grade */}
-                                {showAnswer ? (
-                                    <LabeledCard label={t("flashcard.answerLabel")} bordered contentClassName="flex flex-col gap-3">
-                                        <MarkdownContent plain markdown={card.answer ?? ""} arcSections />
-                                        {card.explanation ? <MarkdownContent plain markdown={card.explanation} /> : null}
-                                    </LabeledCard>
-                                ) : (
-                                    <Button
-                                        variant="outline"
-                                        className="self-start"
-                                        onPress={() => setShowAnswer(true)}
-                                    >
-                                        {t("flashcard.quiz.showSolution")}
-                                    </Button>
-                                )}
-
-                                {showAnswer ? (
-                                    <div className="flex flex-col gap-3">
-                                        <Label>{t("flashcard.review.rateHint")}</Label>
-                                        <RatingBar
-                                            options={ratingOptions}
-                                            onRate={(grade) => void commitCard(grade, coverageRatio)}
-                                            ariaLabel={t("flashcard.review.rateAria")}
-                                            isPending={rating}
-                                        />
-                                    </div>
-                                ) : null}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
+                                                    {t("flashcard.quiz.checkAnswer")}
+                                                </Button>
+                                            ),
+                                        ]} />
+                                    )] : [() => (
+                                        <StackV gap={6} items={[
+                                            () => (
+                                                <StackH gap={3} principle="icon-text" align="center" items={[
+                                                    () => (correctCount === cloze.blanks.length ? (
+                                                        <CheckCircleIcon className="size-5 text-success-soft-foreground" aria-hidden focusable="false" />
+                                                    ) : (
+                                                        <XCircleIcon className="size-5 text-danger-soft-foreground" aria-hidden focusable="false" />
+                                                    )),
+                                                    () => (
+                                                        <Typography type="body-sm" weight="medium">
+                                                            {t("flashcard.quiz.clozeResult", {
+                                                                correct: correctCount,
+                                                                total: cloze.blanks.length,
+                                                            })}
+                                                        </Typography>
+                                                    ),
+                                                ]} />
+                                            ),
+                                            ...(showAnswer ? [() => (
+                                                <LabeledCard label={t("flashcard.answerLabel")} bordered>
+                                                    <StackV gap={4} principle="sibling-stack" items={[
+                                                        () => <MarkdownContent plain markdown={card.answer ?? ""} arcSections />,
+                                                        ...(card.explanation ? [() => <MarkdownContent plain markdown={card.explanation ?? ""} />] : []),
+                                                    ]} />
+                                                </LabeledCard>
+                                            )] : [() => (
+                                                <Button
+                                                    variant="outline"
+                                                    className="self-start"
+                                                    onPress={() => setShowAnswer(true)}
+                                                >
+                                                    {t("flashcard.quiz.showSolution")}
+                                                </Button>
+                                            )]),
+                                            ...(showAnswer ? [() => (
+                                                <StackV gap={4} principle="label-field" items={[
+                                                    () => <Label>{t("flashcard.review.rateHint")}</Label>,
+                                                    () => (
+                                                        <RatingBar
+                                                            options={ratingOptions}
+                                                            onRate={(grade) => void commitCard(grade, coverageRatio)}
+                                                            ariaLabel={t("flashcard.review.rateAria")}
+                                                            isPending={rating}
+                                                        />
+                                                    ),
+                                                ]} />
+                                            )] : []),
+                                        ]} />
+                                    )]),
+                                ]} />
+                            )} />
+                        </Box>
+                    ),
+                ]} />
+            </Box>
         </LayoutGroup>
     )
 }

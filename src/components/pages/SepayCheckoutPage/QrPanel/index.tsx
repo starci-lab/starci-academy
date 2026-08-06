@@ -18,6 +18,8 @@ import {
 import {
     useQueryCourseEnrollmentStatusSwr,
 } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /**
  * Left-hand panel: the SePay QR code + "waiting for payment" status + a manual
@@ -48,42 +50,52 @@ export const QrPanel = () => {
     )
 
     return (
-        <Card className="flex flex-col items-center overflow-hidden bg-default/40 p-8 backdrop-blur-md">
-            <Card.Content className="flex w-full flex-col items-center">
-                <h2 className="mb-6 text-center text-xl font-semibold">
-                    {t("payment.sepay.instruction")}
-                </h2>
+        <Card className="flex flex-col items-center overflow-hidden bg-default/40 backdrop-blur-md">
+            <Box principle="card-padding" className="p-8">
+                <Card.Content className="flex w-full flex-col items-center">
+                    <h2 className="mb-6 text-center text-xl font-semibold">
+                        {t("payment.sepay.instruction")}
+                    </h2>
 
-                <div className="group relative rounded-2xl bg-white p-4 shadow-2xl transition-transform hover:scale-[1.02]">
-                    {qrUrl ? (
-                        <img
-                            alt="SePay QR"
-                            className="aspect-square w-full max-w-[300px] object-contain"
-                            src={qrUrl}
-                        />
-                    ) : (
-                        <div className="flex h-[300px] w-[300px] items-center justify-center">
-                            <Spinner size="lg" />
-                        </div>
-                    )}
-                </div>
+                    <Box principle="card-padding" className="group relative rounded-2xl bg-white p-4 shadow-2xl transition-transform hover:scale-[1.02]">
+                        {qrUrl ? (
+                            <img
+                                alt="SePay QR"
+                                className="aspect-square w-full max-w-[300px] object-contain"
+                                src={qrUrl}
+                            />
+                        ) : (
+                            <div className="flex h-[300px] w-[300px] items-center justify-center">
+                                <Spinner size="lg" />
+                            </div>
+                        )}
+                    </Box>
 
-                <div className="mt-8 flex w-full flex-col items-center gap-3">
-                    <div className="flex items-center gap-2">
-                        <Spinner size="sm" />
-                        <span className="text-sm italic text-muted">
-                            {t("payment.sepay.waiting")}
-                        </span>
-                    </div>
-                    <Button
-                        variant="secondary"
-                        onPress={onRefresh}
-                    >
-                        <ArrowsClockwise className="h-5 w-5" />
-                        {t("payment.sepay.checkStatus")}
-                    </Button>
-                </div>
-            </Card.Content>
+                    <Box principle="push-end" className="mt-8 w-full">
+                        <StackV gap={4} principle="content-row" align="center" items={[
+                            () => (
+                                <StackH gap={3} principle="icon-text" align="center" items={[
+                                    () => <Spinner size="sm" />,
+                                    () => (
+                                        <span className="text-sm italic text-muted">
+                                            {t("payment.sepay.waiting")}
+                                        </span>
+                                    ),
+                                ]} />
+                            ),
+                            () => (
+                                <Button
+                                    variant="secondary"
+                                    onPress={onRefresh}
+                                >
+                                    <ArrowsClockwise className="h-5 w-5" />
+                                    {t("payment.sepay.checkStatus")}
+                                </Button>
+                            ),
+                        ]} />
+                    </Box>
+                </Card.Content>
+            </Box>
         </Card>
     )
 }

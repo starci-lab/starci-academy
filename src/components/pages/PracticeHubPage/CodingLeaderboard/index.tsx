@@ -54,6 +54,7 @@ const LeaderboardRow = ({ rank, entry, isViewer = false, solvedLabel, youLabel, 
         <StackH
             gap={4}
             align="center"
+            principle="content-row"
             items={[
                 // the rank column is a fixed gutter so every name starts on the same line
                 () => (
@@ -139,7 +140,7 @@ export const CodingLeaderboard = () => {
 
     return (
         // the board keeps a capped reading measure — a width no closed union carries
-        <Box className="mx-auto w-full max-w-2xl">
+        <Box className="mx-auto w-full max-w-2xl" principle="center-measure">
             <SurfaceListCard identity={{ tier: "block", component: "CodingLeaderboard" }}>
                 {isSkeleton
                     ? Array.from({ length: SKELETON_ROWS }, (_row, index) => (

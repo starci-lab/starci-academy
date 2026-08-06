@@ -36,6 +36,7 @@ import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { StackH, StackV } from "@/components/frames/Stack"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
@@ -117,39 +118,45 @@ export const ProfileProjectRoadmapPage = ({
                 )}
                 title={project?.courseTitle ?? t("publicProfile.capstone.roadmapTitle")}
                 meta={project ? (
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2">
-                            {hasVerified ? (
-                                <StatusChip
-                                    tone="success"
-                                    icon={<SealCheckIcon aria-hidden focusable="false" className="size-4" />}
-                                >
-                                    {t("pinnedProjects.verified")}
-                                </StatusChip>
-                            ) : null}
-                            <Typography type="body-xs" color="muted">
-                                {t("publicProfile.capstone.roadmapSummary", {
-                                    completedMilestones: project.completedMilestones,
-                                    totalMilestones: project.totalMilestones,
-                                    completedTasks: project.completedTasks,
-                                    totalTasks: project.totalTasks,
-                                })}
-                            </Typography>
-                        </div>
-                        <SegmentBar
-                            hideLegend
-                            max={totalTasks}
-                            ariaLabel={`${project.courseTitle} · ${percent}%`}
-                            segments={[
-                                {
-                                    key: "verified",
-                                    label: t("publicProfile.capstone.projectsHeading"),
-                                    value: project.completedTasks,
-                                    color: "var(--success)",
-                                },
-                            ]}
-                        />
-                    </div>
+                    <StackV gap={3} principle="sibling-stack" items={[
+                        () => (
+                            <StackH gap={3} principle="chip-row" align="center" items={[
+                                ...(hasVerified ? [() => (
+                                    <StatusChip
+                                        tone="success"
+                                        icon={<SealCheckIcon aria-hidden focusable="false" className="size-4" />}
+                                    >
+                                        {t("pinnedProjects.verified")}
+                                    </StatusChip>
+                                )] : []),
+                                () => (
+                                    <Typography type="body-xs" color="muted">
+                                        {t("publicProfile.capstone.roadmapSummary", {
+                                            completedMilestones: project.completedMilestones,
+                                            totalMilestones: project.totalMilestones,
+                                            completedTasks: project.completedTasks,
+                                            totalTasks: project.totalTasks,
+                                        })}
+                                    </Typography>
+                                ),
+                            ]} />
+                        ),
+                        () => (
+                            <SegmentBar
+                                hideLegend
+                                max={totalTasks}
+                                ariaLabel={`${project.courseTitle} · ${percent}%`}
+                                segments={[
+                                    {
+                                        key: "verified",
+                                        label: t("publicProfile.capstone.projectsHeading"),
+                                        value: project.completedTasks,
+                                        color: "var(--success)",
+                                    },
+                                ]}
+                            />
+                        ),
+                    ]} />
                 ) : undefined}
             />
 
@@ -159,25 +166,26 @@ export const ProfileProjectRoadmapPage = ({
                     <SurfaceListCard>
                         {[0, 1].map((row) => (
                             <SurfaceListCardItem key={row}>
-                                <div className="flex items-start gap-3">
-                                    {/* rocket IconTile (sm = size-12 rounded-xl) */}
-                                    <Skeleton className="size-12 shrink-0 rounded-xl" />
-                                    <div className="flex min-w-0 flex-1 flex-col gap-3">
-                                        {/* milestone progress meter (label + bar) + summary line */}
-                                        <Skeleton.Typography type="body-sm" width="1/3" />
-                                        <Skeleton.ProgressBar />
-                                        <Skeleton.Typography type="body-xs" width="2/3" />
-                                        {/* per-task checklist (check/circle icon + title) */}
-                                        <div className="flex flex-col gap-0">
-                                            {[0, 1].map((task) => (
-                                                <div key={task} className="flex items-center gap-3 py-2">
-                                                    <Skeleton className="size-5 shrink-0 rounded-full" />
-                                                    <Skeleton.Typography type="body-sm" width="1/2" />
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
+                                <StackH gap={4} principle="content-row" align="start" items={[
+                                    () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
+                                    () => (
+                                        <StackV gap={4} principle="label-field" classNames={["min-w-0", "flex-1"]} items={[
+                                            () => <Skeleton.Typography type="body-sm" width="1/3" />,
+                                            () => <Skeleton.ProgressBar />,
+                                            () => <Skeleton.Typography type="body-xs" width="2/3" />,
+                                            () => (
+                                                <StackV gap={1} principle="name-handle" items={
+                                                    [0, 1].map((task) => () => (
+                                                        <StackH key={task} gap={4} principle="content-row" align="center" items={[
+                                                            () => <Skeleton className="size-5 shrink-0 rounded-full" />,
+                                                            () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                                        ]} />
+                                                    ))
+                                                } />
+                                            ),
+                                        ]} />
+                                    ),
+                                ]} />
                             </SurfaceListCardItem>
                         ))}
                     </SurfaceListCard>
@@ -204,65 +212,90 @@ export const ProfileProjectRoadmapPage = ({
                 <SurfaceListCard>
                     {milestones.map((milestone, milestoneIndex) => (
                         <SurfaceListCardItem key={milestone.milestoneGlobalId ?? `${milestone.title}-${milestoneIndex}`}>
-                            <div className="flex items-start gap-3">
-                                <IconTile
-                                    size="sm"
-                                    icon={<RocketIcon aria-hidden focusable="false" />}
-                                />
-                                <div className="flex min-w-0 flex-1 flex-col gap-3">
-                                    <ProgressMeter
-                                        label={milestone.title}
-                                        value={milestone.passedTasks}
-                                        max={Math.max(milestone.totalTasks, 1)}
-                                        showValue
+                            <StackH gap={4} principle="content-row" align="start" items={[
+                                () => (
+                                    <IconTile
+                                        size="sm"
+                                        icon={<RocketIcon aria-hidden focusable="false" />}
                                     />
-                                    <Typography type="body-xs" color="muted">
-                                        {t("publicProfile.capstone.roadmapMilestoneProgress", {
-                                            completed: milestone.passedTasks,
-                                            total: milestone.totalTasks,
-                                        })}
-                                    </Typography>
-                                    <div className="flex flex-col gap-0">
-                                        {milestone.tasks.map((task, taskIndex) => (
-                                            <div
-                                                key={task.taskGlobalId ?? `${task.title}-${taskIndex}`}
-                                                className={cn(
-                                                    "flex items-center gap-3 py-2",
-                                                    taskIndex < milestone.tasks.length - 1 && "border-b border-default",
-                                                )}
-                                            >
-                                                {task.passed ? (
-                                                    <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success-soft-foreground" />
-                                                ) : (
-                                                    <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted-foreground" />
-                                                )}
-                                                <Typography
-                                                    type="body-sm"
-                                                    className={cn("min-w-0 flex-1 truncate", task.passed && "text-success-soft-foreground")}
-                                                >
-                                                    {task.title}
-                                                </Typography>
-                                                {task.passed ? (
-                                                    <div className="flex shrink-0 items-center gap-2">
-                                                        <Typography
-                                                            type="body-xs"
-                                                            weight="medium"
-                                                            className={scoreToneClass(task.score)}
-                                                        >
-                                                            {t("publicProfile.capstone.score", { score: task.score })}
-                                                        </Typography>
-                                                        {task.passedAt ? (
-                                                            <Typography type="body-xs" color="muted">
-                                                                {` · ${new Date(task.passedAt).toLocaleDateString(locale)}`}
-                                                            </Typography>
-                                                        ) : null}
+                                ),
+                                () => (
+                                    <StackV gap={4} principle="label-field" classNames={["min-w-0", "flex-1"]} items={[
+                                        () => (
+                                            <ProgressMeter
+                                                label={milestone.title}
+                                                value={milestone.passedTasks}
+                                                max={Math.max(milestone.totalTasks, 1)}
+                                                showValue
+                                            />
+                                        ),
+                                        () => (
+                                            <Typography type="body-xs" color="muted">
+                                                {t("publicProfile.capstone.roadmapMilestoneProgress", {
+                                                    completed: milestone.passedTasks,
+                                                    total: milestone.totalTasks,
+                                                })}
+                                            </Typography>
+                                        ),
+                                        () => (
+                                            <StackV gap={1} principle="name-handle" items={
+                                                milestone.tasks.map((task, taskIndex) => () => (
+                                                    <div
+                                                        key={task.taskGlobalId ?? `${task.title}-${taskIndex}`}
+                                                        className={cn(
+                                                            taskIndex < milestone.tasks.length - 1 && "border-b border-default",
+                                                        )}
+                                                    >
+                                                        <StackH
+                                                            gap={4}
+                                                            principle="content-row"
+                                                            align="center"
+                                                            items={[
+                                                                () => (
+                                                                    task.passed ? (
+                                                                        <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success-soft-foreground" />
+                                                                    ) : (
+                                                                        <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted-foreground" />
+                                                                    )
+                                                                ),
+                                                                () => (
+                                                                    <Typography
+                                                                        type="body-sm"
+                                                                        className={cn("min-w-0 flex-1 truncate", task.passed && "text-success-soft-foreground")}
+                                                                    >
+                                                                        {task.title}
+                                                                    </Typography>
+                                                                ),
+                                                                ...(task.passed ? [() => (
+                                                                    <StackH gap={2} principle="separator-dot" classNames={["shrink-0"]} items={[
+                                                                        () => (
+                                                                            <Typography
+                                                                                type="body-xs"
+                                                                                weight="medium"
+                                                                                className={scoreToneClass(task.score)}
+                                                                            >
+                                                                                {t("publicProfile.capstone.score", { score: task.score })}
+                                                                            </Typography>
+                                                                        ),
+                                                                        ...(task.passedAt ? [() => {
+                                                                            const passedAt = task.passedAt as string | number | Date
+                                                                            return (
+                                                                                <Typography type="body-xs" color="muted">
+                                                                                    {` · ${new Date(passedAt).toLocaleDateString(locale)}`}
+                                                                                </Typography>
+                                                                            )
+                                                                        }] : []),
+                                                                    ]} />
+                                                                )] : []),
+                                                            ]}
+                                                        />
                                                     </div>
-                                                ) : null}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
+                                                ))
+                                            } />
+                                        ),
+                                    ]} />
+                                ),
+                            ]} />
                         </SurfaceListCardItem>
                     ))}
                 </SurfaceListCard>

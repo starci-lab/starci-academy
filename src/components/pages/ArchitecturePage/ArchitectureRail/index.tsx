@@ -37,7 +37,7 @@ const ComponentRow = ({
     const visual = getArchitectureStatusVisual(state)
     const metrics = healthByName?.[name]?.metrics
     return (
-        <span className="flex w-full min-w-0 items-center gap-2">
+        <span data-principle="identity" className="flex w-full min-w-0 items-center gap-2">
             <Icon aria-hidden className="size-4 shrink-0 text-muted" />
             <span className="flex min-w-0 flex-1 flex-col">
                 <Typography type="body-sm" weight="medium" className="min-w-0 truncate">
@@ -72,7 +72,7 @@ const ModuleRow = ({
 }) => {
     const t = useTranslations("architecture")
     return (
-        <span className="flex w-full min-w-0 items-center gap-2">
+        <span data-principle="identity" className="flex w-full min-w-0 items-center gap-2">
             <Icon aria-hidden className="size-4 shrink-0 text-muted" />
             <span className="flex min-w-0 flex-1 flex-col">
                 <Typography type="body-sm" weight="medium" className="min-w-0 truncate">
@@ -111,23 +111,23 @@ export const ArchitectureRail = ({ healthByName, selectedId, onSelect, className
 
     return (
         <div className={cn("relative flex min-h-0 min-w-0 flex-col gap-3 p-6", className)}>
-            <ScrollShadow hideScrollBar className="-mx-1 min-h-0 min-w-0 flex-1 overflow-y-auto px-1">
-                <div className="flex flex-col gap-3">
-                    <div className="flex flex-col gap-2">
-                        <Label className="px-1 text-xs text-muted">{t("rail.ownGroup")}</Label>
+            <ScrollShadow hideScrollBar className="-mx-1 min-h-0 min-w-0 flex-1 overflow-y-auto px-1" data-principle="control-pad">
+                <div data-principle="card-caption" className="flex flex-col gap-3">
+                    <div data-principle="sibling-stack" className="flex flex-col gap-2">
+                        <Label className="px-1 text-xs text-muted" data-principle="control-pad">{t("rail.ownGroup")}</Label>
                         <ListBox
                             aria-label={t("rail.ownGroup")}
                             selectionMode="single"
                             selectedKeys={ownComponents.some((c) => c.name === selectedId) ? [selectedId] : []}
                             onSelectionChange={onSelectionChange}
-                            className="gap-1 p-0"
+                            className="gap-1 p-0" data-principle="title-subtitle"
                         >
                             {ownComponents.map((component) => (
                                 <ListBox.Item
                                     key={component.name}
                                     id={component.name}
                                     textValue={component.name}
-                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft"
+                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft" data-principle="control-pad"
                                 >
                                     <ComponentRow name={component.name} icon={component.icon} healthByName={healthByName} />
                                 </ListBox.Item>
@@ -135,21 +135,21 @@ export const ArchitectureRail = ({ healthByName, selectedId, onSelect, className
                         </ListBox>
                     </div>
 
-                    <div className="flex flex-col gap-2">
-                        <Label className="px-1 text-xs text-muted">{t("rail.externalGroup")}</Label>
+                    <div data-principle="sibling-stack" className="flex flex-col gap-2">
+                        <Label className="px-1 text-xs text-muted" data-principle="control-pad">{t("rail.externalGroup")}</Label>
                         <ListBox
                             aria-label={t("rail.externalGroup")}
                             selectionMode="single"
                             selectedKeys={externalComponents.some((c) => c.name === selectedId) ? [selectedId] : []}
                             onSelectionChange={onSelectionChange}
-                            className="gap-1 p-0"
+                            className="gap-1 p-0" data-principle="title-subtitle"
                         >
                             {externalComponents.map((component) => (
                                 <ListBox.Item
                                     key={component.name}
                                     id={component.name}
                                     textValue={component.name}
-                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft"
+                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft" data-principle="control-pad"
                                 >
                                     <ComponentRow name={component.name} icon={component.icon} healthByName={healthByName} />
                                 </ListBox.Item>
@@ -157,8 +157,8 @@ export const ArchitectureRail = ({ healthByName, selectedId, onSelect, className
                         </ListBox>
                     </div>
 
-                    <div className="flex flex-col gap-2">
-                        <Label className="px-1 text-xs text-muted">
+                    <div data-principle="sibling-stack" className="flex flex-col gap-2">
+                        <Label className="px-1 text-xs text-muted" data-principle="control-pad">
                             {t("rail.moduleGroup", { count: ARCHITECTURE_MODULES.length })}
                         </Label>
                         <ListBox
@@ -166,14 +166,14 @@ export const ArchitectureRail = ({ healthByName, selectedId, onSelect, className
                             selectionMode="single"
                             selectedKeys={ARCHITECTURE_MODULES.some((m) => m.id === selectedId) ? [selectedId] : []}
                             onSelectionChange={onSelectionChange}
-                            className="gap-1 p-0"
+                            className="gap-1 p-0" data-principle="title-subtitle"
                         >
                             {ARCHITECTURE_MODULES.map((module) => (
                                 <ListBox.Item
                                     key={module.id}
                                     id={module.id}
                                     textValue={module.id}
-                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft"
+                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft" data-principle="control-pad"
                                 >
                                     <ModuleRow id={module.id} icon={module.icon} />
                                 </ListBox.Item>

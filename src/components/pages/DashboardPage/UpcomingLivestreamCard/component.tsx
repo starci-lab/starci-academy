@@ -5,6 +5,7 @@ import {
 import { AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { Box } from "@/components/frames/Box"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { Typography } from "@/components/atoms/text/Typography"
@@ -92,7 +93,9 @@ export const _UpcomingLivestreamCard = ({
             <SurfaceListCard bordered>
                 {isSkeleton
                     ? Array.from({ length: MAX_ROWS }, (_unused, index) => (
-                        <Skeleton.ListRow key={index} withSubtitle className="px-4" />
+                        <Box key={index} principle="row-pad" className="px-4">
+                            <Skeleton.ListRow withSubtitle />
+                        </Box>
                     ))
                     : sessions.map((session) => (
                         <SurfaceListCardRow

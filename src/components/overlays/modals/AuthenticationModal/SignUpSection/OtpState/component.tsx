@@ -63,6 +63,47 @@ export const _OtpState = ({
     onResend,
 }: OtpStateProps) => {
     const showError = Boolean(touched && error)
+
+    const resendRow = [
+        () => <Typography size="xs" color="muted" text={labels.resend} />,
+        () => (
+            <Typography
+                size="xs"
+                color={isResending ? "muted" : "accent-soft"}
+                isButton
+                onPress={() => {
+                    if (!isResending) onResend()
+                }}
+                text={labels.resendLink}
+            />
+        ),
+    ]
+
+    const otpFieldItems = [
+        () => (
+            <InputOtp
+                length={6}
+                value={otp}
+                onValueChange={onChangeOtp}
+                isInvalid={showError}
+                errorMessage={showError ? error : undefined}
+            />
+        ),
+        () => (
+            <StackH
+                gap={3}
+                principle="flex-action"
+                justify="center"
+                items={resendRow}
+            />
+        ),
+    ]
+
+    const formBodyItems = [
+        () => <Typography size="xs" color="muted" align="center" text={labels.desc} />,
+        () => <StackV gap={3} items={otpFieldItems} />,
+    ]
+
     return (
         <>
             {!hideCloseButton && <Modal.CloseTrigger />}
@@ -75,50 +116,7 @@ export const _OtpState = ({
                 <Form
                     onSubmit={onSubmit}
                     gap={6}
-                    body={() => (
-                        <StackV
-                            gap={6}
-                            items={[
-                                () => <Typography size="xs" color="muted" align="center" text={labels.desc} />,
-                                () => (
-                                    <StackV
-                                        gap={3}
-                                        items={[
-                                            () => (
-                                                <InputOtp
-                                                    length={6}
-                                                    value={otp}
-                                                    onValueChange={onChangeOtp}
-                                                    isInvalid={showError}
-                                                    errorMessage={showError ? error : undefined}
-                                                />
-                                            ),
-                                            () => (
-                                                <StackH
-                                                    gap={3}
-                                                    justify="center"
-                                                    items={[
-                                                        () => <Typography size="xs" color="muted" text={labels.resend} />,
-                                                        () => (
-                                                            <Typography
-                                                                size="xs"
-                                                                color={isResending ? "muted" : "accent-soft"}
-                                                                isButton
-                                                                onPress={() => {
-                                                                    if (!isResending) onResend()
-                                                                }}
-                                                                text={labels.resendLink}
-                                                            />
-                                                        ),
-                                                    ]}
-                                                />
-                                            ),
-                                        ]}
-                                    />
-                                ),
-                            ]}
-                        />
-                    )}
+                    body={() => <StackV gap={6} items={formBodyItems} />}
                     actions={() => (
                         <Button
                             variant="primary"

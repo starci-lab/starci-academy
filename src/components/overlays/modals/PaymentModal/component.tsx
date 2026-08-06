@@ -196,6 +196,7 @@ const checkoutLineRow = (
 ) => (
     <StackH
         gap={4}
+        principle="content-row"
         align="center"
         items={[
             () => (
@@ -255,39 +256,39 @@ const summaryContent = (props: PaymentModalProps) => {
     }
 
     if (checkoutLines != null) {
+        const checkoutLineItems = checkoutLines.map((line) => () => checkoutLineRow(line, currency, isSkeleton))
+        const totalRow = [
+            () => <Typography size="sm" weight="semibold" text={labels.total} />,
+            ...(isSkeleton || discounted != null
+                ? [() => (
+                    <PriceTagProminent
+                        discounted={discounted ?? 0}
+                        original={original}
+                        currency={currency}
+                        isSkeleton={isSkeleton}
+                        showSavingLine={false}
+                        classNames={["shrink-0"]}
+                    />
+                )]
+                : []),
+        ]
+        const checkoutSummaryItems = [
+            () => <StackV gap={4} items={checkoutLineItems} />,
+            () => (
+                <StackH
+                    gap={4}
+                    principle="content-row"
+                    justify="between"
+                    items={totalRow}
+                />
+            ),
+        ]
         return (
             <StackV
                 gap={5}
+                principle="group-boundary"
                 divider
-                items={[
-                    () => (
-                        <StackV
-                            gap={4}
-                            items={checkoutLines.map((line) => () => checkoutLineRow(line, currency, isSkeleton))}
-                        />
-                    ),
-                    () => (
-                        <StackH
-                            gap={4}
-                            justify="between"
-                            items={[
-                                () => <Typography size="sm" weight="semibold" text={labels.total} />,
-                                ...(isSkeleton || discounted != null
-                                    ? [() => (
-                                        <PriceTagProminent
-                                            discounted={discounted ?? 0}
-                                            original={original}
-                                            currency={currency}
-                                            isSkeleton={isSkeleton}
-                                            showSavingLine={false}
-                                            classNames={["shrink-0"]}
-                                        />
-                                    )]
-                                    : []),
-                            ]}
-                        />
-                    ),
-                ]}
+                items={checkoutSummaryItems}
             />
         )
     }
@@ -306,61 +307,61 @@ const summaryContent = (props: PaymentModalProps) => {
             ? <Typography size="h4" weight="bold" text={labels.membershipPrice} />
             : null
 
-    return (
-        <StackV
-            gap={4}
-            items={[
-                () => (
-                    <StackH
-                        gap={4}
-                        align="center"
-                        items={[
-                            () => (
-                                <IconTile
-                                    size="sm"
-                                    tone="accent"
-                                    icon={GraduationCapIcon}
-                                    src={orderCoverUrl}
-                                    alt={orderName}
-                                />
-                            ),
-                            () => (
-                                <StackV
-                                    gap={3}
-                                    classNames={["min-w-0", "flex-1"]}
-                                    items={[
-                                        () => <Typography size="xs" color="muted" truncate text={orderName} />,
-                                        () => priceRegion,
-                                    ]}
-                                />
-                            ),
-                        ]}
-                    />
-                ),
-                ...(loyaltyRows.length > 0
-                    ? [() => (
-                        <StackV
-                            gap={3}
-                            items={loyaltyRows.map((row) => () => (
-                                <InlineIconLabel icon={row.icon} label={row.label} tone="success" size="xs" />
-                            ))}
-                        />
-                    )]
-                    : []),
-                () => (
-                    <Button
-                        variant="primary"
-                        size="lg"
-                        suffixIcon={ArrowRightIcon}
-                        iconSlide
-                        classNames={["w-full"]}
-                        label={labels.continueToPayment}
-                        onPress={() => onSelectedTabChange("payment")}
-                    />
-                ),
-            ]}
-        />
-    )
+    const orderIdentityItems = [
+        () => (
+            <IconTile
+                size="sm"
+                tone="accent"
+                icon={GraduationCapIcon}
+                src={orderCoverUrl}
+                alt={orderName}
+            />
+        ),
+        () => (
+            <StackV
+                gap={3}
+                classNames={["min-w-0", "flex-1"]}
+                items={[
+                    () => <Typography size="xs" color="muted" truncate text={orderName} />,
+                    () => priceRegion,
+                ]}
+            />
+        ),
+    ]
+
+    const singleSummaryItems = [
+        () => (
+            <StackH
+                gap={4}
+                principle="content-row"
+                align="center"
+                items={orderIdentityItems}
+            />
+        ),
+        ...(loyaltyRows.length > 0
+            ? [() => (
+                <StackV
+                    gap={3}
+                    items={loyaltyRows.map((row) => () => (
+                        <InlineIconLabel icon={row.icon} label={row.label} tone="success" size="xs" />
+                    ))}
+                />
+            )]
+            : []),
+        () => (
+            <Button
+                variant="primary"
+                size="lg"
+                suffixIcon={ArrowRightIcon}
+                iconSlide
+                classNames={["w-full"]}
+                label={labels.continueToPayment}
+                onPress={() => onSelectedTabChange("payment")}
+            />
+        ),
+    ]
+
+    return <StackV gap={4} items={singleSummaryItems} />
 }
 
 /** One gateway row — leading logo, name + description, amount, and a trailing arrow/spinner. */
@@ -409,121 +410,114 @@ const paymentContent = (props: PaymentModalProps) => {
         labels,
     } = props
 
-    return (
-        <StackV
-            gap={4}
-            items={[
-                ...(installmentAvailable
-                    ? [() => (
-                        <StackV
+    const installmentMonthsRow = [
+        () => <Typography size="sm" weight="semibold" text={labels.installmentMonths ?? ""} />,
+        () => <Typography size="sm" color="muted" text={labels.installmentPerMonth ?? ""} />,
+    ]
+
+    const installmentSectionItems = [
+        () => <Typography size="xs" weight="medium" color="muted" text={labels.installmentTitle} />,
+        () => (
+            <Toolbar
+                variant="primary"
+                size="sm"
+                leftTabs={{
+                    selectedKey: installmentActive ? "installment" : "full",
+                    ariaLabel: labels.installmentTitle,
+                    onSelectionChange: (key) => onInstallmentActiveChange(String(key) === "installment"),
+                    items: [
+                        { key: "full", label: labels.payFull },
+                        { key: "installment", label: labels.payInstallment },
+                    ],
+                }}
+            />
+        ),
+        ...(installmentActive && labels.installmentMonths != null
+            ? [() => (
+                <SurfaceCard
+                    variant="nested"
+                    padding={4}
+                    body={() => (
+                        <StackH
                             gap={4}
-                            items={[
-                                () => <Typography size="xs" weight="medium" color="muted" text={labels.installmentTitle} />,
-                                () => (
-                                    <Toolbar
-                                        variant="primary"
-                                        size="sm"
-                                        leftTabs={{
-                                            selectedKey: installmentActive ? "installment" : "full",
-                                            ariaLabel: labels.installmentTitle,
-                                            onSelectionChange: (key) => onInstallmentActiveChange(String(key) === "installment"),
-                                            items: [
-                                                { key: "full", label: labels.payFull },
-                                                { key: "installment", label: labels.payInstallment },
-                                            ],
-                                        }}
-                                    />
-                                ),
-                                ...(installmentActive && labels.installmentMonths != null
-                                    ? [() => (
-                                        <SurfaceCard
-                                            variant="nested"
-                                            padding={4}
-                                            body={() => (
-                                                <StackH
-                                                    gap={4}
-                                                    justify="between"
-                                                    items={[
-                                                        () => <Typography size="sm" weight="semibold" text={labels.installmentMonths ?? ""} />,
-                                                        () => <Typography size="sm" color="muted" text={labels.installmentPerMonth ?? ""} />,
-                                                    ]}
-                                                />
-                                            )}
-                                        />
-                                    )]
-                                    : []),
-                                ...(labels.installmentSummary != null
-                                    ? [() => <Typography size="xs" color="muted" text={labels.installmentSummary ?? ""} />]
-                                    : []),
-                            ]}
+                            principle="content-row"
+                            justify="between"
+                            items={installmentMonthsRow}
                         />
-                    )]
-                    : []),
+                    )}
+                />
+            )]
+            : []),
+        ...(labels.installmentSummary != null
+            ? [() => <Typography size="xs" color="muted" text={labels.installmentSummary ?? ""} />]
+            : []),
+    ]
 
-                ...(showVoucher
-                    ? [() => (
-                        <StackV
-                            gap={4}
-                            items={[
-                                () => (
-                                    <SelectSingle
-                                        label={labels.voucherTitle}
-                                        ariaLabel={labels.voucherTitle}
-                                        placeholder={labels.voucherNone}
-                                        options={voucherOptions}
-                                        value={voucherCode ?? ""}
-                                        onValueChange={(value) => onVoucherCodeChange(value || null)}
-                                        isDisabled={isMutating}
-                                    />
-                                ),
-                                ...(flatVoucherActive
-                                    ? [() => <Typography size="xs" color="muted" text={labels.voucherVndOnlyHint} />]
-                                    : []),
-                            ]}
-                        />
-                    )]
-                    : []),
+    const voucherSectionItems = [
+        () => (
+            <SelectSingle
+                label={labels.voucherTitle}
+                ariaLabel={labels.voucherTitle}
+                placeholder={labels.voucherNone}
+                options={voucherOptions}
+                value={voucherCode ?? ""}
+                onValueChange={(value) => onVoucherCodeChange(value || null)}
+                isDisabled={isMutating}
+            />
+        ),
+        ...(flatVoucherActive
+            ? [() => <Typography size="xs" color="muted" text={labels.voucherVndOnlyHint} />]
+            : []),
+    ]
 
-                ...(hasUsd
-                    ? [() => (
-                        <Toolbar
-                            variant="primary"
-                            leftTabs={{
-                                selectedKey: currency,
-                                ariaLabel: labels.title,
-                                onSelectionChange: (key) => onCurrencyChange(String(key) as PriceCurrency),
-                                items: [
-                                    { key: "VND", label: labels.currencyVnd },
-                                    { key: "USD", label: labels.currencyUsd },
-                                ],
-                            }}
-                        />
-                    )]
-                    : []),
+    const trustLineItems = [
+        () => <InlineIconLabel icon={LockIcon} label={labels.secure} size="xs" />,
+        () => <Typography size="xs" color="muted" text={labels.noCardStored} />,
+    ]
 
-                ...(activeGroup
-                    ? [() => (
-                        <SurfaceCardList
-                            label={activeGroup.label}
-                            labelEnd={activeGroup.currencyLabel}
-                            items={activeGroup.methods.map((method) => gatewayRow(method, onSelectMethod, isMutating))}
-                        />
-                    )]
-                    : []),
+    const paymentPanelItems = [
+        ...(installmentAvailable
+            ? [() => <StackV gap={4} items={installmentSectionItems} />]
+            : []),
+        ...(showVoucher
+            ? [() => <StackV gap={4} items={voucherSectionItems} />]
+            : []),
+        ...(hasUsd
+            ? [() => (
+                <Toolbar
+                    variant="primary"
+                    leftTabs={{
+                        selectedKey: currency,
+                        ariaLabel: labels.title,
+                        onSelectionChange: (key) => onCurrencyChange(String(key) as PriceCurrency),
+                        items: [
+                            { key: "VND", label: labels.currencyVnd },
+                            { key: "USD", label: labels.currencyUsd },
+                        ],
+                    }}
+                />
+            )]
+            : []),
+        ...(activeGroup
+            ? [() => (
+                <SurfaceCardList
+                    label={activeGroup.label}
+                    labelEnd={activeGroup.currencyLabel}
+                    items={activeGroup.methods.map((method) => gatewayRow(method, onSelectMethod, isMutating))}
+                />
+            )]
+            : []),
+        () => (
+            <StackV
+                gap={3}
+                principle="sibling-stack"
+                align="center"
+                items={trustLineItems}
+            />
+        ),
+    ]
 
-                () => (
-                    <StackV
-                        gap={3}
-                        align="center"
-                        items={[
-                            () => <InlineIconLabel icon={LockIcon} label={labels.secure} size="xs" />,
-                            () => <Typography size="xs" color="muted" text={labels.noCardStored} />,
-                        ]}
-                    />
-                ),
-            ]}
-        />
-    )
+    return <StackV gap={4} items={paymentPanelItems} />
 }
 
 /**

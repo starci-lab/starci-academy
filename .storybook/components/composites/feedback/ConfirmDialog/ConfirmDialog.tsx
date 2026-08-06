@@ -122,7 +122,7 @@ export const ConfirmDialog = ({
                         ) : null}
                         <AlertDialogFooter className="w-full">
                             <ButtonGroup
-                                align="end"
+                                principle="flex-action-end"
                                 items={[
                                     {
                                         key: "cancel",

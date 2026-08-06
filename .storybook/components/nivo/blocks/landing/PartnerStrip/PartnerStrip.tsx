@@ -40,12 +40,14 @@ const PartnerStrip = ({ eyebrow, title, intro, chips }: PartnerStripProps) => (
     <div data-tier="block" data-component="PartnerStrip">
         <StackV
             gap={6}
+            principle="block-boundary"
             items={[
                 () => <SectionHeading eyebrow={eyebrow} title={title} intro={intro} align="center" />,
                 () => (
                     <Cluster
                         gap={3}
                         justify="center"
+                        principle="chip-row"
                         items={chips.map((chip) => () => <Chip tone="default" text={chip.label} />)}
                     />
                 ),

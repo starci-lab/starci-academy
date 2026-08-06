@@ -53,6 +53,7 @@ const IndustryCard = ({ item }: { item: SolutionByIndustryItem }) => (
         body={() => (
             <StackV
                 gap={3}
+                principle="sibling-stack"
                 items={[
                     () => (
                         <StackH
@@ -83,12 +84,13 @@ const SolutionByIndustry = ({ eyebrow, title, intro, items }: SolutionByIndustry
     <div data-tier="block" data-component="SolutionByIndustry">
         <StackV
             gap={8}
+            principle="marketing-beat"
             items={[
                 () => <SectionHeading eyebrow={eyebrow} title={title} intro={intro} align="center" />,
                 () => (
                     <Grid
                         columns={{ base: 1, md: 3 }}
-                        gap={4}
+                        principle="content-row"
                         items={items.map((item) => ({
                             key: item.key,
                             content: () => <IndustryCard item={item} />,

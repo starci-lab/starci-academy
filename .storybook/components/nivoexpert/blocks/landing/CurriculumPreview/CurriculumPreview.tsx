@@ -82,7 +82,7 @@ const CurriculumPreview = ({ eyebrow, title, intro, courses, isSkeleton = false,
         key: course.id,
         title: (
             <StackH
-                gap={3}
+                principle="value-row" gap={3}
                 justify="between"
                 classNames={["w-full"]}
                 items={[
@@ -114,7 +114,7 @@ const CurriculumPreview = ({ eyebrow, title, intro, courses, isSkeleton = false,
     return (
         <div data-tier="block" data-component="CurriculumPreview">
             <StackV
-                gap={8}
+                principle="marketing-beat" gap={8}
                 items={[
                     ...(eyebrow ? [() => <Typography size="sm" weight="semibold" color="accent" align="center" text={eyebrow} />] : []),
                     () => <Typography size="h2" weight="bold" align="center" text={title} />,

@@ -9,6 +9,7 @@ import { QuickTestUrls } from "./QuickTestUrls"
 import type { QuickTestUrl } from "./types"
 import { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
 import { type WithClassNames } from "@/modules/types/base/class-name"
+import { Box } from "@/components/frames/Box"
 
 /**
  * Admin tool page for testing the VideoRenderer with all 3 renderer types.
@@ -42,7 +43,7 @@ export const AdminMpegDashTestPage = ({ className }: WithClassNames<undefined>) 
 
     return (
         <div className={cn("min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-4 @app-md:p-8", className)}>
-            <div className="mx-auto max-w-4xl space-y-6">
+            <Box principle="center-measure" className="mx-auto max-w-4xl space-y-6">
                 <AdminMpegDashTestHeader />
 
                 <ConfigCard
@@ -58,7 +59,7 @@ export const AdminMpegDashTestPage = ({ className }: WithClassNames<undefined>) 
                 />
 
                 <QuickTestUrls onSelect={onSelectQuickTestUrl} />
-            </div>
+            </Box>
         </div>
     )
 }

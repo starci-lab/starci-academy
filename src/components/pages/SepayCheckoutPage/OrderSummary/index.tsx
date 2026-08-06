@@ -22,6 +22,8 @@ import {
 import {
     DetailRow,
 } from "../DetailRow"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /**
  * Right-hand panel: the price card plus the bank/account/amount/content rows.
@@ -60,48 +62,64 @@ export const OrderSummary = () => {
     )
 
     return (
-        <div className="flex flex-col gap-6">
-            <Card className="bg-default/40 p-6 backdrop-blur-md">
-                <Card.Content>
-                    <h3 className="mb-4 text-lg font-medium">{courseTitle}</h3>
-                    <div className="flex items-baseline gap-2">
-                        <span className="text-3xl font-bold text-primary">
-                            {Number(amount).toLocaleString("vi-VN")}
-                        </span>
-                        <span className="text-sm text-muted">VND</span>
-                    </div>
-                </Card.Content>
-            </Card>
+        <StackV gap={6} principle="block-boundary" items={[
+            () => (
+                <Card className="bg-default/40 backdrop-blur-md">
+                    <Box principle="card-padding" className="p-6">
+                        <Card.Content>
+                            <h3 className="mb-4 text-lg font-medium">{courseTitle}</h3>
+                            <StackH gap={3} principle="value-row" align="baseline" items={[
+                                () => (
+                                    <span className="text-3xl font-bold text-primary">
+                                        {Number(amount).toLocaleString("vi-VN")}
+                                    </span>
+                                ),
+                                () => <span className="text-sm text-muted">VND</span>,
+                            ]} />
+                        </Card.Content>
+                    </Box>
+                </Card>
+            ),
 
-            <Card className="flex-grow bg-default/40 p-6 backdrop-blur-md">
-                <Card.Content>
-                    <div className="space-y-3">
-                        <DetailRow label={t("payment.sepay.bank")} value={bankDetails.bank} />
-                        <DetailRow
-                            copyValue={bankDetails.account}
-                            label={t("payment.sepay.account")}
-                            showCopy
-                            value={bankDetails.account}
-                            onCopy={onCopy}
-                        />
-                        <DetailRow
-                            copyValue={amount}
-                            label={t("payment.sepay.amount")}
-                            showCopy
-                            value={`${Number(amount).toLocaleString("vi-VN")} VND`}
-                            onCopy={onCopy}
-                        />
-                        <DetailRow
-                            copyValue={referenceId}
-                            isHighlighted
-                            label={t("payment.sepay.content")}
-                            showCopy
-                            value={referenceId}
-                            onCopy={onCopy}
-                        />
-                    </div>
-                </Card.Content>
-            </Card>
-        </div>
+            () => (
+                <Card className="flex-grow bg-default/40 backdrop-blur-md">
+                    <Box principle="card-padding" className="p-6">
+                        <Card.Content>
+                            <StackV gap={4} principle="content-row" items={[
+                                () => <DetailRow label={t("payment.sepay.bank")} value={bankDetails.bank} />,
+                                () => (
+                                    <DetailRow
+                                        copyValue={bankDetails.account}
+                                        label={t("payment.sepay.account")}
+                                        showCopy
+                                        value={bankDetails.account}
+                                        onCopy={onCopy}
+                                    />
+                                ),
+                                () => (
+                                    <DetailRow
+                                        copyValue={amount}
+                                        label={t("payment.sepay.amount")}
+                                        showCopy
+                                        value={`${Number(amount).toLocaleString("vi-VN")} VND`}
+                                        onCopy={onCopy}
+                                    />
+                                ),
+                                () => (
+                                    <DetailRow
+                                        copyValue={referenceId}
+                                        isHighlighted
+                                        label={t("payment.sepay.content")}
+                                        showCopy
+                                        value={referenceId}
+                                        onCopy={onCopy}
+                                    />
+                                ),
+                            ]} />
+                        </Card.Content>
+                    </Box>
+                </Card>
+            ),
+        ]} />
     )
 }

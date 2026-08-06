@@ -42,6 +42,7 @@ import { usePostAdminProcessVideoSwr } from "@/hooks/swr/api/rest/mutations/useP
 import { useRestWithToast } from "@/modules/toast/hooks"
 import { useAppSelector } from "@/redux/hooks"
 import type { AdminPresignedUrlItem } from "@/modules/api/rest/admin-presigned-url/types"
+import { Box } from "@/components/frames/Box"
 
 /** Props for {@link AdminUploadVideoPage}. */
 export type AdminUploadVideoPageProps = WithClassNames<undefined>
@@ -337,7 +338,7 @@ export const AdminUploadVideoPage = ({
 
     return (
         <div className={cn("min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 p-4 @app-md:p-8", className)}>
-            <div className="mx-auto max-w-3xl space-y-6">
+            <Box principle="center-measure" className="mx-auto max-w-3xl space-y-6">
                 <TopBar />
 
                 <AdminUploadVideoHeader />
@@ -367,7 +368,7 @@ export const AdminUploadVideoPage = ({
                         onCopyUrl={onCopyUrl}
                     />
                 )}
-            </div>
+            </Box>
         </div>
     )
 }

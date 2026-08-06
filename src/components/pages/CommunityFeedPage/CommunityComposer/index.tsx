@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useCallback, useState } from "react"
+import { StackV } from "@/components/frames/Stack"
 import {
     Button,
     Card,
@@ -67,28 +68,32 @@ export const CommunityComposer = ({
     return (
         <Card>
             <CardContent>
-                <div className="flex flex-col gap-3">
-                    <TextField variant="secondary">
-                        <TextArea
-                            rows={3}
-                            value={body}
-                            onChange={(event) => setBody(event.target.value)}
-                            placeholder={t("community.composerPlaceholder")}
-                            aria-label={t("community.composerPlaceholder")}
-                            className="resize-none"
-                        />
-                    </TextField>
-                    <div className="flex justify-end">
-                        <Button
-                            variant="primary"
-                            isPending={isMutating}
-                            isDisabled={!body.trim()}
-                            onPress={() => void onSubmit()}
-                        >
-                            {t("community.post")}
-                        </Button>
-                    </div>
-                </div>
+                <StackV gap={4} principle="label-field" items={[
+                    () => (
+                        <TextField variant="secondary">
+                            <TextArea
+                                rows={3}
+                                value={body}
+                                onChange={(event) => setBody(event.target.value)}
+                                placeholder={t("community.composerPlaceholder")}
+                                aria-label={t("community.composerPlaceholder")}
+                                className="resize-none"
+                            />
+                        </TextField>
+                    ),
+                    () => (
+                        <div className="flex justify-end">
+                            <Button
+                                variant="primary"
+                                isPending={isMutating}
+                                isDisabled={!body.trim()}
+                                onPress={() => void onSubmit()}
+                            >
+                                {t("community.post")}
+                            </Button>
+                        </div>
+                    ),
+                ]} />
             </CardContent>
         </Card>
     )

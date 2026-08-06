@@ -29,6 +29,7 @@ import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link MyAttemptsPage}. */
 export type MyAttemptsPageProps = WithClassNames<undefined>
@@ -64,6 +65,63 @@ export const MyAttemptsPage = ({
             day: "numeric",
         })
 
+    const listItems = [
+        () => (
+            <div className="flex flex-col gap-0">
+                {items.map((item, index) => (
+                    <ListRow
+                        key={item.id}
+                        title={item.taskTitle}
+                        subtitle={item.milestoneTitle}
+                        divider={index < items.length - 1}
+                        meta={(
+                            <>
+                                <EntityToken
+                                    globalId={item.courseGlobalId}
+                                    label={item.courseTitle}
+                                />
+                                <Chip
+                                    size="sm"
+                                    variant="soft"
+                                    color={item.passed ? "success" : "danger"}
+                                >
+                                    <Chip.Label>
+                                        {item.passed
+                                            ? t("profileSettings.learning.attempts.passed")
+                                            : t("profileSettings.learning.attempts.failed")}
+                                    </Chip.Label>
+                                </Chip>
+                                <Typography type="body-sm">
+                                    {item.score}
+                                </Typography>
+                                <Typography type="body-xs" color="muted">
+                                    {formatDate(item.attemptedAt)}
+                                </Typography>
+                            </>
+                        )}
+                    />
+                ))}
+            </div>
+        ),
+        ...(hasMore
+            ? [() => (
+                <div className="flex justify-center">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        isDisabled={swr.isValidating}
+                        onPress={() => setPageCount((count) => count + 1)}
+                    >
+                        {swr.isValidating ? (
+                            <Spinner color="current" size="sm" />
+                        ) : null}
+                        {t("profileSettings.learning.loadMore")}
+                    </Button>
+                </div>
+            )]
+            : []),
+    ]
+
     return (
         <div className={cn("flex flex-col gap-10", className)}>
             <PageHeader
@@ -78,11 +136,13 @@ export const MyAttemptsPage = ({
                 <AsyncContent
                     isLoading={!swr.data && !swr.error}
                     skeleton={(
-                        <div className="flex flex-col gap-2">
-                            {[0, 1, 2].map((row) => (
+                        <StackV
+                            gap={3}
+                            principle="sibling-stack"
+                            items={[0, 1, 2].map((row) => () => (
                                 <Skeleton.ListRow key={row} withTrailing />
                             ))}
-                        </div>
+                        />
                     )}
                     isEmpty={items.length === 0}
                     emptyContent={{
@@ -96,58 +156,7 @@ export const MyAttemptsPage = ({
                         retryLabel: t("profileSettings.learning.loadMore"),
                     }}
                 >
-                    <div className="flex flex-col gap-3">
-                        <div className="flex flex-col gap-0">
-                            {items.map((item, index) => (
-                                <ListRow
-                                    key={item.id}
-                                    title={item.taskTitle}
-                                    subtitle={item.milestoneTitle}
-                                    divider={index < items.length - 1}
-                                    meta={(
-                                        <>
-                                            <EntityToken
-                                                globalId={item.courseGlobalId}
-                                                label={item.courseTitle}
-                                            />
-                                            <Chip
-                                                size="sm"
-                                                variant="soft"
-                                                color={item.passed ? "success" : "danger"}
-                                            >
-                                                <Chip.Label>
-                                                    {item.passed
-                                                        ? t("profileSettings.learning.attempts.passed")
-                                                        : t("profileSettings.learning.attempts.failed")}
-                                                </Chip.Label>
-                                            </Chip>
-                                            <Typography type="body-sm">
-                                                {item.score}
-                                            </Typography>
-                                            <Typography type="body-xs" color="muted">
-                                                {formatDate(item.attemptedAt)}
-                                            </Typography>
-                                        </>
-                                    )}
-                                />
-                            ))}
-                        </div>
-                        {hasMore ? (
-                            <div className="flex justify-center">
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    isDisabled={swr.isValidating}
-                                    onPress={() => setPageCount((count) => count + 1)}
-                                >
-                                    {swr.isValidating ? (
-                                        <Spinner color="current" size="sm" />
-                                    ) : null}
-                                    {t("profileSettings.learning.loadMore")}
-                                </Button>
-                            </div>
-                        ) : null}
-                    </div>
+                    <StackV gap={4} items={listItems} />
                 </AsyncContent>
             </LabeledCard>
         </div>

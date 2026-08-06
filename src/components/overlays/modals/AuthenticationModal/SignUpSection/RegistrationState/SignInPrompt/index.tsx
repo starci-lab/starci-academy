@@ -24,6 +24,7 @@ export const SignInPrompt = ({
     return (
         <StackH
             gap={3}
+            principle="flex-action"
             justify="center"
             items={[
                 () => <Typography size="xs" color="muted" text={t("auth.signUp.haveAccount")} />,

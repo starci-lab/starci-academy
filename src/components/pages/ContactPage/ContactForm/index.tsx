@@ -19,6 +19,7 @@ import { CONTACT_CATEGORY_KEYS } from "@/resources/contact"
 import { useContactForm } from "@/hooks/rhf/useContactForm"
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { Box } from "@/components/frames/Box"
+import { StackV } from "@/components/frames/Stack"
 import type { ContactCategory } from "@/modules/api/graphql/mutations/types/contact"
 
 /** Props for {@link ContactForm}. */
@@ -95,41 +96,49 @@ export const ContactForm = ({ className }: ContactFormProps) => {
                 ) : null}
             </TextField>
 
-            <div className="flex flex-col gap-2">
-                <Label htmlFor="contact-category">{t("contact.form.category")}</Label>
-                <Select.Root<{ id: string }, "single">
-                    id="contact-category"
-                    aria-label={t("contact.form.category")}
-                    selectedKey={category}
-                    onSelectionChange={(key) =>
-                        setValue("category", String(key) as ContactCategory)
-                    }
-                >
-                    <Select.Trigger aria-label={t("contact.form.category")}>
-                        <Select.Value>
-                            {() => (
-                                <Typography type="body-sm">
-                                    {t(`contact.categories.${category}`)}
-                                </Typography>
-                            )}
-                        </Select.Value>
-                        <Select.Indicator />
-                    </Select.Trigger>
-                    <Select.Popover>
-                        <ListBox.Root aria-label={t("contact.form.category")}>
-                            {CONTACT_CATEGORY_KEYS.map((key) => (
-                                <ListBox.Item
-                                    key={key}
-                                    id={key}
-                                    textValue={t(`contact.categories.${key}`)}
-                                >
-                                    {t(`contact.categories.${key}`)}
-                                </ListBox.Item>
-                            ))}
-                        </ListBox.Root>
-                    </Select.Popover>
-                </Select.Root>
-            </div>
+            <StackV
+                gap={3}
+                principle="sibling-stack"
+                items={[
+                    () => (
+                        <Label htmlFor="contact-category">{t("contact.form.category")}</Label>
+                    ),
+                    () => (
+                        <Select.Root<{ id: string }, "single">
+                            id="contact-category"
+                            aria-label={t("contact.form.category")}
+                            selectedKey={category}
+                            onSelectionChange={(key) =>
+                                setValue("category", String(key) as ContactCategory)
+                            }
+                        >
+                            <Select.Trigger aria-label={t("contact.form.category")}>
+                                <Select.Value>
+                                    {() => (
+                                        <Typography type="body-sm">
+                                            {t(`contact.categories.${category}`)}
+                                        </Typography>
+                                    )}
+                                </Select.Value>
+                                <Select.Indicator />
+                            </Select.Trigger>
+                            <Select.Popover>
+                                <ListBox.Root aria-label={t("contact.form.category")}>
+                                    {CONTACT_CATEGORY_KEYS.map((key) => (
+                                        <ListBox.Item
+                                            key={key}
+                                            id={key}
+                                            textValue={t(`contact.categories.${key}`)}
+                                        >
+                                            {t(`contact.categories.${key}`)}
+                                        </ListBox.Item>
+                                    ))}
+                                </ListBox.Root>
+                            </Select.Popover>
+                        </Select.Root>
+                    ),
+                ]}
+            />
 
             <TextField variant="secondary">
                 <Label htmlFor="contact-message">{t("contact.form.message")}</Label>

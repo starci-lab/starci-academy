@@ -143,7 +143,7 @@ const StatCell = ({ icon: Icon, value, label, locale, isSkeleton = false }: Stat
     return (
         <div
             ref={ref}
-            className="flex flex-col items-center gap-2 px-4 @app-md:border-l @app-md:border-default @app-md:first:border-l-0"
+            data-principle="sibling-stack" className="flex flex-col items-center gap-2 px-4 @app-md:border-l @app-md:border-default @app-md:first:border-l-0"
         >
             {isSkeleton ? (
                 <Skeleton className="size-6 rounded-full" />

@@ -1,6 +1,10 @@
 import React from "react"
-import { cn } from "@heroui/react"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
+import { Box } from "@/components/frames/Box"
+import { Container } from "@/components/frames/Container"
+import { Cluster } from "@/components/frames/Cluster"
+import { StackH, StackV } from "@/components/frames/Stack"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
@@ -13,45 +17,111 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
  */
 export const DueReviewSkeleton = ({ className }: WithClassNames<undefined> = {}) => {
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
-            {/* header band — mirrors WorkSessionHeader's own edge-to-edge shell */}
-            <div className="border-b border-default bg-surface">
-                <div className="flex items-center gap-3 px-4 py-2 @app-sm:px-6">
-                    <Skeleton className="h-4 w-16 rounded" />
-                    <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
-                    <Skeleton className="hidden h-4 w-24 rounded @app-sm:block" />
-                    <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
-                    <Skeleton className="h-4 w-20 rounded" />
-                </div>
-                <div className="flex gap-1 px-4 pb-2 @app-sm:px-6">
-                    {Array.from({ length: 6 }, (_unused, index) => (
-                        <Skeleton key={index} className="h-1 flex-1 rounded-full" />
-                    ))}
-                </div>
-            </div>
-
-            {/* body — centered column under the header */}
-            <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
-                {/* level + tag chips */}
-                <div className="flex flex-wrap items-center gap-2">
-                    <Skeleton.Chip />
-                    <Skeleton.Chip />
-                </div>
-                {/* the flashcard — FlipCard's LabeledCard (label OUTSIDE + Card) */}
-                <div className="flex flex-col gap-3">
-                    <Skeleton.Typography type="body-xs" width="1/4" />
-                    <div className="flex flex-col gap-3 rounded-3xl bg-surface p-6 shadow-surface">
-                        <Skeleton.Typography type="body" width="3/4" />
-                        <Skeleton.Typography type="body" width="2/3" />
-                    </div>
-                </div>
-                {/* reveal control flanked by prev/next carets */}
-                <div className="flex items-center justify-center gap-3">
-                    <Skeleton className="size-9 shrink-0 rounded-full" />
-                    <Skeleton.Button />
-                    <Skeleton className="size-9 shrink-0 rounded-full" />
-                </div>
-            </div>
+        <div className={className}>
+            <StackV
+                gap={6}
+                items={[
+                    () => (
+                        <div className="border-b border-default bg-surface">
+                            <StackH
+                                gap={1}
+                                padding={{ base: { x: 5, y: 3 }, sm: { x: 6, y: 3 } }}
+                                principle="pill-pad"
+                                items={[
+                                    () => (
+                                        <StackH
+                                            gap={4}
+                                            principle="content-row"
+                                            align="center"
+                                            items={[
+                                                () => <Skeleton className="h-4 w-16 rounded" />,
+                                                () => (
+                                                    <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
+                                                ),
+                                                () => <Skeleton className="hidden h-4 w-24 rounded @app-sm:block" />,
+                                                () => (
+                                                    <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
+                                                ),
+                                                () => <Skeleton className="h-4 w-20 rounded" />,
+                                            ]}
+                                        />
+                                    ),
+                                ]}
+                            />
+                            <Box principle="pill-pad" className="px-4 pb-2 @app-sm:px-6">
+                                <StackH
+                                    gap={2}
+                                    classNames={["w-full"]}
+                                    items={Array.from({ length: 6 }, (_unused, index) => () => (
+                                        <Skeleton key={index} className="h-1 flex-1 rounded-full" />
+                                    ))}
+                                />
+                            </Box>
+                        </div>
+                    ),
+                    () => (
+                        <Container
+                            size="md"
+                            padding={1}
+                            body={() => (
+                                <StackV
+                                    gap={6}
+                                    items={[
+                                        () => (
+                                            <Cluster
+                                                gap={3}
+                                                principle="chip-row"
+                                                align="center"
+                                                items={[
+                                                    () => <Skeleton.Chip />,
+                                                    () => <Skeleton.Chip />,
+                                                ]}
+                                            />
+                                        ),
+                                        () => (
+                                            <StackV
+                                                gap={4}
+                                                principle="label-field"
+                                                items={[
+                                                    () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                                                    () => (
+                                                        <SurfaceCard
+                                                            padding={6}
+                                                            body={() => (
+                                                                <StackV
+                                                                    gap={4}
+                                                                    principle="sibling-stack"
+                                                                    items={[
+                                                                        () => <Skeleton.Typography type="body" width="3/4" />,
+                                                                        () => <Skeleton.Typography type="body" width="2/3" />,
+                                                                    ]}
+                                                                />
+                                                            )}
+                                                        />
+                                                    ),
+                                                ]}
+                                            />
+                                        ),
+                                        () => (
+                                            <StackH
+                                                gap={4}
+                                                principle="flex-action"
+                                                justify="center"
+                                                align="center"
+                                                items={[
+                                                    () => <Skeleton className="size-9 shrink-0 rounded-full" />,
+                                                    () => <Skeleton.Button />,
+                                                    () => <Skeleton className="size-9 shrink-0 rounded-full" />,
+                                                ]}
+                                            />
+                                        ),
+                                    ]}
+                                />
+                            )}
+                        />
+                    ),
+                ]}
+            />
         </div>
     )
 }

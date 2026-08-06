@@ -1,10 +1,10 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
 import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { ProfileJobReadiness } from "./ProfileJobReadiness"
 import { OverviewCourses } from "./OverviewCourses"
 import { OverviewContributions } from "./OverviewContributions"
@@ -12,6 +12,8 @@ import { OverviewChallengeSkills } from "./OverviewChallengeSkills"
 import { OverviewCodeSkills } from "./OverviewCodeSkills"
 import { useProfileUsername } from "@/hooks/profile/useProfileUsername"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Grid } from "@/components/frames/Grid"
+import { StackV } from "@/components/frames/Stack"
 import { pathConfig } from "@/resources/path"
 
 /** Props for {@link ProfileOverviewPage}. */
@@ -55,44 +57,73 @@ export const ProfileOverviewPage = ({
         router.push(target)
     }
 
+    const classNames: Array<AllowedClassName> = ["min-w-0", "flex-1"]
+    if (className) {
+        classNames.push(className as AllowedClassName)
+    }
+
     return (
-        <div className={cn("flex min-w-0 flex-1 flex-col gap-6", className)}>
-            {/* headline recruiter signal — per-track depth, no blended composite.
-                Each section below now owns its own LabeledCard (frameless computed
-                internally) so loading/empty/error states get a real Card instead of
-                rendering bare under a hardcoded `frameless`. */}
-            <ProfileJobReadiness
-                label={t("jobReadiness.title")}
-            />
-
-            <OverviewCourses
-                label={t("publicProfile.overview.courses")}
-                onSeeMore={() => goToTab("activity")}
-                seeMoreLabel={t("publicProfile.overview.seeMore")}
-            />
-
-            <LabeledCard
-                label={t("publicProfile.contributions.heading")}
-            >
-                <OverviewContributions />
-            </LabeledCard>
-
-            {/* two skill cards side by side on desktop */}
-            <div className="grid gap-6 @app-md:grid-cols-2">
-                <OverviewChallengeSkills
-                    label={t("publicProfile.overview.challengeSkills")}
-                    onSeeMore={() => goToTab("challenges")}
-                    seeMoreLabel={t("publicProfile.overview.seeMore")}
-                    fillHeight
-                />
-
-                <OverviewCodeSkills
-                    label={t("publicProfile.overview.codeSkills")}
-                    onSeeMore={() => goToTab("skills")}
-                    seeMoreLabel={t("publicProfile.overview.seeMore")}
-                    fillHeight
-                />
-            </div>
-        </div>
+        <StackV
+            identity={{ tier: "page", component: "ProfileOverviewPage" }}
+            gap={6}
+            principle="block-boundary"
+            classNames={classNames}
+            items={[
+                // headline recruiter signal — per-track depth, no blended composite.
+                // Each section below now owns its own LabeledCard (frameless computed
+                // internally) so loading/empty/error states get a real Card instead of
+                // rendering bare under a hardcoded `frameless`.
+                () => (
+                    <ProfileJobReadiness
+                        label={t("jobReadiness.title")}
+                    />
+                ),
+                () => (
+                    <OverviewCourses
+                        label={t("publicProfile.overview.courses")}
+                        onSeeMore={() => goToTab("activity")}
+                        seeMoreLabel={t("publicProfile.overview.seeMore")}
+                    />
+                ),
+                () => (
+                    <LabeledCard
+                        label={t("publicProfile.contributions.heading")}
+                    >
+                        <OverviewContributions />
+                    </LabeledCard>
+                ),
+                // two skill cards side by side on desktop
+                () => (
+                    <Grid
+                        principle="block-boundary"
+                        columns={{ base: 1, md: 2 }}
+                        items={[
+                            {
+                                key: "challenge-skills",
+                                content: () => (
+                                    <OverviewChallengeSkills
+                                        label={t("publicProfile.overview.challengeSkills")}
+                                        onSeeMore={() => goToTab("challenges")}
+                                        seeMoreLabel={t("publicProfile.overview.seeMore")}
+                                        fillHeight
+                                    />
+                                ),
+                            },
+                            {
+                                key: "code-skills",
+                                content: () => (
+                                    <OverviewCodeSkills
+                                        label={t("publicProfile.overview.codeSkills")}
+                                        onSeeMore={() => goToTab("skills")}
+                                        seeMoreLabel={t("publicProfile.overview.seeMore")}
+                                        fillHeight
+                                    />
+                                ),
+                            },
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
 }

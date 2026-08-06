@@ -260,6 +260,7 @@ const LandingPage = ({
                     body={() => (
                         <StackV
                             gap={8}
+                            principle="marketing-beat"
                             items={[
                                 () => (
                                     <SectionHeading

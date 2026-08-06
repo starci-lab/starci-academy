@@ -106,6 +106,7 @@ const MessageBubble = ({ message, labels, isSkeleton }: {
 }) => (
     <StackH
         gap={3}
+        principle="flex-action"
         justify={message.author === "agent" ? "end" : "start"}
         isSkeleton={isSkeleton}
         items={[

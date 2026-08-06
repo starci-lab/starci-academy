@@ -14,6 +14,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import {
     ProviderUploadRow,
 } from "./ProviderUploadRow"
+import { Box } from "@/components/frames/Box"
 
 /** Props for {@link UploadProgressCard}. */
 export interface UploadProgressCardProps extends WithClassNames<undefined> {
@@ -39,42 +40,45 @@ export const UploadProgressCard = ({
 }: UploadProgressCardProps) => {
     return (
         <Card className="bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl shadow-indigo-500/5">
-            <CardContent className="space-y-6 p-6">
-                {/* Section header */}
-                <div className="flex items-center gap-2 pb-2">
-                    <div className="rounded-lg bg-purple-500/10 p-2">
-                        <UploadIcon className="h-5 w-5 text-purple-400" />
-                    </div>
-                    <div className="flex-1">
-                        <h2 className="text-base font-semibold text-white">
+            <CardContent>
+                <Box principle="page-pad" className="p-6 space-y-6">
+                    {/* Section header */}
+                    <Box principle="identity" className="flex items-center gap-2 pb-2">
+                        {/* ps-admin-5: p-2 not in named house token set — teacher-hold */}
+                        <div data-principle="ps-admin-5" className="rounded-lg bg-purple-500/10 p-2">
+                            <UploadIcon className="h-5 w-5 text-purple-400" />
+                        </div>
+                        <div className="flex-1">
+                            <h2 className="text-base font-semibold text-white">
                             Upload Progress
-                        </h2>
-                        <p className="text-xs text-slate-400">
-                            {uploadDone
-                                ? "All uploads completed"
-                                : "Uploading to storage providers…"}
-                        </p>
-                    </div>
-                    {uploadDone && (
-                        <Chip
-                            size="sm"
-                            color="success"
-                            variant="secondary"
-                        >
-                            <CheckCircleIcon className="h-3 w-3" />
-                            <Chip.Label>Done</Chip.Label>
-                        </Chip>
-                    )}
-                </div>
+                            </h2>
+                            <p className="text-xs text-slate-400">
+                                {uploadDone
+                                    ? "All uploads completed"
+                                    : "Uploading to storage providers…"}
+                            </p>
+                        </div>
+                        {uploadDone && (
+                            <Chip
+                                size="sm"
+                                color="success"
+                                variant="secondary"
+                            >
+                                <CheckCircleIcon className="h-3 w-3" />
+                                <Chip.Label>Done</Chip.Label>
+                            </Chip>
+                        )}
+                    </Box>
 
-                {uploads.map((upload, idx) => (
-                    <ProviderUploadRow
-                        key={upload.provider}
-                        upload={upload}
-                        index={idx}
-                        onCopyUrl={onCopyUrl}
-                    />
-                ))}
+                    {uploads.map((upload, idx) => (
+                        <ProviderUploadRow
+                            key={upload.provider}
+                            upload={upload}
+                            index={idx}
+                            onCopyUrl={onCopyUrl}
+                        />
+                    ))}
+                </Box>
             </CardContent>
         </Card>
     )

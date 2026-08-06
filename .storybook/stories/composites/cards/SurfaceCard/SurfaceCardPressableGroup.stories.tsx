@@ -183,22 +183,22 @@ export const Gap: Story = {
             <BlockAnatomy
                 name="SurfaceCardPressableGroup"
                 tier="composite"
-                leaf="Gap"
+                leaf="Principle"
                 annotate={ITEM_ANNOTATE}
                 renderClassName="max-w-2xl"
-                reason="gap is a prop of the group, never of an item, so the grid always keeps one even spacing across every cell instead of letting a single tile push its neighbours around."
+                reason="principle owns the peer-card seam on the group Grid — sibling-stack (8px) or content-row (12px) — never a public gap prop."
                 states={[
                     {
-                        name: "peers in one set",
+                        name: "principle = \"sibling-stack\"",
                         why: "The cells sit close enough to read as members of one set rather than separate cards, which works when each tile is already visually distinct on its own, as a short profile row with an avatar is. Pick this step from the relationship and not from how full the grid looks.",
-                        code: "<SurfaceCardPressableGroup gap={3} ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(0, 2)} />",
-                        render: <SurfaceCardPressableGroup ariaLabel="Mentors (gap step 3)" columns={{ base: 1, sm: 2 }} gap={3} items={profileItems.slice(0, 2)} />,
+                        code: "<SurfaceCardPressableGroup principle=\"sibling-stack\" ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(0, 2)} />",
+                        render: <SurfaceCardPressableGroup ariaLabel="Mentors (sibling-stack)" columns={{ base: 1, sm: 2 }} principle="sibling-stack" items={profileItems.slice(0, 2)} />,
                     },
                     {
-                        name: "rows inside one surface",
+                        name: "principle = \"content-row\" (default)",
                         why: "Each cell stands as its own surface inside the group, which is the default because a pressable tile is a thing a reader acts on separately. The composition is identical to the state above, so the only difference a reader sees is the claim the seam makes.",
-                        code: "<SurfaceCardPressableGroup gap={4} ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(2)} />  // default",
-                        render: <SurfaceCardPressableGroup ariaLabel="Mentors (gap step 4)" columns={{ base: 1, sm: 2 }} gap={4} items={profileItems.slice(2)} />,
+                        code: "<SurfaceCardPressableGroup principle=\"content-row\" ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(2)} />  // default",
+                        render: <SurfaceCardPressableGroup ariaLabel="Mentors (content-row)" columns={{ base: 1, sm: 2 }} principle="content-row" items={profileItems.slice(2)} />,
                     },
                 ]}
             />,

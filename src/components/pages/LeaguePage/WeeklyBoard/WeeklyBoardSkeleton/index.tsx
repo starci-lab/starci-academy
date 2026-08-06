@@ -9,6 +9,8 @@ import type {
 } from "@/modules/types/base/class-name"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Number of placeholder cohort rows (rank 4+) shown while the weekly league loads. */
 const SKELETON_ROW_COUNT = 6
@@ -27,57 +29,70 @@ export type WeeklyBoardSkeletonProps = WithClassNames<undefined>
  */
 export const WeeklyBoardSkeleton = ({ className }: WeeklyBoardSkeletonProps) => {
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
-            {/* your standing hero — badge · rank/meta · goal meter · CTA */}
-            <div className="flex flex-col gap-4 rounded-3xl bg-surface p-5 shadow-surface">
-                <div className="flex items-center gap-4">
-                    <Skeleton className="size-10 shrink-0 rounded-2xl" />
-                    <div className="flex min-w-0 flex-1 flex-col gap-1">
-                        <Skeleton.Typography type="h6" width="1/2" />
-                        <Skeleton.Typography type="body-sm" width="1/3" />
-                    </div>
-                </div>
-                <div className="flex flex-col gap-1">
-                    <Skeleton.Typography type="body-xs" width="1/3" />
-                    <Skeleton.ProgressBar />
-                </div>
-                <Skeleton className="h-10 w-40 rounded-full" />
-            </div>
-
-            {/* the winners' dais — top-3 (champion centered + raised) */}
-            <div className="flex items-end justify-center gap-3">
-                {[false, true, false].map((isChampion, index) => (
-                    <div key={index} className="flex flex-col items-center gap-2">
-                        <Skeleton className={cn("shrink-0 rounded-full", isChampion ? "size-14" : "size-12")} />
-                        <div className="flex w-20 flex-col items-center gap-1">
-                            <Skeleton.Typography type="body-sm" width="3/4" />
-                            <Skeleton.Typography type="body-xs" width="1/2" />
-                        </div>
-                        <Skeleton className={cn("w-20 rounded-t-2xl rounded-b-none", isChampion ? "h-16" : "h-10")} />
-                    </div>
-                ))}
-            </div>
-
-            {/* promote / demote legend */}
-            <div className="flex items-center gap-3">
-                <Skeleton.Typography type="body-xs" width="1/4" />
-                <Skeleton.Typography type="body-xs" width="1/4" />
-            </div>
-
-            {/* rank 4+ rows — [rank · avatar · name · points · caret] */}
-            <SurfaceListCard>
-                {Array.from({ length: SKELETON_ROW_COUNT }).map((_row, index) => (
-                    <SurfaceListCardItem key={index}>
-                        <div className="flex items-center gap-3">
-                            <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />
-                            <Skeleton.Avatar size="sm" />
-                            <Skeleton.Typography type="body-sm" width="1/3" className="min-w-0 flex-1" />
-                            <Skeleton className="h-3 w-8 shrink-0 rounded-sm" />
-                            <Skeleton className="h-4 w-8 shrink-0 rounded-sm" />
-                        </div>
-                    </SurfaceListCardItem>
-                ))}
-            </SurfaceListCard>
-        </div>
+        <Box className={cn(className)}>
+            <StackV gap={6} principle="block-boundary" items={[
+                () => (
+                    <Box principle="card-padding" className="rounded-3xl bg-surface p-4 shadow-surface">
+                        <StackV gap={5} principle="group-boundary" items={[
+                            () => (
+                                <StackH gap={5} principle="group-boundary" align="center" items={[
+                                    () => <Skeleton className="size-10 shrink-0 rounded-2xl" />,
+                                    () => (
+                                        <StackV gap={2} principle="title-subtitle" classNames={["min-w-0", "flex-1"]} items={[
+                                            () => <Skeleton.Typography type="h6" width="1/2" />,
+                                            () => <Skeleton.Typography type="body-sm" width="1/3" />,
+                                        ]} />
+                                    ),
+                                ]} />
+                            ),
+                            () => (
+                                <StackV gap={2} principle="title-subtitle" items={[
+                                    () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                                    () => <Skeleton.ProgressBar />,
+                                ]} />
+                            ),
+                            () => <Skeleton className="h-10 w-40 rounded-full" />,
+                        ]} />
+                    </Box>
+                ),
+                () => (
+                    <StackH gap={4} principle="content-row" align="end" justify="center" items={[false, true, false].map((isChampion) => () => (
+                        <StackV gap={3} principle="sibling-stack" align="center" items={[
+                            () => <Skeleton className={cn("shrink-0 rounded-full", isChampion ? "size-14" : "size-12")} />,
+                            () => (
+                                <Box className="w-20">
+                                    <StackV gap={2} principle="title-subtitle" align="center" items={[
+                                        () => <Skeleton.Typography type="body-sm" width="3/4" />,
+                                        () => <Skeleton.Typography type="body-xs" width="1/2" />,
+                                    ]} />
+                                </Box>
+                            ),
+                            () => <Skeleton className={cn("w-20 rounded-t-2xl rounded-b-none", isChampion ? "h-16" : "h-10")} />,
+                        ]} />
+                    ))} />
+                ),
+                () => (
+                    <StackH gap={4} principle="content-row" align="center" items={[
+                        () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                        () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                    ]} />
+                ),
+                () => (
+                    <SurfaceListCard>
+                        {Array.from({ length: SKELETON_ROW_COUNT }).map((_row, index) => (
+                            <SurfaceListCardItem key={index}>
+                                <StackH gap={4} principle="content-row" align="center" items={[
+                                    () => <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />,
+                                    () => <Skeleton.Avatar size="sm" />,
+                                    () => <Skeleton.Typography type="body-sm" width="1/3" className="min-w-0 flex-1" />,
+                                    () => <Skeleton className="h-3 w-8 shrink-0 rounded-sm" />,
+                                    () => <Skeleton className="h-4 w-8 shrink-0 rounded-sm" />,
+                                ]} />
+                            </SurfaceListCardItem>
+                        ))}
+                    </SurfaceListCard>
+                ),
+            ]} />
+        </Box>
     )
 }

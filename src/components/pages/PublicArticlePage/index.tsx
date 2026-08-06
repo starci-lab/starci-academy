@@ -4,6 +4,8 @@ import React from "react"
 import { Typography } from "@heroui/react"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import type { ContentEntity } from "@/modules/types/entities/content"
+import { Box } from "@/components/frames/Box"
+import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link PublicArticlePage}. */
 export interface PublicArticleProps {
@@ -21,16 +23,20 @@ export interface PublicArticleProps {
  * @param props - {@link PublicArticleProps}
  */
 export const PublicArticlePage = ({ content }: PublicArticleProps) => (
-    <article className="mx-auto flex max-w-4xl flex-col gap-3 p-6">
-        <Typography.Heading level={1} weight="bold">
-            {content.title}
-        </Typography.Heading>
-        {content.description ? (
-            <Typography type="body" color="muted">
-                {content.description}
-            </Typography>
-        ) : null}
-        <div className="h-3" />
-        <MarkdownContent markdown={content.body || ""} />
-    </article>
+    <Box as="article" principle="center-measure" className="mx-auto max-w-4xl p-6">
+        <StackV gap={4} principle="content-row" items={[
+            () => (
+                <Typography.Heading level={1} weight="bold">
+                    {content.title}
+                </Typography.Heading>
+            ),
+            () => (content.description ? (
+                <Typography type="body" color="muted">
+                    {content.description}
+                </Typography>
+            ) : null),
+            () => <div className="h-3" />,
+            () => <MarkdownContent markdown={content.body || ""} />,
+        ]} />
+    </Box>
 )

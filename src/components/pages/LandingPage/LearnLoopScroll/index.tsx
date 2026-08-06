@@ -28,6 +28,8 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LANDING_LOOP_STEPS } from "../constants"
 import { SectionHeading } from "@/components/blocks/marketing/SectionHeading"
 import { ShowcaseMockup, SHOWCASE_THEMES } from "@/components/blocks/marketing/ShowcaseMockup"
+import { Box } from "@/components/frames/Box"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link LearnLoopScroll}. */
 export type LearnLoopScrollProps = WithClassNames<undefined>
@@ -133,10 +135,10 @@ const CodeBlock = ({ code }: { code: string }) => {
     const lines = code.split("\n")
     return (
         <div className="flex font-mono text-xs leading-relaxed">
-            <div aria-hidden className="flex flex-col items-end gap-2 border-r border-default/70 px-3 py-4 text-muted/60 select-none">
+            <div aria-hidden data-principle="sibling-stack" className="flex flex-col items-end gap-2 border-r border-default/70 px-3 py-4 text-muted/60 select-none">
                 {lines.map((_, index) => <span key={index}>{index + 1}</span>)}
             </div>
-            <div className="flex flex-col gap-2 overflow-x-auto px-4 py-4">
+            <div data-principle="sibling-stack" className="flex flex-col gap-2 overflow-x-auto px-4 py-4">
                 {lines.map((line, index) => <span key={index} className="whitespace-pre">{tintLine(line)}</span>)}
             </div>
         </div>
@@ -185,7 +187,7 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
                 variants={stagger}
                 initial="hidden"
                 animate="show"
-                className="flex flex-col gap-3"
+                className="flex flex-col gap-3" data-principle="content-row"
             >
                 {children}
             </motion.div>
@@ -195,7 +197,7 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
     if (stepKey === "read") {
         return shell(
             <>
-                <motion.div variants={childVariants} className="flex flex-wrap gap-4 border-b border-default text-xs">
+                <motion.div variants={childVariants} data-principle="group-boundary" className="flex flex-wrap gap-4 border-b border-default text-xs">
                     {READ_LESSON.map((item, index) => (
                         <button
                             key={item.label}
@@ -214,9 +216,9 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
                     ))}
                 </motion.div>
                 <motion.div variants={childVariants} className="overflow-hidden rounded-xl border border-default bg-default">
-                    <div className="border-b border-default/70 px-3 py-2">
+                    <Box principle="control-pad" className="border-b border-default/70">
                         <span className="font-mono text-xs text-muted">{READ_LESSON[readLang].file}</span>
-                    </div>
+                    </Box>
                     <CodeBlock code={READ_LESSON[readLang].code} />
                 </motion.div>
             </>,
@@ -233,17 +235,17 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
         return shell(
             <>
                 {/* verdict = HeroUI Alert style (matches SubmissionResult): success tint + icon + score */}
-                <motion.div variants={childVariants} className="flex items-center gap-3 rounded-xl bg-success-soft px-3 py-2">
+                <motion.div variants={childVariants} data-principle="content-row" className="flex items-center gap-3 rounded-xl bg-success-soft px-3 py-2">
                     <CheckCircleIcon aria-hidden focusable="false" className="size-7 shrink-0 text-success-soft-foreground" />
                     <div className="flex flex-1 flex-col">
                         <span className="text-sm font-semibold text-success-soft-foreground">{t("submissionResult.passed")} · 92/100</span>
                         <span className="text-xs text-success-soft-foreground/80">need ≥ 70 to pass</span>
                     </div>
-                    <span className="shrink-0 rounded-full bg-success/15 px-3 py-1 text-xs font-medium text-success-soft-foreground">+120 XP</span>
+                    <span data-principle="control-pad" className="shrink-0 rounded-full bg-success/15 px-3 py-1 text-xs font-medium text-success-soft-foreground">+120 XP</span>
                 </motion.div>
-                <motion.div variants={childVariants} className="flex flex-col gap-2">
+                <motion.div variants={childVariants} data-principle="sibling-stack" className="flex flex-col gap-2">
                     {criteria.map((item) => (
-                        <span key={item.text} className="flex items-center gap-2 text-sm text-muted">
+                        <span key={item.text} data-principle="icon-text" className="flex items-center gap-2 text-sm text-muted">
                             {item.ok ? (
                                 <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-success-soft-foreground" />
                             ) : (
@@ -268,12 +270,12 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
             <>
                 <motion.div variants={childVariants} className="flex items-center justify-between">
                     <span className="font-mono text-sm font-medium">the-shop</span>
-                    <span className="flex items-center gap-2 text-xs text-muted">
+                    <span className="flex items-center gap-2 text-xs text-muted" data-principle="icon-text">
                         <GithubIcon className="size-3.5" />
                         main
                     </span>
                 </motion.div>
-                <motion.div variants={childVariants} className="flex flex-col gap-2">
+                <motion.div variants={childVariants} data-principle="sibling-stack" className="flex flex-col gap-2">
                     <div className="flex items-center justify-between text-xs text-muted">
                         <span>Progress</span>
                         <span>8/20 milestones · 40%</span>
@@ -282,9 +284,9 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
                         <div className="h-full rounded-full bg-accent" style={{ width: "40%" }} />
                     </div>
                 </motion.div>
-                <motion.div variants={childVariants} className="flex flex-col gap-2">
+                <motion.div variants={childVariants} data-principle="sibling-stack" className="flex flex-col gap-2">
                     {milestones.map((item) => (
-                        <span key={item.label} className="flex items-center gap-2 text-sm">
+                        <span key={item.label} data-principle="icon-text" className="flex items-center gap-2 text-sm">
                             {item.state === "done" ? (
                                 <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-success-soft-foreground" />
                             ) : (
@@ -303,36 +305,44 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
     // rank
     const maxXp = RANK_ROWS[0].xp
     return shell(
-        <motion.div variants={childVariants} className="flex flex-col gap-2">
+        <motion.div variants={childVariants} data-principle="sibling-stack" className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
                 <span className="text-sm font-semibold">This week</span>
                 <span className="text-xs text-muted">XP earned</span>
             </div>
             {RANK_ROWS.map((row) => (
-                <div key={row.rank} className="flex flex-col gap-1">
-                    <div className="flex items-center gap-2">
-                        <span className={cn("w-5 text-center text-sm font-semibold", row.rank === 1 ? "text-accent-soft-foreground" : "text-muted")}>
-                            {row.rank}
-                        </span>
-                        <UserAvatar className="size-7" username={row.name} seed={row.name} />
-                        <span className="flex-1 truncate text-sm">{row.name}</span>
-                        <span className={cn("text-sm", row.rank === 1 ? "font-semibold text-accent-soft-foreground" : "text-muted")}>
-                            {row.xp.toLocaleString("en-US")}
-                        </span>
-                    </div>
-                    <div className="ml-7 h-1.5 overflow-hidden rounded-full bg-default">
-                        <div
-                            className={cn("h-full rounded-full", row.rank === 1 ? "bg-accent" : "bg-accent/40")}
-                            style={{ width: `${(row.xp / maxXp) * 100}%` }}
-                        />
-                    </div>
-                </div>
+                <StackV key={row.rank} gap={2} principle="icon-text" items={[
+                    () => (
+                        <StackH gap={3} principle="sibling-stack" items={[
+                            () => (
+                                <span className={cn("w-5 text-center text-sm font-semibold", row.rank === 1 ? "text-accent-soft-foreground" : "text-muted")}>
+                                    {row.rank}
+                                </span>
+                            ),
+                            () => <UserAvatar className="size-7" username={row.name} seed={row.name} />,
+                            () => <span className="flex-1 truncate text-sm">{row.name}</span>,
+                            () => (
+                                <span className={cn("text-sm", row.rank === 1 ? "font-semibold text-accent-soft-foreground" : "text-muted")}>
+                                    {row.xp.toLocaleString("en-US")}
+                                </span>
+                            ),
+                        ]} />
+                    ),
+                    () => (
+                        <div className="ml-7 h-1.5 overflow-hidden rounded-full bg-default">
+                            <div
+                                className={cn("h-full rounded-full", row.rank === 1 ? "bg-accent" : "bg-accent/40")}
+                                style={{ width: `${(row.xp / maxXp) * 100}%` }}
+                            />
+                        </div>
+                    ),
+                ]} />
             ))}
-            <div className="mt-1 flex items-center gap-2 rounded-xl bg-accent-soft px-3 py-2">
+            <div data-principle="identity" className="mt-1 flex items-center gap-2 rounded-xl bg-accent-soft px-3 py-2">
                 <span className="w-5 text-center text-sm font-semibold text-accent-soft-foreground">12</span>
                 <UserAvatar className="size-7" username="You" seed="ban-viewer" />
                 <span className="flex-1 truncate text-sm text-accent-soft-foreground">You</span>
-                <span className="flex items-center gap-1 text-xs text-success-soft-foreground">
+                <span data-principle="icon-text" className="flex items-center gap-1 text-xs text-success-soft-foreground">
                     <ArrowUpIcon aria-hidden focusable="false" className="size-3" />3
                 </span>
             </div>
@@ -362,7 +372,7 @@ const LoopStepList = ({ active, onSelect }: { active: number; onSelect: (index: 
                     onSelect(index)
                 }
             }}
-            className="gap-1 p-0"
+            className="gap-1 p-0" data-principle="title-subtitle"
         >
             {LANDING_LOOP_STEPS.map((key, index) => {
                 const selected = key === activeKey
@@ -381,18 +391,22 @@ const LoopStepList = ({ active, onSelect }: { active: number; onSelect: (index: 
                             selected && "bg-accent-soft",
                         )}
                     >
-                        <div className="flex items-center gap-3">
-                            <span className={cn("[&>svg]:size-5", stepColor)}>
-                                {done ? (
-                                    <CheckCircleIcon aria-hidden focusable="false" className="size-5" />
-                                ) : (
-                                    STEP_ICONS[key]
-                                )}
-                            </span>
-                            <Typography type="body" className={stepColor}>
-                                {t(`landing.learnLoop.items.${key}.title`)}
-                            </Typography>
-                        </div>
+                        <StackH gap={4} principle="content-row" items={[
+                            () => (
+                                <span className={cn("[&>svg]:size-5", stepColor)}>
+                                    {done ? (
+                                        <CheckCircleIcon aria-hidden focusable="false" className="size-5" />
+                                    ) : (
+                                        STEP_ICONS[key]
+                                    )}
+                                </span>
+                            ),
+                            () => (
+                                <Typography type="body" className={stepColor}>
+                                    {t(`landing.learnLoop.items.${key}.title`)}
+                                </Typography>
+                            ),
+                        ]} />
                     </ListBox.Item>
                 )
             })}
@@ -423,17 +437,21 @@ const LoopHeading = () => {
     // CTA "jump in and try it" — scrolls down to the Tracks block (#courses) to pick a track + try a lesson.
     const onJumpIn = () => document.getElementById("courses")?.scrollIntoView({ behavior: "smooth" })
     return (
-        <div className="flex flex-col items-center gap-6">
-            <SectionHeading
-                eyebrow={t("landing.learnLoop.eyebrow")}
-                title={t("landing.learnLoop.title")}
-                intro={t("landing.learnLoop.intro")}
-            />
-            <Button variant="primary" size="lg" onPress={onJumpIn}>
-                {t("landing.learnLoop.cta")}
-                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
-            </Button>
-        </div>
+        <StackV align="center" gap={6} principle="block-boundary" items={[
+            () => (
+                <SectionHeading
+                    eyebrow={t("landing.learnLoop.eyebrow")}
+                    title={t("landing.learnLoop.title")}
+                    intro={t("landing.learnLoop.intro")}
+                />
+            ),
+            () => (
+                <Button variant="primary" size="lg" onPress={onJumpIn}>
+                    {t("landing.learnLoop.cta")}
+                    <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                </Button>
+            ),
+        ]} />
     )
 }
 

@@ -129,11 +129,11 @@ const OfferSection = ({ courses, onEnrol, onContact, guarantee, isSkeleton = fal
                 padding={1}
                 body={() => (
                     <StackV
-                        gap={8}
+                        principle="marketing-beat" gap={8}
                         items={[
                             () => (
                                 <StackV
-                                    gap={3}
+                                    principle="sibling-stack" gap={3}
                                     align="center"
                                     items={[
                                         () => <Typography size="sm" weight="bold" color="accent" align="center" text={labels.eyebrow} />,
@@ -157,7 +157,7 @@ const OfferSection = ({ courses, onEnrol, onContact, guarantee, isSkeleton = fal
                                         padding={2}
                                         body={() => (
                                             <StackV
-                                                gap={1}
+                                                principle="name-handle" gap={1}
                                                 items={rows.map((course, index) => () => (
                                                     <OfferRow
                                                         course={course}

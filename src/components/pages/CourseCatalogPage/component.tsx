@@ -100,6 +100,7 @@ const CatalogLineCardSkeleton = () => (
         body={() => (
             <StackH
                 gap={4}
+                principle="content-row"
                 items={[
                     () => (
                         <Skeleton className="hidden aspect-video w-36 shrink-0 rounded-2xl @app-sm:block" />
@@ -107,6 +108,7 @@ const CatalogLineCardSkeleton = () => (
                     () => (
                         <StackV
                             gap={2}
+                            principle="title-subtitle"
                             classNames={["min-w-0", "flex-1"]}
                             items={[
                                 () => <Skeleton.Typography type="h6" width="1/2" />,
@@ -117,6 +119,7 @@ const CatalogLineCardSkeleton = () => (
                     () => (
                         <StackV
                             gap={2}
+                            principle="title-subtitle"
                             align="end"
                             classNames={["shrink-0"]}
                             items={[
@@ -203,9 +206,23 @@ export const _CourseCatalogPage = ({
 
         if (view === "grid") {
             const gridItems: Array<GridItem> = cardItems.map(({ key, Content }) => ({ key, content: Content }))
-            return <Grid items={gridItems} columns={{ base: 1, md: 2, lg: 3 }} gap={3} isSkeleton={isSkeleton} />
+            return (
+                <Grid
+                    items={gridItems}
+                    columns={{ base: 1, md: 2, lg: 3 }}
+                    principle="sibling-stack"
+                    isSkeleton={isSkeleton}
+                />
+            )
         }
-        return <StackV gap={3} items={cardItems.map(({ Content }) => Content)} isSkeleton={isSkeleton} />
+        return (
+            <StackV
+                gap={3}
+                principle="sibling-stack"
+                items={cardItems.map(({ Content }) => Content)}
+                isSkeleton={isSkeleton}
+            />
+        )
     }
 
     return (
@@ -215,7 +232,8 @@ export const _CourseCatalogPage = ({
             padding={6}
             body={() => (
                 <StackV
-                    gap={4}
+                    gap={6}
+                    principle="block-boundary"
                     items={[
                         () => (
                             <PageHeader
@@ -233,6 +251,7 @@ export const _CourseCatalogPage = ({
                         () => (
                             <Cluster
                                 gap={3}
+                                principle="flex-action"
                                 justify="between"
                                 align="center"
                                 items={[

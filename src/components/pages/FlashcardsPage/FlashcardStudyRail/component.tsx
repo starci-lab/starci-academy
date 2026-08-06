@@ -8,6 +8,7 @@ import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
 
 import { StackV } from "@/components/frames/Stack"
+import { Cluster } from "@/components/frames/Cluster"
 import { Box } from "@/components/frames/Box"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -123,32 +124,36 @@ export const _FlashcardStudyRail = ({
                         onSelectDeck(key)
                     }
                 }}
-                className="gap-1 p-0"
+                className="p-0"
             >
                 {rows.map((deck) => (
                     <ListBox.Item
                         key={deck.id}
                         id={deck.id}
                         textValue={deck.title}
-                        className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft"
+                        className="cursor-pointer rounded-2xl data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft"
                     >
-                        <span className="flex w-full min-w-0 items-center justify-between gap-2">
-                            <Typography
-                                size="sm"
-                                truncate
-                                isSkeleton={isSkeleton}
-                                classNames={["min-w-0", "flex-1"]}
-                                text={deck.title}
-                            />
-                            {isSkeleton || deck.dueCount ? (
-                                <Chip
-                                    isSkeleton={isSkeleton}
-                                    tone="warning"
-                                    text={deck.dueCount}
-                                    classNames={["shrink-0"]}
-                                />
-                            ) : null}
-                        </span>
+                        <Box principle="control-pad" className="px-3 py-2">
+                            <Cluster gap={3} principle="value-row" justify="between" align="center" classNames={["w-full", "min-w-0"]} items={[
+                                () => (
+                                    <Typography
+                                        size="sm"
+                                        truncate
+                                        isSkeleton={isSkeleton}
+                                        classNames={["min-w-0", "flex-1"]}
+                                        text={deck.title}
+                                    />
+                                ),
+                                () => (isSkeleton || deck.dueCount ? (
+                                    <Chip
+                                        isSkeleton={isSkeleton}
+                                        tone="warning"
+                                        text={deck.dueCount}
+                                        classNames={["shrink-0"]}
+                                    />
+                                ) : null),
+                            ]} />
+                        </Box>
                     </ListBox.Item>
                 ))}
             </ListBox>
@@ -158,53 +163,55 @@ export const _FlashcardStudyRail = ({
     return (
         <Box
             identity={{ tier: "block", component: "FlashcardStudyRail" }}
-            className={`relative flex min-h-0 min-w-0 flex-col gap-3 p-6${className ? ` ${className}` : ""}`}
+            principle="page-pad"
+            className={`relative flex min-h-0 min-w-0 flex-col p-6${className ? ` ${className}` : ""}`}
         >
-            {/* pinned header: mode switch + deck search (study mode only) */}
-            <StackV gap={4} items={[
+            <StackV gap={4} principle="content-row" classNames={["min-h-0", "min-w-0", "flex-1"]} items={[
                 () => (
-                    <TabsCard
-                        variant="primary"
-                        leftTabs={{
-                            selectedKey: mode,
-                            ariaLabel: labels.modeAria,
-                            onSelectionChange: (key) => {
-                                if (key === "study" || key === "quiz") {
-                                    onModeChange(key)
-                                }
-                            },
-                            items: [
-                                {
-                                    key: "study",
-                                    icon: <CardsThreeIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
-                                    label: labels.modeStudy,
-                                },
-                                {
-                                    key: "quiz",
-                                    icon: <MicrophoneStageIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
-                                    label: labels.modeQuiz,
-                                },
-                            ],
-                        }}
-                    />
+                    <StackV gap={4} items={[
+                        () => (
+                            <TabsCard
+                                variant="primary"
+                                leftTabs={{
+                                    selectedKey: mode,
+                                    ariaLabel: labels.modeAria,
+                                    onSelectionChange: (key) => {
+                                        if (key === "study" || key === "quiz") {
+                                            onModeChange(key)
+                                        }
+                                    },
+                                    items: [
+                                        {
+                                            key: "study",
+                                            icon: <CardsThreeIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+                                            label: labels.modeStudy,
+                                        },
+                                        {
+                                            key: "quiz",
+                                            icon: <MicrophoneStageIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+                                            label: labels.modeQuiz,
+                                        },
+                                    ],
+                                }}
+                            />
+                        ),
+                        ...(mode === "study" ? [() => (
+                            <InputSearch
+                                label={labels.decksLabel}
+                                ariaLabel={labels.searchAria}
+                                placeholder={labels.searchPlaceholder}
+                                value={query}
+                                onValueChange={onQueryChange}
+                            />
+                        )] : []),
+                    ]} />
                 ),
                 ...(mode === "study" ? [() => (
-                    <InputSearch
-                        label={labels.decksLabel}
-                        ariaLabel={labels.searchAria}
-                        placeholder={labels.searchPlaceholder}
-                        value={query}
-                        onValueChange={onQueryChange}
-                    />
+                    <ScrollShadow hideScrollBar className="min-h-0 min-w-0 flex-1 overflow-y-auto">
+                        {renderDeckRegion()}
+                    </ScrollShadow>
                 )] : []),
             ]} />
-
-            {/* scroll region: the deck nav list (study mode only) */}
-            {mode === "study" ? (
-                <ScrollShadow hideScrollBar className="-mx-1 min-h-0 min-w-0 flex-1 overflow-y-auto px-1">
-                    {renderDeckRegion()}
-                </ScrollShadow>
-            ) : null}
         </Box>
     )
 }

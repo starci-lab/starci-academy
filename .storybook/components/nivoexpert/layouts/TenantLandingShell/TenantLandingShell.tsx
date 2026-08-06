@@ -105,6 +105,7 @@ const TenantLandingShell = ({
             <header className="sticky top-0 z-40 flex h-16 items-center justify-between gap-4 border-b border-default bg-background/95 px-6 backdrop-blur">
                 <StackH
                     gap={3}
+                    principle="identity"
                     align="center"
                     items={[
                         () => <Avatar src={avatarUrl} name={brandName} size="sm" fallback="initials" />,
@@ -122,7 +123,8 @@ const TenantLandingShell = ({
                 </div>
 
                 <StackH
-                    gap={2}
+                    gap={3}
+                    principle="flex-action"
                     align="center"
                     items={[
                         () => <Button variant="secondary" size="sm" label={loginLabel} onPress={onLogin} />,
@@ -139,7 +141,7 @@ const TenantLandingShell = ({
 
             <div className="fixed inset-x-0 bottom-0 z-30 border-t border-default bg-background/95 px-4 py-3 backdrop-blur @app-md:hidden">
                 <StackH
-                    gap={3}
+                    principle="value-row" gap={3}
                     align="center"
                     justify="between"
                     items={[

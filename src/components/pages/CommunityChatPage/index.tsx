@@ -17,6 +17,7 @@ import { useQueryCommunityChatConversationSwr } from "@/hooks/swr/api/graphql/qu
 import { useQueryMyFounderConversationSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFounderConversationSwr"
 import { useAppSelector } from "@/redux/hooks"
 import { pathConfig } from "@/resources/path"
+import { StackV } from "@/components/frames/Stack"
 
 /** Which conversation the chat surface is showing. */
 type ChatTab = "community" | "founder"
@@ -62,23 +63,26 @@ export const CommunityChatPage = () => {
 
     return (
         <PageContainer>
-            <div className="flex flex-col gap-6">
-                <PageHeader
-                    title={t("community.chat.title")}
-                    description={t("community.chat.description")}
-                />
-
-                {authenticated ? (
-                    <div className="flex flex-col gap-3">
-                        <TabsCard
-                            leftTabs={{
-                                items: tabs,
-                                selectedKey: tab,
-                                ariaLabel: t("community.chat.tabsAria"),
-                                onSelectionChange: (key: Key) => setTab(String(key) as ChatTab),
-                            }}
-                        />
-                        {conversationId ? (
+            <StackV gap={6} principle="block-boundary" items={[
+                () => (
+                    <PageHeader
+                        title={t("community.chat.title")}
+                        description={t("community.chat.description")}
+                    />
+                ),
+                () => (authenticated ? (
+                    <StackV gap={4} principle="content-row" items={[
+                        () => (
+                            <TabsCard
+                                leftTabs={{
+                                    items: tabs,
+                                    selectedKey: tab,
+                                    ariaLabel: t("community.chat.tabsAria"),
+                                    onSelectionChange: (key: Key) => setTab(String(key) as ChatTab),
+                                }}
+                            />
+                        ),
+                        () => (conversationId ? (
                             <ChatPane key={conversationId} conversationId={conversationId} />
                         ) : membersOnly ? (
                             // Signed-in but the membership gate rejected this read (or it
@@ -106,8 +110,8 @@ export const CommunityChatPage = () => {
                             // (message list + composer) so the tab switch/first load
                             // doesn't jump into a differently-shaped panel afterward.
                             <ChatPaneSkeleton withComposer />
-                        )}
-                    </div>
+                        )),
+                    ]} />
                 ) : (
                     <EmptyState
                         title={t("community.chat.signInRequired")}
@@ -121,8 +125,8 @@ export const CommunityChatPage = () => {
                             </Button>
                         )}
                     />
-                )}
-            </div>
+                )),
+            ]} />
         </PageContainer>
     )
 }

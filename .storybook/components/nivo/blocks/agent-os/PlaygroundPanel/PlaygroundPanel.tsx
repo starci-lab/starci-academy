@@ -96,6 +96,7 @@ const TurnBubble = ({ turn, labels, isSkeleton }: {
 }) => (
     <StackH
         gap={3}
+        principle="flex-action"
         justify={turn.role === "user" ? "end" : "start"}
         isSkeleton={isSkeleton}
         items={[

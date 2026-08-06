@@ -1,9 +1,10 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
-import { ALIGN_CLASS, gapClassNames, JUSTIFY_CLASS, paddingClassNames, type AllowedGap, type LayoutAlign, type LayoutJustify, type PaddingValue, type Responsive } from "@sb-components/frames/_spacing"
+import { ALIGN_CLASS, JUSTIFY_CLASS, type AllowedGap, type LayoutAlign, type LayoutJustify, type PaddingValue, type Responsive } from "@sb-components/frames/_spacing"
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@sb-components/frames/_principles"
+import { resolvePrincipleSpacing, resolvedSpacingClassNames } from "@sb-components/frames/_principle-style"
 import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_identity"
 
 /**
@@ -66,8 +67,12 @@ export interface FlexBaseProps {
     inline?: boolean
     /** Main axis. Defaults to `row`, the browser default, so the prop reads as an override. */
     direction?: FlexDirection
-    /** Space between children, on the house gap scale. Required so nobody leaves it to chance. */
-    gap: Responsive<AllowedGap>
+    /**
+     * Space between children, on the house gap scale.
+     * Optional when `principle` is a gap-owning token — the principle resolves the class
+     * (`_principle-style.ts`). Still required when there is no gap principle.
+     */
+    gap?: Responsive<AllowedGap>
     /**
      * Space INSIDE the box, on the house padding scale.
      *
@@ -172,32 +177,43 @@ const FlexBase = ({
     classNames,
     principle,
     explain,
-    identity}: FlexBaseProps) => (
+    identity}: FlexBaseProps) => {
+    // Principle owns gap/padding/align when set; see `_principle-style.ts`. Legacy call sites that
+    // still pass both `principle` and `gap` keep typechecking — the principle wins.
+    // Row/col defaults (center / stretch) apply only when the token does not name an align.
+    const spacing = resolvePrincipleSpacing(principle, gap, padding, align, justify)
+    const layoutAlign = spacing.principleOwnsLayout
+        ? (spacing.align ?? (direction === "row" ? "center" : "stretch"))
+        : align
+    const layoutJustify = spacing.principleOwnsLayout ? spacing.justify : justify
+    const layoutResolved = { ...spacing, align: layoutAlign, justify: layoutJustify }
+    return (
     // No self-name fallback: `Flex` is internal-only (see the export note below) and has
     // no story of its own, so a default badge here would only ever point nowhere (§11a.1 rule
     // on undeclared parts). A caller that needs THIS box badged as a node passes ``
     // explicitly, same contract as `Split`/`Cluster`/`SurfaceCard.*`.
-    <Tag
-        {...resolveIdentity(identity, { tier: "frame", name: "Flex" })}
-        data-principle={principleAttr(principle)}
-        data-explain={explainAttr(explain)}
-        className={cn(
-            inline ? "inline-flex" : "flex",
-            DIRECTION_CLASS[direction],
-            ...gapClassNames(gap),
-            ...(padding != null ? paddingClassNames(padding) : []),
-            align != null && ALIGN_CLASS[align],
-            justify != null && JUSTIFY_CLASS[justify],
-            // A column already grows without bound, so wrapping it would emit a class that can
-            // never fire. Ignoring it here keeps the rendered class list honest.
-            at != null && direction === "row" && "flex-wrap",
-            at != null && direction === "row" && WRAP_SWITCH_CLASS[at],
-            nested && NESTED_CLASS,
-            classNames)}
-    >
-        {body}
-    </Tag>
-)
+        <Tag
+            {...resolveIdentity(identity, { tier: "frame", name: "Flex" })}
+            data-principle={principleAttr(principle)}
+            data-explain={explainAttr(explain)}
+            className={cn(
+                inline && !spacing.principleOwnsLayout ? "inline-flex" : "flex",
+                DIRECTION_CLASS[direction],
+                ...resolvedSpacingClassNames({ ...layoutResolved, align: undefined, justify: undefined }),
+                layoutAlign != null && ALIGN_CLASS[layoutAlign],
+                layoutJustify != null && JUSTIFY_CLASS[layoutJustify],
+                // A column already grows without bound, so wrapping it would emit a class that can
+                // never fire. Ignoring it here keeps the rendered class list honest.
+                at != null && direction === "row" && "flex-wrap",
+                at != null && direction === "row" && WRAP_SWITCH_CLASS[at],
+                nested && !spacing.principleOwnsLayout && NESTED_CLASS,
+                // classNames are a public CSS door — ignored when principle owns the layout.
+                !spacing.principleOwnsLayout && classNames)}
+        >
+            {body}
+        </Tag>
+    )
+}
 
 /** `Flex.*` namespace. One shape, so only `.Base`. */
 /**

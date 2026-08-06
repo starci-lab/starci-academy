@@ -6,6 +6,7 @@ import type {
     ProcessResult,
 } from "../../types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Box } from "@/components/frames/Box"
 
 /** Props for {@link ProcessResultBanner}. */
 export interface ProcessResultBannerProps extends WithClassNames<undefined> {
@@ -27,16 +28,16 @@ export const ProcessResultBanner = ({
         return null
     }
     return (
-        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-2">
-            <div className="flex items-center gap-2">
+        <Box principle="card-padding" className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-2">
+            <Box principle="identity" className="flex items-center gap-2">
                 <CheckCircleIcon className="h-5 w-5 text-emerald-400" />
                 <span className="text-sm font-medium text-emerald-300">
                     {processResult.message}
                 </span>
-            </div>
+            </Box>
             <p className="text-xs text-slate-400 font-mono">
                 Job ID: {processResult.jobId}
             </p>
-        </div>
+        </Box>
     )
 }

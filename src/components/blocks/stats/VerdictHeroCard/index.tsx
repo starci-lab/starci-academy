@@ -115,7 +115,8 @@ export const VerdictHeroCard = ({
     return (
         <SectionCard>
             <StackH
-                gap={2}
+                gap={3}
+                principle="value-row"
                 align="baseline"
                 items={[
                     () => <span className={`text-4xl font-bold tabular-nums ${BAND_TEXT[band]}`}>{value}</span>,
@@ -155,20 +156,27 @@ export const VerdictHeroCard = ({
                                 // position-keyed: a fixed N-up breakdown of the SAME headline number,
                                 // never reordered/filtered at runtime like a normal list.
                                 <StackV
-                                    gap={2}
+                                    gap={1}
                                     padding={4}
+                                    principle="cell-pad"
                                     classNames={["flex-1"]}
-                                    items={[
-                                        () => <Typography size="xs" color="muted" text={<SplitLabel />} />,
-                                        () => (
-                                            <Typography
-                                                size="h4"
-                                                weight="bold"
-                                                color={split.band ? SPLIT_VALUE_COLOR[split.band] : undefined}
-                                                text={split.value}
-                                            />
-                                        ),
-                                    ]}
+                                    body={() => (
+                                        <StackV
+                                            gap={2}
+                                            principle="title-subtitle"
+                                            items={[
+                                                () => <Typography size="xs" color="muted" text={<SplitLabel />} />,
+                                                () => (
+                                                    <Typography
+                                                        size="h4"
+                                                        weight="bold"
+                                                        color={split.band ? SPLIT_VALUE_COLOR[split.band] : undefined}
+                                                        text={split.value}
+                                                    />
+                                                ),
+                                            ]}
+                                        />
+                                    )}
                                 />
                             )
                         })}

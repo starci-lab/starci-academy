@@ -106,8 +106,9 @@ const MiniDashboardCard = ({
             padding={4}
             header={() => (
                 <StackH
-                    gap={3}
+                    gap={4}
                     justify="between"
+                    principle="content-row"
                     items={[
                         () => <Typography size="sm" weight="semibold" text={title} />,
                         () => <Chip tone="accent" text={badgeLabel} />,
@@ -118,6 +119,7 @@ const MiniDashboardCard = ({
                 <Cluster
                     gap={5}
                     justify="between"
+                    principle="group-boundary"
                     items={metrics.map((metric) => () => <DashboardMetric metric={metric} />)}
                 />
             )}
@@ -137,6 +139,7 @@ const HeroCopy = ({
 }: Pick<OperatingLoopHeroProps, "eyebrow" | "headline" | "description" | "primaryCta" | "secondaryCta" | "tertiaryCta" | "trustPoints">) => (
     <StackV
         gap={6}
+        principle="block-boundary"
         items={[
             () => <Typography size="sm" weight="semibold" color="accent" text={eyebrow} />,
             () => <Typography size="h1" weight="bold" text={headline} />,
@@ -178,6 +181,7 @@ const HeroCopy = ({
                 <Cluster
                     gap={4}
                     separator
+                    principle="content-row"
                     items={trustPoints.map((point) => () => (
                         <Typography size="xs" color="muted" text={point.label} />
                     ))}
@@ -241,7 +245,7 @@ const OperatingLoopHero = ({
             body={() => (
                 <Grid
                     columns={{ base: 1, lg: 2 }}
-                    gap={7}
+                    principle="layout-split"
                     items={[
                         {
                             key: "copy",

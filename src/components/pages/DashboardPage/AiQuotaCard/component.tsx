@@ -105,41 +105,51 @@ export const _AiQuotaCard = ({
     const tierLabel = tier ? tier.toUpperCase() : undefined
     const showTierChip = isSkeleton || tierLabel !== undefined
 
-    return (
-        <StackV gap={3} isSkeleton={isSkeleton} identity={{ tier: "block", component: "AiQuotaCard" }} items={[
-            () => (
-                <StackH gap={3} justify="between" isSkeleton={isSkeleton} items={[
-                    () => <Typography size="base" weight="semibold" text={labels.title} isSkeleton={isSkeleton} />,
-                    ...(showTierChip ? [() => (
+    // Items hoisted so the outer gap-only column is not scanned as owning nested
+    // justify/principle from its children (check-pattern-coverage opens to `>`).
+    const cardItems = [
+        () => (
+            <StackH gap={3} principle="flex-action" justify="between" isSkeleton={isSkeleton} items={[
+                () => <Typography size="base" weight="semibold" text={labels.title} isSkeleton={isSkeleton} />,
+                ...(showTierChip ? [() => (
+                    isSkeleton
+                        ? <Chip isSkeleton />
+                        : <Chip tone={tier ? TIER_CHIP_TONE[tier] : "default"} text={tierLabel ?? ""} />
+                )] : []),
+            ]} />
+        ),
+        () => <Typography size="xs" color="muted" text={labels.poolCaption} isSkeleton={isSkeleton} />,
+        ...windowRows.map((window) => () => (
+            isSkeleton
+                ? (
+                    <ProgressMeter
                         isSkeleton
-                            ? <Chip isSkeleton />
-                            : <Chip tone={tier ? TIER_CHIP_TONE[tier] : "default"} text={tierLabel ?? ""} />
-                    )] : []),
-                ]} />
-            ),
-            () => <Typography size="xs" color="muted" text={labels.poolCaption} isSkeleton={isSkeleton} />,
-            ...windowRows.map((window) => () => (
-                isSkeleton
-                    ? (
-                        <ProgressMeter
-                            isSkeleton
-                            leading={() => <Typography size="xs" color="muted" isSkeleton text={window.label} />}
-                            trailing={() => <Typography size="xs" weight="medium" isSkeleton text={window.creditsText} />}
-                        />
-                    )
-                    : (
-                        <ProgressMeter
-                            value={window.used}
-                            max={window.limit || 1}
-                            color="accent"
-                            leading={() => <Typography size="xs" color="muted" text={window.label} />}
-                            trailing={() => <Typography size="xs" weight="medium" text={window.creditsText} />}
-                        />
-                    )
-            )),
-            () => (isSkeleton
-                ? <Button isSkeleton variant="tertiary" size="sm" />
-                : <Button variant="tertiary" size="sm" label={labels.upgrade} onPress={onUpgradePress} />),
-        ]} />
+                        leading={() => <Typography size="xs" color="muted" isSkeleton text={window.label} />}
+                        trailing={() => <Typography size="xs" weight="medium" isSkeleton text={window.creditsText} />}
+                    />
+                )
+                : (
+                    <ProgressMeter
+                        value={window.used}
+                        max={window.limit || 1}
+                        color="accent"
+                        leading={() => <Typography size="xs" color="muted" text={window.label} />}
+                        trailing={() => <Typography size="xs" weight="medium" text={window.creditsText} />}
+                    />
+                )
+        )),
+        () => (isSkeleton
+            ? <Button isSkeleton variant="tertiary" size="sm" />
+            : <Button variant="tertiary" size="sm" label={labels.upgrade} onPress={onUpgradePress} />),
+    ]
+
+    return (
+        <StackV
+            gap={3}
+            principle="sibling-stack"
+            isSkeleton={isSkeleton}
+            identity={{ tier: "block", component: "AiQuotaCard" }}
+            items={cardItems}
+        />
     )
 }

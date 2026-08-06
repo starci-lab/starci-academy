@@ -43,6 +43,7 @@ const Stat = ({ value, label }: { value: string; label: string }) => (
     <StackV
         gap={1}
         align="center"
+        principle="name-handle"
         items={[
             () => <Typography size="h3" weight="bold" align="center" text={value} />,
             () => <Typography size="sm" color="muted" align="center" text={label} />,
@@ -67,7 +68,7 @@ const ProofStrip = ({ products, labels }: ProofStripProps) => {
                 body={() => (
                     <Grid
                         columns={{ base: 1, sm: 3 }}
-                        gap={6}
+                        principle="block-boundary"
                         items={[
                             { key: "products", content: () => <Stat value={String(productCount)} label={labels.productsLabel} /> },
                             { key: "plans", content: () => <Stat value={String(planCount)} label={labels.plansLabel} /> },

@@ -259,7 +259,7 @@ const FlashcardDeckList = ({
         />
     ) : view === "grid" ? (
         <div>
-            <Grid columns={{ base: 1, sm: 2, md: 3 }} gap={4} principle="sibling-stack" items={tiles} />
+            <Grid columns={{ base: 1, sm: 2, md: 3 }} principle="content-row" items={tiles} />
         </div>
     ) : (
         <SurfaceCardList isSkeleton={isSkeleton} items={rows} />

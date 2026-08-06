@@ -125,6 +125,7 @@ export const _FollowListModal = ({
             <StackH
                 gap={3}
                 principle="value-row"
+                explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
                 align="center"
                 items={[
                     () => <>{tabLabel[tabId]}</>,

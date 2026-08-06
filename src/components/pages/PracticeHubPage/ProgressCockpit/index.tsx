@@ -113,16 +113,19 @@ export const ProgressCockpit = ({
             skeleton={(
                 <div className={cn("flex flex-col gap-6", className)}>
                     {/* metric row — solved · points · rank · percentile */}
-                    <Box principle="content-row" className="grid grid-cols-2 gap-3 @app-sm:grid-cols-4">
+                    <Box principle="content-row" className="grid grid-cols-2 gap-3 @app-sm:grid-cols-4"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title.">
                         {[0, 1, 2, 3].map((index) => (
                             <Skeleton key={index} className="h-24 w-full rounded-2xl" />
                         ))}
                     </Box>
                     {/* difficulty distribution bar */}
-                    <StackV gap={3} principle="sibling-stack" items={[
-                        () => <Skeleton.Typography type="body-sm" width="1/4" />,
-                        () => <Skeleton.SegmentBar legendItems={3} />,
-                    ]} />
+                    <StackV gap={3} principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                        items={[
+                            () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                            () => <Skeleton.SegmentBar legendItems={3} />,
+                        ]} />
                 </div>
             )}
             error={error}
@@ -134,7 +137,8 @@ export const ProgressCockpit = ({
         >
             <div className={cn("flex flex-col gap-6", className)}>
                 {/* headline metric row — pending rank/percentile cards skeleton in place */}
-                <Box principle="content-row" className="grid grid-cols-2 gap-3 @app-sm:grid-cols-4">
+                <Box principle="content-row" className="grid grid-cols-2 gap-3 @app-sm:grid-cols-4"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title.">
                     {stats.map((stat) => (
                         stat.value === null ? (
                             <Skeleton key={stat.key} className="h-24 w-full rounded-2xl" />
@@ -151,20 +155,24 @@ export const ProgressCockpit = ({
                 {/* difficulty distribution — skeleton while resolving, hidden once
                     resolved with nothing solved yet, real bar otherwise */}
                 {skillsPending ? (
-                    <StackV gap={3} principle="sibling-stack" items={[
-                        () => <Skeleton.Typography type="body-sm" width="1/4" />,
-                        () => <Skeleton.SegmentBar legendItems={3} />,
-                    ]} />
+                    <StackV gap={3} principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                        items={[
+                            () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                            () => <Skeleton.SegmentBar legendItems={3} />,
+                        ]} />
                 ) : difficultySegments.length > 0 ? (
-                    <StackV gap={3} principle="sibling-stack" items={[
-                        () => <Label>{t("PracticeHubPage.cockpit.byDifficulty")}</Label>,
-                        () => (
-                            <SegmentBar
-                                ariaLabel={t("PracticeHubPage.cockpit.byDifficulty")}
-                                segments={difficultySegments}
-                            />
-                        ),
-                    ]} />
+                    <StackV gap={3} principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                        items={[
+                            () => <Label>{t("PracticeHubPage.cockpit.byDifficulty")}</Label>,
+                            () => (
+                                <SegmentBar
+                                    ariaLabel={t("PracticeHubPage.cockpit.byDifficulty")}
+                                    segments={difficultySegments}
+                                />
+                            ),
+                        ]} />
                 ) : null}
             </div>
         </AsyncContent>

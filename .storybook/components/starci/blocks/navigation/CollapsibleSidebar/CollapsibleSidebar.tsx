@@ -147,6 +147,7 @@ export const CollapsibleSidebar = ({
     const panel = (
         <>
             <StackH gap={3} principle="flex-action" justify={collapsed ? "center" : "between"} items={[() => headerRow]} />
+            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
 
             {/* pinned top slot (e.g. resume pill) — above the scroll area, always
                 visible. min-w-0: a column-flex item defaults to content-width

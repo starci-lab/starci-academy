@@ -65,29 +65,35 @@ export const _CurlTester = ({
         gap={3}
         identity={{ tier: "block", component: "CurlTester" }}
         principle="sibling-stack"
+        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
         items={[
             () => (
-                <StackV gap={2} principle="title-subtitle" items={[
-                    () => (
-                        <StackH gap={2} justify="between" align="center" principle="icon-text" items={[
-                            () => <Typography size="xs" color="muted" text={labels.commandLabel} />,
-                            () => (
-                                <Button
-                                    variant="tertiary"
-                                    size="sm"
-                                    prefixIcon={copied ? CheckIcon : CopyIcon}
-                                    label={copied ? labels.copied : labels.copy}
-                                    onPress={onCopy}
-                                />
-                            ),
-                        ]} />
-                    ),
-                    () => (
-                        <Box principle="cell-pad" className="overflow-x-auto rounded-xl bg-default p-3">
-                            <Typography size="code" text={curlCommand} preserveWhitespace />
-                        </Box>
-                    ),
-                ]} />
+                <StackV gap={2} principle="title-subtitle"
+                    explain="Title over supporting line — not label-field, because neither line is a form control label."
+                    items={[
+                        () => (
+                            <StackH gap={2} justify="between" align="center" principle="icon-text"
+                                explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                                items={[
+                                    () => <Typography size="xs" color="muted" text={labels.commandLabel} />,
+                                    () => (
+                                        <Button
+                                            variant="tertiary"
+                                            size="sm"
+                                            prefixIcon={copied ? CheckIcon : CopyIcon}
+                                            label={copied ? labels.copied : labels.copy}
+                                            onPress={onCopy}
+                                        />
+                                    ),
+                                ]} />
+                        ),
+                        () => (
+                            <Box principle="cell-pad" className="overflow-x-auto rounded-xl bg-default p-3"
+                                explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body.">
+                                <Typography size="code" text={curlCommand} preserveWhitespace />
+                            </Box>
+                        ),
+                    ]} />
             ),
             () => (
                 <Button
@@ -107,7 +113,8 @@ export const _CurlTester = ({
             // multi-line JSON blob, so the swap is hand-mirrored right where it sits rather than
             // threaded through a leaf prop.
             ...(running || result ? [() => (
-                <Box principle="cell-pad" className="overflow-x-auto rounded-xl bg-default p-3">
+                <Box principle="cell-pad" className="overflow-x-auto rounded-xl bg-default p-3"
+                    explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body.">
                     {running ? <Skeleton.Paragraph lines={4} /> : <Typography size="code" text={result ?? ""} preserveWhitespace />}
                 </Box>
             )] : []),

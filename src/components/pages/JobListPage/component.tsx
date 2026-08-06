@@ -110,6 +110,7 @@ const JobListRowSkeleton = () => (
         <StackH
             gap={4}
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             align="center"
             items={[
                 () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
@@ -117,6 +118,7 @@ const JobListRowSkeleton = () => (
                     <StackV
                         gap={2}
                         principle="title-subtitle"
+                        explain="Title over supporting line — not label-field, because neither line is a form control label."
                         classNames={["min-w-0", "flex-1"]}
                         items={[
                             () => <Skeleton.Typography type="body-sm" width="1/2" />,
@@ -125,6 +127,7 @@ const JobListRowSkeleton = () => (
                                 <Cluster
                                     gap={3}
                                     principle="chip-row"
+                                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                                     items={[
                                         () => <Skeleton.Typography type="body-xs" width="1/4" />,
                                         () => <Skeleton.Chip />,
@@ -138,6 +141,7 @@ const JobListRowSkeleton = () => (
                     <StackV
                         gap={2}
                         principle="title-subtitle"
+                        explain="Title over supporting line — not label-field, because neither line is a form control label."
                         align="end"
                         classNames={["shrink-0"]}
                         items={[
@@ -239,34 +243,38 @@ export const _JobListPage = ({
     // toolbar: search + funnel popover on the left, the resolved count on the right —
     // always rendered, unaffected by the row-list region's own error/empty/content switch
     const toolbar = (
-        <StackH gap={3} principle="flex-action" justify="between" align="center" at="sm" items={[
-            () => (
-                <StackH gap={3} principle="flex-action" align="center" classNames={["min-w-0", "flex-1"]} items={[
-                    () => (
-                        <SearchInput
-                            className="min-w-0 flex-1"
-                            value={search}
-                            onValueChange={onSearchChange}
-                            placeholder={labels.searchPlaceholder}
-                        />
-                    ),
-                    () => (
-                        <Badge count={activeFacetCount} color="accent" size="sm" placement="top-left">
-                            <Popover
-                                triggerLabel={<span className="sr-only">{labels.filterButtonAria}</span>}
-                                triggerIcon={FunnelIcon}
-                                triggerVariant="ghost"
-                                isOpen={filterOpen}
-                                onOpenChange={setFilterOpen}
-                                classNames={["shrink-0"]}
-                                content={filterPopoverContent}
-                            />
-                        </Badge>
-                    ),
-                ]} />
-            ),
-            () => <Typography size="sm" color="muted" classNames={["shrink-0"]} text={labels.found} />,
-        ]} />
+        <StackH gap={3} principle="flex-action" justify="between" align="center" at="sm"
+            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+            items={[
+                () => (
+                    <StackH gap={3} principle="flex-action" align="center" classNames={["min-w-0", "flex-1"]}
+                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                        items={[
+                            () => (
+                                <SearchInput
+                                    className="min-w-0 flex-1"
+                                    value={search}
+                                    onValueChange={onSearchChange}
+                                    placeholder={labels.searchPlaceholder}
+                                />
+                            ),
+                            () => (
+                                <Badge count={activeFacetCount} color="accent" size="sm" placement="top-left">
+                                    <Popover
+                                        triggerLabel={<span className="sr-only">{labels.filterButtonAria}</span>}
+                                        triggerIcon={FunnelIcon}
+                                        triggerVariant="ghost"
+                                        isOpen={filterOpen}
+                                        onOpenChange={setFilterOpen}
+                                        classNames={["shrink-0"]}
+                                        content={filterPopoverContent}
+                                    />
+                                </Badge>
+                            ),
+                        ]} />
+                ),
+                () => <Typography size="sm" color="muted" classNames={["shrink-0"]} text={labels.found} />,
+            ]} />
     )
 
     // row-list region — the ONLY part of this block that switches state; the header +

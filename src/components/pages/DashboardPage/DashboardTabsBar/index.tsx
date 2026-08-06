@@ -44,7 +44,8 @@ export const DashboardTabsBar = ({ className }: DashboardTabsBarProps) => {
     return (
         <div className={cn("w-full", className)}>
             {/* page-pad owns the horizontal inset; py stays 0 so the strip hugs the navbar */}
-            <Box principle="page-pad" className="w-full px-6">
+            <Box principle="page-pad" className="w-full px-6"
+                explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                 <ExtendedTabs
                     selectedKey={tab}
                     onSelectionChange={(key) => setTab(key as DashboardTab)}
@@ -62,6 +63,7 @@ export const DashboardTabsBar = ({ className }: DashboardTabsBarProps) => {
                                         <StackH
                                             gap={2}
                                             principle="icon-text"
+                                            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
                                             align="center"
                                             items={[
                                                 () => (

@@ -91,7 +91,8 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                 "mermaid" is the label, same as a code fence names its own language. The zoom
                 trigger is icon-only too, matching `SnippetIcon`'s copy button — always visible,
                 not a hover-only overlay. */}
-            <Box principle="control-pad" className="flex items-center justify-between border-b border-default px-3 py-2">
+            <Box principle="control-pad" className="flex items-center justify-between border-b border-default px-3 py-2"
+                explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.">
                 <span className="font-mono text-xs text-muted">mermaid</span>
                 {data ? (
                     <button type="button" aria-label={expandLabel} title={expandLabel} onClick={() => setOpen(true)} className="text-muted">
@@ -137,6 +138,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                                             as="figure"
                                             gap={3}
                                             principle="sibling-stack"
+                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                             align="center"
                                             justify="center"
                                             classNames={["h-full"]}
@@ -163,7 +165,8 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                     </ModalRoot>
                 </>
             ) : (
-                <Box principle="cell-pad" className="p-3 text-sm text-muted">{loadingLabel}</Box>
+                <Box principle="cell-pad" className="p-3 text-sm text-muted"
+                    explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body.">{loadingLabel}</Box>
             )}
         </figure>
     )

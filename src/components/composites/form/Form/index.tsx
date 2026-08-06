@@ -6,7 +6,7 @@ import { GAP_CLASS, type AllowedGap } from "@/components/frames/_spacing"
 import { StackV } from "@/components/frames/Stack"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
-import { principleAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { isGapPrinciple, PRINCIPLE_STYLE } from "@/components/frames/_principle-style"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -221,6 +221,7 @@ const Section = ({
             own badge below and surface as top-level nodes instead). */}
         <StackV
             principle="title-subtitle"
+            explain="Title over supporting line — not label-field, because neither line is a form control label."
             isSkeleton={isSkeleton}
             items={[
                 () => (
@@ -264,6 +265,10 @@ export interface FormActionsProps {
      */
     principle?: PrincipleToken
     /**
+     * Why this layer exists - one sentence, emitted as `data-explain` beside the token.
+     */
+    explain?: ExplainReason
+    /**
      * `true` → the button row STICKS to the bottom of the scroll container
      * (`sticky bottom-0`) with a divider + background, for a long form inside a
      * modal/drawer. Chrome only — it doesn't change the button API.
@@ -283,6 +288,7 @@ export interface FormActionsProps {
 const Actions = ({
     items,
     principle = "flex-action-end",
+    explain,
     sticky = false}: FormActionsProps) => (
     <div
         className={cn(
@@ -291,8 +297,9 @@ const Actions = ({
         data-tier="composite"
         data-component="FormActions"
         data-principle={principleAttr(principle)}
+        data-explain={explainAttr(explain)}
     >
-        <ButtonGroup items={items} principle={principle} />
+        <ButtonGroup items={items} principle={principle} explain={explain} />
     </div>
 )
 /**

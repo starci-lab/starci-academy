@@ -182,10 +182,12 @@ export const _FlashcardReviewer = ({
                 gap={1}
                 padding={{ base: { x: 5, y: 3 }, sm: { x: 6, y: 3 } }}
                 principle="pill-pad"
+                explain="Pill/chip inset — not control-pad, because this pads a compact badge shape rather than a form control."
                 items={[() => (
                     <StackH
                         gap={4}
                         principle="content-row"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                         align="center"
                         divider
                         classNames={["w-full"]}
@@ -203,7 +205,8 @@ export const _FlashcardReviewer = ({
                     />
                 )]}
             />
-            <Box principle="pill-pad" className="px-4 pb-2 @app-sm:px-6">
+            <Box principle="pill-pad" className="px-4 pb-2 @app-sm:px-6"
+                explain="Pill/chip inset — not control-pad, because this pads a compact badge shape rather than a form control.">
                 <StackH
                     gap={2}
                     classNames={["w-full"]}
@@ -279,39 +282,49 @@ export const _FlashcardReviewer = ({
     const body = isSkeleton ? (
         <Container size="md" padding={1} body={() => (
             <StackV gap={6} items={[
-                () => <Cluster gap={3} principle="chip-row" align="center" items={chipItems} />,
+                () => <Cluster gap={3} principle="chip-row"
+                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                    align="center" items={chipItems} />,
                 () => (
-                    <StackV gap={4} principle="label-field" items={[
-                        () => <Skeleton.Typography type="body-xs" width="1/4" />,
-                        () => (
-                            <SurfaceCard padding={6} body={() => (
-                                <StackV gap={4} principle="sibling-stack" items={[
-                                    () => <Skeleton.Typography type="body" width="3/4" />,
-                                    () => <Skeleton.Typography type="body" width="2/3" />,
-                                ]} />
-                            )} />
-                        ),
-                    ]} />
+                    <StackV gap={4} principle="label-field"
+                        explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
+                        items={[
+                            () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                            () => (
+                                <SurfaceCard padding={6} body={() => (
+                                    <StackV gap={4} principle="sibling-stack"
+                                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                        items={[
+                                            () => <Skeleton.Typography type="body" width="3/4" />,
+                                            () => <Skeleton.Typography type="body" width="2/3" />,
+                                        ]} />
+                                )} />
+                            ),
+                        ]} />
                 ),
                 () => (
-                    <StackH gap={4} principle="flex-action" justify="between" align="center" items={[
-                        () => <Skeleton.Button />,
-                        () => <Skeleton.Button />,
-                    ]} />
+                    <StackH gap={4} principle="flex-action"
+                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                        justify="between" align="center" items={[
+                            () => <Skeleton.Button />,
+                            () => <Skeleton.Button />,
+                        ]} />
                 ),
             ]} />
         )} />
     ) : done ? (
         <Container size="md" padding={1} body={() => (
             <Box className="py-10">
-                <StackV gap={4} align="center" principle="card-caption" classNames={["w-full"]} items={[
-                    () => <Spinner size="lg" />,
-                    () => (
-                        <Typography type="body-sm" color="muted">
-                            {labels.savingLabel}
-                        </Typography>
-                    ),
-                ]} />
+                <StackV gap={4} align="center" principle="card-caption"
+                    explain="Holds caption text under card media so the caption stays attached to the image above it."
+                    classNames={["w-full"]} items={[
+                        () => <Spinner size="lg" />,
+                        () => (
+                            <Typography type="body-sm" color="muted">
+                                {labels.savingLabel}
+                            </Typography>
+                        ),
+                    ]} />
             </Box>
         )} />
     ) : (
@@ -324,24 +337,28 @@ export const _FlashcardReviewer = ({
                         answerLabel={labels.answerLabel}
                         front={() => <MarkdownContent plain markdown={card?.question ?? ""} />}
                         belowFront={chipItems.length > 0 ? () => (
-                            <Cluster gap={3} principle="chip-row" align="center" items={chipItems} />
+                            <Cluster gap={3} principle="chip-row"
+                                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                align="center" items={chipItems}  />
                         ) : undefined}
                         back={() => (
                             <>
                                 {isLocked ? (
-                                    <StackV gap={4} principle="sibling-stack" align="center" classNames={["flex-1"]} items={[
-                                        () => <LockIcon aria-hidden focusable="false" className="size-8 text-muted" />,
-                                        () => (
-                                            <Typography type="body-sm" weight="semibold">
-                                                {labels.premiumLockedTitle}
-                                            </Typography>
-                                        ),
-                                        () => (
-                                            <Typography type="body-xs" color="muted">
-                                                {labels.premiumLockedHint}
-                                            </Typography>
-                                        ),
-                                    ]} />
+                                    <StackV gap={4} principle="sibling-stack"
+                                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                        align="center" classNames={["flex-1"]} items={[
+                                            () => <LockIcon aria-hidden focusable="false" className="size-8 text-muted" />,
+                                            () => (
+                                                <Typography type="body-sm" weight="semibold">
+                                                    {labels.premiumLockedTitle}
+                                                </Typography>
+                                            ),
+                                            () => (
+                                                <Typography type="body-xs" color="muted">
+                                                    {labels.premiumLockedHint}
+                                                </Typography>
+                                            ),
+                                        ]} />
                                 ) : (
                                     <>
                                         {card?.answer ? (
@@ -361,11 +378,13 @@ export const _FlashcardReviewer = ({
                     />
                 ),
                 ...(revealed && isLocked ? [() => (
-                    <StackH gap={3} principle="flex-action" justify="center" items={[() => (
-                        <Button size="sm" variant="primary" onPress={onUnlock}>
-                            {labels.premiumCta}
-                        </Button>
-                    )]} />
+                    <StackH gap={3} principle="flex-action"
+                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                        justify="center" items={[() => (
+                            <Button size="sm" variant="primary" onPress={onUnlock}>
+                                {labels.premiumCta}
+                            </Button>
+                        )]} />
                 )] : revealed ? [() => (
                     <SectionCard withVerdict={{ enable: true, variant: "accent" }}>
                         <Label>{labels.rateHint}</Label>
@@ -377,44 +396,48 @@ export const _FlashcardReviewer = ({
                         />
                     </SectionCard>
                 )] : [() => (
-                    <Cluster gap={3} principle="flex-action" align="center" items={[
-                        () => (
-                            <Button size="sm" variant="primary" className="w-full @app-sm:w-auto" onPress={onReveal}>
-                                {labels.showAnswer}
-                            </Button>
-                        ),
-                        () => (
-                            <Button
-                                size="sm"
-                                variant="secondary"
-                                isIconOnly
-                                isDisabled={isFirst}
-                                aria-label={labels.previous}
-                                onPress={onPrev}
-                            >
-                                <CaretLeftIcon weight="bold" className="size-4" aria-hidden focusable="false" />
-                            </Button>
-                        ),
-                        () => (
-                            <Button
-                                size="sm"
-                                variant="secondary"
-                                isIconOnly
-                                isDisabled={isLast}
-                                aria-label={labels.next}
-                                onPress={onNext}
-                            >
-                                <CaretRightIcon weight="bold" className="size-4" aria-hidden focusable="false" />
-                            </Button>
-                        ),
-                    ]} />
+                    <Cluster gap={3} principle="flex-action"
+                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                        align="center" items={[
+                            () => (
+                                <Button size="sm" variant="primary" className="w-full @app-sm:w-auto" onPress={onReveal}>
+                                    {labels.showAnswer}
+                                </Button>
+                            ),
+                            () => (
+                                <Button
+                                    size="sm"
+                                    variant="secondary"
+                                    isIconOnly
+                                    isDisabled={isFirst}
+                                    aria-label={labels.previous}
+                                    onPress={onPrev}
+                                >
+                                    <CaretLeftIcon weight="bold" className="size-4" aria-hidden focusable="false" />
+                                </Button>
+                            ),
+                            () => (
+                                <Button
+                                    size="sm"
+                                    variant="secondary"
+                                    isIconOnly
+                                    isDisabled={isLast}
+                                    aria-label={labels.next}
+                                    onPress={onNext}
+                                >
+                                    <CaretRightIcon weight="bold" className="size-4" aria-hidden focusable="false" />
+                                </Button>
+                            ),
+                        ]} />
                 )]),
             ]} />
         )} />
     )
 
     const bodyShell = (
-        <Box principle="page-pad" className="px-4 pb-6 pt-10 @app-sm:px-6">{body}</Box>
+        <Box principle="page-pad" className="px-4 pb-6 pt-10 @app-sm:px-6"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
+        >{body}</Box>
     )
 
     return (

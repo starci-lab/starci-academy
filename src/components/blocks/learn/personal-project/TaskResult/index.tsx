@@ -433,3 +433,6 @@ export const PersonalProjectTaskResult = ({
 }
 
 export default PersonalProjectTaskResult
+
+/** Folder-matching alias (export-matches-folder) — keep `PersonalProjectTaskResult` as the public name. */
+export { PersonalProjectTaskResult as TaskResult }

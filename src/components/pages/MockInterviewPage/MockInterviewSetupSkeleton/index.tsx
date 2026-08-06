@@ -21,17 +21,20 @@ export const MockInterviewSetupSkeleton = ({ className }: WithClassNames<undefin
                     <StackV
                         gap={5}
                         principle="group-boundary"
+                        explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
                         items={[
                             () => (
                                 <StackH
                                     gap={3}
                                     principle="identity"
+                                    explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
                                     items={[
                                         () => <Skeleton.Avatar size="lg" />,
                                         () => (
                                             <StackV
                                                 gap={2}
                                                 principle="title-subtitle"
+                                                explain="Title over supporting line — not label-field, because neither line is a form control label."
                                                 classNames={["min-w-0"]}
                                                 items={[
                                                     () => <Skeleton.Typography type="body" width="1/3" />,
@@ -46,6 +49,7 @@ export const MockInterviewSetupSkeleton = ({ className }: WithClassNames<undefin
                                 <StackV
                                     gap={2}
                                     principle="title-subtitle"
+                                    explain="Title over supporting line — not label-field, because neither line is a form control label."
                                     items={[
                                         () => <Skeleton.Typography type="h4" width="1/2" />,
                                         () => <Skeleton.Typography type="body-sm" width="2/3" />,

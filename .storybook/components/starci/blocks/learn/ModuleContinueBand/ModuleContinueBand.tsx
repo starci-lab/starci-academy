@@ -99,6 +99,7 @@ const ModuleContinueBand = ({
         <StackH
             gap={4}
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             justify="between"
             align="start"
             isSkeleton={isSkeleton}
@@ -145,7 +146,7 @@ const ModuleContinueBand = ({
     )
 
     return (
-        <StackV
+        <StackV identity={{ tier: "block", component: "ModuleContinueBand" }}
             gap={4}
             isSkeleton={isSkeleton}
             items={[

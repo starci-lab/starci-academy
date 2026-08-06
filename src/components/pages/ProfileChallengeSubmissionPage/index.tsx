@@ -104,44 +104,48 @@ export const ProfileChallengeSubmissionPage = ({
                 )}
                 title={detail?.title ?? t("publicProfile.challengesTab.detail.title")}
                 meta={detail ? (
-                    <Cluster gap={3} principle="chip-row" align="center" items={[
-                        ...(level ? [() => <DifficultyChip difficulty={level} />] : []),
-                        ...(detail.selectedLang ? [() => {
-                            const lang = detail.selectedLang as string
-                            return <LanguageChip language={lang} />
-                        }] : []),
-                        ...(typeof detail.score === "number" ? [() => {
-                            const score = detail.score as number
-                            return (
-                                <Typography type="body-xs" weight="medium" className={scoreToneClass(score)}>
-                                    {t("publicProfile.challengesTab.score", { score })}
+                    <Cluster gap={3} principle="chip-row"
+                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                        align="center" items={[
+                            ...(level ? [() => <DifficultyChip difficulty={level} />] : []),
+                            ...(detail.selectedLang ? [() => {
+                                const lang = detail.selectedLang as string
+                                return <LanguageChip language={lang} />
+                            }] : []),
+                            ...(typeof detail.score === "number" ? [() => {
+                                const score = detail.score as number
+                                return (
+                                    <Typography type="body-xs" weight="medium" className={scoreToneClass(score)}>
+                                        {t("publicProfile.challengesTab.score", { score })}
+                                    </Typography>
+                                )
+                            }] : []),
+                            ...(passedAt ? [() => (
+                                <Typography type="body-xs" color="muted">
+                                    {passedAt}
                                 </Typography>
-                            )
-                        }] : []),
-                        ...(passedAt ? [() => (
-                            <Typography type="body-xs" color="muted">
-                                {passedAt}
-                            </Typography>
-                        )] : []),
-                    ]} />
+                            )] : []),
+                        ]} />
                 ) : undefined}
             />
 
             <AsyncContent
                 isLoading={isLoading && !detail}
                 skeleton={(
-                    <StackV gap={6} principle="block-boundary" items={[
-                        () => <Skeleton className="h-6 w-1/2" />,
-                        () => (
-                            <SurfaceListCard>
-                                {[0, 1, 2].map((row) => (
-                                    <SurfaceListCardItem key={row}>
-                                        <Skeleton.Typography type="body-sm" width="3/4" />
-                                    </SurfaceListCardItem>
-                                ))}
-                            </SurfaceListCard>
-                        ),
-                    ]} />
+                    <StackV gap={6} principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        items={[
+                            () => <Skeleton className="h-6 w-1/2" />,
+                            () => (
+                                <SurfaceListCard>
+                                    {[0, 1, 2].map((row) => (
+                                        <SurfaceListCardItem key={row}>
+                                            <Skeleton.Typography type="body-sm" width="3/4" />
+                                        </SurfaceListCardItem>
+                                    ))}
+                                </SurfaceListCard>
+                            ),
+                        ]} />
                 )}
                 isEmpty={!detail}
                 emptyContent={{
@@ -155,108 +159,120 @@ export const ProfileChallengeSubmissionPage = ({
                 }}
             >
                 {detail ? (
-                    <StackV gap={6} principle="block-boundary" items={[
-                        () => (
-                            <StackV gap={1} principle="name-handle" items={[
-                                () => (
-                                    <Typography type="body-xs" color="muted">
-                                        {t("publicProfile.challengesTab.detail.repoLabel")}
-                                    </Typography>
-                                ),
-                                () => (
-                                    <Link
-                                        href={detail.submissionUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="w-fit min-w-0 max-w-full text-accent-soft-foreground underline underline-offset-4 decoration-[var(--separator-tertiary)]"
-                                        aria-label={t("publicProfile.openRepo", { title: detail.title })}
-                                    >
-                                        <StackH gap={2} principle="icon-text" align="center" items={[
-                                            () => <LinkIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
-                                            () => (
-                                                <Typography type="body-sm" truncate className="text-accent-soft-foreground">
-                                                    {detail.submissionUrl}
-                                                </Typography>
-                                            ),
-                                        ]} />
-                                    </Link>
-                                ),
-                            ]} />
-                        ),
-                        () => (
-                            <LabeledCard
-                                label={t("publicProfile.challengesTab.detail.attemptsHeading")}
-                                frameless
-                            >
-                                {attempts.length > 0 ? (
-                                    <SurfaceListCard>
-                                        {attempts.map((attempt) => {
-                                            const attemptProcessedAt = attempt.processedAt
-                                                ? dayjs(attempt.processedAt).locale(locale).format("hh:mm MMMM DD, YYYY")
-                                                : undefined
-                                            const attemptScore = attempt.score
-                                            return (
-                                                <SurfaceListCardItem key={attempt.attemptNumber}>
-                                                    <StackV gap={3} principle="sibling-stack" items={[
+                    <StackV gap={6} principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        items={[
+                            () => (
+                                <StackV gap={1} principle="name-handle"
+                                    explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
+                                    items={[
+                                        () => (
+                                            <Typography type="body-xs" color="muted">
+                                                {t("publicProfile.challengesTab.detail.repoLabel")}
+                                            </Typography>
+                                        ),
+                                        () => (
+                                            <Link
+                                                href={detail.submissionUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-fit min-w-0 max-w-full text-accent-soft-foreground underline underline-offset-4 decoration-[var(--separator-tertiary)]"
+                                                aria-label={t("publicProfile.openRepo", { title: detail.title })}
+                                            >
+                                                <StackH gap={2} principle="icon-text"
+                                                    explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                                                    align="center" items={[
+                                                        () => <LinkIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
                                                         () => (
-                                                            <StackH gap={4} principle="content-row" justify="between" align="center" items={[
+                                                            <Typography type="body-sm" truncate className="text-accent-soft-foreground">
+                                                                {detail.submissionUrl}
+                                                            </Typography>
+                                                        ),
+                                                    ]} />
+                                            </Link>
+                                        ),
+                                    ]} />
+                            ),
+                            () => (
+                                <LabeledCard
+                                    label={t("publicProfile.challengesTab.detail.attemptsHeading")}
+                                    frameless
+                                >
+                                    {attempts.length > 0 ? (
+                                        <SurfaceListCard>
+                                            {attempts.map((attempt) => {
+                                                const attemptProcessedAt = attempt.processedAt
+                                                    ? dayjs(attempt.processedAt).locale(locale).format("hh:mm MMMM DD, YYYY")
+                                                    : undefined
+                                                const attemptScore = attempt.score
+                                                return (
+                                                    <SurfaceListCardItem key={attempt.attemptNumber}>
+                                                        <StackV gap={3} principle="sibling-stack"
+                                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                            items={[
                                                                 () => (
-                                                                    <Typography type="body-sm" weight="medium">
-                                                                        {t("publicProfile.challengesTab.detail.attemptLabel", { number: attempt.attemptNumber })}
-                                                                    </Typography>
+                                                                    <StackH gap={4} principle="content-row"
+                                                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                                        justify="between" align="center" items={[
+                                                                            () => (
+                                                                                <Typography type="body-sm" weight="medium">
+                                                                                    {t("publicProfile.challengesTab.detail.attemptLabel", { number: attempt.attemptNumber })}
+                                                                                </Typography>
+                                                                            ),
+                                                                            ...(typeof attemptScore === "number" ? [() => (
+                                                                                <Typography
+                                                                                    type="body-xs"
+                                                                                    weight="medium"
+                                                                                    className={cn("shrink-0", scoreToneClass(attemptScore))}
+                                                                                >
+                                                                                    {t("publicProfile.challengesTab.score", { score: attemptScore })}
+                                                                                </Typography>
+                                                                            )] : []),
+                                                                        ]} />
                                                                 ),
-                                                                ...(typeof attemptScore === "number" ? [() => (
-                                                                    <Typography
-                                                                        type="body-xs"
-                                                                        weight="medium"
-                                                                        className={cn("shrink-0", scoreToneClass(attemptScore))}
+                                                                ...(attemptProcessedAt ? [() => (
+                                                                    <Typography type="body-xs" color="muted">
+                                                                        {attemptProcessedAt}
+                                                                    </Typography>
+                                                                )] : []),
+                                                                () => (
+                                                                    <Link
+                                                                        href={attempt.submissionUrl}
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                        className="w-fit min-w-0 max-w-full text-accent-soft-foreground underline underline-offset-4 decoration-[var(--separator-tertiary)]"
+                                                                        aria-label={t("publicProfile.openRepo", { title: detail.title })}
                                                                     >
-                                                                        {t("publicProfile.challengesTab.score", { score: attemptScore })}
+                                                                        <StackH gap={2} principle="icon-text"
+                                                                            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                                                                            align="center" items={[
+                                                                                () => <LinkIcon aria-hidden focusable="false" className="size-4 shrink-0" />,
+                                                                                () => (
+                                                                                    <Typography type="body-xs" truncate className="text-accent-soft-foreground">
+                                                                                        {attempt.submissionUrl}
+                                                                                    </Typography>
+                                                                                ),
+                                                                            ]} />
+                                                                    </Link>
+                                                                ),
+                                                                ...(attempt.shortFeedback ? [() => (
+                                                                    <Typography type="body-xs" color="muted">
+                                                                        {attempt.shortFeedback}
                                                                     </Typography>
                                                                 )] : []),
                                                             ]} />
-                                                        ),
-                                                        ...(attemptProcessedAt ? [() => (
-                                                            <Typography type="body-xs" color="muted">
-                                                                {attemptProcessedAt}
-                                                            </Typography>
-                                                        )] : []),
-                                                        () => (
-                                                            <Link
-                                                                href={attempt.submissionUrl}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className="w-fit min-w-0 max-w-full text-accent-soft-foreground underline underline-offset-4 decoration-[var(--separator-tertiary)]"
-                                                                aria-label={t("publicProfile.openRepo", { title: detail.title })}
-                                                            >
-                                                                <StackH gap={2} principle="icon-text" align="center" items={[
-                                                                    () => <LinkIcon aria-hidden focusable="false" className="size-4 shrink-0" />,
-                                                                    () => (
-                                                                        <Typography type="body-xs" truncate className="text-accent-soft-foreground">
-                                                                            {attempt.submissionUrl}
-                                                                        </Typography>
-                                                                    ),
-                                                                ]} />
-                                                            </Link>
-                                                        ),
-                                                        ...(attempt.shortFeedback ? [() => (
-                                                            <Typography type="body-xs" color="muted">
-                                                                {attempt.shortFeedback}
-                                                            </Typography>
-                                                        )] : []),
-                                                    ]} />
-                                                </SurfaceListCardItem>
-                                            )
-                                        })}
-                                    </SurfaceListCard>
-                                ) : (
-                                    <Typography type="body-sm" color="muted">
-                                        {t("publicProfile.challengesTab.detail.noAttempts")}
-                                    </Typography>
-                                )}
-                            </LabeledCard>
-                        ),
-                    ]} />
+                                                    </SurfaceListCardItem>
+                                                )
+                                            })}
+                                        </SurfaceListCard>
+                                    ) : (
+                                        <Typography type="body-sm" color="muted">
+                                            {t("publicProfile.challengesTab.detail.noAttempts")}
+                                        </Typography>
+                                    )}
+                                </LabeledCard>
+                            ),
+                        ]} />
                 ) : null}
             </AsyncContent>
         </div>

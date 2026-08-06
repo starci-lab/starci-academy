@@ -338,7 +338,8 @@ export const AdminUploadVideoPage = ({
 
     return (
         <div className={cn("min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 p-4 @app-md:p-8", className)}>
-            <Box principle="center-measure" className="mx-auto max-w-3xl space-y-6">
+            <Box principle="center-measure" className="mx-auto max-w-3xl space-y-6"
+                explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
                 <TopBar />
 
                 <AdminUploadVideoHeader />

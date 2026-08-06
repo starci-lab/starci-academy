@@ -13,3 +13,6 @@ export type SkeletonInputProps = WithClassNames<undefined>
 export const SkeletonInput = ({ className }: SkeletonInputProps) => {
     return <Skeleton className={cn("h-9 w-full rounded-xl", className)} />
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonInput` as the public name. */
+export { SkeletonInput as Input }

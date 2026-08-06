@@ -148,11 +148,14 @@ export const CourseOutline = ({
             skeleton={(
                 <div className={cn(ACCORDION_CARD_SKELETON, className)}>
                     {Array.from({ length: SKELETON_MODULE_COUNT }).map((_unused, moduleIndex) => (
-                        <Box key={moduleIndex} principle="row-pad" className="border-b border-default p-4 last:border-b-0">
-                            <StackH gap={4} principle="content-row" justify="between" align="center" items={[
-                                () => <Skeleton.Typography type="body" width="1/2" />,
-                                () => <Skeleton className="h-4 w-16 rounded-medium" />,
-                            ]} />
+                        <Box key={moduleIndex} principle="row-pad" className="border-b border-default p-4 last:border-b-0"
+                            explain="Row content inset — not cell-pad, because this pads a horizontal content row rather than a dense table cell.">
+                            <StackH gap={4} principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                justify="between" align="center" items={[
+                                    () => <Skeleton.Typography type="body" width="1/2" />,
+                                    () => <Skeleton className="h-4 w-16 rounded-medium" />,
+                                ]} />
                         </Box>
                     ))}
                 </div>
@@ -200,69 +203,76 @@ export const CourseOutline = ({
                                 </>
                             ),
                             body: () => (
-                                <StackV gap={3} principle="sibling-stack" items={module.lessons.map((lesson) => () => (
-                                    <StackV key={lesson.id} gap={3} principle="sibling-stack" items={[
-                                        () => (
-                                            <ListRow
-                                                title={lesson.title}
-                                                subtitle={t("content.minutesRead", { minutes: lesson.minutesRead })}
-                                                meta={(
-                                                    <>
-                                                        {lesson.difficulty ? (
-                                                            <DifficultyChip difficulty={toDifficulty(lesson.difficulty)} />
-                                                        ) : null}
-                                                        {lesson.isPremium ? (
-                                                            <LockIcon
-                                                                aria-label={t("profileSettings.learning.outline.premium")}
-                                                                focusable="false"
-                                                                className="size-5 text-muted"
-                                                            />
-                                                        ) : null}
-                                                        {lesson.isRead ? (
-                                                            <CheckCircleIcon
-                                                                aria-label={t("profileSettings.learning.outline.read")}
-                                                                focusable="false"
-                                                                className="size-5 text-success-soft-foreground"
-                                                            />
-                                                        ) : (
-                                                            <CircleIcon
-                                                                aria-label={t("profileSettings.learning.outline.unread")}
-                                                                focusable="false"
-                                                                className="size-5 text-muted"
-                                                            />
-                                                        )}
-                                                    </>
-                                                )}
-                                            />
-                                        ),
-                                        () => (lesson.challenges.length > 0 ? (
-                                            <Box principle="cell-pad" className="pl-6">
-                                                <StackV gap={3} principle="sibling-stack" items={lesson.challenges.map((challenge) => () => (
+                                <StackV gap={3} principle="sibling-stack"
+                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                    items={module.lessons.map((lesson) => () => (
+                                        <StackV key={lesson.id} gap={3} principle="sibling-stack"
+                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                            items={[
+                                                () => (
                                                     <ListRow
-                                                        key={challenge.id}
-                                                        leading={(
-                                                            <PuzzlePieceIcon aria-hidden focusable="false" className="size-5 text-foreground" />
-                                                        )}
-                                                        title={challenge.title}
+                                                        title={lesson.title}
+                                                        subtitle={t("content.minutesRead", { minutes: lesson.minutesRead })}
                                                         meta={(
                                                             <>
-                                                                <DifficultyChip difficulty={toDifficulty(challenge.difficulty)} />
-                                                                <StatusChip tone={toStatusTone(challenge.status)}>
-                                                                    {t(`profileSettings.learning.outline.status.${challenge.status}`)}
-                                                                </StatusChip>
-                                                                {isAttempted(challenge.status) ? (
-                                                                    <Typography type="body-xs" color="muted">
-                                                                        {`${challenge.lastScore}/${challenge.maxScore}`}
-                                                                    </Typography>
+                                                                {lesson.difficulty ? (
+                                                                    <DifficultyChip difficulty={toDifficulty(lesson.difficulty)} />
                                                                 ) : null}
+                                                                {lesson.isPremium ? (
+                                                                    <LockIcon
+                                                                        aria-label={t("profileSettings.learning.outline.premium")}
+                                                                        focusable="false"
+                                                                        className="size-5 text-muted"
+                                                                    />
+                                                                ) : null}
+                                                                {lesson.isRead ? (
+                                                                    <CheckCircleIcon
+                                                                        aria-label={t("profileSettings.learning.outline.read")}
+                                                                        focusable="false"
+                                                                        className="size-5 text-success-soft-foreground"
+                                                                    />
+                                                                ) : (
+                                                                    <CircleIcon
+                                                                        aria-label={t("profileSettings.learning.outline.unread")}
+                                                                        focusable="false"
+                                                                        className="size-5 text-muted"
+                                                                    />
+                                                                )}
                                                             </>
                                                         )}
                                                     />
-                                                ))} />
-                                            </Box>
-                                        ) : null),
-                                    ]} />
-                                ))} />
+                                                ),
+                                                () => (lesson.challenges.length > 0 ? (
+                                                    <Box principle="cell-pad" className="pl-6"
+                                                        explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body.">
+                                                        <StackV gap={3} principle="sibling-stack"
+                                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                            items={lesson.challenges.map((challenge) => () => (
+                                                                <ListRow
+                                                                    key={challenge.id}
+                                                                    leading={(
+                                                                        <PuzzlePieceIcon aria-hidden focusable="false" className="size-5 text-foreground" />
+                                                                    )}
+                                                                    title={challenge.title}
+                                                                    meta={(
+                                                                        <>
+                                                                            <DifficultyChip difficulty={toDifficulty(challenge.difficulty)} />
+                                                                            <StatusChip tone={toStatusTone(challenge.status)}>
+                                                                                {t(`profileSettings.learning.outline.status.${challenge.status}`)}
+                                                                            </StatusChip>
+                                                                            {isAttempted(challenge.status) ? (
+                                                                                <Typography type="body-xs" color="muted">
+                                                                                    {`${challenge.lastScore}/${challenge.maxScore}`}
+                                                                                </Typography>
+                                                                            ) : null}
+                                                                        </>
+                                                                    )}
+                                                                />
+                                                            ))} />
+                                                    </Box>
+                                                ) : null),
+                                            ]} />
+                                    ))} />
                             ),
                         }
                     })}

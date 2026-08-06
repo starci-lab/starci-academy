@@ -41,46 +41,48 @@ export const ApplyMethodSection = ({
         <LabeledCard
             label={t("jobs.post.sections.applyMethod")}
         >
-            <StackV gap={4} principle="content-row" items={[
-                () => (
-                    <TabsCard
-                        variant="primary"
-                        leftTabs={{
-                            selectedKey: applyMethod,
-                            ariaLabel: t("jobs.post.applyMethod.toggleAria"),
-                            onSelectionChange: (key) => setValue("applyMethod", String(key) as JobApplyMethod),
-                            items: [
-                                { key: JobApplyMethod.ExternalUrl, label: t("jobs.post.applyMethod.externalUrl") },
-                                { key: JobApplyMethod.Email, label: t("jobs.post.applyMethod.email") },
-                            ],
-                        }}
-                    />
-                ),
-                () => (applyMethod === JobApplyMethod.ExternalUrl ? (
-                    <TextField variant="secondary">
-                        <Label htmlFor="job-post-apply-url">{t("jobs.post.applyMethod.urlLabel")}</Label>
-                        <Input
-                            id="job-post-apply-url"
-                            type="url"
-                            placeholder={t("jobs.post.applyMethod.urlPlaceholder")}
-                            maxLength={URL_MAX}
-                            value={applyUrl}
-                            onChange={(event) => setValue("applyUrl", event.target.value)}
+            <StackV gap={4} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                items={[
+                    () => (
+                        <TabsCard
+                            variant="primary"
+                            leftTabs={{
+                                selectedKey: applyMethod,
+                                ariaLabel: t("jobs.post.applyMethod.toggleAria"),
+                                onSelectionChange: (key) => setValue("applyMethod", String(key) as JobApplyMethod),
+                                items: [
+                                    { key: JobApplyMethod.ExternalUrl, label: t("jobs.post.applyMethod.externalUrl") },
+                                    { key: JobApplyMethod.Email, label: t("jobs.post.applyMethod.email") },
+                                ],
+                            }}
                         />
-                    </TextField>
-                ) : (
-                    <TextField variant="secondary">
-                        <Label htmlFor="job-post-apply-email">{t("jobs.post.applyMethod.emailLabel")}</Label>
-                        <Input
-                            id="job-post-apply-email"
-                            type="email"
-                            placeholder={t("jobs.post.applyMethod.emailPlaceholder")}
-                            value={applyEmail}
-                            onChange={(event) => setValue("applyEmail", event.target.value)}
-                        />
-                    </TextField>
-                )),
-            ]} />
+                    ),
+                    () => (applyMethod === JobApplyMethod.ExternalUrl ? (
+                        <TextField variant="secondary">
+                            <Label htmlFor="job-post-apply-url">{t("jobs.post.applyMethod.urlLabel")}</Label>
+                            <Input
+                                id="job-post-apply-url"
+                                type="url"
+                                placeholder={t("jobs.post.applyMethod.urlPlaceholder")}
+                                maxLength={URL_MAX}
+                                value={applyUrl}
+                                onChange={(event) => setValue("applyUrl", event.target.value)}
+                            />
+                        </TextField>
+                    ) : (
+                        <TextField variant="secondary">
+                            <Label htmlFor="job-post-apply-email">{t("jobs.post.applyMethod.emailLabel")}</Label>
+                            <Input
+                                id="job-post-apply-email"
+                                type="email"
+                                placeholder={t("jobs.post.applyMethod.emailPlaceholder")}
+                                value={applyEmail}
+                                onChange={(event) => setValue("applyEmail", event.target.value)}
+                            />
+                        </TextField>
+                    )),
+                ]} />
         </LabeledCard>
     )
 }

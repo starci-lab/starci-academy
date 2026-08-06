@@ -76,6 +76,7 @@ const AuthorByline = ({
     <StackH
         gap={2}
         principle="separator-dot"
+        explain="Places a middle-dot separator between short meta peers so the items read as one inline list."
         classNames={["min-w-0", ...(classNames ?? [])]}
         isSkeleton={isSkeleton}
         items={[
@@ -83,6 +84,7 @@ const AuthorByline = ({
                 <StackH
                     gap={2}
                     principle="icon-text"
+                    explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
                     isSkeleton={isSkeleton}
                     items={[
                         () => (

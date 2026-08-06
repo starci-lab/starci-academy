@@ -62,12 +62,14 @@ const ratingTileBody = (option: RatingOption, position: number): ReactNode => (
     <StackV
         gap={3}
         principle="sibling-stack"
+        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
 
         items={[
             () => (
                 <StackH
                     gap={3}
                     principle="chip-row"
+                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                     align="center"
                     justify="between"
 
@@ -109,7 +111,8 @@ const RatingBar = ({
     return (
         <div>
             <div>
-                <SurfaceCardPressableGroup ariaLabel={ariaLabel} columns={{ base: 2, md: 4 }} keyboardShortcut items={items} isSkeleton={isSkeleton} principle="content-row" />
+                <SurfaceCardPressableGroup ariaLabel={ariaLabel} columns={{ base: 2, md: 4 }} keyboardShortcut items={items} isSkeleton={isSkeleton} principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title." />
             </div>
         </div>
     )

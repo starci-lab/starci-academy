@@ -221,70 +221,82 @@ export const _FlashcardSessionStats = ({
         ]
 
         contentNode = (
-            <StackV gap={6} principle="block-boundary" isSkeleton={isSkeleton} items={[
+            <StackV gap={6} principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                isSkeleton={isSkeleton} items={[
                 // HERO — the 4-grade SM-2 distribution (outcome first).
-                () => (
-                    <SurfaceCard isSkeleton={isSkeleton} body={() => (
-                        <StackV gap={5} principle="group-boundary" isSkeleton={isSkeleton} items={[
-                            () => (
-                                <StackV gap={3} principle="sibling-stack" isSkeleton={isSkeleton} items={gradeRows.map((row) => () => (
-                                    <StackH gap={3} principle="content-row" isSkeleton={isSkeleton} items={[
-                                        () => <Typography size="sm" classNames={["shrink-0"]} isSkeleton={isSkeleton} text={row.label} />,
-                                        () => (isSkeleton
-                                            ? <ProgressMeter isSkeleton color={row.color} classNames={["flex-1"]} />
-                                            : <ProgressMeter value={row.count} max={gradeTotal} color={row.color} classNames={["flex-1"]} />),
-                                        () => <Typography size="sm" color="muted" classNames={["shrink-0"]} isSkeleton={isSkeleton} text={row.countPercentLabel} />,
-                                    ]} />
-                                ))} />
-                            ),
-                            // subtle secondary rollup — never replaces the 4 grades above
-                            () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.rollupLabel} />,
-                        ]} />
-                    )} />
-                ),
+                    () => (
+                        <SurfaceCard isSkeleton={isSkeleton} body={() => (
+                            <StackV gap={5} principle="group-boundary"
+                                explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+                                isSkeleton={isSkeleton} items={[
+                                    () => (
+                                        <StackV gap={3} principle="sibling-stack"
+                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                            isSkeleton={isSkeleton} items={gradeRows.map((row) => () => (
+                                                <StackH gap={3} principle="content-row"
+                                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                    isSkeleton={isSkeleton} items={[
+                                                        () => <Typography size="sm" classNames={["shrink-0"]} isSkeleton={isSkeleton} text={row.label} />,
+                                                        () => (isSkeleton
+                                                            ? <ProgressMeter isSkeleton color={row.color} classNames={["flex-1"]} />
+                                                            : <ProgressMeter value={row.count} max={gradeTotal} color={row.color} classNames={["flex-1"]} />),
+                                                        () => <Typography size="sm" color="muted" classNames={["shrink-0"]} isSkeleton={isSkeleton} text={row.countPercentLabel} />,
+                                                    ]} />
+                                            ))} />
+                                    ),
+                                    // subtle secondary rollup — never replaces the 4 grades above
+                                    () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.rollupLabel} />,
+                                ]} />
+                        )} />
+                    ),
 
-                // session metric tiles
-                () => (
+                    // session metric tiles
+                    () => (
                     // teacher-hold: flashcards-remain-session-stats-metric-grid-gap4-no-token —
                     // four metric tiles at preserved step 4; no card-grid token.
-                    <Section
-                        header={{ title: labels.metricsLabel, level: 3 }}
-                        isSkeleton={isSkeleton}
-                        body={() => <Grid columns={{ base: 2, md: 4 }} principle="content-row" isSkeleton={isSkeleton} items={metricItems} />}
-                    />
-                ),
+                        <Section
+                            header={{ title: labels.metricsLabel, level: 3 }}
+                            isSkeleton={isSkeleton}
+                            body={() => <Grid columns={{ base: 2, md: 4 }} principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                isSkeleton={isSkeleton} items={metricItems} />}
+                        />
+                    ),
 
-                // most-forgotten tags — grouped from grade-0 cards
-                ...(showWeakTags ? [() => (
-                    <SurfaceCardList label={labels.weakTagsHeading} isSkeleton={isSkeleton} items={weakTagItems} />
-                )] : []),
+                    // most-forgotten tags — grouped from grade-0 cards
+                    ...(showWeakTags ? [() => (
+                        <SurfaceCardList label={labels.weakTagsHeading} isSkeleton={isSkeleton} items={weakTagItems} />
+                    )] : []),
 
-                // PRIMARY payoff — self-hiding RAG "study your weak spot" list, keyed off the
-                // weak tags. RelatedContentList is a real block (self-fetching) — a presentational
-                // component may render a connected child (split.md). Hidden while shimmering (it
-                // fetches its own state).
-                ...(!isSkeleton ? [() => (
-                    <RelatedContentList
-                        courseId={courseId}
-                        courseDisplayId={courseDisplayId}
-                        query={relatedQuery}
-                        label={labels.studyHeading}
-                    />
-                )] : []),
+                    // PRIMARY payoff — self-hiding RAG "study your weak spot" list, keyed off the
+                    // weak tags. RelatedContentList is a real block (self-fetching) — a presentational
+                    // component may render a connected child (split.md). Hidden while shimmering (it
+                    // fetches its own state).
+                    ...(!isSkeleton ? [() => (
+                        <RelatedContentList
+                            courseId={courseId}
+                            courseDisplayId={courseDisplayId}
+                            query={relatedQuery}
+                            label={labels.studyHeading}
+                        />
+                    )] : []),
 
-                // onward path — never a dead end, even with no weak tags
-                ...(!isSkeleton ? [() => (
-                    <Button variant="tertiary" label={labels.backToReviewLabel} onPress={onBack} classNames={["self-center"]} />
-                )] : []),
-            ]} />
+                    // onward path — never a dead end, even with no weak tags
+                    ...(!isSkeleton ? [() => (
+                        <Button variant="tertiary" label={labels.backToReviewLabel} onPress={onBack} classNames={["self-center"]} />
+                    )] : []),
+                ]} />
         )
     }
 
     return (
-        <StackV gap={1} padding={{ base: { x: 5, y: 6 }, sm: { x: 6 } }} items={[
+        <StackV identity={{ tier: "page", component: "FlashcardSessionStats" }} gap={1} padding={{ base: { x: 5, y: 6 }, sm: { x: 6 } }} items={[
             () => (
                 <Container size="md" padding={1} body={() => (
-                    <StackV gap={6} principle="block-boundary" items={[() => header, () => contentNode]} />
+                    <StackV gap={6} principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        items={[() => header, () => contentNode]}  />
                 )} />
             ),
         ]} />

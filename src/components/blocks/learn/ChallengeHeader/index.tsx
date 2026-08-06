@@ -142,17 +142,13 @@ const ChallengeHeader = ({
             <PageHeader
 
                 isSkeleton={isSkeleton}
-                breadcrumb={() =>
-                    isSkeleton ? (
-                        <Typography size="sm" isSkeleton classNames={["w-1/4"]} />
-                    ) : (
-                        <LinkBack
-                            label={backLabel}
-                            onPress={onBackPress}
-
-                        />
-                    )
-                }
+                breadcrumb={() => (
+                    <LinkBack
+                        label={backLabel}
+                        onPress={onBackPress}
+                        isSkeleton={isSkeleton}
+                    />
+                )}
                 title={title}
                 // `PageHeader.description` is now a plain `string` (COMPOSITE-4), so this
                 // block no longer wraps it in `RichText` at the call site — the field is
@@ -160,7 +156,9 @@ const ChallengeHeader = ({
                 // and `PageHeader` now owns the muted styling + skeleton swap itself.
                 description={description}
                 meta={({ isSkeleton }: SkeletonProps) =>
-                    <StackH gap={3} align="center" principle="chip-row" isSkeleton={isSkeleton} items={[() => metaRow]} />
+                    <StackH gap={3} align="center" principle="chip-row"
+                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                        isSkeleton={isSkeleton} items={[() => metaRow]}  />
                 }
             />
         </div>

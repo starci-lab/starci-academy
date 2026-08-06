@@ -6,7 +6,7 @@ import {
 import { CaretDownIcon } from "@phosphor-icons/react"
 import { FieldFrame, fieldName } from "@sb-components/composites/form/_field/FieldFrame"
 import type { BaseSelectProps, SelectOption } from "../_select/types"
-import { TriggerSkeleton } from "../_select/TriggerSkeleton"
+import { TriggerSkeleton } from "@sb-components/atoms/forms/_select/TriggerSkeleton"
 
 /**
  * `SelectMulti` — multi-select dropdown (HeroUI Select `selectionMode="multiple"`).

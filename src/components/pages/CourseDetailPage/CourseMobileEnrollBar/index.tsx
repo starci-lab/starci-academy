@@ -51,34 +51,36 @@ export const CourseMobileEnrollBar = ({ className }: CourseMobileEnrollBarProps)
 
     return (
         <StickyBottomBar className={className}>
-            <StackH gap={4} principle="content-row" justify="between" align="center" items={[
-                () => (previewPending ? (
-                    <Skeleton.Typography type="body" width="1/4" />
-                ) : hasLoyalty && preview ? (
-                    <PriceTagInline
-                        discounted={preview.discountedPriceVnd}
-                        original={preview.originalPriceVnd}
+            <StackH gap={4} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                justify="between" align="center" items={[
+                    () => (previewPending ? (
+                        <Skeleton.Typography type="body" width="1/4" />
+                    ) : hasLoyalty && preview ? (
+                        <PriceTagInline
+                            discounted={preview.discountedPriceVnd}
+                            original={preview.originalPriceVnd}
 
-                    />
-                ) : active ? (
-                    <PriceTagInline
-                        discounted={active.priceVnd}
-                        original={active.listPriceVnd}
+                        />
+                    ) : active ? (
+                        <PriceTagInline
+                            discounted={active.priceVnd}
+                            original={active.listPriceVnd}
 
-                    />
-                ) : null),
-                () => (isEnrolled ? (
-                    <Button variant="primary" onPress={onContinueLearning}>
-                        <GraduationCapIcon className="size-5" />
-                        {t("course.continueLearning")}
-                    </Button>
-                ) : (
-                    <Button variant="primary" onPress={onEnroll}>
-                        {t("course.enroll")}
-                        <ArrowRightIcon className="size-5" />
-                    </Button>
-                )),
-            ]} />
+                        />
+                    ) : null),
+                    () => (isEnrolled ? (
+                        <Button variant="primary" onPress={onContinueLearning}>
+                            <GraduationCapIcon className="size-5" />
+                            {t("course.continueLearning")}
+                        </Button>
+                    ) : (
+                        <Button variant="primary" onPress={onEnroll}>
+                            {t("course.enroll")}
+                            <ArrowRightIcon className="size-5" />
+                        </Button>
+                    )),
+                ]} />
         </StickyBottomBar>
     )
 }

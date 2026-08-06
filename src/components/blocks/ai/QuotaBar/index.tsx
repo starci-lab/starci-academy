@@ -93,6 +93,7 @@ const QuotaBar = ({
         <StackH
             gap={3}
             principle="value-row"
+            explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
             align="center"
             justify="between"
             isSkeleton={isSkeleton}
@@ -149,7 +150,7 @@ const QuotaBar = ({
     )
 
     return (
-        <StackV
+        <StackV identity={{ tier: "block", component: "QuotaBar" }}
             gap={4}
             classNames={classNames}
             isSkeleton={isSkeleton}

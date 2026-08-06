@@ -116,6 +116,13 @@ export const SectionCard = ({
             <StackV
                 gap={contentGap}
                 principle={contentGap === 6 ? "block-boundary" : contentGap === 5 ? "group-boundary" : "card-caption"}
+                explain={
+                    contentGap === 6
+                        ? "Separates the section header from the card body as major regions so a roomier PricingCard rhythm does not collapse into one band."
+                        : contentGap === 5
+                            ? "Spaces the header band and body as distinct section groups so they stay as separate bands rather than a flat peer list."
+                            : "Stacks the optional header above the body so the title row stays on its own track above the card content."
+                }
                 align={contentAlign}
                 classNames={fillHeight ? ["h-full"] : undefined}
                 body={() => (
@@ -125,12 +132,14 @@ export const SectionCard = ({
                                 <StackH
                                     gap={3}
                                     principle="flex-action"
+                                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                                     justify="between"
                                     items={[
                                         () => (
                                             <StackH
                                                 gap={2}
                                                 principle="icon-text"
+                                                explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
                                                 classNames={["min-w-0"]}
                                                 items={[
                                                     ...(Icon ? [() => <Icon />] : []),

@@ -23,16 +23,20 @@ export const ChangelogListSkeleton = ({ className }: WithClassNames<undefined>) 
         <SurfaceListCard className={className}>
             {Array.from({ length: SKELETON_ROW_COUNT }).map((_, index) => (
                 <SurfaceListCardItem key={index}>
-                    <StackV gap={3} principle="sibling-stack" items={[
-                        () => (
-                            <StackH gap={3} principle="flex-action" align="center" items={[
-                                () => <Skeleton.Typography type="body-xs" width="1/4" />,
-                                () => <Skeleton className="h-4 w-16 shrink-0 rounded-full" />,
-                            ]} />
-                        ),
-                        () => <Skeleton.Typography type="body-sm" width="3/4" />,
-                        () => <Skeleton.Typography type="body-sm" width="1/2" />,
-                    ]} />
+                    <StackV gap={3} principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                        items={[
+                            () => (
+                                <StackH gap={3} principle="flex-action"
+                                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                    align="center" items={[
+                                        () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                                        () => <Skeleton className="h-4 w-16 shrink-0 rounded-full" />,
+                                    ]} />
+                            ),
+                            () => <Skeleton.Typography type="body-sm" width="3/4" />,
+                            () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                        ]} />
                 </SurfaceListCardItem>
             ))}
         </SurfaceListCard>

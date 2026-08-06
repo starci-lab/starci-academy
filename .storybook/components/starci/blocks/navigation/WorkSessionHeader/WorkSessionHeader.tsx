@@ -87,9 +87,11 @@ const WorkSessionHeader = ({
         return (
             <div className="border-b border-default bg-surface">
                 <StackH gap={4} principle="content-row" align="center" isSkeleton={isSkeleton} items={[() => skeletonRow]} />
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 {/* `cell-pad` is the closest registered padding token to this wrapper's
                     `p-2` — the frame's `padding={3}` keeps the exact 8px inset. */}
                 <StackV gap={1} principle="cell-pad" padding={3} isSkeleton={isSkeleton} items={[() => <HeroSkeleton className="h-1 w-full rounded-full" />]} />
+                explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body."
             </div>
         )
     }
@@ -153,9 +155,11 @@ const WorkSessionHeader = ({
     return (
         <div className="border-b border-default bg-surface">
             <StackH gap={4} principle="content-row" align="center" isSkeleton={isSkeleton} items={[() => headerRow]} />
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             {/* The rail. Segments are laid out by a frame so the seam stays on scale; each
                 segment carries its own hit zone, because a 4px bar is not a touch target. */}
             <StackH gap={2} principle="chip-row" align="center" isSkeleton={isSkeleton} items={[() => railSegments]} />
+            explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
         </div>
     )
 }

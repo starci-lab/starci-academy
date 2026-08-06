@@ -25,3 +25,6 @@ export const SkeletonMetric = ({ className }: SkeletonMetricProps) => (
         </CardContent>
     </Card>
 )
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonMetric` as the public name. */
+export { SkeletonMetric as Metric }

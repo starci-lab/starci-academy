@@ -63,7 +63,9 @@ export const ContactFaq = ({ className }: ContactFaqProps) => {
     ]
     return (
         <LabeledCard label={t("contact.faq.title")} className={className}>
-            <StackV gap={5} principle="group-boundary" items={bodyItems} />
+            <StackV gap={5} principle="group-boundary"
+                explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+                items={bodyItems}  />
         </LabeledCard>
     )
 }

@@ -24,14 +24,16 @@ export const AdminUploadVideoHeader = ({
 }: AdminUploadVideoHeaderProps = {}) => {
     return (
         <div className={cn("text-center space-y-2 pb-2", className)}>
-            <Box principle="pill-pad" className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-2 text-xs font-semibold tracking-wider text-indigo-300 uppercase">
+            <Box principle="pill-pad" className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-4 py-2 text-xs font-semibold tracking-wider text-indigo-300 uppercase"
+                explain="Pill/chip inset — not control-pad, because this pads a compact badge shape rather than a form control.">
                 <VideoCameraIcon className="h-3.5 w-3.5" />
                 Admin Tools
             </Box>
             <h1 className="text-3xl @app-md:text-4xl font-bold bg-gradient-to-r from-white via-indigo-200 to-purple-300 bg-clip-text text-transparent">
                 Video Upload
             </h1>
-            <Box principle="center-measure" className="mx-auto">
+            <Box principle="center-measure" className="mx-auto"
+                explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
                 <p className="text-sm text-slate-400 max-w-md">
                     Upload videos via S3 presigned URLs. Files are sent directly to storage providers.
                 </p>
@@ -39,3 +41,6 @@ export const AdminUploadVideoHeader = ({
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `AdminUploadVideoHeader` as the public name. */
+export { AdminUploadVideoHeader as Header }

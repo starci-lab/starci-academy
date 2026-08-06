@@ -70,6 +70,7 @@ const QaConversationHeader = ({
         <StackH
             gap={2}
             principle="icon-text"
+            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
             align="center"
             isSkeleton={isSkeleton}
 
@@ -149,7 +150,9 @@ const QaConversationHeader = ({
 
     return (
         <div>
-            <StackH gap={4} principle="content-row" align="center" isSkeleton={isSkeleton} items={[() => headerRow]} />
+            <StackH gap={4} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                align="center" isSkeleton={isSkeleton} items={[() => headerRow]}  />
         </div>
     )
 }

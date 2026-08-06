@@ -42,3 +42,6 @@ export const SkeletonTable = ({ rows = 3, cols = 3, className }: SkeletonTablePr
         </Table.ScrollContainer>
     </Table>
 )
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonTable` as the public name. */
+export { SkeletonTable as Table }

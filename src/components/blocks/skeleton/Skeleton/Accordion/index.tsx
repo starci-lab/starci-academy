@@ -37,3 +37,6 @@ export const SkeletonAccordion = ({
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonAccordion` as the public name. */
+export { SkeletonAccordion as Accordion }

@@ -119,7 +119,7 @@ const PaginationBase = ({
                             <HeroPagination.Item key={`ellipsis-${index}`}>
                                 <HeroPagination.Ellipsis
 
-                            />
+                                />
                             </HeroPagination.Item>
                         ) : (
                             <PaginationLink

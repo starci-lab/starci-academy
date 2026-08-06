@@ -56,6 +56,7 @@ export const FounderCard = ({ className }: FounderCardProps) => {
                 gap={4}
                 align="center"
                 principle="chip-row"
+                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                 items={SOCIALS.map(({ key, href, icon: Icon }) => () => (
                     <Link
                         key={key}

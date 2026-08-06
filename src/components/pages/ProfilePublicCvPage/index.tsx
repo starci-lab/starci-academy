@@ -83,7 +83,9 @@ export const ProfilePublicCvPage = () => {
     if (isSkeleton) {
         return (
             <Box className={RESTING_HEIGHT}>
-                <Box principle="center-measure" className={PAPER_FRAME}>
+                <Box principle="center-measure" className={PAPER_FRAME}
+                    explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
+                >
                     <Skeleton className="h-full w-full" />
                 </Box>
             </Box>
@@ -117,6 +119,7 @@ export const ProfilePublicCvPage = () => {
             identity={{ tier: "block", component: "ProfilePublicCvPage" }}
             gap={5}
             principle="group-boundary"
+            explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
             items={[
                 ...(isSelf ? [() => (
                     <div className="flex justify-end">
@@ -125,7 +128,9 @@ export const ProfilePublicCvPage = () => {
                 )] : []),
                 () => (
                     <Box className={LOADED_HEIGHT}>
-                        <Box principle="center-measure" className={PAPER_FRAME}>
+                        <Box principle="center-measure" className={PAPER_FRAME}
+                            explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
+                        >
                             <iframe
                                 title={pdfTitle}
                                 src={pdfUrl}

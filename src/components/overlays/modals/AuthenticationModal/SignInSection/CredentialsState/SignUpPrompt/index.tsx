@@ -27,5 +27,7 @@ export const SignUpPrompt = ({
         () => <Typography size="xs" color="muted" text={t("auth.signIn.noAccount")} />,
         () => <Typography size="xs" isLink onPress={onSwitchToSignUp} text={t("auth.signIn.signUp")} />,
     ]
-    return <StackH gap={3} principle="flex-action" justify="center" items={items} />
+    return <StackH identity={{ tier: "overlay", component: "SignUpPrompt" }} gap={3} principle="flex-action"
+        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+        justify="center" items={items}  />
 }

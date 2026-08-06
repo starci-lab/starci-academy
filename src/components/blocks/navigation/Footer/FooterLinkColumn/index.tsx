@@ -34,5 +34,5 @@ export const FooterLinkColumn = ({ title, links }: FooterLinkColumnProps) => {
         </>
     )
 
-    return <StackV gap={4} items={[() => column]} />
+    return <StackV identity={{ tier: "block", component: "FooterLinkColumn" }} gap={4} items={[() => column]} />
 }

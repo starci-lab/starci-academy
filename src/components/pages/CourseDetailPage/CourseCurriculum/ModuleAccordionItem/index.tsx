@@ -57,60 +57,67 @@ export const ModuleAccordionItem = ({ module }: ModuleAccordionItemProps) => {
         <Accordion.Item aria-label={module.title}>
             <Accordion.Heading>
                 <Accordion.Trigger>
-                    <StackH gap={4} principle="content-row" classNames={["min-w-0", "flex-1"]} justify="between" align="center" items={[
-                        () => (
-                            <Typography type="body-sm" weight="medium" truncate className="min-w-0">
-                                {module.title}
-                            </Typography>
-                        ),
-                        () => (
-                            <Cluster
-                                gap={3}
-                                principle="chip-row"
-                                classNames={["shrink-0"]}
-                                items={[
-                                    ...(contentTier ? [() => (
-                                        <StatusChip tone={TIER_TONE[contentTier]}>
-                                            {t(`courseLanding.tier.${contentTier}`)}
-                                        </StatusChip>
-                                    )] : []),
-                                    ...(previews.length > 0 ? [() => (
-                                        <StatusChip tone="neutral">
-                                            {t("courseLanding.previewCount", { count: previews.length })}
-                                        </StatusChip>
-                                    )] : []),
-                                ]}
-                            />
-                        ),
-                    ]} />
+                    <StackH gap={4} principle="content-row"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                        classNames={["min-w-0", "flex-1"]} justify="between" align="center" items={[
+                            () => (
+                                <Typography type="body-sm" weight="medium" truncate className="min-w-0">
+                                    {module.title}
+                                </Typography>
+                            ),
+                            () => (
+                                <Cluster
+                                    gap={3}
+                                    principle="chip-row"
+                                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                    classNames={["shrink-0"]}
+                                    items={[
+                                        ...(contentTier ? [() => (
+                                            <StatusChip tone={TIER_TONE[contentTier]}>
+                                                {t(`courseLanding.tier.${contentTier}`)}
+                                            </StatusChip>
+                                        )] : []),
+                                        ...(previews.length > 0 ? [() => (
+                                            <StatusChip tone="neutral">
+                                                {t("courseLanding.previewCount", { count: previews.length })}
+                                            </StatusChip>
+                                        )] : []),
+                                    ]}
+                                />
+                            ),
+                        ]} />
                 </Accordion.Trigger>
             </Accordion.Heading>
             <Accordion.Panel>
                 <Accordion.Body>
-                    <StackV gap={4} principle="card-caption" items={[
-                        () => (
-                            <Typography type="body-xs" color="muted">
-                                {t("courseLanding.moduleMeta", { lessons: lessonCount, minutes })}
-                            </Typography>
-                        ),
-                        () => (module.description ? (
-                            <MarkdownContent markdown={module.description} />
-                        ) : null),
-                        () => (previews.length > 0 ? (
-                            <ul data-principle="sibling-stack" className="flex flex-col gap-2">
-                                {previews.map((preview) => (
-                                    <StackH key={preview.id} as="li" gap={3} principle="identity" align="start" items={[
-                                        () => <CaretRightIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />,
-                                        () => (
-                                            <Typography type="body-sm" color="muted">
-                                                {preview.text}
-                                            </Typography>
-                                        ),
-                                    ]} />
-                                ))}
-                            </ul>
-                        ) : null),
-                    ]} />
+                    <StackV gap={4} principle="card-caption"
+                        explain="Holds caption text under card media so the caption stays attached to the image above it."
+                        items={[
+                            () => (
+                                <Typography type="body-xs" color="muted">
+                                    {t("courseLanding.moduleMeta", { lessons: lessonCount, minutes })}
+                                </Typography>
+                            ),
+                            () => (module.description ? (
+                                <MarkdownContent markdown={module.description} />
+                            ) : null),
+                            () => (previews.length > 0 ? (
+                                <ul data-principle="sibling-stack" className="flex flex-col gap-2">
+                                    {previews.map((preview) => (
+                                        <StackH key={preview.id} as="li" gap={3} principle="identity"
+                                            explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
+                                            align="start" items={[
+                                                () => <CaretRightIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />,
+                                                () => (
+                                                    <Typography type="body-sm" color="muted">
+                                                        {preview.text}
+                                                    </Typography>
+                                                ),
+                                            ]} />
+                                    ))}
+                                </ul>
+                            ) : null),
+                        ]} />
                 </Accordion.Body>
             </Accordion.Panel>
         </Accordion.Item>

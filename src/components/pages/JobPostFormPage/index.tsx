@@ -64,86 +64,96 @@ export const JobPostFormPage = ({ className }: JobPostFormPageProps) => {
 
     if (!authenticated) {
         return (
-            <Box principle="center-measure" className={cn("mx-auto max-w-2xl p-6 py-16 text-center", className)}>
-                <StackV gap={3} principle="sibling-stack" align="center" items={[
-                    () => (
-                        <Typography type="h5" weight="semibold" align="center">
-                            {t("jobs.post.signedOut.title")}
-                        </Typography>
-                    ),
-                    () => (
-                        <Typography type="body-sm" color="muted" align="center">
-                            {t("jobs.post.signedOut.description")}
-                        </Typography>
-                    ),
-                ]} />
+            <Box principle="center-measure"
+                explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
+                className={cn("mx-auto max-w-2xl p-6 py-16 text-center", className)}>
+                <StackV gap={3} principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                    align="center" items={[
+                        () => (
+                            <Typography type="h5" weight="semibold" align="center">
+                                {t("jobs.post.signedOut.title")}
+                            </Typography>
+                        ),
+                        () => (
+                            <Typography type="body-sm" color="muted" align="center">
+                                {t("jobs.post.signedOut.description")}
+                            </Typography>
+                        ),
+                    ]} />
             </Box>
         )
     }
 
     return (
-        <Box principle="center-measure" className={cn("mx-auto max-w-2xl p-6", className)}>
-            <StackV gap={7} principle="layout-split" items={[
-                () => (
-                    <PageHeader
-                        title={t("jobs.post.title")}
-                        description={t("jobs.post.description")}
-                    />
-                ),
-                () => (
-                    <form onSubmit={onSubmit}>
-                        <StackV gap={6} principle="block-boundary" items={[
-                            () => (
-                                <CompanySection
-                                    companyId={companyId}
-                                    companyLabel={companyLabel}
-                                    newCompanyTitle={newCompanyTitle}
-                                    newCompanyLogoUrl={newCompanyLogoUrl}
-                                    newCompanyWebsiteUrl={newCompanyWebsiteUrl}
-                                    setValue={setValue}
-                                />
-                            ),
-                            () => (
-                                <PositionSection
-                                    title={title}
-                                    employmentType={employmentType}
-                                    workMode={workMode}
-                                    location={location}
-                                    salaryMin={salaryMin}
-                                    salaryMax={salaryMax}
-                                    description={description}
-                                    requirements={requirements}
-                                    setValue={setValue}
-                                />
-                            ),
-                            () => (
-                                <ApplyMethodSection
-                                    applyMethod={applyMethod}
-                                    applyUrl={applyUrl}
-                                    applyEmail={applyEmail}
-                                    setValue={setValue}
-                                />
-                            ),
-                            () => (
-                                <Button
-                                    type="submit"
-                                    variant="primary"
-                                    size="lg"
-                                    isDisabled={isSubmitting}
-                                    isPending={isSubmitting}
-                                >
-                                    {({ isPending }) => (
-                                        <>
-                                            {isPending ? <Spinner color="current" size="sm" /> : null}
-                                            {t("jobs.post.submit")}
-                                        </>
-                                    )}
-                                </Button>
-                            ),
-                        ]} />
-                    </form>
-                ),
-            ]} />
+        <Box principle="center-measure"
+            explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
+            className={cn("mx-auto max-w-2xl p-6", className)}>
+            <StackV gap={7} principle="layout-split"
+                explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+                items={[
+                    () => (
+                        <PageHeader
+                            title={t("jobs.post.title")}
+                            description={t("jobs.post.description")}
+                        />
+                    ),
+                    () => (
+                        <form onSubmit={onSubmit}>
+                            <StackV gap={6} principle="block-boundary"
+                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                                items={[
+                                    () => (
+                                        <CompanySection
+                                            companyId={companyId}
+                                            companyLabel={companyLabel}
+                                            newCompanyTitle={newCompanyTitle}
+                                            newCompanyLogoUrl={newCompanyLogoUrl}
+                                            newCompanyWebsiteUrl={newCompanyWebsiteUrl}
+                                            setValue={setValue}
+                                        />
+                                    ),
+                                    () => (
+                                        <PositionSection
+                                            title={title}
+                                            employmentType={employmentType}
+                                            workMode={workMode}
+                                            location={location}
+                                            salaryMin={salaryMin}
+                                            salaryMax={salaryMax}
+                                            description={description}
+                                            requirements={requirements}
+                                            setValue={setValue}
+                                        />
+                                    ),
+                                    () => (
+                                        <ApplyMethodSection
+                                            applyMethod={applyMethod}
+                                            applyUrl={applyUrl}
+                                            applyEmail={applyEmail}
+                                            setValue={setValue}
+                                        />
+                                    ),
+                                    () => (
+                                        <Button
+                                            type="submit"
+                                            variant="primary"
+                                            size="lg"
+                                            isDisabled={isSubmitting}
+                                            isPending={isSubmitting}
+                                        >
+                                            {({ isPending }) => (
+                                                <>
+                                                    {isPending ? <Spinner color="current" size="sm" /> : null}
+                                                    {t("jobs.post.submit")}
+                                                </>
+                                            )}
+                                        </Button>
+                                    ),
+                                ]} />
+                        </form>
+                    ),
+                ]} />
         </Box>
     )
 }

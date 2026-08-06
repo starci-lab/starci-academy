@@ -71,35 +71,41 @@ export const LoginPage = ({ className }: LoginPageProps) => {
     }
 
     return (
-        <Box principle="center-measure" className={cn("mx-auto max-w-2xl p-6 py-16", className)}>
-            <StackV gap={6} principle="block-boundary" items={[
-                () => (
-                    <StackH gap={1} principle="name-handle" justify="center" items={[
-                        () => (
-                            <Link
-                                href={pathConfig().locale(locale).home().build()}
-                                className="font-semibold text-lg"
-                            >
-                                {t("nav.brand")}
-                            </Link>
-                        ),
-                    ]} />
-                ),
-                () => (redirectTarget ? (
-                    <div className="text-center text-xs text-muted">
-                        {authenticationModalTab === AuthenticationModalTab.SignUp
-                            ? t("auth.signUp.desc")
-                            : t("auth.signIn.desc")}
-                    </div>
-                ) : null),
-                () => (
-                    <Card>
-                        <CardContent>
-                            {renderSection()}
-                        </CardContent>
-                    </Card>
-                ),
-            ]} />
+        <Box principle="center-measure"
+            explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
+            className={cn("mx-auto max-w-2xl p-6 py-16", className)}>
+            <StackV gap={6} principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={[
+                    () => (
+                        <StackH gap={1} principle="name-handle"
+                            explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
+                            justify="center" items={[
+                                () => (
+                                    <Link
+                                        href={pathConfig().locale(locale).home().build()}
+                                        className="font-semibold text-lg"
+                                    >
+                                        {t("nav.brand")}
+                                    </Link>
+                                ),
+                            ]} />
+                    ),
+                    () => (redirectTarget ? (
+                        <div className="text-center text-xs text-muted">
+                            {authenticationModalTab === AuthenticationModalTab.SignUp
+                                ? t("auth.signUp.desc")
+                                : t("auth.signIn.desc")}
+                        </div>
+                    ) : null),
+                    () => (
+                        <Card>
+                            <CardContent>
+                                {renderSection()}
+                            </CardContent>
+                        </Card>
+                    ),
+                ]} />
         </Box>
     )
 }

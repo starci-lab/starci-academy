@@ -1,6 +1,6 @@
 import React from "react"
 import { type SkeletonProps } from "@/components/frames/_slot"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { ArrowRightIcon, CheckCircleIcon, WarningCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
@@ -10,7 +10,6 @@ import { Callout, type CalloutIcon } from "@/components/composites/feedback/Call
 import { MarkdownContent } from "@/components/composites/viewers/MarkdownContent"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { ScoreRow } from "./ScoreRow"
-import { ScoreRowSkeleton } from "./ScoreRowSkeleton"
 
 /**
  * `MockInterviewScorecard` — read-only render of one graded mock-interview run:
@@ -155,6 +154,7 @@ const MockInterviewScorecard = ({
             justify="between"
             at="sm"
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             isSkeleton={isSkeleton}
             items={[
                 () => (isSkeleton ? (
@@ -173,25 +173,45 @@ const MockInterviewScorecard = ({
 
     const scoreBreakdownBody = (
         <>
-            {isSkeleton
-                ? Array.from({ length: SKELETON_SCORE_ROWS }, (_, index) => (
-                    <ScoreRowSkeleton key={`score-skeleton-${index}`} />
-                ))
-                : phaseOrQuestionScores.map((row) => (
-                    <ScoreRow key={row.key} label={row.label} score={row.score} max={row.max} />
-                ))}
+            {(isSkeleton
+                ? Array.from({ length: SKELETON_SCORE_ROWS }, (_, index) => ({
+                    key: `score-skeleton-${index}`,
+                    label: "",
+                    score: 0,
+                    max: 100,
+                }))
+                : phaseOrQuestionScores
+            ).map((row) => (
+                <ScoreRow
+                    key={row.key}
+                    label={row.label}
+                    score={row.score}
+                    max={row.max}
+                    isSkeleton={isSkeleton}
+                />
+            ))}
         </>
     )
 
     const attributeBreakdownBody = (
         <>
-            {isSkeleton
-                ? Array.from({ length: SKELETON_ATTRIBUTE_ROWS }, (_, index) => (
-                    <ScoreRowSkeleton key={`attribute-skeleton-${index}`} />
-                ))
-                : attributeScores.map((row) => (
-                    <ScoreRow key={row.key} label={row.label} score={row.score} max={100} />
-                ))}
+            {(isSkeleton
+                ? Array.from({ length: SKELETON_ATTRIBUTE_ROWS }, (_, index) => ({
+                    key: `attribute-skeleton-${index}`,
+                    label: "",
+                    score: 0,
+                    max: 100,
+                }))
+                : attributeScores.map((row) => ({ ...row, max: 100 }))
+            ).map((row) => (
+                <ScoreRow
+                    key={row.key}
+                    label={row.label}
+                    score={row.score}
+                    max={row.max}
+                    isSkeleton={isSkeleton}
+                />
+            ))}
         </>
     )
 
@@ -214,6 +234,7 @@ const MockInterviewScorecard = ({
             gap={2}
             align="center"
             principle="icon-text"
+            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
             isSkeleton={isSkeleton}
             items={[
                 ({ isSkeleton }: SkeletonProps) => <Typography size="xs" color="muted" text="Weakest:" isSkeleton={isSkeleton} />,
@@ -227,6 +248,7 @@ const MockInterviewScorecard = ({
             gap={4}
             at="sm"
             principle="flex-action"
+            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
             isSkeleton={isSkeleton}
             items={[
                 () => (
@@ -279,7 +301,7 @@ const MockInterviewScorecard = ({
             {/* Verdict banner. `Callout` has no `isSkeleton` of its own (a message
                 frame, not a data-bearing one) — a bare bar stands in, in the same slot. */}
             {isSkeleton ? (
-                <HeroSkeleton className="h-20 w-full rounded-2xl" />
+                <Skeleton className="h-20 w-full rounded-2xl" />
             ) : (
                 <Callout
                     status={VERDICT_STATUS[verdict]}

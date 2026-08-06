@@ -28,12 +28,14 @@ export const FlashcardSessionStatsSkeleton = () => {
                                 <StackV
                                     gap={4}
                                     principle="sibling-stack"
+                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                     items={[
                                         ...Array.from({ length: 4 }, (_unused, index) => () => (
                                             <StackH
                                                 key={index}
                                                 gap={4}
                                                 principle="content-row"
+                                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                 align="center"
                                                 items={[
                                                     () => <Skeleton className="h-[14px] w-16 shrink-0 rounded" />,
@@ -52,6 +54,7 @@ export const FlashcardSessionStatsSkeleton = () => {
                                 as="section"
                                 gap={4}
                                 principle="label-field"
+                                explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
                                 items={[
                                     () => <Skeleton className="h-[14px] w-28 rounded" />,
                                     () => (
@@ -59,6 +62,7 @@ export const FlashcardSessionStatsSkeleton = () => {
                                         // four metric tiles at preserved step 4; no card-grid token.
                                         <Grid
                                             principle="content-row"
+                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                             columns={{ base: 2, md: 4 }}
                                             items={Array.from({ length: 4 }).map((_unused, index) => ({
                                                 key: `metric-${index}`,
@@ -74,6 +78,7 @@ export const FlashcardSessionStatsSkeleton = () => {
                                 as="section"
                                 gap={4}
                                 principle="label-field"
+                                explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
                                 items={[
                                     () => <Skeleton className="h-[14px] w-40 rounded" />,
                                     () => (
@@ -83,6 +88,7 @@ export const FlashcardSessionStatsSkeleton = () => {
                                                     <StackH
                                                         gap={4}
                                                         principle="content-row"
+                                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                         justify="between"
                                                         align="center"
                                                         items={[
@@ -90,6 +96,7 @@ export const FlashcardSessionStatsSkeleton = () => {
                                                                 <StackH
                                                                     gap={3}
                                                                     principle="identity"
+                                                                    explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
                                                                     align="center"
                                                                     classNames={["min-w-0", "flex-1"]}
                                                                     items={[

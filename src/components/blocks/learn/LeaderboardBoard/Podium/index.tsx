@@ -40,6 +40,7 @@ const podiumEntryCard = (entry: LeaderboardPodiumEntry, meLabel: string, isSkele
             <StackV
                 gap={2}
                 principle="title-subtitle"
+                explain="Title over supporting line — not label-field, because neither line is a form control label."
                 align="center"
                 isSkeleton={isSkeleton}
                 items={[
@@ -90,6 +91,7 @@ export const Podium = ({ entries, meLabel, isSkeleton }: PodiumProps) => (
     <StackH
         gap={3}
         principle="sibling-stack"
+        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
         justify="center"
         align="end"
         isSkeleton={isSkeleton}

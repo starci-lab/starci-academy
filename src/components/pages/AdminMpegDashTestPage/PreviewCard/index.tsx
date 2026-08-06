@@ -33,7 +33,8 @@ export const PreviewCard = ({ url, activeType, className }: PreviewCardProps) =>
     return (
         <Card className={cn("border-separator bg-surface backdrop-blur-xl", className)}>
             <CardContent>
-                <Box principle="cell-pad" className="space-y-3 p-3">
+                <Box principle="cell-pad" className="space-y-3 p-3"
+                    explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body.">
                     {/* ps-admin-6: h2 gap-2 — block element inside heading invalid; foreign mount — teacher-hold */}
                     <h2 data-principle="ps-admin-6" className="text-lg font-semibold text-foreground flex items-center gap-2">
                     Preview

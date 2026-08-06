@@ -149,6 +149,7 @@ const _AiQuotaModal = ({
             <StackH
                 gap={3}
                 principle="identity"
+                explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
                 align="center"
                 items={titleAndTierChip}
             />

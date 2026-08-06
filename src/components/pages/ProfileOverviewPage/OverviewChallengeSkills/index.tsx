@@ -82,10 +82,12 @@ export const OverviewChallengeSkills = ({ className, label, onSeeMore, seeMoreLa
                                 () => <Skeleton.Metric />,
                                 () => <Skeleton.SegmentBar legendItems={4} />,
                                 () => (
-                                    <StackV gap={3} principle="sibling-stack" items={[
-                                        () => <Skeleton.Typography type="body-xs" width="1/4" />,
-                                        () => <Skeleton.SegmentBar legendItems={4} />,
-                                    ]} />
+                                    <StackV gap={3} principle="sibling-stack"
+                                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                        items={[
+                                            () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                                            () => <Skeleton.SegmentBar legendItems={4} />,
+                                        ]} />
                                 ),
                             ]} />
                         </SurfaceListCardItem>
@@ -119,24 +121,26 @@ export const OverviewChallengeSkills = ({ className, label, onSeeMore, seeMoreLa
                                 : []),
                             ...(langs.length > 0
                                 ? [() => (
-                                    <StackV gap={3} principle="sibling-stack" items={[
-                                        () => (
-                                            <Typography type="body-xs" color="muted">
-                                                {t("publicProfile.skillsSnapshot.languagesLabel")}
-                                            </Typography>
-                                        ),
-                                        () => (
-                                            <SegmentBar
-                                                ariaLabel={t("publicProfile.skillsSnapshot.languagesLabel")}
-                                                segments={langs.map(([lang, count]) => ({
-                                                    key: lang,
-                                                    label: getLanguageLabel(lang),
-                                                    value: count,
-                                                    color: getLanguageColor(lang),
-                                                }))}
-                                            />
-                                        ),
-                                    ]} />
+                                    <StackV gap={3} principle="sibling-stack"
+                                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                        items={[
+                                            () => (
+                                                <Typography type="body-xs" color="muted">
+                                                    {t("publicProfile.skillsSnapshot.languagesLabel")}
+                                                </Typography>
+                                            ),
+                                            () => (
+                                                <SegmentBar
+                                                    ariaLabel={t("publicProfile.skillsSnapshot.languagesLabel")}
+                                                    segments={langs.map(([lang, count]) => ({
+                                                        key: lang,
+                                                        label: getLanguageLabel(lang),
+                                                        value: count,
+                                                        color: getLanguageColor(lang),
+                                                    }))}
+                                                />
+                                            ),
+                                        ]} />
                                 )]
                                 : []),
                         ]} />

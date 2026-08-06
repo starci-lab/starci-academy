@@ -1,6 +1,5 @@
 import React from "react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Button } from "@/components/atoms/buttons/Button"
@@ -99,6 +98,7 @@ const ModuleContinueBand = ({
         <StackH
             gap={4}
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             justify="between"
             align="start"
             isSkeleton={isSkeleton}
@@ -120,17 +120,13 @@ const ModuleContinueBand = ({
         />
     )
 
-    const progress = isSkeleton ? (
-        // `ProgressMeter` has no `isSkeleton` of its own (same gap `ContinueCard`
-        // documents) — a bare track-height bar stands in for it here.
-        <HeroSkeleton className="h-1 w-full rounded-full" />
-    ) : (
+    const progress = (
         <ProgressMeter
             value={lessonsRead}
             max={lessonsTotal}
             label="Completed"
             showValue
-
+            isSkeleton={isSkeleton}
         />
     )
 
@@ -145,7 +141,7 @@ const ModuleContinueBand = ({
     )
 
     return (
-        <StackV
+        <StackV identity={{ tier: "block", component: "ModuleContinueBand" }}
             gap={4}
             isSkeleton={isSkeleton}
             items={[

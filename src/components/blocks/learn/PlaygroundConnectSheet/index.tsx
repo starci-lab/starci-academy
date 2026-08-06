@@ -1,5 +1,5 @@
 import React from "react"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { ArrowClockwiseIcon, CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Chip, type ChipTone } from "@/components/atoms/chips/Chip"
@@ -166,18 +166,20 @@ const PlaygroundConnectSheet = ({
                 <StackH
                     gap={4}
                     principle="cell-pad"
+                    explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body."
                     padding={4}
                     isSkeleton={isSkeleton}
                     body={() => (
                         <StackH
                             gap={4}
                             principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                             align="center"
                             justify="between"
                             isSkeleton={isSkeleton}
                             items={[
-                                () => <HeroSkeleton className="h-5 w-24 rounded-full" />,
-                                () => <HeroSkeleton className="h-8 w-24 rounded-xl" />,
+                                () => <Skeleton className="h-5 w-24 rounded-full" />,
+                                () => <Skeleton className="h-8 w-24 rounded-xl" />,
                             ]}
                         />
                     )}
@@ -196,6 +198,7 @@ const PlaygroundConnectSheet = ({
         <StackH
             gap={3}
             principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             align="center"
             isSkeleton={isSkeleton}
             items={[
@@ -225,6 +228,7 @@ const PlaygroundConnectSheet = ({
         <StackH
             gap={3}
             principle="flex-action"
+            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
             align="center"
             isSkeleton={isSkeleton}
             items={[
@@ -282,12 +286,14 @@ const PlaygroundConnectSheet = ({
             <StackH
                 gap={4}
                 principle="cell-pad"
+                explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body."
                 padding={4}
                 isSkeleton={isSkeleton}
                 body={() => (
                     <StackH
                         gap={4}
                         principle="content-row"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                         align="center"
                         justify="between"
                         isSkeleton={isSkeleton}
@@ -301,9 +307,13 @@ const PlaygroundConnectSheet = ({
             {/* BODY — mounted only while open, matching a real bottom-sheet's collapsed state. */}
             {open ? (
                 <div className="border-t border-default">
-                    <StackV gap={4} principle="cell-pad" padding={4} isSkeleton={isSkeleton} body={() => (
-                        <StackV gap={4} principle="card-caption" isSkeleton={isSkeleton} items={[() => sheetBody]} />
-                    )} />
+                    <StackV gap={4} principle="cell-pad"
+                        explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body."
+                        padding={4} isSkeleton={isSkeleton} body={() => (
+                            <StackV gap={4} principle="card-caption"
+                                explain="Holds caption text under card media so the caption stays attached to the image above it."
+                                isSkeleton={isSkeleton} items={[() => sheetBody]}  />
+                        )} />
                 </div>
             ) : null}
         </div>

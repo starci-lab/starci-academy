@@ -80,17 +80,20 @@ export const BookmarksPage = () => {
     const pageNumbers = Array.from({ length: totalPages }, (_unused, index) => index + 1)
 
     const skeletonRows = [0, 1, 2, 3, 4].map((row) => () => (
-        <Box key={row} principle="card-padding" className="p-4">
+        <Box key={row} principle="card-padding" className="p-4"
+            explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
             <StackH
                 gap={4}
                 align="center"
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 items={[
                     () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
                     () => (
                         <StackV
                             gap={3}
                             principle="sibling-stack"
+                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                             classNames={["flex-1"]}
                             items={[
                                 () => <Skeleton className="h-4 w-1/2 rounded-medium" />,
@@ -110,6 +113,7 @@ export const BookmarksPage = () => {
                 justify="between"
                 align="center"
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 items={[
                     () => (
                         <TextField className="w-full @app-sm:max-w-sm">
@@ -188,8 +192,10 @@ export const BookmarksPage = () => {
     ]
 
     return (
-        <Box principle="center-measure" className="mx-auto max-w-4xl">
-            <Box principle="page-pad" className="p-6">
+        <Box identity={{ tier: "page", component: "BookmarksPage" }} principle="center-measure" className="mx-auto max-w-4xl"
+            explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
+            <Box principle="page-pad" className="p-6"
+                explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                 <div className="flex flex-col gap-10">
                     <PageHeader
                         breadcrumb={<SettingsBreadcrumb current={t("bookmarks.heading")} />}

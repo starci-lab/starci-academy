@@ -101,8 +101,9 @@ const RagSourceGraphSourceNode = ({ data }: NodeProps) => {
                 <StackV
                     gap={2}
                     principle="title-subtitle"
+                    explain="Title over supporting line — not label-field, because neither line is a form control label."
                     items={[
-                        () => <StackH gap={3} principle="chip-row" justify="between" items={filePathRowItems} />,
+                        () => <StackH gap={3} principle="chip-row" justify="between" items={filePathRowItems} explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."/>,
                         () => <Typography size="xs" color="muted" truncate text={snippetPreview} />,
                     ]}
                 />

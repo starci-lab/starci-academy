@@ -192,13 +192,17 @@ export const Gap: Story = {
                         name: "principle = \"sibling-stack\"",
                         why: "The cells sit close enough to read as members of one set rather than separate cards, which works when each tile is already visually distinct on its own, as a short profile row with an avatar is. Pick this step from the relationship and not from how full the grid looks.",
                         code: "<SurfaceCardPressableGroup principle=\"sibling-stack\" ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(0, 2)} />",
-                        render: <SurfaceCardPressableGroup ariaLabel="Mentors (sibling-stack)" columns={{ base: 1, sm: 2 }} principle="sibling-stack" items={profileItems.slice(0, 2)} />,
+                        render: <SurfaceCardPressableGroup ariaLabel="Mentors (sibling-stack)" columns={{ base: 1, sm: 2 }} principle="sibling-stack"
+                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                            items={profileItems.slice(0, 2)} />,
                     },
                     {
                         name: "principle = \"content-row\" (default)",
                         why: "Each cell stands as its own surface inside the group, which is the default because a pressable tile is a thing a reader acts on separately. The composition is identical to the state above, so the only difference a reader sees is the claim the seam makes.",
                         code: "<SurfaceCardPressableGroup principle=\"content-row\" ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(2)} />  // default",
-                        render: <SurfaceCardPressableGroup ariaLabel="Mentors (content-row)" columns={{ base: 1, sm: 2 }} principle="content-row" items={profileItems.slice(2)} />,
+                        render: <SurfaceCardPressableGroup ariaLabel="Mentors (content-row)" columns={{ base: 1, sm: 2 }} principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            items={profileItems.slice(2)} />,
                     },
                 ]}
             />,

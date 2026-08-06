@@ -111,52 +111,58 @@ export const ProfileChallenges = ({
         <AsyncContent
             isLoading={(isLoading || !userId) && challenges.length === 0}
             skeleton={(
-                <StackV gap={6} principle="block-boundary" classNames={rootClassNames} items={[
-                    () => (
-                        <StackV gap={4} items={[
-                            () => <Skeleton.Typography type="body-sm" width="1/4" />,
-                            () => <Skeleton className="h-20 w-full rounded-2xl" />,
-                        ]} />
-                    ),
-                    () => (
-                        <StackV gap={4} items={[
-                            () => <Skeleton.Typography type="body-sm" width="1/4" />,
-                            () => (
-                                <SurfaceListCard>
-                                    <SurfaceListCardItem>
-                                        <Skeleton.SegmentBar legendItems={4} />
-                                    </SurfaceListCardItem>
-                                    <SurfaceListCardItem>
-                                        <Skeleton.SegmentBar legendItems={4} />
-                                    </SurfaceListCardItem>
-                                </SurfaceListCard>
-                            ),
-                        ]} />
-                    ),
-                    () => (
-                        <StackV gap={4} items={[
-                            () => <Skeleton.Typography type="body-sm" width="1/4" />,
-                            () => (
-                                <SurfaceListCard>
-                                    {[0, 1, 2].map((row) => (
-                                        <SurfaceListCardItem key={row}>
-                                            <StackH gap={4} principle="content-row" align="start" items={[
-                                                () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
-                                                () => (
-                                                    <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
-                                                        () => <Skeleton.Typography type="body-sm" width="1/2" />,
-                                                        () => <Skeleton.ProgressBar />,
-                                                        () => <Skeleton.Typography type="body-xs" width="1/3" />,
-                                                    ]} />
-                                                ),
-                                            ]} />
+                <StackV gap={6} principle="block-boundary" classNames={rootClassNames}
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                    items={[
+                        () => (
+                            <StackV gap={4} items={[
+                                () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                                () => <Skeleton className="h-20 w-full rounded-2xl" />,
+                            ]} />
+                        ),
+                        () => (
+                            <StackV gap={4} items={[
+                                () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                                () => (
+                                    <SurfaceListCard>
+                                        <SurfaceListCardItem>
+                                            <Skeleton.SegmentBar legendItems={4} />
                                         </SurfaceListCardItem>
-                                    ))}
-                                </SurfaceListCard>
-                            ),
-                        ]} />
-                    ),
-                ]} />
+                                        <SurfaceListCardItem>
+                                            <Skeleton.SegmentBar legendItems={4} />
+                                        </SurfaceListCardItem>
+                                    </SurfaceListCard>
+                                ),
+                            ]} />
+                        ),
+                        () => (
+                            <StackV gap={4} items={[
+                                () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                                () => (
+                                    <SurfaceListCard>
+                                        {[0, 1, 2].map((row) => (
+                                            <SurfaceListCardItem key={row}>
+                                                <StackH gap={4} principle="content-row" align="start"
+                                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                    items={[
+                                                        () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
+                                                        () => (
+                                                            <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]}
+                                                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                                items={[
+                                                                    () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                                                    () => <Skeleton.ProgressBar />,
+                                                                    () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                                                                ]} />
+                                                        ),
+                                                    ]} />
+                                            </SurfaceListCardItem>
+                                        ))}
+                                    </SurfaceListCard>
+                                ),
+                            ]} />
+                        ),
+                    ]} />
             )}
             isEmpty={challenges.length === 0}
             emptyContent={{
@@ -170,80 +176,86 @@ export const ProfileChallenges = ({
                 retryLabel: t("publicProfile.loadErrorRetry"),
             }}
         >
-            <StackV gap={6} principle="block-boundary" classNames={rootClassNames} items={[
-                () => (
-                    <LabeledCard label={t("publicProfile.challengesTab.metricsHeading")} frameless>
-                        <StatRibbon
-                            items={metricStats.map((stat) => ({
-                                key: stat.key,
-                                value: stat.value,
-                                label: t(`publicProfile.challengesTab.metric.${stat.key}`),
-                            }))}
-                        />
-                    </LabeledCard>
-                ),
-                () => (
-                    <LabeledCard
-                        label={t("publicProfile.challengesTab.statsHeading")}
-                        frameless
-                    >
-                        <SurfaceListCard>
-                            {difficultySegments.length > 0 ? (
-                                <SurfaceListCardItem>
-                                    <StackV gap={3} principle="sibling-stack" items={[
-                                        () => <Label>{t("publicProfile.challengesTab.difficultyHeading")}</Label>,
-                                        () => (
-                                            <SegmentBar
-                                                ariaLabel={t("publicProfile.challengesTab.difficultyHeading")}
-                                                segments={difficultySegments}
-                                            />
-                                        ),
-                                    ]} />
-                                </SurfaceListCardItem>
-                            ) : null}
-                            {langs.length > 0 ? (
-                                <SurfaceListCardItem>
-                                    <StackV gap={3} principle="sibling-stack" items={[
-                                        () => <Label>{t("publicProfile.challengesTab.languageHeading")}</Label>,
-                                        () => (
-                                            <SegmentBar
-                                                ariaLabel={t("publicProfile.challengesTab.languageHeading")}
-                                                segments={langs.map(([lang, count]) => ({
-                                                    key: lang,
-                                                    label: getLanguageLabel(lang),
-                                                    value: count,
-                                                    color: getLanguageColor(lang),
-                                                }))}
-                                            />
-                                        ),
-                                    ]} />
-                                </SurfaceListCardItem>
-                            ) : null}
-                        </SurfaceListCard>
-                    </LabeledCard>
-                ),
-                () => (
-                    <LabeledCard
-                        label={t("publicProfile.challengesTab.repoHeading")}
-                        frameless
-                    >
-                        <SurfaceListCard>
-                            {groups.map((group, groupIndex) => (
-                                <ChallengeCourseRow
-                                    key={group.courseTitle ?? `__ungrouped-${groupIndex}`}
-                                    username={username}
-                                    courseTitle={group.courseTitle}
-                                    courseSlug={group.courseSlug}
-                                    items={group.items}
-                                    totalChallenges={group.courseTitle
-                                        ? totalChallengesByCourse.get(group.courseTitle)
-                                        : undefined}
-                                />
-                            ))}
-                        </SurfaceListCard>
-                    </LabeledCard>
-                ),
-            ]} />
+            <StackV gap={6} principle="block-boundary" classNames={rootClassNames}
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={[
+                    () => (
+                        <LabeledCard label={t("publicProfile.challengesTab.metricsHeading")} frameless>
+                            <StatRibbon
+                                items={metricStats.map((stat) => ({
+                                    key: stat.key,
+                                    value: stat.value,
+                                    label: t(`publicProfile.challengesTab.metric.${stat.key}`),
+                                }))}
+                            />
+                        </LabeledCard>
+                    ),
+                    () => (
+                        <LabeledCard
+                            label={t("publicProfile.challengesTab.statsHeading")}
+                            frameless
+                        >
+                            <SurfaceListCard>
+                                {difficultySegments.length > 0 ? (
+                                    <SurfaceListCardItem>
+                                        <StackV gap={3} principle="sibling-stack"
+                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                            items={[
+                                                () => <Label>{t("publicProfile.challengesTab.difficultyHeading")}</Label>,
+                                                () => (
+                                                    <SegmentBar
+                                                        ariaLabel={t("publicProfile.challengesTab.difficultyHeading")}
+                                                        segments={difficultySegments}
+                                                    />
+                                                ),
+                                            ]} />
+                                    </SurfaceListCardItem>
+                                ) : null}
+                                {langs.length > 0 ? (
+                                    <SurfaceListCardItem>
+                                        <StackV gap={3} principle="sibling-stack"
+                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                            items={[
+                                                () => <Label>{t("publicProfile.challengesTab.languageHeading")}</Label>,
+                                                () => (
+                                                    <SegmentBar
+                                                        ariaLabel={t("publicProfile.challengesTab.languageHeading")}
+                                                        segments={langs.map(([lang, count]) => ({
+                                                            key: lang,
+                                                            label: getLanguageLabel(lang),
+                                                            value: count,
+                                                            color: getLanguageColor(lang),
+                                                        }))}
+                                                    />
+                                                ),
+                                            ]} />
+                                    </SurfaceListCardItem>
+                                ) : null}
+                            </SurfaceListCard>
+                        </LabeledCard>
+                    ),
+                    () => (
+                        <LabeledCard
+                            label={t("publicProfile.challengesTab.repoHeading")}
+                            frameless
+                        >
+                            <SurfaceListCard>
+                                {groups.map((group, groupIndex) => (
+                                    <ChallengeCourseRow
+                                        key={group.courseTitle ?? `__ungrouped-${groupIndex}`}
+                                        username={username}
+                                        courseTitle={group.courseTitle}
+                                        courseSlug={group.courseSlug}
+                                        items={group.items}
+                                        totalChallenges={group.courseTitle
+                                            ? totalChallengesByCourse.get(group.courseTitle)
+                                            : undefined}
+                                    />
+                                ))}
+                            </SurfaceListCard>
+                        </LabeledCard>
+                    ),
+                ]} />
         </AsyncContent>
     )
 }

@@ -126,157 +126,174 @@ export const AiSettingsPage = () => {
     )
 
     return (
-        <StackV gap={7} principle="layout-split" items={[
-            () => (
-                <PageHeader
-                    breadcrumb={<SettingsBreadcrumb current={t("aiSettings.title")} />}
-                    title={t("aiSettings.title")}
-                    description={t("aiSettings.ceil.description")}
-                />
-            ),
+        <StackV identity={{ tier: "page", component: "AiSettingsPage" }} gap={7} principle="layout-split"
+            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+            items={[
+                () => (
+                    <PageHeader
+                        breadcrumb={<SettingsBreadcrumb current={t("aiSettings.title")} />}
+                        title={t("aiSettings.title")}
+                        description={t("aiSettings.ceil.description")}
+                    />
+                ),
 
-            () => (
-                <AsyncContent
-                    isLoading={quota.isLoading}
-                    skeleton={(
-                        <StackV gap={6} principle="block-boundary" items={[
-                            () => <Skeleton className="h-16 w-full rounded-2xl" />,
-                            () => (
-                                <StackV gap={4} principle="content-row" items={[
-                                    () => <Skeleton className="h-4 w-32 rounded-lg" />,
-                                    () => <Skeleton className="h-9 w-full rounded-xl" />,
+                () => (
+                    <AsyncContent
+                        isLoading={quota.isLoading}
+                        skeleton={(
+                            <StackV gap={6} principle="block-boundary"
+                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                                items={[
+                                    () => <Skeleton className="h-16 w-full rounded-2xl" />,
+                                    () => (
+                                        <StackV gap={4} principle="content-row"
+                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                            items={[
+                                                () => <Skeleton className="h-4 w-32 rounded-lg" />,
+                                                () => <Skeleton className="h-9 w-full rounded-xl" />,
+                                            ]} />
+                                    ),
+                                    () => (
+                                        <StackV gap={4} principle="content-row"
+                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                            items={[
+                                                () => <Skeleton className="h-4 w-40 rounded-lg" />,
+                                                ...SURFACES.map((surface) => () => (
+                                                    <Skeleton
+                                                        key={surface}
+                                                        className="h-9 w-full rounded-xl"
+                                                    />
+                                                )),
+                                            ]} />
+                                    ),
                                 ]} />
-                            ),
-                            () => (
-                                <StackV gap={4} principle="content-row" items={[
-                                    () => <Skeleton className="h-4 w-40 rounded-lg" />,
-                                    ...SURFACES.map((surface) => () => (
-                                        <Skeleton
-                                            key={surface}
-                                            className="h-9 w-full rounded-xl"
-                                        />
-                                    )),
-                                ]} />
-                            ),
-                        ]} />
-                    )}
-                    error={quota.error}
-                    errorContent={{
-                        title: t("aiSettings.ceil.error"),
-                        onRetry: () => { void quota.mutate() },
-                        retryLabel: t("common.retry"),
-                    }}
-                >
-                    <StackV gap={6} principle="block-boundary" items={[
-                        () => (
-                            <Callout
-                                title={data?.tier
-                                    ? t("aiSettings.ceil.plan", {
-                                        tier: data.tier,
-                                        max: label(planMax),
-                                    })
-                                    : t("aiSettings.ceil.planFree", {
-                                        max: label(planMax),
-                                    })}
-                                description={data
-                                    ? t("aiSettings.ceil.creditLine", {
-                                        used5h: data.credit.used5h,
-                                        limit5h: data.credit.limit5h,
-                                        usedWeek: data.credit.usedWeek,
-                                        limitWeek: data.credit.limitWeek,
-                                    })
-                                    : undefined}
-                            />
-                        ),
-
-                        () => (
-                            <StackV gap={4} principle="content-row" items={[
-                                () => <Label>{t("aiSettings.ceil.defaultLabel")}</Label>,
+                        )}
+                        error={quota.error}
+                        errorContent={{
+                            title: t("aiSettings.ceil.error"),
+                            onRetry: () => { void quota.mutate() },
+                            retryLabel: t("common.retry"),
+                        }}
+                    >
+                        <StackV gap={6} principle="block-boundary"
+                            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                            items={[
                                 () => (
-                                    <FlexWrapButtonRadio
-                                        ariaLabel={t("aiSettings.ceil.defaultLabel")}
-                                        items={ladderItems}
-                                        value={data?.ceil.default ?? planMax}
-                                        onChange={(category) =>
-                                            setCeil(
-                                                null,
-                                                category === planMax
-                                                    ? null
-                                                    : (category as AiModelCategory),
-                                            )}
+                                    <Callout
+                                        title={data?.tier
+                                            ? t("aiSettings.ceil.plan", {
+                                                tier: data.tier,
+                                                max: label(planMax),
+                                            })
+                                            : t("aiSettings.ceil.planFree", {
+                                                max: label(planMax),
+                                            })}
+                                        description={data
+                                            ? t("aiSettings.ceil.creditLine", {
+                                                used5h: data.credit.used5h,
+                                                limit5h: data.credit.limit5h,
+                                                usedWeek: data.credit.usedWeek,
+                                                limitWeek: data.credit.limitWeek,
+                                            })
+                                            : undefined}
                                     />
                                 ),
-                                () => (
-                                    <Typography type="body-xs" color="muted">
-                                        {t("aiSettings.ceil.creditCaption")}
-                                        {" · "}
-                                        {t("aiSettings.ceil.hardStop")}
-                                    </Typography>
-                                ),
-                            ]} />
-                        ),
 
-                        () => (
-                            <StackV gap={4} principle="content-row" items={[
-                                () => <Label>{t("aiSettings.ceil.surfacesLabel")}</Label>,
-                                ...SURFACES.map((surface) => () => (
-                                    <StackV
-                                        key={surface}
-                                        gap={3}
-                                        principle="sibling-stack"
+                                () => (
+                                    <StackV gap={4} principle="content-row"
+                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                         items={[
-                                            () => (
-                                                <Typography type="body-sm">
-                                                    {t(`aiSettings.ceil.surface.${surface}`)}
-                                                </Typography>
-                                            ),
+                                            () => <Label>{t("aiSettings.ceil.defaultLabel")}</Label>,
                                             () => (
                                                 <FlexWrapButtonRadio
-                                                    ariaLabel={t(`aiSettings.ceil.surface.${surface}`)}
-                                                    items={surfaceItems}
-                                                    value={data?.ceil[surface] ?? INHERIT}
-                                                    onChange={(value) =>
+                                                    ariaLabel={t("aiSettings.ceil.defaultLabel")}
+                                                    items={ladderItems}
+                                                    value={data?.ceil.default ?? planMax}
+                                                    onChange={(category) =>
                                                         setCeil(
-                                                            surface,
-                                                            value === INHERIT
+                                                            null,
+                                                            category === planMax
                                                                 ? null
-                                                                : (value as AiModelCategory),
+                                                                : (category as AiModelCategory),
                                                         )}
                                                 />
                                             ),
-                                        ]}
-                                    />
-                                )),
-                            ]} />
-                        ),
+                                            () => (
+                                                <Typography type="body-xs" color="muted">
+                                                    {t("aiSettings.ceil.creditCaption")}
+                                                    {" · "}
+                                                    {t("aiSettings.ceil.hardStop")}
+                                                </Typography>
+                                            ),
+                                        ]} />
+                                ),
 
-                        () => (!isPaid
-                            ? (
-                                <StackH gap={3} principle="identity" at="sm" align="center" items={[
-                                    () => (
-                                        <Typography type="body-sm" color="muted">
-                                            {t("aiSettings.upgradePrompt")}
+                                () => (
+                                    <StackV gap={4} principle="content-row"
+                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                        items={[
+                                            () => <Label>{t("aiSettings.ceil.surfacesLabel")}</Label>,
+                                            ...SURFACES.map((surface) => () => (
+                                                <StackV
+                                                    key={surface}
+                                                    gap={3}
+                                                    principle="sibling-stack"
+                                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                    items={[
+                                                        () => (
+                                                            <Typography type="body-sm">
+                                                                {t(`aiSettings.ceil.surface.${surface}`)}
+                                                            </Typography>
+                                                        ),
+                                                        () => (
+                                                            <FlexWrapButtonRadio
+                                                                ariaLabel={t(`aiSettings.ceil.surface.${surface}`)}
+                                                                items={surfaceItems}
+                                                                value={data?.ceil[surface] ?? INHERIT}
+                                                                onChange={(value) =>
+                                                                    setCeil(
+                                                                        surface,
+                                                                        value === INHERIT
+                                                                            ? null
+                                                                            : (value as AiModelCategory),
+                                                                    )}
+                                                            />
+                                                        ),
+                                                    ]}
+                                                />
+                                            )),
+                                        ]} />
+                                ),
+
+                                () => (!isPaid
+                                    ? (
+                                        <StackH gap={3} principle="identity"
+                                            explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
+                                            at="sm" align="center" items={[
+                                                () => (
+                                                    <Typography type="body-sm" color="muted">
+                                                        {t("aiSettings.upgradePrompt")}
+                                                    </Typography>
+                                                ),
+                                                () => (
+                                                    <Link onPress={onNavigateSubscription}>
+                                                        {t("aiSettings.byok.upsellCta")}
+                                                    </Link>
+                                                ),
+                                            ]} />
+                                    )
+                                    : null),
+
+                                () => (isMutating
+                                    ? (
+                                        <Typography type="body-xs" color="muted">
+                                            {t("aiSettings.ceil.saving")}
                                         </Typography>
-                                    ),
-                                    () => (
-                                        <Link onPress={onNavigateSubscription}>
-                                            {t("aiSettings.byok.upsellCta")}
-                                        </Link>
-                                    ),
-                                ]} />
-                            )
-                            : null),
-
-                        () => (isMutating
-                            ? (
-                                <Typography type="body-xs" color="muted">
-                                    {t("aiSettings.ceil.saving")}
-                                </Typography>
-                            )
-                            : null),
-                    ]} />
-                </AsyncContent>
-            ),
-        ]} />
+                                    )
+                                    : null),
+                            ]} />
+                    </AsyncContent>
+                ),
+            ]} />
     )
 }

@@ -102,11 +102,14 @@ const ContentPager = ({
             <StackH
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 align="center"
                 justify="end"
                 isSkeleton={isSkeleton}
                 items={[
-                    ({ isSkeleton }: SkeletonProps) => <StackV gap={1} principle="name-handle" align="end" isSkeleton={isSkeleton} items={[() => nextLabel]} />,
+                    ({ isSkeleton }: SkeletonProps) => <StackV gap={1} principle="name-handle"
+                        explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
+                        align="end" isSkeleton={isSkeleton} items={[() => nextLabel]} />,
                     // Same DIV position/size reasoning as the mirrored left caret above.
                     () => <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />,
                 ]}
@@ -130,7 +133,8 @@ const ContentPager = ({
     return (
         <div>
             <div>
-                <SurfaceCardPressableGroup ariaLabel={ariaLabel} columns={{ base: 1, sm: 2 }} items={items} isSkeleton={isSkeleton} principle="content-row" />
+                <SurfaceCardPressableGroup ariaLabel={ariaLabel} columns={{ base: 1, sm: 2 }} items={items} isSkeleton={isSkeleton} principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title." />
             </div>
         </div>
     )

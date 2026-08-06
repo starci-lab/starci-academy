@@ -326,6 +326,7 @@ const deliverableBody = (item: ChallengeDeliverableItem) => {
         <StackV
             gap={4}
             principle="card-caption"
+            explain="Holds caption text under card media so the caption stays attached to the image above it."
             items={[
                 /* ONE single meta row — verdict chip + "attempt #N · HH:mm dd/MM" — rather than
                     three stacked layers. No "Your latest attempt scored N/M. Minimum required: R."
@@ -338,6 +339,7 @@ const deliverableBody = (item: ChallengeDeliverableItem) => {
                     <StackH
                         gap={3}
                         principle="identity"
+                        explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
                         align="center"
                         at="sm"
 
@@ -412,7 +414,7 @@ const deliverableBody = (item: ChallengeDeliverableItem) => {
         </>
     )
 
-    return <StackV gap={4} items={[() => panel]} />
+    return <StackV identity={{ tier: "block", component: "ChallengeDeliverableList" }} gap={4} items={[() => panel]} />
 }
 
 /**
@@ -485,7 +487,7 @@ const ChallengeDeliverableList = ({
     )
 
     return (
-        <StackV gap={3} isSkeleton={isSkeleton} items={[() => listBody]} />
+        <StackV identity={{ tier: "block", component: "ChallengeDeliverableList" }} gap={3} isSkeleton={isSkeleton} items={[() => listBody]} />
     )
 }
 

@@ -13,6 +13,7 @@ const renderOsTabSkeleton = (key: PlaygroundSetupOs) => (
         gap={2}
         align="center"
         principle="title-subtitle"
+        explain="Title over supporting line — not label-field, because neither line is a form control label."
         items={[
             () => <Typography size="sm" isSkeleton classNames={["w-1/3"]} />,
             () => <Typography size="xs" isSkeleton classNames={["w-1/3"]} />,

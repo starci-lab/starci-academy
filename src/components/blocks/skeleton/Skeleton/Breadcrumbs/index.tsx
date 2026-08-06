@@ -34,3 +34,6 @@ export const SkeletonBreadcrumbs = ({
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonBreadcrumbs` as the public name. */
+export { SkeletonBreadcrumbs as Breadcrumbs }

@@ -160,11 +160,14 @@ export const CourseMilestoneOutline = ({
             skeleton={(
                 <div className={cn(ACCORDION_CARD_SKELETON, className)}>
                     {Array.from({ length: SKELETON_MILESTONE_COUNT }).map((_unused, index) => (
-                        <Box key={index} principle="row-pad" className="border-b border-default p-4 last:border-b-0">
-                            <StackH gap={4} principle="content-row" justify="between" align="center" items={[
-                                () => <Skeleton.Typography type="body" width="1/2" />,
-                                () => <Skeleton className="h-5 w-20 rounded-full" />,
-                            ]} />
+                        <Box key={index} principle="row-pad" className="border-b border-default p-4 last:border-b-0"
+                            explain="Row content inset — not cell-pad, because this pads a horizontal content row rather than a dense table cell.">
+                            <StackH gap={4} principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                justify="between" align="center" items={[
+                                    () => <Skeleton.Typography type="body" width="1/2" />,
+                                    () => <Skeleton className="h-5 w-20 rounded-full" />,
+                                ]} />
                         </Box>
                     ))}
                 </div>
@@ -204,44 +207,46 @@ export const CourseMilestoneOutline = ({
                                 </>
                             ),
                             body: () => (
-                                <StackV gap={3} principle="sibling-stack" items={milestone.tasks.map((task) => () => {
-                                    const attempted = !task.completed && task.lastScore > 0
-                                    return (
-                                        <ListRow
-                                            key={task.id}
-                                            leading={task.completed ? (
-                                                <CheckCircleIcon aria-hidden focusable="false" className="size-5 text-success-soft-foreground" />
-                                            ) : attempted ? (
-                                                <CircleHalfIcon aria-hidden focusable="false" className="size-5 text-warning-soft-foreground" />
-                                            ) : (
-                                                <CircleIcon aria-hidden focusable="false" className="size-5 text-foreground" />
-                                            )}
-                                            title={task.completed ? (
-                                                <span className="text-success-soft-foreground">{task.title}</span>
-                                            ) : attempted ? (
-                                                <span className="text-warning-soft-foreground">{task.title}</span>
-                                            ) : (
-                                                task.title
-                                            )}
-                                            meta={(
-                                                <>
-                                                    {task.type ? (
-                                                        <Chip size="sm" variant="soft">
-                                                            <Chip.Label>
-                                                                {t(`profileSettings.learning.outline.taskType.${task.type}`)}
-                                                            </Chip.Label>
-                                                        </Chip>
-                                                    ) : null}
-                                                    {task.completed || attempted ? (
-                                                        <Typography type="body-xs" color="muted">
-                                                            {`${task.lastScore}/${task.maxScore}`}
-                                                        </Typography>
-                                                    ) : null}
-                                                </>
-                                            )}
-                                        />
-                                    )
-                                })} />
+                                <StackV gap={3} principle="sibling-stack"
+                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                    items={milestone.tasks.map((task) => () => {
+                                        const attempted = !task.completed && task.lastScore > 0
+                                        return (
+                                            <ListRow
+                                                key={task.id}
+                                                leading={task.completed ? (
+                                                    <CheckCircleIcon aria-hidden focusable="false" className="size-5 text-success-soft-foreground" />
+                                                ) : attempted ? (
+                                                    <CircleHalfIcon aria-hidden focusable="false" className="size-5 text-warning-soft-foreground" />
+                                                ) : (
+                                                    <CircleIcon aria-hidden focusable="false" className="size-5 text-foreground" />
+                                                )}
+                                                title={task.completed ? (
+                                                    <span className="text-success-soft-foreground">{task.title}</span>
+                                                ) : attempted ? (
+                                                    <span className="text-warning-soft-foreground">{task.title}</span>
+                                                ) : (
+                                                    task.title
+                                                )}
+                                                meta={(
+                                                    <>
+                                                        {task.type ? (
+                                                            <Chip size="sm" variant="soft">
+                                                                <Chip.Label>
+                                                                    {t(`profileSettings.learning.outline.taskType.${task.type}`)}
+                                                                </Chip.Label>
+                                                            </Chip>
+                                                        ) : null}
+                                                        {task.completed || attempted ? (
+                                                            <Typography type="body-xs" color="muted">
+                                                                {`${task.lastScore}/${task.maxScore}`}
+                                                            </Typography>
+                                                        ) : null}
+                                                    </>
+                                                )}
+                                            />
+                                        )
+                                    })} />
                             ),
                         }
                     })}

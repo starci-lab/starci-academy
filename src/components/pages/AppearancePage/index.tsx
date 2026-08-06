@@ -166,92 +166,101 @@ export const AppearancePage = () => {
     ])
 
     return (
-        <StackV gap={7} principle="layout-split" items={[
-            () => (
-                <PageHeader
-                    breadcrumb={<SettingsBreadcrumb current={t("appearance.title")} />}
-                    title={t("appearance.title")}
-                    description={t("appearance.description")}
-                />
-            ),
-            () => (
-                <StackV gap={6} principle="block-boundary" items={[
-                    () => (
-                        <LabeledCard label={t("appearance.accentLabel")}>
-                            <StackV gap={4} principle="content-row" items={[
-                                () => (
-                                    <ColorSwatchPicker value={color} onChange={onColorChange} size="lg">
-                                        {ACCENT_PRESETS.map((preset) => (
-                                            <ColorSwatchPicker.Item key={preset.hex} color={preset.hex}>
-                                                <ColorSwatchPicker.Swatch />
-                                                <ColorSwatchPicker.Indicator />
-                                            </ColorSwatchPicker.Item>
-                                        ))}
-                                    </ColorSwatchPicker>
-                                ),
-                                () => (
-                                    <StackH gap={4} principle="content-row" at="sm" align="center" items={[
-                                        () => (
-                                            <ColorPicker value={color} onChange={onColorChange}>
-                                                <ColorPicker.Trigger>
-                                                    <ColorSwatch size="lg" />
-                                                    <Label>{t("appearance.customColor")}</Label>
-                                                </ColorPicker.Trigger>
-                                                <ColorPicker.Popover>
-                                                    <ColorArea
-                                                        aria-label={t("appearance.customColor")}
-                                                        className="max-w-full"
-                                                        colorSpace="hsb"
-                                                        xChannel="saturation"
-                                                        yChannel="brightness"
-                                                    >
-                                                        <ColorArea.Thumb />
-                                                    </ColorArea>
-                                                    <ColorSlider channel="hue" colorSpace="hsb">
-                                                        <ColorSlider.Track>
-                                                            <ColorSlider.Thumb />
-                                                        </ColorSlider.Track>
-                                                    </ColorSlider>
-                                                </ColorPicker.Popover>
-                                            </ColorPicker>
-                                        ),
-                                        () => (
-                                            <Button variant="tertiary" size="sm" onPress={onResetAccent}>
-                                                {t("appearance.resetAccent")}
-                                            </Button>
-                                        ),
-                                    ]} />
-                                ),
-                            ]} />
-                        </LabeledCard>
-                    ),
+        <StackV gap={7} principle="layout-split"
+            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+            items={[
+                () => (
+                    <PageHeader
+                        breadcrumb={<SettingsBreadcrumb current={t("appearance.title")} />}
+                        title={t("appearance.title")}
+                        description={t("appearance.description")}
+                    />
+                ),
+                () => (
+                    <StackV gap={6} principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        items={[
+                            () => (
+                                <LabeledCard label={t("appearance.accentLabel")}>
+                                    <StackV gap={4} principle="content-row"
+                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                        items={[
+                                            () => (
+                                                <ColorSwatchPicker value={color} onChange={onColorChange} size="lg">
+                                                    {ACCENT_PRESETS.map((preset) => (
+                                                        <ColorSwatchPicker.Item key={preset.hex} color={preset.hex}>
+                                                            <ColorSwatchPicker.Swatch />
+                                                            <ColorSwatchPicker.Indicator />
+                                                        </ColorSwatchPicker.Item>
+                                                    ))}
+                                                </ColorSwatchPicker>
+                                            ),
+                                            () => (
+                                                <StackH gap={4} principle="content-row" at="sm" align="center"
+                                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                    items={[
+                                                        () => (
+                                                            <ColorPicker value={color} onChange={onColorChange}>
+                                                                <ColorPicker.Trigger>
+                                                                    <ColorSwatch size="lg" />
+                                                                    <Label>{t("appearance.customColor")}</Label>
+                                                                </ColorPicker.Trigger>
+                                                                <ColorPicker.Popover>
+                                                                    <ColorArea
+                                                                        aria-label={t("appearance.customColor")}
+                                                                        className="max-w-full"
+                                                                        colorSpace="hsb"
+                                                                        xChannel="saturation"
+                                                                        yChannel="brightness"
+                                                                    >
+                                                                        <ColorArea.Thumb />
+                                                                    </ColorArea>
+                                                                    <ColorSlider channel="hue" colorSpace="hsb">
+                                                                        <ColorSlider.Track>
+                                                                            <ColorSlider.Thumb />
+                                                                        </ColorSlider.Track>
+                                                                    </ColorSlider>
+                                                                </ColorPicker.Popover>
+                                                            </ColorPicker>
+                                                        ),
+                                                        () => (
+                                                            <Button variant="tertiary" size="sm" onPress={onResetAccent}>
+                                                                {t("appearance.resetAccent")}
+                                                            </Button>
+                                                        ),
+                                                    ]} />
+                                            ),
+                                        ]} />
+                                </LabeledCard>
+                            ),
 
-                    () => (
-                        <LabeledCard label={t("appearance.effectLabel")}>
-                            <Box principle="content-row" className="grid grid-cols-2 gap-3 @app-sm:grid-cols-3 @app-md:grid-cols-5">
-                                {EFFECT_OPTIONS.map((option) => (
-                                    <button
-                                        key={option}
-                                        type="button"
-                                        onClick={() => onSelectEffect(option)}
-                                        className={cn(
-                                            "relative flex h-24 flex-col justify-end overflow-hidden rounded-2xl border p-2 text-left transition-colors",
-                                            effect === option
-                                                ? "border-accent ring-2 ring-accent"
-                                                : "border-default hover:bg-default",
-                                        )}
-                                    >
-                                        <AmbientBackground effect={option} className="absolute inset-0 -z-0" />
-                                        <span className="relative z-10 text-xs font-medium text-foreground">
-                                            {t(`appearance.effects.${option}`)}
-                                        </span>
-                                    </button>
-                                ))}
-                            </Box>
-                        </LabeledCard>
-                    ),
-                ]} />
-            ),
-        ]} />
+                            () => (
+                                <LabeledCard label={t("appearance.effectLabel")}>
+                                    <Box principle="content-row" className="grid grid-cols-2 gap-3 @app-sm:grid-cols-3 @app-md:grid-cols-5"
+                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title.">
+                                        {EFFECT_OPTIONS.map((option) => (
+                                            <button
+                                                key={option}
+                                                type="button"
+                                                onClick={() => onSelectEffect(option)}
+                                                className={cn(
+                                                    "relative flex h-24 flex-col justify-end overflow-hidden rounded-2xl border p-2 text-left transition-colors",
+                                                    effect === option
+                                                        ? "border-accent ring-2 ring-accent"
+                                                        : "border-default hover:bg-default",
+                                                )}
+                                            >
+                                                <AmbientBackground effect={option} className="absolute inset-0 -z-0" />
+                                                <span className="relative z-10 text-xs font-medium text-foreground">
+                                                    {t(`appearance.effects.${option}`)}
+                                                </span>
+                                            </button>
+                                        ))}
+                                    </Box>
+                                </LabeledCard>
+                            ),
+                        ]} />
+                ),
+            ]} />
     )
 }

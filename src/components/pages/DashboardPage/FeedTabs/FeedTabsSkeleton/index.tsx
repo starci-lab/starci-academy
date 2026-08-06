@@ -28,31 +28,39 @@ export type FeedTabsSkeletonProps = WithClassNames<undefined>
 export const FeedTabsSkeleton = ({ className }: FeedTabsSkeletonProps) => {
     return (
         <div className={className}>
-            <StackV gap={6} principle="block-boundary" items={
-                Array.from({ length: SKELETON_GROUP_COUNT }, (_group, groupIndex) => () => (
+            <StackV gap={6} principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={
+                    Array.from({ length: SKELETON_GROUP_COUNT }, (_group, groupIndex) => () => (
                     // mirrors LabeledCard frameless (date label, gap-3) → SurfaceListCard bordered
-                    <StackV key={groupIndex} gap={4} principle="label-field" items={[
-                        () => <Skeleton.Typography type="body-xs" width="1/4" />,
-                        () => (
-                            <SurfaceListCard>
-                                {Array.from({ length: SKELETON_ROW_COUNT }).map((_row, rowIndex) => (
-                                    <SurfaceListCardItem key={rowIndex}>
-                                        <StackH gap={3} principle="identity" align="start" items={[
-                                            () => <Skeleton className="size-9 shrink-0 rounded-full" />,
-                                            () => (
-                                                <StackV gap={1} principle="name-handle" classNames={["flex-1"]} items={[
-                                                    () => <Skeleton.Typography type="body-sm" width="3/4" />,
-                                                    () => <Skeleton.Typography type="body-xs" width="1/4" />,
-                                                ]} />
-                                            ),
-                                        ]} />
-                                    </SurfaceListCardItem>
-                                ))}
-                            </SurfaceListCard>
-                        ),
-                    ]} />
-                ))
-            } />
+                        <StackV key={groupIndex} gap={4} principle="label-field"
+                            explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
+                            items={[
+                                () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                                () => (
+                                    <SurfaceListCard>
+                                        {Array.from({ length: SKELETON_ROW_COUNT }).map((_row, rowIndex) => (
+                                            <SurfaceListCardItem key={rowIndex}>
+                                                <StackH gap={3} principle="identity"
+                                                    explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
+                                                    align="start" items={[
+                                                        () => <Skeleton className="size-9 shrink-0 rounded-full" />,
+                                                        () => (
+                                                            <StackV gap={1} principle="name-handle"
+                                                                explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
+                                                                classNames={["flex-1"]} items={[
+                                                                    () => <Skeleton.Typography type="body-sm" width="3/4" />,
+                                                                    () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                                                                ]} />
+                                                        ),
+                                                    ]} />
+                                            </SurfaceListCardItem>
+                                        ))}
+                                    </SurfaceListCard>
+                                ),
+                            ]} />
+                    ))
+                } />
         </div>
     )
 }

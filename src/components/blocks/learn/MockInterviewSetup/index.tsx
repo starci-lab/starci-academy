@@ -214,6 +214,7 @@ const MockInterviewSetup = ({
         <StackH
             gap={3}
             principle="flex-action"
+            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
             justify="end"
             isSkeleton={isSkeleton}
             items={[

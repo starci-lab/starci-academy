@@ -34,6 +34,7 @@ export const CategoryFilter = ({ value, onChange, categories }: CategoryFilterPr
             <Cluster
                 gap={3}
                 principle="chip-row"
+                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                 items={filters.map((filter) => {
                     const selected = filter === value
                     return () => (

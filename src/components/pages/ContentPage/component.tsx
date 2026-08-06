@@ -214,6 +214,7 @@ export const _ContentPage = ({
             <StackV
                 gap={6}
                 principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                 items={[
                     () => (
                         <Container
@@ -277,6 +278,7 @@ export const _ContentPage = ({
         <StackV
             gap={6}
             principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
             identity={{ tier: "block", component: "LessonReader" }}
             items={[
                 // 1. header — capped to the reading width; skeleton mirrors it while loading.
@@ -308,6 +310,7 @@ export const _ContentPage = ({
                     <StackV
                         gap={1}
                         principle="name-handle"
+                        explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
                         items={[
                             () => (isSkeleton ? (
                                 <Container

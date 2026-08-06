@@ -220,10 +220,12 @@ export const _CourseContents = ({
             identity={{ tier: "page", component: "CourseContents" }}
             size="md"
             principle="center-measure"
+            explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
             body={() => (
                 <StackV
                     gap={7}
                     principle="layout-split"
+                    explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
                     items={[
                         // Header — its OWN tier, gap-10 (page band) from the content cluster below.
                         () => (
@@ -242,6 +244,7 @@ export const _CourseContents = ({
                             <StackV
                                 gap={6}
                                 principle="block-boundary"
+                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                                 items={[
                                     () => <GithubTeamGate />,
                                     ...(trialStrip ? [() => (
@@ -255,6 +258,7 @@ export const _CourseContents = ({
                                         <StackV
                                             gap={4}
                                             principle="card-caption"
+                                            explain="Holds caption text under card media so the caption stays attached to the image above it."
                                             items={[
                                                 () => (
                                                     <StackH
@@ -262,6 +266,7 @@ export const _CourseContents = ({
                                                         justify="between"
                                                         gap={4}
                                                         principle="content-row"
+                                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                         items={[
                                                             () => (
                                                                 <StackV

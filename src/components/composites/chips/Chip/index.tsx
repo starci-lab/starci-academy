@@ -44,3 +44,10 @@ import { RemovableToken } from "@/components/composites/chips/RemovableToken"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 export { EnumChip as ChipEnum, HighlightChip as ChipHighlight, RemovableToken as ChipRemovable }
+
+/** Folder-matching compound namespace (export-matches-folder). Existing named exports stay public. */
+export const Chip = {
+    Enum: EnumChip,
+    Highlight: HighlightChip,
+    Removable: RemovableToken,
+} as const

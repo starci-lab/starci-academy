@@ -2,7 +2,7 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { gapClassNames, type AllowedGap, type Responsive } from "@/components/frames/_spacing"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
-import { principleAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { resolvePrincipleSpacing, resolvedSpacingClassNames } from "@/components/frames/_principle-style"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
@@ -131,6 +131,11 @@ export interface GridBaseProps {
      * Query as `[data-principle="token"]`. When set, owns gap CSS — do not also pass `gap`/`classNames`.
      */
     principle?: PrincipleToken
+    /**
+     * Why this layer exists - one sentence, emitted as `data-explain` beside the token.
+     * A reason, never a restatement of `principle`.
+     */
+    explain?: ExplainReason
     /** Renders every cell's skeleton form instead of its content form. */
     isSkeleton?: boolean
     /**
@@ -149,7 +154,7 @@ export interface GridBaseProps {
  *
  * @param props - {@link GridBaseProps}
  */
-const GridBase = ({ items, columns, gap, classNames, principle, isSkeleton, identity }: GridBaseProps) => {
+const GridBase = ({ items, columns, gap, classNames, principle, explain, isSkeleton, identity }: GridBaseProps) => {
     const resolved = resolvePrincipleSpacing(principle, gap, undefined)
     const gapClasses = resolved.principleOwnsLayout
         ? resolvedSpacingClassNames(resolved)
@@ -160,6 +165,7 @@ const GridBase = ({ items, columns, gap, classNames, principle, isSkeleton, iden
         <div
             {...resolveIdentity(identity, { tier: "frame", name: "Grid" })}
             data-principle={principleAttr(principle)}
+            data-explain={explainAttr(explain)}
             className={cn(
                 "grid",
                 ...gapClasses,

@@ -107,12 +107,14 @@ const statCell = (stat: QuizProgressStat, isSkeleton: boolean): StatGridCardItem
             <StackV
                 gap={2}
                 principle="title-subtitle"
+                explain="Title over supporting line — not label-field, because neither line is a form control label."
                 isSkeleton={isSkeleton}
                 items={[
                     ({ isSkeleton }: SkeletonProps) => (
                         <StackH
                             gap={2}
                             principle="icon-text"
+                            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
                             align="center"
                             isSkeleton={isSkeleton}
                             items={[

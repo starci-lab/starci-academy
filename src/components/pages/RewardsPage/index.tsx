@@ -51,64 +51,69 @@ export const RewardsPage = ({ className }: RewardsPageProps) => {
 
     return (
         <div className={cn(className)}>
-            <Box principle="center-measure" className="mx-auto w-full max-w-3xl p-6">
-                <StackV gap={7} principle="layout-split" items={[
-                    () => (
-                        <PageHeader
-                            breadcrumb={(
-                                <ResponsiveBreadcrumb
-                                    items={[
-                                        {
-                                            key: "home",
-                                            label: t("nav.home"),
-                                            onPress: () => router.push(pathConfig().locale(locale).build()),
-                                        },
-                                        {
-                                            key: "rewards",
-                                            label: t("rewards.title"),
-                                        },
-                                    ]}
-                                />
-                            )}
-                            title={t("rewards.title")}
-                            description={t("rewards.description")}
-                            meta={(
-                                <HighlightChip
-                                    tone="accent"
-                                    icon={CoinsIcon}
-                                    value={balance}
-                                    label={t("rewards.balanceLabel")}
-                                />
-                            )}
-                        />
-                    ),
-                    () => (
-                        <StackV gap={6} principle="block-boundary" items={[
-                            () => (
-                                <TabsCard
-                                    leftTabs={{
-                                        items: [
+            <Box principle="center-measure" className="mx-auto w-full max-w-3xl p-6"
+                explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
+                <StackV gap={7} principle="layout-split"
+                    explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+                    items={[
+                        () => (
+                            <PageHeader
+                                breadcrumb={(
+                                    <ResponsiveBreadcrumb
+                                        items={[
                                             {
-                                                key: RewardsTab.Shop,
-                                                label: t("rewards.tabs.shop"),
+                                                key: "home",
+                                                label: t("nav.home"),
+                                                onPress: () => router.push(pathConfig().locale(locale).build()),
                                             },
                                             {
-                                                key: RewardsTab.Wallet,
-                                                label: unusedVoucherCount > 0
-                                                    ? t("rewards.tabs.walletWithCount", { count: unusedVoucherCount })
-                                                    : t("rewards.tabs.wallet"),
+                                                key: "rewards",
+                                                label: t("rewards.title"),
                                             },
-                                        ],
-                                        selectedKey: tab,
-                                        ariaLabel: t("rewards.tabsAria"),
-                                        onSelectionChange: (key) => setTab(key as RewardsTab),
-                                    }}
-                                />
-                            ),
-                            () => (tab === RewardsTab.Shop ? <RewardCatalog /> : <MyVouchers />),
-                        ]} />
-                    ),
-                ]} />
+                                        ]}
+                                    />
+                                )}
+                                title={t("rewards.title")}
+                                description={t("rewards.description")}
+                                meta={(
+                                    <HighlightChip
+                                        tone="accent"
+                                        icon={CoinsIcon}
+                                        value={balance}
+                                        label={t("rewards.balanceLabel")}
+                                    />
+                                )}
+                            />
+                        ),
+                        () => (
+                            <StackV gap={6} principle="block-boundary"
+                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                                items={[
+                                    () => (
+                                        <TabsCard
+                                            leftTabs={{
+                                                items: [
+                                                    {
+                                                        key: RewardsTab.Shop,
+                                                        label: t("rewards.tabs.shop"),
+                                                    },
+                                                    {
+                                                        key: RewardsTab.Wallet,
+                                                        label: unusedVoucherCount > 0
+                                                            ? t("rewards.tabs.walletWithCount", { count: unusedVoucherCount })
+                                                            : t("rewards.tabs.wallet"),
+                                                    },
+                                                ],
+                                                selectedKey: tab,
+                                                ariaLabel: t("rewards.tabsAria"),
+                                                onSelectionChange: (key) => setTab(key as RewardsTab),
+                                            }}
+                                        />
+                                    ),
+                                    () => (tab === RewardsTab.Shop ? <RewardCatalog /> : <MyVouchers />),
+                                ]} />
+                        ),
+                    ]} />
             </Box>
         </div>
     )

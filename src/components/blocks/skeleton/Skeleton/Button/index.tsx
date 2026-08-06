@@ -15,3 +15,6 @@ export interface SkeletonButtonProps extends WithClassNames<undefined> {
 export const SkeletonButton = ({ className, width = "w-24" }: SkeletonButtonProps) => {
     return <Skeleton className={cn("h-10 @app-md:h-9 rounded-full", width, className)} />
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonButton` as the public name. */
+export { SkeletonButton as Button }

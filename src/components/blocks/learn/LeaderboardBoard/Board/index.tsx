@@ -17,6 +17,7 @@ const rowItem = (row: LeaderboardRow, meLabel: string, isSkeleton: boolean): Sur
         <StackH
             gap={3}
             principle="identity"
+            explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
             align="center"
             isSkeleton={isSkeleton}
             items={[
@@ -140,6 +141,7 @@ export const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCou
                 <StackH
                     gap={3}
                     principle="identity"
+                    explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
                     align="center"
                     isSkeleton={isSkeleton}
                     items={[
@@ -152,7 +154,7 @@ export const Board = ({ standing, podiumEntries, rows, selfRow, hiddenBetweenCou
     ) : null
 
     return (
-        <StackV
+        <StackV identity={{ tier: "block", component: "Board" }}
             gap={6}
             isSkeleton={isSkeleton}
             items={[

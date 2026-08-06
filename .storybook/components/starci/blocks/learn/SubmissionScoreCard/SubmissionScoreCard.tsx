@@ -121,6 +121,7 @@ const SubmissionScoreCard = ({
         <StackH
             gap={3}
             principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             align="center"
             at="sm"
             isSkeleton={isSkeleton}
@@ -158,7 +159,9 @@ const SubmissionScoreCard = ({
 
     const scoreSummary = (
         <>
-            <StackH gap={4} principle="value-row" align="baseline" at="sm" isSkeleton={isSkeleton} items={[() => scoreRow]} />
+            <StackH gap={4} principle="value-row"
+                explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
+                align="baseline" at="sm" isSkeleton={isSkeleton} items={[() => scoreRow]}  />
 
             {pointsNeeded != null && pointsNeeded > 0 ? (
                 <Typography

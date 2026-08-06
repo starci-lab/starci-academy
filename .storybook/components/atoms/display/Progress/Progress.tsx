@@ -227,3 +227,10 @@ export const meta = [
     { tier: "atom", name: "ProgressCircle" },
     { tier: "atom", name: "ProgressGauge" },
 ] as const
+
+/** Folder-matching compound namespace (export-matches-folder / ATOM-11 sync). */
+export const Progress = {
+    Bar: ProgressBar,
+    Circle: ProgressCircle,
+    Gauge: Meter,
+} as const

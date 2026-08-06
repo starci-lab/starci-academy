@@ -70,14 +70,18 @@ const TrackCard = ({
                 {track.courseTitle}
             </Typography>
         ),
-        () => <Cluster gap={3} principle="chip-row" items={bandChips} />,
+        () => <Cluster gap={3} principle="chip-row"
+            explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+            items={bandChips} />,
     ]
 
     return (
         <SurfaceListCardItem href={pathConfig().locale(locale).course(track.courseSlug).build()}>
             <StackV gap={4} items={[
                 () => (
-                    <Cluster gap={3} principle="flex-action" justify="between" items={headerItems} />
+                    <Cluster gap={3} principle="flex-action"
+                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                        justify="between" items={headerItems}  />
                 ),
                 ...(track.capstoneScore !== null
                     ? [() => (
@@ -181,6 +185,7 @@ export const ProfileJobReadiness = ({ className, label }: ProfileJobReadinessPro
                                     <Cluster
                                         gap={4}
                                         principle="content-row"
+                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                         items={[
                                             () => (
                                                 <StatPair

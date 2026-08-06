@@ -160,6 +160,7 @@ const PlaygroundSetupSteps = ({
         <StackV
             gap={3}
             principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             isSkeleton={isSkeleton}
             items={[
                 () => (
@@ -180,6 +181,7 @@ const PlaygroundSetupSteps = ({
                         gap={3}
                         at="sm"
                         principle="flex-action"
+                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                         isSkeleton={isSkeleton}
                         items={[
                             () => renderVerifyButton(),

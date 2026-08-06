@@ -66,7 +66,9 @@ const ProfileLockedState = ({
             />
         </>
     )
-    return <StackV gap={6} principle="block-boundary" padding={6} classNames={classNames} items={[() => lockedBody]} />
+    return <StackV gap={6} principle="block-boundary"
+        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+        padding={6} classNames={classNames} items={[() => lockedBody]}  />
 }
 
 export { ProfileLockedState }

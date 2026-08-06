@@ -38,3 +38,15 @@ export const ModalFooter = HeroModal.Footer
 export const ModalCloseTrigger = HeroModal.CloseTrigger
 
 export const meta = { tier: "atom", name: "ModalRoot" } as const
+
+/** Folder-matching compound namespace (export-matches-folder / ATOM-11 sync). */
+export const Modal = {
+    Root: ModalRoot,
+    Backdrop: ModalBackdrop,
+    Container: ModalContainer,
+    Dialog: ModalDialog,
+    Header: ModalHeader,
+    Body: ModalBody,
+    Footer: ModalFooter,
+    CloseTrigger: ModalCloseTrigger,
+} as const

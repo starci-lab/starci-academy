@@ -1,6 +1,6 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
@@ -69,11 +69,13 @@ const recapCardBody = (
     <StackV
         gap={6}
         principle="block-boundary"
+        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
         items={[
             () => (
                 <StackH
                     gap={3}
                     principle="chip-row"
+                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                     align="center"
 
                     items={[
@@ -152,9 +154,9 @@ const QuizRecapList = ({
     if (isSkeleton) {
         const skeletonCardBody = (
             <>
-                <HeroSkeleton className="h-5 w-16 rounded-full" />
-                <HeroSkeleton className="h-4 w-full rounded" />
-                <HeroSkeleton className="h-4 w-2/3 rounded" />
+                <Skeleton className="h-5 w-16 rounded-full" />
+                <Skeleton className="h-4 w-full rounded" />
+                <Skeleton className="h-4 w-2/3 rounded" />
             </>
         )
         const skeletonCards = Array.from({ length: skeletonCount }, (_unused, index) => (
@@ -166,7 +168,7 @@ const QuizRecapList = ({
         ))
         const loadingBody = (
             <>
-                <HeroSkeleton className="h-3.5 w-40 rounded" />
+                <Skeleton className="h-3.5 w-40 rounded" />
                 {skeletonCards}
             </>
         )

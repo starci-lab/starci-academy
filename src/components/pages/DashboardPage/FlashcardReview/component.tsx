@@ -53,7 +53,9 @@ export const _FlashcardReview = ({
         return null
     }
     return (
-        <Box principle="cell-pad" className="p-3" identity={{ tier: "block", component: "FlashcardReview" }}>
+        <Box principle="cell-pad" className="p-3"
+            explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body."
+            identity={{ tier: "block", component: "FlashcardReview" }}>
             <Split
                 gap={3}
                 isSkeleton={isSkeleton}

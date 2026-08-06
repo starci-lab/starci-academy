@@ -40,5 +40,5 @@ export const OauthButtons = ({
             onPress={() => onOauthPress(item.provider)}
         />
     ))
-    return <StackV gap={3} items={buttonItems} />
+    return <StackV identity={{ tier: "overlay", component: "OauthButtons" }} gap={3} items={buttonItems} />
 }

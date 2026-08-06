@@ -48,5 +48,14 @@ export const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false}: 
             ) : null}
         </>
     )
-    return <StackV gap={2} principle="title-subtitle" align="center" isSkeleton={isSkeleton} items={[() => rankBody]} />
+    return (
+        <StackV identity={{ tier: "block", component: "ProfileRankAvatar" }}
+            gap={2}
+            principle="title-subtitle"
+            explain="Title over supporting line — not label-field, because neither line is a form control label."
+            align="center"
+            isSkeleton={isSkeleton}
+            items={[() => rankBody]}
+        />
+    )
 }

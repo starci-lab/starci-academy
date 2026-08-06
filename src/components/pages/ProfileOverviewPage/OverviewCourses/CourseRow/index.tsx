@@ -63,6 +63,7 @@ export const CourseRow = ({ item, isOwnProfile = false, isSkeleton = false }: Co
             <StackH
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 items={[
                     () => (resting
                         ? <Skeleton className="size-12 shrink-0 rounded-xl" />
@@ -97,12 +98,14 @@ export const CourseRow = ({ item, isOwnProfile = false, isSkeleton = false }: Co
                             <StackV
                                 gap={3}
                                 principle="sibling-stack"
+                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                 classNames={["min-w-0", "flex-1"]}
                                 items={[
                                     () => (
                                         <StackH
                                             gap={3}
                                             principle="flex-action"
+                                            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                                             justify="between"
                                             items={titleRowItems}
                                         />

@@ -71,11 +71,13 @@ export const SystemStatusPage = () => {
             size="lg"
             padding={6}
             principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
             identity={{ tier: "block", component: "SystemStatusPage" }}
             body={() => (
                 <StackV
                     gap={7}
                     principle="layout-split"
+                    explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
                     items={[
                         () => (
                             <PageHeader
@@ -98,6 +100,7 @@ export const SystemStatusPage = () => {
                             <StackV
                                 gap={6}
                                 principle="block-boundary"
+                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                                 items={[
                                     () => (
                                         <AsyncContent
@@ -121,6 +124,7 @@ export const SystemStatusPage = () => {
                                             <StackV
                                                 gap={6}
                                                 principle="block-boundary"
+                                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                                                 items={[
                                                     () => (
                                                         <OverallBanner
@@ -136,6 +140,7 @@ export const SystemStatusPage = () => {
                                                             as="section"
                                                             gap={4}
                                                             principle="label-field"
+                                                            explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
                                                             items={[
                                                                 () => (
                                                                     <h2 className="text-sm font-medium text-muted">
@@ -146,6 +151,7 @@ export const SystemStatusPage = () => {
                                                                     <Grid
                                                                         columns={{ base: 1, sm: 2, lg: 3 }}
                                                                         principle="content-row"
+                                                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                                         items={componentGridItems}
                                                                     />
                                                                 ),
@@ -161,6 +167,7 @@ export const SystemStatusPage = () => {
                                             as="section"
                                             gap={4}
                                             principle="label-field"
+                                            explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
                                             items={[
                                                 () => (
                                                     <h2 className="text-sm font-medium text-muted">
@@ -189,6 +196,7 @@ export const SystemStatusPage = () => {
                                                         <StackV
                                                             gap={4}
                                                             principle="content-row"
+                                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                             items={groups.map((group, index) => () => (
                                                                 <AiKeyGroup
                                                                     key={`${group.provider}-${index}`}

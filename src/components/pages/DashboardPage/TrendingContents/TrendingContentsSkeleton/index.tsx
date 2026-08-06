@@ -40,10 +40,12 @@ export const TrendingContentsSkeleton = ({ className }: TrendingContentsSkeleton
             <SurfaceListCard>
                 {ROW_WIDTHS.slice(0, SKELETON_ROW_COUNT).map((width, index) => (
                     <SurfaceListCardItem key={index}>
-                        <StackH gap={4} principle="content-row" align="center" items={[
-                            () => <Skeleton className="h-4 w-5 shrink-0 rounded" />,
-                            () => <Skeleton.Typography type="body-sm" width={width} />,
-                        ]} />
+                        <StackH gap={4} principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            align="center" items={[
+                                () => <Skeleton className="h-4 w-5 shrink-0 rounded" />,
+                                () => <Skeleton.Typography type="body-sm" width={width} />,
+                            ]} />
                     </SurfaceListCardItem>
                 ))}
             </SurfaceListCard>

@@ -26,10 +26,12 @@ const ProfilePinnedAction = ({ label, onPress }: { label: string; onPress: () =>
         onPress={onPress}
         className="inline-flex shrink-0 cursor-pointer items-center text-sm text-accent-soft-foreground no-underline transition-opacity hover:opacity-60"
     >
-        <StackH gap={2} principle="icon-text" inline items={[
-            () => <PencilIcon className="size-4" aria-hidden="true" focusable="false" />,
-            () => <span>{label}</span>,
-        ]} />
+        <StackH gap={2} principle="icon-text"
+            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+            inline items={[
+                () => <PencilIcon className="size-4" aria-hidden="true" focusable="false" />,
+                () => <span>{label}</span>,
+            ]} />
     </Link>
 )
 
@@ -96,28 +98,36 @@ export const ProfilePinned = ({
                 skeleton={(
                     <Grid
                         principle="content-row"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                         columns={{ base: 1, sm: 2 }}
                         items={[0, 1, 2, 3].map((index) => ({
                             key: `pin-skel-${index}`,
                             content: () => (
-                                <Box principle="card-padding" className="rounded-2xl border border-default bg-surface p-4">
-                                    <StackV gap={3} principle="sibling-stack" items={[
-                                        () => (
-                                            <StackH gap={3} principle="flex-action" justify="between" items={[
-                                                () => <Skeleton.Chip />,
-                                                () => <Skeleton className="size-4 shrink-0 rounded" />,
-                                            ]} />
-                                        ),
-                                        () => <Skeleton.Typography type="body-sm" width="3/4" />,
-                                        () => <Skeleton.Typography type="body-xs" width="1/2" />,
-                                        () => (
-                                            <Cluster gap={3} principle="chip-row" items={
-                                                [0, 1, 2].map((chip) => (
-                                                    () => <Skeleton.Chip key={chip} />
-                                                ))
-                                            } />
-                                        ),
-                                    ]} />
+                                <Box principle="card-padding" className="rounded-2xl border border-default bg-surface p-4"
+                                    explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
+                                    <StackV gap={3} principle="sibling-stack"
+                                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                        items={[
+                                            () => (
+                                                <StackH gap={3} principle="flex-action"
+                                                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                                    justify="between" items={[
+                                                        () => <Skeleton.Chip />,
+                                                        () => <Skeleton className="size-4 shrink-0 rounded" />,
+                                                    ]} />
+                                            ),
+                                            () => <Skeleton.Typography type="body-sm" width="3/4" />,
+                                            () => <Skeleton.Typography type="body-xs" width="1/2" />,
+                                            () => (
+                                                <Cluster gap={3} principle="chip-row"
+                                                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                                    items={
+                                                        [0, 1, 2].map((chip) => (
+                                                            () => <Skeleton.Chip key={chip} />
+                                                        ))
+                                                    } />
+                                            ),
+                                        ]} />
                                 </Box>
                             ),
                         }))}
@@ -141,6 +151,7 @@ export const ProfilePinned = ({
             >
                 <Grid
                     principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                     columns={{ base: 1, sm: 2 }}
                     items={pins.map((pin) => ({
                         key: pin.id,

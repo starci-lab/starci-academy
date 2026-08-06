@@ -30,43 +30,50 @@ export const SubmitSuccess = ({ jobDisplayId }: SubmitSuccessProps) => {
     const router = useRouter()
 
     return (
-        <Box principle="center-measure" className="mx-auto max-w-lg p-6 py-16 text-center">
-            <StackV gap={5} principle="group-boundary" align="center" items={[
-                () => <CheckCircleIcon aria-hidden focusable="false" className="size-12 text-success-soft-foreground" />,
-                () => (
-                    <Typography type="h4" weight="bold">
-                        {t("jobs.post.success.title")}
-                    </Typography>
-                ),
-                () => (
-                    <Typography type="body-sm" color="muted">
-                        {t("jobs.post.success.description")}
-                    </Typography>
-                ),
-                () => (
-                    <Box principle="push-end" className="mt-2">
-                        <StackH gap={4} principle="content-row" align="center" justify="center" at="sm" items={[
-                            () => (
-                                <Button
-                                    variant="primary"
-                                    onPress={() => router.push(pathConfig().locale(locale).jobs(jobDisplayId).build())}
-                                >
-                                    {t("jobs.post.success.viewPosting")}
-                                    <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
-                                </Button>
-                            ),
-                            () => (
-                                <Button
-                                    variant="secondary"
-                                    onPress={() => router.push(pathConfig().locale(locale).jobs().build())}
-                                >
-                                    {t("jobs.post.success.backToBoard")}
-                                </Button>
-                            ),
-                        ]} />
-                    </Box>
-                ),
-            ]} />
+        <Box identity={{ tier: "page", component: "SubmitSuccess" }} principle="center-measure" className="mx-auto max-w-lg p-6 py-16 text-center"
+            explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
+            <StackV gap={5} principle="group-boundary"
+                explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+                align="center" items={[
+                    () => <CheckCircleIcon aria-hidden focusable="false" className="size-12 text-success-soft-foreground" />,
+                    () => (
+                        <Typography type="h4" weight="bold">
+                            {t("jobs.post.success.title")}
+                        </Typography>
+                    ),
+                    () => (
+                        <Typography type="body-sm" color="muted">
+                            {t("jobs.post.success.description")}
+                        </Typography>
+                    ),
+                    () => (
+                        <Box principle="push-end"
+                            explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row."
+                            className="mt-2">
+                            <StackH gap={4} principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                align="center" justify="center" at="sm" items={[
+                                    () => (
+                                        <Button
+                                            variant="primary"
+                                            onPress={() => router.push(pathConfig().locale(locale).jobs(jobDisplayId).build())}
+                                        >
+                                            {t("jobs.post.success.viewPosting")}
+                                            <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                                        </Button>
+                                    ),
+                                    () => (
+                                        <Button
+                                            variant="secondary"
+                                            onPress={() => router.push(pathConfig().locale(locale).jobs().build())}
+                                        >
+                                            {t("jobs.post.success.backToBoard")}
+                                        </Button>
+                                    ),
+                                ]} />
+                        </Box>
+                    ),
+                ]} />
         </Box>
     )
 }

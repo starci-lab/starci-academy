@@ -95,6 +95,7 @@ const FlashcardStudyCard = ({
         <StackH
             gap={3}
             principle="chip-row"
+            explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
             at="sm"
             align="center"
             isSkeleton={isSkeleton}
@@ -123,12 +124,14 @@ const FlashcardStudyCard = ({
         <StackV
             gap={3}
             principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             isSkeleton={isSkeleton}
             items={[
                 ({ isSkeleton }: SkeletonProps) => (
                     <StackH
                         gap={3}
                         principle="identity"
+                        explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
                         align="center"
                         isSkeleton={isSkeleton}
                         items={[
@@ -213,6 +216,7 @@ const FlashcardStudyCard = ({
         <StackH
             gap={3}
             principle="flex-action"
+            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
             justify="between"
             align="center"
             isSkeleton={isSkeleton}

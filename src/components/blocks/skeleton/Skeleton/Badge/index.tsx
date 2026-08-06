@@ -12,3 +12,6 @@ export type SkeletonBadgeProps = WithClassNames<undefined>
 export const SkeletonBadge = ({ className }: SkeletonBadgeProps) => {
     return <Skeleton className={cn("size-4 rounded-full", className)} />
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonBadge` as the public name. */
+export { SkeletonBadge as Badge }

@@ -101,6 +101,7 @@ const CatalogLineCardSkeleton = () => (
             <StackH
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 items={[
                     () => (
                         <Skeleton className="hidden aspect-video w-36 shrink-0 rounded-2xl @app-sm:block" />
@@ -109,6 +110,7 @@ const CatalogLineCardSkeleton = () => (
                         <StackV
                             gap={2}
                             principle="title-subtitle"
+                            explain="Title over supporting line — not label-field, because neither line is a form control label."
                             classNames={["min-w-0", "flex-1"]}
                             items={[
                                 () => <Skeleton.Typography type="h6" width="1/2" />,
@@ -120,6 +122,7 @@ const CatalogLineCardSkeleton = () => (
                         <StackV
                             gap={2}
                             principle="title-subtitle"
+                            explain="Title over supporting line — not label-field, because neither line is a form control label."
                             align="end"
                             classNames={["shrink-0"]}
                             items={[
@@ -211,6 +214,7 @@ export const _CourseCatalogPage = ({
                     items={gridItems}
                     columns={{ base: 1, md: 2, lg: 3 }}
                     principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                     isSkeleton={isSkeleton}
                 />
             )
@@ -219,6 +223,7 @@ export const _CourseCatalogPage = ({
             <StackV
                 gap={3}
                 principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                 items={cardItems.map(({ Content }) => Content)}
                 isSkeleton={isSkeleton}
             />
@@ -234,6 +239,7 @@ export const _CourseCatalogPage = ({
                 <StackV
                     gap={6}
                     principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                     items={[
                         () => (
                             <PageHeader
@@ -252,6 +258,7 @@ export const _CourseCatalogPage = ({
                             <Cluster
                                 gap={3}
                                 principle="flex-action"
+                                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                                 justify="between"
                                 align="center"
                                 items={[

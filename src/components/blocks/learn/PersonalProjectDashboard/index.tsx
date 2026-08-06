@@ -243,6 +243,7 @@ const Body = ({
         <StackV
             gap={6}
             principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
             isSkeleton={isSkeleton}
 
             items={[
@@ -257,6 +258,7 @@ const Body = ({
                             <Grid
                                 columns={{ base: 1, sm: 2 }}
                                 principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
 
                                 items={tasks.map((task) => ({
                                     key: task.id,

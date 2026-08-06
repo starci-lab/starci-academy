@@ -16,3 +16,9 @@ export const ListBoxRoot = (props: ListBoxRootProps) => (
 export const ListBoxItem = HeroListBox.Item
 
 export const meta = { tier: "atom", name: "ListBoxRoot" } as const
+
+/** Folder-matching compound namespace (export-matches-folder / ATOM-11 sync). */
+export const ListBox = {
+    Root: ListBoxRoot,
+    Item: ListBoxItem,
+} as const

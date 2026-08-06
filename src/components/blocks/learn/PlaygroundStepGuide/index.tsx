@@ -1,5 +1,5 @@
 import React from "react"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { CheckCircleIcon } from "@phosphor-icons/react"
 import { MarkdownContent } from "@/components/composites/viewers/MarkdownContent"
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
@@ -72,16 +72,16 @@ const PlaygroundStepGuide = ({
     if (isSkeleton) {
         const loadingStep = (
             <>
-                <HeroSkeleton className="h-6 w-48 rounded" />
+                <Skeleton className="h-6 w-48 rounded" />
                 <StackV
                     gap={2}
                     isSkeleton={isSkeleton}
                     items={[
-                        () => <HeroSkeleton className="h-4 w-full rounded" />,
-                        () => <HeroSkeleton className="h-4 w-2/3 rounded" />,
+                        () => <Skeleton className="h-4 w-full rounded" />,
+                        () => <Skeleton className="h-4 w-2/3 rounded" />,
                     ]}
                 />
-                <HeroSkeleton className="h-9 w-36 rounded-xl" />
+                <Skeleton className="h-9 w-36 rounded-xl" />
             </>
         )
         return (

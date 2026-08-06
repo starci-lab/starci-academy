@@ -1,5 +1,5 @@
 import React from "react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { LinkSeeMore } from "@/components/atoms/navigation/Link"
 import { CardBody } from "../CardBody"
@@ -15,7 +15,7 @@ import { CTA_LABEL, type ContinueCardItemProps } from "../types"
 export const ContinueCardItem = (props: ContinueCardItemProps) => {
     const { href, onPress, className, isSkeleton = false } = props
     return (
-        <SurfaceCard
+        <SurfaceCard identity={{ tier: "block", component: "ContinueCardItem" }}
             isSkeleton={isSkeleton}
 
             contentClassName={cn("relative flex flex-col gap-3 overflow-hidden", className)}
@@ -23,18 +23,12 @@ export const ContinueCardItem = (props: ContinueCardItemProps) => {
                 <CardBody
                     {...props}
                     cta={
-                        isSkeleton ? (
-                            <span>
-                                <HeroSkeleton className="h-[14px] w-20 rounded" />
-                            </span>
-                        ) : (
-                            <LinkSeeMore
-                                href={href}
-                                onPress={onPress}
-
-                                label={CTA_LABEL}
-                            />
-                        )
+                        <LinkSeeMore
+                            href={href}
+                            onPress={onPress}
+                            label={CTA_LABEL}
+                            isSkeleton={isSkeleton}
+                        />
                     }
                 />
             )}

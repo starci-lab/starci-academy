@@ -303,7 +303,8 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
             return (
                 // inset-exception: inline-code geometry, wider than tall by nature, not a surface inset
                 // (same shape as `RichText`'s inline `<code>` — see `RichText.tsx`)
-                <Box as="code" principle="control-pad" className="rounded-md bg-default px-1 py-0 font-mono text-sm text-foreground [overflow-wrap:anywhere]">
+                <Box as="code" principle="control-pad" className="rounded-md bg-default px-1 py-0 font-mono text-sm text-foreground [overflow-wrap:anywhere]"
+                    explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.">
                     {children}
                 </Box>
             )
@@ -358,6 +359,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
                     at="sm"
                     gap={3}
                     principle="chip-row"
+                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                     items={String(items ?? "").split("|").filter(Boolean).map((keyword) => () => (
                         <Chip tone="default" text={keyword} />
                     ))}
@@ -393,6 +395,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
                             <StackH
                                 gap={4}
                                 principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                 justify="between"
                                 items={[
                                     () => <span className={reading ? "text-base font-semibold" : "text-sm font-semibold"}>{title}</span>,

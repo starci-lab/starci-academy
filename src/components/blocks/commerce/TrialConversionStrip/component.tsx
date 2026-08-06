@@ -65,10 +65,12 @@ export const _TrialConversionStrip = ({
     // Header never rests — title/description already arrived as resolved strings
     // (i18n + the outline), not a fetch, so there is nothing here to shimmer.
     const headerRow = (
-        <StackH gap={4} principle="content-row" align="center" items={[
-            () => <IconTile icon={LockIcon} tone="accent" size="sm" />,
-            () => <TitledText classNames={["flex-1"]} title={title} subtitle={description} />,
-        ]} />
+        <StackH gap={4} principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            align="center" items={[
+                () => <IconTile icon={LockIcon} tone="accent" size="sm" />,
+                () => <TitledText classNames={["flex-1"]} title={title} subtitle={description} />,
+            ]} />
     )
 
     // The scarcity line is a CAPTION OF THE PRICE — price + scarcity are one cluster,
@@ -105,28 +107,30 @@ export const _TrialConversionStrip = ({
     // truncate. The row wraps when tight (`StackH`): the button drops to the next
     // line instead of the price getting squeezed.
     const footerRow = (
-        <StackH gap={6} principle="block-boundary" align="end" justify="between" at="sm" items={[
-            () => priceColumn,
-            // ATOM `Button`, NOT the legacy HeroUI one — `suffixIcon` takes a COMPONENT
-            // REF, the atom forces scale + weight; the CTA is never gated on the price
-            // fetch, so it does not take `isSkeleton`.
-            () => (
-                <Button
-                    variant="primary"
-                    size="lg"
-                    classNames={["shrink-0"]}
-                    label={cta}
-                    suffixIcon={ArrowRightIcon}
-                    iconSlide
-                    onPress={onEnroll}
-                />
-            ),
-        ]} />
+        <StackH gap={6} principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            align="end" justify="between" at="sm" items={[
+                () => priceColumn,
+                // ATOM `Button`, NOT the legacy HeroUI one — `suffixIcon` takes a COMPONENT
+                // REF, the atom forces scale + weight; the CTA is never gated on the price
+                // fetch, so it does not take `isSkeleton`.
+                () => (
+                    <Button
+                        variant="primary"
+                        size="lg"
+                        classNames={["shrink-0"]}
+                        label={cta}
+                        suffixIcon={ArrowRightIcon}
+                        iconSlide
+                        onPress={onEnroll}
+                    />
+                ),
+            ]} />
     )
 
     return (
         // The frame owns radius/shadow/padding from ONE source: `SurfaceCard`.
-        <SurfaceCard
+        <SurfaceCard identity={{ tier: "block", component: "TrialConversionStrip" }}
             classNames={classNames}
             body={() => (
                 <StackV gap={6} items={[

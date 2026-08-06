@@ -156,15 +156,19 @@ export const _FlashcardReviewStats = ({
     // `isSkeleton`). Otherwise every attempted tag worst-first.
     const gapRows = isSkeleton
         ? Array.from({ length: WEAK_TOPIC_SKELETON_ROW_COUNT }, (_unused, index) => (
-            <Box key={`pending-${index}`} principle="cell-pad" className="p-3">
-                <StackH gap={4} principle="content-row" align="center" items={[
-                    () => <Skeleton.Typography type="body-sm" width="1/3" />,
-                    () => (
-                        <Box principle="push-end" className="ml-auto shrink-0">
-                            <Skeleton.Chip />
-                        </Box>
-                    ),
-                ]} />
+            <Box key={`pending-${index}`} principle="cell-pad" className="p-3"
+                explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body.">
+                <StackH gap={4} principle="content-row" align="center"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                    items={[
+                        () => <Skeleton.Typography type="body-sm" width="1/3" />,
+                        () => (
+                            <Box principle="push-end" className="ml-auto shrink-0"
+                                explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row.">
+                                <Skeleton.Chip />
+                            </Box>
+                        ),
+                    ]} />
             </Box>
         ))
         : weakTags.map((tagStat) => (
@@ -188,40 +192,52 @@ export const _FlashcardReviewStats = ({
                 <LabeledCard label={labels.memoryHealthLabel} frameless>
                     {isSkeleton ? (
                         <SectionCard>
-                            <StackV gap={4} principle="sibling-stack" items={[
-                                () => (
-                                    <StackH gap={3} principle="value-row" align="baseline" items={[
-                                        () => <Skeleton className="h-9 w-20 rounded" />,
-                                        () => <Skeleton className="h-[14px] w-6 rounded" />,
-                                    ]} />
-                                ),
-                                () => <Skeleton.Typography type="body-sm" width="3/4" />,
-                                () => <Skeleton.Typography type="body-xs" width="1/2" />,
-                                () => <Skeleton.ProgressBar />,
-                                () => (
-                                    <Box className="overflow-hidden rounded-2xl border border-default">
-                                        <StackH gap={1} principle="name-handle" align="stretch" divider items={[
-                                            () => (
-                                                <Box principle="card-padding" className="flex-1 p-4">
-                                                    <StackV gap={2} principle="title-subtitle" items={[
-                                                        () => <Skeleton.Typography type="body-xs" width="2/3" />,
-                                                        () => <Skeleton className="h-5 w-14 rounded" />,
-                                                    ]} />
-                                                </Box>
-                                            ),
-                                            () => (
-                                                <Box principle="card-padding" className="flex-1 p-4">
-                                                    <StackV gap={2} principle="title-subtitle" items={[
-                                                        () => <Skeleton.Typography type="body-xs" width="2/3" />,
-                                                        () => <Skeleton className="h-5 w-14 rounded" />,
-                                                    ]} />
-                                                </Box>
-                                            ),
-                                        ]} />
-                                    </Box>
-                                ),
-                                () => <Skeleton.Button width="w-40" />,
-                            ]} />
+                            <StackV gap={4} principle="sibling-stack"
+                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                items={[
+                                    () => (
+                                        <StackH gap={3} principle="value-row" align="baseline"
+                                            explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
+                                            items={[
+                                                () => <Skeleton className="h-9 w-20 rounded" />,
+                                                () => <Skeleton className="h-[14px] w-6 rounded" />,
+                                            ]} />
+                                    ),
+                                    () => <Skeleton.Typography type="body-sm" width="3/4" />,
+                                    () => <Skeleton.Typography type="body-xs" width="1/2" />,
+                                    () => <Skeleton.ProgressBar />,
+                                    () => (
+                                        <Box className="overflow-hidden rounded-2xl border border-default">
+                                            <StackH gap={1} principle="name-handle" align="stretch" divider
+                                                explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
+                                                items={[
+                                                    () => (
+                                                        <Box principle="card-padding" className="flex-1 p-4"
+                                                            explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
+                                                            <StackV gap={2} principle="title-subtitle"
+                                                                explain="Title over supporting line — not label-field, because neither line is a form control label."
+                                                                items={[
+                                                                    () => <Skeleton.Typography type="body-xs" width="2/3" />,
+                                                                    () => <Skeleton className="h-5 w-14 rounded" />,
+                                                                ]} />
+                                                        </Box>
+                                                    ),
+                                                    () => (
+                                                        <Box principle="card-padding" className="flex-1 p-4"
+                                                            explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
+                                                            <StackV gap={2} principle="title-subtitle"
+                                                                explain="Title over supporting line — not label-field, because neither line is a form control label."
+                                                                items={[
+                                                                    () => <Skeleton.Typography type="body-xs" width="2/3" />,
+                                                                    () => <Skeleton className="h-5 w-14 rounded" />,
+                                                                ]} />
+                                                        </Box>
+                                                    ),
+                                                ]} />
+                                        </Box>
+                                    ),
+                                    () => <Skeleton.Button width="w-40" />,
+                                ]} />
                         </SectionCard>
                     ) : (
                         <VerdictHeroCard

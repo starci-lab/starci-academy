@@ -109,14 +109,16 @@ export const _AiQuotaCard = ({
     // justify/principle from its children (check-pattern-coverage opens to `>`).
     const cardItems = [
         () => (
-            <StackH gap={3} principle="flex-action" justify="between" isSkeleton={isSkeleton} items={[
-                () => <Typography size="base" weight="semibold" text={labels.title} isSkeleton={isSkeleton} />,
-                ...(showTierChip ? [() => (
-                    isSkeleton
-                        ? <Chip isSkeleton />
-                        : <Chip tone={tier ? TIER_CHIP_TONE[tier] : "default"} text={tierLabel ?? ""} />
-                )] : []),
-            ]} />
+            <StackH gap={3} principle="flex-action"
+                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                justify="between" isSkeleton={isSkeleton} items={[
+                    () => <Typography size="base" weight="semibold" text={labels.title} isSkeleton={isSkeleton} />,
+                    ...(showTierChip ? [() => (
+                        isSkeleton
+                            ? <Chip isSkeleton />
+                            : <Chip tone={tier ? TIER_CHIP_TONE[tier] : "default"} text={tierLabel ?? ""} />
+                    )] : []),
+                ]} />
         ),
         () => <Typography size="xs" color="muted" text={labels.poolCaption} isSkeleton={isSkeleton} />,
         ...windowRows.map((window) => () => (
@@ -147,6 +149,7 @@ export const _AiQuotaCard = ({
         <StackV
             gap={3}
             principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             isSkeleton={isSkeleton}
             identity={{ tier: "block", component: "AiQuotaCard" }}
             items={cardItems}

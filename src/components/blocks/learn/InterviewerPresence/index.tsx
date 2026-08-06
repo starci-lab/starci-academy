@@ -114,6 +114,7 @@ const InterviewerPresence = ({
         <StackH
             gap={2}
             principle="icon-text"
+            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
             align="center"
 
             items={[
@@ -135,6 +136,7 @@ const InterviewerPresence = ({
         <StackV
             gap={1}
             principle="name-handle"
+            explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
 
             items={[
                 () => (
@@ -148,6 +150,7 @@ const InterviewerPresence = ({
                     <StackH
                         gap={3}
                         principle="identity"
+                        explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
                         align="center"
 
                         items={[
@@ -171,6 +174,7 @@ const InterviewerPresence = ({
         <StackH
             gap={3}
             principle="identity"
+            explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
             align="center"
 
             items={[
@@ -195,6 +199,7 @@ const InterviewerPresence = ({
         <StackH
             gap={3}
             principle="flex-action"
+            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
             align="center"
             justify="between"
 
@@ -209,6 +214,7 @@ const InterviewerPresence = ({
         <StackH
             gap={2}
             principle="separator-dot"
+            explain="Places a middle-dot separator between short meta peers so the items read as one inline list."
             align="center"
 
             items={[

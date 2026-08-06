@@ -139,6 +139,7 @@ export const MyAttemptsPage = ({
                         <StackV
                             gap={3}
                             principle="sibling-stack"
+                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                             items={[0, 1, 2].map((row) => () => (
                                 <Skeleton.ListRow key={row} withTrailing />
                             ))}

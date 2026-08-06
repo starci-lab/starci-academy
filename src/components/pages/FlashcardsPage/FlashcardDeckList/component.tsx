@@ -174,51 +174,59 @@ export const _FlashcardDeckList = ({
         const total = deck?.cards?.length ?? 0
         const mastered = deck?.masteredCount ?? 0
         return (
-            <StackV gap={3} principle="sibling-stack" items={[
-                () => (
-                    <StackH gap={3} justify="between" align="start" items={[
-                        () => (
-                            <Typography
-                                size="sm"
-                                weight="medium"
-                                lineClamp={2}
-                                isSkeleton={isSkeleton}
-                                text={deck?.title}
-                                classNames={["min-w-0", "flex-1"]}
-                            />
-                        ),
-                        () => (
-                            <StackH gap={3} principle="chip-row" align="center" classNames={["shrink-0"]} items={[
-                                () => dueChip(deck),
-                                () => difficultyChip(deck),
-                            ]} />
-                        ),
-                    ]} />
-                ),
-                // description — always shown while shimmering (mirrors the old skeleton's fixed line);
-                // once loaded, only when the deck actually carries one.
-                ...(isSkeleton || deck?.description ? [
+            <StackV gap={3} principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                items={[
                     () => (
-                        <Typography size="xs" color="muted" lineClamp={2} isSkeleton={isSkeleton} text={deck?.description} />
-                    ),
-                ] : []),
-                // per-viewer mastery — count + a plain divider (study only, never while shimmering:
-                // the old skeleton never carried this row either).
-                ...(!isSkeleton && showProgress && total > 0 ? [
-                    () => (
-                        <StackV gap={3} principle="sibling-stack" items={[
-                            () => <Typography size="xs" color="muted" text={labels.masteredLabel(mastered, total)} />,
-                            () => <Divider />,
+                        <StackH gap={3} justify="between" align="start" items={[
+                            () => (
+                                <Typography
+                                    size="sm"
+                                    weight="medium"
+                                    lineClamp={2}
+                                    isSkeleton={isSkeleton}
+                                    text={deck?.title}
+                                    classNames={["min-w-0", "flex-1"]}
+                                />
+                            ),
+                            () => (
+                                <StackH gap={3} principle="chip-row"
+                                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                    align="center" classNames={["shrink-0"]} items={[
+                                        () => dueChip(deck),
+                                        () => difficultyChip(deck),
+                                    ]} />
+                            ),
                         ]} />
                     ),
-                ] : []),
-                () => (
-                    <StackH gap={3} principle="flex-action" justify="between" align="center" items={[
-                        () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.cardCountLabel(total)} />,
-                        () => cta(deck),
-                    ]} />
-                ),
-            ]} />
+                    // description — always shown while shimmering (mirrors the old skeleton's fixed line);
+                    // once loaded, only when the deck actually carries one.
+                    ...(isSkeleton || deck?.description ? [
+                        () => (
+                            <Typography size="xs" color="muted" lineClamp={2} isSkeleton={isSkeleton} text={deck?.description} />
+                        ),
+                    ] : []),
+                    // per-viewer mastery — count + a plain divider (study only, never while shimmering:
+                    // the old skeleton never carried this row either).
+                    ...(!isSkeleton && showProgress && total > 0 ? [
+                        () => (
+                            <StackV gap={3} principle="sibling-stack"
+                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                items={[
+                                    () => <Typography size="xs" color="muted" text={labels.masteredLabel(mastered, total)} />,
+                                    () => <Divider />,
+                                ]} />
+                        ),
+                    ] : []),
+                    () => (
+                        <StackH gap={3} principle="flex-action"
+                            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                            justify="between" align="center" items={[
+                                () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.cardCountLabel(total)} />,
+                                () => cta(deck),
+                            ]} />
+                    ),
+                ]} />
         )
     }
 
@@ -228,30 +236,32 @@ export const _FlashcardDeckList = ({
         const mastered = deck?.masteredCount ?? 0
         const showMastered = !isSkeleton && showProgress && total > 0
         return (
-            <StackH gap={4} principle="content-row" align="center" items={[
-                () => (
-                    <Typography
-                        size="sm"
-                        weight="medium"
-                        truncate
-                        isSkeleton={isSkeleton}
-                        text={deck?.title}
-                        classNames={["min-w-0", "flex-1"]}
-                    />
-                ),
-                () => dueChip(deck),
-                () => difficultyChip(deck),
-                () => (
-                    <Typography
-                        size="xs"
-                        color="muted"
-                        isSkeleton={isSkeleton}
-                        classNames={["shrink-0"]}
-                        text={showMastered ? labels.masteredLabel(mastered, total) : labels.cardCountLabel(total)}
-                    />
-                ),
-                () => cta(deck),
-            ]} />
+            <StackH gap={4} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                align="center" items={[
+                    () => (
+                        <Typography
+                            size="sm"
+                            weight="medium"
+                            truncate
+                            isSkeleton={isSkeleton}
+                            text={deck?.title}
+                            classNames={["min-w-0", "flex-1"]}
+                        />
+                    ),
+                    () => dueChip(deck),
+                    () => difficultyChip(deck),
+                    () => (
+                        <Typography
+                            size="xs"
+                            color="muted"
+                            isSkeleton={isSkeleton}
+                            classNames={["shrink-0"]}
+                            text={showMastered ? labels.masteredLabel(mastered, total) : labels.cardCountLabel(total)}
+                        />
+                    ),
+                    () => cta(deck),
+                ]} />
         )
     }
 
@@ -273,6 +283,7 @@ export const _FlashcardDeckList = ({
         <Grid
             columns={{ base: 1, sm: 2 }}
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             items={gridItems}
         />
     )
@@ -308,66 +319,70 @@ export const _FlashcardDeckList = ({
                 const deckListColumnItems = [
                     () => (
                         // search row: filter input (left) + result count & view toggle (right).
-                        <StackH gap={4} principle="content-row" at="sm" justify="between" align="center" items={[
-                            () => (
-                                <Box className="w-full @app-sm:max-w-sm">
-                                    <InputSearch
-                                        value={query}
-                                        onValueChange={onQueryChange}
-                                        isSkeleton={isSkeleton}
-                                        ariaLabel={labels.searchPlaceholder}
-                                        placeholder={labels.searchPlaceholder}
-                                    />
-                                </Box>
-                            ),
-                            () => (
-                                <StackH gap={4} principle="flex-action" align="center" classNames={["shrink-0"]} items={[
-                                    () => (
-                                        <Typography
-                                            size="sm"
-                                            color="muted"
+                        <StackH gap={4} principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            at="sm" justify="between" align="center" items={[
+                                () => (
+                                    <Box className="w-full @app-sm:max-w-sm">
+                                        <InputSearch
+                                            value={query}
+                                            onValueChange={onQueryChange}
                                             isSkeleton={isSkeleton}
-                                            text={labels.foundCount}
-                                            classNames={isSkeleton ? ["w-1/4"] : undefined}
+                                            ariaLabel={labels.searchPlaceholder}
+                                            placeholder={labels.searchPlaceholder}
                                         />
-                                    ),
-                                    // grid ⇆ line layout toggle (icon-only; persistence lives in the connected file).
-                                    // Chrome control over local view state, not fetched data — it does not shimmer.
-                                    () => (
-                                        <TabsCard
-                                            variant="primary"
-                                            leftTabs={{
-                                                selectedKey: view,
-                                                ariaLabel: labels.viewAria,
-                                                onSelectionChange: (key) => onViewChange(String(key) as DeckView),
-                                                items: [
-                                                    {
-                                                        key: "grid",
-                                                        label: (
-                                                            <SquaresFourIcon
-                                                                className="size-5"
-                                                                aria-label={labels.viewGrid}
-                                                                focusable="false"
-                                                            />
-                                                        ),
-                                                    },
-                                                    {
-                                                        key: "line",
-                                                        label: (
-                                                            <ListIcon
-                                                                className="size-5"
-                                                                aria-label={labels.viewLine}
-                                                                focusable="false"
-                                                            />
-                                                        ),
-                                                    },
-                                                ],
-                                            }}
-                                        />
-                                    ),
-                                ]} />
-                            ),
-                        ]} />
+                                    </Box>
+                                ),
+                                () => (
+                                    <StackH gap={4} principle="flex-action"
+                                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                        align="center" classNames={["shrink-0"]} items={[
+                                            () => (
+                                                <Typography
+                                                    size="sm"
+                                                    color="muted"
+                                                    isSkeleton={isSkeleton}
+                                                    text={labels.foundCount}
+                                                    classNames={isSkeleton ? ["w-1/4"] : undefined}
+                                                />
+                                            ),
+                                            // grid ⇆ line layout toggle (icon-only; persistence lives in the connected file).
+                                            // Chrome control over local view state, not fetched data — it does not shimmer.
+                                            () => (
+                                                <TabsCard
+                                                    variant="primary"
+                                                    leftTabs={{
+                                                        selectedKey: view,
+                                                        ariaLabel: labels.viewAria,
+                                                        onSelectionChange: (key) => onViewChange(String(key) as DeckView),
+                                                        items: [
+                                                            {
+                                                                key: "grid",
+                                                                label: (
+                                                                    <SquaresFourIcon
+                                                                        className="size-5"
+                                                                        aria-label={labels.viewGrid}
+                                                                        focusable="false"
+                                                                    />
+                                                                ),
+                                                            },
+                                                            {
+                                                                key: "line",
+                                                                label: (
+                                                                    <ListIcon
+                                                                        className="size-5"
+                                                                        aria-label={labels.viewLine}
+                                                                        focusable="false"
+                                                                    />
+                                                                ),
+                                                            },
+                                                        ],
+                                                    }}
+                                                />
+                                            ),
+                                        ]} />
+                                ),
+                            ]} />
                     ),
                     () => (
                         showSearchEmpty ? (

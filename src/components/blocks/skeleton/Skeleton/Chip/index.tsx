@@ -12,3 +12,6 @@ export type SkeletonChipProps = WithClassNames<undefined>
 export const SkeletonChip = ({ className }: SkeletonChipProps) => {
     return <Skeleton className={cn("h-6 w-16 rounded-full", className)} />
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonChip` as the public name. */
+export { SkeletonChip as Chip }

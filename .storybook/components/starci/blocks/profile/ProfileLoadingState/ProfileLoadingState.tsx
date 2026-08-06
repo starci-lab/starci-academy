@@ -76,6 +76,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
         const courseDetails = (
             <>
                 <StackH gap={3} principle="value-row" justify="between" items={[() => progressHeader]} />
+                explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
                 <ProgressBar isSkeleton />
             </>
         )
@@ -179,12 +180,14 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
     const identityColumnBody = (
         <>
             <StackV gap={2} principle="title-subtitle" align="start" items={[() => rankAvatarRow]} />
+            explain="Title over supporting line — not label-field, because neither line is a form control label."
             <StackV gap={1} items={[() => nameBlock]} />
 
             {/* short bio */}
             <Typography size="sm" isSkeleton />
 
             <StackH gap={3} principle="chip-row" at="sm" items={[() => locationRow]} />
+            explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
             <StackH gap={4} items={[() => followRow]} />
 
             {/* earned-badge medal strip — `AvatarGroup` already owns the overlap look */}
@@ -263,6 +266,7 @@ export const ProfileLoadingState = ({ className }: ProfileLoadingStateProps) => 
             <StackV gap={4} items={[() => contributionsSection]} />
             {/* skills — 2-col grid of stat cards */}
             <Grid columns={{ base: 1, md: 2 }} principle="block-boundary" items={skillItems} />
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
         </>
     )
 

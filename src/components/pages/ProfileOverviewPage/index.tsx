@@ -67,6 +67,7 @@ export const ProfileOverviewPage = ({
             identity={{ tier: "page", component: "ProfileOverviewPage" }}
             gap={6}
             principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
             classNames={classNames}
             items={[
                 // headline recruiter signal — per-track depth, no blended composite.
@@ -96,6 +97,7 @@ export const ProfileOverviewPage = ({
                 () => (
                     <Grid
                         principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                         columns={{ base: 1, md: 2 }}
                         items={[
                             {

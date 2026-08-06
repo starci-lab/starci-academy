@@ -100,6 +100,7 @@ export const OauthRedirectPage = ({ action, className }: OauthRedirectPageProps)
                         gap={3}
                         align="center"
                         principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                         items={errorItems}
                     />
                 </div>
@@ -124,7 +125,9 @@ export const OauthRedirectPage = ({ action, className }: OauthRedirectPageProps)
 
     return (
         <div className={cn("flex min-h-[60vh] flex-col items-center justify-center", className)}>
-            <StackV gap={3} align="center" principle="sibling-stack" items={loadingItems} />
+            <StackV gap={3} align="center" principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                items={loadingItems}  />
         </div>
     )
 }

@@ -58,7 +58,7 @@ export interface PricingCardProps {
  *
  * @example
  * ```tsx
- * <PricingCard
+ * <PricingCard>
  *     name="Pro"
  *     price="$9"
  *     originalPrice="$19"
@@ -89,6 +89,7 @@ export const PricingCard = ({
             <StackH
                 gap={3}
                 principle="chip-row"
+                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                 at="sm"
                 items={[
                     () => <Typography size="base" weight="semibold" text={name} />,
@@ -100,6 +101,7 @@ export const PricingCard = ({
             <StackH
                 gap={3}
                 principle="value-row"
+                explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
                 align="baseline"
                 at="sm"
                 items={[

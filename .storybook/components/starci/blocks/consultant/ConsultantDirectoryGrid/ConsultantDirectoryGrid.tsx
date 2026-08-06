@@ -102,23 +102,29 @@ const ConsultantDirectoryGrid = ({
                 isLoading={isLoading}
                 skeleton={() => (
                     <div>
-                        <Grid columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row" items={skeletonTiles} />
+                        <Grid columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            items={skeletonTiles}  />
                     </div>
                 )}
                 isEmpty={isEmpty}
                 emptyContent={emptyContent}
 
                 content={() => (
-                    <StackV gap={4} principle="group-boundary" items={[
-                        ...(count !== undefined ? [() => (
-                            <Typography size="sm" color="muted" text={countLabel(count)} />
-                        )] : []),
-                        () => (
-                            <div>
-                                <Grid columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row" items={tiles} />
-                            </div>
-                        ),
-                    ]} />
+                    <StackV gap={4} principle="group-boundary"
+                        explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+                        items={[
+                            ...(count !== undefined ? [() => (
+                                <Typography size="sm" color="muted" text={countLabel(count)} />
+                            )] : []),
+                            () => (
+                                <div>
+                                    <Grid columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row"
+                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                        items={tiles}  />
+                                </div>
+                            ),
+                        ]} />
                 )}
             />
         </div>

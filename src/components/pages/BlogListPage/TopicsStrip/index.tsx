@@ -15,17 +15,19 @@ const BACKEND_TOPICS = ["CQRS", "Kafka", "RAG · Qdrant", "CDC", "Keycloak", "Ju
 export const TopicsStrip = () => {
     const t = useTranslations("blog")
     return (
-        <Cluster gap={3} principle="chip-row" items={[
-            () => (
-                <Typography type="body-sm" color="muted">
-                    {t("topics")}
-                </Typography>
-            ),
-            ...BACKEND_TOPICS.map((topic) => () => (
-                <Chip key={topic} size="sm" variant="soft" className="font-mono">
-                    {topic}
-                </Chip>
-            )),
-        ]} />
+        <Cluster identity={{ tier: "page", component: "TopicsStrip" }} gap={3} principle="chip-row"
+            explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+            items={[
+                () => (
+                    <Typography type="body-sm" color="muted">
+                        {t("topics")}
+                    </Typography>
+                ),
+                ...BACKEND_TOPICS.map((topic) => () => (
+                    <Chip key={topic} size="sm" variant="soft" className="font-mono">
+                        {topic}
+                    </Chip>
+                )),
+            ]} />
     )
 }

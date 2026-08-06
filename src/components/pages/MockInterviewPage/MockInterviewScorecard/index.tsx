@@ -163,6 +163,7 @@ const MockInterviewQuestionReviewCard = ({
                     <StackH
                         gap={4}
                         principle="content-row"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                         justify="between"
                         classNames={["w-full"]}
                         items={[
@@ -175,6 +176,7 @@ const MockInterviewQuestionReviewCard = ({
                                 <StackH
                                     gap={3}
                                     principle="flex-action"
+                                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                                     classNames={["shrink-0"]}
                                     items={[
                                         () => (
@@ -195,12 +197,14 @@ const MockInterviewQuestionReviewCard = ({
                     <StackV
                         gap={3}
                         principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                         items={[
                             () => <MarkdownContent plain markdown={review.question} />,
                             () => (
                                 <StackV
                                     gap={2}
                                     principle="title-subtitle"
+                                    explain="Title over supporting line — not label-field, because neither line is a form control label."
                                     items={[
                                         () => (
                                             <Typography type="body-xs" color="muted">{t("mockInterview.questionReview.yourAnswer")}</Typography>
@@ -216,6 +220,7 @@ const MockInterviewQuestionReviewCard = ({
                                     <StackV
                                         gap={2}
                                         principle="title-subtitle"
+                                        explain="Title over supporting line — not label-field, because neither line is a form control label."
                                         items={[
                                             () => (
                                                 <Typography type="body-xs" color="muted">{t("mockInterview.questionReview.modelAnswer")}</Typography>
@@ -250,6 +255,7 @@ const MockInterviewQuestionReviewCard = ({
                                         <StackH
                                             gap={2}
                                             principle="icon-text"
+                                            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
                                             items={[
                                                 () => <>{t("mockInterview.viewInLesson")}</>,
                                                 () => (
@@ -352,12 +358,14 @@ export const MockInterviewScorecard = ({
             <StackV
                 gap={6}
                 principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                 items={[
                     ...((promptTitle || formattedDate)
                         ? [() => (
                             <StackH
                                 gap={4}
                                 principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                 justify="between"
                                 classNames={["w-full"]}
                                 items={[
@@ -405,6 +413,7 @@ export const MockInterviewScorecard = ({
                                     <StackH
                                         gap={4}
                                         principle="content-row"
+                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                         classNames={["w-full"]}
                                         items={[
                                             () => (
@@ -451,6 +460,7 @@ export const MockInterviewScorecard = ({
                                         <StackH
                                             gap={4}
                                             principle="content-row"
+                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                             classNames={["w-full"]}
                                             items={[
                                                 () => (
@@ -530,6 +540,7 @@ export const MockInterviewScorecard = ({
                         <Cluster
                             gap={3}
                             principle="flex-action"
+                            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                             items={[
                                 () => (
                                     <Button

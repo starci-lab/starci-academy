@@ -1,6 +1,5 @@
 import React from "react"
 import { LinkBack } from "@/components/atoms/navigation/Link"
-import { Typography } from "@/components/atoms/text/Typography"
 import { PageHeader } from "@/components/composites/layout/Page"
 
 /**
@@ -47,13 +46,9 @@ const SubmissionResultHeader = ({
         <div>
             <PageHeader
                 isSkeleton={isSkeleton}
-                breadcrumb={() =>
-                    isSkeleton ? (
-                        <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
-                    ) : (
-                        <LinkBack label={backLabel} onPress={onBack} />
-                    )
-                }
+                breadcrumb={() => (
+                    <LinkBack label={backLabel} onPress={onBack} isSkeleton={isSkeleton} />
+                )}
                 title={title}
                 description={description}
             />

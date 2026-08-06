@@ -273,6 +273,7 @@ const QaQuestionThread = ({
             <StackH
                 gap={3}
                 principle="identity"
+                explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
                 at="sm"
                 align="center"
                 isSkeleton={isSkeleton}
@@ -341,6 +342,7 @@ const QaQuestionThread = ({
             <StackH
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 align="start"
                 isSkeleton={isSkeleton}
 
@@ -387,6 +389,7 @@ const QaQuestionThread = ({
         <StackH
             gap={3}
             principle="identity"
+            explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
             at="sm"
             align="center"
             isSkeleton={isSkeleton}
@@ -408,6 +411,7 @@ const QaQuestionThread = ({
         <StackH
             gap={3}
             principle="flex-action"
+            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
             at="sm"
             align="center"
             isSkeleton={isSkeleton}
@@ -440,6 +444,7 @@ const QaQuestionThread = ({
                 <StackV
                     gap={2}
                     principle="title-subtitle"
+                    explain="Title over supporting line — not label-field, because neither line is a form control label."
                     align={isMineQuestion ? "end" : "stretch"}
                     classNames={["min-w-0"]}
                     isSkeleton={isSkeleton}

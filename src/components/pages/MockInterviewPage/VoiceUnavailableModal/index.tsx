@@ -71,6 +71,7 @@ export const VoiceUnavailableModal = ({
                             <StackV
                                 gap={6}
                                 principle="block-boundary"
+                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                                 items={[
                                     () => (
                                         <StackV
@@ -86,6 +87,7 @@ export const VoiceUnavailableModal = ({
                                                         <StackV
                                                             gap={3}
                                                             principle="sibling-stack"
+                                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                                             as="div"
                                                             items={[
                                                                 () => (

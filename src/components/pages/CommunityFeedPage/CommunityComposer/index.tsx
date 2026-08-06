@@ -68,32 +68,34 @@ export const CommunityComposer = ({
     return (
         <Card>
             <CardContent>
-                <StackV gap={4} principle="label-field" items={[
-                    () => (
-                        <TextField variant="secondary">
-                            <TextArea
-                                rows={3}
-                                value={body}
-                                onChange={(event) => setBody(event.target.value)}
-                                placeholder={t("community.composerPlaceholder")}
-                                aria-label={t("community.composerPlaceholder")}
-                                className="resize-none"
-                            />
-                        </TextField>
-                    ),
-                    () => (
-                        <div className="flex justify-end">
-                            <Button
-                                variant="primary"
-                                isPending={isMutating}
-                                isDisabled={!body.trim()}
-                                onPress={() => void onSubmit()}
-                            >
-                                {t("community.post")}
-                            </Button>
-                        </div>
-                    ),
-                ]} />
+                <StackV gap={4} principle="label-field"
+                    explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
+                    items={[
+                        () => (
+                            <TextField variant="secondary">
+                                <TextArea
+                                    rows={3}
+                                    value={body}
+                                    onChange={(event) => setBody(event.target.value)}
+                                    placeholder={t("community.composerPlaceholder")}
+                                    aria-label={t("community.composerPlaceholder")}
+                                    className="resize-none"
+                                />
+                            </TextField>
+                        ),
+                        () => (
+                            <div className="flex justify-end">
+                                <Button
+                                    variant="primary"
+                                    isPending={isMutating}
+                                    isDisabled={!body.trim()}
+                                    onPress={() => void onSubmit()}
+                                >
+                                    {t("community.post")}
+                                </Button>
+                            </div>
+                        ),
+                    ]} />
             </CardContent>
         </Card>
     )

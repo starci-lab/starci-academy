@@ -68,36 +68,45 @@ export const Default: Story = {
                         why: "The button cluster sits flush against the row's end edge, with `Cancel` and `Save changes` reading toward that edge. This is the resting alignment most forms want, so a caller who never sets `principle` still lands a CTA where the eye expects to find it.",
                         code: `<FormActions
     principle="flex-action-end"
+    explain="Pins action controls to the trailing edge so primary CTAs stay at the row end."
     items={[
         { key: "cancel", label: "Cancel", variant: "secondary", prefixIcon: XIcon },
         { key: "save", label: "Save changes", prefixIcon: FloppyDiskIcon },
     ]}
 />`,
-                        render: <FormActions principle="flex-action-end" items={SAVE_ITEMS} />,
+                        render: <FormActions principle="flex-action-end"
+                            explain="Pins action controls to the trailing edge so primary CTAs stay at the row end."
+                            items={SAVE_ITEMS} />,
                     },
                     {
                         name: "principle = \"flex-action-start\"",
                         why: "The button cluster keeps its natural width and only slides over to the row's start edge instead of its end edge. This fits a form living in a narrow column read from the left (§3), where anchoring at the end edge would leave a visually detached gap.",
                         code: `<FormActions
     principle="flex-action-start"
+    explain="Pins action controls to the leading edge so secondary actions stay at the row start."
     items={[
         { key: "cancel", label: "Cancel", variant: "secondary", prefixIcon: XIcon },
         { key: "save", label: "Save changes", prefixIcon: FloppyDiskIcon },
     ]}
 />`,
-                        render: <FormActions principle="flex-action-start" items={SAVE_ITEMS} />,
+                        render: <FormActions principle="flex-action-start"
+                            explain="Pins action controls to the leading edge so secondary actions stay at the row start."
+                            items={SAVE_ITEMS} />,
                     },
                     {
                         name: "principle = \"flex-action-between\"",
                         why: "The frame stretches the button row to the full width of its container, pushing `Cancel` to the start edge and `Save changes` to the end edge. Spreading the two mismatched actions across both edges reads as an escape route on one side and the committing action on the other, and only the frame can claim the full width the split needs.",
                         code: `<FormActions
     principle="flex-action-between"
+    explain="Spreads action peers across the row so leading and trailing controls stay at opposite edges."
     items={[
         { key: "cancel", label: "Cancel", variant: "secondary", prefixIcon: XIcon },
         { key: "save", label: "Save changes", prefixIcon: FloppyDiskIcon },
     ]}
 />`,
-                        render: <FormActions principle="flex-action-between" items={SAVE_ITEMS} />,
+                        render: <FormActions principle="flex-action-between"
+                            explain="Spreads action peers across the row so leading and trailing controls stay at opposite edges."
+                            items={SAVE_ITEMS} />,
                     },
                 ]}
             />

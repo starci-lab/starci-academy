@@ -79,59 +79,62 @@ export const FlashcardReviewModeModal = ({
 
     return (
         <ModalShell
+            identity={{ tier: "page", component: "FlashcardReviewModeModal" }}
             isOpen={isOpen}
             onOpenChange={(open) => { if (!open && !isPending) onClose() }}
             title={t("flashcard.mode.title")}
             size="sm"
             body={() => (
-                <StackV gap={5} principle="group-boundary" items={[
-                    () => (
-                        <Typography type="body-sm" color="muted">
-                            {t("flashcard.mode.subtitle", { deck: deckTitle })}
-                        </Typography>
-                    ),
-                    () => (
-                        <SurfaceListCard bordered>
-                            <SurfaceListCardRow
-                            // UNSELECTED → block-native bg-default hover (distinct from the accent-soft
-                            // selected tint, no clash). SELECTED → keep hover:bg-accent-soft so the picked
-                            // row does NOT flicker to bg-default on hover (same idiom as
-                            // SubmissionResultHistoryDrawer). Selection signal = accent icon + the row's
-                            // own `selected` bg-accent-soft tint (icon.md §6); `title` is plain text now
-                            // (never a built element), and `titleClassName` stays lint-forbidden, so the
-                            // per-mode colour rides on the icon + row tint alone.
-                                className={mode === "full" ? "hover:bg-accent-soft" : undefined}
-                                leading={() => <CardsIcon className={cn("size-6", mode === "full" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
-                                title={t("flashcard.mode.fullLabel")}
-                                subtitle={t("flashcard.mode.fullDescription")}
-                                selected={mode === "full"}
-                                isDisabled={isPending}
-                                onPress={() => setMode("full")}
-                                meta={() => (
-                                    <span className="whitespace-nowrap text-xs font-medium text-muted">
-                                        {t("flashcard.mode.fullBadge", { count: totalCount })}
-                                    </span>
-                                )}
-                            />
-                            <SurfaceListCardRow
-                                className={mode === "due" ? "hover:bg-accent-soft" : undefined}
-                                leading={() => <ClockCountdownIcon className={cn("size-6", mode === "due" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
-                                title={t("flashcard.mode.dueLabel")}
-                                subtitle={t("flashcard.mode.dueDescription")}
-                                selected={mode === "due"}
-                                isDisabled={isPending || dueDisabled}
-                                onPress={() => setMode("due")}
-                                meta={() => (
-                                    <span className={`whitespace-nowrap text-xs font-medium ${dueDisabled ? "text-muted" : "text-warning-soft-foreground"}`}>
-                                        {dueDisabled
-                                            ? t("flashcard.mode.dueBadgeEmpty")
-                                            : t("flashcard.mode.dueBadge", { count: dueCount })}
-                                    </span>
-                                )}
-                            />
-                        </SurfaceListCard>
-                    ),
-                ]} />
+                <StackV gap={5} principle="group-boundary"
+                    explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+                    items={[
+                        () => (
+                            <Typography type="body-sm" color="muted">
+                                {t("flashcard.mode.subtitle", { deck: deckTitle })}
+                            </Typography>
+                        ),
+                        () => (
+                            <SurfaceListCard bordered>
+                                <SurfaceListCardRow
+                                    // UNSELECTED → block-native bg-default hover (distinct from the accent-soft
+                                    // selected tint, no clash). SELECTED → keep hover:bg-accent-soft so the picked
+                                    // row does NOT flicker to bg-default on hover (same idiom as
+                                    // SubmissionResultHistoryDrawer). Selection signal = accent icon + the row's
+                                    // own `selected` bg-accent-soft tint (icon.md §6); `title` is plain text now
+                                    // (never a built element), and `titleClassName` stays lint-forbidden, so the
+                                    // per-mode colour rides on the icon + row tint alone.
+                                    className={mode === "full" ? "hover:bg-accent-soft" : undefined}
+                                    leading={() => <CardsIcon className={cn("size-6", mode === "full" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
+                                    title={t("flashcard.mode.fullLabel")}
+                                    subtitle={t("flashcard.mode.fullDescription")}
+                                    selected={mode === "full"}
+                                    isDisabled={isPending}
+                                    onPress={() => setMode("full")}
+                                    meta={() => (
+                                        <span className="whitespace-nowrap text-xs font-medium text-muted">
+                                            {t("flashcard.mode.fullBadge", { count: totalCount })}
+                                        </span>
+                                    )}
+                                />
+                                <SurfaceListCardRow
+                                    className={mode === "due" ? "hover:bg-accent-soft" : undefined}
+                                    leading={() => <ClockCountdownIcon className={cn("size-6", mode === "due" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
+                                    title={t("flashcard.mode.dueLabel")}
+                                    subtitle={t("flashcard.mode.dueDescription")}
+                                    selected={mode === "due"}
+                                    isDisabled={isPending || dueDisabled}
+                                    onPress={() => setMode("due")}
+                                    meta={() => (
+                                        <span className={`whitespace-nowrap text-xs font-medium ${dueDisabled ? "text-muted" : "text-warning-soft-foreground"}`}>
+                                            {dueDisabled
+                                                ? t("flashcard.mode.dueBadgeEmpty")
+                                                : t("flashcard.mode.dueBadge", { count: dueCount })}
+                                        </span>
+                                    )}
+                                />
+                            </SurfaceListCard>
+                        ),
+                    ]} />
             )}
             footer={() => (
                 <>

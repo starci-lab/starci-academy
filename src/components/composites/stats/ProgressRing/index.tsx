@@ -87,6 +87,7 @@ export const ProgressRing = ({
         <StackV
             gap={3}
             principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             align="center"
             classNames={classNames}
             isSkeleton={isSkeleton}

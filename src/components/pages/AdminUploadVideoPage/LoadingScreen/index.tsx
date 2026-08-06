@@ -1,10 +1,8 @@
 "use client"
 
 import React from "react"
-import {
-    cn,
-    Spinner,
-} from "@heroui/react"
+import { cn } from "@heroui/react"
+import { Spinner } from "@/components/atoms/display/Spinner"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link LoadingScreen}. */

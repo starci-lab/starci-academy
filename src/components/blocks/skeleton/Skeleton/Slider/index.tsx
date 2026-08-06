@@ -18,3 +18,6 @@ export const SkeletonSlider = ({ className }: SkeletonSliderProps) => {
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonSlider` as the public name. */
+export { SkeletonSlider as Slider }

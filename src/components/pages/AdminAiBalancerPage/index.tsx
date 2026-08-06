@@ -75,9 +75,12 @@ export const AdminAiBalancerPage = () => {
     const ready = !isLoading && !!data && !error
 
     return (
-        <Box principle="card-padding" className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 p-4 pb-12">
-            <Box principle="center-measure" className="mx-auto max-w-5xl">
-                <Box principle="block-boundary" className="flex flex-col gap-6">
+        <Box identity={{ tier: "page", component: "AdminAiBalancerPage" }} principle="card-padding" className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 p-4 pb-12"
+            explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
+            <Box principle="center-measure" className="mx-auto max-w-5xl"
+                explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
+                <Box principle="block-boundary" className="flex flex-col gap-6"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups.">
                     <TopBar />
                     <div className="space-y-2">
                         <h1 className="text-2xl font-bold text-white">
@@ -95,7 +98,8 @@ export const AdminAiBalancerPage = () => {
                     {!ready ? (
                         <AdminAiBalancerSkeleton />
                     ) : (
-                        <Box principle="block-boundary" className="flex flex-col gap-6">
+                        <Box principle="block-boundary" className="flex flex-col gap-6"
+                            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups.">
                             {sortedProviders.map((providerHealth) => (
                                 <ProviderSection
                                     key={providerHealth.provider}
@@ -114,7 +118,8 @@ export const AdminAiBalancerPage = () => {
                             {t("error")}
                         </p>
                     ) : null}
-                    <Box principle="center-measure" className="mx-auto">
+                    <Box principle="center-measure" className="mx-auto"
+                        explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
                         <Button
                             variant="ghost"
                             size="sm"

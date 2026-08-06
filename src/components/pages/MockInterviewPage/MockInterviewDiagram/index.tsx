@@ -116,10 +116,12 @@ const MockInterviewDiagramCanvas = ({ className, onChange }: MockInterviewDiagra
 
     return (
         <div className={cn("relative flex h-full w-full flex-col overflow-hidden rounded-xl", className)}>
-            <Box principle="control-pad" className="border-b border-divider bg-surface px-3 py-2">
+            <Box principle="control-pad" className="border-b border-divider bg-surface px-3 py-2"
+                explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.">
                 <StackH
                     gap={3}
                     principle="flex-action"
+                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                     justify="between"
                     classNames={["w-full"]}
                     items={[

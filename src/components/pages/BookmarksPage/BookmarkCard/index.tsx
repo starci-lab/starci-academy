@@ -90,6 +90,7 @@ export const BookmarkCard = ({
                         gap={2}
                         align="center"
                         principle="icon-text"
+                        explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
                         items={[
                             () => <ClockIcon aria-hidden className="size-4 text-muted" />,
                             () => (
@@ -106,6 +107,7 @@ export const BookmarkCard = ({
                             gap={2}
                             align="center"
                             principle="icon-text"
+                            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
                             items={[
                                 () => <FlameIcon aria-hidden className="size-4 text-muted" />,
                                 () => (

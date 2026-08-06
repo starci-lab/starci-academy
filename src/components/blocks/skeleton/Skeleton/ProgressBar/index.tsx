@@ -12,3 +12,6 @@ export type SkeletonProgressBarProps = WithClassNames<undefined>
 export const SkeletonProgressBar = ({ className }: SkeletonProgressBarProps) => {
     return <Skeleton className={cn("h-2 w-full rounded-full", className)} />
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonProgressBar` as the public name. */
+export { SkeletonProgressBar as ProgressBar }

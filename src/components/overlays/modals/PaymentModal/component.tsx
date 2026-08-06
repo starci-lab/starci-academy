@@ -197,6 +197,7 @@ const checkoutLineRow = (
     <StackH
         gap={4}
         principle="content-row"
+        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
         align="center"
         items={[
             () => (
@@ -278,6 +279,7 @@ const summaryContent = (props: PaymentModalProps) => {
                 <StackH
                     gap={4}
                     principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                     justify="between"
                     items={totalRow}
                 />
@@ -287,6 +289,7 @@ const summaryContent = (props: PaymentModalProps) => {
             <StackV
                 gap={5}
                 principle="group-boundary"
+                explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
                 divider
                 items={checkoutSummaryItems}
             />
@@ -334,6 +337,7 @@ const summaryContent = (props: PaymentModalProps) => {
             <StackH
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 align="center"
                 items={orderIdentityItems}
             />
@@ -441,6 +445,7 @@ const paymentContent = (props: PaymentModalProps) => {
                         <StackH
                             gap={4}
                             principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                             justify="between"
                             items={installmentMonthsRow}
                         />
@@ -511,6 +516,7 @@ const paymentContent = (props: PaymentModalProps) => {
             <StackV
                 gap={3}
                 principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                 align="center"
                 items={trustLineItems}
             />

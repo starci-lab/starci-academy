@@ -63,7 +63,9 @@ const _LinkGithubModal = ({
     ]
 
     const modalBody = [
-        () => <StackV gap={3} principle="sibling-stack" align="center" items={introItems} />,
+        () => <StackV gap={3} principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+            align="center" items={introItems} />,
         () => (
             <Button
                 variant="primary"

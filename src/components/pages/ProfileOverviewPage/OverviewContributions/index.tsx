@@ -74,6 +74,7 @@ export const OverviewContributions = () => {
             identity={{ tier: "block", component: "OverviewContributions" }}
             gap={4}
             principle="card-caption"
+            explain="Holds caption text under card media so the caption stays attached to the image above it."
             items={[
                 () => (
                     <ContributionCalendarView

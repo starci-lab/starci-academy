@@ -123,6 +123,7 @@ export const ConfirmDialog = ({
                         <AlertDialogFooter className="w-full">
                             <ButtonGroup
                                 principle="flex-action-end"
+                                explain="Pins action controls to the trailing edge so primary CTAs stay at the row end."
                                 items={[
                                     {
                                         key: "cancel",

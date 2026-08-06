@@ -72,43 +72,47 @@ export const ChallengeCourseRow = ({
             hover="underline"
             className={className}
         >
-            <StackH gap={4} principle="content-row" align="start" items={[
-                () => (
-                    <IconTile
-                        size="sm"
-                        icon={<PuzzlePieceIcon aria-hidden focusable="false" />}
-                    />
-                ),
-                () => (
-                    <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
-                        () => (
-                            <Typography
-                                type="body-sm"
-                                weight="medium"
-                                truncate
-                                className={href ? "underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline" : undefined}
-                            >
-                                {courseTitle ?? t("publicProfile.challengesTab.ungrouped")}
-                            </Typography>
-                        ),
-                        () => (
-                            <SegmentBar
-                                hideLegend
-                                max={totalChallenges && totalChallenges > 0 ? totalChallenges : undefined}
-                                ariaLabel={t("publicProfile.challengesTab.submissionCount", { count: items.length })}
-                                segments={segments}
-                            />
-                        ),
-                        () => (
-                            <Typography type="body-xs" color="muted">
-                                {totalChallenges && totalChallenges > 0
-                                    ? t("publicProfile.challengesTab.submissionProgress", { passed: items.length, total: totalChallenges })
-                                    : t("publicProfile.challengesTab.submissionCount", { count: items.length })}
-                            </Typography>
-                        ),
-                    ]} />
-                ),
-            ]} />
+            <StackH gap={4} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                align="start" items={[
+                    () => (
+                        <IconTile
+                            size="sm"
+                            icon={<PuzzlePieceIcon aria-hidden focusable="false" />}
+                        />
+                    ),
+                    () => (
+                        <StackV gap={3} principle="sibling-stack"
+                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                            classNames={["min-w-0", "flex-1"]} items={[
+                                () => (
+                                    <Typography
+                                        type="body-sm"
+                                        weight="medium"
+                                        truncate
+                                        className={href ? "underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline" : undefined}
+                                    >
+                                        {courseTitle ?? t("publicProfile.challengesTab.ungrouped")}
+                                    </Typography>
+                                ),
+                                () => (
+                                    <SegmentBar
+                                        hideLegend
+                                        max={totalChallenges && totalChallenges > 0 ? totalChallenges : undefined}
+                                        ariaLabel={t("publicProfile.challengesTab.submissionCount", { count: items.length })}
+                                        segments={segments}
+                                    />
+                                ),
+                                () => (
+                                    <Typography type="body-xs" color="muted">
+                                        {totalChallenges && totalChallenges > 0
+                                            ? t("publicProfile.challengesTab.submissionProgress", { passed: items.length, total: totalChallenges })
+                                            : t("publicProfile.challengesTab.submissionCount", { count: items.length })}
+                                    </Typography>
+                                ),
+                            ]} />
+                    ),
+                ]} />
         </SurfaceListCardItem>
     )
 }

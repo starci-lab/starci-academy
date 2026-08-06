@@ -83,136 +83,152 @@ export const ProfileCodingProblemPage = ({
     }
 
     return (
-        <Container size="lg" padding={1} classNames={rootClassNames} body={() => (
-            <StackV gap={6} principle="block-boundary" items={[
-                () => (
-                    <PageHeader
-                        breadcrumb={(
-                            <BackLink
-                                target={t("publicProfile.coding.history")}
-                                onPress={() => router.push(pathConfig().locale(locale).profile(username ?? undefined).skills().build())}
-                            />
-                        )}
-                        title={problem?.title ?? t("publicProfile.coding.detail.title")}
-                        meta={problem ? (
-                            <Cluster gap={3} principle="chip-row" items={[
-                                ...(difficulty
-                                    ? [() => (
-                                        <StatusChip tone={difficulty.tone}>
-                                            {t(difficulty.labelKey)}
-                                        </StatusChip>
-                                    )]
-                                    : []),
-                                () => (
-                                    <StatusChip tone="neutral">
-                                        {t(`codingPractice.domain.${problem.domain}`)}
-                                    </StatusChip>
-                                ),
-                            ]} />
-                        ) : undefined}
-                    />
-                ),
-                () => (
-                    <AsyncContent
-                        isLoading={isLoading && !detail}
-                        skeleton={(
-                            <StackV gap={6} principle="block-boundary" items={[
-                                () => <Skeleton className="h-6 w-1/2" />,
-                                () => <Skeleton className="h-40 w-full rounded-2xl" />,
-                                () => (
-                                    <SurfaceListCard>
-                                        {[0, 1, 2].map((row) => (
-                                            <SurfaceListCardItem key={row}>
-                                                <Skeleton.Typography type="body-sm" width="3/4" />
-                                            </SurfaceListCardItem>
-                                        ))}
-                                    </SurfaceListCard>
-                                ),
-                            ]} />
-                        )}
-                        isEmpty={!problem}
-                        emptyContent={{
-                            title: t("publicProfile.coding.detail.notFound"),
-                        }}
-                        error={!problem ? error : undefined}
-                        errorContent={{
-                            title: t("publicProfile.loadError"),
-                            onRetry: () => { void mutate() },
-                            retryLabel: t("publicProfile.loadErrorRetry"),
-                        }}
-                    >
-                        {problem ? (
-                            <StackV gap={6} principle="block-boundary" items={[
-                                () => (
-                                    <LabeledCard label={t("publicProfile.coding.detail.statementHeading")} frameless>
-                                        <MarkdownContent markdown={problem.statement ?? ""} />
-                                    </LabeledCard>
-                                ),
-                                ...(problem.tags.length > 0
-                                    ? [() => (
-                                        <Cluster gap={3} principle="chip-row" items={
-                                            problem.tags.map((tag) => (
-                                                () => (
-                                                    <StatusChip key={tag} tone="neutral">
-                                                        {tag}
-                                                    </StatusChip>
-                                                )
-                                            ))
-                                        } />
-                                    )]
-                                    : []),
-                                () => (
-                                    <LabeledCard label={t("publicProfile.coding.detail.submissionHeading")} frameless>
-                                        {submission ? (
+        <Container identity={{ tier: "page", component: "ProfileCodingProblemPage" }} size="lg" padding={1} classNames={rootClassNames} body={() => (
+            <StackV gap={6} principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={[
+                    () => (
+                        <PageHeader
+                            breadcrumb={(
+                                <BackLink
+                                    target={t("publicProfile.coding.history")}
+                                    onPress={() => router.push(pathConfig().locale(locale).profile(username ?? undefined).skills().build())}
+                                />
+                            )}
+                            title={problem?.title ?? t("publicProfile.coding.detail.title")}
+                            meta={problem ? (
+                                <Cluster gap={3} principle="chip-row"
+                                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                    items={[
+                                        ...(difficulty
+                                            ? [() => (
+                                                <StatusChip tone={difficulty.tone}>
+                                                    {t(difficulty.labelKey)}
+                                                </StatusChip>
+                                            )]
+                                            : []),
+                                        () => (
+                                            <StatusChip tone="neutral">
+                                                {t(`codingPractice.domain.${problem.domain}`)}
+                                            </StatusChip>
+                                        ),
+                                    ]} />
+                            ) : undefined}
+                        />
+                    ),
+                    () => (
+                        <AsyncContent
+                            isLoading={isLoading && !detail}
+                            skeleton={(
+                                <StackV gap={6} principle="block-boundary"
+                                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                                    items={[
+                                        () => <Skeleton className="h-6 w-1/2" />,
+                                        () => <Skeleton className="h-40 w-full rounded-2xl" />,
+                                        () => (
                                             <SurfaceListCard>
-                                                <SurfaceListCardItem>
-                                                    <Cluster gap={4} principle="content-row" justify="between" items={[
-                                                        () => (
-                                                            <Cluster gap={3} principle="chip-row" items={
-                                                                submission.languages.map((language) => (
-                                                                    () => <LanguageChip key={language} language={language} />
-                                                                ))
-                                                            } />
-                                                        ),
-                                                        () => (
-                                                            <StatusChip tone="success">
-                                                                {t(`codingPractice.verdict.${submission.verdict}`)}
-                                                            </StatusChip>
-                                                        ),
-                                                    ]} />
-                                                </SurfaceListCardItem>
-                                                <SurfaceListCardItem>
-                                                    <StackH gap={4} principle="content-row" justify="between" items={[
-                                                        () => (
-                                                            <Typography type="body-sm" color="muted">
-                                                                {t("publicProfile.coding.detail.passedOf", {
-                                                                    passed: submission.passedCount,
-                                                                    total: submission.totalCount,
-                                                                })}
-                                                            </Typography>
-                                                        ),
-                                                        ...(solvedAt
-                                                            ? [() => (
-                                                                <Typography type="body-xs" color="muted">
-                                                                    {solvedAt}
-                                                                </Typography>
-                                                            )]
-                                                            : []),
-                                                    ]} />
-                                                </SurfaceListCardItem>
+                                                {[0, 1, 2].map((row) => (
+                                                    <SurfaceListCardItem key={row}>
+                                                        <Skeleton.Typography type="body-sm" width="3/4" />
+                                                    </SurfaceListCardItem>
+                                                ))}
                                             </SurfaceListCard>
-                                        ) : (
-                                            <Typography type="body-sm" color="muted">
-                                                {t("publicProfile.coding.detail.notSolved")}
-                                            </Typography>
-                                        )}
-                                    </LabeledCard>
-                                ),
-                            ]} />
-                        ) : null}
-                    </AsyncContent>
-                ),
-            ]} />
+                                        ),
+                                    ]} />
+                            )}
+                            isEmpty={!problem}
+                            emptyContent={{
+                                title: t("publicProfile.coding.detail.notFound"),
+                            }}
+                            error={!problem ? error : undefined}
+                            errorContent={{
+                                title: t("publicProfile.loadError"),
+                                onRetry: () => { void mutate() },
+                                retryLabel: t("publicProfile.loadErrorRetry"),
+                            }}
+                        >
+                            {problem ? (
+                                <StackV gap={6} principle="block-boundary"
+                                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                                    items={[
+                                        () => (
+                                            <LabeledCard label={t("publicProfile.coding.detail.statementHeading")} frameless>
+                                                <MarkdownContent markdown={problem.statement ?? ""} />
+                                            </LabeledCard>
+                                        ),
+                                        ...(problem.tags.length > 0
+                                            ? [() => (
+                                                <Cluster gap={3} principle="chip-row"
+                                                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                                    items={
+                                                        problem.tags.map((tag) => (
+                                                            () => (
+                                                                <StatusChip key={tag} tone="neutral">
+                                                                    {tag}
+                                                                </StatusChip>
+                                                            )
+                                                        ))
+                                                    } />
+                                            )]
+                                            : []),
+                                        () => (
+                                            <LabeledCard label={t("publicProfile.coding.detail.submissionHeading")} frameless>
+                                                {submission ? (
+                                                    <SurfaceListCard>
+                                                        <SurfaceListCardItem>
+                                                            <Cluster gap={4} principle="content-row"
+                                                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                                justify="between" items={[
+                                                                    () => (
+                                                                        <Cluster gap={3} principle="chip-row"
+                                                                            explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                                                            items={
+                                                                                submission.languages.map((language) => (
+                                                                                    () => <LanguageChip key={language} language={language} />
+                                                                                ))
+                                                                            } />
+                                                                    ),
+                                                                    () => (
+                                                                        <StatusChip tone="success">
+                                                                            {t(`codingPractice.verdict.${submission.verdict}`)}
+                                                                        </StatusChip>
+                                                                    ),
+                                                                ]} />
+                                                        </SurfaceListCardItem>
+                                                        <SurfaceListCardItem>
+                                                            <StackH gap={4} principle="content-row"
+                                                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                                justify="between" items={[
+                                                                    () => (
+                                                                        <Typography type="body-sm" color="muted">
+                                                                            {t("publicProfile.coding.detail.passedOf", {
+                                                                                passed: submission.passedCount,
+                                                                                total: submission.totalCount,
+                                                                            })}
+                                                                        </Typography>
+                                                                    ),
+                                                                    ...(solvedAt
+                                                                        ? [() => (
+                                                                            <Typography type="body-xs" color="muted">
+                                                                                {solvedAt}
+                                                                            </Typography>
+                                                                        )]
+                                                                        : []),
+                                                                ]} />
+                                                        </SurfaceListCardItem>
+                                                    </SurfaceListCard>
+                                                ) : (
+                                                    <Typography type="body-sm" color="muted">
+                                                        {t("publicProfile.coding.detail.notSolved")}
+                                                    </Typography>
+                                                )}
+                                            </LabeledCard>
+                                        ),
+                                    ]} />
+                            ) : null}
+                        </AsyncContent>
+                    ),
+                ]} />
         )} />
     )
 }

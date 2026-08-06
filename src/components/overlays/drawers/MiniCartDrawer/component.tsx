@@ -129,6 +129,7 @@ export const _MiniCartDrawer = ({
             <StackH
                 gap={3}
                 principle="flex-action"
+                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                 align="center"
                 justify="between"
                 items={comboLabelRow}
@@ -170,11 +171,13 @@ export const _MiniCartDrawer = ({
                         key={index}
                         gap={1}
                         principle="card-padding"
+                        explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome."
                         padding={5}
                         body={() => (
                             <StackH
                                 gap={4}
                                 principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                 align="center"
                                 items={cartLineSkeletonItems}
                             />
@@ -240,6 +243,7 @@ export const _MiniCartDrawer = ({
             <StackH
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 align="center"
                 items={totalPriceRow}
             />
@@ -257,6 +261,7 @@ export const _MiniCartDrawer = ({
                 <StackH
                     gap={4}
                     principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                     align="center"
                     items={previewSkeletonTotalRow}
                 />

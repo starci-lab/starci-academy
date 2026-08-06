@@ -70,6 +70,7 @@ export const StatPair = ({
         <StackV
             gap={1}
             principle="name-handle"
+            explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
             align="start"
             isSkeleton={isSkeleton}
             classNames={classNames}

@@ -1,5 +1,4 @@
 import React from "react"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { StackH, StackV } from "@/components/frames/Stack"
@@ -82,27 +81,22 @@ const ChallengeScoreCard = ({
 
     const scoreBody = (
         <>
-            <StackH gap={2} principle="title-subtitle" align="baseline" isSkeleton={isSkeleton} items={[() => scoreReading]} />
-            {isSkeleton ? (
-                <HeroSkeleton
-                    className="h-1 w-full rounded-full"
-
-                />
-            ) : (
-                <ProgressMeter
-                    value={earnedScore}
-                    max={safeMax}
-                    color={meterColor}
-                    target={targetScore}
-                    targetLabel={`${Math.round(passThreshold * 100)}%`}
-
-                />
-            )}
+            <StackH gap={2} principle="title-subtitle"
+                explain="Title over supporting line — not label-field, because neither line is a form control label."
+                align="baseline" isSkeleton={isSkeleton} items={[() => scoreReading]}  />
+            <ProgressMeter
+                value={earnedScore}
+                max={safeMax}
+                color={meterColor}
+                target={targetScore}
+                targetLabel={`${Math.round(passThreshold * 100)}%`}
+                isSkeleton={isSkeleton}
+            />
         </>
     )
 
     return (
-        <SurfaceCard
+        <SurfaceCard identity={{ tier: "block", component: "ChallengeScoreCard" }}
             label="Your results"
             description="Passing needs every requirement completed, not just the total score."
             isSkeleton={isSkeleton}

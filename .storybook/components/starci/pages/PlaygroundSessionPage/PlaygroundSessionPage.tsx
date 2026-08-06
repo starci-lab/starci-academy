@@ -131,6 +131,7 @@ const PlaygroundSessionPage = ({
                 gap={1}
                 padding={6}
                 principle="page-pad"
+                explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
                 classNames={["min-w-0", "flex-1"]}
 
                 items={[
@@ -155,6 +156,7 @@ const PlaygroundSessionPage = ({
                 gap={1}
                 padding={6}
                 principle="page-pad"
+                explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
                 classNames={["w-full", "shrink-0"]}
 
                 items={[
@@ -179,6 +181,7 @@ const PlaygroundSessionPage = ({
                 <StackH
                     gap={6}
                     principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                     align="start"
                     divider
                     classNames={["h-full", "min-h-0"]}

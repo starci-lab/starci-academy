@@ -22,3 +22,15 @@ export const AlertDialogBody = HeroAlertDialog.Body
 export const AlertDialogFooter = HeroAlertDialog.Footer
 
 export const meta = { tier: "atom", name: "AlertDialogRoot" } as const
+
+/** Folder-matching compound namespace (export-matches-folder). Existing named exports stay public. */
+export const AlertDialog = {
+    Root: AlertDialogRoot,
+    Backdrop: AlertDialogBackdrop,
+    Container: AlertDialogContainer,
+    Dialog: AlertDialogDialog,
+    Header: AlertDialogHeader,
+    Heading: AlertDialogHeading,
+    Body: AlertDialogBody,
+    Footer: AlertDialogFooter,
+} as const

@@ -38,22 +38,25 @@ export const RecapEnrollUpsell = () => {
     )
 
     return (
-        <Box principle="page-pad" className="rounded-2xl border border-default bg-default px-6 py-8 text-center">
+        <Box principle="page-pad" className="rounded-2xl border border-default bg-default px-6 py-8 text-center"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
             <StackV gap={4} align="center" items={[
                 () => <IconTile icon={<FlameIcon aria-hidden focusable="false" />} tone="accent" size="sm" />,
                 () => (
-                    <StackV gap={2} principle="title-subtitle" items={[
-                        () => (
-                            <Typography type="h4" weight="semibold">
-                                {t("flashcard.quiz.upsellTitle")}
-                            </Typography>
-                        ),
-                        () => (
-                            <Typography type="body-sm" color="muted">
-                                {t("flashcard.quiz.upsellDescription")}
-                            </Typography>
-                        ),
-                    ]} />
+                    <StackV gap={2} principle="title-subtitle"
+                        explain="Title over supporting line — not label-field, because neither line is a form control label."
+                        items={[
+                            () => (
+                                <Typography type="h4" weight="semibold">
+                                    {t("flashcard.quiz.upsellTitle")}
+                                </Typography>
+                            ),
+                            () => (
+                                <Typography type="body-sm" color="muted">
+                                    {t("flashcard.quiz.upsellDescription")}
+                                </Typography>
+                            ),
+                        ]} />
                 ),
                 () => (
                     <Button
@@ -104,16 +107,18 @@ const WeakTagRow = ({
             title={tag.tag}
             subtitle={t("flashcard.quiz.weakTagCoverage", { percent: Math.round(tag.coverage * 100) })}
             trailing={() => (
-                <StackH gap={2} principle="icon-text" align="center" classNames={["shrink-0"]} items={[
-                    () => <span className="text-sm font-medium text-accent-soft-foreground">{t("flashcard.quiz.reviewLesson")}</span>,
-                    () => (
-                        <ArrowRightIcon
-                            aria-hidden
-                            focusable="false"
-                            className="size-4 transition-transform group-hover:translate-x-1"
-                        />
-                    ),
-                ]} />
+                <StackH gap={2} principle="icon-text"
+                    explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                    align="center" classNames={["shrink-0"]} items={[
+                        () => <span className="text-sm font-medium text-accent-soft-foreground">{t("flashcard.quiz.reviewLesson")}</span>,
+                        () => (
+                            <ArrowRightIcon
+                                aria-hidden
+                                focusable="false"
+                                className="size-4 transition-transform group-hover:translate-x-1"
+                            />
+                        ),
+                    ]} />
             )}
             hover="underline"
             onPress={() => router.push(href)}
@@ -198,15 +203,19 @@ export const RecapWeakTagsCard = ({
         <LabeledCard label={t("flashcard.quiz.weakTagsTitle")}>
             <StackV gap={4} items={[
                 () => (
-                    <StackV gap={3} principle="sibling-stack" items={weakTags.map((tag) => () => (
-                        <WeakTagRow key={tag.tag} tag={tag} href={resolveTagHref(tag) ?? genericHref} />
-                    ))} />
+                    <StackV gap={3} principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                        items={weakTags.map((tag) => () => (
+                            <WeakTagRow key={tag.tag} tag={tag} href={resolveTagHref(tag) ?? genericHref} />
+                        ))} />
                 ),
                 ...(overflowWeakTags.length > 0 ? [() => (
                     <ScrollShadow hideScrollBar className="max-h-40 overflow-y-auto">
-                        <StackV gap={3} principle="sibling-stack" items={overflowWeakTags.map((tag) => () => (
-                            <WeakTagRow key={tag.tag} tag={tag} href={resolveTagHref(tag) ?? genericHref} />
-                        ))} />
+                        <StackV gap={3} principle="sibling-stack"
+                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                            items={overflowWeakTags.map((tag) => () => (
+                                <WeakTagRow key={tag.tag} tag={tag} href={resolveTagHref(tag) ?? genericHref} />
+                            ))} />
                     </ScrollShadow>
                 )] : []),
             ]} />

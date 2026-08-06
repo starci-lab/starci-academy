@@ -216,7 +216,7 @@ const rowClassName = (state: OptionVisualState) => `${ROW_BASE} ${ROW_CLASSES[st
  * @param props - {@link QuizCardProps}
  *
  * @example
- * <QuizCard
+ * <QuizCard>
  *   questionIndex={1}
  *   question="Which HTTP status reports a resource that doesn't exist?"
  *   options={[
@@ -335,10 +335,12 @@ export const QuizCard = ({
                                     gap={1}
                                     padding={{ x: 5, y: 4 }}
                                     principle="row-pad"
+                                    explain="Row content inset — not cell-pad, because this pads a horizontal content row rather than a dense table cell."
                                     body={() => (
                                         <StackV
                                             gap={2}
                                             principle="title-subtitle"
+                                            explain="Title over supporting line — not label-field, because neither line is a form control label."
                                             items={[
                                                 () => <Typography size="sm" weight="semibold" text="Explanation" />,
                                                 () => <Typography size="sm" color="muted" text={explanation} />,

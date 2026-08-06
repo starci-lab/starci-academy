@@ -1,5 +1,5 @@
 import React from "react"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { CheckIcon, CircleIcon, LockIcon, PlayIcon } from "@phosphor-icons/react"
 import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { VariantChipDifficulty, type Difficulty } from "@/components/blocks/learn/VariantChip"
@@ -111,7 +111,7 @@ const ModuleLessonList = ({
                 // The status icon is chosen DIRECTLY by the block from `STATUS_LEADING`,
                 // never through an atom in between — hand-roll a single shimmer dot in
                 // its place instead of branching off to build a whole separate row (§12c).
-                <HeroSkeleton className="size-5 shrink-0 rounded-full" />
+                <Skeleton className="size-5 shrink-0 rounded-full" />
             ) : (
                 <Icon aria-hidden focusable="false" className={className} />
             )),
@@ -138,7 +138,7 @@ const ModuleLessonList = ({
     })
 
     return (
-        <SurfaceCardList
+        <SurfaceCardList identity={{ tier: "block", component: "ModuleLessonList" }}
 
             isSkeleton={isSkeleton}
             items={rows}

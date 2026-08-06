@@ -23,20 +23,23 @@ export interface PublicArticleProps {
  * @param props - {@link PublicArticleProps}
  */
 export const PublicArticlePage = ({ content }: PublicArticleProps) => (
-    <Box as="article" principle="center-measure" className="mx-auto max-w-4xl p-6">
-        <StackV gap={4} principle="content-row" items={[
-            () => (
-                <Typography.Heading level={1} weight="bold">
-                    {content.title}
-                </Typography.Heading>
-            ),
-            () => (content.description ? (
-                <Typography type="body" color="muted">
-                    {content.description}
-                </Typography>
-            ) : null),
-            () => <div className="h-3" />,
-            () => <MarkdownContent markdown={content.body || ""} />,
-        ]} />
+    <Box as="article" principle="center-measure" className="mx-auto max-w-4xl p-6"
+        explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
+        <StackV gap={4} principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            items={[
+                () => (
+                    <Typography.Heading level={1} weight="bold">
+                        {content.title}
+                    </Typography.Heading>
+                ),
+                () => (content.description ? (
+                    <Typography type="body" color="muted">
+                        {content.description}
+                    </Typography>
+                ) : null),
+                () => <div className="h-3" />,
+                () => <MarkdownContent markdown={content.body || ""} />,
+            ]} />
     </Box>
 )

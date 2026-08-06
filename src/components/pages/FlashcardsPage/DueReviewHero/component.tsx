@@ -95,28 +95,30 @@ export const _DueReviewHero = ({
             return <AsyncContentEmpty title={labels.allCaughtTitle} description={labels.allCaughtHint} />
         }
         return (
-            <StackH gap={4} principle="flex-action" justify="between" at="sm" isSkeleton={isSkeleton} items={[
-                () => (
-                    <StackV gap={1} isSkeleton={isSkeleton} items={[
-                        () => <Typography size="sm" text={labels.count} isSkeleton={isSkeleton} />,
-                        // breaks the (possibly confusing) total down into its 2 parts — only when
-                        // it's actually a mix, so a pure-overdue or pure-new queue doesn't show a
-                        // redundant "X + 0" (dueCount = overdue reviews + today's capped new batch).
-                        ...(labels.countBreakdown ? [() => (
-                            <Typography size="xs" color="muted" text={labels.countBreakdown ?? ""} isSkeleton={isSkeleton} />
-                        )] : []),
-                    ]} />
-                ),
-                () => (
-                    <Button
-                        variant="primary"
-                        label={labels.start}
-                        isPending={starting}
-                        isSkeleton={isSkeleton}
-                        onPress={onPressStart}
-                    />
-                ),
-            ]} />
+            <StackH gap={4} principle="flex-action" justify="between" at="sm" isSkeleton={isSkeleton}
+                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                items={[
+                    () => (
+                        <StackV gap={1} isSkeleton={isSkeleton} items={[
+                            () => <Typography size="sm" text={labels.count} isSkeleton={isSkeleton} />,
+                            // breaks the (possibly confusing) total down into its 2 parts — only when
+                            // it's actually a mix, so a pure-overdue or pure-new queue doesn't show a
+                            // redundant "X + 0" (dueCount = overdue reviews + today's capped new batch).
+                            ...(labels.countBreakdown ? [() => (
+                                <Typography size="xs" color="muted" text={labels.countBreakdown ?? ""} isSkeleton={isSkeleton} />
+                            )] : []),
+                        ]} />
+                    ),
+                    () => (
+                        <Button
+                            variant="primary"
+                            label={labels.start}
+                            isPending={starting}
+                            isSkeleton={isSkeleton}
+                            onPress={onPressStart}
+                        />
+                    ),
+                ]} />
         )
     }
 

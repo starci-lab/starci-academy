@@ -55,7 +55,7 @@ const PlaygroundEnterBanner = ({
 }: PlaygroundEnterBannerProps) => {
     const readiness = buildReadinessText(allReady, pendingCount)
     return (
-        <SurfaceCard
+        <SurfaceCard identity={{ tier: "block", component: "PlaygroundEnterBanner" }}
             label={SECTION_LABEL}
 
             isSkeleton={isSkeleton}

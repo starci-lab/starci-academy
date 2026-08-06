@@ -153,7 +153,8 @@ export const CodeToHtml = ({ code, language, theme, classNames }: CodeToHtmlProp
             )}
         >
             {/* slim header: language label (left) + copy (right) — orients long lessons with many snippets */}
-            <Box principle="control-pad" className="flex items-center justify-between border-b border-default px-3 py-2">
+            <Box principle="control-pad" className="flex items-center justify-between border-b border-default px-3 py-2"
+                explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.">
                 <span className="font-mono text-xs text-muted">{languageLabel(language)}</span>
                 <SnippetIcon copyString={code} />
             </Box>

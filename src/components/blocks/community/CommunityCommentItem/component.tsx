@@ -161,39 +161,45 @@ export const _CommunityCommentItem = ({
         <StackV
             gap={3}
             principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             identity={{ tier: "block", component: "CommunityCommentItem" }}
             items={[
                 () => (
                     <CommunityCommentRow comment={comment} onReact={authenticated ? onReact : undefined} actions={actions} />
                 ),
                 ...(replyOpen && authenticated ? [() => (
-                    <StackV gap={3} principle="sibling-stack" nested items={[
-                        () => (
-                            <InputTextarea
-                                rows={2}
-                                value={replyBody}
-                                onValueChange={onReplyBodyChange}
-                                placeholder={labels.replyPlaceholder}
-                                ariaLabel={labels.replyPlaceholder}
-                                variant="secondary"
-                            />
-                        ),
-                        () => (
-                            <Box principle="push-end" className="ml-auto w-fit">
-                                <Button
-                                    variant="primary"
-                                    size="sm"
-                                    isPending={isSubmittingReply}
-                                    isDisabled={!replyBody.trim()}
-                                    onPress={onSubmitReply}
-                                    label={labels.send}
+                    <StackV gap={3} principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                        nested items={[
+                            () => (
+                                <InputTextarea
+                                    rows={2}
+                                    value={replyBody}
+                                    onValueChange={onReplyBodyChange}
+                                    placeholder={labels.replyPlaceholder}
+                                    ariaLabel={labels.replyPlaceholder}
+                                    variant="secondary"
                                 />
-                            </Box>
-                        ),
-                    ]} />
+                            ),
+                            () => (
+                                <Box principle="push-end" className="ml-auto w-fit"
+                                    explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row.">
+                                    <Button
+                                        variant="primary"
+                                        size="sm"
+                                        isPending={isSubmittingReply}
+                                        isDisabled={!replyBody.trim()}
+                                        onPress={onSubmitReply}
+                                        label={labels.send}
+                                    />
+                                </Box>
+                            ),
+                        ]} />
                 )] : []),
                 ...(repliesOpen ? [() => (
-                    <StackV gap={3} principle="sibling-stack" nested body={() => repliesContent} />
+                    <StackV gap={3} principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                        nested body={() => repliesContent}  />
                 )] : []),
             ]} />
     )

@@ -72,6 +72,7 @@ export const JobListRow = ({ job }: JobListRowProps) => {
             <StackH
                 gap={2}
                 principle="icon-text"
+                explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
                 inline
                 align="center"
                 items={[
@@ -95,6 +96,7 @@ export const JobListRow = ({ job }: JobListRowProps) => {
             <StackH
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 align="center"
                 items={[
                     () => (
@@ -110,6 +112,7 @@ export const JobListRow = ({ job }: JobListRowProps) => {
                         <StackV
                             gap={2}
                             principle="title-subtitle"
+                            explain="Title over supporting line — not label-field, because neither line is a form control label."
                             classNames={["min-w-0", "flex-1"]}
                             items={[
                                 () => (
@@ -123,7 +126,9 @@ export const JobListRow = ({ job }: JobListRowProps) => {
                                     </Typography>
                                 ),
                                 ...(metaItems.length > 0 ? [() => (
-                                    <Cluster gap={3} principle="chip-row" items={metaItems} />
+                                    <Cluster gap={3} principle="chip-row"
+                                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                        items={metaItems}  />
                                 )] : []),
                             ]}
                         />
@@ -132,6 +137,7 @@ export const JobListRow = ({ job }: JobListRowProps) => {
                         <StackV
                             gap={2}
                             principle="title-subtitle"
+                            explain="Title over supporting line — not label-field, because neither line is a form control label."
                             align="end"
                             classNames={["shrink-0"]}
                             items={[

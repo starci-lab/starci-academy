@@ -57,11 +57,13 @@ export const HeadhuntingCompanyPage = ({ className }: HeadhuntingCompanyPageProp
 
     return (
         <Box className={className}>
-            <StackV gap={6} principle="block-boundary" items={[
-                HeadhuntingCompanyBreadcrumbs,
-                HeadhuntingCompanyProfile,
-                HeadhuntingCompanyConsultants,
-            ]} />
+            <StackV gap={6} principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={[
+                    HeadhuntingCompanyBreadcrumbs,
+                    HeadhuntingCompanyProfile,
+                    HeadhuntingCompanyConsultants,
+                ]} />
         </Box>
     )
 }

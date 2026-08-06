@@ -52,7 +52,7 @@ export const EmptyContent = ({
     ]
 
     return (
-        <StackV
+        <StackV identity={{ tier: "block", component: "EmptyContent" }}
             gap={4}
             align="center"
             justify="center"
@@ -66,7 +66,9 @@ export const EmptyContent = ({
                         )}
                     </>
                 ),
-                () => <StackV gap={2} principle="title-subtitle" items={titleLines} />,
+                () => <StackV gap={2} principle="title-subtitle"
+                    explain="Title over supporting line — not label-field, because neither line is a form control label."
+                    items={titleLines} />,
                 ...(onRetry && retryLabel
                     ? [() => <Button variant="secondary" size="sm" onPress={onRetry} label={retryLabel} />]
                     : []),

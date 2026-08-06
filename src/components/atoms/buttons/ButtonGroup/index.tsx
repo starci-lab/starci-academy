@@ -26,3 +26,9 @@ export const meta = [
     { tier: "atom", name: "ButtonGroupRoot" },
     { tier: "atom", name: "ButtonGroupSeparator" },
 ] as const
+
+/** Folder-matching compound namespace (export-matches-folder). Existing named exports stay public. */
+export const ButtonGroup = {
+    Root: ButtonGroupRoot,
+    Separator: ButtonGroupSeparator,
+} as const

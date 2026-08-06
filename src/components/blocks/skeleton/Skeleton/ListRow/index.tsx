@@ -45,3 +45,6 @@ export const SkeletonListRow = ({
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonListRow` as the public name. */
+export { SkeletonListRow as ListRow }

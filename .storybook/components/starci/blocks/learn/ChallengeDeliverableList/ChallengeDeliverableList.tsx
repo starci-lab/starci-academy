@@ -339,6 +339,7 @@ const deliverableBody = (item: ChallengeDeliverableItem) => {
                     <StackH
                         gap={3}
                         principle="identity"
+                        explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
                         align="center"
                         at="sm"
 
@@ -413,7 +414,7 @@ const deliverableBody = (item: ChallengeDeliverableItem) => {
         </>
     )
 
-    return <StackV gap={4} items={[() => panel]} />
+    return <StackV identity={{ tier: "block", component: "ChallengeDeliverableList" }} gap={4} items={[() => panel]} />
 }
 
 /**
@@ -486,7 +487,7 @@ const ChallengeDeliverableList = ({
     )
 
     return (
-        <StackV gap={3} isSkeleton={isSkeleton} items={[() => listBody]} />
+        <StackV identity={{ tier: "block", component: "ChallengeDeliverableList" }} gap={3} isSkeleton={isSkeleton} items={[() => listBody]} />
     )
 }
 

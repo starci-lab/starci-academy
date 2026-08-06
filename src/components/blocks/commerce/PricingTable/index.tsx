@@ -171,6 +171,7 @@ export const PricingTable = ({
             identity={{ tier: "block", component: "PricingTable" }}
             columns={{ base: 1, md: tierGridColumns(tiers.length) }}
             principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
             items={tierItems}
         />
     )

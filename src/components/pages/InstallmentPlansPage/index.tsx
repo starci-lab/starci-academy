@@ -136,176 +136,188 @@ export const InstallmentPlansPage = () => {
     )
 
     return (
-        <StackV gap={7} principle="layout-split" items={[
-            () => (
-                <PageHeader
-                    breadcrumb={<SettingsBreadcrumb current={t("installmentPlans.title")} />}
-                    title={t("installmentPlans.title")}
-                    description={t("installmentPlans.subtitle")}
-                />
-            ),
+        <StackV gap={7} principle="layout-split"
+            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+            items={[
+                () => (
+                    <PageHeader
+                        breadcrumb={<SettingsBreadcrumb current={t("installmentPlans.title")} />}
+                        title={t("installmentPlans.title")}
+                        description={t("installmentPlans.subtitle")}
+                    />
+                ),
 
-            () => (
-                <AsyncContent
-                    isLoading={isLoading && !plans}
-                    skeleton={(
-                        <StackV gap={4} principle="content-row" items={[0, 1].map((row) => () => (
-                            <Skeleton key={row} className="h-40 w-full rounded-2xl" />
-                        ))} />
-                    )}
-                    isEmpty={planList.length === 0}
-                    emptyContent={{
-                        title: t("installmentPlans.empty"),
-                        description: t("installmentPlans.emptyDesc"),
-                        onRetry: () => router.push(pathConfig().locale().course().build()),
-                        retryLabel: t("installmentPlans.emptyCta"),
-                    }}
-                    error={error}
-                    errorContent={{
-                        title: t("installmentPlans.empty"),
-                        onRetry: () => { void mutate() },
-                    }}
-                >
-                    <StackV gap={4} principle="content-row" items={planList.map((plan) => () => {
-                        const isFixed = plan.planType === "Fixed"
-                        const isLocked = plan.status === "Defaulted"
-                        const statusColor = STATUS_COLOR[plan.status] ?? "muted"
-                        const isPaying = payingId === plan.id
-                        return (
-                            <Card key={plan.id}>
-                                <CardContent>
-                                    <StackV gap={4} principle="content-row" items={[
-                                        () => (
-                                            <StackH gap={4} principle="content-row" justify="between" align="center" items={[
+                () => (
+                    <AsyncContent
+                        isLoading={isLoading && !plans}
+                        skeleton={(
+                            <StackV gap={4} principle="content-row" explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title." items={[0, 1].map((row) => () => (
+                                <Skeleton key={row} className="h-40 w-full rounded-2xl" />
+                            ))} />
+                        )}
+                        isEmpty={planList.length === 0}
+                        emptyContent={{
+                            title: t("installmentPlans.empty"),
+                            description: t("installmentPlans.emptyDesc"),
+                            onRetry: () => router.push(pathConfig().locale().course().build()),
+                            retryLabel: t("installmentPlans.emptyCta"),
+                        }}
+                        error={error}
+                        errorContent={{
+                            title: t("installmentPlans.empty"),
+                            onRetry: () => { void mutate() },
+                        }}
+                    >
+                        <StackV gap={4} principle="content-row" explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title." items={planList.map((plan) => () => {
+                            const isFixed = plan.planType === "Fixed"
+                            const isLocked = plan.status === "Defaulted"
+                            const statusColor = STATUS_COLOR[plan.status] ?? "muted"
+                            const isPaying = payingId === plan.id
+                            return (
+                                <Card key={plan.id}>
+                                    <CardContent>
+                                        <StackV gap={4} principle="content-row"
+                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                            items={[
                                                 () => (
-                                                    <Chip
-                                                        size="sm"
-                                                        variant="soft"
-                                                        color={statusColor === "muted" ? "default" : statusColor}
-                                                    >
-                                                        <Chip.Label>{t(`installmentPlans.status.${plan.status}`)}</Chip.Label>
-                                                    </Chip>
+                                                    <StackH gap={4} principle="content-row" justify="between" align="center"
+                                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                        items={[
+                                                            () => (
+                                                                <Chip
+                                                                    size="sm"
+                                                                    variant="soft"
+                                                                    color={statusColor === "muted" ? "default" : statusColor}
+                                                                >
+                                                                    <Chip.Label>{t(`installmentPlans.status.${plan.status}`)}</Chip.Label>
+                                                                </Chip>
+                                                            ),
+                                                            () => (
+                                                                <Typography type="body-xs" color="muted">
+                                                                    {isFixed
+                                                                        ? t("installmentPlans.termMonths", { months: plan.months ?? 0 })
+                                                                        : t("installmentPlans.flexiblePool")}
+                                                                </Typography>
+                                                            ),
+                                                        ]} />
                                                 ),
-                                                () => (
-                                                    <Typography type="body-xs" color="muted">
-                                                        {isFixed
-                                                            ? t("installmentPlans.termMonths", { months: plan.months ?? 0 })
-                                                            : t("installmentPlans.flexiblePool")}
-                                                    </Typography>
-                                                ),
-                                            ]} />
-                                        ),
 
-                                        () => (plan.courses.length > 0 ? (
-                                            <Cluster gap={3} principle="chip-row" items={plan.courses.map((course) => () => (
-                                                <Chip key={course.id} size="sm" variant="soft" color="default">
-                                                    <Chip.Label>{course.title}</Chip.Label>
-                                                </Chip>
-                                            ))} />
-                                        ) : null),
+                                                () => (plan.courses.length > 0 ? (
+                                                    <Cluster gap={3} principle="chip-row" explain="Lets chips share one wrapping row so related tags stay together without stacking as a column." items={plan.courses.map((course) => () => (
+                                                        <Chip key={course.id} size="sm" variant="soft" color="default">
+                                                            <Chip.Label>{course.title}</Chip.Label>
+                                                        </Chip>
+                                                    ))} />
+                                                ) : null),
 
-                                        () => (isFixed ? (
-                                            <>
-                                                <StackH gap={4} principle="content-row" justify="between" align="center" items={[() => (
-                                                    <Typography type="body-sm" weight="semibold">
-                                                        {formatVnd(plan.monthlyAmountVnd ?? 0)}
-                                                        <Typography type="body-xs" color="muted" className="ml-1 inline">
-                                                            {t("installmentPlans.perCycle")}
-                                                        </Typography>
-                                                    </Typography>
-                                                )]} />
-                                                <ProgressMeter
-                                                    value={plan.installmentsPaid ?? 0}
-                                                    max={plan.months ?? 1}
-                                                    label={t("installmentPlans.progress", {
-                                                        paid: plan.installmentsPaid ?? 0,
-                                                        months: plan.months ?? 0,
-                                                    })}
-                                                />
-                                            </>
-                                        ) : (
-                                            <>
-                                                <StackH gap={4} principle="content-row" justify="between" align="center" items={[
-                                                    () => (
-                                                        <Typography type="body-sm" color="muted">
-                                                            {t("installmentPlans.remaining")}
-                                                        </Typography>
-                                                    ),
-                                                    () => (
-                                                        <Typography type="body-sm" weight="semibold">
-                                                            {formatVnd(plan.remainingVnd ?? 0)}
-                                                        </Typography>
-                                                    ),
-                                                ]} />
-                                                <Typography type="body-xs" color="muted">
-                                                    {t("installmentPlans.minPaymentFormula", {
-                                                        percent: plan.minPaymentPercent ?? 0,
-                                                        floor: formatVnd(plan.minPaymentFloorVnd ?? 0),
-                                                    })}
-                                                </Typography>
-                                                <StackH gap={3} principle="identity" align="center" items={[
-                                                    () => (
-                                                        <TextField
-                                                            className="max-w-[160px]"
-                                                            value={amountFor(plan).toLocaleString("vi-VN")}
-                                                            onChange={(value) => onAmountChange(plan, value)}
-                                                            isDisabled={isPaying}
-                                                            aria-label={t("installmentPlans.amountLabel")}
+                                                () => (isFixed ? (
+                                                    <>
+                                                        <StackH gap={4} principle="content-row" explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title." justify="between" align="center" items={[() => (
+                                                            <Typography type="body-sm" weight="semibold">
+                                                                {formatVnd(plan.monthlyAmountVnd ?? 0)}
+                                                                <Typography type="body-xs" color="muted" className="ml-1 inline">
+                                                                    {t("installmentPlans.perCycle")}
+                                                                </Typography>
+                                                            </Typography>
+                                                        )]} />
+                                                        <ProgressMeter
+                                                            value={plan.installmentsPaid ?? 0}
+                                                            max={plan.months ?? 1}
+                                                            label={t("installmentPlans.progress", {
+                                                                paid: plan.installmentsPaid ?? 0,
+                                                                months: plan.months ?? 0,
+                                                            })}
                                                         />
-                                                    ),
-                                                    () => (
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <StackH gap={4} principle="content-row" justify="between" align="center"
+                                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                            items={[
+                                                                () => (
+                                                                    <Typography type="body-sm" color="muted">
+                                                                        {t("installmentPlans.remaining")}
+                                                                    </Typography>
+                                                                ),
+                                                                () => (
+                                                                    <Typography type="body-sm" weight="semibold">
+                                                                        {formatVnd(plan.remainingVnd ?? 0)}
+                                                                    </Typography>
+                                                                ),
+                                                            ]} />
                                                         <Typography type="body-xs" color="muted">
-                                                            {t("installmentPlans.minLabel", { amount: formatVnd(plan.minPaymentVnd) })}
+                                                            {t("installmentPlans.minPaymentFormula", {
+                                                                percent: plan.minPaymentPercent ?? 0,
+                                                                floor: formatVnd(plan.minPaymentFloorVnd ?? 0),
+                                                            })}
                                                         </Typography>
-                                                    ),
-                                                ]} />
-                                            </>
-                                        )),
+                                                        <StackH gap={3} principle="identity" align="center"
+                                                            explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
+                                                            items={[
+                                                                () => (
+                                                                    <TextField
+                                                                        className="max-w-[160px]"
+                                                                        value={amountFor(plan).toLocaleString("vi-VN")}
+                                                                        onChange={(value) => onAmountChange(plan, value)}
+                                                                        isDisabled={isPaying}
+                                                                        aria-label={t("installmentPlans.amountLabel")}
+                                                                    />
+                                                                ),
+                                                                () => (
+                                                                    <Typography type="body-xs" color="muted">
+                                                                        {t("installmentPlans.minLabel", { amount: formatVnd(plan.minPaymentVnd) })}
+                                                                    </Typography>
+                                                                ),
+                                                            ]} />
+                                                    </>
+                                                )),
 
-                                        () => (isLocked ? (
-                                            <Callout
-                                                status="danger"
-                                                title={t("installmentPlans.lockedTitle")}
-                                                description={t("installmentPlans.lockedDesc")}
-                                            />
-                                        ) : null),
+                                                () => (isLocked ? (
+                                                    <Callout
+                                                        status="danger"
+                                                        title={t("installmentPlans.lockedTitle")}
+                                                        description={t("installmentPlans.lockedDesc")}
+                                                    />
+                                                ) : null),
 
-                                        () => (
-                                            <StackH gap={4} principle="content-row" justify="between" align="center" items={[
                                                 () => (
-                                                    <Typography type="body-xs" color="muted">
-                                                        {plan.nextDueAt
-                                                            ? t("installmentPlans.nextDue", { date: new Date(plan.nextDueAt).toLocaleDateString("vi-VN") })
-                                                            : ""}
-                                                    </Typography>
-                                                ),
-                                                () => (
-                                                    <Button
-                                                        variant={isLocked ? "danger" : "primary"}
-                                                        size="sm"
-                                                        isDisabled={isPaying}
-                                                        onPress={() => { void onPay(plan) }}
-                                                    >
-                                                        {isPaying ? (
-                                                            <Spinner size="sm" color="current" />
-                                                        ) : isLocked ? (
-                                                            t("installmentPlans.unlock")
-                                                        ) : isFixed ? (
-                                                            t("installmentPlans.payThisCycle")
-                                                        ) : (
-                                                            t("installmentPlans.pay")
-                                                        )}
-                                                    </Button>
+                                                    <StackH gap={4} principle="content-row" justify="between" align="center"
+                                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                        items={[
+                                                            () => (
+                                                                <Typography type="body-xs" color="muted">
+                                                                    {plan.nextDueAt
+                                                                        ? t("installmentPlans.nextDue", { date: new Date(plan.nextDueAt).toLocaleDateString("vi-VN") })
+                                                                        : ""}
+                                                                </Typography>
+                                                            ),
+                                                            () => (
+                                                                <Button
+                                                                    variant={isLocked ? "danger" : "primary"}
+                                                                    size="sm"
+                                                                    isDisabled={isPaying}
+                                                                    onPress={() => { void onPay(plan) }}
+                                                                >
+                                                                    {isPaying ? (
+                                                                        <Spinner size="sm" color="current" />
+                                                                    ) : isLocked ? (
+                                                                        t("installmentPlans.unlock")
+                                                                    ) : isFixed ? (
+                                                                        t("installmentPlans.payThisCycle")
+                                                                    ) : (
+                                                                        t("installmentPlans.pay")
+                                                                    )}
+                                                                </Button>
+                                                            ),
+                                                        ]} />
                                                 ),
                                             ]} />
-                                        ),
-                                    ]} />
-                                </CardContent>
-                            </Card>
-                        )
-                    })} />
-                </AsyncContent>
-            ),
-        ]} />
+                                    </CardContent>
+                                </Card>
+                            )
+                        })} />
+                    </AsyncContent>
+                ),
+            ]} />
     )
 }

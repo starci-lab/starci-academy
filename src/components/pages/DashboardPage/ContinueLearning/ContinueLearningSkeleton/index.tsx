@@ -33,16 +33,20 @@ export const ContinueLearningSkeleton = ({
         {[0, 1, 2].map((card) => (
             <Card key={card} className="h-full">
                 <CardContent>
-                    <StackV gap={4} principle="sibling-stack" classNames={["h-full"]} items={[
-                        () => (
-                            <StackV gap={2} principle="title-subtitle" classNames={["min-w-0"]} items={[
-                                () => <Skeleton.Typography type="body-sm" width="3/4" />,
-                                () => <Skeleton.Typography type="body-xs" width="1/2" />,
-                            ]} />
-                        ),
-                        // CTA "Continue →" — own row below the title (SeeMoreLink), not inline-right
-                        () => <Skeleton.Typography type="body-sm" width="1/3" />,
-                    ]} />
+                    <StackV gap={4} principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                        classNames={["h-full"]} items={[
+                            () => (
+                                <StackV gap={2} principle="title-subtitle"
+                                    explain="Title over supporting line — not label-field, because neither line is a form control label."
+                                    classNames={["min-w-0"]} items={[
+                                        () => <Skeleton.Typography type="body-sm" width="3/4" />,
+                                        () => <Skeleton.Typography type="body-xs" width="1/2" />,
+                                    ]} />
+                            ),
+                            // CTA "Continue →" — own row below the title (SeeMoreLink), not inline-right
+                            () => <Skeleton.Typography type="body-sm" width="1/3" />,
+                        ]} />
                 </CardContent>
             </Card>
         ))}

@@ -53,19 +53,23 @@ export const PracticeMobileNav = ({ className }: PracticeMobileNavProps) => {
                         {
                             key: "problems",
                             label: (
-                                <StackH gap={3} principle="flex-action" as="span" items={[
-                                    () => <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
-                                    () => <>{t("PracticeHubPage.tabs.problems")}</>,
-                                ]} />
+                                <StackH gap={3} principle="flex-action" as="span"
+                                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                    items={[
+                                        () => <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+                                        () => <>{t("PracticeHubPage.tabs.problems")}</>,
+                                    ]} />
                             ),
                         },
                         {
                             key: "leaderboard",
                             label: (
-                                <StackH gap={3} principle="flex-action" as="span" items={[
-                                    () => <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
-                                    () => <>{t("PracticeHubPage.tabs.leaderboard")}</>,
-                                ]} />
+                                <StackH gap={3} principle="flex-action" as="span"
+                                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                    items={[
+                                        () => <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+                                        () => <>{t("PracticeHubPage.tabs.leaderboard")}</>,
+                                    ]} />
                             ),
                         },
                     ],
@@ -82,6 +86,7 @@ export const PracticeMobileNav = ({ className }: PracticeMobileNavProps) => {
                     <StackH
                         gap={3}
                         principle="chip-row"
+                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                         items={MOBILE_TOPICS.map((domain) => (
                             () => (
                                 <Button

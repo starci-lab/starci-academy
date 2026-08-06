@@ -140,6 +140,7 @@ export const _ChatPane = ({
         <StackV
             gap={4}
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             identity={{ tier: "block", component: "ChatPane" }}
             items={[
                 () => (
@@ -158,32 +159,36 @@ export const _ChatPane = ({
                     )
                 ),
                 () => (
-                    <StackV gap={3} principle="flex-action" items={[
-                        () => (
-                            <InputTextarea
-                                variant="secondary"
-                                rows={2}
-                                value={body}
-                                onValueChange={setBody}
-                                placeholder={labels.placeholder}
-                                ariaLabel={labels.placeholder}
-                            />
-                        ),
-                        () => (
-                            <StackH gap={1} principle="name-handle" justify="end" items={[
-                                () => (
-                                    <Button
-                                        variant="primary"
-                                        size="sm"
-                                        label={labels.send}
-                                        isPending={isSending}
-                                        isDisabled={!body.trim()}
-                                        onPress={() => void onSendPress()}
-                                    />
-                                ),
-                            ]} />
-                        ),
-                    ]} />
+                    <StackV gap={3} principle="flex-action"
+                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                        items={[
+                            () => (
+                                <InputTextarea
+                                    variant="secondary"
+                                    rows={2}
+                                    value={body}
+                                    onValueChange={setBody}
+                                    placeholder={labels.placeholder}
+                                    ariaLabel={labels.placeholder}
+                                />
+                            ),
+                            () => (
+                                <StackH gap={1} principle="name-handle"
+                                    explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
+                                    justify="end" items={[
+                                        () => (
+                                            <Button
+                                                variant="primary"
+                                                size="sm"
+                                                label={labels.send}
+                                                isPending={isSending}
+                                                isDisabled={!body.trim()}
+                                                onPress={() => void onSendPress()}
+                                            />
+                                        ),
+                                    ]} />
+                            ),
+                        ]} />
                 ),
             ]}
         />

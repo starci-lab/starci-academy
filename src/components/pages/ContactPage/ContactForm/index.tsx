@@ -99,6 +99,7 @@ export const ContactForm = ({ className }: ContactFormProps) => {
             <StackV
                 gap={3}
                 principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                 items={[
                     () => (
                         <Label htmlFor="contact-category">{t("contact.form.category")}</Label>

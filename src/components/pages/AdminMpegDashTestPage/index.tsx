@@ -43,7 +43,8 @@ export const AdminMpegDashTestPage = ({ className }: WithClassNames<undefined>) 
 
     return (
         <div className={cn("min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-4 @app-md:p-8", className)}>
-            <Box principle="center-measure" className="mx-auto max-w-4xl space-y-6">
+            <Box principle="center-measure" className="mx-auto max-w-4xl space-y-6"
+                explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
                 <AdminMpegDashTestHeader />
 
                 <ConfigCard

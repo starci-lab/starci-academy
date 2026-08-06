@@ -102,13 +102,17 @@ export const MediaCard = ({
                         gap={1}
                         padding={5}
                         principle="card-padding"
+                        explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome."
                         body={() => (
                             <StackV
                                 gap={4}
                                 principle="card-caption"
+                                explain="Holds caption text under card media so the caption stays attached to the image above it."
                                 items={[
                                     () => <Typography size="base" weight="medium" text={title} />,
-                                    ...(Meta ? [() => <Cluster gap={3} principle="chip-row" items={[() => <Meta />]} />] : []),
+                                    ...(Meta ? [() => <Cluster gap={3} principle="chip-row"
+                                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                        items={[() => <Meta />]} />] : []),
                                     ...(description ? [() => <Typography size="sm" color="muted" lineClamp={2} text={description} />] : []),
                                     ...(Footer ? [() => <Footer />] : []),
                                 ]}
@@ -121,7 +125,7 @@ export const MediaCard = ({
     )
 
     return (
-        <SurfaceCard
+        <SurfaceCard identity={{ tier: "block", component: "MediaCard" }}
             variant="nested"
             padding={1}
             onPress={onPress}

@@ -64,57 +64,65 @@ export const PinnedProjectCard = ({ pin, className }: PinnedProjectCardProps) =>
 
     const body = (
         <>
-            <Box principle="card-padding" className="p-4">
-                <StackV gap={3} principle="sibling-stack" items={[
-                    () => (
-                        <StackH gap={3} principle="flex-action" justify="between" items={[
-                            () => (
-                                <span
-                                    className={cn(
-                                        "inline-flex items-center rounded-full px-2 py-0 text-xs",
-                                        isCourse
-                                            ? "bg-success-soft text-success-soft-foreground"
-                                            : "border border-default text-muted",
-                                    )}
-                                >
-                                    <StackH gap={2} principle="icon-text" inline items={[
-                                        () => <TypeIcon className="size-4" aria-hidden="true" focusable="false" />,
-                                        () => <span>{isCourse ? t("pinnedProjects.typeCapstone") : t("pinnedProjects.typeExternal")}</span>,
-                                    ]} />
-                                </span>
-                            ),
-                            () => (
-                                <ArrowSquareOutIcon
-                                    className="size-4 shrink-0 text-muted"
-                                    aria-hidden="true"
-                                    focusable="false"
-                                />
-                            ),
-                        ]} />
-                    ),
-                    () => (
-                        <Typography
-                            type="body-sm"
-                            weight="medium"
-                            className="line-clamp-2 underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline"
-                        >
-                            {title}
-                        </Typography>
-                    ),
-                    ...(pin.description
-                        ? [() => (
-                            <Typography type="body-xs" color="muted" className="line-clamp-1">
-                                {pin.description}
+            <Box principle="card-padding" className="p-4"
+                explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
+                <StackV gap={3} principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                    items={[
+                        () => (
+                            <StackH gap={3} principle="flex-action" justify="between"
+                                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                items={[
+                                    () => (
+                                        <span
+                                            className={cn(
+                                                "inline-flex items-center rounded-full px-2 py-0 text-xs",
+                                                isCourse
+                                                    ? "bg-success-soft text-success-soft-foreground"
+                                                    : "border border-default text-muted",
+                                            )}
+                                        >
+                                            <StackH gap={2} principle="icon-text" inline
+                                                explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                                                items={[
+                                                    () => <TypeIcon className="size-4" aria-hidden="true" focusable="false" />,
+                                                    () => <span>{isCourse ? t("pinnedProjects.typeCapstone") : t("pinnedProjects.typeExternal")}</span>,
+                                                ]} />
+                                        </span>
+                                    ),
+                                    () => (
+                                        <ArrowSquareOutIcon
+                                            className="size-4 shrink-0 text-muted"
+                                            aria-hidden="true"
+                                            focusable="false"
+                                        />
+                                    ),
+                                ]} />
+                        ),
+                        () => (
+                            <Typography
+                                type="body-sm"
+                                weight="medium"
+                                className="line-clamp-2 underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline"
+                            >
+                                {title}
                             </Typography>
-                        )]
-                        : []),
-                    ...(visibleTech.length > 0
-                        ? [() => <Cluster gap={3} principle="chip-row" items={chipItems} />]
-                        : []),
-                ]} />
+                        ),
+                        ...(pin.description
+                            ? [() => (
+                                <Typography type="body-xs" color="muted" className="line-clamp-1">
+                                    {pin.description}
+                                </Typography>
+                            )]
+                            : []),
+                        ...(visibleTech.length > 0
+                            ? [() => <Cluster gap={3} principle="chip-row" explain="Lets chips share one wrapping row so related tags stay together without stacking as a column." items={chipItems} />]
+                            : []),
+                    ]} />
             </Box>
             {pin.isVerified ? (
-                <Box principle="pill-pad" className="border-t border-success/30 bg-success-soft px-4 py-2">
+                <Box principle="pill-pad" className="border-t border-success/30 bg-success-soft px-4 py-2"
+                    explain="Pill/chip inset — not control-pad, because this pads a compact badge shape rather than a form control.">
                     <StackH gap={3} items={[
                         () => (
                             <SealCheckIcon

@@ -92,18 +92,20 @@ export const EditProfilePage = () => {
     if (!user) {
         return (
             <div className="py-12">
-                <StackV gap={3} principle="sibling-stack" align="center" items={[
-                    () => (
-                        <Typography type="h5" weight="semibold" align="center">
-                            {t("profile.signedOut.title")}
-                        </Typography>
-                    ),
-                    () => (
-                        <Typography type="body-sm" color="muted" align="center">
-                            {t("profile.signedOut.desc")}
-                        </Typography>
-                    ),
-                ]} />
+                <StackV gap={3} principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                    align="center" items={[
+                        () => (
+                            <Typography type="h5" weight="semibold" align="center">
+                                {t("profile.signedOut.title")}
+                            </Typography>
+                        ),
+                        () => (
+                            <Typography type="body-sm" color="muted" align="center">
+                                {t("profile.signedOut.desc")}
+                            </Typography>
+                        ),
+                    ]} />
             </div>
         )
     }
@@ -115,207 +117,217 @@ export const EditProfilePage = () => {
                 title={t("profileEdit.title")}
                 description={t("profileEdit.subtitle")}
             />
-            <StackV gap={6} principle="block-boundary" items={[
-                () => (
-                    <StackH gap={4} principle="identity" items={[
-                        () => (
-                            <AvatarUploadButton
-                                avatar={shownAvatar}
-                                displayName={user.displayName ?? user.username}
-                                seed={user.email ?? user.username}
-                                label={t("profileEdit.changeAvatar")}
-                                onPress={openAvatarUpload}
-                            />
-                        ),
-                        () => (
-                            <StackV gap={3} principle="sibling-stack" items={[
+            <StackV gap={6} principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={[
+                    () => (
+                        <StackH gap={4} principle="identity"
+                            explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
+                            items={[
                                 () => (
-                                    <Button
-                                        variant="secondary"
-                                        size="sm"
+                                    <AvatarUploadButton
+                                        avatar={shownAvatar}
+                                        displayName={user.displayName ?? user.username}
+                                        seed={user.email ?? user.username}
+                                        label={t("profileEdit.changeAvatar")}
                                         onPress={openAvatarUpload}
-                                    >
-                                        {t("profileEdit.changeAvatar")}
-                                    </Button>
-                                ),
-                                () => (
-                                    <Typography type="body-xs" color="muted">
-                                        {t("profileEdit.avatarHint")}
-                                    </Typography>
-                                ),
-                            ]} />
-                        ),
-                    ]} />
-                ),
-                () => <AvatarUploadModal onFile={onAvatarFile} />,
-                () => (
-                    <TextField variant="secondary">
-                        <Label htmlFor="profile-display-name">{t("profileEdit.displayName")}</Label>
-                        <Input
-                            id="profile-display-name"
-                            placeholder={user.username}
-                            maxLength={DISPLAY_NAME_MAX}
-                            value={displayName}
-                            onChange={(event) => setValue("displayName", event.target.value)}
-                        />
-                    </TextField>
-                ),
-                () => (
-                    <TextField variant="secondary">
-                        <Label htmlFor="profile-bio">{t("profileEdit.bio")}</Label>
-                        <TextArea
-                            id="profile-bio"
-                            rows={3}
-                            placeholder={t("profileEdit.bioPlaceholder")}
-                            maxLength={BIO_MAX}
-                            value={bio}
-                            onChange={(event) => setValue("bio", event.target.value)}
-                            className="resize-none"
-                        />
-                        <Typography slot="description" type="body-xs" color="muted" className="self-end">
-                            {`${bio.length}/${BIO_MAX}`}
-                        </Typography>
-                    </TextField>
-                ),
-                () => (
-                    <TextField variant="secondary">
-                        <Label htmlFor="profile-role-title">{t("profileEdit.roleTitle")}</Label>
-                        <Input
-                            id="profile-role-title"
-                            placeholder={t("profileEdit.roleTitlePlaceholder")}
-                            maxLength={ROLE_TITLE_MAX}
-                            value={roleTitle}
-                            onChange={(event) => setValue("roleTitle", event.target.value)}
-                        />
-                    </TextField>
-                ),
-                () => (
-                    <TextField variant="secondary">
-                        <Label htmlFor="profile-location">{t("profileEdit.location")}</Label>
-                        <Input
-                            id="profile-location"
-                            placeholder={t("profileEdit.locationPlaceholder")}
-                            maxLength={LOCATION_MAX}
-                            value={location}
-                            onChange={(event) => setValue("location", event.target.value)}
-                        />
-                    </TextField>
-                ),
-                () => (
-                    <StackV gap={4} principle="label-field" items={[
-                        () => <Label htmlFor="profile-work-mode">{t("profileEdit.workMode")}</Label>,
-                        () => (
-                            <TabsCard
-                                variant="primary"
-                                leftTabs={{
-                                    selectedKey: workMode === "" ? WORK_MODE_NONE : workMode,
-                                    ariaLabel: t("profileEdit.workMode"),
-                                    onSelectionChange: (key) => {
-                                        const value = String(key)
-                                        setValue("workMode", value === WORK_MODE_NONE ? "" : (value as WorkMode))
-                                    },
-                                    items: [
-                                        { key: WORK_MODE_NONE, label: t("profileEdit.workModeNone") },
-                                        ...WORK_MODE_OPTIONS.map((option) => ({
-                                            key: option.value as string,
-                                            label: t(option.labelKey),
-                                        })),
-                                    ],
-                                }}
-                            />
-                        ),
-                    ]} />
-                ),
-                () => (
-                    <TextField variant="secondary">
-                        <Label htmlFor="profile-linkedin">{t("profileEdit.linkedinUrl")}</Label>
-                        <Input
-                            id="profile-linkedin"
-                            type="url"
-                            inputMode="url"
-                            placeholder={t("profileEdit.linkedinUrlPlaceholder")}
-                            maxLength={URL_MAX}
-                            value={linkedinUrl}
-                            onChange={(event) => setValue("linkedinUrl", event.target.value)}
-                        />
-                        {errors.linkedinUrl ? (
-                            <Typography slot="description" type="body-xs" className="text-danger-soft-foreground">
-                                {t("profileEdit.invalidUrl")}
-                            </Typography>
-                        ) : null}
-                    </TextField>
-                ),
-                () => (
-                    <TextField variant="secondary">
-                        <Label htmlFor="profile-website">{t("profileEdit.websiteUrl")}</Label>
-                        <Input
-                            id="profile-website"
-                            type="url"
-                            inputMode="url"
-                            placeholder={t("profileEdit.websiteUrlPlaceholder")}
-                            maxLength={URL_MAX}
-                            value={websiteUrl}
-                            onChange={(event) => setValue("websiteUrl", event.target.value)}
-                        />
-                        {errors.websiteUrl ? (
-                            <Typography slot="description" type="body-xs" className="text-danger-soft-foreground">
-                                {t("profileEdit.invalidUrl")}
-                            </Typography>
-                        ) : null}
-                    </TextField>
-                ),
-                () => (
-                    <StackH gap={4} principle="content-row" align="start" justify="between" items={[
-                        () => (
-                            <StackV gap={1} items={[
-                                () => <Label htmlFor="profile-open-to-work">{t("profileEdit.openToWork")}</Label>,
-                                () => (
-                                    <Typography type="body-xs" color="muted">
-                                        {t("profileEdit.openToWorkHint")}
-                                    </Typography>
-                                ),
-                            ]} />
-                        ),
-                        () => (
-                            <Checkbox
-                                id="profile-open-to-work"
-                                className="shrink-0"
-                                isSelected={openToWork}
-                                onChange={(selected) => setValue("openToWork", selected)}
-                                aria-label={t("profileEdit.openToWork")}
-                            >
-                                <Checkbox.Content>
-                                    <Checkbox.Control>
-                                        <Checkbox.Indicator />
-                                    </Checkbox.Control>
-                                </Checkbox.Content>
-                            </Checkbox>
-                        ),
-                    ]} />
-                ),
-                () => (
-                    <Button
-                        variant="primary"
-                        size="lg"
-                        className="h-12 self-end text-base"
-                        isDisabled={isSubmitting || !isValid}
-                        isPending={isSubmitting}
-                        onPress={() => onSubmit()}
-                    >
-                        {({ isPending }) => (
-                            <>
-                                {isPending ? (
-                                    <Spinner
-                                        color="current"
-                                        size="sm"
                                     />
-                                ) : null}
-                                {t("profileEdit.save")}
-                            </>
-                        )}
-                    </Button>
-                ),
-            ]} />
+                                ),
+                                () => (
+                                    <StackV gap={3} principle="sibling-stack"
+                                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                        items={[
+                                            () => (
+                                                <Button
+                                                    variant="secondary"
+                                                    size="sm"
+                                                    onPress={openAvatarUpload}
+                                                >
+                                                    {t("profileEdit.changeAvatar")}
+                                                </Button>
+                                            ),
+                                            () => (
+                                                <Typography type="body-xs" color="muted">
+                                                    {t("profileEdit.avatarHint")}
+                                                </Typography>
+                                            ),
+                                        ]} />
+                                ),
+                            ]} />
+                    ),
+                    () => <AvatarUploadModal onFile={onAvatarFile} />,
+                    () => (
+                        <TextField variant="secondary">
+                            <Label htmlFor="profile-display-name">{t("profileEdit.displayName")}</Label>
+                            <Input
+                                id="profile-display-name"
+                                placeholder={user.username}
+                                maxLength={DISPLAY_NAME_MAX}
+                                value={displayName}
+                                onChange={(event) => setValue("displayName", event.target.value)}
+                            />
+                        </TextField>
+                    ),
+                    () => (
+                        <TextField variant="secondary">
+                            <Label htmlFor="profile-bio">{t("profileEdit.bio")}</Label>
+                            <TextArea
+                                id="profile-bio"
+                                rows={3}
+                                placeholder={t("profileEdit.bioPlaceholder")}
+                                maxLength={BIO_MAX}
+                                value={bio}
+                                onChange={(event) => setValue("bio", event.target.value)}
+                                className="resize-none"
+                            />
+                            <Typography slot="description" type="body-xs" color="muted" className="self-end">
+                                {`${bio.length}/${BIO_MAX}`}
+                            </Typography>
+                        </TextField>
+                    ),
+                    () => (
+                        <TextField variant="secondary">
+                            <Label htmlFor="profile-role-title">{t("profileEdit.roleTitle")}</Label>
+                            <Input
+                                id="profile-role-title"
+                                placeholder={t("profileEdit.roleTitlePlaceholder")}
+                                maxLength={ROLE_TITLE_MAX}
+                                value={roleTitle}
+                                onChange={(event) => setValue("roleTitle", event.target.value)}
+                            />
+                        </TextField>
+                    ),
+                    () => (
+                        <TextField variant="secondary">
+                            <Label htmlFor="profile-location">{t("profileEdit.location")}</Label>
+                            <Input
+                                id="profile-location"
+                                placeholder={t("profileEdit.locationPlaceholder")}
+                                maxLength={LOCATION_MAX}
+                                value={location}
+                                onChange={(event) => setValue("location", event.target.value)}
+                            />
+                        </TextField>
+                    ),
+                    () => (
+                        <StackV gap={4} principle="label-field"
+                            explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
+                            items={[
+                                () => <Label htmlFor="profile-work-mode">{t("profileEdit.workMode")}</Label>,
+                                () => (
+                                    <TabsCard
+                                        variant="primary"
+                                        leftTabs={{
+                                            selectedKey: workMode === "" ? WORK_MODE_NONE : workMode,
+                                            ariaLabel: t("profileEdit.workMode"),
+                                            onSelectionChange: (key) => {
+                                                const value = String(key)
+                                                setValue("workMode", value === WORK_MODE_NONE ? "" : (value as WorkMode))
+                                            },
+                                            items: [
+                                                { key: WORK_MODE_NONE, label: t("profileEdit.workModeNone") },
+                                                ...WORK_MODE_OPTIONS.map((option) => ({
+                                                    key: option.value as string,
+                                                    label: t(option.labelKey),
+                                                })),
+                                            ],
+                                        }}
+                                    />
+                                ),
+                            ]} />
+                    ),
+                    () => (
+                        <TextField variant="secondary">
+                            <Label htmlFor="profile-linkedin">{t("profileEdit.linkedinUrl")}</Label>
+                            <Input
+                                id="profile-linkedin"
+                                type="url"
+                                inputMode="url"
+                                placeholder={t("profileEdit.linkedinUrlPlaceholder")}
+                                maxLength={URL_MAX}
+                                value={linkedinUrl}
+                                onChange={(event) => setValue("linkedinUrl", event.target.value)}
+                            />
+                            {errors.linkedinUrl ? (
+                                <Typography slot="description" type="body-xs" className="text-danger-soft-foreground">
+                                    {t("profileEdit.invalidUrl")}
+                                </Typography>
+                            ) : null}
+                        </TextField>
+                    ),
+                    () => (
+                        <TextField variant="secondary">
+                            <Label htmlFor="profile-website">{t("profileEdit.websiteUrl")}</Label>
+                            <Input
+                                id="profile-website"
+                                type="url"
+                                inputMode="url"
+                                placeholder={t("profileEdit.websiteUrlPlaceholder")}
+                                maxLength={URL_MAX}
+                                value={websiteUrl}
+                                onChange={(event) => setValue("websiteUrl", event.target.value)}
+                            />
+                            {errors.websiteUrl ? (
+                                <Typography slot="description" type="body-xs" className="text-danger-soft-foreground">
+                                    {t("profileEdit.invalidUrl")}
+                                </Typography>
+                            ) : null}
+                        </TextField>
+                    ),
+                    () => (
+                        <StackH gap={4} principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            align="start" justify="between" items={[
+                                () => (
+                                    <StackV gap={1} items={[
+                                        () => <Label htmlFor="profile-open-to-work">{t("profileEdit.openToWork")}</Label>,
+                                        () => (
+                                            <Typography type="body-xs" color="muted">
+                                                {t("profileEdit.openToWorkHint")}
+                                            </Typography>
+                                        ),
+                                    ]} />
+                                ),
+                                () => (
+                                    <Checkbox
+                                        id="profile-open-to-work"
+                                        className="shrink-0"
+                                        isSelected={openToWork}
+                                        onChange={(selected) => setValue("openToWork", selected)}
+                                        aria-label={t("profileEdit.openToWork")}
+                                    >
+                                        <Checkbox.Content>
+                                            <Checkbox.Control>
+                                                <Checkbox.Indicator />
+                                            </Checkbox.Control>
+                                        </Checkbox.Content>
+                                    </Checkbox>
+                                ),
+                            ]} />
+                    ),
+                    () => (
+                        <Button
+                            variant="primary"
+                            size="lg"
+                            className="h-12 self-end text-base"
+                            isDisabled={isSubmitting || !isValid}
+                            isPending={isSubmitting}
+                            onPress={() => onSubmit()}
+                        >
+                            {({ isPending }) => (
+                                <>
+                                    {isPending ? (
+                                        <Spinner
+                                            color="current"
+                                            size="sm"
+                                        />
+                                    ) : null}
+                                    {t("profileEdit.save")}
+                                </>
+                            )}
+                        </Button>
+                    ),
+                ]} />
         </div>
     )
 }

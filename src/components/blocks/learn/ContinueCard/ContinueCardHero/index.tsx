@@ -15,7 +15,7 @@ import { CTA_LABEL, type ContinueCardHeroProps } from "../types"
 export const ContinueCardHero = (props: ContinueCardHeroProps) => {
     const { onPress, className, isSkeleton = false } = props
     return (
-        <SurfaceCard
+        <SurfaceCard identity={{ tier: "block", component: "ContinueCardHero" }}
             isHighlight
             isSkeleton={isSkeleton}
 

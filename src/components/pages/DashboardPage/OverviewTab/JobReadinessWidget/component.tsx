@@ -129,14 +129,16 @@ export const _JobReadinessWidget = ({
     // Step 4 vertical peers (score row · meters · CTA) have no fitting token — see ledger.
     const widgetItems = [
         () => (
-            <StackH gap={4} principle="content-row" at="sm" items={[
-                () => (isSkeleton
-                    ? <StatPair isSkeleton />
-                    : <StatPair value={String(depthScore ?? 0)} label={courseTitle ?? ""} />),
-                () => (isSkeleton
-                    ? <Chip isSkeleton />
-                    : <Chip tone={band ? BAND_CHIP_TONE[band] : "default"} text={bandLabel ?? ""} />),
-            ]} />
+            <StackH gap={4} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                at="sm" items={[
+                    () => (isSkeleton
+                        ? <StatPair isSkeleton />
+                        : <StatPair value={String(depthScore ?? 0)} label={courseTitle ?? ""} />),
+                    () => (isSkeleton
+                        ? <Chip isSkeleton />
+                        : <Chip tone={band ? BAND_CHIP_TONE[band] : "default"} text={bandLabel ?? ""} />),
+                ]} />
         ),
         ...(showFoundation ? [() => (
             <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={foundationPercentileText} />

@@ -113,7 +113,9 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, isSelected: boolean
     // pushing, not a child margin; the label+chip stay grouped in their own inner track
     // so `between` only ever splits two things, not three.
     const attemptLineContent = [
-        () => <StackH gap={3} align="center" principle="sibling-stack" items={attemptLabelAndChip} />,
+        () => <StackH gap={3} align="center" principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+            items={attemptLabelAndChip} />,
         ...(attempt.processedTimeAgo != null ? [() => (
             <Typography
                 text={attempt.processedTimeAgo}
@@ -149,11 +151,14 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, isSelected: boolean
                 align="center"
                 justify="between"
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 items={attemptLineContent}
             />
         ),
         ...(attempt.gradedByModel != null ? [() => (
-            <StackH gap={3} align="center" at="sm" principle="sibling-stack" items={bylineContent} />
+            <StackH gap={3} align="center" at="sm" principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                items={bylineContent}  />
         )] : []),
     ]
 

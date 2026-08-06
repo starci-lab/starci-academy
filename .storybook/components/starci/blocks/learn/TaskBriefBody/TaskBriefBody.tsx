@@ -241,7 +241,7 @@ const TaskBriefBody = ({
     )
 
     return (
-        <StackV gap={6} isSkeleton={isSkeleton} items={[() => readingColumn]} />
+        <StackV identity={{ tier: "block", component: "TaskBriefBody" }} gap={6} isSkeleton={isSkeleton} items={[() => readingColumn]} />
     )
 }
 

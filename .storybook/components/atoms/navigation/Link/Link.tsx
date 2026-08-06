@@ -18,3 +18,9 @@ export const meta = [
     { tier: "atom", name: "LinkBack" },
     { tier: "atom", name: "LinkSeeMore" },
 ] as const
+
+/** Folder-matching compound namespace (export-matches-folder / ATOM-11 sync). */
+export const Link = {
+    Back: LinkBack,
+    SeeMore: LinkSeeMore,
+} as const

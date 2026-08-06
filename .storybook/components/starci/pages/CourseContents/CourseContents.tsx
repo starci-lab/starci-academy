@@ -168,6 +168,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
         <StackV
             gap={6}
             principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
             isSkeleton={isSkeleton}
             items={[
                 // Gate is for people who ALREADY BOUGHT; the block self-hides when it doesn't apply.
@@ -178,6 +179,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                     <StackV
                         gap={4}
                         principle="group-boundary"
+                        explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
                         isSkeleton={isSkeleton}
                         items={[
                             () => (
@@ -186,6 +188,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                                     justify="between"
                                     gap={4}
                                     principle="content-row"
+                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                     isSkeleton={isSkeleton}
                                     items={[
                                         () => (

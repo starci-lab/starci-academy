@@ -54,3 +54,6 @@ export const GlobalSearchEmpty = ({ hasQuery, popularCourses, labels, onSelectCo
         />
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `GlobalSearchEmpty` as the public name. */
+export { GlobalSearchEmpty as Empty }

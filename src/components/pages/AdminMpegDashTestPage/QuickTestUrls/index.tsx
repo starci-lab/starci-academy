@@ -21,7 +21,8 @@ export interface QuickTestUrlsProps extends WithClassNames<undefined> {
 export const QuickTestUrls = ({ onSelect, className }: QuickTestUrlsProps) => (
     <Card className={cn("border-slate-700/50 bg-slate-800/50 backdrop-blur-xl", className)}>
         <CardContent>
-            <Box principle="page-pad" className="space-y-3 p-6">
+            <Box principle="page-pad" className="space-y-3 p-6"
+                explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                 <h2 className="text-sm font-medium text-slate-400">
                     Quick Test URLs
                 </h2>

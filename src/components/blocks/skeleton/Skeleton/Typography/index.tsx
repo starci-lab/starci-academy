@@ -70,3 +70,6 @@ export const SkeletonTypography = ({
         />
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonTypography` as the public name. */
+export { SkeletonTypography as Typography }

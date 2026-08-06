@@ -158,10 +158,11 @@ export const CourseDayTimeline = ({
             <AsyncContent
                 isLoading={isLoading && items.length === 0}
                 skeleton={(
-                    <StackV gap={6} principle="block-boundary" items={[0, 1].map(() => () => (
+                    <StackV gap={6} principle="block-boundary" explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups." items={[0, 1].map(() => () => (
                         <StackV
                             gap={4}
                             principle="sibling-stack"
+                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                             items={[
                                 () => <Skeleton.Typography type="body-xs" width="1/4" />,
                                 () => <Skeleton.ListRow withTrailing />,
@@ -190,11 +191,13 @@ export const CourseDayTimeline = ({
                     <StackV
                         gap={6}
                         principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                         items={[
                             ...dayGroups.map((group) => () => (
                                 <StackV
                                     gap={4}
                                     principle="sibling-stack"
+                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                     items={[
                                         () => (
                                             <Typography type="body-xs" color="muted" weight="medium">
@@ -205,6 +208,7 @@ export const CourseDayTimeline = ({
                                             <StackV
                                                 gap={3}
                                                 principle="sibling-stack"
+                                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                                 items={group.items.map((item) => () => {
                                                     const Icon = EVENT_ICON[item.type]
                                                     const relative = getTimeAgoLabel(getTimeAgoMessage(item.at), t)

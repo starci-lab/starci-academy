@@ -1,8 +1,8 @@
 "use client"
 
 import React from "react"
-import { Chip } from "@heroui/react"
 import { useTranslations } from "next-intl"
+import { Chip } from "@/components/atoms/chips/Chip"
 
 /** Props for {@link CourseTrialChip}. */
 export interface CourseTrialChipProps {
@@ -28,8 +28,6 @@ export const CourseTrialChip = ({ isEnrolled }: CourseTrialChipProps) => {
         return null
     }
     return (
-        <Chip size="sm" variant="soft" color="warning" className="shrink-0">
-            {t("course.trial")}
-        </Chip>
+        <Chip tone="warning" text={t("course.trial")} classNames={["shrink-0"]} />
     )
 }

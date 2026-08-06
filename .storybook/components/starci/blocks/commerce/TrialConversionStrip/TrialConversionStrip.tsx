@@ -89,36 +89,38 @@ const TrialConversionStripBase = ({
         : undefined
 
     const headerRow = (
-        <StackH gap={4} principle="content-row" align="center" isSkeleton={isSkeleton} items={[
-            ({ isSkeleton }: SkeletonProps) => (
-                <IconTile
-                    isSkeleton={isSkeleton}
-                    icon={LockIcon}
-                    tone="accent"
-                    size="sm"
+        <StackH gap={4} principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            align="center" isSkeleton={isSkeleton} items={[
+                ({ isSkeleton }: SkeletonProps) => (
+                    <IconTile
+                        isSkeleton={isSkeleton}
+                        icon={LockIcon}
+                        tone="accent"
+                        size="sm"
 
-                />
-            ),
-            // The "title + description" cluster is ONE SEMANTIC UNIT ⇒ goes through
-            // ONE frame, not two separate `Typography`.
-            // `TitledText size="row"` (default) already OWNS exactly this scale:
-            // title `sm` medium · subtitle `xs` muted. Hand-building two atoms means
-            // the block decides its own font sizes — one style per spot, with
-            // nothing keeping them in sync.
-            () => (
-                <TitledText
-                    classNames={["flex-1"]}
+                    />
+                ),
+                // The "title + description" cluster is ONE SEMANTIC UNIT ⇒ goes through
+                // ONE frame, not two separate `Typography`.
+                // `TitledText size="row"` (default) already OWNS exactly this scale:
+                // title `sm` medium · subtitle `xs` muted. Hand-building two atoms means
+                // the block decides its own font sizes — one style per spot, with
+                // nothing keeping them in sync.
+                () => (
+                    <TitledText
+                        classNames={["flex-1"]}
 
-                    isSkeleton={isSkeleton && !price}
-                    title="Free trial — unlock the full course"
-                    subtitle={
-                        hasFreeLeft
-                            ? `${freeLessonsRemaining} free lessons left unread — keep reading or unlock the full course now.`
-                            : "You've read every free lesson — unlock the full course to keep going."
-                    }
-                />
-            ),
-        ]} />
+                        isSkeleton={isSkeleton && !price}
+                        title="Free trial — unlock the full course"
+                        subtitle={
+                            hasFreeLeft
+                                ? `${freeLessonsRemaining} free lessons left unread — keep reading or unlock the full course now.`
+                                : "You've read every free lesson — unlock the full course to keep going."
+                        }
+                    />
+                ),
+            ]} />
     )
 
     // `grouped`. Read the seam by RELATIONSHIP, not by tier: the

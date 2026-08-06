@@ -104,6 +104,7 @@ export const SurfaceCardHeader = ({
             gap={4}
             justify="between"
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             items={[
                 () => <StackH gap={3} classNames={["min-w-0"]} items={[() => labelSlot]} />,
                 () => endSlot,

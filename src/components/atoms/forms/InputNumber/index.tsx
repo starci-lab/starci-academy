@@ -2,7 +2,7 @@ import { NumberField as HeroNumberField, cn } from "@heroui/react"
 import { FieldFrame, fieldName } from "@/components/composites/form/_field/FieldFrame"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { FrameProps } from "../_input/types"
-import { FieldSkeleton } from "../_input/FieldSkeleton"
+import { FieldSkeleton } from "@/components/atoms/forms/_input/FieldSkeleton"
 
 /** `InputNumber` — numeric with stepper (HeroUI NumberField). */
 export const InputNumber = ({

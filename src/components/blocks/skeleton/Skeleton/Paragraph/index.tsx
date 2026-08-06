@@ -30,3 +30,6 @@ export const SkeletonParagraph = ({ lines = 3, className }: SkeletonParagraphPro
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonParagraph` as the public name. */
+export { SkeletonParagraph as Paragraph }

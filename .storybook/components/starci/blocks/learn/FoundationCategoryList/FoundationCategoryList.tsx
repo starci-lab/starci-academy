@@ -150,7 +150,7 @@ const FoundationCategoryList = ({
     const showPager = !isSkeleton && categories.length > 0 && pagination != null
 
     return (
-        <StackV
+        <StackV identity={{ tier: "block", component: "FoundationCategoryList" }}
             gap={4}
             isSkeleton={isSkeleton}
             items={[

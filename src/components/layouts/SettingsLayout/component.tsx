@@ -82,6 +82,7 @@ const _SettingsLayout = ({
             body={contentSlot}
             at="md"
             principle="layout-split"
+            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
             identity={{ tier: "layout", component: "SettingsLayout" }}
         />
     )

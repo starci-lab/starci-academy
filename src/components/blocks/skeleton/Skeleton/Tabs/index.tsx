@@ -27,3 +27,6 @@ export const SkeletonTabs = ({ className, count = 3 }: SkeletonTabsProps) => {
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonTabs` as the public name. */
+export { SkeletonTabs as Tabs }

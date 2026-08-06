@@ -77,12 +77,14 @@ const CommentByline = ({ username, isFounderAuthor, createdTimeAgo, isEdited }: 
     <StackH
         gap={2}
         principle="separator-dot"
+        explain="Places a middle-dot separator between short meta peers so the items read as one inline list."
         align="center"
         items={[
             () => (
                 <StackH
                     gap={2}
                     principle="icon-text"
+                    explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
                     align="center"
                     items={[
                         () => <Typography size="sm" weight="medium" text={username} />,
@@ -222,7 +224,9 @@ const ContentCommentThread = ({
             )}
 
             {!comment.isDeleted && !editing ? (
-                <StackH gap={4} principle="content-row" at="sm" align="center" items={[() => actionRow]} />
+                <StackH gap={4} principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                    at="sm" align="center" items={[() => actionRow]}  />
             ) : null}
         </>
     )
@@ -239,6 +243,7 @@ const ContentCommentThread = ({
                 <StackH
                     gap={2}
                     principle="icon-text"
+                    explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
                     align="start"
 
                     items={[

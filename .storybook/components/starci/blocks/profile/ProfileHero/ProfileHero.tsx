@@ -253,7 +253,9 @@ const ProfileHero = ({
                 isSkeleton={isSkeleton}
 
             />
-            <StackV gap={1} principle="name-handle" align="center" isSkeleton={isSkeleton} items={[() => nameBlock]} />
+            <StackV gap={1} principle="name-handle"
+                explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
+                align="center" isSkeleton={isSkeleton} items={[() => nameBlock]}  />
         </>
     )
 
@@ -321,7 +323,9 @@ const ProfileHero = ({
 
     const cardBody = (
         <>
-            <StackV gap={4} principle="card-caption" align="center" isSkeleton={isSkeleton} items={[() => identitySection]} />
+            <StackV gap={4} principle="card-caption"
+                explain="Holds caption text under card media so the caption stays attached to the image above it."
+                align="center" isSkeleton={isSkeleton} items={[() => identitySection]}  />
 
             {isSkeleton || bio ? (
                 <Typography
@@ -339,6 +343,7 @@ const ProfileHero = ({
                 <Cluster
                     gap={3}
                     principle="chip-row"
+                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                     justify="center"
                     items={[
                         ...(isSkeleton || location
@@ -367,7 +372,9 @@ const ProfileHero = ({
                 />
             ) : null}
 
-            <StackH gap={3} principle="sibling-stack" divider isSkeleton={isSkeleton} items={[() => statsRow]} />
+            <StackH gap={3} principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                divider isSkeleton={isSkeleton} items={[() => statsRow]}  />
 
             <StackH gap={3} isSkeleton={isSkeleton} items={[() => actionsRow]} />
 

@@ -163,7 +163,8 @@ const Row = ({
 
             />
             {!isSkeleton && (MetaSlot || TrailingSlot) ? (
-                <Box principle="push-end" className="ml-auto">
+                <Box principle="push-end" className="ml-auto"
+                    explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row.">
                     <StackH
                         gap={3}
                         isSkeleton={isSkeleton}
@@ -462,6 +463,7 @@ const ToggleRow = ({
             isSkeleton={isSkeleton}
             classNames={classNames}
             principle="label-field"
+            explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
             items={[
                 () => (
                     <TitledText
@@ -513,3 +515,11 @@ const ToggleRow = ({
  * | `.ToggleRow` | data props (`label`/`description`/`checked`) |
  */
 export { Row as ListRow, Labeled as ListLabeled, Meta as ListMeta, ToggleRow as ListToggleRow }
+
+/** Folder-matching compound namespace (export-matches-folder). Existing named exports stay public. */
+export const List = {
+    Row: Row,
+    Labeled: Labeled,
+    Meta: Meta,
+    ToggleRow: ToggleRow,
+} as const

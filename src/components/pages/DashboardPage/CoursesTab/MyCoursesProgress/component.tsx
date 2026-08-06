@@ -81,20 +81,26 @@ const _MyCoursesProgress = ({
                 {isSkeleton
                     ? Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => (
                         <SurfaceListCardItem key={`pending-${index}`}>
-                            <StackH gap={4} principle="content-row" items={[
-                                () => <Skeleton className="size-12 shrink-0 rounded-2xl" />,
-                                () => (
-                                    <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
-                                        () => (
-                                            <StackH gap={3} principle="flex-action" justify="between" items={[
-                                                () => <Skeleton.Typography type="body-sm" width="1/2" />,
-                                                () => <Skeleton className="h-3 w-8 rounded" />,
+                            <StackH gap={4} principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                items={[
+                                    () => <Skeleton className="size-12 shrink-0 rounded-2xl" />,
+                                    () => (
+                                        <StackV gap={3} principle="sibling-stack"
+                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                            classNames={["min-w-0", "flex-1"]} items={[
+                                                () => (
+                                                    <StackH gap={3} principle="flex-action"
+                                                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                                        justify="between" items={[
+                                                            () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                                            () => <Skeleton className="h-3 w-8 rounded" />,
+                                                        ]} />
+                                                ),
+                                                () => <Skeleton.ProgressBar />,
                                             ]} />
-                                        ),
-                                        () => <Skeleton.ProgressBar />,
-                                    ]} />
-                                ),
-                            ]} />
+                                    ),
+                                ]} />
                         </SurfaceListCardItem>
                     ))
                     : courses.map((item) => <CourseRow key={item.globalId} item={item} />)}

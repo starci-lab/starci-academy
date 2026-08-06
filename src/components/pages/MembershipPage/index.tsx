@@ -70,6 +70,7 @@ export const MembershipPage = () => {
             <StackV
                 gap={3}
                 principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                 items={[
                     () => (
                         <Typography type="h5" weight="semibold">
@@ -90,6 +91,7 @@ export const MembershipPage = () => {
                     gap={3}
                     align="end"
                     principle="value-row"
+                    explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
                     items={[
                         () => (
                             <Typography type="h3" weight="bold">
@@ -129,8 +131,10 @@ export const MembershipPage = () => {
     ]
 
     return (
-        <Box principle="center-measure" className="mx-auto max-w-2xl">
-            <Box principle="page-pad" className="p-6">
+        <Box identity={{ tier: "page", component: "MembershipPage" }} principle="center-measure" className="mx-auto max-w-2xl"
+            explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
+            <Box principle="page-pad" className="p-6"
+                explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                 <div className="flex flex-col gap-10">
                     <PageHeader
                         breadcrumb={<SettingsBreadcrumb current={t("membership.title")} />}

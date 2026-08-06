@@ -24,6 +24,7 @@ export const CatalogLineCardSkeleton = () => (
             <StackH
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 items={[
                     () => (
                         <Skeleton className="hidden aspect-video w-36 shrink-0 rounded-2xl @app-sm:block" />
@@ -32,6 +33,7 @@ export const CatalogLineCardSkeleton = () => (
                         <StackV
                             gap={2}
                             principle="title-subtitle"
+                            explain="Title over supporting line — not label-field, because neither line is a form control label."
                             classNames={["min-w-0", "flex-1"]}
                             items={[
                                 () => <Skeleton.Typography type="h6" width="1/2" />,
@@ -43,6 +45,7 @@ export const CatalogLineCardSkeleton = () => (
                         <StackV
                             gap={2}
                             principle="title-subtitle"
+                            explain="Title over supporting line — not label-field, because neither line is a form control label."
                             align="end"
                             classNames={["shrink-0"]}
                             items={[

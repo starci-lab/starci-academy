@@ -211,70 +211,82 @@ export const ProfileCoding = ({
         <AsyncContent
             isLoading={isFirstLoad}
             skeleton={(
-                <StackV gap={6} principle="block-boundary" classNames={rootClassNames} items={[
-                    () => (
-                        <StackV gap={4} items={[
-                            () => <Skeleton.Typography type="body-sm" width="1/4" />,
-                            () => <Skeleton className="h-20 w-full rounded-2xl" />,
-                        ]} />
-                    ),
-                    () => (
-                        <StackV gap={4} items={[
-                            () => <Skeleton.Typography type="body-sm" width="1/4" />,
-                            () => (
-                                <SurfaceListCard>
-                                    <SurfaceListCardItem>
-                                        <Skeleton.SegmentBar legendItems={3} />
-                                    </SurfaceListCardItem>
-                                    <SurfaceListCardItem>
-                                        <Cluster gap={3} principle="chip-row" items={
-                                            [0, 1, 2, 3, 4, 5, 6, 7].map((chip) => (
-                                                () => <Skeleton key={chip} className="h-7 w-20 rounded-full" />
-                                            ))
-                                        } />
-                                    </SurfaceListCardItem>
-                                    <SurfaceListCardItem>
-                                        <Skeleton.SegmentBar legendItems={3} />
-                                    </SurfaceListCardItem>
-                                </SurfaceListCard>
-                            ),
-                        ]} />
-                    ),
-                    () => (
-                        <StackV gap={4} items={[
-                            () => <Skeleton.Typography type="body-sm" width="1/4" />,
-                            () => (
-                                <Cluster gap={4} principle="content-row" justify="between" items={[
-                                    () => (
-                                        <StackH gap={4} principle="content-row" classNames={["min-w-0", "flex-1"]} items={[
-                                            () => <Skeleton className="h-9 min-w-0 flex-1 rounded-medium" />,
-                                            () => <Skeleton className="size-9 shrink-0 rounded-full" />,
-                                        ]} />
-                                    ),
-                                    () => <Skeleton.Typography type="body-sm" className="w-16 shrink-0" />,
-                                ]} />
-                            ),
-                            () => (
-                                <SurfaceListCard>
-                                    {[0, 1, 2].map((row) => (
-                                        <SurfaceListCardItem key={row}>
-                                            <StackH gap={4} principle="content-row" items={[
-                                                () => (
-                                                    <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
-                                                        () => <Skeleton.Typography type="body-sm" width="1/2" />,
-                                                        () => <Skeleton.Typography type="body-xs" width="1/3" />,
-                                                    ]} />
-                                                ),
-                                                () => <Skeleton.Chip />,
-                                                () => <Skeleton.Chip />,
-                                            ]} />
+                <StackV gap={6} principle="block-boundary" classNames={rootClassNames}
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                    items={[
+                        () => (
+                            <StackV gap={4} items={[
+                                () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                                () => <Skeleton className="h-20 w-full rounded-2xl" />,
+                            ]} />
+                        ),
+                        () => (
+                            <StackV gap={4} items={[
+                                () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                                () => (
+                                    <SurfaceListCard>
+                                        <SurfaceListCardItem>
+                                            <Skeleton.SegmentBar legendItems={3} />
                                         </SurfaceListCardItem>
-                                    ))}
-                                </SurfaceListCard>
-                            ),
-                        ]} />
-                    ),
-                ]} />
+                                        <SurfaceListCardItem>
+                                            <Cluster gap={3} principle="chip-row"
+                                                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                                items={
+                                                    [0, 1, 2, 3, 4, 5, 6, 7].map((chip) => (
+                                                        () => <Skeleton key={chip} className="h-7 w-20 rounded-full" />
+                                                    ))
+                                                } />
+                                        </SurfaceListCardItem>
+                                        <SurfaceListCardItem>
+                                            <Skeleton.SegmentBar legendItems={3} />
+                                        </SurfaceListCardItem>
+                                    </SurfaceListCard>
+                                ),
+                            ]} />
+                        ),
+                        () => (
+                            <StackV gap={4} items={[
+                                () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                                () => (
+                                    <Cluster gap={4} principle="content-row" justify="between"
+                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                        items={[
+                                            () => (
+                                                <StackH gap={4} principle="content-row" classNames={["min-w-0", "flex-1"]}
+                                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                    items={[
+                                                        () => <Skeleton className="h-9 min-w-0 flex-1 rounded-medium" />,
+                                                        () => <Skeleton className="size-9 shrink-0 rounded-full" />,
+                                                    ]} />
+                                            ),
+                                            () => <Skeleton.Typography type="body-sm" className="w-16 shrink-0" />,
+                                        ]} />
+                                ),
+                                () => (
+                                    <SurfaceListCard>
+                                        {[0, 1, 2].map((row) => (
+                                            <SurfaceListCardItem key={row}>
+                                                <StackH gap={4} principle="content-row"
+                                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                    items={[
+                                                        () => (
+                                                            <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]}
+                                                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                                items={[
+                                                                    () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                                                    () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                                                                ]} />
+                                                        ),
+                                                        () => <Skeleton.Chip />,
+                                                        () => <Skeleton.Chip />,
+                                                    ]} />
+                                            </SurfaceListCardItem>
+                                        ))}
+                                    </SurfaceListCard>
+                                ),
+                            ]} />
+                        ),
+                    ]} />
             )}
             isEmpty={solved === 0 && !hasStats && solvedHistory.length === 0}
             emptyContent={{
@@ -288,267 +300,291 @@ export const ProfileCoding = ({
                 retryLabel: t("publicProfile.loadErrorRetry"),
             }}
         >
-            <StackV gap={6} principle="block-boundary" classNames={rootClassNames} items={[
-                () => (
-                    <LabeledCard label={t("publicProfile.coding.metricsHeading")} frameless>
-                        <StatRibbon
-                            items={stats.map((stat) => ({
-                                key: stat.key,
-                                value: stat.value,
-                                label: t(`publicProfile.coding.metric.${stat.key}`),
-                            }))}
-                        />
-                    </LabeledCard>
-                ),
-                ...(hasStats
-                    ? [() => (
-                        <LabeledCard
-                            label={t("publicProfile.coding.statsHeading")}
-                            frameless
-                        >
-                            <SurfaceListCard>
-                                {difficultySegments.length > 0 ? (
-                                    <SurfaceListCardItem>
-                                        <StackV gap={3} principle="sibling-stack" items={[
-                                            () => <Label>{t("publicProfile.coding.byDifficulty")}</Label>,
-                                            () => (
-                                                <SegmentBar
-                                                    ariaLabel={t("publicProfile.coding.byDifficulty")}
-                                                    segments={difficultySegments}
-                                                />
-                                            ),
-                                        ]} />
-                                    </SurfaceListCardItem>
-                                ) : null}
-                                {orderedDomain.length > 0 ? (
-                                    <SurfaceListCardItem>
-                                        <StackV gap={3} principle="sibling-stack" items={[
-                                            () => <Label>{t("publicProfile.coding.byDomain")}</Label>,
-                                            () => (
-                                                <TopicMasteryGrid
-                                                    ariaLabel={t("publicProfile.coding.byDomain")}
-                                                    topics={orderedDomain.map((item) => ({
-                                                        key: item.key,
-                                                        label: domainLabel(item.key),
-                                                        solved: item.solved,
-                                                    }))}
-                                                />
-                                            ),
-                                        ]} />
-                                    </SurfaceListCardItem>
-                                ) : null}
-                                {byLanguage.length > 0 ? (
-                                    <SurfaceListCardItem>
-                                        <StackV gap={3} principle="sibling-stack" items={[
-                                            () => <Label>{t("publicProfile.coding.byLanguage")}</Label>,
-                                            () => (
-                                                <SegmentBar
-                                                    ariaLabel={t("publicProfile.coding.byLanguage")}
-                                                    segments={byLanguage.map((item) => ({
-                                                        key: item.key,
-                                                        label: getLanguageLabel(item.key),
-                                                        value: item.solved,
-                                                        color: getLanguageColor(item.key),
-                                                    }))}
-                                                />
-                                            ),
-                                        ]} />
-                                    </SurfaceListCardItem>
-                                ) : null}
-                            </SurfaceListCard>
+            <StackV gap={6} principle="block-boundary" classNames={rootClassNames}
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={[
+                    () => (
+                        <LabeledCard label={t("publicProfile.coding.metricsHeading")} frameless>
+                            <StatRibbon
+                                items={stats.map((stat) => ({
+                                    key: stat.key,
+                                    value: stat.value,
+                                    label: t(`publicProfile.coding.metric.${stat.key}`),
+                                }))}
+                            />
                         </LabeledCard>
-                    )]
-                    : []),
-                ...(solvedHistory.length > 0
-                    ? [() => {
-                        const facetBodyItems = [
-                            ...(difficultyOptions.length > 0
-                                ? [() => (
-                                    <StackV gap={3} principle="sibling-stack" items={[
-                                        () => <Typography type="body-xs" color="muted">{t("publicProfile.coding.manage.difficultyHeading")}</Typography>,
-                                        () => (
-                                            <FlexWrapButtonRadio<DifficultyFilterValue>
-                                                ariaLabel={t("publicProfile.coding.manage.difficultyFilterAria")}
-                                                value={difficultyFilter}
-                                                onChange={setDifficultyFilter}
-                                                items={[
-                                                    { value: "all", content: t("publicProfile.coding.manage.allDifficulties") },
-                                                    ...difficultyOptions.map((raw) => {
-                                                        const meta = CODING_DIFFICULTY_CHIP[raw]
-                                                        return {
-                                                            value: raw,
-                                                            content: meta ? <StatusChip tone={meta.tone}>{t(meta.labelKey)}</StatusChip> : raw,
-                                                        }
-                                                    }),
-                                                ]}
-                                            />
-                                        ),
-                                    ]} />
-                                )]
-                                : []),
-                            ...(languageOptions.length > 0
-                                ? [() => (
-                                    <StackV gap={3} principle="sibling-stack" items={[
-                                        () => <Typography type="body-xs" color="muted">{t("publicProfile.coding.manage.languageHeading")}</Typography>,
-                                        () => (
-                                            <FlexWrapButtonRadio<LanguageFilterValue>
-                                                ariaLabel={t("publicProfile.coding.manage.languageFilterAria")}
-                                                value={languageFilter}
-                                                onChange={setLanguageFilter}
-                                                items={[
-                                                    { value: "all", content: t("publicProfile.coding.manage.allLanguages") },
-                                                    ...languageOptions.map((lang) => ({
-                                                        value: lang,
-                                                        content: <LanguageChip language={lang} />,
-                                                    })),
-                                                ]}
-                                            />
-                                        ),
-                                    ]} />
-                                )]
-                                : []),
-                            ...(activeFacetCount > 0
-                                ? [() => (
-                                    <Button variant="danger-soft" size="sm" className="self-start" onPress={clearFacets}>
-                                        {t("publicProfile.coding.manage.clearFilters")}
-                                    </Button>
-                                )]
-                                : []),
-                        ]
-                        return (
+                    ),
+                    ...(hasStats
+                        ? [() => (
                             <LabeledCard
-                                label={t("publicProfile.coding.history")}
+                                label={t("publicProfile.coding.statsHeading")}
                                 frameless
                             >
-                                <StackV gap={4} items={[
-                                    () => (
-                                        <Cluster gap={4} principle="content-row" justify="between" items={[
-                                            () => (
-                                                <StackH gap={4} principle="content-row" classNames={["min-w-0", "flex-1"]} items={[
+                                <SurfaceListCard>
+                                    {difficultySegments.length > 0 ? (
+                                        <SurfaceListCardItem>
+                                            <StackV gap={3} principle="sibling-stack"
+                                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                items={[
+                                                    () => <Label>{t("publicProfile.coding.byDifficulty")}</Label>,
                                                     () => (
-                                                        <SearchInput
-                                                            className="min-w-0 flex-1"
-                                                            value={search}
-                                                            onValueChange={setSearch}
-                                                            placeholder={t("publicProfile.coding.manage.searchPlaceholder")}
+                                                        <SegmentBar
+                                                            ariaLabel={t("publicProfile.coding.byDifficulty")}
+                                                            segments={difficultySegments}
                                                         />
                                                     ),
-                                                    ...((difficultyOptions.length > 0 || languageOptions.length > 0)
-                                                        ? [() => (
-                                                            <Popover isOpen={filterOpen} onOpenChange={setFilterOpen}>
-                                                                <Button
-                                                                    isIconOnly
-                                                                    variant="ghost"
-                                                                    aria-label={t("publicProfile.coding.manage.filterButton")}
-                                                                    className="shrink-0"
-                                                                >
-                                                                    {activeFacetCount > 0 ? (
-                                                                        <Badge.Anchor>
-                                                                            <FunnelIcon className="size-5" />
-                                                                            <Badge size="sm" color="accent" placement="top-left">{activeFacetCount}</Badge>
-                                                                        </Badge.Anchor>
-                                                                    ) : (
-                                                                        <FunnelIcon className="size-5" />
-                                                                    )}
-                                                                </Button>
-                                                                <Popover.Content className="w-72">
-                                                                    <StackV gap={1} padding={4} principle="cell-pad" items={[
-                                                                        () => (
-                                                                            <StackV gap={4} items={facetBodyItems} />
-                                                                        ),
-                                                                    ]} />
-                                                                </Popover.Content>
-                                                            </Popover>
-                                                        )]
-                                                        : []),
                                                 ]} />
-                                            ),
-                                            () => (
-                                                <Typography type="body-sm" color="muted" className="shrink-0">
-                                                    {t("publicProfile.coding.manage.found", { count: filteredHistory.length })}
-                                                </Typography>
-                                            ),
-                                        ]} />
-                                    ),
-                                    () => (filteredHistory.length === 0 ? (
-                                        <Typography type="body-sm" color="muted">
-                                            {t("publicProfile.coding.manage.emptyFiltered")}
-                                        </Typography>
-                                    ) : (
-                                        <SurfaceListCard>
-                                            {visibleHistory.map((item, index) => {
-                                                const difficulty = CODING_DIFFICULTY_CHIP[item.difficulty]
-                                                const solvedAt = item.firstSolvedAt
-                                                    ? new Date(item.firstSolvedAt).toLocaleDateString(locale)
-                                                    : undefined
-                                                const chipItems = [
-                                                    ...(difficulty
-                                                        ? [() => (
-                                                            <StatusChip tone={difficulty.tone}>
-                                                                {t(difficulty.labelKey)}
-                                                            </StatusChip>
-                                                        )]
-                                                        : []),
-                                                    ...(item.domain
-                                                        ? [() => (
-                                                            <StatusChip tone="neutral">
-                                                                {domainLabel(item.domain!)}
-                                                            </StatusChip>
-                                                        )]
-                                                        : []),
-                                                    ...item.languages.map((language) => (
-                                                        () => <LanguageChip key={language} language={language} />
-                                                    )),
-                                                ]
-                                                return (
-                                                    <SurfaceListCardItem
-                                                        key={`${item.slug}-${index}`}
-                                                        hover="underline"
-                                                        href={username
-                                                            ? pathConfig().locale(locale).profile(username).skills().problem(item.slug).build()
-                                                            : undefined}
-                                                    >
-                                                        <StackH gap={4} principle="content-row" items={[
-                                                            () => (
-                                                                <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
-                                                                    () => (
-                                                                        <Typography type="body-sm" weight="medium" truncate className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
-                                                                            {item.problemTitle}
-                                                                        </Typography>
-                                                                    ),
-                                                                    ...(solvedAt
-                                                                        ? [() => (
-                                                                            <Typography type="body-xs" color="muted">
-                                                                                {solvedAt}
-                                                                            </Typography>
-                                                                        )]
-                                                                        : []),
-                                                                ]} />
-                                                            ),
-                                                            () => (
-                                                                <Cluster gap={3} principle="chip-row" justify="end" classNames={["shrink-0"]} items={chipItems} />
-                                                            ),
-                                                        ]} />
-                                                    </SurfaceListCardItem>
-                                                )
-                                            })}
-                                            {hiddenHistory > 0 ? (
-                                                <SurfaceListCardItem onPress={() => setShowAllHistory((open) => !open)}>
-                                                    <span className="text-muted">
-                                                        {showAllHistory
-                                                            ? t("publicProfile.coding.showLess")
-                                                            : t("publicProfile.coding.showMore", { count: hiddenHistory })}
-                                                    </span>
-                                                </SurfaceListCardItem>
-                                            ) : null}
-                                        </SurfaceListCard>
-                                    )),
-                                ]} />
+                                        </SurfaceListCardItem>
+                                    ) : null}
+                                    {orderedDomain.length > 0 ? (
+                                        <SurfaceListCardItem>
+                                            <StackV gap={3} principle="sibling-stack"
+                                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                items={[
+                                                    () => <Label>{t("publicProfile.coding.byDomain")}</Label>,
+                                                    () => (
+                                                        <TopicMasteryGrid
+                                                            ariaLabel={t("publicProfile.coding.byDomain")}
+                                                            topics={orderedDomain.map((item) => ({
+                                                                key: item.key,
+                                                                label: domainLabel(item.key),
+                                                                solved: item.solved,
+                                                            }))}
+                                                        />
+                                                    ),
+                                                ]} />
+                                        </SurfaceListCardItem>
+                                    ) : null}
+                                    {byLanguage.length > 0 ? (
+                                        <SurfaceListCardItem>
+                                            <StackV gap={3} principle="sibling-stack"
+                                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                items={[
+                                                    () => <Label>{t("publicProfile.coding.byLanguage")}</Label>,
+                                                    () => (
+                                                        <SegmentBar
+                                                            ariaLabel={t("publicProfile.coding.byLanguage")}
+                                                            segments={byLanguage.map((item) => ({
+                                                                key: item.key,
+                                                                label: getLanguageLabel(item.key),
+                                                                value: item.solved,
+                                                                color: getLanguageColor(item.key),
+                                                            }))}
+                                                        />
+                                                    ),
+                                                ]} />
+                                        </SurfaceListCardItem>
+                                    ) : null}
+                                </SurfaceListCard>
                             </LabeledCard>
-                        )
-                    }]
-                    : []),
-            ]} />
+                        )]
+                        : []),
+                    ...(solvedHistory.length > 0
+                        ? [() => {
+                            const facetBodyItems = [
+                                ...(difficultyOptions.length > 0
+                                    ? [() => (
+                                        <StackV gap={3} principle="sibling-stack"
+                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                            items={[
+                                                () => <Typography type="body-xs" color="muted">{t("publicProfile.coding.manage.difficultyHeading")}</Typography>,
+                                                () => (
+                                                    <FlexWrapButtonRadio<DifficultyFilterValue>
+                                                        ariaLabel={t("publicProfile.coding.manage.difficultyFilterAria")}
+                                                        value={difficultyFilter}
+                                                        onChange={setDifficultyFilter}
+                                                        items={[
+                                                            { value: "all", content: t("publicProfile.coding.manage.allDifficulties") },
+                                                            ...difficultyOptions.map((raw) => {
+                                                                const meta = CODING_DIFFICULTY_CHIP[raw]
+                                                                return {
+                                                                    value: raw,
+                                                                    content: meta ? <StatusChip tone={meta.tone}>{t(meta.labelKey)}</StatusChip> : raw,
+                                                                }
+                                                            }),
+                                                        ]}
+                                                    />
+                                                ),
+                                            ]} />
+                                    )]
+                                    : []),
+                                ...(languageOptions.length > 0
+                                    ? [() => (
+                                        <StackV gap={3} principle="sibling-stack"
+                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                            items={[
+                                                () => <Typography type="body-xs" color="muted">{t("publicProfile.coding.manage.languageHeading")}</Typography>,
+                                                () => (
+                                                    <FlexWrapButtonRadio<LanguageFilterValue>
+                                                        ariaLabel={t("publicProfile.coding.manage.languageFilterAria")}
+                                                        value={languageFilter}
+                                                        onChange={setLanguageFilter}
+                                                        items={[
+                                                            { value: "all", content: t("publicProfile.coding.manage.allLanguages") },
+                                                            ...languageOptions.map((lang) => ({
+                                                                value: lang,
+                                                                content: <LanguageChip language={lang} />,
+                                                            })),
+                                                        ]}
+                                                    />
+                                                ),
+                                            ]} />
+                                    )]
+                                    : []),
+                                ...(activeFacetCount > 0
+                                    ? [() => (
+                                        <Button variant="danger-soft" size="sm" className="self-start" onPress={clearFacets}>
+                                            {t("publicProfile.coding.manage.clearFilters")}
+                                        </Button>
+                                    )]
+                                    : []),
+                            ]
+                            return (
+                                <LabeledCard
+                                    label={t("publicProfile.coding.history")}
+                                    frameless
+                                >
+                                    <StackV gap={4} items={[
+                                        () => (
+                                            <Cluster gap={4} principle="content-row" justify="between"
+                                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                items={[
+                                                    () => (
+                                                        <StackH gap={4} principle="content-row" classNames={["min-w-0", "flex-1"]}
+                                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                            items={[
+                                                                () => (
+                                                                    <SearchInput
+                                                                        className="min-w-0 flex-1"
+                                                                        value={search}
+                                                                        onValueChange={setSearch}
+                                                                        placeholder={t("publicProfile.coding.manage.searchPlaceholder")}
+                                                                    />
+                                                                ),
+                                                                ...((difficultyOptions.length > 0 || languageOptions.length > 0)
+                                                                    ? [() => (
+                                                                        <Popover isOpen={filterOpen} onOpenChange={setFilterOpen}>
+                                                                            <Button
+                                                                                isIconOnly
+                                                                                variant="ghost"
+                                                                                aria-label={t("publicProfile.coding.manage.filterButton")}
+                                                                                className="shrink-0"
+                                                                            >
+                                                                                {activeFacetCount > 0 ? (
+                                                                                    <Badge.Anchor>
+                                                                                        <FunnelIcon className="size-5" />
+                                                                                        <Badge size="sm" color="accent" placement="top-left">{activeFacetCount}</Badge>
+                                                                                    </Badge.Anchor>
+                                                                                ) : (
+                                                                                    <FunnelIcon className="size-5" />
+                                                                                )}
+                                                                            </Button>
+                                                                            <Popover.Content className="w-72">
+                                                                                <StackV gap={1} padding={4} principle="cell-pad"
+                                                                                    explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body."
+                                                                                    items={[
+                                                                                        () => (
+                                                                                            <StackV gap={4} items={facetBodyItems} />
+                                                                                        ),
+                                                                                    ]} />
+                                                                            </Popover.Content>
+                                                                        </Popover>
+                                                                    )]
+                                                                    : []),
+                                                            ]} />
+                                                    ),
+                                                    () => (
+                                                        <Typography type="body-sm" color="muted" className="shrink-0">
+                                                            {t("publicProfile.coding.manage.found", { count: filteredHistory.length })}
+                                                        </Typography>
+                                                    ),
+                                                ]} />
+                                        ),
+                                        () => (filteredHistory.length === 0 ? (
+                                            <Typography type="body-sm" color="muted">
+                                                {t("publicProfile.coding.manage.emptyFiltered")}
+                                            </Typography>
+                                        ) : (
+                                            <SurfaceListCard>
+                                                {visibleHistory.map((item, index) => {
+                                                    const difficulty = CODING_DIFFICULTY_CHIP[item.difficulty]
+                                                    const solvedAt = item.firstSolvedAt
+                                                        ? new Date(item.firstSolvedAt).toLocaleDateString(locale)
+                                                        : undefined
+                                                    const chipItems = [
+                                                        ...(difficulty
+                                                            ? [() => (
+                                                                <StatusChip tone={difficulty.tone}>
+                                                                    {t(difficulty.labelKey)}
+                                                                </StatusChip>
+                                                            )]
+                                                            : []),
+                                                        ...(item.domain
+                                                            ? [() => (
+                                                                <StatusChip tone="neutral">
+                                                                    {domainLabel(item.domain!)}
+                                                                </StatusChip>
+                                                            )]
+                                                            : []),
+                                                        ...item.languages.map((language) => (
+                                                            () => <LanguageChip key={language} language={language} />
+                                                        )),
+                                                    ]
+                                                    return (
+                                                        <SurfaceListCardItem
+                                                            key={`${item.slug}-${index}`}
+                                                            hover="underline"
+                                                            href={username
+                                                                ? pathConfig().locale(locale).profile(username).skills().problem(item.slug).build()
+                                                                : undefined}
+                                                        >
+                                                            <StackH gap={4} principle="content-row"
+                                                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                                items={[
+                                                                    () => (
+                                                                        <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]}
+                                                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                                            items={[
+                                                                                () => (
+                                                                                    <Typography type="body-sm" weight="medium" truncate className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
+                                                                                        {item.problemTitle}
+                                                                                    </Typography>
+                                                                                ),
+                                                                                ...(solvedAt
+                                                                                    ? [() => (
+                                                                                        <Typography type="body-xs" color="muted">
+                                                                                            {solvedAt}
+                                                                                        </Typography>
+                                                                                    )]
+                                                                                    : []),
+                                                                            ]} />
+                                                                    ),
+                                                                    () => (
+                                                                        <Cluster gap={3} principle="chip-row" justify="end" classNames={["shrink-0"]} items={chipItems}
+                                                                            explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                                                        />
+                                                                    ),
+                                                                ]} />
+                                                        </SurfaceListCardItem>
+                                                    )
+                                                })}
+                                                {hiddenHistory > 0 ? (
+                                                    <SurfaceListCardItem onPress={() => setShowAllHistory((open) => !open)}>
+                                                        <span className="text-muted">
+                                                            {showAllHistory
+                                                                ? t("publicProfile.coding.showLess")
+                                                                : t("publicProfile.coding.showMore", { count: hiddenHistory })}
+                                                        </span>
+                                                    </SurfaceListCardItem>
+                                                ) : null}
+                                            </SurfaceListCard>
+                                        )),
+                                    ]} />
+                                </LabeledCard>
+                            )
+                        }]
+                        : []),
+                ]} />
         </AsyncContent>
     )
 }

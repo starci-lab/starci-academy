@@ -35,6 +35,7 @@ export const ContactPage = ({ className }: ContactPageProps) => {
                 <StackV
                     gap={3}
                     principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                     items={[
                         () => (
                             <PageHeader
@@ -53,6 +54,7 @@ export const ContactPage = ({ className }: ContactPageProps) => {
                 <Grid
                     columns={{ base: 1, lg: 2 }}
                     principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                     items={[
                         { key: "channels", content: () => <ContactChannels /> },
                         {

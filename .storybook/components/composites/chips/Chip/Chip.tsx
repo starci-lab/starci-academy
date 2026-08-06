@@ -9,3 +9,10 @@ import { RemovableToken } from "@sb-components/composites/chips/RemovableToken/R
  * under new names: `EnumChip`→`ChipEnum`, `HighlightChip`→`ChipHighlight`, `RemovableToken`→`ChipRemovable`.
  */
 export { EnumChip as ChipEnum, HighlightChip as ChipHighlight, RemovableToken as ChipRemovable }
+
+/** Folder-matching compound namespace (export-matches-folder / ATOM-11 sync). */
+export const Chip = {
+    Enum: EnumChip,
+    Highlight: HighlightChip,
+    Removable: RemovableToken,
+} as const

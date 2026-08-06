@@ -52,6 +52,7 @@ export const DesktopNavRow = ({ item, isActive, onNavigate }: DesktopNavRowProps
             )}
         >
             <StackH gap={2} principle="icon-text" align="center" justify={collapsed ? "center" : "start"} items={[() => rowContent]} />
+            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
         </button>
     )
 }

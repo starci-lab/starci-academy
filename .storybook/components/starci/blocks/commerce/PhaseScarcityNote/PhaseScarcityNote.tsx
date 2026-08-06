@@ -104,6 +104,7 @@ const PhaseScarcityNoteBase = ({
             <Cluster
                 gap={3}
                 principle="separator-dot"
+                explain="Places a middle-dot separator between short meta peers so the items read as one inline list."
                 align="center"
                 // The `·` between the two clauses is drawn by the FRAME, not written as a text item.
                 // A mark that separates a track's items belongs to the track, the same way a rule

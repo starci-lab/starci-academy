@@ -27,11 +27,13 @@ export const DueReviewSkeleton = ({ className }: WithClassNames<undefined> = {})
                                 gap={1}
                                 padding={{ base: { x: 5, y: 3 }, sm: { x: 6, y: 3 } }}
                                 principle="pill-pad"
+                                explain="Pill/chip inset — not control-pad, because this pads a compact badge shape rather than a form control."
                                 items={[
                                     () => (
                                         <StackH
                                             gap={4}
                                             principle="content-row"
+                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                             align="center"
                                             items={[
                                                 () => <Skeleton className="h-4 w-16 rounded" />,
@@ -48,7 +50,8 @@ export const DueReviewSkeleton = ({ className }: WithClassNames<undefined> = {})
                                     ),
                                 ]}
                             />
-                            <Box principle="pill-pad" className="px-4 pb-2 @app-sm:px-6">
+                            <Box principle="pill-pad" className="px-4 pb-2 @app-sm:px-6"
+                                explain="Pill/chip inset — not control-pad, because this pads a compact badge shape rather than a form control.">
                                 <StackH
                                     gap={2}
                                     classNames={["w-full"]}
@@ -71,6 +74,7 @@ export const DueReviewSkeleton = ({ className }: WithClassNames<undefined> = {})
                                             <Cluster
                                                 gap={3}
                                                 principle="chip-row"
+                                                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                                                 align="center"
                                                 items={[
                                                     () => <Skeleton.Chip />,
@@ -82,6 +86,7 @@ export const DueReviewSkeleton = ({ className }: WithClassNames<undefined> = {})
                                             <StackV
                                                 gap={4}
                                                 principle="label-field"
+                                                explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
                                                 items={[
                                                     () => <Skeleton.Typography type="body-xs" width="1/4" />,
                                                     () => (
@@ -91,6 +96,7 @@ export const DueReviewSkeleton = ({ className }: WithClassNames<undefined> = {})
                                                                 <StackV
                                                                     gap={4}
                                                                     principle="sibling-stack"
+                                                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                                                     items={[
                                                                         () => <Skeleton.Typography type="body" width="3/4" />,
                                                                         () => <Skeleton.Typography type="body" width="2/3" />,
@@ -106,6 +112,7 @@ export const DueReviewSkeleton = ({ className }: WithClassNames<undefined> = {})
                                             <StackH
                                                 gap={4}
                                                 principle="flex-action"
+                                                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                                                 justify="center"
                                                 align="center"
                                                 items={[

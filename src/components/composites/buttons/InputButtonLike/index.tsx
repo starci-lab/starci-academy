@@ -1,4 +1,3 @@
-import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
@@ -92,18 +91,21 @@ export const InputButtonLike = ({
     isSkeleton = false,
     classNames,
 }: InputButtonLikeProps) => {
-    const placeholderLabel = isSkeleton ? (
-        <Typography size={TYPOGRAPHY_SIZE[size]} isSkeleton />
-    ) : (
-        <span className={cn("truncate font-normal text-field-placeholder")}>
-            {placeholder}
-        </span>
+    const placeholderLabel = (
+        <Typography
+            size={TYPOGRAPHY_SIZE[size]}
+            isSkeleton={isSkeleton}
+            text={placeholder}
+            color="muted"
+            truncate
+        />
     )
 
     const label = !isSkeleton && Suffix ? (
         <StackH
             gap={4}
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             justify="between"
             align="center"
             classNames={["w-full", "min-w-0"]}

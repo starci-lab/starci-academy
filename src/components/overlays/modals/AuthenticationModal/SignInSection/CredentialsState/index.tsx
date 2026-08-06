@@ -220,6 +220,7 @@ export const CredentialsState = ({ hideCloseButton }: CredentialsStateProps = {}
                     <StackV
                         gap={2}
                         principle="title-subtitle"
+                        explain="Title over supporting line — not label-field, because neither line is a form control label."
                         items={[
                             () => <Typography weight="semibold" align="center" text={t("auth.signIn.title")} />,
                             () => <Typography size="xs" color="muted" align="center" text={t("auth.signIn.desc")} />,

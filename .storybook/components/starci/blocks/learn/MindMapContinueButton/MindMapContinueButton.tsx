@@ -90,6 +90,7 @@ const MindMapContinueButton = ({
             // Wrap with Box + principle for now.
             <Box
                 principle="control-pad" className="rounded-full border border-default bg-surface px-3 py-2 shadow-lg"
+                explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row."
             >
                 <Typography
                     size="sm"

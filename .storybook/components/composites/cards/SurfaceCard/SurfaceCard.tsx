@@ -20,7 +20,7 @@ import { PADDING_CLASS, type AllowedPadding } from "@sb-components/frames/_spaci
 import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 import { Box } from "@sb-components/frames/Box/Box"
-import type { PrincipleToken } from "@sb-components/frames/_principles"
+import type { PrincipleToken, ExplainReason } from "@sb-components/frames/_principles"
 /**
  * `SurfaceCard` — the general wrapper frame of the card family. Owns the header section
  * (`SurfaceCardHeader`: label/labelEnd/see-more/action/subtleLabel), the `header`/`body`/`footer`
@@ -806,6 +806,10 @@ export interface SurfaceCardPressableGroupProps {
      */
     principle?: PrincipleToken
     /**
+     * Why this layer exists - one sentence, forwarded to the owning grid beside `principle`.
+     */
+    explain?: ExplainReason
+    /**
      * Binds number keys `1`–`N` to the items in order, so the group can be driven
      * without the mouse. Off by default — only opt in where the group IS the
      * screen's primary action (e.g. a flashcard rating bar).
@@ -893,6 +897,7 @@ const PressableGroup = ({
     ariaLabel,
     columns = {},
     principle = "content-row",
+    explain,
     keyboardShortcut = false,
     isSkeleton = false,
     classNames,
@@ -947,6 +952,7 @@ const PressableGroup = ({
                 <Grid
                     columns={columns}
                     principle={principle}
+                    explain={explain}
                     items={items.map((item) => ({
                         key: item.key,
                         content: () => <PressableGroupSkeletonTile classNames={item.classNames} />,
@@ -970,6 +976,7 @@ const PressableGroup = ({
             <Grid
                 columns={columns}
                 principle={principle}
+                explain={explain}
                 items={items.map((item) => {
                     // A component reference, not a built node (COMPOSITE-8) — `Base`'s
                     // `body` slot calls this itself; the closure keeps the item's own

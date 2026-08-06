@@ -102,6 +102,7 @@ const groupToAccordionItem = (group: PlaygroundResourceGroup): SurfaceCardAccord
         <StackV
             gap={1}
             principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
 
             items={group.resources.map((resource, index) => () => (
                 <ListRow
@@ -164,6 +165,7 @@ const PlaygroundResourcePanel = ({
         <StackH
             gap={3}
             principle="value-row"
+            explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
             justify="between"
             align="center"
 
@@ -194,7 +196,7 @@ const PlaygroundResourcePanel = ({
     )
 
     return (
-        <StackV
+        <StackV identity={{ tier: "block", component: "PlaygroundResourcePanel" }}
             gap={4}
 
             items={[

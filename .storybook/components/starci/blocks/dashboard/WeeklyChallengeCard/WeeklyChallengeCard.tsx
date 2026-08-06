@@ -167,18 +167,20 @@ interface ContentProps {
 
 const Content = ({ data, isSkeleton }: ContentProps) => {
     const statusRow = (
-        <StackH gap={4} principle="content-row" justify="between" align="center" items={[
-            () => (data.endsInLabel != null || isSkeleton ? (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    isSkeleton={isSkeleton}
-                    text={isSkeleton ? undefined : data.endsInLabel}
+        <StackH gap={4} principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            justify="between" align="center" items={[
+                () => (data.endsInLabel != null || isSkeleton ? (
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        text={isSkeleton ? undefined : data.endsInLabel}
 
-                />
-            ) : <span />),
-            () => statusSlot(data, isSkeleton),
-        ]} />
+                    />
+                ) : <span />),
+                () => statusSlot(data, isSkeleton),
+            ]} />
     )
 
     return (

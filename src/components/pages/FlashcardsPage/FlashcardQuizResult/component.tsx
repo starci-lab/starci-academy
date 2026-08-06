@@ -236,97 +236,100 @@ export const _FlashcardQuizResult = ({
         const showReadiness = !isSkeleton && enrollKnown && enrolled && readiness != null
 
         return (
-            <StackV gap={6} principle="block-boundary" items={[
+            <StackV gap={6} principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={[
                 // HERO — three authoritative metric tiles (outcome first).
-                () => (
+                    () => (
                     // teacher-hold: flashcards-remain-quiz-result-metric-grid-gap4-no-token —
                     // peer metric tiles at preserved step 4; no card-grid token.
-                    <Grid
-                        principle="content-row"
-                        columns={{ base: 1, sm: 3 }}
-                        isSkeleton={isSkeleton}
-                        items={[
-                            {
-                                key: "coverage",
-                                content: ({ isSkeleton: cellSkeleton }: SkeletonProps) => (
-                                    cellSkeleton
-                                        ? <MetricCard isSkeleton />
-                                        : <MetricCard value={coverageValue} label={coverageLabel} />
-                                ),
-                            },
-                            {
-                                key: "xp",
-                                content: ({ isSkeleton: cellSkeleton }: SkeletonProps) => (
-                                    cellSkeleton
-                                        ? <MetricCard isSkeleton />
-                                        : <MetricCard value={xpValue} label={xpLabel} />
-                                ),
-                            },
-                            {
-                                key: "fullyCorrect",
-                                content: ({ isSkeleton: cellSkeleton }: SkeletonProps) => (
-                                    cellSkeleton
-                                        ? <MetricCard isSkeleton />
-                                        : <MetricCard value={fullyCorrectValue} label={fullyCorrectLabel} />
-                                ),
-                            },
-                        ]}
-                    />
-                ),
-                ...(!isSkeleton && dailyCapReached ? [() => (
-                    <Typography size="xs" color="muted" text={dailyCapReachedLabel} />
-                )] : []),
+                        <Grid
+                            principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            columns={{ base: 1, sm: 3 }}
+                            isSkeleton={isSkeleton}
+                            items={[
+                                {
+                                    key: "coverage",
+                                    content: ({ isSkeleton: cellSkeleton }: SkeletonProps) => (
+                                        cellSkeleton
+                                            ? <MetricCard isSkeleton />
+                                            : <MetricCard value={coverageValue} label={coverageLabel} />
+                                    ),
+                                },
+                                {
+                                    key: "xp",
+                                    content: ({ isSkeleton: cellSkeleton }: SkeletonProps) => (
+                                        cellSkeleton
+                                            ? <MetricCard isSkeleton />
+                                            : <MetricCard value={xpValue} label={xpLabel} />
+                                    ),
+                                },
+                                {
+                                    key: "fullyCorrect",
+                                    content: ({ isSkeleton: cellSkeleton }: SkeletonProps) => (
+                                        cellSkeleton
+                                            ? <MetricCard isSkeleton />
+                                            : <MetricCard value={fullyCorrectValue} label={fullyCorrectLabel} />
+                                    ),
+                                },
+                            ]}
+                        />
+                    ),
+                    ...(!isSkeleton && dailyCapReached ? [() => (
+                        <Typography size="xs" color="muted" text={dailyCapReachedLabel} />
+                    )] : []),
 
-                // PER-CARD breakdown — a NESTED async region (its own card-text fetch),
-                // so it carries its own `isPerCardSkeleton` on top of the outer one.
-                ...(showPerCard ? [() => (
-                    <SurfaceCardList
-                        label={perCardHeading}
-                        isSkeleton={perCardListSkeleton}
-                        items={perCardItems}
-                    />
-                )] : []),
+                    // PER-CARD breakdown — a NESTED async region (its own card-text fetch),
+                    // so it carries its own `isPerCardSkeleton` on top of the outer one.
+                    ...(showPerCard ? [() => (
+                        <SurfaceCardList
+                            label={perCardHeading}
+                            isSkeleton={perCardListSkeleton}
+                            items={perCardItems}
+                        />
+                    )] : []),
 
-                // enroll upsell (trial only) — the result's PRIMARY action for a trial
-                // viewer, framed as a reward for the momentum just built.
-                ...(showUpsell ? [() => <RecapEnrollUpsell />] : []),
+                    // enroll upsell (trial only) — the result's PRIMARY action for a trial
+                    // viewer, framed as a reward for the momentum just built.
+                    ...(showUpsell ? [() => <RecapEnrollUpsell />] : []),
 
-                // weak-tags demand-bridge: PRIMARY when enrolled, a smaller secondary
-                // link under the upsell when trial.
-                ...(!isSkeleton ? [() => (
-                    <RecapWeakTagsCard
-                        weakTags={topWeakTags}
-                        overflowWeakTags={overflowWeakTags}
-                        resolveTagHref={resolveTagHref}
-                        genericHref={genericContinueHref}
-                        primary={weakTagsPrimary}
-                    />
-                )] : []),
+                    // weak-tags demand-bridge: PRIMARY when enrolled, a smaller secondary
+                    // link under the upsell when trial.
+                    ...(!isSkeleton ? [() => (
+                        <RecapWeakTagsCard
+                            weakTags={topWeakTags}
+                            overflowWeakTags={overflowWeakTags}
+                            resolveTagHref={resolveTagHref}
+                            genericHref={genericContinueHref}
+                            primary={weakTagsPrimary}
+                        />
+                    )] : []),
 
-                // quiet, self-hiding "study this too" — RAG search keyed off the same
-                // weak tags (no typing); auto-hides when there are none.
-                ...(showStudyList ? [() => (
-                    <RelatedContentList
-                        courseId={courseId}
-                        courseDisplayId={courseDisplayId}
-                        query={topWeakTags.map((tag) => tag.tag).join(" ")}
-                        label={studyHeading}
-                    />
-                )] : []),
+                    // quiet, self-hiding "study this too" — RAG search keyed off the same
+                    // weak tags (no typing); auto-hides when there are none.
+                    ...(showStudyList ? [() => (
+                        <RelatedContentList
+                            courseId={courseId}
+                            courseDisplayId={courseDisplayId}
+                            query={topWeakTags.map((tag) => tag.tag).join(" ")}
+                            label={studyHeading}
+                        />
+                    )] : []),
 
-                // AI Mock Interview readiness — live-only (query-absent), enrolled-only.
-                ...(showReadiness ? [() => (
-                    <RecapReadinessCallout
-                        readiness={readiness as QuizSessionReadinessData}
-                        mockInterviewHref={mockInterviewHref}
-                    />
-                )] : []),
+                    // AI Mock Interview readiness — live-only (query-absent), enrolled-only.
+                    ...(showReadiness ? [() => (
+                        <RecapReadinessCallout
+                            readiness={readiness as QuizSessionReadinessData}
+                            mockInterviewHref={mockInterviewHref}
+                        />
+                    )] : []),
 
-                // onward path — never a dead end, even with no weak tags.
-                ...(!isSkeleton ? [() => (
-                    <Button variant="tertiary" onPress={onBack} label={backToReviewLabel} classNames={["self-center"]} />
-                )] : []),
-            ]} />
+                    // onward path — never a dead end, even with no weak tags.
+                    ...(!isSkeleton ? [() => (
+                        <Button variant="tertiary" onPress={onBack} label={backToReviewLabel} classNames={["self-center"]} />
+                    )] : []),
+                ]} />
         )
     }
 
@@ -335,7 +338,9 @@ export const _FlashcardQuizResult = ({
             identity={{ tier: "block", component: "FlashcardQuizResult" }}
             size="md"
             padding={{ base: { x: 5, y: 6 }, sm: { x: 6 } }}
-            body={() => <StackV gap={6} principle="block-boundary" items={[header, body]} />}
+            body={() => <StackV gap={6} principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={[header, body]} />}
         />
     )
 }

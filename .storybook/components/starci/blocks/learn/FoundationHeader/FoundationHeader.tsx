@@ -69,7 +69,7 @@ export interface FoundationHeaderProps {
     isRecommended?: boolean
     /** Topic tags. Empty or omitted → no tag chips render. */
     tags?: Array<FoundationHeaderTag>
-    /** Author or source attribution — the block adds "Author: " itself. Omit or empty → no author line. */
+    /** Author or source attribution — the block adds "Author: — itself. Omit or empty → no author line. */
     author?: string
     /**
      * `true` → every composed atom switches to its own shimmer. The flag FLOWS
@@ -105,6 +105,7 @@ const FoundationHeader = ({
             <StackH
                 gap={3}
                 principle="chip-row"
+                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                 align="center"
                 at="sm"
                 isSkeleton={isSkeleton}

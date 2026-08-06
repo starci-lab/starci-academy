@@ -98,12 +98,14 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                 <StackH
                     gap={4}
                     principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                     classNames={["w-full"]}
                     items={[
                         () => (
                             <StackV
                                 gap={1}
                                 principle="name-handle"
+                                explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
                                 classNames={["shrink-0"]}
                                 items={[
                                     () => (
@@ -144,6 +146,7 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                 <StackV
                     gap={6}
                     principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                     items={[
                         () => (
                             <StackV
@@ -155,6 +158,7 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                                             <StackH
                                                 gap={3}
                                                 principle="value-row"
+                                                explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
                                                 align="baseline"
                                                 items={[
                                                     () => <Skeleton className="h-9 w-20 rounded" />,
@@ -183,12 +187,14 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                                                     key={index}
                                                     gap={4}
                                                     principle="content-row"
+                                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                     classNames={["w-full"]}
                                                     items={[
                                                         () => (
                                                             <StackV
                                                                 gap={2}
                                                                 principle="title-subtitle"
+                                                                explain="Title over supporting line — not label-field, because neither line is a form control label."
                                                                 classNames={["shrink-0"]}
                                                                 items={[
                                                                     () => <Skeleton.Typography type="body-sm" width="2/3" />,
@@ -231,6 +237,7 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                     <StackV
                         gap={6}
                         principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                         items={[
                             () => (
                                 <LabeledCard

@@ -21,7 +21,7 @@ import { Grid, type GridColumns } from "@/components/frames/Grid"
 import { StackV, StackH } from "@/components/frames/Stack"
 import { Box } from "@/components/frames/Box"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
-import type { PrincipleToken } from "@/components/frames/_principles"
+import type { PrincipleToken, ExplainReason } from "@/components/frames/_principles"
 /**
  * `SurfaceCard` — the general wrapper frame of the card family. Owns the header section
  * (`SurfaceCardHeader`: label/labelEnd/see-more/action/subtleLabel), the `header`/`body`/`footer`
@@ -637,6 +637,7 @@ const Nested = ({
                         gap={3}
                         justify="between"
                         principle="content-row"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                         classNames={["min-w-0"]}
                         padding={{ x: 4, y: 3 }}
                         isSkeleton={isSkeleton}
@@ -664,7 +665,8 @@ const Nested = ({
             ) : null}
             <div className="flex flex-col divide-y divide-default">{innerBody}</div>
             {Footer ? (
-                <Box principle="control-pad" className="border-t border-default px-3 py-2">
+                <Box principle="control-pad" className="border-t border-default px-3 py-2"
+                    explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.">
                     <Footer isSkeleton={isSkeleton} />
                 </Box>
             ) : null}
@@ -820,6 +822,10 @@ export interface SurfaceCardPressableGroupProps {
      */
     principle?: PrincipleToken
     /**
+     * Why this layer exists - one sentence, forwarded to the owning grid beside `principle`.
+     */
+    explain?: ExplainReason
+    /**
      * Binds number keys `1`–`N` to the items in order, so the group can be driven
      * without the mouse. Off by default — only opt in where the group IS the
      * screen's primary action (e.g. a flashcard rating bar).
@@ -914,6 +920,7 @@ const PressableGroup = ({
     ariaLabel,
     columns = {},
     principle = "content-row",
+    explain,
     keyboardShortcut = false,
     isSkeleton = false,
     classNames,
@@ -968,6 +975,7 @@ const PressableGroup = ({
                 <Grid
                     columns={columns}
                     principle={principle}
+                    explain={explain}
                     items={items.map((item) => ({
                         key: item.key,
                         content: () => <PressableGroupSkeletonTile classNames={item.classNames} />,
@@ -990,6 +998,7 @@ const PressableGroup = ({
             <Grid
                 columns={columns}
                 principle={principle}
+                explain={explain}
                 items={items.map((item) => {
                     // A component reference, not a built node (COMPOSITE-8) — `Base`'s
                     // `body` slot calls this itself; the closure keeps the item's own
@@ -1115,6 +1124,7 @@ const SelectableGroup = <T extends string>({
         >
             <Grid
                 principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                 columns={SELECTABLE_GROUP_COLUMNS[columns]}
                 classNames={classNames}
                 items={items.map((item) => ({
@@ -1140,7 +1150,9 @@ const SelectableGroup = <T extends string>({
                                                     ) : null}
                                                 </span>
                                                 {item.badge ? (
-                                                    <Box as="span" principle="push-end" className="shrink-0">
+                                                    <Box as="span" principle="push-end" className="shrink-0"
+                                                        explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row."
+                                                    >
                                                         <item.badge />
                                                     </Box>
                                                 ) : null}
@@ -1439,7 +1451,8 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
                 ]}
             />
             {metaSlot || trailingSlot || selected ? (
-                <Box principle="push-end">
+                <Box principle="push-end"
+                    explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row.">
                     <StackH
                         gap={3}
                         classNames={["shrink-0"]}
@@ -1539,8 +1552,8 @@ const List = ({
     // outranks the skeleton (a failed fetch is not a loading state); empty only
     // reads once loading is done.
     const inner = error && ErrorState != null
-        ? <Box principle="page-pad"><ErrorState /></Box>
-        : !isSkeleton && isEmpty && EmptyState != null ? <Box principle="page-pad"><EmptyState /></Box> : rows
+        ? <Box principle="page-pad" explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."><ErrorState /></Box>
+        : !isSkeleton && isEmpty && EmptyState != null ? <Box principle="page-pad" explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."><EmptyState /></Box> : rows
     const bare = label == null && description == null
     const surface = (
         <div
@@ -1929,6 +1942,7 @@ const CrossListRow = ({
             gap={4}
             align="start"
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             padding={4}
             isSkeleton={isSkeleton}
             items={

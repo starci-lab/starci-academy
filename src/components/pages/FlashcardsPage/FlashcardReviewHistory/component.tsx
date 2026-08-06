@@ -203,45 +203,47 @@ export const _FlashcardReviewHistory = ({
     // carries no `isSkeleton` of its own — its loading state mirrors it inline with a bare
     // `Skeleton`, right where it sits (missingSkeletonSupport), instead of a parallel tree.
     const toolbar = (
-        <StackH gap={4} principle="content-row" justify="between" at="sm" items={[
-            () => (
-                <InputSearch
-                    isSkeleton={isSkeleton}
-                    ariaLabel={labels.searchPlaceholder}
-                    placeholder={labels.searchPlaceholder}
-                    value={query}
-                    onValueChange={setQuery}
-                    classNames={["w-full"]}
-                />
-            ),
-            () => (
-                <StackH gap={3} classNames={["shrink-0"]} items={[
-                    () => <Typography size="sm" color="muted" isSkeleton={isSkeleton} text={labels.deckRunCount(searchedItems.length)} />,
-                    () => (isSkeleton ? (
-                        <Skeleton className="h-9 w-16 rounded-medium" />
-                    ) : (
-                        <TabsCard
-                            variant="primary"
-                            leftTabs={{
-                                selectedKey: groupMode,
-                                ariaLabel: labels.groupByDeck,
-                                onSelectionChange: (key) => setGroupMode(String(key) as FlashcardReviewHistoryGroupMode),
-                                items: [
-                                    {
-                                        key: "deck",
-                                        label: <CardsIcon className="size-5" aria-label={labels.groupByDeck} focusable="false" />,
-                                    },
-                                    {
-                                        key: "time",
-                                        label: <ClockIcon className="size-5" aria-label={labels.groupByTime} focusable="false" />,
-                                    },
-                                ],
-                            }}
-                        />
-                    )),
-                ]} />
-            ),
-        ]} />
+        <StackH gap={4} principle="content-row" justify="between" at="sm"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            items={[
+                () => (
+                    <InputSearch
+                        isSkeleton={isSkeleton}
+                        ariaLabel={labels.searchPlaceholder}
+                        placeholder={labels.searchPlaceholder}
+                        value={query}
+                        onValueChange={setQuery}
+                        classNames={["w-full"]}
+                    />
+                ),
+                () => (
+                    <StackH gap={3} classNames={["shrink-0"]} items={[
+                        () => <Typography size="sm" color="muted" isSkeleton={isSkeleton} text={labels.deckRunCount(searchedItems.length)} />,
+                        () => (isSkeleton ? (
+                            <Skeleton className="h-9 w-16 rounded-medium" />
+                        ) : (
+                            <TabsCard
+                                variant="primary"
+                                leftTabs={{
+                                    selectedKey: groupMode,
+                                    ariaLabel: labels.groupByDeck,
+                                    onSelectionChange: (key) => setGroupMode(String(key) as FlashcardReviewHistoryGroupMode),
+                                    items: [
+                                        {
+                                            key: "deck",
+                                            label: <CardsIcon className="size-5" aria-label={labels.groupByDeck} focusable="false" />,
+                                        },
+                                        {
+                                            key: "time",
+                                            label: <ClockIcon className="size-5" aria-label={labels.groupByTime} focusable="false" />,
+                                        },
+                                    ],
+                                }}
+                            />
+                        )),
+                    ]} />
+                ),
+            ]} />
     )
 
     // Flat placeholder rows — the loading state's list shape, regardless of `groupMode`
@@ -280,7 +282,8 @@ export const _FlashcardReviewHistory = ({
                 ),
                 body: () => (
                     <StackV gap={1} items={group.items.map((item) => () => (
-                        <Box key={item.id} principle="control-pad" className="rounded-lg px-3 py-2 text-left transition-colors hover:bg-default">
+                        <Box key={item.id} principle="control-pad" className="rounded-lg px-3 py-2 text-left transition-colors hover:bg-default"
+                            explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.">
                             <button
                                 type="button"
                                 onClick={() => onOpenDeck(item.deckId)}

@@ -102,32 +102,38 @@ export interface KpiPageProps {
  */
 const kpiRowBody = (row: KpiRowData, isSkeleton: boolean, labels: KpiLabels) => {
     const labelValueRow = () => (
-        <StackH justify="between" gap={4} principle="content-row" items={[
-            () => (
-                <StackH gap={3} principle="identity" items={[
-                    () => <row.icon className="size-5 shrink-0 text-foreground" />,
-                    () => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text={row.label} />,
-                ]}
-                />
-            ),
-            () => (
-                <Typography
-                    size="sm"
-                    color="muted"
-                    isSkeleton={isSkeleton}
-                    classNames={isSkeleton ? ["w-1/4"] : undefined}
-                    text={`${row.current}/${row.target}`}
-                />
-            ),
-        ]}
+        <StackH justify="between" gap={4} principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            items={[
+                () => (
+                    <StackH gap={3} principle="identity"
+                        explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
+                        items={[
+                            () => <row.icon className="size-5 shrink-0 text-foreground" />,
+                            () => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text={row.label} />,
+                        ]}
+                    />
+                ),
+                () => (
+                    <Typography
+                        size="sm"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        classNames={isSkeleton ? ["w-1/4"] : undefined}
+                        text={`${row.current}/${row.target}`}
+                    />
+                ),
+            ]}
         />
     )
 
     const presetRow = () => (
         isSkeleton ? (
-            <StackH gap={3} principle="flex-action" items={row.presets.map((preset) => () => (
-                <Skeleton.Button key={preset.value} width="w-16" />
-            ))}
+            <StackH gap={3} principle="flex-action"
+                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                items={row.presets.map((preset) => () => (
+                    <Skeleton.Button key={preset.value} width="w-16" />
+                ))}
             />
         ) : (
             <FlexWrapButtonRadio
@@ -144,29 +150,31 @@ const kpiRowBody = (row: KpiRowData, isSkeleton: boolean, labels: KpiLabels) => 
     )
 
     const coinRow = () => (
-        <StackH justify="between" gap={3} principle="flex-action" items={[
-            () => (
-                <Typography
-                    size="xs"
-                    color={row.canClaim ? "accent-soft" : "muted"}
-                    text={row.coinRewardText as string}
-                />
-            ),
-            ...(row.claimed
-                ? [() => <Typography size="xs" color="muted" text={labels.claimedLabel} />]
-                : row.canClaim
-                    ? [() => (
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            isPending={row.isClaiming}
-                            isDisabled={row.isClaimDisabled}
-                            onPress={row.onClaim}
-                            label={labels.claimLabel}
-                        />
-                    )]
-                    : []),
-        ]}
+        <StackH justify="between" gap={3} principle="flex-action"
+            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+            items={[
+                () => (
+                    <Typography
+                        size="xs"
+                        color={row.canClaim ? "accent-soft" : "muted"}
+                        text={row.coinRewardText as string}
+                    />
+                ),
+                ...(row.claimed
+                    ? [() => <Typography size="xs" color="muted" text={labels.claimedLabel} />]
+                    : row.canClaim
+                        ? [() => (
+                            <Button
+                                variant="primary"
+                                size="sm"
+                                isPending={row.isClaiming}
+                                isDisabled={row.isClaimDisabled}
+                                onPress={row.onClaim}
+                                label={labels.claimLabel}
+                            />
+                        )]
+                        : []),
+            ]}
         />
     )
 

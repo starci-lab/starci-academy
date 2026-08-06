@@ -1,5 +1,5 @@
 import React from "react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { WarningCircleIcon } from "@phosphor-icons/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Typography } from "@/components/atoms/text/Typography"
@@ -68,7 +68,11 @@ const _PhaseScarcityNote = ({
     classNames,
 }: PhaseScarcityNoteBaseProps) => {
     if (isSkeleton) {
-        return <HeroSkeleton className={cn("h-4 w-64 max-w-full rounded", classNames)} />
+        return (
+            <Skeleton
+                className={["h-4", "w-64", "max-w-full", "rounded", ...(classNames ?? [])].join(" ")}
+            />
+        )
     }
     // no seat cap at this phase → no honest scarcity reason → stay silent
     if (seatsRemaining == null) {
@@ -90,6 +94,7 @@ const _PhaseScarcityNote = ({
             <Cluster
                 gap={3}
                 principle="separator-dot"
+                explain="Places a middle-dot separator between short meta peers so the items read as one inline list."
                 align="center"
                 // The `·` between the two clauses is drawn by the FRAME, not written as a text item.
                 // A mark that separates a track's items belongs to the track, the same way a rule

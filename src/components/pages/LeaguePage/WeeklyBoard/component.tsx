@@ -98,25 +98,34 @@ export interface WeeklyBoardProps {
  * (badge · rank/meta lines · goal meter · CTA) since the block has no `isSkeleton` of its own.
  */
 const HeroSkeleton = () => (
-    <Box principle="card-padding" className="rounded-3xl bg-surface p-4 shadow-surface">
-        <StackV gap={5} principle="group-boundary" items={[
-            () => (
-                <StackH gap={5} principle="group-boundary" items={[
-                    () => <Skeleton className="size-10 shrink-0 rounded-2xl" />,
-                    () => <StackV gap={2} principle="title-subtitle" classNames={["min-w-0", "flex-1"]} items={[
-                        () => <Skeleton.Typography type="h6" width="1/2" />,
-                        () => <Skeleton.Typography type="body-sm" width="1/3" />,
-                    ]} />,
-                ]} />
-            ),
-            () => (
-                <StackV gap={2} principle="title-subtitle" items={[
-                    () => <Skeleton.Typography type="body-xs" width="1/3" />,
-                    () => <Skeleton.ProgressBar />,
-                ]} />
-            ),
-            () => <Skeleton className="h-10 w-40 rounded-full" />,
-        ]} />
+    <Box principle="card-padding" className="rounded-3xl bg-surface p-4 shadow-surface"
+        explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
+        <StackV gap={5} principle="group-boundary"
+            explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+            items={[
+                () => (
+                    <StackH gap={5} principle="group-boundary"
+                        explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+                        items={[
+                            () => <Skeleton className="size-10 shrink-0 rounded-2xl" />,
+                            () => <StackV gap={2} principle="title-subtitle"
+                                explain="Title over supporting line — not label-field, because neither line is a form control label."
+                                classNames={["min-w-0", "flex-1"]} items={[
+                                    () => <Skeleton.Typography type="h6" width="1/2" />,
+                                    () => <Skeleton.Typography type="body-sm" width="1/3" />,
+                                ]} />,
+                        ]} />
+                ),
+                () => (
+                    <StackV gap={2} principle="title-subtitle"
+                        explain="Title over supporting line — not label-field, because neither line is a form control label."
+                        items={[
+                            () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                            () => <Skeleton.ProgressBar />,
+                        ]} />
+                ),
+                () => <Skeleton className="h-10 w-40 rounded-full" />,
+            ]} />
     </Box>
 )
 
@@ -125,50 +134,60 @@ const HeroSkeleton = () => (
  * raised) since the block has no `isSkeleton` of its own.
  */
 const PodiumSkeleton = () => (
-    <StackH gap={4} principle="content-row" justify="center" items={[false, true, false].map((isChampion) => () => (
-        <StackV gap={3} principle="sibling-stack" align="center" items={[
-            () => <Skeleton className={isChampion ? "size-14 shrink-0 rounded-full" : "size-12 shrink-0 rounded-full"} />,
-            // The podium column's fixed width is not a member of the closed AllowedClassName
-            // union, so it sits on Box — the frame tier's sanctioned escape hatch — rather than
-            // widening that union for one skeleton.
-            () => <Box className="w-20"><StackV gap={2} principle="title-subtitle" align="center" items={[
-                () => <Skeleton.Typography type="body-sm" width="3/4" />,
-                () => <Skeleton.Typography type="body-xs" width="1/2" />,
-            ]} /></Box>,
-            () => <Skeleton className={isChampion ? "h-16 w-20 rounded-t-2xl rounded-b-none" : "h-10 w-20 rounded-t-2xl rounded-b-none"} />,
-        ]} />
-    ))} />
+    <StackH gap={4} principle="content-row"
+        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+        justify="center" items={[false, true, false].map((isChampion) => () => (
+            <StackV gap={3} principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                align="center" items={[
+                    () => <Skeleton className={isChampion ? "size-14 shrink-0 rounded-full" : "size-12 shrink-0 rounded-full"} />,
+                    // The podium column's fixed width is not a member of the closed AllowedClassName
+                    // union, so it sits on Box — the frame tier's sanctioned escape hatch — rather than
+                    // widening that union for one skeleton.
+                    () => <Box className="w-20"><StackV gap={2} principle="title-subtitle"
+                        explain="Title over supporting line — not label-field, because neither line is a form control label."
+                        align="center" items={[
+                            () => <Skeleton.Typography type="body-sm" width="3/4" />,
+                            () => <Skeleton.Typography type="body-xs" width="1/2" />,
+                        ]} /></Box>,
+                    () => <Skeleton className={isChampion ? "h-16 w-20 rounded-t-2xl rounded-b-none" : "h-10 w-20 rounded-t-2xl rounded-b-none"} />,
+                ]} />
+        ))} />
 )
 
 /** Loading placeholder for one rank 4+ row — mirrors the [rank · avatar · name · points · caret] shape. */
 const RowSkeleton = () => (
-    <StackH gap={4} principle="content-row" items={[
-        () => <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />,
-        () => <Skeleton.Avatar size="sm" />,
-        () => <Skeleton.Typography type="body-sm" width="1/3" className="min-w-0 flex-1" />,
-        () => <Skeleton className="h-3 w-8 shrink-0 rounded-sm" />,
-        () => <Skeleton className="h-4 w-8 shrink-0 rounded-sm" />,
-    ]} />
+    <StackH gap={4} principle="content-row"
+        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+        items={[
+            () => <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />,
+            () => <Skeleton.Avatar size="sm" />,
+            () => <Skeleton.Typography type="body-sm" width="1/3" className="min-w-0 flex-1" />,
+            () => <Skeleton className="h-3 w-8 shrink-0 rounded-sm" />,
+            () => <Skeleton className="h-4 w-8 shrink-0 rounded-sm" />,
+        ]} />
 )
 
 /** One resolved rank 4+ row: rank cell · profile-linked user cell · points · movement caret. */
 const Row = ({ row }: { row: WeeklyBoardRowEntry }) => (
-    <StackH gap={4} principle="content-row" items={[
-        () => (
-            <Box as="span" className="w-6 shrink-0 text-right">
-                <Typography size="xs" color={row.mine ? "accent" : "muted"} weight={row.mine ? "semibold" : undefined} text={String(row.rank)} />
-            </Box>
-        ),
-        () => (
-            <Box className="min-w-0 flex-1">
-                <UserCell username={row.displayUsername} avatar={row.avatar} isOwnRow={row.mine } />
-            </Box>
-        ),
-        () => (
-            <Typography size="sm" color={row.mine ? "accent" : "muted"} weight={row.mine ? "semibold" : undefined} classNames={["shrink-0"]} text={row.pointsLabel} />
-        ),
-        () => <RankDeltaCaret delta={row.rankDelta} className="w-8 shrink-0 justify-end" />,
-    ]} />
+    <StackH gap={4} principle="content-row"
+        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+        items={[
+            () => (
+                <Box as="span" className="w-6 shrink-0 text-right">
+                    <Typography size="xs" color={row.mine ? "accent" : "muted"} weight={row.mine ? "semibold" : undefined} text={String(row.rank)} />
+                </Box>
+            ),
+            () => (
+                <Box className="min-w-0 flex-1">
+                    <UserCell username={row.displayUsername} avatar={row.avatar} isOwnRow={row.mine } />
+                </Box>
+            ),
+            () => (
+                <Typography size="sm" color={row.mine ? "accent" : "muted"} weight={row.mine ? "semibold" : undefined} classNames={["shrink-0"]} text={row.pointsLabel} />
+            ),
+            () => <RankDeltaCaret delta={row.rankDelta} className="w-8 shrink-0 justify-end" />,
+        ]} />
 )
 
 /**
@@ -232,53 +251,61 @@ export const _WeeklyBoard = ({
 
     return (
         <Box className={className} identity={{ tier: "block", component: "WeeklyBoard" }}>
-            <StackV gap={6} principle="block-boundary" items={[
-                () => <Confetti fireKey={celebrateKey} />,
+            <StackV gap={6} principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={[
+                    () => <Confetti fireKey={celebrateKey} />,
 
-                // your standing hero — rank-driven badge · rank/meta · goal meter · CTA
-                ...(showHero ? [() => (
-                    isSkeleton || !hero
-                        ? <HeroSkeleton />
-                        : (
-                            <StandingHeroCard
-                                badge={<IconTile icon={rankBadgeIcon(hero.rank)} tone="neutral" size="sm" />}
-                                rankLabel={hero.rankLabel}
-                                meta={hero.meta}
-                                progress={hero.progress}
-                                ctaLabel={labels.climbCta}
-                                onCta={onClimb}
-                            />
-                        )
-                )] : []),
+                    // your standing hero — rank-driven badge · rank/meta · goal meter · CTA
+                    ...(showHero ? [() => (
+                        isSkeleton || !hero
+                            ? <HeroSkeleton />
+                            : (
+                                <StandingHeroCard
+                                    badge={<IconTile icon={rankBadgeIcon(hero.rank)} tone="neutral" size="sm" />}
+                                    rankLabel={hero.rankLabel}
+                                    meta={hero.meta}
+                                    progress={hero.progress}
+                                    ctaLabel={labels.climbCta}
+                                    onCta={onClimb}
+                                />
+                            )
+                    )] : []),
 
-                // the winners' dais — top-3 (viewer's own column ringed)
-                ...(showPodium ? [() => (
-                    isSkeleton
-                        ? <PodiumSkeleton />
-                        : <Podium meLabel={labels.you} entries={[...podiumEntries]} />
-                )] : []),
+                    // the winners' dais — top-3 (viewer's own column ringed)
+                    ...(showPodium ? [() => (
+                        isSkeleton
+                            ? <PodiumSkeleton />
+                            : <Podium meLabel={labels.you} entries={[...podiumEntries]} />
+                    )] : []),
 
-                // promote / demote legend
-                () => (
-                    <StackH gap={4} principle="content-row" items={[
-                        () => (
-                            <StackH gap={3} principle="sibling-stack" items={[
-                                () => <Box as="span" className="size-2 shrink-0 rounded-full bg-success" />,
-                                () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.legendPromote} />,
+                    // promote / demote legend
+                    () => (
+                        <StackH gap={4} principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            items={[
+                                () => (
+                                    <StackH gap={3} principle="sibling-stack"
+                                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                        items={[
+                                            () => <Box as="span" className="size-2 shrink-0 rounded-full bg-success" />,
+                                            () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.legendPromote} />,
+                                        ]} />
+                                ),
+                                () => (
+                                    <StackH gap={3} principle="sibling-stack"
+                                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                        items={[
+                                            () => <Box as="span" className="size-2 shrink-0 rounded-full bg-danger" />,
+                                            () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.legendDemote} />,
+                                        ]} />
+                                ),
                             ]} />
-                        ),
-                        () => (
-                            <StackH gap={3} principle="sibling-stack" items={[
-                                () => <Box as="span" className="size-2 shrink-0 rounded-full bg-danger" />,
-                                () => <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={labels.legendDemote} />,
-                            ]} />
-                        ),
-                    ]} />
-                ),
+                    ),
 
-                // rank 4+ — the runners the podium can't hold; zone edge-markers via `withVerdict`
-                ...(showRows ? [() => <SurfaceListCard>{rowItems.map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)}</SurfaceListCard>] : []),
-            ]} />
+                    // rank 4+ — the runners the podium can't hold; zone edge-markers via `withVerdict`
+                    ...(showRows ? [() => <SurfaceListCard>{rowItems.map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)}</SurfaceListCard>] : []),
+                ]} />
         </Box>
     )
 }

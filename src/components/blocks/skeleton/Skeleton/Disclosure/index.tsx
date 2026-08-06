@@ -17,3 +17,6 @@ export const SkeletonDisclosure = ({ className }: SkeletonDisclosureProps) => {
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonDisclosure` as the public name. */
+export { SkeletonDisclosure as Disclosure }

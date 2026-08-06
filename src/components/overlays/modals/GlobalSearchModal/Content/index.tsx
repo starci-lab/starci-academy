@@ -80,3 +80,6 @@ export const GlobalSearchContent = ({
         />
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `GlobalSearchContent` as the public name. */
+export { GlobalSearchContent as Content }

@@ -74,6 +74,7 @@ const ProfileLockedState = ({
         <StackV
             gap={6}
             principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
             padding={6}
             identity={identity}
             items={[() => lockedBody]}

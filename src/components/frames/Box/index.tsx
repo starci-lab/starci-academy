@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from "react"
 import { cn } from "@heroui/react"
-import { principleAttr, type PrincipleToken } from "@/components/frames/_principles"
+import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@/components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
@@ -22,6 +22,11 @@ import { resolveIdentity, type CallerIdentity } from "@/components/frames/_ident
 export interface BoxProps {
     /** Layout/seam token this element embodies -> emitted as `data-principle`. */
     principle?: PrincipleToken
+    /**
+     * Why this layer exists - one sentence, emitted as `data-explain` beside the token.
+     * A reason, never a restatement of `principle`.
+     */
+    explain?: ExplainReason
     /**
      * ESCAPE HATCH: raw appearance or foreign-mount classes. Forbidden on every
      * other frame. Do not treat this as a general styling door.
@@ -57,6 +62,7 @@ export const meta = { tier: "frame", name: "Box" } as const
  */
 export const Box = ({
     principle,
+    explain,
     className,
     as: Tag = "div",
     style,
@@ -67,6 +73,7 @@ export const Box = ({
     <Tag
         {...resolveIdentity(identity, meta)}
         data-principle={principleAttr(principle)}
+        data-explain={explainAttr(explain)}
         className={cn(className)}
         style={style}
         aria-hidden={ariaHidden}

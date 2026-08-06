@@ -120,6 +120,7 @@ export const _ShareModal = ({
             <StackV
                 gap={3}
                 principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                 align="center"
                 items={[
                     () => (
@@ -135,6 +136,7 @@ export const _ShareModal = ({
             <StackH
                 gap={2}
                 principle="icon-text"
+                explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
                 align="center"
                 justify="center"
                 items={[
@@ -147,6 +149,7 @@ export const _ShareModal = ({
             <Cluster
                 gap={3}
                 principle="chip-row"
+                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                 justify="center"
                 items={SHARE_PLATFORMS.map((platform) => () => (
                     <a
@@ -173,7 +176,7 @@ export const _ShareModal = ({
             // Matches the original's silence when nothing is loaded yet — no
             // empty-state copy ever shipped for this edge case, so none is
             // invented here (file header).
-            body={isEmpty ? undefined : () => <StackV gap={6} principle="block-boundary" align="center" items={shareBody} />}
+            body={isEmpty ? undefined : () => <StackV gap={6} principle="block-boundary" explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups." align="center" items={shareBody} />}
         />
     )
 }

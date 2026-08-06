@@ -85,28 +85,30 @@ const AiQuotaSubscriptionPanel = ({
 
 
                     body={() => (
-                        <StackV gap={4} principle="content-row" align="start" isSkeleton={isSkeleton} items={[
-                            () => (
-                                <Typography
-                                    size="sm"
-                                    color="muted"
-                                    isSkeleton={isSkeleton}
-                                    text="You don't have a paid plan yet. Upgrade to unlock Premium credit and get graded with premium models."
+                        <StackV gap={4} principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            align="start" isSkeleton={isSkeleton} items={[
+                                () => (
+                                    <Typography
+                                        size="sm"
+                                        color="muted"
+                                        isSkeleton={isSkeleton}
+                                        text="You don't have a paid plan yet. Upgrade to unlock Premium credit and get graded with premium models."
 
-                                />
-                            ),
-                            () => (
-                                <Button
-                                    label="Subscribe to a paid plan"
-                                    variant="primary"
-                                    size="lg"
-                                    suffixIcon={ArrowRightIcon}
-                                    iconSlide
-                                    isSkeleton={isSkeleton}
-                                    onPress={onSubscribe}
-                                />
-                            ),
-                        ]} />
+                                    />
+                                ),
+                                () => (
+                                    <Button
+                                        label="Subscribe to a paid plan"
+                                        variant="primary"
+                                        size="lg"
+                                        suffixIcon={ArrowRightIcon}
+                                        iconSlide
+                                        isSkeleton={isSkeleton}
+                                        onPress={onSubscribe}
+                                    />
+                                ),
+                            ]} />
                     )}
                 />
             </div>

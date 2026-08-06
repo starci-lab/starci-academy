@@ -37,3 +37,6 @@ export const DarkLightModeSwitch = ({ className }: DarkLightModeSwitchProps = {}
         </Switch>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `DarkLightModeSwitch` as the public name. */
+export { DarkLightModeSwitch as DarkLightMode }

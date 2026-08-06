@@ -3,7 +3,7 @@ import { Input as HeroInput, TextField as HeroTextField, cn } from "@heroui/reac
 import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react"
 import { FieldFrame, fieldName } from "@/components/composites/form/_field/FieldFrame"
 import type { StringFieldProps } from "../_input/types"
-import { FieldSkeleton } from "../_input/FieldSkeleton"
+import { FieldSkeleton } from "@/components/atoms/forms/_input/FieldSkeleton"
 
 /** Props for {@link InputPassword}. */
 type InputPasswordProps = StringFieldProps & {

@@ -81,6 +81,7 @@ export const _ContinueLearning = ({
             items={gridItems}
             columns={{ sm: 2, lg: 3 }}
             principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             isSkeleton={isSkeleton}
             identity={{ tier: "block", component: "ContinueLearning" }}
         />

@@ -107,6 +107,7 @@ const UserCellBase = ({
     // of vanishing during loading and jumping the row's width once data lands.
     const trailingSlot = Trailing ? (
         <Box principle="push-end" className="shrink-0">
+        explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row."
             <Trailing isSkeleton={isSkeleton} />
         </Box>
     ) : null

@@ -47,7 +47,7 @@ export const TrialEnrollHook = ({ className }: TrialEnrollHookProps) => {
     }
 
     return (
-        <Box className={className}>
+        <Box identity={{ tier: "block", component: "TrialEnrollHook" }} className={className}>
             <Callout
                 status="accent"
                 title={t("enrollGate.hookTitle")}

@@ -22,6 +22,7 @@ export const CommandSkeleton = ({ lines = 1 }: CommandSkeletonProps) => (
             justify="between"
             padding={{ x: 4, y: 3 }}
             principle="control-pad"
+            explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row."
             body={() => <Typography size="xs" isSkeleton />}
         />
         <Divider />
@@ -29,10 +30,12 @@ export const CommandSkeleton = ({ lines = 1 }: CommandSkeletonProps) => (
             gap={1}
             padding={4}
             principle="cell-pad"
+            explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body."
             items={[() => (
                 <StackV
                     gap={3}
                     principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                     items={Array.from({ length: lines }, () => () => (
                         <Typography size="xs" isSkeleton />
                     ))}

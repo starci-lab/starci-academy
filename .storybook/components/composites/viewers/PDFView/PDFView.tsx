@@ -123,6 +123,7 @@ const PdfViewportPage = (props: PdfViewportPageProps) => {
                     // and `Typography` draws its own shape (COMPOSITE-10).
                     <Box
                         principle="title-subtitle" className="flex w-full max-w-full flex-col items-center justify-center gap-2 rounded-medium border border-default"
+                        explain="Title over supporting line — not label-field, because neither line is a form control label."
                         style={{ minHeight: placeholderMinH }}
                         aria-hidden
                     >
@@ -281,6 +282,7 @@ export const PDFView = ({
                     items={Array.from({ length: SKELETON_PAGE_COUNT }, () => () => (
                         <Box
                             principle="title-subtitle" className="flex w-full flex-col items-center justify-center gap-2 rounded-medium border border-default"
+                            explain="Title over supporting line — not label-field, because neither line is a form control label."
                             style={{ minHeight: 320 }}
                             aria-hidden
                         >

@@ -133,26 +133,29 @@ export const _FlashcardStudyRail = ({
                         textValue={deck.title}
                         className="cursor-pointer rounded-2xl data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft"
                     >
-                        <Box principle="control-pad" className="px-3 py-2">
-                            <Cluster gap={3} principle="value-row" justify="between" align="center" classNames={["w-full", "min-w-0"]} items={[
-                                () => (
-                                    <Typography
-                                        size="sm"
-                                        truncate
-                                        isSkeleton={isSkeleton}
-                                        classNames={["min-w-0", "flex-1"]}
-                                        text={deck.title}
-                                    />
-                                ),
-                                () => (isSkeleton || deck.dueCount ? (
-                                    <Chip
-                                        isSkeleton={isSkeleton}
-                                        tone="warning"
-                                        text={deck.dueCount}
-                                        classNames={["shrink-0"]}
-                                    />
-                                ) : null),
-                            ]} />
+                        <Box principle="control-pad" className="px-3 py-2"
+                            explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.">
+                            <Cluster gap={3} principle="value-row"
+                                explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
+                                justify="between" align="center" classNames={["w-full", "min-w-0"]} items={[
+                                    () => (
+                                        <Typography
+                                            size="sm"
+                                            truncate
+                                            isSkeleton={isSkeleton}
+                                            classNames={["min-w-0", "flex-1"]}
+                                            text={deck.title}
+                                        />
+                                    ),
+                                    () => (isSkeleton || deck.dueCount ? (
+                                        <Chip
+                                            isSkeleton={isSkeleton}
+                                            tone="warning"
+                                            text={deck.dueCount}
+                                            classNames={["shrink-0"]}
+                                        />
+                                    ) : null),
+                                ]} />
                         </Box>
                     </ListBox.Item>
                 ))}
@@ -164,54 +167,57 @@ export const _FlashcardStudyRail = ({
         <Box
             identity={{ tier: "block", component: "FlashcardStudyRail" }}
             principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
             className={`relative flex min-h-0 min-w-0 flex-col p-6${className ? ` ${className}` : ""}`}
         >
-            <StackV gap={4} principle="content-row" classNames={["min-h-0", "min-w-0", "flex-1"]} items={[
-                () => (
-                    <StackV gap={4} items={[
-                        () => (
-                            <TabsCard
-                                variant="primary"
-                                leftTabs={{
-                                    selectedKey: mode,
-                                    ariaLabel: labels.modeAria,
-                                    onSelectionChange: (key) => {
-                                        if (key === "study" || key === "quiz") {
-                                            onModeChange(key)
-                                        }
-                                    },
-                                    items: [
-                                        {
-                                            key: "study",
-                                            icon: <CardsThreeIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
-                                            label: labels.modeStudy,
+            <StackV gap={4} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                classNames={["min-h-0", "min-w-0", "flex-1"]} items={[
+                    () => (
+                        <StackV gap={4} items={[
+                            () => (
+                                <TabsCard
+                                    variant="primary"
+                                    leftTabs={{
+                                        selectedKey: mode,
+                                        ariaLabel: labels.modeAria,
+                                        onSelectionChange: (key) => {
+                                            if (key === "study" || key === "quiz") {
+                                                onModeChange(key)
+                                            }
                                         },
-                                        {
-                                            key: "quiz",
-                                            icon: <MicrophoneStageIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
-                                            label: labels.modeQuiz,
-                                        },
-                                    ],
-                                }}
-                            />
-                        ),
-                        ...(mode === "study" ? [() => (
-                            <InputSearch
-                                label={labels.decksLabel}
-                                ariaLabel={labels.searchAria}
-                                placeholder={labels.searchPlaceholder}
-                                value={query}
-                                onValueChange={onQueryChange}
-                            />
-                        )] : []),
-                    ]} />
-                ),
-                ...(mode === "study" ? [() => (
-                    <ScrollShadow hideScrollBar className="min-h-0 min-w-0 flex-1 overflow-y-auto">
-                        {renderDeckRegion()}
-                    </ScrollShadow>
-                )] : []),
-            ]} />
+                                        items: [
+                                            {
+                                                key: "study",
+                                                icon: <CardsThreeIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+                                                label: labels.modeStudy,
+                                            },
+                                            {
+                                                key: "quiz",
+                                                icon: <MicrophoneStageIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+                                                label: labels.modeQuiz,
+                                            },
+                                        ],
+                                    }}
+                                />
+                            ),
+                            ...(mode === "study" ? [() => (
+                                <InputSearch
+                                    label={labels.decksLabel}
+                                    ariaLabel={labels.searchAria}
+                                    placeholder={labels.searchPlaceholder}
+                                    value={query}
+                                    onValueChange={onQueryChange}
+                                />
+                            )] : []),
+                        ]} />
+                    ),
+                    ...(mode === "study" ? [() => (
+                        <ScrollShadow hideScrollBar className="min-h-0 min-w-0 flex-1 overflow-y-auto">
+                            {renderDeckRegion()}
+                        </ScrollShadow>
+                    )] : []),
+                ]} />
         </Box>
     )
 }

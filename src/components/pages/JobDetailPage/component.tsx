@@ -187,6 +187,7 @@ export const _JobDetailPage = ({
                                     <StackH
                                         gap={3}
                                         principle="content-row"
+                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                         items={[
                                             () => (isSkeleton ? (
                                                 <Skeleton className="size-16 shrink-0 rounded-2xl" />

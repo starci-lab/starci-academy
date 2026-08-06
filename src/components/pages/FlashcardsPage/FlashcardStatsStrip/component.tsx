@@ -23,7 +23,7 @@ export interface FlashcardStatsStripLabels {
     label: string
     /** Error-branch title (the deck-list fetch failed). */
     errorTitle: string
-    /** Headline sentence — mastered/total already interpolated, the " · N%" tail already appended. */
+    /** Headline sentence — mastered/total already interpolated, the — · N%" tail already appended. */
     masteredLine: string
     /** Streak chip label, already interpolated with the day count. Only shown once `streak > 0`. */
     streakChip: string
@@ -114,56 +114,60 @@ export const _FlashcardStatsStrip = ({
 
     return (
         <LabeledCard className={className} identity={IDENTITY} label={labels.label}>
-            <StackV gap={3} principle="sibling-stack" isSkeleton={isSkeleton} items={[
-                () => (
-                    <StackH gap={4} principle="content-row" justify="between" isSkeleton={isSkeleton} items={[
-                        () => (
-                            <Typography
-                                size="sm"
-                                isSkeleton={isSkeleton}
-                                truncate
-                                classNames={["min-w-0"]}
-                                text={labels.masteredLine}
+            <StackV gap={3} principle="sibling-stack" isSkeleton={isSkeleton}
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                items={[
+                    () => (
+                        <StackH gap={4} principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            justify="between" isSkeleton={isSkeleton} items={[
+                                () => (
+                                    <Typography
+                                        size="sm"
+                                        isSkeleton={isSkeleton}
+                                        truncate
+                                        classNames={["min-w-0"]}
+                                        text={labels.masteredLine}
+                                    />
+                                ),
+                                ...(streak > 0 ? [() => (
+                                    <Chip
+                                        isSkeleton={isSkeleton}
+                                        tone="warning"
+                                        icon={FlameIcon}
+                                        text={labels.streakChip}
+                                        classNames={["shrink-0"]}
+                                    />
+                                )] : []),
+                            ]} />
+                    ),
+                    // maturity bar: mastered · learning · new, filling toward total. No `isSkeleton` of its
+                    // own, so the mirror sits right here (co-located), not in a parallel tree.
+                    () => (isSkeleton
+                        ? <Skeleton.SegmentBar />
+                        : (
+                            <SegmentBar
+                                max={total}
+                                ariaLabel={labels.barAria}
+                                segments={[
+                                    { key: "mastered", label: labels.mastered, value: mastered, color: "var(--success)" },
+                                    { key: "learning", label: labels.learning, value: learning, color: "var(--warning)" },
+                                    // light track tone (same as a ProgressBar's empty track) — "untouched",
+                                    // NOT a heavy grey slice
+                                    { key: "new", label: labels.new, value: newCount, color: "var(--default)" },
+                                ]}
                             />
-                        ),
-                        ...(streak > 0 ? [() => (
-                            <Chip
-                                isSkeleton={isSkeleton}
-                                tone="warning"
-                                icon={FlameIcon}
-                                text={labels.streakChip}
-                                classNames={["shrink-0"]}
-                            />
-                        )] : []),
-                    ]} />
-                ),
-                // maturity bar: mastered · learning · new, filling toward total. No `isSkeleton` of its
-                // own, so the mirror sits right here (co-located), not in a parallel tree.
-                () => (isSkeleton
-                    ? <Skeleton.SegmentBar />
-                    : (
-                        <SegmentBar
-                            max={total}
-                            ariaLabel={labels.barAria}
-                            segments={[
-                                { key: "mastered", label: labels.mastered, value: mastered, color: "var(--success)" },
-                                { key: "learning", label: labels.learning, value: learning, color: "var(--warning)" },
-                                // light track tone (same as a ProgressBar's empty track) — "untouched",
-                                // NOT a heavy grey slice
-                                { key: "new", label: labels.new, value: newCount, color: "var(--default)" },
-                            ]}
+                        )),
+                    // retention only once it's meaningful; else a first-review nudge
+                    ...(showRetention || showFirstReviewHint ? [() => (
+                        <Typography
+                            size="xs"
+                            color="muted"
+                            isSkeleton={isSkeleton}
+                            text={showRetention ? labels.retentionCaption : labels.firstReviewHint}
                         />
-                    )),
-                // retention only once it's meaningful; else a first-review nudge
-                ...(showRetention || showFirstReviewHint ? [() => (
-                    <Typography
-                        size="xs"
-                        color="muted"
-                        isSkeleton={isSkeleton}
-                        text={showRetention ? labels.retentionCaption : labels.firstReviewHint}
-                    />
-                )] : []),
-            ]} />
+                    )] : []),
+                ]} />
         </LabeledCard>
     )
 }

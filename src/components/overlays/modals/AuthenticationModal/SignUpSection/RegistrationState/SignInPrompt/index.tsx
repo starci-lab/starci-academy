@@ -22,9 +22,10 @@ export const SignInPrompt = ({
 }: SignInPromptProps) => {
     const t = useTranslations()
     return (
-        <StackH
+        <StackH identity={{ tier: "overlay", component: "SignInPrompt" }}
             gap={3}
             principle="flex-action"
+            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
             justify="center"
             items={[
                 () => <Typography size="xs" color="muted" text={t("auth.signUp.haveAccount")} />,

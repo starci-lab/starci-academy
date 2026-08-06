@@ -85,6 +85,7 @@ const historyRowContent = (
                     <StackH
                         gap={3}
                         principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                         align="center"
                         justify="between"
                         items={[
@@ -92,6 +93,7 @@ const historyRowContent = (
                                 <StackH
                                     gap={3}
                                     principle="chip-row"
+                                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                                     align="center"
                                     items={[
                                         () => <Typography size="sm" weight="medium" text={row.attemptLineLabel} />,
@@ -107,6 +109,7 @@ const historyRowContent = (
                     <StackH
                         gap={3}
                         principle="chip-row"
+                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                         align="center"
                         at="sm"
                         justify="between"

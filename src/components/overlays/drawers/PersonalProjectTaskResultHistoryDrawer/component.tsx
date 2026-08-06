@@ -90,7 +90,7 @@ const attemptRowContent = (
     ]
 
     const attemptLine = [
-        () => <StackH gap={2} principle="chip-row" align="center" items={attemptLabelAndChip} />,
+        () => <StackH gap={2} principle="chip-row" align="center" items={attemptLabelAndChip} explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."/>,
         () => (
             <Typography
                 size="sm"
@@ -110,15 +110,16 @@ const attemptRowContent = (
     ]
 
     const rowContent = [
-        () => <StackH gap={3} principle="sibling-stack" align="center" justify="between" items={attemptLine} />,
+        () => <StackH gap={3} principle="sibling-stack" align="center" justify="between" items={attemptLine} explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."/>,
         ...(bylineParts.length > 0 || timeLabel != null ? [() => (
             <StackH
                 gap={3}
                 principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                 align="center"
                 justify="between"
                 items={[
-                    ...(bylineParts.length > 0 ? [() => <StackH gap={3} principle="sibling-stack" align="center" items={bylineParts} />] : []),
+                    ...(bylineParts.length > 0 ? [() => <StackH gap={3} principle="sibling-stack" explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups." align="center" items={bylineParts} />] : []),
                     ...(timeLabel != null ? [() => <Typography size="xs" color="muted" text={timeLabel} />] : []),
                 ]}
             />

@@ -78,12 +78,14 @@ export const MyFeedbackPage = ({
                 <StackV
                     gap={3}
                     principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                     items={[
                         () => (
                             <StackH
                                 gap={4}
                                 align="center"
                                 principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                 items={[
                                     () => <Skeleton.Chip />,
                                     () => <Skeleton.Typography type="body-sm" width="1/3" />,
@@ -104,12 +106,14 @@ export const MyFeedbackPage = ({
                     <StackV
                         gap={3}
                         principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                         items={[
                             () => (
                                 <Cluster
                                     gap={4}
                                     align="center"
                                     principle="content-row"
+                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                     items={[
                                         () => (
                                             <Chip
@@ -128,7 +132,8 @@ export const MyFeedbackPage = ({
                                             </Typography>
                                         ),
                                         () => (
-                                            <Box principle="push-end" className="ml-auto">
+                                            <Box principle="push-end" className="ml-auto"
+                                                explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row.">
                                                 <Typography type="body-xs" color="muted">
                                                     {formatDate(item.createdAt)}
                                                 </Typography>

@@ -1,5 +1,5 @@
 import React from "react"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { PuzzlePieceIcon } from "@phosphor-icons/react"
 import { SurfaceCardList } from "@/components/composites/cards/SurfaceCard"
 import { VariantChipDifficulty, type Difficulty } from "@/components/blocks/learn/VariantChip"
@@ -88,7 +88,7 @@ const ModuleChallengeList = ({
     const rows = isSkeleton && challenges.length === 0 ? SKELETON_CHALLENGES : challenges
 
     return (
-        <SurfaceCardList
+        <SurfaceCardList identity={{ tier: "block", component: "ModuleChallengeList" }}
 
             isSkeleton={isSkeleton}
             items={rows.map((challenge) => ({
@@ -96,7 +96,7 @@ const ModuleChallengeList = ({
                 leading: () => (isSkeleton ? (
                     // The color is chosen DIRECTLY by this block (no atom in between) —
                     // hand-roll a single shimmer dot in place of the puzzle icon.
-                    <HeroSkeleton className="size-5 shrink-0 rounded-full" />
+                    <Skeleton className="size-5 shrink-0 rounded-full" />
                 ) : (
                     <PuzzlePieceIcon
                         aria-hidden

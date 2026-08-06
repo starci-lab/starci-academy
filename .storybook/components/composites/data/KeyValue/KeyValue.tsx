@@ -108,6 +108,7 @@ const KeyValueRow = ({
                 gap={2}
                 classNames={["min-w-0"]}
                 principle="title-subtitle"
+                explain="Title over supporting line — not label-field, because neither line is a form control label."
                 isSkeleton={isSkeleton}
                 items={[
                     () => (
@@ -159,6 +160,7 @@ const KeyValueRow = ({
             justify="between"
             gap={3}
             principle="value-row"
+            explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
             classNames={classNames}
             isSkeleton={isSkeleton}
             items={[() => pairContent]}
@@ -267,3 +269,9 @@ const KeyValueList = ({
  * `List` (N pairs, `items`). Visual variants = PROP (`emphasis`/`divider`), §6b.
  */
 export { KeyValueRow, KeyValueList }
+
+/** Folder-matching compound namespace (export-matches-folder / ATOM-11 sync). */
+export const KeyValue = {
+    Row: KeyValueRow,
+    List: KeyValueList,
+} as const

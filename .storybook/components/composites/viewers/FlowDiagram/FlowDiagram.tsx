@@ -50,6 +50,7 @@ const FlowDiagramCardNode = ({ data, selected }: NodeProps) => {
             <Handle type="target" position={Position.Top} className="!size-2 !border-none !bg-muted" />
             <Box
                 principle="title-subtitle"
+                explain="Title over supporting line — not label-field, because neither line is a form control label."
                 className={cn(
                     "flex min-w-[140px] max-w-[220px] flex-col items-center gap-1 rounded-large border bg-surface px-3 py-2 text-center shadow-sm transition-colors",
                     selected ? "border-accent ring-2 ring-accent/40" : "border-default",
@@ -130,6 +131,7 @@ export const FlowDiagram = ({ nodes, edges, isSkeleton = false, classNames}: Flo
                 <StackH
                     gap={1}
                     principle="page-pad"
+                    explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
                     padding={6}
                     align="center"
                     justify="center"
@@ -138,12 +140,15 @@ export const FlowDiagram = ({ nodes, edges, isSkeleton = false, classNames}: Flo
                         <StackH
                             gap={5}
                             principle="group-boundary"
+                            explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
                             align="center"
                             items={Array.from({ length: SKELETON_NODE_COUNT }, () => () => (
-                                <Box principle="control-pad" className="min-w-[140px] max-w-[220px] rounded-large border border-default bg-surface px-3 py-2 text-center shadow-sm">
+                                <Box principle="control-pad" className="min-w-[140px] max-w-[220px] rounded-large border border-default bg-surface px-3 py-2 text-center shadow-sm"
+                                    explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.">
                                     <StackV
                                         gap={2}
                                         principle="title-subtitle"
+                                        explain="Title over supporting line — not label-field, because neither line is a form control label."
                                         align="center"
                                         items={[
                                             () => <Typography size="sm" weight="medium" isSkeleton />,

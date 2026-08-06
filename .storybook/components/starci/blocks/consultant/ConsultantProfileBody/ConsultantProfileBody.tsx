@@ -81,59 +81,63 @@ const ConsultantProfileBody = ({
     const { fullName, jobTitle, companyTitle, description, avatarUrl, contactUnlocked, contactLinks } = consultant
 
     const nameRow = (
-        <StackV gap={1} align="center" principle="name-handle" isSkeleton={isSkeleton} items={[
-            () => (
-                <Typography
-                    size="h4"
-                    weight="bold"
-                    align="center"
-                    isSkeleton={isSkeleton}
-                    text={fullName}
+        <StackV gap={1} align="center" principle="name-handle"
+            explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
+            isSkeleton={isSkeleton} items={[
+                () => (
+                    <Typography
+                        size="h4"
+                        weight="bold"
+                        align="center"
+                        isSkeleton={isSkeleton}
+                        text={fullName}
 
-                />
-            ),
-            ...(isSkeleton || jobTitle ? [() => (
-                <Typography
-                    size="sm"
-                    color="muted"
-                    align="center"
-                    isSkeleton={isSkeleton}
-                    text={jobTitle}
+                    />
+                ),
+                ...(isSkeleton || jobTitle ? [() => (
+                    <Typography
+                        size="sm"
+                        color="muted"
+                        align="center"
+                        isSkeleton={isSkeleton}
+                        text={jobTitle}
 
-                />
-            )] : []),
-        ]} />
+                    />
+                )] : []),
+            ]} />
     )
 
     // identity: centered photo, name+role, pressable company row
     const identity = (
-        <StackV gap={4} align="center" principle="card-caption" isSkeleton={isSkeleton} items={[
-            () => (
-                <div className="w-28">
-                    <Image
-                        src={avatarUrl}
-                        alt={fullName}
-                        ratio="square"
-                        radius="full"
+        <StackV gap={4} align="center" principle="card-caption"
+            explain="Holds caption text under card media so the caption stays attached to the image above it."
+            isSkeleton={isSkeleton} items={[
+                () => (
+                    <div className="w-28">
+                        <Image
+                            src={avatarUrl}
+                            alt={fullName}
+                            ratio="square"
+                            radius="full"
+                            isSkeleton={isSkeleton}
+
+                        />
+                    </div>
+                ),
+                () => nameRow,
+                ...(isSkeleton || companyTitle ? [() => (
+                    <Button
                         isSkeleton={isSkeleton}
+                        variant="secondary"
+                        size="sm"
+                        label={companyTitle ?? ""}
+                        prefixIcon={BuildingsIcon}
+                        onPress={onOpenCompany}
+                        isDisabled={isSkeleton || !onOpenCompany}
 
                     />
-                </div>
-            ),
-            () => nameRow,
-            ...(isSkeleton || companyTitle ? [() => (
-                <Button
-                    isSkeleton={isSkeleton}
-                    variant="secondary"
-                    size="sm"
-                    label={companyTitle ?? ""}
-                    prefixIcon={BuildingsIcon}
-                    onPress={onOpenCompany}
-                    isDisabled={isSkeleton || !onOpenCompany}
-
-                />
-            )] : []),
-        ]} />
+                )] : []),
+            ]} />
     )
 
     // contact fork — see file header for why loading shimmers neutrally

@@ -153,18 +153,15 @@ const Header = ({
             )}
             {showDescription ? (
                 // clamp to 2 lines on mobile (keep the header short on a phone); full on sm+
-                // — a viewport-width decision, so the wrapper owns it, not the atom. Skipped
-                // while loading: the shimmer bar has no overflow to clamp.
-                isSkeleton ? (
-                    <Typography size="sm" color="muted" isSkeleton />
-                ) : (
-                    <div className="line-clamp-2 @app-sm:line-clamp-none">
-                        <Typography size="sm"
-                            color="muted"
-                            text={description}
-                        />
-                    </div>
-                )
+                // — a viewport-width decision, so the wrapper owns it, not the atom.
+                <div className={isSkeleton ? undefined : "line-clamp-2 @app-sm:line-clamp-none"}>
+                    <Typography
+                        size="sm"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        text={description}
+                    />
+                </div>
             ) : null}
         </>
     )
@@ -175,6 +172,7 @@ const Header = ({
             justify="between"
             gap={4}
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             items={[
                 () => <StackV gap={3} classNames={["min-w-0"]} items={[() => titleBlock]} />,
                 // Right slot: shrink-0 prevents action buttons from being squeezed.
@@ -201,6 +199,7 @@ const Header = ({
                         gap={3}
                         align="stretch"
                         principle="chip-row"
+                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                         items={[
                             () => <Chip isSkeleton />,
                             () => <Chip isSkeleton />,
@@ -291,6 +290,7 @@ const BottomBar = ({
                 justify="between"
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 items={[
                     () => <div className="min-w-0"><Main isSkeleton={isSkeleton} /></div>,
                     () => <div className="shrink-0"><Actions isSkeleton={isSkeleton} /></div>,
@@ -313,3 +313,9 @@ const BottomBar = ({
  * on 2026-07-26 — see the history note at the top of this file.
  */
 export { Header as PageHeader, BottomBar as PageBottomBar }
+
+/** Folder-matching compound namespace (export-matches-folder). Existing named exports stay public. */
+export const Page = {
+    Header: Header,
+    BottomBar: BottomBar,
+} as const

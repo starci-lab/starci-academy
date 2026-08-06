@@ -31,11 +31,13 @@ export const FlashcardDeckListSkeleton = ({
                             <StackV
                                 gap={3}
                                 principle="sibling-stack"
+                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                 items={[
                                     () => (
                                         <StackH
                                             gap={4}
                                             principle="content-row"
+                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                             justify="between"
                                             align="center"
                                             items={[
@@ -49,6 +51,7 @@ export const FlashcardDeckListSkeleton = ({
                                         <StackH
                                             gap={4}
                                             principle="content-row"
+                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                             justify="between"
                                             align="center"
                                             items={[

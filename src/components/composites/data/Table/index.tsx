@@ -147,7 +147,7 @@ const TableBase = ({
                 <TableRow key={rowIndex} id={`skeleton-${rowIndex}`}>
                     {columns.map((column) => (
                         <TableCell key={column.key}>
-                            {/* The bar is 14px tall < the real cell's 20px line-height → wrap it in an
+                            {/* The bar is 14px tall < the real cell's 20px line-height → wrap it in an>
                                 `h-5` box so the mirror row is the EXACT height of a real row (§8, no
                                 layout jump). Balance the height with `items-center`, NOT with margin
                                 (§10a). The tag sits OUTSIDE the atom (the atom takes no rest props) —
@@ -166,7 +166,9 @@ const TableBase = ({
             renderEmptyState={
                 EmptyContent != null
                     ? () => (
-                        <Box principle="page-pad" className="text-center">
+                        <Box principle="page-pad"
+                            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
+                            className="text-center">
                             <EmptyContent isSkeleton={isSkeleton} />
                         </Box>
                     )

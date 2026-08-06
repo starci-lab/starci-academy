@@ -151,6 +151,7 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
                                 <StackV
                                     gap={3}
                                     principle="sibling-stack"
+                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                     items={[0, 1, 2, 3].map((row) => () => (
                                         <Skeleton key={row} className="h-12 w-full rounded-xl" />
                                     ))}

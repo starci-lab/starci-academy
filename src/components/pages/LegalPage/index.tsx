@@ -109,41 +109,46 @@ export const LegalPage = ({ kind }: LegalPageProps) => {
 
     return (
         <PageContainer>
-            <Box principle="center-measure" className="mx-auto max-w-3xl">
-                <StackV gap={7} principle="layout-split" items={[
-                    () => (
-                        <PageHeader
-                            breadcrumb={(
-                                <Breadcrumbs>
-                                    <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale().build())}>
-                                        {t("nav.home")}
-                                    </Breadcrumbs.Item>
-                                    <Breadcrumbs.Item>
-                                        {t(`legal.${kind}.title`)}
-                                    </Breadcrumbs.Item>
-                                </Breadcrumbs>
-                            )}
-                            title={t(`legal.${kind}.title`)}
-                            description={t(`legal.${kind}.description`)}
-                            meta={(
-                                <Typography type="body-xs" color="muted">
-                                    {t("legal.lastUpdated", { date: lastUpdated })}
-                                </Typography>
-                            )}
-                        />
-                    ),
-                    () => <StackV gap={7} principle="layout-split" items={docItems} />,
-                    () => (
-                        <Button
-                            variant="tertiary"
-                            size="sm"
-                            className="self-start"
-                            onPress={() => router.push(pathConfig().locale().course().build())}
-                        >
-                            {`${t("cart.browseCourses")} →`}
-                        </Button>
-                    ),
-                ]} />
+            <Box principle="center-measure" className="mx-auto max-w-3xl"
+                explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
+                <StackV gap={7} principle="layout-split"
+                    explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+                    items={[
+                        () => (
+                            <PageHeader
+                                breadcrumb={(
+                                    <Breadcrumbs>
+                                        <Breadcrumbs.Item onPress={() => router.push(pathConfig().locale().build())}>
+                                            {t("nav.home")}
+                                        </Breadcrumbs.Item>
+                                        <Breadcrumbs.Item>
+                                            {t(`legal.${kind}.title`)}
+                                        </Breadcrumbs.Item>
+                                    </Breadcrumbs>
+                                )}
+                                title={t(`legal.${kind}.title`)}
+                                description={t(`legal.${kind}.description`)}
+                                meta={(
+                                    <Typography type="body-xs" color="muted">
+                                        {t("legal.lastUpdated", { date: lastUpdated })}
+                                    </Typography>
+                                )}
+                            />
+                        ),
+                        () => <StackV gap={7} principle="layout-split"
+                            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+                            items={docItems} />,
+                        () => (
+                            <Button
+                                variant="tertiary"
+                                size="sm"
+                                className="self-start"
+                                onPress={() => router.push(pathConfig().locale().course().build())}
+                            >
+                                {`${t("cart.browseCourses")} →`}
+                            </Button>
+                        ),
+                    ]} />
             </Box>
         </PageContainer>
     )

@@ -1551,6 +1551,51 @@
         ".storybook/test-runner/patterns.mjs"
       ],
       "next": "None for this patch."
+    },
+    {
+      "id": "eslint-ab-identity-heroui-safe-2026-08-07",
+      "date": "2026-08-07",
+      "status": "applied",
+      "summary": "Safe burn: 1 identity-wrapper (CourseDetailPage→Box identity); 7 heroui→existing Spinner/Button/FloatingActionButton atom|composite; RagSourceGraph left hard-case.",
+      "reason": "Only clear roots and drop-in atom/composite switches. Did not invent atoms, principles, or force identity onto ReactFlow host divs. Locked nivo/nivoexpert/MockInterviewSession/etc. untouched.",
+      "fixed": {
+        "no-identity-wrapper-div": 1,
+        "no-heroui-outside-vocabulary": 7
+      },
+      "hardCases": [
+        "RagSourceGraph: intentional host div for ReactFlow (FlowDiagram twin pattern)",
+        "remaining ~99 nivo identity wrappers (locked)",
+        "remaining heroui debt where HeroUI JSX API ≠ house atom API or atom missing"
+      ],
+      "holdsPreserved": 27,
+      "next": "Continue heroui only where SB twin already uses atom API; RagSourceGraph needs teacher ruling or identity-capable canvas frame."
+    },
+    {
+      "id": "ragsourcegraph-data-tier-div-2026-08-07",
+      "date": "2026-08-07",
+      "status": "open",
+      "summary": "RagSourceGraph keeps a hand-written `<div data-tier=\"block\">` root.",
+      "reason": "Box/frame roots hard-code vocabulary identity (frame/Box). This block must self-identify as block/RagSourceGraph for anatomy/tier audits; same pattern as FlowDiagram. Forcing identity on Box would lie about the tier.",
+      "path": "src/components/blocks/rendering/RagSourceGraph/index.tsx",
+      "next": "Teacher: allow block-tier identity on a plain container frame, or exempt ReactFlow roots from no-identity-wrapper-div."
+    },
+    {
+      "id": "eslint-arch-burn-pass2-2026-08-07",
+      "date": "2026-08-07",
+      "status": "applied",
+      "summary": "Architectural burn pass2: identity −54, heroui −21, unlocked explain-only −1 (71 locked), inline-skeleton −3, raw/cn −1 each; PostRow explain satisfies family rule.",
+      "reason": "No invented principles for missing-both. Locked paths hold most remaining explain-only debt. RagSourceGraph left as open hard-case.",
+      "holdsPreserved": 27,
+      "next": "Missing-both only with registered tokens; host-root identity strategy; page-folder extraction with import audit."
+    },
+    {
+      "id": "eslint-arch-structural-safe-2026-08-07",
+      "date": "2026-08-07",
+      "status": "applied",
+      "summary": "Structural safe burn: 6 export-matches aliases; 2 utils moved to modules/utils; page-folder extras skipped.",
+      "reason": "Only mechanical aliases and pure util moves. BlockRegistry skipped (not a component). ~356 page-folder and ~64 helpers left as non-mechanical.",
+      "holdsPreserved": 27,
+      "next": "page-folder extraction only with per-file import audit and SB twin plan."
     }
   ]
 }

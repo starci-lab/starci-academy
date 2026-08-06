@@ -3,7 +3,7 @@ import type { DateValue } from "@internationalized/date"
 import { FieldFrame, fieldName } from "@sb-components/composites/form/_field/FieldFrame"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { FrameProps } from "../_input/types"
-import { FieldSkeleton } from "../_input/FieldSkeleton"
+import { FieldSkeleton } from "@sb-components/atoms/forms/_input/FieldSkeleton"
 
 /** `InputDate` — date picker (HeroUI DatePicker + DateField segments + Calendar popover). */
 export const InputDate = ({

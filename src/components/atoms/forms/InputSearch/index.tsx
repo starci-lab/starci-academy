@@ -2,7 +2,7 @@ import { useId } from "react"
 import { SearchField as HeroSearchField, cn } from "@heroui/react"
 import { FieldFrame, fieldName } from "@/components/composites/form/_field/FieldFrame"
 import type { StringFieldProps } from "../_input/types"
-import { FieldSkeleton } from "../_input/FieldSkeleton"
+import { FieldSkeleton } from "@/components/atoms/forms/_input/FieldSkeleton"
 
 /** Props for {@link InputSearch}. */
 type InputSearchProps = StringFieldProps & {

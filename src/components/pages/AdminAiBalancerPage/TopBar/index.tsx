@@ -44,30 +44,32 @@ export const TopBar = () => {
 
     return (
         <div className="pt-4">
-            <StackH gap={4} principle="content-row" align="center" items={[
-                () => (
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-slate-400 hover:text-white"
-                        onPress={onBack}
-                    >
-                        <ArrowLeftIcon className="h-5 w-5" />
-                        {t("backToAdmin")}
-                    </Button>
-                ),
-                () => (
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-slate-400 hover:text-white"
-                        onPress={onOpenUploadVideo}
-                    >
-                        <FilmStripIcon className="h-5 w-5" />
-                        {t("uploadVideoTool")}
-                    </Button>
-                ),
-            ]} />
+            <StackH gap={4} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                align="center" items={[
+                    () => (
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-slate-400 hover:text-white"
+                            onPress={onBack}
+                        >
+                            <ArrowLeftIcon className="h-5 w-5" />
+                            {t("backToAdmin")}
+                        </Button>
+                    ),
+                    () => (
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-slate-400 hover:text-white"
+                            onPress={onOpenUploadVideo}
+                        >
+                            <FilmStripIcon className="h-5 w-5" />
+                            {t("uploadVideoTool")}
+                        </Button>
+                    ),
+                ]} />
         </div>
     )
 }

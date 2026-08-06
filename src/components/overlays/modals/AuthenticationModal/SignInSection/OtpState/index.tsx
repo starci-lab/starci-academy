@@ -103,6 +103,7 @@ export const OtpState = ({ hideCloseButton }: OtpStateProps = {}) => {
             <StackH
                 gap={3}
                 principle="flex-action"
+                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                 justify="center"
                 items={resendRow}
             />

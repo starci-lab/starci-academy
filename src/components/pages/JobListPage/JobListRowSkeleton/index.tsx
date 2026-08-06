@@ -19,6 +19,7 @@ export const JobListRowSkeleton = () => {
             <StackH
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 align="center"
                 items={[
                     () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
@@ -26,6 +27,7 @@ export const JobListRowSkeleton = () => {
                         <StackV
                             gap={2}
                             principle="title-subtitle"
+                            explain="Title over supporting line — not label-field, because neither line is a form control label."
                             classNames={["min-w-0", "flex-1"]}
                             items={[
                                 () => <Skeleton.Typography type="body-sm" width="1/2" />,
@@ -34,6 +36,7 @@ export const JobListRowSkeleton = () => {
                                     <Cluster
                                         gap={3}
                                         principle="chip-row"
+                                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                                         items={[
                                             () => <Skeleton.Typography type="body-xs" width="1/4" />,
                                             () => <Skeleton.Chip />,
@@ -47,6 +50,7 @@ export const JobListRowSkeleton = () => {
                         <StackV
                             gap={2}
                             principle="title-subtitle"
+                            explain="Title over supporting line — not label-field, because neither line is a form control label."
                             align="end"
                             classNames={["shrink-0"]}
                             items={[

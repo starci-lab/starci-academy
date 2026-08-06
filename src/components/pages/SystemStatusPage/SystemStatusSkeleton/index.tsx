@@ -1,5 +1,5 @@
 import React from "react"
-import { Skeleton } from "@heroui/react"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Box } from "@/components/frames/Box"
 import { Cluster } from "@/components/frames/Cluster"
 import { Grid, type GridItem } from "@/components/frames/Grid"
@@ -14,15 +14,18 @@ export interface SystemStatusSkeletonProps extends WithClassNames<undefined> {
 
 /** A single component-card placeholder mirroring {@link ComponentCard}. */
 const ComponentCardSkeleton = () => (
-    <Box principle="card-padding" className="rounded-large bg-surface p-4 shadow-surface">
+    <Box principle="card-padding" className="rounded-large bg-surface p-4 shadow-surface"
+        explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
         <StackV
             gap={3}
             principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             items={[
                 () => (
                     <StackH
                         gap={3}
                         principle="flex-action"
+                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                         align="center"
                         justify="between"
                         items={[
@@ -30,6 +33,7 @@ const ComponentCardSkeleton = () => (
                                 <StackH
                                     gap={3}
                                     principle="identity"
+                                    explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
                                     align="center"
                                     items={[
                                         () => <Skeleton className="size-2.5 rounded-full" />,
@@ -45,6 +49,7 @@ const ComponentCardSkeleton = () => (
                     <StackH
                         gap={3}
                         principle="flex-action"
+                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                         align="center"
                         justify="between"
                         items={[
@@ -60,16 +65,19 @@ const ComponentCardSkeleton = () => (
 
 /** A single AI key group placeholder mirroring {@link AiKeyGroup}. */
 const AiKeyGroupSkeleton = () => (
-    <Box principle="card-padding" className="rounded-large bg-surface p-4 shadow-surface">
+    <Box principle="card-padding" className="rounded-large bg-surface p-4 shadow-surface"
+        explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
         <StackV
             gap={4}
             principle="label-field"
+            explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
             items={[
                 () => <Skeleton className="h-4 w-2/3 rounded" />,
                 () => (
                     <Cluster
                         gap={3}
                         principle="chip-row"
+                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                         items={Array.from({ length: 5 }, (_, index) => () => (
                             <Skeleton key={index} className="h-5 w-20 rounded-full" />
                         ))}
@@ -88,9 +96,10 @@ const AiKeyGroupSkeleton = () => (
 export const SystemStatusSkeleton = ({ aiOnly = false }: SystemStatusSkeletonProps) => {
     if (aiOnly) {
         return (
-            <StackV
+            <StackV identity={{ tier: "page", component: "SystemStatusSkeleton" }}
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 items={Array.from({ length: 2 }, (_, index) => () => (
                     <AiKeyGroupSkeleton key={index} />
                 ))}
@@ -104,21 +113,24 @@ export const SystemStatusSkeleton = ({ aiOnly = false }: SystemStatusSkeletonPro
     }))
 
     return (
-        <StackV
+        <StackV identity={{ tier: "page", component: "SystemStatusSkeleton" }}
             gap={6}
             principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
             items={[
                 () => <Skeleton className="h-14 w-full rounded-2xl" />,
                 () => (
                     <StackV
                         gap={4}
                         principle="label-field"
+                        explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
                         items={[
                             () => <Skeleton className="h-4 w-32 rounded" />,
                             () => (
                                 <Grid
                                     columns={{ base: 1, sm: 2, lg: 3 }}
                                     principle="content-row"
+                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                     items={gridItems}
                                 />
                             ),

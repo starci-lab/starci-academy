@@ -28,3 +28,6 @@ export const SkeletonCheckbox = ({
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonCheckbox` as the public name. */
+export { SkeletonCheckbox as Checkbox }

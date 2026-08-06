@@ -31,16 +31,20 @@ export const OverviewContributionsSkeleton = ({ className }: WithClassNames<unde
     return (
         <div className={cn("flex flex-col gap-3", className)}>
             {/* header: count text (left) + year switcher (right) */}
-            <StackH gap={4} principle="content-row" justify="between" align="center" items={[
-                () => <Skeleton.Typography type="body-sm" width="1/3" />,
-                () => (
-                    <StackH gap={3} principle="flex-action" align="center" items={
-                        Array.from({ length: YEAR_BUTTONS }, (_, index) => () => (
-                            <Skeleton key={index} className="h-5 w-10 rounded-medium" />
-                        ))
-                    } />
-                ),
-            ]} />
+            <StackH gap={4} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                justify="between" align="center" items={[
+                    () => <Skeleton.Typography type="body-sm" width="1/3" />,
+                    () => (
+                        <StackH gap={3} principle="flex-action"
+                            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                            align="center" items={
+                                Array.from({ length: YEAR_BUTTONS }, (_, index) => () => (
+                                    <Skeleton key={index} className="h-5 w-10 rounded-medium" />
+                                ))
+                            } />
+                    ),
+                ]} />
 
             {/* grid: weekday label column + N week columns of 7 cells — gap-[3px] is calendar cell pitch, not a house seam */}
             <div className="flex gap-[3px] overflow-hidden">
@@ -55,11 +59,13 @@ export const OverviewContributionsSkeleton = ({ className }: WithClassNames<unde
             </div>
 
             {/* legend: Less → More (5 cells, right-aligned) */}
-            <StackH gap={3} principle="chip-row" justify="end" align="center" items={
-                Array.from({ length: 5 }, (_, index) => () => (
-                    <Skeleton key={index} className="size-3 shrink-0 rounded-sm" />
-                ))
-            } />
+            <StackH gap={3} principle="chip-row"
+                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                justify="end" align="center" items={
+                    Array.from({ length: 5 }, (_, index) => () => (
+                        <Skeleton key={index} className="size-3 shrink-0 rounded-sm" />
+                    ))
+                } />
         </div>
     )
 }

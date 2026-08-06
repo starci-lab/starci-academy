@@ -22,5 +22,5 @@ export const ProfileBadges = ({ badges, isSkeleton = false}: ProfileBadgesProps)
                 text={badge.label}
             />
         ))
-    return <Cluster items={items} gap={2} />
+    return <Cluster identity={{ tier: "block", component: "ProfileBadges" }} items={items} gap={2} />
 }

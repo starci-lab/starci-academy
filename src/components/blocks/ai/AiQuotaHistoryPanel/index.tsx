@@ -109,37 +109,39 @@ export const AiQuotaHistoryPanel = ({
     const isEmpty = !isLoading && (items?.length ?? 0) === 0
 
     const chart = (
-        <StackV gap={4} principle="card-caption" items={[
-            () => <Typography size="sm" weight="medium" text="Credits used per day (last 7 days)" />,
-            () => (
-                <SurfaceCard
-                    variant="nested"
-                    padding={4}
+        <StackV gap={4} principle="card-caption"
+            explain="Holds caption text under card media so the caption stays attached to the image above it."
+            items={[
+                () => <Typography size="sm" weight="medium" text="Credits used per day (last 7 days)" />,
+                () => (
+                    <SurfaceCard
+                        variant="nested"
+                        padding={4}
 
-                    body={() => (
-                        <div className="h-44 w-full text-accent-soft-foreground">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={chartPoints} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
-                                    <CartesianGrid
-                                        strokeDasharray="3 3"
-                                        stroke="currentColor"
-                                        className="text-divider"
-                                        vertical={false}
-                                    />
-                                    <XAxis dataKey="day" tick={{ fontSize: 10 }} interval={0} tickLine={false} axisLine={false} />
-                                    <YAxis allowDecimals={false} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} width={28} />
-                                    <Tooltip
-                                        cursor={{ fill: "currentColor", opacity: 0.08 }}
-                                        formatter={(value) => [`${value} ${CREDITS_UNIT}`, ""]}
-                                    />
-                                    <Bar dataKey="credits" fill="currentColor" radius={[4, 4, 0, 0]} />
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </div>
-                    )}
-                />
-            ),
-        ]} />
+                        body={() => (
+                            <div className="h-44 w-full text-accent-soft-foreground">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={chartPoints} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
+                                        <CartesianGrid
+                                            strokeDasharray="3 3"
+                                            stroke="currentColor"
+                                            className="text-divider"
+                                            vertical={false}
+                                        />
+                                        <XAxis dataKey="day" tick={{ fontSize: 10 }} interval={0} tickLine={false} axisLine={false} />
+                                        <YAxis allowDecimals={false} tick={{ fontSize: 10 }} tickLine={false} axisLine={false} width={28} />
+                                        <Tooltip
+                                            cursor={{ fill: "currentColor", opacity: 0.08 }}
+                                            formatter={(value) => [`${value} ${CREDITS_UNIT}`, ""]}
+                                        />
+                                        <Bar dataKey="credits" fill="currentColor" radius={[4, 4, 0, 0]} />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        )}
+                    />
+                ),
+            ]} />
     )
 
     const chargesList = (

@@ -51,9 +51,11 @@ export const ProviderUploadRow = ({
         ],
     )
     return (
-        <Box principle="card-padding" className="rounded-xl border border-white/5 bg-white/[0.02] p-4 space-y-3">
+        <Box identity={{ tier: "page", component: "ProviderUploadRow" }} principle="card-padding" className="rounded-xl border border-white/5 bg-white/[0.02] p-4 space-y-3"
+            explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
             <div className="flex items-center justify-between">
-                <Box principle="chip-row" className="flex items-center gap-2">
+                <Box principle="chip-row" className="flex items-center gap-2"
+                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column.">
                     <Chip
                         size="sm"
                         variant="secondary"
@@ -63,7 +65,8 @@ export const ProviderUploadRow = ({
                     </Chip>
                     {UPLOAD_STATUS_ICON_MAP[upload.status]}
                 </Box>
-                <Box principle="value-row" className="flex items-center gap-2">
+                <Box principle="value-row" className="flex items-center gap-2"
+                    explain="Holds a label and its numeric value on one baseline so the count stays readable against the label.">
                     <span className="text-xs font-mono text-slate-400">
                         {upload.progress}%
                     </span>

@@ -357,10 +357,12 @@ export const PracticeProblemPage = () => {
     if (!problem) {
         return (
             <div className="flex h-[calc(100vh-4rem)] flex-col">
-                <Box principle="page-pad" className="flex flex-col border-b border-default px-6 py-3">
+                <Box principle="page-pad" className="flex flex-col border-b border-default px-6 py-3"
+                    explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                     <BackLink target={t("codingPractice.title")} onPress={onBack} />
                 </Box>
-                <Box principle="page-pad" className="flex min-h-0 flex-1 items-center justify-center px-6">
+                <Box principle="page-pad" className="flex min-h-0 flex-1 items-center justify-center px-6"
+                    explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                     {problemError ? (
                         <AsyncContentError
                             title={t("codingPractice.detailError")}
@@ -390,109 +392,127 @@ export const PracticeProblemPage = () => {
 
     /** LEFT: problem statement, samples, hint. */
     const descriptionPanel = (
-        <StackV gap={6} principle="block-boundary" items={[
-            () => (
-                <StackV gap={4} principle="card-caption" items={[
-                    () => (
-                        <StackH gap={3} principle="flex-action" items={[
-                            () => <Typography type="h4" weight="bold">{problem.title}</Typography>,
+        <StackV gap={6} principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            items={[
+                () => (
+                    <StackV gap={4} principle="card-caption"
+                        explain="Holds caption text under card media so the caption stays attached to the image above it."
+                        items={[
                             () => (
-                                <StatusChip tone={DIFFICULTY_TONE[problem.difficulty]}>
-                                    {t(`codingPractice.level.${LEVEL_KEY[problem.difficulty]}`)}
-                                </StatusChip>
+                                <StackH gap={3} principle="flex-action"
+                                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                    items={[
+                                        () => <Typography type="h4" weight="bold">{problem.title}</Typography>,
+                                        () => (
+                                            <StatusChip tone={DIFFICULTY_TONE[problem.difficulty]}>
+                                                {t(`codingPractice.level.${LEVEL_KEY[problem.difficulty]}`)}
+                                            </StatusChip>
+                                        ),
+                                    ]} />
+                            ),
+                            () => (
+                                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
+                                    <span>{t("codingPractice.points", { points: problem.points })}</span>
+                                    {problem.timeLimitMs ? <span>· {t("codingPractice.timeLimit", { ms: problem.timeLimitMs })}</span> : null}
+                                    {memoryMb ? <span>· {t("codingPractice.memoryLimit", { mb: memoryMb })}</span> : null}
+                                    {problem.tags.map((tag) => <span key={tag}>· {tag}</span>)}
+                                </div>
                             ),
                         ]} />
-                    ),
+                ),
+                () => <MarkdownContent markdown={problem.statement ?? ""} />,
+                ...(samples.length > 0 ? [
                     () => (
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
-                            <span>{t("codingPractice.points", { points: problem.points })}</span>
-                            {problem.timeLimitMs ? <span>· {t("codingPractice.timeLimit", { ms: problem.timeLimitMs })}</span> : null}
-                            {memoryMb ? <span>· {t("codingPractice.memoryLimit", { mb: memoryMb })}</span> : null}
-                            {problem.tags.map((tag) => <span key={tag}>· {tag}</span>)}
-                        </div>
-                    ),
-                ]} />
-            ),
-            () => <MarkdownContent markdown={problem.statement ?? ""} />,
-            ...(samples.length > 0 ? [
-                () => (
-                    <StackV gap={4} principle="card-caption" items={[
-                        () => <hr className="border-default" />,
-                        () => <p className="font-semibold">{t("codingPractice.samples")}</p>,
-                        ...samples.map((testcase, index) => () => (
-                            <IOExampleCard
-                                key={testcase.id}
-                                rows={[
-                                    { key: "in", label: `${t("codingPractice.example")} ${index + 1} · ${t("codingPractice.input")}`, value: testcase.input },
-                                    { key: "out", label: t("codingPractice.output"), value: testcase.expectedOutput },
-                                ]}
-                            />
-                        )),
-                    ]} />
-                ),
-            ] : []),
-            ...(hint ? [
-                () => (
-                    <StackV gap={4} principle="card-caption" items={[
-                        () => <hr className="border-default" />,
-                        () => (
-                            <StackH gap={3} principle="flex-action" justify="between" items={[
-                                () => <p className="font-semibold">{t("codingPractice.hintTitle")}</p>,
-                                () => (
-                                    <Button size="sm" variant="secondary" onPress={() => setShowHint((prev) => !prev)}>
-                                        {showHint ? t("codingPractice.hideHint") : t("codingPractice.showHint")}
-                                    </Button>
-                                ),
+                        <StackV gap={4} principle="card-caption"
+                            explain="Holds caption text under card media so the caption stays attached to the image above it."
+                            items={[
+                                () => <hr className="border-default" />,
+                                () => <p className="font-semibold">{t("codingPractice.samples")}</p>,
+                                ...samples.map((testcase, index) => () => (
+                                    <IOExampleCard
+                                        key={testcase.id}
+                                        rows={[
+                                            { key: "in", label: `${t("codingPractice.example")} ${index + 1} · ${t("codingPractice.input")}`, value: testcase.input },
+                                            { key: "out", label: t("codingPractice.output"), value: testcase.expectedOutput },
+                                        ]}
+                                    />
+                                )),
                             ]} />
-                        ),
-                        ...(showHint ? [() => <MarkdownContent markdown={hint} />] : []),
-                    ]} />
-                ),
-            ] : []),
-        ]} />
+                    ),
+                ] : []),
+                ...(hint ? [
+                    () => (
+                        <StackV gap={4} principle="card-caption"
+                            explain="Holds caption text under card media so the caption stays attached to the image above it."
+                            items={[
+                                () => <hr className="border-default" />,
+                                () => (
+                                    <StackH gap={3} principle="flex-action" justify="between"
+                                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                        items={[
+                                            () => <p className="font-semibold">{t("codingPractice.hintTitle")}</p>,
+                                            () => (
+                                                <Button size="sm" variant="secondary" onPress={() => setShowHint((prev) => !prev)}>
+                                                    {showHint ? t("codingPractice.hideHint") : t("codingPractice.showHint")}
+                                                </Button>
+                                            ),
+                                        ]} />
+                                ),
+                                ...(showHint ? [() => <MarkdownContent markdown={hint} />] : []),
+                            ]} />
+                    ),
+                ] : []),
+            ]} />
     )
 
     /** LEFT: reveal-gated reference solution, one tab per language. */
     const solutionPanel = (
-        <StackV gap={4} principle="card-caption" items={[
-            () => (
-                <StackH gap={3} principle="flex-action" justify="between" items={[
-                    () => <p className="font-semibold">{t("codingPractice.solutionTitle")}</p>,
-                    () => (
-                        <Button size="sm" variant="secondary" onPress={onToggleSolution}>
-                            {showSolution ? t("codingPractice.hideSolution") : t("codingPractice.showSolution")}
-                        </Button>
-                    ),
-                ]} />
-            ),
-            () => showSolution && solutionLanguages.length > 0 ? (
-                <StackV gap={4} principle="card-caption" items={[
-                    () => (
-                        <Cluster gap={3} principle="flex-action" items={solutionLanguages.map((option) => () => (
-                            <Button
-                                key={option}
-                                size="sm"
-                                variant={solutionLanguage === option ? "primary" : "secondary"}
-                                onPress={() => setSolutionLanguage(option)}
-                            >
-                                {t(`codingPractice.language.${option}`)}
-                            </Button>
-                        ))} />
-                    ),
-                    () => (
-                        <MarkdownContent
-                            markdown={`\`\`\`${MONACO_LANGUAGE[solutionLanguage]}\n${
-                                solutionByLanguage.get(solutionLanguage) ?? ""
-                            }\n\`\`\``}
-                        />
-                    ),
-                ]} />
-            ) : (
-                <Typography type="body-sm" color="muted">
-                    {t("codingPractice.solutionLocked")}
-                </Typography>
-            ),
-        ]} />
+        <StackV gap={4} principle="card-caption"
+            explain="Holds caption text under card media so the caption stays attached to the image above it."
+            items={[
+                () => (
+                    <StackH gap={3} principle="flex-action" justify="between"
+                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                        items={[
+                            () => <p className="font-semibold">{t("codingPractice.solutionTitle")}</p>,
+                            () => (
+                                <Button size="sm" variant="secondary" onPress={onToggleSolution}>
+                                    {showSolution ? t("codingPractice.hideSolution") : t("codingPractice.showSolution")}
+                                </Button>
+                            ),
+                        ]} />
+                ),
+                () => showSolution && solutionLanguages.length > 0 ? (
+                    <StackV gap={4} principle="card-caption"
+                        explain="Holds caption text under card media so the caption stays attached to the image above it."
+                        items={[
+                            () => (
+                                <Cluster gap={3} principle="flex-action" explain="Groups action controls on one horizontal peer row so they share a single hit baseline." items={solutionLanguages.map((option) => () => (
+                                    <Button
+                                        key={option}
+                                        size="sm"
+                                        variant={solutionLanguage === option ? "primary" : "secondary"}
+                                        onPress={() => setSolutionLanguage(option)}
+                                    >
+                                        {t(`codingPractice.language.${option}`)}
+                                    </Button>
+                                ))} />
+                            ),
+                            () => (
+                                <MarkdownContent
+                                    markdown={`\`\`\`${MONACO_LANGUAGE[solutionLanguage]}\n${
+                                        solutionByLanguage.get(solutionLanguage) ?? ""
+                                    }\n\`\`\``}
+                                />
+                            ),
+                        ]} />
+                ) : (
+                    <Typography type="body-sm" color="muted">
+                        {t("codingPractice.solutionLocked")}
+                    </Typography>
+                ),
+            ]} />
     )
 
     /** LEFT: the learner's prior submissions for this problem. */
@@ -521,7 +541,7 @@ export const PracticeProblemPage = () => {
 
     /** CONSOLE: sample testcases (pre-run reference). */
     const testcaseTab = samples.length > 0 ? (
-        <StackV gap={4} principle="card-caption" items={samples.map((testcase, index) => () => (
+        <StackV gap={4} principle="card-caption" explain="Holds caption text under card media so the caption stays attached to the image above it." items={samples.map((testcase, index) => () => (
             <IOExampleCard
                 key={testcase.id}
                 rows={[
@@ -542,75 +562,79 @@ export const PracticeProblemPage = () => {
             error={pendingJobError}
         />
     ) : latestSubmission ? (
-        <StackV gap={5} principle="group-boundary" items={[
-            () => (
-                <Cluster gap={4} principle="content-row" items={[
-                    () => (
-                        <StatusChip tone={VERDICT_TONE[latestSubmission.verdict]}>
-                            {t(`codingPractice.verdict.${latestSubmission.verdict}`)}
-                        </StatusChip>
-                    ),
-                    () => (
-                        <Typography type="body-sm" color="muted">
-                            {t("codingPractice.passed")}: {latestSubmission.passedCount}/{latestSubmission.totalCount}
-                        </Typography>
-                    ),
-                ]} />
-            ),
-            () => (
-                <StatGridCard
-                    items={[
-                        {
-                            key: "passed",
-                            content: () => (
-                                <div className="flex flex-col gap-0">
-                                    <span className="text-lg font-bold">{latestSubmission.passedCount}/{latestSubmission.totalCount}</span>
-                                    <span className="text-xs text-muted">{t("codingPractice.statPassed")}</span>
-                                </div>
-                            ),
-                        },
-                        {
-                            key: "runtime",
-                            content: () => (
-                                <div className="flex flex-col gap-0">
-                                    <span className="text-lg font-bold">{latestSubmission.runtimeMs ?? "—"}<span className="text-xs"> ms</span></span>
-                                    <span className="text-xs text-muted">{t("codingPractice.statRuntime")}</span>
-                                </div>
-                            ),
-                        },
-                        {
-                            key: "memory",
-                            content: () => (
-                                <div className="flex flex-col gap-0">
-                                    <span className="text-lg font-bold">{latestSubmission.memoryKb ?? "—"}<span className="text-xs"> KB</span></span>
-                                    <span className="text-xs text-muted">{t("codingPractice.statMemory")}</span>
-                                </div>
-                            ),
-                        },
-                    ]}
-                />
-            ),
-            ...(resultCases.length > 0 ? [
+        <StackV gap={5} principle="group-boundary"
+            explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+            items={[
                 () => (
-                    <TestCaseResultGrid
-                        cases={resultCases}
-                        labels={{
-                            input: t("codingPractice.input"),
-                            expected: t("codingPractice.expected"),
-                            got: t("codingPractice.got"),
-                            hidden: t("codingPractice.hiddenCase"),
-                        }}
+                    <Cluster gap={4} principle="content-row"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                        items={[
+                            () => (
+                                <StatusChip tone={VERDICT_TONE[latestSubmission.verdict]}>
+                                    {t(`codingPractice.verdict.${latestSubmission.verdict}`)}
+                                </StatusChip>
+                            ),
+                            () => (
+                                <Typography type="body-sm" color="muted">
+                                    {t("codingPractice.passed")}: {latestSubmission.passedCount}/{latestSubmission.totalCount}
+                                </Typography>
+                            ),
+                        ]} />
+                ),
+                () => (
+                    <StatGridCard
+                        items={[
+                            {
+                                key: "passed",
+                                content: () => (
+                                    <div className="flex flex-col gap-0">
+                                        <span className="text-lg font-bold">{latestSubmission.passedCount}/{latestSubmission.totalCount}</span>
+                                        <span className="text-xs text-muted">{t("codingPractice.statPassed")}</span>
+                                    </div>
+                                ),
+                            },
+                            {
+                                key: "runtime",
+                                content: () => (
+                                    <div className="flex flex-col gap-0">
+                                        <span className="text-lg font-bold">{latestSubmission.runtimeMs ?? "—"}<span className="text-xs"> ms</span></span>
+                                        <span className="text-xs text-muted">{t("codingPractice.statRuntime")}</span>
+                                    </div>
+                                ),
+                            },
+                            {
+                                key: "memory",
+                                content: () => (
+                                    <div className="flex flex-col gap-0">
+                                        <span className="text-lg font-bold">{latestSubmission.memoryKb ?? "—"}<span className="text-xs"> KB</span></span>
+                                        <span className="text-xs text-muted">{t("codingPractice.statMemory")}</span>
+                                    </div>
+                                ),
+                            },
+                        ]}
                     />
                 ),
-            ] : []),
-            ...(latestSubmission.compileOutput ? [
-                () => (
-                    <pre data-principle="cell-pad" className="whitespace-pre-wrap rounded-2xl bg-danger-soft p-3 text-xs text-danger-soft-foreground">
-                        {latestSubmission.compileOutput}
-                    </pre>
-                ),
-            ] : []),
-        ]} />
+                ...(resultCases.length > 0 ? [
+                    () => (
+                        <TestCaseResultGrid
+                            cases={resultCases}
+                            labels={{
+                                input: t("codingPractice.input"),
+                                expected: t("codingPractice.expected"),
+                                got: t("codingPractice.got"),
+                                hidden: t("codingPractice.hiddenCase"),
+                            }}
+                        />
+                    ),
+                ] : []),
+                ...(latestSubmission.compileOutput ? [
+                    () => (
+                        <pre data-principle="cell-pad" className="whitespace-pre-wrap rounded-2xl bg-danger-soft p-3 text-xs text-danger-soft-foreground">
+                            {latestSubmission.compileOutput}
+                        </pre>
+                    ),
+                ] : []),
+            ]} />
     ) : (
         <Typography type="body-sm" color="muted">{t("codingPractice.resultEmpty")}</Typography>
     )
@@ -621,35 +645,39 @@ export const PracticeProblemPage = () => {
 
             {/* ── LEFT: tabbed reading column ── */}
             <div className="flex min-h-0 flex-col overflow-hidden border-r border-default">
-                <Box principle="page-pad" className="flex flex-col border-b border-default px-6 py-3">
-                    <StackV gap={4} principle="card-caption" items={[
-                        () => <BackLink target={t("codingPractice.title")} onPress={onBack} />,
-                        () => (
-                            <ExtendedTabs
-                                selectedKey={leftTab}
-                                onSelectionChange={(key) => setLeftTab(key as LeftTab)}
-                            >
-                                <Tabs.ListContainer>
-                                    <Tabs.List aria-label={problem.title}>
-                                        <Tabs.Tab id="description">
-                                            {t("codingPractice.tabDescription")}
-                                            <Tabs.Indicator />
-                                        </Tabs.Tab>
-                                        <Tabs.Tab id="solution">
-                                            {t("codingPractice.tabSolution")}
-                                            <Tabs.Indicator />
-                                        </Tabs.Tab>
-                                        <Tabs.Tab id="submissions">
-                                            {t("codingPractice.tabSubmissions")}
-                                            <Tabs.Indicator />
-                                        </Tabs.Tab>
-                                    </Tabs.List>
-                                </Tabs.ListContainer>
-                            </ExtendedTabs>
-                        ),
-                    ]} />
+                <Box principle="page-pad" className="flex flex-col border-b border-default px-6 py-3"
+                    explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
+                    <StackV gap={4} principle="card-caption"
+                        explain="Holds caption text under card media so the caption stays attached to the image above it."
+                        items={[
+                            () => <BackLink target={t("codingPractice.title")} onPress={onBack} />,
+                            () => (
+                                <ExtendedTabs
+                                    selectedKey={leftTab}
+                                    onSelectionChange={(key) => setLeftTab(key as LeftTab)}
+                                >
+                                    <Tabs.ListContainer>
+                                        <Tabs.List aria-label={problem.title}>
+                                            <Tabs.Tab id="description">
+                                                {t("codingPractice.tabDescription")}
+                                                <Tabs.Indicator />
+                                            </Tabs.Tab>
+                                            <Tabs.Tab id="solution">
+                                                {t("codingPractice.tabSolution")}
+                                                <Tabs.Indicator />
+                                            </Tabs.Tab>
+                                            <Tabs.Tab id="submissions">
+                                                {t("codingPractice.tabSubmissions")}
+                                                <Tabs.Indicator />
+                                            </Tabs.Tab>
+                                        </Tabs.List>
+                                    </Tabs.ListContainer>
+                                </ExtendedTabs>
+                            ),
+                        ]} />
                 </Box>
-                <Box principle="page-pad" className="min-h-0 flex-1 overflow-auto px-6 py-5">
+                <Box principle="page-pad" className="min-h-0 flex-1 overflow-auto px-6 py-5"
+                    explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                     {leftTab === "description" && descriptionPanel}
                     {leftTab === "solution" && solutionPanel}
                     {leftTab === "submissions" && submissionsPanel}
@@ -659,8 +687,9 @@ export const PracticeProblemPage = () => {
             {/* ── RIGHT: editor + console ── */}
             <div className="flex min-h-0 flex-col overflow-hidden">
                 {/* language selector + reset */}
-                <Box principle="pill-pad" className="flex flex-wrap items-center justify-between border-b border-default px-4 py-2">
-                    <Cluster gap={3} principle="flex-action" items={languages.map((option) => () => (
+                <Box principle="pill-pad" className="flex flex-wrap items-center justify-between border-b border-default px-4 py-2"
+                    explain="Pill/chip inset — not control-pad, because this pads a compact badge shape rather than a form control.">
+                    <Cluster gap={3} principle="flex-action" explain="Groups action controls on one horizontal peer row so they share a single hit baseline." items={languages.map((option) => () => (
                         <Button
                             key={option}
                             size="sm"

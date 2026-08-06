@@ -69,5 +69,5 @@ export const _LearnNudges = ({ items, isSkeleton = false, classNames }: LearnNud
             trailingIcon: ArrowRightIcon,
             onPress: item.onPress,
         }))
-    return <SurfaceCardList classNames={classNames} items={rows} />
+    return <SurfaceCardList identity={{ tier: "block", component: "LearnNudges" }} classNames={classNames} items={rows} />
 }

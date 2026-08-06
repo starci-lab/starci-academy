@@ -216,36 +216,38 @@ export const _TalentDirectoryPage = ({
             padding={6}
             isSkeleton={isSkeleton}
             body={() => (
-                <StackV gap={6} principle="block-boundary" items={[
-                    () => <PageHeader title={labels.title} description={labels.description} />,
+                <StackV gap={6} principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                    items={[
+                        () => <PageHeader title={labels.title} description={labels.description} />,
 
-                    // track filter (single-select nav → underline tabs). Changing the track
-                    // re-keys the candidate query below → server-side re-rank. Hidden until
-                    // tracks resolve + a selection exists — same condition as before, and it
-                    // never coincides with the skeleton grid below (both wait on the same
-                    // course fetch), so no separate skeleton mirror is needed here.
-                    ...(tracks.length > 0 && selectedTrackKey ? [() => (
-                        <TabsCard
-                            leftTabs={{
-                                items: tracks.map((track) => ({ key: track.key, label: track.label })),
-                                selectedKey: selectedTrackKey,
-                                ariaLabel: labels.trackFilterAria,
-                                onSelectionChange,
-                            }}
-                        />
-                    )] : []),
+                        // track filter (single-select nav → underline tabs). Changing the track
+                        // re-keys the candidate query below → server-side re-rank. Hidden until
+                        // tracks resolve + a selection exists — same condition as before, and it
+                        // never coincides with the skeleton grid below (both wait on the same
+                        // course fetch), so no separate skeleton mirror is needed here.
+                        ...(tracks.length > 0 && selectedTrackKey ? [() => (
+                            <TabsCard
+                                leftTabs={{
+                                    items: tracks.map((track) => ({ key: track.key, label: track.label })),
+                                    selectedKey: selectedTrackKey,
+                                    ariaLabel: labels.trackFilterAria,
+                                    onSelectionChange,
+                                }}
+                            />
+                        )] : []),
 
-                    () => (
-                        <GroupPressableCard
-                            ariaLabel={labels.candidatesAria}
-                            // container steps, not viewport. A candidate card carries a 48px
-                            // avatar + name + chips, so it needs real width: two-up from 576px
-                            // (≈284px each), three-up only from 896px (≈293px each).
-                            columns={{ base: 1, xl: 2, xl4: 3 }}
-                            items={candidateItems}
-                        />
-                    ),
-                ]} />
+                        () => (
+                            <GroupPressableCard
+                                ariaLabel={labels.candidatesAria}
+                                // container steps, not viewport. A candidate card carries a 48px
+                                // avatar + name + chips, so it needs real width: two-up from 576px
+                                // (≈284px each), three-up only from 896px (≈293px each).
+                                columns={{ base: 1, xl: 2, xl4: 3 }}
+                                items={candidateItems}
+                            />
+                        ),
+                    ]} />
             )}
         />
     )

@@ -30,3 +30,6 @@ export const SkeletonMenu = ({ items = 4, className }: SkeletonMenuProps) => {
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonMenu` as the public name. */
+export { SkeletonMenu as Menu }

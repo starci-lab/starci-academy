@@ -60,40 +60,43 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
         const infraNames = module.usesInfra.map((id) => ARCHITECTURE_COMPONENT_MAP[id]?.name ?? id)
         return (
             <Card className={cn(className)}>
-                <Box principle="page-pad" className="p-6">
-                    <StackV gap={5} principle="group-boundary" items={[
-                        () => (
-                            <div data-principle="content-row" className="flex min-w-0 items-center gap-3">
-                                <IconTile icon={<ModuleIcon aria-hidden />} tone="neutral" size="sm" />
-                                <div className="flex min-w-0 flex-col">
-                                    <Typography type="h4" weight="semibold" className="min-w-0 truncate">
-                                        {t(`module.${module.id}.name`)}
-                                    </Typography>
-                                    <Typography type="body-sm" color="muted">
-                                        {t(`module.${module.id}.sub`)}
-                                    </Typography>
+                <Box principle="page-pad" className="p-6"
+                    explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
+                    <StackV gap={5} principle="group-boundary"
+                        explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+                        items={[
+                            () => (
+                                <div data-principle="content-row" className="flex min-w-0 items-center gap-3">
+                                    <IconTile icon={<ModuleIcon aria-hidden />} tone="neutral" size="sm" />
+                                    <div className="flex min-w-0 flex-col">
+                                        <Typography type="h4" weight="semibold" className="min-w-0 truncate">
+                                            {t(`module.${module.id}.name`)}
+                                        </Typography>
+                                        <Typography type="body-sm" color="muted">
+                                            {t(`module.${module.id}.sub`)}
+                                        </Typography>
+                                    </div>
                                 </div>
-                            </div>
-                        ),
-                        () => (
-                            <div data-principle="sibling-stack" className="flex flex-col gap-2 border-t border-default pt-3">
-                                <Typography type="body-sm" weight="medium">{t("panel.whyHeading")}</Typography>
-                                <Typography type="body-sm" color="muted">{t(`module.${module.id}.role`)}</Typography>
-                            </div>
-                        ),
-                        () => (
-                            <div data-principle="sibling-stack" className="flex flex-col gap-2 border-t border-default pt-3">
-                                <Typography type="body-sm" weight="medium">{t("panel.runsOn")}</Typography>
-                                <div data-principle="chip-row" className="flex flex-wrap gap-2">
-                                    {infraNames.map((name) => (
-                                        <span key={name} data-principle="control-pad" className="rounded-full bg-default px-2 py-1 font-mono text-xs text-muted">
-                                            {name}
-                                        </span>
-                                    ))}
+                            ),
+                            () => (
+                                <div data-principle="sibling-stack" className="flex flex-col gap-2 border-t border-default pt-3">
+                                    <Typography type="body-sm" weight="medium">{t("panel.whyHeading")}</Typography>
+                                    <Typography type="body-sm" color="muted">{t(`module.${module.id}.role`)}</Typography>
                                 </div>
-                            </div>
-                        ),
-                    ]} />
+                            ),
+                            () => (
+                                <div data-principle="sibling-stack" className="flex flex-col gap-2 border-t border-default pt-3">
+                                    <Typography type="body-sm" weight="medium">{t("panel.runsOn")}</Typography>
+                                    <div data-principle="chip-row" className="flex flex-wrap gap-2">
+                                        {infraNames.map((name) => (
+                                            <span key={name} data-principle="control-pad" className="rounded-full bg-default px-2 py-1 font-mono text-xs text-muted">
+                                                {name}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ),
+                        ]} />
                 </Box>
             </Card>
         )
@@ -102,7 +105,8 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
     if (!component) {
         return (
             <Card className={cn(className)}>
-                <Box principle="page-pad" className="p-6">
+                <Box principle="page-pad" className="p-6"
+                    explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                     <SimpleEmptyState>{t("panel.notFound")}</SimpleEmptyState>
                 </Box>
             </Card>
@@ -116,64 +120,67 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
 
     return (
         <Card className={cn(className)}>
-            <Box principle="page-pad" className="p-6">
-                <StackV gap={5} principle="group-boundary" items={[
-                    () => (
-                        <div data-principle="content-row" className="flex items-start justify-between gap-3">
-                            <div data-principle="content-row" className="flex min-w-0 items-center gap-3">
-                                <IconTile icon={<Icon aria-hidden />} tone="neutral" size="sm" />
-                                <div className="flex min-w-0 flex-col">
-                                    <Typography type="h4" weight="semibold" className="min-w-0 truncate font-mono">
-                                        {component.name}
-                                    </Typography>
-                                    <Typography type="body-sm" color="muted">
-                                        {t(`role.${component.name}`)}
-                                    </Typography>
-                                </div>
-                            </div>
-                            <span className={cn("flex shrink-0 items-center gap-2 rounded-full px-2 py-1", visual.chipClassName)}>
-                                <span className={cn("size-2 shrink-0 rounded-full", visual.dotClassName, visual.pulse && "animate-pulse")} aria-hidden />
-                                <Typography type="body-xs" weight="medium" className="whitespace-nowrap">
-                                    {t(`status.${state}`)}
-                                </Typography>
-                            </span>
-                        </div>
-                    ),
-                    () => (
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
-                            <span className="tabular-nums">
-                                {health?.latencyMs == null ? "—" : t("panel.latency", { ms: health.latencyMs })}
-                            </span>
-                            {checkedAgo ? <span>{t("panel.checked", { ago: checkedAgo })}</span> : null}
-                            <MetricsInline metrics={health?.metrics} />
-                        </div>
-                    ),
-                    ...(health?.message ? [
-                        () => {
-                            const message = health.message!
-                            return <Callout status="danger" title={message} />
-                        },
-                    ] : []),
-                    () => (
-                        <div data-principle="sibling-stack" className="flex flex-col gap-2 border-t border-default pt-3">
-                            <Typography type="body-sm" weight="medium">{t("panel.whyHeading")}</Typography>
-                            <Typography type="body-sm" color="muted">{t(`why.${component.name}`)}</Typography>
-                        </div>
-                    ),
-                    ...(blogHref ? [
+            <Box principle="page-pad" className="p-6"
+                explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
+                <StackV gap={5} principle="group-boundary"
+                    explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+                    items={[
                         () => (
-                            <Link href={blogHref} data-principle="flex-action" className="group inline-flex items-center gap-2 text-accent-soft-foreground">
-                                <BookOpenTextIcon aria-hidden focusable="false" className="size-4" />
-                                {t("panel.deepDive")}
-                                <ArrowUpRightIcon
-                                    aria-hidden
-                                    focusable="false"
-                                    className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                                />
-                            </Link>
+                            <div data-principle="content-row" className="flex items-start justify-between gap-3">
+                                <div data-principle="content-row" className="flex min-w-0 items-center gap-3">
+                                    <IconTile icon={<Icon aria-hidden />} tone="neutral" size="sm" />
+                                    <div className="flex min-w-0 flex-col">
+                                        <Typography type="h4" weight="semibold" className="min-w-0 truncate font-mono">
+                                            {component.name}
+                                        </Typography>
+                                        <Typography type="body-sm" color="muted">
+                                            {t(`role.${component.name}`)}
+                                        </Typography>
+                                    </div>
+                                </div>
+                                <span className={cn("flex shrink-0 items-center gap-2 rounded-full px-2 py-1", visual.chipClassName)}>
+                                    <span className={cn("size-2 shrink-0 rounded-full", visual.dotClassName, visual.pulse && "animate-pulse")} aria-hidden />
+                                    <Typography type="body-xs" weight="medium" className="whitespace-nowrap">
+                                        {t(`status.${state}`)}
+                                    </Typography>
+                                </span>
+                            </div>
                         ),
-                    ] : []),
-                ]} />
+                        () => (
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
+                                <span className="tabular-nums">
+                                    {health?.latencyMs == null ? "—" : t("panel.latency", { ms: health.latencyMs })}
+                                </span>
+                                {checkedAgo ? <span>{t("panel.checked", { ago: checkedAgo })}</span> : null}
+                                <MetricsInline metrics={health?.metrics} />
+                            </div>
+                        ),
+                        ...(health?.message ? [
+                            () => {
+                                const message = health.message!
+                                return <Callout status="danger" title={message} />
+                            },
+                        ] : []),
+                        () => (
+                            <div data-principle="sibling-stack" className="flex flex-col gap-2 border-t border-default pt-3">
+                                <Typography type="body-sm" weight="medium">{t("panel.whyHeading")}</Typography>
+                                <Typography type="body-sm" color="muted">{t(`why.${component.name}`)}</Typography>
+                            </div>
+                        ),
+                        ...(blogHref ? [
+                            () => (
+                                <Link href={blogHref} data-principle="flex-action" className="group inline-flex items-center gap-2 text-accent-soft-foreground">
+                                    <BookOpenTextIcon aria-hidden focusable="false" className="size-4" />
+                                    {t("panel.deepDive")}
+                                    <ArrowUpRightIcon
+                                        aria-hidden
+                                        focusable="false"
+                                        className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                                    />
+                                </Link>
+                            ),
+                        ] : []),
+                    ]} />
             </Box>
         </Card>
     )

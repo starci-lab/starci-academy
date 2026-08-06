@@ -31,7 +31,7 @@ export const RememberMeRow = ({
 }: RememberMeRowProps) => {
     const t = useTranslations()
     return (
-        <Box className="flex items-center justify-between">
+        <Box identity={{ tier: "overlay", component: "RememberMeRow" }} className="flex items-center justify-between">
             <ChoiceCheckbox
                 isSelected={isSelected}
                 onValueChange={onChangeSelected}

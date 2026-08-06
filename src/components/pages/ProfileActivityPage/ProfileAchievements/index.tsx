@@ -137,23 +137,25 @@ export const ProfileAchievements = ({
             >
                 <Tooltip.Trigger>
                     <div className="max-w-32 min-w-0 cursor-default text-center">
-                        <StackV gap={3} principle="sibling-stack" align="center" items={[
-                            () => (
-                                <MascotBadge
-                                    objectKey={item.iconKey}
-                                    name={item.name}
-                                    earned={item.earned}
-                                    tierReached={item.tierReached}
-                                    size={48}
-                                />
-                            ),
-                            () => (
-                                <Typography type="body-xs" truncate className="w-full">
-                                    {item.name}
-                                </Typography>
-                            ),
-                            () => meta,
-                        ]} />
+                        <StackV gap={3} principle="sibling-stack"
+                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                            align="center" items={[
+                                () => (
+                                    <MascotBadge
+                                        objectKey={item.iconKey}
+                                        name={item.name}
+                                        earned={item.earned}
+                                        tierReached={item.tierReached}
+                                        size={48}
+                                    />
+                                ),
+                                () => (
+                                    <Typography type="body-xs" truncate className="w-full">
+                                        {item.name}
+                                    </Typography>
+                                ),
+                                () => meta,
+                            ]} />
                     </div>
                 </Tooltip.Trigger>
                 <Tooltip.Content
@@ -162,28 +164,30 @@ export const ProfileAchievements = ({
                     className="max-w-[240px]"
                 >
                     <Tooltip.Arrow />
-                    <StackV gap={3} principle="sibling-stack" align="center" items={[
-                        () => (
-                            <MascotBadge
-                                objectKey={item.iconKey}
-                                name={item.name}
-                                earned={item.earned}
-                                tierReached={item.tierReached}
-                                size={56}
-                            />
-                        ),
-                        () => (
-                            <Typography type="body-sm" weight="semibold">
-                                {item.name}
-                            </Typography>
-                        ),
-                        () => (
-                            <Typography type="body-xs" color="muted">
-                                {item.description}
-                            </Typography>
-                        ),
-                        () => meta,
-                    ]} />
+                    <StackV gap={3} principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                        align="center" items={[
+                            () => (
+                                <MascotBadge
+                                    objectKey={item.iconKey}
+                                    name={item.name}
+                                    earned={item.earned}
+                                    tierReached={item.tierReached}
+                                    size={56}
+                                />
+                            ),
+                            () => (
+                                <Typography type="body-sm" weight="semibold">
+                                    {item.name}
+                                </Typography>
+                            ),
+                            () => (
+                                <Typography type="body-xs" color="muted">
+                                    {item.description}
+                                </Typography>
+                            ),
+                            () => meta,
+                        ]} />
                 </Tooltip.Content>
             </Tooltip>
         )
@@ -234,26 +238,32 @@ export const ProfileAchievements = ({
             <AsyncContent
                 isLoading={(isLoading || !userId) && items.length === 0}
                 skeleton={
-                    <StackV gap={6} principle="block-boundary" items={
-                        [0, 1].map(() => () => (
-                            <StackV gap={4} items={[
-                                () => <Skeleton.Typography type="body-sm" width="1/4" />,
-                                () => (
-                                    <Cluster gap={5} principle="group-boundary" items={
-                                        [0, 1, 2, 3].map(() => () => (
-                                            <div className="w-24 text-center">
-                                                <StackV gap={3} principle="sibling-stack" align="center" items={[
-                                                    () => <Skeleton className="size-12 rounded-full" />,
-                                                    () => <Skeleton.Typography type="body-xs" width="3/4" />,
-                                                    () => <Skeleton.Typography type="body-xs" width="1/2" />,
-                                                ]} />
-                                            </div>
-                                        ))
-                                    } />
-                                ),
-                            ]} />
-                        ))
-                    } />
+                    <StackV gap={6} principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        items={
+                            [0, 1].map(() => () => (
+                                <StackV gap={4} items={[
+                                    () => <Skeleton.Typography type="body-sm" width="1/4" />,
+                                    () => (
+                                        <Cluster gap={5} principle="group-boundary"
+                                            explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+                                            items={
+                                                [0, 1, 2, 3].map(() => () => (
+                                                    <div className="w-24 text-center">
+                                                        <StackV gap={3} principle="sibling-stack"
+                                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                            align="center" items={[
+                                                                () => <Skeleton className="size-12 rounded-full" />,
+                                                                () => <Skeleton.Typography type="body-xs" width="3/4" />,
+                                                                () => <Skeleton.Typography type="body-xs" width="1/2" />,
+                                                            ]} />
+                                                    </div>
+                                                ))
+                                            } />
+                                    ),
+                                ]} />
+                            ))
+                        } />
                 }
                 isEmpty={items.length === 0}
                 emptyContent={{
@@ -266,22 +276,26 @@ export const ProfileAchievements = ({
                     retryLabel: t("publicProfile.loadErrorRetry"),
                 }}
             >
-                <StackV gap={6} principle="block-boundary" items={
-                    groups.map((group) => () => (
-                        <StackV gap={4} items={[
-                            () => (
-                                <Label>
-                                    {t(`publicProfile.achievementGroups.${group.key}`)}
-                                </Label>
-                            ),
-                            () => (
-                                <Cluster gap={5} principle="group-boundary" items={
-                                    group.items.map((item) => () => renderItem(item))
-                                } />
-                            ),
-                        ]} />
-                    ))
-                } />
+                <StackV gap={6} principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                    items={
+                        groups.map((group) => () => (
+                            <StackV gap={4} items={[
+                                () => (
+                                    <Label>
+                                        {t(`publicProfile.achievementGroups.${group.key}`)}
+                                    </Label>
+                                ),
+                                () => (
+                                    <Cluster gap={5} principle="group-boundary"
+                                        explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+                                        items={
+                                            group.items.map((item) => () => renderItem(item))
+                                        } />
+                                ),
+                            ]} />
+                        ))
+                    } />
             </AsyncContent>
         </LabeledCard>
     )

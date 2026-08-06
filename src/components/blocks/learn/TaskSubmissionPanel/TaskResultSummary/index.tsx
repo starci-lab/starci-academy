@@ -63,10 +63,13 @@ export const TaskResultSummary = ({ result, isSkeleton }: TaskResultSummaryProps
         <StackV
             gap={2}
             principle="title-subtitle"
+            explain="Title over supporting line — not label-field, because neither line is a form control label."
             isSkeleton={isSkeleton}
 
             items={[
-                ({ isSkeleton }: SkeletonProps) => <StackH gap={4} principle="content-row" align="baseline" at="sm" isSkeleton={isSkeleton} items={[() => scoreRow]} />,
+                ({ isSkeleton }: SkeletonProps) => <StackH gap={4} principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                    align="baseline" at="sm" isSkeleton={isSkeleton} items={[() => scoreRow]} />,
                 ...(result.shortFeedback != null ? [() => (
                     <Typography
                         size="sm"

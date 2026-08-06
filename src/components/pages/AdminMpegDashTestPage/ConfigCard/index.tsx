@@ -36,7 +36,8 @@ export const ConfigCard = ({
 }: ConfigCardProps) => (
     <Card className={cn("border-slate-700/50 bg-slate-800/50 backdrop-blur-xl", className)}>
         <CardContent>
-            <Box principle="page-pad" className="space-y-3 p-6">
+            <Box principle="page-pad" className="space-y-3 p-6"
+                explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                 <h2 className="text-lg font-semibold text-white">
                     Configuration
                 </h2>
@@ -49,7 +50,8 @@ export const ConfigCard = ({
                     className="text-white"
                 />
 
-                <Box principle="chip-row" className="flex flex-wrap gap-2">
+                <Box principle="chip-row" className="flex flex-wrap gap-2"
+                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column.">
                     {RENDERER_TYPE_OPTIONS.map((option) => (
                         <RendererTypeButton
                             key={option.type}

@@ -126,7 +126,9 @@ export const FlashcardReviewPage = ({
     // forever: `isLoading` is already false and `data` is undefined here)
     if (error && !data) {
         return (
-            <Box principle="center-measure" className={cn("flex min-h-[60vh] items-center justify-center", className)}>
+            <Box principle="center-measure" className={cn("flex min-h-[60vh] items-center justify-center", className)}
+                explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
+            >
                 <AsyncContentError
                     title={t("flashcardReview.loadError")}
                     onRetry={() => { void mutate() }}
@@ -139,7 +141,9 @@ export const FlashcardReviewPage = ({
     // still loading the queue → centred spinner
     if (isLoading || !data) {
         return (
-            <Box principle="center-measure" className={cn("flex min-h-[60vh] items-center justify-center", className)}>
+            <Box principle="center-measure" className={cn("flex min-h-[60vh] items-center justify-center", className)}
+                explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
+            >
                 <Spinner size="lg" />
             </Box>
         )
@@ -149,117 +153,133 @@ export const FlashcardReviewPage = ({
     if (!current) {
         const empty = cards.length === 0
         return (
-            <Box principle="center-measure" className={cn("mx-auto min-h-[60vh] w-full max-w-xl p-3", className)}>
-                <StackV gap={6} principle="block-boundary" align="center" justify="center" items={[
-                    () => <CheckCircleIcon className="size-12 text-success-soft-foreground" />,
-                    () => (
-                        <span className="text-center text-lg font-semibold text-foreground">
-                            {empty
-                                ? t("flashcardReview.empty")
-                                : t("flashcardReview.done")}
-                        </span>
-                    ),
-                    () => (
-                        <Button
-                            variant="primary"
-                            onPress={() => router.push(
-                                pathConfig().locale(locale).dashboard().build(),
-                            )}
-                        >
-                            {t("flashcardReview.backToDashboard")}
-                        </Button>
-                    ),
-                ]} />
+            <Box principle="center-measure" className={cn("mx-auto min-h-[60vh] w-full max-w-xl p-3", className)}
+                explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
+            >
+                <StackV gap={6} principle="block-boundary" align="center" justify="center"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                    items={[
+                        () => <CheckCircleIcon className="size-12 text-success-soft-foreground" />,
+                        () => (
+                            <span className="text-center text-lg font-semibold text-foreground">
+                                {empty
+                                    ? t("flashcardReview.empty")
+                                    : t("flashcardReview.done")}
+                            </span>
+                        ),
+                        () => (
+                            <Button
+                                variant="primary"
+                                onPress={() => router.push(
+                                    pathConfig().locale(locale).dashboard().build(),
+                                )}
+                            >
+                                {t("flashcardReview.backToDashboard")}
+                            </Button>
+                        ),
+                    ]} />
             </Box>
         )
     }
 
     return (
-        <Box principle="center-measure" className={cn("mx-auto w-full max-w-xl p-3", className)}>
-            <StackV gap={6} principle="block-boundary" items={[
+        <Box principle="center-measure" className={cn("mx-auto w-full max-w-xl p-3", className)}
+            explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
+        >
+            <StackV gap={6} principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={[
                 // progress header: deck context + position in the queue
-                () => (
-                    <StackH gap={4} principle="content-row" justify="between" align="center" items={[
-                        () => (
-                            <StackH gap={3} principle="identity" classNames={["min-w-0"]} align="center" items={[
-                                () => <StackIcon className="size-5 shrink-0 text-foreground" />,
+                    () => (
+                        <StackH gap={4} principle="content-row" justify="between" align="center"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            items={[
                                 () => (
-                                    <span className="truncate text-sm font-medium text-foreground">
-                                        {current.deckTitle}
+                                    <StackH gap={3} principle="identity" classNames={["min-w-0"]} align="center"
+                                        explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
+                                        items={[
+                                            () => <StackIcon className="size-5 shrink-0 text-foreground" />,
+                                            () => (
+                                                <span className="truncate text-sm font-medium text-foreground">
+                                                    {current.deckTitle}
+                                                </span>
+                                            ),
+                                        ]} />
+                                ),
+                                () => (
+                                    <span className="shrink-0 text-sm text-muted">
+                                        {t("flashcardReview.progress", {
+                                            current: index + 1,
+                                            total: cards.length,
+                                        })}
                                     </span>
                                 ),
                             ]} />
-                        ),
-                        () => (
-                            <span className="shrink-0 text-sm text-muted">
-                                {t("flashcardReview.progress", {
-                                    current: index + 1,
-                                    total: cards.length,
-                                })}
-                            </span>
-                        ),
-                    ]} />
-                ),
+                    ),
 
-                // the card: front always, back after flip
-                () => (
-                    <Card>
-                        <Box principle="card-padding" className="p-6 @app-sm:p-7">
-                            <CardContent>
-                                <StackV gap={4} principle="content-row" items={[
-                                    () => (
-                                        <span className="text-xl font-semibold text-foreground">
-                                            {current.front}
-                                        </span>
-                                    ),
-                                    () => (flipped ? (
-                                        <>
-                                            <span className="h-px w-full bg-default" />
-                                            <span className="text-lg text-foreground">
-                                                {current.back}
-                                            </span>
-                                        </>
-                                    ) : null),
-                                ]} />
-                            </CardContent>
-                        </Box>
-                    </Card>
-                ),
+                    // the card: front always, back after flip
+                    () => (
+                        <Card>
+                            <Box principle="card-padding" className="p-6 @app-sm:p-7"
+                                explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
+                                <CardContent>
+                                    <StackV gap={4} principle="content-row"
+                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                        items={[
+                                            () => (
+                                                <span className="text-xl font-semibold text-foreground">
+                                                    {current.front}
+                                                </span>
+                                            ),
+                                            () => (flipped ? (
+                                                <>
+                                                    <span className="h-px w-full bg-default" />
+                                                    <span className="text-lg text-foreground">
+                                                        {current.back}
+                                                    </span>
+                                                </>
+                                            ) : null),
+                                        ]} />
+                                </CardContent>
+                            </Box>
+                        </Card>
+                    ),
 
-                // flip → reveal; revealed → grade buttons
-                () => (flipped ? (
-                    <Box principle="sibling-stack" className="grid grid-cols-2 gap-2 @app-sm:grid-cols-4">
-                        {GRADES.map((item) => (
-                            <Button
-                                key={item.grade}
-                                variant={item.variant}
-                                isDisabled={savingGrade !== null}
-                                isPending={savingGrade === item.grade}
-                                onPress={() => void onGrade(item.grade)}
-                            >
-                                {/* label over the SM-2 next-interval preview the BE ships
+                    // flip → reveal; revealed → grade buttons
+                    () => (flipped ? (
+                        <Box principle="sibling-stack" className="grid grid-cols-2 gap-2 @app-sm:grid-cols-4"
+                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups.">
+                            {GRADES.map((item) => (
+                                <Button
+                                    key={item.grade}
+                                    variant={item.variant}
+                                    isDisabled={savingGrade !== null}
+                                    isPending={savingGrade === item.grade}
+                                    onPress={() => void onGrade(item.grade)}
+                                >
+                                    {/* label over the SM-2 next-interval preview the BE ships
                                     per grade (`nextIntervals`), so the learner sees how far
                                     each choice pushes the card before picking. */}
-                                <span className="flex flex-col items-center leading-tight">
-                                    <span>{t(`flashcardReview.${item.key}`)}</span>
-                                    <span className="text-xs opacity-80">
-                                        {t("flashcardReview.intervalDays", {
-                                            days: current.nextIntervals[item.key],
-                                        })}
+                                    <span className="flex flex-col items-center leading-tight">
+                                        <span>{t(`flashcardReview.${item.key}`)}</span>
+                                        <span className="text-xs opacity-80">
+                                            {t("flashcardReview.intervalDays", {
+                                                days: current.nextIntervals[item.key],
+                                            })}
+                                        </span>
                                     </span>
-                                </span>
-                            </Button>
-                        ))}
-                    </Box>
-                ) : (
-                    <Button
-                        variant="primary"
-                        onPress={() => setFlipped(true)}
-                    >
-                        {t("flashcardReview.flip")}
-                    </Button>
-                )),
-            ]} />
+                                </Button>
+                            ))}
+                        </Box>
+                    ) : (
+                        <Button
+                            variant="primary"
+                            onPress={() => setFlipped(true)}
+                        >
+                            {t("flashcardReview.flip")}
+                        </Button>
+                    )),
+                ]} />
         </Box>
     )
 }

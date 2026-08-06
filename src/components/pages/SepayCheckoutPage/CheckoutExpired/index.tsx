@@ -64,27 +64,31 @@ export const CheckoutExpired = ({ onRecheck }: CheckoutExpiredProps) => {
     )
 
     return (
-        <Box principle="page-pad" className="flex min-h-[80vh] flex-col items-center justify-center p-4">
+        <Box principle="page-pad" className="flex min-h-[80vh] flex-col items-center justify-center p-4"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
             <Card className="w-full max-w-md bg-default/40 text-center backdrop-blur-md">
-                <Box principle="card-padding" className="p-8">
+                <Box principle="card-padding" className="p-8"
+                    explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
                     <Card.Content className="flex flex-col items-center">
                         <div className="mb-6 flex justify-center">
                             <IconTile icon={<ClockCountdown aria-hidden focusable="false" />} tone="warning" size="lg" />
                         </div>
                         <h1 className="mb-2 text-2xl font-bold">{t("payment.sepay.expired.title")}</h1>
                         <p className="mb-6 text-muted">{t("payment.sepay.expired.description")}</p>
-                        <StackV gap={4} principle="content-row" classNames={["w-full"]} items={[
-                            () => (
-                                <Button variant="primary" onPress={onStartOver}>
-                                    {t("payment.sepay.expired.startOver")}
-                                </Button>
-                            ),
-                            () => (
-                                <Button variant="secondary" onPress={onRecheck}>
-                                    {t("payment.sepay.expired.recheck")}
-                                </Button>
-                            ),
-                        ]} />
+                        <StackV gap={4} principle="content-row" classNames={["w-full"]}
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            items={[
+                                () => (
+                                    <Button variant="primary" onPress={onStartOver}>
+                                        {t("payment.sepay.expired.startOver")}
+                                    </Button>
+                                ),
+                                () => (
+                                    <Button variant="secondary" onPress={onRecheck}>
+                                        {t("payment.sepay.expired.recheck")}
+                                    </Button>
+                                ),
+                            ]} />
                     </Card.Content>
                 </Box>
             </Card>

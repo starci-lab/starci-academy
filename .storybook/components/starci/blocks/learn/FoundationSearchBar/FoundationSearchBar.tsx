@@ -84,6 +84,7 @@ const FoundationSearchBar = ({
                 gap={3}
                 justify="between"
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 isSkeleton={isSkeleton}
 
                 items={[

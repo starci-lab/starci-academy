@@ -91,6 +91,7 @@ export const _HeadhuntingCompanyConsultants = ({
             identity={{ tier: "block", component: "HeadhuntingCompanyConsultants" }}
             columns={{ base: 1, sm: 2, lg: 3 }}
             principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             items={items}
         />
     )

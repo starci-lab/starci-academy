@@ -62,64 +62,72 @@ export const OrderSummary = () => {
     )
 
     return (
-        <StackV gap={6} principle="block-boundary" items={[
-            () => (
-                <Card className="bg-default/40 backdrop-blur-md">
-                    <Box principle="card-padding" className="p-6">
-                        <Card.Content>
-                            <h3 className="mb-4 text-lg font-medium">{courseTitle}</h3>
-                            <StackH gap={3} principle="value-row" align="baseline" items={[
-                                () => (
-                                    <span className="text-3xl font-bold text-primary">
-                                        {Number(amount).toLocaleString("vi-VN")}
-                                    </span>
-                                ),
-                                () => <span className="text-sm text-muted">VND</span>,
-                            ]} />
-                        </Card.Content>
-                    </Box>
-                </Card>
-            ),
+        <StackV gap={6} principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            items={[
+                () => (
+                    <Card className="bg-default/40 backdrop-blur-md">
+                        <Box principle="card-padding" className="p-6"
+                            explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
+                            <Card.Content>
+                                <h3 className="mb-4 text-lg font-medium">{courseTitle}</h3>
+                                <StackH gap={3} principle="value-row" align="baseline"
+                                    explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
+                                    items={[
+                                        () => (
+                                            <span className="text-3xl font-bold text-primary">
+                                                {Number(amount).toLocaleString("vi-VN")}
+                                            </span>
+                                        ),
+                                        () => <span className="text-sm text-muted">VND</span>,
+                                    ]} />
+                            </Card.Content>
+                        </Box>
+                    </Card>
+                ),
 
-            () => (
-                <Card className="flex-grow bg-default/40 backdrop-blur-md">
-                    <Box principle="card-padding" className="p-6">
-                        <Card.Content>
-                            <StackV gap={4} principle="content-row" items={[
-                                () => <DetailRow label={t("payment.sepay.bank")} value={bankDetails.bank} />,
-                                () => (
-                                    <DetailRow
-                                        copyValue={bankDetails.account}
-                                        label={t("payment.sepay.account")}
-                                        showCopy
-                                        value={bankDetails.account}
-                                        onCopy={onCopy}
-                                    />
-                                ),
-                                () => (
-                                    <DetailRow
-                                        copyValue={amount}
-                                        label={t("payment.sepay.amount")}
-                                        showCopy
-                                        value={`${Number(amount).toLocaleString("vi-VN")} VND`}
-                                        onCopy={onCopy}
-                                    />
-                                ),
-                                () => (
-                                    <DetailRow
-                                        copyValue={referenceId}
-                                        isHighlighted
-                                        label={t("payment.sepay.content")}
-                                        showCopy
-                                        value={referenceId}
-                                        onCopy={onCopy}
-                                    />
-                                ),
-                            ]} />
-                        </Card.Content>
-                    </Box>
-                </Card>
-            ),
-        ]} />
+                () => (
+                    <Card className="flex-grow bg-default/40 backdrop-blur-md">
+                        <Box principle="card-padding" className="p-6"
+                            explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
+                            <Card.Content>
+                                <StackV gap={4} principle="content-row"
+                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                    items={[
+                                        () => <DetailRow label={t("payment.sepay.bank")} value={bankDetails.bank} />,
+                                        () => (
+                                            <DetailRow
+                                                copyValue={bankDetails.account}
+                                                label={t("payment.sepay.account")}
+                                                showCopy
+                                                value={bankDetails.account}
+                                                onCopy={onCopy}
+                                            />
+                                        ),
+                                        () => (
+                                            <DetailRow
+                                                copyValue={amount}
+                                                label={t("payment.sepay.amount")}
+                                                showCopy
+                                                value={`${Number(amount).toLocaleString("vi-VN")} VND`}
+                                                onCopy={onCopy}
+                                            />
+                                        ),
+                                        () => (
+                                            <DetailRow
+                                                copyValue={referenceId}
+                                                isHighlighted
+                                                label={t("payment.sepay.content")}
+                                                showCopy
+                                                value={referenceId}
+                                                onCopy={onCopy}
+                                            />
+                                        ),
+                                    ]} />
+                            </Card.Content>
+                        </Box>
+                    </Card>
+                ),
+            ]} />
     )
 }

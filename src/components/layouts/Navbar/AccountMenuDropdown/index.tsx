@@ -54,6 +54,7 @@ export const AccountMenuDropdown = () => {
                     padding={4}
                     gap={1}
                     principle="cell-pad"
+                    explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body."
                     body={() => (isSkeleton
                         ? <Skeleton.UserCell />
                         : isAuthed ? <UserSummary /> : <GuestHeader />)}

@@ -22,9 +22,11 @@ import { Box } from "@/components/frames/Box"
 export const EnrolledSuccess = () => {
     const t = useTranslations()
     return (
-        <Box principle="page-pad" className="flex min-h-[80vh] flex-col items-center justify-center p-4">
+        <Box principle="page-pad" className="flex min-h-[80vh] flex-col items-center justify-center p-4"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
             <Card className="w-full max-w-md bg-default/40 text-center backdrop-blur-md">
-                <Box principle="card-padding" className="p-8">
+                <Box principle="card-padding" className="p-8"
+                    explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
                     <Card.Content>
                         <div className="mb-6 flex justify-center">
                             <IconTile icon={<CheckCircle aria-hidden focusable="false" />} tone="success" size="lg" />

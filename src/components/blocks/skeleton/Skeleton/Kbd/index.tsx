@@ -12,3 +12,6 @@ export type SkeletonKbdProps = WithClassNames<undefined>
 export const SkeletonKbd = ({ className }: SkeletonKbdProps) => {
     return <Skeleton className={cn("h-6 w-10 rounded-lg", className)} />
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonKbd` as the public name. */
+export { SkeletonKbd as Kbd }

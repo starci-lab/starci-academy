@@ -187,7 +187,9 @@ const FlashcardDeckList = ({
                 {showProgress && deck.totalCount > 0 ? (
                     <StackH gap={2} isSkeleton={isSkeleton} items={[() => progressRow]} />
                 ) : null}
-                <StackH gap={2} principle="icon-text" justify="end" isSkeleton={isSkeleton} items={[() => ctaRow]} />
+                <StackH gap={2} principle="icon-text"
+                    explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                    justify="end" isSkeleton={isSkeleton} items={[() => ctaRow]}  />
             </>
         )
 
@@ -250,7 +252,9 @@ const FlashcardDeckList = ({
         />
     ) : view === "grid" ? (
         <div>
-            <Grid columns={{ base: 1, sm: 2, md: 3 }} principle="content-row" items={tiles} />
+            <Grid columns={{ base: 1, sm: 2, md: 3 }} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                items={tiles}  />
         </div>
     ) : (
         <SurfaceCardList isSkeleton={isSkeleton} items={rows} />
@@ -281,7 +285,9 @@ const FlashcardDeckList = ({
 
     const listBody = (
         <>
-            <StackH gap={3} principle="flex-action" at="sm" isSkeleton={isSkeleton} items={[() => searchAndView]} />
+            <StackH gap={3} principle="flex-action"
+                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                at="sm" isSkeleton={isSkeleton} items={[() => searchAndView]}  />
             {track}
             {!isSkeleton && decks.length > 0 ? (
                 <div>

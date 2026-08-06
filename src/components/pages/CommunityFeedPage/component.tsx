@@ -28,26 +28,34 @@ const SKELETON_ROW_COUNT = 3
  */
 const CommunityFeedSkeletonRow = () => (
     <SurfaceCard body={() => (
-        <StackV gap={4} principle="card-caption" items={[
-            () => (
-                <StackH gap={4} principle="content-row" items={[
-                    () => <Avatar isSkeleton size="md" />,
-                    () => (
-                        <StackV gap={3} principle="identity" classNames={["min-w-0", "flex-1"]} items={[
-                            () => <Typography size="sm" isSkeleton classNames={["w-1/2"]} />,
-                            () => <Typography size="xs" isSkeleton classNames={["w-3/4"]} />,
+        <StackV gap={4} principle="card-caption"
+            explain="Holds caption text under card media so the caption stays attached to the image above it."
+            items={[
+                () => (
+                    <StackH gap={4} principle="content-row"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                        items={[
+                            () => <Avatar isSkeleton size="md" />,
+                            () => (
+                                <StackV gap={3} principle="identity"
+                                    explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
+                                    classNames={["min-w-0", "flex-1"]} items={[
+                                        () => <Typography size="sm" isSkeleton classNames={["w-1/2"]} />,
+                                        () => <Typography size="xs" isSkeleton classNames={["w-3/4"]} />,
+                                    ]} />
+                            ),
                         ]} />
-                    ),
-                ]} />
-            ),
-            () => <Skeleton className="h-16 w-full rounded-xl" />,
-            () => (
-                <StackH gap={6} principle="block-boundary" items={[
-                    () => <Skeleton className="h-7 w-24 rounded-full" />,
-                    () => <Skeleton className="h-7 w-14 rounded-full" />,
-                ]} />
-            ),
-        ]} />
+                ),
+                () => <Skeleton className="h-16 w-full rounded-xl" />,
+                () => (
+                    <StackH gap={6} principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        items={[
+                            () => <Skeleton className="h-7 w-24 rounded-full" />,
+                            () => <Skeleton className="h-7 w-14 rounded-full" />,
+                        ]} />
+                ),
+            ]} />
     )} />
 )
 
@@ -163,96 +171,102 @@ export const _CommunityFeedPage = ({
 }: CommunityFeedPageProps) => {
     return (
         <PageContainer>
-            <StackV gap={7} principle="layout-split" items={[
-                () => (
-                    <PageHeader
-                        title={labels.title}
-                        description={labels.description}
-                        actions={(
-                            <Button
-                                variant="secondary"
-                                size="sm"
-                                prefixIcon={ChatCircleIcon}
-                                label={labels.chatLabel}
-                                onPress={onChatClick}
-                            />
-                        )}
-                    />
-                ),
-                () => (
-                    <StackV gap={6} principle="block-boundary" items={[
-                        () => (
-                            <TabsCard
-                                leftTabs={{
-                                    items: channelTabs,
-                                    selectedKey: selectedChannelKey,
-                                    ariaLabel: labels.channelTabsAriaLabel,
-                                    onSelectionChange: onChannelChange,
-                                }}
-                            />
-                        ),
-                        ...(showComposer ? [() => (
-                            <CommunityComposer channel={composerChannel} onPosted={onPosted} />
-                        )] : []),
-                        () => {
-                            // error beats a stale loading flag; empty only once settled
-                            if (error) {
-                                return <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retryLabel} />
-                            }
-                            if (!isSkeleton && isEmpty) {
-                                // empty feed is still a conversion surface. Two distinct reasons need
-                                // two distinct empties (§State-matrix): filtered-empty offers a way
-                                // back to "all channels"; platform-empty invites into courses.
-                                return isFilteredEmpty ? (
-                                    <AsyncContentEmpty
-                                        title={labels.emptyFilteredTitle}
-                                        action={() => (
-                                            <Button variant="secondary" size="sm" label={labels.viewAllChannelsLabel} onPress={onViewAllChannels} />
-                                        )}
+            <StackV gap={7} principle="layout-split"
+                explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+                items={[
+                    () => (
+                        <PageHeader
+                            title={labels.title}
+                            description={labels.description}
+                            actions={(
+                                <Button
+                                    variant="secondary"
+                                    size="sm"
+                                    prefixIcon={ChatCircleIcon}
+                                    label={labels.chatLabel}
+                                    onPress={onChatClick}
+                                />
+                            )}
+                        />
+                    ),
+                    () => (
+                        <StackV gap={6} principle="block-boundary"
+                            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                            items={[
+                                () => (
+                                    <TabsCard
+                                        leftTabs={{
+                                            items: channelTabs,
+                                            selectedKey: selectedChannelKey,
+                                            ariaLabel: labels.channelTabsAriaLabel,
+                                            onSelectionChange: onChannelChange,
+                                        }}
                                     />
-                                ) : (
-                                    <AsyncContentEmpty
-                                        title={labels.emptyTitle}
-                                        action={() => (
-                                            <Button variant="secondary" size="sm" label={labels.browseCoursesLabel} onPress={onBrowseCourses} />
-                                        )}
-                                    />
-                                )
-                            }
-
-                            // ROWS — while shimmering, placeholder rows keep the SAME count shape as the
-                            // real list; `CommunityPost` has no `isSkeleton` of its own (missingSkeletonSupport).
-                            const rowItems = isSkeleton
-                                ? Array.from({ length: SKELETON_ROW_COUNT }, () => () => <CommunityFeedSkeletonRow />)
-                                : items.map((post) => () => (
-                                    <CommunityPost
-                                        post={post}
-                                        authenticated={authenticated}
-                                        onReact={authenticated ? onReact : undefined}
-                                        onChanged={onChanged}
-                                    />
-                                ))
-
-                            return (
-                                <StackV gap={6} principle="block-boundary" items={[
-                                    ...rowItems,
-                                    ...(!isSkeleton && hasMore ? [() => (
-                                        <div className="flex justify-center">
-                                            <Button
-                                                variant="secondary"
-                                                size="sm"
-                                                isPending={isLoadingMore}
-                                                label={labels.loadMoreLabel}
-                                                onPress={onLoadMore}
+                                ),
+                                ...(showComposer ? [() => (
+                                    <CommunityComposer channel={composerChannel} onPosted={onPosted} />
+                                )] : []),
+                                () => {
+                                    // error beats a stale loading flag; empty only once settled
+                                    if (error) {
+                                        return <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retryLabel} />
+                                    }
+                                    if (!isSkeleton && isEmpty) {
+                                        // empty feed is still a conversion surface. Two distinct reasons need
+                                        // two distinct empties (§State-matrix): filtered-empty offers a way
+                                        // back to "all channels"; platform-empty invites into courses.
+                                        return isFilteredEmpty ? (
+                                            <AsyncContentEmpty
+                                                title={labels.emptyFilteredTitle}
+                                                action={() => (
+                                                    <Button variant="secondary" size="sm" label={labels.viewAllChannelsLabel} onPress={onViewAllChannels} />
+                                                )}
                                             />
-                                        </div>
-                                    )] : []),
-                                ]} />
-                            )
-                        },
-                    ]} />
-                ),
-            ]} />
+                                        ) : (
+                                            <AsyncContentEmpty
+                                                title={labels.emptyTitle}
+                                                action={() => (
+                                                    <Button variant="secondary" size="sm" label={labels.browseCoursesLabel} onPress={onBrowseCourses} />
+                                                )}
+                                            />
+                                        )
+                                    }
+
+                                    // ROWS — while shimmering, placeholder rows keep the SAME count shape as the
+                                    // real list; `CommunityPost` has no `isSkeleton` of its own (missingSkeletonSupport).
+                                    const rowItems = isSkeleton
+                                        ? Array.from({ length: SKELETON_ROW_COUNT }, () => () => <CommunityFeedSkeletonRow />)
+                                        : items.map((post) => () => (
+                                            <CommunityPost
+                                                post={post}
+                                                authenticated={authenticated}
+                                                onReact={authenticated ? onReact : undefined}
+                                                onChanged={onChanged}
+                                            />
+                                        ))
+
+                                    return (
+                                        <StackV gap={6} principle="block-boundary"
+                                            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                                            items={[
+                                                ...rowItems,
+                                                ...(!isSkeleton && hasMore ? [() => (
+                                                    <div className="flex justify-center">
+                                                        <Button
+                                                            variant="secondary"
+                                                            size="sm"
+                                                            isPending={isLoadingMore}
+                                                            label={labels.loadMoreLabel}
+                                                            onPress={onLoadMore}
+                                                        />
+                                                    </div>
+                                                )] : []),
+                                            ]} />
+                                    )
+                                },
+                            ]} />
+                    ),
+                ]} />
         </PageContainer>
     )
 }

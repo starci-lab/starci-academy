@@ -34,12 +34,14 @@ export const MessageRow = ({
         <StackH
             gap={2}
             principle="separator-dot"
+            explain="Places a middle-dot separator between short meta peers so the items read as one inline list."
             align="center"
             items={[
                 () => (
                     <StackH
                         gap={2}
                         principle="icon-text"
+                        explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
                         align="center"
                         items={[
                             () => <Avatar src={answer.author.avatarUrl} name={answer.author.displayName} seed={answer.author.id} size="sm" />,
@@ -57,6 +59,7 @@ export const MessageRow = ({
         <StackH
             gap={3}
             principle="flex-action"
+            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
             align="center"
 
             items={[
@@ -99,7 +102,9 @@ export const MessageRow = ({
     return (
         <div className={cn("flex w-full", isMine ? "justify-end" : "justify-start")}>
             <div className="max-w-[92%]">
-                <StackV gap={2} principle="title-subtitle" align={isMine ? "end" : undefined} classNames={["min-w-0"]} items={[() => bubbleBody]} />
+                <StackV gap={2} principle="title-subtitle"
+                    explain="Title over supporting line — not label-field, because neither line is a form control label."
+                    align={isMine ? "end" : undefined} classNames={["min-w-0"]} items={[() => bubbleBody]}  />
             </div>
         </div>
     )

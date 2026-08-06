@@ -28,3 +28,6 @@ export const SkeletonCard = ({ className, lines = 3 }: SkeletonCardProps) => (
         </CardContent>
     </Card>
 )
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonCard` as the public name. */
+export { SkeletonCard as Card }

@@ -57,9 +57,10 @@ export const ProjectCard = ({
     const hasVerified = (project?.completedTasks ?? 0) > 0
 
     return (
-        <StackH
+        <StackH identity={{ tier: "page", component: "ProjectCard" }}
             gap={4}
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             align="start"
             items={[
                 () => (resting
@@ -69,12 +70,14 @@ export const ProjectCard = ({
                     <StackV
                         gap={3}
                         principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                         classNames={["min-w-0", "flex-1"]}
                         items={[
                             () => (
                                 <StackH
                                     gap={3}
                                     principle="flex-action"
+                                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                                     align="start"
                                     justify="between"
                                     items={[
@@ -82,6 +85,7 @@ export const ProjectCard = ({
                                             <Cluster
                                                 gap={3}
                                                 principle="chip-row"
+                                                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                                                 classNames={["min-w-0"]}
                                                 items={[
                                                     () => (

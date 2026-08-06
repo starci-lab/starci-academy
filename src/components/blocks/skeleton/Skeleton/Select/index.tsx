@@ -19,3 +19,6 @@ export const SkeletonSelect = ({ className }: SkeletonSelectProps) => {
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonSelect` as the public name. */
+export { SkeletonSelect as Select }

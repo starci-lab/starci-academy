@@ -58,6 +58,7 @@ const ReactionButton = ({
         <StackH
             gap={3}
             principle="value-row"
+            explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
             align="center"
             isSkeleton={isSkeleton}
             items={[
@@ -114,7 +115,9 @@ const ReactionButton = ({
     )
 
     return (
-        <StackH gap={3} principle="flex-action" align="center" isSkeleton={isSkeleton} items={[() => triggerAndSummary]} />
+        <StackH gap={3} principle="flex-action"
+            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+            align="center" isSkeleton={isSkeleton} items={[() => triggerAndSummary]}  />
     )
 }
 

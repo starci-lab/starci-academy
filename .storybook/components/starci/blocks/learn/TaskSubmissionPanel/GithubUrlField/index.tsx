@@ -50,7 +50,7 @@ export const GithubUrlField = ({
 }: GithubUrlFieldProps) => {
     const AutosaveIcon = autosaveStatus === "idle" ? null : AUTOSAVE_ICON[autosaveStatus]
     return (
-        <StackV
+        <StackV identity={{ tier: "block", component: "GithubUrlField" }}
             gap={2}
             isSkeleton={isSkeleton}
 

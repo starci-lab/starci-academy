@@ -111,6 +111,7 @@ export const PrivacySettingsPage = () => {
                     gap={3}
                     align="center"
                     principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                     items={[
                         () => (
                             <Typography type="h5" weight="semibold" align="center">
@@ -135,6 +136,7 @@ export const PrivacySettingsPage = () => {
                 align="start"
                 justify="between"
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 items={[
                     () => (
                         <div className="flex flex-col gap-0">
@@ -170,6 +172,7 @@ export const PrivacySettingsPage = () => {
                 align="start"
                 justify="between"
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 items={[
                     () => (
                         <div className="flex min-w-0 flex-col gap-0">
@@ -259,15 +262,17 @@ export const PrivacySettingsPage = () => {
     ]
 
     return (
-        <StackV gap={7} principle="layout-split" items={[
-            () => (
-                <PageHeader
-                    breadcrumb={<SettingsBreadcrumb current={t("profileSettings.privacy.title")} />}
-                    title={t("profileSettings.privacy.title")}
-                    description={t("profileSettings.privacy.description")}
-                />
-            ),
-            () => <StackV gap={6} items={formItems} />,
-        ]} />
+        <StackV gap={7} principle="layout-split"
+            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+            items={[
+                () => (
+                    <PageHeader
+                        breadcrumb={<SettingsBreadcrumb current={t("profileSettings.privacy.title")} />}
+                        title={t("profileSettings.privacy.title")}
+                        description={t("profileSettings.privacy.description")}
+                    />
+                ),
+                () => <StackV gap={6} items={formItems} />,
+            ]} />
     )
 }

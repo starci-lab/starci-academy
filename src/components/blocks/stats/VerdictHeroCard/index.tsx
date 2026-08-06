@@ -117,6 +117,7 @@ export const VerdictHeroCard = ({
             <StackH
                 gap={3}
                 principle="value-row"
+                explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
                 align="baseline"
                 items={[
                     () => <span className={`text-4xl font-bold tabular-nums ${BAND_TEXT[band]}`}>{value}</span>,
@@ -159,11 +160,13 @@ export const VerdictHeroCard = ({
                                     gap={1}
                                     padding={4}
                                     principle="cell-pad"
+                                    explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body."
                                     classNames={["flex-1"]}
                                     body={() => (
                                         <StackV
                                             gap={2}
                                             principle="title-subtitle"
+                                            explain="Title over supporting line — not label-field, because neither line is a form control label."
                                             items={[
                                                 () => <Typography size="xs" color="muted" text={<SplitLabel />} />,
                                                 () => (

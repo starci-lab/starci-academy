@@ -75,6 +75,7 @@ const QuizQuestion = ({
         <StackH
             gap={3}
             principle="chip-row"
+            explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
             align="center"
             isSkeleton={isSkeleton}
             items={[() => <Chip tone="default" text={levelLabel} isSkeleton={isSkeleton} />]}
@@ -102,12 +103,14 @@ const QuizQuestion = ({
         <StackV
             gap={6}
             principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
             isSkeleton={isSkeleton}
             items={[
                 () => (
                     <StackH
                         gap={3}
                         principle="chip-row"
+                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                         align="center"
                         isSkeleton={isSkeleton}
                         items={[
@@ -141,6 +144,7 @@ const QuizQuestion = ({
         <StackH
             gap={3}
             principle="flex-action"
+            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
             justify="end"
             isSkeleton={isSkeleton}
             items={[

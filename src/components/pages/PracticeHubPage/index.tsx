@@ -52,8 +52,10 @@ export const PracticeHubPage = () => {
             </ResizableRail>
 
             {/* content column — owns the canonical p-6 reading padding */}
-            <Box principle="page-pad" className="min-h-0 min-w-0 flex-1 p-6">
-                <Box principle="center-measure" className="mx-auto flex max-w-5xl flex-col gap-10">
+            <Box principle="page-pad" className="min-h-0 min-w-0 flex-1 p-6"
+                explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
+                <Box principle="center-measure" className="mx-auto flex max-w-5xl flex-col gap-10"
+                    explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
                     <PageHeader
                         breadcrumb={(
                             <ResponsiveBreadcrumb
@@ -74,20 +76,23 @@ export const PracticeHubPage = () => {
                         description={t("codingPractice.subtitle")}
                     />
 
-                    <StackV gap={6} principle="block-boundary" items={[
-                        () => <PracticeMobileNav />,
-                        () => <ProgressCockpit />,
-                        () => (view === "problems" ? (
-                            <>
-                                <Box principle="pill-pad" className="sticky top-16 z-40 bg-background py-2">
-                                    <PracticeFilters />
-                                </Box>
-                                <ProblemCatalog />
-                            </>
-                        ) : (
-                            <CodingLeaderboard />
-                        )),
-                    ]} />
+                    <StackV gap={6} principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        items={[
+                            () => <PracticeMobileNav />,
+                            () => <ProgressCockpit />,
+                            () => (view === "problems" ? (
+                                <>
+                                    <Box principle="pill-pad" className="sticky top-16 z-40 bg-background py-2"
+                                        explain="Pill/chip inset — not control-pad, because this pads a compact badge shape rather than a form control.">
+                                        <PracticeFilters />
+                                    </Box>
+                                    <ProblemCatalog />
+                                </>
+                            ) : (
+                                <CodingLeaderboard />
+                            )),
+                        ]} />
                 </Box>
             </Box>
         </div>

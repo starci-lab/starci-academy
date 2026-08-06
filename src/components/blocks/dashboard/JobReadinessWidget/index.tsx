@@ -1,5 +1,4 @@
 import React from "react"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { ChartLineUpIcon } from "@phosphor-icons/react"
 import { AsyncContent } from "@/components/composites/async/AsyncContent"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
@@ -81,22 +80,13 @@ const pillarMeter = (label: string, score: number | null, isSkeleton: boolean) =
     if (!isSkeleton && score === null) {
         return null
     }
-    return isSkeleton ? (
-        <StackV
-            gap={3}
-            isSkeleton={isSkeleton}
-            items={[
-                () => <Typography size="xs" color="muted" isSkeleton />,
-                () => <HeroSkeleton className="h-1 w-full rounded-full" />,
-            ]}
-        />
-    ) : (
+    return (
         <ProgressMeter
             label={label}
             value={score ?? 0}
             max={100}
             showValue
-
+            isSkeleton={isSkeleton}
         />
     )
 }
@@ -114,6 +104,7 @@ const Content = ({ codingPercentile, track, isSkeleton }: ContentProps) => {
             <StackH
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 at="sm"
                 align="center"
                 isSkeleton={isSkeleton}
@@ -153,7 +144,7 @@ const Content = ({ codingPercentile, track, isSkeleton }: ContentProps) => {
             ) : null}
         </>
     )
-    return <StackV gap={4} isSkeleton={isSkeleton} items={[() => trackSummary]} />
+    return <StackV identity={{ tier: "block", component: "JobReadinessWidget" }} gap={4} isSkeleton={isSkeleton} items={[() => trackSummary]} />
 }
 
 /** Fixed-shape placeholder rendered while {@link JobReadinessWidgetProps.isLoading} — no real track exists yet. */

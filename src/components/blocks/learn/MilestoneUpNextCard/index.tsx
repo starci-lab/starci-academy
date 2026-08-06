@@ -68,6 +68,7 @@ const MilestoneUpNextCard = ({
             <StackV
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 items={[
                     // Back INSIDE the card face (not `SurfaceCard.label`,
                     // which sits OUTSIDE/above it) — a plain atom call, not raw CSS, so no

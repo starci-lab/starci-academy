@@ -144,7 +144,8 @@ export const _DailyQuest = ({
             <SurfaceListCard>
                 {isSkeleton
                     ? Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => (
-                        <Box key={index} principle="cell-pad" className="px-3">
+                        <Box key={index} principle="cell-pad" className="px-3"
+                            explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body.">
                             <Skeleton.ListRow withSubtitle={false} withTrailing />
                         </Box>
                     ))

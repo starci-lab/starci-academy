@@ -118,30 +118,34 @@ export const ProfileActivity = ({
             <AsyncContent
                 isLoading={(isLoading || !userId) && items.length === 0}
                 skeleton={(
-                    <StackV gap={6} principle="block-boundary" items={
-                        [0, 1].map(() => () => (
-                            <StackV gap={4} items={[
-                                () => <Skeleton.Typography type="body-xs" width="1/4" />,
-                                () => (
-                                    <SurfaceListCard bordered>
-                                        {[0, 1, 2].map((row) => (
-                                            <SurfaceListCardItem key={row}>
-                                                <StackH gap={3} principle="identity" align="start" items={[
-                                                    () => <Skeleton className="size-9 shrink-0 rounded-full" />,
-                                                    () => (
-                                                        <StackV gap={1} classNames={["flex-1"]} items={[
-                                                            () => <Skeleton.Typography type="body-sm" width="3/4" />,
-                                                            () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                    <StackV gap={6} principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        items={
+                            [0, 1].map(() => () => (
+                                <StackV gap={4} items={[
+                                    () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                                    () => (
+                                        <SurfaceListCard bordered>
+                                            {[0, 1, 2].map((row) => (
+                                                <SurfaceListCardItem key={row}>
+                                                    <StackH gap={3} principle="identity"
+                                                        explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
+                                                        align="start" items={[
+                                                            () => <Skeleton className="size-9 shrink-0 rounded-full" />,
+                                                            () => (
+                                                                <StackV gap={1} classNames={["flex-1"]} items={[
+                                                                    () => <Skeleton.Typography type="body-sm" width="3/4" />,
+                                                                    () => <Skeleton.Typography type="body-xs" width="1/4" />,
+                                                                ]} />
+                                                            ),
                                                         ]} />
-                                                    ),
-                                                ]} />
-                                            </SurfaceListCardItem>
-                                        ))}
-                                    </SurfaceListCard>
-                                ),
-                            ]} />
-                        ))
-                    } />
+                                                </SurfaceListCardItem>
+                                            ))}
+                                        </SurfaceListCard>
+                                    ),
+                                ]} />
+                            ))
+                        } />
                 )}
                 isEmpty={items.length === 0}
                 emptyContent={{
@@ -157,30 +161,32 @@ export const ProfileActivity = ({
                     retryLabel: t("publicProfile.loadErrorRetry"),
                 }}
             >
-                <StackV gap={6} principle="block-boundary" items={[
-                    () => (
-                        <ActivityFeed
-                            items={items}
-                            onResolve={onResolve}
-                            onReact={authenticated ? onReact : undefined}
-                            bordered
-                        />
-                    ),
-                    ...(hasMore
-                        ? [() => (
-                            <div className="flex justify-center">
-                                <Button
-                                    variant="secondary"
-                                    size="sm"
-                                    isPending={isLoadingMore}
-                                    onPress={() => setSize(size + 1)}
-                                >
-                                    {t("publicProfile.loadMore")}
-                                </Button>
-                            </div>
-                        )]
-                        : []),
-                ]} />
+                <StackV gap={6} principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                    items={[
+                        () => (
+                            <ActivityFeed
+                                items={items}
+                                onResolve={onResolve}
+                                onReact={authenticated ? onReact : undefined}
+                                bordered
+                            />
+                        ),
+                        ...(hasMore
+                            ? [() => (
+                                <div className="flex justify-center">
+                                    <Button
+                                        variant="secondary"
+                                        size="sm"
+                                        isPending={isLoadingMore}
+                                        onPress={() => setSize(size + 1)}
+                                    >
+                                        {t("publicProfile.loadMore")}
+                                    </Button>
+                                </div>
+                            )]
+                            : []),
+                    ]} />
             </AsyncContent>
         </LabeledCard>
     )

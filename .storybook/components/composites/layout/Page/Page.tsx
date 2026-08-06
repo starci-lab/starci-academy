@@ -138,19 +138,15 @@ const Header = ({
             )}
             {showDescription ? (
                 // clamp to 2 lines on mobile (keep the header short on a phone); full on sm+
-                // — a viewport-width decision, so the wrapper owns it, not the atom. Skipped
-                // while loading: the shimmer bar has no overflow to clamp.
-                isSkeleton ? (
-                    <Typography size="sm" color="muted" isSkeleton />
-                ) : (
-                    <div className="line-clamp-2 @app-sm:line-clamp-none">
-                        <Typography size="sm"
-                            color="muted"
-
-                            text={description}
-                        />
-                    </div>
-                )
+                // — a viewport-width decision, so the wrapper owns it, not the atom.
+                <div className={isSkeleton ? undefined : "line-clamp-2 @app-sm:line-clamp-none"}>
+                    <Typography
+                        size="sm"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        text={description}
+                    />
+                </div>
             ) : null}
         </>
     )
@@ -188,6 +184,7 @@ const Header = ({
                         gap={3}
                         align="stretch"
                         principle="chip-row"
+                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                         isSkeleton={isSkeleton}
                         items={[
                             () => <Chip isSkeleton />,
@@ -284,6 +281,7 @@ const BottomBar = ({
                 justify="between"
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 isSkeleton={isSkeleton}
                 items={[
                     () => <div className="min-w-0"><Main isSkeleton={isSkeleton} /></div>,
@@ -304,3 +302,9 @@ const BottomBar = ({
  * | `.BottomBar` | `body`/`actions` slots |
  */
 export { Header as PageHeader, BottomBar as PageBottomBar }
+
+/** Folder-matching compound namespace (export-matches-folder / ATOM-11 sync). */
+export const Page = {
+    Header: Header,
+    BottomBar: BottomBar,
+} as const

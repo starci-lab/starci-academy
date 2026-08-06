@@ -102,6 +102,7 @@ export const ProgressMeter = ({
         <StackH
             gap={3}
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             justify="between"
             isSkeleton={isSkeleton}
             items={[
@@ -122,6 +123,7 @@ export const ProgressMeter = ({
         <StackH
             gap={3}
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             justify="between"
             isSkeleton={isSkeleton}
             items={[

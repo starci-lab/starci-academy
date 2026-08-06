@@ -68,54 +68,62 @@ export const PracticeRail = ({ className }: PracticeRailProps) => {
     return (
         <div className={cn("relative flex min-h-0 min-w-0 flex-col gap-3 p-6", className)}>
             {/* pinned header: mode switch + topic search */}
-            <StackV gap={4} principle="card-caption" items={[
-                () => (
-                    <TabsCard
-                        variant="primary"
-                        leftTabs={{
-                            selectedKey: view,
-                            ariaLabel: t("PracticeHubPage.rail.modeAria"),
-                            onSelectionChange: (key) => setView(String(key) as PracticeView),
-                            items: [
-                                {
-                                    key: "problems",
-                                    label: (
-                                        <StackH gap={3} principle="flex-action" as="span" items={[
-                                            () => <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
-                                            () => <>{t("PracticeHubPage.tabs.problems")}</>,
-                                        ]} />
-                                    ),
-                                },
-                                {
-                                    key: "leaderboard",
-                                    label: (
-                                        <StackH gap={3} principle="flex-action" as="span" items={[
-                                            () => <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
-                                            () => <>{t("PracticeHubPage.tabs.leaderboard")}</>,
-                                        ]} />
-                                    ),
-                                },
-                            ],
-                        }}
-                    />
-                ),
-                () => view === "problems" ? (
-                    <StackV gap={3} principle="sibling-stack" items={[
-                        () => <Label className="px-1 text-xs text-muted" data-principle="control-pad">{t("PracticeHubPage.rail.topicsLabel")}</Label>,
-                        () => (
-                            <TextField>
-                                <Input
-                                    type="search"
-                                    aria-label={t("PracticeHubPage.rail.searchTopic")}
-                                    placeholder={t("PracticeHubPage.rail.searchTopic")}
-                                    value={query}
-                                    onChange={(event) => setQuery(event.target.value)}
-                                />
-                            </TextField>
-                        ),
-                    ]} />
-                ) : null,
-            ]} />
+            <StackV gap={4} principle="card-caption"
+                explain="Holds caption text under card media so the caption stays attached to the image above it."
+                items={[
+                    () => (
+                        <TabsCard
+                            variant="primary"
+                            leftTabs={{
+                                selectedKey: view,
+                                ariaLabel: t("PracticeHubPage.rail.modeAria"),
+                                onSelectionChange: (key) => setView(String(key) as PracticeView),
+                                items: [
+                                    {
+                                        key: "problems",
+                                        label: (
+                                            <StackH gap={3} principle="flex-action" as="span"
+                                                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                                items={[
+                                                    () => <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+                                                    () => <>{t("PracticeHubPage.tabs.problems")}</>,
+                                                ]} />
+                                        ),
+                                    },
+                                    {
+                                        key: "leaderboard",
+                                        label: (
+                                            <StackH gap={3} principle="flex-action" as="span"
+                                                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                                items={[
+                                                    () => <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />,
+                                                    () => <>{t("PracticeHubPage.tabs.leaderboard")}</>,
+                                                ]} />
+                                        ),
+                                    },
+                                ],
+                            }}
+                        />
+                    ),
+                    () => view === "problems" ? (
+                        <StackV gap={3} principle="sibling-stack"
+                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                            items={[
+                                () => <Label className="px-1 text-xs text-muted" data-principle="control-pad">{t("PracticeHubPage.rail.topicsLabel")}</Label>,
+                                () => (
+                                    <TextField>
+                                        <Input
+                                            type="search"
+                                            aria-label={t("PracticeHubPage.rail.searchTopic")}
+                                            placeholder={t("PracticeHubPage.rail.searchTopic")}
+                                            value={query}
+                                            onChange={(event) => setQuery(event.target.value)}
+                                        />
+                                    </TextField>
+                                ),
+                            ]} />
+                    ) : null,
+                ]} />
 
             {/* scroll region: the topic nav list (problems mode only) */}
             {view === "problems" ? (
@@ -124,7 +132,8 @@ export const PracticeRail = ({ className }: PracticeRailProps) => {
                     className="-mx-1 min-h-0 min-w-0 flex-1 overflow-y-auto px-1" data-principle="control-pad"
                 >
                     {topics.length === 0 ? (
-                        <Box principle="control-pad" className="px-3 py-2">
+                        <Box principle="control-pad" className="px-3 py-2"
+                            explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.">
                             <Typography type="body-sm" color="muted">
                                 {t("PracticeHubPage.rail.searchTopicEmpty", { query: query.trim() })}
                             </Typography>

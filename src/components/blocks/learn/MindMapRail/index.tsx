@@ -198,7 +198,9 @@ const MindMapRail = ({
 
     const railBody = (
         <>
-            <StackH gap={3} principle="flex-action" at="sm" isSkeleton={isSkeleton} items={[() => searchRow]} />
+            <StackH gap={3} principle="flex-action"
+                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                at="sm" isSkeleton={isSkeleton} items={[() => searchRow]}  />
             <AsyncContent
                 isLoading={isLoading || isSkeleton}
                 skeleton={() => <SurfaceCardList items={skeletonRows()} isSkeleton />}
@@ -210,7 +212,7 @@ const MindMapRail = ({
         </>
     )
 
-    return <StackV gap={3} isSkeleton={isSkeleton} items={[() => railBody]} />
+    return <StackV identity={{ tier: "block", component: "MindMapRail" }} gap={3} isSkeleton={isSkeleton} items={[() => railBody]} />
 }
 
 export { MindMapRail }

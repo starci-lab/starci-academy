@@ -134,7 +134,9 @@ const Footer = ({
             <div className="max-w-sm">
                 <StackV gap={4} items={[() => brandColumn]} />
             </div>
-            <StackH gap={7} principle="layout-split" at="sm" items={[() => linkColumns]} />
+            <StackH gap={7} principle="layout-split"
+                explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+                at="sm" items={[() => linkColumns]}  />
         </>
     )
 
@@ -175,6 +177,7 @@ const Footer = ({
             <StackH
                 gap={7}
                 principle="layout-split"
+                explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
                 justify="between"
                 at="md"
 
@@ -184,6 +187,7 @@ const Footer = ({
                 <StackH
                     gap={3}
                     principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                     justify="between"
                     at="sm"
 
@@ -194,7 +198,9 @@ const Footer = ({
     )
 
     const footerBody = (
-        <StackV gap={6} principle="block-boundary" divider items={[() => sections]} />
+        <StackV gap={6} principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            divider items={[() => sections]}  />
     )
 
     return (

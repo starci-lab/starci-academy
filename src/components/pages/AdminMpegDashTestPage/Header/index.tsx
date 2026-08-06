@@ -44,3 +44,6 @@ export const AdminMpegDashTestHeader = ({ className }: WithClassNames<undefined>
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `AdminMpegDashTestHeader` as the public name. */
+export { AdminMpegDashTestHeader as Header }

@@ -119,7 +119,8 @@ const CvGalleryCardCover = ({ item, labels }: { item: CvGalleryDocument; labels:
             as="span"
             className="absolute inset-0 flex items-end justify-center bg-foreground/0 pb-3 opacity-0 transition-opacity group-hover:bg-foreground/5 group-hover:opacity-100"
         >
-            <Box as="span" principle="pill-pad" className="rounded-full bg-accent px-4 py-2 text-sm text-accent-foreground">
+            <Box as="span" principle="pill-pad" className="rounded-full bg-accent px-4 py-2 text-sm text-accent-foreground"
+                explain="Pill/chip inset — not control-pad, because this pads a compact badge shape rather than a form control.">
                 {labels.openEditor}
             </Box>
         </Box>
@@ -130,11 +131,13 @@ const CvGalleryCardFooter = ({ item, labels }: { item: CvGalleryDocument; labels
     <StackV
         gap={3}
         principle="sibling-stack"
+        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
         items={[
             () => (
                 <StackH
                     gap={3}
                     principle="flex-action"
+                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                     justify="between"
                     items={[
                         () => (
@@ -208,6 +211,7 @@ export const _CvGallery = ({
         <StackV
             gap={3}
             principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             align="center"
             items={[
                 () => <Button label={labels.createFirst} variant="tertiary" size="sm" onPress={onCreate} />,
@@ -244,13 +248,14 @@ export const _CvGallery = ({
     } else if (!isSkeleton && isEmpty) {
         body = <AsyncContentEmpty title={labels.emptyTitle} description={labels.emptyHint} action={emptyAction} />
     } else {
-        body = <Grid columns={{ base: 1, sm: 2, lg: 3 }} principle="block-boundary" items={gridItems} />
+        body = <Grid columns={{ base: 1, sm: 2, lg: 3 }} principle="block-boundary" explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups." items={gridItems} />
     }
 
     return (
         <StackV
             gap={7}
             principle="layout-split"
+            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
             identity={{ tier: "block", component: "CvGallery" }}
             items={[
                 ...(breadcrumb ? [() => (

@@ -171,10 +171,12 @@ export const _DueReview = ({
                 gap={1}
                 padding={{ base: { x: 5, y: 3 }, sm: { x: 6, y: 3 } }}
                 principle="pill-pad"
+                explain="Pill/chip inset — not control-pad, because this pads a compact badge shape rather than a form control."
                 items={[() => (
                     <StackH
                         gap={4}
                         principle="content-row"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                         align="center"
                         divider
                         classNames={["w-full"]}
@@ -192,7 +194,8 @@ export const _DueReview = ({
                     />
                 )]}
             />
-            <Box principle="pill-pad" className="px-4 pb-2 @app-sm:px-6">
+            <Box principle="pill-pad" className="px-4 pb-2 @app-sm:px-6"
+                explain="Pill/chip inset — not control-pad, because this pads a compact badge shape rather than a form control.">
                 <StackH
                     gap={2}
                     classNames={["w-full"]}
@@ -286,10 +289,12 @@ export const _DueReview = ({
         // the "saving" interim until that navigation lands. KEEP the same
         // `WorkSessionHeader` chrome the just-finished ACTIVE phase used.
         <Container size="md" padding={1} body={() => (
-            <StackV gap={4} align="center" principle="card-caption" classNames={["w-full"]} items={[
-                () => <Spinner size="lg" />,
-                () => <Typography size="sm" color="muted" text={labels.savingLabel} />,
-            ]} />
+            <StackV gap={4} align="center" principle="card-caption"
+                explain="Holds caption text under card media so the caption stays attached to the image above it."
+                classNames={["w-full"]} items={[
+                    () => <Spinner size="lg" />,
+                    () => <Typography size="sm" color="muted" text={labels.savingLabel} />,
+                ]} />
         )} />
     ) : (
         <Container size="md" padding={1} body={() => (
@@ -350,7 +355,9 @@ export const _DueReview = ({
     )
 
     const bodyShell = (
-        <Box principle="page-pad" className="px-4 pb-6 pt-10 @app-sm:px-6">{body}</Box>
+        <Box principle="page-pad" className="px-4 pb-6 pt-10 @app-sm:px-6"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
+        >{body}</Box>
     )
 
     return (

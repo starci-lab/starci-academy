@@ -1,5 +1,5 @@
 import React from "react"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import {
     BookOpenIcon,
     CardsIcon,
@@ -102,7 +102,7 @@ const goalCellContent = (
     const iconLabel = (
         <StackH gap={2} isSkeleton={isSkeleton} items={[
             () => (isSkeleton ? (
-                <HeroSkeleton
+                <Skeleton
                     className="size-5 shrink-0 rounded-full"
 
                 />
@@ -121,36 +121,33 @@ const goalCellContent = (
     )
 
     const labelRow = (
-        <StackH gap={3} principle="sibling-stack" justify="between" isSkeleton={isSkeleton} items={[
-            () => iconLabel,
-            () => (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    tabularNums
-                    isSkeleton={isSkeleton}
-                    text={isSkeleton ? undefined : `${item.current}/${effectiveTarget}`}
+        <StackH gap={3} principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+            justify="between" isSkeleton={isSkeleton} items={[
+                () => iconLabel,
+                () => (
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        tabularNums
+                        isSkeleton={isSkeleton}
+                        text={isSkeleton ? undefined : `${item.current}/${effectiveTarget}`}
 
-                />
-            ),
-        ]} />
+                    />
+                ),
+            ]} />
     )
 
     return (
-        <StackV gap={3} isSkeleton={isSkeleton} items={[
+        <StackV identity={{ tier: "block", component: "WeeklyGoals" }} gap={3} isSkeleton={isSkeleton} items={[
             () => labelRow,
-            () => (isSkeleton ? (
-                <HeroSkeleton
-                    className="h-1 w-full rounded-full"
-
-                />
-            ) : (
+            () => (
                 <ProgressMeter
                     value={item.current}
                     max={effectiveTarget > 0 ? effectiveTarget : 1}
-
+                    isSkeleton={isSkeleton}
                 />
-            )),
+            ),
             ...(!isSkeleton && item.coinReward != null ? [() => (
                 <Typography
                     size="xs"
@@ -193,7 +190,7 @@ const Content = ({ items, composite, resetInLabel, defaultTargets, isSkeleton }:
         content: () => goalCellContent(item, defaultTargets, isSkeleton),
     }))
     return (
-        <StackV gap={4} isSkeleton={isSkeleton} items={[
+        <StackV identity={{ tier: "block", component: "WeeklyGoals" }} gap={4} isSkeleton={isSkeleton} items={[
             () => (
                 <Typography
                     size="sm"

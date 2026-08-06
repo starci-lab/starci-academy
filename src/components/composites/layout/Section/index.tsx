@@ -153,7 +153,7 @@ const Header = ({
             classNames={classNames}
             isSkeleton={isSkeleton}
             items={[
-                () => <StackV gap={2} principle="title-subtitle" classNames={["min-w-0"]} isSkeleton={isSkeleton} items={[() => titleBlock]} />,
+                () => <StackV gap={2} principle="title-subtitle" classNames={["min-w-0"]} isSkeleton={isSkeleton} items={[() => titleBlock]} explain="Title over supporting line — not label-field, because neither line is a form control label."/>,
                 ...(Action != null ? [() => (
                     <div className="shrink-0"><Action isSkeleton={isSkeleton} /></div>
                 )] : []),

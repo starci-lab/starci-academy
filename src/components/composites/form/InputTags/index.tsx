@@ -82,6 +82,7 @@ export const InputTags = ({
         >
             <Box
                 principle="control-pad"
+                explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row."
                 className={cn(
                     "bg-default-100 w-full rounded-xl border px-3 py-2",
                     invalid ? "border-danger" : "border-default-200",
@@ -91,6 +92,7 @@ export const InputTags = ({
                 <Cluster
                     gap={3}
                     principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                     align="center"
                     items={[
                         ...value.map((tag, index) => () => (

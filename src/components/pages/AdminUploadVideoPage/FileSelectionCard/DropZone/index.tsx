@@ -5,9 +5,7 @@ import React from "react"
 import {
     Chip,
 } from "@heroui/react"
-import {
-    formatSize,
-} from "../../utils"
+import { formatSize } from "@/modules/utils/format-size"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { StackV } from "@/components/frames/Stack"
 import { Box } from "@/components/frames/Box"
@@ -61,55 +59,62 @@ export const DropZone = ({
             className="flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-white/10 bg-white/[0.02] p-8 transition-all hover:border-indigo-400/40 hover:bg-indigo-500/5" data-principle="ps-admin-2"
         >
             {file ? (
-                <StackV gap={3} principle="sibling-stack" align="center" items={[
-                    () => (
-                        <Box principle="cell-pad" className="rounded-full bg-emerald-500/10 p-3">
-                            <VideoIcon className="h-8 w-8 text-emerald-400" />
-                        </Box>
-                    ),
-                    () => (
-                        <p className="text-sm font-medium text-white">
-                            {file.name}
-                        </p>
-                    ),
-                    () => (
-                        <Box principle="chip-row" className="flex items-center gap-2">
-                            <Chip
-                                size="sm"
-                                variant="secondary"
-                                className="bg-white/5 text-slate-300"
-                            >
-                                {file.type || "unknown"}
-                            </Chip>
-                            <span className="text-xs text-slate-400">
-                                {formatSize(file.size)}
-                            </span>
-                        </Box>
-                    ),
-                    () => (
-                        <p className="text-xs text-slate-500">
-                            Click or drag to replace
-                        </p>
-                    ),
-                ]} />
-            ) : (
-                <StackV gap={4} principle="card-caption" align="center" items={[
-                    () => (
-                        <Box principle="cell-pad" className="rounded-full bg-indigo-500/10 p-3">
-                            <UploadIcon className="h-8 w-8 text-indigo-400" />
-                        </Box>
-                    ),
-                    () => (
-                        <div className="text-center">
+                <StackV gap={3} principle="sibling-stack" align="center"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                    items={[
+                        () => (
+                            <Box principle="cell-pad" className="rounded-full bg-emerald-500/10 p-3"
+                                explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body.">
+                                <VideoIcon className="h-8 w-8 text-emerald-400" />
+                            </Box>
+                        ),
+                        () => (
                             <p className="text-sm font-medium text-white">
+                                {file.name}
+                            </p>
+                        ),
+                        () => (
+                            <Box principle="chip-row" className="flex items-center gap-2"
+                                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column.">
+                                <Chip
+                                    size="sm"
+                                    variant="secondary"
+                                    className="bg-white/5 text-slate-300"
+                                >
+                                    {file.type || "unknown"}
+                                </Chip>
+                                <span className="text-xs text-slate-400">
+                                    {formatSize(file.size)}
+                                </span>
+                            </Box>
+                        ),
+                        () => (
+                            <p className="text-xs text-slate-500">
+                            Click or drag to replace
+                            </p>
+                        ),
+                    ]} />
+            ) : (
+                <StackV gap={4} principle="card-caption" align="center"
+                    explain="Holds caption text under card media so the caption stays attached to the image above it."
+                    items={[
+                        () => (
+                            <Box principle="cell-pad" className="rounded-full bg-indigo-500/10 p-3"
+                                explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body.">
+                                <UploadIcon className="h-8 w-8 text-indigo-400" />
+                            </Box>
+                        ),
+                        () => (
+                            <div className="text-center">
+                                <p className="text-sm font-medium text-white">
                                 Click to select or drag & drop
-                            </p>
-                            <p className="text-xs text-slate-500 mt-1">
+                                </p>
+                                <p className="text-xs text-slate-500 mt-1">
                                 MP4, MOV, WebM, AVI — any size
-                            </p>
-                        </div>
-                    ),
-                ]} />
+                                </p>
+                            </div>
+                        ),
+                    ]} />
             )}
             <input
                 ref={fileInputRef}

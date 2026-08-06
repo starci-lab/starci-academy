@@ -112,12 +112,14 @@ export const SessionsPage = () => {
                     gap={4}
                     align="center"
                     principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                     items={[
                         () => <Skeleton className="size-5 shrink-0 rounded" />,
                         () => (
                             <StackV
                                 gap={3}
                                 principle="sibling-stack"
+                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                 classNames={["min-w-0", "flex-1"]}
                                 items={[
                                     () => <Skeleton.Typography type="body-sm" width="1/2" />,
@@ -180,6 +182,7 @@ export const SessionsPage = () => {
                                         gap={3}
                                         align="center"
                                         principle="chip-row"
+                                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                                         items={[
                                             () => (
                                                 <Typography type="body-sm" weight="medium" truncate>
@@ -208,7 +211,8 @@ export const SessionsPage = () => {
                             ),
                             ...(!session.current
                                 ? [() => (
-                                    <Box principle="push-end" className="ml-auto shrink-0">
+                                    <Box principle="push-end" className="ml-auto shrink-0"
+                                        explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row.">
                                         <Button
                                             variant="ghost"
                                             size="sm"
@@ -231,7 +235,9 @@ export const SessionsPage = () => {
 
                         return (
                             <SurfaceListCardItem key={session.id}>
-                                <StackH gap={4} align="center" principle="content-row" items={rowItems} />
+                                <StackH gap={4} align="center" principle="content-row"
+                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                    items={rowItems}  />
                             </SurfaceListCardItem>
                         )
                     })}

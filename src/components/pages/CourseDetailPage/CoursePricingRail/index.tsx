@@ -67,75 +67,83 @@ export const CoursePricingRail = ({ className }: CoursePricingRailProps) => {
         <div className={cn("@app-md:sticky @app-md:top-[88px] @app-md:self-start", className)}>
             <Card>
                 <CardContent>
-                    <StackV gap={5} principle="group-boundary" items={[
-                        () => <CoverImage src={coverImageUrl} alt={title ?? ""} />,
+                    <StackV gap={5} principle="group-boundary"
+                        explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
+                        items={[
+                            () => <CoverImage src={coverImageUrl} alt={title ?? ""} />,
 
-                        // headline: price + ONE discount + ONE scarcity line.
-                        // When the viewer has a loyalty discount, the headline is THEIR price
-                        // (struck phase price + loyalty chip); otherwise the active phase price.
-                        () => (
-                            <StackV gap={3} principle="sibling-stack" items={[
-                                () => (
-                                    <StackH gap={3} principle="value-row" align="center" at="sm" items={[
-                                        // single-source PriceTag — loyalty price when the viewer has one,
-                                        // else the active phase price (struck vs list). USD line stays beside it.
-                                        () => (previewPending ? (
-                                            <Skeleton.Typography type="h3" width="1/3" />
-                                        ) : hasLoyalty && preview ? (
-                                            <PriceTagProminent
-                                                discounted={preview.discountedPriceVnd}
-                                                original={preview.originalPriceVnd}
+                            // headline: price + ONE discount + ONE scarcity line.
+                            // When the viewer has a loyalty discount, the headline is THEIR price
+                            // (struck phase price + loyalty chip); otherwise the active phase price.
+                            () => (
+                                <StackV gap={3} principle="sibling-stack"
+                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                    items={[
+                                        () => (
+                                            <StackH gap={3} principle="value-row"
+                                                explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
+                                                align="center" at="sm" items={[
+                                                    // single-source PriceTag — loyalty price when the viewer has one,
+                                                    // else the active phase price (struck vs list). USD line stays beside it.
+                                                    () => (previewPending ? (
+                                                        <Skeleton.Typography type="h3" width="1/3" />
+                                                    ) : hasLoyalty && preview ? (
+                                                        <PriceTagProminent
+                                                            discounted={preview.discountedPriceVnd}
+                                                            original={preview.originalPriceVnd}
 
-                                                breakdown={{
-                                                    phase: preview.phasePriceVnd,
-                                                    loyaltyPercent: preview.discountPercent,
-                                                }}
-                                            />
-                                        ) : active ? (
-                                            <PriceTagProminent
-                                                discounted={active.priceVnd}
-                                                original={active.listPriceVnd}
+                                                            breakdown={{
+                                                                phase: preview.phasePriceVnd,
+                                                                loyaltyPercent: preview.discountPercent,
+                                                            }}
+                                                        />
+                                                    ) : active ? (
+                                                        <PriceTagProminent
+                                                            discounted={active.priceVnd}
+                                                            original={active.listPriceVnd}
 
-                                                breakdown={{
-                                                    phase: active.priceVnd,
-                                                    loyaltyPercent: 0,
-                                                }}
-                                            />
-                                        ) : null),
-                                        () => (active?.formattedPriceUsd ? (
-                                            <Typography type="body-sm" color="muted">
-                                                {active.formattedPriceUsd}
+                                                            breakdown={{
+                                                                phase: active.priceVnd,
+                                                                loyaltyPercent: 0,
+                                                            }}
+                                                        />
+                                                    ) : null),
+                                                    () => (active?.formattedPriceUsd ? (
+                                                        <Typography type="body-sm" color="muted">
+                                                            {active.formattedPriceUsd}
+                                                        </Typography>
+                                                    ) : null),
+                                                ]} />
+                                        ),
+                                        () => (active?.slotAvailable != null ? (
+                                            <Typography type="body-sm" className="text-warning-soft-foreground">
+                                                {t("courseLanding.slotsLeftPhase", {
+                                                    count: active.slotAvailable,
+                                                    phase: t(PHASE_LABEL_KEY[active.phase]),
+                                                })}
                                             </Typography>
                                         ) : null),
                                     ]} />
-                                ),
-                                () => (active?.slotAvailable != null ? (
-                                    <Typography type="body-sm" className="text-warning-soft-foreground">
-                                        {t("courseLanding.slotsLeftPhase", {
-                                            count: active.slotAvailable,
-                                            phase: t(PHASE_LABEL_KEY[active.phase]),
-                                        })}
-                                    </Typography>
-                                ) : null),
-                            ]} />
-                        ),
+                            ),
 
-                        // price ladder — minimal, current highlighted, future prices = urgency
-                        () => (rows.length > 0 ? (
-                            <>
-                                <Separator />
-                                <StackV gap={4} principle="content-row" items={rows.map((row) => () => <PhaseRow key={row.id} row={row} />)} />
-                                <Separator />
-                            </>
-                        ) : null),
+                            // price ladder — minimal, current highlighted, future prices = urgency
+                            () => (rows.length > 0 ? (
+                                <>
+                                    <Separator />
+                                    <StackV gap={4} principle="content-row"
+                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                        items={rows.map((row) => () => <PhaseRow key={row.id} row={row} />)}  />
+                                    <Separator />
+                                </>
+                            ) : null),
 
-                        () => <CourseCtaButtons />,
-                        () => (
-                            <Typography type="body-xs" color="muted" align="center">
-                                {t("course.usersEnrolled", { count: enrollmentCount })}
-                            </Typography>
-                        ),
-                    ]} />
+                            () => <CourseCtaButtons />,
+                            () => (
+                                <Typography type="body-xs" color="muted" align="center">
+                                    {t("course.usersEnrolled", { count: enrollmentCount })}
+                                </Typography>
+                            ),
+                        ]} />
                 </CardContent>
             </Card>
         </div>

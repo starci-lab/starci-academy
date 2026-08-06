@@ -56,15 +56,18 @@ export const AiKeyGroup = ({ group }: AiKeyGroupProps) => {
         <Card className="border border-default bg-surface">
             {/* Vendor CardContent padding cleared so house card-padding owns the inset. */}
             <CardContent className="p-0">
-                <Box principle="card-padding" className="p-4">
+                <Box principle="card-padding" className="p-4"
+                    explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
                     <StackV
                         gap={4}
                         principle="label-field"
+                        explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
                         items={[
                             () => (
                                 <StackH
                                     gap={3}
                                     principle="identity"
+                                    explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
                                     align="center"
                                     items={[
                                         () => (
@@ -83,7 +86,9 @@ export const AiKeyGroup = ({ group }: AiKeyGroupProps) => {
                                 />
                             ),
                             () => (group.keys.length > 0 ? (
-                                <Cluster gap={3} principle="chip-row" items={chipItems} />
+                                <Cluster gap={3} principle="chip-row" items={chipItems}
+                                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                />
                             ) : (
                                 <span className="text-xs text-muted">{t("noKeys")}</span>
                             )),

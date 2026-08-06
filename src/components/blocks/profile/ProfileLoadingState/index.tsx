@@ -1,4 +1,4 @@
-import { Skeleton as HeroSkeleton } from "@heroui/react"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { FlameIcon, GithubLogoIcon, GlobeIcon, LinkedinLogoIcon, MapPinIcon } from "@phosphor-icons/react"
 import { Tabs, type TabItem } from "@/components/atoms/navigation/Tabs"
 import { Typography, type TypographyIcon } from "@/components/atoms/text/Typography"
@@ -97,7 +97,9 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
         )
         const courseDetails = (
             <>
-                <StackH gap={3} principle="value-row" justify="between" items={[() => progressHeader]} />
+                <StackH gap={3} principle="value-row"
+                    explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
+                    justify="between" items={[() => progressHeader]}  />
                 <ProgressBar isSkeleton />
             </>
         )
@@ -144,7 +146,7 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
     // circular shimmer, so this stays a raw HeroUI `Skeleton`.
     const rankAvatarRow = (
         <>
-            <HeroSkeleton className="size-32 rounded-full" />
+            <Skeleton className="size-32 rounded-full" />
             <Chip isSkeleton />
         </>
     )
@@ -191,13 +193,17 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
 
     const identityColumnBody = (
         <>
-            <StackV gap={2} principle="title-subtitle" align="start" items={[() => rankAvatarRow]} />
+            <StackV gap={2} principle="title-subtitle"
+                explain="Title over supporting line — not label-field, because neither line is a form control label."
+                align="start" items={[() => rankAvatarRow]}  />
             <StackV gap={1} items={[() => nameBlock]} />
 
             {/* short bio */}
             <Typography size="sm" isSkeleton classNames={["w-2/3"]} />
 
-            <StackH gap={3} principle="chip-row" at="sm" items={[() => locationRow]} />
+            <StackH gap={3} principle="chip-row"
+                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                at="sm" items={[() => locationRow]}  />
             <StackH gap={4} items={[() => followRow]} />
 
             {/* earned-badge medal strip — `AvatarGroup` already owns the overlap look */}
@@ -252,7 +258,7 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
     // stays a raw HeroUI `Skeleton`.
     const contributionGroup = (
         <>
-            <HeroSkeleton className="h-40 w-full rounded-xl" />
+            <Skeleton className="h-40 w-full rounded-xl" />
             <InlineIconLabel icon={FlameIcon} isSkeleton size="sm" skeletonWidth="w-1/2" />
         </>
     )
@@ -269,7 +275,9 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
             <StackV gap={4} items={[() => coursesSection]} />
             <StackV gap={4} items={[() => contributionsSection]} />
             {/* skills — 2-col grid of stat cards */}
-            <Grid columns={{ base: 1, md: 2 }} principle="block-boundary" items={skillItems} />
+            <Grid columns={{ base: 1, md: 2 }} principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={skillItems}  />
         </>
     )
 
@@ -285,7 +293,9 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
         <StackV gap={6} items={[() => overviewSections]} />
     )
 
-    const overviewBody = <RailShell principle="layout-split" rail={identityRail} body={overviewContent} at="md" />
+    const overviewBody = <RailShell principle="layout-split"
+        explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+        rail={identityRail} body={overviewContent} at="md"  />
 
     return (
         // ⚠️ couldNotFix (require-identity-root / no-raw-shape-at-sentence-tier):

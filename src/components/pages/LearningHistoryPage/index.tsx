@@ -105,118 +105,132 @@ export const LearningHistoryPage = ({
                 title={t("profileSettings.learning.history.title")}
                 description={t("profileSettings.learning.history.subtitle")}
             />
-            <StackV gap={6} principle="block-boundary" items={[
+            <StackV gap={6} principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={[
                 // search — only worth showing once there are several courses
-                () => (courses.length >= SEARCH_MIN_COURSES ? (
-                    <TextField variant="secondary">
-                        <Input
-                            aria-label={t("profileSettings.learning.history.searchCourses")}
-                            placeholder={t("profileSettings.learning.history.searchCourses")}
-                            value={search}
-                            onChange={(event) => setSearch(event.target.value)}
-                        />
-                    </TextField>
-                ) : null),
+                    () => (courses.length >= SEARCH_MIN_COURSES ? (
+                        <TextField variant="secondary">
+                            <Input
+                                aria-label={t("profileSettings.learning.history.searchCourses")}
+                                placeholder={t("profileSettings.learning.history.searchCourses")}
+                                value={search}
+                                onChange={(event) => setSearch(event.target.value)}
+                            />
+                        </TextField>
+                    ) : null),
 
-                () => (
-                    <AsyncContent
-                        isLoading={!coursesSwr.data && !coursesSwr.error}
-                        skeleton={(
-                            <SurfaceListCard>
-                                {Array.from({ length: SKELETON_COURSE_COUNT }).map((_unused, row) => (
-                                    <SurfaceListCardItem key={row}>
-                                        <StackH gap={4} principle="content-row" align="center" items={[
-                                            () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
-                                            () => (
-                                                <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
+                    () => (
+                        <AsyncContent
+                            isLoading={!coursesSwr.data && !coursesSwr.error}
+                            skeleton={(
+                                <SurfaceListCard>
+                                    {Array.from({ length: SKELETON_COURSE_COUNT }).map((_unused, row) => (
+                                        <SurfaceListCardItem key={row}>
+                                            <StackH gap={4} principle="content-row"
+                                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                align="center" items={[
+                                                    () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
                                                     () => (
-                                                        <StackH gap={3} principle="value-row" justify="between" align="center" items={[
-                                                            () => <Skeleton.Typography type="body-sm" width="1/2" />,
-                                                            () => <Skeleton className="h-3 w-8 rounded" />,
-                                                        ]} />
-                                                    ),
-                                                    () => <Skeleton.ProgressBar />,
-                                                ]} />
-                                            ),
-                                        ]} />
-                                    </SurfaceListCardItem>
-                                ))}
-                            </SurfaceListCard>
-                        )}
-                        isEmpty={courses.length === 0}
-                        emptyContent={{
-                            title: t("profileSettings.learning.history.coursesEmpty"),
-                            description: t("profileSettings.learning.history.coursesEmptyHint"),
-                            onRetry: () => { router.push(pathConfig().locale(locale).course().build()) },
-                            retryLabel: t("profileSettings.learning.history.explore"),
-                        }}
-                        error={!coursesSwr.data ? coursesSwr.error : undefined}
-                        errorContent={{
-                            title: t("profileSettings.learning.outline.error"),
-                            onRetry: () => { void coursesSwr.mutate() },
-                            retryLabel: t("profileSettings.learning.loadMore"),
-                        }}
-                    >
-                        {filtered.length === 0 ? (
-                        // loaded but the current search matches nothing
-                            <AsyncContentEmpty title={t("profileSettings.learning.history.noMatch")} />
-                        ) : (
-                            <SurfaceListCard>
-                                {filtered.map((course) => {
-                                    const dims = [
-                                        { key: "content", completed: course.contentCompleted, total: course.contentTotal },
-                                        { key: "challenge", completed: course.challengeCompleted, total: course.challengeTotal },
-                                        { key: "milestone", completed: course.completed, total: course.total },
-                                    ]
-                                    const totalTasks = dims.reduce((acc, dim) => acc + dim.total, 0)
-                                    return (
-                                        <SurfaceListCardItem
-                                            key={course.globalId}
-                                            onPress={() => { setSelectedCourse(course.globalId) }}
-                                            hover="underline"
-                                        >
-                                            <StackH gap={4} principle="content-row" align="center" items={[
-                                                () => <IconTile size="sm" src={course.thumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />,
-                                                () => (
-                                                    <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
-                                                        () => (
-                                                            <StackH gap={3} principle="value-row" justify="between" align="center" items={[
+                                                        <StackV gap={3} principle="sibling-stack"
+                                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                            classNames={["min-w-0", "flex-1"]} items={[
                                                                 () => (
-                                                                    <Typography type="body-sm" weight="semibold" truncate className="min-w-0 flex-1 underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
-                                                                        {course.label}
-                                                                    </Typography>
+                                                                    <StackH gap={3} principle="value-row"
+                                                                        explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
+                                                                        justify="between" align="center" items={[
+                                                                            () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                                                            () => <Skeleton className="h-3 w-8 rounded" />,
+                                                                        ]} />
                                                                 ),
-                                                                () => <CourseTrialChip isEnrolled={course.isEnrolled} />,
-                                                                () => (
-                                                                    <Typography type="body-xs" color="muted">
-                                                                        {`${course.completionPercent}%`}
-                                                                    </Typography>
-                                                                ),
+                                                                () => <Skeleton.ProgressBar />,
                                                             ]} />
-                                                        ),
+                                                    ),
+                                                ]} />
+                                        </SurfaceListCardItem>
+                                    ))}
+                                </SurfaceListCard>
+                            )}
+                            isEmpty={courses.length === 0}
+                            emptyContent={{
+                                title: t("profileSettings.learning.history.coursesEmpty"),
+                                description: t("profileSettings.learning.history.coursesEmptyHint"),
+                                onRetry: () => { router.push(pathConfig().locale(locale).course().build()) },
+                                retryLabel: t("profileSettings.learning.history.explore"),
+                            }}
+                            error={!coursesSwr.data ? coursesSwr.error : undefined}
+                            errorContent={{
+                                title: t("profileSettings.learning.outline.error"),
+                                onRetry: () => { void coursesSwr.mutate() },
+                                retryLabel: t("profileSettings.learning.loadMore"),
+                            }}
+                        >
+                            {filtered.length === 0 ? (
+                            // loaded but the current search matches nothing
+                                <AsyncContentEmpty title={t("profileSettings.learning.history.noMatch")} />
+                            ) : (
+                                <SurfaceListCard>
+                                    {filtered.map((course) => {
+                                        const dims = [
+                                            { key: "content", completed: course.contentCompleted, total: course.contentTotal },
+                                            { key: "challenge", completed: course.challengeCompleted, total: course.challengeTotal },
+                                            { key: "milestone", completed: course.completed, total: course.total },
+                                        ]
+                                        const totalTasks = dims.reduce((acc, dim) => acc + dim.total, 0)
+                                        return (
+                                            <SurfaceListCardItem
+                                                key={course.globalId}
+                                                onPress={() => { setSelectedCourse(course.globalId) }}
+                                                hover="underline"
+                                            >
+                                                <StackH gap={4} principle="content-row"
+                                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                    align="center" items={[
+                                                        () => <IconTile size="sm" src={course.thumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />,
                                                         () => (
-                                                            <SegmentBar
-                                                                max={totalTasks || 1}
-                                                                ariaLabel={`${course.label} · ${course.completionPercent}%`}
-                                                                segments={dims.map((dim) => ({
-                                                                    key: dim.key,
-                                                                    label: t(`dashboard.courseProgress.${dim.key}`),
-                                                                    value: dim.completed,
-                                                                    color: DIM_COLOR[dim.key],
-                                                                }))}
-                                                            />
+                                                            <StackV gap={3} principle="sibling-stack"
+                                                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                                classNames={["min-w-0", "flex-1"]} items={[
+                                                                    () => (
+                                                                        <StackH gap={3} principle="value-row"
+                                                                            explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
+                                                                            justify="between" align="center" items={[
+                                                                                () => (
+                                                                                    <Typography type="body-sm" weight="semibold" truncate className="min-w-0 flex-1 underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
+                                                                                        {course.label}
+                                                                                    </Typography>
+                                                                                ),
+                                                                                () => <CourseTrialChip isEnrolled={course.isEnrolled} />,
+                                                                                () => (
+                                                                                    <Typography type="body-xs" color="muted">
+                                                                                        {`${course.completionPercent}%`}
+                                                                                    </Typography>
+                                                                                ),
+                                                                            ]} />
+                                                                    ),
+                                                                    () => (
+                                                                        <SegmentBar
+                                                                            max={totalTasks || 1}
+                                                                            ariaLabel={`${course.label} · ${course.completionPercent}%`}
+                                                                            segments={dims.map((dim) => ({
+                                                                                key: dim.key,
+                                                                                label: t(`dashboard.courseProgress.${dim.key}`),
+                                                                                value: dim.completed,
+                                                                                color: DIM_COLOR[dim.key],
+                                                                            }))}
+                                                                        />
+                                                                    ),
+                                                                ]} />
                                                         ),
                                                     ]} />
-                                                ),
-                                            ]} />
-                                        </SurfaceListCardItem>
-                                    )
-                                })}
-                            </SurfaceListCard>
-                        )}
-                    </AsyncContent>
-                ),
-            ]} />
+                                            </SurfaceListCardItem>
+                                        )
+                                    })}
+                                </SurfaceListCard>
+                            )}
+                        </AsyncContent>
+                    ),
+                ]} />
         </div>
     )
 }

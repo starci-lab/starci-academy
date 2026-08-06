@@ -102,6 +102,7 @@ export const ProfileMenuCard = ({
             <StackH
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 align="center"
                 classNames={["min-w-0"]}
                 items={[
@@ -123,6 +124,7 @@ export const ProfileMenuCard = ({
                         <StackV
                             gap={1}
                             principle="name-handle"
+                            explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
                             classNames={["min-w-0"]}
                             items={[
                                 () => (

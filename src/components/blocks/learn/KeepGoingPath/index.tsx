@@ -1,5 +1,5 @@
 import React from "react"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { CheckCircleIcon, CircleIcon, LockIcon, PlayCircleIcon } from "@phosphor-icons/react"
 import { SurfaceCardList } from "@/components/composites/cards/SurfaceCard"
 import { VariantChipDifficulty, type Difficulty } from "@/components/blocks/learn/VariantChip"
@@ -134,6 +134,7 @@ const KeepGoingPathBase = ({
     const rows = isSkeleton && contents.length === 0 ? SKELETON_ROWS : contents
     return (
         <SurfaceCardList
+            identity={{ tier: "block", component: "KeepGoingPath" }}
             // The heading sentence is assembled by the BLOCK — the caller only hands over the module name.
             // EVERY word of the heading is decided HERE — "Continue", "Chapter", the `·`.
             // The caller only supplies the number and the name.
@@ -150,7 +151,7 @@ const KeepGoingPathBase = ({
                     leading: isSkeleton ? (
                         // The icon is chosen DIRECTLY by the block itself (no atom in between) —
                         // hand-roll a single shimmer dot in place of the state/lock icon.
-                        () => <HeroSkeleton className="size-5 shrink-0 rounded-full" />
+                        () => <Skeleton className="size-5 shrink-0 rounded-full" />
                     ) : (
                         () => (
                             <Icon

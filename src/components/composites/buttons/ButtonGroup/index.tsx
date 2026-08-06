@@ -4,7 +4,7 @@ import { Button } from "@/components/atoms/buttons/Button"
 import { type ButtonSize, type ButtonVariant, type IconComponent } from "@/components/atoms/buttons/Button/button-tokens"
 import { ResponsiveCluster, type ResponsiveClusterItem } from "@/components/frames/ResponsiveCluster"
 import type { ResponsiveRowSwitch } from "@/components/frames/ResponsiveRow"
-import type { PrincipleToken } from "@/components/frames/_principles"
+import type { PrincipleToken, ExplainReason } from "@/components/frames/_principles"
 import { PRINCIPLE_STYLE } from "@/components/frames/_principle-style"
 import type { AllowedGap, LayoutJustify } from "@/components/frames/_spacing"
 
@@ -51,6 +51,10 @@ export interface ButtonGroupProps {
      */
     principle?: PrincipleToken
     /**
+     * Why this layer exists - one sentence, forwarded to the owning cluster beside `principle`.
+     */
+    explain?: ExplainReason
+    /**
      * Container step this row leaves the full-width column for the packed row at.
      * Default `sm` — a button row needs far less room than a page split to pack.
      */
@@ -70,6 +74,7 @@ export const ButtonGroup = ({
     size = "md",
     isSkeleton = false,
     principle = "flex-action",
+    explain,
     at = "sm",
     classNames,
 }: ButtonGroupProps) => {
@@ -83,6 +88,7 @@ export const ButtonGroup = ({
             at={at}
             gap={gap}
             principle={principle}
+            explain={explain}
             justify={justify}
             classNames={classNames}
             isSkeleton={isSkeleton}

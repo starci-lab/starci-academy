@@ -69,11 +69,13 @@ const recapCardBody = (
     <StackV
         gap={6}
         principle="block-boundary"
+        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
         items={[
             () => (
                 <StackH
                     gap={3}
                     principle="chip-row"
+                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                     align="center"
 
                     items={[

@@ -29,5 +29,5 @@ export const ProfileFollowers = ({ followersCount, isSkeleton = false}: ProfileF
             />
         </>
     )
-    return <StackV gap={1} isSkeleton={isSkeleton} items={[() => followersBody]} />
+    return <StackV identity={{ tier: "block", component: "ProfileFollowers" }} gap={1} isSkeleton={isSkeleton} items={[() => followersBody]} />
 }

@@ -13,3 +13,6 @@ export type SkeletonSwitchProps = WithClassNames<undefined>
 export const SkeletonSwitch = ({ className }: SkeletonSwitchProps) => {
     return <Skeleton className={cn("h-9 w-16 rounded-full", className)} />
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonSwitch` as the public name. */
+export { SkeletonSwitch as Switch }

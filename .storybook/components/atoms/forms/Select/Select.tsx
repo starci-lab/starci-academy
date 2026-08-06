@@ -19,3 +19,12 @@ export const SelectIndicator = HeroSelect.Indicator
 export const SelectPopover = HeroSelect.Popover
 
 export const meta = { tier: "atom", name: "SelectRoot" } as const
+
+/** Folder-matching compound namespace (export-matches-folder / ATOM-11 sync). */
+export const Select = {
+    Root: SelectRoot,
+    Trigger: SelectTrigger,
+    Value: SelectValue,
+    Indicator: SelectIndicator,
+    Popover: SelectPopover,
+} as const

@@ -8,12 +8,18 @@
  * `.Language`/`.HostPlatform`/`.AiCategory` as screens need them.
  */
 
+import { VariantChipDifficulty } from "./VariantChipDifficulty"
+
 export type { Difficulty, VariantChipDifficultyProps } from "./types"
 export { DIFFICULTY_COLOR } from "./types"
-export { VariantChipDifficulty } from "./VariantChipDifficulty"
+export { VariantChipDifficulty }
 
 /**
  * `VariantChip.*` — the family of chips carrying a meaningful role. Members are
  * named by ROLE (§14d), not by shape. No `Base` (see the doc at the top of this
  * file).
+ * Folder-matching compound namespace (export-matches-folder). Existing named exports stay public.
  */
+export const VariantChip = {
+    Difficulty: VariantChipDifficulty,
+} as const

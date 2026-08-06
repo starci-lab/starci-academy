@@ -76,7 +76,9 @@ const ContentReaction = ({
 
     return (
         <div>
-            <StackH gap={3} principle="sibling-stack" align="center" justify="between" isSkeleton={isSkeleton} items={[() => row]} />
+            <StackH gap={3} principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                align="center" justify="between" isSkeleton={isSkeleton} items={[() => row]}  />
         </div>
     )
 }

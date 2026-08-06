@@ -153,39 +153,49 @@ export const _BlogPostPage = ({
     // Cover image, the locked gate, the CTA row, and the related strip only ever existed post-load
     // (the legacy skeleton never mirrored them either), so they're skipped entirely while shimmering.
     const articleTree = (
-        <StackV gap={6} principle="block-boundary" isSkeleton={isSkeleton} items={[
-            () => (
-                <StackV gap={3} principle="sibling-stack" isSkeleton={isSkeleton} items={[
-                    () => <Cluster gap={2} principle="chip-row" items={chipItems} />,
-                    () => <Typography size="h1" text={title ?? ""} isSkeleton={isSkeleton} />,
-                    () => <Cluster gap={2} principle="separator-dot" separator items={metaItems} />,
-                ]} />
-            ),
-            ...(!isSkeleton && coverImageUrl ? [() => <Image src={coverImageUrl} alt="" ratio="video" />] : []),
-            () => (isSkeleton
-                ? <Skeleton.Paragraph lines={SKELETON_BODY_LINES} />
-                : <MarkdownContent markdown={body ?? ""} />),
-            ...(!isSkeleton && isLocked ? [() => (
-                <Callout status="warning" title={labels.lockedTitle} description={labels.lockedBody} />
-            )] : []),
-            ...(!isSkeleton && (sourceUrl || ctaUrl) ? [() => (
-                <StackV gap={3} principle="sibling-stack" items={[
-                    ...(sourceUrl ? [() => (
-                        <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
-                            <Button variant="outline" size="lg" label={labels.viewSource} classNames={["w-full"]} />
-                        </a>
-                    )] : []),
-                    ...(ctaUrl ? [() => (
-                        <Link href={ctaUrl}>
-                            <Button variant="primary" size="lg" label={labels.cta} classNames={["w-full"]} />
-                        </Link>
-                    )] : []),
-                ]} />
-            )] : []),
-            ...(!isSkeleton && category != null && slug != null ? [() => (
-                <RelatedPosts category={category} currentSlug={slug} />
-            )] : []),
-        ]} />
+        <StackV gap={6} principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            isSkeleton={isSkeleton} items={[
+                () => (
+                    <StackV gap={3} principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                        isSkeleton={isSkeleton} items={[
+                            () => <Cluster gap={2} principle="chip-row"
+                                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                items={chipItems} />,
+                            () => <Typography size="h1" text={title ?? ""} isSkeleton={isSkeleton} />,
+                            () => <Cluster gap={2} principle="separator-dot"
+                                explain="Places a middle-dot separator between short meta peers so the items read as one inline list."
+                                separator items={metaItems} />,
+                        ]} />
+                ),
+                ...(!isSkeleton && coverImageUrl ? [() => <Image src={coverImageUrl} alt="" ratio="video" />] : []),
+                () => (isSkeleton
+                    ? <Skeleton.Paragraph lines={SKELETON_BODY_LINES} />
+                    : <MarkdownContent markdown={body ?? ""} />),
+                ...(!isSkeleton && isLocked ? [() => (
+                    <Callout status="warning" title={labels.lockedTitle} description={labels.lockedBody} />
+                )] : []),
+                ...(!isSkeleton && (sourceUrl || ctaUrl) ? [() => (
+                    <StackV gap={3} principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                        items={[
+                            ...(sourceUrl ? [() => (
+                                <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
+                                    <Button variant="outline" size="lg" label={labels.viewSource} classNames={["w-full"]} />
+                                </a>
+                            )] : []),
+                            ...(ctaUrl ? [() => (
+                                <Link href={ctaUrl}>
+                                    <Button variant="primary" size="lg" label={labels.cta} classNames={["w-full"]} />
+                                </Link>
+                            )] : []),
+                        ]} />
+                )] : []),
+                ...(!isSkeleton && category != null && slug != null ? [() => (
+                    <RelatedPosts category={category} currentSlug={slug} />
+                )] : []),
+            ]} />
     )
 
     return (
@@ -197,7 +207,9 @@ export const _BlogPostPage = ({
                 isSkeleton={isSkeleton}
                 identity={{ tier: "block", component: "BlogPostPage" }}
                 body={() => (
-                    <StackV gap={6} principle="block-boundary" items={[backLink, () => articleTree]} />
+                    <StackV gap={6} principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        items={[backLink, () => articleTree]}  />
                 )}
             />
         </>

@@ -39,3 +39,6 @@ export const SkeletonPagination = ({
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonPagination` as the public name. */
+export { SkeletonPagination as Pagination }

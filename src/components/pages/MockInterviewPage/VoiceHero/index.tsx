@@ -77,6 +77,7 @@ export const VoiceHero = ({
                 <StackV
                     gap={3}
                     principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                     classNames={["w-full"]}
                     items={[
                         () => (
@@ -160,7 +161,8 @@ export const VoiceHero = ({
                     ),
                     ...(value || interimTranscript
                         ? [() => (
-                            <Box principle="card-padding" className="w-full rounded-2xl bg-default/40 p-4">
+                            <Box principle="card-padding" className="w-full rounded-2xl bg-default/40 p-4"
+                                explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
                                 <Typography className="text-foreground">
                                     {value} <span className="text-muted">{interimTranscript}</span>
                                 </Typography>

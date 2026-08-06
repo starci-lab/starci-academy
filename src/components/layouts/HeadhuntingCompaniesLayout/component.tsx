@@ -45,6 +45,7 @@ const _HeadhuntingCompaniesLayout = ({
     <RailShell
         at="lg"
         principle="layout-split"
+        explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
         rail={NavRail}
         body={() => <>{children}</>}
         identity={{ tier: "layout", component: "HeadhuntingCompaniesLayout" }}

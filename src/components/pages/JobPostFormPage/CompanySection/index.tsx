@@ -66,102 +66,112 @@ export const CompanySection = ({
         <LabeledCard
             label={t("jobs.post.sections.company")}
         >
-            <StackV gap={4} principle="content-row" items={[
-                () => (hasPickedCompany ? (
-                    <Box principle="row-pad" className="rounded-2xl border border-default px-4 py-3">
-                        <StackH gap={4} principle="content-row" justify="between" align="center" items={[
-                            () => (
-                                <Typography type="body-sm" weight="medium">
-                                    {companyLabel}
-                                </Typography>
-                            ),
-                            () => (
-                                <Button
-                                    variant="tertiary"
-                                    size="sm"
-                                    onPress={() => {
-                                        setValue("companyId", "")
-                                        setValue("companyLabel", "")
-                                        setQuery("")
-                                    }}
-                                >
-                                    <XIcon aria-hidden focusable="false" className="size-4" />
-                                    {t("jobs.post.company.change")}
-                                </Button>
-                            ),
-                        ]} />
-                    </Box>
-                ) : (
-                    <StackV gap={4} principle="content-row" items={[
-                        () => (
-                            <SearchInput
-                                value={query}
-                                onValueChange={setQuery}
-                                placeholder={t("jobs.post.company.searchPlaceholder")}
-                                suggestions={suggestions}
-                                onSelectSuggestion={(suggestion) => {
-                                    setValue("companyId", suggestion.id)
-                                    setValue("companyLabel", suggestion.label)
-                                    setQuery("")
-                                }}
-                            />
-                        ),
-                        () => (
-                            <Typography type="body-xs" color="muted">
-                                {t("jobs.post.company.notFoundHint")}
-                            </Typography>
-                        ),
-                        () => (
-                            <Box principle="separator-dot" className="border-t border-default pt-3">
-                                <StackV gap={4} principle="content-row" items={[
+            <StackV gap={4} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                items={[
+                    () => (hasPickedCompany ? (
+                        <Box principle="row-pad" className="rounded-2xl border border-default px-4 py-3"
+                            explain="Row content inset — not cell-pad, because this pads a horizontal content row rather than a dense table cell.">
+                            <StackH gap={4} principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                justify="between" align="center" items={[
                                     () => (
-                                        <TextField variant="secondary">
-                                            <Label htmlFor="job-post-new-company-title">
-                                                {t("jobs.post.company.newTitle")}
-                                            </Label>
-                                            <Input
-                                                id="job-post-new-company-title"
-                                                placeholder={t("jobs.post.company.newTitlePlaceholder")}
-                                                maxLength={COMPANY_TITLE_MAX}
-                                                value={newCompanyTitle}
-                                                onChange={(event) => setValue("newCompanyTitle", event.target.value)}
-                                            />
-                                        </TextField>
+                                        <Typography type="body-sm" weight="medium">
+                                            {companyLabel}
+                                        </Typography>
                                     ),
                                     () => (
-                                        <TextField variant="secondary">
-                                            <Label htmlFor="job-post-new-company-logo">
-                                                {t("jobs.post.company.newLogoUrl")}
-                                            </Label>
-                                            <Input
-                                                id="job-post-new-company-logo"
-                                                type="url"
-                                                placeholder={t("jobs.post.company.newLogoUrlPlaceholder")}
-                                                value={newCompanyLogoUrl}
-                                                onChange={(event) => setValue("newCompanyLogoUrl", event.target.value)}
-                                            />
-                                        </TextField>
-                                    ),
-                                    () => (
-                                        <TextField variant="secondary">
-                                            <Label htmlFor="job-post-new-company-website">
-                                                {t("jobs.post.company.newWebsiteUrl")}
-                                            </Label>
-                                            <Input
-                                                id="job-post-new-company-website"
-                                                type="url"
-                                                placeholder={t("jobs.post.company.newWebsiteUrlPlaceholder")}
-                                                value={newCompanyWebsiteUrl}
-                                                onChange={(event) => setValue("newCompanyWebsiteUrl", event.target.value)}
-                                            />
-                                        </TextField>
+                                        <Button
+                                            variant="tertiary"
+                                            size="sm"
+                                            onPress={() => {
+                                                setValue("companyId", "")
+                                                setValue("companyLabel", "")
+                                                setQuery("")
+                                            }}
+                                        >
+                                            <XIcon aria-hidden focusable="false" className="size-4" />
+                                            {t("jobs.post.company.change")}
+                                        </Button>
                                     ),
                                 ]} />
-                            </Box>
-                        ),
-                    ]} />
-                )),
-            ]} />
+                        </Box>
+                    ) : (
+                        <StackV gap={4} principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            items={[
+                                () => (
+                                    <SearchInput
+                                        value={query}
+                                        onValueChange={setQuery}
+                                        placeholder={t("jobs.post.company.searchPlaceholder")}
+                                        suggestions={suggestions}
+                                        onSelectSuggestion={(suggestion) => {
+                                            setValue("companyId", suggestion.id)
+                                            setValue("companyLabel", suggestion.label)
+                                            setQuery("")
+                                        }}
+                                    />
+                                ),
+                                () => (
+                                    <Typography type="body-xs" color="muted">
+                                        {t("jobs.post.company.notFoundHint")}
+                                    </Typography>
+                                ),
+                                () => (
+                                    <Box principle="separator-dot" className="border-t border-default pt-3"
+                                        explain="Places a middle-dot separator between short meta peers so the items read as one inline list.">
+                                        <StackV gap={4} principle="content-row"
+                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                            items={[
+                                                () => (
+                                                    <TextField variant="secondary">
+                                                        <Label htmlFor="job-post-new-company-title">
+                                                            {t("jobs.post.company.newTitle")}
+                                                        </Label>
+                                                        <Input
+                                                            id="job-post-new-company-title"
+                                                            placeholder={t("jobs.post.company.newTitlePlaceholder")}
+                                                            maxLength={COMPANY_TITLE_MAX}
+                                                            value={newCompanyTitle}
+                                                            onChange={(event) => setValue("newCompanyTitle", event.target.value)}
+                                                        />
+                                                    </TextField>
+                                                ),
+                                                () => (
+                                                    <TextField variant="secondary">
+                                                        <Label htmlFor="job-post-new-company-logo">
+                                                            {t("jobs.post.company.newLogoUrl")}
+                                                        </Label>
+                                                        <Input
+                                                            id="job-post-new-company-logo"
+                                                            type="url"
+                                                            placeholder={t("jobs.post.company.newLogoUrlPlaceholder")}
+                                                            value={newCompanyLogoUrl}
+                                                            onChange={(event) => setValue("newCompanyLogoUrl", event.target.value)}
+                                                        />
+                                                    </TextField>
+                                                ),
+                                                () => (
+                                                    <TextField variant="secondary">
+                                                        <Label htmlFor="job-post-new-company-website">
+                                                            {t("jobs.post.company.newWebsiteUrl")}
+                                                        </Label>
+                                                        <Input
+                                                            id="job-post-new-company-website"
+                                                            type="url"
+                                                            placeholder={t("jobs.post.company.newWebsiteUrlPlaceholder")}
+                                                            value={newCompanyWebsiteUrl}
+                                                            onChange={(event) => setValue("newCompanyWebsiteUrl", event.target.value)}
+                                                        />
+                                                    </TextField>
+                                                ),
+                                            ]} />
+                                    </Box>
+                                ),
+                            ]} />
+                    )),
+                ]} />
         </LabeledCard>
     )
 }

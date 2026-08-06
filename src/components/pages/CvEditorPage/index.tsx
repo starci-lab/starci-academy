@@ -379,7 +379,8 @@ export const CvEditorPage = ({ className, cvId }: CvEditorPageProps) => {
 
             <AsyncContent
                 isLoading={isLoading}
-                skeleton={<Box principle="page-pad" className="p-6"><CvWorkspaceSkeleton /></Box>}
+                skeleton={<Box principle="page-pad" className="p-6"
+                    explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."><CvWorkspaceSkeleton /></Box>}
                 isEmpty={isMissing}
                 emptyContent={{
                     title: t("cv.builder.missingTitle"),
@@ -396,7 +397,8 @@ export const CvEditorPage = ({ className, cvId }: CvEditorPageProps) => {
             >
                 {/* Mobile mode switch — desktop shows all zones.
                     Retuned to page-pad (p-6) from held asymmetric px-6 pt-4. */}
-                <Box principle="page-pad" className="p-6 @app-lg:hidden">
+                <Box principle="page-pad" className="p-6 @app-lg:hidden"
+                    explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                     <TabsCard
                         variant="primary"
                         leftTabs={{
@@ -442,154 +444,167 @@ export const CvEditorPage = ({ className, cvId }: CvEditorPageProps) => {
                             hideScrollBar
                             className="@app-lg:min-h-0 @app-lg:flex-1 @app-lg:overflow-y-auto"
                         >
-                            <Box principle="page-pad" className="flex min-h-full flex-col p-6">
-                                <Box principle="block-boundary" className="flex flex-1 flex-col gap-6">
+                            <Box principle="page-pad" className="flex min-h-full flex-col p-6"
+                                explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
+                                <Box principle="block-boundary" className="flex flex-1 flex-col gap-6"
+                                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups.">
                                     {/* Template — coarsest style lever, so it sits at the top.
                             Shows the CURRENT value and opens a picker (the thumbnail
                             gallery), rendered as `Button variant="tertiary"` — matching
                             the "AI assistant" picker below (both button-style pickers;
                             Font/Font size stay real `Select` fields). */}
-                                    <StackV gap={4} principle="label-field" items={[
-                                        () => <Label>{t("cv.builder.template.label")}</Label>,
-                                        () => (
-                                            <Button
-                                                variant="tertiary"
-                                                size="sm"
-                                                fullWidth
-                                                aria-label={t("cv.builder.template.label")}
-                                                onPress={() => setIsTemplateModalOpen(true)}
-                                            >
-                                                <SquaresFourIcon aria-hidden className="size-4 shrink-0" />
-                                                <span className="min-w-0 flex-1 truncate text-left">
-                                                    {t(`cv.builder.template.names.${draft?.style.template ?? "classic"}`)}
-                                                </span>
-                                            </Button>
-                                        ),
-                                    ]} />
+                                    <StackV gap={4} principle="label-field"
+                                        explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
+                                        items={[
+                                            () => <Label>{t("cv.builder.template.label")}</Label>,
+                                            () => (
+                                                <Button
+                                                    variant="tertiary"
+                                                    size="sm"
+                                                    fullWidth
+                                                    aria-label={t("cv.builder.template.label")}
+                                                    onPress={() => setIsTemplateModalOpen(true)}
+                                                >
+                                                    <SquaresFourIcon aria-hidden className="size-4 shrink-0" />
+                                                    <span className="min-w-0 flex-1 truncate text-left">
+                                                        {t(`cv.builder.template.names.${draft?.style.template ?? "classic"}`)}
+                                                    </span>
+                                                </Button>
+                                            ),
+                                        ]} />
 
-                                    <StackV gap={4} principle="label-field" items={[
-                                        () => <Label>{t("cv.builder.fontLabel")}</Label>,
-                                        () => (
-                                            <Select.Root
-                                                selectedKey={draft?.style.font ?? DEFAULT_CV_STYLE.font}
-                                                onSelectionChange={(key) => {
-                                                    if (key) {
-                                                        onFontChange(String(key))
-                                                    }
-                                                }}
-                                            >
-                                                <Select.Trigger aria-label={t("cv.builder.fontLabel")}>
-                                                    <Select.Value style={{ fontFamily: fontFamilyOf(draft?.style.font ?? DEFAULT_CV_STYLE.font) }} />
-                                                    <Select.Indicator />
-                                                </Select.Trigger>
-                                                <Select.Popover>
-                                                    <ListBox.Root aria-label={t("cv.builder.fontLabel")} items={CV_FONTS}>
-                                                        {(font) => (
-                                                            <ListBox.Item key={font.key} id={font.key} textValue={font.label} aria-label={font.label}>
-                                                                <span style={{ fontFamily: font.family }}>{font.label}</span>
-                                                            </ListBox.Item>
-                                                        )}
-                                                    </ListBox.Root>
-                                                </Select.Popover>
-                                            </Select.Root>
-                                        ),
-                                    ]} />
-                                    <StackV gap={4} principle="label-field" items={[
-                                        () => <Label>{t("cv.builder.accentLabel")}</Label>,
-                                        () => (
-                                            <Cluster
-                                                gap={3}
-                                                principle="chip-row"
-                                                align="center"
-                                                items={ACCENT_OPTIONS.map((hex) => () => (
-                                                    <button
-                                                        key={hex}
-                                                        type="button"
-                                                        aria-label={hex}
-                                                        aria-pressed={draft?.style.accent === hex}
-                                                        onClick={() => onAccentChange(hex)}
-                                                        style={{ backgroundColor: hex }}
-                                                        className={cn(
-                                                            "size-6 shrink-0 cursor-pointer rounded-full outline-none transition-transform focus-visible:ring-2 focus-visible:ring-accent",
-                                                            draft?.style.accent === hex && "scale-110 ring-2 ring-accent ring-offset-2 ring-offset-surface",
-                                                        )}
-                                                    />
-                                                ))}
-                                            />
-                                        ),
-                                    ]} />
+                                    <StackV gap={4} principle="label-field"
+                                        explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
+                                        items={[
+                                            () => <Label>{t("cv.builder.fontLabel")}</Label>,
+                                            () => (
+                                                <Select.Root
+                                                    selectedKey={draft?.style.font ?? DEFAULT_CV_STYLE.font}
+                                                    onSelectionChange={(key) => {
+                                                        if (key) {
+                                                            onFontChange(String(key))
+                                                        }
+                                                    }}
+                                                >
+                                                    <Select.Trigger aria-label={t("cv.builder.fontLabel")}>
+                                                        <Select.Value style={{ fontFamily: fontFamilyOf(draft?.style.font ?? DEFAULT_CV_STYLE.font) }} />
+                                                        <Select.Indicator />
+                                                    </Select.Trigger>
+                                                    <Select.Popover>
+                                                        <ListBox.Root aria-label={t("cv.builder.fontLabel")} items={CV_FONTS}>
+                                                            {(font) => (
+                                                                <ListBox.Item key={font.key} id={font.key} textValue={font.label} aria-label={font.label}>
+                                                                    <span style={{ fontFamily: font.family }}>{font.label}</span>
+                                                                </ListBox.Item>
+                                                            )}
+                                                        </ListBox.Root>
+                                                    </Select.Popover>
+                                                </Select.Root>
+                                            ),
+                                        ]} />
+                                    <StackV gap={4} principle="label-field"
+                                        explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
+                                        items={[
+                                            () => <Label>{t("cv.builder.accentLabel")}</Label>,
+                                            () => (
+                                                <Cluster
+                                                    gap={3}
+                                                    principle="chip-row"
+                                                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                                    align="center"
+                                                    items={ACCENT_OPTIONS.map((hex) => () => (
+                                                        <button
+                                                            key={hex}
+                                                            type="button"
+                                                            aria-label={hex}
+                                                            aria-pressed={draft?.style.accent === hex}
+                                                            onClick={() => onAccentChange(hex)}
+                                                            style={{ backgroundColor: hex }}
+                                                            className={cn(
+                                                                "size-6 shrink-0 cursor-pointer rounded-full outline-none transition-transform focus-visible:ring-2 focus-visible:ring-accent",
+                                                                draft?.style.accent === hex && "scale-110 ring-2 ring-accent ring-offset-2 ring-offset-surface",
+                                                            )}
+                                                        />
+                                                    ))}
+                                                />
+                                            ),
+                                        ]} />
 
-                                    <StackV gap={4} principle="label-field" items={[
-                                        () => <Label>{t("cv.builder.fontScaleLabel")}</Label>,
-                                        () => (
-                                            <Select.Root
-                                                selectedKey={draft?.style.fontScale ?? DEFAULT_CV_STYLE.fontScale ?? "md"}
-                                                onSelectionChange={(key) => {
-                                                    if (key) {
-                                                        onFontScaleChange(key as CvFontScale)
-                                                    }
-                                                }}
-                                            >
-                                                <Select.Trigger aria-label={t("cv.builder.fontScaleLabel")}>
-                                                    <Select.Value />
-                                                    <Select.Indicator />
-                                                </Select.Trigger>
-                                                <Select.Popover>
-                                                    <ListBox.Root
-                                                        aria-label={t("cv.builder.fontScaleLabel")}
-                                                        items={FONT_SCALE_VALUES.map((value) => ({ value }))}
-                                                    >
-                                                        {(item) => (
-                                                            <ListBox.Item
-                                                                key={item.value}
-                                                                id={item.value}
-                                                                textValue={t(`cv.builder.fontScale.${item.value}`)}
-                                                                aria-label={t(`cv.builder.fontScale.${item.value}`)}
-                                                            >
-                                                                {t(`cv.builder.fontScale.${item.value}`)}
-                                                            </ListBox.Item>
-                                                        )}
-                                                    </ListBox.Root>
-                                                </Select.Popover>
-                                            </Select.Root>
-                                        ),
-                                    ]} />
+                                    <StackV gap={4} principle="label-field"
+                                        explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
+                                        items={[
+                                            () => <Label>{t("cv.builder.fontScaleLabel")}</Label>,
+                                            () => (
+                                                <Select.Root
+                                                    selectedKey={draft?.style.fontScale ?? DEFAULT_CV_STYLE.fontScale ?? "md"}
+                                                    onSelectionChange={(key) => {
+                                                        if (key) {
+                                                            onFontScaleChange(key as CvFontScale)
+                                                        }
+                                                    }}
+                                                >
+                                                    <Select.Trigger aria-label={t("cv.builder.fontScaleLabel")}>
+                                                        <Select.Value />
+                                                        <Select.Indicator />
+                                                    </Select.Trigger>
+                                                    <Select.Popover>
+                                                        <ListBox.Root
+                                                            aria-label={t("cv.builder.fontScaleLabel")}
+                                                            items={FONT_SCALE_VALUES.map((value) => ({ value }))}
+                                                        >
+                                                            {(item) => (
+                                                                <ListBox.Item
+                                                                    key={item.value}
+                                                                    id={item.value}
+                                                                    textValue={t(`cv.builder.fontScale.${item.value}`)}
+                                                                    aria-label={t(`cv.builder.fontScale.${item.value}`)}
+                                                                >
+                                                                    {t(`cv.builder.fontScale.${item.value}`)}
+                                                                </ListBox.Item>
+                                                            )}
+                                                        </ListBox.Root>
+                                                    </Select.Popover>
+                                                </Select.Root>
+                                            ),
+                                        ]} />
 
-                                    <StackV gap={4} principle="label-field" items={[
-                                        () => <Label>{t("cv.builder.languageLabel")}</Label>,
-                                        () => (
-                                            <Select.Root
-                                                selectedKey={draft?.style.language ?? DEFAULT_CV_STYLE.language ?? "vi"}
-                                                onSelectionChange={(key) => {
-                                                    if (key) {
-                                                        onLanguageChange(key as CvLanguage)
-                                                    }
-                                                }}
-                                            >
-                                                <Select.Trigger aria-label={t("cv.builder.languageLabel")}>
-                                                    <Select.Value />
-                                                    <Select.Indicator />
-                                                </Select.Trigger>
-                                                <Select.Popover>
-                                                    <ListBox.Root
-                                                        aria-label={t("cv.builder.languageLabel")}
-                                                        items={LANGUAGE_VALUES.map((value) => ({ value }))}
-                                                    >
-                                                        {(item) => (
-                                                            <ListBox.Item
-                                                                key={item.value}
-                                                                id={item.value}
-                                                                textValue={t(`cv.builder.language.${item.value}`)}
-                                                                aria-label={t(`cv.builder.language.${item.value}`)}
-                                                            >
-                                                                {t(`cv.builder.language.${item.value}`)}
-                                                            </ListBox.Item>
-                                                        )}
-                                                    </ListBox.Root>
-                                                </Select.Popover>
-                                            </Select.Root>
-                                        ),
-                                    ]} />
+                                    <StackV gap={4} principle="label-field"
+                                        explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
+                                        items={[
+                                            () => <Label>{t("cv.builder.languageLabel")}</Label>,
+                                            () => (
+                                                <Select.Root
+                                                    selectedKey={draft?.style.language ?? DEFAULT_CV_STYLE.language ?? "vi"}
+                                                    onSelectionChange={(key) => {
+                                                        if (key) {
+                                                            onLanguageChange(key as CvLanguage)
+                                                        }
+                                                    }}
+                                                >
+                                                    <Select.Trigger aria-label={t("cv.builder.languageLabel")}>
+                                                        <Select.Value />
+                                                        <Select.Indicator />
+                                                    </Select.Trigger>
+                                                    <Select.Popover>
+                                                        <ListBox.Root
+                                                            aria-label={t("cv.builder.languageLabel")}
+                                                            items={LANGUAGE_VALUES.map((value) => ({ value }))}
+                                                        >
+                                                            {(item) => (
+                                                                <ListBox.Item
+                                                                    key={item.value}
+                                                                    id={item.value}
+                                                                    textValue={t(`cv.builder.language.${item.value}`)}
+                                                                    aria-label={t(`cv.builder.language.${item.value}`)}
+                                                                >
+                                                                    {t(`cv.builder.language.${item.value}`)}
+                                                                </ListBox.Item>
+                                                            )}
+                                                        </ListBox.Root>
+                                                    </Select.Popover>
+                                                </Select.Root>
+                                            ),
+                                        ]} />
 
                                     {/* AI assistant — the model picker for "AI rewrite" rewrites,
                             rendered `isButton` (matches the "Template" picker above — both
@@ -598,84 +613,92 @@ export const CvEditorPage = ({ className, cvId }: CvEditorPageProps) => {
                             Credit caption = shared `GradeCreditCaption` (weekly pool, same
                             as every other AI surface — see canon
                             `ai-credit-caption-bound-to-picker-not-button.md`). */}
-                                    <StackV gap={4} principle="label-field" items={[
-                                        () => <Label>{t("cv.builder.aiAssistantLabel")}</Label>,
-                                        () => (
-                                            <GradeModelDropdown
-                                                isButton
-                                                isButtonFullWidth
-                                                models={gradeModels}
-                                                selection={aiSelection}
-                                                canPremium={canPremium}
-                                                showAutoLane
-                                                task={AiModelTask.CvGenerating}
-                                                onSelect={setAiSelection}
-                                                onUpgrade={onUpgrade}
-                                            />
-                                        ),
-                                        () => (
-                                            <GradeCreditCaption
-                                                creditUsage={aiQuota}
-                                                hasPinnedModel={aiSelection.model !== null}
-                                                autoCreditCost={aiAutoConfig?.creditCost}
-                                            />
-                                        ),
-                                    ]} />
+                                    <StackV gap={4} principle="label-field"
+                                        explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
+                                        items={[
+                                            () => <Label>{t("cv.builder.aiAssistantLabel")}</Label>,
+                                            () => (
+                                                <GradeModelDropdown
+                                                    isButton
+                                                    isButtonFullWidth
+                                                    models={gradeModels}
+                                                    selection={aiSelection}
+                                                    canPremium={canPremium}
+                                                    showAutoLane
+                                                    task={AiModelTask.CvGenerating}
+                                                    onSelect={setAiSelection}
+                                                    onUpgrade={onUpgrade}
+                                                />
+                                            ),
+                                            () => (
+                                                <GradeCreditCaption
+                                                    creditUsage={aiQuota}
+                                                    hasPinnedModel={aiSelection.model !== null}
+                                                    autoCreditCost={aiAutoConfig?.creditCost}
+                                                />
+                                            ),
+                                        ]} />
 
                                     {/* Quick access — both ingest entry points: paste an existing CV +
                             tailor to a job description (reviewer: both belong in quick access). */}
-                                    <StackV gap={3} principle="sibling-stack" items={[
-                                        () => <Label>{t("cv.builder.quickAccessLabel")}</Label>,
-                                        () => (
-                                            <Button variant="tertiary" className="w-full justify-start" onPress={() => setIsSplitModalOpen(true)}>
-                                                <PaperclipIcon aria-hidden className="size-4 shrink-0" />
-                                                <span className="min-w-0 flex-1 truncate text-left">{t("cv.builder.splitEntryCta")}</span>
-                                            </Button>
-                                        ),
-                                        () => (
-                                            <Button
-                                                variant="tertiary"
-                                                className="w-full justify-start"
-                                                isDisabled={!draft}
-                                                onPress={() => setIsTailorModalOpen(true)}
-                                            >
-                                                <BriefcaseIcon aria-hidden className="size-4 shrink-0" />
-                                                <span className="min-w-0 flex-1 truncate text-left">{t("cv.builder.tailorEntryCta")}</span>
-                                            </Button>
-                                        ),
-                                    ]} />
+                                    <StackV gap={3} principle="sibling-stack"
+                                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                        items={[
+                                            () => <Label>{t("cv.builder.quickAccessLabel")}</Label>,
+                                            () => (
+                                                <Button variant="tertiary" className="w-full justify-start" onPress={() => setIsSplitModalOpen(true)}>
+                                                    <PaperclipIcon aria-hidden className="size-4 shrink-0" />
+                                                    <span className="min-w-0 flex-1 truncate text-left">{t("cv.builder.splitEntryCta")}</span>
+                                                </Button>
+                                            ),
+                                            () => (
+                                                <Button
+                                                    variant="tertiary"
+                                                    className="w-full justify-start"
+                                                    isDisabled={!draft}
+                                                    onPress={() => setIsTailorModalOpen(true)}
+                                                >
+                                                    <BriefcaseIcon aria-hidden className="size-4 shrink-0" />
+                                                    <span className="min-w-0 flex-1 truncate text-left">{t("cv.builder.tailorEntryCta")}</span>
+                                                </Button>
+                                            ),
+                                        ]} />
 
                                     {/* Completeness meter — cheap client-derived score + a
                             one-line nudge toward the highest-impact missing item. */}
                                     {completeness ? (
-                                        <StackV gap={3} principle="sibling-stack" items={[
-                                            () => (
-                                                <StackH gap={3} principle="flex-action" justify="between" align="center" items={[
-                                                    () => <Label>{t("cv.builder.completeness.label")}</Label>,
-                                                    () => (
+                                        <StackV gap={3} principle="sibling-stack"
+                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                            items={[
+                                                () => (
+                                                    <StackH gap={3} principle="flex-action" justify="between" align="center"
+                                                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                                        items={[
+                                                            () => <Label>{t("cv.builder.completeness.label")}</Label>,
+                                                            () => (
+                                                                <Typography type="body-xs" color="muted">
+                                                                    {t("cv.builder.completeness.percent", { percent: completeness.percent })}
+                                                                </Typography>
+                                                            ),
+                                                        ]} />
+                                                ),
+                                                () => (
+                                                    <div className="h-1.5 w-full rounded-full bg-default">
+                                                        <div
+                                                            className="h-full rounded-full bg-accent transition-all"
+                                                            style={{ width: `${completeness.percent}%` }}
+                                                        />
+                                                    </div>
+                                                ),
+                                                ...(completeness.nextHintKey ? [() => {
+                                                    const hintKey = completeness.nextHintKey as string
+                                                    return (
                                                         <Typography type="body-xs" color="muted">
-                                                            {t("cv.builder.completeness.percent", { percent: completeness.percent })}
+                                                            {t(hintKey)}
                                                         </Typography>
-                                                    ),
-                                                ]} />
-                                            ),
-                                            () => (
-                                                <div className="h-1.5 w-full rounded-full bg-default">
-                                                    <div
-                                                        className="h-full rounded-full bg-accent transition-all"
-                                                        style={{ width: `${completeness.percent}%` }}
-                                                    />
-                                                </div>
-                                            ),
-                                            ...(completeness.nextHintKey ? [() => {
-                                                const hintKey = completeness.nextHintKey as string
-                                                return (
-                                                    <Typography type="body-xs" color="muted">
-                                                        {t(hintKey)}
-                                                    </Typography>
-                                                )
-                                            }] : []),
-                                        ]} />
+                                                    )
+                                                }] : []),
+                                            ]} />
                                     ) : null}
 
                                     {/* Verified-project trust: a badge once earned, else an
@@ -685,7 +708,8 @@ export const CvEditorPage = ({ className, cvId }: CvEditorPageProps) => {
                             (nested-in-sidebar tint — [[elements/alert]] §3), not
                             warning. Vertical (button stacked in Content) to fit the
                             narrow sidebar. */}
-                                    <Box principle="pin-bottom" className="mt-auto">
+                                    <Box principle="pin-bottom" className="mt-auto"
+                                        explain="Pins this block to the bottom of its parent so the footer action stays visible under scrolling content.">
                                         {capstoneCount > 0 ? (
                                             <Chip className="bg-accent-soft text-accent-soft-foreground">
                                                 <TrophyIcon aria-hidden className="size-4" />
@@ -716,9 +740,11 @@ export const CvEditorPage = ({ className, cvId }: CvEditorPageProps) => {
 
                     {/* Content — edit pane (block form | raw LaTeX) | compiled-PDF preview,
                         each an independent scroll region. */}
-                    <Box principle="page-pad" className="min-h-0 min-w-0 flex-1 p-6 @app-lg:overflow-hidden">
+                    <Box principle="page-pad" className="min-h-0 min-w-0 flex-1 p-6 @app-lg:overflow-hidden"
+                        explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                         <Grid
                             principle="block-boundary"
+                            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                             columns={{ base: 1, lg: 2 }}
                             items={[
                                 {
@@ -728,6 +754,7 @@ export const CvEditorPage = ({ className, cvId }: CvEditorPageProps) => {
                                             <StackV
                                                 gap={4}
                                                 principle="label-field"
+                                                explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
                                                 items={[
                                                     () => (
                                                         <TabsCard

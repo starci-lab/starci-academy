@@ -41,9 +41,11 @@ export const UploadProgressCard = ({
     return (
         <Card className="bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl shadow-indigo-500/5">
             <CardContent>
-                <Box principle="page-pad" className="p-6 space-y-6">
+                <Box principle="page-pad" className="p-6 space-y-6"
+                    explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                     {/* Section header */}
-                    <Box principle="identity" className="flex items-center gap-2 pb-2">
+                    <Box principle="identity" className="flex items-center gap-2 pb-2"
+                        explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face.">
                         {/* ps-admin-5: p-2 not in named house token set — teacher-hold */}
                         <div data-principle="ps-admin-5" className="rounded-lg bg-purple-500/10 p-2">
                             <UploadIcon className="h-5 w-5 text-purple-400" />

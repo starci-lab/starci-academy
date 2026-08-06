@@ -93,6 +93,7 @@ const FlashcardMasteryStrip = ({
             <StackH
                 gap={2}
                 principle="value-row"
+                explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
                 align="baseline"
                 isSkeleton={isSkeleton}
                 items={[

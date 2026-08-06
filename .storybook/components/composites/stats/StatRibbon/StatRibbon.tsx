@@ -95,6 +95,7 @@ export const StatRibbon = ({
                     at="sm"
                     gap={4}
                     principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                     items={cells.map((item, index) => () => (
                         <div
 

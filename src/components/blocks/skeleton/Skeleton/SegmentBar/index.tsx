@@ -31,3 +31,6 @@ export const SkeletonSegmentBar = ({ legendItems = 3, className }: SkeletonSegme
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonSegmentBar` as the public name. */
+export { SkeletonSegmentBar as SegmentBar }

@@ -70,6 +70,7 @@ export const InterviewerPresence = ({
                         <StackH
                             gap={4}
                             principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                             justify="between"
                             classNames={["w-full"]}
                             items={[
@@ -90,12 +91,14 @@ export const InterviewerPresence = ({
                                                 <StackV
                                                     gap={1}
                                                     principle="name-handle"
+                                                    explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
                                                     classNames={["min-w-0"]}
                                                     items={[
                                                         () => (
                                                             <StackH
                                                                 gap={3}
                                                                 principle="flex-action"
+                                                                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                                                                 items={[
                                                                     () => (
                                                                         <Typography type="body-sm" weight="medium" className="truncate">

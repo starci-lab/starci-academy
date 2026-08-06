@@ -1,16 +1,21 @@
 /**
- * eslint-plugin-starci-fe — luật MÁY cho trục-1 cơ học của canon 3-trục.
+ * eslint-plugin-starci-fe — machine rules for the mechanical half of the FE canon.
  *
- * Đây là tầng ENFORCEMENT (xem `.claude/fe/methodology/enforcement.md`): mỗi rule ở đây
- * "giết" 1 dòng trong `.claude/fe/enforcement/lint-candidates.md` — pattern lệch mà audit-LLM
- * từng phải soi tay, giờ máy bắt tại lúc-gõ / pre-commit / CI. "Audit tìm 1 lần, lint giữ mãi."
+ * This is the ENFORCEMENT layer: each rule kills one pattern that audit formerly
+ * had to spot by hand. "Audit finds it once; lint keeps it gone."
  *
- * v1 nhắm các luật CHÍNH XÁC (ít false-positive). Mở rộng dần khi codebase xanh.
+ * v1 targets exact rules (low false-positive). Expand as the codebase goes green.
+ * Authoring helpers live in ./authoring.mjs (inline-param types, emoji, Vietnamese).
  */
 import { existsSync } from "node:fs"
 import { join } from "node:path"
+import {
+  noEmojiInSource,
+  noInlineParameterType,
+  noVietnameseInSourceAuthoring,
+} from "./authoring.mjs"
 
-/** Lấy chuỗi className tĩnh từ 1 JSXAttribute (string literal hoặc template quasi thuần). */
+/** Static className string from one JSXAttribute (literal or pure template quasi). */
 function classNameText(node) {
   if (!node || !node.value) return null
   const v = node.value
@@ -27,7 +32,7 @@ function isClassAttr(node) {
   return node.type === "JSXAttribute" && node.name && (node.name.name === "className" || node.name.name === "class")
 }
 
-/** Tên component của 1 JSXElement (Chip, Chip.Label, ModalShell…). */
+/** Component name of one JSXElement (Chip, Chip.Label, ModalShell…). */
 function elementName(opening) {
   const n = opening && opening.name
   if (!n) return null
@@ -40,7 +45,7 @@ function elementName(opening) {
   return null
 }
 
-/** Lấy string literal tĩnh từ 1 JSXAttribute (Literal hoặc JSXExpressionContainer bọc Literal). */
+/** Static string literal from one JSXAttribute (Literal or JSXExpressionContainer wrapping Literal). */
 function attrStringLiteral(node) {
   const v = node && node.value
   if (!v) return null
@@ -51,17 +56,17 @@ function attrStringLiteral(node) {
   return null
 }
 
-// ── tier map dùng chung — suy tier từ ĐƯỜNG DẪN FILE, không phải nội dung ──
-// vocabulary: atoms/frames/composites (bọc vendor + ghép leaf, không quyết layout/data).
-// sentence: blocks/pages/layouts/overlays (ghép câu, không tự vẽ hình/gọi data).
-// Không còn nhà tạm: `features`, `starci`, `modals(v2)`, `drawers(v2)`, `pallettes` đã rỗng và
-// bị xoá, nên bốn tên dưới đây là TOÀN BỘ tầng câu — thêm một thư mục mới cạnh chúng là lách cổng.
-// Bất cứ gì NGOÀI `src/components/**` (route app/, hook, module) KHÔNG PHẢI 1 component tier —
-// mỗi rule dùng helper này tự nói rõ trong comment nó bỏ qua phạm vi đó hay không.
+// ── shared tier map — derive tier from FILE PATH, not contents ──
+// vocabulary: atoms/frames/composites (wrap vendor + compose leaves; no layout/data decisions).
+// sentence: blocks/pages/layouts/overlays (compose sentences; do not draw shapes or fetch).
+// Temporary homes (`features`, `starci`, `modals(v2)`, `drawers(v2)`, `pallettes`) are empty and
+// deleted, so the four names below are the FULL sentence tier — a new sibling directory bypasses the gate.
+// Anything OUTSIDE `src/components/**` (app routes, hooks, modules) is NOT a component tier —
+// each rule using this helper says in its comment whether it skips that scope.
 const VOCAB_TIER_DIRS = new Set(["atoms", "frames", "composites"])
 const SENTENCE_TIER_DIRS = new Set(["blocks", "pages", "layouts", "overlays"])
 
-/** "vocabulary" | "sentence" | null (null = ngoài src/components/** hoặc thư mục tier không xác định). */
+/** "vocabulary" | "sentence" | null (null = outside src/components/** or unknown tier dir). */
 function componentTier(filename) {
   const file = (filename || "").replace(/\\/g, "/")
   const m = file.match(/\/src\/components\/([^/]+)\//)
@@ -73,15 +78,15 @@ function componentTier(filename) {
 }
 
 // L4 — off-scale spacing: fractional Tailwind (gap-1.5, p-2.5, space-y-1.5…). Thang StarCi = 0·2·3·6·8(+4);
-// fractional KHÔNG BAO GIỜ đúng thang → bắt chắc, 0 false-positive.
+// fractional is NEVER on-scale → exact match, zero false-positives.
 const FRACTIONAL = /\b(?:gap|gap-x|gap-y|p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|space-x|space-y|inset|top|bottom|left|right)-\d+\.5\b/g
 
 const noFractionalSpacing = {
   meta: {
     type: "problem",
-    docs: { description: "Cấm spacing lẻ (fractional, vd gap-1.5) — thang StarCi = 0·2·3·6·8. [[enforcement L4]]" },
+    docs: { description: "Ban fractional spacing (e.g. gap-1.5) — StarCi scale is 0·2·3·6·8. [[enforcement L4]]" },
     schema: [],
-    messages: { frac: "Spacing lẻ '{{cls}}' ngoài thang 0·2·3·6·8 — dùng nấc gần nhất (vd gap-1.5 → gap-2)." },
+    messages: { frac: "Fractional spacing '{{cls}}' is off the 0·2·3·6·8 scale — use the nearest step (e.g. gap-1.5 → gap-2)." },
   },
   create(context) {
     return {
@@ -96,13 +101,13 @@ const noFractionalSpacing = {
   },
 }
 
-// L3 — chip-cạnh-chip: ≥2 <Chip> sibling trực tiếp trong 1 cụm = vi phạm (1 cụm meta tối đa 1 chip).
+// L3 — adjacent chips: ≥2 direct <Chip> siblings in one cluster = violation (one meta cluster → one chip).
 const noAdjacentChip = {
   meta: {
     type: "problem",
-    docs: { description: "Cấm ≥2 <Chip> kề nhau trong 1 cụm — 1 cụm meta tối đa 1 chip. [[enforcement L3]]" },
+    docs: { description: "Ban ≥2 adjacent <Chip> siblings in one cluster — one meta cluster max one chip. [[enforcement L3]]" },
     schema: [],
-    messages: { adj: "≥2 <Chip> kề nhau — giữ 1 chip (trục phân loại chính), phần còn lại để text + icon inline." },
+    messages: { adj: "≥2 adjacent <Chip> siblings — keep one chip (primary classification); put the rest in inline text + icon." },
   },
   create(context) {
     return {
@@ -116,13 +121,13 @@ const noAdjacentChip = {
   },
 }
 
-// L2 — header anatomy: cấm escape-hatch `titleClassName` (nâng header modal thành hero/H-scale).
+// L2 — header anatomy: ban the `titleClassName` escape hatch (promotes modal header to hero/H-scale).
 const noModalTitleClassname = {
   meta: {
     type: "problem",
-    docs: { description: "Cấm prop titleClassName trên Modal/Shell — header = Typography body semibold default. [[enforcement L2]]" },
+    docs: { description: "Ban titleClassName on Modal/Shell — header stays Typography body semibold default. [[enforcement L2]]" },
     schema: [],
-    messages: { tc: "Bỏ `titleClassName` — để ModalShell render header default (body semibold); đừng nâng thành hero/H-scale." },
+    messages: { tc: "Drop `titleClassName` — let ModalShell render the default header (body semibold); do not promote it to hero/H-scale." },
   },
   create(context) {
     return {
@@ -133,14 +138,14 @@ const noModalTitleClassname = {
   },
 }
 
-// L2b — hero heading class: text-{xl,2xl,3xl} + font-bold trên 1 element = heading hand-roll → Typography.
+// L2b — hero heading class: text-{xl,2xl,3xl} + font-bold on one element = hand-rolled heading → Typography.
 const HERO = /\btext-(?:xl|2xl|3xl|4xl)\b/
 const noHeroHeadingClass = {
   meta: {
     type: "suggestion",
-    docs: { description: "text-xl+/font-bold hand-roll = heading → dùng <Typography type>. [[enforcement L2/L6]]" },
+    docs: { description: "text-xl+/font-bold hand-roll = heading → use <Typography type>. [[enforcement L2/L6]]" },
     schema: [],
-    messages: { hero: "Heading hand-roll (text-xl+ + font-bold) — dùng <Typography type=\"h3|h4\"> thay className thô." },
+    messages: { hero: "Hand-rolled heading (text-xl+ + font-bold) — use <Typography type=\"h3|h4\"> instead of raw className." },
   },
   create(context) {
     return {
@@ -153,19 +158,19 @@ const noHeroHeadingClass = {
   },
 }
 
-// L4b/token — arbitrary Tailwind value = thoát token-system. Tailwind v4 sinh spacing bằng calc
-// (không prune-enum được), nên chặn "cửa hậu": `gap-[7px]` (ngoài scale) + `text-[#hex]` (ngoài semantic color).
-// 'warn' — có ca hợp lệ (vd % / px canh chỉnh, brand hex) → dùng eslint-disable + lý do.
+// L4b/token — arbitrary Tailwind value escapes the token system. Tailwind v4 emits spacing via calc
+// (cannot prune-enum), so block the backdoor: `gap-[7px]` (off-scale) + `text-[#hex]` (off semantic color).
+// 'warn' — some cases are valid (e.g. % / px alignment, brand hex) → eslint-disable + reason.
 const ARBITRARY_SPACING = /\b(?:gap|gap-x|gap-y|p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|space-x|space-y)-\[[^\]]+\]/
 const HEX_COLOR = /\b(?:text|bg|border|ring|from|to|via|fill|stroke|shadow)-\[#[0-9a-fA-F]/
 const noArbitraryToken = {
   meta: {
     type: "suggestion",
-    docs: { description: "Cấm arbitrary spacing/hex-color (thoát token-system). [[enforcement token]]" },
+    docs: { description: "Ban arbitrary spacing/hex-color (token-system escape). [[enforcement token]]" },
     schema: [],
     messages: {
-      space: "Arbitrary spacing '{{cls}}' — dùng nấc scale (0·2·3·6·8); ngoại lệ thật → eslint-disable + lý do.",
-      hex: "Màu hex arbitrary '{{cls}}' — dùng token semantic (text-accent…); brand-color thật → eslint-disable + lý do.",
+      space: "Arbitrary spacing '{{cls}}' — use the 0·2·3·6·8 scale; a real exception needs eslint-disable + reason.",
+      hex: "Arbitrary hex color '{{cls}}' — use a semantic token (text-accent…); a real brand color needs eslint-disable + reason.",
     },
   },
   create(context) {
@@ -183,16 +188,16 @@ const noArbitraryToken = {
   },
 }
 
-// ── authoring convention rules (trục viết-code, 2026-08) — mỗi rule = 1 luật `enforce/authoring/*` ──
+// ── authoring convention rules (2026-08) — each rule = one `enforce/authoring/*` law ──
 
-// structure-and-naming §5 + "tên hàm phải là arrow": mọi hàm module-level là `const X = () => {}`,
-// KHÔNG `function` declaration / `export default function`. Bắt FunctionDeclaration ở top-level.
+// structure-and-naming §5 + "functions are arrows": every module-level function is `const X = () => {}`,
+// NOT a `function` declaration / `export default function`. Flag top-level FunctionDeclaration.
 const preferArrowExport = {
   meta: {
     type: "suggestion",
-    docs: { description: "Hàm module-level dùng arrow const, không `function` declaration. [[structure-and-naming §5]]" },
+    docs: { description: "Module-level functions use arrow const, not `function` declarations. [[structure-and-naming §5]]" },
     schema: [],
-    messages: { fn: "Dùng arrow const `const {{name}} = (…) => {…}` — không `function` ở module-level (structure-and-naming §5)." },
+    messages: { fn: "Use an arrow const `const {{name}} = (…) => {…}` — no module-level `function` (structure-and-naming §5)." },
   },
   create(context) {
     return {
@@ -206,13 +211,13 @@ const preferArrowExport = {
   },
 }
 
-// comments.md §3: mọi thứ EXPORT (component/hook/helper/const/interface) mở đầu bằng 1 JSDoc `/** */`.
+// comments.md §3: every EXPORT (component/hook/helper/const/interface) opens with JSDoc `/** */`.
 const requireExportJsdoc = {
   meta: {
     type: "suggestion",
-    docs: { description: "Khai báo export mở đầu bằng JSDoc `/** */`. [[comments §3]]" },
+    docs: { description: "Exported declarations open with JSDoc `/** */`. [[comments §3]]" },
     schema: [],
-    messages: { jsdoc: "Thêm JSDoc `/** … */` cho export `{{name}}` — role/what-it-does (comments §3)." },
+    messages: { jsdoc: "Add JSDoc `/** … */` for export `{{name}}` — role / what it does (comments §3)." },
   },
   create(context) {
     const sc = context.sourceCode || context.getSourceCode()
@@ -231,13 +236,13 @@ const requireExportJsdoc = {
   },
 }
 
-// react-idioms §7: handler đặt tên `onXxx`, KHÔNG `handleXxx` (biến cục bộ lẫn prop).
+// react-idioms §7: handlers are named `onXxx`, NOT `handleXxx` (locals and props).
 const handlerOnPrefix = {
   meta: {
     type: "suggestion",
-    docs: { description: "Handler đặt tên `onXxx`, không `handleXxx`. [[react-idioms §7]]" },
+    docs: { description: "Handlers are named `onXxx`, not `handleXxx`. [[react-idioms §7]]" },
     schema: [],
-    messages: { handle: "`{{name}}` → đặt `on{{rest}}` (handler là `onXxx`, không `handleXxx` — react-idioms §7)." },
+    messages: { handle: "`{{name}}` → rename to `on{{rest}}` (handlers are `onXxx`, not `handleXxx` — react-idioms §7)." },
   },
   create(context) {
     const flag = (node, name) => {
@@ -252,13 +257,13 @@ const handlerOnPrefix = {
   },
 }
 
-// structure-and-naming §1/§5: 1 folder PascalCase = 1 `index.tsx`, có 1 named-export TRÙNG tên folder.
+// structure-and-naming §1/§5: one PascalCase folder = one `index.tsx` with a named export matching the folder.
 const exportMatchesFolder = {
   meta: {
     type: "suggestion",
-    docs: { description: "index.tsx trong folder PascalCase phải export tên trùng folder. [[structure-and-naming §1/§5]]" },
+    docs: { description: "PascalCase folder `index.tsx` must export a name matching the folder. [[structure-and-naming §1/§5]]" },
     schema: [],
-    messages: { mismatch: "index.tsx của folder `{{folder}}` không export `{{folder}}` (đang export: {{names}}) — named export phải trùng tên folder (structure-and-naming §5)." },
+    messages: { mismatch: "`index.tsx` in folder `{{folder}}` does not export `{{folder}}` (exports: {{names}}) — the named export must match the folder (structure-and-naming §5)." },
   },
   create(context) {
     const file = (context.filename || context.getFilename()).replace(/\\/g, "/")
@@ -282,19 +287,19 @@ const exportMatchesFolder = {
   },
 }
 
-// ── tier rules (refactor tuần này, 2026-08) — mỗi rule = 1 lớp vi phạm cụ thể vừa bắt được ──
+// ── tier rules (2026-08 refactor) — each rule = one concrete violation class ──
 
-// atom layer = bọc vendor 1 LẦN (atom-layer-heroui-wrappers). Import @heroui/react thẳng ở sentence
-// tier = 1 block tự quyết lại appearance mà atom đã chốt — bỏ qua atom, chồng nguồn sự thật hình dạng.
-// CHỈ áp cho file dưới `src/components/**` (sentence tier); ngoài src/components/ (route, hook, module)
-// KHÔNG bị rule này soi — false-positive-risk: 1 hook/route import @heroui/react thẳng lọt lưới.
+// atom layer = wrap vendor ONCE (atom-layer-heroui-wrappers). Direct @heroui/react import at sentence
+// tier = a block re-deciding appearance the atom already fixed — bypasses the atom, splits shape truth.
+// ONLY applies under `src/components/**` (sentence tier); outside src/components/ (route, hook, module)
+// is out of scope — otherwise a hook/route direct @heroui/react import would be a false positive.
 const noHerouiOutsideVocabulary = {
   meta: {
     type: "problem",
-    docs: { description: "Import '@heroui/react' chỉ hợp lệ ở tier vocabulary (atom bọc vendor 1 lần). [[canon atom-layer-heroui-wrappers]]" },
+    docs: { description: "Import '@heroui/react' is only valid at the vocabulary tier (atom wraps vendor once). [[canon atom-layer-heroui-wrappers]]" },
     schema: [],
     messages: {
-      heroui: "Import '@heroui/react' ngoài tier vocabulary — dùng atom tương ứng (đã bọc vendor); nếu atom chưa có, thêm atom mới thay vì import thẳng.",
+      heroui: "Import '@heroui/react' outside the vocabulary tier — use the matching atom (vendor wrapped once); if missing, add an atom instead of importing vendor directly.",
     },
   },
   create(context) {
@@ -311,17 +316,17 @@ const noHerouiOutsideVocabulary = {
 }
 
 // BLOCK-4: "Accepting className hands the caller an escape hatch: the difference then lives at the
-// call site, invisible to every other screen that will need the same thing." Ở sentence tier, prop
-// className/classNames (hoặc kế thừa WithClassNames<…>) mở lại cửa hậu đó — đóng bằng cách đẩy khác
-// biệt xuống 1 tier, nơi nó có TÊN (1 composite/variant mới). CHỈ áp sentence tier.
+// call site, invisible to every other screen that will need the same thing." At sentence tier, a
+// className/classNames prop (or WithClassNames<…>) reopens that backdoor — close it by pushing the
+// difference down one tier where it has a NAME (new composite/variant). Sentence tier only.
 const noClassnameAtSentenceTier = {
   meta: {
     type: "problem",
-    docs: { description: "Sentence tier không nhận prop className/classNames — cửa hậu che khác biệt gọi nơi khác. [[canon BLOCK-4]]" },
+    docs: { description: "Sentence tier must not take className/classNames — that backdoor hides a difference that belongs elsewhere. [[canon BLOCK-4]]" },
     schema: [],
     messages: {
-      member: "Prop `{{name}}` ở sentence tier là cửa hậu (BLOCK-4) — đặt tên khác biệt thật (1 variant/composite mới) thay vì nhận className.",
-      withClassNames: "`WithClassNames<…>` ở sentence tier mở cửa hậu className (BLOCK-4) — đẩy khác biệt xuống 1 tier, đặt tên cho nó.",
+      member: "Prop `{{name}}` at sentence tier is a className backdoor (BLOCK-4) — name a real difference (new variant/composite) instead of accepting className.",
+      withClassNames: "`WithClassNames<…>` at sentence tier opens a className backdoor (BLOCK-4) — push the difference down one tier and name it.",
     },
   },
   create(context) {
@@ -351,17 +356,17 @@ const noClassnameAtSentenceTier = {
   },
 }
 
-// BLOCK-5: composing a class string ("cn(") là quyết hình dạng — việc của tier dưới (composite/atom).
-// `cn(` xuất hiện ngoài vocabulary tier đọc là "thiếu 1 composite, hoặc composite có sẵn thiếu variant".
-// CHỈ áp sentence tier (ngoài src/components/ — hook/lib định nghĩa `cn` chính nó — KHÔNG bị soi;
-// false-positive-risk: `cn(` trong 1 hook/util ngoài components lọt lưới, chấp nhận để giữ precision).
+// BLOCK-5: composing a class string ("cn(") is a shape decision — the lower tier's job (composite/atom).
+// `cn(` outside vocabulary tier reads as "missing a composite, or an existing composite missing a variant".
+// Sentence tier only (outside src/components/ — hooks/libs that define `cn` itself — not scanned;
+// false-positive risk: `cn(` in a hook/util outside components; accepted to keep precision).
 const noCnAboveVocabulary = {
   meta: {
     type: "problem",
-    docs: { description: "Gọi cn(...) chỉ hợp lệ ở tier vocabulary — tier trên compose bằng composite có sẵn. [[canon BLOCK-5]]" },
+    docs: { description: "cn(...) is only valid at the vocabulary tier — upper tiers compose via existing composites. [[canon BLOCK-5]]" },
     schema: [],
     messages: {
-      cn: "`cn(...)` ngoài tier vocabulary (BLOCK-5) — đọc như thiếu 1 composite hoặc composite có sẵn thiếu variant, đừng tự ghép class ở đây.",
+      cn: "`cn(...)` outside the vocabulary tier (BLOCK-5) — treat this as a missing composite or missing variant; do not assemble classes here.",
     },
   },
   create(context) {
@@ -377,18 +382,18 @@ const noCnAboveVocabulary = {
   },
 }
 
-// fe-asynccontent-4branch-retired: AsyncContent (bare, 4-nhánh) + EmptyContent/ErrorContent = bộ
-// wrapper đã NGHỈ HƯU — thay bằng isSkeleton thread xuống từng leaf + AsyncContentEmpty/AsyncContentError.
-// Global — áp cho MỌI file (kể cả ngoài src/components/), vì import retired có thể lọt ở bất cứ đâu.
+// fe-asynccontent-4branch-retired: AsyncContent (bare, 4-branch) + EmptyContent/ErrorContent = the
+// retired wrapper set — replace with isSkeleton threaded to each leaf + AsyncContentEmpty/AsyncContentError.
+// Global — applies to EVERY file (including outside src/components/), because retired imports can land anywhere.
 const RETIRED_ASYNC_CONTENT_SRC = /blocks\/async\/AsyncContent/
 const RETIRED_ASYNC_DIR_SRC = /blocks\/async\//
 const noRetiredAsyncContent = {
   meta: {
     type: "problem",
-    docs: { description: "Cấm AsyncContent (bare) + EmptyContent/ErrorContent — bộ 4-nhánh đã retired. [[canon fe-asynccontent-4branch-retired]]" },
+    docs: { description: "Ban AsyncContent (bare) + EmptyContent/ErrorContent — the 4-branch set is retired. [[canon fe-asynccontent-4branch-retired]]" },
     schema: [],
     messages: {
-      retired: "`{{name}}` đã retired — dùng isSkeleton thread xuống từng leaf, cộng AsyncContentEmpty/AsyncContentError từ '@/components/composites/async/AsyncContent'.",
+      retired: "`{{name}}` is retired — thread `isSkeleton` to each leaf, and use AsyncContentEmpty/AsyncContentError from '@/components/composites/async/AsyncContent'.",
     },
   },
   create(context) {
@@ -410,20 +415,24 @@ const noRetiredAsyncContent = {
   },
 }
 
-// atom-tightening-migration-and-pos-ruling: overlay dev-tool showAnatomy/anatPart/data-anat-* đã
-// NGHỈ HƯU — identity giờ là data-tier + data-component. Global — soi cả prop declaration, prop pass,
-// destructure, và JSX attr data-anat*, vì overlay có thể rơi rớt ở bất cứ file nào (blueprint cũ).
+// atom-tightening-migration-and-pos-ruling: showAnatomy/anatPart/data-anat-* overlay tooling is
+// RETIRED — identity is now data-tier + data-component. Global — scan prop declarations, prop pass,
+// destructure, and JSX attr data-anat*, because leftover overlay can appear in any file (old blueprint).
 const noAnatomyOverlay = {
   meta: {
     type: "problem",
-    docs: { description: "Cấm showAnatomy/anatPart/data-anat-* — overlay blueprint đã retired, identity = data-tier + data-component. [[canon atom-tightening-migration-and-pos-ruling]]" },
+    docs: { description: "Ban showAnatomy/anatPart/data-anat-* — overlay blueprint retired; identity = data-tier + data-component. [[canon atom-tightening-migration-and-pos-ruling]]" },
     schema: [],
     messages: {
-      ident: "`{{name}}` là overlay dev-tool đã retired — bỏ hẳn; identity của component là cặp attr data-tier + data-component.",
-      attr: "`{{name}}` là overlay dev-tool đã retired — bỏ hẳn; identity của component là cặp attr data-tier + data-component.",
+      ident: "`{{name}}` is a retired anatomy overlay — remove it; component identity is the data-tier + data-component attr pair.",
+      attr: "`{{name}}` is a retired anatomy overlay — remove it; component identity is the data-tier + data-component attr pair.",
     },
   },
   create(context) {
+    const file = (context.filename || context.getFilename()).replace(/\\/g, "/")
+    // Stories that document the retired overlay itself must keep `data-anat*` fixtures.
+    // ledger: anatomy-overlay-stories-allowlist-2026-08-07
+    if (file.includes("/AnatomyOverlay/") && (file.includes("/stories/") || file.includes(".stories."))) return {}
     return {
       "Identifier, JSXIdentifier"(node) {
         if (node.name === "showAnatomy" || node.name === "anatPart") {
@@ -439,19 +448,19 @@ const noAnatomyOverlay = {
   },
 }
 
-// split.md — component.tsx (nửa PRESENTATIONAL của cặp index.tsx/component.tsx) chỉ nhận props đã
-// resolve sẵn: không tự fetch, không tự đọc store, không tự resolve i18n — nếu không thì không còn
-// render được từ story. Danh sách allow/deny mirror `check-presentational-purity.mjs` (gate BE dùng
-// cho cùng invariant). Chỉ soi file tên đúng `component.tsx` — không giới hạn tier vì quy ước đặt tên
-// đã tự khoanh phạm vi (component.tsx chỉ tồn tại trong src/components/**).
+// split.md — component.tsx (PRESENTATIONAL half of the index.tsx/component.tsx pair) only takes already-
+// resolved props: no self-fetch, no store reads, no self i18n — otherwise it cannot be
+// rendered from a story. Allow/deny lists mirror `check-presentational-purity.mjs` (BE gate for
+// the same invariant). Only files named `component.tsx` — no tier filter because the naming
+// convention already scopes it (component.tsx only exists under src/components/**).
 const PRESENTATIONAL_FORBIDDEN_CALL = /^(?:useSWR|useSWRMutation|use[A-Za-z0-9]*Swr|useAppSelector|useDispatch|use[A-Za-z0-9]*Store|useTranslations|useLocale|query[A-Z][A-Za-z0-9]*)$/
 const presentationalPurity = {
   meta: {
     type: "problem",
-    docs: { description: "component.tsx chỉ nhận props resolve sẵn — không fetch/store/i18n tự gọi. [[canon split.md]]" },
+    docs: { description: "component.tsx only takes resolved props — no self fetch/store/i18n. [[canon split.md]]" },
     schema: [],
     messages: {
-      call: "`{{name}}(...)` trong component.tsx — component.tsx là nửa presentational, phải nhận qua props; đặt call này ở index.tsx (nửa connected) rồi truyền xuống.",
+      call: "`{{name}}(...)` in component.tsx — that file is the presentational half and must receive data via props; put this call in index.tsx (connected half) and pass it down.",
     },
   },
   create(context) {
@@ -467,22 +476,22 @@ const presentationalPurity = {
   },
 }
 
-// components/frames/_identity.ts (teacher's ruling 2026-08-05) — identity của 1 sentence-tier
-// component.tsx (hoặc index.tsx khi KHÔNG có component.tsx sibling) KHÔNG còn tự vẽ `data-tier` lên
-// 1 div bọc riêng (đó chính là shape BLOCK-2 cấm) — nó truyền prop `identity={{ tier, component }}`
-// cho root frame/composite nó compose, ROOT đó mang cặp data-tier/data-component thay nó. Rule này
-// bắt trường hợp cũ (mảng `require-identity-root` từng đòi `data-tier` trực tiếp trên file) — giờ đòi
-// prop `identity`. Report 1 lần/file, trên export default/named. Conservative: bỏ file không có JSX,
-// *.stories.tsx, map.ts, types (quy ước tên component.tsx | index.tsx đã tự loại các file đó khỏi
-// phạm vi soi), và bỏ file mà MỌI return chỉ là fragment trần (`<>…</>`) hoặc null — không có root
-// element thật để mang identity.
+// components/frames/_identity.ts (teacher's ruling 2026-08-05) — identity of a sentence-tier
+// component.tsx (or index.tsx when there is NO component.tsx sibling) no longer hand-paints `data-tier` on
+// a wrapping div (that is the banned BLOCK-2 shape) — it passes `identity={{ tier, component }}`
+// to the root frame/composite it composes; that ROOT carries data-tier/data-component. This rule
+// catches the old case (when `require-identity-root` demanded `data-tier` on the file) — now it demands
+// the `identity` prop. Report once per file on default/named export. Conservative: skip files without JSX,
+// *.stories.tsx, map.ts, types (the component.tsx | index.tsx naming already excludes those from
+// scope), and skip files whose EVERY return is a bare fragment (`<>…</>`) or null — no real root
+// element to carry identity.
 const requireIdentityRoot = {
   meta: {
     type: "problem",
-    docs: { description: "component.tsx/index.tsx sentence tier có JSX phải truyền prop identity={{ tier, component }} cho root frame/composite — ROOT mang identity, không tự vẽ div bọc. [[canon components/frames/_identity.ts]]" },
+    docs: { description: "sentence-tier component.tsx/index.tsx with JSX must pass identity={{ tier, component }} to the root frame/composite — the ROOT carries identity; no hand-rolled wrapper div. [[canon components/frames/_identity.ts]]" },
     schema: [],
     messages: {
-      identity: "File có JSX nhưng không truyền prop `identity` cho root — thêm `identity={{ tier: \"…\", component: \"…\" }}` ở frame/composite làm root (xem components/frames/_identity.ts); đừng tự vẽ div data-tier bọc ngoài.",
+      identity: "JSX file without an `identity` prop on the root — add `identity={{ tier: \"…\", component: \"…\" }}` on the root frame/composite (see components/frames/_identity.ts); do not wrap with a hand-rolled data-tier div.",
     },
   },
   create(context) {
@@ -491,12 +500,12 @@ const requireIdentityRoot = {
     if (tier !== "sentence") return {}
     const base = filename.slice(filename.lastIndexOf("/") + 1)
     if (base === "component.tsx") {
-      // ok — soi file này
+      // ok — scan this file
     } else if (base === "index.tsx") {
       const dir = filename.slice(0, filename.length - base.length)
-      if (existsSync(join(dir, "component.tsx"))) return {} // sibling component.tsx là identity root thật
+      if (existsSync(join(dir, "component.tsx"))) return {} // sibling component.tsx is the real identity root
     } else {
-      return {} // không phải component.tsx / index.tsx — ngoài phạm vi rule (bao gồm *.stories.tsx, map.ts, types)
+      return {} // not component.tsx / index.tsx — out of rule scope (includes *.stories.tsx, map.ts, types)
     }
     let hasJsx = false
     let hasIdentityProp = false
@@ -504,10 +513,10 @@ const requireIdentityRoot = {
     let sawReturn = false
     let sawNonBareReturn = false
     const isBareReturnArg = (arg) => {
-      if (!arg) return true // `return;` — không render gì
+      if (!arg) return true // `return;` — renders nothing
       if (arg.type === "Literal" && arg.value === null) return true
       if (arg.type === "Identifier" && arg.name === "undefined") return true
-      if (arg.type === "JSXFragment") return true // fragment trần — không có element để mang identity
+      if (arg.type === "JSXFragment") return true // bare fragment — no element to carry identity
       return false
     }
     return {
@@ -524,30 +533,34 @@ const requireIdentityRoot = {
       ExportNamedDeclaration(node) { if (!exportNode) exportNode = node },
       "Program:exit"(node) {
         if (!hasJsx) return
-        if (sawReturn && !sawNonBareReturn) return // mọi return chỉ là fragment trần / null — bỏ qua
+        if (sawReturn && !sawNonBareReturn) return // every return is bare fragment / null — skip
         if (!hasIdentityProp) context.report({ node: exportNode || node, messageId: "identity" })
       },
     }
   },
 }
 
-// components/frames/_identity.ts — mặt trái của rule trên: wrapper div tay-vẽ
-// `data-tier="block|layout|overlay|page"` để "mang identity" là chính pattern đã bị RETIRE (bug, không
-// phải cách reconcile) — identity của sentence-tier giờ đứng trên CHÍNH root frame/composite nó
-// compose qua prop `identity`, không phải 1 div bọc thêm. CHỈ 4 giá trị sentence-tier (block/layout/
-// overlay/page) bị cấm ở đây; "atom"/"frame"/"composite" là vocabulary tier tự vẽ + tự badge element
-// của chính nó — hợp lệ, không soi. Global — wrapper có thể rơi rớt ở bất cứ file nào.
+// components/frames/_identity.ts — flip side of the rule above: a hand-rolled wrapper div
+// `data-tier="block|layout|overlay|page"` to "carry identity" is the RETIRED pattern (a bug, not
+// a reconciliation path) — sentence-tier identity now lives on the ROOT frame/composite it
+// composes via the `identity` prop, not an extra wrapping div. ONLY the four sentence-tier values (block/layout/
+// overlay/page) are banned here; "atom"/"frame"/"composite" are vocabulary-tier self-draw + self-badge
+// on their own elements — valid, not scanned. Global — leftover wrappers can appear in any file.
 const RETIRED_IDENTITY_TIER_VALUES = new Set(["block", "layout", "overlay", "page"])
 const noIdentityWrapperDiv = {
   meta: {
     type: "problem",
-    docs: { description: "Cấm div/span/… tay-vẽ data-tier=\"block|layout|overlay|page\" — wrapper identity đã retired, truyền prop identity cho root frame/composite thay vào đó. [[canon components/frames/_identity.ts]]" },
+    docs: { description: "Ban hand-rolled div/span/… with data-tier=\"block|layout|overlay|page\" — identity wrapper retired; pass identity to the root frame/composite instead. [[canon components/frames/_identity.ts]]" },
     schema: [],
     messages: {
-      wrapper: "`<{{tag}} data-tier=\"{{value}}\">` là wrapper identity đã retired — truyền `identity={{ tier: \"{{value}}\", component: \"…\" }}` cho root frame/composite thay vì tự vẽ div này (xem components/frames/_identity.ts).",
+      wrapper: "`<{{tag}} data-tier=\"{{value}}\">` is a retired identity wrapper — pass `identity={{ tier: \"{{value}}\", component: \"…\" }}` to the root frame/composite instead (see components/frames/_identity.ts).",
     },
   },
   create(context) {
+    const file = (context.filename || context.getFilename()).replace(/\\/g, "/")
+    // nivo / nivoexpert are plain-CSS tenant trees, not Academy frame identity.
+    // ledger: nivoexpert-identity-wrapper-exempt-2026-08-07
+    if (file.includes("/.storybook/components/nivoexpert/") || file.includes("/.storybook/components/nivo/")) return {}
     return {
       JSXAttribute(node) {
         if (!node.name || node.name.type !== "JSXIdentifier" || node.name.name !== "data-tier") return
@@ -555,17 +568,17 @@ const noIdentityWrapperDiv = {
         if (!value || !RETIRED_IDENTITY_TIER_VALUES.has(value)) return
         const opening = node.parent
         const tag = opening && opening.type === "JSXOpeningElement" ? elementName(opening) : null
-        if (!tag || !/^[a-z]/.test(tag)) return // chỉ soi host element (div/span/…) — component PascalCase không tính
+        if (!tag || !/^[a-z]/.test(tag)) return // host elements only (div/span/…) — PascalCase components excluded
         context.report({ node, messageId: "wrapper", data: { tag, value } })
       },
     }
   },
 }
 
-// sentence tier ghép câu bằng cách compose frame/composite có sẵn — nó không tự vẽ hình. Class LAYOUT
-// (flex/grid/gap-/items-/justify-/space-x-/space-y-/absolute/relative/sticky/overflow-) trên 1 host
-// element (div/span/section/…) ở sentence tier = tự vẽ hình thay vì compose. Bỏ qua: token `sr-only`,
-// className CHỈ gồm token `size-*` (icon sizing), và variant-prefix (`md:flex`) được strip trước khi so.
+// sentence tier composes sentences via existing frames/composites — it does not draw shapes. LAYOUT classes
+// (flex/grid/gap-/items-/justify-/space-x-/space-y-/absolute/relative/sticky/overflow-) on a host
+// element (div/span/section/…) at sentence tier = drawing instead of composing. Skip: `sr-only`,
+// className that is ONLY `size-*` (icon sizing), and strip variant prefixes (`md:flex`) before matching.
 const HOST_ELEMENTS = new Set(["div", "span", "section", "ul", "ol", "li", "p", "h1", "h2", "h3", "h4", "h5", "h6", "main", "nav", "header", "footer", "aside"])
 function isLayoutToken(tok) {
   if (tok === "flex" || tok === "grid" || tok === "absolute" || tok === "relative" || tok === "sticky") return true
@@ -574,10 +587,10 @@ function isLayoutToken(tok) {
 const noRawShapeAtSentenceTier = {
   meta: {
     type: "problem",
-    docs: { description: "Sentence tier không tự vẽ layout (flex/grid/gap-/absolute/…) trên host element — compose frame/composite có sẵn. [[canon sentence-tier-composes-not-draws]]" },
+    docs: { description: "Sentence tier must not draw layout (flex/grid/gap-/absolute/…) on host elements — compose existing frames/composites. [[canon sentence-tier-composes-not-draws]]" },
     schema: [],
     messages: {
-      shape: "`{{cls}}` trên <{{tag}}> ở sentence tier — tier này compose frame/composite, không tự vẽ layout; đưa class này xuống 1 frame/composite.",
+      shape: "`{{cls}}` on <{{tag}}> at sentence tier — this tier composes frames/composites and does not draw layout; push the class down into a frame/composite.",
     },
   },
   create(context) {
@@ -602,18 +615,18 @@ const noRawShapeAtSentenceTier = {
   },
 }
 
-// skeleton co-located: cây skeleton tay-giữ ("import FooSkeleton from './FooSkeleton'" hoặc prop
-// `skeleton={<...>}`) là bản sao chép tay dễ trôi khỏi bản thật — thread `isSkeleton` xuống từng leaf
-// để shimmer luôn mirror đúng hình đã load, không thể lệch. Global — cả 2 dạng đều là "cây song song"
-// dù ở tier nào. KHÔNG bắt import `Skeleton` (bare, tên đúng "Skeleton") — đó là primitive dùng co-located.
+// co-located skeleton: a hand-kept skeleton tree ("import FooSkeleton from './FooSkeleton'" or prop
+// `skeleton={<...>}`) is a hand copy that drifts from the real shape — thread `isSkeleton` to each leaf
+// so shimmer always mirrors the loaded tree. Global — both forms are a "parallel tree"
+// at any tier. Do NOT flag bare `Skeleton` imports (exact name "Skeleton") — that is the co-located primitive.
 const noParallelSkeleton = {
   meta: {
     type: "problem",
-    docs: { description: "Cấm cây skeleton tay-giữ (prop skeleton={JSX} hoặc import *Skeleton relative) — thread isSkeleton xuống leaf. [[canon v2-src-twins-and-gates]]" },
+    docs: { description: "Ban hand-kept skeleton trees (skeleton={JSX} prop or relative *Skeleton import) — thread isSkeleton to leaves. [[canon v2-src-twins-and-gates]]" },
     schema: [],
     messages: {
-      prop: "Prop `skeleton={<…>}` là cây skeleton tay-giữ, dễ trôi khỏi bản thật — thread `isSkeleton` xuống từng leaf để shimmer tự mirror hình đã load.",
-      import: "Import `{{name}}` (relative) là skeleton tay-giữ, dễ trôi khỏi bản thật — thread `isSkeleton` xuống từng leaf thay vì giữ cây skeleton song song.",
+      prop: "Prop `skeleton={<…>}` is a hand-kept parallel skeleton tree that drifts from the real shape — thread `isSkeleton` to each leaf so shimmer mirrors the loaded tree.",
+      import: "Import `{{name}}` (relative) is a hand-kept parallel skeleton — thread `isSkeleton` to each leaf instead of keeping a second tree.",
     },
   },
   create(context) {
@@ -638,18 +651,18 @@ const noParallelSkeleton = {
   },
 }
 
-// atom phải nhận text đã resolve qua prop — không tự embed câu locale (i18n là data, thuộc file
-// connected). Regression thật: Input.Password hardcode "Show password", user VN mất "Hiện mật khẩu".
-// Heuristic: string literal có khoảng trắng + mở đầu chữ hoa = câu văn thật, không phải token. CHỈ
-// áp vocabulary tier — sentence tier nhận text qua props nên không thuộc phạm vi rule này.
+// atoms must take already-resolved text via props — do not embed locale sentences (i18n is data, owned by the
+// connected file). Real regression: Input.Password hardcoded "Show password"; VI users lost "Hiện mật khẩu". // vn-ok: documents the retired VI string
+// Heuristic: string literal with a space + leading capital = real prose, not a token. ONLY
+// vocabulary tier — sentence tier receives text via props so it is out of this rule's scope.
 const TEXT_ATTRS = new Set(["aria-label", "placeholder", "title", "alt"])
 const noHardcodedUserTextInVocabulary = {
   meta: {
     type: "problem",
-    docs: { description: "Atom (vocabulary tier) không hardcode câu văn ở aria-label/placeholder/title/alt — nhận qua prop đã resolve i18n. [[canon fe-no-custom-from-design-up]]" },
+    docs: { description: "Atoms (vocabulary tier) must not hardcode prose in aria-label/placeholder/title/alt — take an i18n-resolved prop. [[canon fe-no-custom-from-design-up]]" },
     schema: [],
     messages: {
-      hardcoded: "`{{attr}}=\"{{text}}\"` hardcode câu văn ở atom — i18n là data của file connected; đổi thành prop nhận string đã resolve sẵn.",
+      hardcoded: "`{{attr}}=\"{{text}}\"` hardcodes copy in an atom — i18n belongs to the connected file; take a resolved string prop instead.",
     },
   },
   create(context) {
@@ -783,20 +796,20 @@ const noPerPartClassNameProp = {
   },
 }
 
-// ── mỗi lớp phải TỰ KHAI nó là gì và VÌ SAO nó tồn tại ──────────────────────────
-// `principle` = lớp này tuyên bố nó là seam gì (một token, tập đóng, khớp `patterns.mjs`,
-// test đi theo `[data-principle]`). `explain` = vì sao có lớp này — thứ không ai dựng lại
-// được từ markup về sau, và là thứ quyết định lớp kế tiếp nằm CẠNH hay nằm TRONG lớp này.
-// Atom miễn: nó bọc vendor, nó không dựng layer nào của riêng mình.
+// ── every layer must SELF-DECLARE what it is and WHY it exists ──────────────────
+// `principle` = this layer declares which seam it is (one token, closed set, matches `patterns.mjs`,
+// tests follow `[data-principle]`). `explain` = why this layer exists — something nobody can rebuild
+// from markup later, and what decides whether the next layer sits BESIDE or INSIDE this one.
+// Atoms are exempt: they wrap vendor and do not build a layer of their own.
 
-/** Frame nào cũng dựng ra một node thật, nên node đó phải tự khai. */
+/** Every frame builds a real node, so that node must self-declare. */
 const FRAME_ELEMENTS = new Set([
   "Box", "Cluster", "Container", "Flex", "Grid", "PinnedTrack", "RailShell",
   "ResponsiveCluster", "ResponsiveRow", "ScrollArea", "Split", "SplitWorkspace",
   "Stage", "StackV", "StackH",
 ])
 
-/** Tên element JSX, kể cả dạng `Foo.Bar`. */
+/** JSX element name, including `Foo.Bar`. */
 function jsxElementName(node) {
   const n = node.name
   if (!n) return null
@@ -805,7 +818,7 @@ function jsxElementName(node) {
   return null
 }
 
-/** Element có prop tên này không (kể cả `{...spread}` — spread thì coi như CÓ, đừng báo oan). */
+/** Whether the element has this prop name (including `{...spread}` — treat spread as present, no false positive). */
 function hasJsxProp(node, name) {
   return node.attributes.some((attr) =>
     attr.type === "JSXSpreadAttribute" || (attr.name && attr.name.name === name))
@@ -885,13 +898,13 @@ const noInlineSkeletonBranch = {
   },
 }
 
-// ── một component = MỘT thư mục, và thư mục đó chỉ chứa hai nửa của chính nó ──
-// Ba luật dưới đây khoá cùng một thói quen: nhét cả một cụm vào trong thư mục của
-// một màn hình. Nó luôn bắt đầu vô hại ("con này chỉ trang này dùng") rồi kết thúc
-// bằng một trang 674 dòng gồm 4 component, 1 folder constants, 1 folder utils và 3
-// bản skeleton chép tay — đúng thứ `pages/AiSubscriptionPage` từng là.
+// ── one component = ONE folder, and that folder holds only its two halves ──
+// The three rules below lock the same habit: stuffing a whole cluster into the folder of
+// one screen. It always starts harmlessly ("only this page uses it") and ends
+// as a 674-line page with 4 components, a constants folder, a utils folder, and 3
+// hand-copied skeletons — exactly what `pages/AiSubscriptionPage` used to be.
 
-/** Đường dẫn có nằm trong thư mục của MỘT component ở tầng câu không, và tên thư mục đó là gì. */
+/** Whether the path sits in ONE sentence-tier component folder, and what that folder is named. */
 function sentenceComponentFolder(filename) {
   const file = (filename || "").replace(/\\/g, "/")
   // pages/<Name>/… · layouts/<Name>/… · overlays/<kind>/<Name>/…
@@ -1070,5 +1083,8 @@ export default {
     "no-parallel-skeleton": noParallelSkeleton,
     "no-hardcoded-user-text-in-vocabulary": noHardcodedUserTextInVocabulary,
     "no-public-frame-css-props": noPublicFrameCssProps,
+    "no-inline-parameter-type": noInlineParameterType,
+    "no-emoji-in-source": noEmojiInSource,
+    "no-vietnamese-in-source-authoring": noVietnameseInSourceAuthoring,
   },
 }

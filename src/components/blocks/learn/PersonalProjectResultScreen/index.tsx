@@ -103,6 +103,7 @@ const MilestoneUpNextCard = ({
                 <StackH
                     gap={4}
                     principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                     justify="between"
                     align="center"
                     at="sm"

@@ -22,10 +22,12 @@ const RUBRIC_KEYS = ["r1", "r2", "r3", "r4"] as const
 export const MockInterviewGatePreview = () => {
     const t = useTranslations()
     return (
-        <Box principle="center-measure" className="mx-auto w-full max-w-3xl">
+        <Box principle="center-measure" className="mx-auto w-full max-w-3xl"
+            explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
             <StackV
                 gap={5}
                 principle="group-boundary"
+                explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."
                 items={[
                     () => (
                         // Original used p-5 (20px) — no padding token; SurfaceCard padding={5} is p-4.
@@ -52,10 +54,12 @@ export const MockInterviewGatePreview = () => {
                                             </Typography>
                                         ),
                                         () => (
-                                            <Box principle="row-pad" className="rounded-2xl border border-dashed border-default bg-default px-4 py-3">
+                                            <Box principle="row-pad" className="rounded-2xl border border-dashed border-default bg-default px-4 py-3"
+                                                explain="Row content inset — not cell-pad, because this pads a horizontal content row rather than a dense table cell.">
                                                 <StackH
                                                     gap={2}
                                                     principle="icon-text"
+                                                    explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
                                                     items={[
                                                         () => (
                                                             <MicrophoneStageIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
@@ -73,6 +77,7 @@ export const MockInterviewGatePreview = () => {
                                             <Cluster
                                                 gap={3}
                                                 principle="chip-row"
+                                                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                                                 items={RUBRIC_KEYS.map((key) => () => (
                                                     <Chip key={key} size="sm" variant="soft" className="w-fit">
                                                         {t(`mockInterview.gatePreview.${key}`)}

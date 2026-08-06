@@ -125,7 +125,9 @@ const CourseQaToolbar = ({
 
                 />
             </div>
-            <StackH gap={3} principle="flex-action" justify="between" at="sm" isSkeleton={isSkeleton} items={[() => searchAndCount]} />
+            <StackH gap={3} principle="flex-action"
+                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                justify="between" at="sm" isSkeleton={isSkeleton} items={[() => searchAndCount]}  />
         </>
     )
 

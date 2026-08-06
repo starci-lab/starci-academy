@@ -60,28 +60,30 @@ export const CvEditorToolbarBar = ({ className }: CvEditorToolbarBarProps) => {
                     onChange={(event) => onLabelChange(event.target.value)}
                 />
             </TextField>
-            <StackH gap={4} principle="flex-action" classNames={["shrink-0"]} items={[
-                () => (
-                    <Button
-                        variant="secondary"
-                        isDisabled={!canExport}
-                        onPress={onDownloadTex}
-                    >
-                        <FileTextIcon aria-hidden className="size-5" />
-                        {t("cv.builder.downloadTexCta")}
-                    </Button>
-                ),
-                () => (
-                    <Button
-                        variant="primary"
-                        isDisabled={!canExport || exportingFormat !== null}
-                        onPress={() => onExport(CvExportFormat.Pdf)}
-                    >
-                        <FilePdfIcon aria-hidden className="size-5" />
-                        {t("cv.builder.downloadCta")}
-                    </Button>
-                ),
-            ]} />
+            <StackH gap={4} principle="flex-action"
+                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                classNames={["shrink-0"]} items={[
+                    () => (
+                        <Button
+                            variant="secondary"
+                            isDisabled={!canExport}
+                            onPress={onDownloadTex}
+                        >
+                            <FileTextIcon aria-hidden className="size-5" />
+                            {t("cv.builder.downloadTexCta")}
+                        </Button>
+                    ),
+                    () => (
+                        <Button
+                            variant="primary"
+                            isDisabled={!canExport || exportingFormat !== null}
+                            onPress={() => onExport(CvExportFormat.Pdf)}
+                        >
+                            <FilePdfIcon aria-hidden className="size-5" />
+                            {t("cv.builder.downloadCta")}
+                        </Button>
+                    ),
+                ]} />
         </div>
     )
 }

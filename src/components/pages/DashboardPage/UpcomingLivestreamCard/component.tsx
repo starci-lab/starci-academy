@@ -93,7 +93,8 @@ export const _UpcomingLivestreamCard = ({
             <SurfaceListCard bordered>
                 {isSkeleton
                     ? Array.from({ length: MAX_ROWS }, (_unused, index) => (
-                        <Box key={index} principle="row-pad" className="px-4">
+                        <Box key={index} principle="row-pad" className="px-4"
+                            explain="Row content inset — not cell-pad, because this pads a horizontal content row rather than a dense table cell.">
                             <Skeleton.ListRow withSubtitle />
                         </Box>
                     ))

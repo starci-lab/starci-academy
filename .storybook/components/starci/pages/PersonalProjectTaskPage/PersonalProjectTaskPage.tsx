@@ -414,6 +414,7 @@ const submissionPanel = (props: PersonalProjectTaskActColumnProps) => {
                 />
             </div>
             <StackH gap={3} at="sm" principle="flex-action" isSkeleton={isSkeleton} items={[() => evaluateActions]} />
+            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
         </>
     )
 

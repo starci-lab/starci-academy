@@ -101,6 +101,7 @@ export const LessonChallenges = () => {
                         key={challenge.id}
                         gap={3}
                         principle="chip-row"
+                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                         align="center"
                         justify="between"
                         items={[

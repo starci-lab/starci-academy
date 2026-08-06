@@ -162,6 +162,7 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                             <StackH
                                 gap={4}
                                 principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                 justify="between"
                                 classNames={["w-full"]}
                                 items={[
@@ -169,6 +170,7 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                                         <StackH
                                             gap={4}
                                             principle="content-row"
+                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                             classNames={["min-w-0", "flex-1"]}
                                             items={[
                                                 () => <Skeleton className="h-9 min-w-0 flex-1 rounded-medium" />,
@@ -187,12 +189,14 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                                         <StackH
                                             gap={4}
                                             principle="content-row"
+                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                             classNames={["w-full"]}
                                             items={[
                                                 () => (
                                                     <StackV
                                                         gap={2}
                                                         principle="title-subtitle"
+                                                        explain="Title over supporting line — not label-field, because neither line is a form control label."
                                                         classNames={["min-w-0", "flex-1"]}
                                                         items={[
                                                             () => <Skeleton.Typography type="body-sm" width="1/2" />,
@@ -242,6 +246,7 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                                 <StackH
                                     gap={4}
                                     principle="content-row"
+                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                     justify="between"
                                     classNames={["w-full"]}
                                     items={[
@@ -249,6 +254,7 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                                             <StackH
                                                 gap={4}
                                                 principle="content-row"
+                                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                 classNames={["min-w-0", "flex-1"]}
                                                 items={[
                                                     () => (
@@ -278,7 +284,8 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                                                                     )}
                                                                 </Button>
                                                                 <Popover.Content className="w-72">
-                                                                    <Box principle="cell-pad" className="p-3">
+                                                                    <Box principle="cell-pad" className="p-3"
+                                                                        explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body.">
                                                                         <StackV
                                                                             gap={4}
                                                                             items={[
@@ -286,6 +293,7 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                                                                                     <StackV
                                                                                         gap={4}
                                                                                         principle="label-field"
+                                                                                        explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
                                                                                         items={[
                                                                                             () => (
                                                                                                 <Typography type="body-xs" color="muted">{t("mockInterview.historyFilterHeading")}</Typography>
@@ -334,7 +342,8 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                                 filteredItems.length === 0 ? (
                                     <Card>
                                         <CardContent>
-                                            <Box principle="page-pad" className="p-6">
+                                            <Box principle="page-pad" className="p-6"
+                                                explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                                                 <Typography type="body-sm" color="muted" align="center">
                                                     {t("mockInterview.historyEmptyFiltered")}
                                                 </Typography>

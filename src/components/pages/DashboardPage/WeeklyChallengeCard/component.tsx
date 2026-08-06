@@ -153,32 +153,34 @@ export const _WeeklyChallengeCard = ({
                 ? <Skeleton.Typography type="body-sm" width="2/3" />
                 : <EntityToken globalId={challengeGlobalId} label={challengeTitle ?? ""} />),
             () => (
-                <StackH gap={3} principle="flex-action" justify="between" items={[
-                    () => (
-                        <Typography
-                            size="xs"
-                            color="muted"
-                            text={labels.endsIn ?? ""}
-                            isSkeleton={isSkeleton}
-                            classNames={isSkeleton ? ["w-1/3"] : undefined}
-                        />
-                    ),
-                    () => (isSkeleton
-                        ? <Skeleton className="h-6 w-16 shrink-0 rounded-full" />
-                        : viewerPassed
-                            ? (claimed
-                                ? <Chip tone="success" text={labels.passed} />
-                                : (
-                                    <Button
-                                        variant="primary"
-                                        size="sm"
-                                        isPending={isClaiming}
-                                        onPress={onClaim}
-                                        label={labels.claimReward}
-                                    />
-                                ))
-                            : <EntityToken globalId={challengeGlobalId} label={labels.tryNow} />),
-                ]} />
+                <StackH gap={3} principle="flex-action"
+                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                    justify="between" items={[
+                        () => (
+                            <Typography
+                                size="xs"
+                                color="muted"
+                                text={labels.endsIn ?? ""}
+                                isSkeleton={isSkeleton}
+                                classNames={isSkeleton ? ["w-1/3"] : undefined}
+                            />
+                        ),
+                        () => (isSkeleton
+                            ? <Skeleton className="h-6 w-16 shrink-0 rounded-full" />
+                            : viewerPassed
+                                ? (claimed
+                                    ? <Chip tone="success" text={labels.passed} />
+                                    : (
+                                        <Button
+                                            variant="primary"
+                                            size="sm"
+                                            isPending={isClaiming}
+                                            onPress={onClaim}
+                                            label={labels.claimReward}
+                                        />
+                                    ))
+                                : <EntityToken globalId={challengeGlobalId} label={labels.tryNow} />),
+                    ]} />
             ),
             () => (
                 <Typography
@@ -194,11 +196,13 @@ export const _WeeklyChallengeCard = ({
                     {isSkeleton
                         ? Array.from({ length: SKELETON_ROW_COUNT }, (_row, index) => (
                             <SurfaceListCardItem key={index}>
-                                <StackH gap={3} principle="content-row" items={[
-                                    () => <Skeleton className="size-6 shrink-0 rounded-full" />,
-                                    () => <Skeleton.Typography type="body-sm" width="1/2" className="min-w-0 flex-1" />,
-                                    () => <Skeleton className="h-3 w-12 shrink-0 rounded-sm" />,
-                                ]} />
+                                <StackH gap={3} principle="content-row"
+                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                    items={[
+                                        () => <Skeleton className="size-6 shrink-0 rounded-full" />,
+                                        () => <Skeleton.Typography type="body-sm" width="1/2" className="min-w-0 flex-1" />,
+                                        () => <Skeleton className="h-3 w-12 shrink-0 rounded-sm" />,
+                                    ]} />
                             </SurfaceListCardItem>
                         ))
                         : leaderboard.map((entry) => (
@@ -228,7 +232,9 @@ export const _WeeklyChallengeCard = ({
         ]
 
         return (
-            <StackV gap={3} principle="sibling-stack" items={challengeItems} />
+            <StackV gap={3} principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                items={challengeItems}  />
         )
     }
 

@@ -91,7 +91,8 @@ const RULES: Array<InlineRule> = [
         re: /`([^`]+)`/,
         recurse: false,
         render: (match) => (
-            <Box as="code" principle="control-pad" className="rounded-md bg-default px-2 py-0 font-mono text-[0.9em] text-accent-soft-foreground">
+            <Box as="code" principle="control-pad" className="rounded-md bg-default px-2 py-0 font-mono text-[0.9em] text-accent-soft-foreground"
+                explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.">
                 {match[1]}
             </Box>
         )},

@@ -1,6 +1,5 @@
 import React from "react"
 import { type SkeletonProps } from "@/components/frames/_slot"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { ListMeta } from "@/components/composites/lists/List"
 import { StackH, StackV } from "@/components/frames/Stack"
@@ -53,6 +52,7 @@ export const CardBody = ({
                 <StackH
                     gap={4}
                     principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                     align="center"
                     isSkeleton={isSkeleton}
                     items={[
@@ -60,10 +60,8 @@ export const CardBody = ({
                     ]}
                 />
             </div>
-            {value === undefined ? null : isSkeleton ? (
-                <HeroSkeleton className="h-1 w-full rounded-full" />
-            ) : (
-                <ProgressMeter value={value} max={max} />
+            {value === undefined ? null : (
+                <ProgressMeter value={value} max={max} isSkeleton={isSkeleton} />
             )}
             <div className="relative">{cta}</div>
         </>

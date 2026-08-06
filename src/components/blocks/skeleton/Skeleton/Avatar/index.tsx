@@ -21,3 +21,6 @@ const SIZE_CLASS: Record<SkeletonAvatarSize, string> = {
 export const SkeletonAvatar = ({ size = "md", className }: SkeletonAvatarProps) => {
     return <Skeleton className={cn("rounded-full", SIZE_CLASS[size], className)} />
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonAvatar` as the public name. */
+export { SkeletonAvatar as Avatar }

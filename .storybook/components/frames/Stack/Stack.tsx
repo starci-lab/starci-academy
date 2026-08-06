@@ -6,7 +6,7 @@ import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import { type AllowedGap, type LayoutAlign, type LayoutJustify, type PaddingValue, type Responsive } from "@sb-components/frames/_spacing"
 import { Flex } from "@sb-components/frames/Flex/Flex"
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
-import type { PrincipleToken } from "@sb-components/frames/_principles"
+import type { PrincipleToken, ExplainReason } from "@sb-components/frames/_principles"
 import type { CallerIdentity } from "@sb-components/frames/_identity"
 
 /**
@@ -107,6 +107,11 @@ export interface StackBaseProps {
      */
     principle?: PrincipleToken
     /**
+     * Why this layer exists - one sentence, emitted as `data-explain` beside the token.
+     * A reason, never a restatement of `principle`. Forwarded to `Flex`.
+     */
+    explain?: ExplainReason
+    /**
      * Caller identity to wear on this track's root instead of `Stack`'s own -- pass this when a
      * `block`/`layout`/`overlay`/`page` component (BLOCK-2: never draws a shape of its own) is
      * using this track AS its root element, instead of wrapping it in a raw `<div data-tier=...
@@ -178,6 +183,7 @@ const StackV = ({
     padding,
     classNames,
     principle,
+    explain,
     identity}: StackVProps) => {
     // `items` (buildable) wins over legacy `body`: the track renders each item itself, threading
     // `isSkeleton`, so it can shimmer the whole column and interleave dividers on the real children.
@@ -190,6 +196,7 @@ const StackV = ({
                 as={Tag}
                 direction="col"
                 principle={principle}
+                explain={explain}
                 identity={identity}
                 body={divider ? interleaveDividers(content, "vertical") : content}
             />
@@ -227,6 +234,7 @@ const StackH = ({
     padding,
     classNames,
     principle,
+    explain,
     identity}: StackHProps) => {
     const content = (items ?? (body ? [body] : [])).map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)
     if (principle) {
@@ -235,6 +243,7 @@ const StackH = ({
                 as={Tag}
                 direction="row"
                 principle={principle}
+                explain={explain}
                 identity={identity}
                 // `at` is a named width switch (FRAME-10), not a free CSS boolean — still forwarded.
                 at={at}

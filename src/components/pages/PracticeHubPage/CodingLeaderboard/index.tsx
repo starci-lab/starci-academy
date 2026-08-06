@@ -55,6 +55,7 @@ const LeaderboardRow = ({ rank, entry, isViewer = false, solvedLabel, youLabel, 
             gap={4}
             align="center"
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             items={[
                 // the rank column is a fixed gutter so every name starts on the same line
                 () => (
@@ -140,7 +141,9 @@ export const CodingLeaderboard = () => {
 
     return (
         // the board keeps a capped reading measure — a width no closed union carries
-        <Box className="mx-auto w-full max-w-2xl" principle="center-measure">
+        <Box className="mx-auto w-full max-w-2xl" principle="center-measure"
+            explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
+        >
             <SurfaceListCard identity={{ tier: "block", component: "CodingLeaderboard" }}>
                 {isSkeleton
                     ? Array.from({ length: SKELETON_ROWS }, (_row, index) => (

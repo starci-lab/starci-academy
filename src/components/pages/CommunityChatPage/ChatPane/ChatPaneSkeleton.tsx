@@ -23,28 +23,38 @@ export interface ChatPaneSkeletonProps {
  */
 export const ChatPaneSkeleton = ({ withComposer = false }: ChatPaneSkeletonProps) => {
     return (
-        <StackV gap={4} principle="content-row" items={[
-            () => (
-                <Box className="max-h-[60vh] overflow-y-auto">
-                    <StackV gap={4} principle="content-row" items={[0, 1, 2].map((row) => () => (
-                        <StackV key={row} gap={2} principle="title-subtitle" align={row % 2 === 1 ? "end" : "stretch"} items={[
-                            () => <Skeleton className="h-14 w-2/3 rounded-2xl" />,
-                        ]} />
-                    ))} />
-                </Box>
-            ),
-            ...(withComposer ? [
+        <StackV gap={4} principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            items={[
                 () => (
-                    <StackV gap={3} principle="sibling-stack" items={[
-                        () => <Skeleton className="h-14 w-full rounded-xl" />,
-                        () => (
-                            <StackH gap={1} principle="name-handle" justify="end" items={[
-                                () => <Skeleton.Button width="w-20" />,
+                    <Box className="max-h-[60vh] overflow-y-auto">
+                        <StackV gap={4} principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            items={[0, 1, 2].map((row) => () => (
+                                <StackV key={row} gap={2} principle="title-subtitle"
+                                    explain="Title over supporting line — not label-field, because neither line is a form control label."
+                                    align={row % 2 === 1 ? "end" : "stretch"} items={[
+                                        () => <Skeleton className="h-14 w-2/3 rounded-2xl" />,
+                                    ]} />
+                            ))} />
+                    </Box>
+                ),
+                ...(withComposer ? [
+                    () => (
+                        <StackV gap={3} principle="sibling-stack"
+                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                            items={[
+                                () => <Skeleton className="h-14 w-full rounded-xl" />,
+                                () => (
+                                    <StackH gap={1} principle="name-handle"
+                                        explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
+                                        justify="end" items={[
+                                            () => <Skeleton.Button width="w-20" />,
+                                        ]} />
+                                ),
                             ]} />
-                        ),
-                    ]} />
-                )
-            ] : []),
-        ]} />
+                    )
+                ] : []),
+            ]} />
     )
 }

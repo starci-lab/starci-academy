@@ -52,37 +52,39 @@ export interface WeeklyGoalsProps {
  * coin-reward hint below it.
  */
 const renderGoalCell = (item: WeeklyGoalsItem, isSkeleton: boolean) => (
-    <StackV gap={3} principle="sibling-stack" isSkeleton={isSkeleton} items={[
+    <StackV gap={3} principle="sibling-stack"
+        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+        isSkeleton={isSkeleton} items={[
         // ATOM GAP: `ProgressMeter`'s discriminated `isSkeleton` union needs a literal branch
         // to narrow at compile time — a runtime boolean can't satisfy it directly.
-        () => (isSkeleton
-            ? (
-                <ProgressMeter
-                    isSkeleton
-                    leading={() => <Typography size="sm" prefixIcon={KPI_ICON_MAP[item.key]} isSkeleton text={item.label} />}
-                    trailing={() => <Typography size="xs" color="muted" tabularNums isSkeleton text={`${item.current}/${item.target}`} />}
+            () => (isSkeleton
+                ? (
+                    <ProgressMeter
+                        isSkeleton
+                        leading={() => <Typography size="sm" prefixIcon={KPI_ICON_MAP[item.key]} isSkeleton text={item.label} />}
+                        trailing={() => <Typography size="xs" color="muted" tabularNums isSkeleton text={`${item.current}/${item.target}`} />}
+                    />
+                )
+                : (
+                    <ProgressMeter
+                        value={item.current}
+                        max={item.target > 0 ? item.target : 1}
+                        color="accent"
+                        leading={() => <Typography size="sm" prefixIcon={KPI_ICON_MAP[item.key]} text={item.label} />}
+                        trailing={() => <Typography size="xs" color="muted" tabularNums text={`${item.current}/${item.target}`} />}
+                    />
+                )),
+            // coin-reward hint — only once a REAL target is set server-side, and never while
+            // shimmering (unknown yet whether this row will show one — same as the loaded shape
+            // it mirrors, `WeeklyGoalsProps.items` never carries a reward while `isSkeleton`).
+            ...(!isSkeleton && item.coinRewardText ? [() => (
+                <Typography
+                    size="xs"
+                    color={item.canClaim ? "accent-soft" : "muted"}
+                    text={item.coinRewardText}
                 />
-            )
-            : (
-                <ProgressMeter
-                    value={item.current}
-                    max={item.target > 0 ? item.target : 1}
-                    color="accent"
-                    leading={() => <Typography size="sm" prefixIcon={KPI_ICON_MAP[item.key]} text={item.label} />}
-                    trailing={() => <Typography size="xs" color="muted" tabularNums text={`${item.current}/${item.target}`} />}
-                />
-            )),
-        // coin-reward hint — only once a REAL target is set server-side, and never while
-        // shimmering (unknown yet whether this row will show one — same as the loaded shape
-        // it mirrors, `WeeklyGoalsProps.items` never carries a reward while `isSkeleton`).
-        ...(!isSkeleton && item.coinRewardText ? [() => (
-            <Typography
-                size="xs"
-                color={item.canClaim ? "accent-soft" : "muted"}
-                text={item.coinRewardText}
-            />
-        )] : []),
-    ]} />
+            )] : []),
+        ]} />
 )
 
 /**

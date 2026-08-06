@@ -77,10 +77,12 @@ const WhoToFollowRow = ({
     isSkeleton = false,
 }: WhoToFollowRowProps) => (
     // padding-plus-gap: outer control-pad owns the inset; inner content-row owns the seam
-    <Box principle="control-pad" className="px-3 py-2">
+    <Box principle="control-pad" className="px-3 py-2"
+        explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.">
         <StackH
             gap={4}
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             items={[
                 () => (isSkeleton || !user ? (
                     <Skeleton.UserCell className="min-w-0 flex-1" />

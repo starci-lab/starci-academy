@@ -1,8 +1,6 @@
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 import React from "react"
-import {
-    Spinner,
-} from "@heroui/react"
+import { Spinner } from "@/components/atoms/display/Spinner"
 import {
     UploadStatus,
 } from "./enums"

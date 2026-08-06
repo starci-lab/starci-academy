@@ -28,6 +28,7 @@ export const FlashcardQuizResultSkeleton = () => {
                             // peer metric tiles at preserved step 4; no card-grid token.
                             <Grid
                                 principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                 columns={{ base: 1, sm: 3 }}
                                 items={[
                                     { key: "metric-1", content: () => <Skeleton.Metric /> },
@@ -41,6 +42,7 @@ export const FlashcardQuizResultSkeleton = () => {
                                 as="section"
                                 gap={4}
                                 principle="label-field"
+                                explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
                                 items={[
                                     () => <Skeleton className="h-[14px] w-40 rounded" />,
                                     () => (
@@ -50,6 +52,7 @@ export const FlashcardQuizResultSkeleton = () => {
                                                     <StackH
                                                         gap={4}
                                                         principle="content-row"
+                                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                         align="center"
                                                         items={[
                                                             () => <Skeleton className="size-2.5 shrink-0 rounded-full" />,
@@ -75,6 +78,7 @@ export const FlashcardQuizResultSkeleton = () => {
                                 as="section"
                                 gap={4}
                                 principle="label-field"
+                                explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
                                 items={[
                                     () => <Skeleton className="h-[14px] w-40 rounded" />,
                                     () => (
@@ -83,6 +87,7 @@ export const FlashcardQuizResultSkeleton = () => {
                                                 <StackV
                                                     gap={3}
                                                     principle="sibling-stack"
+                                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                                     items={Array.from({ length: 3 }).map((_unused, index) => () => (
                                                         <Skeleton key={index} className="h-16 w-full rounded-xl" />
                                                     ))}

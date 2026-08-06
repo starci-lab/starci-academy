@@ -42,6 +42,7 @@ const EnrollCard = ({ title, description, priceRegion, scarcity, ctaLabel, onEnr
         <StackV
             gap={4}
             principle="card-caption"
+            explain="Holds caption text under card media so the caption stays attached to the image above it."
             align="center"
             items={[
                 () => <IconTile icon={<LockIcon aria-hidden focusable="false" />} tone="accent" size="sm" />,

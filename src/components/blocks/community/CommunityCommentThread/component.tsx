@@ -125,6 +125,7 @@ export const _CommunityCommentThread = ({
         <StackV
             gap={3}
             principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             identity={{ tier: "block", component: "CommunityCommentThread" }}
             items={[
                 () => <Divider />,
@@ -141,7 +142,8 @@ export const _CommunityCommentThread = ({
                             />
                         ),
                         () => (
-                            <Box principle="push-end" className="ml-auto w-fit">
+                            <Box principle="push-end" className="ml-auto w-fit"
+                                explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row.">
                                 <Button
                                     variant="primary"
                                     size="sm"

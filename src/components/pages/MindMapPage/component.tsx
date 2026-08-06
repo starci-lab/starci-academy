@@ -155,6 +155,7 @@ const MindMapWorkspaceEmpty = ({ labels, onBrowseModules }: {
             <StackV
                 gap={1}
                 principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                 align="center"
                 justify="center"
                 items={[() => (
@@ -240,6 +241,7 @@ const _MindMapPage = ({
                 <StackV
                     gap={1}
                     principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                     align="center"
                     isSkeleton={isSkeleton}
                     items={[() => (
@@ -319,6 +321,7 @@ const _MindMapPage = ({
                         <StackV
                             padding={6}
                             principle="page-pad"
+                            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
                             gap={1}
                             classNames={["h-full"]}
                             isSkeleton={isSkeleton}

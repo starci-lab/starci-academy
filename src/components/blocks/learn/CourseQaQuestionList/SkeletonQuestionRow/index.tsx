@@ -1,5 +1,5 @@
 import React from "react"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Avatar } from "@/components/atoms/display/Avatar"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
@@ -44,9 +44,10 @@ export const SkeletonQuestionRow = () => {
     )
 
     return (
-        <StackH
+        <StackH identity={{ tier: "block", component: "SkeletonQuestionRow" }}
             gap={4}
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             align="start"
 
             items={[
@@ -57,7 +58,7 @@ export const SkeletonQuestionRow = () => {
                 ),
                 () => <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={[() => textColumn]} />,
                 // status dot — no home atom (★3), same escape hatch `Pagination` uses for its own shimmer squares
-                () => <HeroSkeleton className="size-2 shrink-0 rounded-full" />,
+                () => <Skeleton className="size-2 shrink-0 rounded-full" />,
             ]}
         />
     )

@@ -6,9 +6,7 @@ import React, {
     useEffect,
     useState,
 } from "react"
-import {
-    Spinner,
-} from "@heroui/react"
+import { Spinner } from "@/components/atoms/display/Spinner"
 import {
     useLocale,
 } from "next-intl"
@@ -163,11 +161,15 @@ const SepayCheckoutPageContent = () => {
     }
 
     return (
-        <Box principle="page-pad" className="flex min-h-screen flex-col items-center px-4 py-12">
-            <Box principle="center-measure" className="w-full max-w-4xl">
+        <Box principle="page-pad" className="flex min-h-screen flex-col items-center px-4 py-12"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
+            <Box principle="center-measure" className="w-full max-w-4xl"
+                explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
+            >
                 <Grid
                     columns={{ base: 1, md: 2 }}
                     principle="layout-split"
+                    explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
                     items={[
                         { key: "qr", content: QrPanel },
                         { key: "summary", content: OrderSummary },

@@ -93,51 +93,58 @@ const _CourseDetailPage = ({
     }
 
     return (
-        <div className={className} data-tier="page" data-component="CourseDetailPage">
-            <Box principle="center-measure" className="mx-auto w-full max-w-6xl px-6 py-6 pb-24 @app-md:pb-6">
-                {/* ONE grid from the top so the sticky purchase card's top lines up with the
+        <Box
+            identity={{ tier: "page", component: "CourseDetailPage" }}
+            principle="center-measure"
+            className={`mx-auto w-full max-w-6xl px-6 py-6 pb-24 @app-md:pb-6${className ? ` ${className}` : ""}`}
+            explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
+        >
+            {/* ONE grid from the top so the sticky purchase card's top lines up with the
                     breadcrumb/header: header = row 1 (cols 1-2), card = col 3 spanning rows 1-2,
                     narrative = row 2 (cols 1-2). Row gap = 10 (header → content, layouts/gap.md),
                     column gap = 6. DOM order hero → card → narrative → mobile stacks
                     header → purchase card → curriculum. */}
-                <>
-                    <div className="grid grid-cols-1 items-start gap-x-6 gap-y-10 @app-md:grid-cols-3">
-                        {isSkeleton ? (
-                            <Box className="@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1">
-                                <StackV gap={4} principle="content-row" items={[
+            <>
+                <div className="grid grid-cols-1 items-start gap-x-6 gap-y-10 @app-md:grid-cols-3">
+                    {isSkeleton ? (
+                        <Box className="@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1">
+                            <StackV gap={4} principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                items={[
                                     () => <Skeleton.Typography type="h2" />,
                                     () => <Skeleton.Typography type="body" />,
                                     () => <Skeleton.Metric />,
                                 ]} />
-                            </Box>
-                        ) : (
-                            <CourseHero className="@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1" />
-                        )}
-                        {isSkeleton ? (
-                            <Skeleton.Card className="@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1" />
-                        ) : (
-                            <CoursePricingRail className="@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1" />
-                        )}
-                        {isSkeleton ? (
-                            <Skeleton.Accordion items={3} className="@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-2" />
-                        ) : (
-                            <Box className="@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-2">
-                                <StackV gap={6} principle="block-boundary" items={[
+                        </Box>
+                    ) : (
+                        <CourseHero className="@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1" />
+                    )}
+                    {isSkeleton ? (
+                        <Skeleton.Card className="@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1" />
+                    ) : (
+                        <CoursePricingRail className="@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1" />
+                    )}
+                    {isSkeleton ? (
+                        <Skeleton.Accordion items={3} className="@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-2" />
+                    ) : (
+                        <Box className="@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-2">
+                            <StackV gap={6} principle="block-boundary"
+                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                                items={[
                                     CourseValueProps,
                                     CourseCurriculum,
                                     CoursePrerequisites,
                                     CourseFaq,
                                 ]} />
-                            </Box>
-                        )}
-                    </div>
-                    {/* mobile-only sticky enroll bar — reads course/price itself, so it only
+                        </Box>
+                    )}
+                </div>
+                {/* mobile-only sticky enroll bar — reads course/price itself, so it only
                         renders once the real spine has loaded (matches the old AsyncContent
                         content branch, which never rendered it during loading either). */}
-                    {!isSkeleton && <CourseMobileEnrollBar className="@app-md:hidden" />}
-                </>
-            </Box>
-        </div>
+                {!isSkeleton && <CourseMobileEnrollBar className="@app-md:hidden" />}
+            </>
+        </Box>
     )
 }
 

@@ -40,15 +40,18 @@ export const ComponentCard = ({ component }: ComponentCardProps) => {
         <Card className="border border-default bg-surface">
             {/* Vendor CardContent padding cleared so house card-padding owns the inset. */}
             <CardContent className="p-0">
-                <Box principle="card-padding" className="p-4">
+                <Box principle="card-padding" className="p-4"
+                    explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
                     <StackV
                         gap={3}
                         principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                         items={[
                             () => (
                                 <StackH
                                     gap={3}
                                     principle="flex-action"
+                                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                                     align="center"
                                     justify="between"
                                     items={[
@@ -56,6 +59,7 @@ export const ComponentCard = ({ component }: ComponentCardProps) => {
                                             <StackH
                                                 gap={3}
                                                 principle="identity"
+                                                explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
                                                 align="center"
                                                 classNames={["min-w-0"]}
                                                 items={[
@@ -85,6 +89,7 @@ export const ComponentCard = ({ component }: ComponentCardProps) => {
                                 <StackH
                                     gap={3}
                                     principle="flex-action"
+                                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                                     align="center"
                                     justify="between"
                                     items={[

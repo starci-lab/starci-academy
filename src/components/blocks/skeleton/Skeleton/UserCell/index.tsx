@@ -29,3 +29,6 @@ export const SkeletonUserCell = ({ withHandle = true, className }: SkeletonUserC
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonUserCell` as the public name. */
+export { SkeletonUserCell as UserCell }

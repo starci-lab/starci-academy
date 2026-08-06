@@ -213,10 +213,12 @@ export const _CartPage = ({
         ? [() => <Skeleton className="h-4 w-40 rounded-lg" />]
         : [
             ...(savingsLabel ? [() => (
-                <StackH gap={3} principle="flex-action" justify="between" items={[
-                    () => <Typography size="sm" color="success-soft" text={savingsLabel} />,
-                    () => (bundleBonusLabel ? <Chip tone="accent" text={bundleBonusLabel} /> : null),
-                ]} />
+                <StackH gap={3} principle="flex-action" justify="between"
+                    explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                    items={[
+                        () => <Typography size="sm" color="success-soft" text={savingsLabel} />,
+                        () => (bundleBonusLabel ? <Chip tone="accent" text={bundleBonusLabel} /> : null),
+                    ]} />
             )] : []),
             ...(installmentHintLabel ? [() => <Typography size="xs" color="muted" text={installmentHintLabel} />] : []),
             ...(addMoreHintLabel ? [() => <Typography size="xs" color="muted" text={addMoreHintLabel} />] : []),
@@ -240,74 +242,80 @@ export const _CartPage = ({
             )
         }
         return (
-            <StackV gap={6} principle="block-boundary" items={[
-                () => (
-                    <SurfaceListCard>
-                        {isSkeleton
-                            ? Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => (
-                                <CartLineSkeletonRow key={index} />
-                            ))
-                            : items.map((item) => (
-                                <CartLine
-                                    key={item.id}
-                                    item={item}
-                                    previewLine={previewByCourse.get(item.courseId)}
-                                    onRemove={onRemove}
-                                    isMutating={isMutating}
-                                />
-                            ))}
-                    </SurfaceListCard>
-                ),
-                () => {
+            <StackV gap={6} principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={[
+                    () => (
+                        <SurfaceListCard>
+                            {isSkeleton
+                                ? Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => (
+                                    <CartLineSkeletonRow key={index} />
+                                ))
+                                : items.map((item) => (
+                                    <CartLine
+                                        key={item.id}
+                                        item={item}
+                                        previewLine={previewByCourse.get(item.courseId)}
+                                        onRemove={onRemove}
+                                        isMutating={isMutating}
+                                    />
+                                ))}
+                        </SurfaceListCard>
+                    ),
+                    () => {
                     // Items hoisted so this gap-only column is not scanned as owning nested
                     // justify/principle from its children (check-pattern-coverage opens to `>`).
-                    const footerColumnItems = isSkeleton
-                        ? [() => <Skeleton className="h-12 w-full rounded-2xl" />]
-                        : [
-                            () => (
-                                <StackV gap={3} principle="sibling-stack" isSkeleton={isPreviewSkeleton} items={[
-                                    () => (
-                                        <StackH gap={4} principle="content-row" justify="between" items={[
-                                            () => <Typography size="base" weight="semibold" text={labels.total} isSkeleton={isPreviewSkeleton} />,
-                                            () => (isPreviewSkeleton
-                                                ? <Skeleton className="h-7 w-32 rounded-lg" />
-                                                : (totalChargedVnd != null
-                                                    ? (
-                                                        <PriceTagInline
-                                                            discounted={totalChargedVnd}
-                                                            original={totalListVnd}
-                                                            currency="VND"
-                                                        />
-                                                    )
-                                                    : <Typography size="h4" weight="bold" text={formatVnd(fallbackTotalVnd)} />)),
+                        const footerColumnItems = isSkeleton
+                            ? [() => <Skeleton className="h-12 w-full rounded-2xl" />]
+                            : [
+                                () => (
+                                    <StackV gap={3} principle="sibling-stack" isSkeleton={isPreviewSkeleton}
+                                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                        items={[
+                                            () => (
+                                                <StackH gap={4} principle="content-row" justify="between"
+                                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                    items={[
+                                                        () => <Typography size="base" weight="semibold" text={labels.total} isSkeleton={isPreviewSkeleton} />,
+                                                        () => (isPreviewSkeleton
+                                                            ? <Skeleton className="h-7 w-32 rounded-lg" />
+                                                            : (totalChargedVnd != null
+                                                                ? (
+                                                                    <PriceTagInline
+                                                                        discounted={totalChargedVnd}
+                                                                        original={totalListVnd}
+                                                                        currency="VND"
+                                                                    />
+                                                                )
+                                                                : <Typography size="h4" weight="bold" text={formatVnd(fallbackTotalVnd)} />)),
+                                                    ]} />
+                                            ),
+                                            ...summaryItems,
                                         ]} />
-                                    ),
-                                    ...summaryItems,
-                                ]} />
-                            ),
-                            () => (
-                                <Button
-                                    variant="primary"
-                                    size="lg"
-                                    isDisabled={isMutating}
-                                    onPress={onCheckout}
-                                    label={labels.checkoutCount}
-                                    suffixIcon={ArrowRightIcon}
-                                    classNames={["w-full"]}
-                                />
-                            ),
-                            () => (
-                                <ClearCartButton
-                                    isDisabled={isMutating}
-                                    onClear={onClearCart}
-                                    clearLabel={labels.clear}
-                                    confirmLabel={labels.clearConfirm}
-                                />
-                            ),
-                        ]
-                    return <StackV gap={4} items={footerColumnItems} />
-                },
-            ]} />
+                                ),
+                                () => (
+                                    <Button
+                                        variant="primary"
+                                        size="lg"
+                                        isDisabled={isMutating}
+                                        onPress={onCheckout}
+                                        label={labels.checkoutCount}
+                                        suffixIcon={ArrowRightIcon}
+                                        classNames={["w-full"]}
+                                    />
+                                ),
+                                () => (
+                                    <ClearCartButton
+                                        isDisabled={isMutating}
+                                        onClear={onClearCart}
+                                        clearLabel={labels.clear}
+                                        confirmLabel={labels.clearConfirm}
+                                    />
+                                ),
+                            ]
+                        return <StackV gap={4} items={footerColumnItems} />
+                    },
+                ]} />
         )
     }
 

@@ -138,6 +138,7 @@ const Base = ({
                                     <StackV
                                         gap={2}
                                         principle="title-subtitle"
+                                        explain="Title over supporting line — not label-field, because neither line is a form control label."
                                         isSkeleton={isSkeleton}
                                         items={[
                                             () => (

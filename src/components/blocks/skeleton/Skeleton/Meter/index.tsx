@@ -12,3 +12,6 @@ export type SkeletonMeterProps = WithClassNames<undefined>
 export const SkeletonMeter = ({ className }: SkeletonMeterProps) => {
     return <Skeleton className={cn("h-2 w-full rounded-full", className)} />
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonMeter` as the public name. */
+export { SkeletonMeter as Meter }

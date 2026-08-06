@@ -91,27 +91,33 @@ export const ProblemCatalog = ({
                 <SurfaceListCard className={className}>
                     {[0, 1, 2, 3, 4].map((row) => (
                         <SurfaceListCardItem key={row}>
-                            <StackH gap={4} align="center" principle="content-row" classNames={["min-w-0"]} items={[
-                                () => <Skeleton className="size-5 shrink-0 rounded-full" />,
-                                () => (
-                                    <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
-                                        () => <Skeleton.Typography type="body-sm" width="1/2" />,
-                                        () => (
-                                            <Box principle="chip-row" className="flex flex-wrap items-center gap-2">
-                                                <Skeleton.Typography type="body-xs" width="1/4" />
-                                                <Skeleton.Typography type="body-xs" width="1/4" />
-                                            </Box>
-                                        ),
-                                    ]} />
-                                ),
-                                () => (
-                                    <Box principle="push-end" className="ml-auto flex shrink-0 items-center gap-2">
-                                        <Skeleton.Chip />
-                                        <Skeleton.Chip />
-                                        <Skeleton.Typography type="body-xs" width="1/4" className="w-10" />
-                                    </Box>
-                                ),
-                            ]} />
+                            <StackH gap={4} align="center" principle="content-row" classNames={["min-w-0"]}
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                items={[
+                                    () => <Skeleton className="size-5 shrink-0 rounded-full" />,
+                                    () => (
+                                        <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]}
+                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                            items={[
+                                                () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                                () => (
+                                                    <Box principle="chip-row" className="flex flex-wrap items-center gap-2"
+                                                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column.">
+                                                        <Skeleton.Typography type="body-xs" width="1/4" />
+                                                        <Skeleton.Typography type="body-xs" width="1/4" />
+                                                    </Box>
+                                                ),
+                                            ]} />
+                                    ),
+                                    () => (
+                                        <Box principle="push-end" className="ml-auto flex shrink-0 items-center gap-2"
+                                            explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row.">
+                                            <Skeleton.Chip />
+                                            <Skeleton.Chip />
+                                            <Skeleton.Typography type="body-xs" width="1/4" className="w-10" />
+                                        </Box>
+                                    ),
+                                ]} />
                         </SurfaceListCardItem>
                     ))}
                 </SurfaceListCard>
@@ -134,33 +140,37 @@ export const ProblemCatalog = ({
             {filters.group ? (
                 <div className={cn("flex flex-col gap-6", className)}>
                     {groups.map((group) => (
-                        <StackV key={group.domain} gap={3} principle="sibling-stack" as="section" items={[
-                            () => (
-                                <StackH gap={3} principle="flex-action" items={[
-                                    () => (
-                                        <Typography type="h5" weight="semibold">
-                                            {t(`codingPractice.domain.${group.domain}`)}
-                                        </Typography>
-                                    ),
-                                    () => (
-                                        <Chip size="sm" variant="soft" color="default">
-                                            <Chip.Label>{group.problems.length}</Chip.Label>
-                                        </Chip>
-                                    ),
-                                ]} />
-                            ),
-                            () => (
-                                <SurfaceListCard>
-                                    {group.problems.map((problem) => (
-                                        <ProblemRow
-                                            key={problem.id}
-                                            problem={problem}
-                                            status={deriveStatus(problem.id, progress)}
-                                        />
-                                    ))}
-                                </SurfaceListCard>
-                            ),
-                        ]} />
+                        <StackV key={group.domain} gap={3} principle="sibling-stack" as="section"
+                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                            items={[
+                                () => (
+                                    <StackH gap={3} principle="flex-action"
+                                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                        items={[
+                                            () => (
+                                                <Typography type="h5" weight="semibold">
+                                                    {t(`codingPractice.domain.${group.domain}`)}
+                                                </Typography>
+                                            ),
+                                            () => (
+                                                <Chip size="sm" variant="soft" color="default">
+                                                    <Chip.Label>{group.problems.length}</Chip.Label>
+                                                </Chip>
+                                            ),
+                                        ]} />
+                                ),
+                                () => (
+                                    <SurfaceListCard>
+                                        {group.problems.map((problem) => (
+                                            <ProblemRow
+                                                key={problem.id}
+                                                problem={problem}
+                                                status={deriveStatus(problem.id, progress)}
+                                            />
+                                        ))}
+                                    </SurfaceListCard>
+                                ),
+                            ]} />
                     ))}
                 </div>
             ) : (

@@ -2,7 +2,7 @@
 import React, { PropsWithChildren } from "react"
 import { useTranslations } from "next-intl"
 import { useSelectedLayoutSegments, useSearchParams } from "next/navigation"
-import { Spinner } from "@heroui/react"
+import { Spinner } from "@/components/atoms/display/Spinner"
 import { _LearnShellLayout } from "./component"
 import { ContentMap } from "@/components/blocks/learn/ContentMap"
 import { MilestoneOutline } from "@/components/blocks/learn/MilestoneOutline"

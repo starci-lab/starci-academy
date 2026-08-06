@@ -63,70 +63,74 @@ export const CommunityChatPage = () => {
 
     return (
         <PageContainer>
-            <StackV gap={6} principle="block-boundary" items={[
-                () => (
-                    <PageHeader
-                        title={t("community.chat.title")}
-                        description={t("community.chat.description")}
-                    />
-                ),
-                () => (authenticated ? (
-                    <StackV gap={4} principle="content-row" items={[
-                        () => (
-                            <TabsCard
-                                leftTabs={{
-                                    items: tabs,
-                                    selectedKey: tab,
-                                    ariaLabel: t("community.chat.tabsAria"),
-                                    onSelectionChange: (key: Key) => setTab(String(key) as ChatTab),
-                                }}
-                            />
-                        ),
-                        () => (conversationId ? (
-                            <ChatPane key={conversationId} conversationId={conversationId} />
-                        ) : membersOnly ? (
-                            // Signed-in but the membership gate rejected this read (or it
-                            // failed): a non-member must not sit on a perpetual skeleton —
-                            // surface a members-only terminal with an upsell to membership.
-                            <EmptyState
-                                icon={UsersThreeIcon}
-                                title={t("community.chat.membersOnly")}
-                                description={t("community.chat.membersOnlyDescription")}
-                                action={() => (
-                                    <Button
-                                        variant="primary"
-                                        size="sm"
-                                        onPress={() => router.push(
-                                            pathConfig().locale(locale).profile().membership().build(),
+            <StackV gap={6} principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={[
+                    () => (
+                        <PageHeader
+                            title={t("community.chat.title")}
+                            description={t("community.chat.description")}
+                        />
+                    ),
+                    () => (authenticated ? (
+                        <StackV gap={4} principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                            items={[
+                                () => (
+                                    <TabsCard
+                                        leftTabs={{
+                                            items: tabs,
+                                            selectedKey: tab,
+                                            ariaLabel: t("community.chat.tabsAria"),
+                                            onSelectionChange: (key: Key) => setTab(String(key) as ChatTab),
+                                        }}
+                                    />
+                                ),
+                                () => (conversationId ? (
+                                    <ChatPane key={conversationId} conversationId={conversationId} />
+                                ) : membersOnly ? (
+                                // Signed-in but the membership gate rejected this read (or it
+                                // failed): a non-member must not sit on a perpetual skeleton —
+                                // surface a members-only terminal with an upsell to membership.
+                                    <EmptyState
+                                        icon={UsersThreeIcon}
+                                        title={t("community.chat.membersOnly")}
+                                        description={t("community.chat.membersOnlyDescription")}
+                                        action={() => (
+                                            <Button
+                                                variant="primary"
+                                                size="sm"
+                                                onPress={() => router.push(
+                                                    pathConfig().locale(locale).profile().membership().build(),
+                                                )}
+                                            >
+                                                {t("community.chat.viewMembership")}
+                                            </Button>
                                         )}
-                                    >
-                                        {t("community.chat.viewMembership")}
-                                    </Button>
-                                )}
-                            />
-                        ) : (
-                            // 2026-07-12: was a bare "loading…" caption while the active
-                            // conversation id resolves — mirror the real pane's shape
-                            // (message list + composer) so the tab switch/first load
-                            // doesn't jump into a differently-shaped panel afterward.
-                            <ChatPaneSkeleton withComposer />
-                        )),
-                    ]} />
-                ) : (
-                    <EmptyState
-                        title={t("community.chat.signInRequired")}
-                        action={() => (
-                            <Button
-                                variant="primary"
-                                size="sm"
-                                onPress={() => authentication.open()}
-                            >
-                                {t("nav.signIn")}
-                            </Button>
-                        )}
-                    />
-                )),
-            ]} />
+                                    />
+                                ) : (
+                                // 2026-07-12: was a bare "loading…" caption while the active
+                                // conversation id resolves — mirror the real pane's shape
+                                // (message list + composer) so the tab switch/first load
+                                // doesn't jump into a differently-shaped panel afterward.
+                                    <ChatPaneSkeleton withComposer />
+                                )),
+                            ]} />
+                    ) : (
+                        <EmptyState
+                            title={t("community.chat.signInRequired")}
+                            action={() => (
+                                <Button
+                                    variant="primary"
+                                    size="sm"
+                                    onPress={() => authentication.open()}
+                                >
+                                    {t("nav.signIn")}
+                                </Button>
+                            )}
+                        />
+                    )),
+                ]} />
         </PageContainer>
     )
 }

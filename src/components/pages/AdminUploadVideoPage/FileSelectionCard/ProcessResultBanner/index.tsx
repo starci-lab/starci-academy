@@ -28,8 +28,10 @@ export const ProcessResultBanner = ({
         return null
     }
     return (
-        <Box principle="card-padding" className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-2">
-            <Box principle="identity" className="flex items-center gap-2">
+        <Box identity={{ tier: "page", component: "ProcessResultBanner" }} principle="card-padding" className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-2"
+            explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome.">
+            <Box principle="identity" className="flex items-center gap-2"
+                explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face.">
                 <CheckCircleIcon className="h-5 w-5 text-emerald-400" />
                 <span className="text-sm font-medium text-emerald-300">
                     {processResult.message}

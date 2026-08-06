@@ -33,3 +33,6 @@ export const SkeletonRadioGroup = ({
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonRadioGroup` as the public name. */
+export { SkeletonRadioGroup as RadioGroup }

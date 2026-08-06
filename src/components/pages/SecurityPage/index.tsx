@@ -183,6 +183,7 @@ export const SecurityPage = () => {
         <StackH
             gap={4}
             principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             align="center"
             items={[
                 () => <ShieldCheckIcon aria-hidden className="size-5 text-accent-soft-foreground" />,
@@ -190,6 +191,7 @@ export const SecurityPage = () => {
                     <StackV
                         gap={1}
                         principle="name-handle"
+                        explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
                         classNames={["flex-1"]}
                         items={[
                             () => (
@@ -228,6 +230,7 @@ export const SecurityPage = () => {
         <StackV
             gap={7}
             principle="layout-split"
+            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
             identity={{ tier: "block", component: "SecurityPage" }}
             items={[
                 () => (
@@ -241,6 +244,7 @@ export const SecurityPage = () => {
                     <StackV
                         gap={6}
                         principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                         items={[
                             () => (
                                 <Card>
@@ -251,6 +255,7 @@ export const SecurityPage = () => {
                                                 <StackV
                                                     gap={4}
                                                     principle="content-row"
+                                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                     items={[
                                                         () => statusRow,
                                                         () => <Skeleton.Button width="w-full" />,
@@ -261,6 +266,7 @@ export const SecurityPage = () => {
                                             <StackV
                                                 gap={4}
                                                 principle="content-row"
+                                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                 items={[
                                                     () => statusRow,
                                                     ...(status ? [() => (
@@ -273,6 +279,7 @@ export const SecurityPage = () => {
                                                         <StackV
                                                             gap={4}
                                                             principle="label-field"
+                                                            explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
                                                             items={[
                                                                 () => (
                                                                     <TextField variant="secondary">
@@ -308,6 +315,7 @@ export const SecurityPage = () => {
                                                         <StackV
                                                             gap={4}
                                                             principle="content-row"
+                                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                             items={[
                                                                 () => (
                                                                     <Typography type="body-sm" color="muted">
@@ -318,6 +326,7 @@ export const SecurityPage = () => {
                                                                     <StackV
                                                                         gap={4}
                                                                         principle="card-caption"
+                                                                        explain="Holds caption text under card media so the caption stays attached to the image above it."
                                                                         align="center"
                                                                         items={[
                                                                             () => <QRCode size={180} data={setup.otpauthUrl} />,
@@ -325,6 +334,7 @@ export const SecurityPage = () => {
                                                                                 <StackV
                                                                                     gap={3}
                                                                                     principle="sibling-stack"
+                                                                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                                                                     items={[
                                                                                         () => (
                                                                                             <Typography type="body-xs" color="muted" align="center">
@@ -359,6 +369,7 @@ export const SecurityPage = () => {
                                                                     <StackH
                                                                         gap={4}
                                                                         principle="flex-action"
+                                                                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                                                                         items={[
                                                                             () => (
                                                                                 <Button

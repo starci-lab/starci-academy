@@ -122,6 +122,7 @@ export const MySubmissionsPage = ({
                                     gap={3}
                                     align="center"
                                     principle="identity"
+                                    explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
                                     items={[
                                         () => <FaGithub aria-hidden focusable="false" className="size-5" />,
                                         () => <>{t("profileSettings.learning.submissions.open")}</>,
@@ -171,6 +172,7 @@ export const MySubmissionsPage = ({
                         <StackV
                             gap={3}
                             principle="sibling-stack"
+                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                             items={[0, 1, 2].map((row) => () => (
                                 <Skeleton.ListRow key={row} withTrailing />
                             ))}

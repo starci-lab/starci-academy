@@ -94,9 +94,11 @@ export const FileSelectionCard = ({
     return (
         <Card className="bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl shadow-indigo-500/5">
             <CardContent>
-                <Box principle="page-pad" className="p-6 space-y-6">
+                <Box principle="page-pad" className="p-6 space-y-6"
+                    explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                     {/* Section header */}
-                    <Box principle="identity" className="flex items-center gap-2 pb-2">
+                    <Box principle="identity" className="flex items-center gap-2 pb-2"
+                        explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face.">
                         {/* ps-admin-5: p-2 not in named house token set — teacher-hold */}
                         <div data-principle="ps-admin-5" className="rounded-lg bg-indigo-500/10 p-2">
                             <FilmSlateIcon className="h-5 w-5 text-indigo-400" />
@@ -138,7 +140,8 @@ export const FileSelectionCard = ({
                     </TextField>
 
                     {/* Action Buttons */}
-                    <Box principle="content-row" className="flex gap-3">
+                    <Box principle="content-row" className="flex gap-3"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title.">
 
                         <Button
                             id="admin-upload-button"

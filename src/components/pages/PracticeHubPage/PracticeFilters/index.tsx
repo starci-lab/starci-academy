@@ -67,89 +67,95 @@ export const PracticeFilters = ({
             </SearchField>
 
             {/* difficulty + status chip groups */}
-            <StackV gap={4} principle="card-caption" items={[
-                () => (
-                    <FlexWrapButtonRadio
-                        ariaLabel={t("PracticeHubPage.filters.difficultyAria")}
-                        value={filters.difficulty}
-                        onChange={(value) => setFilters({ difficulty: value as DifficultyFilter })}
-                        items={DIFFICULTY_FILTERS.map((value) => ({
-                            value,
-                            content: value === "all"
-                                ? t("PracticeHubPage.filters.allDifficulties")
-                                : t(CODING_DIFFICULTY_META[value].labelKey),
-                        }))}
-                    />
-                ),
-                () => (
-                    <FlexWrapButtonRadio
-                        ariaLabel={t("PracticeHubPage.filters.statusAria")}
-                        value={filters.status}
-                        onChange={(value) => setFilters({ status: value as StatusFilter })}
-                        items={STATUS_FILTERS.map((value) => ({
-                            value,
-                            content: t(`PracticeHubPage.filters.status.${value}`),
-                        }))}
-                    />
-                ),
-            ]} />
+            <StackV gap={4} principle="card-caption"
+                explain="Holds caption text under card media so the caption stays attached to the image above it."
+                items={[
+                    () => (
+                        <FlexWrapButtonRadio
+                            ariaLabel={t("PracticeHubPage.filters.difficultyAria")}
+                            value={filters.difficulty}
+                            onChange={(value) => setFilters({ difficulty: value as DifficultyFilter })}
+                            items={DIFFICULTY_FILTERS.map((value) => ({
+                                value,
+                                content: value === "all"
+                                    ? t("PracticeHubPage.filters.allDifficulties")
+                                    : t(CODING_DIFFICULTY_META[value].labelKey),
+                            }))}
+                        />
+                    ),
+                    () => (
+                        <FlexWrapButtonRadio
+                            ariaLabel={t("PracticeHubPage.filters.statusAria")}
+                            value={filters.status}
+                            onChange={(value) => setFilters({ status: value as StatusFilter })}
+                            items={STATUS_FILTERS.map((value) => ({
+                                value,
+                                content: t(`PracticeHubPage.filters.status.${value}`),
+                            }))}
+                        />
+                    ),
+                ]} />
 
             {/* sort dropdown + group toggle */}
-            <StackH gap={4} principle="content-row" items={[
-                () => (
-                    <StackV gap={3} principle="sibling-stack" items={[
-                        () => <Label className="sr-only">{t("PracticeHubPage.filters.sortAria")}</Label>,
-                        () => (
-                            <Select.Root<{ id: string }, "single">
-                                aria-label={t("PracticeHubPage.filters.sortAria")}
-                                selectedKey={filters.sort}
-                                onSelectionChange={(key) => setFilters({ sort: String(key) as SortKey })}
-                            >
-                                <Select.Trigger aria-label={t("PracticeHubPage.filters.sortAria")} className="w-fit min-w-40">
-                                    <Select.Value>
-                                        {() => (
-                                            <Typography type="body-sm">
-                                                {t(`PracticeHubPage.filters.sort.${filters.sort}`)}
-                                            </Typography>
-                                        )}
-                                    </Select.Value>
-                                    <Select.Indicator />
-                                </Select.Trigger>
-                                <Select.Popover>
-                                    <ListBox.Root aria-label={t("PracticeHubPage.filters.sortAria")}>
-                                        {SORT_KEYS.map((value) => (
-                                            <ListBox.Item
-                                                key={value}
-                                                id={value}
-                                                textValue={t(`PracticeHubPage.filters.sort.${value}`)}
-                                            >
-                                                {t(`PracticeHubPage.filters.sort.${value}`)}
-                                            </ListBox.Item>
-                                        ))}
-                                    </ListBox.Root>
-                                </Select.Popover>
-                            </Select.Root>
-                        ),
-                    ]} />
-                ),
-                () => (
-                    <Button
-                        size="sm"
-                        variant={filters.group ? "secondary" : "ghost"}
-                        aria-pressed={filters.group}
-                        onPress={() => setFilters({ group: !filters.group })}
-                    >
-                        {filters.group ? (
-                            <SquaresFourIcon aria-hidden focusable="false" className="size-5" />
-                        ) : (
-                            <RowsIcon aria-hidden focusable="false" className="size-5" />
-                        )}
-                        {filters.group
-                            ? t("PracticeHubPage.filters.grouped")
-                            : t("PracticeHubPage.filters.flat")}
-                    </Button>
-                ),
-            ]} />
+            <StackH gap={4} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                items={[
+                    () => (
+                        <StackV gap={3} principle="sibling-stack"
+                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                            items={[
+                                () => <Label className="sr-only">{t("PracticeHubPage.filters.sortAria")}</Label>,
+                                () => (
+                                    <Select.Root<{ id: string }, "single">
+                                        aria-label={t("PracticeHubPage.filters.sortAria")}
+                                        selectedKey={filters.sort}
+                                        onSelectionChange={(key) => setFilters({ sort: String(key) as SortKey })}
+                                    >
+                                        <Select.Trigger aria-label={t("PracticeHubPage.filters.sortAria")} className="w-fit min-w-40">
+                                            <Select.Value>
+                                                {() => (
+                                                    <Typography type="body-sm">
+                                                        {t(`PracticeHubPage.filters.sort.${filters.sort}`)}
+                                                    </Typography>
+                                                )}
+                                            </Select.Value>
+                                            <Select.Indicator />
+                                        </Select.Trigger>
+                                        <Select.Popover>
+                                            <ListBox.Root aria-label={t("PracticeHubPage.filters.sortAria")}>
+                                                {SORT_KEYS.map((value) => (
+                                                    <ListBox.Item
+                                                        key={value}
+                                                        id={value}
+                                                        textValue={t(`PracticeHubPage.filters.sort.${value}`)}
+                                                    >
+                                                        {t(`PracticeHubPage.filters.sort.${value}`)}
+                                                    </ListBox.Item>
+                                                ))}
+                                            </ListBox.Root>
+                                        </Select.Popover>
+                                    </Select.Root>
+                                ),
+                            ]} />
+                    ),
+                    () => (
+                        <Button
+                            size="sm"
+                            variant={filters.group ? "secondary" : "ghost"}
+                            aria-pressed={filters.group}
+                            onPress={() => setFilters({ group: !filters.group })}
+                        >
+                            {filters.group ? (
+                                <SquaresFourIcon aria-hidden focusable="false" className="size-5" />
+                            ) : (
+                                <RowsIcon aria-hidden focusable="false" className="size-5" />
+                            )}
+                            {filters.group
+                                ? t("PracticeHubPage.filters.grouped")
+                                : t("PracticeHubPage.filters.flat")}
+                        </Button>
+                    ),
+                ]} />
         </div>
     )
 }

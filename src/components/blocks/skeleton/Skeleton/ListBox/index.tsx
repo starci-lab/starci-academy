@@ -30,3 +30,6 @@ export const SkeletonListBox = ({ items = 4, className }: SkeletonListBoxProps) 
         </div>
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonListBox` as the public name. */
+export { SkeletonListBox as ListBox }

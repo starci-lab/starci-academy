@@ -104,6 +104,7 @@ export const ArchitectureMobileNav = ({ healthByName, selectedId, onSelect, clas
                     <StackH
                         gap={3}
                         principle="chip-row"
+                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                         items={ownComponents.map((component) => (
                             () => (
                                 <NodeChip
@@ -124,6 +125,7 @@ export const ArchitectureMobileNav = ({ healthByName, selectedId, onSelect, clas
                     <StackH
                         gap={3}
                         principle="chip-row"
+                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                         items={externalComponents.map((component) => (
                             () => (
                                 <NodeChip
@@ -144,6 +146,7 @@ export const ArchitectureMobileNav = ({ healthByName, selectedId, onSelect, clas
                     <StackH
                         gap={3}
                         principle="chip-row"
+                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                         items={ARCHITECTURE_MODULES.map((module) => (
                             () => (
                                 <ModuleChip

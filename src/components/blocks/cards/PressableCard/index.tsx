@@ -166,7 +166,7 @@ export const PressableCard = ({
                     () => <div className="min-w-0 flex-1">{children}</div>,
                     () => (
                         <div className="relative z-10">
-                            <StackH gap={3} principle="flex-action" classNames={["shrink-0"]} items={[() => <Actions />]} />
+                            <StackH gap={3} principle="flex-action" explain="Groups action controls on one horizontal peer row so they share a single hit baseline." classNames={["shrink-0"]} items={[() => <Actions />]} />
                         </div>
                     ),
                 ]}

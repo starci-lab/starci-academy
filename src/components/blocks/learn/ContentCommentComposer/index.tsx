@@ -100,9 +100,10 @@ const ContentCommentComposer = ({
     // collapsed pill: avatar + placeholder, the whole row opens the composer
     if (collapsible && !expanded) {
         return (
-            <StackH
+            <StackH identity={{ tier: "block", component: "ContentCommentComposer" }}
                 gap={4}
                 principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 align="center"
 
                 items={[
@@ -171,7 +172,9 @@ const ContentCommentComposer = ({
     )
 
     return (
-        <StackH gap={4} principle="content-row" align="start" classNames={classNames} items={[() => composerRow]} />
+        <StackH identity={{ tier: "block", component: "ContentCommentComposer" }} gap={4} principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            align="start" classNames={classNames} items={[() => composerRow]}  />
     )
 }
 

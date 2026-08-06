@@ -58,6 +58,7 @@ export const ErrorContent = ({
                     <StackV
                         gap={2}
                         principle="title-subtitle"
+                        explain="Title over supporting line — not label-field, because neither line is a form control label."
                         items={[
                             () => <Typography size="sm" weight="medium" align="center" text={title} />,
                             ...(description

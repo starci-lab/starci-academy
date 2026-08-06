@@ -25,3 +25,6 @@ export const SkeletonTextArea = ({ rows = 3, className }: SkeletonTextAreaProps)
         <Skeleton className="h-full w-full rounded-xl" />
     </div>
 )
+
+/** Folder-matching alias (export-matches-folder) — keep `SkeletonTextArea` as the public name. */
+export { SkeletonTextArea as TextArea }

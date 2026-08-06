@@ -111,6 +111,7 @@ export const CourseDetail = ({
                     inline
                     gap={3}
                     principle="identity"
+                    explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
                     align="center"
                     items={[
                         () => <ArrowLeftIcon aria-hidden focusable="false" className="size-5" />,
@@ -120,81 +121,94 @@ export const CourseDetail = ({
             </Link>
 
             {/* sticky course header — title + progress + meta */}
-            <Box principle="row-pad" className="sticky top-16 z-30 -mx-4 bg-background px-4 py-3">
-                <StackV gap={4} principle="content-row" items={[
-                    () => (
-                        <AsyncContent
-                            isLoading={outlineSwr.data === null || outlineSwr.data === undefined ? !outlineSwr.error : false}
-                            skeleton={(
-                                <StackH gap={4} principle="content-row" align="center" items={[
-                                    () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
-                                    () => (
-                                        <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
-                                            () => <Skeleton.Typography type="h4" width="1/2" />,
-                                            () => <Skeleton.ProgressBar />,
-                                        ]} />
-                                    ),
-                                ]} />
-                            )}
-                            isEmpty={!outline}
-                            emptyContent={{ title: t("profileSettings.learning.outline.empty") }}
-                            error={!outlineSwr.data ? outlineSwr.error : undefined}
-                            errorContent={{
-                                title: t("profileSettings.learning.outline.error"),
-                                onRetry: () => { void outlineSwr.mutate() },
-                                retryLabel: t("profileSettings.learning.loadMore"),
-                            }}
-                        >
-                            {outline && progress ? (
-                                <StackH gap={4} principle="content-row" align="center" items={[
-                                    () => <IconTile size="sm" src={courseThumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />,
-                                    () => (
-                                        <StackV gap={3} principle="sibling-stack" classNames={["min-w-0", "flex-1"]} items={[
+            <Box principle="row-pad" className="sticky top-16 z-30 -mx-4 bg-background px-4 py-3"
+                explain="Row content inset — not cell-pad, because this pads a horizontal content row rather than a dense table cell.">
+                <StackV gap={4} principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                    items={[
+                        () => (
+                            <AsyncContent
+                                isLoading={outlineSwr.data === null || outlineSwr.data === undefined ? !outlineSwr.error : false}
+                                skeleton={(
+                                    <StackH gap={4} principle="content-row"
+                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                        align="center" items={[
+                                            () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
                                             () => (
-                                                <StackH gap={3} principle="value-row" justify="between" align="center" items={[
-                                                    () => (
-                                                        <Typography type="h5" weight="bold" truncate className="min-w-0 flex-1">
-                                                            {outline.course.title}
-                                                        </Typography>
-                                                    ),
-                                                    () => (selectedCourseItem ? <CourseTrialChip isEnrolled={selectedCourseItem.isEnrolled} /> : null),
-                                                    () => (
-                                                        <Typography type="body-xs" color="muted">
-                                                            {`${progress.completionPercent}%`}
-                                                        </Typography>
-                                                    ),
-                                                ]} />
-                                            ),
-                                            () => (
-                                                <SegmentBar
-                                                    max={headerTotal || 1}
-                                                    hideLegend
-                                                    ariaLabel={`${outline.course.title} · ${progress.completionPercent}%`}
-                                                    segments={headerDims.map((dim) => ({
-                                                        key: dim.key,
-                                                        label: t(`dashboard.courseProgress.${dim.key}`),
-                                                        value: dim.completed,
-                                                        color: DIM_COLOR[dim.key],
-                                                    }))}
-                                                />
-                                            ),
-                                            () => (
-                                                <Typography type="body-xs" color="muted">
-                                                    {t("profileSettings.learning.detail.meta", {
-                                                        lessonsRead: progress.lessonsRead,
-                                                        lessonsTotal: progress.lessonsTotal,
-                                                        challenges: progress.challengesCompleted,
-                                                        milestones: progress.tasksCompleted,
-                                                    })}
-                                                </Typography>
+                                                <StackV gap={3} principle="sibling-stack"
+                                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                    classNames={["min-w-0", "flex-1"]} items={[
+                                                        () => <Skeleton.Typography type="h4" width="1/2" />,
+                                                        () => <Skeleton.ProgressBar />,
+                                                    ]} />
                                             ),
                                         ]} />
-                                    ),
-                                ]} />
-                            ) : null}
-                        </AsyncContent>
-                    ),
-                ]} />
+                                )}
+                                isEmpty={!outline}
+                                emptyContent={{ title: t("profileSettings.learning.outline.empty") }}
+                                error={!outlineSwr.data ? outlineSwr.error : undefined}
+                                errorContent={{
+                                    title: t("profileSettings.learning.outline.error"),
+                                    onRetry: () => { void outlineSwr.mutate() },
+                                    retryLabel: t("profileSettings.learning.loadMore"),
+                                }}
+                            >
+                                {outline && progress ? (
+                                    <StackH gap={4} principle="content-row"
+                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                        align="center" items={[
+                                            () => <IconTile size="sm" src={courseThumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />,
+                                            () => (
+                                                <StackV gap={3} principle="sibling-stack"
+                                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                    classNames={["min-w-0", "flex-1"]} items={[
+                                                        () => (
+                                                            <StackH gap={3} principle="value-row"
+                                                                explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
+                                                                justify="between" align="center" items={[
+                                                                    () => (
+                                                                        <Typography type="h5" weight="bold" truncate className="min-w-0 flex-1">
+                                                                            {outline.course.title}
+                                                                        </Typography>
+                                                                    ),
+                                                                    () => (selectedCourseItem ? <CourseTrialChip isEnrolled={selectedCourseItem.isEnrolled} /> : null),
+                                                                    () => (
+                                                                        <Typography type="body-xs" color="muted">
+                                                                            {`${progress.completionPercent}%`}
+                                                                        </Typography>
+                                                                    ),
+                                                                ]} />
+                                                        ),
+                                                        () => (
+                                                            <SegmentBar
+                                                                max={headerTotal || 1}
+                                                                hideLegend
+                                                                ariaLabel={`${outline.course.title} · ${progress.completionPercent}%`}
+                                                                segments={headerDims.map((dim) => ({
+                                                                    key: dim.key,
+                                                                    label: t(`dashboard.courseProgress.${dim.key}`),
+                                                                    value: dim.completed,
+                                                                    color: DIM_COLOR[dim.key],
+                                                                }))}
+                                                            />
+                                                        ),
+                                                        () => (
+                                                            <Typography type="body-xs" color="muted">
+                                                                {t("profileSettings.learning.detail.meta", {
+                                                                    lessonsRead: progress.lessonsRead,
+                                                                    lessonsTotal: progress.lessonsTotal,
+                                                                    challenges: progress.challengesCompleted,
+                                                                    milestones: progress.tasksCompleted,
+                                                                })}
+                                                            </Typography>
+                                                        ),
+                                                    ]} />
+                                            ),
+                                        ]} />
+                                ) : null}
+                            </AsyncContent>
+                        ),
+                    ]} />
             </Box>
 
             {/* search over the active tab (lessons or milestone tasks) */}
@@ -209,34 +223,36 @@ export const CourseDetail = ({
 
             {/* Contents vs Personal Project — TabsCard pattern: tabs float ABOVE, each
                 tab below is its own accordion-card (Card p-0 skin owned by the view). */}
-            <StackV gap={4} principle="content-row" items={[
-                () => (
-                    <TabsCard
-                        leftTabs={{
-                            items: [
-                                {
-                                    key: "contents",
-                                    label: t("profileSettings.learning.detail.contents"),
-                                    icon: <ListBulletsIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
-                                },
-                                {
-                                    key: "personalProject",
-                                    label: t("profileSettings.learning.detail.personalProject"),
-                                    icon: <FlagIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
-                                },
-                            ],
-                            selectedKey: tab,
-                            ariaLabel: t("profileSettings.learning.detail.viewToggle"),
-                            onSelectionChange: (key) => setTab(key as DetailTab),
-                        }}
-                    />
-                ),
-                () => (tab === "contents" ? (
-                    <CourseOutline search={query} />
-                ) : (
-                    <CourseMilestoneOutline search={query} />
-                )),
-            ]} />
+            <StackV gap={4} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                items={[
+                    () => (
+                        <TabsCard
+                            leftTabs={{
+                                items: [
+                                    {
+                                        key: "contents",
+                                        label: t("profileSettings.learning.detail.contents"),
+                                        icon: <ListBulletsIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
+                                    },
+                                    {
+                                        key: "personalProject",
+                                        label: t("profileSettings.learning.detail.personalProject"),
+                                        icon: <FlagIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
+                                    },
+                                ],
+                                selectedKey: tab,
+                                ariaLabel: t("profileSettings.learning.detail.viewToggle"),
+                                onSelectionChange: (key) => setTab(key as DetailTab),
+                            }}
+                        />
+                    ),
+                    () => (tab === "contents" ? (
+                        <CourseOutline search={query} />
+                    ) : (
+                        <CourseMilestoneOutline search={query} />
+                    )),
+                ]} />
         </div>
     )
 }

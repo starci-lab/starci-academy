@@ -18,6 +18,7 @@ export const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton
     <StackH
         gap={3}
         principle="flex-action"
+        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
         align="center"
         justify="between"
         isSkeleton={isSkeleton}
@@ -27,6 +28,7 @@ export const SettingsSummaryRow = ({ settingsSummary, onOpenSettings, isSkeleton
                 <StackH
                     gap={3}
                     principle="chip-row"
+                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                     align="center"
                     at="sm"
                     isSkeleton={isSkeleton}

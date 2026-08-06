@@ -35,26 +35,32 @@ const SKELETON_ROW_COUNT = 3
  * separate skeleton tree (loading-and-skeleton.md; `missingSkeletonSupport`).
  */
 const FeedSkeletonGroup = () => (
-    <StackV gap={3} principle="sibling-stack" items={[
-        () => <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} />,
-        () => (
-            <SurfaceListCard>
-                {Array.from({ length: SKELETON_ROW_COUNT }, (_row, index) => (
-                    <SurfaceListCardItem key={index}>
-                        <StackH gap={2} principle="icon-text" align="start" items={[
-                            () => <Skeleton className="size-9 shrink-0 rounded-full" />,
-                            () => (
-                                <StackV gap={1} principle="name-handle" classNames={["min-w-0", "flex-1"]} items={[
-                                    () => <Typography size="sm" isSkeleton classNames={["w-3/4"]} />,
-                                    () => <Typography size="xs" isSkeleton classNames={["w-1/4"]} />,
+    <StackV gap={3} principle="sibling-stack"
+        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+        items={[
+            () => <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} />,
+            () => (
+                <SurfaceListCard>
+                    {Array.from({ length: SKELETON_ROW_COUNT }, (_row, index) => (
+                        <SurfaceListCardItem key={index}>
+                            <StackH gap={2} principle="icon-text"
+                                explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                                align="start" items={[
+                                    () => <Skeleton className="size-9 shrink-0 rounded-full" />,
+                                    () => (
+                                        <StackV gap={1} principle="name-handle"
+                                            explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
+                                            classNames={["min-w-0", "flex-1"]} items={[
+                                                () => <Typography size="sm" isSkeleton classNames={["w-3/4"]} />,
+                                                () => <Typography size="xs" isSkeleton classNames={["w-1/4"]} />,
+                                            ]} />
+                                    ),
                                 ]} />
-                            ),
-                        ]} />
-                    </SurfaceListCardItem>
-                ))}
-            </SurfaceListCard>
-        ),
-    ]} />
+                        </SurfaceListCardItem>
+                    ))}
+                </SurfaceListCard>
+            ),
+        ]} />
 )
 
 /** All display text, already localized by the connected `FeedTabs`; a story passes i18n keys. */
@@ -175,23 +181,27 @@ export const _FeedTabs = ({
             ? Array.from({ length: SKELETON_GROUP_COUNT }, () => () => <FeedSkeletonGroup />)
             : [() => <ActivityFeed items={items} onResolve={onResolve} onReact={onReact} />]),
         ...(!isSkeleton && hasMore ? [() => (
-            <StackV gap={3} principle="sibling-stack" align="center" items={[
-                () => (
-                    <Button
-                        variant="secondary"
-                        size="sm"
-                        isPending={isLoadingMore}
-                        label={labels.loadMoreLabel}
-                        onPress={onLoadMore}
-                    />
-                ),
-                ...(hasLoadMoreError && !isLoadingMore ? [() => (
-                    <StackH gap={2} principle="icon-text" items={[
-                        () => <Typography size="xs" color="danger" text={labels.errorTitle} />,
-                        () => <Button variant="tertiary" size="sm" label={labels.retryLabel} onPress={onRetry} />,
-                    ]} />
-                )] : []),
-            ]} />
+            <StackV gap={3} principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                align="center" items={[
+                    () => (
+                        <Button
+                            variant="secondary"
+                            size="sm"
+                            isPending={isLoadingMore}
+                            label={labels.loadMoreLabel}
+                            onPress={onLoadMore}
+                        />
+                    ),
+                    ...(hasLoadMoreError && !isLoadingMore ? [() => (
+                        <StackH gap={2} principle="icon-text"
+                            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                            items={[
+                                () => <Typography size="xs" color="danger" text={labels.errorTitle} />,
+                                () => <Button variant="tertiary" size="sm" label={labels.retryLabel} onPress={onRetry} />,
+                            ]} />
+                    )] : []),
+                ]} />
         )] : []),
     ]
 
@@ -241,22 +251,28 @@ export const _FeedTabs = ({
             // the feed lives DIRECTLY in the zone — do NOT wrap it in an outer
             // Card (each day is already a labeled-list-card; an outer Card
             // would nest card-in-card inside the big zone)
-            return <StackV gap={6} principle="block-boundary" items={feedStreamItems} />
+            return <StackV gap={6} principle="block-boundary"
+                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                items={feedStreamItems}  />
         },
     ]
 
     return (
-        <StackV gap={6} principle="block-boundary" identity={identity} items={[
+        <StackV gap={6} principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            identity={identity} items={[
             // CARD 1 — "Trending this week": platform-wide trending discovery (own
             // query, NOT scope-dependent) → shown on both scopes; self-hides when
             // nothing trends.
-            () => <TrendingContents />,
-            // CARD 2 — TabsCard pattern (like the lesson ContentBody): the double-tabs
-            // toolbar floats OUTSIDE, above the card; the card holds the activity
-            // stream the tabs govern.
-            () => (
-                <StackV gap={3} principle="sibling-stack" items={tabsZoneItems} />
-            ),
-        ]} />
+                () => <TrendingContents />,
+                // CARD 2 — TabsCard pattern (like the lesson ContentBody): the double-tabs
+                // toolbar floats OUTSIDE, above the card; the card holds the activity
+                // stream the tabs govern.
+                () => (
+                    <StackV gap={3} principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                        items={tabsZoneItems}  />
+                ),
+            ]} />
     )
 }

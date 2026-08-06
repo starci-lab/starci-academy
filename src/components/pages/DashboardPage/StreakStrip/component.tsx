@@ -110,25 +110,29 @@ export const _StreakStrip = ({
     // here, co-located, rather than in a parallel tree.
     const dayItems: Array<ComponentTypeWithSkeleton> = isSkeleton
         ? Array.from({ length: SKELETON_DAY_COUNT }, () => () => (
-            <StackV gap={3} principle="sibling-stack" align="center" items={[
-                () => <Skeleton className="size-6 shrink-0 rounded-full" />,
-                () => <Typography isSkeleton size="xs" classNames={["w-1/2"]} />,
-            ]} />
+            <StackV gap={3} principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                align="center" items={[
+                    () => <Skeleton className="size-6 shrink-0 rounded-full" />,
+                    () => <Typography isSkeleton size="xs" classNames={["w-1/2"]} />,
+                ]} />
         ))
         : days.map((day) => () => (
-            <StackV gap={3} principle="sibling-stack" align="center" items={[
-                () => (
+            <StackV gap={3} principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                align="center" items={[
+                    () => (
                     // No `title`: the dot is `aria-hidden`, so a tooltip string on it would be
                     // announced to nobody — the weekday label below carries the meaning.
-                    <CircleIcon
-                        aria-hidden
-                        focusable="false"
-                        weight="fill"
-                        className={day.active ? "size-6 shrink-0 text-accent/80" : "size-6 shrink-0 text-muted/20"}
-                    />
-                ),
-                () => <Typography size="xs" color="muted" text={day.weekday} />,
-            ]} />
+                        <CircleIcon
+                            aria-hidden
+                            focusable="false"
+                            weight="fill"
+                            className={day.active ? "size-6 shrink-0 text-accent/80" : "size-6 shrink-0 text-muted/20"}
+                        />
+                    ),
+                    () => <Typography size="xs" color="muted" text={day.weekday} />,
+                ]} />
         ))
 
     return (

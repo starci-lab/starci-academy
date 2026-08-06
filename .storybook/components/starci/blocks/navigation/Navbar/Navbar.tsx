@@ -312,6 +312,7 @@ const Navbar = ({
     const notificationPanel = (
         <>
             <StackH gap={3} principle="sibling-stack" justify="between" items={[() => notificationHeader]} />
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             <AsyncContent
                 isLoading={notifications.isLoading && notifications.items.length === 0}
                 skeleton={() => <StackV gap={1} items={[() => notificationSkeletonRows]} />}
@@ -429,6 +430,7 @@ const Navbar = ({
                     <PopoverContent placement="bottom right" className="w-[360px]">
                         {/* inset-exception: vendor popover body padding, wider than tall, not a surface inset */}
                         <StackV gap={2} principle="control-pad" padding={{ x: 3, y: 2 }} items={[() => notificationPanel]} />
+                        explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row."
                     </PopoverContent>
                 </Popover>
             ) : null}
@@ -457,6 +459,7 @@ const Navbar = ({
                 </HeroButton>
                 <Dropdown.Popover placement="bottom right" className="w-[300px]">
                     <StackV gap={1} padding={4} principle="cell-pad" body={() => accountMenuHeader} />
+                    explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body."
                     <Divider />
                     <Dropdown.Menu aria-label="Account">
                         <Dropdown.Section>
@@ -542,7 +545,9 @@ const Navbar = ({
     const drawerControls = (
         <>
             <StackH gap={3} principle="sibling-stack" justify="between" items={[() => languageRow]} />
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             <StackH gap={3} principle="sibling-stack" justify="between" items={[() => themeRow]} />
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
         </>
     )
 
@@ -564,6 +569,7 @@ const Navbar = ({
                 <StackH
                     gap={6}
                     principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                     justify="between"
                     padding={{ x: 4 }}
 

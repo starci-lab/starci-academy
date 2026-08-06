@@ -224,7 +224,8 @@ export const SurfaceListCardRow = ({
                 {subtitle ? <Typography size="xs" color="muted" truncate text={subtitle} /> : null}
             </div>
             {Meta || Trailing ? (
-                <Box principle="push-end" className="ml-auto shrink-0">
+                <Box principle="push-end" className="ml-auto shrink-0"
+                    explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row.">
                     <StackH gap={2} items={[() => (Meta ? <Meta /> : null), () => (Trailing ? <Trailing /> : null)]} />
                 </Box>
             ) : null}

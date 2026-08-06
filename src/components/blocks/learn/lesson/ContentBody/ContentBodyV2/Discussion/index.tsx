@@ -311,3 +311,6 @@ export const ContentDiscussion = ({ className }: WithClassNames<undefined>) => {
         />
     )
 }
+
+/** Folder-matching alias (export-matches-folder) — keep `ContentDiscussion` as the public name. */
+export { ContentDiscussion as Discussion }

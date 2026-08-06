@@ -85,27 +85,33 @@ export const _TopLearners = ({
         const skeletonItems = [
             () => <Skeleton.Typography type="body-sm" width="1/3" />,
             () => (
-                <StackH gap={3} principle="content-row" align="center" items={[
-                    () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
-                    () => (
-                        <StackV gap={1} principle="name-handle" classNames={["min-w-0", "flex-1"]} items={[
-                            () => <Skeleton.Typography type="body-sm" width="1/2" />,
-                            () => <Skeleton.Typography type="body-xs" width="1/3" />,
-                        ]} />
-                    ),
-                ]} />
+                <StackH gap={3} principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                    align="center" items={[
+                        () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
+                        () => (
+                            <StackV gap={1} principle="name-handle"
+                                explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
+                                classNames={["min-w-0", "flex-1"]} items={[
+                                    () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                    () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                                ]} />
+                        ),
+                    ]} />
             ),
             () => (
                 <SurfaceListCard bordered>
                     {Array.from({ length: SKELETON_ROW_COUNT }, (_row, index) => (
                         <SurfaceListCardItem key={index}>
-                            <StackH gap={3} principle="content-row" align="center" items={[
-                                () => <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />,
-                                () => <Skeleton.Avatar size="sm" />,
-                                () => <Skeleton.Typography type="body-sm" width="1/2" className="min-w-0 flex-1" />,
-                                () => <Skeleton className="h-3 w-10 shrink-0 rounded-sm" />,
-                                () => <Skeleton className="h-8 w-24 shrink-0 rounded-xl" />,
-                            ]} />
+                            <StackH gap={3} principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                align="center" items={[
+                                    () => <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />,
+                                    () => <Skeleton.Avatar size="sm" />,
+                                    () => <Skeleton.Typography type="body-sm" width="1/2" className="min-w-0 flex-1" />,
+                                    () => <Skeleton className="h-3 w-10 shrink-0 rounded-sm" />,
+                                    () => <Skeleton className="h-8 w-24 shrink-0 rounded-xl" />,
+                                ]} />
                         </SurfaceListCardItem>
                     ))}
                 </SurfaceListCard>
@@ -115,6 +121,7 @@ export const _TopLearners = ({
             <StackV
                 gap={3}
                 principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                 identity={{ tier: "block", component: "TopLearners" }}
                 items={skeletonItems}
             />

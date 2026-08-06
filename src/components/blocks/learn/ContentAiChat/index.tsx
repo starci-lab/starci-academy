@@ -521,7 +521,6 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         initializedRef.current = false
         // mount-only, deliberately: see the note above — this must NOT re-run
         // when the learner navigates to a different surface.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     /** Jump to a search result's real surface (content/challenge/flashcard/milestone), then close the panel. */

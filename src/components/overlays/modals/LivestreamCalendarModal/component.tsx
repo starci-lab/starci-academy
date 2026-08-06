@@ -61,6 +61,7 @@ const sessionRowContent = (row: LivestreamCalendarSessionRow) => (
                     gap={3}
                     align="center"
                     principle="chip-row"
+                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
                     items={[
                         () => <Chip text={row.dayLabel} />,
                         () => <ClockIcon aria-hidden focusable="false" className="size-3 text-muted" />,

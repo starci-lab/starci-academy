@@ -1,5 +1,4 @@
 import React from "react"
-import { cn } from "@heroui/react"
 import { CheckCircleIcon, SparkleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { AiCategoryChip } from "@/components/blocks/chips/AiCategoryChip"
 import type { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
@@ -8,8 +7,6 @@ import type { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-mod
 export interface VerdictIconProps {
     /** `true` → green check; `false` → red x. */
     pass: boolean
-    /** Optional className override on the glyph. */
-    className?: string
 }
 
 /**
@@ -18,11 +15,11 @@ export interface VerdictIconProps {
  *
  * @param props - {@link VerdictIconProps}
  */
-export const VerdictIcon = ({ pass, className }: VerdictIconProps) =>
+export const VerdictIcon = ({ pass }: VerdictIconProps) =>
     pass ? (
-        <CheckCircleIcon aria-hidden focusable="false" className={cn("size-4 shrink-0 text-success-soft-foreground", className)} />
+        <CheckCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-success-soft-foreground" />
     ) : (
-        <XCircleIcon aria-hidden focusable="false" className={cn("size-4 shrink-0 text-danger-soft-foreground", className)} />
+        <XCircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-danger-soft-foreground" />
     )
 
 /** Props for {@link _ModelByline} — presentational; the "graded by" prefix already resolved. */

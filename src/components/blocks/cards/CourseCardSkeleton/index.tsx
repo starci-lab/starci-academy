@@ -3,19 +3,17 @@
 import React from "react"
 import {
     Card,
-    cn,
 } from "@heroui/react"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Loading placeholder mirroring the grid {@link import("../CourseCard").CourseCard}'s
  * layout (cover, title, 2 description lines, a 3-row value-prop list, price, and a
  * TWO-button action row) so the courses grid does not jump when data resolves.
  */
-export const CourseCardSkeleton = ({ className }: WithClassNames<undefined>) => {
+export const CourseCardSkeleton = () => {
     return (
-        <Card className={cn("flex flex-col overflow-hidden rounded-3xl", className)}>
+        <Card className="flex flex-col overflow-hidden rounded-3xl">
             <Card.Content className="flex flex-col gap-3 p-0">
                 {/* cover 16:9 */}
                 <Skeleton className="aspect-video w-full rounded-2xl" />

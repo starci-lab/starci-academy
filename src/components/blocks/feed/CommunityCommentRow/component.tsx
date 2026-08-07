@@ -4,12 +4,11 @@ import { SealCheckIcon } from "@phosphor-icons/react"
 import { ReactionBar } from "../ReactionBar"
 import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import type { QueryCommunityCommentNode } from "@/modules/api/graphql/queries/types/community-comments"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 
 /** Props for {@link _CommunityCommentRow} — presentational; labels already resolved. */
-export interface CommunityCommentRowProps extends WithClassNames<undefined> {
+export interface CommunityCommentRowProps {
     /** The comment to render. */
     comment: QueryCommunityCommentNode
     /**
@@ -41,7 +40,6 @@ export const _CommunityCommentRow = ({
     actions,
     deletedLabel,
     timeAgoLabel,
-    className,
 }: CommunityCommentRowProps) => {
     // resolve the display name, falling back to the username when unset
     const displayName = comment.author.displayName || comment.author.username
@@ -53,7 +51,7 @@ export const _CommunityCommentRow = ({
     // the owning feature chooses to keep stays reachable on a deleted node.
     if (comment.isDeleted) {
         return (
-            <div className={className}>
+            <div>
                 <div className="flex min-w-0 flex-col gap-1">
                     <Typography type="body-xs" color="muted" className="italic">
                         {deletedLabel}
@@ -67,7 +65,7 @@ export const _CommunityCommentRow = ({
     }
 
     return (
-        <div className={className}>
+        <div>
             <div className="flex gap-3">
                 <UserAvatar
                     username={comment.author.username}

@@ -6,10 +6,9 @@ import { LearnSidebar } from "@/components/blocks/learn/LearnSidebar"
 import { LearnMobileBar } from "@/components/blocks/learn/LearnMobileBar"
 import { LearnMobileTabBar } from "@/components/blocks/learn/LearnMobileTabBar"
 import { LearnPanelToggles } from "@/components/blocks/learn/LearnPanelToggles"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link _LearnShellLayout}. */
-export interface LearnShellLayoutProps extends WithClassNames<undefined>, PropsWithChildren {
+export interface LearnShellLayoutProps extends PropsWithChildren {
     /**
      * The route's persistent left content rail (the course content-map), rendered
      * by the route layout between the course-nav icon rail and the content. Owns
@@ -65,14 +64,13 @@ export const _LearnShellLayout = ({
     showRightCollapse = false,
     fullBleed = false,
     simpleMobileBar = false,
-    className,
 }: LearnShellLayoutProps) => {
     // the reader's bottom-tab bar only fits a content-map left rail; other left rails use the plain bar
     const useTabBar = Boolean(leftRail) && !simpleMobileBar
     return (
         // single column on mobile/tablet; a horizontal flow from lg up so the
         // content-map rail (left) and the optional right rail sit beside content
-        <div className={cn("flex w-full flex-col items-start @app-lg:flex-row", className)}>
+        <div className={cn("flex w-full flex-col items-start @app-lg:flex-row")}>
             {/* desktop course-nav icon rail — sticks under the 4rem navbar, viewport-tall;
                 the block owns its own scroll, divider, width animation + collapse. */}
             <aside className="hidden shrink-0 @app-lg:sticky @app-lg:top-16 @app-lg:block @app-lg:h-[calc(100dvh-4rem)]">

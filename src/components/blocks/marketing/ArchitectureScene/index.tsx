@@ -12,7 +12,6 @@ import { ArrowsSplitIcon, CheckCircleIcon, CubeIcon, DatabaseIcon, DesktopIcon, 
 import { useReducedMotion } from "framer-motion"
 import * as THREE from "three"
 import type { ReactNode } from "react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type {
     ArchitectureBoard,
     ArchitectureCamera,
@@ -693,7 +692,7 @@ const Scene = ({ data, palette, reduce, selectedId, onSelectNode }: {
 }
 
 /** Props for {@link ArchitectureScene}. */
-export interface ArchitectureSceneProps extends WithClassNames<undefined> {
+export interface ArchitectureSceneProps {
     /** Scene topology/layout/camera as data (default = StarCi backend {@link sceneJson}). */
     data?: ArchitectureSceneData
     /** Caption under the scene (i18n string from the feature). */
@@ -718,11 +717,11 @@ export interface ArchitectureSceneProps extends WithClassNames<undefined> {
  * @param props - {@link ArchitectureSceneProps}
  * @see Story: .storybook/stories/blocks/marketing/ArchitectureScene/ArchitectureScene.stories
  */
-export const ArchitectureScene = ({ data = DEFAULT_DATA, caption, className, selectedId, onSelectNode }: ArchitectureSceneProps) => {
+export const ArchitectureScene = ({ data = DEFAULT_DATA, caption, selectedId, onSelectNode }: ArchitectureSceneProps) => {
     const reduce = Boolean(useReducedMotion())
     const palette = usePalette()
     return (
-        <div className={cn("w-full", className)}>
+        <div className="w-full">
             <div className="h-[440px] w-full @app-sm:h-[560px]">
                 <Canvas
                     flat

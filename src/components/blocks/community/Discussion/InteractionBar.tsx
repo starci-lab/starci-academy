@@ -2,13 +2,11 @@
 
 import { EyeIcon } from "@phosphor-icons/react"
 import React from "react"
-import { cn } from "@heroui/react"
 import { ReactionBar } from "./ReactionBar"
 import { ReactionType, type ReactionSummary } from "@/modules/api/graphql/queries/types/discussion"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link InteractionBar}. */
-export interface InteractionBarProps extends WithClassNames<undefined> {
+export interface InteractionBarProps {
     /** Aggregate reaction summary for the content. */
     summary: ReactionSummary | undefined
     /** React to / un-react from the content (null removes the reaction). */
@@ -27,10 +25,9 @@ export const InteractionBar = ({
     summary,
     onReact,
     viewCount,
-    className,
 }: InteractionBarProps) => {
     return (
-        <div className={cn("flex items-center justify-between gap-3", className)}>
+        <div className="flex items-center justify-between gap-3">
             {/* reaction trigger + summary — same control as the comment reactions */}
             <ReactionBar summary={summary} onReact={onReact} />
 

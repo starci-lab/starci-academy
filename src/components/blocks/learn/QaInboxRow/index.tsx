@@ -12,10 +12,9 @@ import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import type { CourseQuestionNode } from "@/modules/api/graphql/queries/types/course-questions"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link QaInboxRow}. */
-export interface QaInboxRowProps extends WithClassNames<undefined> {
+export interface QaInboxRowProps {
     /** The question to preview. */
     question: CourseQuestionNode
     /** Open the full conversation (expands the thread inline). */
@@ -35,7 +34,7 @@ export interface QaInboxRowProps extends WithClassNames<undefined> {
  *
  * @param props - {@link QaInboxRowProps}
  */
-export const QaInboxRow = ({ question, onOpen, className }: QaInboxRowProps) => {
+export const QaInboxRow = ({ question, onOpen }: QaInboxRowProps) => {
     const t = useTranslations()
     const displayName = question.author.displayName || question.author.username
     const isAnswered = question.replyCount > 0
@@ -51,10 +50,7 @@ export const QaInboxRow = ({ question, onOpen, className }: QaInboxRowProps) => 
                     onOpen()
                 }
             }}
-            className={cn(
-                "flex w-full cursor-pointer items-start gap-3 p-3 text-left outline-none transition-colors hover:bg-default focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent",
-                className,
-            )}
+            className="flex w-full cursor-pointer items-start gap-3 p-3 text-left outline-none transition-colors hover:bg-default focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent"
         >
             <UserAvatar
                 size="sm"

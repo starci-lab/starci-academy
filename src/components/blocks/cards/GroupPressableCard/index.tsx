@@ -2,7 +2,6 @@
 
 import React, { useEffect, type ComponentType } from "react"
 import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { PressableCard } from "@/components/blocks/cards/PressableCard"
 import { type VerdictBand, verdictBandClassName } from "@/components/blocks/cards/verdict-band"
 
@@ -66,7 +65,7 @@ export interface GroupPressableCardItem {
 }
 
 /** Props for the {@link GroupPressableCard} block. */
-export interface GroupPressableCardProps extends WithClassNames<undefined> {
+export interface GroupPressableCardProps {
     /** The cards, in reading order (also the 1–N shortcut order). */
     items: Array<GroupPressableCardItem>
     /**
@@ -153,7 +152,6 @@ export const GroupPressableCard = ({
     columns = {},
     gap = 3,
     keyboardShortcut = false,
-    className,
 }: GroupPressableCardProps) => {
     // `items` is typically rebuilt inline by the caller (`options.map(...)`), so a
     // fresh array arrives every render. Reading it through a ref keeps the window
@@ -201,7 +199,7 @@ export const GroupPressableCard = ({
     return (
         // The `@container` wrapper is NOT decorative: an element cannot query its
         // own size, so the queried grid must live inside the container it reacts to.
-        <div className={cn("@container", className)}>
+        <div className="@container">
             <div
                 role="group"
                 aria-label={ariaLabel}

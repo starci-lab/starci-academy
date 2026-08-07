@@ -1,10 +1,9 @@
 import React from "react"
 import { WarningCircleIcon } from "@phosphor-icons/react"
 import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link _GradeCreditCaption} — presentational; the caption text already resolved. */
-export interface GradeCreditCaptionProps extends WithClassNames<undefined> {
+export interface GradeCreditCaptionProps {
     /**
      * `null`/`undefined` while `creditUsage` hasn't landed yet → the caption
      * renders NOTHING (mirrors the connected half's own "no snapshot" branch).
@@ -28,7 +27,6 @@ export const _GradeCreditCaption = ({
     text,
     blocked,
     onOpenDetails,
-    className,
 }: GradeCreditCaptionProps) => {
     if (text == null) {
         return null
@@ -50,12 +48,12 @@ export const _GradeCreditCaption = ({
             <button
                 type="button"
                 onClick={onOpenDetails}
-                className={cn("w-fit cursor-pointer outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-accent", className)}
+                className="w-fit cursor-pointer outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-accent"
             >
                 {content}
             </button>
         )
     }
 
-    return <span className={cn(className)}>{content}</span>
+    return <span>{content}</span>
 }

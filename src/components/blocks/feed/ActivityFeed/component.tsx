@@ -1,5 +1,4 @@
 import React from "react"
-import { cn } from "@heroui/react"
 import {
     BookOpenIcon,
     BookmarkSimpleIcon,
@@ -19,7 +18,6 @@ import { FeedItem } from "../FeedItem"
 import { ReactionBar } from "../ReactionBar"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ActivityType } from "@/modules/api/graphql/queries/types/my-feed"
 import type { QueryMyFeedItemData } from "@/modules/api/graphql/queries/types/my-feed"
 import type { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
@@ -60,7 +58,7 @@ export interface ActivityFeedDayGroup {
 }
 
 /** Props for the {@link _ActivityFeed} block — presentational; grouping + i18n already resolved. */
-export interface ActivityFeedProps extends WithClassNames<undefined> {
+export interface ActivityFeedProps {
     /** Day-bucketed, already-grouped + already-localized rows. */
     dayGroups: Array<ActivityFeedDayGroup>
     /**
@@ -100,7 +98,6 @@ export const _ActivityFeed = ({
     onReact,
     bordered = false,
     locale,
-    className,
 }: ActivityFeedProps) => {
     /** Render one feed row as a FeedItem (avatar+badge · sentence · relative time). */
     const renderRow = (row: ActivityFeedRow) => {
@@ -143,7 +140,7 @@ export const _ActivityFeed = ({
     // categorized-list: each day is its own labeled surface card (label = day
     // header outside the card, rows joined edge-to-edge with inset separators).
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
+        <div className="flex flex-col gap-6">
             {dayGroups.map((group) => (
                 <LabeledCard key={group.key} label={group.label} frameless subtleLabel>
                     <SurfaceListCard bordered={bordered}>

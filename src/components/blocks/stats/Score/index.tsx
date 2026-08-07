@@ -2,11 +2,10 @@
 
 import React, { useMemo } from "react"
 import { useFormatter, useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { _Score, type ScoreProps } from "./component"
 
 /** Props the connected {@link Score} takes from its caller. */
-export type ScoreConnectedProps = Omit<ScoreProps, "label" | "ariaLabel"> & WithClassNames<undefined>
+export type ScoreConnectedProps = Omit<ScoreProps, "label" | "ariaLabel">
 
 /**
  * Renders `current/max` — the CONNECTED half: formats the numbers via

@@ -40,7 +40,6 @@ export const PitchCard = ({
     return (
         <SectionCard
             identity={{ tier: "block", component: "PitchCard" }}
-            classNames={["h-full"]}
             contentGap={4}
             fillHeight
         >

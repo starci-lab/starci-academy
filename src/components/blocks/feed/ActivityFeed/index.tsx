@@ -31,7 +31,7 @@ export type ActivityFeedConnectedProps = Omit<ActivityFeedProps, "dayGroups" | "
  *
  * @param props - {@link ActivityFeedConnectedProps}
  */
-export const ActivityFeed = ({ items, onResolve, onReact, bordered, className }: ActivityFeedConnectedProps) => {
+export const ActivityFeed = ({ items, onResolve, onReact, bordered }: ActivityFeedConnectedProps) => {
     const t = useTranslations()
     const locale = useLocale()
 
@@ -123,7 +123,6 @@ export const ActivityFeed = ({ items, onResolve, onReact, bordered, className }:
             onReact={onReact}
             bordered={bordered}
             locale={locale}
-            className={className}
         />
     )
 }

@@ -1,6 +1,5 @@
 import React, { useMemo } from "react"
 import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Color of the score based on the ratio compared to the threshold.
@@ -33,7 +32,7 @@ const resolveTone = (
 }
 
 /** Props for {@link _Score} — presentational; the label + aria-label already resolved. */
-export interface ScoreProps extends WithClassNames<undefined> {
+export interface ScoreProps {
     /** Current score (numerator). */
     current: number
     /** Maximum score (denominator). */
@@ -48,7 +47,6 @@ export interface ScoreProps extends WithClassNames<undefined> {
     /** Already-localized + already-formatted aria-label. */
     ariaLabel: string
     /** Extra classes on the root element (typography, spacing). */
-    className?: string
 }
 
 /**
@@ -61,7 +59,6 @@ export const _Score = ({
     threshold = 0.7,
     label,
     ariaLabel,
-    className,
 }: ScoreProps) => {
     const tone = useMemo(
         () => resolveTone(current, max, threshold),
@@ -74,7 +71,6 @@ export const _Score = ({
                 cn(
                     "font-medium tabular-nums text-4xl font-bold",
                     toneTextClass[tone]
-                    , className
                 )
             }
             aria-label={ariaLabel}

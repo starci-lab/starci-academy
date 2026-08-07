@@ -1,9 +1,8 @@
 import React from "react"
 import { Chip, cn, Typography } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for the {@link HeroBanner} block. */
-export interface HeroBannerProps extends WithClassNames<undefined> {
+export interface HeroBannerProps {
     /** Eyebrow label (the audience/subject gate). */
     eyebrow: React.ReactNode
     /** Optional leading icon for the eyebrow chip. */
@@ -53,7 +52,6 @@ export const HeroBanner = ({
     keywords,
     keywordsLabel,
     visual,
-    className,
 }: HeroBannerProps) => {
     const hasVisual = Boolean(visual)
     const align = hasVisual ? "start" : "center"
@@ -113,14 +111,14 @@ export const HeroBanner = ({
 
     if (!hasVisual) {
         return (
-            <section className={cn("flex flex-col items-center gap-6 text-center", className)}>
+            <section className="flex flex-col items-center gap-6 text-center">
                 {textColumn}
             </section>
         )
     }
 
     return (
-        <section className={cn("flex flex-col items-center gap-10 @app-lg:flex-row @app-lg:gap-12", className)}>
+        <section className="flex flex-col items-center gap-10 @app-lg:flex-row @app-lg:gap-12">
             {textColumn}
             <div className="flex w-full max-w-md shrink-0 items-center justify-center @app-lg:max-w-none @app-lg:flex-1">
                 {visual}

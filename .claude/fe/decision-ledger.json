@@ -1822,6 +1822,16 @@
       "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b26-status.md",
       "holdsPreserved": 27,
       "next": "Parent-placement only with exact existing principles; continue live-api declaration burn with consumer proof; error-ratchet still deferred."
+    },
+    {
+      "id": "b27-live-door-contract-triage-2026-08-09",
+      "date": "2026-08-09",
+      "status": "applied-uncommitted",
+      "summary": "BATCH 27: inventory 1667→1618 classname hits (−49) across 10 disjoint workers; ~25 files with proven dead-safe/safe-noop door burns; CourseDetail root migrated to StackV block-boundary (existing principle). CvPdfPreview held (CvPreview-family). Accidental Profile page line-ending churn reverted.",
+      "reason": "Code only for zero-consumer dead doors, one duplicate h-full noop (PitchCard fillHeight), and one exact existing-principle parent placement. Live-api / semantic-contract / vendor / locked / ambiguous remain as proposals with consumer evidence; no new variants, slots, tokens, or lint severity changes.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b27-status.md",
+      "holdsPreserved": 27,
+      "next": "Teacher-review live-api proposals; apply further parent-placement only with exact existing principles and consumer proof; error-ratchet still deferred."
     }
   ]
 }

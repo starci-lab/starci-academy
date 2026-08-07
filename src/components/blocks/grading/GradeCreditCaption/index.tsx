@@ -35,12 +35,11 @@ export const GradeCreditCaption = ({
     hasPinnedModel,
     autoCreditCost,
     onOpenDetails,
-    className,
 }: GradeCreditCaptionConnectedProps) => {
     const t = useTranslations()
 
     if (!creditUsage) {
-        return <_GradeCreditCaption text={null} blocked={false} onOpenDetails={onOpenDetails} className={className} />
+        return <_GradeCreditCaption text={null} blocked={false} onOpenDetails={onOpenDetails} />
     }
 
     // BOTH lanes debit the SAME weekly pool — the served model's catalog credit,
@@ -64,7 +63,6 @@ export const GradeCreditCaption = ({
             text={text}
             blocked={blocked}
             onOpenDetails={onOpenDetails}
-            className={className}
         />
     )
 }

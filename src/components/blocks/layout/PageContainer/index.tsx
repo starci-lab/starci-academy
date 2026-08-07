@@ -1,10 +1,8 @@
 import React from "react"
-import { cn } from "@heroui/react"
 import type { ReactNode } from "react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for the {@link PageContainer} block. */
-export interface PageContainerProps extends WithClassNames<undefined> {
+export interface PageContainerProps {
     /** Page content, composed by the caller. */
     children: ReactNode
 }
@@ -12,20 +10,14 @@ export interface PageContainerProps extends WithClassNames<undefined> {
 /**
  * Standard page shell — full width of the parent with a right gutter + vertical
  * rhythm. No `mx-auto` centering and no left padding (flush start). Owns page
- * spacing so features (which must not use `p-*`) compose inside it. Override
- * via `className`.
+ * spacing so features (which must not use `p-*`) compose inside it.
  *
  * @param props - {@link PageContainerProps}
  * @see Story: .storybook/stories/blocks/layout/PageContainer/PageContainer.stories
  */
-export const PageContainer = ({ children, className }: PageContainerProps) => {
+export const PageContainer = ({ children }: PageContainerProps) => {
     return (
-        <div
-            className={cn(
-                "w-full py-16 pr-4 @app-sm:pr-6 @app-lg:pr-8",
-                className,
-            )}
-        >
+        <div className="w-full py-16 pr-4 @app-sm:pr-6 @app-lg:pr-8">
             {children}
         </div>
     )

@@ -12,12 +12,11 @@ import {
 import { ReactionBar } from "../ReactionBar"
 import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import type { QueryCommunityFeedItemData } from "@/modules/api/graphql/queries/types/community-feed"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 
 /** Props for {@link _CommunityPostCard} — presentational; labels already resolved. */
-export interface CommunityPostCardProps extends WithClassNames<undefined> {
+export interface CommunityPostCardProps {
     /** The post to render (author relation already loaded). */
     post: QueryCommunityFeedItemData
     /**
@@ -51,13 +50,12 @@ export const _CommunityPostCard = ({
     children,
     timeAgoLabel,
     channelLabel,
-    className,
 }: CommunityPostCardProps) => {
     // resolve the display name, falling back to the username when unset
     const displayName = post.author.displayName || post.author.username
 
     return (
-        <Card className={className}>
+        <Card>
             <CardContent>
                 <div className="flex flex-col gap-3">
                     <div className="flex items-center gap-3">

@@ -1,10 +1,8 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
 import { LockIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { SectionVisibility } from "@/modules/types/entities/user"
 import { useProfileUsername } from "@/hooks/profile/useProfileUsername"
 import { useAppSelector } from "@/redux/hooks"
@@ -12,7 +10,7 @@ import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQuery
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
 
 /** Props for {@link ProfileSectionGuard}. */
-export interface ProfileSectionGuardProps extends WithClassNames<undefined> {
+export interface ProfileSectionGuardProps {
     /** Which gateable section this tab renders (drives the `sectionVisibility` flag). */
     section: keyof SectionVisibility
     /** The tab's real content, shown when the section is visible to the viewer. */
@@ -34,7 +32,6 @@ export interface ProfileSectionGuardProps extends WithClassNames<undefined> {
 export const ProfileSectionGuard = ({
     section,
     children,
-    className,
 }: ProfileSectionGuardProps) => {
     const t = useTranslations()
     const username = useProfileUsername()
@@ -49,7 +46,7 @@ export const ProfileSectionGuard = ({
 
     if (isPrivate) {
         return (
-            <div className={cn("flex min-w-0 flex-col", className)}>
+            <div className="flex min-w-0 flex-col">
                 <EmptyState
                     icon={LockIcon}
                     title={t("publicProfile.sectionPrivate.title")}

@@ -13,7 +13,6 @@ import { AsyncContent } from "@/components/composites/async/AsyncContent"
 import { SurfaceCard, SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { Chip, type ChipTone } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { StackV } from "@/components/frames/Stack"
 
 /**
@@ -71,7 +70,6 @@ export interface AiQuotaHistoryPanelProps {
     /** `true` while the charges list's first load is running (drives ONLY the `ChargesList` leaf). */
     isLoading: boolean
     /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
-    classNames?: Array<AllowedClassName>
 }
 
 /** How many placeholder rows the loading mirror shows — matches the source's 3-row skeleton. */
@@ -104,7 +102,6 @@ export const AiQuotaHistoryPanel = ({
     chartPoints = [],
     items,
     isLoading,
-    classNames,
 }: AiQuotaHistoryPanelProps) => {
     const isEmpty = !isLoading && (items?.length ?? 0) === 0
 
@@ -169,7 +166,6 @@ export const AiQuotaHistoryPanel = ({
         <StackV
             identity={{ tier: "block", component: "AiQuotaHistoryPanel" }}
             gap={6}
-            classNames={classNames}
             items={[() => chart, () => chargesList]}
         />
     )

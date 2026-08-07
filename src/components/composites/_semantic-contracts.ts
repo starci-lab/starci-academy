@@ -19,6 +19,8 @@ export type PDFViewHeight =
     | "viewport"
 /** Named SurfaceCard body layout (does not include relative). */
 export type SurfaceCardBodyVariant = "default" | "stacked" | "tile"
+/** Named SurfaceCard outer chrome (independent of body layout). */
+export type SurfaceCardChromeVariant = "default" | "tile"
 
 const DRAWER_DIALOG_WIDTH: Record<DrawerDialogWidth, string | undefined> = {
     default: undefined,
@@ -50,6 +52,11 @@ const SURFACE_CARD_BODY_VARIANT: Record<SurfaceCardBodyVariant, string | undefin
     tile: "flex flex-col gap-3 overflow-hidden",
 }
 
+const SURFACE_CARD_CHROME_VARIANT: Record<SurfaceCardChromeVariant, string | undefined> = {
+    default: undefined,
+    tile: "rounded-2xl shadow-field",
+}
+
 const resolve = <T extends string>(value: T, table: Record<T, string | undefined>, label: string): string | undefined => {
     if (!(value in table)) {
         throw new TypeError(`Invalid ${label}: ${JSON.stringify(value)}`)
@@ -76,3 +83,7 @@ export const resolvePDFViewHeight = (height: PDFViewHeight = "document"): string
 /** Resolves SurfaceCard `bodyVariant` to body layout classes (does not include `relative`). */
 export const resolveSurfaceCardBodyVariant = (variant: SurfaceCardBodyVariant = "default"): string | undefined =>
     resolve(variant, SURFACE_CARD_BODY_VARIANT, "SurfaceCardBodyVariant")
+
+/** Resolves SurfaceCard `chromeVariant` to outer chrome classes (`tile` → TILE_CHROME). */
+export const resolveSurfaceCardChromeVariant = (variant: SurfaceCardChromeVariant = "default"): string | undefined =>
+    resolve(variant, SURFACE_CARD_CHROME_VARIANT, "SurfaceCardChromeVariant")

@@ -8,6 +8,7 @@
 /** @typedef {"default" | "near-fullscreen"} ModalViewportFit */
 /** @typedef {"compact" | "standard" | "tall" | "expanded" | "document" | "viewport"} PDFViewHeight */
 /** @typedef {"default" | "stacked" | "tile"} SurfaceCardBodyVariant */
+/** @typedef {"default" | "tile"} SurfaceCardChromeVariant */
 
 export const DRAWER_DIALOG_WIDTH = /** @type {const} */ ({
   default: undefined,
@@ -37,6 +38,12 @@ export const SURFACE_CARD_BODY_VARIANT = /** @type {const} */ ({
   default: undefined,
   stacked: "flex flex-col gap-3",
   tile: "flex flex-col gap-3 overflow-hidden",
+})
+
+/** Outer chrome only — independent of {@link SURFACE_CARD_BODY_VARIANT}. */
+export const SURFACE_CARD_CHROME_VARIANT = /** @type {const} */ ({
+  default: undefined,
+  tile: "rounded-2xl shadow-field",
 })
 
 /**
@@ -74,4 +81,9 @@ export function resolvePDFViewHeight(height = "document") {
 /** @param {SurfaceCardBodyVariant} [variant="default"] */
 export function resolveSurfaceCardBodyVariant(variant = "default") {
   return resolve(variant, SURFACE_CARD_BODY_VARIANT, "SurfaceCardBodyVariant")
+}
+
+/** @param {SurfaceCardChromeVariant} [variant="default"] */
+export function resolveSurfaceCardChromeVariant(variant = "default") {
+  return resolve(variant, SURFACE_CARD_CHROME_VARIANT, "SurfaceCardChromeVariant")
 }

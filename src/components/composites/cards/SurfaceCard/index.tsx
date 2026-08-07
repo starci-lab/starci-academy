@@ -24,7 +24,9 @@ import { resolveIdentity, type CallerIdentity } from "@/components/frames/_ident
 import type { PrincipleToken, ExplainReason } from "@/components/frames/_principles"
 import {
     resolveSurfaceCardBodyVariant,
+    resolveSurfaceCardChromeVariant,
     type SurfaceCardBodyVariant,
+    type SurfaceCardChromeVariant,
 } from "@/components/composites/_semantic-contracts"
 /**
  * `SurfaceCard` — the general wrapper frame of the card family. Owns the header section
@@ -36,7 +38,7 @@ import {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "SurfaceCard" } as const
 
-export type { SurfaceCardBodyVariant }
+export type { SurfaceCardBodyVariant, SurfaceCardChromeVariant }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Shared slot plumbing
@@ -234,13 +236,20 @@ interface SurfaceCardBaseOwnProps extends SurfaceLabelProps, SlotProps {
     /**
      * Named body layout. `"tile"` owns ContinueCard's stacked overflow body;
      * `"stacked"` is flex-col gap only; `"default"` keeps the plain surface.
-     * Prefer this over raw class escapes.
+     * Prefer this over raw class escapes. Independent of {@link chromeVariant}.
      * @default "default"
      */
     bodyVariant?: SurfaceCardBodyVariant
     /**
-     * PressableGroup tile chrome hold — not bodyVariant.
-     * Optional escape for PressableGroup's TILE_CHROME / verdict band only.
+     * Named outer chrome. `"tile"` owns PressableGroup's concentric
+     * `rounded-2xl shadow-field` face; `"default"` keeps {@link surfaceFrame}.
+     * Independent of {@link bodyVariant}.
+     * @default "default"
+     */
+    chromeVariant?: SurfaceCardChromeVariant
+    /**
+     * Escape for PressableGroup verdict band + item placement only — not chrome
+     * (use {@link chromeVariant}) and not body layout (use {@link bodyVariant}).
      */
     contentClassName?: string
     /**
@@ -283,6 +292,7 @@ const Base = ({
     ariaLabel,
     classNames,
     bodyVariant = "default",
+    chromeVariant = "default",
     contentClassName,
     identity,
 }: SurfaceCardBaseProps) => {
@@ -309,7 +319,7 @@ const Base = ({
         // The Pressable branch below carries `relative` for the same reason.
         card = (
             <div
-                className={cn("relative", surfaceFrame(variant), paddingCls, isSelected && "ring-2 ring-accent", resolveSurfaceCardBodyVariant(bodyVariant), contentClassName)}
+                className={cn("relative", surfaceFrame(variant), resolveSurfaceCardChromeVariant(chromeVariant), paddingCls, isSelected && "ring-2 ring-accent", resolveSurfaceCardBodyVariant(bodyVariant), contentClassName)}
             >
                 {content}
             </div>
@@ -326,6 +336,7 @@ const Base = ({
         const frameCls = cn(
             "relative block w-full overflow-hidden text-left outline-none focus-visible:ring-2 focus-visible:ring-accent [-webkit-tap-highlight-color:transparent]",
             surfaceFrame(variant),
+            resolveSurfaceCardChromeVariant(chromeVariant),
             paddingCls,
             isSelected && "ring-2 ring-accent",
             isLink
@@ -377,6 +388,7 @@ const Base = ({
                 className={cn(
                     "relative w-full",
                     surfaceFrame(variant),
+                    resolveSurfaceCardChromeVariant(chromeVariant),
                     paddingCls,
                     isSelected && "ring-2 ring-accent",
                     !isDisabled && "has-[[data-card-press]:active]:scale-[0.97]",
@@ -870,10 +882,9 @@ export interface SurfaceCardPressableGroupProps {
     identity?: CallerIdentity
 
 }
-// Compact grid cell, not a standalone top-level card: one step down from
-// `.Pressable`'s own `rounded-3xl`/`shadow-surface` default (concentric
-// radius: card 24px − 1 step → 16px) and one step UP from the flat button.
-const TILE_CHROME = "rounded-2xl shadow-field"
+// Compact grid cell chrome — owned by chromeVariant="tile" (resolver), not bodyVariant.
+// One step down from surfaceFrame's rounded-3xl/shadow-surface (concentric radius).
+const TILE_CHROME = resolveSurfaceCardChromeVariant("tile")!
 // §5a: tile body defaults to body-sm/text-sm → icon size-5, muted (list-icon convention).
 // Forced HERE (descendant selector) so no call-site ever hand-sets icon size/color again.
 const ITEM_ICON_CLS = "shrink-0 [&_svg]:size-5 [&_svg]:shrink-0 text-muted"
@@ -1030,9 +1041,9 @@ const PressableGroup = ({
                             isDisabled={item.isDisabled}
                             isSelected={item.selected}
                             ariaLabel={item.label}
-                            // PressableGroup tile chrome hold — not bodyVariant.
+                            chromeVariant="tile"
+                            // Verdict band + item placement only — chrome is chromeVariant.
                             contentClassName={cn(
-                                TILE_CHROME,
                                 verdictBandClassName(item.withVerdict),
                                 item.classNames,
                             )}

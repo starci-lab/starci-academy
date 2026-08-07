@@ -1757,11 +1757,11 @@
     {
       "id": "b19-hold-surfacecard-pressablegroup-chrome-2026-08-08",
       "date": "2026-08-08",
-      "status": "open",
+      "status": "superseded",
       "summary": "SurfaceCard PressableGroup still passes contentClassName for TILE_CHROME (rounded-2xl shadow-field) — not bodyVariant.",
       "reason": "bodyVariant covers stacked/tile body layout only. Concentric tile chrome is a different axis; do not invent further bodyVariant values.",
       "holdsPreserved": 27,
-      "next": "Named chrome/radius path on SurfaceCard or PressableGroup-owned wrapper when product locks the API."
+      "next": "Superseded by b22-chrome-variant-2026-08-09 (chromeVariant=tile)."
     },
     {
       "id": "b20-classname-dead-doors-2026-08-08",
@@ -1782,6 +1782,16 @@
       "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b21-status.md",
       "holdsPreserved": 27,
       "next": "Chrome axis proposal for TILE_CHROME; LearnLoopScroll unlock for ShowcaseMockup; nivo LessonEditorPanel → dialogWidth."
+    },
+    {
+      "id": "b22-chrome-variant-2026-08-09",
+      "date": "2026-08-09",
+      "status": "applied",
+      "summary": "BATCH 22: SurfaceCard chromeVariant default|tile (tile=rounded-2xl shadow-field); PressableGroup migrated off TILE_CHROME contentClassName. bodyVariant unchanged. Boundary proposals only for nivo/Showcase/span.",
+      "reason": "Teacher-approved chrome axis independent of bodyVariant. ContinueCard stays bodyVariant-only to preserve default surface chrome.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b22-status.md",
+      "holdsPreserved": 27,
+      "next": "PressableGroupItem.span; LessonEditorPanel dialogWidth (nivo); ShowcaseMockup after LearnLoopScroll unlock."
     }
   ]
 }

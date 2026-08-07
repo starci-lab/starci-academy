@@ -1669,6 +1669,42 @@
       "reason": "Per-part prop is SB-only width escape. Do not invent dialogWidth. Do not edit nivoexpert in this batch.",
       "holdsPreserved": 27,
       "next": "Migrate LessonEditorPanel off contentClassName in a nivo-allowed batch, then remove if zero consumers remain."
+    },
+    {
+      "id": "contract16-surfacecard-identity-twin-2026-08-08",
+      "date": "2026-08-08",
+      "status": "applied",
+      "summary": "BATCH 16: ported identity to all SB SurfaceCard non-Base members; removed dead ListItem.titleClassName.",
+      "reason": "Src already accepted CallerIdentity on Nested/PressableGroup/SelectableGroup/List/Accordion/CrossList/Placeholder. Twin sync only.",
+      "holdsPreserved": 27,
+      "next": null
+    },
+    {
+      "id": "contract16-clear-identity-roots-2026-08-08",
+      "date": "2026-08-08",
+      "status": "applied",
+      "summary": "BATCH 16: stamped/relocated identity on MilestoneUpNextCard, QuizCard, PitchCard, VerdictHeroCard, WeeklyGoals, JobReadinessWidget.",
+      "reason": "Each export roots on SurfaceCard or SectionCard which already accept CallerIdentity. WeeklyGoals/JobReadinessWidget moved stamp from inner StackV to SurfaceCard root.",
+      "holdsPreserved": 27,
+      "next": null
+    },
+    {
+      "id": "contract16-dead-shell-props-2026-08-08",
+      "date": "2026-08-08",
+      "status": "applied",
+      "summary": "BATCH 16: removed SB-only zero-consumer ModalShell title/dialog/footer ClassName and DrawerShell title/body ClassName.",
+      "reason": "Repo-wide JSX search found no consumers; props absent from src twins. Kept ModalShell.bodyClassName (stories) and DrawerShell content/dialog/footer ClassName.",
+      "holdsPreserved": 27,
+      "next": null
+    },
+    {
+      "id": "contract16-link-stack-namespace-objects-2026-08-08",
+      "date": "2026-08-08",
+      "status": "applied",
+      "summary": "BATCH 16: removed unused Link and Stack runtime namespace objects; kept LinkBack/LinkSeeMore and StackV/StackH.",
+      "reason": "Zero Link.*/Stack.* call sites. export-matches-folder satisfied by Folder* named exports.",
+      "holdsPreserved": 27,
+      "next": null
     }
   ]
 }

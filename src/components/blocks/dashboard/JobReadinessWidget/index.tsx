@@ -144,7 +144,7 @@ const Content = ({ codingPercentile, track, isSkeleton }: ContentProps) => {
             ) : null}
         </>
     )
-    return <StackV identity={{ tier: "block", component: "JobReadinessWidget" }} gap={4} isSkeleton={isSkeleton} items={[() => trackSummary]} />
+    return <StackV gap={4} isSkeleton={isSkeleton} items={[() => trackSummary]} />
 }
 
 /** Fixed-shape placeholder rendered while {@link JobReadinessWidgetProps.isLoading} — no real track exists yet. */
@@ -173,6 +173,7 @@ const JobReadinessWidget = ({
     isSkeleton = false,
 }: JobReadinessWidgetProps) => (
     <SurfaceCard
+        identity={{ tier: "block", component: "JobReadinessWidget" }}
         label="My readiness"
 
 

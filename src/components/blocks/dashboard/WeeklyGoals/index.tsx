@@ -139,7 +139,7 @@ const goalCellContent = (
     )
 
     return (
-        <StackV identity={{ tier: "block", component: "WeeklyGoals" }} gap={3} isSkeleton={isSkeleton} items={[
+        <StackV gap={3} isSkeleton={isSkeleton} items={[
             () => labelRow,
             () => (
                 <ProgressMeter
@@ -190,7 +190,7 @@ const Content = ({ items, composite, resetInLabel, defaultTargets, isSkeleton }:
         content: () => goalCellContent(item, defaultTargets, isSkeleton),
     }))
     return (
-        <StackV identity={{ tier: "block", component: "WeeklyGoals" }} gap={4} isSkeleton={isSkeleton} items={[
+        <StackV gap={4} isSkeleton={isSkeleton} items={[
             () => (
                 <Typography
                     size="sm"
@@ -224,6 +224,7 @@ const WeeklyGoals = ({
     isSkeleton = false,
 }: WeeklyGoalsProps) => (
     <SurfaceCard
+        identity={{ tier: "block", component: "WeeklyGoals" }}
         label="Weekly Goals"
 
 

@@ -113,7 +113,7 @@ export const VerdictHeroCard = ({
     const meterMax = meter?.max ?? 100
 
     return (
-        <SectionCard>
+        <SectionCard identity={{ tier: "block", component: "VerdictHeroCard" }}>
             <StackH
                 gap={3}
                 principle="value-row"

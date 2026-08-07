@@ -56,6 +56,7 @@ const MilestoneUpNextCard = ({
     isSkeleton = false,
 }: MilestoneUpNextCardProps) => (
     <SurfaceCard
+        identity={{ tier: "block", component: "MilestoneUpNextCard" }}
         isHighlight={isHighlight}
         isSkeleton={isSkeleton}
         body={() => (

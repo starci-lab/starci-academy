@@ -2,8 +2,8 @@ import { LinkBack } from "./LinkBack"
 import { LinkSeeMore } from "./LinkSeeMore"
 
 /**
- * `Link.*` — namespace of the arrow text-link family. This file only gathers
- * the members together; no logic of its own.
+ * `LinkBack` / `LinkSeeMore` — arrow text-link family. This file gathers the
+ * direct named exports; no runtime namespace object.
  *
  *   • `LinkBack`    → ./LinkBack     — "← Back" / "← Back to {target}".
  *   • `LinkSeeMore` → ./LinkSeeMore  — "See more →" / "Continue →".
@@ -18,9 +18,3 @@ export const meta = [
     { tier: "atom", name: "LinkBack" },
     { tier: "atom", name: "LinkSeeMore" },
 ] as const
-
-/** Folder-matching compound namespace (export-matches-folder). Existing named exports stay public. */
-export const Link = {
-    Back: LinkBack,
-    SeeMore: LinkSeeMore,
-} as const

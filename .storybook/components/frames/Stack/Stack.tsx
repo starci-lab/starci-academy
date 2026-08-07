@@ -272,15 +272,6 @@ const StackH = ({
 export { StackV, StackH }
 
 /**
- * `Stack` -- named export matching this folder (structure-and-naming §5). The two axes have no
- * single canonical member (see the `meta` note below: neither `StackV` nor `StackH` is "the"
- * component this file names), so this groups both under the folder's own name rather than
- * aliasing one of them as `Stack`. Existing call sites keep importing `StackV`/`StackH`
- * directly, unchanged -- this export adds a name, it does not replace either one.
- */
-export const Stack = { V: StackV, H: StackH } as const
-
-/**
  * Source-level tier marker -- lets a gate read the tier without guessing from the folder path.
  *
  * Shaped as a record, not the single `{ tier, name }` most frame files export: this file has

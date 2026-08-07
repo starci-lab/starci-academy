@@ -38,7 +38,12 @@ export const PitchCard = ({
     footer,
 }: PitchCardProps) => {
     return (
-        <SectionCard classNames={["h-full"]} contentGap={4} fillHeight>
+        <SectionCard
+            identity={{ tier: "block", component: "PitchCard" }}
+            classNames={["h-full"]}
+            contentGap={4}
+            fillHeight
+        >
             <IconTile icon={icon} tone={tone} size="md" />
             <Typography size="h5" weight="semibold" text={title} />
             <Typography size="sm" color="muted" classNames={["flex-1"]} text={body} />

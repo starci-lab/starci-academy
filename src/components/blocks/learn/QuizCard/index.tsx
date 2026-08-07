@@ -297,7 +297,10 @@ export const QuizCard = ({
     )
 
     return (
-        <SectionCard classNames={classNames}>
+        <SectionCard
+            identity={{ tier: "block", component: "QuizCard" }}
+            classNames={classNames}
+        >
             <StackV
                 gap={5}
                 items={[

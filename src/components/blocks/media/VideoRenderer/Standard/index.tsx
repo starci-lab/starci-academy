@@ -1,12 +1,10 @@
 "use client"
 
 import React, { useCallback, useEffect, useRef, useState } from "react"
-import { cn } from "@heroui/react"
 import { VideoControls } from "../VideoControls"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link Standard}. */
-export interface StandardPlayerProps extends WithClassNames<undefined> {
+export interface StandardPlayerProps {
     /** Direct video URL (mp4, webm, ogg). */
     src: string
 }
@@ -15,7 +13,7 @@ export interface StandardPlayerProps extends WithClassNames<undefined> {
  * Standard (MP4) video player with custom HeroUI controls.
  * Uses native `<video>` element for playback.
  */
-export const Standard = ({ src, className }: StandardPlayerProps) => {
+export const Standard = ({ src }: StandardPlayerProps) => {
     const videoRef = useRef<HTMLVideoElement | null>(null)
     const containerRef = useRef<HTMLDivElement | null>(null)
 
@@ -95,7 +93,7 @@ export const Standard = ({ src, className }: StandardPlayerProps) => {
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- hover/focus only toggles the visibility of the control bar; every control is a real, independently keyboard-focusable button inside VideoControls
         <div
             ref={containerRef}
-            className={cn("relative aspect-video overflow-hidden rounded-large bg-black", className)}
+            className="relative aspect-video overflow-hidden rounded-large bg-black"
             onMouseEnter={() => setHideControls(false)}
             onMouseLeave={() => setHideControls(true)}
             onFocus={() => setHideControls(false)}

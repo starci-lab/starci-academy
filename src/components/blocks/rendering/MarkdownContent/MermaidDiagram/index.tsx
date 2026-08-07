@@ -3,11 +3,10 @@
 import React, { useId } from "react"
 import mermaid from "mermaid"
 import useSWR from "swr"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { _MermaidDiagram } from "./component"
 
 /** Props the connected {@link MermaidDiagram} takes from its caller. */
-export interface MermaidDiagramConnectedProps extends WithClassNames<undefined> {
+export interface MermaidDiagramConnectedProps {
     /** Mermaid source string. */
     code: string
     /** Mermaid theme key resolved from the app theme. */
@@ -29,7 +28,7 @@ export interface MermaidDiagramConnectedProps extends WithClassNames<undefined> 
  * re-renders. See `design/storybook/architecture/split.md`.
  * @param props - {@link MermaidDiagramConnectedProps}
  */
-export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption, fallbackLabel, className }: MermaidDiagramConnectedProps) => {
+export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption, fallbackLabel }: MermaidDiagramConnectedProps) => {
     // Stable id so concurrent diagrams never collide on mermaid's render target id.
     const renderId = useId().replace(/:/g, "-")
     const { data } = useSWR(
@@ -56,7 +55,6 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
             expandLabel={expandLabel}
             caption={caption}
             fallbackLabel={fallbackLabel}
-            className={className}
         />
     )
 }

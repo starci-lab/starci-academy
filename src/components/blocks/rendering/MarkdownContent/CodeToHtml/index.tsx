@@ -4,10 +4,9 @@ import React, { useEffect, useRef, useState } from "react"
 import { codeToHtml } from "shiki"
 import { cn } from "@heroui/react"
 import { SnippetIcon } from "@/components/blocks/identity/SnippetIcon"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CodeToHtml}. */
-export interface CodeToHtmlProps extends WithClassNames<undefined> {
+export interface CodeToHtmlProps {
     /** Source code to highlight. */
     code: string
     /** Shiki language id (e.g. `bash`, `ts`). */
@@ -39,7 +38,7 @@ export interface CodeToHtmlProps extends WithClassNames<undefined> {
  * @param props - {@link CodeToHtmlProps}
  * @see Story: .storybook/stories/blocks/rendering/MarkdownContent/CodeToHtml/CodeToHtml.stories
  */
-export const CodeToHtml = ({ code, language, theme, elevated = false, className }: CodeToHtmlProps) => {
+export const CodeToHtml = ({ code, language, theme, elevated = false }: CodeToHtmlProps) => {
     const containerRef = useRef<HTMLDivElement>(null)
     /** Whether the block has entered (near) the viewport yet — only then do we highlight. */
     const [isVisible, setIsVisible] = useState(false)
@@ -101,7 +100,6 @@ export const CodeToHtml = ({ code, language, theme, elevated = false, className 
                 elevated
                     ? "bg-surface shadow-surface"
                     : "border border-default bg-background",
-                className,
             )}
         >
             {/* slim header: language label (left) + copy (right) — orients long lessons with many snippets */}

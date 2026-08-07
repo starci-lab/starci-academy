@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import { ArrowRightIcon, ArrowUpRightIcon } from "@phosphor-icons/react"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { pathConfig } from "@/resources/path"
@@ -60,11 +61,15 @@ export const ArchitecturePage = () => {
                 maxWidth={420}
                 ariaLabel={t("rail.ariaLabel")}
             >
-                <ArchitectureRail
-                    className="min-h-0 @app-lg:flex-1"
-                    healthByName={healthByName}
-                    selectedId={node}
-                    onSelect={setNode}
+                <FillAvailable
+                    at="lg"
+                    body={() => (
+                        <ArchitectureRail
+                            healthByName={healthByName}
+                            selectedId={node}
+                            onSelect={setNode}
+                        />
+                    )}
                 />
             </ResizableRail>
 

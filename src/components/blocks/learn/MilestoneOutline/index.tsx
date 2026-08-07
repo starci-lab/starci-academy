@@ -7,9 +7,6 @@ import React, {
     useState,
 } from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     useRouter,
 } from "next/navigation"
 import {
@@ -31,13 +28,12 @@ import { setSelectedTaskId } from "@/redux/slices/milestone"
 import { OutlineRail } from "@/components/blocks/navigation/OutlineRail"
 import type { OutlineRailGroup } from "@/components/blocks/navigation/OutlineRail"
 import type { MilestoneEntity } from "@/modules/types/entities/milestone"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { buildMilestoneTaskProgressLookup, isPersonalProjectTaskActionUnlocked } from "@/components/utils/task-lookup"
 
 /**
  * Props for {@link MilestoneOutline}.
  */
-type MilestoneOutlineProps = WithClassNames<undefined> & {
+type MilestoneOutlineProps = {
     /** Collapsed mode: render a slim numbered index instead of the full list. */
     collapsed?: boolean
 }
@@ -76,9 +72,9 @@ const filterMilestones = (
  *
  * `collapsed` keeps the slim numbered {@link MilestoneIndexStrip} for the rail's
  * collapse handle. `"use client"` for hooks.
- * @param props - optional container class name + collapsed flag
+ * @param props - optional collapsed flag
  */
-export const MilestoneOutline = ({ className, collapsed = false }: MilestoneOutlineProps) => {
+export const MilestoneOutline = ({ collapsed = false }: MilestoneOutlineProps) => {
     const t = useTranslations()
     const milestonesSwr = useQueryMilestonesSwr()
     const progressSwr = useQueryMilestoneTaskProgressSwr()
@@ -219,7 +215,7 @@ export const MilestoneOutline = ({ className, collapsed = false }: MilestoneOutl
     // collapsed rail: only the slim numbered index (clicking a number jumps to that milestone)
     if (collapsed) {
         return (
-            <div className={cn("@app-lg:min-h-0 @app-lg:flex-1 @app-lg:overflow-y-auto", className)}>
+            <div className="@app-lg:min-h-0 @app-lg:flex-1 @app-lg:overflow-y-auto">
                 <MilestoneIndexStrip
                     milestones={milestones}
                     activeMilestoneId={activeMilestoneId}
@@ -231,7 +227,7 @@ export const MilestoneOutline = ({ className, collapsed = false }: MilestoneOutl
 
     return (
         <OutlineRail
-            className={cn("@app-lg:min-h-0 @app-lg:flex-1", className)}
+            className="@app-lg:min-h-0 @app-lg:flex-1"
             header={taskTotals.total > 0 ? {
                 label: t("courseContents.progress"),
                 progress: { done: taskTotals.done, total: taskTotals.total },

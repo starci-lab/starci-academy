@@ -1,13 +1,11 @@
 "use client"
 
 import React, { useCallback, useEffect, useRef, useState } from "react"
-import { cn } from "@heroui/react"
 import { VideoControls, type QualityLevel } from "../VideoControls"
 import type { MediaPlayerClass } from "dashjs"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link MpegDash}. */
-export interface MpegDashPlayerProps extends WithClassNames<undefined> {
+export interface MpegDashPlayerProps {
     /** URL pointing to an MPEG-DASH .mpd manifest. */
     src: string
 }
@@ -47,7 +45,7 @@ interface DashLegacyQualityApi {
  *
  * Pattern based on cistudy-client-2 DashVideoPlayer.
  */
-export const MpegDash = ({ src, className }: MpegDashPlayerProps) => {
+export const MpegDash = ({ src }: MpegDashPlayerProps) => {
     const videoRef = useRef<HTMLVideoElement | null>(null)
     const containerRef = useRef<HTMLDivElement | null>(null)
     const playerRef = useRef<MediaPlayerClass | null>(null)
@@ -187,7 +185,7 @@ export const MpegDash = ({ src, className }: MpegDashPlayerProps) => {
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- hover/focus only toggles the visibility of the control bar; every control is a real, independently keyboard-focusable button inside VideoControls
         <div
             ref={containerRef}
-            className={cn("relative aspect-video overflow-hidden rounded-large bg-black", className)}
+            className="relative aspect-video overflow-hidden rounded-large bg-black"
             onMouseEnter={() => setHideControls(false)}
             onMouseLeave={() => setHideControls(true)}
             onFocus={() => setHideControls(false)}

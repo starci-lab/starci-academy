@@ -102,6 +102,7 @@ export const PRINCIPLE_STYLE: { readonly [K in PrincipleToken]: PrincipleStyleEn
     "sticky-top": { kind: "structural", classes: ["sticky", "top-0"] },
     "fixed-bar": { kind: "structural", classes: ["fixed"] },
     "stack-below": { kind: "structural", classes: [] },
+    "flex-fill": { kind: "structural", classes: ["min-h-0", "@app-lg:flex-1"] },
 }
 
 /** True when the token owns the gap seam. */

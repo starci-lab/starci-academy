@@ -13,6 +13,7 @@ import { EnrollGate } from "@/components/blocks/learn/EnrollGate"
 import { PersonalProjectGatePreview } from "@/components/blocks/learn/personal-project/PersonalProjectGatePreview"
 import { GithubLinkGate } from "@/components/blocks/auth/GithubLinkGate"
 import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
 import { useQueryCourseEnrollmentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseEnrollmentStatusSwr"
 import { useAppSelector } from "@/redux/hooks"
@@ -143,7 +144,7 @@ export const LearnShellLayout = ({ children }: PropsWithChildren) => {
             maxWidth={560}
             ariaLabel={t("courseContents.resizeRail")}
         >
-            <ContentMap className="min-h-0 @app-lg:flex-1" />
+            <FillAvailable at="lg" body={() => <ContentMap />} />
         </ResizableRail>
     ) : isPersonalProject ? (
         <ResizableRail
@@ -154,7 +155,7 @@ export const LearnShellLayout = ({ children }: PropsWithChildren) => {
             maxWidth={560}
             ariaLabel={t("courseContents.resizeRail")}
         >
-            <MilestoneOutline className="min-h-0 @app-lg:flex-1" />
+            <FillAvailable at="lg" body={() => <MilestoneOutline />} />
         </ResizableRail>
     ) : isLeaderboard ? (
         <ResizableRail
@@ -165,7 +166,7 @@ export const LearnShellLayout = ({ children }: PropsWithChildren) => {
             maxWidth={420}
             ariaLabel={t("leaderboard.categories.label")}
         >
-            <LeaderboardCategoryRail variant="rail" className="min-h-0 @app-lg:flex-1" />
+            <FillAvailable at="lg" body={() => <LeaderboardCategoryRail variant="rail" />} />
         </ResizableRail>
     ) : undefined
     // right rail: on-this-page for the LESSON READER only (a real "contents/<id>" route) —

@@ -8,10 +8,9 @@ import { ARCHITECTURE_MODULES } from "../modules"
 import type { HealthByName } from "../hooks/useSystemHealthPoll"
 import { MetricsInline } from "../MetricsInline"
 import { getArchitectureStatusVisual, resolveArchitectureStatus } from "../statusVisual"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ArchitectureRail}. */
-export interface ArchitectureRailProps extends WithClassNames<undefined> {
+export interface ArchitectureRailProps {
     /** Live health keyed by component name, or `null` before the first probe resolves. */
     healthByName: HealthByName | null
     /** Selected node id, mirrored to `?node=`. */
@@ -90,7 +89,7 @@ const ModuleRow = ({
  *
  * @param props - {@link ArchitectureRailProps}
  */
-export const ArchitectureRail = ({ healthByName, selectedId, onSelect, className }: ArchitectureRailProps) => {
+export const ArchitectureRail = ({ healthByName, selectedId, onSelect }: ArchitectureRailProps) => {
     const t = useTranslations("architecture")
 
     const ownComponents = useMemo(() => ARCHITECTURE_COMPONENTS.filter((c) => c.group === "own"), [])
@@ -103,7 +102,7 @@ export const ArchitectureRail = ({ healthByName, selectedId, onSelect, className
     }
 
     return (
-        <div className={cn("relative flex min-h-0 min-w-0 flex-col gap-3 p-6", className)}>
+        <div className="relative flex min-h-0 min-w-0 flex-col gap-3 p-6">
             <ScrollShadow hideScrollBar className="-mx-1 min-h-0 min-w-0 flex-1 overflow-y-auto px-1" data-principle="control-pad">
                 <div data-principle="card-caption" className="flex flex-col gap-3">
                     <div data-principle="sibling-stack" className="flex flex-col gap-2">

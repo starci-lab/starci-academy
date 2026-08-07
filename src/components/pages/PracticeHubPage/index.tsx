@@ -9,6 +9,7 @@ import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveB
 import { pathConfig } from "@/resources/path"
 import { Box } from "@/components/frames/Box"
 import { StackV } from "@/components/frames/Stack"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { PracticeRail } from "./PracticeRail"
 import { PracticeMobileNav } from "./PracticeRail/PracticeMobileNav"
 import { ProgressCockpit } from "./ProgressCockpit"
@@ -48,7 +49,7 @@ export const PracticeHubPage = () => {
                 maxWidth={420}
                 ariaLabel={t("PracticeHubPage.rail.modeAria")}
             >
-                <PracticeRail className="min-h-0 @app-lg:flex-1" />
+                <FillAvailable at="lg" body={() => <PracticeRail />} />
             </ResizableRail>
 
             {/* content column — owns the canonical p-6 reading padding */}

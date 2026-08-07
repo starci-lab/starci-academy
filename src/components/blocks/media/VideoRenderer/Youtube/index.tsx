@@ -1,11 +1,9 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link Youtube}. */
-export interface YoutubePlayerProps extends WithClassNames<undefined> {
+export interface YoutubePlayerProps {
     /** YouTube video URL (watch, short, embed, youtu.be). */
     url: string
     title?: string
@@ -60,13 +58,12 @@ const toYoutubeEmbedUrl = (raw: string): string | null => {
 export const Youtube = ({
     url,
     title = "YouTube video",
-    className,
 }: YoutubePlayerProps) => {
     const embedSrc = useMemo(() => toYoutubeEmbedUrl(url), [url])
 
     if (!embedSrc) {
         return (
-            <div className={cn("text-muted flex min-h-[12rem] items-center justify-center rounded-medium border border-dashed p-4 text-center text-sm", className)}>
+            <div className="text-muted flex min-h-[12rem] items-center justify-center rounded-medium border border-dashed p-4 text-center text-sm">
                 Invalid or unsupported YouTube URL.
             </div>
         )
@@ -75,7 +72,7 @@ export const Youtube = ({
     return (
         <iframe
             title={title}
-            className={cn("aspect-video w-full rounded-large", className)}
+            className="aspect-video w-full rounded-large"
             src={embedSrc}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen

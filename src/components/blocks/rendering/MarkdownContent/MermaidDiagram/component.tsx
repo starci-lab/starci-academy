@@ -1,10 +1,9 @@
 import { MagnifyingGlassPlusIcon } from "@phosphor-icons/react"
 import React, { useState } from "react"
-import { Modal, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Modal } from "@heroui/react"
 
 /** Props for {@link _MermaidDiagram} — presentational; the rendered SVG already resolved. */
-export interface MermaidDiagramProps extends WithClassNames<undefined> {
+export interface MermaidDiagramProps {
     /** Rendered SVG markup, or `null` while the diagram is still compiling. */
     svg: string | null
     /** Translated loading text while the diagram is rendering. */
@@ -27,14 +26,14 @@ export interface MermaidDiagramProps extends WithClassNames<undefined> {
  * half — this file itself needs no browser API.
  * @param props - {@link MermaidDiagramProps}
  */
-export const _MermaidDiagram = ({ svg, loadingLabel, expandLabel, caption, fallbackLabel, className }: MermaidDiagramProps) => {
+export const _MermaidDiagram = ({ svg, loadingLabel, expandLabel, caption, fallbackLabel }: MermaidDiagramProps) => {
     // Local open flag for the full-screen preview dialog (per-diagram, not a global modal).
     const [isOpen, setOpen] = useState(false)
     // Authored caption wins; otherwise show a generic figure label.
     const figureCaption = caption ?? fallbackLabel
 
     return (
-        <figure className={cn("rounded-xl border border-default bg-background p-3", className)}>
+        <figure className="rounded-xl border border-default bg-background p-3">
             {svg ? (
                 <>
                     {/* Clickable inline diagram — opens the full-screen preview on press. */}

@@ -17,7 +17,6 @@ import {
     type LeaderboardCategoryKey,
 } from "@/modules/utils/leaderboard"
 import { useLeaderboardSwr } from "@/hooks/swr/api/graphql/queries/useLeaderboardSwr"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One row in the category rail. */
 interface RailItem {
@@ -32,7 +31,7 @@ interface RailItem {
 }
 
 /** Props for {@link LeaderboardCategoryRail}. */
-export interface LeaderboardCategoryRailProps extends WithClassNames<undefined> {
+export interface LeaderboardCategoryRailProps {
     /**
      * `rail` — the sidebar-style vertical list (desktop left rail, in the learn
      * shell's `leftRail` slot). `chips` — a horizontal scroll of pills above the
@@ -51,7 +50,7 @@ export interface LeaderboardCategoryRailProps extends WithClassNames<undefined> 
  *
  * @param props - {@link LeaderboardCategoryRailProps}
  */
-export const LeaderboardCategoryRail = ({ variant, className }: LeaderboardCategoryRailProps) => {
+export const LeaderboardCategoryRail = ({ variant }: LeaderboardCategoryRailProps) => {
     const t = useTranslations()
     const router = useRouter()
     const pathname = usePathname()
@@ -100,7 +99,7 @@ export const LeaderboardCategoryRail = ({ variant, className }: LeaderboardCateg
     // mobile: a horizontal scroll of category chips above the board
     if (variant === "chips") {
         return (
-            <div className={cn("-mx-1 flex gap-2 overflow-x-auto px-1 pb-1", className)}>
+            <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
                 {items.map((item) => {
                     const isSelected = item.key === selected
                     return (
@@ -131,7 +130,7 @@ export const LeaderboardCategoryRail = ({ variant, className }: LeaderboardCateg
 
     // desktop: vertical sidebar-style list (lives in the shell's left rail slot)
     return (
-        <div className={cn("flex flex-col gap-3 overflow-y-auto p-6", className)}>
+        <div className="flex flex-col gap-3 overflow-y-auto p-6">
             <Label>{t("leaderboard.categories.label")}</Label>
             <ListBox
                 aria-label={t("leaderboard.categories.label")}

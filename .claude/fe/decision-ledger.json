@@ -1842,6 +1842,16 @@
       "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b28-status.md",
       "holdsPreserved": 27,
       "next": "Wave 2: GithubIcon size union after LearnLoopScroll unlock; grid start props or honest parent Grid migration for CourseHero/PricingRail; flex-fill named wrapper for rails; InfoTooltip vendor Trigger contract."
+    },
+    {
+      "id": "b29-fill-media-markdown-2026-08-09",
+      "date": "2026-08-09",
+      "status": "applied-uncommitted",
+      "summary": "BATCH 29: FillAvailable+flex-fill (5 rails); VideoRenderer/player CSS doors deleted (0 consumers); Markdown blockMy owned by map wrappers; CodeToHtml/Mermaid doors closed. Inventory 1573→1536 (−37). Secondary cards/lists/nav held. ATOM-5 ModalBody p-6 moved to Box page-pad.",
+      "reason": "Proven exact fill value min-h-0 @app-lg:flex-1; video doors unused; markdown spacing is parent map ownership. No new CSS doors; at=base deferred; secondary multi-value axes held.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b29-status.md",
+      "holdsPreserved": 29,
+      "next": "Secondary finite axes (TabsCard measure, TierCardBase popular chrome); GithubIcon after LearnLoopScroll unlock; CourseHero grid start."
     }
   ]
 }

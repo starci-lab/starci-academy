@@ -19,17 +19,11 @@ import {
 import {
     pathConfig,
 } from "@/resources/path"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
 import { OutlineRail } from "@/components/blocks/navigation/OutlineRail"
 import type { OutlineRailGroup } from "@/components/blocks/navigation/OutlineRail"
 import type { MyCourseOutlineModule } from "@/modules/api/graphql/queries/types/my-course-outline"
-
-/** Props for {@link ContentMap}. */
-export type ContentMapProps = WithClassNames<undefined>
 
 /**
  * Filter modules + their lessons by a lower-cased query (module title match keeps
@@ -67,12 +61,10 @@ const filterModules = (
  * {@link OutlineRail} block (which owns the look it shares with the personal-project
  * milestone rail).
  *
- * Positioning (sticky / width / scroll) is supplied by the caller via `className`
- * so the same rail serves the desktop left rail and the mobile drawer.
- *
- * @param props - {@link ContentMap}
+ * Positioning (sticky / width / scroll) is owned by the learn shell's
+ * {@link FillAvailable} wrapper on desktop and the mobile drawer on small screens.
  */
-export const ContentMap = ({ className }: ContentMapProps) => {
+export const ContentMap = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -214,7 +206,6 @@ export const ContentMap = ({ className }: ContentMapProps) => {
 
     return (
         <OutlineRail
-            className={className}
             header={progress ? {
                 label: t("courseContents.progress"),
                 progress: { done: progress.lessonsRead, total: progress.lessonsTotal },

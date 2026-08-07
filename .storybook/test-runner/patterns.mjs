@@ -87,6 +87,7 @@ export const PATTERNS = {
     "sticky-top": { prop: "position", value: "sticky", what: "a header/sub-header pinned to the top of its scroll region" },
     "fixed-bar": { prop: "position", value: "fixed", what: "a bottom action bar or FAB pinned to the viewport, rail-aware (right offset by --app-rail-w)" },
     "stack-below": { prop: "breakpoint", what: "a row that becomes a full-width column below a named container width (the Switcher — `ResponsiveRow`/`ResponsiveCluster`)" },
+    "flex-fill": { prop: "breakpoint", what: "a flex child that keeps min-h-0 and takes remaining height from a named container step up (`FillAvailable` — rails that scroll inside a pinned shell)" },
 }
 
 /** Which computed property each `prop` reads, and how. */

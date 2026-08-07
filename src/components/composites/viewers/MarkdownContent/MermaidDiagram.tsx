@@ -4,7 +4,6 @@ import React, { useId, useState } from "react"
 import { MagnifyingGlassPlusIcon } from "@phosphor-icons/react"
 import mermaid from "mermaid"
 import useSWR from "swr"
-import { cn } from "@heroui/react"
 import {
     ModalBackdrop,
     ModalBody,
@@ -15,7 +14,6 @@ import {
 } from "@/components/atoms/overlay/Modal"
 import { Box } from "@/components/frames/Box"
 import { StackV } from "@/components/frames/Stack"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -43,13 +41,6 @@ export interface MermaidDiagramProps {
     caption?: string
     /** Generic caption shown in the zoom modal when the diagram has no authored caption. */
     fallbackLabel: string
-    /**
-     * Where the root `<figure>` sits inside its parent, from the closed
-     * positioning union. `map.tsx` owns the block-rhythm margin between fences
-     * by wrapping this component's output in a plain `<div>` — margins have no
-     * slot in `AllowedClassName` (see `principles/margin.md`).
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -60,7 +51,7 @@ export interface MermaidDiagramProps {
  * `"use client"` for the browser-side mermaid renderer.
  * @param props - {@link MermaidDiagramProps}
  */
-export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption, fallbackLabel, classNames }: MermaidDiagramProps) => {
+export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption, fallbackLabel }: MermaidDiagramProps) => {
     // Stable id so concurrent diagrams never collide on mermaid's render target id.
     const renderId = useId().replace(/:/g, "-")
     // Local open flag for the full-screen preview dialog (per-diagram, not a global modal).
@@ -85,7 +76,7 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
     )
 
     return (
-        <figure className={cn("overflow-hidden rounded-3xl border border-default bg-background", classNames)}>
+        <figure className="overflow-hidden rounded-3xl border border-default bg-background">
             {/* Header row matches `CodeToHtml`'s exact chrome (label left, action right) — a
                 mermaid block is "a fence with a name" the same way a code fence is: the WORD
                 "mermaid" is the label, same as a code fence names its own language. The zoom
@@ -128,36 +119,40 @@ export const MermaidDiagram = ({ code, theme, loadingLabel, expandLabel, caption
                             <ModalContainer size="full">
                                 <ModalDialog>
                                     <ModalCloseTrigger />
-                                    {/* `p-6` — the composite viewer tier caps padding to the house
-                                        scale (`AllowedPadding` steps `1..6`, see `scripts/check-padding.mjs`);
-                                        `src`'s `p-4` is off that scale, so the full-screen preview gets the
-                                        closest generous step instead. */}
-                                    <ModalBody data-principle="page-pad" className="p-6">
-                                        {/* Full-screen figure: diagram scaled to fill, caption beneath. */}
-                                        <StackV
-                                            as="figure"
-                                            gap={3}
-                                            principle="sibling-stack"
-                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                                            align="center"
-                                            justify="center"
-                                            classNames={["h-full"]}
-                                            items={[
-                                                () => (
-                                                    <div className="flex w-full flex-1 items-center justify-center overflow-auto">
-                                                        <div
-                                                            className="[&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full"
-                                                            dangerouslySetInnerHTML={{ __html: data }}
-                                                        />
-                                                    </div>
-                                                ),
-                                                () => (
-                                                    <figcaption className="text-center text-sm italic text-muted">
-                                                        {figureCaption}
-                                                    </figcaption>
-                                                ),
-                                            ]}
-                                        />
+                                    <ModalBody>
+                                        {/* Full-screen figure: diagram scaled to fill, caption beneath.
+                                            Page inset owned by Box principle=page-pad — not ModalBody
+                                            className (ATOM-5: atoms take position only). */}
+                                        <Box
+                                            principle="page-pad"
+                                            className="h-full"
+                                            explain="Outermost reading inset inside the zoom dialog — not card-padding, because this is a full-viewport surface rather than a card body."
+                                        >
+                                            <StackV
+                                                as="figure"
+                                                gap={3}
+                                                principle="sibling-stack"
+                                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                align="center"
+                                                justify="center"
+                                                classNames={["h-full"]}
+                                                items={[
+                                                    () => (
+                                                        <div className="flex w-full flex-1 items-center justify-center overflow-auto">
+                                                            <div
+                                                                className="[&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-full"
+                                                                dangerouslySetInnerHTML={{ __html: data }}
+                                                            />
+                                                        </div>
+                                                    ),
+                                                    () => (
+                                                        <figcaption className="text-center text-sm italic text-muted">
+                                                            {figureCaption}
+                                                        </figcaption>
+                                                    ),
+                                                ]}
+                                            />
+                                        </Box>
                                     </ModalBody>
                                 </ModalDialog>
                             </ModalContainer>

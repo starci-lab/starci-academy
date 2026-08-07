@@ -367,15 +367,16 @@ export const buildMarkdownRenderers = ({
             const code = String((child.props as { children?: React.ReactNode }).children || "").replace(/\n$/, "")
             if (lang.toLowerCase() === "mermaid") {
                 return (
-                    <MermaidDiagram
-                        code={code}
-                        theme={isDark ? "dark" : "default"}
-                        loadingLabel={t("markdown.mermaidRendering")}
-                        expandLabel={t("markdown.mermaidExpand")}
-                        caption={mermaidCaptions[code.trim()]}
-                        fallbackLabel={t("markdown.mermaidFigureLabel")}
-                        className={blockMy}
-                    />
+                    <div className={blockMy}>
+                        <MermaidDiagram
+                            code={code}
+                            theme={isDark ? "dark" : "default"}
+                            loadingLabel={t("markdown.mermaidRendering")}
+                            expandLabel={t("markdown.mermaidExpand")}
+                            caption={mermaidCaptions[code.trim()]}
+                            fallbackLabel={t("markdown.mermaidFigureLabel")}
+                        />
+                    </div>
                 )
             }
             // ```mdx fence → live HeroUI render (render-only; tabs come from a :::tab block).
@@ -386,15 +387,16 @@ export const buildMarkdownRenderers = ({
                 return <LayoutWidget html={code} />
             }
             return (
-                <CodeToHtml
-                    code={code}
-                    language={lang}
-                    theme={isDark
-                        ? "material-theme-darker"
-                        : "material-theme-lighter"}
-                    elevated={codeElevated}
-                    className={blockMy}
-                />
+                <div className={blockMy}>
+                    <CodeToHtml
+                        code={code}
+                        language={lang}
+                        theme={isDark
+                            ? "material-theme-darker"
+                            : "material-theme-lighter"}
+                        elevated={codeElevated}
+                    />
+                </div>
             )
         },
         blockquote: ({ children }) => (

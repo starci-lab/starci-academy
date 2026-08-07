@@ -2,10 +2,8 @@
 
 import React, { useEffect, useRef, useState } from "react"
 import { codeToHtml } from "shiki"
-import { cn } from "@heroui/react"
 import { SnippetIcon } from "@/components/atoms/display/SnippetIcon"
 import { Box } from "@/components/frames/Box"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -69,16 +67,6 @@ export interface CodeToHtmlProps {
     language: string
     /** Shiki theme id resolved from the current Storybook toolbar theme. */
     theme: string
-    /**
-     * Where the root element sits inside its parent, from the closed positioning
-     * union. The block-rhythm margin between fences (`"my-4"`/`"my-3"`) has no
-     * slot here on purpose — margins are excluded from `AllowedClassName` by
-     * design (see `_allowed-class-name.ts` and `principles/margin.md`: it is the
-     * seam between two things, not a component's own prop). `map.tsx` owns that
-     * margin by wrapping this component's output in a plain `<div>` instead of
-     * forwarding a free string in.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -92,7 +80,7 @@ export interface CodeToHtmlProps {
  * (Shiki/WASM is heavy); off-screen blocks show raw code (`<pre>`) until scrolled into view.
  * @param props - {@link CodeToHtmlProps}
  */
-export const CodeToHtml = ({ code, language, theme, classNames }: CodeToHtmlProps) => {
+export const CodeToHtml = ({ code, language, theme }: CodeToHtmlProps) => {
     const containerRef = useRef<HTMLDivElement>(null)
     /** Whether the block has entered (near) the viewport yet — only then do we highlight. */
     const [isVisible, setIsVisible] = useState(false)
@@ -143,12 +131,7 @@ export const CodeToHtml = ({ code, language, theme, classNames }: CodeToHtmlProp
     return (
         <div
             ref={containerRef}
-            className={cn(
-                // A code block is card-like → 3xl. Recessed well (`border` + `bg-background`) is
-                // the correct look on a reading surface/card — this composite always renders on
-                // one, so (unlike `src`) there is no `elevated` variant to opt into here.
-                "w-full max-w-full overflow-hidden rounded-3xl border border-default bg-background",
-                classNames)}
+            className="w-full max-w-full overflow-hidden rounded-3xl border border-default bg-background"
         >
             {/* slim header: language label (left) + copy (right) — orients long lessons with many snippets */}
             <Box principle="control-pad" className="flex items-center justify-between border-b border-default px-3 py-2"

@@ -11,7 +11,6 @@ import {
     ScrollShadow,
     TextField,
     Typography,
-    cn,
 } from "@heroui/react"
 import {
     ListChecksIcon,
@@ -26,10 +25,6 @@ import { usePracticeView } from "../hooks/usePracticeView"
 import { usePracticeFilters } from "../hooks/usePracticeFilters"
 import type { PracticeView } from "../hooks/usePracticeView"
 import type { DomainFilter } from "../types"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
-/** Props for {@link PracticeRail}. */
-export type PracticeRailProps = WithClassNames<undefined>
 
 /**
  * The PracticeHubPage LEFT RAIL — the same docs-style sidebar as the flashcards /
@@ -40,10 +35,8 @@ export type PracticeRailProps = WithClassNames<undefined>
  * the rail and the work pane share one source of truth. Topics show only in
  * Problems mode (the leaderboard is topic-agnostic). Placed in the rail column by
  * the page shell; reads/writes URL state directly (no data props).
- *
- * @param props - {@link PracticeRailProps}
  */
-export const PracticeRail = ({ className }: PracticeRailProps) => {
+export const PracticeRail = () => {
     const t = useTranslations()
     const { view, setView } = usePracticeView()
     const { filters, setFilters } = usePracticeFilters()
@@ -66,7 +59,7 @@ export const PracticeRail = ({ className }: PracticeRailProps) => {
     }, [query, t])
 
     return (
-        <div className={cn("relative flex min-h-0 min-w-0 flex-col gap-3 p-6", className)}>
+        <div className="relative flex min-h-0 min-w-0 flex-col gap-3 p-6">
             {/* pinned header: mode switch + topic search */}
             <StackV gap={4} principle="card-caption"
                 explain="Holds caption text under card media so the caption stays attached to the image above it."

@@ -1,5 +1,4 @@
 "use client"
-import { cn } from "@heroui/react"
 import React, { useMemo } from "react"
 import { Standard } from "./Standard"
 import { MpegDash } from "./MpegDash"
@@ -7,7 +6,6 @@ import { Youtube } from "./Youtube"
 import { LessonVideoType } from "@/modules/types/enums/lesson-video-type"
 import { VideoHostPlatform } from "@/modules/types/enums/video-host-platform"
 import { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
-import { type WithClassNames } from "@/modules/types/base/class-name"
 
 // ---------------------------------------------------------------------------
 // Resolve which sub-player to use
@@ -42,11 +40,7 @@ const resolveRendererType = (
 // ---------------------------------------------------------------------------
 
 /** Props for {@link VideoRenderer}. */
-export interface VideoRendererProps
-    extends WithClassNames<{
-        content?: string
-        base?: string
-    }> {
+export interface VideoRendererProps {
     url: string
     hostPlatform?: VideoHostPlatform
     /** Video delivery format — Standard (mp4) or MpegDash. Defaults to Standard. */
@@ -71,8 +65,6 @@ export const VideoRenderer = ({
     videoType,
     rendererType,
     title,
-    classNames,
-    className,
 }: VideoRendererProps) => {
     const type =
         rendererType ?? resolveRendererType(url, videoType, hostPlatform)
@@ -88,44 +80,22 @@ export const VideoRenderer = ({
 
         switch (type) {
         case VideoRendererType.MpegDash:
-            return (
-                <MpegDash
-                    src={url}
-                    className={classNames?.content}
-                />
-            )
+            return <MpegDash src={url} />
         case VideoRendererType.Youtube:
-            return (
-                <Youtube
-                    url={url}
-                    title={title}
-                    className={classNames?.content}
-                />
-            )
+            return <Youtube url={url} title={title} />
         case VideoRendererType.Standard:
         default:
-            return (
-                <Standard
-                    src={url}
-                    className={classNames?.content}
-                />
-            )
+            return <Standard src={url} />
         }
     }
 
     const content = useMemo(
         () => renderContent(),
-        [url, type, title, classNames?.content],
+        [url, type, title],
     )
 
     return (
-        <div
-            className={cn(
-                classNames?.base,
-                className,
-                "w-full aspect-video rounded-large overflow-hidden",
-            )}
-        >
+        <div className="w-full aspect-video rounded-large overflow-hidden">
             {content}
         </div>
     )

@@ -3,7 +3,6 @@ import { cn } from "@heroui/react"
 import { ProgressCircle } from "@sb-components/atoms/display/Progress/Progress"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "ProgressRing" } as const
 
@@ -40,11 +39,6 @@ interface ProgressRingOwnProps {
     size?: "sm" | "md" | "lg"
     /** Fill tone. Defaults to `"accent"`; pass a semantic tone (success / warning / danger) when the VALUE carries meaning. */
     tone?: "accent" | "success" | "warning" | "danger"
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
     /** `true` → tag the ring/caption skeleton bars with ``. */
 }
 
@@ -73,7 +67,7 @@ export const ProgressRing = ({
     size = "md",
     tone = "accent",
     isSkeleton = false,
-    classNames,
+    
 }: ProgressRingProps) => {
     const { label: labelSize } = SIZE_MAP[size]
     // `value` is REQUIRED whenever `isSkeleton` is false (the discriminated union above) —
@@ -89,7 +83,6 @@ export const ProgressRing = ({
             principle="sibling-stack"
             explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             align="center"
-            classNames={classNames}
             isSkeleton={isSkeleton}
             items={[
                 // Relative container: the ring fills it, the label overlays its center

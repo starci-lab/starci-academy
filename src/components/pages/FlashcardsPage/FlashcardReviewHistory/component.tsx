@@ -207,14 +207,15 @@ export const _FlashcardReviewHistory = ({
             explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             items={[
                 () => (
-                    <InputSearch
-                        isSkeleton={isSkeleton}
-                        ariaLabel={labels.searchPlaceholder}
-                        placeholder={labels.searchPlaceholder}
-                        value={query}
-                        onValueChange={setQuery}
-                        classNames={["w-full"]}
-                    />
+                    <Box className="w-full">
+                        <InputSearch
+                            isSkeleton={isSkeleton}
+                            ariaLabel={labels.searchPlaceholder}
+                            placeholder={labels.searchPlaceholder}
+                            value={query}
+                            onValueChange={setQuery}
+                        />
+                    </Box>
                 ),
                 () => (
                     <StackH gap={3} classNames={["shrink-0"]} items={[

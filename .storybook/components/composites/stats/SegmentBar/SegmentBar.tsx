@@ -3,7 +3,6 @@ import { cn } from "@heroui/react"
 import { Legend } from "@sb-components/composites/stats/Legend/Legend"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "SegmentBar" } as const
@@ -50,11 +49,6 @@ interface SegmentBarOwnProps {
      * able to build it (a pre-built node could not be told it is loading).
      */
     caption?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -93,7 +87,7 @@ export const SegmentBar = ({
     inlineLabels,
     caption,
     isSkeleton = false,
-    classNames,
+    
 }: SegmentBarProps) => {
     // `segments` is REQUIRED whenever `isSkeleton` is false (discriminated union above) —
     // guaranteed by the type at every real call site — the `?? []` only satisfies narrowing
@@ -175,5 +169,5 @@ export const SegmentBar = ({
             ) : null}
         </>
     )
-    return <StackV gap={3} isSkeleton={isSkeleton} classNames={classNames} items={[() => barContent]} />
+    return <StackV gap={3} isSkeleton={isSkeleton} items={[() => barContent]} />
 }

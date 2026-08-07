@@ -2,7 +2,6 @@ import { cn } from "@heroui/react"
 import { XIcon } from "@phosphor-icons/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Button, type IconComponent } from "@/components/atoms/buttons/Button"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { StackH } from "@/components/frames/Stack"
 
 /**
@@ -51,11 +50,6 @@ export interface RemovableTokenProps {
     removeLabel?: string
     /** Disables both affordances and dims the token. */
     isDisabled?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
     /** `true` → render the skeleton mirror (row frame + placeholder bars). */
     isSkeleton?: boolean
 }
@@ -81,7 +75,7 @@ export const RemovableToken = ({
     onRemove,
     removeLabel = "Remove",
     isDisabled = false,
-    classNames,
+    
     isSkeleton = false}: RemovableTokenProps) => {
     // One render path: the row's own frame stays identical whether loading or not;
     // only the trailing affordance's CONTENT differs (a shimmer pill vs the real
@@ -123,8 +117,7 @@ export const RemovableToken = ({
             aria-disabled={isDisabled}
             className={cn(
                 "flex items-center justify-between gap-3 rounded-2xl border border-default px-3 py-3",
-                isDisabled && "opacity-50",
-                classNames)}
+                isDisabled && "opacity-50")}
             data-tier="composite"
             data-component="RemovableToken"
             data-principle="cell-pad"

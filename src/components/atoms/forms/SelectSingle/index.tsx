@@ -22,7 +22,7 @@ export const SelectSingle = ({
     isInvalid,
     ariaLabel,
     isSkeleton,
-    classNames,
+    
     label,
     hint,
     errorMessage,
@@ -43,7 +43,7 @@ export const SelectSingle = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            skeletonControl={<TriggerSkeleton classNames={classNames} />}
+            skeletonControl={<TriggerSkeleton />}
         >
             <HeroSelect.Root<SelectOption, "single">
                 data-tier="atom"
@@ -55,7 +55,7 @@ export const SelectSingle = ({
                 selectedKey={value}
                 onSelectionChange={(key) => onValueChange(String(key))}
                 fullWidth
-                className={cn(classNames)}
+                
             >
                 <HeroSelect.Trigger>
                     <HeroSelect.Value>

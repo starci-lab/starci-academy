@@ -1,9 +1,6 @@
 import type { ComponentType, SVGProps } from "react"
 import { Alert as AtomAlert } from "@sb-components/atoms/feedback/Alert/Alert"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
-import { Box } from "@sb-components/frames/Box/Box"
-import { cn } from "@heroui/react"
 /**
  * `Toast` — the one notification surface, composed from `Alert` (`tone="plain"` + glyph `sm`);
  * the HeroUI port lives entirely in `Alert`. Leaves: `Statuses` (the full `ToastStatus` union)
@@ -48,8 +45,6 @@ interface ToastOwnProps {
     onClose?: () => void
     /** Accessible label for the × (caller passes a localised string). */
     closeLabel?: string
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
-    classNames?: Array<AllowedClassName>
 }
 /**
  * `isSkeleton` is the loading state of the value this toast renders, so the title is optional
@@ -66,7 +61,7 @@ export type ToastBaseProps = ToastOwnProps &
  * @param props - {@link ToastBaseProps}
  */
 const ToastBase = (props: ToastBaseProps) => {
-    const { status = "info", description, icon, action: Action, onClose, closeLabel, classNames } = props
+    const { status = "info", description, icon, action: Action, onClose, closeLabel } = props
     // Narrowed off the discriminant so the title stays required in the live branch. Destructuring
     // `title` first would widen it to `ReactNode | undefined` and lose exactly that guarantee.
     const content = props.isSkeleton
@@ -84,7 +79,7 @@ const ToastBase = (props: ToastBaseProps) => {
             closeAriaLabel={closeLabel}
         />
     )
-    return classNames?.length ? <Box className={cn(classNames)}>{alert}</Box> : alert
+    return alert
 }
 /** `Toast.*` — the notification-surface composite namespace. `status`/`action`/`close` are all leaf props. */
 export { ToastBase as Toast }

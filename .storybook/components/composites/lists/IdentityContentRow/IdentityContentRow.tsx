@@ -1,6 +1,5 @@
 import { Avatar, type AvatarSize } from "@sb-components/atoms/display/Avatar/Avatar"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
 /**
@@ -38,7 +37,6 @@ export interface IdentityContentRowProps {
     /** `true` → the whole row (avatar + byline) renders as its skeleton mirror. */
     isSkeleton?: boolean
     /** Layout utilities on the root, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -58,7 +56,7 @@ const IdentityContentRow = ({
     byline: Byline,
     body: Body,
     isSkeleton = false,
-    classNames,
+    
 }: IdentityContentRowProps) => (
     <StackH
         gap={4}
@@ -66,7 +64,6 @@ const IdentityContentRow = ({
         explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
         align="start"
         nested={nested}
-        classNames={classNames}
         isSkeleton={isSkeleton}
 
         items={[

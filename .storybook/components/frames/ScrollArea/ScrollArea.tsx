@@ -1,5 +1,4 @@
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@sb-components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_identity"
@@ -43,8 +42,6 @@ export interface ScrollAreaProps {
     axis?: ScrollAreaAxis
     /** Renders `body` in its skeleton state. */
     isSkeleton?: boolean
-    /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
-    classNames?: Array<AllowedClassName>
     /**
      * The layout pattern this frame's seam realises - one token from `test-runner/patterns.mjs`
      * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principle` on the element
@@ -83,7 +80,7 @@ const ScrollArea = ({
     body: Body,
     axis = "y",
     isSkeleton,
-    classNames,
+    
     principle,
     explain,
     identity}: ScrollAreaProps) => (
@@ -91,7 +88,7 @@ const ScrollArea = ({
         {...resolveIdentity(identity, { tier: "frame", name: "ScrollArea" })}
         data-principle={principleAttr(principle)}
         data-explain={explainAttr(explain)}
-        className={cn(AXIS_CLASS[axis], classNames)}
+        className={cn(AXIS_CLASS[axis])}
     >
         {/* `body` is a CALLER SLOT -- the node inside belongs to whoever passed it, not to
             this frame, so it gets no badge of its own (same restraint as `Container.body`). */}

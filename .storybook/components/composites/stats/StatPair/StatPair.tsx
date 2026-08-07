@@ -1,5 +1,4 @@
 import React from "react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -12,11 +11,6 @@ export type StatPairValueType = "h4" | "h5" | "body"
 interface StatPairOwnProps {
     /** Value (title) size — defaults to `h4`; use `body` (text-base) for a smaller title (long strings). */
     valueType?: StatPairValueType
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -64,7 +58,7 @@ export const StatPair = ({
     label,
     valueType = "h4",
     isSkeleton = false,
-    classNames,
+    
 }: StatPairProps) => {
     return (
         <StackV
@@ -73,7 +67,6 @@ export const StatPair = ({
             explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
             align="start"
             isSkeleton={isSkeleton}
-            classNames={classNames}
             items={[
                 () => (
                     <Typography

@@ -1,7 +1,6 @@
 import { cn } from "@heroui/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { TypographyIcon } from "@/components/atoms/text/Typography"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -63,7 +62,6 @@ export interface IconLabelValueRowProps {
     /** `true` -> render the skeleton mirror (icon placeholder + two bars) instead of the live row. */
     isSkeleton?: boolean
     /** Layout utilities on the root, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -80,10 +78,10 @@ const IconLabelValueRow = ({
     label,
     value,
     isSkeleton = false,
-    classNames,
+    
 }: IconLabelValueRowProps) => (
     <div
-        className={cn("flex min-w-0 items-center gap-3", classNames)}
+        className={cn("flex min-w-0 items-center gap-3")}
         data-tier="composite"
         data-component="IconLabelValueRow"
         data-principle="content-row"

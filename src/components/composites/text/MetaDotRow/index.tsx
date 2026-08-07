@@ -2,7 +2,6 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Divider } from "@/components/atoms/display/Divider"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — MetaDotRow: a row of small text fragments
@@ -33,10 +32,6 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 interface MetaDotRowOwnProps {
     /** Fragment count to shimmer while `isSkeleton`. Defaults to `3`. */
     skeletonCount?: number
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -66,7 +61,7 @@ export const MetaDotRow = ({
     items,
     isSkeleton = false,
     skeletonCount = 3,
-    classNames,
+    
 }: MetaDotRowProps) => {
     const fragments = isSkeleton
         ? Array.from({ length: skeletonCount }, (_unused, index) => ({ key: String(index), text: undefined }))
@@ -79,7 +74,7 @@ export const MetaDotRow = ({
     // of its own (a static glyph, nothing to load — see `Divider`'s own header).
     return (
         <div
-            className={cn("flex flex-wrap items-center gap-1 text-muted", classNames)}
+            className={cn("flex flex-wrap items-center gap-1 text-muted")}
             data-tier="composite"
             data-component="MetaDotRow"
             data-principle="separator-dot"

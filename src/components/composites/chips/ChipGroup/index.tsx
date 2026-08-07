@@ -1,6 +1,5 @@
 import { cn } from "@heroui/react"
 import { Tooltip } from "@/components/atoms/overlay/Tooltip"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Chip, type ChipTone } from "@/components/atoms/chips/Chip"
 /**
  * `ChipGroup` — a row of chips described by `items` data, truncated when it overflows.
@@ -38,11 +37,6 @@ export interface ChipGroupProps {
     tone?: ChipTone
     /** `true` → skeleton mirrors the resting-state cell count (each cell is its own `Chip`). */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "ChipGroup" } as const
@@ -53,12 +47,12 @@ export const ChipGroup = ({
     maxVisible = 3,
     tone = "default",
     isSkeleton = false,
-    classNames,
+    
 }: ChipGroupProps) => {
     if (isSkeleton) {
         return (
             <div
-                className={cn("flex flex-wrap items-center gap-2", classNames)}
+                className={cn("flex flex-wrap items-center gap-2")}
                 data-tier="composite"
                 data-component="ChipGroup"
                 data-principle="chip-row"
@@ -79,7 +73,7 @@ export const ChipGroup = ({
     const overflowCount = Math.max(0, items.length - maxVisible)
     return (
         <div
-            className={cn("flex flex-wrap items-center gap-2", classNames)}
+            className={cn("flex flex-wrap items-center gap-2")}
             data-tier="composite"
             data-component="ChipGroup"
             data-principle="chip-row"

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { ImageIcon } from "@phosphor-icons/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ATOM — `Image`: framed image wrapping `<img>`, handling its own skeleton while fetching +
@@ -54,11 +53,6 @@ export interface ImageBaseProps {
     loading?: "lazy" | "eager"
     /** Forces the skeleton state from outside, in addition to internal loading. */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -74,7 +68,7 @@ const ImageBase = ({
     fallbackSrc,
     loading = "lazy",
     isSkeleton = false,
-    classNames,
+    
 }: ImageBaseProps) => {
     // Internal load state; resets to "loading" whenever `src` changes.
     const [status, setStatus] = useState<"loading" | "loaded" | "error">(src ? "loading" : "error")
@@ -92,7 +86,7 @@ const ImageBase = ({
         ratio != null && RATIO_CLS[ratio],
         RADIUS_CLS[radius],
         "w-full",
-        classNames,
+        
     )
     const imgFit = fit === "cover" ? "object-cover" : "object-contain"
 

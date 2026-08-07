@@ -11,7 +11,6 @@ import {
     Typography,
 } from "@heroui/react"
 import { FieldFrame, fieldName } from "@sb-components/composites/form/_field/FieldFrame"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ATOM — a suggest-as-you-type search field built on HeroUI `ComboBox`. Anatomy:
@@ -80,8 +79,6 @@ export interface SearchAutocompleteProps {
     errorMessage?: ReactNode
     /** Adds a required `*` mark after the label. */
     isRequired?: boolean
-    /** Where this sits inside its parent. Everything about appearance is a prop of its own. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -108,7 +105,7 @@ const SearchAutocompleteBase = ({
     hint,
     errorMessage,
     isRequired,
-    classNames,
+    
 }: SearchAutocompleteProps) => {
     const controlId = useId()
     const invalid = errorMessage != null
@@ -134,7 +131,7 @@ const SearchAutocompleteBase = ({
             // field's resting shape; the popover has no resting shape.
             skeletonControl={
                 <HeroSkeleton
-                    className={cn("h-9 w-full rounded-xl @app-sm:max-w-sm", classNames)}
+                    className={cn("h-9 w-full rounded-xl @app-sm:max-w-sm")}
 
                 />
             }
@@ -144,7 +141,7 @@ const SearchAutocompleteBase = ({
                 data-component="SearchAutocomplete"
                 aria-label={fieldName(label, placeholder)}
                 isInvalid={invalid}
-                className={cn("w-full @app-sm:max-w-sm", classNames)}
+                className={cn("w-full @app-sm:max-w-sm")}
                 variant="secondary"
                 allowsEmptyCollection
                 items={items}

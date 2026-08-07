@@ -3,7 +3,6 @@ import { cn } from "@heroui/react"
 import { Legend } from "@/components/composites/stats/Legend"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -51,11 +50,6 @@ interface SegmentBarOwnProps {
      * able to build it (a pre-built node could not be told it is loading).
      */
     caption?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -96,8 +90,7 @@ export const SegmentBar = ({
     hideLegend,
     inlineLabels,
     caption,
-    isSkeleton = false,
-    classNames}: SegmentBarProps) => {
+    isSkeleton = false}: SegmentBarProps) => {
     // `segments` is REQUIRED whenever `isSkeleton` is false (discriminated union above) —
     // guaranteed by the type at every real call site — the `?? []` only satisfies narrowing
     // across the destructure, and is never seen while `isSkeleton`.
@@ -174,5 +167,5 @@ export const SegmentBar = ({
             ) : null}
         </>
     )
-    return <StackV gap={3} classNames={classNames} items={[() => barContent]} />
+    return <StackV gap={3} items={[() => barContent]} />
 }

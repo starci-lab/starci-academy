@@ -1,4 +1,3 @@
-import { cn } from "@heroui/react"
 import {
     AlertDialogRoot,
     AlertDialogBackdrop,
@@ -10,7 +9,6 @@ import {
     AlertDialogFooter,
 } from "@sb-components/atoms/feedback/AlertDialog/AlertDialog"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { ButtonGroup } from "@sb-components/composites/buttons/ButtonGroup/ButtonGroup"
 
 /**
@@ -62,10 +60,6 @@ export interface ConfirmDialogProps {
      */
     isConfirming?: boolean
     /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
-    /**
      * `true` → `title`/`description` switch to shimmer (COMPOSITE-8 — both are TEXT
      * this shell renders itself via `Typography`, so the flag reaches them directly,
      * no component-reference slot to call).
@@ -93,7 +87,7 @@ export const ConfirmDialog = ({
     onConfirm,
     tone = "default",
     isConfirming = false,
-    classNames,
+    
     isSkeleton = false,
 }: ConfirmDialogProps) => {
     const isDanger = tone === "danger"
@@ -102,7 +96,7 @@ export const ConfirmDialog = ({
             {/* Root = react-aria `DialogTrigger`: a LOGICAL wrapper, renders no DOM node of its own. */}
             <AlertDialogBackdrop>
                 <AlertDialogContainer size="sm">
-                    <AlertDialogDialog className={cn(classNames)}>
+                    <AlertDialogDialog >
                         {/* No status icon — text-only; heading/body left, footer right. */}
                         <AlertDialogHeader>
                             <AlertDialogHeading>

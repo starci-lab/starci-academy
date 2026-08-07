@@ -1802,6 +1802,16 @@
       "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b23-status.md",
       "holdsPreserved": 27,
       "next": "Nivo LessonEditorPanel width token; Showcase content variant after LearnLoopScroll unlock; error-ratchet when live-api declarations → 0."
+    },
+    {
+      "id": "b24-ratchet-ready-door-burn-2026-08-09",
+      "date": "2026-08-09",
+      "status": "applied",
+      "summary": "BATCH 24: delete proven-dead className/classNames doors (atoms/composites/frames + shared form types); inventory 2492→2216 hits. PinnedTrack restored (live). InputSearch w-full via Box. Rule not error-ratcheted.",
+      "reason": "Zero-consumer open-tag proof only; no new principles/variants; holds preserved.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b24-status.md",
+      "holdsPreserved": 27,
+      "next": "Continue dead-door burn on remaining live-api; error-ratchet only when live-api declarations approach zero."
     }
   ]
 }

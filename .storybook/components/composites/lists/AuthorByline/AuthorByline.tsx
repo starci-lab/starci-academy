@@ -1,7 +1,6 @@
 import { SealCheckIcon, PushPinIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `AuthorByline` — name + optional verified/pinned glyphs + a relative timestamp, as one
@@ -20,10 +19,6 @@ export interface AuthorBylineProps {
     pinned?: boolean
     /** Relative time text (e.g. "3 hours ago") — the caller resolves the string; this row only renders it. */
     timestamp: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
     /**
      * Render the leaf skeleton (shimmer) instead of the row. `name`/`timestamp`
      * delegate to `Typography isSkeleton`; the verified/pinned glyphs and the
@@ -48,14 +43,14 @@ const AuthorByline = ({
     verified = false,
     pinned = false,
     timestamp,
-    classNames,
+    
     isSkeleton = false,
 }: AuthorBylineProps) => (
     <StackH
         gap={2}
         principle="separator-dot"
         explain="Places a middle-dot separator between short meta peers so the items read as one inline list."
-        classNames={["min-w-0", ...(classNames ?? [])]}
+        classNames={["min-w-0"]}
         isSkeleton={isSkeleton}
         items={[
             () => (

@@ -2,7 +2,6 @@ import React from "react"
 import type { ReactNode } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { CheckIcon } from "@phosphor-icons/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ATOM — `StepBadge`: the system's one numbered circle for multi-step flows.
@@ -35,11 +34,6 @@ interface StepBadgeOwnProps {
     state?: StepBadgeState
     /** Badge size. Defaults to `"sm"` (20px, matches the hand-rolled `size-5`). */
     size?: StepBadgeSize
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -92,7 +86,7 @@ const StepBadgeBase = ({
     number,
     state = "active",
     size = "sm",
-    classNames,
+    
     isSkeleton = false,
 }: StepBadgeProps) => {
     if (isSkeleton) {
@@ -101,7 +95,7 @@ const StepBadgeBase = ({
             <HeroSkeleton
                 data-tier="atom"
                 data-component="StepBadge"
-                className={cn("rounded-full", SKELETON_SIZE[size], classNames)}
+                className={cn("rounded-full", SKELETON_SIZE[size])}
 
             />
         )
@@ -117,7 +111,7 @@ const StepBadgeBase = ({
                 "flex shrink-0 items-center justify-center rounded-full font-medium",
                 SIZE[size],
                 STATE[state],
-                classNames,
+                
             )}
         >
             {state === "done" ? (

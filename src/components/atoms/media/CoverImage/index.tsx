@@ -1,6 +1,5 @@
 import React from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * Storybook-local port of `src/components/blocks/media/CoverImage`. Does not
@@ -15,11 +14,6 @@ export interface CoverImageProps {
     alt: string
     /** `true` → shimmer the SAME frame (aspect-video/rounded-2xl footprint), no `<img>` mounted. */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -34,7 +28,7 @@ const CoverImageBase = ({
     src,
     alt,
     isSkeleton = false,
-    classNames,
+    
 }: CoverImageProps) => {
     if (isSkeleton) {
         // No wrapper: the shimmer box is both the root and the leaf skeleton.
@@ -42,7 +36,7 @@ const CoverImageBase = ({
             <HeroSkeleton
                 data-tier="atom"
                 data-component="CoverImage"
-                className={cn("aspect-video w-full rounded-2xl", classNames)}
+                className={cn("aspect-video w-full rounded-2xl")}
             />
         )
     }
@@ -50,7 +44,7 @@ const CoverImageBase = ({
         <div
             data-tier="atom"
             data-component="CoverImage"
-            className={cn("aspect-video w-full overflow-hidden rounded-2xl bg-surface-secondary", classNames)}
+            className={cn("aspect-video w-full overflow-hidden rounded-2xl bg-surface-secondary")}
         >
             {src ? (
                 <img

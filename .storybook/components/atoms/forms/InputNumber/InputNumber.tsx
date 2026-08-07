@@ -1,6 +1,5 @@
-import { NumberField as HeroNumberField, cn } from "@heroui/react"
+import { NumberField as HeroNumberField } from "@heroui/react"
 import { FieldFrame, fieldName } from "@sb-components/composites/form/_field/FieldFrame"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { FrameProps } from "../_input/types"
 import { FieldSkeleton } from "@sb-components/atoms/forms/_input/FieldSkeleton"
 
@@ -15,7 +14,7 @@ export const InputNumber = ({
     isInvalid,
     ariaLabel,
     isSkeleton,
-    classNames,
+    
     label,
     hint,
     errorMessage,
@@ -30,10 +29,6 @@ export const InputNumber = ({
     isInvalid?: boolean
     ariaLabel?: string
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 } & FrameProps) => {
     const invalid = isInvalid || errorMessage != null
     return (
@@ -45,7 +40,7 @@ export const InputNumber = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
 
-            skeletonControl={<FieldSkeleton classNames={classNames} />}
+            skeletonControl={<FieldSkeleton />}
         >
             <HeroNumberField
                 data-tier="atom"
@@ -59,7 +54,7 @@ export const InputNumber = ({
                 isInvalid={invalid}
                 isDisabled={isDisabled}
                 fullWidth
-                className={cn(classNames)}
+                
             >
                 {/* There's no wrapping div here since it had no styling of its own. */}
                 <HeroNumberField.Group>

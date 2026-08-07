@@ -1,5 +1,4 @@
 import type { ReactNode } from "react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * Field-frame props every form atom accepts to carry its own label, hint,
@@ -23,10 +22,6 @@ export interface FrameProps {
 export interface FieldSkeletonProps {
     /** Height class of the bar — matches the real control it stands in for. */
     heightCls?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /** Shared props for text-string members, excluding the value pair and `isSkeleton`. */
@@ -36,10 +31,6 @@ export interface StringFieldOwnProps extends FrameProps {
     isInvalid?: boolean
     /** Accessible name used when there's no `label` (otherwise the label handles it). */
     ariaLabel?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**

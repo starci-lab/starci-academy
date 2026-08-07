@@ -11,7 +11,7 @@ type InputTextProps = StringFieldProps & {
 }
 
 /** `InputText` — single-line text (HeroUI TextField+Input) with label/hint/error. */
-export const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, ariaLabel, isSkeleton, classNames, label, hint, errorMessage, isRequired, variant = "primary" }: InputTextProps) => {
+export const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, ariaLabel, isSkeleton, label, hint, errorMessage, isRequired, variant = "primary" }: InputTextProps) => {
     const controlId = useId()
     const invalid = isInvalid || errorMessage != null
     return (
@@ -23,9 +23,9 @@ export const InputText = ({ value, onValueChange, placeholder, isDisabled, isInv
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
             id={controlId}
-            skeletonControl={<FieldSkeleton classNames={classNames} />}
+            skeletonControl={<FieldSkeleton />}
         >
-            <HeroTextField data-tier="atom" data-component="InputText" variant={variant} aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", classNames)}>
+            <HeroTextField data-tier="atom" data-component="InputText" variant={variant} aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full")}>
                 <HeroInput
                     id={controlId}
                     placeholder={placeholder}

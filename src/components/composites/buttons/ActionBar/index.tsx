@@ -1,4 +1,3 @@
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { type SkeletonProps } from "@/components/frames/_slot"
 import { Button } from "@/components/atoms/buttons/Button"
 import type { IconComponent } from "@/components/atoms/buttons/Button/button-tokens"
@@ -60,8 +59,6 @@ export interface ActionBarProps {
      * before packing than `ButtonGroup`'s own default (`sm`) does.
      */
     at?: ResponsiveRowSwitch
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
-    classNames?: Array<AllowedClassName>
 }
 
 /** Component-tier metadata for `ActionBar` — registers it as a composite named `ActionBar`. */
@@ -102,7 +99,7 @@ export const ActionBar = ({
     dismiss,
     isSkeleton = false,
     at = "md",
-    classNames,
+    
 }: ActionBarProps) => {
     const items = [
         renderSlot("dismiss", dismiss, "ghost"),
@@ -119,7 +116,6 @@ export const ActionBar = ({
             principle="flex-action"
             explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
             justify="end"
-            classNames={classNames}
             isSkeleton={isSkeleton}
             items={items}
         />

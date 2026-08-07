@@ -17,7 +17,6 @@ import {
 } from "@/components/atoms/forms/Select"
 import { ListBoxRoot, ListBoxItem } from "@/components/atoms/forms/ListBox"
 import { StackH } from "@/components/frames/Stack"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 /**
  * `Toolbar` — the nav/control-row frame sitting above a panel: the primary tab group pinned
  * left (+ an action cluster `leftEnd` right after it), a secondary tab group pinned right,
@@ -99,7 +98,6 @@ export interface ToolbarBaseProps {
      */
     size?: "sm" | "md"
     /** Layout utilities on the toolbar row, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
     /** Dev/spec: overlay the anatomy annotation on this toolbar. */
 }
 /** size -> extra Tab className override (md = HeroUI's own default, no override). */
@@ -141,7 +139,7 @@ const ToolbarBase = ({
     rightTabsNeutral,
     variant = "secondary",
     size = "md",
-    classNames,
+    
 }: ToolbarBaseProps) => {
     /** Render one controlled tab group (`accent` = accent selected chrome, secondary-only). */
     const renderGroup = (group: ToolbarTabGroup, accent = true): ReactNode => (
@@ -291,7 +289,6 @@ const ToolbarBase = ({
             justify="between"
             principle="content-row"
             explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-            classNames={classNames}
 
             items={[
                 () => leftGroup,

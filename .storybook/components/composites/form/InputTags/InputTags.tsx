@@ -3,7 +3,6 @@ import { cn } from "@heroui/react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { FieldFrame, fieldName } from "@sb-components/composites/form/_field/FieldFrame"
 import { FieldSkeleton, type FrameProps } from "@sb-components/atoms/forms"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Box } from "@sb-components/frames/Box/Box"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
@@ -26,10 +25,6 @@ export interface InputTagsProps extends FrameProps {
     removeLabel?: string
     /** Render the field-box skeleton instead of the box. */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -45,7 +40,7 @@ export const InputTags = ({
     ariaLabel = "Tags",
     removeLabel = "Remove tag",
     isSkeleton,
-    classNames,
+    
     label,
     hint,
     errorMessage,
@@ -73,7 +68,7 @@ export const InputTags = ({
             isSkeleton={isSkeleton}
 
             id={controlId}
-            skeletonControl={<Box className={cn(classNames)}><FieldSkeleton /></Box>}
+            skeletonControl={<Box ><FieldSkeleton /></Box>}
         >
             <Box
                 principle="control-pad"
@@ -81,7 +76,7 @@ export const InputTags = ({
                     "bg-default-100 w-full rounded-xl border px-3 py-2",
                     invalid ? "border-danger" : "border-default-200",
                     isDisabled && "pointer-events-none opacity-50",
-                    classNames,
+                    
                 )}
             >
                 <StackH

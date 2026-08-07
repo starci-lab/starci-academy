@@ -2,7 +2,6 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH } from "@sb-components/frames/Stack/Stack"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "Legend" } as const
@@ -48,11 +47,6 @@ interface LegendOwnProps {
     direction?: "row" | "col"
     /** Entry count to shimmer while `isSkeleton`. Defaults to `3`. */
     skeletonCount?: number
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
     /** `true` → tag the dot/label skeleton bars with ``. */
 }
 
@@ -80,7 +74,7 @@ export const Legend = ({
     direction = "row",
     isSkeleton = false,
     skeletonCount = 3,
-    classNames,
+    
 }: LegendProps) => {
     return (
         <div
@@ -88,7 +82,7 @@ export const Legend = ({
                 direction === "col"
                     ? "flex flex-col gap-2"
                     : "flex flex-wrap gap-x-3 gap-y-2",
-                classNames,
+                
             )}
 
             data-tier="composite"

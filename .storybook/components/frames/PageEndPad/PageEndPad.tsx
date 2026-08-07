@@ -1,5 +1,4 @@
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@sb-components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_identity"
@@ -18,8 +17,6 @@ export interface PageEndPadProps {
     body: ComponentTypeWithSkeleton
     /** Renders `body` in its skeleton state. */
     isSkeleton?: boolean
-    /** Where this sits inside its parent. */
-    classNames?: Array<AllowedClassName>
     /** Seam token when the wrap itself is measured. */
     principle?: PrincipleToken
     /** Why this layer exists — beside `principle`. */
@@ -36,7 +33,7 @@ export interface PageEndPadProps {
 const PageEndPad = ({
     body: Body,
     isSkeleton,
-    classNames,
+    
     principle,
     explain,
     identity,
@@ -45,7 +42,7 @@ const PageEndPad = ({
         {...resolveIdentity(identity, { tier: "frame", name: "PageEndPad" })}
         data-principle={principleAttr(principle)}
         data-explain={explainAttr(explain)}
-        className={cn("pb-6", classNames)}
+        className={cn("pb-6")}
     >
         <Body isSkeleton={isSkeleton} />
     </div>

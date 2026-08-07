@@ -1,6 +1,5 @@
 import React from "react"
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -38,11 +37,6 @@ export interface StatGridCardProps {
     items: Array<StatGridCardItem>
     /** `true` → render every cell's `content` in its skeleton state. Default `false`. */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -57,13 +51,13 @@ export interface StatGridCardProps {
  *
  * @param props - {@link StatGridCardProps}
  */
-export const StatGridCard = ({ items, isSkeleton = false, classNames}: StatGridCardProps) => {
+export const StatGridCard = ({ items, isSkeleton = false}: StatGridCardProps) => {
     const total = items.length
     const isOddTotal = total % 2 === 1
 
     return (
         <div
-            className={cn("grid grid-cols-2 overflow-hidden rounded-3xl border border-default bg-surface", classNames)}
+            className={cn("grid grid-cols-2 overflow-hidden rounded-3xl border border-default bg-surface")}
             data-tier="composite"
             data-component="StatGridCard"
         >

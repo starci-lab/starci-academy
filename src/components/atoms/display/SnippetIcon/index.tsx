@@ -4,7 +4,6 @@ import { CheckCircleIcon, CopyIcon } from "@phosphor-icons/react"
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * ATOM — `SnippetIcon`: the system's one single-click copy affordance.
@@ -26,11 +25,6 @@ interface SnippetIconOwnProps {
      * `true`/`false` overrides the internal state.
      */
     isCopied?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -64,7 +58,7 @@ const SnippetIconBase = ({
     copyString,
     isCopied,
     isSkeleton = false,
-    classNames,
+    
 }: SnippetIconProps) => {
     const [copiedState, setCopiedState] = useState(false)
     // `isCopied` passed from outside wins over internal state (used for previews).
@@ -90,7 +84,7 @@ const SnippetIconBase = ({
             <HeroSkeleton
                 data-tier="atom"
                 data-component="SnippetIcon"
-                className={cn("w-5 h-5 shrink-0 rounded-full", classNames)}
+                className={cn("w-5 h-5 shrink-0 rounded-full")}
 
             />
         )
@@ -103,7 +97,7 @@ const SnippetIconBase = ({
             data-tier="atom"
             data-component="SnippetIcon"
             onClick={onCopy}
-            className={cn("cursor-pointer", classNames)}
+            className={cn("cursor-pointer")}
             whileTap={{ scale: 0.9 }}
 
         >

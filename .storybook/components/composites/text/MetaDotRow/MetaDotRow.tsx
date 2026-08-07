@@ -2,7 +2,6 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "MetaDotRow" } as const
@@ -25,10 +24,6 @@ export const meta = { tier: "composite", name: "MetaDotRow" } as const
 interface MetaDotRowOwnProps {
     /** Fragment count to shimmer while `isSkeleton`. Defaults to `3`. */
     skeletonCount?: number
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -54,7 +49,7 @@ export const MetaDotRow = ({
     items,
     isSkeleton = false,
     skeletonCount = 3,
-    classNames,
+    
 }: MetaDotRowProps) => {
     const fragments = isSkeleton
         ? Array.from({ length: skeletonCount }, (_unused, index) => ({ key: String(index), text: undefined }))
@@ -67,7 +62,7 @@ export const MetaDotRow = ({
     // of its own (a static glyph, nothing to load — see `Divider`'s own header).
     return (
         <div
-            className={cn("flex flex-wrap items-center gap-1 text-muted", classNames)}
+            className={cn("flex flex-wrap items-center gap-1 text-muted")}
 
             data-tier="composite"
             data-component="MetaDotRow"

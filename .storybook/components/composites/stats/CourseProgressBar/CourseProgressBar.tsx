@@ -2,7 +2,6 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { Legend } from "@sb-components/composites/stats/Legend/Legend"
 import { StackV } from "@sb-components/frames/Stack/Stack"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "CourseProgressBar" } as const
@@ -34,7 +33,6 @@ interface CourseProgressBarOwnProps {
     /** Hide the legend row under the bar. */
     hideLegend?: boolean
     /** Layout utilities on the root element, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -66,7 +64,7 @@ export const CourseProgressBar = ({
     ariaLabel,
     hideLegend,
     isSkeleton = false,
-    classNames,
+    
 }: CourseProgressBarProps) => {
     const lanes = (dims ?? [])
         .filter((dim) => dim.total > 0)
@@ -80,7 +78,6 @@ export const CourseProgressBar = ({
         <StackV
             gap={3}
             isSkeleton={isSkeleton}
-            classNames={classNames}
             items={[
                 /* ATOM GAP: equal-width multi-lane track has no atom counterpart (see
                         file header note), so it stays a hand-drawn real element — the SAME

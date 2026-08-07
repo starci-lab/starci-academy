@@ -22,7 +22,7 @@ export const SelectMulti = ({
     isInvalid,
     ariaLabel,
     isSkeleton,
-    classNames,
+    
     label,
     hint,
     errorMessage,
@@ -49,7 +49,7 @@ export const SelectMulti = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
 
-            skeletonControl={<TriggerSkeleton classNames={classNames} />}
+            skeletonControl={<TriggerSkeleton />}
         >
             <HeroSelect.Root<SelectOption, "multiple">
                 data-tier="atom"
@@ -62,7 +62,7 @@ export const SelectMulti = ({
                 value={value}
                 onChange={(keys) => onValueChange(keys.map(String))}
                 fullWidth
-                className={cn(classNames)}
+                
             >
                 <HeroSelect.Trigger>
                     <span className={cn("text-sm", summary == null && "text-field-placeholder")}>

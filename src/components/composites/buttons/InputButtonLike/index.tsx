@@ -1,4 +1,3 @@
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { IconComponent } from "@/components/atoms/buttons/Button/button-tokens"
@@ -59,10 +58,6 @@ export interface InputButtonLikeProps {
     onPress: () => void
     /** `true` → skeleton mirror (field-shaped bar, same height per size). */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -89,7 +84,7 @@ export const InputButtonLike = ({
     ariaLabel,
     onPress,
     isSkeleton = false,
-    classNames,
+    
 }: InputButtonLikeProps) => {
     const placeholderLabel = (
         <Typography
@@ -131,7 +126,6 @@ export const InputButtonLike = ({
                 onPress={isSkeleton ? undefined : onPress}
                 isDisabled={isSkeleton}
                 prefixIcon={!isSkeleton && Icon ? Icon : undefined}
-                classNames={classNames}
                 label={label}
             />
         </div>

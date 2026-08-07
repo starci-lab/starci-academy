@@ -2,7 +2,6 @@ import { Toolbar, type ToolbarTabGroup } from "@sb-components/composites/navigat
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { type SurfaceCardVariant } from "@sb-components/composites/cards/SurfaceCard/surface-card-header"
 import { type AllowedPadding } from "@sb-components/frames/_spacing"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
 /**
@@ -46,7 +45,6 @@ export interface DoubleTabsCardProps {
     /** Padding around the body, §10c scale. Default `{4}` (`SurfaceCard`'s own default). */
     padding?: AllowedPadding
     /** Layout utilities on the card's outer section wrapper, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
     /**
      * `true` → every content-region slot this shell mounts (`leftEnd` / `body`)
      * is CALLED with `isSkeleton` too (COMPOSITE-8 — each is a component
@@ -76,13 +74,12 @@ const DoubleTabsCard = ({
     body: Body,
     cardVariant,
     padding,
-    classNames,
+    
     isSkeleton = false,
 }: DoubleTabsCardProps) => (
     <SurfaceCard
         variant={cardVariant}
         padding={padding}
-        classNames={classNames}
         isSkeleton={isSkeleton}
         header={() => (
             <Toolbar

@@ -1,6 +1,5 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography, type TypographySize } from "@sb-components/atoms/text/Typography/Typography"
 import { GAP_CLASS, type AllowedGap } from "@sb-components/frames/_spacing"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
@@ -69,10 +68,6 @@ export interface SectionHeaderProps {
      * it the same way it reaches the text lines).
      */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -91,7 +86,7 @@ const Header = ({
     action: Action,
     level = 2,
     isSkeleton = false,
-    classNames,
+    
 }: SectionHeaderProps) => {
     const titleSize = TITLE_SIZE[level]
     const descriptionSize = DESCRIPTION_SIZE[level]
@@ -121,7 +116,6 @@ const Header = ({
             align="start"
             justify="between"
             gap={4}
-            classNames={classNames}
             isSkeleton={isSkeleton}
             items={[
                 () => <StackV gap={2} principle="title-subtitle" classNames={["min-w-0"]} isSkeleton={isSkeleton} items={[() => titleBlock]} />,
@@ -170,10 +164,6 @@ export interface SectionBaseProps {
      * the flag reaches inside every one of them).
      */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /** A header slot is PROPS only when it is a plain object (not a component reference). */
@@ -194,7 +184,7 @@ const Base = ({
     footer: Footer,
     gap = 6,
     isSkeleton = false,
-    classNames,
+    
 }: SectionBaseProps) => {
     let headerNode: ReactNode = null
     if (header != null) {
@@ -210,7 +200,7 @@ const Base = ({
     }
     return (
         <section
-            className={cn("flex flex-col", GAP_CLASS[gap], classNames)}
+            className={cn("flex flex-col", GAP_CLASS[gap])}
 
             data-tier="composite"
             data-component="Section"

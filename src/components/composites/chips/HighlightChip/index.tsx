@@ -59,13 +59,13 @@ export type HighlightChipProps = HighlightChipOwnProps &
 export const meta = { tier: "composite", name: "HighlightChip" } as const
 
 /** A soft-tinted pill pairing a bold `value` with a `label`, e.g. "24 Modules". */
-export const HighlightChip = ({ tone = "default", icon, value, label, isSkeleton = false, classNames }: HighlightChipProps) => (
+export const HighlightChip = ({ tone = "default", icon, value, label, isSkeleton = false }: HighlightChipProps) => (
     // Wrapping span exists only to carry the composite's own position (`classNames`)
     // and its tier tags — `Chip` (the house atom) is the one real element rendered,
     // one render path whether loading or not (COMPOSITE-10: the atom draws its own
     // shimmer, sized to the same box, this composite only forwards the flag).
     <span
-        className={cn("inline-flex", classNames)}
+        className={cn("inline-flex")}
         data-tier="composite"
         data-component="HighlightChip"
     >

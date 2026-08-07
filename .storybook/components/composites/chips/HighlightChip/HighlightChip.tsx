@@ -52,13 +52,13 @@ export type HighlightChipProps = HighlightChipOwnProps &
  * "276 Practice exercises". Pure and props-only (tone drives the color). Used in the
  * `PageHeader` meta row to show a course's figures.
  */
-export const HighlightChip = ({ tone = "default", icon, value, label, isSkeleton = false, classNames }: HighlightChipProps) => (
+export const HighlightChip = ({ tone = "default", icon, value, label, isSkeleton = false }: HighlightChipProps) => (
     // Wrapping span exists only to carry the composite's own position (`classNames`)
     // and its tier tags — `Chip` (the house atom) is the one real element rendered,
     // one render path whether loading or not (COMPOSITE-10: the atom draws its own
     // shimmer, sized to the same box, this composite only forwards the flag).
     <span
-        className={cn("inline-flex", classNames)}
+        className={cn("inline-flex")}
         data-tier="composite"
         data-component="HighlightChip"
     >

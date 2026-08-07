@@ -1,5 +1,4 @@
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { gapClassNames, type AllowedGap, type Responsive } from "@sb-components/frames/_spacing"
 import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@sb-components/frames/_principles"
@@ -67,10 +66,6 @@ export interface ResponsiveRowProps {
      * Missing this prop means the frame is used but the panel cannot see it.
      */
     /**
-     * Where this sits inside its parent. Appearance is not passable -- it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
-    /**
      * The layout pattern this row's seam realises - one token from `test-runner/patterns.mjs`.
      * Emitted as `data-principle` on this same root, beside `data-tier`/`data-component`, so the
      * rendered-tree test can assert the seam is the step the pattern names. Query as
@@ -120,7 +115,7 @@ const ResponsiveRowBase = ({
     at,
     gap,
     isSkeleton,
-    classNames,
+    
     principle,
     explain,
     identity}: ResponsiveRowProps) => (
@@ -132,8 +127,7 @@ const ResponsiveRowBase = ({
             "grid",
             COLUMNS_CLASS[columns],
             ...gapClassNames(gap),
-            SWITCH_CLASS[at],
-            classNames)}
+            SWITCH_CLASS[at])}
     >
         {items.map((Item, index) => (
             <Item key={index} isSkeleton={isSkeleton} />

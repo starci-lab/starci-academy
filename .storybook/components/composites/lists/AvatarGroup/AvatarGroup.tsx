@@ -1,7 +1,6 @@
 import { cn } from "@heroui/react"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import type { AvatarSize, IconComponent } from "@sb-components/atoms/display/Avatar/Avatar"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "AvatarGroup" } as const
@@ -42,11 +41,6 @@ export interface AvatarGroupProps {
     size?: AvatarSize
     /** Render the row skeleton — each visible slot mirrors as a circle shimmer. */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /** Ring that separates one overlapping avatar from the one beneath it. */
@@ -63,14 +57,14 @@ export const AvatarGroup = ({
     total,
     size = "sm",
     isSkeleton = false,
-    classNames,
+    
 }: AvatarGroupProps) => {
     const visible = items.slice(0, max)
     const extra = Math.max((total ?? items.length) - visible.length, 0)
 
     return (
         <div
-            className={cn("flex -space-x-2", classNames)}
+            className={cn("flex -space-x-2")}
             data-tier="composite"
             data-component="AvatarGroup"
         >

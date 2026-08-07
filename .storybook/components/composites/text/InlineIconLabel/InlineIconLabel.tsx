@@ -3,7 +3,7 @@ import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { TypographyColor, TypographyIcon } from "@sb-components/atoms/text/Typography/Typography"
 import type { AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
-import type { AllowedClassName, SkeletonWidth } from "@sb-components/atoms/_allowed-class-name"
+import type { SkeletonWidth } from "@sb-components/atoms/_allowed-class-name"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "InlineIconLabel" } as const
@@ -84,10 +84,6 @@ export interface InlineIconLabelProps {
      * an unconstrained string here would only fail one tier down.
      */
     skeletonWidth?: SkeletonWidth
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -105,7 +101,7 @@ export const InlineIconLabel = ({
     truncate = false,
     isSkeleton = false,
     skeletonWidth = "w-1/4",
-    classNames,
+    
 }: InlineIconLabelProps) => {
     const cfg = SIZE_CONFIG[size]
     // Icon span always gets its tone via className (currentColor) — no atom involved there.
@@ -127,7 +123,7 @@ export const InlineIconLabel = ({
     // the label shimmers via `Typography`'s own `isSkeleton`.
     return (
         <span
-            className={cn("inline-flex items-center", cfg.gap, classNames)}
+            className={cn("inline-flex items-center", cfg.gap)}
 
             data-tier="composite"
             data-component="InlineIconLabel"

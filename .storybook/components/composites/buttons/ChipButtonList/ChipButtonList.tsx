@@ -1,7 +1,6 @@
 import { cn } from "@heroui/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { IconComponent } from "@sb-components/atoms/buttons/Button/button-tokens"
 
 /**
@@ -41,10 +40,6 @@ export interface ChipButtonListProps {
     isSkeleton?: boolean
     /** How many skeleton items to render when `isSkeleton` (the real `items` count isn't known yet). Defaults to 3. */
     skeletonCount?: number
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 const DEFAULT_VARIANT: Record<ChipButtonListDirection, ChipButtonListVariant> = {
@@ -73,7 +68,7 @@ export const ChipButtonList = ({
     direction = "wrap",
     isSkeleton = false,
     skeletonCount = 3,
-    classNames,
+    
 }: ChipButtonListProps) => {
     const resolvedVariant = variant ?? DEFAULT_VARIANT[direction]
 
@@ -127,7 +122,7 @@ export const ChipButtonList = ({
 
     return (
         <div
-            className={cn(CONTAINER_CLS[direction], classNames)}
+            className={cn(CONTAINER_CLS[direction])}
 
             data-tier="composite"
             data-component="ChipButtonList"

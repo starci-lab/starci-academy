@@ -3,7 +3,6 @@ import { Chip, type ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
 import { InputPassword } from "@sb-components/atoms/forms/InputPassword/InputPassword"
 import { InputText } from "@sb-components/atoms/forms/InputText/InputText"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -103,8 +102,6 @@ interface SecretFieldOwnProps {
     noticeMessage?: string
     /** Already-localized copy. */
     labels: SecretFieldLabels
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -156,7 +153,7 @@ const SecretField = (props: SecretFieldProps) => {
         errorMessage,
         noticeMessage,
         labels,
-        classNames,
+        
     } = props
     const isSkeleton = props.isSkeleton === true
 
@@ -300,7 +297,6 @@ const SecretField = (props: SecretFieldProps) => {
                 gap={2}
                 principle="label-field"
                 isSkeleton={isSkeleton}
-                classNames={classNames}
                 items={mode === "editing" ? editingItems : summaryItems}
             />
         </div>

@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { cn } from "@heroui/react"
 import { CaretDownIcon } from "@phosphor-icons/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { StackV } from "@/components/frames/Stack"
@@ -72,10 +71,6 @@ export interface DisclosureBaseProps {
      * region stays unmounted, exactly like the collapsed real state.
      */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -95,8 +90,7 @@ const Base = ({
     onOpenChange,
     defaultOpen = false,
     isDisabled = false,
-    isSkeleton = false,
-    classNames}: DisclosureBaseProps) => {
+    isSkeleton = false}: DisclosureBaseProps) => {
     const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen)
     const isControlled = isOpen !== undefined
     const open = isControlled ? isOpen : uncontrolledOpen
@@ -117,7 +111,6 @@ const Base = ({
     return (
         <StackV
             gap={4}
-            classNames={classNames}
             items={[
                 () => (
                     <button

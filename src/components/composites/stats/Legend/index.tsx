@@ -2,7 +2,6 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackH } from "@/components/frames/Stack"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -49,11 +48,6 @@ interface LegendOwnProps {
     direction?: "row" | "col"
     /** Entry count to shimmer while `isSkeleton`. Defaults to `3`. */
     skeletonCount?: number
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
     /** `true` → tag the dot/label skeleton bars with ``. */
 }
 
@@ -84,15 +78,13 @@ export const Legend = ({
     items,
     direction = "row",
     isSkeleton = false,
-    skeletonCount = 3,
-    classNames}: LegendProps) => {
+    skeletonCount = 3}: LegendProps) => {
     return (
         <div
             className={cn(
                 direction === "col"
                     ? "flex flex-col gap-2"
-                    : "flex flex-wrap gap-x-3 gap-y-2",
-                classNames)}
+                    : "flex flex-wrap gap-x-3 gap-y-2")}
             data-tier="composite"
             data-component="Legend"
             data-principle={direction === "col" ? "sibling-stack" : undefined}

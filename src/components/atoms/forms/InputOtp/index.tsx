@@ -1,6 +1,5 @@
 import { InputOTP as HeroInputOTP, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { FieldFrame, fieldName } from "@/components/composites/form/_field/FieldFrame"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { FrameProps } from "../_input/types"
 
 /** `InputOtp` — bare one-time-code cells (HeroUI InputOTP), `length` slots, `value` a digit string. */
@@ -13,7 +12,7 @@ export const InputOtp = ({
     autoFocus,
     ariaLabel,
     isSkeleton,
-    classNames,
+    
     label,
     hint,
     errorMessage,
@@ -28,10 +27,6 @@ export const InputOtp = ({
     autoFocus?: boolean
     ariaLabel?: string
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 } & FrameProps) => {
     const invalid = isInvalid || errorMessage != null
     return (
@@ -44,7 +39,7 @@ export const InputOtp = ({
             isSkeleton={isSkeleton}
             skeletonControl={
                 // Leaf skeleton OWNED by the atom — a row of `length` cell-shaped squares.
-                <div className={cn("flex items-center gap-2", classNames)}>
+                <div className={cn("flex items-center gap-2")}>
                     {Array.from({ length }, (_, index) => (
                         <HeroSkeleton key={index} className="h-10 w-9 rounded-xl" />
                     ))}
@@ -61,7 +56,7 @@ export const InputOtp = ({
                 isInvalid={invalid}
                 isDisabled={isDisabled}
                 autoFocus={autoFocus}
-                className={cn(classNames)}
+                
             >
                 <HeroInputOTP.Group>
                     {Array.from({ length }, (_, index) => (

@@ -22,7 +22,7 @@ export const InputTextarea = ({
     ariaLabel,
     rows = 3,
     isSkeleton,
-    classNames,
+    
     label,
     hint,
     errorMessage,
@@ -41,9 +41,9 @@ export const InputTextarea = ({
             isSkeleton={isSkeleton}
 
             id={controlId}
-            skeletonControl={<FieldSkeleton heightCls="h-24" classNames={classNames} />}
+            skeletonControl={<FieldSkeleton heightCls="h-24" />}
         >
-            <HeroTextField data-tier="atom" data-component="InputTextarea" variant={variant} aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", classNames)}>
+            <HeroTextField data-tier="atom" data-component="InputTextarea" variant={variant} aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full")}>
                 <HeroTextArea
                     id={controlId}
                     rows={rows}

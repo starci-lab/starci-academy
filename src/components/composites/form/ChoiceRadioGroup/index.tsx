@@ -2,7 +2,6 @@ import { cn } from "@heroui/react"
 import { ChoiceRadio, type InlineFrameProps } from "@/components/atoms/forms"
 import { RadioGroup } from "@/components/atoms/forms/RadioGroup"
 import { FieldFrame } from "@/components/composites/form/_field/FieldFrame"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * `ChoiceRadioGroup` — a radio group that rebuilds the house `ChoiceRadio` atom once per
@@ -44,10 +43,6 @@ export interface ChoiceRadioGroupProps extends InlineFrameProps {
     isSkeleton?: boolean
     /** Row count for the skeleton mirror (default = `options.length`). */
     skeletonRows?: number
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -64,7 +59,7 @@ export const ChoiceRadioGroup = ({
     isInvalid,
     isSkeleton,
     skeletonRows,
-    classNames,
+    
     hint,
     errorMessage,
     isRequired,
@@ -84,7 +79,7 @@ export const ChoiceRadioGroup = ({
                 // COMPOSITE-10: the composite only decides HOW MANY rows shimmer — each row
                 // draws its own shimmer via `ChoiceRadio`'s own `isSkeleton` branch, the same
                 // shape ButtonGroup/ChipGroup delegate to `Button`/`Chip` while loading.
-                <div data-principle="sibling-stack" className={cn("flex flex-col gap-2", classNames)}>
+                <div data-principle="sibling-stack" className={cn("flex flex-col gap-2")}>
                     {Array.from({ length: rows }, (_, index) => (
                         <ChoiceRadio key={index} value={String(index)} label="" isSkeleton />
                     ))}
@@ -92,7 +87,7 @@ export const ChoiceRadioGroup = ({
             }
         >
             {/* House `RadioGroup` omits `className` — stack layout rides a plain wrapper. */}
-            <div data-principle="sibling-stack" className={cn("flex flex-col gap-2", classNames)}>
+            <div data-principle="sibling-stack" className={cn("flex flex-col gap-2")}>
                 <RadioGroup
                     aria-label={groupLabel ?? ariaLabel}
                     value={value}

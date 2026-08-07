@@ -4,7 +4,6 @@ import { cn } from "@heroui/react"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { FieldFrame, fieldName } from "@/components/composites/form/_field/FieldFrame"
 
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Box } from "@/components/frames/Box"
 import { Cluster } from "@/components/frames/Cluster"
 
@@ -33,10 +32,6 @@ export interface InputTagsProps extends FrameProps {
     removeLabel?: string
     /** Render the field-box skeleton instead of the box. */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -52,7 +47,7 @@ export const InputTags = ({
     ariaLabel = "Tags",
     removeLabel = "Remove tag",
     isSkeleton,
-    classNames,
+    
     label,
     hint,
     errorMessage,
@@ -78,7 +73,7 @@ export const InputTags = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
             id={controlId}
-            skeletonControl={<FieldSkeleton classNames={classNames} />}
+            skeletonControl={<FieldSkeleton />}
         >
             <Box
                 principle="control-pad"
@@ -86,8 +81,7 @@ export const InputTags = ({
                 className={cn(
                     "bg-default-100 w-full rounded-xl border px-3 py-2",
                     invalid ? "border-danger" : "border-default-200",
-                    isDisabled && "pointer-events-none opacity-50",
-                    classNames)}
+                    isDisabled && "pointer-events-none opacity-50")}
             >
                 <Cluster
                     gap={3}

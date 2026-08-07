@@ -2,7 +2,6 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import type { TypographyColor } from "@/components/atoms/text/Typography"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -76,10 +75,6 @@ const resolveDotColor = (color: string): ResolvedDotColor => {
 interface DotLabelOwnProps {
     /** Label tone. Defaults to `"muted"`. */
     tone?: DotLabelTone
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -120,14 +115,14 @@ export const DotLabel = ({
     color,
     label,
     tone = "muted",
-    classNames,
+    
     isSkeleton = false,
 }: DotLabelProps) => {
     const dot = color ? resolveDotColor(color) : undefined
 
     return (
         <span
-            className={cn("inline-flex items-center gap-1", classNames)}
+            className={cn("inline-flex items-center gap-1")}
             data-tier="composite"
             data-component="DotLabel"
             data-principle="icon-text"

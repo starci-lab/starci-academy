@@ -1,5 +1,4 @@
 import type { ReactNode } from "react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 interface FrameProps {
     /** Label above the control. */
@@ -20,11 +19,8 @@ export interface SelectOption {
     label: ReactNode
 }
 
-/** Props for the trigger-box shimmer owned by select atoms. */
-export interface TriggerSkeletonProps {
-    /** Where this sits inside its parent. Everything about appearance is a prop of its own. */
-    classNames?: Array<AllowedClassName>
-}
+/** Props for the trigger-box shimmer owned by select atoms (no public CSS door). */
+export type TriggerSkeletonProps = Record<string, never>
 
 /** Shared props across the select members. */
 export interface BaseSelectProps extends FrameProps {
@@ -40,6 +36,4 @@ export interface BaseSelectProps extends FrameProps {
     ariaLabel?: string
     /** Renders the trigger-box skeleton instead of the control. */
     isSkeleton?: boolean
-    /** Where this sits inside its parent. Everything about appearance is a prop of its own. */
-    classNames?: Array<AllowedClassName>
 }

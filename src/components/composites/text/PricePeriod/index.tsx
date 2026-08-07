@@ -1,6 +1,5 @@
 import { cn } from "@heroui/react"
 import { Typography } from "@/components/atoms/text/Typography"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * PricePeriod: a price shown as one baseline-aligned unit — a prominent amount, an
@@ -47,10 +46,6 @@ interface PricePeriodOwnProps {
     period?: string
     /** Amount size — also drives `original`/`period`'s size via {@link SIZE_TO_TOKENS}. Defaults to `"md"` (h3). */
     size?: PricePeriodSize
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -80,7 +75,7 @@ export const PricePeriod = ({
     period,
     size = "md",
     isSkeleton = false,
-    classNames,
+    
 }: PricePeriodProps) => {
     const tokens = SIZE_TO_TOKENS[size]
 
@@ -89,7 +84,7 @@ export const PricePeriod = ({
             data-tier="composite"
             data-component="PricePeriod"
             data-principle="value-row"
-            className={cn("flex flex-wrap items-baseline gap-2", classNames)}
+            className={cn("flex flex-wrap items-baseline gap-2")}
         >
             {/* Main amount — prominent, sized off {@link SIZE_TO_TOKENS}. */}
             <Typography

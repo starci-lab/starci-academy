@@ -1,5 +1,4 @@
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@sb-components/frames/_principles"
@@ -77,8 +76,6 @@ export interface RailShellProps {
     side?: "start" | "end"
     /** Renders `rail`/`body` in their skeleton state. */
     isSkeleton?: boolean
-    /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
-    classNames?: Array<AllowedClassName>
     /**
      * The layout pattern this frame's seam realises -- a token from `test-runner/patterns.mjs`
      * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principle` on the
@@ -142,7 +139,7 @@ const RailShell = ({
     isRailSticky = false,
     side = "start",
     isSkeleton,
-    classNames,
+    
     principle,
     explain,
     identity,
@@ -167,7 +164,7 @@ const RailShell = ({
     return (
         <div
             {...resolveIdentity(identity, { tier: "frame", name: "RailShell" })}
-            className={cn("@container w-full", classNames)}
+            className={cn("@container w-full")}
         >
             <div
                 data-principle={principleAttr(principle)}

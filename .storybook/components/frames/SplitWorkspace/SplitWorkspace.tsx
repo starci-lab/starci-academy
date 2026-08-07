@@ -1,5 +1,4 @@
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ResponsiveRowSwitch } from "@sb-components/frames/ResponsiveRow/ResponsiveRow"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@sb-components/frames/_principles"
@@ -69,8 +68,6 @@ export interface SplitWorkspaceProps {
      * Defaults to `xl` -- the step both real sources agree on.
      */
     at?: ResponsiveRowSwitch
-    /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
-    classNames?: Array<AllowedClassName>
     /**
      * The layout pattern this frame's seam realises - one token from `test-runner/patterns.mjs`
      * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principle` on the element
@@ -122,7 +119,7 @@ const SplitWorkspace = ({
     aside: Aside,
     at = "xl",
     isSkeleton,
-    classNames,
+    
     principle,
     explain,
     identity}: SplitWorkspaceProps) => (
@@ -130,7 +127,7 @@ const SplitWorkspace = ({
         {...resolveIdentity(identity, { tier: "frame", name: "SplitWorkspace" })}
         data-principle={principleAttr(principle)}
         data-explain={explainAttr(explain)}
-        className={cn("flex flex-col gap-6", WORKSPACE_SWITCH_CLASS[at], classNames)}
+        className={cn("flex flex-col gap-6", WORKSPACE_SWITCH_CLASS[at])}
     >
         {/* `main`/`aside` are CALLER SLOTS -- the node inside belongs to whoever passed it, not
             to this frame, so neither gets a badge of its own (same as `Container.body`'s bare

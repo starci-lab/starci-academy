@@ -1,5 +1,4 @@
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { ALIGN_CLASS, gapClassNames, type AllowedGap, type LayoutAlign, type Responsive } from "@sb-components/frames/_spacing"
 import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@sb-components/frames/_principles"
@@ -48,8 +47,6 @@ export interface SplitBaseProps {
     gap: Responsive<AllowedGap>
     /** Cross-axis alignment of the two sides. Default `center` (the split row's normal). */
     align?: LayoutAlign
-    /** Where this sits inside its parent. Appearance is not passable -- it is already a prop. */
-    classNames?: Array<AllowedClassName>
     /**
      * The layout pattern this frame's seam realises - one token from `test-runner/patterns.mjs`
      * (`flex-action`, `label-field`, `group-boundary`, ...). Emitted as `data-principle` on the element
@@ -84,7 +81,7 @@ const SplitBase = ({
     end,
     gap,
     align = "center",
-    classNames,
+    
     principle,
     explain,
     isSkeleton,
@@ -100,8 +97,7 @@ const SplitBase = ({
                 "flex w-full",
                 ...gapClassNames(gap),
                 "flex-row justify-between",
-                ALIGN_CLASS[align],
-                classNames)}
+                ALIGN_CLASS[align])}
         >
             {/* `start`/`end` are CALLER slots -- whatever they render (a `Typography`, a
                 `Button`, a `StackV`) belongs to the caller, not to this frame. */}

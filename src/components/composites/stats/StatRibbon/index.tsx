@@ -1,7 +1,6 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import { Card, type CardProps } from "@/components/atoms/display/Card"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { StatPair, type StatPairValueType } from "@/components/composites/stats/StatPair"
 import { ResponsiveRow } from "@/components/frames/ResponsiveRow"
 
@@ -39,11 +38,6 @@ interface StatRibbonOwnProps {
     bordered?: boolean
     /** Cell count to shimmer while `isSkeleton` (no real `items` yet). Defaults to `3`. */
     skeletonCount?: number
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -71,7 +65,7 @@ export const StatRibbon = ({
     bordered = false,
     isSkeleton = false,
     skeletonCount = 3,
-    classNames,
+    
 }: StatRibbonProps) => {
     const cells = isSkeleton
         ? Array.from({ length: skeletonCount }, (_unused, index) => ({ key: String(index) }))
@@ -81,7 +75,7 @@ export const StatRibbon = ({
         <Card
             {...({
                 variant: "default",
-                className: cn(bordered && "!border !border-solid !border-default !shadow-none", classNames),
+                className: cn(bordered && "!border !border-solid !border-default !shadow-none"),
                 "data-tier": "composite",
                 "data-component": "StatRibbon",
             } as CardProps)}

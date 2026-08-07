@@ -24,7 +24,7 @@ export const SelectCombobox = ({
     isInvalid,
     ariaLabel,
     isSkeleton,
-    classNames,
+    
     label,
     hint,
     errorMessage,
@@ -45,7 +45,7 @@ export const SelectCombobox = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
 
-            skeletonControl={<TriggerSkeleton classNames={classNames} />}
+            skeletonControl={<TriggerSkeleton />}
         >
             <HeroComboBox
                 data-tier="atom"
@@ -63,7 +63,7 @@ export const SelectCombobox = ({
                         onValueChange(String(key))
                     }
                 }}
-                className={cn("w-full", classNames)}
+                className={cn("w-full")}
             >
                 <HeroComboBox.InputGroup className="relative">
                     <HeroInput placeholder={placeholder} className="w-full pr-9" />

@@ -2,7 +2,6 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { TypographyColor } from "@sb-components/atoms/text/Typography/Typography"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "DotLabel" } as const
@@ -50,10 +49,6 @@ const resolveDotColor = (color: string): ResolvedDotColor => {
 interface DotLabelOwnProps {
     /** Label tone. Defaults to `"muted"`. */
     tone?: DotLabelTone
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -90,14 +85,14 @@ export const DotLabel = ({
     color,
     label,
     tone = "muted",
-    classNames,
+    
     isSkeleton = false,
 }: DotLabelProps) => {
     const dot = color ? resolveDotColor(color) : undefined
 
     return (
         <span
-            className={cn("inline-flex items-center gap-1", classNames)}
+            className={cn("inline-flex items-center gap-1")}
 
             data-tier="composite"
             data-component="DotLabel"

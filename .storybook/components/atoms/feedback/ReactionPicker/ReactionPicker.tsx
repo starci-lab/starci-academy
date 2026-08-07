@@ -1,6 +1,5 @@
 import React from "react"
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * @noSkeleton the reactions are a fixed set the caller declares, not a value fetched behind this
@@ -32,8 +31,6 @@ export interface ReactionPickerProps {
     activeKey?: string | null
     /** Fired with the picked item's key. */
     onSelect: (key: string) => void
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -41,8 +38,8 @@ export interface ReactionPickerProps {
  *
  * @param props - {@link ReactionPickerProps}
  */
-const ReactionPicker = ({ items, activeKey = null, onSelect, classNames }: ReactionPickerProps) => (
-    <div data-tier="atom" data-component="ReactionPicker" className={cn("flex items-center gap-1", classNames)}>
+const ReactionPicker = ({ items, activeKey = null, onSelect }: ReactionPickerProps) => (
+    <div data-tier="atom" data-component="ReactionPicker" className={cn("flex items-center gap-1")}>
         {items.map((item, index) => (
             <button
                 key={item.key}

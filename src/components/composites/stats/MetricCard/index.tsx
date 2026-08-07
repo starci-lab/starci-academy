@@ -3,7 +3,6 @@ import { cn } from "@heroui/react"
 import { Card, CardContent, type CardProps } from "@/components/atoms/display/Card"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "MetricCard" } as const
@@ -18,17 +17,16 @@ export const meta = { tier: "composite", name: "MetricCard" } as const
  */
 interface MetricSectionCardProps {
     body: React.ReactNode
-    classNames?: Array<AllowedClassName>
 }
 
 const SectionCard = ({
     body,
-    classNames,
+    
 }: MetricSectionCardProps) => (
     // House Card omits `className` from its public type; positioning still lands on the chrome.
     <Card
         {...({
-            className: cn(classNames),
+            className: cn(""),
             "data-tier": "composite",
             "data-component": "MetricCard",
         } as CardProps)}
@@ -52,11 +50,6 @@ interface MetricCardOwnProps {
      * so it must be able to build it.
      */
     hint?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
     /**
      * When `true`, each composed part emits `` so a
      * BlockAnatomy panel can badge it on-render. Off by default (production).
@@ -100,11 +93,11 @@ export const MetricCard = ({
     label,
     hint,
     isSkeleton = false,
-    classNames,
+    
 }: MetricCardProps) => {
     return (
         // SectionCard provides the framed card shell (border + bg + radius)
-        <SectionCard classNames={classNames} body={
+        <SectionCard body={
             <StackV
                 gap={3}
                 isSkeleton={isSkeleton}

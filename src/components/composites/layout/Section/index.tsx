@@ -1,6 +1,5 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Typography, type TypographySize } from "@/components/atoms/text/Typography"
 import { GAP_CLASS, type AllowedGap } from "@/components/frames/_spacing"
 import { StackH, StackV } from "@/components/frames/Stack"
@@ -99,10 +98,6 @@ export interface SectionHeaderProps {
      * it the same way it reaches the text lines).
      */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -120,8 +115,7 @@ const Header = ({
     eyebrow,
     action: Action,
     level = 2,
-    isSkeleton = false,
-    classNames}: SectionHeaderProps) => {
+    isSkeleton = false}: SectionHeaderProps) => {
     const titleSize = TITLE_SIZE[level]
     const descriptionSize = DESCRIPTION_SIZE[level]
     const eyebrowSize = EYEBROW_SIZE[level]
@@ -150,7 +144,6 @@ const Header = ({
             align="start"
             justify="between"
             gap={4}
-            classNames={classNames}
             isSkeleton={isSkeleton}
             items={[
                 () => <StackV gap={2} principle="title-subtitle" classNames={["min-w-0"]} isSkeleton={isSkeleton} items={[() => titleBlock]} explain="Title over supporting line — not label-field, because neither line is a form control label."/>,
@@ -199,10 +192,6 @@ export interface SectionBaseProps {
      * the flag reaches inside every one of them).
      */
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /** A header slot is PROPS only when it is a plain object (not a component reference). */
@@ -222,8 +211,7 @@ const Base = ({
     body: Body,
     footer: Footer,
     gap = 6,
-    isSkeleton = false,
-    classNames}: SectionBaseProps) => {
+    isSkeleton = false}: SectionBaseProps) => {
     let headerNode: ReactNode = null
     if (header != null) {
         if (isHeaderProps(header)) {
@@ -238,7 +226,7 @@ const Base = ({
     }
     return (
         <section
-            className={cn("flex flex-col", GAP_CLASS[gap], classNames)}
+            className={cn("flex flex-col", GAP_CLASS[gap])}
             data-tier="composite"
             data-component="Section"
             data-principle={gap === 6 ? "block-boundary" : undefined}

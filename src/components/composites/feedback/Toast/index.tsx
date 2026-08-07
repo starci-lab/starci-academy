@@ -1,6 +1,5 @@
 import type { ComponentType, SVGProps } from "react"
 import { Alert as AtomAlert } from "@/components/atoms/feedback/Alert"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 /**
  * COMPOSITE — `Toast`: the floating notification surface, built entirely from
@@ -67,8 +66,6 @@ interface ToastOwnProps {
     onClose?: () => void
     /** Accessible label for the × (caller passes a localised string). */
     closeLabel?: string
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
-    classNames?: Array<AllowedClassName>
 }
 /**
  * `isSkeleton` is the loading state of the value this toast renders, so the title is optional
@@ -85,7 +82,7 @@ export type ToastBaseProps = ToastOwnProps &
  * @param props - {@link ToastBaseProps}
  */
 const ToastBase = (props: ToastBaseProps) => {
-    const { status = "info", description, icon, action: Action, onClose, closeLabel, classNames } = props
+    const { status = "info", description, icon, action: Action, onClose, closeLabel } = props
     // Narrowed off the discriminant so the title stays required in the live branch. Destructuring
     // `title` first would widen it to `ReactNode | undefined` and lose exactly that guarantee.
     const content = props.isSkeleton
@@ -101,7 +98,6 @@ const ToastBase = (props: ToastBaseProps) => {
             action={Action ? <Action isSkeleton={props.isSkeleton} /> : undefined}
             onClose={onClose}
             closeAriaLabel={closeLabel}
-            classNames={classNames}
         />
     )
 }

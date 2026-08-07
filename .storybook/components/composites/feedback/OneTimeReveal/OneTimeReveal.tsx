@@ -3,7 +3,6 @@ import { SnippetIcon } from "@sb-components/atoms/display/SnippetIcon/SnippetIco
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { ChoiceCheckbox } from "@sb-components/atoms/forms/ChoiceCheckbox/ChoiceCheckbox"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Callout } from "@sb-components/composites/feedback/Callout/Callout"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -71,8 +70,6 @@ interface OneTimeRevealOwnProps {
     isCopied?: boolean
     /** Already-localized copy. */
     labels: OneTimeRevealLabels
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -104,7 +101,7 @@ const OneTimeReveal = (props: OneTimeRevealProps) => {
         acknowledgedSummary,
         isCopied,
         labels,
-        classNames,
+        
     } = props
     const isSkeleton = props.isSkeleton === true
     const value = props.value ?? null
@@ -124,7 +121,6 @@ const OneTimeReveal = (props: OneTimeRevealProps) => {
                 <StackV
                     gap={2}
                     principle="title-subtitle"
-                    classNames={classNames}
                     items={[
                         heading,
                         () => <Callout status="info" title={absenceTitle} description={absenceDescription} />,
@@ -142,7 +138,6 @@ const OneTimeReveal = (props: OneTimeRevealProps) => {
                 <StackV
                     gap={2}
                     principle="title-subtitle"
-                    classNames={classNames}
                     items={[
                         heading,
                         ...(acknowledgedSummary != null
@@ -160,7 +155,6 @@ const OneTimeReveal = (props: OneTimeRevealProps) => {
                 gap={3}
                 principle="sibling-stack"
                 isSkeleton={isSkeleton}
-                classNames={classNames}
                 items={[
                     heading,
                     () =>

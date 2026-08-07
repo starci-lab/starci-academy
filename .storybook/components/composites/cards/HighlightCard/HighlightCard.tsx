@@ -1,6 +1,5 @@
 import React from "react"
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "HighlightCard" } as const
@@ -22,7 +21,6 @@ export interface HighlightCardProps {
      * Where the wrapper sits inside its parent. Appearance is not passable — it is
      * already a prop. Prefer this over `className`; the string form is going away.
      */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -34,9 +32,9 @@ export interface HighlightCardProps {
  *
  * @param props - {@link HighlightCardProps}
  */
-export const HighlightCard = ({ body, isSkeleton = false, classNames }: HighlightCardProps) => (
+export const HighlightCard = ({ body, isSkeleton = false }: HighlightCardProps) => (
     <div
-        className={cn("relative", classNames)}
+        className={cn("relative")}
 
         data-tier="composite"
         data-component="HighlightCard"

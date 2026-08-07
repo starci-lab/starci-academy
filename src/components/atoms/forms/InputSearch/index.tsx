@@ -19,7 +19,7 @@ export const InputSearch = ({
     isInvalid,
     ariaLabel,
     isSkeleton,
-    classNames,
+    
     label,
     hint,
     errorMessage,
@@ -36,7 +36,7 @@ export const InputSearch = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
             id={controlId}
-            skeletonControl={<FieldSkeleton classNames={classNames} />}
+            skeletonControl={<FieldSkeleton />}
         >
             <HeroSearchField
                 data-tier="atom"
@@ -46,7 +46,7 @@ export const InputSearch = ({
                 onChange={onValueChange}
                 isInvalid={invalid}
                 isDisabled={isDisabled}
-                className={cn("w-full", classNames)}
+                className={cn("w-full")}
             >
                 <HeroSearchField.Group>
                     <HeroSearchField.SearchIcon />

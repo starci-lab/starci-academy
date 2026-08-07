@@ -3,7 +3,6 @@ import { type SkeletonProps } from "@sb-components/frames/_slot"
 import { XIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Button, type IconComponent } from "@sb-components/atoms/buttons/Button/Button"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -49,11 +48,6 @@ export interface RemovableTokenProps {
     removeLabel?: string
     /** Disables both affordances and dims the token. */
     isDisabled?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
     /** `true` → render the skeleton mirror (row frame + placeholder bars). */
     isSkeleton?: boolean
 }
@@ -75,7 +69,7 @@ export const RemovableToken = ({
     onRemove,
     removeLabel = "Remove",
     isDisabled = false,
-    classNames,
+    
     isSkeleton = false,
 }: RemovableTokenProps) => {
     // One render path: the row's own frame stays identical whether loading or not;
@@ -116,7 +110,7 @@ export const RemovableToken = ({
             className={cn(
                 "flex items-center justify-between gap-3 rounded-2xl border border-default px-3 py-3",
                 isDisabled && "opacity-50",
-                classNames,
+                
             )}
             data-tier="composite"
             data-component="RemovableToken"

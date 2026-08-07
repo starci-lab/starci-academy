@@ -3,7 +3,6 @@ import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { CheckIcon } from "@phosphor-icons/react"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /** Horizontal, mid-flow: done = check, current = accent ring, upcoming = muted. */
 
@@ -40,7 +39,6 @@ export interface StepperProps {
      */
     onStepPress?: (index: number) => void
     /** Layout utilities on the track, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
     /**
      * `true` → each part this block renders carries a ``
      * attribute so a BlockAnatomy panel can badge it on-render. Off in production.
@@ -97,7 +95,7 @@ const StepperBase = ({
     currentIndex,
     orientation = "horizontal",
     onStepPress,
-    classNames,
+    
 }: StepperProps) => {
     const isVertical = orientation === "vertical"
     const safeIndex = Math.min(Math.max(currentIndex, 0), steps.length)
@@ -110,7 +108,7 @@ const StepperBase = ({
             className={cn(
                 "flex",
                 isVertical ? "flex-col gap-3" : "items-start",
-                classNames,
+                
             )}
             data-tier="composite"
             data-component="Stepper"

@@ -1,7 +1,6 @@
 import { DatePicker as HeroDatePicker, DateField, Calendar, cn } from "@heroui/react"
 import type { DateValue } from "@internationalized/date"
 import { FieldFrame, fieldName } from "@/components/composites/form/_field/FieldFrame"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import type { FrameProps } from "../_input/types"
 import { FieldSkeleton } from "@/components/atoms/forms/_input/FieldSkeleton"
 
@@ -15,7 +14,7 @@ export const InputDate = ({
     isInvalid,
     ariaLabel = "Pick a date",
     isSkeleton,
-    classNames,
+    
     label,
     hint,
     errorMessage,
@@ -29,10 +28,6 @@ export const InputDate = ({
     isInvalid?: boolean
     ariaLabel?: string
     isSkeleton?: boolean
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 } & FrameProps) => {
     const invalid = isInvalid || errorMessage != null
     return (
@@ -44,7 +39,7 @@ export const InputDate = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
 
-            skeletonControl={<FieldSkeleton classNames={classNames} />}
+            skeletonControl={<FieldSkeleton />}
         >
             <HeroDatePicker
                 data-tier="atom"
@@ -56,7 +51,7 @@ export const InputDate = ({
                 onChange={onValueChange}
                 minValue={minValue}
                 maxValue={maxValue}
-                className={cn("w-full", classNames)}
+                className={cn("w-full")}
             >
                 <DateField.Group fullWidth variant="secondary">
                     <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>

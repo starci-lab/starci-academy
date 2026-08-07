@@ -3,7 +3,6 @@
 import React, { type ReactNode } from "react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import type { TypographySize as AtomTypographySize } from "@sb-components/atoms/text/Typography/Typography"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Box } from "@sb-components/frames/Box/Box"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -50,8 +49,6 @@ interface RichTextOwnProps {
     size?: TypographySize
     /** Typography color; defaults to the Typography default (omit for inherited). */
     color?: TypographyColor
-    /** Where this sits inside its parent, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -184,13 +181,12 @@ export const RichText = ({
     size = "body-sm",
     color,
     isSkeleton = false,
-    classNames,
+    
 }: RichTextProps) => {
     // One render path (COMPOSITE-10): the atom decides its own shimmer shape via
     // `isSkeleton`; this composite only decides size/color and renders a thin `<span>`.
     return (
         <span
-            className={classNames?.join(" ")}
             data-tier="composite"
             data-component="RichText"
         >

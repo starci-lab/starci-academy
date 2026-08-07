@@ -1,5 +1,4 @@
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@sb-components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_identity"
@@ -33,8 +32,6 @@ export interface HideAboveProps {
     at: HideAboveAt
     /** Renders `body` in its skeleton state. */
     isSkeleton?: boolean
-    /** Where this sits inside its parent. */
-    classNames?: Array<AllowedClassName>
     /** Seam token on this root, when the wrap itself is a measured principle. */
     principle?: PrincipleToken
     /** Why this layer exists — beside `principle`, never a restatement of it. */
@@ -52,7 +49,7 @@ const HideAbove = ({
     body: Body,
     at,
     isSkeleton,
-    classNames,
+    
     principle,
     explain,
     identity,
@@ -61,7 +58,7 @@ const HideAbove = ({
         {...resolveIdentity(identity, { tier: "frame", name: "HideAbove" })}
         data-principle={principleAttr(principle)}
         data-explain={explainAttr(explain)}
-        className={cn(HIDE_ABOVE_CLASS[at], classNames)}
+        className={cn(HIDE_ABOVE_CLASS[at])}
     >
         <Body isSkeleton={isSkeleton} />
     </div>

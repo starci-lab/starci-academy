@@ -1792,6 +1792,16 @@
       "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b22-status.md",
       "holdsPreserved": 27,
       "next": "PressableGroupItem.span; LessonEditorPanel dialogWidth (nivo); ShowcaseMockup after LearnLoopScroll unlock."
+    },
+    {
+      "id": "b23-boundary-handoff-2026-08-09",
+      "date": "2026-08-09",
+      "status": "applied",
+      "summary": "BATCH 23: PressableGroupItem.span?:1|2 → GridItem.span; ContentPager+story migrated off col-span classNames. Nivoexpert DrawerShell + ShowcaseMockup locked handoffs only. CSS-door inventory for future error ratchet (rule/allowlist unchanged).",
+      "reason": "Span is Grid's proven placement contract; DOM uses Grid's min-w-0 wrapper (press/focus stay on Base). Boundaries remain out of house CSS-door batches.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b23-status.md",
+      "holdsPreserved": 27,
+      "next": "Nivo LessonEditorPanel width token; Showcase content variant after LearnLoopScroll unlock; error-ratchet when live-api declarations → 0."
     }
   ]
 }

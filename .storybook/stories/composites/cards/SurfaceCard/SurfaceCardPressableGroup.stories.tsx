@@ -383,16 +383,15 @@ export const Verdict: Story = {
         ),
 }
 /**
- * A single leftover pager card, spanning the full row — `span={2}` (via
- * `classNames: ["col-span-2"]`) is the only placement lever `Grid` exposes
- * (§13z on `Grid.tsx`). A raw column-start class (the old `@app-sm:col-start-2`,
- * reached through `item.className`) used to pin a lone card to the right column
- * instead — that was the exact escape hatch that broke mobile in the old
- * `GroupPressableCard` (the mentor's call, recorded in `Grid.tsx`), and it is
- * doubly unavailable now: `Grid` never grew a start-position prop, and
- * `SurfaceCardPressableGroupItem.className` is gone too (COMPOSITE-4 —
- * `classNames: Array<AllowedClassName>`, a closed union with no column-start
- * member). A lone card now spans the row instead of being pinned to one side of it.
+ * A single leftover pager card, spanning the full row — `span={2}` forwards to
+ * {@link GridItem.span} (`col-span-2`, capped there on purpose). A raw column-start
+ * class (the old `@app-sm:col-start-2`, reached through `item.className`) used to
+ * pin a lone card to the right column instead — that was the exact escape hatch
+ * that broke mobile in the old `GroupPressableCard` (the mentor's call, recorded
+ * in `Grid.tsx`), and it is doubly unavailable now: `Grid` never grew a
+ * start-position prop, and `SurfaceCardPressableGroupItem.className` is gone too
+ * (COMPOSITE-4). A lone card now spans the row instead of being pinned to one
+ * side of it.
  */
 /** `content` slot fixture for {@link PagerFullWidth} — a component reference (COMPOSITE-8), not a built node. */
 const NextContent = () => (
@@ -415,12 +414,12 @@ export const PagerFullWidth: Story = {
                 reason="Grid's only placement lever is span (col-span-2, capped there on purpose) — a raw column-start class doesn't exist in the closed classNames union, so a lone leftover card spans the full row instead of pinning to one side of it."
                 states={[
                     {
-                        name: "items.length = 1, classNames = [\"col-span-2\"]",
-                        why: "The single next-content card spans both grid tracks once the container reaches two columns, and stays full width below that too, because it is the only item and carries the span class itself. This is still one repeated Item, so the same composition covers a full grid or a lone pager card.",
+                        name: "items.length = 1, span = 2",
+                        why: "The single next-content card spans both grid tracks once the container reaches two columns, and stays full width below that too, because it is the only item and carries span={2}. This is still one repeated Item, so the same composition covers a full grid or a lone pager card.",
                         code: `<SurfaceCardPressableGroup
     ariaLabel="Go to previous or next content"
     columns={{ base: 1, sm: 2 }}
-    items={[{ key: "next", href: "#", classNames: ["col-span-2"], content: <…/> }]}
+    items={[{ key: "next", href: "#", span: 2, content: <…/> }]}
 />`,
                         render: (
                             <SurfaceCardPressableGroup
@@ -430,7 +429,7 @@ export const PagerFullWidth: Story = {
                                     {
                                         key: "next",
                                         href: "#",
-                                        classNames: ["col-span-2"],
+                                        span: 2,
                                         content: NextContent,
                                     },
                                 ]}

@@ -119,14 +119,10 @@ const ContentPager = ({
         items.push({
             key: "next",
             href: next.href,
-            // `SurfaceCardPressableGroupItem.className` was removed entirely
-            // (COMPOSITE-4) and the closed `AllowedClassName` union has no
-            // container-conditional column-start member to reproduce "pin the lone
-            // pager card to the right column" with. Until that union grows one (or
-            // `Grid` grows a start-position prop), `col-span-2` (full-width lone
-            // card) is the nearest supported fallback — same as the `PagerFullWidth`
-            // leaf in `SurfaceCardPressableGroup.stories.tsx`.
-            classNames: ["col-span-2"],
+            // Full-width lone pager card: Grid's only placement lever is `span`
+            // (`GridItem.span`, capped at 2). Column-start escapes are intentionally
+            // unavailable — same contract as `PagerFullWidth` in SurfaceCardPressableGroup stories.
+            span: 2,
             content: () => nextCard,
         })
     }

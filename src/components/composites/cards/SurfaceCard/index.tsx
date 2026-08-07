@@ -815,9 +815,14 @@ export interface SurfaceCardPressableGroupItem {
     /** Accessible name — needed only when {@link SurfaceCardPressableGroupItem.content} carries no readable text. */
     label?: string
     /**
-     * Where this tile sits inside the grid (e.g. `@lg:col-start-2`) and any
-     * tile-level tweaks on top of the `.Pressable` surface. Appearance is not
-     * passable — it is already a prop.
+     * Columns this tile spans inside the group's {@link Grid}. Forwarded to
+     * {@link GridItem.span} — the frame's only placement lever (`1` | `2`).
+     * Prefer this over routing `col-span-*` through {@link classNames}.
+     */
+    span?: 1 | 2
+    /**
+     * Residual tile-level placement on the press surface (not column span —
+     * use {@link span}). Appearance is not passable — it is already a prop.
      */
     classNames?: Array<AllowedClassName>
     /**
@@ -1008,6 +1013,7 @@ const PressableGroup = ({
                     explain={explain}
                     items={items.map((item) => ({
                         key: item.key,
+                        span: item.span,
                         content: () => <PressableGroupSkeletonTile classNames={item.classNames} />,
                     }))}
                 />
@@ -1052,6 +1058,7 @@ const PressableGroup = ({
                     )
                     return {
                         key: item.key,
+                        span: item.span,
                         content: () => tile,
                     }
                 })}

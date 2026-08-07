@@ -3,6 +3,7 @@
 import React from "react"
 import { CourseCard } from "@/components/blocks/cards/CourseCard"
 import { AddToCartButton } from "@/components/blocks/commerce/AddToCartButton"
+import { Box } from "@/components/frames/Box"
 import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursePricePreviewSwr"
 import type { CourseEntity } from "@/modules/types/entities/course"
 
@@ -42,12 +43,13 @@ export const CatalogCourseCard = ({ course, layout = "grid" }: CatalogCourseCard
             // row was uneven card-to-card (button width = own content only,
             // not the row's real available width).
             action={() => (
-                <AddToCartButton
-                    course={course}
-                    isEnrolled={course.isEnrolled ?? undefined}
-                    variant="secondary"
-                    className="flex-1"
-                />
+                <Box className="flex-1">
+                    <AddToCartButton
+                        course={course}
+                        isEnrolled={course.isEnrolled ?? undefined}
+                        variant="secondary"
+                    />
+                </Box>
             )}
         />
     )

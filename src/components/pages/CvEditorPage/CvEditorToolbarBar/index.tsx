@@ -8,6 +8,7 @@ import {
     FileTextIcon,
 } from "@phosphor-icons/react"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
+import { Box } from "@/components/frames/Box"
 import { StackH } from "@/components/frames/Stack"
 import { CvExportFormat } from "@/modules/types/enums/cv-export-format"
 import { useCvEditorToolbarStore } from "@/hooks/zustand/cvEditorToolbar/store"
@@ -42,7 +43,9 @@ export const CvEditorToolbarBar = () => {
 
     return (
         <div className={"flex w-full items-center justify-between gap-3 px-6 pb-3"}>
-            <BackLink className="shrink-0" target={t("cv.builder.galleryTarget")} onPress={onBack} />
+            <Box className="shrink-0">
+                <BackLink target={t("cv.builder.galleryTarget")} onPress={onBack} />
+            </Box>
             <TextField
                 aria-label={t("cv.builder.nameLabel")}
                 className="min-w-0 w-full max-w-sm"

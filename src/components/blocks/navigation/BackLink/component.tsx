@@ -1,10 +1,9 @@
 import React from "react"
-import { Link, cn } from "@heroui/react"
+import { Link } from "@heroui/react"
 import { ArrowLeftIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link _BackLink} — presentational; the text already resolved. */
-export interface BackLinkProps extends WithClassNames<undefined> {
+export interface BackLinkProps {
     /** Already-localized link text ("Back" / "Back to {target}" / a full override). */
     text: string
     /** Fired when the link is pressed — the caller owns the routing. */
@@ -21,13 +20,10 @@ export interface BackLinkProps extends WithClassNames<undefined> {
  * @param props - {@link BackLinkProps}
  * @see Story: .storybook/stories/blocks/navigation/BackLink/BackLink.stories
  */
-export const _BackLink = ({ text, onPress, className }: BackLinkProps) => (
+export const _BackLink = ({ text, onPress }: BackLinkProps) => (
     <Link
         onPress={onPress}
-        className={cn(
-            "group flex w-fit cursor-pointer items-center gap-2 text-sm text-muted no-underline transition-colors hover:text-foreground",
-            className,
-        )}
+        className="group flex w-fit cursor-pointer items-center gap-2 text-sm text-muted no-underline transition-colors hover:text-foreground"
     >
         <ArrowLeftIcon
             aria-hidden

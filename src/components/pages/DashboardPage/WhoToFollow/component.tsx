@@ -103,7 +103,6 @@ const WhoToFollowRow = ({
                     <Skeleton.Button className="shrink-0" />
                 ) : (
                     <FollowButton
-                        className="shrink-0"
                         following={user.following}
                         isPending={user.isPending}
                         onToggle={() => {

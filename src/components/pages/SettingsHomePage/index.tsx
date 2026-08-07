@@ -51,7 +51,7 @@ export const SettingsHomePage = () => {
     const methodMeta = authType === AuthenticationType.Github
         ? { key: "github", icon: <GithubIcon className="size-3.5" /> }
         : authType === AuthenticationType.Google
-            ? { key: "google", icon: <GoogleIcon className="size-3.5" /> }
+            ? { key: "google", icon: <GoogleIcon /> }
             : authType === AuthenticationType.Credentials
                 ? { key: "credentials", icon: <EnvelopeIcon className="size-3.5" /> }
                 : null

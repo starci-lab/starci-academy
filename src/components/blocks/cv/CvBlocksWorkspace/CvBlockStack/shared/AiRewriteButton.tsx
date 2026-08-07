@@ -1,13 +1,11 @@
 "use client"
 
 import React, { useState } from "react"
-import { Button, Spinner } from "@heroui/react"
+import { Button, cn, Spinner } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { SparkleIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
 /** Props for {@link AiRewriteButton}. */
-export interface AiRewriteButtonProps extends WithClassNames<undefined> {
+export interface AiRewriteButtonProps {
     /**
      * Fires the rewrite call for THIS item only. Rejecting leaves the item
      * untouched — the button just goes back to idle so the learner can retry
@@ -23,7 +21,7 @@ export interface AiRewriteButtonProps extends WithClassNames<undefined> {
  *
  * @param props - {@link AiRewriteButtonProps}
  */
-export const AiRewriteButton = ({ className, onRewrite }: AiRewriteButtonProps) => {
+export const AiRewriteButton = ({ onRewrite }: AiRewriteButtonProps) => {
     const t = useTranslations()
     const [isRunning, setIsRunning] = useState(false)
     const [hasError, setHasError] = useState(false)
@@ -44,7 +42,7 @@ export const AiRewriteButton = ({ className, onRewrite }: AiRewriteButtonProps) 
         <Button
             variant="tertiary"
             size="sm"
-            className={className}
+            className={cn("w-fit", "self-start")}
             isDisabled={isRunning}
             onPress={onPress}
         >

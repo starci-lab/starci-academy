@@ -1832,6 +1832,16 @@
       "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b27-status.md",
       "holdsPreserved": 27,
       "next": "Teacher-review live-api proposals; apply further parent-placement only with exact existing principles and consumer proof; error-ratchet still deferred."
+    },
+    {
+      "id": "b28-live-door-semantic-closure-wave1-2026-08-09",
+      "date": "2026-08-09",
+      "status": "applied-uncommitted",
+      "summary": "BATCH 28 wave 1: closed 12 live CSS doors with proven finite contracts (BrandLogo.size sm|md|lg; intrinsic bakes; HideAbove/Box parent placement). Inventory 1618→1573 (−45). 12 disjoint workers; overlap pass. Locked/vendor/grid/flex-fill cases held with evidence.",
+      "reason": "Only applied when every consumer value formed a finite axis or exact existing HideAbove/Box placement. No new principles. No core Button/Chip/Stack/Grid/Box/SurfaceCard contract edits. No lint severity changes.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b28-status.md",
+      "holdsPreserved": 27,
+      "next": "Wave 2: GithubIcon size union after LearnLoopScroll unlock; grid start props or honest parent Grid migration for CourseHero/PricingRail; flex-fill named wrapper for rails; InfoTooltip vendor Trigger contract."
     }
   ]
 }

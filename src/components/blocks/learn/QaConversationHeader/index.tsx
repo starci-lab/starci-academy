@@ -100,13 +100,14 @@ export const QaConversationHeader = ({
                 </div>
                 {/* follow the asker — quiet so it never competes with the composer's primary */}
                 {canFollow ? (
-                    <FollowButton
-                        quiet
-                        following={isFollowing}
-                        isPending={isFollowPending}
-                        onToggle={onToggleFollow}
-                        className="ml-1 shrink-0"
-                    />
+                    <span className="ml-1">
+                        <FollowButton
+                            quiet
+                            following={isFollowing}
+                            isPending={isFollowPending}
+                            onToggle={onToggleFollow}
+                        />
+                    </span>
                 ) : null}
             </div>
 

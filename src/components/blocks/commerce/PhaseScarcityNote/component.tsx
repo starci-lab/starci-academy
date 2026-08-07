@@ -1,7 +1,6 @@
 import React from "react"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { WarningCircleIcon } from "@phosphor-icons/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Cluster } from "@/components/frames/Cluster"
 
@@ -11,42 +10,23 @@ import { Cluster } from "@/components/frames/Cluster"
  * countdown or seat count, and a phase with no seat cap renders nothing.
  */
 
-/** The course's pricing phases (inlined from `@/modules/types/enums/pricing-phase`). */
-
-/** Props {@link PhaseScarcityNote} carries regardless of loading state. */
-interface PhaseScarcityNoteOwnProps {
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
-    classNames?: Array<AllowedClassName>
-    /**
-     * Anatomy tag for THIS line itself — lets the caller badge it as ONE node.
-     *
-     * Without this prop the root doesn't emit, so when the caller (`TrialConversionStrip`)
-     * declares it as a dep, the node CAN'T enter the tree — the gold-colored line vanishes from
-     * the panel even though it still renders on screen. Worse: the four internal spans
-     * (`WarningCircleIcon`/`SeatCountLine`/`Separator`/`PriceRiseClause`) leak
-     * out as LOOSE siblings, reading like four sibling deps of the block.
-     */
-}
-
 /**
  * Props for {@link _PhaseScarcityNote}. The two sentences are REQUIRED unless
  * `isSkeleton` (§12b) — the price preview hasn't arrived yet, so there is no
  * honest phase/seat fact to state. They arrive already localized: the phase name
  * and the interpolated copy are the connected half's to resolve.
  */
-export type PhaseScarcityNoteBaseProps = PhaseScarcityNoteOwnProps &
-    (
-        | { isSkeleton: true; seatsRemaining?: number | null; slotsLeftLabel?: string | null; priceRisingLabel?: string | null }
-        | {
-            isSkeleton?: false
-            /** Seats left at this phase's price; `null` = unlimited → renders NOTHING. */
-            seatsRemaining: number | null
-            /** "N seats left at the X price", already localized. */
-            slotsLeftLabel: string | null
-            /** "price rises to Y after that", already localized; `null` = no rise to mention. */
-            priceRisingLabel: string | null
-        }
-    )
+export type PhaseScarcityNoteBaseProps =
+    | { isSkeleton: true; seatsRemaining?: number | null; slotsLeftLabel?: string | null; priceRisingLabel?: string | null }
+    | {
+        isSkeleton?: false
+        /** Seats left at this phase's price; `null` = unlimited → renders NOTHING. */
+        seatsRemaining: number | null
+        /** "N seats left at the X price", already localized. */
+        slotsLeftLabel: string | null
+        /** "price rises to Y after that", already localized; `null` = no rise to mention. */
+        priceRisingLabel: string | null
+    }
 
 /**
  * Honest scarcity line for a paywall. Sits as a DIRECT SIBLING below `PriceTag`
@@ -65,12 +45,11 @@ const _PhaseScarcityNote = ({
     slotsLeftLabel,
     priceRisingLabel,
     isSkeleton = false,
-    classNames,
 }: PhaseScarcityNoteBaseProps) => {
     if (isSkeleton) {
         return (
             <Skeleton
-                className={["h-4", "w-64", "max-w-full", "rounded", ...(classNames ?? [])].join(" ")}
+                className="h-4 w-64 max-w-full rounded"
             />
         )
     }
@@ -101,7 +80,6 @@ const _PhaseScarcityNote = ({
                 // does; written as content it also produced a `Separator` node in the structure tree
                 // whose link went to the generic Typography story.
                 separator
-                classNames={classNames}
                 items={[
                     () => (
                         // §5a: icon matches the FONT-SIZE of the text beside it — `sm`

@@ -334,7 +334,6 @@ export const _GlobalBoard = ({
                                                 ),
                                                 ...(!row.isMine ? [() => (
                                                     <FollowButton
-                                                        className="shrink-0"
                                                         quiet
                                                         following={row.following}
                                                         isPending={row.isPending}

@@ -184,7 +184,6 @@ export const QaMessageBubble = ({
                 {/* reply composer */}
                 {replying ? (
                     <CommentComposer
-                        className="w-full"
                         placeholder={t("discussion.replyPlaceholder")}
                         submitLabel={t("discussion.reply")}
                         currentUser={currentUser}

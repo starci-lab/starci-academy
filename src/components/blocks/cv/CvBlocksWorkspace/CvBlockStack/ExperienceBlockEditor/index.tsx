@@ -128,7 +128,7 @@ export const ExperienceBlockEditor = ({ block, onChange, onAiRewrite }: Experien
                     </TextField>
 
                     {onAiRewrite ? (
-                        <AiRewriteButton className="w-fit self-start" onRewrite={() => onRewriteItem(item.id)} />
+                        <AiRewriteButton onRewrite={() => onRewriteItem(item.id)} />
                     ) : null}
                 </RepeatableItemCard>
             ))}

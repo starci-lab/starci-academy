@@ -49,7 +49,7 @@ export const SummaryBlockEditor = ({ block, onChange, onAiRewrite }: SummaryBloc
             </TextField>
 
             {onAiRewrite ? (
-                <AiRewriteButton className="w-fit self-start" onRewrite={onRewrite} />
+                <AiRewriteButton onRewrite={onRewrite} />
             ) : null}
         </div>
     )

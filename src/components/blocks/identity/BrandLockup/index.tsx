@@ -1,12 +1,5 @@
 import React from "react"
-import { cn } from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { BrandLogo } from "@/components/blocks/identity/BrandLogo"
-
-/** Props for the {@link BrandLockup} block. */
-export type BrandLockupProps = WithClassNames<undefined>
 
 /**
  * BrandLockup — the {@link BrandLogo} icon flush against the "StarCi Academy"
@@ -17,14 +10,11 @@ export type BrandLockupProps = WithClassNames<undefined>
  * width is tight) and reappears at `md` and up.
  *
  * Presentational only — wrap it in a link/button where it needs to act.
- *
- * @param props - optional className (placement only, applied to the outer
- * flex row — e.g. `self-start` under a stretching flex-col parent).
  */
-export const BrandLockup = ({ className }: BrandLockupProps) => {
+export const BrandLockup = () => {
     return (
-        <span className={cn("inline-flex items-center gap-0", className)}>
-            <BrandLogo className="h-10" />
+        <span className="inline-flex items-center gap-0">
+            <BrandLogo size="md" />
             <span className="hidden flex-col gap-0 @app-md:flex">
                 <div className="text-sm font-semibold leading-none text-foreground">
                     StarCi

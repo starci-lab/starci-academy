@@ -105,12 +105,13 @@ const EnrollGateBase = ({
                 classNames={["self-center"]}
             />
             {price.currentPhase != null ? (
-                <PhaseScarcityNote
-                    currentPhase={price.currentPhase}
-                    seatsRemaining={price.seatsRemaining ?? null}
-                    nextPhasePriceVnd={price.nextPhasePriceVnd ?? null}
-                    classNames={["self-center"]}
-                />
+                <Box className="self-center">
+                    <PhaseScarcityNote
+                        currentPhase={price.currentPhase}
+                        seatsRemaining={price.seatsRemaining ?? null}
+                        nextPhasePriceVnd={price.nextPhasePriceVnd ?? null}
+                    />
+                </Box>
             ) : null}
         </>
     ) : null

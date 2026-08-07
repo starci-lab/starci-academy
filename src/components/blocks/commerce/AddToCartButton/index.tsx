@@ -1,16 +1,15 @@
 "use client"
 
 import React, { useCallback, useMemo } from "react"
-import { Button, Spinner, Tooltip, cn } from "@heroui/react"
+import { Button, Spinner, Tooltip } from "@heroui/react"
 import { ShoppingCartIcon, XIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useCart } from "@/hooks/useCart"
 import { useCartEntry } from "@/hooks/useCartEntry"
 import type { CourseEntity } from "@/modules/types/entities/course"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link AddToCartButton}. */
-export interface AddToCartButtonProps extends WithClassNames<undefined> {
+export interface AddToCartButtonProps {
     /** The course this button adds to / removes from the cart. */
     course: CourseEntity
     /**
@@ -55,7 +54,6 @@ export const AddToCartButton = ({
     variant = "tertiary",
     fullWidth = false,
     iconOnly = false,
-    className,
 }: AddToCartButtonProps) => {
     const t = useTranslations()
     const { isInCart, removeFromCart, isMutating } = useCart()
@@ -100,7 +98,6 @@ export const AddToCartButton = ({
                         isPending={isMutating}
                         onPress={onToggle}
                         aria-label={inCart ? t("cart.remove") : t("cart.tooltipAdd")}
-                        className={cn(className)}
                     >
                         {isMutating ? (
                             <Spinner size="sm" color="current" />
@@ -122,7 +119,6 @@ export const AddToCartButton = ({
             fullWidth={fullWidth}
             isPending={isMutating}
             onPress={onToggle}
-            className={cn(className)}
         >
             {isMutating ? (
                 <Spinner size="sm" color="current" />

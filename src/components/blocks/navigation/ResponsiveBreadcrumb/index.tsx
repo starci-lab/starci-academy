@@ -4,6 +4,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { Breadcrumbs, cn } from "@heroui/react"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
+import { HideAbove } from "@/components/frames/HideAbove"
 
 /** Collapse the full trail into a single "Back" once the path is this deep. */
 const LONG_TRAIL_MIN = 4
@@ -41,6 +42,7 @@ export const ResponsiveBreadcrumb = ({
     // back target = deepest ancestor we can navigate to (skips the current crumb)
     const parent = [...items].reverse().find((item) => item.onPress)
     const isLongTrail = items.length >= LONG_TRAIL_MIN
+    const onBack = parent?.onPress
 
     return (
         <>
@@ -56,11 +58,12 @@ export const ResponsiveBreadcrumb = ({
             </Breadcrumbs>
 
             {/* mobile, or long trail on any width: single "Back" */}
-            {parent?.onPress ? (
-                <BackLink
-                    onPress={parent.onPress}
-                    className={cn(isLongTrail ? undefined : "@app-sm:hidden")}
-                />
+            {onBack ? (
+                isLongTrail ? (
+                    <BackLink onPress={onBack} />
+                ) : (
+                    <HideAbove at="sm" body={() => <BackLink onPress={onBack} />} />
+                )
             ) : null}
         </>
     )

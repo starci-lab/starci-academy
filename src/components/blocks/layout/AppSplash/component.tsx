@@ -70,7 +70,7 @@ export const _AppSplash = ({ loadingLabel }: AppSplashProps) => {
                     style={{ animation: "appSplashTrickle 2.4s ease-in-out infinite" }}
                 />
             </div>
-            <BrandLogo className="h-14" />
+            <BrandLogo size="lg" />
             <Typography type="body-sm" color="muted">
                 {loadingLabel}
             </Typography>

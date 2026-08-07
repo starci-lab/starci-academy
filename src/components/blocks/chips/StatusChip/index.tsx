@@ -117,7 +117,6 @@ export const StatusChip = ({ tone = "neutral", icon, children, onCancel, cancelL
                     label={cancelLabel ?? ""}
                     onPress={onCancel}
                     tone={tone}
-                    classNames={["shrink-0"]}
                 />
             ) : null}
         </Chip>

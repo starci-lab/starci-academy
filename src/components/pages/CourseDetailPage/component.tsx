@@ -29,6 +29,7 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { Box } from "@/components/frames/Box"
+import { HideAbove } from "@/components/frames/HideAbove"
 import { StackV } from "@/components/frames/Stack"
 
 /** Already-translated copy {@link _CourseDetailPage} needs — resolved by the connected `CourseDetailPage`. */
@@ -142,7 +143,12 @@ const _CourseDetailPage = ({
                 {/* mobile-only sticky enroll bar — reads course/price itself, so it only
                         renders once the real spine has loaded (matches the old AsyncContent
                         content branch, which never rendered it during loading either). */}
-                {!isSkeleton && <CourseMobileEnrollBar className="@app-md:hidden" />}
+                {!isSkeleton && (
+                    <HideAbove
+                        at="md"
+                        body={() => <CourseMobileEnrollBar />}
+                    />
+                )}
             </>
         </Box>
     )

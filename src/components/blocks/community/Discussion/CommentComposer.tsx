@@ -1,13 +1,12 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { Button, TextArea, TextField, cn } from "@heroui/react"
+import { Button, TextArea, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CommentComposer}. */
-export interface CommentComposerProps extends WithClassNames<undefined> {
+export interface CommentComposerProps {
     /** Called with the trimmed body when the user submits a non-empty comment. */
     onSubmit: (body: string) => void
     /** Placeholder text for the textarea. */
@@ -52,7 +51,6 @@ export const CommentComposer = ({
     busy,
     currentUser,
     collapsible,
-    className,
 }: CommentComposerProps) => {
     const t = useTranslations()
     // draft body kept local until submit
@@ -92,7 +90,7 @@ export const CommentComposer = ({
             <button
                 type="button"
                 onClick={() => setExpanded(true)}
-                className={cn("flex w-full items-center gap-3 text-left", className)}
+                className="flex w-full items-center gap-3 text-left"
             >
                 {currentUser ? (
                     <UserAvatar
@@ -143,7 +141,7 @@ export const CommentComposer = ({
 
     // avatar-led when a viewer is known, else just the field (reply/edit keep old layout)
     return (
-        <div className={cn("flex gap-3", className)}>
+        <div className="flex w-full gap-3">
             {currentUser ? (
                 <UserAvatar
                     size="sm"

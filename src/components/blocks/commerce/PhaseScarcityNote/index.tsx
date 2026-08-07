@@ -3,7 +3,6 @@
 import React from "react"
 import { useTranslations } from "next-intl"
 import { PricingPhase } from "@/modules/types/enums/pricing-phase"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { _PhaseScarcityNote } from "./component"
 
 /** Phase → its i18n key. The ONE pricing-phase enum lives in `modules/types/enums`. */
@@ -23,8 +22,6 @@ export interface PhaseScarcityNoteConnectedProps {
     nextPhasePriceVnd?: number | null
     /** First load, nothing in hand → the line rests in place. */
     isSkeleton?: boolean
-    /** Where this sits inside its parent. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -44,12 +41,11 @@ export const PhaseScarcityNote = ({
     seatsRemaining,
     nextPhasePriceVnd,
     isSkeleton = false,
-    classNames,
 }: PhaseScarcityNoteConnectedProps) => {
     const t = useTranslations()
 
     if (isSkeleton) {
-        return <_PhaseScarcityNote isSkeleton classNames={classNames} />
+        return <_PhaseScarcityNote isSkeleton />
     }
     if (seatsRemaining == null || currentPhase == null) {
         return (
@@ -57,7 +53,6 @@ export const PhaseScarcityNote = ({
                 seatsRemaining={null}
                 slotsLeftLabel={null}
                 priceRisingLabel={null}
-                classNames={classNames}
             />
         )
     }
@@ -70,7 +65,6 @@ export const PhaseScarcityNote = ({
             priceRisingLabel={nextPhasePriceVnd != null
                 ? t("course.paywall.priceRising", { nextPrice: `${nextPhasePriceVnd.toLocaleString("vi-VN")}₫` })
                 : null}
-            classNames={classNames}
         />
     )
 }

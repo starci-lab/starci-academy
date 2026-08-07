@@ -26,6 +26,7 @@ import {
     FooterNavColumn,
 } from "./FooterNavColumn"
 import { BrandLockup } from "@/components/blocks/identity/BrandLockup"
+import { Box } from "@/components/frames/Box"
 
 /** Founder social links (brand logos → react-icons/fa6 per the icon rule). */
 const SOCIALS = [
@@ -75,7 +76,9 @@ export const Footer = () => {
                         {/* the column is a flex-col (align-items: stretch by default), which
                             would otherwise stretch the lockup's auto width to the full column
                             width while its height stays fixed — self-start opts it out */}
-                        <BrandLockup className="self-start" />
+                        <Box className="self-start">
+                            <BrandLockup />
+                        </Box>
                         <Typography type="body-sm" color="muted">
                             {t("footer.tagline")}
                         </Typography>

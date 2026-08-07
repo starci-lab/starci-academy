@@ -144,7 +144,7 @@ export const ProjectBlockEditor = ({ block, onChange, onAiRewrite }: ProjectBloc
                             grounds the rewrite (RAG) on the real capstone. Self-reported
                             items have nothing real to ground on, so no AI assist. */}
                         {onAiRewrite && isVerified ? (
-                            <AiRewriteButton className="w-fit self-start" onRewrite={() => onRewriteItem(item.id)} />
+                            <AiRewriteButton onRewrite={() => onRewriteItem(item.id)} />
                         ) : null}
                     </RepeatableItemCard>
                 )

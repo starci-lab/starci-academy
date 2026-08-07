@@ -42,7 +42,7 @@ export const Logo = ({ className }: LogoProps) => {
             onPress={onPress}
             className={cn(className)}
         >
-            <LogoMark className="size-10" />
+            <LogoMark />
         </Link>
     )
 }

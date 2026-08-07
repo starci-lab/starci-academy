@@ -1,7 +1,6 @@
 import React from "react"
-import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { WarningCircleIcon } from "@phosphor-icons/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 
@@ -28,27 +27,12 @@ const PHASE_LABEL: Record<PricingPhase, string> = {
     [PricingPhase.Regular]: "Standard",
 }
 
-/** Props {@link PhaseScarcityNote} carries regardless of loading state. */
-interface PhaseScarcityNoteOwnProps {
-    /** Where this sits inside its parent. Appearance is not passable — it is already a prop. */
-    classNames?: Array<AllowedClassName>
-    /**
-     * Anatomy tag for THIS line itself — lets the caller badge it as ONE node.
-     *
-     * Without this prop the root doesn't emit, so when the caller (`TrialConversionStrip`)
-     * declares it as a dep, the node CAN'T enter the tree — the gold-colored line vanishes from
-     * the panel even though it still renders on screen. Worse: the four internal spans
-     * (`WarningCircleIcon`/`SeatCountLine`/`Separator`/`PriceRiseClause`) leak
-     * out as LOOSE siblings, reading like four sibling deps of the block.
-     */
-}
-
 /**
  * Props for {@link PhaseScarcityNote}. `currentPhase`/`seatsRemaining`/
  * `nextPhasePriceVnd` are REQUIRED unless `isSkeleton` (§12b) — the price
  * preview hasn't arrived yet, so there is no honest phase/seat fact to state.
  */
-export type PhaseScarcityNoteBaseProps = PhaseScarcityNoteOwnProps &
+export type PhaseScarcityNoteBaseProps =
     (
         | { isSkeleton: true; currentPhase?: PricingPhase; seatsRemaining?: number | null; nextPhasePriceVnd?: number | null }
         | {
@@ -79,10 +63,9 @@ const PhaseScarcityNoteBase = ({
     seatsRemaining,
     nextPhasePriceVnd,
     isSkeleton = false,
-    classNames,
 }: PhaseScarcityNoteBaseProps) => {
     if (isSkeleton) {
-        return <HeroSkeleton className={cn("h-4 w-64 max-w-full rounded", classNames)} />
+        return <HeroSkeleton className="h-4 w-64 max-w-full rounded" />
     }
     // no seat cap at this phase → no honest scarcity reason → stay silent
     if (seatsRemaining == null) {
@@ -111,7 +94,6 @@ const PhaseScarcityNoteBase = ({
                 // does; written as content it also produced a `Separator` node in the structure tree
                 // whose link went to the generic Typography story.
                 separator
-                classNames={classNames}
                 items={[
                     () => (
                         // §5a: icon matches the FONT-SIZE of the text beside it — `sm`

@@ -17,9 +17,6 @@ import {
 import {
     useCourseEnrollment,
 } from "../hooks/useCourseEnrollment"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { PriceTagInline } from "@/components/blocks/commerce/PriceTag"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StickyBottomBar } from "@/components/blocks/layout/StickyBottomBar"
@@ -28,16 +25,14 @@ import { useQueryCoursePricePreviewSwr } from "@/hooks/swr/api/graphql/queries/u
 import { StackH } from "@/components/frames/Stack"
 
 /** Props for {@link CourseMobileEnrollBar}. */
-export type CourseMobileEnrollBarProps = WithClassNames<undefined>
+export type CourseMobileEnrollBarProps = Record<string, never>
 
 /**
  * Mobile-only sticky bottom bar (md:hidden): the active price + a single primary
  * action that's always reachable while scrolling the landing on a phone. Reuses
  * the {@link StickyBottomBar} block chrome + the shared pricing / enrollment hooks.
- *
- * @param props - optional className (placement only).
  */
-export const CourseMobileEnrollBar = ({ className }: CourseMobileEnrollBarProps) => {
+export const CourseMobileEnrollBar = () => {
     const t = useTranslations()
     const { active } = usePricingRows()
     const { isEnrolled, onEnroll, onContinueLearning } = useCourseEnrollment()
@@ -50,7 +45,7 @@ export const CourseMobileEnrollBar = ({ className }: CourseMobileEnrollBarProps)
     const previewPending = previewLoading && !preview
 
     return (
-        <StickyBottomBar className={className}>
+        <StickyBottomBar>
             <StackH gap={4} principle="content-row"
                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 justify="between" align="center" items={[

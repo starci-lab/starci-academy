@@ -1,22 +1,15 @@
 import React from "react"
-import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
-/** Props for {@link LogoMark}. */
-export type LogoMarkProps = WithClassNames<undefined>
 
 /**
  * LogoMark — the square StarCi "S✦" brand mark, rendered as inline SVG.
  *
  * Inline (vs `<img src=".svg">`) so it stays crisp at any size and the "S"
  * resolves to the site's Open Sans face instead of an SVG-renderer fallback.
- *
- * @param props.className - sizing/utility classes for the root svg
  */
-export const LogoMark = ({ className }: LogoMarkProps) => {
+export const LogoMark = () => {
     return (
         <svg
-            className={cn(className)}
+            className="size-10"
             viewBox="0 0 512 512"
             width="512"
             height="512"

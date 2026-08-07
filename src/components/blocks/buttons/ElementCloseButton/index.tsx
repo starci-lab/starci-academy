@@ -1,7 +1,5 @@
 import { CloseButton as HeroCloseButton, cn } from "@heroui/react"
 
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-
 /**
  * Tone that drives the close button's colour + hover tint. Maps 1:1 to the app's
  * semantic colours; `neutral` is the quiet grey default.
@@ -34,8 +32,6 @@ export interface ElementCloseButtonProps {
      * X reads tonal (a warning callout → warning X, an accent chip → accent X).
      */
     tone?: ElementCloseButtonTone
-    /** Where this sits inside its parent. Appearance is not passable — it is already the `tone` prop. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -58,14 +54,14 @@ export interface ElementCloseButtonProps {
  * @param props - {@link ElementCloseButtonProps}
  * @see Story: .storybook/stories/blocks/buttons/ElementCloseButton/ElementCloseButton.stories
  */
-export const ElementCloseButton = ({ label, onPress, tone = "neutral", classNames }: ElementCloseButtonProps) => {
+export const ElementCloseButton = ({ label, onPress, tone = "neutral" }: ElementCloseButtonProps) => {
     return (
         <HeroCloseButton
             data-tier="atom"
             data-component="ElementCloseButton"
             aria-label={label}
             onPress={onPress}
-            className={cn("!bg-transparent", TONE[tone], classNames)}
+            className={cn("shrink-0", "!bg-transparent", TONE[tone])}
         />
     )
 }

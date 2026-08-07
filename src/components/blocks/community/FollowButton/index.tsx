@@ -7,15 +7,14 @@ import {
 import React from "react"
 import {
     Button,
+    cn,
     Spinner,
 } from "@heroui/react"
 import {
     useTranslations,
 } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
 /** Props for {@link FollowButton}. */
-export interface FollowButtonProps extends WithClassNames<undefined> {
+export interface FollowButtonProps {
     /** Current follow state (owned by the parent). */
     following: boolean
     /** Invoked when the button is pressed; the parent runs the mutation. */
@@ -46,7 +45,6 @@ export const FollowButton = ({
     onToggle,
     isPending = false,
     quiet = false,
-    className,
 }: FollowButtonProps) => {
     const t = useTranslations()
 
@@ -62,7 +60,7 @@ export const FollowButton = ({
             size="sm"
             isDisabled={isPending}
             onPress={onToggle}
-            className={className}
+            className={cn("shrink-0")}
         >
             {isPending ? (
                 <Spinner

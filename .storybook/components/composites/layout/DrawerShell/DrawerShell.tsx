@@ -1,6 +1,5 @@
 import React from "react"
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import {
     DrawerRoot,
     DrawerBackdrop,
@@ -14,6 +13,12 @@ import {
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
+import {
+    resolveDrawerDialogWidth,
+    resolveDrawerFooterVariant,
+    type DrawerDialogWidth,
+    type DrawerFooterVariant,
+} from "@sb-components/composites/_semantic-contracts"
 
 /**
  * `DrawerShell` — the panel scaffold frame:
@@ -25,6 +30,8 @@ import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "DrawerShell" } as const
+
+export type { DrawerDialogWidth, DrawerFooterVariant }
 
 /** Props for {@link DrawerShell}. */
 export interface DrawerShellBaseProps {
@@ -72,14 +79,18 @@ export interface DrawerShellBaseProps {
      * Held — do not remove while that caller exists; nivoexpert is out of batch scope.
      */
     contentClassName?: string
-    /** Extra classes merged onto `DrawerDialog`, in addition to {@link DrawerShellBaseProps.classNames}. */
-    dialogClassName?: string
-    /** Extra classes merged onto `DrawerFooter`. */
-    footerClassName?: string
     /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Named dialog width. `"cart"` owns MiniCart's `sm:max-w-md`; `"default"` keeps
+     * HeroUI drawer dialog width. Prefer this over raw class escapes.
+     * @default "default"
      */
-    classNames?: Array<AllowedClassName>
+    dialogWidth?: DrawerDialogWidth
+    /**
+     * Named footer layout. `"stacked"` owns MiniCart's column stretch + top border;
+     * `"default"` keeps HeroUI DrawerFooter row. Prefer this over raw class escapes.
+     * @default "default"
+     */
+    footerVariant?: DrawerFooterVariant
     /**
      * `true` → the `title`/`description` text this frame owns switches to
      * shimmer, AND every content-region slot it mounts (`header` / `body` /
@@ -107,9 +118,8 @@ const Base = ({
     body: Body,
     footer: Footer,
     contentClassName,
-    dialogClassName,
-    footerClassName,
-    classNames,
+    dialogWidth = "default",
+    footerVariant = "default",
     isSkeleton = false,
 }: DrawerShellBaseProps) => {
     const hasHeader = Header != null || title != null
@@ -123,7 +133,7 @@ const Base = ({
         >
             <DrawerBackdrop>
                 <DrawerContent className={contentClassName} placement={placement}>
-                    <DrawerDialog className={cn(dialogClassName, classNames)}>
+                    <DrawerDialog className={resolveDrawerDialogWidth(dialogWidth)}>
                         <DrawerCloseTrigger />
                         {Header ? (
                             <DrawerHeader><Header isSkeleton={isSkeleton} /></DrawerHeader>
@@ -171,7 +181,7 @@ const Base = ({
                         {Footer != null ? (
                             <DrawerFooter
 
-                                className={cn("mt-0!", footerClassName)}
+                                className={cn("mt-0!", resolveDrawerFooterVariant(footerVariant))}
                             >
                                 <Footer isSkeleton={isSkeleton} />
                             </DrawerFooter>

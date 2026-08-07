@@ -45,9 +45,7 @@ export type ProfileActivityProps = WithClassNames<undefined>
  *
  * @param props - optional className (placement only).
  */
-export const ProfileActivity = ({
-    className,
-}: ProfileActivityProps) => {
+export const ProfileActivity = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -112,7 +110,7 @@ export const ProfileActivity = ({
 
     return (
         <LabeledCard
-            className={className}
+
             label={t("publicProfile.recentActivity")}
         >
             <AsyncContent

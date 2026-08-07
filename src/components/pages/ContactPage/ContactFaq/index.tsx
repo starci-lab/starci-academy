@@ -26,7 +26,7 @@ export type ContactFaqProps = WithClassNames<undefined>
  *
  * @param props - optional className (placement only).
  */
-export const ContactFaq = ({ className }: ContactFaqProps) => {
+export const ContactFaq = () => {
     const t = useTranslations()
     const locale = useLocale()
     const bodyItems = [
@@ -65,7 +65,7 @@ export const ContactFaq = ({ className }: ContactFaqProps) => {
         <LabeledCard
             identity={{ tier: "block", component: "ContactFaq" }}
             label={t("contact.faq.title")}
-            className={className}
+
         >
             <StackV gap={5} principle="group-boundary"
                 explain="Section group spacing — not sibling-stack, because these blocks are distinct groups rather than same-kind peers."

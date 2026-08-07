@@ -4,7 +4,6 @@ import React from "react"
 import { Chip, Typography } from "@heroui/react"
 import { RocketLaunchIcon, ChartLineUpIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { UserJobReadinessBand, UserJobReadinessTrack } from "@/modules/api/graphql/queries/types/user-job-readiness"
 import { useProfileUsername } from "@/hooks/profile/useProfileUsername"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
@@ -20,7 +19,7 @@ import { StackV } from "@/components/frames/Stack"
 import { pathConfig } from "@/resources/path"
 
 /** Props for {@link ProfileJobReadiness}. */
-export interface ProfileJobReadinessProps extends WithClassNames<undefined> {
+export interface ProfileJobReadinessProps {
     /** Section label, rendered outside the card (owned here, like every other self-contained section). */
     label: string
 }
@@ -128,7 +127,7 @@ const TrackCard = ({
  *
  * @param props - {@link ProfileJobReadinessProps}
  */
-export const ProfileJobReadiness = ({ className, label }: ProfileJobReadinessProps) => {
+export const ProfileJobReadiness = ({ label }: ProfileJobReadinessProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const username = useProfileUsername()
@@ -141,7 +140,7 @@ export const ProfileJobReadiness = ({ className, label }: ProfileJobReadinessPro
     const hasTracks = !(isLoading || !userId) && !error && tracks.length > 0
 
     return (
-        <LabeledCard className={className} label={label} frameless={hasTracks}>
+        <LabeledCard label={label} frameless={hasTracks}>
             <AsyncContent
                 isLoading={(isLoading || !userId) && tracks.length === 0}
                 skeleton={(

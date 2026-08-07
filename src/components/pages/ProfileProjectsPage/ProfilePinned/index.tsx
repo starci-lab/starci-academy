@@ -54,9 +54,7 @@ export type ProfilePinnedProps = WithClassNames<undefined>
  *
  * @param props - {@link ProfilePinnedProps}
  */
-export const ProfilePinned = ({
-    className,
-}: ProfilePinnedProps) => {
+export const ProfilePinned = () => {
     const t = useTranslations()
     const username = useProfileUsername()
     const viewer = useAppSelector((state) => state.user.user)
@@ -93,7 +91,7 @@ export const ProfilePinned = ({
             action={isSelf && pins.length > 0
                 ? () => <ProfilePinnedAction label={t("pinnedProjects.manage")} onPress={openManage} />
                 : undefined}
-            className={className}
+
         >
             <AsyncContent
                 isLoading={isLoading && !data}

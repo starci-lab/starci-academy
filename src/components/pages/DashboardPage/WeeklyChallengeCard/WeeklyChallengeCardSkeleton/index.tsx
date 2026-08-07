@@ -26,12 +26,12 @@ export type WeeklyChallengeCardSkeletonProps = WithClassNames<undefined>
  *
  * @param props - {@link WeeklyChallengeCardSkeletonProps}
  */
-export const WeeklyChallengeCardSkeleton = ({ className }: WeeklyChallengeCardSkeletonProps) => {
+export const WeeklyChallengeCardSkeleton = () => {
     const t = useTranslations()
     return (
         <LabeledCard
             label={t("weeklyChallenge.title")}
-            className={className}
+
         >
             <StackV gap={3} principle="sibling-stack"
                 explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."

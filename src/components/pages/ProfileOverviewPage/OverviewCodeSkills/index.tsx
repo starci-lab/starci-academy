@@ -50,7 +50,7 @@ const DIFF_COLOR: Record<string, string> = {
  *
  * @param props - {@link OverviewCodeSkillsProps}
  */
-export const OverviewCodeSkills = ({ className, label, onSeeMore, seeMoreLabel, fillHeight }: OverviewCodeSkillsProps) => {
+export const OverviewCodeSkills = ({ label, onSeeMore, seeMoreLabel, fillHeight }: OverviewCodeSkillsProps) => {
     const t = useTranslations()
     const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
@@ -76,7 +76,7 @@ export const OverviewCodeSkills = ({ className, label, onSeeMore, seeMoreLabel, 
 
     return (
         <LabeledCard
-            className={className}
+
             label={label}
             onSeeMore={onSeeMore}
             seeMoreLabel={seeMoreLabel}

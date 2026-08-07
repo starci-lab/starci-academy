@@ -31,7 +31,7 @@ export const Empty: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
             <div className="w-[420px]">
-                <PDFView src="" title="No document yet" heightClassName="h-[200px]" />
+                <PDFView src="" title="No document yet" height="compact" />
             </div>
         </div>
     ),
@@ -46,7 +46,7 @@ export const SinglePage: Story = {
                     src={SAMPLE_PDF}
                     title="NestJS lecture slides"
                     showAllPages={false}
-                    heightClassName="h-[320px]"
+                    height="standard"
 
 
                 />
@@ -64,7 +64,7 @@ export const AllPagesScroll: Story = {
                     src={SAMPLE_PDF}
                     title="System Design lecture slides"
                     allowVerticalScroll
-                    heightClassName="h-[420px]"
+                    height="expanded"
 
 
                 />
@@ -83,7 +83,7 @@ export const FitToContainer: Story = {
                     title="StarCi service agreement"
                     fitToContainer
                     allowVerticalScroll
-                    heightClassName="h-[400px]"
+                    height="tall"
 
 
                 />
@@ -100,7 +100,7 @@ export const LoadError: Story = {
                 <PDFView
                     src="https://storage.example.invalid/file-not-found.pdf"
                     title="Document failed to load"
-                    heightClassName="h-[200px]"
+                    height="compact"
 
 
                 />
@@ -128,7 +128,7 @@ export const Skeleton: Story = {
                 states={[
                     {
                         name: "isSkeleton = true",
-                        why: "Covers 'the whole PDF file hasn't arrived yet' — no `Document` mounted, just one full-footprint `HeroSkeleton` sized by `heightClassName`. Distinct from the per-page shimmer `PdfViewportPage` draws once the file HAS loaded but a given page hasn't scrolled into view yet.",
+                        why: "Covers 'the whole PDF file hasn't arrived yet' — no `Document` mounted, just one full-footprint `HeroSkeleton` sized by `height` (default `document`). Distinct from the per-page shimmer `PdfViewportPage` draws once the file HAS loaded but a given page hasn't scrolled into view yet.",
                         code: "<PDFView isSkeleton />",
                         render: <PDFView isSkeleton />,
                     },

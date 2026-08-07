@@ -410,6 +410,7 @@ const PlaygroundSetupSteps = ({
 
     return (
         <StackV
+            identity={{ tier: "block", component: "PlaygroundSetupSteps" }}
             gap={4}
             isSkeleton={isSkeleton}
             items={[

@@ -1705,6 +1705,73 @@
       "reason": "Zero Link.*/Stack.* call sites. export-matches-folder satisfied by Folder* named exports.",
       "holdsPreserved": 27,
       "next": null
+    },
+    {
+      "id": "b17-clear-identity-upnext-playground-2026-08-08",
+      "date": "2026-08-08",
+      "status": "applied",
+      "summary": "BATCH 17: stamped identity on UpNextCard (SectionCard) and PlaygroundSetupSteps (StackV src+SB).",
+      "reason": "Sole declared roots already accept CallerIdentity. No SB twin for UpNextCard.",
+      "holdsPreserved": 27,
+      "next": null
+    },
+    {
+      "id": "b17-hold-triage-proposals-2026-08-08",
+      "date": "2026-08-08",
+      "status": "open",
+      "summary": "BATCH 17: remaining holds classified with proposals — no invented slots applied.",
+      "reason": "ModalShell.bodyClassName story-visual; MiniCart/CvPreview/PDF live; DrawerShell.contentClassName nivoexpert; 30 HeroUI vendor; skeletons+27 teacher untouched.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-08-b17-status.json",
+      "holdsPreserved": 27,
+      "next": "Apply named slots only after architecture locks dialogWidth/viewportFit/height/bodyVariant; migrate LessonEditorPanel in nivo-allowed batch."
+    },
+    {
+      "id": "b18-modalshell-bodyclassname-stackv-2026-08-08",
+      "date": "2026-08-08",
+      "status": "applied",
+      "summary": "BATCH 18: removed SB ModalShell.bodyClassName; WithLeadingTabs stacks via StackV content-row.",
+      "reason": "Gate passed using existing StackV (content-row = 12px). Src twin never had the prop. No bodyVariant invented.",
+      "holdsPreserved": 27,
+      "next": null
+    },
+    {
+      "id": "b18-contract-canon-proposals-2026-08-08",
+      "date": "2026-08-08",
+      "status": "superseded",
+      "summary": "BATCH 18: remaining API holds recorded as approval-ready proposals — dialogWidth/footerVariant/viewportFit/PDF height/SurfaceCard bodyVariant not invented.",
+      "reason": "Gate #3 requires existing canon token; those named slots do not exist yet. HeroUI×30 vendor; nivoexpert contentClassName; skeletons redesign-only.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-08-b18-status.json",
+      "holdsPreserved": 27,
+      "next": "Superseded by b19-semantic-contracts-2026-08-08 after teacher approved exact mappings."
+    },
+    {
+      "id": "b19-semantic-contracts-2026-08-08",
+      "date": "2026-08-08",
+      "status": "applied",
+      "summary": "BATCH 19: DrawerShell dialogWidth/footerVariant; ModalShell viewportFit; PDFView height enum; SurfaceCard bodyVariant — SB+src+consumers+resolvers+tests.",
+      "reason": "Teacher-approved exact mappings. MiniCart/CvPreview/ContinueCard/PDF stories migrated. Removed dialogClassName/footerClassName/containerClassName/heightClassName for these semantics.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-08-b19-status.md",
+      "holdsPreserved": 27,
+      "next": "PressableGroup TILE_CHROME contentClassName hold; LabeledCard/ShowcaseMockup contentClassName one-offs; DrawerShell.contentClassName nivoexpert; HeroUI×30; skeletons."
+    },
+    {
+      "id": "b19-hold-surfacecard-pressablegroup-chrome-2026-08-08",
+      "date": "2026-08-08",
+      "status": "open",
+      "summary": "SurfaceCard PressableGroup still passes contentClassName for TILE_CHROME (rounded-2xl shadow-field) — not bodyVariant.",
+      "reason": "bodyVariant covers stacked/tile body layout only. Concentric tile chrome is a different axis; do not invent further bodyVariant values.",
+      "holdsPreserved": 27,
+      "next": "Named chrome/radius path on SurfaceCard or PressableGroup-owned wrapper when product locks the API."
+    },
+    {
+      "id": "b20-classname-dead-doors-2026-08-08",
+      "date": "2026-08-08",
+      "status": "applied",
+      "summary": "BATCH 20: inventory + remove proven-dead className/classNames/WithClassNames doors on shells/PDF/LabeledCard/ShowcaseMockup/AiQuotaModal; vendor usage exemption in no-public-classname-prop.",
+      "reason": "Consumer-searched dead doors only. Approved B19 contracts verified. contentClassName holds and remaining ambiguous debt untouched.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-08-b20-status.md",
+      "holdsPreserved": 27,
+      "next": "Burn parent-placement / List-KeyValue / atoms classNames with semantic APIs; migrate nivoexpert off DrawerShell.contentClassName."
     }
   ]
 }

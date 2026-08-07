@@ -1,6 +1,5 @@
 import React from "react"
 import { FlameIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SegmentBar } from "@/components/composites/stats/SegmentBar"
@@ -42,7 +41,7 @@ export interface FlashcardStatsStripLabels {
 }
 
 /** Props for {@link _FlashcardStatsStrip} — presentational; all data resolved, no fetch/store/i18n. */
-export interface FlashcardStatsStripProps extends WithClassNames<undefined> {
+export interface FlashcardStatsStripProps {
     /** First load, nothing in hand → the whole strip shimmers in place (co-located). Owned by the connected file. */
     isSkeleton?: boolean
     /** Settled with zero cards in the course at all → the section renders nothing (matches the legacy
@@ -85,7 +84,6 @@ export interface FlashcardStatsStripProps extends WithClassNames<undefined> {
  * @param props - {@link FlashcardStatsStripProps}
  */
 export const _FlashcardStatsStrip = ({
-    className,
     isSkeleton = false,
     isEmpty = false,
     error,
@@ -113,7 +111,7 @@ export const _FlashcardStatsStrip = ({
     const showFirstReviewHint = !showRetention && mastered === 0
 
     return (
-        <LabeledCard className={className} identity={IDENTITY} label={labels.label}>
+        <LabeledCard identity={IDENTITY} label={labels.label}>
             <StackV gap={3} principle="sibling-stack" isSkeleton={isSkeleton}
                 explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                 items={[

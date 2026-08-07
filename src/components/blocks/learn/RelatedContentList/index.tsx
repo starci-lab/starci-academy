@@ -3,7 +3,6 @@
 import React from "react"
 import { useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/useQuerySearchCourseContentSwr"
 import { resolveSearchResultHref } from "@/modules/learn/resolve-search-result-href"
 import { _RelatedContentList } from "./component"
@@ -12,7 +11,7 @@ import { _RelatedContentList } from "./component"
 const SKELETON_ROW_COUNT_CAP = 2
 
 /** Props the connected {@link RelatedContentList} takes from its caller. */
-export interface RelatedContentListConnectedProps extends WithClassNames<undefined> {
+export interface RelatedContentListConnectedProps {
     /** Course to search within (RAG query scope). */
     courseId: string
     /** The course's `displayId` (slug) — needed to build result URLs. */
@@ -53,7 +52,6 @@ export const RelatedContentList = ({
     label,
     excludeId,
     limit = 3,
-    className,
 }: RelatedContentListConnectedProps) => {
     const locale = useLocale()
     const router = useRouter()
@@ -85,7 +83,6 @@ export const RelatedContentList = ({
                     router.push(href)
                 }
             }}
-            className={className}
         />
     )
 }

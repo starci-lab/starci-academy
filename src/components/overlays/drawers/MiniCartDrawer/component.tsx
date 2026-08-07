@@ -299,15 +299,11 @@ export const _MiniCartDrawer = ({
             onOpenChange={onOpenChange}
             placement={isMobile ? "bottom" : "right"}
             title={labels.header}
-            dialogClassName="sm:max-w-md"
+            dialogWidth="cart"
+            footerVariant="stacked"
             isSkeleton={isSkeleton}
             body={cartBody}
             footer={items.length > 0 ? footerSection : undefined}
-            // HeroUI's `.drawer__footer` hard-codes `flex-row items-center justify-end
-            // gap-2` (drawer.css) — this footer needs a vertical stack (summary above
-            // full-width buttons), so every conflicting axis is forced with the trailing
-            // `!` important modifier, same technique `DrawerShell` itself uses for `mt-0!`.
-            footerClassName="flex-col! items-stretch! justify-start! gap-3! border-t"
             identity={{ tier: "overlay", component: "MiniCartDrawer" }}
         />
     )

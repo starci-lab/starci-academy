@@ -9,10 +9,13 @@ import React, {
     useState} from "react"
 import { Document, Page, pdfjs } from "react-pdf"
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Box } from "@/components/frames/Box"
 import { StackV } from "@/components/frames/Stack"
+import {
+    resolvePDFViewHeight,
+    type PDFViewHeight,
+} from "@/components/composites/_semantic-contracts"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -136,8 +139,11 @@ const PdfViewportPage = (props: PdfViewportPageProps) => {
 }
 
 interface PDFViewOwnProps {
-    /** Optional custom height class for wrapper. */
-    heightClassName?: string
+    /**
+     * Named viewer height. Prefer this over raw height class escapes.
+     * @default "document"
+     */
+    height?: PDFViewHeight
     /** Optional page width for PDF rendering. */
     pageWidth?: number
     /** Render all pages or only first page. */
@@ -152,8 +158,6 @@ interface PDFViewOwnProps {
      * a page that just hasn't scrolled into view).
      */
     isSkeleton?: boolean
-    /** Where this sits inside its parent, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -172,6 +176,8 @@ export type PDFViewProps = PDFViewOwnProps &
         }
     )
 
+export type { PDFViewHeight }
+
 /**
  * Reusable PDF preview viewer built on react-pdf.
  *
@@ -187,13 +193,13 @@ export const meta = { tier: "composite", name: "PDFView" } as const
 export const PDFView = ({
     src,
     title,
-    heightClassName = "h-[560px]",
+    height = "document",
     pageWidth = 840,
     showAllPages = true,
     allowVerticalScroll = false,
     fitToContainer = false,
     isSkeleton = false,
-    classNames}: PDFViewProps) => {
+}: PDFViewProps) => {
     const file = useMemo(() => (src ? src : undefined), [src])
     const [numPages, setNumPages] = useState(0)
     const containerRef = useRef<HTMLDivElement | null>(null)
@@ -225,7 +231,7 @@ export const PDFView = ({
     }, [
         fitToContainer,
         src,
-        heightClassName])
+        height])
 
     useEffect(() => {
         if (!fitToContainer) {
@@ -262,10 +268,10 @@ export const PDFView = ({
         <div
             ref={assignContainerRef}
             className={cn(
-                heightClassName,
+                resolvePDFViewHeight(height),
                 "overflow-x-auto bg-surface scrollbar-thin scrollbar-thumb-accent scrollbar-track-surface-secondary",
                 allowVerticalScroll ? "overflow-y-auto" : "overflow-y-hidden",
-                classNames)}
+            )}
             data-tier="composite"
             data-component="PDFView"
         >

@@ -1,6 +1,5 @@
 import React from "react"
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import {
     DrawerRoot,
     DrawerBackdrop,
@@ -15,6 +14,12 @@ import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
+import {
+    resolveDrawerDialogWidth,
+    resolveDrawerFooterVariant,
+    type DrawerDialogWidth,
+    type DrawerFooterVariant,
+} from "@/components/composites/_semantic-contracts"
 
 /**
  * `DrawerShell` — the panel scaffold frame:
@@ -26,6 +31,8 @@ import { resolveIdentity, type CallerIdentity } from "@/components/frames/_ident
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "DrawerShell" } as const
+
+export type { DrawerDialogWidth, DrawerFooterVariant }
 
 /** Props for {@link DrawerShell}. */
 export interface DrawerShellBaseProps {
@@ -67,14 +74,18 @@ export interface DrawerShellBaseProps {
      * flex row. A COMPONENT reference (COMPOSITE-8) the frame mounts itself.
      */
     footer?: ComponentTypeWithSkeleton
-    /** Extra classes merged onto `DrawerDialog`, in addition to {@link DrawerShellBaseProps.classNames}. */
-    dialogClassName?: string
-    /** Extra classes merged onto `DrawerFooter`. */
-    footerClassName?: string
     /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Named dialog width. `"cart"` owns MiniCart's `sm:max-w-md`; `"default"` keeps
+     * HeroUI drawer dialog width. Prefer this over raw class escapes.
+     * @default "default"
      */
-    classNames?: Array<AllowedClassName>
+    dialogWidth?: DrawerDialogWidth
+    /**
+     * Named footer layout. `"stacked"` owns MiniCart's column stretch + top border;
+     * `"default"` keeps HeroUI DrawerFooter row. Prefer this over raw class escapes.
+     * @default "default"
+     */
+    footerVariant?: DrawerFooterVariant
     /**
      * Caller identity to wear on this composite's root instead of its own — pass this
      * when a block/layout/overlay/page uses this composite as its root element.
@@ -107,9 +118,8 @@ const Base = ({
     header: Header,
     body: Body,
     footer: Footer,
-    dialogClassName,
-    footerClassName,
-    classNames,
+    dialogWidth = "default",
+    footerVariant = "default",
     isSkeleton = false,
     identity,
 }: DrawerShellBaseProps) => {
@@ -123,7 +133,7 @@ const Base = ({
         >
             <DrawerBackdrop>
                 <DrawerContent placement={placement}>
-                    <DrawerDialog className={cn(dialogClassName, classNames)}>
+                    <DrawerDialog className={resolveDrawerDialogWidth(dialogWidth)}>
                         <DrawerCloseTrigger />
                         {Header ? (
                             <DrawerHeader><Header isSkeleton={isSkeleton} /></DrawerHeader>
@@ -173,7 +183,7 @@ const Base = ({
                         {Footer != null ? (
                             <DrawerFooter
 
-                                className={cn("mt-0!", footerClassName)}
+                                className={cn("mt-0!", resolveDrawerFooterVariant(footerVariant))}
                             >
                                 <Footer isSkeleton={isSkeleton} />
                             </DrawerFooter>

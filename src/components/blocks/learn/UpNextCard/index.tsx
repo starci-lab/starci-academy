@@ -72,7 +72,7 @@ export const UpNextCard = ({
     const hasEyebrowRow = Boolean(eyebrow || showCheck)
 
     return (
-        <SectionCard>
+        <SectionCard identity={{ tier: "block", component: "UpNextCard" }}>
             {/* completion micro-feedback + "next" eyebrow */}
             {hasEyebrowRow ? (
                 <StackH

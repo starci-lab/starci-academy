@@ -16,6 +16,7 @@ import {
 } from "./authoring.mjs"
 import { noContentPageBoxClassName } from "./contentpage.mjs"
 import { noRuntimeNamespace } from "./namespaces.mjs"
+import { noPublicClassNameProp } from "./public-contracts.mjs"
 
 /** Static className string from one JSXAttribute (literal or pure template quasi). */
 function classNameText(node) {
@@ -1100,5 +1101,6 @@ export default {
     "no-vietnamese-in-source-authoring": noVietnameseInSourceAuthoring,
     "no-contentpage-box-classname": noContentPageBoxClassName,
     "no-runtime-namespace": noRuntimeNamespace,
+    "no-public-classname-prop": noPublicClassNameProp,
   },
 }

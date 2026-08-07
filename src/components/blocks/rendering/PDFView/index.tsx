@@ -12,18 +12,26 @@ import { Document, pdfjs } from "react-pdf"
 import { cn } from "@heroui/react"
 import { RESIZE_DEBOUNCE_MS } from "./constants"
 import { PdfViewportPage } from "./PdfViewportPage"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import {
+    resolvePDFViewHeight,
+    type PDFViewHeight,
+} from "@/components/composites/_semantic-contracts"
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
 
+export type { PDFViewHeight }
+
 /** Props for {@link PDFView}. */
-export interface PDFViewProps extends WithClassNames<undefined> {
+export interface PDFViewProps {
     /** Source URL of the PDF file to preview. */
     src: string
     /** Accessible title for the iframe viewer. */
     title: string
-    /** Optional custom height class for wrapper. */
-    heightClassName?: string
+    /**
+     * Named viewer height. Prefer this over raw height class escapes.
+     * @default "document"
+     */
+    height?: PDFViewHeight
     /** Optional page width for PDF rendering. */
     pageWidth?: number
     /** Render all pages or only first page. */
@@ -45,12 +53,11 @@ export interface PDFViewProps extends WithClassNames<undefined> {
 export const PDFView = ({
     src,
     title,
-    heightClassName = "h-[560px]",
+    height = "document",
     pageWidth = 840,
     showAllPages = true,
     allowVerticalScroll = false,
     fitToContainer = false,
-    className,
 }: PDFViewProps) => {
     const file = useMemo(() => (src ? src : undefined), [src])
     const [numPages, setNumPages] = useState(0)
@@ -83,7 +90,7 @@ export const PDFView = ({
     }, [
         fitToContainer,
         src,
-        heightClassName,
+        height,
     ])
 
     useEffect(() => {
@@ -120,10 +127,9 @@ export const PDFView = ({
         <div
             ref={assignContainerRef}
             className={cn(
-                heightClassName,
+                resolvePDFViewHeight(height),
                 "overflow-x-auto bg-surface scrollbar-thin scrollbar-thumb-accent scrollbar-track-surface-secondary",
                 allowVerticalScroll ? "overflow-y-auto" : "overflow-y-hidden",
-                className,
             )}
         >
             {file ? (

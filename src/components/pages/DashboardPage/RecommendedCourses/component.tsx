@@ -73,7 +73,6 @@ export interface RecommendedCoursesProps extends WithClassNames<undefined> {
  * @param props - {@link RecommendedCoursesProps}
  */
 export const _RecommendedCourses = ({
-    className,
     isSkeleton = false,
     isEmpty = false,
     error,
@@ -94,7 +93,7 @@ export const _RecommendedCourses = ({
     return (
         <LabeledCard
             label={labels.title}
-            className={className}
+
             frameless={hasItems}
             identity={{ tier: "block", component: "RecommendedCourses" }}
         >
@@ -148,7 +147,7 @@ export const _RecommendedCourses = ({
                                                 <PriceTagInline
                                                     discounted={course.discountedPriceVnd}
                                                     original={course.discounted ? course.originalPriceVnd : null}
-                                                   
+
                                                 />
                                             ),
                                             ...(course.reasonText ? [() => (

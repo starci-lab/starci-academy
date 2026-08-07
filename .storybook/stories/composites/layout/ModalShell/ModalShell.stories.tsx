@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, Input, Label, ScrollShadow, Tabs, TextField, Typography } from "@heroui/react"
 import { CheckIcon } from "@phosphor-icons/react"
 import { ModalShell } from "@sb-components/composites/layout/ModalShell/ModalShell"
+import { StackV } from "@sb-components/frames/Stack/Stack"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -157,62 +158,69 @@ const CheckList = ({ items }: CheckListProps) => (
 const LeadingTabsDemo = () => {
     const [tab, setTab] = useState<"email" | "push">("email")
     return (
-        <>
-            <Tabs data-tier="fixture"
-                selectedKey={tab}
-                onSelectionChange={(key) => setTab(String(key) as "email" | "push")}
-            >
-                <Tabs.ListContainer>
-                    <Tabs.List aria-label="Notification channel">
-                        <Tabs.Tab id="email">
-                            Email
-                            <Tabs.Indicator />
-                        </Tabs.Tab>
-                        <Tabs.Tab id="push">
-                            Push
-                            <Tabs.Indicator />
-                        </Tabs.Tab>
-                    </Tabs.List>
-                </Tabs.ListContainer>
-            </Tabs>
-
-            <ScrollShadow data-tier="fixture" hideScrollBar offset={8} className="h-72 overflow-y-auto">
-                {tab === "email" ? (
-                    <div className="flex min-h-full flex-col gap-3">
-                        <Typography type="body-sm" color="muted">
-                            Choose the channel for notifications when a new lesson arrives.
-                        </Typography>
-                        {[
-                            { id: "notify-email", label: "Notification email", value: "you@email.com" },
-                            { id: "notify-email-cc", label: "Secondary email (CC)", value: "cc@email.com" },
-                            { id: "notify-email-subject", label: "Subject template", value: "[StarCi] New lesson" },
-                            { id: "notify-email-reply", label: "Reply-to", value: "" },
-                            { id: "notify-email-footer", label: "Email signature", value: "" },
-                            { id: "notify-email-digest", label: "Weekly digest sent at", value: "" },
-                        ].map((field) => (
-                            <TextField data-tier="fixture" key={field.id} variant="secondary">
-                                <Label htmlFor={field.id}>{field.label}</Label>
-                                <Input id={field.id} defaultValue={field.value} placeholder={field.label} />
-                            </TextField>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="flex min-h-full flex-col gap-3">
-                        <Typography type="body-sm" color="muted">
-                            Push notifications on the browser or registered devices.
-                        </Typography>
-                        <TextField variant="secondary">
-                            <Label htmlFor="notify-device">Device name</Label>
-                            <Input id="notify-device" placeholder="Personal laptop" />
-                        </TextField>
-                        <TextField variant="secondary">
-                            <Label htmlFor="notify-push-token">Push token</Label>
-                            <Input id="notify-push-token" placeholder="fcm_…" />
-                        </TextField>
-                    </div>
-                )}
-            </ScrollShadow>
-        </>
+        <StackV
+            principle="content-row"
+            explain="Keeps the fixed tab strip and the scroll panel on one vertical track so the strip stays put above the form."
+            items={[
+                () => (
+                    <Tabs data-tier="fixture"
+                        selectedKey={tab}
+                        onSelectionChange={(key) => setTab(String(key) as "email" | "push")}
+                    >
+                        <Tabs.ListContainer>
+                            <Tabs.List aria-label="Notification channel">
+                                <Tabs.Tab id="email">
+                                    Email
+                                    <Tabs.Indicator />
+                                </Tabs.Tab>
+                                <Tabs.Tab id="push">
+                                    Push
+                                    <Tabs.Indicator />
+                                </Tabs.Tab>
+                            </Tabs.List>
+                        </Tabs.ListContainer>
+                    </Tabs>
+                ),
+                () => (
+                    <ScrollShadow data-tier="fixture" hideScrollBar offset={8} className="h-72 overflow-y-auto">
+                        {tab === "email" ? (
+                            <div className="flex min-h-full flex-col gap-3">
+                                <Typography type="body-sm" color="muted">
+                                    Choose the channel for notifications when a new lesson arrives.
+                                </Typography>
+                                {[
+                                    { id: "notify-email", label: "Notification email", value: "you@email.com" },
+                                    { id: "notify-email-cc", label: "Secondary email (CC)", value: "cc@email.com" },
+                                    { id: "notify-email-subject", label: "Subject template", value: "[StarCi] New lesson" },
+                                    { id: "notify-email-reply", label: "Reply-to", value: "" },
+                                    { id: "notify-email-footer", label: "Email signature", value: "" },
+                                    { id: "notify-email-digest", label: "Weekly digest sent at", value: "" },
+                                ].map((field) => (
+                                    <TextField data-tier="fixture" key={field.id} variant="secondary">
+                                        <Label htmlFor={field.id}>{field.label}</Label>
+                                        <Input id={field.id} defaultValue={field.value} placeholder={field.label} />
+                                    </TextField>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="flex min-h-full flex-col gap-3">
+                                <Typography type="body-sm" color="muted">
+                                    Push notifications on the browser or registered devices.
+                                </Typography>
+                                <TextField variant="secondary">
+                                    <Label htmlFor="notify-device">Device name</Label>
+                                    <Input id="notify-device" placeholder="Personal laptop" />
+                                </TextField>
+                                <TextField variant="secondary">
+                                    <Label htmlFor="notify-push-token">Push token</Label>
+                                    <Input id="notify-push-token" placeholder="fcm_…" />
+                                </TextField>
+                            </div>
+                        )}
+                    </ScrollShadow>
+                ),
+            ]}
+        />
     )
 }
 
@@ -325,13 +333,13 @@ export const WithLeadingTabs: Story = {
                 trigger="Open modal with tabs"
                 hint="Fixed Tabs (no scroll). The panel at h-72: long content scrolls, short still fills the frame."
                 title="Notification settings"
-                bodyClassName="flex flex-col gap-3"
                 leaf="WithLeadingTabs"
                 parts={TITLE_ONLY_PARTS}
                 stateName="body starts with a tab strip"
-                why="The tab strip sits fixed above the body content with a tighter gap-3 seam in place of the header's usual gap-4, and it stays put instead of scrolling away with the panel underneath it. A short panel still fills the fixed-height frame while a long one scrolls inside it."
-                code={`<ModalShell title="Notification settings" bodyClassName="flex flex-col gap-3">
-  <Tabs>{/* Email / Push panels */}</Tabs>
+                why="The tab strip sits fixed above the body content with a content-row seam, and it stays put instead of scrolling away with the panel underneath it. A short panel still fills the fixed-height frame while a long one scrolls inside it."
+                code={`<ModalShell title="Notification settings" body={() => (
+  <StackV principle="content-row" explain="…" items={[() => <Tabs/>, () => <ScrollPanel/>]} />
+)}>
 </ModalShell>`}
             >
                 <LeadingTabsDemo />

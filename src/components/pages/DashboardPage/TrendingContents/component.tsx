@@ -53,7 +53,6 @@ export interface TrendingContentsProps extends WithClassNames<undefined> {
  * @param props - {@link TrendingContentsProps}
  */
 export const _TrendingContents = ({
-    className,
     isSkeleton = false,
     isEmpty = false,
     items = [],
@@ -68,7 +67,7 @@ export const _TrendingContents = ({
     return (
         <LabeledCard
             frameless
-            className={className}
+
             label={label}
         >
             <SurfaceListCard>

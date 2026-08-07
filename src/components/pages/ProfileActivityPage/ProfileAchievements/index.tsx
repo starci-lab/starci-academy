@@ -87,9 +87,7 @@ export type ProfileAchievementsProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const ProfileAchievements = ({
-    className,
-}: ProfileAchievementsProps) => {
+export const ProfileAchievements = () => {
     const t = useTranslations()
     // route carries the username; resolve it to the entity id the achievements
     // query keys off (the profile fetch is SWR-deduped with the parent + tabs)
@@ -232,7 +230,7 @@ export const ProfileAchievements = ({
 
     return (
         <LabeledCard
-            className={className}
+
             label={t("publicProfile.tabs.achievements")}
         >
             <AsyncContent

@@ -95,6 +95,10 @@ export default defineConfig([
             // ContentPage Box layout regression — path-scoped inside the rule.
             "starci-fe/no-contentpage-box-classname": "error",
             "starci-fe/no-runtime-namespace": "warn",
+            // Public house components must not expose CSS placement doors.
+            // Warn while legacy debt is being migrated; changed files run with
+            // --max-warnings=0 and therefore cannot introduce new violations.
+            "starci-fe/no-public-classname-prop": "warn",
         },
     },
     {

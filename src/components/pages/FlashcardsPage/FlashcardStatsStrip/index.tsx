@@ -3,7 +3,6 @@
 import React from "react"
 import useSWR from "swr"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { DUE_REVIEW_LIMIT } from "../constants"
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query-flashcard-decks-by-course"
 import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due-flashcards"
@@ -11,18 +10,8 @@ import { queryMyFlashcardStats } from "@/modules/api/graphql/queries/query-my-fl
 import { useAppSelector } from "@/redux/hooks"
 import { _FlashcardStatsStrip } from "./component"
 
-/** Props for {@link FlashcardStatsStrip}. */
-export type FlashcardStatsStripProps = WithClassNames<undefined>
-
-/**
- * The flashcards home progress block — the CONNECTED half: it reuses the sibling
- * SWR keys (deck list + due hero + stats) so it adds no extra fetch, derives the
- * mastery/streak/retention numbers, and hands them to the presentational
- * {@link _FlashcardStatsStrip}. See `tiers/split.md`.
- *
- * @param props - {@link FlashcardStatsStripProps}
- */
-export const FlashcardStatsStrip = ({ className }: FlashcardStatsStripProps) => {
+/** Connected flashcards home progress block — no public props. */
+export const FlashcardStatsStrip = () => {
     const t = useTranslations()
     // scope mastery + new-backlog to THIS course (shared keys with the siblings)
     const courseId = useAppSelector((state) => state.course.entity?.id)
@@ -72,7 +61,6 @@ export const FlashcardStatsStrip = ({ className }: FlashcardStatsStripProps) => 
 
     return (
         <_FlashcardStatsStrip
-            className={className}
             isSkeleton={isSkeleton}
             // nothing to show only when the course has no cards at all
             isEmpty={total === 0}

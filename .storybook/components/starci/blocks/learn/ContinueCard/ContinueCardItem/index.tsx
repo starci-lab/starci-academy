@@ -18,7 +18,7 @@ export const ContinueCardItem = (props: ContinueCardItemProps) => {
         <SurfaceCard
             isSkeleton={isSkeleton}
             // CardBody peers (title / progress / CTA) need a stack until CardBody owns one.
-            contentClassName="relative flex flex-col gap-3 overflow-hidden"
+            bodyVariant="tile"
             body={() => (
                 <CardBody
                     {...props}

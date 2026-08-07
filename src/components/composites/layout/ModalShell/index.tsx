@@ -1,6 +1,5 @@
 import React from "react"
 import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import {
     ModalRoot,
     ModalBackdrop,
@@ -15,6 +14,10 @@ import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
+import {
+    resolveModalViewportFit,
+    type ModalViewportFit,
+} from "@/components/composites/_semantic-contracts"
 
 /**
  * `ModalShell` — the dialog scaffold frame:
@@ -27,6 +30,8 @@ import { resolveIdentity, type CallerIdentity } from "@/components/frames/_ident
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "ModalShell" } as const
+
+export type { ModalViewportFit }
 
 /** Props for {@link ModalShell}. */
 export interface ModalShellBaseProps {
@@ -74,12 +79,12 @@ export interface ModalShellBaseProps {
      * When set, the container also gets `max-h-[85vh]`.
      */
     scroll?: React.ComponentProps<typeof ModalContainer>["scroll"]
-    /** Extra classes merged onto `ModalContainer` (merged after the `scroll="inside"` max-height default). */
-    containerClassName?: string
     /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
+     * Named viewport fit for the modal container. `"near-fullscreen"` owns
+     * CvPreview's near-full viewport size; `"default"` keeps HeroUI sizing.
+     * @default "default"
      */
-    classNames?: Array<AllowedClassName>
+    viewportFit?: ModalViewportFit
     /**
      * Caller identity to wear on this composite's root instead of its own — pass this
      * when a block/layout/overlay/page uses this composite as its root element.
@@ -113,8 +118,7 @@ const Base = ({
     footer: Footer,
     size,
     scroll,
-    containerClassName,
-    classNames,
+    viewportFit = "default",
     isSkeleton = false,
     identity,
 }: ModalShellBaseProps) => {
@@ -128,7 +132,7 @@ const Base = ({
         >
             <ModalBackdrop>
                 <ModalContainer
-                    className={cn(scroll === "inside" && "max-h-[85vh]", containerClassName)}
+                    className={cn(scroll === "inside" && "max-h-[85vh]", resolveModalViewportFit(viewportFit))}
                     scroll={scroll}
                     size={size}
                 >
@@ -138,7 +142,7 @@ const Base = ({
                         (`.modal__header + .modal__body { mt-2 }`, `mt-5` before the footer), not to
                         compete with the parent.
                         Dialog gap + mt-0 on the child: ONE seam, ONE owner. */}
-                    <ModalDialog className={cn(classNames)}>
+                    <ModalDialog>
                         <ModalCloseTrigger />
                         {Header ? (
                             <ModalHeader><Header isSkeleton={isSkeleton} /></ModalHeader>

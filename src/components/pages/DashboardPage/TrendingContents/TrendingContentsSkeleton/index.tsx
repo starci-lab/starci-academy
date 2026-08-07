@@ -29,12 +29,12 @@ export type TrendingContentsSkeletonProps = WithClassNames<undefined>
  *
  * @param props - {@link TrendingContentsSkeletonProps}
  */
-export const TrendingContentsSkeleton = ({ className }: TrendingContentsSkeletonProps) => {
+export const TrendingContentsSkeleton = () => {
     const t = useTranslations()
     return (
         <LabeledCard
             frameless
-            className={className}
+
             label={t("DashboardPage.trending.title")}
         >
             <SurfaceListCard>

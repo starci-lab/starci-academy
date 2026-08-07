@@ -1,7 +1,6 @@
 import React, { type ComponentType } from "react"
 import type { ReactNode } from "react"
 import { Card, CardContent, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { SeeMoreLink } from "@/components/blocks/navigation/SeeMoreLink"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Box } from "@/components/frames/Box"
@@ -9,7 +8,7 @@ import { StackH, StackV } from "@/components/frames/Stack"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /** Props for the {@link LabeledCard} block. */
-export interface LabeledCardProps extends WithClassNames<undefined> {
+export interface LabeledCardProps {
     /** Section title rendered OUTSIDE (above) the card. */
     label: string
     /**
@@ -106,7 +105,6 @@ export const LabeledCard = ({
     action: Action,
     children,
     description: Description,
-    className,
     contentClassName,
     frameless = false,
     flushContent = false,
@@ -152,7 +150,7 @@ export const LabeledCard = ({
         <section
             {...resolveIdentity(identity, { tier: "composite", name: "LabeledCard" })}
             data-principle={subtleLabel ? "sublabel-field" : "label-field"}
-            className={cn("flex flex-col", subtleLabel ? "gap-2" : "gap-3", fillHeight && "h-full", className)}
+            className={cn("flex flex-col", subtleLabel ? "gap-2" : "gap-3", fillHeight && "h-full")}
         >
             <StackH gap={4} principle="content-row" justify="between" items={[() => labelSlot, () => endSlot]}
                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."

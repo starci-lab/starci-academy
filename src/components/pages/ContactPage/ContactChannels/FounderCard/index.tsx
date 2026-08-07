@@ -38,7 +38,7 @@ const SOCIALS = [
  *
  * @param props - optional className (placement only).
  */
-export const FounderCard = ({ className }: FounderCardProps) => {
+export const FounderCard = () => {
     const t = useTranslations()
     const bodyItems = [
         () => (
@@ -75,7 +75,7 @@ export const FounderCard = ({ className }: FounderCardProps) => {
         <LabeledCard
             identity={{ tier: "block", component: "FounderCard" }}
             label={t("contact.founder.title")}
-            className={className}
+
         >
             <StackV gap={4} items={bodyItems} />
         </LabeledCard>

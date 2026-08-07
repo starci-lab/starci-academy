@@ -114,7 +114,6 @@ const toRow = (entry: LeagueCardEntry): LeaderboardRow => ({
  * @param props - {@link LeagueCardProps}
  */
 export const _LeagueCard = ({
-    className,
     isSkeleton = false,
     isEmpty = false,
     title,
@@ -136,7 +135,7 @@ export const _LeagueCard = ({
     if (isSkeleton) {
         return (
             <LabeledCard
-                className={className}
+
                 // `label` is plain text now (never a built element), and `title` is already
                 // known statically (translated up front, not fetched) — showing it for real
                 // instead of shimmering it is strictly more correct, not just a workaround.
@@ -179,7 +178,7 @@ export const _LeagueCard = ({
 
     return (
         <LeaderboardListCard
-            className={className}
+
             // `title` forwards into `LabeledCard.label`, plain text now (never a built
             // element) — the `InfoTooltip` decoration has no slot to ride any more
             // (mirrors the same drop in `LeagueCardContent`); `titleHelp` is unused here

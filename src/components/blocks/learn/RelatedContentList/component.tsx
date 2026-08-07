@@ -1,6 +1,4 @@
 import React from "react"
-import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -8,7 +6,7 @@ import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
 import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/types/search-course-content"
 
 /** Props for {@link _RelatedContentList} — presentational; every result already resolved. */
-export interface RelatedContentListProps extends WithClassNames<undefined> {
+export interface RelatedContentListProps {
     /** Section label (translated by the caller — each surface phrases this differently). */
     label: string
     /**
@@ -45,14 +43,13 @@ export const _RelatedContentList = ({
     isSkeleton = false,
     skeletonRowCount,
     onSelectItem,
-    className,
 }: RelatedContentListProps) => {
     if (!isSkeleton && results.length === 0) {
         return null
     }
 
     return (
-        <LabeledCard label={label} frameless className={cn(className)}>
+        <LabeledCard label={label} frameless>
             <SurfaceListCard bordered>
                 {isSkeleton
                     ? Array.from({ length: skeletonRowCount }).map((_row, index) => (

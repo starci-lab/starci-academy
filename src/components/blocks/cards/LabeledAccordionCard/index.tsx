@@ -158,7 +158,6 @@ export const LabeledAccordionCard = ({
     allowsMultipleExpanded = false,
     defaultExpandedKeys,
     bordered = false,
-    className,
 }: LabeledAccordionCardProps) => {
     const frame = (
         <AccordionFrame
@@ -170,7 +169,7 @@ export const LabeledAccordionCard = ({
     )
     // no label → the pane already carries a heading/tab; render the frame bare
     if (label == null) {
-        return <div className={cn(className)}>{frame}</div>
+        return <div>{frame}</div>
     }
     return (
         <LabeledCard
@@ -179,7 +178,7 @@ export const LabeledAccordionCard = ({
             labelEnd={labelEnd}
             action={action}
             frameless
-            className={className}
+
         >
             {frame}
         </LabeledCard>

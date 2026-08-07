@@ -41,14 +41,14 @@ export const _CvPreviewModal = ({ isOpen, onOpenChange, pdfUrl, labels }: CvPrev
     <ModalShell
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        containerClassName="h-[92vh] w-[96vw] max-w-[96vw]"
+        viewportFit="near-fullscreen"
         title={labels.title}
         identity={{ tier: "overlay", component: "CvPreviewModal" }}
         body={() => (
             <PDFView
                 src={pdfUrl}
                 title={labels.title}
-                heightClassName="h-[84vh]"
+                height="viewport"
                 pageWidth={900}
                 showAllPages={true}
                 allowVerticalScroll={true}

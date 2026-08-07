@@ -230,7 +230,7 @@ export const LeaderboardListCard = ({
             label={title ?? ""}
             onSeeMore={onSeeMore}
             seeMoreLabel={seeMoreLabel}
-            className={className}
+
             contentClassName="flex flex-col gap-3"
         >
             {content}

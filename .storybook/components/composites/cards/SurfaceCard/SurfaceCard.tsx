@@ -22,6 +22,10 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 import { Box } from "@sb-components/frames/Box/Box"
 import type { PrincipleToken, ExplainReason } from "@sb-components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_identity"
+import {
+    resolveSurfaceCardBodyVariant,
+    type SurfaceCardBodyVariant,
+} from "@sb-components/composites/_semantic-contracts"
 /**
  * `SurfaceCard` — the general wrapper frame of the card family. Owns the header section
  * (`SurfaceCardHeader`: label/labelEnd/see-more/action/subtleLabel), the `header`/`body`/`footer`
@@ -31,6 +35,8 @@ import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_ide
  */
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "SurfaceCard" } as const
+
+export type { SurfaceCardBodyVariant }
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Shared slot plumbing
@@ -225,7 +231,17 @@ interface SurfaceCardBaseOwnProps extends SurfaceLabelProps, SlotProps {
      * it is already a prop.
      */
     classNames?: Array<AllowedClassName>
-    /** Extra classes on the surface (content) wrapper. */
+    /**
+     * Named body layout. `"tile"` owns ContinueCard's stacked overflow body;
+     * `"stacked"` is flex-col gap only; `"default"` keeps the plain surface.
+     * Prefer this over raw class escapes.
+     * @default "default"
+     */
+    bodyVariant?: SurfaceCardBodyVariant
+    /**
+     * PressableGroup tile chrome hold — not bodyVariant.
+     * Optional escape for PressableGroup's TILE_CHROME / verdict band only.
+     */
     contentClassName?: string
     /**
      * Caller identity to wear on this composite's root instead of its own — pass this
@@ -266,6 +282,7 @@ const Base = ({
     actions,
     ariaLabel,
     classNames,
+    bodyVariant = "default",
     contentClassName,
     identity,
 }: SurfaceCardBaseProps) => {
@@ -292,7 +309,7 @@ const Base = ({
         // The Pressable branch below carries `relative` for the same reason.
         card = (
             <div
-                className={cn("relative", surfaceFrame(variant), paddingCls, isSelected && "ring-2 ring-accent", contentClassName)}
+                className={cn("relative", surfaceFrame(variant), paddingCls, isSelected && "ring-2 ring-accent", resolveSurfaceCardBodyVariant(bodyVariant), contentClassName)}
             >
                 {content}
             </div>
@@ -317,6 +334,7 @@ const Base = ({
                     "transition-[scale] duration-200 ease-out motion-reduce:transition-none",
                     isDisabled ? "cursor-not-allowed opacity-60" : "cursor-pointer active:scale-[0.97]",
                 ),
+            resolveSurfaceCardBodyVariant(bodyVariant),
             contentClassName,
         )
         const inner = isLink ? (
@@ -362,6 +380,7 @@ const Base = ({
                     paddingCls,
                     isSelected && "ring-2 ring-accent",
                     !isDisabled && "has-[[data-card-press]:active]:scale-[0.97]",
+                    resolveSurfaceCardBodyVariant(bodyVariant),
                     contentClassName,
                 )}
             >
@@ -1007,6 +1026,7 @@ const PressableGroup = ({
                             isDisabled={item.isDisabled}
                             isSelected={item.selected}
                             ariaLabel={item.label}
+                            // PressableGroup tile chrome hold — not bodyVariant.
                             contentClassName={cn(
                                 TILE_CHROME,
                                 verdictBandClassName(item.withVerdict),

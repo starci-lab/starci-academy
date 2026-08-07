@@ -20,7 +20,7 @@ import { useLessonNavigation } from "../hooks/useLessonNavigation"
 export type ChallengeBodyProps = WithClassNames<undefined>
 
 /** Content tab body listing the lesson's challenges, paginated. */
-export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
+export const ChallengeBody = () => {
     const t = useTranslations()
     const router = useRouter()
     const dispatch = useAppDispatch()
@@ -74,7 +74,7 @@ export const ChallengeBody = ({ className }: ChallengeBodyProps) => {
             identity={{ tier: "block", component: "ChallengeBody" }}
             label={t("challenge.count", { count: count ?? 0 })}
             frameless={hasChallenges}
-            className={className}
+
         >
             <AsyncContent
                 isLoading={isLoading}

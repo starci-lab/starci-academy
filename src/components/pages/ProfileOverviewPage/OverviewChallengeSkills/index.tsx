@@ -42,7 +42,7 @@ export interface OverviewChallengeSkillsProps extends WithClassNames<undefined> 
  *
  * @param props - {@link OverviewChallengeSkillsProps}
  */
-export const OverviewChallengeSkills = ({ className, label, onSeeMore, seeMoreLabel, fillHeight }: OverviewChallengeSkillsProps) => {
+export const OverviewChallengeSkills = ({ label, onSeeMore, seeMoreLabel, fillHeight }: OverviewChallengeSkillsProps) => {
     const t = useTranslations()
     const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
@@ -65,7 +65,7 @@ export const OverviewChallengeSkills = ({ className, label, onSeeMore, seeMoreLa
 
     return (
         <LabeledCard
-            className={className}
+
             label={label}
             onSeeMore={onSeeMore}
             seeMoreLabel={seeMoreLabel}

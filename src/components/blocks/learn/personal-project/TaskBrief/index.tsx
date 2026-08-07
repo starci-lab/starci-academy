@@ -2,7 +2,6 @@
 
 import React, { useMemo } from "react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import type { MilestoneTaskBrief } from "@/modules/types/entities/milestone"
@@ -10,7 +9,7 @@ import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGit
 import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link TaskBrief}. */
-export type TaskBriefProps = WithClassNames<undefined>
+export type TaskBriefProps = Record<string, never>
 
 /**
  * Pick the brief matching the selected language, falling back to the first brief (handles the
@@ -36,11 +35,8 @@ const resolveBriefBody = (
  * the active locale. Renders nothing when there are no briefs (legacy tasks).
  *
  * Self-contained: reads `briefs` from redux task state and `lang` from the github form store.
- * @param props - optional className for the root element
  */
-export const TaskBrief = ({
-    className,
-}: TaskBriefProps = {}) => {
+export const TaskBrief = () => {
     const t = useTranslations()
     const { lang } = usePersonalProjectGithubForm()
 
@@ -73,7 +69,7 @@ export const TaskBrief = ({
 
     return (
         // the brief IS a labeled card: "Instructions" is the label OUTSIDE, the markdown body inside.
-        <LabeledCard className={className} label={t("task.briefTitle")}>
+        <LabeledCard label={t("task.briefTitle")}>
             {/* data-ai-selectable: the task brief is a valid "ask AI about this passage" region */}
             <div data-ai-selectable>
                 <MarkdownContent markdown={body} />

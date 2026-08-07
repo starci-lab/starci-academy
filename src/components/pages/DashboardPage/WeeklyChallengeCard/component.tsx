@@ -119,7 +119,6 @@ export const _WeeklyChallengeCard = ({
     onClaim,
     leaderboard = [],
     labels,
-    className,
 }: WeeklyChallengeCardProps) => {
     /** The card's body — error beats a stale loading flag; empty only once settled (BLOCK-8). */
     const body = () => {
@@ -242,7 +241,7 @@ export const _WeeklyChallengeCard = ({
         <LabeledCard
             identity={{ tier: "block", component: "WeeklyChallengeCard" }}
             label={labels.title}
-            className={className}
+
         >
             {body()}
         </LabeledCard>

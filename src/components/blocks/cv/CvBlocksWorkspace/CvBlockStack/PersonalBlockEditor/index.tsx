@@ -1,20 +1,10 @@
 "use client"
 
 import React, { useState } from "react"
-import {
-    Calendar,
-    DateField,
-    DatePicker,
-    FieldError,
-    Input,
-    Label,
-    TextField,
-    cn,
-} from "@heroui/react"
+import { Calendar, DateField, DatePicker, FieldError, Input, Label, TextField } from "@heroui/react"
 import { getLocalTimeZone, parseDate, today } from "@internationalized/date"
 import type { DateValue } from "@internationalized/date"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { CvBlockEditorProps } from "@/modules/types/entities/cv"
 import { isValidOptionalUrl } from "@/modules/utils/cv-url"
 
@@ -47,7 +37,7 @@ const parseStoredDate = (value: string): DateValue | null => {
 }
 
 /** Props for {@link PersonalBlockEditor}. */
-export interface PersonalBlockEditorProps extends WithClassNames<undefined>, CvBlockEditorProps {}
+export type PersonalBlockEditorProps = CvBlockEditorProps 
 
 /**
  * Header/contact block editor — singleton, non-repeatable, no AI affordance
@@ -57,7 +47,7 @@ export interface PersonalBlockEditorProps extends WithClassNames<undefined>, CvB
  *
  * @param props - {@link PersonalBlockEditorProps}
  */
-export const PersonalBlockEditor = ({ className, block, onChange }: PersonalBlockEditorProps) => {
+export const PersonalBlockEditor = ({ block, onChange }: PersonalBlockEditorProps) => {
     const t = useTranslations()
     const fields = block.items[0]?.fields ?? {}
     const [touchedUrlKeys, setTouchedUrlKeys] = useState<ReadonlySet<PersonalFieldKey>>(new Set())
@@ -73,7 +63,7 @@ export const PersonalBlockEditor = ({ className, block, onChange }: PersonalBloc
     }
 
     return (
-        <div className={cn("grid grid-cols-1 gap-3 @app-sm:grid-cols-3", className)}>
+        <div className={"grid grid-cols-1 gap-3 @app-sm:grid-cols-3"}>
             {FIELD_KEYS.map((key) => {
                 const value = typeof fields[key] === "string" ? (fields[key] as string) : ""
 

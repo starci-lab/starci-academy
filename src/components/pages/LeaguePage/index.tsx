@@ -4,9 +4,6 @@ import React, {
     useState,
 } from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -24,10 +21,6 @@ import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveB
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { StackV } from "@/components/frames/Stack"
 import { pathConfig } from "@/resources/path"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-
 /** The two leaderboard scopes the page can show. */
 enum LeagueTab {
     Weekly = "weekly",
@@ -35,8 +28,7 @@ enum LeagueTab {
 }
 
 /** Props for {@link LeaguePage}. */
-export type LeaguePageProps = WithClassNames<undefined>
-
+export type LeaguePageProps = Record<string, never>
 /**
  * The full leaderboard page behind the dashboard `LeagueCard`'s "see more":
  * a proper main page ({@link PageHeader} + responsive breadcrumb, per
@@ -49,16 +41,14 @@ export type LeaguePageProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const LeaguePage = ({
-    className,
-}: LeaguePageProps) => {
+export const LeaguePage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
     const [tab, setTab] = useState<LeagueTab>(LeagueTab.Weekly)
 
     return (
-        <div className={cn("mx-auto w-full max-w-2xl p-3", className)} data-principle="cell-pad">
+        <div className={"mx-auto w-full max-w-2xl p-3"} data-principle="cell-pad">
             <StackV
                 gap={7}
                 principle="layout-split"

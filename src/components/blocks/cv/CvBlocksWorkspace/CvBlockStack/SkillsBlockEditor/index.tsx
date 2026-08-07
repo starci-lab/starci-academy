@@ -1,19 +1,9 @@
 "use client"
 
 import React, { useState } from "react"
-import {
-    Button,
-    Chip,
-    Input,
-    Label,
-    Link,
-    TextField,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Button, Chip, Input, Label, Link, TextField, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { PlusIcon, XIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { CvBlock, CvBlockEditorProps, CvBlockItem } from "@/modules/types/entities/cv"
 
 /**
@@ -45,7 +35,7 @@ const namesOf = (block: CvBlock): Array<string> => block.items
     .filter((name): name is string => Boolean(name))
 
 /** Props for {@link SkillsBlockEditor}. */
-export interface SkillsBlockEditorProps extends WithClassNames<undefined>, CvBlockEditorProps {}
+export type SkillsBlockEditorProps = CvBlockEditorProps 
 
 /**
  * Skills block editor — one repeatable item PER skill (`fields.name`).
@@ -55,7 +45,7 @@ export interface SkillsBlockEditorProps extends WithClassNames<undefined>, CvBlo
  *
  * @param props - {@link SkillsBlockEditorProps}
  */
-export const SkillsBlockEditor = ({ className, block, onChange }: SkillsBlockEditorProps) => {
+export const SkillsBlockEditor = ({ block, onChange }: SkillsBlockEditorProps) => {
     const t = useTranslations()
     const [draft, setDraft] = useState("")
     const currentNames = namesOf(block)
@@ -77,7 +67,7 @@ export const SkillsBlockEditor = ({ className, block, onChange }: SkillsBlockEdi
     )
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className={"flex flex-col gap-3"}>
             {block.items.length > 0 ? (
                 <div className="flex flex-wrap items-center gap-2">
                     {block.items.map((item) => {

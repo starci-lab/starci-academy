@@ -1,23 +1,13 @@
 "use client"
 
 import React from "react"
-import {
-    cn,
-    FieldError,
-    Input,
-    Label,
-    Spinner,
-    TextField,
-    Typography,
-} from "@heroui/react"
+import { FieldError, Input, Label, Spinner, TextField, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGithub/usePersonalProjectGithubForm"
 import type { PersonalProjectGithubAutosaveStatus } from "@/hooks/zustand/personalProjectGithub/store"
 
 /** Props for {@link PersonalProjectSubmission}. */
-export type PersonalProjectSubmissionProps = WithClassNames<undefined>
-
+export type PersonalProjectSubmissionProps = Record<string, never>
 /**
  * GitHub repo URL field — the panel's PRIMARY input (the thing learners actually change).
  *
@@ -27,7 +17,7 @@ export type PersonalProjectSubmissionProps = WithClassNames<undefined>
  * {@link import("../GithubGradingSettings").GithubGradingSettings} inside that Drawer.
  * @param props - {@link PersonalProjectSubmissionProps}
  */
-export const PersonalProjectSubmission = ({ className }: PersonalProjectSubmissionProps) => {
+export const PersonalProjectSubmission = () => {
     const t = useTranslations()
     const {
         githubUrl,
@@ -40,7 +30,7 @@ export const PersonalProjectSubmission = ({ className }: PersonalProjectSubmissi
     const urlInvalid = Boolean(touched.githubUrl && errors.githubUrl)
 
     return (
-        <div className={cn("flex flex-col gap-2", className)}>
+        <div className={"flex flex-col gap-2"}>
             {/* label + autosave status on ONE row → the section ends at the input, so the gap to
                 the next section stays a clean gap-6 (the status no longer adds trailing height). */}
             <div className="flex items-center justify-between gap-2">

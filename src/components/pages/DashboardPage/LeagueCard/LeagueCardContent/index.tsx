@@ -14,9 +14,6 @@ import {
 import {
     pathConfig,
 } from "@/resources/path"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { RankDeltaCaret } from "@/components/blocks/profile/RankDeltaCaret"
 import {
@@ -29,7 +26,7 @@ import type { QueryMyLeagueData } from "@/modules/api/graphql/queries/types/leag
 const TOP_ROWS = 5
 
 /** Props for {@link LeagueCardContent}. */
-export interface LeagueCardContentProps extends WithClassNames<undefined> {
+export interface LeagueCardContentProps {
     /** The resolved (non-null) weekly-league standing — supplied by the container. */
     data: QueryMyLeagueData
     /** Kept for API compatibility with the container; the card is always framed now. */
@@ -46,9 +43,7 @@ export interface LeagueCardContentProps extends WithClassNames<undefined> {
  * @param props - {@link LeagueCardContentProps}
  */
 export const LeagueCardContent = ({
-    data,
-    className,
-}: LeagueCardContentProps) => {
+    data}: LeagueCardContentProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -116,7 +111,6 @@ export const LeagueCardContent = ({
 
     return (
         <LeaderboardListCard
-            className={className}
             title={t("DashboardPage.league.title")}
             onSeeMore={onSeeMore}
             seeMoreLabel={t("DashboardPage.league.seeMore")}

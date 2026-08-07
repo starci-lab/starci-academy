@@ -1,7 +1,5 @@
 import React from "react"
-import { Typography, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
+import { Typography } from "@heroui/react"
 /** One topic cell in a {@link TopicMasteryGrid}. */
 export interface TopicMasterySegment {
     /** Stable key. */
@@ -13,7 +11,7 @@ export interface TopicMasterySegment {
 }
 
 /** Props for the {@link TopicMasteryGrid} block. */
-export interface TopicMasteryGridProps extends WithClassNames<undefined> {
+export interface TopicMasteryGridProps {
     /** Topics to show, already sorted (strongest first reads best). */
     topics: Array<TopicMasterySegment>
     /** Accessible summary of the whole grid (read instead of the cells). */
@@ -31,13 +29,13 @@ export interface TopicMasteryGridProps extends WithClassNames<undefined> {
  * @param props - {@link TopicMasteryGridProps}
  * @see Story: .storybook/stories/blocks/stats/TopicMasteryGrid/TopicMasteryGrid.stories
  */
-export const TopicMasteryGrid = ({ topics, ariaLabel, className }: TopicMasteryGridProps) => {
+export const TopicMasteryGrid = ({ topics, ariaLabel}: TopicMasteryGridProps) => {
     const max = topics.reduce((peak, topic) => Math.max(peak, topic.solved), 0) || 1
     return (
         <div
             role="img"
             aria-label={ariaLabel}
-            className={cn("flex flex-wrap gap-2", className)}
+            className={"flex flex-wrap gap-2"}
         >
             {topics.map((topic) => {
                 // deeper neutral tint the closer a topic is to the strongest (12%–48%)

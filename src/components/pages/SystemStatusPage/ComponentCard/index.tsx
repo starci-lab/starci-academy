@@ -8,11 +8,10 @@ import { Box } from "@/components/frames/Box"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { resolveComponentStatusVisual } from "../map"
 import type { SystemHealthComponent } from "@/modules/api/graphql/queries/types/system-health-status"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 
 /** Props for {@link ComponentCard}. */
-export interface ComponentCardProps extends WithClassNames<undefined> {
+export interface ComponentCardProps {
     /** One probed infrastructure component from GraphQL. */
     component: SystemHealthComponent
 }

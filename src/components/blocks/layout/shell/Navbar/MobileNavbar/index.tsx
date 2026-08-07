@@ -7,21 +7,19 @@ import {
 } from "next-intl"
 import { usePathname, useRouter } from "@/i18n/navigation"
 import { pathConfig } from "@/resources/path"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { _MobileNavbar, type MobileNavItem } from "./component"
 
 /**
  * Props for {@link MobileNavbar}.
  */
-export type MobileNavbarProps = WithClassNames<undefined>
-
+export type MobileNavbarProps = Record<string, never>
 /**
  * MobileNavbar — the CONNECTED half: derives nav entries + active-route state
  * from the router/locale itself, manages its own open/close state, and
  * self-navigates on item press. See `design/storybook/architecture/split.md`.
  * @param props - optional root class name
  */
-export const MobileNavbar = ({ className }: MobileNavbarProps) => {
+export const MobileNavbar = () => {
     const t = useTranslations()
     const router = useRouter()
     const pathname = usePathname()
@@ -65,7 +63,6 @@ export const MobileNavbar = ({ className }: MobileNavbarProps) => {
                 router.push(path)
                 setIsMenuOpen(false)
             }}
-            className={className}
         />
     )
 }

@@ -7,19 +7,12 @@ import React, {
 import {
     useTranslations,
 } from "next-intl"
-import {
-    Card,
-    CardContent,
-    cn,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
+import { Card, CardContent } from "@heroui/react"
 import type { QueryActiveAdvertisementData, AdvertisementImageMedia, AdvertisementVideoMedia, AdvertisementCarouselMedia } from "@/modules/api/graphql/queries/types/active-advertisement"
 import { AdvertisementMediaType } from "@/modules/api/graphql/queries/types/active-advertisement"
 
 /** Props for {@link AdBanner}. */
-export interface AdBannerProps extends WithClassNames<undefined> {
+export interface AdBannerProps {
     /** The active advertisement to render. */
     ad: QueryActiveAdvertisementData
 }
@@ -36,9 +29,7 @@ const DEFAULT_CAROUSEL_INTERVAL = 4000
  * @param props - the active ad
  */
 export const AdBanner = ({
-    ad,
-    className,
-}: AdBannerProps) => {
+    ad}: AdBannerProps) => {
     const t = useTranslations()
 
     // carousel slide index (only used when mediaType === carousel)
@@ -125,7 +116,7 @@ export const AdBanner = ({
     }
 
     return (
-        <Card className={cn(className)}>
+        <Card className={""}>
             {/* whole card = ONE pressable target → ad.linkUrl (no nested
                 affordances competing for the same destination) */}
             <a

@@ -19,16 +19,12 @@ import {
     type WeeklyBoardPodiumEntry,
     type WeeklyBoardRowEntry,
 } from "./component"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryMyLeagueSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyLeagueSwr"
 import { useAppSelector } from "@/redux/hooks"
 import { pathConfig } from "@/resources/path"
 
 /** Props for {@link WeeklyBoard}. */
-export type WeeklyBoardProps = WithClassNames<undefined>
-
+export type WeeklyBoardProps = Record<string, never>
 /**
  * The full weekly-league board — one shell shared with the global board:
  * a {@link import("./component").WeeklyBoardHero} of the viewer's own standing (rank-driven
@@ -45,9 +41,7 @@ export type WeeklyBoardProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const WeeklyBoard = ({
-    className,
-}: WeeklyBoardProps) => {
+export const WeeklyBoard = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -169,7 +163,6 @@ export const WeeklyBoard = ({
                 legendPromote: t("dashboard.league.promote", { count: data?.promoteCount ?? 0 }),
                 legendDemote: t("dashboard.league.demote", { count: data?.demoteCount ?? 0 }),
             }}
-            className={className}
         />
     )
 }

@@ -1,18 +1,10 @@
 "use client"
 
 import React from "react"
-import {
-    Link,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Link, Typography } from "@heroui/react"
 import {
     useRouter,
 } from "@/i18n/navigation"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-
 /** A single footer link: an internal `path` (locale-aware push) OR an external
  *  `href` (mailto / off-site) — exactly one is set. */
 export interface FooterNavLink {
@@ -27,7 +19,7 @@ export interface FooterNavLink {
 }
 
 /** Props for {@link FooterNavColumn}. */
-export interface FooterNavColumnProps extends WithClassNames<undefined> {
+export interface FooterNavColumnProps {
     /** Quiet column heading (e.g. "Explore", "Support"). */
     title: string
     /** Links stacked under the heading. */
@@ -47,13 +39,11 @@ export interface FooterNavColumnProps extends WithClassNames<undefined> {
  */
 export const FooterNavColumn = ({
     title,
-    links,
-    className,
-}: FooterNavColumnProps) => {
+    links}: FooterNavColumnProps) => {
     const router = useRouter()
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className={"flex flex-col gap-3"}>
             <Typography type="body-sm" weight="semibold">
                 {title}
             </Typography>

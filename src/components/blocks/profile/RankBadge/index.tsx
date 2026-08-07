@@ -1,15 +1,8 @@
 "use client"
 
 import React from "react"
-import {
-    cn,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-
 /** Props for {@link RankBadge}. */
-export interface RankBadgeProps extends WithClassNames<undefined> {
+export interface RankBadgeProps {
     /** Display label for the rank (already localised, e.g. "Senior"). */
     label: string
     /** Hex colour encoding the rank tier (grey → bronze → silver → gold). */
@@ -30,15 +23,10 @@ export interface RankBadgeProps extends WithClassNames<undefined> {
  */
 export const RankBadge = ({
     label,
-    color,
-    className,
-}: RankBadgeProps) => {
+    color}: RankBadgeProps) => {
     return (
         <span
-            className={cn(
-                "inline-flex w-fit items-center gap-2 rounded-full px-2 py-0 text-xs font-medium",
-                className,
-            )}
+            className={"inline-flex w-fit items-center gap-2 rounded-full px-2 py-0 text-xs font-medium"}
             style={{
                 backgroundColor: `color-mix(in srgb, ${color} 10%, transparent)`,
                 color,

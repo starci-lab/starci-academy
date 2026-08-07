@@ -3,7 +3,6 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Breadcrumbs, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 
 /** Collapse the full trail into a single "Back" once the path is this deep. */
@@ -20,7 +19,7 @@ export interface ResponsiveBreadcrumbItem {
 }
 
 /** Props for {@link ResponsiveBreadcrumb}. */
-export interface ResponsiveBreadcrumbProps extends WithClassNames<undefined> {
+export interface ResponsiveBreadcrumbProps {
     /** The full trail, root → current (current last, usually without `onPress`). */
     items: Array<ResponsiveBreadcrumbItem>
 }
@@ -38,9 +37,7 @@ export interface ResponsiveBreadcrumbProps extends WithClassNames<undefined> {
  * @see Story: .storybook/stories/blocks/navigation/ResponsiveBreadcrumb/ResponsiveBreadcrumb.stories
  */
 export const ResponsiveBreadcrumb = ({
-    items,
-    className,
-}: ResponsiveBreadcrumbProps) => {
+    items}: ResponsiveBreadcrumbProps) => {
     // back target = deepest ancestor we can navigate to (skips the current crumb)
     const parent = [...items].reverse().find((item) => item.onPress)
     const isLongTrail = items.length >= LONG_TRAIL_MIN
@@ -49,10 +46,7 @@ export const ResponsiveBreadcrumb = ({
         <>
             {/* desktop + short trail: the full path */}
             <Breadcrumbs
-                className={cn(
-                    isLongTrail ? "hidden" : "hidden @app-sm:flex",
-                    className,
-                )}
+                className={cn(isLongTrail ? "hidden" : "hidden @app-sm:flex")}
             >
                 {items.map((item) => (
                     <Breadcrumbs.Item key={item.key} onPress={item.onPress}>
@@ -65,10 +59,7 @@ export const ResponsiveBreadcrumb = ({
             {parent?.onPress ? (
                 <BackLink
                     onPress={parent.onPress}
-                    className={cn(
-                        isLongTrail ? undefined : "@app-sm:hidden",
-                        className,
-                    )}
+                    className={cn(isLongTrail ? undefined : "@app-sm:hidden")}
                 />
             ) : null}
         </>

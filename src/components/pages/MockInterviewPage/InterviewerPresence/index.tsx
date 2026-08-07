@@ -6,10 +6,9 @@ import { SpeakerHighIcon, SpeakerSlashIcon } from "@phosphor-icons/react"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { StackH, StackV } from "@/components/frames/Stack"
 import type { MockInterviewPersona } from "../interviewPersona"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link InterviewerPresence}. */
-export interface InterviewerPresenceProps extends WithClassNames<undefined> {
+export interface InterviewerPresenceProps {
     /** The interviewer identity (face photo + name). */
     persona: MockInterviewPersona
     /** Whether the interviewer is currently "speaking" (a question is streaming in). */
@@ -66,11 +65,9 @@ export const InterviewerPresence = ({
     onToggleTts,
     muteLabel,
     unmuteLabel,
-    children,
-    className,
-}: InterviewerPresenceProps) => {
+    children}: InterviewerPresenceProps) => {
     return (
-        <div className={className}>
+        <div>
             <SurfaceCard
                 padding={5}
                 body={() => (

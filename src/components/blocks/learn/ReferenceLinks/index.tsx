@@ -1,8 +1,7 @@
 import { ArrowSquareOutIcon as ArrowUpRightIcon } from "@phosphor-icons/react"
-import { Link, cn } from "@heroui/react"
+import { Link } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import React from "react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 
 /** Minimal shape for content or challenge reference rows. */
@@ -15,7 +14,7 @@ export interface ReferenceLinkItem {
 }
 
 /** Props for {@link ReferenceLinks}. */
-export interface ReferenceLinksProps extends WithClassNames<undefined> {
+export interface ReferenceLinksProps {
     references: Array<ReferenceLinkItem>
     /** i18n key for section title (e.g. reference.title). */
     titleKey: string
@@ -24,13 +23,13 @@ export interface ReferenceLinksProps extends WithClassNames<undefined> {
 /**
  * Sorted list of external reference links (content or challenge).
  */
-export const ReferenceLinks = ({ references, titleKey, className }: ReferenceLinksProps) => {
+export const ReferenceLinks = ({ references, titleKey}: ReferenceLinksProps) => {
     const t = useTranslations()
     if (references.length === 0) {
         return null
     }
     return (
-        <div className={cn(className)}>
+        <div className={""}>
             <div className="font-semibold text-base text-foreground">
                 {t(titleKey)}
             </div>

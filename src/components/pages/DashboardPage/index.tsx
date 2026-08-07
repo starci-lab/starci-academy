@@ -4,9 +4,6 @@ import React, {
     useMemo,
 } from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     useDashboardTabUrlSync,
 } from "./hooks/useDashboardTabUrlSync"
 import {
@@ -27,17 +24,13 @@ import {
 import {
     CommunityTab,
 } from "./CommunityTab"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useDashboardTabStore } from "@/hooks/zustand/dashboardTab/store"
 import { useRegisterNavbarBottomLayer } from "@/hooks/zustand/navbarBottomLayer/store"
 import { Container } from "@/components/frames/Container"
 import { RailShell } from "@/components/frames/RailShell"
 
 /** Props for {@link DashboardPage}. */
-export type DashboardPageProps = WithClassNames<undefined>
-
+export type DashboardPageProps = Record<string, never>
 /**
  * Logged-in home — rebuilt on the proven PROFILE page layout: a tab strip rendered
  * as the navbar's bottom layer, then a centered 2-column body — left = the viewer's identity +
@@ -48,9 +41,7 @@ export type DashboardPageProps = WithClassNames<undefined>
  * content (no rail, no drawer). `"use client"` for the tab store + URL sync.
  * @param props - optional className for the root element
  */
-export const DashboardPage = ({
-    className,
-}: DashboardPageProps) => {
+export const DashboardPage = () => {
     useDashboardTabUrlSync()
     const tab = useDashboardTabStore((state) => state.tab)
     // the DashboardPage tab strip renders as the global Navbar's bottom layer
@@ -108,7 +99,7 @@ export const DashboardPage = ({
     }
 
     return (
-        <div className={cn("flex w-full flex-col", className)}>
+        <div className={"flex w-full flex-col"}>
             {/* tab strip is registered as the Navbar bottom layer above (not here) */}
             <Container
                 size="xl"

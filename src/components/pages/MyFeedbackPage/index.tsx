@@ -3,15 +3,7 @@
 import React, {
     useState,
 } from "react"
-import {
-    Button,
-    Card,
-    CardContent,
-    Chip,
-    Typography,
-    cn,
-    Spinner,
-} from "@heroui/react"
+import { Button, Card, CardContent, Chip, Typography, Spinner } from "@heroui/react"
 import {
     useLocale,
     useTranslations,
@@ -19,9 +11,6 @@ import {
 import {
     SettingsBreadcrumb,
 } from "@/components/blocks/settings/SettingsBreadcrumb"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryMyLearningFeedbacksSwr, MY_LEARNING_FEEDBACKS_LIMIT } from "@/hooks/swr/api/graphql/queries/useQueryMyLearningFeedbacksSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
@@ -32,8 +21,7 @@ import { Cluster } from "@/components/frames/Cluster"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link MyFeedbackPage}. */
-export type MyFeedbackPageProps = WithClassNames<undefined>
-
+export type MyFeedbackPageProps = Record<string, never>
 /** Map a feedback source to a HeroUI Chip color. */
 const SOURCE_COLOR_MAP: Record<string, "accent" | "warning" | "success"> = {
     challenge: "accent",
@@ -48,9 +36,7 @@ const SOURCE_COLOR_MAP: Record<string, "accent" | "warning" | "success"> = {
  *
  * @param props - optional root className.
  */
-export const MyFeedbackPage = ({
-    className,
-}: MyFeedbackPageProps) => {
+export const MyFeedbackPage = () => {
     const t = useTranslations()
     const locale = useLocale()
 
@@ -179,7 +165,7 @@ export const MyFeedbackPage = ({
     ]
 
     return (
-        <div className={cn("flex flex-col gap-10", className)}>
+        <div className={"flex flex-col gap-10"}>
             <PageHeader
                 breadcrumb={<SettingsBreadcrumb current={t("profileSettings.learning.feedback.title")} />}
                 title={t("profileSettings.learning.feedback.title")}

@@ -21,9 +21,6 @@ import {
     getTimeAgoLabel,
     getTimeAgoMessage,
 } from "@/modules/dayjs"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { toDifficulty } from "@/modules/utils/difficulty"
 import { CourseLearningEventType } from "@/modules/api/graphql/queries/types/course-learning-history"
 import type { CourseLearningHistoryItemData } from "@/modules/api/graphql/queries/types/course-learning-history"
@@ -37,7 +34,7 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link CourseDayTimeline}. */
-export interface CourseDayTimelineProps extends WithClassNames<undefined> {
+export interface CourseDayTimelineProps {
     /** Selected course RELAY GLOBAL ID (the `?course=` value, passed to the query). */
     courseGlobalId: string
     /** Lower-cased trimmed search query; filters events by label, client-side. */
@@ -85,9 +82,7 @@ const startOfDayMs = (date: Date): number =>
  */
 export const CourseDayTimeline = ({
     courseGlobalId,
-    query,
-    className,
-}: CourseDayTimelineProps) => {
+    query}: CourseDayTimelineProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const {
@@ -154,7 +149,7 @@ export const CourseDayTimeline = ({
     )
 
     return (
-        <div className={className}>
+        <div>
             <AsyncContent
                 isLoading={isLoading && items.length === 0}
                 skeleton={(

@@ -2,14 +2,13 @@
 
 import React, { useMemo } from "react"
 import dynamic from "next/dynamic"
-import { Chip, Skeleton, cn } from "@heroui/react"
+import { Chip, Skeleton } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import type { HealthByName } from "../hooks/useSystemHealthPoll"
 import { ARCHITECTURE_MODULE_MAP } from "../modules"
 import { buildLiveScene } from "./scene"
 import { buildFutureScene } from "./future-scene"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** The R3F canvas is heavy + client-only — lazy so it never ships in the RSC
  *  bundle and never mounts during SSR. */
@@ -25,7 +24,7 @@ const ArchitectureScene = dynamic(
 export type ArchitectureEra = "present" | "future"
 
 /** Props for {@link ArchitectureMap}. */
-export interface ArchitectureMapProps extends WithClassNames<undefined> {
+export interface ArchitectureMapProps {
     /** Live health keyed by component name, or `null` before the first probe resolves. */
     healthByName: HealthByName | null
     /** Currently selected node id — highlighted with a ring on the map. */
@@ -50,7 +49,7 @@ export interface ArchitectureMapProps extends WithClassNames<undefined> {
  *
  * @param props - {@link ArchitectureMapProps}
  */
-export const ArchitectureMap = ({ healthByName, selectedId, onSelectNode, className }: ArchitectureMapProps) => {
+export const ArchitectureMap = ({ healthByName, selectedId, onSelectNode}: ArchitectureMapProps) => {
     const t = useTranslations("architecture")
 
     const [era, setEra] = React.useState<ArchitectureEra>("present")
@@ -103,7 +102,7 @@ export const ArchitectureMap = ({ healthByName, selectedId, onSelectNode, classN
             : t("map.atlasHint")
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className={"flex flex-col gap-3"}>
             {/* era switch (present ⇄ future) — no pod/layout toggle anymore */}
             <div data-principle="content-row" className="flex flex-wrap items-center justify-between gap-3">
                 <TabsCard

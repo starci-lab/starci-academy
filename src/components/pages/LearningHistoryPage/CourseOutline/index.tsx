@@ -16,9 +16,6 @@ import {
     LockIcon,
     PuzzlePieceIcon,
 } from "@phosphor-icons/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import {
     useSelectedCourse,
 } from "../hooks/useSelectedCourse"
@@ -41,7 +38,7 @@ import { Box } from "@/components/frames/Box"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link CourseOutline}. */
-export interface CourseOutlineProps extends WithClassNames<undefined> {
+export interface CourseOutlineProps {
     /**
      * Lower-cased trimmed search query. Modules are kept when their title matches
      * or any of their lessons match; their lesson list is filtered to matches.
@@ -120,9 +117,7 @@ const resolveOpenModuleId = (outline: MyCourseOutlinePayload): string | null => 
  * @param props - {@link CourseOutlineProps}
  */
 export const CourseOutline = ({
-    search = "",
-    className,
-}: CourseOutlineProps) => {
+    search = ""}: CourseOutlineProps) => {
     const t = useTranslations()
     const { selectedCourse } = useSelectedCourse()
 
@@ -146,7 +141,7 @@ export const CourseOutline = ({
         <AsyncContent
             isLoading={outlineSwr.data === null || outlineSwr.data === undefined ? !outlineSwr.error : false}
             skeleton={(
-                <div className={cn(ACCORDION_CARD_SKELETON, className)}>
+                <div className={cn(ACCORDION_CARD_SKELETON)}>
                     {Array.from({ length: SKELETON_MODULE_COUNT }).map((_unused, moduleIndex) => (
                         <Box key={moduleIndex} principle="row-pad" className="border-b border-default p-4 last:border-b-0"
                             explain="Row content inset — not cell-pad, because this pads a horizontal content row rather than a dense table cell.">

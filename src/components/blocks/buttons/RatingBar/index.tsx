@@ -3,7 +3,6 @@
 import React from "react"
 import { Chip, Typography } from "@heroui/react"
 import type { ReactNode } from "react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { GroupPressableCard } from "@/components/blocks/cards/GroupPressableCard"
 
 /** One selectable recall grade in a {@link RatingBar}. */
@@ -17,7 +16,7 @@ export interface RatingOption {
 }
 
 /** Props for the {@link RatingBar} block. */
-export interface RatingBarProps extends WithClassNames<undefined> {
+export interface RatingBarProps {
     /** Ordered grades to offer, weakest recall first (Again → Easy). */
     options: Array<RatingOption>
     /** Called with the chosen grade. */
@@ -65,7 +64,7 @@ const GRADE_COLOR: Record<number, string> = {
  *
  * @param props - {@link RatingBarProps}
  */
-export const RatingBar = ({ options, onRate, ariaLabel, isPending = false, className }: RatingBarProps) => (
+export const RatingBar = ({ options, onRate, ariaLabel, isPending = false}: RatingBarProps) => (
     <GroupPressableCard
         ariaLabel={ariaLabel}
         // measured: below a 384px container the hint line wraps and the tiles grow
@@ -75,7 +74,6 @@ export const RatingBar = ({ options, onRate, ariaLabel, isPending = false, class
         columns={{ base: 2, sm: 4 }}
         gap={3}
         keyboardShortcut
-        className={className}
         items={options.map((option, position) => ({
             key: String(option.grade),
             onPress: () => onRate(option.grade),

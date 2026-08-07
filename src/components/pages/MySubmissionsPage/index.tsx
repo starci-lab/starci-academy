@@ -3,14 +3,7 @@
 import React, {
     useState,
 } from "react"
-import {
-    Button,
-    Chip,
-    Link,
-    Typography,
-    cn,
-    Spinner,
-} from "@heroui/react"
+import { Button, Chip, Link, Typography, Spinner } from "@heroui/react"
 import {
     useLocale,
     useTranslations,
@@ -24,9 +17,6 @@ import {
 import {
     EntityToken,
 } from "@/components/blocks/entity/EntityToken"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryMyChallengeSubmissionsSwr, MY_CHALLENGE_SUBMISSIONS_LIMIT } from "@/hooks/swr/api/graphql/queries/useQueryMyChallengeSubmissionsSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
@@ -36,8 +26,7 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link MySubmissionsPage}. */
-export type MySubmissionsPageProps = WithClassNames<undefined>
-
+export type MySubmissionsPageProps = Record<string, never>
 /** Map a submission status to a HeroUI Chip color. */
 const STATUS_COLOR_MAP: Record<string, "success" | "danger" | "warning"> = {
     passed: "success",
@@ -52,9 +41,7 @@ const STATUS_COLOR_MAP: Record<string, "success" | "danger" | "warning"> = {
  *
  * @param props - optional root className.
  */
-export const MySubmissionsPage = ({
-    className,
-}: MySubmissionsPageProps) => {
+export const MySubmissionsPage = () => {
     const t = useTranslations()
     const locale = useLocale()
 
@@ -156,7 +143,7 @@ export const MySubmissionsPage = ({
     ]
 
     return (
-        <div className={cn("flex flex-col gap-10", className)}>
+        <div className={"flex flex-col gap-10"}>
             <PageHeader
                 breadcrumb={<SettingsBreadcrumb current={t("profileSettings.learning.submissions.title")} />}
                 title={t("profileSettings.learning.submissions.title")}

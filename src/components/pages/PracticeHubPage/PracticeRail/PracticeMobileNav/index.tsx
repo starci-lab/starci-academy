@@ -1,11 +1,7 @@
 "use client"
 
 import React from "react"
-import {
-    Button,
-    ScrollShadow,
-    cn,
-} from "@heroui/react"
+import { Button, ScrollShadow } from "@heroui/react"
 import {
     ListChecksIcon,
     TrophyIcon,
@@ -18,11 +14,9 @@ import { usePracticeView } from "../../hooks/usePracticeView"
 import { usePracticeFilters } from "../../hooks/usePracticeFilters"
 import type { PracticeView } from "../../hooks/usePracticeView"
 import type { DomainFilter } from "../../types"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link PracticeMobileNav}. */
-export type PracticeMobileNavProps = WithClassNames<undefined>
-
+export type PracticeMobileNavProps = Record<string, never>
 /** All topic options for the mobile chip row: "all" + the canonical domain order. */
 const MOBILE_TOPICS: ReadonlyArray<DomainFilter> = ["all", ...CODING_DOMAIN_ORDER]
 
@@ -35,13 +29,13 @@ const MOBILE_TOPICS: ReadonlyArray<DomainFilter> = ["all", ...CODING_DOMAIN_ORDE
  *
  * @param props - {@link PracticeMobileNavProps}
  */
-export const PracticeMobileNav = ({ className }: PracticeMobileNavProps) => {
+export const PracticeMobileNav = () => {
     const t = useTranslations()
     const { view, setView } = usePracticeView()
     const { filters, setFilters } = usePracticeFilters()
 
     return (
-        <div className={cn("flex flex-col gap-3 @app-lg:hidden", className)}>
+        <div className={"flex flex-col gap-3 @app-lg:hidden"}>
             {/* mode switch — mirrors the desktop rail's TabsCard (see PracticeRail) */}
             <TabsCard
                 variant="primary"

@@ -3,10 +3,7 @@
 import React, {
     useMemo,
 } from "react"
-import {
-    Breadcrumbs,
-    cn,
-} from "@heroui/react"
+import { Breadcrumbs } from "@heroui/react"
 import {
     useLocale,
     useTranslations,
@@ -14,7 +11,6 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { CvGallery } from "./CvGallery"
 import { pathConfig } from "@/resources/path"
 
@@ -29,8 +25,7 @@ type CvBreadcrumbItem = {
 }
 
 /** Props for {@link CvGalleryPage}. */
-export type CvGalleryPageProps = WithClassNames<undefined>
-
+export type CvGalleryPageProps = Record<string, never>
 /**
  * CvGalleryPage page — a USER-level (not course-scoped) resume tool. Hosted at
  * `/profile/cv` (the user owns many CVs across all courses). Profile-context
@@ -40,7 +35,7 @@ export type CvGalleryPageProps = WithClassNames<undefined>
  *
  * @param props - {@link CvGalleryPageProps}
  */
-export const CvGalleryPage = ({ className }: CvGalleryPageProps) => {
+export const CvGalleryPage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -67,7 +62,7 @@ export const CvGalleryPage = ({ className }: CvGalleryPageProps) => {
     ])
 
     return (
-        <div className={cn("mx-auto flex w-full max-w-[1280px] flex-col px-6 py-6", className)}>
+        <div className={"mx-auto flex w-full max-w-[1280px] flex-col px-6 py-6"}>
             <CvGallery
                 breadcrumb={(
                     <Breadcrumbs>

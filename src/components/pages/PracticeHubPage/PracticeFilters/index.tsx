@@ -1,15 +1,7 @@
 "use client"
 
 import React from "react"
-import {
-    Button,
-    Label,
-    ListBox,
-    SearchField,
-    Select,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Button, Label, ListBox, SearchField, Select, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import {
     RowsIcon,
@@ -29,11 +21,9 @@ import type {
     SortKey,
     StatusFilter,
 } from "../types"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link PracticeFilters}. */
-export type PracticeFiltersProps = WithClassNames<undefined>
-
+export type PracticeFiltersProps = Record<string, never>
 /**
  * The PracticeHubPage catalog filter bar — a title search box plus difficulty / status
  * filter chips (HeroUI Buttons, secondary when active / ghost when not), a sort
@@ -44,14 +34,12 @@ export type PracticeFiltersProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const PracticeFilters = ({
-    className,
-}: PracticeFiltersProps) => {
+export const PracticeFilters = () => {
     const t = useTranslations()
     const { filters, setFilters } = usePracticeFilters()
 
     return (
-        <div className={cn("flex flex-col gap-4", className)}>
+        <div className={"flex flex-col gap-4"}>
             {/* title search — client-side filter over loaded problems */}
             <SearchField
                 aria-label={t("PracticeHubPage.filters.searchPlaceholder")}

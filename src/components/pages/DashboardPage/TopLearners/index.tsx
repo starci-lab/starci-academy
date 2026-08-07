@@ -20,9 +20,6 @@ import {
 import {
     fromGlobalId,
 } from "@/modules/utils/globalId"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import type { LeaderboardRow } from "@/components/blocks/dashboard/LeaderboardListCard"
 import { useMutateSetFollowSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetFollowSwr"
 import { useQueryGlobalLeaderboardSwr } from "@/hooks/swr/api/graphql/queries/useQueryGlobalLeaderboardSwr"
@@ -33,8 +30,7 @@ import { _TopLearners } from "./component"
 export const TOP_N = 5
 
 /** Props for {@link TopLearners}. */
-export type TopLearnersProps = WithClassNames<undefined>
-
+export type TopLearnersProps = Record<string, never>
 /**
  * DashboardPage "Top Learners" card — the CONNECTED half: fetches the global leaderboard, owns the
  * follow mutation (rows stay presentational), resolves the viewer's rank-relative slice (top-N +
@@ -43,9 +39,7 @@ export type TopLearnersProps = WithClassNames<undefined>
  *
  * @param props - optional root class name (placement only)
  */
-export const TopLearners = ({
-    className,
-}: TopLearnersProps) => {
+export const TopLearners = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -156,7 +150,6 @@ export const TopLearners = ({
 
     return (
         <_TopLearners
-            className={className}
             isSkeleton={isSkeleton}
             isEmpty={isEmpty}
             onSeeMore={onSeeMore}

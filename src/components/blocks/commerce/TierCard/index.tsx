@@ -4,7 +4,6 @@ import React, {
     useCallback,
 } from "react"
 import {
-    cn,
     Button,
     Chip,
     Spinner,
@@ -18,12 +17,11 @@ import { formatUsd } from "@/modules/utils/format-usd"
 import type { AiSubscriptionTier } from "@/modules/api/graphql/queries/types/ai-subscription-tiers"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
-import { type WithClassNames } from "@/modules/types/base/class-name"
 import { TierLevelIcon } from "@/components/svg/TierLevelIcon"
 import { TierCardBase } from "@/components/blocks/commerce/TierCardBase"
 
 /** Props for {@link TierCard} (list item — per-item tier data only). */
-export interface TierCardProps extends WithClassNames<undefined> {
+export interface TierCardProps {
     /** Tier this card represents. */
     /** The tier this card sells. Absent only while {@link TierCardProps.isSkeleton}. */
     tier?: AiSubscriptionTier
@@ -48,9 +46,7 @@ const EmptySlot = () => null
 export const TierCard = ({
     tier,
     isCurrent,
-    className,
-    isSkeleton = false,
-}: TierCardProps) => {
+    isSkeleton = false}: TierCardProps) => {
     const t = useTranslations()
     const { open: openPaymentModal } = usePaymentOverlayState()
 
@@ -76,7 +72,6 @@ export const TierCard = ({
             <TierCardBase
                 identity={{ tier: "block", component: "TierCard" }}
                 isSkeleton
-                className={className}
                 icon={EmptySlot}
                 title=""
                 price={EmptySlot}
@@ -96,10 +91,7 @@ export const TierCard = ({
     return (
         <TierCardBase
             identity={{ tier: "block", component: "TierCard" }}
-            className={cn(
-                tier.popular ? "border-accent ring-2 ring-accent/30" : "",
-                className,
-            )}
+            className={tier.popular ? "border-accent ring-2 ring-accent/30" : undefined}
             icon={() => (
                 <TierLevelIcon
                     level={tierLevel}

@@ -5,7 +5,6 @@ import React, {
 } from "react"
 import {
     Card,
-    cn,
 } from "@heroui/react"
 import type {
     CvSubmissionFormValues,
@@ -14,10 +13,9 @@ import {
     CvSubmissionFields,
 } from "./CvSubmissionFields"
 import { useCvSubmissionForm } from "@/hooks/rhf/useCvSubmissionForm"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CVSubmissionForm}. */
-export interface CVSubmissionFormProps extends WithClassNames<undefined> {
+export interface CVSubmissionFormProps {
     /** Whether the S3 upload step is in progress. */
     isUploading: boolean
     /** Whether the backend processing step is in progress. */
@@ -50,9 +48,7 @@ export const CVSubmissionForm = ({
     uploadedFileName,
     uploadedS3Key,
     onSubmit,
-    onProcess,
-    className,
-}: CVSubmissionFormProps) => {
+    onProcess}: CVSubmissionFormProps) => {
     const {
         watch,
         setValue,
@@ -73,7 +69,7 @@ export const CVSubmissionForm = ({
     }, [uploadedFileName, uploadedS3Key, reset])
 
     return (
-        <Card className={cn(className)}>
+        <Card>
             <CvSubmissionFields
                 cv={watch("cv")}
                 cvError={errors.cv?.message}

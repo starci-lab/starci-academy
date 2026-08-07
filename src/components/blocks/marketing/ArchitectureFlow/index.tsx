@@ -1,10 +1,9 @@
 import React from "react"
-import { cn, Typography } from "@heroui/react"
+import { Typography } from "@heroui/react"
 import { CaretRightIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for the {@link ArchitectureFlow} block. */
-export interface ArchitectureFlowProps extends WithClassNames<undefined> {
+export interface ArchitectureFlowProps {
     /** Ordered node labels rendered as boxes joined by caret connectors (left → right). */
     nodes: ReadonlyArray<string>
 }
@@ -17,9 +16,9 @@ export interface ArchitectureFlowProps extends WithClassNames<undefined> {
  *
  * @param props - {@link ArchitectureFlowProps}
  */
-export const ArchitectureFlow = ({ nodes, className }: ArchitectureFlowProps) => {
+export const ArchitectureFlow = ({ nodes}: ArchitectureFlowProps) => {
     return (
-        <div className={cn("flex flex-wrap items-center gap-2", className)}>
+        <div className={"flex flex-wrap items-center gap-2"}>
             {nodes.map((node, index) => (
                 <React.Fragment key={`${node}-${index}`}>
                     {index > 0 ? (

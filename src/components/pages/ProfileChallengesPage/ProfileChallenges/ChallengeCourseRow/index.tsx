@@ -11,9 +11,6 @@ import {
 import {
     PuzzlePieceIcon,
 } from "@phosphor-icons/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import {
     buildDifficultySegments,
 } from "@/modules/utils/challenge-difficulty"
@@ -25,7 +22,7 @@ import { StackH, StackV } from "@/components/frames/Stack"
 import type { QueryUserSolvedChallengeItemData } from "@/modules/api/graphql/queries/types/user-solved-challenges"
 
 /** Props for {@link ChallengeCourseRow}. */
-export interface ChallengeCourseRowProps extends WithClassNames<undefined> {
+export interface ChallengeCourseRowProps {
     /** Profile owner's username — routes the row to `.challenges().course(courseSlug)`. */
     username: string | null
     /** Course title for this group, or null for ungrouped (V1-legacy) rows. */
@@ -55,9 +52,7 @@ export const ChallengeCourseRow = ({
     courseTitle,
     courseSlug,
     items,
-    totalChallenges,
-    className,
-}: ChallengeCourseRowProps) => {
+    totalChallenges}: ChallengeCourseRowProps) => {
     const t = useTranslations()
     const locale = useLocale()
 
@@ -70,7 +65,6 @@ export const ChallengeCourseRow = ({
         <SurfaceListCardItem
             href={href}
             hover="underline"
-            className={className}
         >
             <StackH gap={4} principle="content-row"
                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."

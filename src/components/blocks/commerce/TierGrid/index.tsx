@@ -1,18 +1,16 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
 import { FreeTierCard } from "@/components/blocks/commerce/FreeTierCard"
 import { TierCard } from "@/components/blocks/commerce/TierCard"
 import { useQueryAiSubscriptionTiersSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiSubscriptionTiersSwr"
 import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** How many paid cards the resting grid holds — the free card plus these fills both columns. */
 const SKELETON_PAID_CARDS = 3
 
 /** Props for {@link TierGrid}. */
-export interface TierGridProps extends WithClassNames<undefined> {
+export interface TierGridProps {
     /**
      * First load, nothing in hand → the SAME cards render resting, in the SAME grid.
      * A separate `AiSubscriptionSkeleton` used to mirror this layout by hand, along
@@ -32,9 +30,7 @@ export interface TierGridProps extends WithClassNames<undefined> {
  * @param props - {@link TierGridProps}
  */
 export const TierGrid = ({
-    className,
-    isSkeleton = false,
-}: TierGridProps) => {
+    isSkeleton = false}: TierGridProps) => {
     const { data: tiersData } = useQueryAiSubscriptionTiersSwr()
     const { data: mySettings } = useQueryMyAiSettingsSwr()
 
@@ -44,7 +40,7 @@ export const TierGrid = ({
     const currentTier = mySettings?.tier ?? null
 
     return (
-        <div className={cn("grid grid-cols-1 gap-6 @app-sm:grid-cols-2", className)}>
+        <div className={"grid grid-cols-1 gap-6 @app-sm:grid-cols-2"}>
             <FreeTierCard isCurrent={currentTier === null} isSkeleton={isSkeleton} />
             {isSkeleton
                 ? Array.from({ length: SKELETON_PAID_CARDS }, (_card, index) => (

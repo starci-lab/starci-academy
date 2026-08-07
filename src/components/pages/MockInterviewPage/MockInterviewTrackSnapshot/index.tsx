@@ -1,16 +1,15 @@
 "use client"
 
 import React from "react"
-import { Chip, Typography, cn } from "@heroui/react"
+import { Chip, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { StatPair } from "@/components/composites/stats/StatPair"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { useQueryMyJobReadinessSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyJobReadinessSwr"
 import type { UserJobReadinessBand } from "@/modules/api/graphql/queries/types/user-job-readiness"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link MockInterviewTrackSnapshot}. */
-export interface MockInterviewTrackSnapshotProps extends WithClassNames<undefined> {
+export interface MockInterviewTrackSnapshotProps {
     /** Course whose job-readiness track to show — filters the viewer's own `myJobReadiness.tracks`. */
     courseId: string
 }
@@ -38,7 +37,7 @@ const bandColorOf = (band: UserJobReadinessBand): "success" | "warning" | "defau
  *
  * @param props - {@link MockInterviewTrackSnapshotProps}
  */
-export const MockInterviewTrackSnapshot = ({ courseId, className }: MockInterviewTrackSnapshotProps) => {
+export const MockInterviewTrackSnapshot = ({ courseId}: MockInterviewTrackSnapshotProps) => {
     const t = useTranslations()
     const readinessSwr = useQueryMyJobReadinessSwr()
     const data = readinessSwr.data
@@ -50,7 +49,7 @@ export const MockInterviewTrackSnapshot = ({ courseId, className }: MockIntervie
     // persona card / into the alert stack a beat after the screen had settled.
     if (readinessSwr.isLoading && !data) {
         return (
-            <div className={cn("flex flex-wrap items-center gap-3 rounded-xl bg-default/40 p-4", className)}>
+            <div className={"flex flex-wrap items-center gap-3 rounded-xl bg-default/40 p-4"}>
                 <Skeleton.Typography type="h4" width="1/4" />
                 <Skeleton className="h-6 w-20 rounded-full" />
             </div>
@@ -67,7 +66,7 @@ export const MockInterviewTrackSnapshot = ({ courseId, className }: MockIntervie
     }
 
     return (
-        <div className={cn("flex flex-wrap items-center gap-3 rounded-xl bg-default/40 p-4", className)}>
+        <div className={"flex flex-wrap items-center gap-3 rounded-xl bg-default/40 p-4"}>
             <StatPair value={String(track.interviewScore)} label={t("mockInterview.trackSnapshotLabel")} />
             <Chip size="md" variant="soft" color={bandColorOf(track.band)}>
                 <Chip.Label>{t(`jobReadiness.band.${track.band}`)}</Chip.Label>

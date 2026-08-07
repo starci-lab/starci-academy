@@ -6,10 +6,9 @@ import { useTranslations } from "next-intl"
 import { REACTIONS } from "./constants"
 import { ReactionEmoji } from "./ReactionEmoji"
 import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link FacebookReactionSelector}. */
-export interface FacebookReactionSelectorProps extends WithClassNames<undefined> {
+export interface FacebookReactionSelectorProps {
     /** The viewer's current reaction, highlighted in the bar (null = none). */
     active?: ReactionType | null
     /** Called with the picked emotion. */
@@ -28,11 +27,11 @@ export interface FacebookReactionSelectorProps extends WithClassNames<undefined>
  *
  * @param props - {@link FacebookReactionSelectorProps}
  */
-export const FacebookReactionSelector = ({ active, onSelect, className }: FacebookReactionSelectorProps) => {
+export const FacebookReactionSelector = ({ active, onSelect}: FacebookReactionSelectorProps) => {
     const t = useTranslations()
 
     return (
-        <div className={cn("flex items-center gap-1", className)}>
+        <div className={"flex items-center gap-1"}>
             {REACTIONS.map((reaction, index) => {
                 const label = t(reaction.labelKey)
                 return (

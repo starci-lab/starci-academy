@@ -3,7 +3,6 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import type { ReactionDescriptor } from "./constants"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Visual size for {@link ReactionEmoji}. */
 export type ReactionEmojiSize = "xs" | "sm" | "md" | "lg"
@@ -17,7 +16,7 @@ const SIZE_CLASS: Record<ReactionEmojiSize, string> = {
 }
 
 /** Props for {@link ReactionEmoji}. */
-export interface ReactionEmojiProps extends WithClassNames<undefined> {
+export interface ReactionEmojiProps {
     /** Descriptor for the reaction (provides the reaction `type` → SVG asset). */
     descriptor: ReactionDescriptor
     /** Visual size (default `"xs"` for inline use; `"md"` for the picker). */
@@ -33,12 +32,12 @@ export interface ReactionEmojiProps extends WithClassNames<undefined> {
  *
  * @param props - {@link ReactionEmojiProps}
  */
-export const ReactionEmoji = ({ descriptor, size = "xs", className }: ReactionEmojiProps) => (
+export const ReactionEmoji = ({ descriptor, size = "xs"}: ReactionEmojiProps) => (
     <img
         src={`/reactions/${descriptor.type}.svg`}
         alt=""
         aria-hidden
         draggable={false}
-        className={cn("inline-block select-none", SIZE_CLASS[size], className)}
+        className={cn("inline-block select-none", SIZE_CLASS[size])}
     />
 )

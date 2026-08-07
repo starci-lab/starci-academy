@@ -2,18 +2,13 @@
 
 import React from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     PromptPlayground,
 } from "./PromptPlayground"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryAiLabPlaygroundSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiLabPlaygroundSwr"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for the AI Lab tab body. */
-export type AiLabBodyProps = WithClassNames<undefined>
-
+export type AiLabBodyProps = Record<string, never>
 /** Known AI Lab playground kinds (mirrors backend `AiLabPlaygroundKind`). */
 const PLAYGROUND_KIND = {
     Prompt: "prompt",
@@ -27,7 +22,7 @@ const PLAYGROUND_KIND = {
  * Reads `content` from Redux to scope the playground query.
  * @param props - Optional wrapper styling props.
  */
-export const AiLab = ({ className }: AiLabBodyProps) => {
+export const AiLab = () => {
     const content = useAppSelector((state) => state.content.entity)
     const playgroundSwr = useQueryAiLabPlaygroundSwr(content?.id)
     const playground = playgroundSwr.data
@@ -37,7 +32,7 @@ export const AiLab = ({ className }: AiLabBodyProps) => {
     }
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
+        <div className={"flex flex-col gap-6"}>
             {playground.kind === PLAYGROUND_KIND.Prompt ? (
                 <PromptPlayground playground={playground} />
             ) : (

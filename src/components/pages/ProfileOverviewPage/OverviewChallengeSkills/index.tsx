@@ -3,7 +3,6 @@
 import React from "react"
 import { Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useProfileUsername } from "@/hooks/profile/useProfileUsername"
 import { buildDifficultySegments } from "@/modules/utils/challenge-difficulty"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
@@ -18,7 +17,7 @@ import { StackV } from "@/components/frames/Stack"
 import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 
 /** Props for {@link OverviewChallengeSkills}. */
-export interface OverviewChallengeSkillsProps extends WithClassNames<undefined> {
+export interface OverviewChallengeSkillsProps {
     /** Section label, rendered outside the card (owned here, like every other self-contained section). */
     label: string
     /** Optional "see more" link on the label row. */

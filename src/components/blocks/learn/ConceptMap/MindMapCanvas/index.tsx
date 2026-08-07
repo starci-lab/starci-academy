@@ -2,16 +2,13 @@
 
 import React from "react"
 import { ReactFlowProvider } from "@xyflow/react"
-import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { Canvas } from "../Canvas"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
 
 /** Props for {@link MindMapCanvas}. */
-export type MindMapCanvasProps = WithClassNames<undefined>
-
+export type MindMapCanvasProps = Record<string, never>
 /**
  * Shared React Flow mind-map canvas: provider wrapper and empty-state handling.
  *
@@ -22,9 +19,7 @@ export type MindMapCanvasProps = WithClassNames<undefined>
  * into its reader.
  * @param props - optional className (unused; layout is controlled by the parent container)
  */
-export const MindMapCanvas = ({
-    className,
-}: MindMapCanvasProps = {}) => {
+export const MindMapCanvas = () => {
     const t = useTranslations()
     const course = useAppSelector((state) => state.course.entity)
     const hasModules = Boolean(course?.modules && course.modules.length > 0)
@@ -35,7 +30,7 @@ export const MindMapCanvas = ({
 
     if (!hasModules) {
         return (
-            <div className={cn("flex h-full w-full items-center justify-center rounded-2xl border border-dashed dark:border-zinc-600", className)}>
+            <div className={"flex h-full w-full items-center justify-center rounded-2xl border border-dashed dark:border-zinc-600"}>
                 <EmptyState title={t("content.mindMapEmpty")} />
             </div>
         )
@@ -43,7 +38,7 @@ export const MindMapCanvas = ({
 
     return (
         <ReactFlowProvider>
-            <div className={cn("h-full w-full", className)}>
+            <div className={"h-full w-full"}>
                 <Canvas />
             </div>
         </ReactFlowProvider>

@@ -1,20 +1,9 @@
 "use client"
 
 import React from "react"
-import {
-    Button,
-    Input,
-    Label,
-    ListBox,
-    Select,
-    TextArea,
-    TextField,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Button, Input, Label, ListBox, Select, TextArea, TextField, Typography } from "@heroui/react"
 import { CheckCircleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { CONTACT_CATEGORY_KEYS } from "@/resources/contact"
 import { useContactForm } from "@/hooks/rhf/useContactForm"
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
@@ -23,8 +12,7 @@ import { StackV } from "@/components/frames/Stack"
 import type { ContactCategory } from "@/modules/api/graphql/mutations/types/contact"
 
 /** Props for {@link ContactForm}. */
-export type ContactFormProps = WithClassNames<undefined>
-
+export type ContactFormProps = Record<string, never>
 /**
  * The contact form: name · email · reason · message → the public `submitContact`
  * mutation (emailed to the team), toasted. On success it swaps to a confirmation
@@ -33,7 +21,7 @@ export type ContactFormProps = WithClassNames<undefined>
  *
  * @param props - optional className (placement only).
  */
-export const ContactForm = ({ className }: ContactFormProps) => {
+export const ContactForm = () => {
     const t = useTranslations()
     const {
         watch,
@@ -46,7 +34,7 @@ export const ContactForm = ({ className }: ContactFormProps) => {
 
     if (sent) {
         return (
-            <Box className={className}>
+            <Box>
                 <EmptyState
                     icon={CheckCircleIcon}
                     title={t("contact.form.successTitle")}
@@ -64,7 +52,7 @@ export const ContactForm = ({ className }: ContactFormProps) => {
     const category = watch("category")
 
     return (
-        <form onSubmit={onSubmit} className={cn("flex flex-col gap-3", className)}>
+        <form onSubmit={onSubmit} className={"flex flex-col gap-3"}>
             <TextField variant="secondary">
                 <Label htmlFor="contact-name">{t("contact.form.name")}</Label>
                 <Input

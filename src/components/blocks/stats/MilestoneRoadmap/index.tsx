@@ -1,7 +1,6 @@
 import React from "react"
 import { cn } from "@heroui/react"
 
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One milestone node on the roadmap. */
 export interface MilestoneRoadmapItem {
@@ -14,7 +13,7 @@ export interface MilestoneRoadmapItem {
 }
 
 /** Props for the {@link MilestoneRoadmap} block. */
-export interface MilestoneRoadmapProps extends WithClassNames<undefined> {
+export interface MilestoneRoadmapProps {
     /** Ordered milestones rendered left → right as dots + connectors. */
     milestones: ReadonlyArray<MilestoneRoadmapItem>
 }
@@ -27,9 +26,9 @@ export interface MilestoneRoadmapProps extends WithClassNames<undefined> {
  * code stays style-free.
  * @see Story: .storybook/stories/blocks/stats/MilestoneRoadmap/MilestoneRoadmap.stories
  */
-export const MilestoneRoadmap = ({ milestones, className }: MilestoneRoadmapProps) => {
+export const MilestoneRoadmap = ({ milestones}: MilestoneRoadmapProps) => {
     return (
-        <div className={cn("flex items-center gap-0 overflow-x-auto pb-1", className)}>
+        <div className={"flex items-center gap-0 overflow-x-auto pb-1"}>
             {milestones.map((milestone, index) => {
                 const isDone = milestone.totalTasks > 0
                     && milestone.passedTasks === milestone.totalTasks

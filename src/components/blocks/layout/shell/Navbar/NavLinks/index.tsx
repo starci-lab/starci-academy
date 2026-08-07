@@ -14,21 +14,19 @@ import {
 import {
     pathConfig,
 } from "@/resources/path"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { _NavLinks, type NavLinkItem } from "./component"
 
 /**
  * Props for {@link NavLinks}.
  */
-export type NavLinksProps = WithClassNames<undefined>
-
+export type NavLinksProps = Record<string, never>
 /**
  * Desktop navbar link group — the CONNECTED half: derives its entries +
  * active-route state from the router/locale itself and self-navigates on
  * press. See `design/storybook/architecture/split.md`.
  * @param props - optional root class name
  */
-export const NavLinks = ({ className }: NavLinksProps) => {
+export const NavLinks = () => {
     const t = useTranslations()
     const router = useRouter()
     const pathname = usePathname()
@@ -64,5 +62,5 @@ export const NavLinks = ({ className }: NavLinksProps) => {
         ],
     )
 
-    return <_NavLinks items={items} onNavigate={(path) => router.push(path)} className={className} />
+    return <_NavLinks items={items} onNavigate={(path) => router.push(path)} />
 }

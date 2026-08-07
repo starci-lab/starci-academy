@@ -8,7 +8,6 @@ import {
     Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useQueryMyPickableCvAchievementsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyPickableCvAchievementsSwr"
 
 /** One `myPickableCvAchievements.milestoneTaskAttempts[]` entry, as a `Select.Root` item. */
@@ -18,7 +17,7 @@ interface PickableAchievementItem {
 }
 
 /** Props for {@link PickFromStarciSelect}. */
-export interface PickFromStarciSelectProps extends WithClassNames<undefined> {
+export interface PickFromStarciSelectProps {
     /** Fires with the picked attempt's `id`, `taskTitle`, `milestoneTitle`, `courseTitle`. */
     onPick: (attempt: { id: string, taskTitle: string, milestoneTitle: string, courseTitle: string }) => void
     /** `sourceRef`s already used by other project items — hides them from the list (no picking the same capstone twice). */
@@ -34,7 +33,7 @@ export interface PickFromStarciSelectProps extends WithClassNames<undefined> {
  *
  * @param props - {@link PickFromStarciSelectProps}
  */
-export const PickFromStarciSelect = ({ className, onPick, excludeIds = [] }: PickFromStarciSelectProps) => {
+export const PickFromStarciSelect = ({ onPick, excludeIds = [] }: PickFromStarciSelectProps) => {
     const t = useTranslations()
     const pickableSwr = useQueryMyPickableCvAchievementsSwr()
     const attempts = pickableSwr.data?.milestoneTaskAttempts ?? []
@@ -52,7 +51,7 @@ export const PickFromStarciSelect = ({ className, onPick, excludeIds = [] }: Pic
     const isDisabled = isLoading || items.length === 0
 
     return (
-        <div className={className}>
+        <div>
             <div className="flex flex-col gap-2">
                 <Label htmlFor="cv-project-pick-from-starci">
                     {t("cv.blocks.project.pickFromStarciLabel")}

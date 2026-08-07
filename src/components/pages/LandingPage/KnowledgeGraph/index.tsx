@@ -14,7 +14,6 @@ import {
     useNodesState,
     useReactFlow,
 } from "@xyflow/react"
-import { cn } from "@heroui/react"
 import { useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useReducedMotion } from "framer-motion"
@@ -31,7 +30,6 @@ import {
     type SimulationNodeDatum,
 } from "d3-force"
 import { pathConfig } from "@/resources/path"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LANDING_TRACK_COURSE_SLUG } from "../constants"
 import { CONCEPT_NODE_TYPE, type ConceptNodeData, ConceptNode } from "./ConceptNode"
 import { ShuffleBeacon } from "./ShuffleBeacon"
@@ -258,8 +256,7 @@ const KnowledgeGraphFlow = () => {
 }
 
 /** Props for {@link KnowledgeGraph}. */
-export type KnowledgeGraphProps = WithClassNames<undefined>
-
+export type KnowledgeGraphProps = Record<string, never>
 /**
  * "Treasure Trove" rendered as a live KNOWLEDGE GRAPH: ~26 real curriculum concepts (nodes)
  * interlinked by builds-on + cross-track edges, laid out by a d3-force simulation
@@ -269,8 +266,8 @@ export type KnowledgeGraphProps = WithClassNames<undefined>
  *
  * @param props - {@link KnowledgeGraphProps}
  */
-export const KnowledgeGraph = ({ className }: KnowledgeGraphProps) => (
-    <div className={cn("h-[460px] w-full overflow-hidden rounded-3xl border border-default bg-background @app-sm:h-[560px]", className)}>
+export const KnowledgeGraph = () => (
+    <div className={"h-[460px] w-full overflow-hidden rounded-3xl border border-default bg-background @app-sm:h-[560px]"}>
         <ReactFlowProvider>
             <KnowledgeGraphFlow />
         </ReactFlowProvider>

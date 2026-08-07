@@ -16,7 +16,6 @@ import { Box } from "@/components/frames/Box"
 import type {
     ProcessResult,
 } from "../types"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import {
     DropZone,
 } from "./DropZone"
@@ -25,7 +24,7 @@ import {
 } from "./ProcessResultBanner"
 
 /** Props for {@link FileSelectionCard}. */
-export interface FileSelectionCardProps extends WithClassNames<undefined> {
+export interface FileSelectionCardProps {
     /** Currently selected file, or null when none is chosen. */
     file: File | null
     /** Ref to the hidden file input, used to open the native picker. */

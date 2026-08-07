@@ -1,17 +1,9 @@
 "use client"
 
 import React, { useState } from "react"
-import {
-    Button,
-    FieldError,
-    Input,
-    Label,
-    TextField,
-    cn,
-} from "@heroui/react"
+import { Button, FieldError, Input, Label, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { PlusIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { CvBlock, CvBlockEditorProps, CvBlockItem } from "@/modules/types/entities/cv"
 import { RepeatableItemCard } from "../shared/RepeatableItemCard"
 import { isValidOptionalUrl } from "@/modules/utils/cv-url"
@@ -20,7 +12,7 @@ import { isValidOptionalUrl } from "@/modules/utils/cv-url"
 const emptyItem = (): CvBlockItem => ({ id: crypto.randomUUID(), fields: {} })
 
 /** Props for {@link CertificationBlockEditor}. */
-export interface CertificationBlockEditorProps extends WithClassNames<undefined>, CvBlockEditorProps {}
+export type CertificationBlockEditorProps = CvBlockEditorProps 
 
 /**
  * Certification block editor — repeatable entries (name / issuer / date),
@@ -29,7 +21,7 @@ export interface CertificationBlockEditorProps extends WithClassNames<undefined>
  *
  * @param props - {@link CertificationBlockEditorProps}
  */
-export const CertificationBlockEditor = ({ className, block, onChange }: CertificationBlockEditorProps) => {
+export const CertificationBlockEditor = ({ block, onChange }: CertificationBlockEditorProps) => {
     const t = useTranslations()
     const [touchedUrlItemIds, setTouchedUrlItemIds] = useState<ReadonlySet<string>>(new Set())
 
@@ -58,7 +50,7 @@ export const CertificationBlockEditor = ({ className, block, onChange }: Certifi
     }
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className={"flex flex-col gap-3"}>
             {block.items.map((item, index) => (
                 <RepeatableItemCard
                     key={item.id}

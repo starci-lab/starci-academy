@@ -1,15 +1,7 @@
 "use client"
 
 import React from "react"
-import {
-    Button,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownPopover,
-    DropdownTrigger,
-    cn,
-} from "@heroui/react"
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownPopover, DropdownTrigger } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import {
     ArrowDownIcon,
@@ -17,7 +9,6 @@ import {
     PlusIcon,
     TrashIcon,
 } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import type { CvBlockType } from "@/modules/types/enums/cv-block-type"
 import { CV_BLOCK_TYPE_REGISTRY } from "@/components/blocks/cv/BlockRegistry"
@@ -25,7 +16,7 @@ import type { CvBlock, CvBlockItemFields } from "@/modules/types/entities/cv"
 import { CV_BLOCK_EDITOR_REGISTRY } from "./blockEditorRegistry"
 
 /** Props for {@link CvBlockStack}. */
-export interface CvBlockStackProps extends WithClassNames<undefined> {
+export interface CvBlockStackProps {
     /** The active document's ordered blocks. */
     blocks: Array<CvBlock>
     /** Emit the whole replacement array after any per-block edit/reorder/removal. */
@@ -53,13 +44,11 @@ export interface CvBlockStackProps extends WithClassNames<undefined> {
  * @param props - {@link CvBlockStackProps}
  */
 export const CvBlockStack = ({
-    className,
     blocks,
     onChange,
     addableTypes,
     onAddBlock,
-    onAiRewrite,
-}: CvBlockStackProps) => {
+    onAiRewrite}: CvBlockStackProps) => {
     const t = useTranslations()
 
     const onBlockChange = (index: number, next: CvBlock) => {
@@ -83,7 +72,7 @@ export const CvBlockStack = ({
     }
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
+        <div className={"flex flex-col gap-6"}>
             {blocks.map((block, index) => {
                 const meta = CV_BLOCK_TYPE_REGISTRY[block.type]
                 const Editor = CV_BLOCK_EDITOR_REGISTRY[block.type]

@@ -1,13 +1,12 @@
 "use client"
 
 import React from "react"
-import { Button, cn } from "@heroui/react"
+import { Button } from "@heroui/react"
 import { CameraIcon } from "@phosphor-icons/react"
 import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link AvatarUploadButton}. */
-export interface AvatarUploadButtonProps extends WithClassNames<undefined> {
+export interface AvatarUploadButtonProps {
     /** Currently shown avatar URL (the saved image or a freshly-picked preview). */
     avatar?: string | null
     /** Display name; drives the avatar fallback initials + image alt text. */
@@ -38,18 +37,13 @@ export const AvatarUploadButton = ({
     displayName,
     seed,
     label,
-    onPress,
-    className,
-}: AvatarUploadButtonProps) => (
+    onPress}: AvatarUploadButtonProps) => (
     <Button
         isIconOnly
         variant="ghost"
         onPress={onPress}
         aria-label={label}
-        className={cn(
-            "group relative size-20 shrink-0 overflow-hidden rounded-full p-0",
-            className,
-        )}
+        className={"group relative size-20 shrink-0 overflow-hidden rounded-full p-0"}
     >
         <UserAvatar
             username={displayName}

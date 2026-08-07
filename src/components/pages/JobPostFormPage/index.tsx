@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { Button, Spinner, Typography, cn } from "@heroui/react"
+import { Button, Spinner, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { CompanySection } from "./CompanySection"
 import { PositionSection } from "./PositionSection"
@@ -9,14 +9,12 @@ import { ApplyMethodSection } from "./ApplyMethodSection"
 import { SubmitSuccess } from "./SubmitSuccess"
 import { useSubmitJobPostingForm } from "@/hooks/rhf/useSubmitJobPostingForm"
 import { useAppSelector } from "@/redux/hooks"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Box } from "@/components/frames/Box"
 import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link JobPostFormPage}. */
-export type JobPostFormPageProps = WithClassNames<undefined>
-
+export type JobPostFormPageProps = Record<string, never>
 /**
  * Public job-post form — `/jobs/post`. Any signed-in user can submit an opening;
  * it goes live immediately (no approval queue). Sections are grouped by MEANING
@@ -27,7 +25,7 @@ export type JobPostFormPageProps = WithClassNames<undefined>
  *
  * @param props - {@link JobPostFormPageProps}
  */
-export const JobPostFormPage = ({ className }: JobPostFormPageProps) => {
+export const JobPostFormPage = () => {
     const t = useTranslations()
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const [submittedJobId, setSubmittedJobId] = useState<string | null>(null)
@@ -66,7 +64,7 @@ export const JobPostFormPage = ({ className }: JobPostFormPageProps) => {
         return (
             <Box principle="center-measure"
                 explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
-                className={cn("mx-auto max-w-2xl p-6 py-16 text-center", className)}>
+                className={"mx-auto max-w-2xl p-6 py-16 text-center"}>
                 <StackV gap={3} principle="sibling-stack"
                     explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                     align="center" items={[
@@ -88,7 +86,7 @@ export const JobPostFormPage = ({ className }: JobPostFormPageProps) => {
     return (
         <Box principle="center-measure"
             explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
-            className={cn("mx-auto max-w-2xl p-6", className)}>
+            className={"mx-auto max-w-2xl p-6"}>
             <StackV gap={7} principle="layout-split"
                 explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
                 items={[

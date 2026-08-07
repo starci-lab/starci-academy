@@ -2,12 +2,6 @@
 
 import React from "react"
 import {
-    cn,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-import {
     ProfileCoding,
 } from "./ProfileCoding"
 import {
@@ -15,8 +9,7 @@ import {
 } from "@/components/blocks/profile/ProfileSectionGuard"
 
 /** Props for {@link ProfileSkillsPage}. */
-export type ProfileSkillsPageProps = WithClassNames<undefined>
-
+export type ProfileSkillsPageProps = Record<string, never>
 /**
  * Skills tab ("Skills & Coding") of the public profile — a sibling of the
  * Challenges tab. Delegates the whole tab to {@link ProfileCoding}, which leads
@@ -26,12 +19,10 @@ export type ProfileSkillsPageProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const ProfileSkillsPage = ({
-    className,
-}: ProfileSkillsPageProps) => {
+export const ProfileSkillsPage = () => {
     return (
-        <ProfileSectionGuard section="skills" className={className}>
-            <div className={cn("flex flex-col gap-6", className)}>
+        <ProfileSectionGuard section="skills">
+            <div className={"flex flex-col gap-6"}>
                 {/* metric row → gathered stats card → solve history */}
                 <ProfileCoding />
             </div>

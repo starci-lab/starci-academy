@@ -38,9 +38,6 @@ import type {
     Key,
     ReactNode,
 } from "react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { mutateMarkAllNotificationsAsRead } from "@/modules/api/graphql/mutations/mutation-mark-all-notifications-as-read"
 import { mutateMarkNotificationAsRead } from "@/modules/api/graphql/mutations/mutation-mark-notification-as-read"
 import {
@@ -62,8 +59,7 @@ import { Box } from "@/components/frames/Box"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link NotificationsPage}. */
-export type NotificationsPageProps = WithClassNames<undefined>
-
+export type NotificationsPageProps = Record<string, never>
 /** Page size for the notification center's pager (bigger than the bell's popover page). */
 const PAGE_SIZE = 20
 
@@ -99,7 +95,7 @@ const TYPE_ICONS: Record<NotificationType, ReactNode> = {
  * and navigation.
  * @param props - optional root class name
  */
-export const NotificationsPage = ({ className }: NotificationsPageProps) => {
+export const NotificationsPage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -200,7 +196,7 @@ export const NotificationsPage = ({ className }: NotificationsPageProps) => {
     const goToCourses = () => router.push(pathConfig().locale(locale).course().build())
 
     return (
-        <Box identity={{ tier: "page", component: "NotificationsPage" }} principle="center-measure" className={cn("mx-auto max-w-3xl p-6", className)}
+        <Box identity={{ tier: "page", component: "NotificationsPage" }} principle="center-measure" className={"mx-auto max-w-3xl p-6"}
             explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
         >
             <StackV gap={7} principle="layout-split"

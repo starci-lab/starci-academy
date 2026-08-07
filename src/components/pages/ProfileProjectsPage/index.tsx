@@ -2,12 +2,6 @@
 
 import React from "react"
 import {
-    cn,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-import {
     ProfilePinned,
 } from "./ProfilePinned"
 import {
@@ -18,8 +12,7 @@ import {
 } from "@/components/blocks/profile/ProfileSectionGuard"
 
 /** Props for {@link ProfileProjectsPage}. */
-export type ProfileProjectsPageProps = WithClassNames<undefined>
-
+export type ProfileProjectsPageProps = Record<string, never>
 /**
  * "Projects" tab of the public profile (NEW-PROFILE.spec.md §7.2). The portfolio
  * view: a recruiter's verifiable-work column, top to bottom in credibility order.
@@ -39,12 +32,10 @@ export type ProfileProjectsPageProps = WithClassNames<undefined>
  *
  * @param props - {@link ProfileProjectsPageProps}
  */
-export const ProfileProjectsPage = ({
-    className,
-}: ProfileProjectsPageProps) => {
+export const ProfileProjectsPage = () => {
     return (
-        <ProfileSectionGuard section="projects" className={className}>
-            <div className={cn("flex min-w-0 flex-col gap-6", className)}>
+        <ProfileSectionGuard section="projects">
+            <div className={"flex min-w-0 flex-col gap-6"}>
                 <ProfilePinned />
                 <ProfileCapstone />
             </div>

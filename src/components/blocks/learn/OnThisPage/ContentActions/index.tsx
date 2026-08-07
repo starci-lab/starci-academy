@@ -1,10 +1,9 @@
 "use client"
 
 import React, { useCallback } from "react"
-import { Label, cn } from "@heroui/react"
+import { Label } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { ActionToolbar } from "@/components/blocks/learn/lesson/ContentBody/ActionToolbar"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { useShareOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useMutateToggleFavoriteSwr } from "@/hooks/swr/api/graphql/mutations/useMutateToggleFavoriteSwr"
@@ -12,8 +11,7 @@ import { useQueryContentStatusSwr } from "@/hooks/swr/api/graphql/queries/useQue
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Props for {@link ContentActions}. */
-export type ContentActionsProps = WithClassNames<undefined>
-
+export type ContentActionsProps = Record<string, never>
 /**
  * Right-rail content actions: bookmark/save, share and fullscreen for the content
  * currently open (moved out of the inline interaction bar). Self-contained — owns
@@ -22,7 +20,7 @@ export type ContentActionsProps = WithClassNames<undefined>
  *
  * @param props - {@link ContentActionsProps}
  */
-export const ContentActions = ({ className }: ContentActionsProps) => {
+export const ContentActions = () => {
     const t = useTranslations()
     const runGraphQL = useGraphQLWithToast()
     const contentId = useAppSelector((state) => state.content.id)
@@ -60,7 +58,7 @@ export const ContentActions = ({ className }: ContentActionsProps) => {
     }
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className={"flex flex-col gap-3"}>
             <Label>{t("contentActions.title")}</Label>
             <ActionToolbar
                 isFavorite={Boolean(statusSwr.data?.isFavorite)}

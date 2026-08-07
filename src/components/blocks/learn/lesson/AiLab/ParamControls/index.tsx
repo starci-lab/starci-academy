@@ -2,18 +2,14 @@
 
 import React from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
 import type {
     AiLabParamsForm,
 } from "../types"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ParamControls}. */
-export type ParamControlsProps = WithClassNames<undefined> & {
+export type ParamControlsProps = {
     /** Current generation params. */
     params: AiLabParamsForm
     /** Disables all inputs (e.g. while a run is in flight). */
@@ -84,12 +80,10 @@ const ParamField = ({
 export const ParamControls = ({
     params,
     isDisabled = false,
-    onChange,
-    className,
-}: ParamControlsProps) => {
+    onChange}: ParamControlsProps) => {
     const t = useTranslations()
     return (
-        <div className={cn("grid grid-cols-1 gap-3 @app-sm:grid-cols-3", className)}>
+        <div className={"grid grid-cols-1 gap-3 @app-sm:grid-cols-3"}>
             <ParamField
                 id="ai-lab-temperature"
                 label={t("aiLab.playground.temperature")}

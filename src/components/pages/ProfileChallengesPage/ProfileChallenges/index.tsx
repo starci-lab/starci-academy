@@ -7,9 +7,6 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import {
     useProfileUsername,
 } from "@/hooks/profile/useProfileUsername"
@@ -37,8 +34,7 @@ import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 
 /** Props for {@link ProfileChallenges}. */
-export type ProfileChallengesProps = WithClassNames<undefined>
-
+export type ProfileChallengesProps = Record<string, never>
 /**
  * Challenges tab — the profile owner's graded-challenge proof of work. Leads with
  * a passed count + a 4-tone difficulty {@link SegmentBar} (easy→green /
@@ -50,9 +46,7 @@ export type ProfileChallengesProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const ProfileChallenges = ({
-    className,
-}: ProfileChallengesProps) => {
+export const ProfileChallenges = () => {
     const t = useTranslations()
     // route carries the username; resolve to the entity id the query keys off
     const username = useProfileUsername()
@@ -102,10 +96,7 @@ export const ProfileChallenges = ({
         metricStats.push({ key: "rank", value: `#${strength.rank}` })
     }
 
-    const rootClassNames: Array<AllowedClassName> = []
-    if (className) {
-        rootClassNames.push(className as AllowedClassName)
-    }
+    const rootClassNames: Array<AllowedClassName> = []
 
     return (
         <AsyncContent

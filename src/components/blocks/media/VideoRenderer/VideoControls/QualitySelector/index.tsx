@@ -2,20 +2,13 @@
 
 import { GearIcon as GearSixIcon } from "@phosphor-icons/react"
 import React from "react"
-import {
-    cn,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
-} from "@heroui/react"
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react"
 import { useCallback, useMemo } from "react"
 import { AUTO_QUALITY_INDEX } from "../constants"
 import type { QualityLevel } from "../types"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link QualitySelector}. */
-export interface QualitySelectorProps extends WithClassNames<undefined> {
+export interface QualitySelectorProps {
     /** Available quality renditions (excluding the synthetic Auto entry). */
     qualityLevels: Array<QualityLevel>
     /** Currently selected quality index (`-1` = auto). */
@@ -34,9 +27,7 @@ export interface QualitySelectorProps extends WithClassNames<undefined> {
 export const QualitySelector = ({
     qualityLevels,
     selectedQuality,
-    onQualityChange,
-    className,
-}: QualitySelectorProps) => {
+    onQualityChange}: QualitySelectorProps) => {
     /** Human-readable label for a quality level. */
     const qualityLabel = useCallback(
         (quality: QualityLevel) =>
@@ -86,7 +77,7 @@ export const QualitySelector = ({
     )
 
     return (
-        <Dropdown className={cn(className)}>
+        <Dropdown className={""}>
             <DropdownTrigger aria-label="Quality">
                 <div className="flex h-8 min-w-8 cursor-pointer items-center justify-center rounded-medium border-none text-white hover:bg-white/20">
                     <GearSixIcon className="h-5 w-5" />

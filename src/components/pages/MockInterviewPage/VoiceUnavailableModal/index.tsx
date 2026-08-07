@@ -1,14 +1,13 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { Button, Modal, Typography, cn } from "@heroui/react"
+import { Button, Modal, Typography } from "@heroui/react"
 import { ArrowSquareOutIcon, CheckCircleIcon, WarningCircleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { StackH, StackV } from "@/components/frames/Stack"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link VoiceUnavailableModal}. */
-export interface VoiceUnavailableModalProps extends WithClassNames<undefined> {
+export interface VoiceUnavailableModalProps {
     /** Whether the modal is open. */
     isOpen: boolean
     /** Fired on any close (X, backdrop, or the explicit dismiss button) — the caller persists this as "seen" so the nudge doesn't reopen every session. */
@@ -33,9 +32,7 @@ export const VoiceUnavailableModal = ({
     isOpen,
     onOpenChange,
     onRecheck: recheckVoices,
-    hasLocaleVoice,
-    className,
-}: VoiceUnavailableModalProps) => {
+    hasLocaleVoice}: VoiceUnavailableModalProps) => {
     const t = useTranslations()
     // tracks "the candidate just pressed Recheck" so the found/not-found
     // hint only shows AFTER an explicit recheck, never on first open
@@ -60,7 +57,7 @@ export const VoiceUnavailableModal = ({
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             <Modal.Backdrop>
                 <Modal.Container size="sm">
-                    <Modal.Dialog className={cn(className)}>
+                    <Modal.Dialog className={""}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <Typography type="body" weight="semibold" className="pr-8">

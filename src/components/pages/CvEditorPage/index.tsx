@@ -26,7 +26,6 @@ import {
     SquaresFourIcon,
     TrophyIcon,
 } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
@@ -111,7 +110,7 @@ const FONT_SCALE_VALUES: Array<CvFontScale> = ["sm", "md", "lg"]
 const LANGUAGE_VALUES: Array<CvLanguage> = ["vi", "en"]
 
 /** Props for {@link CvEditorPage}. */
-export interface CvEditorPageProps extends WithClassNames<undefined> {
+export interface CvEditorPageProps {
     /** `cv_blocks.id` of the document being edited (from the route param). */
     cvId: string
 }
@@ -126,7 +125,7 @@ export interface CvEditorPageProps extends WithClassNames<undefined> {
  *
  * @param props - {@link CvEditorPageProps}
  */
-export const CvEditorPage = ({ className, cvId }: CvEditorPageProps) => {
+export const CvEditorPage = ({ cvId }: CvEditorPageProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -371,7 +370,7 @@ export const CvEditorPage = ({ className, cvId }: CvEditorPageProps) => {
     const isMissing = !documentsSwr.isLoading && !activeDocument
 
     return (
-        <div className={cn("flex flex-col overflow-x-hidden", className)}>
+        <div className={"flex flex-col overflow-x-hidden"}>
             {/* Load all catalog Google fonts so any pick renders instantly in the
                 preview (React 19 hoists this <link> into <head>). The toolbar
                 (back + name + export) renders in the Navbar's bottom layer. */}

@@ -9,7 +9,6 @@ import {
     SandpackFileExplorer,
 } from "@codesandbox/sandpack-react"
 import type { SandpackFiles, SandpackTheme } from "@codesandbox/sandpack-react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 const sharedFont = {
     body: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
@@ -75,7 +74,7 @@ const lightTheme: SandpackTheme = {
 }
 
 /** Props for {@link SandpackPanel}. */
-export interface SandpackPanelProps extends WithClassNames<undefined> {
+export interface SandpackPanelProps {
     /** Assembled files map (stubs + github files + dynamic overrides). */
     files: SandpackFiles
     /** Extra npm dependencies merged from the lesson's package.json. */
@@ -95,8 +94,8 @@ const EXTERNAL_RESOURCES = [
 ]
 
 /** Live in-browser React sandbox (Sandpack) previewing the lesson's code files. */
-export const SandpackPanel = ({ files, dependencies = {}, isDark = true, className }: SandpackPanelProps) => (
-    <div className={className}>
+export const SandpackPanel = ({ files, dependencies = {}, isDark = true}: SandpackPanelProps) => (
+    <div>
         <SandpackProvider
             template="react-ts"
             theme={isDark ? darkTheme : lightTheme}

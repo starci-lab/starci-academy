@@ -15,14 +15,11 @@ import {
     useLocale,
     useTranslations,
 } from "next-intl"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import type { QueryMyContributionDayData } from "@/modules/api/graphql/queries/types/my-dashboard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link ContributionCalendarView}. */
-export interface ContributionCalendarViewProps extends WithClassNames<undefined> {
+export interface ContributionCalendarViewProps {
     /** Active contribution days for the selected year (oldest first). */
     days: Array<QueryMyContributionDayData>
     /** The year currently shown. */
@@ -107,9 +104,7 @@ export const ContributionCalendarView = ({
     days,
     year,
     onYearChange,
-    isSkeleton = false,
-    className,
-}: ContributionCalendarViewProps) => {
+    isSkeleton = false}: ContributionCalendarViewProps) => {
     const t = useTranslations()
     const locale = useLocale()
 
@@ -254,7 +249,7 @@ export const ContributionCalendarView = ({
     // walks (`years` from YEAR_SPAN, `LEVEL_CLASS`), so they cannot fall out of step.
     if (isSkeleton) {
         return (
-            <div className={cn("flex flex-col gap-3", className)}>
+            <div className={"flex flex-col gap-3"}>
                 {/* header: year-scoped count + the year switcher */}
                 <div className="flex items-center justify-between gap-3">
                     <Skeleton.Typography type="body-sm" width="1/3" />
@@ -279,8 +274,7 @@ export const ContributionCalendarView = ({
     }
 
     return (
-        <div className={cn("flex flex-col gap-3",
-            className)}
+        <div className={"flex flex-col gap-3"}
         >
             {/* header: year-scoped count + the year switcher */}
             <div className="flex items-center justify-between gap-3">

@@ -13,7 +13,6 @@ import {
 } from "@phosphor-icons/react"
 import { CODING_DIFFICULTY_META } from "../../constants"
 import type { ProblemStatus } from "../../types"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import type { CodingProblem } from "@/modules/api/graphql/queries/types/coding"
@@ -21,7 +20,7 @@ import { StackH, StackV } from "@/components/frames/Stack"
 import { Box } from "@/components/frames/Box"
 
 /** Props for {@link ProblemRow}. A list-item, so it accepts its data as props. */
-export interface ProblemRowProps extends WithClassNames<undefined> {
+export interface ProblemRowProps {
     /** The problem to render. */
     problem: CodingProblem
     /** The viewer's solve status for this problem (drives the status icon). */
@@ -63,9 +62,7 @@ const STATUS_META: Record<
  */
 export const ProblemRow = ({
     problem,
-    status,
-    className,
-}: ProblemRowProps) => {
+    status}: ProblemRowProps) => {
     const t = useTranslations()
     const statusMeta = STATUS_META[status]
     const StatusIcon = statusMeta.Icon
@@ -75,7 +72,6 @@ export const ProblemRow = ({
         <SurfaceListCardItem
             href={`/PracticeHubPage/${problem.slug}`}
             hover="underline"
-            className={className}
         >
             <StackH gap={4} align="center" principle="content-row" classNames={["min-w-0"]}
                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."

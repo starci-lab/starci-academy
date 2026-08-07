@@ -7,14 +7,10 @@ import {
 import {
     _TrendingContents,
 } from "./component"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryTrendingContentsSwr } from "@/hooks/swr/api/graphql/queries/useQueryTrendingContentsSwr"
 
 /** Props for {@link TrendingContents}. */
-export type TrendingContentsProps = WithClassNames<undefined>
-
+export type TrendingContentsProps = Record<string, never>
 /**
  * "Trending this week" discovery card for the explore feed — the CONNECTED half: it
  * self-fetches its own leaf query (layout container — no data props), computes the
@@ -25,15 +21,12 @@ export type TrendingContentsProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const TrendingContents = ({
-    className,
-}: TrendingContentsProps) => {
+export const TrendingContents = () => {
     const t = useTranslations()
     const { data, error } = useQueryTrendingContentsSwr()
 
     return (
         <_TrendingContents
-            className={className}
             // first load, nothing in hand → shimmer; settled (data OR error) stops it (loading-and-skeleton.md)
             isSkeleton={!data && !error}
             // settled with nothing to show — an empty list or a settled fetch error both fold into

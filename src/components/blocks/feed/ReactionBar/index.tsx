@@ -16,9 +16,6 @@ import {
     AnimatePresence,
     motion,
 } from "framer-motion"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 
 /** The six reactions + their emoji glyph, in display order. */
@@ -59,7 +56,7 @@ const EMOJI_VARIANTS = {
 } as const
 
 /** Props for the {@link ReactionBar} block. */
-export interface ReactionBarProps extends WithClassNames<undefined> {
+export interface ReactionBarProps {
     /** Total reactions on the target. */
     count: number
     /** The viewer's own reaction, or null. */
@@ -91,9 +88,7 @@ export interface ReactionBarProps extends WithClassNames<undefined> {
 export const ReactionBar = ({
     count,
     myReaction,
-    onReact,
-    className,
-}: ReactionBarProps) => {
+    onReact}: ReactionBarProps) => {
     const [open, setOpen] = useState(false)
     const rootRef = useRef<HTMLDivElement>(null)
 
@@ -131,7 +126,7 @@ export const ReactionBar = ({
             return null
         }
         return (
-            <div className={cn("flex items-center gap-1", className)}>
+            <div className={"flex items-center gap-1"}>
                 {myReaction ? <span aria-hidden>{EMOJI[myReaction]}</span> : null}
                 <Typography type="body-xs" color="muted">{count}</Typography>
             </div>
@@ -147,7 +142,7 @@ export const ReactionBar = ({
     return (
         <div
             ref={rootRef}
-            className={cn("relative flex items-center gap-2", className)}
+            className={"relative flex items-center gap-2"}
         >
             <button
                 type="button"

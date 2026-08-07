@@ -1,12 +1,10 @@
 "use client"
 
 import React, { useEffect, useRef } from "react"
-import { cn } from "@heroui/react"
 import { publicEnv } from "@/resources/env/public"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link Turnstile}. */
-export interface TurnstileProps extends WithClassNames<undefined> {
+export interface TurnstileProps {
     /** Callback triggered when Turnstile successfully validates the visitor. */
     onVerify: (token: string) => void
     /** Callback triggered when Turnstile token expires. */
@@ -39,7 +37,7 @@ interface WindowWithTurnstile extends Window {
  * Automatically loads the Turnstile script if not already present.
  * No-ops (returns null) when captcha is disabled in public config.
  */
-export const Turnstile = ({ onVerify, onExpire, onError, className }: TurnstileProps) => {
+export const Turnstile = ({ onVerify, onExpire, onError}: TurnstileProps) => {
     const containerRef = useRef<HTMLDivElement>(null)
     const widgetIdRef = useRef<string | null>(null)
 
@@ -117,6 +115,6 @@ export const Turnstile = ({ onVerify, onExpire, onError, className }: TurnstileP
     const { enabled } = publicEnv().captcha
     if (!enabled) return null
 
-    return <div ref={containerRef} className={cn("flex justify-center my-2 min-h-[74px]", className)} />
+    return <div ref={containerRef} className={"flex justify-center my-2 min-h-[74px]"} />
 }
 export default Turnstile

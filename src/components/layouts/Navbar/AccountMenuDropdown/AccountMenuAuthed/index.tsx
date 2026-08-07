@@ -17,11 +17,9 @@ import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources/path"
 import { useAccountMenuOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useMutateSignOutSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSignOutSwr"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link AccountMenuAuthed}. */
-export type AccountMenuAuthedProps = WithClassNames<undefined>
-
+export type AccountMenuAuthedProps = Record<string, never>
 /**
  * Account dropdown menu for SIGNED-IN viewers: a primary section (Dashboard ·
  * Profile · Settings) and a separated destructive section (Sign out, danger).
@@ -30,7 +28,7 @@ export type AccountMenuAuthedProps = WithClassNames<undefined>
  *
  * @param props - optional className (placement only).
  */
-export const AccountMenuAuthed = ({ className }: AccountMenuAuthedProps) => {
+export const AccountMenuAuthed = () => {
     const t = useTranslations()
     const router = useRouter()
     const { close } = useAccountMenuOverlayState()
@@ -55,7 +53,7 @@ export const AccountMenuAuthed = ({ className }: AccountMenuAuthedProps) => {
     )
 
     return (
-        <Dropdown.Menu className={className}>
+        <Dropdown.Menu>
             <Dropdown.Section>
                 <Dropdown.Item
                     id="dashboard"

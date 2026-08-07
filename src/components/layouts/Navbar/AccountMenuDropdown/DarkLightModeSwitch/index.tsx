@@ -1,23 +1,20 @@
 "use client"
 import { MoonIcon, SunIcon } from "@phosphor-icons/react"
-import { Switch, cn } from "@heroui/react"
-
+import { Switch } from "@heroui/react"
 import { useTheme } from "next-themes"
 import React from "react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link DarkLightModeSwitch}.
  */
-export type DarkLightModeSwitchProps = WithClassNames<undefined>
-
+export type DarkLightModeSwitchProps = Record<string, never>
 /**
  * DarkLightModeSwitch — round HeroUI toggle for dark/light mode, with a sun/moon
  * icon riding inside the thumb. Uses the native Switch sizing (no custom pixel
  * dimensions) so the track + thumb stay perfectly round.
  * @param props - optional root class name (placement only)
  */
-export const DarkLightModeSwitch = ({ className }: DarkLightModeSwitchProps = {}) => {
+export const DarkLightModeSwitch = () => {
     const { theme, setTheme } = useTheme()
     const isDarkMode = theme === "dark"
     return (
@@ -25,7 +22,7 @@ export const DarkLightModeSwitch = ({ className }: DarkLightModeSwitchProps = {}
             isSelected={isDarkMode}
             onChange={(value) => setTheme(value ? "dark" : "light")}
             aria-label="Toggle dark mode"
-            className={cn(className)}
+            className={""}
         >
             {({ isSelected }) => (
                 <Switch.Content>

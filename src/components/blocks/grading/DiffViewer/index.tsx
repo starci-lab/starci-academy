@@ -2,7 +2,6 @@
 
 import React from "react"
 import { Typography, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** The kind of a diff line: an addition, a deletion, or unchanged context. */
 export type DiffLineType = "add" | "del" | "ctx"
@@ -37,7 +36,7 @@ export type DiffViewerVariant = "unified" | "split"
  * the caller supplies already-parsed hunks. Used for grading feedback that
  * compares student code against a suggested fix.
  */
-export interface DiffViewerProps extends WithClassNames<undefined> {
+export interface DiffViewerProps {
     /** Optional filename shown in the header bar above the diff (e.g. "src/auth.ts"). */
     filename?: string
     /** The pre-parsed hunks to render, in order. */
@@ -146,15 +145,11 @@ const SplitCell = ({ line, side }: SplitCellProps) => (
 export const DiffViewer = ({
     filename,
     hunks,
-    variant = "unified",
-    className,
-}: DiffViewerProps) => {
+    variant = "unified"}: DiffViewerProps) => {
     return (
         <div
             className={cn(
-                "overflow-hidden rounded-xl border border-default bg-surface",
-                className,
-            )}
+                "overflow-hidden rounded-xl border border-default bg-surface")}
         >
             {/* Filename header bar — sits above the scrollable code area */}
             {filename ? (

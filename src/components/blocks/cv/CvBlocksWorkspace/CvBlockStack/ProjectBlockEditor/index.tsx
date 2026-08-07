@@ -1,18 +1,9 @@
 "use client"
 
 import React from "react"
-import {
-    Button,
-    Chip,
-    Input,
-    Label,
-    TextArea,
-    TextField,
-    cn,
-} from "@heroui/react"
+import { Button, Chip, Input, Label, TextArea, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { PlusIcon, SealCheckIcon, UserIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { CvBlockItemSource } from "@/modules/types/enums/cv-block-item-source"
 import type { CvBlock, CvBlockEditorProps, CvBlockItem } from "@/modules/types/entities/cv"
 import { AiRewriteButton } from "../shared/AiRewriteButton"
@@ -27,7 +18,7 @@ const emptySelfItem = (): CvBlockItem => ({
 })
 
 /** Props for {@link ProjectBlockEditor}. */
-export interface ProjectBlockEditorProps extends WithClassNames<undefined>, CvBlockEditorProps {}
+export type ProjectBlockEditorProps = CvBlockEditorProps 
 
 /**
  * Project block editor — the ONLY block whose items carry `source` /
@@ -40,7 +31,7 @@ export interface ProjectBlockEditorProps extends WithClassNames<undefined>, CvBl
  *
  * @param props - {@link ProjectBlockEditorProps}
  */
-export const ProjectBlockEditor = ({ className, block, onChange, onAiRewrite }: ProjectBlockEditorProps) => {
+export const ProjectBlockEditor = ({ block, onChange, onAiRewrite }: ProjectBlockEditorProps) => {
     const t = useTranslations()
 
     const setItems = (items: Array<CvBlockItem>) => onChange({ ...block, items } satisfies CvBlock)
@@ -98,7 +89,7 @@ export const ProjectBlockEditor = ({ className, block, onChange, onAiRewrite }: 
         .map((item) => item.sourceRef as string)
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className={"flex flex-col gap-3"}>
             {block.items.map((item, index) => {
                 const isVerified = item.source === CvBlockItemSource.Verified
                 return (

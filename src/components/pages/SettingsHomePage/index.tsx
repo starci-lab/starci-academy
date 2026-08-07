@@ -21,9 +21,6 @@ import {
 import {
     getSettingsGroups,
 } from "@/resources/settings-nav"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { GroupPressableCard } from "@/components/blocks/cards/GroupPressableCard"
@@ -34,8 +31,7 @@ import { AuthenticationType } from "@/modules/types/enums/authentication-type"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link SettingsHomePage}. */
-export type SettingsHomePageProps = WithClassNames<undefined>
-
+export type SettingsHomePageProps = Record<string, never>
 /**
  * Settings hub landing — a responsive grid of every account-management
  * destination (a card per page), so `/profile/settings` answers "where do I
@@ -44,9 +40,7 @@ export type SettingsHomePageProps = WithClassNames<undefined>
  *
  * @param props - optional root className.
  */
-export const SettingsHomePage = ({
-    className,
-}: SettingsHomePageProps) => {
+export const SettingsHomePage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -63,7 +57,7 @@ export const SettingsHomePage = ({
                 : null
 
     return (
-        <div className={className}>
+        <div>
             <StackV gap={7} principle="layout-split"
                 explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
                 items={[

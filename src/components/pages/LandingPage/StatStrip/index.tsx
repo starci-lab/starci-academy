@@ -2,7 +2,6 @@
 
 import React from "react"
 import { useLocale, useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useQueryPlatformStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryPlatformStatsSwr"
 import { _StatStrip } from "./component"
 import type { StatStripStats } from "./component"
@@ -27,8 +26,7 @@ const SKELETON_STATS: StatStripStats = {
 } as const
 
 /** Props for {@link StatStrip}. */
-export type StatStripProps = WithClassNames<undefined>
-
+export type StatStripProps = Record<string, never>
 /**
  * Live platform proof strip — the CONNECTED half of `StatStrip` (`tiers/split.md`):
  * fetches the public `platformStats` query, computes `isSkeleton` from the
@@ -37,7 +35,7 @@ export type StatStripProps = WithClassNames<undefined>
  *
  * @param props - {@link StatStripProps}
  */
-export const StatStrip = ({ className }: StatStripProps) => {
+export const StatStrip = () => {
     const t = useTranslations()
     const locale = useLocale()
     const { data, isLoading, error } = useQueryPlatformStatsSwr()
@@ -49,7 +47,6 @@ export const StatStrip = ({ className }: StatStripProps) => {
 
     return (
         <_StatStrip
-            className={className}
             isSkeleton={isSkeleton}
             stats={stats}
             locale={locale}

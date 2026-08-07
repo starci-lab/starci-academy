@@ -37,7 +37,6 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { Cluster } from "@/components/frames/Cluster"
 import { StackH, StackV } from "@/components/frames/Stack"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Score → attention colour band (also used per-attempt in the attempts record). */
 const scoreToneClass = (score: number): string => {
@@ -51,8 +50,7 @@ const scoreToneClass = (score: number): string => {
 }
 
 /** Props for {@link ProfileChallengeSubmissionPage}. */
-export type ProfileChallengeSubmissionPageProps = WithClassNames<undefined>
-
+export type ProfileChallengeSubmissionPageProps = Record<string, never>
 /**
  * `/profile/<u>/challenges/<courseSlug>/<submissionId>` — the DETAIL tier of
  * the 3-tier challenges flow: one passed submission's header (title, score,
@@ -63,9 +61,7 @@ export type ProfileChallengeSubmissionPageProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const ProfileChallengeSubmissionPage = ({
-    className,
-}: ProfileChallengeSubmissionPageProps) => {
+export const ProfileChallengeSubmissionPage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -90,7 +86,7 @@ export const ProfileChallengeSubmissionPage = ({
     const attempts = detail?.attempts ?? []
 
     return (
-        <div className={cn("mx-auto flex max-w-4xl flex-col gap-6", className)}>
+        <div className={"mx-auto flex max-w-4xl flex-col gap-6"}>
             <PageHeader
                 breadcrumb={(
                     <BackLink

@@ -2,9 +2,6 @@
 
 import React from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     ProfileMenuCard,
 } from "./ProfileMenuCard"
 import {
@@ -13,13 +10,8 @@ import {
 import {
     IdentityStats,
 } from "./IdentityStats"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-
 /** Props for {@link DashboardIdentity}. */
-export type DashboardIdentityProps = WithClassNames<undefined>
-
+export type DashboardIdentityProps = Record<string, never>
 /**
  * DashboardPage LEFT column — the viewer's own identity + standing, bare (no card),
  * stable across every tab (mirrors the profile page's identity sidebar). Stacks:
@@ -27,11 +19,9 @@ export type DashboardIdentityProps = WithClassNames<undefined>
  * AI credit · reward), then the quick-action shortcuts. Each child self-fetches.
  * @param props - optional className for the root column.
  */
-export const DashboardIdentity = ({
-    className,
-}: DashboardIdentityProps) => {
+export const DashboardIdentity = () => {
     return (
-        <div className={cn("flex flex-col gap-4", className)}>
+        <div className={"flex flex-col gap-4"}>
             {/* profile anchor — avatar + name + rank, links to the public profile */}
             <ProfileMenuCard />
             {/* glanceable standing that persists across tabs */}

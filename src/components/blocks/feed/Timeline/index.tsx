@@ -1,10 +1,9 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link Timeline}. */
-export interface TimelineProps extends WithClassNames<undefined> {
+export interface TimelineProps {
     /**
      * The row elements to render inside the timeline. Each child is expected to
      * be a self-contained row block (e.g. {@link FeedItem}) that describes one
@@ -27,15 +26,12 @@ export interface TimelineProps extends WithClassNames<undefined> {
  * @param props - {@link TimelineProps}
  * @see Story: .storybook/stories/blocks/feed/Timeline/Timeline.stories
  */
-export const Timeline = ({ children, className }: TimelineProps) => {
+export const Timeline = ({ children}: TimelineProps) => {
     return (
         <div
-            className={cn(
-                "relative flex flex-col gap-3",
+            className={cn("relative flex flex-col gap-3",
                 "border-l border-separator",
-                "pl-4",
-                className,
-            )}
+                "pl-4")}
         >
             {children}
         </div>

@@ -18,7 +18,6 @@ import { useQueryMyRewardWalletSwr } from "@/hooks/swr/api/graphql/queries/useQu
 import { useQueryMyVouchersSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr"
 import { pathConfig } from "@/resources/path"
 import type { QueryMyVoucherData } from "@/modules/api/graphql/queries/types/my-vouchers"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Box } from "@/components/frames/Box"
 import { StackH, StackV } from "@/components/frames/Stack"
 
@@ -39,8 +38,7 @@ const discountLabel = (voucher: QueryMyVoucherData): string => (
 )
 
 /** Props for {@link MyVouchers}. */
-export type MyVouchersProps = WithClassNames<undefined>
-
+export type MyVouchersProps = Record<string, never>
 /**
  * The Coin shop's "My wallet" tab: the viewer's minted vouchers (code, scope,
  * status, expiry) plus the redemption history. Self-fetches both — the
@@ -49,14 +47,14 @@ export type MyVouchersProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const MyVouchers = ({ className }: MyVouchersProps) => {
+export const MyVouchers = () => {
     const t = useTranslations()
     const locale = useLocale()
     const vouchersSwr = useQueryMyVouchersSwr()
     const walletSwr = useQueryMyRewardWalletSwr()
 
     return (
-        <Box identity={{ tier: "page", component: "MyVouchers" }} className={className}>
+        <Box identity={{ tier: "page", component: "MyVouchers" }}>
             <StackV gap={6} principle="block-boundary"
                 explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                 items={[

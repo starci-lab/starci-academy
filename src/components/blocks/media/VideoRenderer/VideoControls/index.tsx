@@ -10,12 +10,11 @@ import { SeekBar } from "./SeekBar"
 import { TimeDisplay } from "./TimeDisplay"
 import type { QualityLevel } from "./types"
 import { VolumeControl } from "./VolumeControl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export type { QualityLevel } from "./types"
 
 /** Props for {@link VideoControls}. */
-export interface VideoControlsProps extends WithClassNames<undefined> {
+export interface VideoControlsProps {
     /** Whether playback is currently active. */
     isPlaying: boolean
     /** Current playback position in seconds. */
@@ -69,9 +68,7 @@ export const VideoControls = ({
     qualityLevels,
     selectedQuality,
     onQualityChange,
-    hidden = false,
-    className,
-}: VideoControlsProps) => {
+    hidden = false}: VideoControlsProps) => {
     /** Whether to render the DASH quality selector. */
     const hasQuality = useMemo(
         () => Boolean(
@@ -93,11 +90,8 @@ export const VideoControls = ({
 
     return (
         <div
-            className={cn(
-                "absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black/80 via-black/40 to-transparent px-3 pb-3 pt-8 transition-opacity duration-300",
-                visibilityClassName,
-                className,
-            )}
+            className={cn("absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black/80 via-black/40 to-transparent px-3 pb-3 pt-8 transition-opacity duration-300",
+                visibilityClassName)}
         >
             <SeekBar
                 currentTime={currentTime}

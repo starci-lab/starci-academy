@@ -2,15 +2,8 @@
 
 import React, { useCallback, useMemo, useState } from "react"
 import axios from "axios"
-import {
-    Spinner,
-    TextArea,
-    TextField,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Spinner, TextArea, TextField, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Dropzone } from "@/components/blocks/form/Dropzone"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { sleep } from "@/modules/utils/misc"
@@ -31,7 +24,7 @@ const MAX_SIZE_IN_BYTES = 10 * 1024 * 1024
 type InputMode = "paste" | "upload"
 
 /** Props for {@link CvTextOrFileInput}. */
-export interface CvTextOrFileInputProps extends WithClassNames<undefined> {
+export interface CvTextOrFileInputProps {
     /** The text value both modes ultimately produce (paste = typed, upload = extracted). */
     value: string
     /** Fired with the new text (typed directly, or extracted from an uploaded file). */
@@ -59,14 +52,12 @@ export interface CvTextOrFileInputProps extends WithClassNames<undefined> {
  * @param props - {@link CvTextOrFileInputProps}
  */
 export const CvTextOrFileInput = ({
-    className,
     value,
     onChange,
     fieldId,
     label,
     placeholder,
-    onExtractingChange,
-}: CvTextOrFileInputProps) => {
+    onExtractingChange}: CvTextOrFileInputProps) => {
     const t = useTranslations()
     const [mode, setMode] = useState<InputMode>("paste")
     const [file, setFile] = useState<File | null>(null)
@@ -136,7 +127,7 @@ export const CvTextOrFileInput = ({
     }), [mode, t])
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className={"flex flex-col gap-3"}>
             {/* TabsCard pattern: mode tabs float above; the field sits DIRECTLY below
                 (no outer <Card> — the modal is already a surface, so wrapping the field
                 in another card = card-in-card). No field <Label> (tab labels the mode). */}

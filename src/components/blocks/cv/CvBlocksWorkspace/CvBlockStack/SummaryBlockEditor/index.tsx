@@ -1,19 +1,13 @@
 "use client"
 
 import React from "react"
-import {
-    Label,
-    TextArea,
-    TextField,
-    cn,
-} from "@heroui/react"
+import { Label, TextArea, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { CvBlockEditorProps } from "@/modules/types/entities/cv"
 import { AiRewriteButton } from "../shared/AiRewriteButton"
 
 /** Props for {@link SummaryBlockEditor}. */
-export interface SummaryBlockEditorProps extends WithClassNames<undefined>, CvBlockEditorProps {}
+export type SummaryBlockEditorProps = CvBlockEditorProps 
 
 /**
  * Summary/objective paragraph editor — singleton, non-repeatable, holds its
@@ -22,7 +16,7 @@ export interface SummaryBlockEditorProps extends WithClassNames<undefined>, CvBl
  *
  * @param props - {@link SummaryBlockEditorProps}
  */
-export const SummaryBlockEditor = ({ className, block, onChange, onAiRewrite }: SummaryBlockEditorProps) => {
+export const SummaryBlockEditor = ({ block, onChange, onAiRewrite }: SummaryBlockEditorProps) => {
     const t = useTranslations()
     const text = typeof block.items[0]?.fields.text === "string" ? (block.items[0].fields.text as string) : ""
 
@@ -41,7 +35,7 @@ export const SummaryBlockEditor = ({ className, block, onChange, onAiRewrite }: 
     }
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className={"flex flex-col gap-3"}>
             <TextField variant="secondary">
                 <Label htmlFor="cv-summary-text">{t("cv.blocks.summary.fields.text")}</Label>
                 <TextArea

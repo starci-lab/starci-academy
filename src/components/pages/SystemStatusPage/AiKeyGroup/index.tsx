@@ -8,10 +8,9 @@ import { Box } from "@/components/frames/Box"
 import { Cluster } from "@/components/frames/Cluster"
 import { StackH, StackV } from "@/components/frames/Stack"
 import type { AiKeyHealthGroup } from "@/modules/api/graphql/queries/types/ai-key-health"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link AiKeyGroup}. */
-export interface AiKeyGroupProps extends WithClassNames<undefined> {
+export interface AiKeyGroupProps {
     /** One per-model AI key health group from GraphQL. */
     group: AiKeyHealthGroup
 }

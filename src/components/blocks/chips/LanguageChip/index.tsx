@@ -1,10 +1,9 @@
 import React from "react"
-import { Typography, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Typography } from "@heroui/react"
 import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 
 /** Props for {@link LanguageChip}. */
-export interface LanguageChipProps extends WithClassNames<undefined> {
+export interface LanguageChipProps {
     /** Language enum value (e.g. `typescript`, `csharp`). Drives colour + label. */
     language: string
 }
@@ -18,9 +17,9 @@ export interface LanguageChipProps extends WithClassNames<undefined> {
  * @param props - {@link LanguageChipProps}
  * @see Story: .storybook/stories/blocks/chips/LanguageChip/LanguageChip.stories
  */
-export const LanguageChip = ({ language, className }: LanguageChipProps) => {
+export const LanguageChip = ({ language}: LanguageChipProps) => {
     return (
-        <span className={cn("inline-flex items-center gap-2", className)}>
+        <span className={"inline-flex items-center gap-2"}>
             <span
                 aria-hidden
                 className="size-3 shrink-0 rounded-full"

@@ -5,15 +5,12 @@ import {
     CaretDoubleRightIcon,
 } from "@phosphor-icons/react"
 import React from "react"
-import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { toggleRightCollapsed } from "@/redux/slices/sidebar"
 
 /** Props for {@link LearnPanelToggles}. */
-export type LearnPanelTogglesProps = WithClassNames<undefined>
-
+export type LearnPanelTogglesProps = Record<string, never>
 /**
  * Desktop collapse handle styled as a short accent bar on the content's right
  * border.
@@ -27,7 +24,7 @@ export type LearnPanelTogglesProps = WithClassNames<undefined>
  * rendered inside a `relative` content column. `"use client"` for redux + presses.
  * @param props - {@link LearnPanelTogglesProps}
  */
-export const LearnPanelToggles = ({ className }: LearnPanelTogglesProps) => {
+export const LearnPanelToggles = () => {
     const t = useTranslations()
     const dispatch = useAppDispatch()
     // current collapse state drives both the caret direction and the aria label
@@ -41,7 +38,7 @@ export const LearnPanelToggles = ({ className }: LearnPanelTogglesProps) => {
     return (
         // full-height, click-through overlay spanning the content column; desktop only.
         // absolute so it adds no layout, z-20 to float above the article text.
-        <div className={cn("pointer-events-none absolute inset-0 z-20 hidden @app-lg:block", className)}>
+        <div className={"pointer-events-none absolute inset-0 z-20 hidden @app-lg:block"}>
             {/* zero-height bar that sticks at viewport mid-line, so the handle stays centered while scrolling */}
             <div className="sticky top-1/2">
                 {/* right handle: sits on the divider between content and the outline rail */}

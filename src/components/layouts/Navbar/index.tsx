@@ -5,12 +5,7 @@ import React, {
     useEffect,
     useState,
 } from "react"
-import {
-    Button,
-    Drawer,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Button, Drawer, Typography } from "@heroui/react"
 import {
     SidebarSimpleIcon as MenuIcon,
     MagnifyingGlassIcon as SearchIcon,
@@ -50,13 +45,11 @@ import {
 } from "./AccountMenuDropdown/DarkLightModeSwitch"
 import { useNavbarBottomLayerStore } from "@/hooks/zustand/navbarBottomLayer/store"
 import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link Navbar}.
  */
-export type NavbarProps = WithClassNames<undefined>
-
+export type NavbarProps = Record<string, never>
 /**
  * Navbar — top application navigation bar.
  *
@@ -67,7 +60,7 @@ export type NavbarProps = WithClassNames<undefined>
  * `"use client"` for hooks + keyboard handling.
  * @param props - optional root class name (placement only)
  */
-export const Navbar = ({ className }: NavbarProps) => {
+export const Navbar = () => {
     const t = useTranslations()
     const router = useRouter()
     const { open: openSearch } = useSearchOverlayState()
@@ -93,7 +86,7 @@ export const Navbar = ({ className }: NavbarProps) => {
     const mobileNavItems = useNavbarItems({ includeCart: true })
 
     return (
-        <nav className={cn("sticky top-0 z-50 border-b border-separator bg-background", className)}>
+        <nav className={"sticky top-0 z-50 border-b border-separator bg-background"}>
             {/* primary row — fixed 4rem tall; the nav root owns the single bottom border */}
             <div className="flex h-16 min-h-16 w-full items-center justify-between gap-3 px-3">
                 <div className="flex items-center gap-6">

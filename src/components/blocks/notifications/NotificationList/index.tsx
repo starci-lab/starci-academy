@@ -1,8 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Button, cn, Typography } from "@heroui/react"
+import { Button, Typography } from "@heroui/react"
 import { ChecksIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { NotificationItem } from "@/components/blocks/notifications/NotificationItem"
 import type { NotificationItemProps } from "@/components/blocks/notifications/NotificationItem"
@@ -23,7 +22,7 @@ export interface NotificationGroup {
 }
 
 /** Props for {@link NotificationList}. */
-export interface NotificationListProps extends WithClassNames<undefined> {
+export interface NotificationListProps {
     /**
      * The day-grouped sections to render, top to bottom. Each group carries an
      * optional label and its rows. When every group is empty (or the array is
@@ -87,13 +86,11 @@ export const NotificationList = ({
     title,
     onMarkAllRead,
     markAllReadLabel = "Mark all as read",
-    emptyState,
-    className,
-}: NotificationListProps) => {
+    emptyState}: NotificationListProps) => {
     const isEmpty = groups.every((group) => group.items.length === 0)
 
     return (
-        <div className={cn("flex flex-col", className)}>
+        <div className={"flex flex-col"}>
             {title ? (
                 <div className="flex items-center justify-between gap-3 px-3 py-2">
                     <Typography type="body-sm" weight="semibold">

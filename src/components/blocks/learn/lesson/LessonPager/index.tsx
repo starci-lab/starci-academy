@@ -11,9 +11,6 @@ import {
     CaretLeftIcon,
     CaretRightIcon,
 } from "@phosphor-icons/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import {
     useLessonNavigation,
 } from "../hooks/useLessonNavigation"
@@ -22,8 +19,7 @@ import type { GroupPressableCardItem } from "@/components/blocks/cards/GroupPres
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link LessonPager}. */
-export type LessonPagerProps = WithClassNames<undefined>
-
+export type LessonPagerProps = Record<string, never>
 /**
  * Previous / next lesson pager shown at the foot of the reader: two navigation
  * cards that move through the course in its linear order (the prev card aligns
@@ -36,13 +32,13 @@ export type LessonPagerProps = WithClassNames<undefined>
  *
  * @param props - {@link LessonPager}
  */
-export const LessonPager = ({ className }: LessonPagerProps) => {
+export const LessonPager = () => {
     const t = useTranslations()
     const { previous, next, isLoading } = useLessonNavigation()
 
     if (isLoading) {
         return (
-            <div className={className}>
+            <div>
                 {/*
                   Mirrors the resolved pager below, which reflows on its CONTAINER
                   (`GroupPressableCard columns={{base:1, sm:2}}`). The skeleton must
@@ -126,7 +122,7 @@ export const LessonPager = ({ className }: LessonPagerProps) => {
     }
 
     return (
-        <div className={className}>
+        <div>
             <GroupPressableCard
                 ariaLabel={t("content.pagerAria")}
                 columns={{ base: 1, sm: 2 }}

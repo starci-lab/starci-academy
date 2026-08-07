@@ -14,11 +14,9 @@ import { AuthenticationModalTab } from "@/redux/slices/tabs"
 import { useAppDispatch } from "@/redux/hooks"
 import { setAuthenticationModalTab } from "@/redux/slices/tabs"
 import { useAccountMenuOverlayState, useAuthenticationOverlayState } from "@/hooks/zustand/overlay/hooks"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link AccountMenuGuest}. */
-export type AccountMenuGuestProps = WithClassNames<undefined>
-
+export type AccountMenuGuestProps = Record<string, never>
 /**
  * Account dropdown menu for SIGNED-OUT viewers: sign in + sign up, each opening
  * the authentication modal on its tab. Self-contained — dispatches the auth tab,
@@ -26,7 +24,7 @@ export type AccountMenuGuestProps = WithClassNames<undefined>
  *
  * @param props - optional className (placement only).
  */
-export const AccountMenuGuest = ({ className }: AccountMenuGuestProps) => {
+export const AccountMenuGuest = () => {
     const t = useTranslations()
     const dispatch = useAppDispatch()
     const { close } = useAccountMenuOverlayState()
@@ -43,7 +41,7 @@ export const AccountMenuGuest = ({ className }: AccountMenuGuestProps) => {
     )
 
     return (
-        <Dropdown.Menu className={className}>
+        <Dropdown.Menu>
             <Dropdown.Section>
                 <Dropdown.Item
                     id="sign-in"

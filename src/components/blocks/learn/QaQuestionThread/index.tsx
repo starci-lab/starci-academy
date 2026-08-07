@@ -7,7 +7,6 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import type { CourseQuestionNode } from "@/modules/api/graphql/queries/types/course-questions"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { AvatarGroupItem } from "@/components/composites/lists/AvatarGroup"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
 import { Composer } from "@/components/blocks/feed/Composer"
@@ -22,7 +21,7 @@ import { pathConfig } from "@/resources/path"
 import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link QaQuestionThread}. */
-export interface QaQuestionThreadProps extends WithClassNames<undefined> {
+export interface QaQuestionThreadProps {
     /** The question to render. */
     question: CourseQuestionNode
     /** Current viewer id (drives own-bubble alignment + owner-only actions); null when unknown. */
@@ -48,7 +47,7 @@ export interface QaQuestionThreadProps extends WithClassNames<undefined> {
  *
  * @param props - {@link QaQuestionThreadProps}
  */
-export const QaQuestionThread = ({ question, currentUserId, currentUser, onAnswered, className }: QaQuestionThreadProps) => {
+export const QaQuestionThread = ({ question, currentUserId, currentUser, onAnswered}: QaQuestionThreadProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -149,7 +148,6 @@ export const QaQuestionThread = ({ question, currentUserId, currentUser, onAnswe
     if (!expanded) {
         return (
             <QaInboxRow
-                className={className}
                 question={question}
                 onOpen={() => setExpanded(true)}
             />
@@ -158,7 +156,7 @@ export const QaQuestionThread = ({ question, currentUserId, currentUser, onAnswe
 
     // expanded — the full conversation, rendered inline in place of the row
     return (
-        <div className={cn("flex flex-col gap-4 p-3", className)}>
+        <div className={"flex flex-col gap-4 p-3"}>
             <QaConversationHeader
                 asker={question.author}
                 isFounderAsker={question.isFounderAuthor}

@@ -1,28 +1,16 @@
 "use client"
 
 import React, { useState } from "react"
-import {
-    Button,
-    cn,
-    FieldError,
-    Input,
-    Label,
-    Spinner,
-    Tabs,
-    TextField,
-    Typography,
-} from "@heroui/react"
+import { Button, FieldError, Input, Label, Spinner, Tabs, TextField, Typography } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { AutosaveStatus } from "../PersonalProjectSubmission"
 import { GradeModelDropdown } from "@/components/blocks/grading/GradeModelDropdown"
 import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGithub/usePersonalProjectGithubForm"
 
 /** Props for {@link GithubGradingSettings}. */
-export type GithubGradingSettingsProps = WithClassNames<undefined>
-
+export type GithubGradingSettingsProps = Record<string, never>
 /**
  * Set-once grading config for the personal project — rendered inside the panel's settings Drawer
  * (progressive disclosure): the grading language, the branch to evaluate, and the optional
@@ -31,7 +19,7 @@ export type GithubGradingSettingsProps = WithClassNames<undefined>
  * url/branch sync, so the autosave status shown here comes from the same store.
  * @param props - {@link GithubGradingSettingsProps}
  */
-export const GithubGradingSettings = ({ className }: GithubGradingSettingsProps) => {
+export const GithubGradingSettings = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -66,7 +54,7 @@ export const GithubGradingSettings = ({ className }: GithubGradingSettingsProps)
     const branchInvalid = Boolean(touched.branch && errors.branch)
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
+        <div className={"flex flex-col gap-6"}>
             <div className="flex flex-col gap-2">
                 <Label>{t("finalProject.page.submitGithub.langFieldTitle")}</Label>
                 <Tabs

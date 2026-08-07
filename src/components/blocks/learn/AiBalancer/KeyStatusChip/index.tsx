@@ -12,9 +12,8 @@ import {
 } from "../map"
 import { cn } from "@heroui/react"
 import { AiBalancerKeyStatus } from "@/modules/api/graphql/queries/enums/ai-balancer-key-status"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
-interface KeyStatusChipProps extends WithClassNames<undefined> {
+interface KeyStatusChipProps {
     /** Raw status string from GraphQL (`active` / `disabled` / `probing`). */
     status: string
     /** Translated label for the status. */
@@ -33,9 +32,7 @@ interface KeyStatusChipProps extends WithClassNames<undefined> {
 export const KeyStatusChip = ({
     status,
     label,
-    variant = KeyStatusChipVariant.Dark,
-    className,
-}: KeyStatusChipProps) => {
+    variant = KeyStatusChipVariant.Dark}: KeyStatusChipProps) => {
     const visual = useMemo(
         () => {
             const map = variant === KeyStatusChipVariant.Light
@@ -54,7 +51,7 @@ export const KeyStatusChip = ({
 
     return (
         <span
-            className={cn("inline-flex items-center gap-2 rounded-full border px-3 py-0 text-xs font-medium", visual.chipClassName, className)}
+            className={cn("inline-flex items-center gap-2 rounded-full border px-3 py-0 text-xs font-medium", visual.chipClassName)}
         >
             <StatusIcon
                 className="h-3.5 w-3.5"

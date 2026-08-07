@@ -5,11 +5,10 @@ import React from "react"
 import type {
     ProcessResult,
 } from "../../types"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Box } from "@/components/frames/Box"
 
 /** Props for {@link ProcessResultBanner}. */
-export interface ProcessResultBannerProps extends WithClassNames<undefined> {
+export interface ProcessResultBannerProps {
     /** Process-video result to show, or null to render nothing. */
     processResult: ProcessResult | null
 }

@@ -1,14 +1,13 @@
 "use client"
 
 import React from "react"
-import { Chip, cn } from "@heroui/react"
+import { Chip } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import type { CodeExplainingEntity } from "@/modules/types/entities/code-explaining"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ExplainingCard}. */
-export interface ExplainingCardProps extends WithClassNames<undefined> {
+export interface ExplainingCardProps {
     /** One code explaining row from `content.codeExplainings`. */
     item: CodeExplainingEntity
 }
@@ -17,11 +16,11 @@ export interface ExplainingCardProps extends WithClassNames<undefined> {
  * Renders one critical code snippet and its explanation.
  * @param props.item - Code explaining entity for this card.
  */
-export const ExplainingCard = ({ item, className }: ExplainingCardProps) => {
+export const ExplainingCard = ({ item}: ExplainingCardProps) => {
     const t = useTranslations()
 
     return (
-        <article className={cn("rounded-xl border border-default-200 p-4 flex flex-col gap-3", className)}>
+        <article className={"rounded-xl border border-default-200 p-4 flex flex-col gap-3"}>
             <div className="flex items-center gap-2">
                 <Chip variant="secondary" color="accent" size="sm">
                     <Chip.Label>{t("content.codeExplainings.indexLabel", { index: item.sortIndex })}</Chip.Label>

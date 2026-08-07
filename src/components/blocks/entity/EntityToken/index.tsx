@@ -1,19 +1,12 @@
 "use client"
 
 import React from "react"
-import {
-    cn,
-    Link,
-} from "@heroui/react"
+import { Link } from "@heroui/react"
 import {
     useResolveRouteNavigation,
 } from "./useResolveRouteNavigation"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-
 /** Props for {@link EntityToken}. */
-export interface EntityTokenProps extends WithClassNames<undefined> {
+export interface EntityTokenProps {
     /**
      * Opaque global id of the entity — resolved to a route on click. Omit when
      * passing a direct {@link EntityTokenProps.href} instead.
@@ -45,9 +38,7 @@ export const EntityToken = ({
     globalId,
     href,
     label,
-    block = false,
-    className,
-}: EntityTokenProps) => {
+    block = false}: EntityTokenProps) => {
     // resolve-and-navigate lives in a shared hook (also used by whole-row list items)
     const { onPress, pending, routable } = useResolveRouteNavigation({ globalId, href })
 
@@ -59,7 +50,7 @@ export const EntityToken = ({
                 type="button"
                 disabled={!routable || pending}
                 onClick={onPress}
-                className={cn("truncate py-1 text-left text-sm text-muted transition-colors hover:text-foreground hover:underline underline-offset-4 decoration-[var(--separator-tertiary)] disabled:opacity-60", className)}
+                className={"truncate py-1 text-left text-sm text-muted transition-colors hover:text-foreground hover:underline underline-offset-4 decoration-[var(--separator-tertiary)] disabled:opacity-60"}
             >
                 {label}
             </button>
@@ -77,7 +68,7 @@ export const EntityToken = ({
         <Link
             onPress={onPress}
             isDisabled={pending}
-            className={cn("font-semibold text-foreground hover:underline underline-offset-4 decoration-[var(--separator-tertiary)] disabled:opacity-60 text-sm", className)}
+            className={"font-semibold text-foreground hover:underline underline-offset-4 decoration-[var(--separator-tertiary)] disabled:opacity-60 text-sm"}
         >
             {label}
         </Link>

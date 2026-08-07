@@ -1,16 +1,9 @@
 "use client"
 
 import React from "react"
-import {
-    Button,
-    Input,
-    Label,
-    TextField,
-    cn,
-} from "@heroui/react"
+import { Button, Input, Label, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { PlusIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { CvBlock, CvBlockEditorProps, CvBlockItem } from "@/modules/types/entities/cv"
 import { AiRewriteButton } from "../shared/AiRewriteButton"
 import { RepeatableItemCard } from "../shared/RepeatableItemCard"
@@ -19,7 +12,7 @@ import { RepeatableItemCard } from "../shared/RepeatableItemCard"
 const emptyItem = (): CvBlockItem => ({ id: crypto.randomUUID(), fields: {} })
 
 /** Props for {@link ActivityBlockEditor}. */
-export interface ActivityBlockEditorProps extends WithClassNames<undefined>, CvBlockEditorProps {}
+export type ActivityBlockEditorProps = CvBlockEditorProps 
 
 /**
  * Extracurricular / volunteering activity block editor — repeatable entries
@@ -29,7 +22,7 @@ export interface ActivityBlockEditorProps extends WithClassNames<undefined>, CvB
  *
  * @param props - {@link ActivityBlockEditorProps}
  */
-export const ActivityBlockEditor = ({ className, block, onChange, onAiRewrite }: ActivityBlockEditorProps) => {
+export const ActivityBlockEditor = ({ block, onChange, onAiRewrite }: ActivityBlockEditorProps) => {
     const t = useTranslations()
 
     const setItems = (items: Array<CvBlockItem>) => onChange({ ...block, items } satisfies CvBlock)
@@ -66,7 +59,7 @@ export const ActivityBlockEditor = ({ className, block, onChange, onAiRewrite }:
     }
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className={"flex flex-col gap-3"}>
             {block.items.map((item, index) => (
                 <RepeatableItemCard
                     key={item.id}

@@ -14,12 +14,8 @@ import {
 import type {
     ReactNode,
 } from "react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-
 /** Props for the {@link ContentMapRow} block. */
-export interface ContentMapRowProps extends WithClassNames<undefined> {
+export interface ContentMapRowProps {
     /** Lesson title (the row's accessible name). */
     title: string
     /** Highlights the row as the lesson currently open. */
@@ -70,19 +66,14 @@ export const ContentMapRow = ({
     isLocked = false,
     isPremium,
     meta,
-    onPress,
-    className,
-}: ContentMapRowProps) => {
+    onPress}: ContentMapRowProps) => {
     const { Icon, tone } = resolveStatus({ isRead, isLocked, isPremium })
     return (
         <button
             type="button"
             onClick={onPress}
-            className={cn(
-                "flex w-full items-start gap-2 rounded-xl px-2 py-2 text-left transition-colors",
-                isActive ? "bg-accent-soft" : "hover:bg-surface-secondary",
-                className,
-            )}
+            className={cn("flex w-full items-start gap-2 rounded-xl px-2 py-2 text-left transition-colors",
+                isActive ? "bg-accent-soft" : "hover:bg-surface-secondary")}
         >
             {/* one thin status marker per row (read / locked / premium / unread) */}
             <Icon aria-hidden focusable="false" className={cn("mt-0 size-5 shrink-0", tone)} />

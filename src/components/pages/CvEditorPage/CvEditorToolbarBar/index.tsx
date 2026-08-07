@@ -1,26 +1,19 @@
 "use client"
 
 import React from "react"
-import {
-    Button,
-    Input,
-    TextField,
-    cn,
-} from "@heroui/react"
+import { Button, Input, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import {
     FilePdfIcon,
     FileTextIcon,
 } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { StackH } from "@/components/frames/Stack"
 import { CvExportFormat } from "@/modules/types/enums/cv-export-format"
 import { useCvEditorToolbarStore } from "@/hooks/zustand/cvEditorToolbar/store"
 
 /** Props for {@link CvEditorToolbarBar}. */
-export type CvEditorToolbarBarProps = WithClassNames<undefined>
-
+export type CvEditorToolbarBarProps = Record<string, never>
 /**
  * The CV editor's toolbar, rendered as the global Navbar's BOTTOM LAYER (so it
  * reads as the navbar's second row — no divider between them; the Navbar owns
@@ -37,7 +30,7 @@ export type CvEditorToolbarBarProps = WithClassNames<undefined>
  *
  * @param props - {@link CvEditorToolbarBarProps}
  */
-export const CvEditorToolbarBar = ({ className }: CvEditorToolbarBarProps) => {
+export const CvEditorToolbarBar = () => {
     const t = useTranslations()
     const label = useCvEditorToolbarStore((state) => state.label)
     const canExport = useCvEditorToolbarStore((state) => state.canExport)
@@ -48,7 +41,7 @@ export const CvEditorToolbarBar = ({ className }: CvEditorToolbarBarProps) => {
     const onDownloadTex = useCvEditorToolbarStore((state) => state.onDownloadTex)
 
     return (
-        <div className={cn("flex w-full items-center justify-between gap-3 px-6 pb-3", className)}>
+        <div className={"flex w-full items-center justify-between gap-3 px-6 pb-3"}>
             <BackLink className="shrink-0" target={t("cv.builder.galleryTarget")} onPress={onBack} />
             <TextField
                 aria-label={t("cv.builder.nameLabel")}

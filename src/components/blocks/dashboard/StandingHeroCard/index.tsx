@@ -1,19 +1,11 @@
 "use client"
 
 import React from "react"
-import {
-    Button,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Button, Typography } from "@heroui/react"
 import {
     ArrowRightIcon,
 } from "@phosphor-icons/react"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-
 /** Goal-gradient progress toward the next rank/tier, shown as a thin meter. */
 export interface StandingHeroProgress {
     /** Fill ratio, clamped to `0..1`. */
@@ -23,7 +15,7 @@ export interface StandingHeroProgress {
 }
 
 /** Props for the {@link StandingHeroCard} block. */
-export interface StandingHeroCardProps extends WithClassNames<undefined> {
+export interface StandingHeroCardProps {
     /** Leading badge/icon — a `LeagueTierBadge` (weekly) or a scope icon (global). */
     badge?: React.ReactNode
     /** Primary standing line (e.g. "Rank #1 · Bronze" / "Rank #9 platform-wide"). */
@@ -56,10 +48,8 @@ export const StandingHeroCard = ({
     meta,
     progress,
     ctaLabel,
-    onCta,
-    className,
-}: StandingHeroCardProps) => (
-    <div className={cn("flex flex-col gap-4 rounded-3xl bg-surface p-5 shadow-surface", className)}>
+    onCta}: StandingHeroCardProps) => (
+    <div className={"flex flex-col gap-4 rounded-3xl bg-surface p-5 shadow-surface"}>
         <div className="flex items-center gap-4">
             {badge ? <div className="shrink-0">{badge}</div> : null}
             <div className="flex min-w-0 flex-col gap-1">

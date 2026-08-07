@@ -1,36 +1,24 @@
 "use client"
 import { ArrowRightIcon, KeyIcon, LockIcon, ShieldCheckIcon } from "@phosphor-icons/react"
 import React from "react"
-import {
-    Button,
-    Card,
-    CardContent,
-    cn,
-    FieldError,
-    Input,
-    Label,
-    TextField,
-} from "@heroui/react"
-
+import { Button, Card, CardContent, FieldError, Input, Label, TextField } from "@heroui/react"
 import { Controller } from "react-hook-form"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAdminApiKeyForm } from "@/hooks/rhf/useAdminApiKeyForm"
 import { Box } from "@/components/frames/Box"
 
 /** Props for {@link AdminLoginPage}. */
-export type AdminLoginPageProps = WithClassNames<undefined>
-
+export type AdminLoginPageProps = Record<string, never>
 /**
  * Admin login page — API key entry form.
  *
  * Container: owns the RHF form and submission logic. `"use client"` for form state.
  * @param props - {@link AdminLoginPageProps}
  */
-export const AdminLoginPage = ({ className }: AdminLoginPageProps) => {
+export const AdminLoginPage = () => {
     const { control, watch, formState, onSubmit } = useAdminApiKeyForm()
 
     return (
-        <div className={cn("min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 flex items-center justify-center p-4", className)}>
+        <div className={"min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 flex items-center justify-center p-4"}>
             {/* Decorative background elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-indigo-500/5 blur-3xl" />

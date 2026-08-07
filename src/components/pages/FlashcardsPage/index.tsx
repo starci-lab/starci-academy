@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react"
 import useSWR from "swr"
 import { useLocale, useTranslations } from "next-intl"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { cn } from "@heroui/react"
 import { EnrollGate } from "@/components/blocks/learn/EnrollGate"
 import { LearnBreadcrumb } from "@/components/blocks/learn/LearnBreadcrumb"
 import { FlashcardReviewer } from "./FlashcardReviewer"
@@ -23,7 +22,6 @@ import { FlashcardReviewStats } from "./FlashcardReviewStats"
 import { FlashcardSessionStats } from "./FlashcardSessionStats"
 import { FlashcardSessionStatsSkeleton } from "./FlashcardSessionStats/FlashcardSessionStatsSkeleton"
 import { useFlashcardNav, type FlashcardMode } from "./useFlashcardNav"
-import { type WithClassNames } from "@/modules/types/base/class-name"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { StackV } from "@/components/frames/Stack"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
@@ -36,7 +34,7 @@ import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcar
 import { pathConfig } from "@/resources/path"
 
 /** Props for {@link FlashcardsPage}. */
-export interface FlashcardsPageProps extends WithClassNames<undefined> {
+export interface FlashcardsPageProps {
     /**
      * Present when reached via the dedicated `flashcards/quiz/sessions/[sessionId]`
      * route — threaded straight through to {@link QuizSession}, which
@@ -94,12 +92,10 @@ export interface FlashcardsPageProps extends WithClassNames<undefined> {
  * @param {FlashcardsPageProps} props Optional wrapper placement props.
  */
 export const FlashcardsPage = ({
-    className,
     resumeQuizSessionId,
     resumeStudySessionId,
     resultQuizSessionId,
-    resultStudySessionId,
-}: FlashcardsPageProps) => {
+    resultStudySessionId}: FlashcardsPageProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const pathname = usePathname()
@@ -253,7 +249,7 @@ export const FlashcardsPage = ({
     // own `AsyncContent`.
     if (resultStudySessionId) {
         return (
-            <div className={className}>
+            <div>
                 {courseId ? (
                     <FlashcardSessionStats
                         sessionId={resultStudySessionId}
@@ -272,7 +268,7 @@ export const FlashcardsPage = ({
     }
     if (resultQuizSessionId) {
         return (
-            <div className={className}>
+            <div>
                 {courseId ? (
                     <FlashcardQuizResult
                         sessionId={resultQuizSessionId}
@@ -294,7 +290,7 @@ export const FlashcardsPage = ({
     // header band spanning edge-to-edge, same as `MockInterviewSession`.
     if (isLive) {
         return (
-            <div className={className}>
+            <div>
                 {resumeStudySessionId ? (
                     !studyStatusKnown || !studyIsInProgress ? (
                         // status not settled yet, OR resolved to "not in progress" — the
@@ -330,10 +326,10 @@ export const FlashcardsPage = ({
     }
 
     return (
-        <div className={className}>
+        <div>
             {/* header → content = gap-10 (named exception, fe/foundations/gap.md) —
                 everything under the header is ONE gap-6 content cluster */}
-            <div className={cn("mx-auto flex max-w-3xl flex-col gap-10")}>
+            <div className={"mx-auto flex max-w-3xl flex-col gap-10"}>
                 <PageHeader
                     breadcrumb={breadcrumb}
                     title={t("flashcard.title")}

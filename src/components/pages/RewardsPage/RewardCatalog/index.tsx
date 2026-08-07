@@ -38,7 +38,6 @@ import { useQueryRewardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryRewa
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import type { QueryRewardData } from "@/modules/api/graphql/queries/types/rewards"
 import type { RedeemRewardAiCreditGrant } from "@/modules/api/graphql/mutations/types/redeem-reward"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Box } from "@/components/frames/Box"
 import { Grid } from "@/components/frames/Grid"
 import { StackH, StackV } from "@/components/frames/Stack"
@@ -83,8 +82,7 @@ const EMPTY_SHIPPING: ShippingForm = {
 }
 
 /** Props for {@link RewardCatalog}. */
-export type RewardCatalogProps = WithClassNames<undefined>
-
+export type RewardCatalogProps = Record<string, never>
 /**
  * The Coin shop's "Store" tab: the redeemable catalog grid. Self-fetches the
  * catalog + the viewer's balance (the wallet SWR key is shared with the header
@@ -95,7 +93,7 @@ export type RewardCatalogProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const RewardCatalog = ({ className }: RewardCatalogProps) => {
+export const RewardCatalog = () => {
     const t = useTranslations()
     const rewardsSwr = useQueryRewardsSwr()
     const walletSwr = useQueryMyRewardWalletSwr()
@@ -166,7 +164,7 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
     )
 
     return (
-        <Box className={className}>
+        <Box>
             <StackV gap={4} principle="content-row"
                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 items={[

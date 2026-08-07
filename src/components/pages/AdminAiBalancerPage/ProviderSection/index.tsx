@@ -15,11 +15,10 @@ import {
 } from "./KeyRow"
 import type { AiBalancerProviderHealth } from "@/modules/api/graphql/queries/types/ai-balancer-health"
 import { ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { Box } from "@/components/frames/Box"
 
-interface ProviderSectionProps extends WithClassNames<undefined> {
+interface ProviderSectionProps {
     /** Provider aggregate from GraphQL. */
     providerHealth: AiBalancerProviderHealth
 }

@@ -17,10 +17,9 @@ import { StackH, StackV } from "@/components/frames/Stack"
 import { useQueryMyMockInterviewStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyMockInterviewStatsSwr"
 import type { MockInterviewStatsBreakdownItem } from "@/modules/api/graphql/queries/types/my-mock-interview-stats"
 import { ProgrammingLanguage } from "@/modules/types/enums/programming-language"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link MockInterviewStats}. */
-export interface MockInterviewStatsProps extends WithClassNames<undefined> {
+export interface MockInterviewStatsProps {
     /** Course whose aggregate mock-interview stats to show. */
     courseId: string
     /** Course display id, for the weakest-phase/kind CTA's deep link. */
@@ -60,7 +59,7 @@ const readinessBandOf = (avgScore: number): VerdictHeroBand =>
  * reads as a broken dashboard of fabricated percentages.
  * @param props - {@link MockInterviewStatsProps}
  */
-export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview, className }: MockInterviewStatsProps) => {
+export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview}: MockInterviewStatsProps) => {
     const t = useTranslations()
 
     const statsSwr = useQueryMyMockInterviewStatsSwr(courseId)
@@ -233,7 +232,7 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                     ) : undefined}
                 />
             ) : (
-                <div className={className}>
+                <div>
                     <StackV
                         gap={6}
                         principle="block-boundary"

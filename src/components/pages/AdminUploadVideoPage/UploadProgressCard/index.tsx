@@ -10,14 +10,13 @@ import {
 import type {
     ProviderUploadStatus,
 } from "../types"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import {
     ProviderUploadRow,
 } from "./ProviderUploadRow"
 import { Box } from "@/components/frames/Box"
 
 /** Props for {@link UploadProgressCard}. */
-export interface UploadProgressCardProps extends WithClassNames<undefined> {
+export interface UploadProgressCardProps {
     /** Per-provider upload statuses to render. */
     uploads: Array<ProviderUploadStatus>
     /** Whether all uploads have finished (drives the header copy + Done chip). */

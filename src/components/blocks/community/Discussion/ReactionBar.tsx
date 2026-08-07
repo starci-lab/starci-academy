@@ -1,16 +1,15 @@
 "use client"
 
 import React, { useState } from "react"
-import { Button, Popover, cn } from "@heroui/react"
+import { Button, Popover } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { REACTION_BY_TYPE } from "./constants"
 import { ReactionEmoji } from "./ReactionEmoji"
 import { FacebookReactionSelector } from "./FacebookReactionSelector"
 import { ReactionType, type ReactionSummary } from "@/modules/api/graphql/queries/types/discussion"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ReactionBar}. */
-export interface ReactionBarProps extends WithClassNames<undefined> {
+export interface ReactionBarProps {
     /** Current reaction summary for the target (content or comment). */
     summary: ReactionSummary | undefined
     /** Called with a new emotion, or null to remove the current one. */
@@ -28,7 +27,7 @@ export interface ReactionBarProps extends WithClassNames<undefined> {
  * Presentational: only local picker-open state; all persistence is delegated via `onReact`.
  * @param props - {@link ReactionBarProps}
  */
-export const ReactionBar = ({ summary, onReact, disabled, className }: ReactionBarProps) => {
+export const ReactionBar = ({ summary, onReact, disabled}: ReactionBarProps) => {
     const t = useTranslations()
     // controlled so the popover closes as soon as an emotion is picked
     const [open, setOpen] = useState(false)
@@ -51,7 +50,7 @@ export const ReactionBar = ({ summary, onReact, disabled, className }: ReactionB
     }
 
     return (
-        <div className={cn("flex items-center gap-2", className)}>
+        <div className={"flex items-center gap-2"}>
             {/* trigger: a real HeroUI Button (pill); secondary once the viewer has reacted */}
             <Popover isOpen={open} onOpenChange={setOpen}>
                 <Popover.Trigger>

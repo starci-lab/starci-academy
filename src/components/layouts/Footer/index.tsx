@@ -1,11 +1,7 @@
 "use client"
 
 import React from "react"
-import {
-    Link,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Link, Typography } from "@heroui/react"
 import {
     FaFacebook,
     FaLinkedin,
@@ -20,9 +16,6 @@ import {
 import {
     pathConfig,
 } from "@/resources/path"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import {
     CONTACT_EMAIL,
     FOUNDER_FACEBOOK,
@@ -42,8 +35,7 @@ const SOCIALS = [
 ] as const
 
 /** Props for {@link Footer}. */
-export type FooterProps = WithClassNames<undefined>
-
+export type FooterProps = Record<string, never>
 /**
  * Global site footer (editorial-minimal). A single flat band separated from the
  * page by a top border — never a card. Brand lockup + manifesto + founder socials
@@ -56,7 +48,7 @@ export type FooterProps = WithClassNames<undefined>
  *
  * @param props - optional className (placement only).
  */
-export const Footer = ({ className }: FooterProps) => {
+export const Footer = () => {
     const t = useTranslations()
     const router = useRouter()
     const paths = pathConfig().locale()
@@ -75,7 +67,7 @@ export const Footer = ({ className }: FooterProps) => {
     ]
 
     return (
-        <footer className={cn("border-t border-default bg-surface", className)}>
+        <footer className={"border-t border-default bg-surface"}>
             <div className="mx-auto w-full max-w-6xl px-4 py-12 @app-sm:px-6 @app-lg:px-8">
                 {/* top: brand+manifesto+socials (left) · link columns (right) */}
                 <div className="flex flex-col justify-between gap-10 @app-md:flex-row">

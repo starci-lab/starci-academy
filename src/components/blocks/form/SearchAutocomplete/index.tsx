@@ -2,17 +2,7 @@
 
 import { MagnifyingGlassIcon } from "@phosphor-icons/react"
 import React from "react"
-import {
-    cn,
-    ComboBox,
-    Input,
-    ListBox,
-    ListBoxItem,
-    Spinner,
-    Typography,
-} from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
+import { ComboBox, Input, ListBox, ListBoxItem, Spinner, Typography } from "@heroui/react"
 /** One suggestion row in a {@link SearchAutocomplete} dropdown. */
 export interface SearchAutocompleteItem {
     /** Stable id — the select payload passed to `onSelect` and the React key. */
@@ -30,7 +20,7 @@ export interface SearchAutocompleteItem {
  * owns both the typed query and the suggestion list (e.g. an Elasticsearch-backed
  * query), so this block stays generic. Every callback is safe as a no-op.
  */
-export interface SearchAutocompleteProps extends WithClassNames<undefined> {
+export interface SearchAutocompleteProps {
     /**
      * The suggestions to render in the dropdown. The parent is responsible for
      * filtering/fetching them from the query — this block does NOT filter locally.
@@ -90,9 +80,7 @@ export const SearchAutocomplete = ({
     onSelect,
     placeholder = "Search courses, topics...",
     isLoading = false,
-    emptyLabel = "No suggestions",
-    className,
-}: SearchAutocompleteProps) => {
+    emptyLabel = "No suggestions"}: SearchAutocompleteProps) => {
     // ComboBox reports the picked key; forward its id to the parent (ignore null,
     // which fires when the selection is cleared).
     const onSelectionChange = (key: React.Key | null) => {
@@ -104,7 +92,7 @@ export const SearchAutocomplete = ({
     return (
         <ComboBox
             aria-label={placeholder}
-            className={cn("w-full @app-sm:max-w-sm", className)}
+            className={"w-full @app-sm:max-w-sm"}
             variant="secondary"
             allowsEmptyCollection
             items={items}

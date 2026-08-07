@@ -5,12 +5,7 @@ import React, {
     useMemo,
     useState,
 } from "react"
-import {
-    Button,
-    Chip,
-    Spinner,
-    cn,
-} from "@heroui/react"
+import { Button, Chip, Spinner } from "@heroui/react"
 import {
     useLocale,
     useTranslations,
@@ -34,7 +29,6 @@ import { type AiGradableModel } from "@/modules/api/graphql/queries/types/ai-mod
 import { type AiLabPlaygroundData } from "@/modules/api/graphql/queries/types/ai-lab-playground"
 import { type GraphQLResponse } from "@/modules/api/graphql/types"
 import { type RunPlaygroundPromptData } from "@/modules/api/graphql/mutations/types/run-playground-prompt"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAiLabRunStreamSocketIo } from "@/hooks/socketio/useAiLabRunStreamSocketIo"
 import { useMutateRunPlaygroundPromptSwr } from "@/hooks/swr/api/graphql/mutations/useMutateRunPlaygroundPromptSwr"
 import { useQueryAiModelsSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiModelsSwr"
@@ -46,7 +40,7 @@ import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Props for {@link PromptPlayground}. */
-export type PromptPlaygroundProps = WithClassNames<undefined> & {
+export type PromptPlaygroundProps = {
     /** The playground bound to this lesson. */
     playground: AiLabPlaygroundData
 }
@@ -74,7 +68,7 @@ const buildDefaultParams = (playground: AiLabPlaygroundData): AiLabParamsForm =>
  * subscribes to the `/ai_lab` token stream for non-cached runs.
  * @param props - {@link PromptPlaygroundProps}
  */
-export const PromptPlayground = ({ playground, className }: PromptPlaygroundProps) => {
+export const PromptPlayground = ({ playground}: PromptPlaygroundProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -224,7 +218,7 @@ export const PromptPlayground = ({ playground, className }: PromptPlaygroundProp
     const priorRuns = runsSwr.data ?? []
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
+        <div className={"flex flex-col gap-6"}>
             <div className="flex flex-col gap-2">
                 <h3 className="text-lg font-semibold">{t("aiLab.playground.title")}</h3>
                 <p className="text-sm text-muted">{t("aiLab.playground.description")}</p>

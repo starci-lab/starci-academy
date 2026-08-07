@@ -5,20 +5,18 @@ import {
     ListIcon,
 } from "@phosphor-icons/react"
 import React, { useEffect, useState } from "react"
-import { Button, cn, Drawer, ScrollShadow } from "@heroui/react"
+import { Button, Drawer, ScrollShadow } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useRouter, useSelectedLayoutSegments } from "next/navigation"
 import { ContentMap } from "@/components/blocks/learn/ContentMap"
 import {
     useSidebarNavItems,
 } from "@/hooks/useSidebarNavItems"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { SidebarNavItem } from "@/components/blocks/navigation/SidebarNavItem"
 import { SidebarNavAccordionGroup } from "@/components/blocks/navigation/SidebarNavAccordionGroup"
 
 /** Props for {@link LearnMobileBar}. */
-export type LearnMobileBarProps = WithClassNames<undefined>
-
+export type LearnMobileBarProps = Record<string, never>
 /**
  * Mobile toolbar for the course-learn pages (hidden from `lg` up).
  *
@@ -29,7 +27,7 @@ export type LearnMobileBarProps = WithClassNames<undefined>
  * open state. `"use client"` for the interactive triggers + shared nav hook.
  * @param props - {@link LearnMobileBarProps}
  */
-export const LearnMobileBar = ({ className }: LearnMobileBarProps) => {
+export const LearnMobileBar = () => {
     const t = useTranslations()
     const router = useRouter()
     // shared course-nav entries (same list the desktop sidebar renders)
@@ -54,7 +52,7 @@ export const LearnMobileBar = ({ className }: LearnMobileBarProps) => {
         // fixed FOOTER bar (mirrors LearnMobileTabBar's own bottom placement — every
         // learn page's mobile chrome lives in the SAME footer zone, whether it renders
         // this simple drawer trigger or the reader's full tab bar); mobile/tablet only
-        <div className={cn("fixed bottom-0 left-0 right-[var(--app-rail-w,0px)] z-40 flex h-16 items-center gap-3 border-t bg-background/90 px-3 backdrop-blur-xl @app-lg:hidden", className)}>
+        <div className={"fixed bottom-0 left-0 right-[var(--app-rail-w,0px)] z-40 flex h-16 items-center gap-3 border-t bg-background/90 px-3 backdrop-blur-xl @app-lg:hidden"}>
             {/* trigger: open the course navigation drawer */}
             <Button variant="ghost" size="sm" onPress={() => setMenuOpen(true)}>
                 <ListIcon className="size-5" />

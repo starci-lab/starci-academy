@@ -19,10 +19,9 @@ import { groupByTimeBucket } from "@/modules/utils/history-buckets"
 import { sessionDisplayName } from "@/modules/utils/session-display-name"
 import { pathConfig } from "@/resources/path"
 import type { MockInterviewAttemptItem } from "@/modules/api/graphql/queries/types/my-mock-interview-attempts"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link MockInterviewHistory}. */
-export interface MockInterviewHistoryProps extends WithClassNames<undefined> {
+export interface MockInterviewHistoryProps {
     /** Course whose mock-interview history to list. */
     courseId: string
     /** Course display id, for the scorecard result deep link. */
@@ -53,7 +52,7 @@ const verdictColorOf = (verdict: string): "success" | "warning" | "danger" =>
  * read empty).
  * @param props - {@link MockInterviewHistoryProps}
  */
-export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartInterview, className }: MockInterviewHistoryProps) => {
+export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartInterview}: MockInterviewHistoryProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -225,7 +224,7 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
             {items.length === 0 ? (
                 // no attempts at all → a single bounded empty card (matches the
                 // populated SurfaceListCard shape; components/card.md §2).
-                <Card className={className}>
+                <Card>
                     <CardContent>
                         <EmptyState
                             title={t("mockInterview.historyEmpty")}
@@ -238,7 +237,7 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                     </CardContent>
                 </Card>
             ) : (
-                <div className={className}>
+                <div>
                     <StackV
                         gap={4}
                         items={[

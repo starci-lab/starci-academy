@@ -22,9 +22,6 @@ import type {
     LearnNavGroup,
 } from "@/components/layouts/LearnShellLayout/types"
 import { ResumeRail } from "../ResumeRail"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { CollapsibleSidebar } from "@/components/blocks/navigation/CollapsibleSidebar"
 import { SidebarNavGroup } from "@/components/blocks/navigation/SidebarNavGroup"
 import { SidebarNavItem } from "@/components/blocks/navigation/SidebarNavItem"
@@ -63,8 +60,7 @@ const renderBadge = (badge: LearnNavBadge): React.ReactNode => {
 }
 
 /** Props for {@link LearnSidebar}. */
-export type LearnSidebarProps = WithClassNames<undefined>
-
+export type LearnSidebarProps = Record<string, never>
 /**
  * Course-learn left navigation rail (desktop).
  *
@@ -78,7 +74,7 @@ export type LearnSidebarProps = WithClassNames<undefined>
  *
  * @param props - {@link LearnSidebarProps}
  */
-export const LearnSidebar = ({ className }: LearnSidebarProps) => {
+export const LearnSidebar = () => {
     const t = useTranslations()
     const router = useRouter()
     // shared entries + active tab (also used by the mobile drawer)
@@ -96,7 +92,6 @@ export const LearnSidebar = ({ className }: LearnSidebarProps) => {
             expandLabel={t("nav.expandLeftRail")}
             storageKey={SIDEBAR_STORAGE_KEY}
             topSlot={<ResumeRail />}
-            className={className}
         >
             {GROUP_ORDER.map((group, index) => {
                 // rows belonging to this cluster, in their declared order

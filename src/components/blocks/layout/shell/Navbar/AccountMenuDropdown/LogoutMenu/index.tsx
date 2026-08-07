@@ -5,19 +5,17 @@ import {
     useTranslations,
 } from "next-intl"
 import { useMutateSignOutSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSignOutSwr"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { _LogoutMenu } from "./component"
 
 /** Props for {@link LogoutMenu}. */
-export type LogoutMenuProps = WithClassNames<undefined>
-
+export type LogoutMenuProps = Record<string, never>
 /**
  * Logout section of the account dropdown — the CONNECTED half: owns the
  * sign-out mutation and resolves the label via `t()`. See
  * `design/storybook/architecture/split.md`.
  * @param props - optional root class name
  */
-export const LogoutMenu = ({ className }: LogoutMenuProps) => {
+export const LogoutMenu = () => {
     const t = useTranslations()
     const mutateSignOutSwr = useMutateSignOutSwr()
 
@@ -29,5 +27,5 @@ export const LogoutMenu = ({ className }: LogoutMenuProps) => {
         [mutateSignOutSwr],
     )
 
-    return <_LogoutMenu label={t("nav.logout")} onLogout={onLogout} className={className} />
+    return <_LogoutMenu label={t("nav.logout")} onLogout={onLogout} />
 }

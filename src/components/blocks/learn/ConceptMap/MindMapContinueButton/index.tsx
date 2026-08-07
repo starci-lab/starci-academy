@@ -6,10 +6,9 @@ import { Panel } from "@xyflow/react"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { ArrowRightIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link MindMapContinueButton}. */
-export interface MindMapContinueButtonProps extends WithClassNames<undefined> {
+export interface MindMapContinueButtonProps {
     /** Resume href for the viewer's next content task, or null when none resolvable. */
     resumeHref: string | null
     /** Whether the viewer has finished all content (outline known, nothing left). */

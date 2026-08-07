@@ -2,13 +2,12 @@
 
 import { SpeakerHighIcon, SpeakerSlashIcon } from "@phosphor-icons/react"
 import React from "react"
-import { Button, cn, Popover, Slider } from "@heroui/react"
+import { Button, Popover, Slider } from "@heroui/react"
 import { useCallback, useMemo } from "react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 
 /** Props for {@link VolumeControl}. */
-export interface VolumeControlProps extends WithClassNames<undefined> {
+export interface VolumeControlProps {
     /** Current volume in the `0..1` range. */
     volume: number
     /** Whether audio is currently muted. */
@@ -29,9 +28,7 @@ export const VolumeControl = ({
     volume,
     isMuted,
     onVolumeChange,
-    onMuteToggle,
-    className,
-}: VolumeControlProps) => {
+    onMuteToggle}: VolumeControlProps) => {
     /** Slider should sit at zero whenever audio is muted. */
     const sliderValue = useMemo(
         () => (isMuted ? 0 : volume),
@@ -66,7 +63,7 @@ export const VolumeControl = ({
                     variant="ghost"
                     aria-label="Volume"
                     onPress={onMuteToggle}
-                    className={cn("text-white hover:bg-white/20 border-none min-w-8 h-8", className)}
+                    className={"text-white hover:bg-white/20 border-none min-w-8 h-8"}
                 >
                     {isSilent ? (
                         <SpeakerSlashIcon className="h-5 w-5" />

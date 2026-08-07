@@ -1,15 +1,14 @@
 "use client"
 
 import React from "react"
-import { Card, CardContent, Input, cn } from "@heroui/react"
+import { Card, CardContent, Input } from "@heroui/react"
 import { RENDERER_TYPE_OPTIONS } from "../map"
 import { RendererTypeButton } from "./RendererTypeButton"
 import type { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Box } from "@/components/frames/Box"
 
 /** Props for {@link ConfigCard}. */
-export interface ConfigCardProps extends WithClassNames<undefined> {
+export interface ConfigCardProps {
     /** Current URL value. */
     url: string
     /** Currently selected renderer type. */
@@ -31,10 +30,8 @@ export const ConfigCard = ({
     url,
     activeType,
     onChangeUrl,
-    onSelectType,
-    className,
-}: ConfigCardProps) => (
-    <Card className={cn("border-slate-700/50 bg-slate-800/50 backdrop-blur-xl", className)}>
+    onSelectType}: ConfigCardProps) => (
+    <Card className={"border-slate-700/50 bg-slate-800/50 backdrop-blur-xl"}>
         <CardContent>
             <Box principle="page-pad" className="space-y-3 p-6"
                 explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">

@@ -1,13 +1,9 @@
 "use client"
 
 import React from "react"
-import {
-    Label,
-    cn,
-} from "@heroui/react"
+import { Label } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { CODING_DIFFICULTY_META } from "../constants"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useQueryUserCodingProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingProgressSwr"
 import { useQueryUserCodingRankSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingRankSwr"
 import { useQueryUserCodingSkillsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingSkillsSwr"
@@ -21,8 +17,7 @@ import { Box } from "@/components/frames/Box"
 import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link ProgressCockpit}. */
-export type ProgressCockpitProps = WithClassNames<undefined>
-
+export type ProgressCockpitProps = Record<string, never>
 /** Difficulty order for the distribution SegmentBar (easy → hard). */
 const COCKPIT_DIFFICULTY: ReadonlyArray<CodingDifficulty> = [
     CodingDifficulty.Easy,
@@ -40,9 +35,7 @@ const COCKPIT_DIFFICULTY: ReadonlyArray<CodingDifficulty> = [
  *
  * @param props - optional className for the root element.
  */
-export const ProgressCockpit = ({
-    className,
-}: ProgressCockpitProps) => {
+export const ProgressCockpit = () => {
     const t = useTranslations()
     // signed-in user id — the rank/skills queries key off it (null when anonymous)
     const userId = useAppSelector((state) => state.user.user?.id) ?? null
@@ -111,7 +104,7 @@ export const ProgressCockpit = ({
         <AsyncContent
             isLoading={isFirstLoad}
             skeleton={(
-                <div className={cn("flex flex-col gap-6", className)}>
+                <div className={"flex flex-col gap-6"}>
                     {/* metric row — solved · points · rank · percentile */}
                     <Box principle="content-row" className="grid grid-cols-2 gap-3 @app-sm:grid-cols-4"
                         explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title.">
@@ -135,7 +128,7 @@ export const ProgressCockpit = ({
                 retryLabel: t("PracticeHubPage.retry"),
             }}
         >
-            <div className={cn("flex flex-col gap-6", className)}>
+            <div className={"flex flex-col gap-6"}>
                 {/* headline metric row — pending rank/percentile cards skeleton in place */}
                 <Box principle="content-row" className="grid grid-cols-2 gap-3 @app-sm:grid-cols-4"
                     explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title.">

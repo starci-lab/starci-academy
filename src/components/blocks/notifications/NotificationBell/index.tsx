@@ -1,7 +1,6 @@
 import React from "react"
-import { Badge, Button, cn, Popover, PopoverContent } from "@heroui/react"
+import { Badge, Button, Popover, PopoverContent } from "@heroui/react"
 import { BellIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { NotificationList } from "@/components/blocks/notifications/NotificationList"
 import type { NotificationGroup } from "@/components/blocks/notifications/NotificationList"
 
@@ -9,7 +8,7 @@ import type { NotificationGroup } from "@/components/blocks/notifications/Notifi
 const MAX_BADGE = 9
 
 /** Props for {@link NotificationBell}. */
-export interface NotificationBellProps extends WithClassNames<undefined> {
+export interface NotificationBellProps {
     /**
      * Number of unread notifications. Drives the count badge: hidden entirely at
      * zero, capped at {@link MAX_BADGE} ("9+") above the threshold.
@@ -80,9 +79,7 @@ export const NotificationBell = ({
     emptyState,
     ariaLabel = "Notifications",
     isOpen,
-    onOpenChange,
-    className,
-}: NotificationBellProps) => {
+    onOpenChange}: NotificationBellProps) => {
     /** Badge label, capped at {@link MAX_BADGE} (e.g. "9+"). */
     const badgeLabel = unreadCount > MAX_BADGE ? `${MAX_BADGE}+` : `${unreadCount}`
 
@@ -91,7 +88,7 @@ export const NotificationBell = ({
             <Button
                 isIconOnly
                 variant="tertiary"
-                className={cn("rounded-full", className)}
+                className={"rounded-full"}
                 aria-label={ariaLabel}
             >
                 {unreadCount > 0 ? (

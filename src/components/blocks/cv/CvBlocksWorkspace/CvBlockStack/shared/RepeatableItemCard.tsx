@@ -2,17 +2,16 @@
 
 import React from "react"
 import type { ReactNode } from "react"
-import { Button, cn } from "@heroui/react"
+import { Button } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import {
     ArrowDownIcon,
     ArrowUpIcon,
     TrashIcon,
 } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link RepeatableItemCard}. */
-export interface RepeatableItemCardProps extends WithClassNames<undefined> {
+export interface RepeatableItemCardProps {
     /** Field controls for this one item. */
     children: ReactNode
     /** Remove this item from its block. */
@@ -35,17 +34,15 @@ export interface RepeatableItemCardProps extends WithClassNames<undefined> {
  * @param props - {@link RepeatableItemCardProps}
  */
 export const RepeatableItemCard = ({
-    className,
     children,
     onRemove,
     onMoveUp,
     onMoveDown,
-    headerEnd,
-}: RepeatableItemCardProps) => {
+    headerEnd}: RepeatableItemCardProps) => {
     const t = useTranslations()
 
     return (
-        <div className={cn("flex flex-col gap-3 rounded-2xl border border-default bg-transparent px-4 py-3", className)}>
+        <div className={"flex flex-col gap-3 rounded-2xl border border-default bg-transparent px-4 py-3"}>
             <div className="flex items-center justify-end gap-2">
                 {headerEnd}
                 <div className="flex items-center gap-2">

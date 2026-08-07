@@ -1,7 +1,6 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn, Typography } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Visual tone of a {@link NotificationItem}. Drives ONLY the color of the
@@ -15,7 +14,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 export type NotificationTone = "default" | "success" | "warning" | "accent"
 
 /** Props for {@link NotificationItem}. */
-export interface NotificationItemProps extends WithClassNames<undefined> {
+export interface NotificationItemProps {
     /**
      * Primary line describing what happened. Rendered medium-weight foreground
      * and clamped to two lines. The caller localizes it (pass a `t()` result).
@@ -106,17 +105,14 @@ export const NotificationItem = ({
     tone = "default",
     isUnread = false,
     onPress,
-    actionSlot,
-    className,
-}: NotificationItemProps) => {
+    actionSlot}: NotificationItemProps) => {
     const isPressable = Boolean(onPress)
 
     const content = (
         <>
             {icon ? (
                 <span
-                    className={cn(
-                        "flex size-10 shrink-0 items-center justify-center rounded-2xl [&>svg]:size-5",
+                    className={cn("flex size-10 shrink-0 items-center justify-center rounded-2xl [&>svg]:size-5",
                         TONE_TILE[tone],
                     )}
                 >
@@ -153,9 +149,7 @@ export const NotificationItem = ({
         // subtle row tint when unread — soft token, never a status overlay
         isUnread && "bg-accent-soft",
         isPressable &&
-            "transition-colors hover:bg-surface-secondary focus-visible:bg-surface-secondary focus-visible:outline-none",
-        className,
-    )
+            "transition-colors hover:bg-surface-secondary focus-visible:bg-surface-secondary focus-visible:outline-none")
 
     if (isPressable) {
         return (

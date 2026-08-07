@@ -9,7 +9,6 @@ import {
 } from "next-intl"
 import _ from "lodash"
 import { ListChecksIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LabeledAccordionCard } from "@/components/blocks/cards/LabeledAccordionCard"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { useAppSelector } from "@/redux/hooks"
@@ -17,17 +16,14 @@ import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { Box } from "@/components/frames/Box"
 
 /** Props for {@link TaskCriteriaList}. */
-export type TaskCriteriaListProps = WithClassNames<undefined>
-
+export type TaskCriteriaListProps = Record<string, never>
 /**
  * Accordion list of pass criteria with score chips and markdown hints.
  *
  * Self-contained: reads sorted criteria from the redux task state, no props needed.
  * @param props - optional className for the root element
  */
-export const TaskCriteriaList = ({
-    className,
-}: TaskCriteriaListProps = {}) => {
+export const TaskCriteriaList = () => {
     const t = useTranslations()
     const selectedTaskId = useAppSelector((state) => state.milestone.selectedTaskId)
     const selectedTaskDetail = useAppSelector((state) => state.milestone.selectedTaskDetail)
@@ -56,7 +52,7 @@ export const TaskCriteriaList = ({
         // list needs a proper empty-state instead of a silent null (self-hide is
         // only for un-labeled widgets)
         return (
-            <Box className={className}>
+            <Box>
                 <EmptyState
                     icon={ListChecksIcon}
                     title={t("task.criteriaEmpty")}

@@ -8,9 +8,6 @@ import {
     useLocale,
     useTranslations,
 } from "next-intl"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryWeeklyChallengeSwr } from "@/hooks/swr/api/graphql/queries/useQueryWeeklyChallengeSwr"
 import { useMutateClaimWeeklyChallengeRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateClaimWeeklyChallengeRewardSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
@@ -20,8 +17,7 @@ import { _WeeklyChallengeCard } from "./component"
 const TOP_ROWS = 5
 
 /** Props for {@link WeeklyChallengeCard}. */
-export type WeeklyChallengeCardProps = WithClassNames<undefined>
-
+export type WeeklyChallengeCardProps = Record<string, never>
 /**
  * "This week's challenge" section — the CONNECTED half: it self-fetches the featured
  * weekly-challenge event, computes the countdown/claim state and every "x ago" label, resolves
@@ -30,9 +26,7 @@ export type WeeklyChallengeCardProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const WeeklyChallengeCard = ({
-    className,
-}: WeeklyChallengeCardProps) => {
+export const WeeklyChallengeCard = () => {
     const t = useTranslations()
     const locale = useLocale()
     const challengeSwr = useQueryWeeklyChallengeSwr()
@@ -126,7 +120,6 @@ export const WeeklyChallengeCard = ({
             isClaiming={isClaiming}
             onClaim={() => { void onClaim() }}
             leaderboard={leaderboard}
-            className={className}
             labels={{
                 title: t("weeklyChallenge.title"),
                 errorTitle: t("weeklyChallenge.errorTitle"),

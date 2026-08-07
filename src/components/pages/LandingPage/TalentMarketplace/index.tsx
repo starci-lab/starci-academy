@@ -1,12 +1,7 @@
 "use client"
 
 import React from "react"
-import {
-    Button,
-    Chip,
-    cn,
-    Typography,
-} from "@heroui/react"
+import { Button, Chip, Typography } from "@heroui/react"
 import {
     BuildingsIcon,
     CaretRightIcon,
@@ -17,7 +12,6 @@ import {
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources/path"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LANDING_SAMPLE_CANDIDATE } from "../constants"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { SectionHeading } from "@/components/blocks/marketing/SectionHeading"
@@ -26,8 +20,7 @@ import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link TalentMarketplace}. */
-export type TalentMarketplaceProps = WithClassNames<undefined>
-
+export type TalentMarketplaceProps = Record<string, never>
 /** One flat "journey" row (engineer / company) — icon tile + claim + proof copy. */
 const JourneyRow = ({
     icon,
@@ -136,7 +129,7 @@ const SampleCandidateCard = () => {
  *
  * @param props - optional className (placement only).
  */
-export const TalentMarketplace = ({ className }: TalentMarketplaceProps) => {
+export const TalentMarketplace = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -146,7 +139,7 @@ export const TalentMarketplace = ({ className }: TalentMarketplaceProps) => {
     const onBrowseJobs = () => router.push(pathConfig().locale(locale).jobs().build())
 
     return (
-        <section className={cn("flex flex-col gap-16", className)}>
+        <section className={"flex flex-col gap-16"}>
             <SectionHeading
                 eyebrow={t("landing.outcome.eyebrow")}
                 title={t("landing.outcome.title")}

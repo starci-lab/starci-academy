@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useState } from "react"
-import { cn } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { CoinsIcon } from "@phosphor-icons/react"
@@ -12,7 +11,6 @@ import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { useQueryMyRewardWalletSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr"
 import { useQueryMyVouchersSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyVouchersSwr"
 import { pathConfig } from "@/resources/path"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { MyVouchers } from "./MyVouchers"
 import { RewardCatalog } from "./RewardCatalog"
 import { Box } from "@/components/frames/Box"
@@ -25,8 +23,7 @@ enum RewardsTab {
 }
 
 /** Props for {@link RewardsPage}. */
-export type RewardsPageProps = WithClassNames<undefined>
-
+export type RewardsPageProps = Record<string, never>
 /**
  * The Coin shop: the viewer's spendable Coin balance in the header, a
  * "Store" tab (redeemable catalog) and a "My wallet" tab (minted vouchers +
@@ -36,7 +33,7 @@ export type RewardsPageProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const RewardsPage = ({ className }: RewardsPageProps) => {
+export const RewardsPage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -50,7 +47,7 @@ export const RewardsPage = ({ className }: RewardsPageProps) => {
     ).length
 
     return (
-        <div className={cn(className)}>
+        <div className={""}>
             <Box principle="center-measure" className="mx-auto w-full max-w-3xl p-6"
                 explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
                 <StackV gap={7} principle="layout-split"

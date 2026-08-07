@@ -11,9 +11,6 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { mutateMarkAllNotificationsAsRead } from "@/modules/api/graphql/mutations/mutation-mark-all-notifications-as-read"
 import { mutateMarkNotificationAsRead } from "@/modules/api/graphql/mutations/mutation-mark-notification-as-read"
 import { queryResolveRoute } from "@/modules/api/graphql/queries/query-resolve-route"
@@ -24,8 +21,7 @@ import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { _NotificationBell, type NotificationBellItem } from "./component"
 
 /** Props for {@link NotificationBell}. */
-export type NotificationBellProps = WithClassNames<undefined>
-
+export type NotificationBellProps = Record<string, never>
 /**
  * Encode a notification target into the opaque global id the route index
  * expects: base64url of `"<entityName>:<id>"`.
@@ -46,7 +42,7 @@ const encodeGlobalId = (target: QueryNotificationTargetData): string => {
  * `design/storybook/architecture/split.md`.
  * @param props - optional root class name
  */
-export const NotificationBell = ({ className }: NotificationBellProps) => {
+export const NotificationBell = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -160,7 +156,6 @@ export const NotificationBell = ({ className }: NotificationBellProps) => {
             onMarkAllRead={() => {
                 void onMarkAllRead()
             }}
-            className={className}
         />
     )
 }

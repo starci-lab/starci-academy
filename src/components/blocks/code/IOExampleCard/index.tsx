@@ -1,7 +1,6 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Semantic tone of one IO row's label (drives the label colour only). */
 export type IORowTone = "default" | "success" | "danger"
@@ -19,7 +18,7 @@ export interface IOExampleRow {
 }
 
 /** Props for the {@link IOExampleCard} block. */
-export interface IOExampleCardProps extends WithClassNames<undefined> {
+export interface IOExampleCardProps {
     /** The labelled blocks, in order — separated by a dashed inset rule. */
     rows: Array<IOExampleRow>
 }
@@ -42,9 +41,9 @@ const TONE_CLASS: Record<IORowTone, string> = {
  * @param props - {@link IOExampleCardProps}
  * @see Story: .storybook/stories/blocks/code/IOExampleCard/IOExampleCard.stories
  */
-export const IOExampleCard = ({ rows, className }: IOExampleCardProps) => {
+export const IOExampleCard = ({ rows}: IOExampleCardProps) => {
     return (
-        <div className={cn("overflow-hidden rounded-3xl border border-default bg-surface", className)}>
+        <div className={"overflow-hidden rounded-3xl border border-default bg-surface"}>
             {rows.map((row, index) => (
                 <div
                     key={row.key}

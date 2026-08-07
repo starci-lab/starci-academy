@@ -1,17 +1,15 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
 import CodeMirror from "@uiw/react-codemirror"
 import { StreamLanguage } from "@codemirror/language"
 import { stex } from "@codemirror/legacy-modes/mode/stex"
 import { whiteLight } from "@uiw/codemirror-theme-white"
 import { vscodeDark } from "@uiw/codemirror-theme-vscode"
 import { useTheme } from "next-themes"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CvTexEditor}. */
-export interface CvTexEditorProps extends WithClassNames<undefined> {
+export interface CvTexEditorProps {
     /** Current `.tex` source (controlled). */
     value: string
     /** Fired with the next `.tex` source on every edit. */
@@ -27,10 +25,10 @@ export interface CvTexEditorProps extends WithClassNames<undefined> {
  *
  * @param props - {@link CvTexEditorProps}
  */
-export const CvTexEditor = ({ className, value, onChange }: CvTexEditorProps) => {
+export const CvTexEditor = ({ value, onChange }: CvTexEditorProps) => {
     const { theme } = useTheme()
     return (
-        <div className={cn("h-full min-h-0 overflow-hidden rounded-xl", className)}>
+        <div className={"h-full min-h-0 overflow-hidden rounded-xl"}>
             <CodeMirror
                 height="100%"
                 theme={theme === "dark" ? vscodeDark : whiteLight}

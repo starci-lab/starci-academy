@@ -2,20 +2,18 @@
 
 import React from "react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { SimpleEmptyState } from "@/components/blocks/feedback/SimpleEmptyState"
 
 /** Props for the code-explaining empty state. */
-export type CodeExplainingEmptyProps = WithClassNames<undefined>
-
+export type CodeExplainingEmptyProps = Record<string, never>
 /**
  * Empty state when the lesson has no code explaining rows.
  */
-export const Empty = ({ className }: CodeExplainingEmptyProps) => {
+export const Empty = () => {
     const t = useTranslations()
 
     return (
-        <SimpleEmptyState className={className}>
+        <SimpleEmptyState>
             {t("content.codeExplainings.empty")}
         </SimpleEmptyState>
     )

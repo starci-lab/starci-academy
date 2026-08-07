@@ -1,12 +1,11 @@
 "use client"
 
 import React, { useState } from "react"
-import { Tabs, cn } from "@heroui/react"
+import { Tabs } from "@heroui/react"
 import { CodeIcon, SidebarIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CodePreviewTabs}. */
-export interface CodePreviewTabsProps extends WithClassNames<undefined> {
+export interface CodePreviewTabsProps {
     /** Live render (the rendered React component). */
     preview: React.ReactNode
     /** Source code panel (Shiki-highlighted). */
@@ -20,10 +19,10 @@ export interface CodePreviewTabsProps extends WithClassNames<undefined> {
  * `:::tab` panes) so the tab shell stays identical and depends on NO layout component.
  * @param props - {@link CodePreviewTabsProps}
  */
-export const CodePreviewTabs = ({ preview, code, className }: CodePreviewTabsProps) => {
+export const CodePreviewTabs = ({ preview, code}: CodePreviewTabsProps) => {
     const [tab, setTab] = useState<"preview" | "code">("preview")
     return (
-        <div className={cn("not-prose flex flex-col gap-2", className)}>
+        <div className={"not-prose flex flex-col gap-2"}>
             <Tabs
                 selectedKey={tab}
                 variant="secondary"

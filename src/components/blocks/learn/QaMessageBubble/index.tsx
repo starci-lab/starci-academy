@@ -11,10 +11,8 @@ import { ReactionBar } from "@/components/blocks/community/Discussion/ReactionBa
 import { CommentComposer } from "@/components/blocks/community/Discussion/CommentComposer"
 import type { ReactionType, CommentNode } from "@/modules/api/graphql/queries/types/discussion"
 import type { CommentItemCallbacks } from "@/components/blocks/community/Discussion/CommentItem"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
 /** Props for {@link QaMessageBubble}. */
-export interface QaMessageBubbleProps extends CommentItemCallbacks, WithClassNames<undefined> {
+export interface QaMessageBubbleProps extends CommentItemCallbacks {
     /** The answer/reply to render. */
     comment: CommentNode
     /** Current viewer id — drives own-bubble alignment + owner edit/delete; null when unknown. */
@@ -66,9 +64,7 @@ export const QaMessageBubble = ({
     onEdit,
     onDelete,
     onReactComment,
-    onLoadReplies,
-    className,
-}: QaMessageBubbleProps) => {
+    onLoadReplies}: QaMessageBubbleProps) => {
     const t = useTranslations()
     // transient per-bubble UI state (mirrors CommentItem)
     const [replying, setReplying] = useState(false)
@@ -93,7 +89,7 @@ export const QaMessageBubble = ({
     }
 
     return (
-        <div className={cn("flex w-full", isMine ? "justify-end" : "justify-start", className)}>
+        <div className={cn("flex w-full", isMine ? "justify-end" : "justify-start")}>
             <div className={cn("flex min-w-0 max-w-[92%] flex-col gap-1", isMine && "items-end")}>
                 {/* reply-to tag (flattened threading) */}
                 {replyToName ? (

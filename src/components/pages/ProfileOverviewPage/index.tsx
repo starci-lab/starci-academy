@@ -3,7 +3,6 @@
 import React from "react"
 import { useTranslations, useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { ProfileJobReadiness } from "./ProfileJobReadiness"
 import { OverviewCourses } from "./OverviewCourses"
@@ -17,8 +16,7 @@ import { StackV } from "@/components/frames/Stack"
 import { pathConfig } from "@/resources/path"
 
 /** Props for {@link ProfileOverviewPage}. */
-export type ProfileOverviewPageProps = WithClassNames<undefined>
-
+export type ProfileOverviewPageProps = Record<string, never>
 /**
  * Overview-tab body of the public profile (UI 2.0): five labelled sections, each
  * a {@link LabeledCard} (title `Label` outside, content inside) with its data
@@ -34,9 +32,7 @@ export type ProfileOverviewPageProps = WithClassNames<undefined>
  *
  * @param props - {@link ProfileOverviewPageProps}
  */
-export const ProfileOverviewPage = ({
-    className,
-}: ProfileOverviewPageProps) => {
+export const ProfileOverviewPage = () => {
     const t = useTranslations()
     const router = useRouter()
     const locale = useLocale()
@@ -57,10 +53,7 @@ export const ProfileOverviewPage = ({
         router.push(target)
     }
 
-    const classNames: Array<AllowedClassName> = ["min-w-0", "flex-1"]
-    if (className) {
-        classNames.push(className as AllowedClassName)
-    }
+    const classNames: Array<AllowedClassName> = ["min-w-0", "flex-1"]
 
     return (
         <StackV

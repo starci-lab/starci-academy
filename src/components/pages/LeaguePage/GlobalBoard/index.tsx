@@ -22,17 +22,13 @@ import {
 import {
     rankBadgeIcon,
 } from "@/components/blocks/dashboard/rankBadge"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryGlobalLeaderboardSwr } from "@/hooks/swr/api/graphql/queries/useQueryGlobalLeaderboardSwr"
 import { useMutateSetFollowSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetFollowSwr"
 import { useAppSelector } from "@/redux/hooks"
 import { _GlobalBoard } from "./component"
 
 /** Props for {@link GlobalBoard}. */
-export type GlobalBoardProps = WithClassNames<undefined>
-
+export type GlobalBoardProps = Record<string, never>
 /**
  * The global (all-users) leaderboard — the CONNECTED half of {@link import("./component")._GlobalBoard}.
  * Fetches the leaderboard, owns the follow mutation (rows stay presentational), computes the
@@ -41,9 +37,7 @@ export type GlobalBoardProps = WithClassNames<undefined>
  *
  * @param props - {@link GlobalBoardProps}
  */
-export const GlobalBoard = ({
-    className,
-}: GlobalBoardProps) => {
+export const GlobalBoard = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -122,7 +116,6 @@ export const GlobalBoard = ({
 
     return (
         <_GlobalBoard
-            className={className}
             // first load, nothing in hand → shimmer; settled (data OR a resolved error, which
             // SWR also clears `isLoading` for) stops it (loading-and-skeleton.md §2). Same
             // formula the retired `AsyncContent` used (`isLoading={isLoading && !data}`).

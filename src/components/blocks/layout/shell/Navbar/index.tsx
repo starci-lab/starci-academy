@@ -4,9 +4,6 @@ import React, {
     useEffect,
 } from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     Logo,
 } from "./Logo"
 import {
@@ -22,13 +19,11 @@ import {
     NotificationBell,
 } from "./NotificationBell"
 import { useSearchOverlayState } from "@/hooks/zustand/overlay/hooks"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link Navbar}.
  */
-export type NavbarProps = WithClassNames<undefined>
-
+export type NavbarProps = Record<string, never>
 /**
  * Navbar — top application navigation bar.
  *
@@ -37,7 +32,7 @@ export type NavbarProps = WithClassNames<undefined>
  * `"use client"` for hooks + keyboard handling.
  * @param props - optional root class name
  */
-export const Navbar = ({ className }: NavbarProps) => {
+export const Navbar = () => {
     const { open: openSearch } = useSearchOverlayState()
 
     // register the global Ctrl/Cmd+K shortcut to open the search overlay
@@ -54,7 +49,7 @@ export const Navbar = ({ className }: NavbarProps) => {
     }, [openSearch])
 
     return (
-        <nav className={cn("sticky top-0 z-50 h-16 min-h-16 border-b bg-background", className)}>
+        <nav className={"sticky top-0 z-50 h-16 min-h-16 border-b bg-background"}>
             <div className="mx-auto flex h-full w-full items-center justify-between px-3">
                 <div className="flex items-center gap-6">
                     <Logo className="flex-1 justify-start" />

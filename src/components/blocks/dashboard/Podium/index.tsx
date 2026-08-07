@@ -11,10 +11,6 @@ import {
 import {
     RankDeltaCaret,
 } from "@/components/blocks/profile/RankDeltaCaret"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-
 /** One podium finisher (top-3). */
 export interface PodiumEntry {
     /** 1-based rank (1 · 2 · 3). */
@@ -36,7 +32,7 @@ export interface PodiumEntry {
 }
 
 /** Props for the {@link Podium} block. */
-export interface PodiumProps extends WithClassNames<undefined> {
+export interface PodiumProps {
     /** Top finishers best→worst; at most 3 are shown. */
     entries: Array<PodiumEntry>
     /** Optional "you" label appended to the viewer's finisher (e.g. `t("...you")`). */
@@ -54,15 +50,13 @@ export interface PodiumProps extends WithClassNames<undefined> {
  */
 export const Podium = ({
     entries,
-    meLabel,
-    className,
-}: PodiumProps) => {
+    meLabel}: PodiumProps) => {
     const top = entries.slice(0, 3)
     // visual order: runner-up · champion · third — champion centered + raised
     const ordered = [top[1], top[0], top[2]].filter(Boolean) as Array<PodiumEntry>
 
     return (
-        <div className={cn("flex items-end justify-center gap-3", className)}>
+        <div className={"flex items-end justify-center gap-3"}>
             {ordered.map((entry) => {
                 const isChampion = entry.rank === 1
                 return (

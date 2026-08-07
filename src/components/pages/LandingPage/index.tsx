@@ -37,7 +37,6 @@ const ArchitectureScene3D = dynamic(
     },
 )
 import { pathConfig } from "@/resources/path"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { FOUNDER_FACEBOOK, FOUNDER_GITHUB, FOUNDER_LINKEDIN } from "@/resources/contact"
 import { StatStrip } from "./StatStrip"
 import { TalentMarketplace } from "./TalentMarketplace"
@@ -82,8 +81,7 @@ const FOUNDER_SOCIALS = [
 ] as const
 
 /** Props for {@link LandingPage}. */
-export type LandingPageProps = WithClassNames<undefined>
-
+export type LandingPageProps = Record<string, never>
 /**
  * Public landing page. Show-don't-tell information architecture: hero → live
  * proof → the wedge (challenge + AI grading) → track ladder → founder beat →
@@ -94,7 +92,7 @@ export type LandingPageProps = WithClassNames<undefined>
  *
  * @param props - optional className (placement only).
  */
-export const LandingPage = ({ className }: LandingPageProps) => {
+export const LandingPage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -120,7 +118,7 @@ export const LandingPage = ({ className }: LandingPageProps) => {
     const screen = "flex min-h-[calc(100dvh-4rem)] flex-col justify-center"
 
     return (
-        <div className={className}>
+        <div>
             {/* Section-to-section rhythm: gap-16→20 (64–80px) between beats. ONLY the HERO is
                 min-h-screen; other beats shrink to their content → this small gap is REAL
                 whitespace, enough to separate sections without a short section (stats,

@@ -2,16 +2,15 @@
 
 import { CheckCircleIcon } from "@phosphor-icons/react"
 import React from "react"
-import { Chip, cn } from "@heroui/react"
+import { Chip } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import type { ChipProps } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 
 /**
  * Props for {@link ReadBadge}.
  */
-export interface ReadBadgeProps extends WithClassNames<undefined> {
+export interface ReadBadgeProps {
     /** Chip size — defaults to `"md"`. */
     size?: ChipProps["size"]
 }
@@ -20,14 +19,14 @@ export interface ReadBadgeProps extends WithClassNames<undefined> {
  * Green "Read" badge driven by `state.content.isRead` from Redux.
  * Returns `null` when the active content is not yet marked as read.
  */
-export const ReadBadge = ({ size, className }: ReadBadgeProps) => {
+export const ReadBadge = ({ size}: ReadBadgeProps) => {
     const t = useTranslations()
     const isRead = useAppSelector((state) => state.content.isRead)
 
     if (!isRead) return null
 
     return (
-        <Chip variant="secondary" color="success" size={size} className={cn("bg-success-soft text-success-soft-foreground", className)}>
+        <Chip variant="secondary" color="success" size={size} className={"bg-success-soft text-success-soft-foreground"}>
             <CheckCircleIcon className="size-4" />
             <Chip.Label>{t("content.read")}</Chip.Label>
         </Chip>

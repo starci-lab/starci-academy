@@ -1,13 +1,10 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
 import { Spinner } from "@/components/atoms/display/Spinner"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link LoadingScreen}. */
-export type LoadingScreenProps = WithClassNames<undefined>
-
+export type LoadingScreenProps = Record<string, never>
 /**
  * Full-screen loading gate shown while the API key is being resolved.
  *
@@ -15,11 +12,9 @@ export type LoadingScreenProps = WithClassNames<undefined>
  * Spinner client component.
  * @param props - optional className forwarded to the wrapper div
  */
-export const LoadingScreen = ({
-    className,
-}: LoadingScreenProps = {}) => {
+export const LoadingScreen = () => {
     return (
-        <div className={cn("min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 flex items-center justify-center", className)}>
+        <div className={"min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 flex items-center justify-center"}>
             <Spinner size="lg" />
         </div>
     )

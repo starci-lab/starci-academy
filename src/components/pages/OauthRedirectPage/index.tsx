@@ -1,11 +1,10 @@
 "use client"
 
 import React, { useEffect } from "react"
-import { Button, cn, Spinner, Typography } from "@heroui/react"
+import { Button, Spinner, Typography } from "@heroui/react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useLocale, useTranslations } from "next-intl"
 import { pathConfig } from "@/resources/path"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 import { OauthAction } from "./enums"
 import { OAUTH_ACTION_MESSAGE_KEY_MAP } from "./map"
@@ -18,7 +17,7 @@ import { StackV } from "@/components/frames/Stack"
 export * from "./enums"
 
 /** Props for {@link OauthRedirectPage}. */
-export interface OauthRedirectPageProps extends WithClassNames<undefined> {
+export interface OauthRedirectPageProps {
     /**
      * The OAuth lifecycle step this redirect page represents — selects the i18n
      * message shown under the spinner. The redirect destination (locale home)
@@ -34,7 +33,7 @@ export interface OauthRedirectPageProps extends WithClassNames<undefined> {
  *
  * `"use client"`: relies on `useRouter`, `useEffect` and `useLocale`.
  */
-export const OauthRedirectPage = ({ action, className }: OauthRedirectPageProps) => {
+export const OauthRedirectPage = ({ action}: OauthRedirectPageProps) => {
     const router = useRouter()
     const locale = useLocale()
     const t = useTranslations()
@@ -94,7 +93,7 @@ export const OauthRedirectPage = ({ action, className }: OauthRedirectPageProps)
             ),
         ]
         return (
-            <div className={cn("flex min-h-[60vh] flex-col items-center justify-center", className)}>
+            <div className={"flex min-h-[60vh] flex-col items-center justify-center"}>
                 <div className="max-w-sm text-center">
                     <StackV
                         gap={3}
@@ -124,7 +123,7 @@ export const OauthRedirectPage = ({ action, className }: OauthRedirectPageProps)
     ]
 
     return (
-        <div className={cn("flex min-h-[60vh] flex-col items-center justify-center", className)}>
+        <div className={"flex min-h-[60vh] flex-col items-center justify-center"}>
             <StackV gap={3} align="center" principle="sibling-stack"
                 explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                 items={loadingItems}  />

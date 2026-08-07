@@ -3,7 +3,6 @@
 import React, { useCallback, useEffect, useRef } from "react"
 import { cn } from "@heroui/react"
 import type { PointerEvent as ReactPointerEvent, ReactNode } from "react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Height (px) of the grabber handle strip above the peek row. */
 const GRABBER_HEIGHT = 26
@@ -15,7 +14,7 @@ const MAX_VIEWPORT_FRACTION = 0.6
 const TAP_THRESHOLD = 5
 
 /** Props for the {@link ConnectSheet} block. */
-export interface ConnectSheetProps extends WithClassNames<undefined> {
+export interface ConnectSheetProps {
     /** Whether the sheet is expanded (controlled — the feature owns snap state). */
     open: boolean
     /** Fired when the user drags/taps to change the snap (or taps the peek row). */
@@ -46,9 +45,7 @@ export const ConnectSheet = ({
     onOpenChange,
     peek,
     children,
-    toggleLabel,
-    className,
-}: ConnectSheetProps) => {
+    toggleLabel}: ConnectSheetProps) => {
     const sheetRef = useRef<HTMLDivElement>(null)
     const peekRef = useRef<HTMLDivElement>(null)
     const bodyRef = useRef<HTMLDivElement>(null)
@@ -148,16 +145,13 @@ export const ConnectSheet = ({
     return (
         <div
             ref={sheetRef}
-            className={cn(
-                // BORDER delineates the docked sheet from the content above — NOT a
+            className={cn(// BORDER delineates the docked sheet from the content above — NOT a
                 // shadow: `shadow-surface` casts DOWNWARD + is very subtle, so on a
                 // bottom-docked sheet it can't mark the top seam (axis-1 §16: when a
                 // shadow can't delineate, use a border instead). No ad-hoc shadow-md —
                 // the design system only has surface/field/overlay shadow tokens.
                 "absolute inset-x-0 bottom-0 z-30 flex flex-col overflow-hidden rounded-t-3xl border border-default bg-surface",
-                "[transition:height_280ms_cubic-bezier(0.32,0.72,0,1)]",
-                className,
-            )}
+                "[transition:height_280ms_cubic-bezier(0.32,0.72,0,1)]")}
             style={{ height: GRABBER_HEIGHT + PEEK_FALLBACK }}
         >
             <button

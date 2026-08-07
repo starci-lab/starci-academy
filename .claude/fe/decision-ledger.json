@@ -1812,6 +1812,16 @@
       "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b24-status.md",
       "holdsPreserved": 27,
       "next": "Continue dead-door burn on remaining live-api; error-ratchet only when live-api declarations approach zero."
+    },
+    {
+      "id": "b26-parallel-css-door-2026-08-09",
+      "date": "2026-08-09",
+      "status": "applied",
+      "summary": "BATCH 26: brace-aware zero-consumer WithClassNames/className door burn across blocks/pages (+ HighlightChip twins); inventory 2194→1671 (−523). EntityLink+GithubLinkGate restored as false positives. 12 disjoint workers; overlap pass.",
+      "reason": "Only doors with brace-aware unused destructure proof and open-tag consumer count 0 (locked paths still count as consumers). No new principles; live APIs/vendor/locked held.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b26-status.md",
+      "holdsPreserved": 27,
+      "next": "Parent-placement only with exact existing principles; continue live-api declaration burn with consumer proof; error-ratchet still deferred."
     }
   ]
 }

@@ -7,13 +7,12 @@ import { SiTwitch as TwitchLogoIcon } from "@icons-pack/react-simple-icons"
 import { LessonVideoKind } from "@/modules/types/enums/lesson-video-kind"
 import { EnumChip } from "@/components/blocks/chips/EnumChip"
 import type { EnumChipEntry } from "@/components/blocks/chips/EnumChip"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * The props for the LessonVideoKindChip component.
  * @param kind - The kind of the lesson video.
  */
-export interface LessonVideoKindChipProps extends WithClassNames<undefined> {
+export interface LessonVideoKindChipProps {
     /** Lesson video kind from the API. */
     kind: LessonVideoKind
 }
@@ -23,7 +22,7 @@ export interface LessonVideoKindChipProps extends WithClassNames<undefined> {
  * Thin domain map over the shared {@link EnumChip} primitive (warning-toned, per-kind
  * icon + tooltip).
  */
-export const LessonVideoKindChip = ({ kind, className }: LessonVideoKindChipProps) => {
+export const LessonVideoKindChip = ({ kind}: LessonVideoKindChipProps) => {
     const t = useTranslations()
     const map: Record<LessonVideoKind, EnumChipEntry> = {
         [LessonVideoKind.RawStream]: {
@@ -45,5 +44,5 @@ export const LessonVideoKindChip = ({ kind, className }: LessonVideoKindChipProp
             tooltip: t("lessonVideoKind.premiumRecord.tooltip"),
         },
     }
-    return <EnumChip value={kind} map={map} className={className} />
+    return <EnumChip value={kind} map={map} />
 }

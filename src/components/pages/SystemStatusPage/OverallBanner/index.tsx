@@ -1,10 +1,9 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import { CheckCircleIcon, WarningOctagonIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link OverallBanner}. */
-export interface OverallBannerProps extends WithClassNames<undefined> {
+export interface OverallBannerProps {
     /** True when every probed component is `up`. */
     allUp: boolean
     /** Localized "N/M components healthy" label. */
@@ -18,16 +17,13 @@ export interface OverallBannerProps extends WithClassNames<undefined> {
  *
  * @param props - See {@link OverallBannerProps}.
  */
-export const OverallBanner = ({ allUp, label, className }: OverallBannerProps) => {
+export const OverallBanner = ({ allUp, label}: OverallBannerProps) => {
     return (
         <div
-            className={cn(
-                "flex items-center gap-3 rounded-2xl border px-4 py-3",
+            className={cn("flex items-center gap-3 rounded-2xl border px-4 py-3",
                 allUp
                     ? "border-success/40 bg-success-soft text-success-soft-foreground"
-                    : "border-danger/40 bg-danger-soft text-danger-soft-foreground",
-                className,
-            )}
+                    : "border-danger/40 bg-danger-soft text-danger-soft-foreground")}
         >
             {allUp ? (
                 <CheckCircleIcon aria-hidden focusable="false" className="size-6 shrink-0" />

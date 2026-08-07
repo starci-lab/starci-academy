@@ -6,12 +6,10 @@ import { AuthenticationModalTab } from "@/redux/slices/tabs"
 import { useAppDispatch } from "@/redux/hooks"
 import { setAuthenticationModalTab } from "@/redux/slices/tabs"
 import { useAccountMenuOverlayState, useAuthenticationOverlayState } from "@/hooks/zustand/overlay/hooks"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { _AuthActions, type AuthActionItem } from "./component"
 
 /** Props for {@link AuthActions}. */
-export type AuthActionsProps = WithClassNames<undefined>
-
+export type AuthActionsProps = Record<string, never>
 /**
  * Row of authentication call-to-action buttons — the CONNECTED half: derives
  * its action items from translations, dispatches the auth-tab action, and
@@ -19,7 +17,7 @@ export type AuthActionsProps = WithClassNames<undefined>
  * `design/storybook/architecture/split.md`.
  * @param props - optional root class name
  */
-export const AuthActions = ({ className }: AuthActionsProps) => {
+export const AuthActions = () => {
     const t = useTranslations()
     const dispatch = useAppDispatch()
     const { close } = useAccountMenuOverlayState()
@@ -53,5 +51,5 @@ export const AuthActions = ({ className }: AuthActionsProps) => {
         [t, onSelectTab],
     )
 
-    return <_AuthActions items={items} className={className} />
+    return <_AuthActions items={items} />
 }

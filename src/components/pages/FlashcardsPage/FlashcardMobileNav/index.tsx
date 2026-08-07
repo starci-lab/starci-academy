@@ -1,15 +1,12 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { useFlashcardNav, type FlashcardMode } from "../useFlashcardNav"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link FlashcardMobileNav}. */
-export type FlashcardMobileNavProps = WithClassNames<undefined>
-
+export type FlashcardMobileNavProps = Record<string, never>
 /**
  * Mobile (`<lg`) fallback for the flashcards LEFT RAIL — which is hidden on
  * small screens. Surfaces the mode switch (Study / Quiz) the rail owns,
@@ -22,12 +19,12 @@ export type FlashcardMobileNavProps = WithClassNames<undefined>
  * deck picker, so the chip row was a redundant second way to jump decks.
  * @param props - {@link FlashcardMobileNavProps}
  */
-export const FlashcardMobileNav = ({ className }: FlashcardMobileNavProps) => {
+export const FlashcardMobileNav = () => {
     const t = useTranslations()
     const { mode, goMode } = useFlashcardNav()
 
     return (
-        <div className={cn("flex flex-col gap-3 @app-lg:hidden", className)}>
+        <div className={"flex flex-col gap-3 @app-lg:hidden"}>
             {/* page-FEATURE switch (mirrors the desktop rail's own mode control, see
                 FlashcardsPage/index.tsx) → TabsCard variant="primary"
                 (fe/components/tabs.md §0b, corrected 2026-07-09). */}

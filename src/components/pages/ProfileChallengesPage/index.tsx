@@ -2,12 +2,6 @@
 
 import React from "react"
 import {
-    cn,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-import {
     ProfileChallenges,
 } from "./ProfileChallenges"
 import {
@@ -15,8 +9,7 @@ import {
 } from "@/components/blocks/profile/ProfileSectionGuard"
 
 /** Props for {@link ProfileChallengesPage}. */
-export type ProfileChallengesPageProps = WithClassNames<undefined>
-
+export type ProfileChallengesPageProps = Record<string, never>
 /**
  * "Challenges" tab of the public profile (SKILLS-TABS-UX-BRAINSTORM.md §4) — the
  * proof-first, recruiter-facing view of graded-challenge work: a passed count, a
@@ -26,12 +19,10 @@ export type ProfileChallengesPageProps = WithClassNames<undefined>
  *
  * @param props - {@link ProfileChallengesPageProps}
  */
-export const ProfileChallengesPage = ({
-    className,
-}: ProfileChallengesPageProps) => {
+export const ProfileChallengesPage = () => {
     return (
-        <ProfileSectionGuard section="challenges" className={className}>
-            <div className={cn("flex min-w-0 flex-col gap-6", className)}>
+        <ProfileSectionGuard section="challenges">
+            <div className={"flex min-w-0 flex-col gap-6"}>
                 <ProfileChallenges />
             </div>
         </ProfileSectionGuard>

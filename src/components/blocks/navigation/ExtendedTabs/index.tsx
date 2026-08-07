@@ -1,10 +1,9 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Tabs, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for the {@link ExtendedTabs} block. */
-export interface ExtendedTabsProps extends WithClassNames<undefined> {
+export interface ExtendedTabsProps {
     /** Currently selected tab id (controlled). */
     selectedKey: string
     /** Fired with the newly selected tab id. */
@@ -54,23 +53,18 @@ export const ExtendedTabs = ({
     selectedKey,
     onSelectionChange,
     children,
-    className,
     variant = "secondary",
-    size = "md",
-}: ExtendedTabsProps) => {
+    size = "md"}: ExtendedTabsProps) => {
     return (
         <Tabs
             variant={variant}
             selectedKey={selectedKey}
             onSelectionChange={(key) => onSelectionChange(String(key))}
-            className={cn(
-                // tab labels must never wrap to a 2nd line — white-space inherits down to
+            className={cn(// tab labels must never wrap to a 2nd line — white-space inherits down to
                 // every Tabs.Tab, so a squeezed segment truncates (w-full) or sizes to the
                 // one-line label (w-fit) instead of stacking words.
                 "whitespace-nowrap",
-                variant === "secondary" ? "extended-tabs" : size === "sm" ? "w-fit" : "w-full",
-                className,
-            )}
+                variant === "secondary" ? "extended-tabs" : size === "sm" ? "w-fit" : "w-full")}
         >
             {children}
         </Tabs>

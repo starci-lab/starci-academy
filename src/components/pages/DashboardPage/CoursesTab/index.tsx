@@ -2,9 +2,6 @@
 
 import React from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
 import {
@@ -16,25 +13,18 @@ import {
 import {
     UpcomingLivestreamCard,
 } from "../UpcomingLivestreamCard"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-
 /** Props for {@link CoursesTab}. */
-export type CoursesTabProps = WithClassNames<undefined>
-
+export type CoursesTabProps = Record<string, never>
 /**
  * DashboardPage "Courses" tab — everything about the viewer's learning path: enrolled-
  * course progress, recommended courses to pick up next, and upcoming live sessions.
  * Each child self-fetches its own leaf query.
  * @param props - optional root class name (placement only)
  */
-export const CoursesTab = ({
-    className,
-}: CoursesTabProps) => {
+export const CoursesTab = () => {
     const t = useTranslations()
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
+        <div className={"flex flex-col gap-6"}>
             <MyCoursesProgress
                 label={t("DashboardPage.enrolledCourses")}
             />

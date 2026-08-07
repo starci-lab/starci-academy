@@ -1,15 +1,12 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { cn } from "@heroui/react"
 import { ImplementationCard } from "@/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGithub/usePersonalProjectGithubForm"
 import { useAppSelector } from "@/redux/hooks"
 
 /** Props for {@link TaskCodeImplementations}. */
-export type TaskCodeImplementationsProps = WithClassNames<undefined>
-
+export type TaskCodeImplementationsProps = Record<string, never>
 /**
  * Implementation guide for a milestone task, shown for the language picked by the
  * top "grading language" selector in {@link PersonalProjectSubmission} — a single
@@ -20,9 +17,7 @@ export type TaskCodeImplementationsProps = WithClassNames<undefined>
  * the github form store.
  * @param props - optional className for the root element
  */
-export const TaskCodeImplementations = ({
-    className,
-}: TaskCodeImplementationsProps = {}) => {
+export const TaskCodeImplementations = () => {
     // active grading language lives in the shared github-form store (set by the top selector);
     // read-only here, so `enableSync` stays off (default) and no debounced sync runs
     const { lang } = usePersonalProjectGithubForm()
@@ -62,7 +57,7 @@ export const TaskCodeImplementations = ({
     // "task.criteriaTitle" LabeledCard (see personal-project/index.tsx) instead of
     // stacking a second hand-rolled header right under the criteria one.
     return (
-        <div className={cn(className)}>
+        <div className={""}>
             <ImplementationCard item={selected} />
         </div>
     )

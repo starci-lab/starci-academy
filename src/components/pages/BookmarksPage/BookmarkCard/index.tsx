@@ -25,10 +25,9 @@ import { IconTile } from "@/components/blocks/identity/IconTile"
 import { SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { StackH } from "@/components/frames/Stack"
 import { type ContentEntity, getContentChallengeCount } from "@/modules/types/entities/content"
-import { type WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link BookmarkCard} (list item — per-item content data only). */
-export interface BookmarkCardProps extends WithClassNames<undefined> {
+export interface BookmarkCardProps {
     /** Saved content entity rendered by this row. */
     content: ContentEntity
 }

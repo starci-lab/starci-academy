@@ -4,21 +4,16 @@ import { ArrowLeftIcon, CpuIcon } from "@phosphor-icons/react"
 import React, {
     useCallback,
 } from "react"
-import {
-    Button,
-    cn,
-} from "@heroui/react"
+import { Button } from "@heroui/react"
 import {
     useRouter,
 } from "next/navigation"
 import {
     useTranslations,
 } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link TopBar}. */
-export type TopBarProps = WithClassNames<undefined>
-
+export type TopBarProps = Record<string, never>
 /**
  * Top navigation bar holding the "Back to admin" button.
  *
@@ -27,9 +22,7 @@ export type TopBarProps = WithClassNames<undefined>
  * for the HeroUI interactive Button and the router.
  * @param props - optional className forwarded to the wrapper div
  */
-export const TopBar = ({
-    className,
-}: TopBarProps = {}) => {
+export const TopBar = () => {
     const router = useRouter()
     const t = useTranslations("admin.aiBalancer")
 
@@ -52,7 +45,7 @@ export const TopBar = ({
     )
 
     return (
-        <div className={cn("flex flex-wrap items-center gap-3 pt-4", className)}>
+        <div className={"flex flex-wrap items-center gap-3 pt-4"}>
             <Button
                 id="admin-back-button"
                 variant="ghost"

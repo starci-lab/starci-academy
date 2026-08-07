@@ -1,22 +1,15 @@
 "use client"
 
 import React from "react"
-import {
-    Modal,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Modal, Typography } from "@heroui/react"
 import {
     useTranslations,
 } from "next-intl"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useAvatarUploadOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { ImageDropzone } from "@/components/blocks/identity/ImageDropzone"
 
 /** Props for {@link AvatarUploadModal}. */
-export interface AvatarUploadModalProps extends WithClassNames<undefined> {
+export interface AvatarUploadModalProps {
     /** Receives the picked image file (preview + staging owned by the parent form). */
     onFile: (file: File) => void
 }
@@ -31,9 +24,7 @@ export interface AvatarUploadModalProps extends WithClassNames<undefined> {
  * @param props - {@link AvatarUploadModalProps}
  */
 export const AvatarUploadModal = ({
-    onFile,
-    className,
-}: AvatarUploadModalProps) => {
+    onFile}: AvatarUploadModalProps) => {
     const t = useTranslations()
     const { isOpen, setOpen, close } = useAvatarUploadOverlayState()
 
@@ -41,7 +32,7 @@ export const AvatarUploadModal = ({
         <Modal isOpen={isOpen} onOpenChange={setOpen}>
             <Modal.Backdrop>
                 <Modal.Container size="md">
-                    <Modal.Dialog className={cn(className)}>
+                    <Modal.Dialog className={""}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <Typography.Heading level={3}>

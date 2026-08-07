@@ -2,21 +2,15 @@
 
 import { UserIcon } from "@phosphor-icons/react"
 import React, { useCallback } from "react"
-import {
-    Badge,
-    Button,
-    cn,
-} from "@heroui/react"
+import { Badge, Button } from "@heroui/react"
 import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { useAppSelector } from "@/redux/hooks"
 import { useAccountMenuOverlayState } from "@/hooks/zustand/overlay/hooks"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link AccountTrigger}.
  */
-export type AccountTriggerProps = WithClassNames<undefined>
-
+export type AccountTriggerProps = Record<string, never>
 /**
  * Dropdown trigger button shown in the navbar.
  *
@@ -26,7 +20,7 @@ export type AccountTriggerProps = WithClassNames<undefined>
  * `"use client"` for store selectors + press handler.
  * @param props - optional root class name
  */
-export const AccountTrigger = ({ className }: AccountTriggerProps) => {
+export const AccountTrigger = () => {
     const isAuthenticated = useAppSelector((state) => state.keycloak.authenticated)
     const user = useAppSelector((state) => state.user.user)
     const { open } = useAccountMenuOverlayState()
@@ -39,7 +33,7 @@ export const AccountTrigger = ({ className }: AccountTriggerProps) => {
             <Button
                 onPress={onOpen}
                 isIconOnly
-                className={cn("rounded-full", className)}
+                className={"rounded-full"}
                 variant="tertiary"
             >
                 <UserIcon className="size-5" />
@@ -50,7 +44,7 @@ export const AccountTrigger = ({ className }: AccountTriggerProps) => {
         <Button
             onPress={onOpen}
             isIconOnly
-            className={cn("rounded-full", className)}
+            className={"rounded-full"}
             variant="tertiary"
         >
             <Badge.Anchor>

@@ -3,10 +3,7 @@
 import React, {
     useMemo,
 } from "react"
-import {
-    cn,
-    Typography,
-} from "@heroui/react"
+import { Typography } from "@heroui/react"
 import {
     Cell,
     Pie,
@@ -14,9 +11,6 @@ import {
     ResponsiveContainer,
     Tooltip,
 } from "recharts"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 
 /** One language slice: its key + count. */
@@ -28,7 +22,7 @@ export interface LanguageDonutItem {
 }
 
 /** Props for {@link LanguageDonut}. */
-export interface LanguageDonutProps extends WithClassNames<undefined> {
+export interface LanguageDonutProps {
     /** Language buckets to plot. */
     items: Array<LanguageDonutItem>
     /** Centre big-number unit label (e.g. "solved" / "problems"). */
@@ -55,9 +49,7 @@ export const LanguageDonut = ({
     unitLabel,
     ariaLabel,
     size = 128,
-    thickness = 8,
-    className,
-}: LanguageDonutProps) => {
+    thickness = 8}: LanguageDonutProps) => {
     // total across languages — denominator for the legend percentages
     const total = useMemo(
         () => items.reduce((sum, item) => sum + item.value, 0),
@@ -73,7 +65,7 @@ export const LanguageDonut = ({
     const innerRadius = Math.max(0, outerRadius - thickness)
 
     return (
-        <div className={cn("flex flex-col items-center gap-6 @app-sm:flex-row", className)}>
+        <div className={"flex flex-col items-center gap-6 @app-sm:flex-row"}>
             {/* the donut — labelled as an image for screen readers */}
             <div
                 role="img"

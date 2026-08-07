@@ -4,9 +4,6 @@ import React, {
     useMemo,
     type Key,
 } from "react"
-import {
-    cn,
-} from "@heroui/react"
 import type {
     ContentTabItem,
 } from "../types"
@@ -18,10 +15,9 @@ import {
 } from "./TabTrigger"
 import { TabsCard, type TabsCardGroup } from "@/components/blocks/navigation/TabsCard"
 import type { ContentTab } from "@/redux/slices/tabs"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ContentTabBar}. */
-export interface ContentTabBarProps extends WithClassNames<undefined> {
+export interface ContentTabBarProps {
     /** Tabs to render, in display order. */
     tabItems: Array<ContentTabItem>
     /** Currently selected tab key. */
@@ -50,9 +46,7 @@ export const ContentTabBar = ({
     selectedKey,
     ariaLabel,
     onSelectionChange,
-    className,
-    rightTabs,
-}: ContentTabBarProps) => {
+    rightTabs}: ContentTabBarProps) => {
     /** Left group: content tabs mapped to TabsCard items (icon + label + lock). */
     const leftTabs = useMemo<TabsCardGroup>(
         () => ({
@@ -76,7 +70,7 @@ export const ContentTabBar = ({
 
     return (
         // no divider line under the row — the toolbar floats above the reading card
-        <div className={cn("w-full", className)}>
+        <div className={"w-full"}>
             {/* capped + centered wrapper so the toolbar lines up with the reading column */}
             <TabsCard
                 className="mx-auto w-full max-w-3xl"

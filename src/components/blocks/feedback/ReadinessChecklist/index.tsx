@@ -4,7 +4,6 @@ import { CheckCircleIcon } from "@phosphor-icons/react"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One row of a {@link ReadinessChecklist}. */
 export interface ReadinessChecklistItem {
@@ -23,7 +22,7 @@ export interface ReadinessChecklistItem {
 }
 
 /** Props for the {@link ReadinessChecklist} block. */
-export interface ReadinessChecklistProps extends WithClassNames<undefined> {
+export interface ReadinessChecklistProps {
     /** Rows, top to bottom. */
     items: Array<ReadinessChecklistItem>
     /** Trailing chip label for a ready row (i18n-driven by the caller). */
@@ -46,9 +45,9 @@ export interface ReadinessChecklistProps extends WithClassNames<undefined> {
  *
  * @see Story: .storybook/stories/blocks/feedback/ReadinessChecklist/ReadinessChecklist.stories
  */
-export const ReadinessChecklist = ({ items, readyLabel, pendingLabel, className }: ReadinessChecklistProps) => {
+export const ReadinessChecklist = ({ items, readyLabel, pendingLabel}: ReadinessChecklistProps) => {
     return (
-        <div className={className}>
+        <div>
             {items.map((item, index) => (
                 <ListRow
                     key={item.id}

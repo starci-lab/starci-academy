@@ -17,22 +17,20 @@ import {
 import { useTranslations } from "next-intl"
 
 import { dayjs } from "@/modules/dayjs"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useQueryMyWeeklyStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyWeeklyStatsSwr"
 
 /** Weekday-initial placeholder while the 7-day stats are loading (no real dates yet). */
 const FALLBACK_DAYS: Array<string> = ["M", "T", "W", "T", "F", "S", "S"]
 
 /** Props for {@link UserStreak}. */
-export type UserStreakProps = WithClassNames<undefined>
-
+export type UserStreakProps = Record<string, never>
 /**
  * UserStreak — navbar streak widget. Reads the viewer's real rolling 7-day
  * stats (current/longest streak + per-day active flags) from
  * {@link useQueryMyWeeklyStatsSwr}; falls back to zeros / inactive days while
  * loading or when unauthenticated. `"use client"` for the dropdown interactivity.
  */
-export const UserStreak = ({ className }: UserStreakProps) => {
+export const UserStreak = () => {
     const t = useTranslations("common")
     const { data } = useQueryMyWeeklyStatsSwr()
 
@@ -55,7 +53,7 @@ export const UserStreak = ({ className }: UserStreakProps) => {
     return (
         <Dropdown>
             <DropdownTrigger>
-                <div className={cn("group relative flex size-10 cursor-pointer items-center justify-center rounded-full border-4 border-dashed border-accent/50 bg-accent/5 transition-all hover:scale-110 active:scale-95", className)}>
+                <div className={"group relative flex size-10 cursor-pointer items-center justify-center rounded-full border-4 border-dashed border-accent/50 bg-accent/5 transition-all hover:scale-110 active:scale-95"}>
                     <FlameIcon aria-hidden weight="fill" className="size-6 text-accent-soft-foreground" />
                 </div>
             </DropdownTrigger>

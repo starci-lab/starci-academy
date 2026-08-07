@@ -5,7 +5,6 @@ import type { ReactNode } from "react"
 import { Typography, cn } from "@heroui/react"
 import { ImageIcon } from "@phosphor-icons/react"
 import { useDropzone } from "react-dropzone"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Max image size in bytes (5 MB — mirrors the BE avatar limit). */
 const MAX_SIZE = 5 * 1024 * 1024
@@ -19,7 +18,7 @@ const ACCEPT = {
 }
 
 /** Props for the {@link ImageDropzone} block. */
-export interface ImageDropzoneProps extends WithClassNames<undefined> {
+export interface ImageDropzoneProps {
     /** Called with the dropped / picked image file (type + size filtered). */
     onFile: (file: File) => void
     /** Primary CTA (e.g. "Drag and drop an image here, or click to choose"). */
@@ -41,7 +40,7 @@ export interface ImageDropzoneProps extends WithClassNames<undefined> {
  *
  * @see Story: .storybook/stories/blocks/identity/ImageDropzone/ImageDropzone.stories
  */
-export const ImageDropzone = ({ onFile, label, hint, icon, className }: ImageDropzoneProps) => {
+export const ImageDropzone = ({ onFile, label, hint, icon}: ImageDropzoneProps) => {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         accept: ACCEPT,
         maxSize: MAX_SIZE,
@@ -57,11 +56,8 @@ export const ImageDropzone = ({ onFile, label, hint, icon, className }: ImageDro
     return (
         <div
             {...getRootProps()}
-            className={cn(
-                "flex cursor-pointer flex-col items-center gap-2 rounded-2xl border border-dashed border-separator px-6 py-8 text-center transition-colors hover:border-accent",
-                isDragActive && "border-solid border-accent bg-accent-soft",
-                className,
-            )}
+            className={cn("flex cursor-pointer flex-col items-center gap-2 rounded-2xl border border-dashed border-separator px-6 py-8 text-center transition-colors hover:border-accent",
+                isDragActive && "border-solid border-accent bg-accent-soft")}
         >
             <input {...getInputProps()} />
             <span

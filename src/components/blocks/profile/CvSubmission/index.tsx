@@ -4,15 +4,11 @@ import React, {
     useCallback,
     useState,
 } from "react"
-import {
-    cn,
-} from "@heroui/react"
 import { toast } from "@/modules/toast/toast"
 import { useTranslations } from "next-intl"
 import type {
     CvSubmissionFormValues,
 } from "@/types"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { mutateGetCVPresignedUrl } from "@/modules/api/graphql/mutations/mutation-get-cv-presigned-url"
 import { mutateProcessCV } from "@/modules/api/graphql/mutations/mutation-process-cv"
 import { useAppSelector } from "@/redux/hooks"
@@ -30,8 +26,7 @@ const UPLOAD_PROGRESS = {
 } as const
 
 /** Props for {@link CvSubmission}. */
-export type CvSubmissionProps = WithClassNames<undefined>
-
+export type CvSubmissionProps = Record<string, never>
 /**
  * CV submission container.
  *
@@ -40,9 +35,7 @@ export type CvSubmissionProps = WithClassNames<undefined>
  * {@link CVSubmissionForm}. `"use client"` because it holds state + side effects.
  * @param props - {@link CvSubmissionProps}
  */
-export const CvSubmission = ({
-    className,
-}: CvSubmissionProps) => {
+export const CvSubmission = () => {
     /** Keycloak access token used to authorize the API calls. */
     const token = useAppSelector((state) => state.keycloak.accessToken)
     /** Whether the S3 upload step is in progress. */
@@ -187,7 +180,7 @@ export const CvSubmission = ({
     )
 
     return (
-        <div className={cn(className)}>
+        <div className={""}>
             <CVSubmissionForm
                 isUploading={isUploading}
                 isProcessing={isProcessing}

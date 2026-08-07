@@ -3,13 +3,7 @@
 import React, {
     useState,
 } from "react"
-import {
-    Button,
-    Chip,
-    Typography,
-    cn,
-    Spinner,
-} from "@heroui/react"
+import { Button, Chip, Typography, Spinner } from "@heroui/react"
 import {
     useLocale,
     useTranslations,
@@ -20,9 +14,6 @@ import {
 import {
     EntityToken,
 } from "@/components/blocks/entity/EntityToken"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryMyMilestoneTaskAttemptsSwr, MY_MILESTONE_TASK_ATTEMPTS_LIMIT } from "@/hooks/swr/api/graphql/queries/useQueryMyMilestoneTaskAttemptsSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
@@ -32,8 +23,7 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link MyAttemptsPage}. */
-export type MyAttemptsPageProps = WithClassNames<undefined>
-
+export type MyAttemptsPageProps = Record<string, never>
 /**
  * The learner's milestone-task attempts as a list — task, milestone, course,
  * pass/fail chip, score and date (failed attempts included). "Load more" grows
@@ -41,9 +31,7 @@ export type MyAttemptsPageProps = WithClassNames<undefined>
  *
  * @param props - optional root className.
  */
-export const MyAttemptsPage = ({
-    className,
-}: MyAttemptsPageProps) => {
+export const MyAttemptsPage = () => {
     const t = useTranslations()
     const locale = useLocale()
 
@@ -123,7 +111,7 @@ export const MyAttemptsPage = ({
     ]
 
     return (
-        <div className={cn("flex flex-col gap-10", className)}>
+        <div className={"flex flex-col gap-10"}>
             <PageHeader
                 breadcrumb={<SettingsBreadcrumb current={t("profileSettings.learning.attempts.title")} />}
                 title={t("profileSettings.learning.attempts.title")}

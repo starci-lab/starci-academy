@@ -3,11 +3,7 @@
 import React, {
     useMemo,
 } from "react"
-import {
-    Chip,
-    ScrollShadow,
-    cn,
-} from "@heroui/react"
+import { Chip, ScrollShadow } from "@heroui/react"
 import {
     useTranslations,
 } from "next-intl"
@@ -31,7 +27,6 @@ import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/S
 import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StackV } from "@/components/frames/Stack"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Days shown in the per-day spend chart (matches the chart title copy). */
 const CHART_DAYS = 14
@@ -63,8 +58,7 @@ const purposeLabel = (
 }
 
 /** Props for {@link AiUsageHistory}. */
-export type AiUsageHistoryProps = WithClassNames<undefined>
-
+export type AiUsageHistoryProps = Record<string, never>
 /**
  * AI usage insight for the `/profile/ai-usage` page: a per-day spend chart, a
  * "by provider" {@link SegmentBar} breakdown, and the charge history as an
@@ -77,7 +71,7 @@ export type AiUsageHistoryProps = WithClassNames<undefined>
  *
  * @param props - optional className (placement only).
  */
-export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
+export const AiUsageHistory = () => {
     const t = useTranslations()
 
     const {
@@ -170,7 +164,7 @@ export const AiUsageHistory = ({ className }: AiUsageHistoryProps) => {
                 retryLabel: t("dashboard.retry"),
             }}
         >
-            <div className={cn(className)}>
+            <div className={""}>
                 <StackV
                     gap={6}
                     items={[

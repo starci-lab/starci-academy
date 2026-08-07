@@ -2,11 +2,9 @@
 
 import { ArrowsOutIcon } from "@phosphor-icons/react"
 import React from "react"
-import { Button, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
+import { Button } from "@heroui/react"
 /** Props for {@link FullscreenButton}. */
-export interface FullscreenButtonProps extends WithClassNames<undefined> {
+export interface FullscreenButtonProps {
     /** Fired when the user requests fullscreen toggle. */
     onFullscreen: () => void
 }
@@ -18,16 +16,14 @@ export interface FullscreenButtonProps extends WithClassNames<undefined> {
  * @param props - The fullscreen toggle callback.
  */
 export const FullscreenButton = ({
-    onFullscreen,
-    className,
-}: FullscreenButtonProps) => {
+    onFullscreen}: FullscreenButtonProps) => {
     return (
         <Button
             isIconOnly
             variant="ghost"
             aria-label="Fullscreen"
             onPress={onFullscreen}
-            className={cn("text-white hover:bg-white/20 border-none min-w-8 h-8", className)}
+            className={"text-white hover:bg-white/20 border-none min-w-8 h-8"}
         >
             <ArrowsOutIcon className="h-5 w-5" />
         </Button>

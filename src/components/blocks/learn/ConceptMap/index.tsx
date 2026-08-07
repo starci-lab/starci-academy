@@ -35,7 +35,6 @@ import {
     tierAllows,
 } from "@/modules/utils/mind-map"
 import { MindMapNodeDrawer } from "@/components/overlays/drawers/MindMapNodeDrawer"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Border-ring tone per popularity tier (green / yellow / red) — the ring signals how common a keyword is. */
 const RING_BY_POP: Record<string, string> = {
@@ -163,7 +162,7 @@ const FocusOnSelect = ({
 }
 
 /** Props for {@link ConceptMap}. */
-export interface ConceptMapProps extends WithClassNames<undefined> {
+export interface ConceptMapProps {
     /** The full keyword graph (server-laid-out). */
     data: CourseMindMapData
     /** Live search text — hides non-matching nodes (keeping matches + their ancestor path). */
@@ -190,9 +189,7 @@ export const ConceptMap = ({
     query,
     tier,
     selectedId,
-    onSelectId,
-    className,
-}: ConceptMapProps) => {
+    onSelectId}: ConceptMapProps) => {
     const courseId = useAppSelector((state) => state.course.id)
     const displayId = useAppSelector((state) => state.course.displayId)
 
@@ -262,7 +259,7 @@ export const ConceptMap = ({
         : undefined
 
     return (
-        <div className={cn("relative h-full w-full", className)}>
+        <div className={"relative h-full w-full"}>
             <ReactFlowProvider>
                 <ReactFlow
                     nodes={nodes}

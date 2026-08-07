@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useCallback, useMemo } from "react"
-import { cn, Tabs } from "@heroui/react"
+import { Tabs } from "@heroui/react"
 import {
     HouseIcon,
     PuzzlePieceIcon,
@@ -12,7 +12,6 @@ import {
 } from "@phosphor-icons/react"
 import { useTranslations, useLocale } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { SectionVisibility } from "@/modules/types/entities/user"
 import { PROFILE_TABS } from "@/modules/types/entities/profile"
 import type { ProfileTab } from "@/modules/types/entities/profile"
@@ -45,7 +44,7 @@ const TAB_ICONS: Record<ProfileTab, typeof HouseIcon> = {
 }
 
 /** Props for {@link ProfileTabsBar}. */
-export interface ProfileTabsBarProps extends WithClassNames<undefined> {
+export interface ProfileTabsBarProps {
     /** The viewed user's canonical username (drives every tab's href). */
     username: string
     /** Whether the viewer is the profile owner — shows the "CV" tab even without a public CV. */
@@ -101,7 +100,7 @@ const tabHref = (locale: string, username: string, tabId: ProfileTab): string =>
  *
  * @param props - {@link ProfileTabsBarProps}
  */
-export const ProfileTabsBar = ({ username, isSelf, hasPublicCv, sectionVisibility, className }: ProfileTabsBarProps) => {
+export const ProfileTabsBar = ({ username, isSelf, hasPublicCv, sectionVisibility}: ProfileTabsBarProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -144,7 +143,7 @@ export const ProfileTabsBar = ({ username, isSelf, hasPublicCv, sectionVisibilit
     return (
         // Rendered as the Navbar's bottom layer — no border / sticky / bg of its
         // own; the Navbar root owns the single bottom border and the sticky.
-        <div className={cn("w-full", className)}>
+        <div className={"w-full"}>
             <div className="w-full px-6">
                 <ExtendedTabs
                     selectedKey={activeTab}

@@ -11,13 +11,11 @@ import {
 import {
     useNavbarItems,
 } from "../useNavbarItems"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link NavLinks}.
  */
-export type NavLinksProps = WithClassNames<undefined>
-
+export type NavLinksProps = Record<string, never>
 /**
  * Desktop navbar link group (hidden on small screens).
  *
@@ -26,12 +24,12 @@ export type NavLinksProps = WithClassNames<undefined>
  * handlers.
  * @param props - optional root class name
  */
-export const NavLinks = ({ className }: NavLinksProps) => {
+export const NavLinks = () => {
     const router = useRouter()
     const items = useNavbarItems()
 
     return (
-        <div className={cn("hidden flex-1 items-center justify-center gap-2 @app-md:flex", className)}>
+        <div className={"hidden flex-1 items-center justify-center gap-2 @app-md:flex"}>
             {items.map((item) => (
                 <Link key={item.path} onPress={() => router.push(item.path)}>
                     <span

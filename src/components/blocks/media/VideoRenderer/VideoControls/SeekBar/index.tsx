@@ -1,12 +1,11 @@
 "use client"
 
 import React from "react"
-import { cn, Slider } from "@heroui/react"
+import { Slider } from "@heroui/react"
 import { useCallback } from "react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link SeekBar}. */
-export interface SeekBarProps extends WithClassNames<undefined> {
+export interface SeekBarProps {
     /** Current playback position in seconds. */
     currentTime: number
     /** Total media duration in seconds. */
@@ -24,9 +23,7 @@ export interface SeekBarProps extends WithClassNames<undefined> {
 export const SeekBar = ({
     currentTime,
     duration,
-    onSeek,
-    className,
-}: SeekBarProps) => {
+    onSeek}: SeekBarProps) => {
     /** Normalize the slider value to a number before bubbling the seek. */
     const onChange = useCallback(
         (value: number | Array<number>) => onSeek(value as number),
@@ -43,7 +40,7 @@ export const SeekBar = ({
             maxValue={duration || 1}
             value={currentTime}
             onChange={onChange}
-            className={cn("mb-2", className)}
+            className={"mb-2"}
         />
     )
 }

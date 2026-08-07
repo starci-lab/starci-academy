@@ -10,10 +10,9 @@ import React, { type RefObject, useCallback, useEffect, useState } from "react"
 import { Button } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { Panel, useReactFlow } from "@xyflow/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link MindMapFullscreenButton}. */
-export interface MindMapFullscreenButtonProps extends WithClassNames<undefined> {
+export interface MindMapFullscreenButtonProps {
     /** The element to toggle into fullscreen (the mind-map canvas container). */
     targetRef: RefObject<HTMLElement | null>
 }

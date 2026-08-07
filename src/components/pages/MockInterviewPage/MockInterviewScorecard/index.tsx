@@ -28,12 +28,11 @@ import { StackH, StackV } from "@/components/frames/Stack"
 import { Cluster } from "@/components/frames/Cluster"
 import { useQueryMatchedContentSwr } from "@/hooks/swr/api/graphql/queries/useQueryMatchedContentSwr"
 import { pathConfig } from "@/resources/path"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { MockInterviewTrackSnapshot } from "../MockInterviewTrackSnapshot"
 import type { MockInterviewGradeResult, MockInterviewPhaseKey, MockInterviewQuestionReview } from "../types"
 
 /** Props for {@link MockInterviewScorecard}. */
-export interface MockInterviewScorecardProps extends WithClassNames<undefined> {
+export interface MockInterviewScorecardProps {
     /** The graded result to render (current session, or a past attempt re-opened from history). */
     grade: MockInterviewGradeResult
     /** Course the session belongs to — needed for the track snapshot (B3). */
@@ -294,9 +293,7 @@ export const MockInterviewScorecard = ({
     courseDisplayId,
     promptTitle,
     createdAt,
-    onRetry,
-    className,
-}: MockInterviewScorecardProps) => {
+    onRetry}: MockInterviewScorecardProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -358,7 +355,7 @@ export const MockInterviewScorecard = ({
         && grade.phaseScores.every((phaseScore) => (DESIGN_PHASE_KEYS as ReadonlyArray<string>).includes(phaseScore.phase))
 
     return (
-        <div className={className}>
+        <div>
             <StackV
                 gap={6}
                 principle="block-boundary"

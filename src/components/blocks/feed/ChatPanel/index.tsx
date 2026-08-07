@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef } from "react"
 import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
 import { Composer } from "@/components/blocks/feed/Composer"
 import type { ComposerProps } from "@/components/blocks/feed/Composer"
@@ -31,7 +30,7 @@ export interface ChatPanelMessage {
  * all data + the composer wiring arrive via props; the only side-effect is an
  * auto-scroll-to-bottom effect on the list ref.
  */
-export interface ChatPanelProps extends WithClassNames<undefined> {
+export interface ChatPanelProps {
     /** The conversation, oldest first. Each entry renders one {@link ChatBubble}. */
     messages: Array<ChatPanelMessage>
     /** Props forwarded to the sticky-bottom {@link Composer} (controlled by the parent). */
@@ -67,9 +66,7 @@ export const ChatPanel = ({
     messages,
     composer,
     isTyping = false,
-    emptyState,
-    className,
-}: ChatPanelProps) => {
+    emptyState}: ChatPanelProps) => {
     const listRef = useRef<HTMLDivElement>(null)
 
     // keep the newest turn in view as the conversation (or typing state) grows
@@ -85,11 +82,8 @@ export const ChatPanel = ({
 
     return (
         <div
-            className={cn(
-                "flex flex-col overflow-hidden rounded-3xl border border-default bg-surface",
-                "h-[32rem]",
-                className,
-            )}
+            className={cn("flex flex-col overflow-hidden rounded-3xl border border-default bg-surface",
+                "h-[32rem]")}
         >
             {/* scrollable message list */}
             <div ref={listRef} className="flex-1 overflow-y-auto p-4">

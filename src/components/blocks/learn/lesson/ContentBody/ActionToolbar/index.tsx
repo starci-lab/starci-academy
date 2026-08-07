@@ -2,15 +2,9 @@
 
 import { BookmarkSimpleIcon, ShareNetworkIcon } from "@phosphor-icons/react"
 import React from "react"
-import {
-    Button,
-    Spinner,
-    cn,
-} from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
+import { Button, Spinner } from "@heroui/react"
 /** Props for {@link ActionToolbar}. */
-export interface ActionToolbarProps extends WithClassNames<undefined> {
+export interface ActionToolbarProps {
     /** Whether the content is currently favorited (controls the bookmark fill). */
     isFavorite: boolean
     /** Whether the share button should be shown (hidden for premium content). */
@@ -35,11 +29,9 @@ export const ActionToolbar = ({
     isShareVisible,
     isFavoritePending,
     onToggleFavorite,
-    onShare,
-    className,
-}: ActionToolbarProps) => {
+    onShare}: ActionToolbarProps) => {
     return (
-        <div className={cn("flex items-center gap-2", className)}>
+        <div className={"flex items-center gap-2"}>
             <Button
                 isIconOnly
                 variant="secondary"

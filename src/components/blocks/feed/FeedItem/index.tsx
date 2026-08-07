@@ -1,10 +1,8 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { cn, Typography } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
+import { Typography } from "@heroui/react"
 /** Props for {@link FeedItem}. */
-export interface FeedItemProps extends WithClassNames<undefined> {
+export interface FeedItemProps {
     /**
      * Optional leading visual rendered at the row's start (e.g. a small
      * {@link UserAvatar} or an activity-type icon). Shrinks to its content and
@@ -41,9 +39,9 @@ export interface FeedItemProps extends WithClassNames<undefined> {
  * @param props - {@link FeedItemProps}
  * @see Story: .storybook/stories/blocks/feed/FeedItem/FeedItem.stories
  */
-export const FeedItem = ({ leading, children, timestamp, footer, className }: FeedItemProps) => {
+export const FeedItem = ({ leading, children, timestamp, footer}: FeedItemProps) => {
     return (
-        <div className={cn("flex items-start gap-2", className)}>
+        <div className={"flex items-start gap-2"}>
             {leading ? <div className="shrink-0">{leading}</div> : null}
             <div className="flex flex-col gap-1 min-w-0">
                 <div className="flex flex-col gap-0">

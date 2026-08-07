@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { CheckIcon, XIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { IOExampleCard } from "@/components/blocks/code/IOExampleCard"
 
 /** One testcase outcome shown as a selectable pill + (sample) IO detail. */
@@ -38,7 +37,7 @@ export interface TestCaseResultLabels {
 }
 
 /** Props for the {@link TestCaseResultGrid} block. */
-export interface TestCaseResultGridProps extends WithClassNames<undefined> {
+export interface TestCaseResultGridProps {
     /** The per-case outcomes, in evaluation order. */
     cases: Array<TestCaseResult>
     /** Localised labels for the selected sample case's IO rows. */
@@ -63,7 +62,7 @@ const firstFailingIndex = (cases: Array<TestCaseResult>): number => {
  * @param props - {@link TestCaseResultGridProps}
  * @see Story: .storybook/stories/blocks/code/TestCaseResultGrid/TestCaseResultGrid.stories
  */
-export const TestCaseResultGrid = ({ cases, labels, className }: TestCaseResultGridProps) => {
+export const TestCaseResultGrid = ({ cases, labels}: TestCaseResultGridProps) => {
     const [selected, setSelected] = useState<number>(() => firstFailingIndex(cases))
 
     // re-home the selection on the first failing case whenever the result set changes
@@ -79,7 +78,7 @@ export const TestCaseResultGrid = ({ cases, labels, className }: TestCaseResultG
     const active = cases[Math.min(selected, cases.length - 1)]
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className={"flex flex-col gap-3"}>
             <div className="flex flex-wrap gap-2">
                 {cases.map((testcase, index) => {
                     const isActive = index === Math.min(selected, cases.length - 1)

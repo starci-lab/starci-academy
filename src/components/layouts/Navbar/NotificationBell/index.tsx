@@ -10,15 +10,7 @@ import React, {
     useMemo,
     useState,
 } from "react"
-import {
-    Badge,
-    Button,
-    Header,
-    Popover,
-    PopoverContent,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Badge, Button, Header, Popover, PopoverContent, Typography } from "@heroui/react"
 import {
     useLocale,
     useTranslations,
@@ -26,9 +18,6 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { mutateMarkAllNotificationsAsRead } from "@/modules/api/graphql/mutations/mutation-mark-all-notifications-as-read"
 import { mutateMarkNotificationAsRead } from "@/modules/api/graphql/mutations/mutation-mark-notification-as-read"
 import type { QueryNotificationData } from "@/modules/api/graphql/queries/types/notifications"
@@ -45,8 +34,7 @@ import { pathConfig } from "@/resources/path"
 const MAX_BADGE = 9
 
 /** Props for {@link NotificationBell}. */
-export type NotificationBellProps = WithClassNames<undefined>
-
+export type NotificationBellProps = Record<string, never>
 /**
  * NotificationBell — navbar bell with an unread-count badge and a popover list.
  *
@@ -58,7 +46,7 @@ export type NotificationBellProps = WithClassNames<undefined>
  * and navigation.
  * @param props - optional root class name (placement only)
  */
-export const NotificationBell = ({ className }: NotificationBellProps) => {
+export const NotificationBell = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -155,7 +143,7 @@ export const NotificationBell = ({ className }: NotificationBellProps) => {
             <Button
                 isIconOnly
                 variant="tertiary"
-                className={cn("rounded-full", className)}
+                className={"rounded-full"}
                 aria-label={t("notifications.title")}
             >
                 {unreadCount > 0 ? (

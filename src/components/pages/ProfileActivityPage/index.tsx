@@ -2,12 +2,6 @@
 
 import React from "react"
 import {
-    cn,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-import {
     ProfileAchievements,
 } from "./ProfileAchievements"
 import {
@@ -18,8 +12,7 @@ import {
 } from "@/components/blocks/profile/ProfileSectionGuard"
 
 /** Props for {@link ProfileActivityPage}. */
-export type ProfileActivityPageProps = WithClassNames<undefined>
-
+export type ProfileActivityPageProps = Record<string, never>
 /**
  * "Activity" tab of the public profile (NEW-PROFILE.spec.md §7.4). A single
  * centered column with two editorial sections — earned achievements (badge wall
@@ -30,12 +23,10 @@ export type ProfileActivityPageProps = WithClassNames<undefined>
  *
  * @param props - {@link ProfileActivityPageProps}
  */
-export const ProfileActivityPage = ({
-    className,
-}: ProfileActivityPageProps) => {
+export const ProfileActivityPage = () => {
     return (
-        <ProfileSectionGuard section="activity" className={className}>
-            <div className={cn("flex flex-col gap-6", className)}>
+        <ProfileSectionGuard section="activity">
+            <div className={"flex flex-col gap-6"}>
                 <ProfileAchievements />
                 <ProfileActivity />
             </div>

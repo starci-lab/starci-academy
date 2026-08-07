@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useCallback, useMemo } from "react"
-import { Chip, Typography, cn } from "@heroui/react"
+import { Chip, Typography } from "@heroui/react"
 import {
     PlayIcon,
 } from "@phosphor-icons/react"
@@ -14,7 +14,6 @@ import {
 } from "@/components/utils/task-lookup"
 import { PersonalProjectDashboardSkeleton } from "./PersonalProjectDashboardSkeleton"
 import { TaskBreadcrumb } from "../TaskBreadcrumb"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { setSelectedTaskId } from "@/redux/slices/milestone"
 import { useQueryMilestonesSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestonesSwr"
@@ -29,8 +28,7 @@ import { Grid } from "@/components/frames/Grid"
 import type { MilestoneEntity } from "@/modules/types/entities/milestone"
 
 /** Props for {@link PersonalProjectDashboard}. */
-export type PersonalProjectDashboardProps = WithClassNames<undefined>
-
+export type PersonalProjectDashboardProps = Record<string, never>
 /** github.com URL → `owner/repo` (drops scheme + trailing .git) for a compact label. */
 const toRepoLabel = (url: string): string =>
     url
@@ -56,9 +54,7 @@ const toRepoLabel = (url: string): string =>
  *
  * @param props - {@link PersonalProjectDashboardProps}
  */
-export const PersonalProjectDashboard = ({
-    className,
-}: PersonalProjectDashboardProps = {}) => {
+export const PersonalProjectDashboard = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -176,7 +172,7 @@ export const PersonalProjectDashboard = ({
     const isEmpty = !hasMilestones && !milestonesSwr.isLoading && !!milestonesSwr.data && !milestonesSwr.error
 
     return (
-        <div className={cn("mx-auto flex w-full max-w-3xl flex-col gap-10", className)}>
+        <div className={"mx-auto flex w-full max-w-3xl flex-col gap-10"}>
             {/* shared PageHeader: breadcrumb → H3 title → muted desc → github status chip (meta).
                 header → content = gap-10 (page-heading debt). */}
             <PageHeader

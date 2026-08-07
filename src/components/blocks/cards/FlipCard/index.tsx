@@ -3,11 +3,10 @@
 import React, { useState, type ComponentType } from "react"
 import { ScrollShadow, cn } from "@heroui/react"
 import { AnimatePresence, motion } from "framer-motion"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 
 /** Props for the {@link FlipCard} block. */
-export interface FlipCardProps extends WithClassNames<undefined> {
+export interface FlipCardProps {
     /** Whether the answer card is currently revealed below the question. */
     revealed: boolean
     /** Label shown OUTSIDE (above) the question card — e.g. "Question". */
@@ -38,7 +37,7 @@ export interface FlipCardProps extends WithClassNames<undefined> {
  * BETWEEN this block and the rating; this block is purely presentational.
  * @param props - {@link FlipCardProps}
  */
-export const FlipCard = ({ revealed, questionLabel, answerLabel, front: Front, belowFront: BelowFront, back: Back, className }: FlipCardProps) => {
+export const FlipCard = ({ revealed, questionLabel, answerLabel, front: Front, belowFront: BelowFront, back: Back}: FlipCardProps) => {
     // `overflow-hidden` is only needed WHILE the height animates — left on at
     // rest, it permanently clips the answer `Card`'s own box-shadow along every
     // edge, so it read flatter than the question card right above it (teacher:
@@ -47,7 +46,7 @@ export const FlipCard = ({ revealed, questionLabel, answerLabel, front: Front, b
     // shows in full, same as the un-clipped question card.
     const [animating, setAnimating] = useState(false)
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
+        <div className={"flex flex-col gap-6"}>
             {/* question card + its `belowFront` chips grouped `gap-3` — the chips
                 stay under the QUESTION when the answer reveals below (not pushed
                 to the bottom of the answer). */}

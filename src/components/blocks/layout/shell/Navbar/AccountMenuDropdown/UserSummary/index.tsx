@@ -3,19 +3,17 @@
 import React from "react"
 import { truncate } from "lodash"
 import { useAppSelector } from "@/redux/hooks"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { _UserSummary } from "./component"
 
 /** Props for {@link UserSummary}. */
-export type UserSummaryProps = WithClassNames<undefined>
-
+export type UserSummaryProps = Record<string, never>
 /**
  * Header panel for authenticated users — the CONNECTED half: reads the
  * authenticated user from the Redux store itself. See
  * `design/storybook/architecture/split.md`.
  * @param props - optional root class name
  */
-export const UserSummary = ({ className }: UserSummaryProps) => {
+export const UserSummary = () => {
     const user = useAppSelector((state) => state.user.user)
     return (
         <_UserSummary
@@ -24,7 +22,6 @@ export const UserSummary = ({ className }: UserSummaryProps) => {
             avatar={user?.avatar}
             avatarSeed={user?.email ?? user?.username}
             email={user?.email}
-            className={className}
         />
     )
 }

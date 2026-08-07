@@ -6,9 +6,6 @@ import React, {
 import {
     CaretRightIcon,
 } from "@phosphor-icons/react"
-import {
-    cn,
-} from "@heroui/react"
 import Link from "next/link"
 import {
     useLocale,
@@ -19,17 +16,13 @@ import {
 import {
     pathConfig,
 } from "@/resources/path"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryUserAchievementsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserAchievementsSwr"
 import { rankInfo, resolveSeniorityRank } from "@/modules/utils/rank"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link ProfileMenuCard}. */
-export type ProfileMenuCardProps = WithClassNames<undefined>
-
+export type ProfileMenuCardProps = Record<string, never>
 /**
  * The DashboardPage rail's identity row: a rank-ringed avatar + display name +
  * @handle on the left, with a trailing caret. The whole row is a link to the
@@ -43,9 +36,7 @@ export type ProfileMenuCardProps = WithClassNames<undefined>
  *
  * @param props - optional className merged onto the row.
  */
-export const ProfileMenuCard = ({
-    className,
-}: ProfileMenuCardProps) => {
+export const ProfileMenuCard = () => {
     const locale = useLocale()
     const user = useAppSelector((state) => state.user.user)
     const achievementsSwr = useQueryUserAchievementsSwr(user?.id ?? null)
@@ -93,10 +84,7 @@ export const ProfileMenuCard = ({
     return (
         <Link
             href={pathConfig().locale(locale).profile(user.username).build()}
-            className={cn(
-                "group flex cursor-pointer items-center justify-between gap-3 no-underline transition-opacity hover:opacity-80",
-                className,
-            )}
+            className={"group flex cursor-pointer items-center justify-between gap-3 no-underline transition-opacity hover:opacity-80"}
         >
             {/* avatar + name = left cluster; caret pinned right by justify-between */}
             <StackH

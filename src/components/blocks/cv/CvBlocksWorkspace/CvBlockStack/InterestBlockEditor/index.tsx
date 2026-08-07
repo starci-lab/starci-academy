@@ -1,18 +1,9 @@
 "use client"
 
 import React, { useState } from "react"
-import {
-    Button,
-    Chip,
-    Input,
-    Label,
-    Link,
-    TextField,
-    cn,
-} from "@heroui/react"
+import { Button, Chip, Input, Label, Link, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { PlusIcon, XIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { CvBlock, CvBlockEditorProps, CvBlockItem } from "@/modules/types/entities/cv"
 
 /** Reads the interest names currently on this block's items (`fields.name`). */
@@ -21,7 +12,7 @@ const namesOf = (block: CvBlock): Array<string> => block.items
     .filter((name): name is string => Boolean(name))
 
 /** Props for {@link InterestBlockEditor}. */
-export interface InterestBlockEditorProps extends WithClassNames<undefined>, CvBlockEditorProps {}
+export type InterestBlockEditorProps = CvBlockEditorProps 
 
 /**
  * Interests block editor — one repeatable item PER interest (`fields.name`),
@@ -31,7 +22,7 @@ export interface InterestBlockEditorProps extends WithClassNames<undefined>, CvB
  *
  * @param props - {@link InterestBlockEditorProps}
  */
-export const InterestBlockEditor = ({ className, block, onChange }: InterestBlockEditorProps) => {
+export const InterestBlockEditor = ({ block, onChange }: InterestBlockEditorProps) => {
     const t = useTranslations()
     const [draft, setDraft] = useState("")
     const currentNames = namesOf(block)
@@ -49,7 +40,7 @@ export const InterestBlockEditor = ({ className, block, onChange }: InterestBloc
     const onRemoveInterest = (itemId: string) => setItems(block.items.filter((item) => item.id !== itemId))
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className={"flex flex-col gap-3"}>
             {block.items.length > 0 ? (
                 <div className="flex flex-wrap items-center gap-2">
                     {block.items.map((item) => {

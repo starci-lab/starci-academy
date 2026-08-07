@@ -1,7 +1,6 @@
 import React from "react"
-import { cn, Typography } from "@heroui/react"
+import { Typography } from "@heroui/react"
 import type { ReactNode } from "react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Isometric face palette per tone (top lightest -> right darkest, for the 3D read).
  * Hard-coded hexes: it's an illustration (canvas/SVG art), tuned for the dark hero. */
@@ -51,7 +50,7 @@ const IsoSvc = ({ x, y, tone = "neutral" }: { x: number; y: number; tone?: Tone 
 }
 
 /** Props for {@link MicroservicesScene}. */
-export interface MicroservicesSceneProps extends WithClassNames<undefined> {
+export interface MicroservicesSceneProps {
     /** Caption under the scene (i18n string from the feature). */
     caption?: ReactNode
 }
@@ -65,9 +64,9 @@ export interface MicroservicesSceneProps extends WithClassNames<undefined> {
  *
  * @param props - {@link MicroservicesSceneProps}
  */
-export const MicroservicesScene = ({ caption, className }: MicroservicesSceneProps) => {
+export const MicroservicesScene = ({ caption}: MicroservicesSceneProps) => {
     return (
-        <div className={cn("w-full", className)}>
+        <div className={"w-full"}>
             <svg viewBox="0 0 680 480" width="100%" role="img" aria-label="Isometric mini infrastructure">
                 {/* connectors (svc -> pods -> DB) */}
                 <g fill="none" strokeLinecap="round">

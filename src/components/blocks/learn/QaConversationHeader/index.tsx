@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Button, Typography, cn } from "@heroui/react"
+import { Button, Typography } from "@heroui/react"
 import {
     CaretUpIcon,
     SealCheckIcon,
@@ -10,10 +10,9 @@ import { useTranslations } from "next-intl"
 import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { AvatarGroup, type AvatarGroupItem } from "@/components/composites/lists/AvatarGroup"
 import { FollowButton } from "@/components/blocks/community/FollowButton"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link QaConversationHeader}. */
-export interface QaConversationHeaderProps extends WithClassNames<undefined> {
+export interface QaConversationHeaderProps {
     /** The asker (whose question opens the conversation). */
     asker: {
         /** Asker username (drives avatar fallback). */
@@ -62,15 +61,13 @@ export const QaConversationHeader = ({
     canFollow = false,
     isFollowing = false,
     onToggleFollow,
-    isFollowPending = false,
-    className,
-}: QaConversationHeaderProps) => {
+    isFollowPending = false}: QaConversationHeaderProps) => {
     const t = useTranslations()
     const displayName = asker.displayName || asker.username
     const hasAnswers = replyCount > 0
 
     return (
-        <div className={cn("flex flex-wrap items-center justify-between gap-3 border-b border-default pb-3", className)}>
+        <div className={"flex flex-wrap items-center justify-between gap-3 border-b border-default pb-3"}>
             {/* collapse + asker identity + follow */}
             <div className="flex min-w-0 items-center gap-2">
                 <Button

@@ -6,7 +6,6 @@ import { useTranslations, useLocale } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
 import { SM2_GRADES } from "../constants"
 import { _FlashcardReviewer, type FlashcardReviewerLabels } from "./component"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { mutateReviewFlashcard } from "@/modules/api/graphql/mutations/mutation-review-flashcard"
 import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcard-deck"
 import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-card"
@@ -21,7 +20,7 @@ import { useQueryMyInProgressFlashcardReviewSessionSwr } from "@/hooks/swr/api/g
 import { useQueryMyFlashcardReviewSessionBySessionIdSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyFlashcardReviewSessionBySessionIdSwr"
 
 /** Props for {@link FlashcardReviewer}. */
-export interface FlashcardReviewerProps extends WithClassNames<undefined> {
+export interface FlashcardReviewerProps {
     /** Deck id being reviewed. */
     deckId: string
     /**
@@ -65,7 +64,7 @@ const seedGradedSet = (resumed: { gradedIndexes?: Array<number>, reviewedCount: 
  * steps back to re-grade; a summary closes the run. See `tiers/split.md`.
  * @param props - {@link FlashcardReviewerProps}
  */
-export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: FlashcardReviewerProps) => {
+export const FlashcardReviewer = ({ deckId, sessionId, onBack }: FlashcardReviewerProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -527,7 +526,6 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
 
     return (
         <_FlashcardReviewer
-            className={className}
             isSkeleton={isSkeleton}
             isEmpty={isEmpty}
             error={resolvedError}

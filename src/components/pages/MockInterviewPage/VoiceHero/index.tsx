@@ -5,7 +5,6 @@ import { TextArea, TextField, Typography, cn } from "@heroui/react"
 import { MicrophoneIcon } from "@phosphor-icons/react"
 import { Box } from "@/components/frames/Box"
 import { StackH, StackV } from "@/components/frames/Stack"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** How the candidate answers — mirrors the session's `answerMode` (FE-only). */
 export type VoiceHeroAnswerMode = "voice" | "text" | "both"
@@ -25,7 +24,7 @@ export interface VoiceHeroLabels {
 }
 
 /** Props for {@link VoiceHero}. */
-export interface VoiceHeroProps extends WithClassNames<undefined> {
+export interface VoiceHeroProps {
     /** Whether speech-to-text is available (falls back to typing when false). */
     sttSupported: boolean
     /** Whether the mic is currently capturing. */
@@ -62,9 +61,7 @@ export const VoiceHero = ({
     onValueChange,
     onToggleListen,
     answerMode,
-    labels,
-    className,
-}: VoiceHeroProps) => {
+    labels}: VoiceHeroProps) => {
     // voice is the hero unless setup forced text-only or the browser can't do STT
     const textForced = answerMode === "text" || !sttSupported
     const canToggle = answerMode === "both" && sttSupported
@@ -73,7 +70,7 @@ export const VoiceHero = ({
     // typing box — used when forced (unsupported / text-only) or toggled to via "type instead"
     if (textForced || showText) {
         return (
-            <div className={className}>
+            <div>
                 <StackV
                     gap={3}
                     principle="sibling-stack"
@@ -118,7 +115,7 @@ export const VoiceHero = ({
 
     // voice hero — big push-to-talk mic + live transcript
     return (
-        <div className={cn(className)}>
+        <div className={""}>
             {/* Mic · prompt · transcript at preserved 12px — no vertical step-4 peer token. */}
             <StackV
                 gap={4}

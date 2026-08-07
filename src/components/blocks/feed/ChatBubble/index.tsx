@@ -3,13 +3,12 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import type { ReactNode } from "react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Who authored a chat message. */
 export type ChatRole = "user" | "assistant"
 
 /** Props for the {@link ChatBubble} block. */
-export interface ChatBubbleProps extends WithClassNames<undefined> {
+export interface ChatBubbleProps {
     /** Author of the message — drives alignment + tint. */
     role: ChatRole
     /** Message content (text or a markdown render). */
@@ -23,10 +22,10 @@ export interface ChatBubbleProps extends WithClassNames<undefined> {
  *
  * @param props - {@link ChatBubbleProps}
  */
-export const ChatBubble = ({ role, children, className }: ChatBubbleProps) => {
+export const ChatBubble = ({ role, children}: ChatBubbleProps) => {
     const isUser = role === "user"
     return (
-        <div className={cn("flex", isUser ? "justify-end" : "justify-start", className)}>
+        <div className={cn("flex", isUser ? "justify-end" : "justify-start")}>
             <div
                 className={cn(
                     "max-w-[85%] rounded-2xl px-3 py-2",

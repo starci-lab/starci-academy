@@ -1,16 +1,9 @@
 "use client"
 
 import React from "react"
-import {
-    Button,
-    Input,
-    Label,
-    TextField,
-    cn,
-} from "@heroui/react"
+import { Button, Input, Label, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { PlusIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { CvBlock, CvBlockEditorProps, CvBlockItem } from "@/modules/types/entities/cv"
 import { RepeatableItemCard } from "../shared/RepeatableItemCard"
 
@@ -18,7 +11,7 @@ import { RepeatableItemCard } from "../shared/RepeatableItemCard"
 const emptyItem = (): CvBlockItem => ({ id: crypto.randomUUID(), fields: {} })
 
 /** Props for {@link LanguageBlockEditor}. */
-export interface LanguageBlockEditorProps extends WithClassNames<undefined>, CvBlockEditorProps {}
+export type LanguageBlockEditorProps = CvBlockEditorProps 
 
 /**
  * Language block editor — repeatable entries (language name / proficiency
@@ -27,7 +20,7 @@ export interface LanguageBlockEditorProps extends WithClassNames<undefined>, CvB
  *
  * @param props - {@link LanguageBlockEditorProps}
  */
-export const LanguageBlockEditor = ({ className, block, onChange }: LanguageBlockEditorProps) => {
+export const LanguageBlockEditor = ({ block, onChange }: LanguageBlockEditorProps) => {
     const t = useTranslations()
 
     const setItems = (items: Array<CvBlockItem>) => onChange({ ...block, items } satisfies CvBlock)
@@ -51,7 +44,7 @@ export const LanguageBlockEditor = ({ className, block, onChange }: LanguageBloc
     }
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className={"flex flex-col gap-3"}>
             {block.items.map((item, index) => (
                 <RepeatableItemCard
                     key={item.id}

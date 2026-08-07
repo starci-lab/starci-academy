@@ -5,7 +5,6 @@ import { Chip, cn, Typography } from "@heroui/react"
 import { CaretRightIcon, WarningIcon } from "@phosphor-icons/react"
 import { motion, useReducedMotion, type Variants } from "framer-motion"
 import type { CSSProperties, ReactNode } from "react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One node in the curated topology. */
 interface DiagramNode {
@@ -53,7 +52,7 @@ const FAILURES: ReadonlyArray<{ from: string; to: string; pos: string }> = [
 ]
 
 /** Props for {@link MicroservicesDiagram}. */
-export interface MicroservicesDiagramProps extends WithClassNames<undefined> {
+export interface MicroservicesDiagramProps {
     /** Caption under the diagram (i18n string from the feature). */
     caption?: ReactNode
 }
@@ -89,7 +88,7 @@ const nodeStyle = (tone: DiagramNode["tone"]): CSSProperties => {
  *
  * @param props - {@link MicroservicesDiagramProps}
  */
-export const MicroservicesDiagram = ({ caption, className }: MicroservicesDiagramProps) => {
+export const MicroservicesDiagram = ({ caption}: MicroservicesDiagramProps) => {
     const reduce = useReducedMotion()
 
     // node entrance: stagger fade-rise (no transform when reduced motion is preferred)
@@ -103,7 +102,7 @@ export const MicroservicesDiagram = ({ caption, className }: MicroservicesDiagra
     return (
         // No card/window surface — just the diagram floating over a soft coloured glow
         // (StarCi triad). The glow is the only "backdrop"; nodes/wires/chips sit on top.
-        <div className={cn("relative w-full", className)}>
+        <div className={"relative w-full"}>
             <div
                 aria-hidden
                 className="pointer-events-none absolute inset-0 -z-10"

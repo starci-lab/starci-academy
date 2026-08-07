@@ -1,9 +1,7 @@
 "use client"
 
 import React from "react"
-import { cn, InputOTP, Label, Typography } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
+import { InputOTP, Label, Typography } from "@heroui/react"
 /**
  * Props for the {@link OtpInput} block.
  *
@@ -11,7 +9,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
  * {@link InputOTP}. Tier-3 presentational — the value and every state arrive via
  * props; the block owns no state, store, or fetch.
  */
-export interface OtpInputProps extends WithClassNames<undefined> {
+export interface OtpInputProps {
     /**
      * Number of code slots to render (also the `maxLength` of the underlying
      * input). Default `6` — the common 2FA / email-verification length.
@@ -80,11 +78,9 @@ export const OtpInput = ({
     isInvalid,
     errorMessage,
     autoFocus,
-    label,
-    className,
-}: OtpInputProps) => {
+    label}: OtpInputProps) => {
     return (
-        <div className={cn("flex flex-col gap-2", className)}>
+        <div className={"flex flex-col gap-2"}>
             {/* Optional field label above the slots */}
             {label != null ? <Label>{label}</Label> : null}
 

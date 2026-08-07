@@ -5,11 +5,10 @@ import useSWR from "swr"
 import { evaluate } from "@mdx-js/mdx"
 import * as runtime from "react/jsx-runtime"
 import remarkGfm from "remark-gfm"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { _RenderReactComponent, type MdxContentComponent } from "./component"
 
 /** Props the connected {@link RenderReactComponent} takes from its caller. */
-export interface RenderReactComponentConnectedProps extends WithClassNames<undefined> {
+export interface RenderReactComponentConnectedProps {
     /** JSX/MDX source (a self-contained renderable expression, no imports/logic). */
     code: string
 }
@@ -22,7 +21,7 @@ export interface RenderReactComponentConnectedProps extends WithClassNames<undef
  * `design/storybook/architecture/split.md`.
  * @param props - {@link RenderReactComponentConnectedProps}
  */
-export const RenderReactComponent = ({ code, className }: RenderReactComponentConnectedProps) => {
+export const RenderReactComponent = ({ code}: RenderReactComponentConnectedProps) => {
     const { data: Content, error } = useSWR(
         `mdx:${code}`,
         async () => {
@@ -43,7 +42,6 @@ export const RenderReactComponent = ({ code, className }: RenderReactComponentCo
             code={code}
             Content={Content ?? null}
             hasError={Boolean(error)}
-            className={className}
         />
     )
 }

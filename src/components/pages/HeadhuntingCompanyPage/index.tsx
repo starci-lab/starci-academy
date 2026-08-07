@@ -3,7 +3,6 @@
 import React from "react"
 import { Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { HeadhuntingCompanyBreadcrumbs } from "./HeadhuntingCompanyBreadcrumbs"
 import { HeadhuntingCompanyConsultants } from "./HeadhuntingCompanyConsultants"
 import { HeadhuntingCompanyProfile } from "./HeadhuntingCompanyProfile"
@@ -14,14 +13,13 @@ import { Box } from "@/components/frames/Box"
 import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link HeadhuntingCompanyPage}. */
-export type HeadhuntingCompanyPageProps = WithClassNames<undefined>
-
+export type HeadhuntingCompanyPageProps = Record<string, never>
 /**
  * Headhunting company detail: company profile and the consultants at that company.
  * Container — owns data + breadcrumb orchestration via hooks; renders presentational children.
  * @param props - {@link HeadhuntingCompanyPageProps}
  */
-export const HeadhuntingCompanyPage = ({ className }: HeadhuntingCompanyPageProps) => {
+export const HeadhuntingCompanyPage = () => {
     const t = useTranslations()
     const {
         companyId,
@@ -56,7 +54,7 @@ export const HeadhuntingCompanyPage = ({ className }: HeadhuntingCompanyPageProp
     }
 
     return (
-        <Box className={className}>
+        <Box>
             <StackV gap={6} principle="block-boundary"
                 explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                 items={[

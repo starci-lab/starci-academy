@@ -7,14 +7,10 @@ import React, {
     useRef,
     useState,
 } from "react"
-import {
-    cn,
-} from "@heroui/react"
 import { toast } from "@/modules/toast/toast"
 import {
     useRouter,
 } from "next/navigation"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import {
     UploadStatus,
 } from "./enums"
@@ -45,8 +41,7 @@ import type { AdminPresignedUrlItem } from "@/modules/api/rest/admin-presigned-u
 import { Box } from "@/components/frames/Box"
 
 /** Props for {@link AdminUploadVideoPage}. */
-export type AdminUploadVideoPageProps = WithClassNames<undefined>
-
+export type AdminUploadVideoPageProps = Record<string, never>
 /**
  * Admin video upload tool container.
  *
@@ -56,9 +51,7 @@ export type AdminUploadVideoPageProps = WithClassNames<undefined>
  * (XMLHttpRequest, clipboard, drag/drop) and local state.
  * @param props - optional className forwarded to the wrapper div
  */
-export const AdminUploadVideoPage = ({
-    className,
-}: AdminUploadVideoPageProps = {}) => {
+export const AdminUploadVideoPage = () => {
     const apiKey = useAppSelector((state) => state.admin.apiKey)
     const router = useRouter()
 
@@ -337,7 +330,7 @@ export const AdminUploadVideoPage = ({
     }
 
     return (
-        <div className={cn("min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 p-4 @app-md:p-8", className)}>
+        <div className={"min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 p-4 @app-md:p-8"}>
             <Box principle="center-measure" className="mx-auto max-w-3xl space-y-6"
                 explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport.">
                 <TopBar />

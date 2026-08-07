@@ -16,9 +16,6 @@ import {
     CircleIcon,
     CircleHalfIcon,
 } from "@phosphor-icons/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import {
     useSelectedCourse,
 } from "../hooks/useSelectedCourse"
@@ -36,7 +33,7 @@ import { Box } from "@/components/frames/Box"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link CourseMilestoneOutline}. */
-export interface CourseMilestoneOutlineProps extends WithClassNames<undefined> {
+export interface CourseMilestoneOutlineProps {
     /**
      * Lower-cased trimmed search query. Milestones survive when their title matches
      * or any of their tasks match; surviving milestones keep only matching tasks.
@@ -134,9 +131,7 @@ const resolveOpenMilestoneId = (outline: MyCourseOutlinePayload): string | null 
  * @param props - {@link CourseMilestoneOutlineProps}
  */
 export const CourseMilestoneOutline = ({
-    search = "",
-    className,
-}: CourseMilestoneOutlineProps) => {
+    search = ""}: CourseMilestoneOutlineProps) => {
     const t = useTranslations()
     const { selectedCourse } = useSelectedCourse()
 
@@ -158,7 +153,7 @@ export const CourseMilestoneOutline = ({
         <AsyncContent
             isLoading={outlineSwr.data === null || outlineSwr.data === undefined ? !outlineSwr.error : false}
             skeleton={(
-                <div className={cn(ACCORDION_CARD_SKELETON, className)}>
+                <div className={cn(ACCORDION_CARD_SKELETON)}>
                     {Array.from({ length: SKELETON_MILESTONE_COUNT }).map((_unused, index) => (
                         <Box key={index} principle="row-pad" className="border-b border-default p-4 last:border-b-0"
                             explain="Row content inset — not cell-pad, because this pads a horizontal content row rather than a dense table cell.">

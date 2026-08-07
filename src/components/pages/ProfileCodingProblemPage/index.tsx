@@ -35,11 +35,9 @@ import { Cluster } from "@/components/frames/Cluster"
 import { Container } from "@/components/frames/Container"
 import { StackH, StackV } from "@/components/frames/Stack"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ProfileCodingProblemPage}. */
-export type ProfileCodingProblemPageProps = WithClassNames<undefined>
-
+export type ProfileCodingProblemPageProps = Record<string, never>
 /**
  * `/profile/<u>/skills/<slug>` — the DETAIL tier of the skills (coding) flow: one
  * coding problem's statement (same read as the practice catalog, no ownership
@@ -51,9 +49,7 @@ export type ProfileCodingProblemPageProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const ProfileCodingProblemPage = ({
-    className,
-}: ProfileCodingProblemPageProps) => {
+export const ProfileCodingProblemPage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -77,10 +73,7 @@ export const ProfileCodingProblemPage = ({
         ? dayjs(submission.firstSolvedAt).locale(locale).format("hh:mm MMMM DD, YYYY")
         : undefined
 
-    const rootClassNames: Array<AllowedClassName> = []
-    if (className) {
-        rootClassNames.push(className as AllowedClassName)
-    }
+    const rootClassNames: Array<AllowedClassName> = []
 
     return (
         <Container identity={{ tier: "page", component: "ProfileCodingProblemPage" }} size="lg" padding={1} classNames={rootClassNames} body={() => (

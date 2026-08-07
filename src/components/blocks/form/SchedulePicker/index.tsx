@@ -1,16 +1,8 @@
 "use client"
 
 import React from "react"
-import {
-    Button,
-    Calendar,
-    cn,
-    DateField,
-    DatePicker,
-    Label,
-} from "@heroui/react"
+import { Button, Calendar, DateField, DatePicker, Label } from "@heroui/react"
 import type { DateValue } from "@internationalized/date"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One selectable time slot in a {@link SchedulePicker}. */
 export interface SchedulePickerSlot {
@@ -29,7 +21,7 @@ export interface SchedulePickerSlot {
  * selected date and the selected slot are owned by the parent; every callback is
  * safe to leave as a no-op.
  */
-export interface SchedulePickerProps extends WithClassNames<undefined> {
+export interface SchedulePickerProps {
     /**
      * The currently selected date, as an `@internationalized/date` value (the
      * REAL HeroUI `DatePicker` value type — a `CalendarDate`/`DateValue`, not a
@@ -100,11 +92,9 @@ export const SchedulePicker = ({
     selectedSlotId,
     onSlotChange,
     minDate,
-    slotsLabel = "Choose a time slot",
-    className,
-}: SchedulePickerProps) => {
+    slotsLabel = "Choose a time slot"}: SchedulePickerProps) => {
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
+        <div className={"flex flex-col gap-6"}>
             {/* DATE half — canonical HeroUI DatePicker + DateField + Calendar popover */}
             <DatePicker
                 aria-label="Choose an interview date"

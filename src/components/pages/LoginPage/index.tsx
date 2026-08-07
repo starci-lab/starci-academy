@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect } from "react"
-import { Card, CardContent, cn, Link } from "@heroui/react"
+import { Card, CardContent, Link } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter, useSearchParams } from "next/navigation"
 import { SignInSection } from "@/components/overlays/modals/AuthenticationModal/SignInSection"
@@ -10,13 +10,11 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { AuthenticationModalTab, resetAuthenticationModalTab } from "@/redux/slices/tabs"
 import { resetSignInState, resetSignUpState } from "@/redux/slices/state"
 import { pathConfig } from "@/resources/path"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Box } from "@/components/frames/Box"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link LoginPage}. */
-export type LoginPageProps = WithClassNames<undefined>
-
+export type LoginPageProps = Record<string, never>
 /**
  * `/login` — the auth-guard redirect target for protected routes (`src/proxy.ts`),
  * and a directly-navigable sign-in/sign-up page. Reuses the SAME sign-in/sign-up
@@ -28,7 +26,7 @@ export type LoginPageProps = WithClassNames<undefined>
  *
  * @param props - {@link LoginPageProps}
  */
-export const LoginPage = ({ className }: LoginPageProps) => {
+export const LoginPage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -73,7 +71,7 @@ export const LoginPage = ({ className }: LoginPageProps) => {
     return (
         <Box principle="center-measure"
             explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
-            className={cn("mx-auto max-w-2xl p-6 py-16", className)}>
+            className={"mx-auto max-w-2xl p-6 py-16"}>
             <StackV gap={6} principle="block-boundary"
                 explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                 items={[

@@ -1,17 +1,11 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { Chip, type ChipTone, type IconComponent } from "@sb-components/atoms/chips/Chip/Chip"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "HighlightChip" } as const
 
 /** Neutral (default): value + label, no leading icon — the plain figure pill. */
-
-/** Local mirror of the shared `WithClassNames` base (avoids a `@/` import). */
-interface WithClassNames<T> {
-    classNames?: T
-}
 
 /**
  * Semantic tone of the highlight chip — drives the soft tint
@@ -23,7 +17,7 @@ interface WithClassNames<T> {
 export type HighlightChipTone = ChipTone
 
 /** Props every {@link HighlightChip} carries regardless of loading state. */
-interface HighlightChipOwnProps extends WithClassNames<Array<AllowedClassName>> {
+interface HighlightChipOwnProps {
     /**
      * Semantic tone driving the soft-tinted color. Defaults to "default" (neutral).
      */

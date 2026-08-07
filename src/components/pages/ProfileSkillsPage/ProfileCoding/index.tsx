@@ -26,9 +26,6 @@ import {
     domainLabel,
 } from "@/modules/utils/coding-difficulty"
 import { pathConfig } from "@/resources/path"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useQueryUserCodingHistorySwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingHistorySwr"
 import { useQueryUserCodingProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingProgressSwr"
 import { useQueryUserCodingRankSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingRankSwr"
@@ -55,8 +52,7 @@ import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 const INITIAL_HISTORY = 6
 
 /** Props for {@link ProfileCoding}. */
-export type ProfileCodingProps = WithClassNames<undefined>
-
+export type ProfileCodingProps = Record<string, never>
 /**
  * CODING difficulty scale (easy/medium/hard ONLY — coding problems, NOT the
  * challenge beginner/intermediate/advanced/insane taxonomy). 3-tone semantic
@@ -86,9 +82,7 @@ type LanguageFilterValue = "all" | string
  *
  * @param props - optional className for the root element.
  */
-export const ProfileCoding = ({
-    className,
-}: ProfileCodingProps) => {
+export const ProfileCoding = () => {
     const t = useTranslations()
     const locale = useLocale()
     // route carries the username; resolve to the entity id the queries key off
@@ -202,10 +196,7 @@ export const ProfileCoding = ({
         || (standingSwr.isLoading && !standing)
         || (xpSwr.isLoading && !xp)
 
-    const rootClassNames: Array<AllowedClassName> = []
-    if (className) {
-        rootClassNames.push(className as AllowedClassName)
-    }
+    const rootClassNames: Array<AllowedClassName> = []
 
     return (
         <AsyncContent

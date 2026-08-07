@@ -2,11 +2,7 @@
 
 import { SparkleIcon } from "@phosphor-icons/react"
 import React, { useCallback, useMemo } from "react"
-import {
-    Button,
-    Spinner,
-    cn,
-} from "@heroui/react"
+import { Button, Spinner } from "@heroui/react"
 import {
     useTranslations,
 } from "next-intl"
@@ -14,9 +10,6 @@ import {
     usePathname,
     useRouter,
 } from "next/navigation"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { AIProcessingText } from "@/components/blocks/learn/AIProcessingText"
 import { JobCategory } from "@/modules/types/enums/job-category"
 import { JobStatus } from "@/modules/types/enums/job-status"
@@ -30,8 +23,7 @@ import { useAppSelector } from "@/redux/hooks"
 import { buildMilestoneTaskProgressLookup, isPersonalProjectTaskActionUnlocked } from "@/components/utils/task-lookup"
 
 /** Props for {@link TaskActions}. */
-export type TaskActionsProps = WithClassNames<undefined>
-
+export type TaskActionsProps = Record<string, never>
 /**
  * Action row for the task panel: evaluate, feedback, attempts, plus AI status.
  *
@@ -39,9 +31,7 @@ export type TaskActionsProps = WithClassNames<undefined>
  * flag props needed. Dispatches the submit/open actions directly.
  * @param props - optional className for the root element
  */
-export const TaskActions = ({
-    className,
-}: TaskActionsProps = {}) => {
+export const TaskActions = () => {
     const t = useTranslations()
     const router = useRouter()
     const pathname = usePathname()
@@ -160,7 +150,7 @@ export const TaskActions = ({
 
     return (
         // button row <-> AI processing status = gap-3 (same block), no manual h-* spacer
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className={"flex flex-col gap-3"}>
             <div className="flex flex-wrap items-center gap-2">
                 <Button
                     size="lg"

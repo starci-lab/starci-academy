@@ -10,13 +10,10 @@ import {
 import {
     BadgeImage,
 } from "@/components/blocks/identity/BadgeImage"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { getRank } from "@/modules/utils/rank"
 
 /** Props for {@link MascotBadge}. */
-export interface MascotBadgeProps extends WithClassNames<undefined> {
+export interface MascotBadgeProps {
     /** MinIO object key of the mascot art (bare animal, no baked frame). */
     objectKey: string
     /** Accessible name of the mascot. */
@@ -42,9 +39,7 @@ export const MascotBadge = ({
     name,
     earned,
     tierReached,
-    size = 64,
-    className,
-}: MascotBadgeProps) => {
+    size = 64}: MascotBadgeProps) => {
     const {
         rank,
         ring,
@@ -57,13 +52,10 @@ export const MascotBadge = ({
 
     return (
         <div
-            className={cn(
-                // clip the (slightly over-scaled) art to the ring so the mascot
+            className={cn(// clip the (slightly over-scaled) art to the ring so the mascot
                 // hugs the ring with no transparent gap from the PNG's own padding
                 "flex shrink-0 items-center justify-center overflow-hidden rounded-full",
-                !rank && "border-dashed border-default-300",
-                className,
-            )}
+                !rank && "border-dashed border-default-300")}
             style={{
                 width: size,
                 height: size,

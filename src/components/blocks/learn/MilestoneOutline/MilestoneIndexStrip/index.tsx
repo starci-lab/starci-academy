@@ -3,12 +3,11 @@
 import React from "react"
 import { Typography, cn, Separator } from "@heroui/react"
 import type { MilestoneEntity } from "@/modules/types/entities/milestone"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link MilestoneIndexStrip}.
  */
-export interface MilestoneIndexStripProps extends WithClassNames<undefined> {
+export interface MilestoneIndexStripProps {
     /** Milestones to render, already ordered. */
     milestones: Array<MilestoneEntity>
     /** Currently active milestone id (highlights its number). */
@@ -28,12 +27,10 @@ export interface MilestoneIndexStripProps extends WithClassNames<undefined> {
 export const MilestoneIndexStrip = ({
     milestones,
     activeMilestoneId,
-    onSelectMilestone,
-    className,
-}: MilestoneIndexStripProps) => {
+    onSelectMilestone}: MilestoneIndexStripProps) => {
     return (
         // centered vertical stack of number chips; padded to clear the collapse bar
-        <div className={cn("flex flex-col items-center gap-2 px-0 py-3", className)}>
+        <div className={"flex flex-col items-center gap-2 px-0 py-3"}>
             {milestones.map((milestone) => {
                 return (
                     <React.Fragment key={String(milestone.id)}>

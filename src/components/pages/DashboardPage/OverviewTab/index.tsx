@@ -4,9 +4,6 @@ import React, {
     useCallback,
 } from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     useLocale,
     useTranslations,
 } from "next-intl"
@@ -43,14 +40,10 @@ import {
 import {
     JobReadinessWidget,
 } from "./JobReadinessWidget"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 
 /** Props for {@link OverviewTab}. */
-export type OverviewTabProps = WithClassNames<undefined>
-
+export type OverviewTabProps = Record<string, never>
 /**
  * DashboardPage "Overview" tab — the cockpit, every section framed by a `LabeledCard`
  * (label outside + card, mirroring the profile page): "Continue learning" (next action),
@@ -59,9 +52,7 @@ export type OverviewTabProps = WithClassNames<undefined>
  * the contribution heatmap. Each child self-fetches + owns its states.
  * @param props - optional root class name (placement only)
  */
-export const OverviewTab = ({
-    className,
-}: OverviewTabProps) => {
+export const OverviewTab = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -73,7 +64,7 @@ export const OverviewTab = ({
     )
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
+        <div className={"flex flex-col gap-6"}>
             {/* frameless: resume items are themselves cards → no card-in-card */}
             <LabeledCard
                 label={t("DashboardPage.sections.continue")}

@@ -10,19 +10,17 @@ import { pathConfig } from "@/resources/path"
 import { useAppSelector } from "@/redux/hooks"
 import { languages } from "@/resources/constants/lang"
 import { useAccountMenuOverlayState, useLanguageOverlayState, useLinkGithubOverlayState } from "@/hooks/zustand/overlay/hooks"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { _MenuList } from "./component"
 
 /** Props for {@link MenuList}. */
-export type MenuListProps = WithClassNames<undefined>
-
+export type MenuListProps = Record<string, never>
 /**
  * Dropdown body menu — the CONNECTED half: reads auth state from Redux,
  * derives current language from locale, and self-dispatches navigation +
  * overlay actions on press. See `design/storybook/architecture/split.md`.
  * @param props - optional root class name
  */
-export const MenuList = ({ className }: MenuListProps) => {
+export const MenuList = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -75,7 +73,6 @@ export const MenuList = ({ className }: MenuListProps) => {
             onLinkGithub={onLinkGithub}
             onOpenBookmarks={onOpenBookmarks}
             onOpenLanguage={onOpenLanguage}
-            className={className}
         />
     )
 }

@@ -1,14 +1,7 @@
-﻿"use client"
+"use client"
 
 import React from "react"
-import {
-    Card,
-    CardContent,
-    cn,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
+import { Card, CardContent } from "@heroui/react"
 import { ProfileHero } from "@/components/blocks/profile/ProfileHero"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
@@ -17,22 +10,19 @@ import { Grid } from "@/components/frames/Grid"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link ProfileRedirectPage}. */
-export type ProfileRedirectPageProps = WithClassNames<undefined>
-
+export type ProfileRedirectPageProps = Record<string, never>
 /**
  * First-load skeleton for the public profile, shaped to MIRROR the real shell so
  * the layout never jumps on resolve.
  *
  * @param props - {@link ProfileRedirectPageProps}
  */
-export const ProfileRedirectPage = ({
-    className,
-}: ProfileRedirectPageProps) => {
+export const ProfileRedirectPage = () => {
     return (
         <div
             aria-busy="true"
             aria-label="Loading profile"
-            className={cn("flex w-full flex-col", className)}
+            className={"flex w-full flex-col"}
         >
             {/* Tab strip — retuned to row-pad (px-4 py-3) from held px-6 py-3. */}
             <Box principle="row-pad" className="w-full px-4 py-3"

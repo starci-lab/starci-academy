@@ -16,10 +16,9 @@ import { ARCHITECTURE_MODULE_MAP } from "../modules"
 import type { HealthByName } from "../hooks/useSystemHealthPoll"
 import { MetricsInline } from "../MetricsInline"
 import { getArchitectureStatusVisual, resolveArchitectureStatus } from "../statusVisual"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link NodeDissectionPanel}. */
-export interface NodeDissectionPanelProps extends WithClassNames<undefined> {
+export interface NodeDissectionPanelProps {
     /** Selected component name (must exist in the catalog). */
     nodeId: string
     /** Live health keyed by component name, or `null` before the first probe resolves. */
@@ -36,7 +35,7 @@ export interface NodeDissectionPanelProps extends WithClassNames<undefined> {
  *
  * @param props - {@link NodeDissectionPanelProps}
  */
-export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDissectionPanelProps) => {
+export const NodeDissectionPanel = ({ nodeId, healthByName}: NodeDissectionPanelProps) => {
     const t = useTranslations("architecture")
     const tRoot = useTranslations()
     const locale = useLocale()
@@ -59,7 +58,7 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
         const ModuleIcon = module.icon
         const infraNames = module.usesInfra.map((id) => ARCHITECTURE_COMPONENT_MAP[id]?.name ?? id)
         return (
-            <Card className={cn(className)}>
+            <Card className={""}>
                 <Box principle="page-pad" className="p-6"
                     explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                     <StackV gap={5} principle="group-boundary"
@@ -104,7 +103,7 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
 
     if (!component) {
         return (
-            <Card className={cn(className)}>
+            <Card className={""}>
                 <Box principle="page-pad" className="p-6"
                     explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                     <SimpleEmptyState>{t("panel.notFound")}</SimpleEmptyState>
@@ -119,7 +118,7 @@ export const NodeDissectionPanel = ({ nodeId, healthByName, className }: NodeDis
         : null
 
     return (
-        <Card className={cn(className)}>
+        <Card className={""}>
             <Box principle="page-pad" className="p-6"
                 explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">
                 <StackV gap={5} principle="group-boundary"

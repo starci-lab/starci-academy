@@ -1,13 +1,6 @@
 import React from "react"
-import {
-    cn,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-
 /** Props for the {@link CoverImage} block. */
-export interface CoverImageProps extends WithClassNames<undefined> {
+export interface CoverImageProps {
     /** Image source URL (null/undefined → empty framed surface). */
     src?: string | null
     /** Accessible alt text. */
@@ -25,11 +18,9 @@ export interface CoverImageProps extends WithClassNames<undefined> {
  */
 export const CoverImage = ({
     src,
-    alt,
-    className,
-}: CoverImageProps) => {
+    alt}: CoverImageProps) => {
     return (
-        <div className={cn("aspect-video w-full overflow-hidden rounded-2xl bg-surface-secondary", className)}>
+        <div className={"aspect-video w-full overflow-hidden rounded-2xl bg-surface-secondary"}>
             {src ? (
                 <img
                     src={src}

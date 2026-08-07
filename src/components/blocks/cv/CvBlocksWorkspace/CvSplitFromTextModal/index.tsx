@@ -1,21 +1,15 @@
 "use client"
 
 import React, { useState } from "react"
-import {
-    Button,
-    Modal,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Button, Modal, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { SparkleIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { CvBlock } from "@/modules/types/entities/cv"
 import { CvTextOrFileInput } from "../shared/CvTextOrFileInput"
 import { useMutateSplitCvFromTextSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSplitCvFromTextSwr"
 
 /** Props for {@link CvSplitFromTextModal}. */
-export interface CvSplitFromTextModalProps extends WithClassNames<undefined> {
+export interface CvSplitFromTextModalProps {
     /** Whether the modal is open. */
     isOpen: boolean
     /** Fired when the modal should open/close. */
@@ -35,7 +29,7 @@ export interface CvSplitFromTextModalProps extends WithClassNames<undefined> {
  *
  * @param props - {@link CvSplitFromTextModalProps}
  */
-export const CvSplitFromTextModal = ({ className, isOpen, onOpenChange, onSplit }: CvSplitFromTextModalProps) => {
+export const CvSplitFromTextModal = ({ isOpen, onOpenChange, onSplit }: CvSplitFromTextModalProps) => {
     const t = useTranslations()
     const [text, setText] = useState("")
     const [hasError, setHasError] = useState(false)
@@ -66,7 +60,7 @@ export const CvSplitFromTextModal = ({ className, isOpen, onOpenChange, onSplit 
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             <Modal.Backdrop>
                 <Modal.Container size="lg">
-                    <Modal.Dialog className={cn(className)}>
+                    <Modal.Dialog className={""}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <Typography type="body" weight="semibold" className="pr-8">

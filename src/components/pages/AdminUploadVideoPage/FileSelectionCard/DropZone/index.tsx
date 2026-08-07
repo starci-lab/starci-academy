@@ -6,12 +6,11 @@ import {
     Chip,
 } from "@heroui/react"
 import { formatSize } from "@/modules/utils/format-size"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { StackV } from "@/components/frames/Stack"
 import { Box } from "@/components/frames/Box"
 
 /** Props for {@link DropZone}. */
-export interface DropZoneProps extends WithClassNames<undefined> {
+export interface DropZoneProps {
     /** Currently selected file, or null when none is chosen. */
     file: File | null
     /** Ref to the hidden file input, used to open the native picker. */

@@ -1,18 +1,10 @@
 "use client"
 
 import React from "react"
-import {
-    Button,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Button, Typography } from "@heroui/react"
 import { WarningIcon } from "@phosphor-icons/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-
 /** Props for {@link ErrorState}. */
-export interface ErrorStateProps extends WithClassNames<undefined> {
+export interface ErrorStateProps {
     /**
      * Primary error headline rendered emphasized below the warning icon.
      * Caller supplies a translated node (e.g. via `t()`).
@@ -48,15 +40,10 @@ export const ErrorState = ({
     title,
     description,
     retryLabel,
-    onRetry,
-    className,
-}: ErrorStateProps) => {
+    onRetry}: ErrorStateProps) => {
     return (
         <div
-            className={cn(
-                "flex flex-col items-center gap-3 py-6 text-center",
-                className,
-            )}
+            className={"flex flex-col items-center gap-3 py-6 text-center"}
         >
             <WarningIcon weight="duotone" className="size-8 text-foreground" />
             {title ? (

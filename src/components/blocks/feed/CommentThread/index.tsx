@@ -2,7 +2,6 @@
 
 import React, { useState } from "react"
 import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { QueryCommunityCommentNode } from "@/modules/api/graphql/queries/types/community-comments"
 import type { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import { CommunityCommentRow } from "@/components/blocks/feed/CommunityCommentRow"
@@ -29,7 +28,7 @@ export interface CommentThreadNode extends QueryCommunityCommentNode {
  * presentational — the tree + callbacks arrive via props; the block owns only the
  * transient draft/reveal UI state.
  */
-export interface CommentThreadProps extends WithClassNames<undefined> {
+export interface CommentThreadProps {
     /** The comment tree, top-level nodes first. */
     comments: Array<CommentThreadNode>
     /**
@@ -171,9 +170,7 @@ export const CommentThread = ({
     comments,
     onReply,
     onReact,
-    avatarSrc,
-    className,
-}: CommentThreadProps) => {
+    avatarSrc}: CommentThreadProps) => {
     const [rootValue, setRootValue] = useState("")
 
     // submit a new root comment (parentId = null), then clear the box
@@ -187,7 +184,7 @@ export const CommentThread = ({
     }
 
     return (
-        <div className={cn("flex flex-col gap-4", className)}>
+        <div className={"flex flex-col gap-4"}>
             {/* top-level composer for a new root comment */}
             <Composer
                 value={rootValue}

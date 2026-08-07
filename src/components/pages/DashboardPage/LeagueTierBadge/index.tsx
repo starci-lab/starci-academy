@@ -2,15 +2,11 @@
 
 import React from "react"
 import {
-    cn,
-} from "@heroui/react"
-import {
     Icon,
 } from "@iconify/react"
 import {
     BadgeImage,
 } from "@/components/blocks/identity/BadgeImage"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { StackH } from "@/components/frames/Stack"
 
 /**
@@ -80,7 +76,7 @@ const TIER_VISUAL: Record<LeagueTier, TierVisual> = {
 }
 
 /** Props for {@link LeagueTierBadge}. */
-export interface LeagueTierBadgeProps extends WithClassNames<undefined> {
+export interface LeagueTierBadgeProps {
     /** Which tier to render. */
     tier: LeagueTier
     /** Icon size in px (default 24). */
@@ -97,13 +93,11 @@ export interface LeagueTierBadgeProps extends WithClassNames<undefined> {
 export const LeagueTierBadge = ({
     tier,
     size = 24,
-    showLabel = false,
-    className,
-}: LeagueTierBadgeProps) => {
+    showLabel = false}: LeagueTierBadgeProps) => {
     // resolve the icon + label for this tier
     const visual = TIER_VISUAL[tier]
     return (
-        <div className={cn("shrink-0", className)}>
+        <div className={"shrink-0"}>
             <StackH
                 gap={3}
                 principle="identity"

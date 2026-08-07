@@ -4,12 +4,7 @@ import React, {
     useMemo,
     useState,
 } from "react"
-import {
-    Input,
-    TextField,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Input, TextField, Typography } from "@heroui/react"
 import {
     useLocale,
     useTranslations,
@@ -26,9 +21,6 @@ import {
 import {
     SettingsBreadcrumb,
 } from "@/components/blocks/settings/SettingsBreadcrumb"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import {
     useSelectedCourse,
 } from "./hooks/useSelectedCourse"
@@ -47,8 +39,7 @@ import { pathConfig } from "@/resources/path"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link LearningHistoryPage}. */
-export type LearningHistoryPageProps = WithClassNames<undefined>
-
+export type LearningHistoryPageProps = Record<string, never>
 /** Number of placeholder course cards shown while the hub loads. */
 const SKELETON_COURSE_COUNT = 3
 
@@ -73,9 +64,7 @@ const DIM_COLOR: Record<string, string> = {
  *
  * @param props - optional root className (placement only).
  */
-export const LearningHistoryPage = ({
-    className,
-}: LearningHistoryPageProps) => {
+export const LearningHistoryPage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -95,11 +84,11 @@ export const LearningHistoryPage = ({
 
     // a selected course → show its detail (day timeline + chapter outline)
     if (selectedCourse) {
-        return <CourseDetail className={className} />
+        return <CourseDetail />
     }
 
     return (
-        <div className={cn("flex flex-col gap-10", className)}>
+        <div className={"flex flex-col gap-10"}>
             <PageHeader
                 breadcrumb={<SettingsBreadcrumb current={t("profileSettings.learning.history.title")} />}
                 title={t("profileSettings.learning.history.title")}

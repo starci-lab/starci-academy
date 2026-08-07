@@ -44,7 +44,6 @@ import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/
 import { Box } from "@/components/frames/Box"
 import { Cluster } from "@/components/frames/Cluster"
 import { StackH, StackV } from "@/components/frames/Stack"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Single-select difficulty filter value — `"all"` clears the filter. */
 type DifficultyFilterValue = "all" | string
@@ -69,8 +68,7 @@ const scoreToneClass = (score: number): string => {
 }
 
 /** Props for {@link ProfileChallengeManagePage}. */
-export type ProfileChallengeManagePageProps = WithClassNames<undefined>
-
+export type ProfileChallengeManagePageProps = Record<string, never>
 /**
  * `/profile/<u>/challenges/<courseSlug>` — the MANAGE tier of the 3-tier
  * challenges flow: search ONE course's passed-challenge submissions, with sort
@@ -83,9 +81,7 @@ export type ProfileChallengeManagePageProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const ProfileChallengeManagePage = ({
-    className,
-}: ProfileChallengeManagePageProps) => {
+export const ProfileChallengeManagePage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -162,7 +158,7 @@ export const ProfileChallengeManagePage = ({
     const hasActiveFilter = Boolean(search.trim() || difficultyFilter !== "all" || languageFilter !== "all")
 
     return (
-        <div className={cn("mx-auto flex max-w-4xl flex-col gap-6", className)}>
+        <div className={"mx-auto flex max-w-4xl flex-col gap-6"}>
             <PageHeader
                 breadcrumb={(
                     <BackLink

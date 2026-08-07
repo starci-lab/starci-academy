@@ -1,6 +1,5 @@
 import React from "react"
 import { Typography, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One day's bar in a {@link DeadlineCallout}'s forecast row. */
 export interface DeadlineCalloutForecastBar {
@@ -13,7 +12,7 @@ export interface DeadlineCalloutForecastBar {
 }
 
 /** Props for the {@link DeadlineCallout} block. */
-export interface DeadlineCalloutProps extends WithClassNames<undefined> {
+export interface DeadlineCalloutProps {
     /** How many items are about to be lost — rendered large inside the tinted panel. */
     count: number
     /** The deadline sentence (e.g. "12 cards will slip before Thursday"). */
@@ -47,11 +46,9 @@ export const DeadlineCallout = ({
     title,
     hint,
     forecast,
-    caption,
-    className,
-}: DeadlineCalloutProps) => {
+    caption}: DeadlineCalloutProps) => {
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className={"flex flex-col gap-3"}>
             <div className="flex items-center gap-3 rounded-2xl border border-warning-soft-foreground bg-warning-soft p-3">
                 <Typography type="h3" weight="bold" className="shrink-0 text-warning-soft-foreground">
                     {count}

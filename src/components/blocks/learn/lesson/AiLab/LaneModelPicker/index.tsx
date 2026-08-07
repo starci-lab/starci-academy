@@ -6,16 +6,7 @@ import {
     SparkleIcon,
 } from "@phosphor-icons/react"
 import React from "react"
-import {
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownPopover,
-    DropdownSection,
-    DropdownTrigger,
-    Tooltip,
-    cn,
-} from "@heroui/react"
+import { Dropdown, DropdownItem, DropdownMenu, DropdownPopover, DropdownSection, DropdownTrigger, Tooltip } from "@heroui/react"
 import {
     useTranslations,
 } from "next-intl"
@@ -24,11 +15,10 @@ import type {
 } from "../types"
 import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
 import { type AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { AiCategoryChip } from "@/components/blocks/chips/AiCategoryChip"
 
 /** Props for {@link LaneModelPicker}. */
-export type LaneModelPickerProps = WithClassNames<undefined> & {
+export type LaneModelPickerProps = {
     /** Enabled models the user can pick from (from the `aiModels` catalog). */
     models: Array<AiGradableModel>
     /** The current lane + model selection. */
@@ -58,9 +48,7 @@ export const LaneModelPicker = ({
     canPremium,
     isDisabled = false,
     onSelect,
-    onUpgrade,
-    className,
-}: LaneModelPickerProps) => {
+    onUpgrade}: LaneModelPickerProps) => {
     const t = useTranslations()
     const isAuto = selection.model === null
     const triggerLabel = isAuto
@@ -71,7 +59,7 @@ export const LaneModelPicker = ({
         <Dropdown>
             <DropdownTrigger
                 isDisabled={isDisabled}
-                className={cn("cursor-pointer", className)}
+                className={"cursor-pointer"}
             >
                 <div className="flex items-center gap-2">
                     <SparkleIcon className="size-5" />

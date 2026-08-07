@@ -3,22 +3,15 @@
 import type {
     BaseSyntheticEvent,
 } from "react"
-import {
-    Button,
-    ProgressBar,
-    Spinner,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Button, ProgressBar, Spinner, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Dropzone } from "@/components/blocks/form/Dropzone"
 
 /** Max CV upload size (10MB), mirrored in the drop hint copy. */
 const MAX_CV_BYTES = 10 * 1024 * 1024
 
 /** Props for {@link CvSubmissionFields}. */
-export interface CvSubmissionFieldsProps extends WithClassNames<undefined> {
+export interface CvSubmissionFieldsProps {
     /** Currently selected CV file, or `null`. */
     cv: File | null
     /** Validation error message for the `cv` field, if any. */
@@ -61,13 +54,11 @@ export const CvSubmissionFields = ({
     uploadProgress,
     uploadedFileName,
     uploadedS3Key,
-    onProcess,
-    className,
-}: CvSubmissionFieldsProps) => {
+    onProcess}: CvSubmissionFieldsProps) => {
     const t = useTranslations("cv.submission")
 
     return (
-        <form onSubmit={onSubmit} className={cn("flex flex-col gap-3", className)}>
+        <form onSubmit={onSubmit} className={"flex flex-col gap-3"}>
             <div className="flex flex-col gap-2">
                 <Typography type="body-sm" weight="medium">{t("uploadLabel")}</Typography>
                 <Dropzone

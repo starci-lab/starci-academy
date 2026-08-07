@@ -12,8 +12,6 @@ import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { ReactionBar } from "./ReactionBar"
 import { CommentComposer } from "./CommentComposer"
 import { ReactionType, type CommentNode } from "@/modules/api/graphql/queries/types/discussion"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
 /** Callbacks shared down the comment tree. */
 export interface CommentItemCallbacks {
     /** Post a reply under `parentId`. */
@@ -29,7 +27,7 @@ export interface CommentItemCallbacks {
 }
 
 /** Props for {@link CommentItem}. */
-export interface CommentItemProps extends CommentItemCallbacks, WithClassNames<undefined> {
+export interface CommentItemProps extends CommentItemCallbacks {
     /** The comment to render. */
     comment: CommentNode
     /** Current viewer id (drives owner-only actions); null when unknown. */
@@ -57,9 +55,7 @@ export const CommentItem = ({
     onEdit,
     onDelete,
     onReactComment,
-    onLoadReplies,
-    className,
-}: CommentItemProps) => {
+    onLoadReplies}: CommentItemProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -82,12 +78,9 @@ export const CommentItem = ({
 
     return (
         <div
-            className={cn(
-                "flex flex-col gap-2",
+            className={cn("flex flex-col gap-2",
                 // indent nested replies with a guide border, capped after a few levels
-                depth > 0 ? "border-l border-default pl-3 @app-sm:pl-4" : undefined,
-                className,
-            )}
+                depth > 0 ? "border-l border-default pl-3 @app-sm:pl-4" : undefined)}
         >
             <div className="flex gap-3">
                 <UserAvatar

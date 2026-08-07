@@ -1,11 +1,9 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { cn } from "@heroui/react"
 import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for the {@link ActivityAvatar} block. */
-export interface ActivityAvatarProps extends WithClassNames<undefined> {
+export interface ActivityAvatarProps {
     /** Main avatar's username — drives the image / initials fallback. */
     username: string
     /** Uploaded avatar URL (a generated default is used when missing). */
@@ -27,11 +25,9 @@ export interface ActivityAvatarProps extends WithClassNames<undefined> {
 export const ActivityAvatar = ({
     username,
     avatar,
-    icon,
-    className,
-}: ActivityAvatarProps) => {
+    icon}: ActivityAvatarProps) => {
     return (
-        <div className={cn("relative shrink-0", className)}>
+        <div className={"relative shrink-0"}>
             <UserAvatar
                 className="size-9"
                 username={username}

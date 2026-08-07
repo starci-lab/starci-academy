@@ -1,7 +1,5 @@
 import React from "react"
-import { Accordion, cn, Typography } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
+import { Accordion, Typography } from "@heroui/react"
 /** One blunt truth + how the product answers it. */
 export interface TruthListItem {
     /** The uncomfortable truth (the headline statement). */
@@ -11,7 +9,7 @@ export interface TruthListItem {
 }
 
 /** Props for the {@link TruthList} block. */
-export interface TruthListProps extends WithClassNames<undefined> {
+export interface TruthListProps {
     /** Ordered truths — each a broken industry reality + the product's answer. */
     items: Array<TruthListItem>
     /** Optional signature footer (who is saying this) — e.g. a founder byline. */
@@ -27,9 +25,9 @@ export interface TruthListProps extends WithClassNames<undefined> {
  *
  * @param props - {@link TruthListProps}
  */
-export const TruthList = ({ items, byline, className }: TruthListProps) => {
+export const TruthList = ({ items, byline}: TruthListProps) => {
     return (
-        <div className={cn("overflow-hidden rounded-3xl bg-surface shadow-surface", className)}>
+        <div className={"overflow-hidden rounded-3xl bg-surface shadow-surface"}>
             {/* Accordion Card: p-0 flush frame, the accordion surface owns its background + separators + corner radius.
                 Each truth = a trigger (statement) that opens its explanation. NO Accordion.Indicator
                 → no caret (teacher's ruling); the trigger hover is the affordance. */}

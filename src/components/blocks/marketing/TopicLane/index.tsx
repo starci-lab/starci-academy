@@ -1,7 +1,6 @@
 import React from "react"
-import { cn, Typography } from "@heroui/react"
+import { Typography } from "@heroui/react"
 import type { ReactNode } from "react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One topic row in a {@link TopicLane}. */
 export interface TopicLaneItem {
@@ -14,7 +13,7 @@ export interface TopicLaneItem {
 }
 
 /** Props for the {@link TopicLane} block. */
-export interface TopicLaneProps extends WithClassNames<undefined> {
+export interface TopicLaneProps {
     /** Lane icon (e.g. code vs infrastructure). */
     icon: ReactNode
     /** Lane title. */
@@ -31,9 +30,9 @@ export interface TopicLaneProps extends WithClassNames<undefined> {
  *
  * @param props - {@link TopicLaneProps}
  */
-export const TopicLane = ({ icon, title, items, className }: TopicLaneProps) => {
+export const TopicLane = ({ icon, title, items}: TopicLaneProps) => {
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div className={"flex flex-col gap-3"}>
             <div className="flex items-center gap-2">
                 <span className="text-accent-soft-foreground [&>svg]:size-4">{icon}</span>
                 <Typography type="body-sm" weight="semibold">

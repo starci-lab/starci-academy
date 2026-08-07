@@ -1,11 +1,8 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
 /** Props for {@link HighlightCard}. */
-export interface HighlightCardProps extends WithClassNames<undefined> {
+export interface HighlightCardProps {
     /** The wrapped card (e.g. a `SectionCard`/`Card`) — `HighlightCard` only adds the sweeping-light layer, it renders no card chrome of its own. */
     children: React.ReactNode
 }
@@ -24,8 +21,8 @@ export interface HighlightCardProps extends WithClassNames<undefined> {
  * @param props - {@link HighlightCardProps}
  * @see Story: .storybook/stories/blocks/cards/HighlightCard/HighlightCard.stories
  */
-export const HighlightCard = ({ children, className }: HighlightCardProps) => (
-    <div className={cn("relative", className)}>
+export const HighlightCard = ({ children}: HighlightCardProps) => (
+    <div className={"relative"}>
         <div aria-hidden className="highlight-card-sweep" />
         {children}
     </div>

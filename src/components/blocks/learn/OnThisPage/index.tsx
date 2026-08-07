@@ -10,9 +10,6 @@ import {
 import {
     useTranslations,
 } from "next-intl"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import {
     useTableOfContents,
 } from "./hooks/useTableOfContents"
@@ -29,7 +26,7 @@ import { useAppSelector } from "@/redux/hooks"
 import { ContentTab } from "@/redux/slices/tabs"
 
 /** Props for {@link OnThisPage}. */
-export interface OnThisPageProps extends WithClassNames<undefined> {
+export interface OnThisPageProps {
     /**
      * Render as a full-width mobile panel (the bottom-tab "On this page" view):
      * drops the hidden/sticky/width rail chrome and keeps just the body. Default
@@ -49,7 +46,7 @@ export interface OnThisPageProps extends WithClassNames<undefined> {
  *
  * @param props - {@link OnThisPageProps}
  */
-export const OnThisPage = ({ className, mobile = false }: OnThisPageProps) => {
+export const OnThisPage = ({ mobile = false }: OnThisPageProps) => {
     const t = useTranslations()
     const contentId = useAppSelector((state) => state.content.id)
     const contentTab = useAppSelector((state) => state.tabs.contentTab)
@@ -78,8 +75,7 @@ export const OnThisPage = ({ className, mobile = false }: OnThisPageProps) => {
                             <Link
                                 key={heading.id}
                                 onPress={() => onJump(heading.id)}
-                                className={cn(
-                                    "cursor-pointer text-start",
+                                className={cn("cursor-pointer text-start",
                                     heading.level >= 3 && "pl-3",
                                     heading.id === activeId ? "text-accent-soft-foreground" : "text-muted",
                                 )}
@@ -105,15 +101,13 @@ export const OnThisPage = ({ className, mobile = false }: OnThisPageProps) => {
 
     // mobile bottom-tab "On this page" view: full-width panel, no rail chrome
     if (mobile) {
-        return <div className={cn("flex flex-col gap-6 p-6", className)}>{body}</div>
+        return <div className={"flex flex-col gap-6 p-6"}>{body}</div>
     }
 
     return (
         <aside
             className={cn(
-                "hidden w-64 shrink-0 @app-lg:ml-8 @app-lg:block @app-lg:sticky @app-lg:top-16 @app-lg:self-start @app-lg:max-h-[calc(100dvh-4rem)]",
-                className,
-            )}
+                "hidden w-64 shrink-0 @app-lg:ml-8 @app-lg:block @app-lg:sticky @app-lg:top-16 @app-lg:self-start @app-lg:max-h-[calc(100dvh-4rem)]")}
         >
             {/* ScrollShadow owns the overflow + fades the top/bottom edges so a long
                 outline reads as scrollable (the rail often overflows the viewport). */}

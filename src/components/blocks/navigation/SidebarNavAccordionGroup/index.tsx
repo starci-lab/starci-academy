@@ -13,10 +13,6 @@ import {
 import type {
     IconComponent,
 } from "@/types"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-
 /** One expandable child destination inside a {@link SidebarNavAccordionGroup}. */
 export interface SidebarNavAccordionChild {
     /** Stable list key. */
@@ -30,7 +26,7 @@ export interface SidebarNavAccordionChild {
 }
 
 /** Props for the {@link SidebarNavAccordionGroup} block. */
-export interface SidebarNavAccordionGroupProps extends WithClassNames<undefined> {
+export interface SidebarNavAccordionGroupProps {
     /** Leading icon of the group trigger row. */
     icon: IconComponent
     /** Visible label of the group trigger row. */
@@ -55,14 +51,12 @@ export interface SidebarNavAccordionGroupProps extends WithClassNames<undefined>
 export const SidebarNavAccordionGroup = ({
     icon: Icon,
     label,
-    items,
-    className,
-}: SidebarNavAccordionGroupProps) => {
+    items}: SidebarNavAccordionGroupProps) => {
     // collapsed rail (icon-only) has no room for a panel — fall back to the
     // plain icon trigger; the accordion still expands on click if pressed.
     const collapsed = useSidebarCollapsed()
     return (
-        <Accordion variant="default" className={cn("w-full", className)}>
+        <Accordion variant="default" className={"w-full"}>
             <Accordion.Item aria-label={label}>
                 <Accordion.Heading>
                     <Accordion.Trigger

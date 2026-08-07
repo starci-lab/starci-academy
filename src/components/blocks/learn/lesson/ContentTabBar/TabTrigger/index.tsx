@@ -3,11 +3,8 @@
 import type { IconComponent } from "@/types"
 import { LockIcon } from "@phosphor-icons/react"
 import React from "react"
-import { cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
 /** Props for {@link TabTrigger}. */
-export interface TabTriggerProps extends WithClassNames<undefined> {
+export interface TabTriggerProps {
     /** Icon rendered before the label. */
     icon: IconComponent
     /** Translated tab label. */
@@ -26,13 +23,11 @@ export interface TabTriggerProps extends WithClassNames<undefined> {
 export const TabTrigger = ({
     icon: TabIcon,
     label,
-    locked,
-    className,
-}: TabTriggerProps) => {
+    locked}: TabTriggerProps) => {
     // When gated, the lock OVERRIDES the tab's own icon (one icon, not icon + lock).
     const Icon = locked ? LockIcon : TabIcon
     return (
-        <div className={cn("flex items-center gap-2", className)}>
+        <div className={"flex items-center gap-2"}>
             <Icon className="size-4" aria-label={locked ? label : undefined} />
             <span>{label}</span>
         </div>

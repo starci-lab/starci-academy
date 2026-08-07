@@ -1,14 +1,12 @@
 "use client"
 
 import React from "react"
-import { cn } from "@heroui/react"
 import {
     EnvelopeSimpleIcon,
     PhoneIcon,
     ClockIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { FounderCard } from "./FounderCard"
 import {
     CONTACT_EMAIL,
@@ -20,8 +18,7 @@ import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Props for {@link ContactChannels}. */
-export type ContactChannelsProps = WithClassNames<undefined>
-
+export type ContactChannelsProps = Record<string, never>
 /**
  * Left rail of the contact page: the real direct channels (email · phone · support
  * hours) plus the founder card. Static, honest data — no fake form, no fabricated
@@ -29,10 +26,10 @@ export type ContactChannelsProps = WithClassNames<undefined>
  *
  * @param props - optional className (placement only).
  */
-export const ContactChannels = ({ className }: ContactChannelsProps) => {
+export const ContactChannels = () => {
     const t = useTranslations()
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
+        <div className={"flex flex-col gap-6"}>
             <LabeledCard label={t("contact.direct.title")} flushContent>
                 <SurfaceListCard bordered>
                     <SurfaceListCardRow

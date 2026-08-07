@@ -9,7 +9,6 @@ import {
     Chip,
     ProgressBar,
 } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type {
     ProviderUploadStatus,
 } from "../../types"
@@ -21,7 +20,7 @@ import {
 } from "../../map"
 
 /** Props for {@link ProviderUploadRow}. */
-export interface ProviderUploadRowProps extends WithClassNames<undefined> {
+export interface ProviderUploadRowProps {
     /** Per-provider upload status to render. */
     upload: ProviderUploadStatus
     /** Zero-based index of this row, used for the copy button's element id. */

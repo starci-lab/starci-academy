@@ -37,7 +37,6 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { StackH, StackV } from "@/components/frames/Stack"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Score → attention colour the eye catches fast: high green, mid yellow, low red.
@@ -55,8 +54,7 @@ const scoreToneClass = (score: number): string => {
 }
 
 /** Props for {@link ProfileProjectRoadmapPage}. */
-export type ProfileProjectRoadmapPageProps = WithClassNames<undefined>
-
+export type ProfileProjectRoadmapPageProps = Record<string, never>
 /**
  * `/profile/<u>/projects/<courseGlobalId>` — the DETAIL tier of the projects
  * flow: the FULL milestone/task roadmap of ONE capstone course, no inline
@@ -67,9 +65,7 @@ export type ProfileProjectRoadmapPageProps = WithClassNames<undefined>
  *
  * @param props - optional className for the root element.
  */
-export const ProfileProjectRoadmapPage = ({
-    className,
-}: ProfileProjectRoadmapPageProps) => {
+export const ProfileProjectRoadmapPage = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -108,7 +104,7 @@ export const ProfileProjectRoadmapPage = ({
     const notFound = !resolvedLoading && !projectsError && !project
 
     return (
-        <div className={cn("mx-auto flex max-w-4xl flex-col gap-6", className)}>
+        <div className={"mx-auto flex max-w-4xl flex-col gap-6"}>
             <PageHeader
                 breadcrumb={(
                     <BackLink

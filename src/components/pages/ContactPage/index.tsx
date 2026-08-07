@@ -5,7 +5,6 @@ import {
     Typography,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ContactChannels } from "./ContactChannels"
 import { ContactForm } from "./ContactForm"
 import { ContactFaq } from "./ContactFaq"
@@ -16,8 +15,7 @@ import { Grid } from "@/components/frames/Grid"
 import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link Contact}. */
-export type ContactPageProps = WithClassNames<undefined>
-
+export type ContactPageProps = Record<string, never>
 /**
  * Contact page (`/[locale]/contact`). Founder-led routing: a header with an honest
  * response-time line, the real direct channels + founder card on the left, a
@@ -27,10 +25,10 @@ export type ContactPageProps = WithClassNames<undefined>
  *
  * @param props - optional className (placement only).
  */
-export const ContactPage = ({ className }: ContactPageProps) => {
+export const ContactPage = () => {
     const t = useTranslations()
     return (
-        <PageContainer className={className}>
+        <PageContainer>
             <div className="flex flex-col gap-10">
                 <StackV
                     gap={3}

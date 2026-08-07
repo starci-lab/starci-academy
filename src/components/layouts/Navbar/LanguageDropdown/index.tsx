@@ -11,13 +11,11 @@ import {
 import { useLocale, useTranslations } from "next-intl"
 import { usePathname, useRouter } from "@/i18n/navigation"
 import { languages } from "@/resources/constants/lang"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * Props for {@link LanguageDropdown}.
  */
-export type LanguageDropdownProps = WithClassNames<undefined>
-
+export type LanguageDropdownProps = Record<string, never>
 /**
  * Standalone language switcher for the navbar — a globe-icon dropdown listing the
  * available locales with a single-selection check (Dropdown.ItemIndicator) on the
@@ -27,7 +25,7 @@ export type LanguageDropdownProps = WithClassNames<undefined>
  *
  * @param props - optional root class name (placement only)
  */
-export const LanguageDropdown = ({ className }: LanguageDropdownProps) => {
+export const LanguageDropdown = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -48,7 +46,6 @@ export const LanguageDropdown = ({ className }: LanguageDropdownProps) => {
                 isIconOnly
                 variant="tertiary"
                 aria-label={t("nav.toggleLanguage")}
-                className={className}
             >
                 <TranslateIcon className="size-5" />
             </Button>

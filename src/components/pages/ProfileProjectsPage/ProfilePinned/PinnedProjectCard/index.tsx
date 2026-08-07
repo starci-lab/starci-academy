@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import React from "react"
 import {
@@ -13,7 +13,6 @@ import {
     CodeIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { QueryUserPinnedProjectItem } from "@/modules/api/graphql/queries/types/user-pinned-projects"
 import { Box } from "@/components/frames/Box"
 import { Cluster } from "@/components/frames/Cluster"
@@ -23,7 +22,7 @@ import { StackH, StackV } from "@/components/frames/Stack"
 const MAX_TECH_CHIPS = 3
 
 /** Props for {@link PinnedProjectCard}. */
-export interface PinnedProjectCardProps extends WithClassNames<undefined> {
+export interface PinnedProjectCardProps {
     /** The pinned project to render (list-item data prop — store can't index it). */
     pin: QueryUserPinnedProjectItem
 }
@@ -34,7 +33,7 @@ export interface PinnedProjectCardProps extends WithClassNames<undefined> {
  *
  * @param props - {@link PinnedProjectCardProps}
  */
-export const PinnedProjectCard = ({ pin, className }: PinnedProjectCardProps) => {
+export const PinnedProjectCard = ({ pin}: PinnedProjectCardProps) => {
     const t = useTranslations()
 
     const isCourse = pin.type === "course"
@@ -75,8 +74,7 @@ export const PinnedProjectCard = ({ pin, className }: PinnedProjectCardProps) =>
                                 items={[
                                     () => (
                                         <span
-                                            className={cn(
-                                                "inline-flex items-center rounded-full px-2 py-0 text-xs",
+                                            className={cn("inline-flex items-center rounded-full px-2 py-0 text-xs",
                                                 isCourse
                                                     ? "bg-success-soft text-success-soft-foreground"
                                                     : "border border-default text-muted",
@@ -144,9 +142,7 @@ export const PinnedProjectCard = ({ pin, className }: PinnedProjectCardProps) =>
 
     const cardClassName = cn(
         "group flex flex-col overflow-hidden rounded-2xl border bg-surface",
-        pin.isVerified ? "border-success/40" : "border-default",
-        className,
-    )
+        pin.isVerified ? "border-success/40" : "border-default")
 
     if (pin.url) {
         return (

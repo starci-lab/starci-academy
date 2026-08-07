@@ -9,11 +9,9 @@ import { useAppSelector } from "@/redux/hooks"
 import { _FlashcardStudyRail } from "./component"
 import type { FlashcardStudyRailDeck } from "./component"
 import type { FlashcardDeckEntity } from "@/modules/types/entities/flashcard-deck"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link FlashcardStudyRail}. */
-export type FlashcardStudyRailProps = WithClassNames<undefined>
-
+export type FlashcardStudyRailProps = Record<string, never>
 /**
  * The flashcards LEFT RAIL — CONNECTED half of {@link _FlashcardStudyRail}
  * (`tiers/split.md`): fetches the course's decks, owns the mode/deck/search
@@ -25,7 +23,7 @@ export type FlashcardStudyRailProps = WithClassNames<undefined>
  *
  * @param props - {@link FlashcardStudyRailProps}
  */
-export const FlashcardStudyRail = ({ className }: FlashcardStudyRailProps) => {
+export const FlashcardStudyRail = () => {
     const t = useTranslations()
     const courseId = useAppSelector((state) => state.course.entity?.id)
     const { mode, deckId, session, goMode, goDeck } = useFlashcardNav()
@@ -71,7 +69,6 @@ export const FlashcardStudyRail = ({ className }: FlashcardStudyRailProps) => {
 
     return (
         <_FlashcardStudyRail
-            className={className}
             isSkeleton={isSkeleton}
             isEmpty={isEmpty}
             error={settledError}

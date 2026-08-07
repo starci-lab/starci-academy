@@ -1,12 +1,11 @@
 "use client"
 
 import React from "react"
-import { Badge, Button, cn } from "@heroui/react"
+import { Badge, Button } from "@heroui/react"
 import { ShoppingCartIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useCart } from "@/hooks/useCart"
 import { useCartEntry } from "@/hooks/useCartEntry"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Largest cart count rendered verbatim on the badge before showing "9+". */
 const MAX_BADGE = 9
@@ -14,8 +13,7 @@ const MAX_BADGE = 9
 /**
  * Props for {@link CartButton}.
  */
-export type CartButtonProps = WithClassNames<undefined>
-
+export type CartButtonProps = Record<string, never>
 /**
  * Navbar shopping-cart button: a tertiary icon button ALWAYS shown (guests included,
  * so the cart is discoverable) with an accent count badge only when the cart is
@@ -24,7 +22,7 @@ export type CartButtonProps = WithClassNames<undefined>
  * after sign-in). Reads {@link useCart} + {@link useCartEntry} directly (no props).
  * @param props - optional root class name (placement only)
  */
-export const CartButton = ({ className }: CartButtonProps) => {
+export const CartButton = () => {
     const t = useTranslations()
     const { count } = useCart()
     const { openCartOrAuth } = useCartEntry()
@@ -36,7 +34,7 @@ export const CartButton = ({ className }: CartButtonProps) => {
         <Button
             isIconOnly
             variant="tertiary"
-            className={cn("rounded-full", className)}
+            className={"rounded-full"}
             aria-label={t("cart.title")}
             onPress={openCartOrAuth}
         >

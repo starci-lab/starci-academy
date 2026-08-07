@@ -1,21 +1,12 @@
 "use client"
 
 import React from "react"
-import {
-    Header,
-    Separator,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Header, Separator, Typography } from "@heroui/react"
 import {
     useSidebarCollapsed,
 } from "../CollapsibleSidebar"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
-
 /** Props for the {@link SidebarNavGroup} block. */
-export interface SidebarNavGroupProps extends WithClassNames<undefined> {
+export interface SidebarNavGroupProps {
     /** Uppercase section label shown above the rows (omit for an unlabelled group). */
     label?: string
     /** Render a full-width {@link Separator} above the group (use to divide groups). */
@@ -37,12 +28,10 @@ export interface SidebarNavGroupProps extends WithClassNames<undefined> {
 export const SidebarNavGroup = ({
     label,
     divider = false,
-    children,
-    className,
-}: SidebarNavGroupProps) => {
+    children}: SidebarNavGroupProps) => {
     const collapsed = useSidebarCollapsed()
     return (
-        <div className={cn("flex flex-col", className)}>
+        <div className={"flex flex-col"}>
             {/* Divider spans the rail's PADDED content width (lines up with the rows) —
                 the single padding wrapper lives on CollapsibleSidebar, so this stays
                 inset, not edge-to-edge. */}

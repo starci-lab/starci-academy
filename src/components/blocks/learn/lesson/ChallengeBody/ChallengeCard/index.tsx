@@ -20,7 +20,6 @@ import { useParams } from "next/navigation"
 import { useRouter } from "@/i18n/navigation"
 import { ChallengeDifficulty } from "@/modules/types/enums/challenge-difficulty"
 import { type ChallengeEntity } from "@/modules/types/entities/challenge"
-import { type WithClassNames } from "@/modules/types/base/class-name"
 import type { ChallengeProgressStatus } from "@/modules/api/graphql/queries/types/challenge-submission-progress"
 import { DifficultyChip } from "@/components/blocks/chips/DifficultyChip"
 import { toDifficulty } from "@/modules/utils/difficulty"
@@ -53,7 +52,7 @@ const CTA_META: Record<ChallengeProgressStatus, { labelKey: string; icon: Icon }
 }
 
 /** Props for {@link ChallengeCard}. */
-export interface ChallengeCardProps extends WithClassNames<undefined> {
+export interface ChallengeCardProps {
     /** Challenge row displayed in content tab. */
     challenge: ChallengeEntity
 }
@@ -65,7 +64,7 @@ export interface ChallengeCardProps extends WithClassNames<undefined> {
  * right). The card is a static surface — only the footer button navigates.
  * @param {ChallengeCardProps} props Challenge card props.
  */
-export const ChallengeCard = ({ challenge, className }: ChallengeCardProps) => {
+export const ChallengeCard = ({ challenge}: ChallengeCardProps) => {
     const t = useTranslations()
     const router = useRouter()
     const params = useParams()
@@ -107,7 +106,7 @@ export const ChallengeCard = ({ challenge, className }: ChallengeCardProps) => {
         // the utilities aren't overridden by HeroUI Card's unlayered styles). The card itself
         // is static (NOT clickable, no hover/cursor) — only the footer "Do" button navigates.
         // Completed rows are de-emphasized.
-        <div className={cn("rounded-3xl border border-default bg-surface p-4", status === "completed" && "opacity-80", className)}>
+        <div className={cn("rounded-3xl border border-default bg-surface p-4", status === "completed" && "opacity-80")}>
             <div className="flex flex-col gap-3">
                 <div>
                     <div className="flex items-center justify-between gap-2 mb-2">

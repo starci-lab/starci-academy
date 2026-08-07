@@ -28,16 +28,12 @@ import {
     pathConfig,
 } from "@/resources/path"
 import { LabeledList } from "@/components/blocks/lists/LabeledList"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryMyRewardWalletSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyRewardWalletSwr"
 import { useQueryMyDueFlashcardsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDueFlashcardsSwr"
 
 /** Props for {@link QuickActions}. */
-export type QuickActionsProps = WithClassNames<undefined>
-
+export type QuickActionsProps = Record<string, never>
 /**
  * Left-rail "quick access" list — one-tap shortcuts to the surfaces a learner
  * reaches for most (catalog, practice, bookmarks, own profile). Pure navigation;
@@ -46,9 +42,7 @@ export type QuickActionsProps = WithClassNames<undefined>
  * indented HeroUI ListBox. `"use client"` for the redux read.
  * @param props - optional className for the root element.
  */
-export const QuickActions = ({
-    className,
-}: QuickActionsProps) => {
+export const QuickActions = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -132,7 +126,7 @@ export const QuickActions = ({
     )
 
     return (
-        <LabeledList className={className} label={t("DashboardPage.quickActions")}>
+        <LabeledList label={t("DashboardPage.quickActions")}>
             <ListBox
                 aria-label={t("DashboardPage.quickActions")}
                 selectionMode="none"

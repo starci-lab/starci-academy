@@ -2,14 +2,9 @@
 
 import { CopyIcon } from "@phosphor-icons/react"
 import React from "react"
-import {
-    Button,
-    cn,
-} from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-
+import { Button } from "@heroui/react"
 /** Props for {@link DetailRow}. */
-export interface DetailRowProps extends WithClassNames<undefined> {
+export interface DetailRowProps {
     /** Uppercase caption shown above the value. */
     label: string
     /** The value text rendered in the row. */
@@ -38,12 +33,10 @@ export const DetailRow = ({
     showCopy = false,
     copyValue,
     isHighlighted = false,
-    onCopy,
-    className,
-}: DetailRowProps) => {
+    onCopy}: DetailRowProps) => {
     const textToCopy = copyValue ?? value
     return (
-        <div className={cn("flex flex-col gap-2", className)}>
+        <div className={"flex flex-col gap-2"}>
             <span className="text-xs font-semibold uppercase tracking-wide text-muted">
                 {label}
             </span>

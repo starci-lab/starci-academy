@@ -3,11 +3,7 @@
 import React, {
     useMemo,
 } from "react"
-import {
-    Chip,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Chip, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { usePracticeFilters } from "../hooks/usePracticeFilters"
 import { useCodingProblemsSwr } from "../hooks/useCodingProblemsSwr"
@@ -18,7 +14,6 @@ import {
     sortProblems,
 } from "../utils"
 import { ProblemRow } from "./ProblemRow"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
@@ -27,8 +22,7 @@ import { StackH, StackV } from "@/components/frames/Stack"
 import { Box } from "@/components/frames/Box"
 
 /** Props for {@link ProblemCatalog}. */
-export type ProblemCatalogProps = WithClassNames<undefined>
-
+export type ProblemCatalogProps = Record<string, never>
 /** One rendered domain section: the domain plus its (already sorted) problems. */
 interface CatalogGroup {
     /** The domain this section groups. */
@@ -47,9 +41,7 @@ interface CatalogGroup {
  *
  * @param props - optional className for the root element.
  */
-export const ProblemCatalog = ({
-    className,
-}: ProblemCatalogProps) => {
+export const ProblemCatalog = () => {
     const t = useTranslations()
     const { filters, isFiltered, clearFilters } = usePracticeFilters()
 
@@ -88,7 +80,7 @@ export const ProblemCatalog = ({
             // N domain-header sections when grouped, but we keep the skeleton a
             // simple 5-row approximation rather than pre-guessing group shape
             skeleton={(
-                <SurfaceListCard className={className}>
+                <SurfaceListCard>
                     {[0, 1, 2, 3, 4].map((row) => (
                         <SurfaceListCardItem key={row}>
                             <StackH gap={4} align="center" principle="content-row" classNames={["min-w-0"]}
@@ -138,7 +130,7 @@ export const ProblemCatalog = ({
             }}
         >
             {filters.group ? (
-                <div className={cn("flex flex-col gap-6", className)}>
+                <div className={"flex flex-col gap-6"}>
                     {groups.map((group) => (
                         <StackV key={group.domain} gap={3} principle="sibling-stack" as="section"
                             explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
@@ -174,7 +166,7 @@ export const ProblemCatalog = ({
                     ))}
                 </div>
             ) : (
-                <SurfaceListCard className={className}>
+                <SurfaceListCard>
                     {filtered.map((problem) => (
                         <ProblemRow
                             key={problem.id}

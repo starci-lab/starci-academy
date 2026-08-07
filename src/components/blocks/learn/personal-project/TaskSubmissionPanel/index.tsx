@@ -1,10 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import {
-    cn,
-    Drawer,
-} from "@heroui/react"
+import { Drawer } from "@heroui/react"
 import { CaretRightIcon, GearSixIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import {
@@ -19,14 +16,12 @@ import {
 import {
     TaskResults,
 } from "../TaskResults"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { usePersonalProjectGithubStore } from "@/hooks/zustand/personalProjectGithub/store"
 import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link TaskSubmissionPanel}. */
-export type TaskSubmissionPanelProps = WithClassNames<undefined>
-
+export type TaskSubmissionPanelProps = Record<string, never>
 /**
  * The persistent submission panel — the RIGHT, sticky side of the split workspace.
  *
@@ -38,9 +33,7 @@ export type TaskSubmissionPanelProps = WithClassNames<undefined>
  * on the selected task — only the left brief column swaps per task.
  * @param props - optional className for the root element
  */
-export const TaskSubmissionPanel = ({
-    className,
-}: TaskSubmissionPanelProps = {}) => {
+export const TaskSubmissionPanel = () => {
     const t = useTranslations()
     const [isSettingsOpen, setSettingsOpen] = useState(false)
     // read-only summary of the current grading config (what the Drawer edits)
@@ -54,7 +47,7 @@ export const TaskSubmissionPanel = ({
     }
 
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
+        <div className={"flex flex-col gap-6"}>
             <LabeledCard
                 label={t("finalProject.page.submitGithub.title")}
             >

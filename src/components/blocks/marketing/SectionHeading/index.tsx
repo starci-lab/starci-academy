@@ -1,9 +1,8 @@
 import React from "react"
 import { Chip, cn, Typography } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for the {@link SectionHeading} block. */
-export interface SectionHeadingProps extends WithClassNames<undefined> {
+export interface SectionHeadingProps {
     /** Small accent chip above the title (e.g. "Real learning"); omit to hide. */
     eyebrow?: React.ReactNode
     /** Section title. */
@@ -34,17 +33,12 @@ export const SectionHeading = ({
     intro,
     level = 3,
     align = "center",
-    anchorId,
-    className,
-}: SectionHeadingProps) => {
+    anchorId}: SectionHeadingProps) => {
     const centered = align === "center"
     return (
         <div
-            className={cn(
-                "flex flex-col gap-3",
-                centered ? "items-center" : "items-start",
-                className,
-            )}
+            className={cn("flex flex-col gap-3",
+                centered ? "items-center" : "items-start")}
         >
             {eyebrow ? (
                 <Chip variant="soft" color="accent" size="sm">

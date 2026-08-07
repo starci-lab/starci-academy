@@ -1,22 +1,16 @@
 "use client"
 
 import React, { useState } from "react"
-import {
-    Button,
-    Modal,
-    Typography,
-    cn,
-} from "@heroui/react"
+import { Button, Modal, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { SparkleIcon } from "@phosphor-icons/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import type { CvBlock } from "@/modules/types/entities/cv"
 import { CvTextOrFileInput } from "../shared/CvTextOrFileInput"
 import { useMutateTailorCvBlocksSwr } from "@/hooks/swr/api/graphql/mutations/useMutateTailorCvBlocksSwr"
 
 /** Props for {@link CvTailorToJobModal}. */
-export interface CvTailorToJobModalProps extends WithClassNames<undefined> {
+export interface CvTailorToJobModalProps {
     /** Whether the modal is open. */
     isOpen: boolean
     /** Fired when the modal should open/close. */
@@ -43,14 +37,12 @@ export interface CvTailorToJobModalProps extends WithClassNames<undefined> {
  * @param props - {@link CvTailorToJobModalProps}
  */
 export const CvTailorToJobModal = ({
-    className,
     isOpen,
     onOpenChange,
     blocks,
     selectedModel,
     selectedModelProvider,
-    onTailored,
-}: CvTailorToJobModalProps) => {
+    onTailored}: CvTailorToJobModalProps) => {
     const t = useTranslations()
     const [jobDescription, setJobDescription] = useState("")
     const [hasError, setHasError] = useState(false)
@@ -86,7 +78,7 @@ export const CvTailorToJobModal = ({
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             <Modal.Backdrop>
                 <Modal.Container size="lg">
-                    <Modal.Dialog className={cn(className)}>
+                    <Modal.Dialog className={""}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <Typography type="body" weight="semibold" className="pr-8">

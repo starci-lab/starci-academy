@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { cn, Tabs } from "@heroui/react"
+import { Tabs } from "@heroui/react"
 import {
     HouseIcon,
     CompassIcon,
@@ -9,7 +9,6 @@ import {
     TrophyIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { DASHBOARD_TABS } from "../types"
 import type { DashboardTab } from "../types"
 import { ExtendedTabs } from "@/components/blocks/navigation/ExtendedTabs"
@@ -26,8 +25,7 @@ const TAB_ICONS: Record<DashboardTab, typeof HouseIcon> = {
 }
 
 /** Props for {@link DashboardTabsBar}. */
-export type DashboardTabsBarProps = WithClassNames<undefined>
-
+export type DashboardTabsBarProps = Record<string, never>
 /**
  * Full-width DashboardPage tab strip (mirror of the profile page's `ProfileTabsBar`).
  * Registered as the global Navbar's bottom layer ({@link useRegisterNavbarBottomLayer}),
@@ -37,12 +35,12 @@ export type DashboardTabsBarProps = WithClassNames<undefined>
  * store so panels stay in sync. Mobile = icon only; label shows from `md` up.
  * @param props - optional root class name (placement only)
  */
-export const DashboardTabsBar = ({ className }: DashboardTabsBarProps) => {
+export const DashboardTabsBar = () => {
     const t = useTranslations()
     const { tab, setTab } = useDashboardTabStore()
 
     return (
-        <div className={cn("w-full", className)}>
+        <div className={"w-full"}>
             {/* page-pad owns the horizontal inset; py stays 0 so the strip hugs the navbar */}
             <Box principle="page-pad" className="w-full px-6"
                 explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface.">

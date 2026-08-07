@@ -8,7 +8,6 @@ import {
     cn,
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import {
     CV_TWO_COLUMN_TEMPLATES,
     type CvDocument,
@@ -20,7 +19,7 @@ import { CvHtmlDocument } from "../CvHtmlDocument"
 const TEMPLATE_ORDER: ReadonlyArray<CvTemplate> = ["classic", "modern", "sidebar", "minimal"]
 
 /** Props for {@link CvTemplateGalleryModal}. */
-export interface CvTemplateGalleryModalProps extends WithClassNames<undefined> {
+export interface CvTemplateGalleryModalProps {
     /** Whether the modal is open. */
     isOpen: boolean
     /** Fired when the modal should open/close. */
@@ -41,12 +40,10 @@ export interface CvTemplateGalleryModalProps extends WithClassNames<undefined> {
  * @param props - {@link CvTemplateGalleryModalProps}
  */
 export const CvTemplateGalleryModal = ({
-    className,
     isOpen,
     onOpenChange,
     doc,
-    onSelect,
-}: CvTemplateGalleryModalProps) => {
+    onSelect}: CvTemplateGalleryModalProps) => {
     const t = useTranslations()
     const current = doc.style.template ?? "classic"
 
@@ -59,7 +56,7 @@ export const CvTemplateGalleryModal = ({
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             <Modal.Backdrop>
                 <Modal.Container size="lg">
-                    <Modal.Dialog className={cn(className)}>
+                    <Modal.Dialog className={""}>
                         <Modal.CloseTrigger />
                         <Modal.Header>
                             <Typography type="body" weight="semibold" className="pr-8">

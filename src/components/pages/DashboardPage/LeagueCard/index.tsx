@@ -11,9 +11,6 @@ import {
 import {
     pathConfig,
 } from "@/resources/path"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryMyLeagueSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyLeagueSwr"
 import type { QueryMyLeagueEntryData } from "@/modules/api/graphql/queries/types/league"
@@ -26,7 +23,7 @@ import {
 const TOP_ROWS = 5
 
 /** Props for {@link LeagueCard}. */
-export interface LeagueCardProps extends WithClassNames<undefined> {
+export interface LeagueCardProps {
     /**
      * When true, render the league inside a `LabeledCard` (title as a Label OUTSIDE
      * the card) instead of the flat inline heading — used on the DashboardPage Community
@@ -64,9 +61,7 @@ const toEntry = (
  * @param props - {@link LeagueCardProps}
  */
 export const LeagueCard = ({
-    className,
-    framed = false,
-}: LeagueCardProps) => {
+    framed = false}: LeagueCardProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -124,7 +119,6 @@ export const LeagueCard = ({
 
     return (
         <_LeagueCard
-            className={className}
             framed={framed}
             isSkeleton={isSkeleton}
             isEmpty={isEmpty}

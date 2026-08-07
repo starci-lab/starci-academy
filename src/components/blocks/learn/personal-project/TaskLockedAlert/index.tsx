@@ -4,11 +4,7 @@ import React, {
     useCallback,
     useMemo,
 } from "react"
-import {
-    Alert,
-    Button,
-    cn,
-} from "@heroui/react"
+import { Alert, Button } from "@heroui/react"
 import {
     useTranslations,
     useLocale,
@@ -19,15 +15,13 @@ import {
 import {
     pathConfig,
 } from "@/resources/path"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { setSelectedTaskId } from "@/redux/slices/milestone"
 import { useQueryMilestoneTaskProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskProgressSwr"
 import { buildMilestoneTaskProgressLookup, isPersonalProjectTaskActionUnlocked } from "@/components/utils/task-lookup"
 
 /** Props for {@link TaskLockedAlert}. */
-export type TaskLockedAlertProps = WithClassNames<undefined>
-
+export type TaskLockedAlertProps = Record<string, never>
 /**
  * Warning alert shown when previewing a locked (not-yet-unlocked) task.
  *
@@ -39,9 +33,7 @@ export type TaskLockedAlertProps = WithClassNames<undefined>
  * routing and i18n.
  * @param props - optional className (unused; alert shape is fixed)
  */
-export const TaskLockedAlert = ({
-    className,
-}: TaskLockedAlertProps = {}) => {
+export const TaskLockedAlert = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -113,7 +105,7 @@ export const TaskLockedAlert = ({
 
     return (
         <>
-            <Alert status="warning" className={cn("shadow-none bg-warning-soft", className)}>
+            <Alert status="warning" className={"shadow-none bg-warning-soft"}>
                 <Alert.Indicator />
                 <Alert.Content className="gap-2">
                     <Alert.Title>{t("task.previewLockedAlertTitle")}</Alert.Title>

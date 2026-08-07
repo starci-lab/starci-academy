@@ -8,10 +8,9 @@ import { ARCHITECTURE_MODULES } from "../../modules"
 import type { HealthByName } from "../../hooks/useSystemHealthPoll"
 import { getArchitectureStatusVisual, resolveArchitectureStatus } from "../../statusVisual"
 import { StackH } from "@/components/frames/Stack"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ArchitectureMobileNav}. */
-export interface ArchitectureMobileNavProps extends WithClassNames<undefined> {
+export interface ArchitectureMobileNavProps {
     /** Live health keyed by component name, or `null` before the first probe resolves. */
     healthByName: HealthByName | null
     /** Selected node id, mirrored to `?node=`. */
@@ -80,13 +79,13 @@ const ModuleChip = ({
  *
  * @param props - {@link ArchitectureMobileNavProps}
  */
-export const ArchitectureMobileNav = ({ healthByName, selectedId, onSelect, className }: ArchitectureMobileNavProps) => {
+export const ArchitectureMobileNav = ({ healthByName, selectedId, onSelect}: ArchitectureMobileNavProps) => {
     const t = useTranslations("architecture")
     const ownComponents = ARCHITECTURE_COMPONENTS.filter((c) => c.group === "own")
     const externalComponents = ARCHITECTURE_COMPONENTS.filter((c) => c.group === "external")
 
     return (
-        <div className={cn("flex flex-col gap-3 @app-lg:hidden", className)}>
+        <div className={"flex flex-col gap-3 @app-lg:hidden"}>
             <div data-principle="sibling-stack" className="flex flex-col gap-2">
                 <Typography type="body-xs" color="muted">{t("rail.ownGroup")}</Typography>
                 <ScrollShadow orientation="horizontal" hideScrollBar className="overflow-x-auto pb-1">

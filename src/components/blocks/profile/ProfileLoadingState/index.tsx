@@ -75,7 +75,7 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
     // passes `content` and stays untouched by the list's own shimmer branch.
     const readinessTrack = (
         <>
-            <Typography size="sm" isSkeleton classNames={["w-1/2"]} />
+            <Typography size="sm" isSkeleton />
             <ProgressBar isSkeleton />
             <ProgressBar isSkeleton />
         </>
@@ -91,7 +91,7 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
     const courseItems: Array<SurfaceCardListItem> = [0, 1].map((i) => {
         const progressHeader = (
             <>
-                <Typography size="sm" isSkeleton classNames={["w-1/2"]} />
+                <Typography size="sm" isSkeleton />
                 <Typography size="xs" isSkeleton classNames={["w-1/4", "shrink-0"]} />
             </>
         )
@@ -125,7 +125,7 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
         )
         const skillCard = (
             <>
-                <Typography size="h4" isSkeleton classNames={["w-1/2"]} />
+                <Typography size="h4" isSkeleton />
                 <SurfaceCard
                     padding={4}
                     body={() => <StackV gap={3} items={[() => statCardBody]} />}
@@ -155,7 +155,7 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
     const nameBlock = (
         <>
             <Typography size="h3" isSkeleton classNames={["w-3/4"]} />
-            <Typography size="sm" isSkeleton classNames={["w-1/2"]} />
+            <Typography size="sm" isSkeleton />
             <Typography size="sm" isSkeleton classNames={["w-1/3"]} />
         </>
     )
@@ -237,7 +237,7 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
     // job readiness — headline metric card + a tracked-goal row
     const readinessSection = (
         <>
-            <Typography size="h4" isSkeleton classNames={["w-1/2"]} />
+            <Typography size="h4" isSkeleton />
             <StackV gap={4} items={[() => readinessGroup]} />
         </>
     )
@@ -245,7 +245,7 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
     // courses — icon tile + title/percent + progress rows
     const coursesSection = (
         <>
-            <Typography size="h4" isSkeleton classNames={["w-1/2"]} />
+            <Typography size="h4" isSkeleton />
             <SurfaceCardList
                 items={courseItems}
             />
@@ -264,7 +264,7 @@ export const ProfileLoadingState = ({ identity }: ProfileLoadingStateProps) => {
     )
     const contributionsSection = (
         <>
-            <Typography size="h4" isSkeleton classNames={["w-1/2"]} />
+            <Typography size="h4" isSkeleton />
             <StackV gap={4} items={[() => contributionGroup]} />
         </>
     )

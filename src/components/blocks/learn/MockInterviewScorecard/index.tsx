@@ -158,7 +158,7 @@ const MockInterviewScorecard = ({
             isSkeleton={isSkeleton}
             items={[
                 () => (isSkeleton ? (
-                    <Typography size="sm" weight="medium" isSkeleton classNames={["w-1/2"]} />
+                    <Typography size="sm" weight="medium" isSkeleton />
                 ) : promptTitle != null ? (
                     <Typography size="sm" weight="medium" text={promptTitle} />
                 ) : null),

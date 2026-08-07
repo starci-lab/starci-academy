@@ -70,7 +70,6 @@ export const TaskCriteriaList = ({
         // above this list — a label here would be label-on-label (accordion.md §3d).
         // The per-criterion score rides in the header via `titleEnd`.
         <LabeledAccordionCard
-            className={className}
             allowsMultipleExpanded
             items={sortedCriterias.map((criteria, index) => ({
                 id: criteria.id,

@@ -23,7 +23,7 @@ export const CardBody = ({
         <>
             <Typography weight="medium" truncate isSkeleton={isSkeleton} text={title} />
             {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} />
+                <Typography size="xs" color="muted" isSkeleton />
             ) : meta?.length || timeLeft ? (
                 <ListMeta
                     items={meta ?? []}

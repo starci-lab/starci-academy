@@ -40,7 +40,7 @@ const CommunityFeedSkeletonRow = () => (
                                 <StackV gap={3} principle="identity"
                                     explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
                                     classNames={["min-w-0", "flex-1"]} items={[
-                                        () => <Typography size="sm" isSkeleton classNames={["w-1/2"]} />,
+                                        () => <Typography size="sm" isSkeleton />,
                                         () => <Typography size="xs" isSkeleton classNames={["w-3/4"]} />,
                                     ]} />
                             ),

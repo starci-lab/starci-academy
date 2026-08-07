@@ -155,7 +155,7 @@ const ConsultantProfileBody = ({
     // contact fork — see file header for why loading shimmers neutrally
     const contactFork = isSkeleton ? (
         <StackV gap={2} isSkeleton={isSkeleton} items={[
-            () => <Typography size="sm" isSkeleton classNames={["w-1/2"]} />,
+            () => <Typography size="sm" isSkeleton />,
             () => <Typography size="sm" isSkeleton classNames={["w-1/3"]} />,
         ]} />
     ) : contactUnlocked ? (

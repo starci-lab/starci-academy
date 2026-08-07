@@ -81,7 +81,7 @@ export const _TrialConversionStrip = ({
                 // The header + CTA render instantly, but the price is a second fetch —
                 // mirror the price line instead of showing an empty gap until it lands.
                 () => <Typography size="h4" isSkeleton classNames={["w-1/3"]} />,
-                () => <Typography size="xs" isSkeleton classNames={["w-1/2"]} />,
+                () => <Typography size="xs" isSkeleton />,
             ] : price?.discountedPriceVnd != null ? [
                 ({ isSkeleton }: SkeletonProps) => (
                     <PriceTagProminent

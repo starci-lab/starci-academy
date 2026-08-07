@@ -175,7 +175,6 @@ export const CourseOutline = ({
                 // NO `label`: the accordion IS the tab content; the premium lock +
                 // read-count ride in the header via `titleEnd`.
                 <LabeledAccordionCard
-                    className={className}
                     defaultExpandedKeys={defaultOpenId ? new Set([defaultOpenId]) : undefined}
                     items={modules.map((module) => {
                         const read = module.lessons.filter((lesson) => lesson.isRead).length

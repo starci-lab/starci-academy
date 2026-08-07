@@ -27,7 +27,7 @@ const DailyQuestClaimState = ({
     labels,
 }: Pick<DailyQuestProps, "isSkeleton" | "claimed" | "allDone" | "isClaiming" | "onClaim" | "labels">) => (
     isSkeleton ? (
-        <Typography isSkeleton size="xs" classNames={["w-1/2"]} />
+        <Typography isSkeleton size="xs" />
     ) : claimed ? (
         <Chip tone="success" text={labels.claimed} classNames={["self-start"]} />
     ) : allDone ? (

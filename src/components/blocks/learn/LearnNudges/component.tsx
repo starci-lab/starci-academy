@@ -60,7 +60,7 @@ export const _LearnNudges = ({ items, isSkeleton = false, classNames }: LearnNud
     const rows: Array<SurfaceCardListItem> = isSkeleton
         ? Array.from({ length: 2 }, (_unused, index) => ({
             key: `pending-${index}`,
-            content: () => <Typography size="sm" isSkeleton classNames={["w-1/2"]} />,
+            content: () => <Typography size="sm" isSkeleton />,
         }))
         : items.map((item) => ({
             key: item.key,

@@ -187,7 +187,6 @@ export const CourseMilestoneOutline = ({
                 // NO `label`: the accordion IS the tab content (the tab already names it);
                 // per-milestone status + progress ride in the header via `titleEnd`.
                 <LabeledAccordionCard
-                    className={className}
                     defaultExpandedKeys={defaultOpenId ? new Set([defaultOpenId]) : undefined}
                     items={milestones.map((milestone) => {
                         const state = milestoneState(milestone)

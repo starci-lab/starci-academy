@@ -1,6 +1,5 @@
 import React, { type ComponentType } from "react"
 import { Accordion, Typography, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
 
@@ -24,7 +23,7 @@ export interface LabeledAccordionCardItem {
 }
 
 /** Props for the {@link LabeledAccordionCard} block. */
-export interface LabeledAccordionCardProps extends WithClassNames<undefined> {
+export interface LabeledAccordionCardProps {
     /**
      * Section label rendered OUTSIDE (above) the card — forwarded to {@link LabeledCard}.
      * OMIT it when the card sits in a pane that already carries a heading/tab of its

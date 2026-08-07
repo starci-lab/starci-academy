@@ -131,7 +131,7 @@ const FoundationHeader = ({
                 ]}
             />
             {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/2"]} />
+                <Typography size="xs" color="muted" isSkeleton />
             ) : hasAuthor ? (
                 <Typography
                     size="xs"

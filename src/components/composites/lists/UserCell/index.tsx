@@ -137,7 +137,7 @@ const UserCellBase = ({
                     <Avatar isSkeleton size={size} />
                 )}
                 <div className="flex min-w-0 flex-col gap-0">
-                    <Typography size="sm" isSkeleton classNames={["w-1/2"]} />
+                    <Typography size="sm" isSkeleton />
                     {handle ? (
                         <Typography size="xs" isSkeleton classNames={["w-1/3"]} />
                     ) : null}

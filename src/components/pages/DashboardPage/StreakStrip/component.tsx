@@ -114,7 +114,7 @@ export const _StreakStrip = ({
                 explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                 align="center" items={[
                     () => <Skeleton className="size-6 shrink-0 rounded-full" />,
-                    () => <Typography isSkeleton size="xs" classNames={["w-1/2"]} />,
+                    () => <Typography isSkeleton size="xs" />,
                 ]} />
         ))
         : days.map((day) => () => (

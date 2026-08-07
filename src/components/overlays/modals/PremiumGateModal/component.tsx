@@ -178,7 +178,7 @@ export const _PremiumGateModal = ({
 
     const skeletonPrice = [
         () => <Typography size="h4" isSkeleton classNames={["w-1/3"]} />,
-        () => <Typography size="xs" isSkeleton classNames={["w-1/2"]} />,
+        () => <Typography size="xs" isSkeleton />,
     ]
 
     const gateBody = [

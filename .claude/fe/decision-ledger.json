@@ -1852,6 +1852,26 @@
       "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b29-status.md",
       "holdsPreserved": 29,
       "next": "Secondary finite axes (TabsCard measure, TierCardBase popular chrome); GithubIcon after LearnLoopScroll unlock; CourseHero grid start."
+    },
+    {
+      "id": "b30-card-list-navigation-contracts-2026-08-09",
+      "date": "2026-08-09",
+      "status": "superseded-by-b30c",
+      "summary": "BATCH 30 original door-burn wave (isFeatured/density/FlexWrap/TabsCard parents/Leaderboard door). Changed-set eslint later failed zero-warning ratchet (72 warnings). See b30c.",
+      "reason": "Touched-file zero-warning gate blocks claiming door burns in files with unrepaired sentence-tier/HeroUI/page-folder debt.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b30-status.md",
+      "holdsPreserved": 29,
+      "next": "b30c retract-or-fix"
+    },
+    {
+      "id": "b30c-touched-file-zero-warning-2026-08-09",
+      "date": "2026-08-09",
+      "status": "applied-uncommitted",
+      "summary": "BATCH 30c: zero-warning ratchet. Retracted uncleanable B30/B30b product edits to 8c13fd52 (TierCard*, ListRow/Readiness, Leaderboard+TopLearners, FlexWrap, SidebarNavItem, ArchitectureMap/Flashcards/Notifications). Kept LabeledList StackV door closure + ContentTabBar Container measure + sentence-tier regression test. Changed-set eslint 0 warnings.",
+      "reason": "Files with HeroUI/page-folder/parallel-skeleton/raw-shape debt cannot reach zero warnings without forbidden contracts; retract restores doors/holds honestly. Survivors fixed with existing frames only.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b30c-status.md",
+      "holdsPreserved": 29,
+      "next": "Re-attempt finite contracts only in files already at zero-warning baseline, or after unlocking page-folder/HeroUI debt separately."
     }
   ]
 }

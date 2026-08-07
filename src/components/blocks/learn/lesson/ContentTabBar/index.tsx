@@ -14,6 +14,7 @@ import {
     TabTrigger,
 } from "./TabTrigger"
 import { TabsCard, type TabsCardGroup } from "@/components/blocks/navigation/TabsCard"
+import { Container } from "@/components/frames/Container"
 import type { ContentTab } from "@/redux/slices/tabs"
 
 /** Props for {@link ContentTabBar}. */
@@ -69,16 +70,20 @@ export const ContentTabBar = ({
     )
 
     return (
-        // no divider line under the row — the toolbar floats above the reading card
-        <div className={"w-full"}>
-            {/* capped + centered wrapper so the toolbar lines up with the reading column */}
-            <TabsCard
-                className="mx-auto w-full max-w-3xl"
-                leftTabs={leftTabs}
-                rightTabs={rightTabs}
-                collapseRightOnMobile
-                rightTabsNeutral
-            />
-        </div>
+        <Container
+            identity={{ tier: "block", component: "ContentTabBar" }}
+            size="md"
+            padding={1}
+            principle="center-measure"
+            explain="Centers the lesson tab toolbar on the same reading measure as the article column — not page-pad, because this caps measure rather than padding a page region."
+            body={() => (
+                <TabsCard
+                    leftTabs={leftTabs}
+                    rightTabs={rightTabs}
+                    collapseRightOnMobile
+                    rightTabsNeutral
+                />
+            )}
+        />
     )
 }

@@ -32,7 +32,7 @@ export interface ProfileHeroProps extends WithClassNames<undefined> {
     followersLabel: string
     /** Label for the following stat (caller-localized). */
     followingLabel: string
-    /** Rank badge text (e.g. "Hạng Vàng"); the chip is hidden when absent. */
+    /** Rank badge text (e.g. "Gold Rank"); the chip is hidden when absent. */
     rankLabel?: string | null
     /** Right-aligned action slot — typically the follow toggle button. */
     action?: React.ReactNode

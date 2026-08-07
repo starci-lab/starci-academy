@@ -28,9 +28,9 @@ export interface FriendRowProps extends WithClassNames<undefined> {
     isFollowing: boolean
     /** In-flight state for the follow toggle; shows an inline spinner. */
     isPending?: boolean
-    /** Button copy for the "not yet following" state (e.g. "Kết bạn"). */
+    /** Button copy for the "not yet following" state (e.g. "Add friend"). */
     followLabel: string
-    /** Button copy for the "already following" state (e.g. "Đã kết bạn"). */
+    /** Button copy for the "already following" state (e.g. "Already friends"). */
     followingLabel: string
     /** Fired when the action button is pressed; the caller owns the follow mutation. */
     onToggleFollow: () => void

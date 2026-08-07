@@ -41,7 +41,7 @@ const SIZE: Record<"sm" | "md", string> = {
 /**
  * The neo-brutalist pill: a small bordered, optionally hard-shadowed label. It is the
  * marketing surface's smallest labelled value — the hero eyebrow, a card's meta tag
- * (`50 câu · 60′`), a status chip (`Đã nộp`). Extracting it keeps the blocks and cards
+ * (`50 questions · 60′`), a status chip (`Submitted`). Extracting it keeps the blocks and cards
  * free of hand-rolled chip chrome and off-scale padding. Purely presentational: props
  * in, `var(--nb-*)` out, no state.
  *

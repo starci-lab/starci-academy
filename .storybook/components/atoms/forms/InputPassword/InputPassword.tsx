@@ -42,7 +42,7 @@ export const InputPassword = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
             id={controlId}
-            skeletonControl={<FieldSkeleton />}
+            skeletonControl={FieldSkeleton}
         >
             <HeroTextField data-tier="atom" data-component="InputPassword" aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full")}>
                 <div className="relative">

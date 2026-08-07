@@ -5,6 +5,21 @@ import { FieldFrame } from "@/components/composites/form/_field/FieldFrame"
 import type { InlineFrameProps } from "../_choice/types"
 import { withRequired } from "../_choice/with-required"
 
+/** Switch track shimmer without a label bar. */
+const ChoiceSwitchSkeleton = () => (
+    <div data-tier="atom" data-component="ChoiceSwitch" className={cn("flex items-center gap-3")}>
+        <HeroSkeleton className="h-9 w-16 shrink-0 rounded-full" />
+    </div>
+)
+
+/** Switch track shimmer with a label bar (when `label` is set on ChoiceSwitch). */
+const ChoiceSwitchSkeletonLabeled = () => (
+    <div data-tier="atom" data-component="ChoiceSwitch" className={cn("flex items-center gap-3")}>
+        <HeroSkeleton className="h-9 w-16 shrink-0 rounded-full" />
+        <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-1/2")} />
+    </div>
+)
+
 /** Props for {@link ChoiceSwitch}. */
 export interface ChoiceSwitchProps extends InlineFrameProps {
     /** On/off state (controlled). */
@@ -30,20 +45,19 @@ export const ChoiceSwitch = ({
     isInvalid,
     size,
     isSkeleton,
-    
     hint,
     errorMessage,
     isRequired,
 }: ChoiceSwitchProps) => {
     const invalid = isInvalid || errorMessage != null
-    const skeletonControl = (
-        <div data-tier="atom" data-component="ChoiceSwitch" className={cn("flex items-center gap-3")}>
-            <HeroSkeleton className="h-9 w-16 shrink-0 rounded-full" />
-            {label != null ? <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-1/2")} /> : null}
-        </div>
-    )
     return (
-        <FieldFrame hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} skeletonControl={skeletonControl}>
+        <FieldFrame
+            hint={hint}
+            errorMessage={errorMessage}
+            isDisabled={isDisabled}
+            isSkeleton={isSkeleton}
+            skeletonControl={label != null ? ChoiceSwitchSkeletonLabeled : ChoiceSwitchSkeleton}
+        >
             <div data-tier="atom" data-component="ChoiceSwitch" className={cn("flex items-center gap-3")}>
                 <HeroSwitch
                     size={size}

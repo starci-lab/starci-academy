@@ -39,7 +39,7 @@ export const InputDate = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
 
-            skeletonControl={<FieldSkeleton />}
+            skeletonControl={FieldSkeleton}
         >
             <HeroDatePicker
                 data-tier="atom"

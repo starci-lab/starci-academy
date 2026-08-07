@@ -45,7 +45,7 @@ export const SelectCombobox = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
 
-            skeletonControl={<TriggerSkeleton />}
+            skeletonControl={TriggerSkeleton}
         >
             <HeroComboBox
                 data-tier="atom"

@@ -6,6 +6,14 @@ import { FieldFrame } from "@/components/composites/form/_field/FieldFrame"
 import type { InlineFrameProps } from "../_choice/types"
 import { withRequired } from "../_choice/with-required"
 
+/** Checkbox control shimmer — square + label bar (label is always present on ChoiceCheckbox). */
+const ChoiceCheckboxSkeleton = () => (
+    <div data-tier="atom" data-component="ChoiceCheckbox" className={cn("flex items-center gap-3")}>
+        <HeroSkeleton className="size-4 shrink-0 rounded-md" />
+        <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-1/2")} />
+    </div>
+)
+
 /** Props for {@link ChoiceCheckbox}. */
 export interface ChoiceCheckboxProps extends InlineFrameProps {
     /** Checked state (controlled). */
@@ -28,21 +36,27 @@ export const ChoiceCheckbox = ({
     isDisabled,
     isInvalid,
     isSkeleton,
-    
     hint,
     errorMessage,
     isRequired,
 }: ChoiceCheckboxProps) => {
     const invalid = isInvalid || errorMessage != null
-    const skeletonControl = (
-        <div data-tier="atom" data-component="ChoiceCheckbox" className={cn("flex items-center gap-3")}>
-            <HeroSkeleton className="size-4 shrink-0 rounded-md" />
-            <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-1/2")} />
-        </div>
-    )
     return (
-        <FieldFrame hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} skeletonControl={skeletonControl}>
-            <HeroCheckbox data-tier="atom" data-component="ChoiceCheckbox" isSelected={isSelected} onChange={onValueChange} isInvalid={invalid} isDisabled={isDisabled} >
+        <FieldFrame
+            hint={hint}
+            errorMessage={errorMessage}
+            isDisabled={isDisabled}
+            isSkeleton={isSkeleton}
+            skeletonControl={ChoiceCheckboxSkeleton}
+        >
+            <HeroCheckbox
+                data-tier="atom"
+                data-component="ChoiceCheckbox"
+                isSelected={isSelected}
+                onChange={onValueChange}
+                isInvalid={invalid}
+                isDisabled={isDisabled}
+            >
                 <HeroCheckbox.Control>
                     <HeroCheckbox.Indicator>
                         {({ isIndeterminate }) =>

@@ -18,12 +18,6 @@ export interface FrameProps {
     isRequired?: boolean
 }
 
-/** Props for the field-box shimmer owned by input atoms. */
-export interface FieldSkeletonProps {
-    /** Height class of the bar — matches the real control it stands in for. */
-    heightCls?: string
-}
-
 /** Shared props for text-string members, excluding the value pair and `isSkeleton`. */
 export interface StringFieldOwnProps extends FrameProps {
     placeholder?: string

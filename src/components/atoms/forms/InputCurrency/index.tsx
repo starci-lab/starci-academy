@@ -42,7 +42,7 @@ export const InputCurrency = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            skeletonControl={<FieldSkeleton />}
+            skeletonControl={FieldSkeleton}
         >
             <HeroNumberField
                 data-tier="atom"

@@ -19,9 +19,6 @@ export interface SelectOption {
     label: ReactNode
 }
 
-/** Props for the trigger-box shimmer owned by select atoms (no public CSS door). */
-export type TriggerSkeletonProps = Record<string, never>
-
 /** Shared props across the select members. */
 export interface BaseSelectProps extends FrameProps {
     /** Flat list of options to choose from. */

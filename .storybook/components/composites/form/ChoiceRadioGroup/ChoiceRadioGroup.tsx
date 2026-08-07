@@ -1,3 +1,4 @@
+import type { ComponentType } from "react"
 import { cn } from "@heroui/react"
 import { ChoiceRadio, type InlineFrameProps } from "@sb-components/atoms/forms"
 import { RadioGroup } from "@sb-components/atoms/forms/RadioGroup/RadioGroup"
@@ -48,6 +49,30 @@ export interface ChoiceRadioGroupProps extends InlineFrameProps {
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "ChoiceRadioGroup" } as const
 
+/**
+ * Stable zero-prop skeleton components keyed by row count so ChoiceRadioGroup can
+ * pass `skeletonControl={choiceRadioGroupSkeleton(rows)}` without ReactNode while
+ * preserving the loaded row count.
+ */
+const skeletonCache = new Map<number, ComponentType>()
+
+const choiceRadioGroupSkeleton = (rows: number): ComponentType => {
+    const count = Math.max(0, rows)
+    const cached = skeletonCache.get(count)
+    if (cached) return cached
+
+    const ChoiceRadioGroupSkeleton = () => (
+        <div data-principle="sibling-stack" className={cn("flex flex-col gap-2")}>
+            {Array.from({ length: count }, (_, index) => (
+                <ChoiceRadio key={index} value={String(index)} label="" isSkeleton />
+            ))}
+        </div>
+    )
+    ChoiceRadioGroupSkeleton.displayName = `ChoiceRadioGroupSkeleton(${count})`
+    skeletonCache.set(count, ChoiceRadioGroupSkeleton)
+    return ChoiceRadioGroupSkeleton
+}
+
 /** `ChoiceRadioGroup` — mutually-exclusive single-select group (house RadioGroup + `ChoiceRadio` rows). */
 export const ChoiceRadioGroup = ({
     value,
@@ -59,7 +84,6 @@ export const ChoiceRadioGroup = ({
     isInvalid,
     isSkeleton,
     skeletonRows,
-    
     hint,
     errorMessage,
     isRequired,
@@ -74,17 +98,7 @@ export const ChoiceRadioGroup = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-
-            skeletonControl={
-                // COMPOSITE-10: the composite only decides HOW MANY rows shimmer — each row
-                // draws its own shimmer via `ChoiceRadio`'s own `isSkeleton` branch, the same
-                // shape ButtonGroup/ChipGroup delegate to `Button`/`Chip` while loading.
-                <div data-principle="sibling-stack" className={cn("flex flex-col gap-2")}>
-                    {Array.from({ length: rows }, (_, index) => (
-                        <ChoiceRadio key={index} value={String(index)} label="" isSkeleton />
-                    ))}
-                </div>
-            }
+            skeletonControl={choiceRadioGroupSkeleton(rows)}
         >
             {/* House `RadioGroup` omits `className` — stack layout rides a plain wrapper. */}
             <div data-principle="sibling-stack" className={cn("flex flex-col gap-2")}>

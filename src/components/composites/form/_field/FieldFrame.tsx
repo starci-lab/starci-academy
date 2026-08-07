@@ -1,4 +1,4 @@
-import type { ReactNode } from "react"
+import type { ComponentType, ReactNode } from "react"
 import { Label, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
@@ -28,8 +28,11 @@ export interface FieldFrameProps {
     isDisabled?: boolean
     /** Loading mirror: a label-width skeleton over a control-skeleton, keeping the same column. */
     isSkeleton?: boolean
-    /** Control-shaped skeleton for `isSkeleton` (the atom passes its own box). */
-    skeletonControl?: ReactNode
+    /**
+     * Control-shaped skeleton for `isSkeleton` — a zero-prop component reference
+     * (COMPOSITE-8), never a built node. The frame mounts it only while loading.
+     */
+    skeletonControl?: ComponentType
     /**
      * The real control (an already-wrapped HeroUI cell). `FieldFrame` is a
      * wrapping frame that must accept the calling atom's arbitrary control
@@ -72,6 +75,12 @@ const withRequired = (label: ReactNode, isRequired?: boolean) =>
         label
     )
 
+/** Mount the control skeleton slot when present. */
+const renderSkeletonControl = (skeletonControl?: ComponentType) => {
+    const SkeletonControl = skeletonControl
+    return SkeletonControl ? <SkeletonControl /> : null
+}
+
 /**
  * `FieldFrame` — label/hint/control/error column shared by every form atom.
  * @param props - {@link FieldFrameProps}
@@ -94,7 +103,7 @@ const FieldFrameBase = ({
     if (isSkeleton) {
         // Bare skeleton (no label frame) → just the control skeleton box (badges Skeleton itself).
         if (!hasFrame && label == null) {
-            return <>{skeletonControl}</>
+            return <>{renderSkeletonControl(skeletonControl)}</>
         }
         return (
             <div data-tier="composite" data-component="FieldFrame" data-principle="label-field" className={cn("flex flex-col", FIELD_SEAM, classNames)}>
@@ -102,7 +111,7 @@ const FieldFrameBase = ({
                     // label-bar look), not the slot word "Label" it stands in for.
                     <HeroSkeleton className="h-4 w-1/3 rounded-md" />
                 ) : null}
-                {skeletonControl}
+                {renderSkeletonControl(skeletonControl)}
             </div>
         )
     }

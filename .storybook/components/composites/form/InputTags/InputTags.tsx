@@ -68,7 +68,7 @@ export const InputTags = ({
             isSkeleton={isSkeleton}
 
             id={controlId}
-            skeletonControl={<Box ><FieldSkeleton /></Box>}
+            skeletonControl={FieldSkeleton}
         >
             <Box
                 principle="control-pad"

@@ -44,7 +44,7 @@ export const SelectSingle = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
 
-            skeletonControl={<TriggerSkeleton />}
+            skeletonControl={TriggerSkeleton}
         >
             <HeroSelect.Root<SelectOption, "single">
                 data-tier="atom"

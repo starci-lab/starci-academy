@@ -12,6 +12,11 @@ import {
 } from "@heroui/react"
 import { FieldFrame, fieldName } from "@sb-components/composites/form/_field/FieldFrame"
 
+/** SearchAutocomplete field-box shimmer — mirrors `@app-sm:max-w-sm` resting width. */
+const SearchAutocompleteSkeleton = () => (
+    <HeroSkeleton className={cn("h-9 w-full rounded-xl @app-sm:max-w-sm")} />
+)
+
 /**
  * ATOM — a suggest-as-you-type search field built on HeroUI `ComboBox`. Anatomy:
  * `ComboBox.InputGroup` (Input + leading icon) plus `ComboBox.Popover` (ListBox of
@@ -127,14 +132,7 @@ const SearchAutocompleteBase = ({
             isSkeleton={isSkeleton}
 
             id={controlId}
-            // Field-box skeleton owned by this atom — mirrors only the search
-            // field's resting shape; the popover has no resting shape.
-            skeletonControl={
-                <HeroSkeleton
-                    className={cn("h-9 w-full rounded-xl @app-sm:max-w-sm")}
-
-                />
-            }
+            skeletonControl={SearchAutocompleteSkeleton}
         >
             <ComboBox
                 data-tier="atom"

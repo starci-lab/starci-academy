@@ -35,7 +35,7 @@ export const InputTime = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
 
-            skeletonControl={<FieldSkeleton />}
+            skeletonControl={FieldSkeleton}
         >
             <HeroTimeField
                 data-tier="atom"

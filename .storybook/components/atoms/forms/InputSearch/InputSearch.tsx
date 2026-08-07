@@ -36,7 +36,7 @@ export const InputSearch = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
             id={controlId}
-            skeletonControl={<FieldSkeleton />}
+            skeletonControl={FieldSkeleton}
         >
             <HeroSearchField
                 data-tier="atom"

@@ -2,7 +2,7 @@ import { useId } from "react"
 import { TextField as HeroTextField, TextArea as HeroTextArea, cn } from "@heroui/react"
 import { FieldFrame, fieldName } from "@sb-components/composites/form/_field/FieldFrame"
 import type { StringFieldProps } from "../_input/types"
-import { FieldSkeleton } from "@sb-components/atoms/forms/_input/FieldSkeleton"
+import { TextareaSkeleton } from "@sb-components/atoms/forms/_input/FieldSkeleton"
 
 /** Props for {@link InputTextarea}. */
 type InputTextareaProps = StringFieldProps & {
@@ -41,7 +41,7 @@ export const InputTextarea = ({
             isSkeleton={isSkeleton}
 
             id={controlId}
-            skeletonControl={<FieldSkeleton heightCls="h-24" />}
+            skeletonControl={TextareaSkeleton}
         >
             <HeroTextField data-tier="atom" data-component="InputTextarea" variant={variant} aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full")}>
                 <HeroTextArea

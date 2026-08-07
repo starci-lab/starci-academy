@@ -40,7 +40,7 @@ export const InputNumber = ({
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
 
-            skeletonControl={<FieldSkeleton />}
+            skeletonControl={FieldSkeleton}
         >
             <HeroNumberField
                 data-tier="atom"

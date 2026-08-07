@@ -48,7 +48,7 @@ export const SelectMulti = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            skeletonControl={<TriggerSkeleton />}
+            skeletonControl={TriggerSkeleton}
         >
             <HeroSelect.Root<SelectOption, "multiple">
                 data-tier="atom"

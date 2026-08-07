@@ -12,8 +12,24 @@ import {
 } from "@heroui/react"
 import { FieldFrame, fieldName } from "@/components/composites/form/_field/FieldFrame"
 
+/** SearchAutocomplete field-box shimmer — mirrors `@app-sm:max-w-sm` resting width. */
+const SearchAutocompleteSkeleton = () => (
+    <HeroSkeleton className={cn("h-9 w-full rounded-xl @app-sm:max-w-sm")} />
+)
+
 /**
- * `SearchAutocomplete` — suggest-as-you-type search field on HeroUI `ComboBox`.
+ * ATOM — a suggest-as-you-type search field built on HeroUI `ComboBox`. Anatomy:
+ * `ComboBox.InputGroup` (Input + leading icon) plus `ComboBox.Popover` (ListBox of
+ * suggestion rows / spinner / empty state).
+ * 
+ * Leaf atom: `ComboBox.InputGroup`/`ComboBox.Popover`/`Skeleton` are real HeroUI components
+ * (not hand-rolled slots) — none has its own story here, so `annotate` carries no `storyId`,
+ * but they get the `heroui` tier so the two-law panel doesn't silently skip them.
+ * 
+ * ANATOMY IS PER-LEAF: each story is its own leaf wrapping its render in its own BlockAnatomy
+ * reflecting the parts that leaf composes — the field + dropdown shape is constant across
+ * WithSuggestions/Loading/NoResults (only the dropdown's internal content changes);
+ * `Skeleton` collapses to a single field-box mirror with no dropdown.
  */
 
 /** One suggestion row in a {@link SearchAutocomplete} dropdown. */
@@ -114,14 +130,9 @@ const SearchAutocompleteBase = ({
             errorMessage={errorMessage}
             isRequired={isRequired}
             isSkeleton={isSkeleton}
+
             id={controlId}
-            // Field-box skeleton owned by this atom — mirrors only the search
-            // field's resting shape; the popover has no resting shape.
-            skeletonControl={
-                <HeroSkeleton
-                    className={cn("h-9 w-full rounded-xl @app-sm:max-w-sm")}
-                />
-            }
+            skeletonControl={SearchAutocompleteSkeleton}
         >
             <ComboBox
                 data-tier="atom"

@@ -2,6 +2,15 @@ import { InputOTP as HeroInputOTP, Skeleton as HeroSkeleton, cn } from "@heroui/
 import { FieldFrame, fieldName } from "@/components/composites/form/_field/FieldFrame"
 import type { FrameProps } from "../_input/types"
 
+/** Default OTP row shimmer — six digit cells (InputOtp `length` default). */
+const InputOtpSkeleton = () => (
+    <div className={cn("flex items-center gap-2")}>
+        {Array.from({ length: 6 }, (_, index) => (
+            <HeroSkeleton key={index} className="h-10 w-9 rounded-xl" />
+        ))}
+    </div>
+)
+
 /** `InputOtp` — bare one-time-code cells (HeroUI InputOTP), `length` slots, `value` a digit string. */
 export const InputOtp = ({
     value,
@@ -12,7 +21,6 @@ export const InputOtp = ({
     autoFocus,
     ariaLabel,
     isSkeleton,
-    
     label,
     hint,
     errorMessage,
@@ -37,14 +45,7 @@ export const InputOtp = ({
             isRequired={isRequired}
             isDisabled={isDisabled}
             isSkeleton={isSkeleton}
-            skeletonControl={
-                // Leaf skeleton OWNED by the atom — a row of `length` cell-shaped squares.
-                <div className={cn("flex items-center gap-2")}>
-                    {Array.from({ length }, (_, index) => (
-                        <HeroSkeleton key={index} className="h-10 w-9 rounded-xl" />
-                    ))}
-                </div>
-            }
+            skeletonControl={InputOtpSkeleton}
         >
             <HeroInputOTP
                 data-tier="atom"
@@ -56,7 +57,6 @@ export const InputOtp = ({
                 isInvalid={invalid}
                 isDisabled={isDisabled}
                 autoFocus={autoFocus}
-                
             >
                 <HeroInputOTP.Group>
                     {Array.from({ length }, (_, index) => (

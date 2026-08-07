@@ -140,38 +140,46 @@ export const _LeagueCard = ({
                 // known statically (translated up front, not fetched) — showing it for real
                 // instead of shimmering it is strictly more correct, not just a workaround.
                 label={title}
-                contentClassName="flex flex-col gap-3"
             >
-                {/* standing header — IconTile badge + primary + secondary, mirrored bar-for-bar */}
-                <StackH gap={4} principle="content-row"
-                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                    align="center" items={[
-                        () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
+                <StackV
+                    gap={3}
+                    principle="sibling-stack"
+                    explain="Skeleton standing header and cohort rows are peer sections in one league card — not block-boundary."
+                    items={[
                         () => (
-                            <StackV gap={2} principle="title-subtitle"
-                                explain="Title over supporting line — not label-field, because neither line is a form control label."
-                                classNames={["min-w-0", "flex-1"]} items={[
-                                    () => <Skeleton.Typography type="body-sm" width="1/2" />,
-                                    () => <Skeleton.Typography type="body-xs" width="1/3" />,
-                                ]} />
-                        ),
-                    ]} />
-                {/* cohort rows — [rank · avatar · name · value · caret] */}
-                <SurfaceListCard bordered>
-                    {Array.from({ length: SKELETON_ROWS }, (_row, index) => (
-                        <SurfaceListCardItem key={index}>
                             <StackH gap={4} principle="content-row"
                                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                 align="center" items={[
-                                    () => <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />,
-                                    () => <Skeleton.Avatar size="sm" />,
-                                    () => <Skeleton.Typography type="body-sm" width="1/2" className="min-w-0 flex-1" />,
-                                    () => <Skeleton className="h-3 w-10 shrink-0 rounded-sm" />,
-                                    () => <Skeleton className="h-4 w-8 shrink-0 rounded-sm" />,
+                                    () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
+                                    () => (
+                                        <StackV gap={2} principle="title-subtitle"
+                                            explain="Title over supporting line — not label-field, because neither line is a form control label."
+                                            classNames={["min-w-0", "flex-1"]} items={[
+                                                () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                                () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                                            ]} />
+                                    ),
                                 ]} />
-                        </SurfaceListCardItem>
-                    ))}
-                </SurfaceListCard>
+                        ),
+                        () => (
+                            <SurfaceListCard bordered>
+                                {Array.from({ length: SKELETON_ROWS }, (_row, index) => (
+                                    <SurfaceListCardItem key={index}>
+                                        <StackH gap={4} principle="content-row"
+                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                            align="center" items={[
+                                                () => <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />,
+                                                () => <Skeleton.Avatar size="sm" />,
+                                                () => <Skeleton.Typography type="body-sm" width="1/2" className="min-w-0 flex-1" />,
+                                                () => <Skeleton className="h-3 w-10 shrink-0 rounded-sm" />,
+                                                () => <Skeleton className="h-4 w-8 shrink-0 rounded-sm" />,
+                                            ]} />
+                                    </SurfaceListCardItem>
+                                ))}
+                            </SurfaceListCard>
+                        ),
+                    ]}
+                />
             </LabeledCard>
         )
     }

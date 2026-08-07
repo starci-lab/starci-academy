@@ -52,7 +52,7 @@ export const FlipCard = ({ revealed, questionLabel, answerLabel, front: Front, b
                 stay under the QUESTION when the answer reveals below (not pushed
                 to the bottom of the answer). */}
             <div className="flex flex-col gap-3">
-                <LabeledCard label={questionLabel} bordered contentClassName="flex flex-col gap-3">
+                <LabeledCard label={questionLabel} bordered>
                     <Front />
                 </LabeledCard>
                 {BelowFront ? <BelowFront /> : null}

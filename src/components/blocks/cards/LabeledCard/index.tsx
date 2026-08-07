@@ -3,7 +3,6 @@ import type { ReactNode } from "react"
 import { Card, CardContent, cn } from "@heroui/react"
 import { SeeMoreLink } from "@/components/blocks/navigation/SeeMoreLink"
 import { Typography } from "@/components/atoms/text/Typography"
-import { Box } from "@/components/frames/Box"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
@@ -39,8 +38,6 @@ export interface LabeledCardProps {
      * Caller owns its alignment.
      */
     description?: ComponentType
-    /** Extra classes merged onto the card content wrapper. */
-    contentClassName?: string
     /**
      * When true, drop the inner `<Card>` frame and render children directly under
      * the label — for sections whose content is ITSELF card(s) (e.g. a grid of
@@ -105,7 +102,6 @@ export const LabeledCard = ({
     action: Action,
     children,
     description: Description,
-    contentClassName,
     frameless = false,
     flushContent = false,
     fillHeight = false,
@@ -131,7 +127,7 @@ export const LabeledCard = ({
     )
     // card body: frameless = content is itself card(s) → no inner Card (avoid nesting)
     const body = frameless ? (
-        <Box className={contentClassName}>{children}</Box>
+        children
     ) : (
         <Card
             className={cn(
@@ -141,7 +137,7 @@ export const LabeledCard = ({
                 flushContent && "gap-0 overflow-hidden p-0",
             )}
         >
-            <CardContent className={cn(flushContent && "p-0", fillHeight && "h-full", contentClassName)}>
+            <CardContent className={cn(flushContent && "p-0", fillHeight && "h-full")}>
                 {children}
             </CardContent>
         </Card>

@@ -22,6 +22,7 @@ import {
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { usePersonalProjectGithubStore } from "@/hooks/zustand/personalProjectGithub/store"
+import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link TaskSubmissionPanel}. */
 export type TaskSubmissionPanelProps = WithClassNames<undefined>
@@ -56,33 +57,36 @@ export const TaskSubmissionPanel = ({
         <div className={cn("flex flex-col gap-6", className)}>
             <LabeledCard
                 label={t("finalProject.page.submitGithub.title")}
-                contentClassName="flex flex-col gap-6"
             >
-                {/* URL + the settings row are one config GROUP (gap-3 — related); the CTA
-                    below is a separate section, kept gap-6 away by the card content. */}
-                <div className="flex flex-col gap-3">
-                    <PersonalProjectSubmission />
-                    {/* settings summary row → opens the drawer. Interactive, so it has a hover:
-                        the label "Grading settings" underlines (a link affordance); the
-                        right-side config preview stays muted (no colour change). */}
-                    <button
-                        type="button"
-                        onClick={() => setSettingsOpen(true)}
-                        aria-label={t("finalProject.page.submitGithub.settingsTitle")}
-                        aria-expanded={isSettingsOpen}
-                        className="group flex cursor-pointer items-center justify-between gap-3 rounded-medium bg-default-100 px-3 py-2 text-left outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                    >
-                        <span className="flex items-center gap-2 text-sm">
-                            <GearSixIcon className="size-4 shrink-0" />
-                            <span className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">{t("finalProject.page.submitGithub.settingsTitle")}</span>
-                        </span>
-                        <span className="flex min-w-0 items-center gap-2 text-xs text-muted">
-                            <span className="truncate">{(langLabelMap[lang] ?? lang)} · {branch}</span>
-                            <CaretRightIcon weight="bold" className="size-4 shrink-0" />
-                        </span>
-                    </button>
-                </div>
-                <TaskActions />
+                <StackV
+                    gap={6}
+                    principle="block-boundary"
+                    explain="Github config group and submit CTA are separate sections in the submit panel — not sibling-stack, because the CTA is a distinct action block."
+                    items={[
+                        () => (
+                            <div className="flex flex-col gap-3">
+                                <PersonalProjectSubmission />
+                                <button
+                                    type="button"
+                                    onClick={() => setSettingsOpen(true)}
+                                    aria-label={t("finalProject.page.submitGithub.settingsTitle")}
+                                    aria-expanded={isSettingsOpen}
+                                    className="group flex cursor-pointer items-center justify-between gap-3 rounded-medium bg-default-100 px-3 py-2 text-left outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                                >
+                                    <span className="flex items-center gap-2 text-sm">
+                                        <GearSixIcon className="size-4 shrink-0" />
+                                        <span className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">{t("finalProject.page.submitGithub.settingsTitle")}</span>
+                                    </span>
+                                    <span className="flex min-w-0 items-center gap-2 text-xs text-muted">
+                                        <span className="truncate">{(langLabelMap[lang] ?? lang)} · {branch}</span>
+                                        <CaretRightIcon weight="bold" className="size-4 shrink-0" />
+                                    </span>
+                                </button>
+                            </div>
+                        ),
+                        () => <TaskActions />,
+                    ]}
+                />
             </LabeledCard>
             <TaskResults />
 

@@ -1772,6 +1772,16 @@
       "artifact": ".artifacts/fe-refactor-audit/2026-08-08-b20-status.md",
       "holdsPreserved": 27,
       "next": "Burn parent-placement / List-KeyValue / atoms classNames with semantic APIs; migrate nivoexpert off DrawerShell.contentClassName."
+    },
+    {
+      "id": "b21-css-door-hold-closure-2026-08-09",
+      "date": "2026-08-09",
+      "status": "applied",
+      "summary": "BATCH 21: List/KeyValue dead classNames deleted; LabeledCard.contentClassName parent-placement migrated then deleted. TILE_CHROME, ShowcaseMockup, DrawerShell contentClassName held.",
+      "reason": "Only proven dead + parent-placement with existing principles (sibling-stack/block-boundary/Grid). No new variants. Nivo/locked paths untouched.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b21-status.md",
+      "holdsPreserved": 27,
+      "next": "Chrome axis proposal for TILE_CHROME; LearnLoopScroll unlock for ShowcaseMockup; nivo LessonEditorPanel → dialogWidth."
     }
   ]
 }

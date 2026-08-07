@@ -15,6 +15,7 @@ import {
     placeMedalIcon,
     rankBadgeIcon,
 } from "@/components/blocks/dashboard/rankBadge"
+import { StackV } from "@/components/frames/Stack"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One normalised leaderboard row (the container maps its query data into this). */
@@ -164,10 +165,9 @@ export const LeaderboardListCard = ({
         )
     }
 
-    const content = (
-        <>
-            {/* viewer's own standing — rank-driven badge (medal/cup) + rank text */}
-            {standing ? (
+    const contentItems = [
+        ...(standing
+            ? [() => (
                 <div className="flex items-center gap-3">
                     <IconTile icon={rankBadgeIcon(standing.rank)} tone="neutral" size="sm" />
                     <div className="flex min-w-0 flex-col">
@@ -181,22 +181,13 @@ export const LeaderboardListCard = ({
                         ) : null}
                     </div>
                 </div>
-            ) : null}
-
-            {/* optional podium (spacious page) between standing and the list */}
-            {topSlot}
-
-            {/* skip the list card entirely when there are no rows (all on the podium) */}
-            {rows.length > 0 || selfRow ? (
+            )]
+            : []),
+        ...(topSlot ? [() => <>{topSlot}</>] : []),
+        ...(rows.length > 0 || selfRow
+            ? [() => (
                 <SurfaceListCard bordered>
                     {rows.map(renderRow)}
-                    {/* viewer below the slice → collapsed-rows ellipsis + pinned self-row.
-                        Renders as a REAL row (teacher 2026-07-17): a `SurfaceListCardItem` so it
-                        gets the same `p-3` + full-bleed separator, a transparent bg that INHERITS
-                        the card's `bg-surface` (no `bg-surface-secondary` banner), and `min-h-8`
-                        on the inner box to match the avatar rows' height exactly (avatar sm =
-                        size-8). The ⋯ sits in the same `w-6` centred slot as the rank number so it
-                        aligns as one of the rows, not a strip between them. */}
                     {selfRow ? (
                         <>
                             <SurfaceListCardItem>
@@ -213,13 +204,19 @@ export const LeaderboardListCard = ({
                         </>
                     ) : null}
                 </SurfaceListCard>
-            ) : null}
-        </>
-    )
+            )]
+            : []),
+    ]
 
     // bare → the page owns the frame (PageHeader); dashboard cards keep the LabeledCard
     if (bare) {
-        return <div className={cn("flex flex-col gap-3", className)}>{content}</div>
+        return (
+            <div className={cn("flex flex-col gap-3", className)}>
+                {contentItems.map((Item, index) => (
+                    <Item key={index} />
+                ))}
+            </div>
+        )
     }
 
     return (
@@ -230,10 +227,13 @@ export const LeaderboardListCard = ({
             label={title ?? ""}
             onSeeMore={onSeeMore}
             seeMoreLabel={seeMoreLabel}
-
-            contentClassName="flex flex-col gap-3"
         >
-            {content}
+            <StackV
+                gap={3}
+                principle="sibling-stack"
+                explain="Standing, optional podium, and cohort list are peer sections in one leaderboard — not block-boundary, because they stay inside one card group."
+                items={contentItems}
+            />
         </LabeledCard>
     )
 }

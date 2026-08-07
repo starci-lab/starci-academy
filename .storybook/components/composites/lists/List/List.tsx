@@ -13,7 +13,6 @@ import {
 import { ChoiceSwitch } from "@sb-components/atoms/forms"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { Box } from "@sb-components/frames/Box/Box"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/frames/_slot"
 
 /**
@@ -99,8 +98,6 @@ export interface ListRowProps {
      * live row. The consumer only flips the flag — same as `Button.isSkeleton`.
      */
     isSkeleton?: boolean
-    /** Layout utilities merged onto the root element, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
     /**
      * When `true`, each composed part (leading / title-text / meta-trailing
      * cluster) emits `` so a BlockAnatomy panel can badge
@@ -127,7 +124,6 @@ const Row = ({
     onPress,
     href,
     isSkeleton = false,
-    classNames,
 }: ListRowProps) => {
     // Interactivity is a LOADED-state affordance only — a loading row is inert,
     // same as the old separate `RowSkeleton` never wired a role/href/onClick.
@@ -138,7 +134,6 @@ const Row = ({
         divider && "border-b border-separator",
         isPressable &&
             "rounded-2xl transition-colors hover:bg-surface-secondary focus-visible:bg-surface-secondary focus-visible:outline-none",
-        classNames,
     )
 
     // One render path: `leading` is now a COMPONENT reference (COMPOSITE-8), so the
@@ -264,8 +259,6 @@ export interface ListLabeledProps {
     isSkeleton?: boolean
     /** Placeholder row count while `isSkeleton`. Defaults to `3`. */
     skeletonRows?: number
-    /** Layout utilities on the outer section, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -285,7 +278,6 @@ const Labeled = ({
     emptyState: EmptyState,
     isSkeleton = false,
     skeletonRows = 3,
-    classNames,
 }: ListLabeledProps) => {
     // Skeleton placeholder rows go through the SAME `Row` the live list renders —
     // no second hand-built row shape to keep in sync (COMPOSITE-10). `title`/
@@ -306,7 +298,6 @@ const Labeled = ({
             as="section"
             gap={4}
             isSkeleton={isSkeleton}
-            classNames={classNames}
             items={[
                 ({ isSkeleton }: SkeletonProps) => (
                     <StackH
@@ -346,8 +337,6 @@ export interface ListMetaProps {
      * every segment in `Typography` itself (COMPOSITE-8).
      */
     items: ReadonlyArray<string>
-    /** Layout utilities on the row root, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
     /**
      * Dev/spec: tag this row's own direct parts (`Chip` / `Meta`) so a
      * BlockAnatomy panel can badge them.
@@ -363,10 +352,10 @@ export interface ListMetaProps {
  *
  * @param props - {@link ListMetaProps}
  */
-const Meta = ({ chip: Chip, items, classNames}: ListMetaProps) => (
+const Meta = ({ chip: Chip, items }: ListMetaProps) => (
     <StackH
         gap={3}
-        classNames={["min-w-0", ...(classNames ?? [])]}
+        classNames={["min-w-0"]}
 
         items={[
             ...(Chip ? [() => <span className="shrink-0"><Chip /></span>] : []),
@@ -424,8 +413,6 @@ export interface ListToggleRowProps {
      * `aria-disabled` + opacity treatment on the gated section-visibility group.
      */
     isDisabled?: boolean
-    /** Layout utilities on the row root, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
     /** `true` -> render the skeleton mirror (label + desc bars, switch pill). Consumer just flips the flag. */
     isSkeleton?: boolean
 }
@@ -448,7 +435,6 @@ const ToggleRow = ({
     checked,
     onCheckedChange,
     isDisabled = false,
-    classNames,
     isSkeleton = false,
 }: ListToggleRowProps) => (
     // One outer shape whether loading or not: same wrapper, same `TitledText` call
@@ -461,7 +447,6 @@ const ToggleRow = ({
         <StackH
             gap={4}
             isSkeleton={isSkeleton}
-            classNames={classNames}
             principle="label-field"
             explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
             items={[

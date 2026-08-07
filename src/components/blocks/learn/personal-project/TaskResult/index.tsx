@@ -28,6 +28,7 @@ import { dayjs, getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { Score } from "@/components/blocks/stats/Score"
+import { StackV } from "@/components/frames/Stack"
 import { UpNextCard } from "@/components/blocks/learn/UpNextCard"
 import { ModelByline, VerdictIcon } from "@/components/blocks/grading/GradingByline"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
@@ -316,45 +317,53 @@ export const PersonalProjectTaskResult = ({
                 {/* selected attempt detail — two labeled cards: "Result" + "Feedback" */}
                 {selectedAttempt ? (
                     <div className="flex flex-col gap-6">
-                        <LabeledCard label={t("personalProjectResult.resultLabel")} contentClassName="flex flex-col gap-3">
-                            {/* score hero — the #1 signal; SSOT digit render via Score, verdict Chip kept separate */}
-                            <div className="flex items-start gap-3">
-                                <Score current={selectedAttempt.score ?? 0} max={maxScore} />
-                                <div className="min-w-0 flex-1">
-                                    <Chip color={passing ? "success" : "danger"} variant="soft" size="sm">
-                                        <VerdictIcon pass={passing} />
-                                        <Chip.Label>
-                                            {t(passing ? "personalProjectResult.passed" : "personalProjectResult.failed")}
-                                        </Chip.Label>
-                                    </Chip>
-                                    {selectedAttempt.shortFeedback ? (
-                                        <Typography type="body-sm" color="muted" className="mt-1">
-                                            {selectedAttempt.shortFeedback}
-                                        </Typography>
-                                    ) : null}
-                                </div>
-                                {githubUrl ? (
-                                    <Link
-                                        href={githubUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex shrink-0 items-center gap-2 text-sm text-accent-soft-foreground hover:underline underline-offset-4 decoration-[var(--separator-tertiary)]"
-                                    >
-                                        {t("personalProjectResult.viewRepo")}
-                                        <ArrowSquareOutIcon aria-hidden focusable="false" className="size-5" />
-                                    </Link>
-                                ) : null}
-                            </div>
-
-                            {/* model byline — which AI model actually graded this attempt + when */}
-                            <div className="flex flex-wrap items-center gap-2 border-t border-default pt-3">
-                                <ModelByline model={selectedAttempt.servedModel} category={servedCategory} withLabel />
-                                {timeAgo ? (
-                                    <Typography type="body-xs" color="muted" className="ml-auto">
-                                        {timeAgo}
-                                    </Typography>
-                                ) : null}
-                            </div>
+                        <LabeledCard label={t("personalProjectResult.resultLabel")}>
+                            <StackV
+                                gap={3}
+                                principle="sibling-stack"
+                                explain="Score hero and model byline are peer result sections — not block-boundary."
+                                items={[
+                                    () => (
+                                        <div className="flex items-start gap-3">
+                                            <Score current={selectedAttempt.score ?? 0} max={maxScore} />
+                                            <div className="min-w-0 flex-1">
+                                                <Chip color={passing ? "success" : "danger"} variant="soft" size="sm">
+                                                    <VerdictIcon pass={passing} />
+                                                    <Chip.Label>
+                                                        {t(passing ? "personalProjectResult.passed" : "personalProjectResult.failed")}
+                                                    </Chip.Label>
+                                                </Chip>
+                                                {selectedAttempt.shortFeedback ? (
+                                                    <Typography type="body-sm" color="muted" className="mt-1">
+                                                        {selectedAttempt.shortFeedback}
+                                                    </Typography>
+                                                ) : null}
+                                            </div>
+                                            {githubUrl ? (
+                                                <Link
+                                                    href={githubUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex shrink-0 items-center gap-2 text-sm text-accent-soft-foreground hover:underline underline-offset-4 decoration-[var(--separator-tertiary)]"
+                                                >
+                                                    {t("personalProjectResult.viewRepo")}
+                                                    <ArrowSquareOutIcon aria-hidden focusable="false" className="size-5" />
+                                                </Link>
+                                            ) : null}
+                                        </div>
+                                    ),
+                                    () => (
+                                        <div className="flex flex-wrap items-center gap-2 border-t border-default pt-3">
+                                            <ModelByline model={selectedAttempt.servedModel} category={servedCategory} withLabel />
+                                            {timeAgo ? (
+                                                <Typography type="body-xs" color="muted" className="ml-auto">
+                                                    {timeAgo}
+                                                </Typography>
+                                            ) : null}
+                                        </div>
+                                    ),
+                                ]}
+                            />
                         </LabeledCard>
 
                         {/* findings — a labeled accordion card (each finding expands). frameless

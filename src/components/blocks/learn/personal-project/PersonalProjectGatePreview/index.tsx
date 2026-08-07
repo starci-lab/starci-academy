@@ -7,6 +7,7 @@ import { useAppSelector } from "@/redux/hooks"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
+import { Grid } from "@/components/frames/Grid"
 
 /** Course slugs that have a dedicated capstone teaser (`finalProject.gatePreview.<key>`). */
 type CourseSlug = "fullstack-mastery" | "system-design-mastery" | "devops-mastery"
@@ -60,19 +61,35 @@ export const PersonalProjectGatePreview = () => {
             <LabeledCard
                 label={t(`finalProject.gatePreview.${key}.milestone`)}
                 frameless
-                contentClassName="grid gap-3 @app-sm:grid-cols-2"
             >
-                <ContinueCard
-                    variant="item"
-                    title={t(`finalProject.gatePreview.${key}.item1Title`)}
-                    subtitle={taskMeta}
-                    ctaLabel={t("finalProject.dashboard.continue")}
-                />
-                <ContinueCard
-                    variant="item"
-                    title={t(`finalProject.gatePreview.${key}.item2Title`)}
-                    subtitle={taskMeta}
-                    ctaLabel={t("finalProject.dashboard.continue")}
+                <Grid
+                    columns={{ base: 1, sm: 2 }}
+                    principle="sibling-stack"
+                    explain="Gate-preview task tiles share one section grid — not block-boundary."
+                    items={[
+                        {
+                            key: "item1",
+                            content: () => (
+                                <ContinueCard
+                                    variant="item"
+                                    title={t(`finalProject.gatePreview.${key}.item1Title`)}
+                                    subtitle={taskMeta}
+                                    ctaLabel={t("finalProject.dashboard.continue")}
+                                />
+                            ),
+                        },
+                        {
+                            key: "item2",
+                            content: () => (
+                                <ContinueCard
+                                    variant="item"
+                                    title={t(`finalProject.gatePreview.${key}.item2Title`)}
+                                    subtitle={taskMeta}
+                                    ctaLabel={t("finalProject.dashboard.continue")}
+                                />
+                            ),
+                        },
+                    ]}
                 />
             </LabeledCard>
         </div>

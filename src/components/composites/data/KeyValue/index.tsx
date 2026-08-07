@@ -2,7 +2,6 @@ import { cn } from "@heroui/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Divider } from "@/components/atoms/display/Divider"
 import { SnippetIcon } from "@/components/atoms/display/SnippetIcon"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { GAP_CLASS, type AllowedGap } from "@/components/frames/_spacing"
 
@@ -68,15 +67,6 @@ interface KeyValueRowOwnProps {
      * shimmer a control with no value behind it (COMPOSITE-10).
      */
     copyable?: boolean
-    /**
-     * Anatomy tag for THIS composite itself — lets the PARENT badge it as ONE node (§11a.1).
-     * Without this prop the composite doesn't make it into the Deps tree: using a
-     * `frame`/`composite` tier node that the panel can't see counts as not using it.
-     */
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -105,7 +95,7 @@ const KeyValueRow = ({
     gap = 4,
     copyable = false,
     isSkeleton = false,
-    classNames}: KeyValueRowProps) => {
+}: KeyValueRowProps) => {
     // COMPOSITE-10: ONE render path — same two-column `StackH`, same label+hint
     // `StackV` cluster, in both states. Every piece of text goes through
     // `Typography`'s own `isSkeleton` (§12c: the atom draws its own bar, sized to
@@ -177,7 +167,6 @@ const KeyValueRow = ({
             gap={3}
             principle="value-row"
             explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
-            classNames={classNames}
             items={pairContent}
         />
     )
@@ -229,15 +218,6 @@ export interface KeyValueListProps {
     isSkeleton?: boolean
     /** Placeholder row count while `isSkeleton`. Defaults to `3`. */
     skeletonRows?: number
-    /**
-     * Anatomy tag for THIS composite itself — lets the PARENT badge it as ONE node (§11a.1).
-     * Without this prop the composite doesn't make it into the Deps tree: using a
-     * `frame`/`composite` tier node that the panel can't see counts as not using it.
-     */
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -255,9 +235,9 @@ const KeyValueList = ({
     divider = false,
     isSkeleton = false,
     skeletonRows = 3,
-    classNames}: KeyValueListProps) => (
+}: KeyValueListProps) => (
     <div
-        className={cn("flex flex-col", GAP_CLASS[gap], classNames)}
+        className={cn("flex flex-col", GAP_CLASS[gap])}
         data-tier="composite"
         data-component="KeyValueList"
     >

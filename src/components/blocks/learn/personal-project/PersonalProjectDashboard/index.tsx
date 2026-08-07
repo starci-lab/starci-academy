@@ -25,6 +25,7 @@ import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
+import { Grid } from "@/components/frames/Grid"
 import type { MilestoneEntity } from "@/modules/types/entities/milestone"
 
 /** Props for {@link PersonalProjectDashboard}. */
@@ -245,34 +246,40 @@ export const PersonalProjectDashboard = ({
                         <LabeledCard
                             label={`${t("finalProject.dashboard.keepGoing")} · ${currentMilestone.title}`}
                             frameless
-                            contentClassName="grid gap-3 @app-sm:grid-cols-2"
                         >
-                            {(currentMilestone.tasks ?? []).map((task) => {
-                                const isCompleted = progressMap.get(task.id)?.completed ?? false
-                                const isActive = task.id === currentTaskId
-                                const isLocked = !isPersonalProjectTaskActionUnlocked(
-                                    task.id,
-                                    progressMap,
-                                    currentTaskId,
-                                )
-                                const subtitle = isActive
-                                    ? t("finalProject.dashboard.nextTask")
-                                    : isCompleted
-                                        ? t("finalProject.dashboard.taskDone")
-                                        : isLocked
-                                            ? t("finalProject.dashboard.statLocked")
-                                            : t("finalProject.dashboard.taskTodo")
-                                return (
-                                    <ContinueCard
-                                        key={task.id}
-                                        variant="item"
-                                        title={`${task.sortIndex}. ${task.title}`}
-                                        subtitle={subtitle}
-                                        ctaLabel={t("finalProject.dashboard.continue")}
-                                        onPress={() => onSelectTask(task.id)}
-                                    />
-                                )
-                            })}
+                            <Grid
+                                columns={{ base: 1, sm: 2 }}
+                                principle="sibling-stack"
+                                explain="Keep-going task tiles share one section grid — not block-boundary, because they stay inside one labeled group."
+                                items={(currentMilestone.tasks ?? []).map((task) => {
+                                    const isCompleted = progressMap.get(task.id)?.completed ?? false
+                                    const isActive = task.id === currentTaskId
+                                    const isLocked = !isPersonalProjectTaskActionUnlocked(
+                                        task.id,
+                                        progressMap,
+                                        currentTaskId,
+                                    )
+                                    const subtitle = isActive
+                                        ? t("finalProject.dashboard.nextTask")
+                                        : isCompleted
+                                            ? t("finalProject.dashboard.taskDone")
+                                            : isLocked
+                                                ? t("finalProject.dashboard.statLocked")
+                                                : t("finalProject.dashboard.taskTodo")
+                                    return {
+                                        key: task.id,
+                                        content: () => (
+                                            <ContinueCard
+                                                variant="item"
+                                                title={`${task.sortIndex}. ${task.title}`}
+                                                subtitle={subtitle}
+                                                ctaLabel={t("finalProject.dashboard.continue")}
+                                                onPress={() => onSelectTask(task.id)}
+                                            />
+                                        ),
+                                    }
+                                })}
+                            />
                         </LabeledCard>
                     ) : null}
                 </div>

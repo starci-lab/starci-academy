@@ -1,0 +1,34 @@
+{
+  "worker": "coordinator-gates",
+  "batch": "B31r2",
+  "complete": false,
+  "status": "partial",
+  "productEdits": true,
+  "identityTileLanded": true,
+  "iconTileUnchanged": true,
+  "legacyBlockDeleted": false,
+  "overlapCheck": "pass — edit manifests disjoint; consumer manifests empty",
+  "importCounts": {
+    "legacyBlockBefore": 33,
+    "legacyBlockAfter": 33,
+    "note": "PitchCard uses relative ../../identity/IconTile; counted in held blocks-consumers"
+  },
+  "migrated": [],
+  "held": 33,
+  "rawSkeletonRemovals": [],
+  "twinParity": "byte-identical SB IdentityTile.tsx ↔ src IdentityTile/index.tsx",
+  "gates": {
+    "tsc": "pass",
+    "eslintChanged": "pass — IdentityTile SB+src+stories max-warnings=0",
+    "public-contracts.test": "pass",
+    "sentence-tier.test": "pass",
+    "namespaces.test": "pass",
+    "authoring.test": "pass",
+    "contentpage.test": "pass",
+    "principle-style.test": "pass",
+    "semantic-contracts.test": "pass",
+    "audit:fe": "pass",
+    "gitDiffCheck": "pass"
+  },
+  "regressions": []
+}

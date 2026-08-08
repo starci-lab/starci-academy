@@ -1,0 +1,38 @@
+{
+  "batch": "B31r2",
+  "complete": false,
+  "status": "partial",
+  "checkpoint": "18f84f5b",
+  "contract": ".claude/fe/contracts/identity-tile.md",
+  "summary": "IdentityTile atom landed (SB+src). Zero consumers migrated (all fail zero-warn). Legacy block retained under coexistence.",
+  "identityTile": {
+    "path": "atoms/display/IdentityTile",
+    "storybook": ".storybook/components/atoms/display/IdentityTile/IdentityTile.tsx",
+    "src": "src/components/atoms/display/IdentityTile/index.tsx",
+    "stories": ".storybook/stories/atoms/display/IdentityTile/IdentityTile.stories.tsx",
+    "sizeMap": "sm48/xl md64/2xl lg80/2xl",
+    "twinParity": "byte-identical"
+  },
+  "iconTile": "unchanged — sm40/md64/lg80 rounded-full",
+  "legacyBlock": {
+    "path": "blocks/identity/IconTile",
+    "deleted": false,
+    "importFilesBefore": 33,
+    "importFilesAfter": 33
+  },
+  "migration": {
+    "unlockedZeroWarn": 0,
+    "migrated": [],
+    "held": 33,
+    "rawSkeletonRemovals": []
+  },
+  "gates": {
+    "tsc": "pass",
+    "eslintChanged": "pass",
+    "pluginTests": "pass",
+    "storybookTests": "pass",
+    "auditFe": "pass",
+    "gitDiffCheck": "pass"
+  },
+  "next": "Zero-warn unlock per consumer cluster, then migrate to IdentityTile; delete legacy block at zero imports"
+}

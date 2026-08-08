@@ -1,0 +1,16 @@
+{
+  "worker": "learning-pages-consumers",
+  "manifest": [],
+  "changed": [],
+  "held": [
+    "src/components/pages/LearningHistoryPage/index.tsx",
+    "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+    "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+    "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+    "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+    "src/components/pages/LeaguePage/WeeklyBoard/component.tsx"
+  ],
+  "migrated": [],
+  "reason": "page-folder and/or pre-existing warnings",
+  "overlapCheck": "pass"
+}

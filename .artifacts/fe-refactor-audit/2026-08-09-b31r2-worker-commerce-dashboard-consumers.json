@@ -1,0 +1,17 @@
+{
+  "worker": "commerce-dashboard-consumers",
+  "manifest": [],
+  "changed": [],
+  "held": [
+    "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+    "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+    "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+    "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+    "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+    "src/components/pages/SepayCheckoutPage/EnrolledSuccess/index.tsx",
+    "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx"
+  ],
+  "migrated": [],
+  "reason": "page-folder and/or pre-existing warnings",
+  "overlapCheck": "pass"
+}

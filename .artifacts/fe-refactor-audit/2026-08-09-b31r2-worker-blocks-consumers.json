@@ -1,0 +1,18 @@
+{
+  "worker": "blocks-consumers",
+  "manifest": [],
+  "changed": [],
+  "held": [
+    "src/components/blocks/auth/GithubTeamGate/index.tsx",
+    "src/components/blocks/cards/PlaygroundCard/component.tsx",
+    "src/components/blocks/commerce/CartLine/index.tsx",
+    "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+    "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+    "src/components/blocks/learn/EnrollGate/index.tsx",
+    "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+    "src/components/blocks/marketing/PitchCard/index.tsx"
+  ],
+  "migrated": [],
+  "reason": "Every file fails eslint --max-warnings=0 on pre-existing debt; LeaderboardListCard also batch-forbidden",
+  "overlapCheck": "pass"
+}

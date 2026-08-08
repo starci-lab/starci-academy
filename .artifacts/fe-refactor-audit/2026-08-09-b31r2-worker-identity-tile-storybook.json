@@ -1,0 +1,19 @@
+{
+  "worker": "identity-tile-storybook",
+  "manifest": [
+    ".storybook/components/atoms/display/IdentityTile/IdentityTile.tsx",
+    ".storybook/stories/atoms/display/IdentityTile/IdentityTile.stories.tsx"
+  ],
+  "changed": [
+    ".storybook/components/atoms/display/IdentityTile/IdentityTile.tsx",
+    ".storybook/stories/atoms/display/IdentityTile/IdentityTile.stories.tsx"
+  ],
+  "sizeEvidence": {
+    "sm": "size-12 + rounded-xl (48px)",
+    "md": "size-16 + rounded-2xl (64px)",
+    "lg": "size-20 + rounded-2xl (80px)"
+  },
+  "api": "ComponentType icon; isSkeleton; tone includes neutral; no className/classNames",
+  "eslint": { "maxWarnings0": "pass" },
+  "overlapCheck": "pass"
+}

@@ -1,0 +1,17 @@
+{
+  "worker": "identity-tile-src",
+  "manifest": [
+    "src/components/atoms/display/IdentityTile/index.tsx"
+  ],
+  "changed": [
+    "src/components/atoms/display/IdentityTile/index.tsx"
+  ],
+  "twinParity": {
+    "storybookHash": "7EE8A3CB950F3E7E30E4A661908CE5FEE433CE0D8E9E0ED585EFDA5F2BB07848",
+    "srcHash": "7EE8A3CB950F3E7E30E4A661908CE5FEE433CE0D8E9E0ED585EFDA5F2BB07848",
+    "byteIdentical": true
+  },
+  "barrels": "path-based imports only — no aggregate display barrel update required",
+  "eslint": { "maxWarnings0": "pass" },
+  "overlapCheck": "pass"
+}

@@ -1,0 +1,253 @@
+{
+  "batch": "B31r2",
+  "checkpoint": "18f84f5b",
+  "contract": ".claude/fe/contracts/identity-tile.md",
+  "sizeMaps": {
+    "IconTile": "sm40/md64/lg80 rounded-full",
+    "IdentityTile": "sm48/xl md64/2xl lg80/2xl"
+  },
+  "legacyBlockConsumers": [
+    {
+      "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "worker": "blocks-consumers",
+      "action": "hold",
+      "reason": "pre-existing ESLint warnings (zero-warn ratchet)",
+      "warnHitsApprox": 16
+    },
+    {
+      "file": "src/components/blocks/cards/PlaygroundCard/component.tsx",
+      "worker": "blocks-consumers",
+      "action": "hold",
+      "reason": "pre-existing ESLint warnings",
+      "warnHitsApprox": 9
+    },
+    {
+      "file": "src/components/blocks/commerce/CartLine/index.tsx",
+      "worker": "blocks-consumers",
+      "action": "hold",
+      "reason": "pre-existing ESLint warnings (heroui + raw flex)",
+      "warnHitsApprox": 5
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "worker": "blocks-consumers",
+      "action": "hold",
+      "reason": "batch-forbidden + pre-existing warnings",
+      "warnHitsApprox": 17
+    },
+    {
+      "file": "src/components/blocks/feedback/ReadinessChecklist/index.tsx",
+      "worker": "blocks-consumers",
+      "action": "hold",
+      "reason": "pre-existing ESLint warnings",
+      "warnHitsApprox": 4
+    },
+    {
+      "file": "src/components/blocks/learn/EnrollGate/index.tsx",
+      "worker": "blocks-consumers",
+      "action": "hold",
+      "reason": "pre-existing ESLint warnings",
+      "warnHitsApprox": 12
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/PremiumPaywall/index.tsx",
+      "worker": "blocks-consumers",
+      "action": "hold",
+      "reason": "pre-existing ESLint warnings",
+      "warnHitsApprox": 7
+    },
+    {
+      "file": "src/components/blocks/marketing/PitchCard/index.tsx",
+      "worker": "blocks-consumers",
+      "action": "hold",
+      "reason": "pre-existing ESLint warnings",
+      "warnHitsApprox": 3
+    },
+    {
+      "file": "src/components/pages/ProfileOverviewPage/OverviewCourses/CourseRow/index.tsx",
+      "worker": "profile-pages-consumers",
+      "action": "hold",
+      "reason": "page-folder-two-files-only + other warnings",
+      "warnHitsApprox": 8
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/ProfileChallenges/ChallengeCourseRow/index.tsx",
+      "worker": "profile-pages-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 6
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/ProfileCapstone/ProjectCard/index.tsx",
+      "worker": "profile-pages-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 9
+    },
+    {
+      "file": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "worker": "profile-pages-consumers",
+      "action": "hold",
+      "reason": "pre-existing warnings",
+      "warnHitsApprox": 14
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/index.tsx",
+      "worker": "learning-pages-consumers",
+      "action": "hold",
+      "reason": "page-folder / warnings",
+      "warnHitsApprox": 11
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/index.tsx",
+      "worker": "learning-pages-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 10
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+      "worker": "learning-pages-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 8
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardQuizResult/recapBlocks.tsx",
+      "worker": "learning-pages-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 8
+    },
+    {
+      "file": "src/components/pages/LeaguePage/GlobalBoard/component.tsx",
+      "worker": "learning-pages-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 23
+    },
+    {
+      "file": "src/components/pages/LeaguePage/WeeklyBoard/component.tsx",
+      "worker": "learning-pages-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 25
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+      "worker": "commerce-dashboard-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 6
+    },
+    {
+      "file": "src/components/pages/DashboardPage/UpcomingLivestreamCard/component.tsx",
+      "worker": "commerce-dashboard-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 4
+    },
+    {
+      "file": "src/components/pages/DashboardPage/RecommendedCourses/component.tsx",
+      "worker": "commerce-dashboard-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 12
+    },
+    {
+      "file": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "worker": "commerce-dashboard-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 11
+    },
+    {
+      "file": "src/components/pages/RewardsPage/RewardCatalog/index.tsx",
+      "worker": "commerce-dashboard-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 9
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/EnrolledSuccess/index.tsx",
+      "worker": "commerce-dashboard-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 7
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/CheckoutExpired/index.tsx",
+      "worker": "commerce-dashboard-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 8
+    },
+    {
+      "file": "src/components/pages/SettingsHomePage/index.tsx",
+      "worker": "remaining-unlocked-consumers",
+      "action": "hold",
+      "reason": "pre-existing warnings",
+      "warnHitsApprox": 5
+    },
+    {
+      "file": "src/components/pages/LandingPage/index.tsx",
+      "worker": "remaining-unlocked-consumers",
+      "action": "hold",
+      "reason": "pre-existing warnings",
+      "warnHitsApprox": 13
+    },
+    {
+      "file": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "worker": "remaining-unlocked-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 13
+    },
+    {
+      "file": "src/components/pages/JobListPage/JobListRow/index.tsx",
+      "worker": "remaining-unlocked-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 7
+    },
+    {
+      "file": "src/components/pages/JobDetailPage/component.tsx",
+      "worker": "remaining-unlocked-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 16
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "worker": "remaining-unlocked-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 17
+    },
+    {
+      "file": "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+      "worker": "remaining-unlocked-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 5
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "worker": "remaining-unlocked-consumers",
+      "action": "hold",
+      "reason": "page-folder + warnings",
+      "warnHitsApprox": 5
+    }
+  ],
+  "nonImportHolds": [
+    {
+      "file": "src/components/blocks/dashboard/rankBadge.tsx",
+      "note": "JSDoc reference only; emoji warning if touched — not migrated"
+    }
+  ],
+  "unlockedZeroWarnCount": 0,
+  "migratedCount": 0,
+  "heldCount": 33,
+  "legacyImportFilesBefore": 33,
+  "legacyImportFilesAfter": 33
+}

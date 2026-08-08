@@ -1,0 +1,19 @@
+{
+  "worker": "remaining-unlocked-consumers",
+  "manifest": [],
+  "changed": [],
+  "held": [
+    "src/components/pages/SettingsHomePage/index.tsx",
+    "src/components/pages/LandingPage/index.tsx",
+    "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+    "src/components/pages/JobListPage/JobListRow/index.tsx",
+    "src/components/pages/JobDetailPage/component.tsx",
+    "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+    "src/components/pages/BookmarksPage/BookmarkCard/index.tsx",
+    "src/components/pages/ContactPage/ContactChannels/index.tsx"
+  ],
+  "migrated": [],
+  "rawSkeletonRemovals": [],
+  "reason": "pre-existing warnings (page-folder and/or sentence-tier debt)",
+  "overlapCheck": "pass"
+}

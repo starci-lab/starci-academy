@@ -1872,6 +1872,61 @@
       "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b30c-status.md",
       "holdsPreserved": 29,
       "next": "Re-attempt finite contracts only in files already at zero-warning baseline, or after unlocking page-folder/HeroUI debt separately."
+    },
+    {
+      "id": "b31a-promote-top-learners-2026-08-09",
+      "date": "2026-08-09",
+      "status": "blocked",
+      "summary": "BATCH 31a: TopLearners promotion blocked. CommunityTab import site cannot hit 0 warnings under page-folder-two-files-only without forbidden CommunityTab refactor; co-located skeleton Skeleton className lacks exact typed vocabulary. No product move. LeaderboardListCard.className remains open.",
+      "reason": "Atomic zero-warning ratchet + forbid on CommunityTab refactor beyond import + skeleton redesign stop.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b31a-status.md",
+      "next": "page-folder CommunityTab (or inline) batch + IconTile skeleton vocabulary, then re-run B31a"
+    },
+    {
+      "id": "b31a0-unblock-top-learners-prereqs-2026-08-09",
+      "date": "2026-08-09",
+      "status": "blocked",
+      "summary": "BATCH 31a0: CommunityTab classified page-specific (inline into DashboardPage proposed, not blocks). IconTile isSkeleton blocked: correct chrome is blocks/identity/IconTile (no SB twin; cannot zero-warn); TopLearners skeleton migrate blocked by page-folder while TopLearners move forbidden. No product edits.",
+      "reason": "Zero-warning ratchet + no Box proliferation + no TopLearners move + atom geometry ≠ block geometry.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b31a0-status.md",
+      "next": "IconTile vocabulary sync/demotion batch, then CommunityTab inline, then B31a"
+    },
+    {
+      "id": "b31r-icontile-tier-correction-2026-08-09",
+      "date": "2026-08-09",
+      "status": "blocked",
+      "summary": "BATCH 31r: IconTile classified composite (not atom/block). Move held — dual incompatible sm chrome, nivo/nivoexpert atom imports locked, page-folder consumers, no forwarder. Proposed destination composites/lists/IconTile. No product edits; no other proven atom moves.",
+      "reason": "Zero-warning ratchet + no visual redesign + no Nivo edits + no new size token + no compatibility shim.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b31r-status.md",
+      "next": "IconTile chrome-unify + nivo unlock batch, then composite move, then B31a0/B31a"
+    },
+    {
+      "id": "b31r-contract-icontile-canonical-2026-08-09",
+      "date": "2026-08-09",
+      "status": "blocked",
+      "summary": "BATCH 31r-contract: Phase 1 inventory of 80 IconTile open-tag consumers. Proposed sm/md/lg map conflicts with atom md/lg and block md/lg; 30 block-sm need md remap; 6 nivo locked; 28 page-folder. No canonical composites/identity/IconTile created; duplicates remain.",
+      "reason": "Atomic deletion impossible without nivo edits/forwarder; silent size remap forbidden; Storybook atom chrome ≠ proposed md/lg.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b31r-contract-status.md",
+      "next": "Approve size map vs Storybook blueprint + nivo unlock, then implement composites/identity/IconTile"
+    },
+    {
+      "id": "b31r1-identity-tile-split-2026-08-09",
+      "date": "2026-08-09",
+      "status": "superseded",
+      "summary": "BATCH 31r1: IdentityTile not landed under composites path. Superseded by contract atoms/display/IdentityTile (B31r2).",
+      "reason": "COMPOSITE-3/10 conflict with composite filing.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b31r1-status.md",
+      "supersededBy": "b31r2-identity-tile-mass-migration-2026-08-09",
+      "next": "None — see b31r2."
+    },
+    {
+      "id": "b31r2-identity-tile-mass-migration-2026-08-09",
+      "date": "2026-08-09",
+      "status": "partial",
+      "summary": "BATCH 31r2: Landed atoms/display/IdentityTile (SB+src twins, byte-identical). Circular IconTile unchanged. Zero consumers migrated — every legacy block consumer fails zero-warn ratchet. Legacy blocks/identity/IconTile kept (coexistence approved). Deletion deferred.",
+      "reason": "Contract identity-tile.md (atom filing). All 33 live consumer files have pre-existing ESLint warnings; page-folder / LeaderboardListCard / sentence-tier debt holds.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b31r2-status.md",
+      "next": "Zero-warn unlock batches per consumer cluster, then migrate to IdentityTile; delete blocks/identity/IconTile at zero imports."
     }
   ]
 }

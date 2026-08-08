@@ -124,25 +124,6 @@ const MockInterviewSetup = ({
         />
     ) : null
 
-    const personaDetails = (
-        <>
-            <Typography
-                size="sm"
-                weight="medium"
-                isSkeleton={isSkeleton}
-                text={persona.name}
-
-            />
-            <Typography
-                size="xs"
-                color="muted"
-                isSkeleton={isSkeleton}
-                text={persona.role}
-
-            />
-        </>
-    )
-
     // Interviewer identity — built from Avatar + Typography directly (not
     // `UserCell`): the second line is a ROLE, not an `@handle`.
     const identityRow = (
@@ -162,7 +143,32 @@ const MockInterviewSetup = ({
                         />
                     </div>
                 ),
-                ({ isSkeleton }: SkeletonProps) => <StackV gap={1} isSkeleton={isSkeleton} items={[() => personaDetails]} />,
+                ({ isSkeleton }: SkeletonProps) => (
+                    <StackV
+                        gap={1}
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <Typography
+                                    size="sm"
+                                    weight="medium"
+                                    isSkeleton={isSkeleton}
+                                    text={persona.name}
+
+                                />
+                            ),
+                            () => (
+                                <Typography
+                                    size="xs"
+                                    color="muted"
+                                    isSkeleton={isSkeleton}
+                                    text={persona.role}
+
+                                />
+                            ),
+                        ]}
+                    />
+                ),
             ]}
         />
     )
@@ -264,23 +270,25 @@ const MockInterviewSetup = ({
         />
     )
 
-    const setupBody = (
-        <>
-            {resumeBanner}
-            {identityRow}
-            {sessionNameField}
-            {tierField}
-            {footer}
-        </>
-    )
-
     return (
         <div>
             <SurfaceCard
                 label={label}
                 isSkeleton={isSkeleton}
 
-                body={({ isSkeleton }: SkeletonProps) => <StackV gap={6} isSkeleton={isSkeleton} items={[() => setupBody]} />}
+                body={({ isSkeleton }: SkeletonProps) => (
+                    <StackV
+                        gap={6}
+                        isSkeleton={isSkeleton}
+                        items={[
+                            ...(resumeBanner != null ? [() => resumeBanner] : []),
+                            () => identityRow,
+                            () => sessionNameField,
+                            () => tierField,
+                            () => footer,
+                        ]}
+                    />
+                )}
             />
         </div>
     )

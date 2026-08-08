@@ -72,50 +72,54 @@ const ContentArticle = ({
     hintText,
     isSkeleton = false,
 }: ContentArticleProps) => {
-    const lessonBody = (
-        <>
-            {hintText != null && !isLocked ? (
-                <Callout
-                    title={hintText}
-
-                />
-            ) : null}
-            {/* Lock fade + select-none owned by LockedContentMask (same owner as ContentPage). */}
-            <LockedContentMask
-                isLocked={isLocked}
-                isSkeleton={isSkeleton}
-                body={() => (
-                    <MarkdownContent
-                        source={body}
-                        measure="reading"
-                        isSkeleton={isSkeleton}
-                    />
-                )}
-            />
-            {isLocked && offer != null ? (
-                <ContentPaywall
-                    title={offer.title}
-                    description={offer.description}
-                    discountedPriceVnd={offer.discountedPriceVnd}
-                    originalPriceVnd={offer.originalPriceVnd}
-                    currentPhase={offer.currentPhase}
-                    seatsRemaining={offer.seatsRemaining}
-                    nextPhasePriceVnd={offer.nextPhasePriceVnd}
-                    ctaLabel={offer.ctaLabel}
-                    onPurchase={offer.onPurchase}
-
-
-                />
-            ) : null}
-        </>
-    )
-
     return (
         <div>
             <SurfaceCard
                 isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={[() => lessonBody]} />}
+                body={() => (
+                    <StackV
+                        gap={6}
+                        isSkeleton={isSkeleton}
+                        items={[
+                            ...(hintText != null && !isLocked ? [() => (
+                                <Callout
+                                    title={hintText}
+
+                                />
+                            )] : []),
+                            // Lock fade + select-none owned by LockedContentMask (same owner as ContentPage).
+                            () => (
+                                <LockedContentMask
+                                    isLocked={isLocked}
+                                    isSkeleton={isSkeleton}
+                                    body={() => (
+                                        <MarkdownContent
+                                            source={body}
+                                            measure="reading"
+                                            isSkeleton={isSkeleton}
+                                        />
+                                    )}
+                                />
+                            ),
+                            ...(isLocked && offer != null ? [() => (
+                                <ContentPaywall
+                                    title={offer.title}
+                                    description={offer.description}
+                                    discountedPriceVnd={offer.discountedPriceVnd}
+                                    originalPriceVnd={offer.originalPriceVnd}
+                                    currentPhase={offer.currentPhase}
+                                    seatsRemaining={offer.seatsRemaining}
+                                    nextPhasePriceVnd={offer.nextPhasePriceVnd}
+                                    ctaLabel={offer.ctaLabel}
+                                    onPurchase={offer.onPurchase}
+
+
+                                />
+                            )] : []),
+                        ]}
+                    />
+                )}
             />
         </div>
     )

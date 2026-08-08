@@ -244,138 +244,166 @@ const QuizPage = ({
     onRecapRate,
     recapRatingAriaLabel,
 }: QuizPageProps) => {
-    const setupSection = (
-        <>
-            <FlashcardModeSwitch
+    const quizBody = (
+        <StackV
+            gap={7}
+            isSkeleton={isSkeleton}
+            items={[
+                ...(phase === "setup"
+                    ? [
+                        () => (
+                            <StackV
+                                gap={6}
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <FlashcardModeSwitch
 
-                mode={flashcardMode}
-                onModeChange={onFlashcardModeChange}
-                ariaLabel={flashcardModeAriaLabel}
+                                            mode={flashcardMode}
+                                            onModeChange={onFlashcardModeChange}
+                                            ariaLabel={flashcardModeAriaLabel}
 
-            />
-            {!isEnrolled ? (
-                <QuizEnrollGate
+                                        />
+                                    ),
+                                    ...(!isEnrolled
+                                        ? [
+                                            () => (
+                                                <QuizEnrollGate
 
-                    title={enrollTitle}
-                    description={enrollDescription}
-                    ctaLabel={enrollCtaLabel}
-                    onEnroll={onEnroll}
+                                                    title={enrollTitle}
+                                                    description={enrollDescription}
+                                                    ctaLabel={enrollCtaLabel}
+                                                    onEnroll={onEnroll}
 
-                />
-            ) : (
-                <>
-                    <QuizSetup
+                                                />
+                                            ),
+                                        ]
+                                        : [
+                                            () => (
+                                                <QuizSetup
 
-                        label={setupLabel}
-                        name={setupName}
-                        onNameChange={onSetupNameChange}
-                        length={setupLength}
-                        onLengthChange={onSetupLengthChange}
-                        level={setupLevel}
-                        onLevelChange={onSetupLevelChange}
-                        onStart={onSetupStart}
-                        resumable={setupResumable}
-                        isPending={isSetupPending}
-                        errorMessage={setupErrorMessage}
-                        isSkeleton={isSkeleton}
+                                                    label={setupLabel}
+                                                    name={setupName}
+                                                    onNameChange={onSetupNameChange}
+                                                    length={setupLength}
+                                                    onLengthChange={onSetupLengthChange}
+                                                    level={setupLevel}
+                                                    onLevelChange={onSetupLevelChange}
+                                                    onStart={onSetupStart}
+                                                    resumable={setupResumable}
+                                                    isPending={isSetupPending}
+                                                    errorMessage={setupErrorMessage}
+                                                    isSkeleton={isSkeleton}
 
-                    />
-                    <QuizProgressPanel
+                                                />
+                                            ),
+                                            () => (
+                                                <QuizProgressPanel
 
-                        label={progressLabel}
-                        view={progressView}
-                        onViewChange={onProgressViewChange}
-                        viewAriaLabel={progressViewAriaLabel}
-                        stats={progressStats}
-                        sessions={progressSessions}
-                        isSkeleton={isSkeleton}
+                                                    label={progressLabel}
+                                                    view={progressView}
+                                                    onViewChange={onProgressViewChange}
+                                                    viewAriaLabel={progressViewAriaLabel}
+                                                    stats={progressStats}
+                                                    sessions={progressSessions}
+                                                    isSkeleton={isSkeleton}
 
-                    />
-                </>
-            )}
-        </>
+                                                />
+                                            ),
+                                        ]),
+                                ]}
+                            />
+                        ),
+                    ]
+                    : []),
+                ...(phase === "active"
+                    ? [
+                        () => (
+                            <StackV
+                                gap={6}
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <WorkSessionHeader
+
+                                            backLabel={activeBackLabel}
+                                            onBack={onActiveBack}
+                                            title={activeTitle}
+                                            counter={activeCounter}
+                                            timeLeft={activeTimeLeft}
+                                            total={activeTotal}
+                                            current={activeCurrent}
+                                            doneSteps={activeDoneSteps}
+                                            onStepPress={onActiveStepPress}
+                                            finishLabel={activeFinishLabel}
+                                            onFinish={onActiveFinish}
+
+                                        />
+                                    ),
+                                    () => (
+                                        <QuizQuestion
+
+                                            question={question}
+                                            levelLabel={questionLevelLabel}
+                                            answer={answer}
+                                            onAnswerChange={onAnswerChange}
+                                            onSubmit={onAnswerSubmit}
+                                            verdict={verdict}
+                                            expectedAnswer={expectedAnswer}
+                                            explanation={explanation}
+                                            submitLabel={answerSubmitLabel}
+                                            nextLabel={answerNextLabel}
+                                            onNext={onAnswerNext}
+                                            isPending={isAnswerPending}
+                                            isSkeleton={isSkeleton}
+
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]
+                    : []),
+                ...(phase === "recap"
+                    ? [
+                        () => (
+                            <StackV
+                                gap={6}
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <WorkSessionHeader
+
+                                            backLabel={recapBackLabel}
+                                            onBack={onRecapBack}
+                                            title={recapTitle}
+                                            counter={recapCounter}
+                                            total={recapTotal}
+                                            current={recapCurrent}
+                                            doneSteps={recapDoneSteps}
+                                            finishLabel={recapFinishLabel}
+                                            onFinish={onRecapFinish}
+
+                                        />
+                                    ),
+                                    () => (
+                                        <QuizRecapList
+
+                                            cards={recapCards}
+                                            ratingOptions={recapRatingOptions}
+                                            onRate={onRecapRate}
+                                            ratingAriaLabel={recapRatingAriaLabel}
+
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]
+                    : []),
+            ]}
+        />
     )
-
-    const activeSection = (
-        <>
-            <WorkSessionHeader
-
-                backLabel={activeBackLabel}
-                onBack={onActiveBack}
-                title={activeTitle}
-                counter={activeCounter}
-                timeLeft={activeTimeLeft}
-                total={activeTotal}
-                current={activeCurrent}
-                doneSteps={activeDoneSteps}
-                onStepPress={onActiveStepPress}
-                finishLabel={activeFinishLabel}
-                onFinish={onActiveFinish}
-
-            />
-            <QuizQuestion
-
-                question={question}
-                levelLabel={questionLevelLabel}
-                answer={answer}
-                onAnswerChange={onAnswerChange}
-                onSubmit={onAnswerSubmit}
-                verdict={verdict}
-                expectedAnswer={expectedAnswer}
-                explanation={explanation}
-                submitLabel={answerSubmitLabel}
-                nextLabel={answerNextLabel}
-                onNext={onAnswerNext}
-                isPending={isAnswerPending}
-                isSkeleton={isSkeleton}
-
-            />
-        </>
-    )
-
-    const recapSection = (
-        <>
-            <WorkSessionHeader
-
-                backLabel={recapBackLabel}
-                onBack={onRecapBack}
-                title={recapTitle}
-                counter={recapCounter}
-                total={recapTotal}
-                current={recapCurrent}
-                doneSteps={recapDoneSteps}
-                finishLabel={recapFinishLabel}
-                onFinish={onRecapFinish}
-
-            />
-            <QuizRecapList
-
-                cards={recapCards}
-                ratingOptions={recapRatingOptions}
-                onRate={onRecapRate}
-                ratingAriaLabel={recapRatingAriaLabel}
-
-            />
-        </>
-    )
-
-    const quizPhases = (
-        <>
-            {phase === "setup" ? (
-                <StackV gap={6} isSkeleton={isSkeleton} items={[() => setupSection]} />
-            ) : null}
-
-            {phase === "active" ? (
-                <StackV gap={6} isSkeleton={isSkeleton} items={[() => activeSection]} />
-            ) : null}
-
-            {phase === "recap" ? (
-                <StackV gap={6} isSkeleton={isSkeleton} items={[() => recapSection]} />
-            ) : null}
-        </>
-    )
-
-    const quizBody = <StackV gap={7} isSkeleton={isSkeleton} items={[() => quizPhases]} />
 
     return <Container size="md" padding={6} body={() => quizBody} />
 }

@@ -108,52 +108,60 @@ const FoundationResourcePage = ({
     isEmpty = false,
     isSkeleton = false,
 }: FoundationResourcePageProps) => {
-    const resourceSection = (
-        <>
-            <FoundationHeader
-
-                breadcrumbItems={breadcrumbItems}
-                title={title}
-                description={description}
-                kind={kind}
-                isRecommended={isRecommended}
-                tags={tags}
-                author={author}
-                isSkeleton={isSkeleton}
-
-            />
-            <FoundationResourceBody
-
-                kind={KIND_TO_RESOURCE_KIND[kind]}
-                markdownBody={markdownBody}
-                linkTitle={linkTitle}
-                linkUrl={linkUrl}
-                onOpenLink={onOpenLink}
-                isSkeleton={isSkeleton}
-
-            />
-        </>
-    )
-
-    const resourceSections = (
-        <>
-            <TrialEnrollBanner
-
-                isVisible={isEnrollmentKnown && !isEnrolled}
-                onEnroll={onEnroll}
-                isSkeleton={isSkeleton}
-
-            />
-            {isEmpty ? (
-                <FoundationResourceEmpty />
-            ) : (
-                <StackV gap={6} isSkeleton={isSkeleton} items={[() => resourceSection]} />
-            )}
-        </>
-    )
-
     const resourceBody = ({ isSkeleton }: SkeletonProps) => (
-        <StackV gap={6} isSkeleton={isSkeleton} items={[() => resourceSections]} />
+        <StackV
+            gap={6}
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <TrialEnrollBanner
+
+                        isVisible={isEnrollmentKnown && !isEnrolled}
+                        onEnroll={onEnroll}
+                        isSkeleton={isSkeleton}
+
+                    />
+                ),
+                ...(isEmpty
+                    ? [() => <FoundationResourceEmpty />]
+                    : [
+                        () => (
+                            <StackV
+                                gap={6}
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <FoundationHeader
+
+                                            breadcrumbItems={breadcrumbItems}
+                                            title={title}
+                                            description={description}
+                                            kind={kind}
+                                            isRecommended={isRecommended}
+                                            tags={tags}
+                                            author={author}
+                                            isSkeleton={isSkeleton}
+
+                                        />
+                                    ),
+                                    () => (
+                                        <FoundationResourceBody
+
+                                            kind={KIND_TO_RESOURCE_KIND[kind]}
+                                            markdownBody={markdownBody}
+                                            linkTitle={linkTitle}
+                                            linkUrl={linkUrl}
+                                            onOpenLink={onOpenLink}
+                                            isSkeleton={isSkeleton}
+
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]),
+            ]}
+        />
     )
 
     return <Container size="md" padding={6} isSkeleton={isSkeleton} body={resourceBody} />

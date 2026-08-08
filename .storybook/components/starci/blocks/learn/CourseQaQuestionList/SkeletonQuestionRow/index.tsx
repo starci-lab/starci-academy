@@ -16,33 +16,6 @@ import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
  * own a seam).
  */
 export const SkeletonQuestionRow = () => {
-    const previewLines = (
-        <>
-            <Typography size="sm" isSkeleton />
-            <Typography size="sm" isSkeleton />
-        </>
-    )
-
-    const chipRow = (
-        <>
-            <Typography size="xs" isSkeleton />
-            <Chip isSkeleton />
-        </>
-    )
-
-    const textColumn = (
-        <>
-            {/* asker + time line */}
-            <Typography size="xs" isSkeleton />
-            {/* two-line preview */}
-            <StackV gap={2} items={[() => previewLines]} />
-            {/* chip-pill row — ONE chip (status, the classification axis) + the scope
-                as a plain shimmer bar, matching the real row's own text-inline treatment
-                (eslint `starci-fe/no-adjacent-chip`, *7 below). */}
-            <StackH gap={3} items={[() => chipRow]} />
-        </>
-    )
-
     return (
         <StackH identity={{ tier: "block", component: "SkeletonQuestionRow" }}
             gap={4}
@@ -56,7 +29,38 @@ export const SkeletonQuestionRow = () => {
                         <Avatar isSkeleton size="sm" />
                     </div>
                 ),
-                () => <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={[() => textColumn]} />,
+                () => (
+                    <StackV
+                        gap={2}
+                        classNames={["min-w-0", "flex-1"]}
+                        items={[
+                            // asker + time line
+                            () => <Typography size="xs" isSkeleton />,
+                            // two-line preview
+                            () => (
+                                <StackV
+                                    gap={2}
+                                    items={[
+                                        () => <Typography size="sm" isSkeleton />,
+                                        () => <Typography size="sm" isSkeleton />,
+                                    ]}
+                                />
+                            ),
+                            // chip-pill row — ONE chip (status, the classification axis) + the scope
+                            // as a plain shimmer bar, matching the real row's own text-inline treatment
+                            // (eslint `starci-fe/no-adjacent-chip`, *7 below).
+                            () => (
+                                <StackH
+                                    gap={3}
+                                    items={[
+                                        () => <Typography size="xs" isSkeleton />,
+                                        () => <Chip isSkeleton />,
+                                    ]}
+                                />
+                            ),
+                        ]}
+                    />
+                ),
                 // status dot — no home atom (*3), same escape hatch `Pagination` uses for its own shimmer squares
                 () => <HeroSkeleton className="size-2 shrink-0 rounded-full" />,
             ]}

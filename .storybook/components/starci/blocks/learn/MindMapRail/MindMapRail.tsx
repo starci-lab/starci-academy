@@ -171,44 +171,56 @@ const MindMapRail = ({
         />
     )
 
-    const searchRow = (
-        <>
-            <div className="min-w-0 flex-1">
-                <InputSearch
-                    value={query}
-                    onValueChange={onQuery}
-                    placeholder={SEARCH_PLACEHOLDER}
-                    ariaLabel={ariaLabel}
+    return (
+        <StackV
+            identity={{ tier: "block", component: "MindMapRail" }}
+            gap={3}
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <StackH
+                        gap={3}
+                        principle="flex-action"
+                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                        at="sm"
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <div className="min-w-0 flex-1">
+                                    <InputSearch
+                                        value={query}
+                                        onValueChange={onQuery}
+                                        placeholder={SEARCH_PLACEHOLDER}
+                                        ariaLabel={ariaLabel}
 
-                />
-            </div>
-            <div>
-                {/* `Badge` only wraps the trigger when a non-default tier is active — `dot` has
-                    no built-in "hide me" reading the way `count` does (§ Badge file header: count
-                    ≤ 0 hides itself, a bare dot has no such signal), so the ON/OFF state is this
-                    block's own condition instead of a prop the atom could resolve alone. */}
-                {isFiltered ? <Badge dot>{filterTrigger}</Badge> : filterTrigger}
-            </div>
-        </>
+                                    />
+                                </div>
+                            ),
+                            () => (
+                                <div>
+                                    {/* `Badge` only wraps the trigger when a non-default tier is active — `dot` has
+                                        no built-in "hide me" reading the way `count` does (§ Badge file header: count
+                                        ≤ 0 hides itself, a bare dot has no such signal), so the ON/OFF state is this
+                                        block's own condition instead of a prop the atom could resolve alone. */}
+                                    {isFiltered ? <Badge dot>{filterTrigger}</Badge> : filterTrigger}
+                                </div>
+                            ),
+                        ]}
+                    />
+                ),
+                () => (
+                    <AsyncContent
+                        isLoading={isLoading || isSkeleton}
+                        skeleton={() => <SurfaceCardList items={skeletonRows()} isSkeleton />}
+                        isEmpty={items.length === 0}
+                        emptyContent={emptyContent}
+
+                        content={() => <SurfaceCardList items={rows} />}
+                    />
+                ),
+            ]}
+        />
     )
-
-    const railBody = (
-        <>
-            <StackH gap={3} principle="flex-action"
-                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
-                at="sm" isSkeleton={isSkeleton} items={[() => searchRow]}  />
-            <AsyncContent
-                isLoading={isLoading || isSkeleton}
-                skeleton={() => <SurfaceCardList items={skeletonRows()} isSkeleton />}
-                isEmpty={items.length === 0}
-                emptyContent={emptyContent}
-
-                content={() => <SurfaceCardList items={rows} />}
-            />
-        </>
-    )
-
-    return <StackV identity={{ tier: "block", component: "MindMapRail" }} gap={3} isSkeleton={isSkeleton} items={[() => railBody]} />
 }
 
 export { MindMapRail }

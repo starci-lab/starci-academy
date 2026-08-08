@@ -165,8 +165,8 @@ const ModulePage = ({
         return <ModulePageEmpty />
     }
 
-    const moduleContent = (
-        <>
+    const moduleContent = [
+        () => (
             <ModuleContinueBand
 
                 resumeLessonTitle={resumeLessonTitle}
@@ -178,6 +178,8 @@ const ModulePage = ({
                 isSkeleton={isSkeleton}
 
             />
+        ),
+        () => (
             <ModuleLessonList
 
                 lessons={lessons}
@@ -186,58 +188,66 @@ const ModulePage = ({
                 isSkeleton={isSkeleton}
 
             />
-            {/* A count of zero is not news (`ModuleHeader`/`ContentModeNav` idiom) —
-            extended here to a whole block's presence: a module with no challenges
-            yet does not earn an empty challenge list on its own page. */}
-            {isSkeleton || challenges.length > 0 ? (
-                <ModuleChallengeList
+        ),
+        // A count of zero is not news (`ModuleHeader`/`ContentModeNav` idiom) —
+        // extended here to a whole block's presence: a module with no challenges
+        // yet does not earn an empty challenge list on its own page.
+        ...(isSkeleton || challenges.length > 0
+            ? [
+                () => (
+                    <ModuleChallengeList
 
-                    challenges={challenges}
-                    onSelectChallenge={onSelectChallenge}
-                    isSkeleton={isSkeleton}
+                        challenges={challenges}
+                        onSelectChallenge={onSelectChallenge}
+                        isSkeleton={isSkeleton}
 
-                />
-            ) : null}
-        </>
-    )
-
-    const moduleSections = (
-        <>
-            <ModuleHeader
-
-                breadcrumbItems={breadcrumbItems}
-                title={title}
-                description={description}
-                tier={tier}
-                lessonCount={lessonCount}
-                minutesTotal={minutesTotal}
-                challengeCount={challengeCount}
-                isSkeleton={isSkeleton}
-
-            />
-            {isLocked ? (
-                <ContentPaywall
-
-                    title={paywallTitle ?? ""}
-                    description={paywallDescription}
-                    discountedPriceVnd={discountedPriceVnd ?? 0}
-                    originalPriceVnd={originalPriceVnd}
-                    currentPhase={currentPhase}
-                    seatsRemaining={seatsRemaining}
-                    nextPhasePriceVnd={nextPhasePriceVnd}
-                    ctaLabel={paywallCtaLabel ?? ""}
-                    onPurchase={onPurchase ?? (() => {})}
-                    isSkeleton={isSkeleton}
-
-                />
-            ) : (
-                <StackV gap={6} isSkeleton={isSkeleton} items={[() => moduleContent]} />
-            )}
-        </>
-    )
+                    />
+                ),
+            ]
+            : []),
+    ]
 
     const moduleBody = ({ isSkeleton }: SkeletonProps) => (
-        <StackV gap={7} isSkeleton={isSkeleton} items={[() => moduleSections]} />
+        <StackV
+            gap={7}
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <ModuleHeader
+
+                        breadcrumbItems={breadcrumbItems}
+                        title={title}
+                        description={description}
+                        tier={tier}
+                        lessonCount={lessonCount}
+                        minutesTotal={minutesTotal}
+                        challengeCount={challengeCount}
+                        isSkeleton={isSkeleton}
+
+                    />
+                ),
+                ...(isLocked
+                    ? [
+                        () => (
+                            <ContentPaywall
+
+                                title={paywallTitle ?? ""}
+                                description={paywallDescription}
+                                discountedPriceVnd={discountedPriceVnd ?? 0}
+                                originalPriceVnd={originalPriceVnd}
+                                currentPhase={currentPhase}
+                                seatsRemaining={seatsRemaining}
+                                nextPhasePriceVnd={nextPhasePriceVnd}
+                                ctaLabel={paywallCtaLabel ?? ""}
+                                onPurchase={onPurchase ?? (() => {})}
+                                isSkeleton={isSkeleton}
+
+                            />
+                        ),
+                    ]
+                    : [() => <StackV gap={6} isSkeleton={isSkeleton} items={moduleContent} />]),
+            ]}
+        />
     )
 
     return <Container size="md" padding={6} isSkeleton={isSkeleton} body={moduleBody} />

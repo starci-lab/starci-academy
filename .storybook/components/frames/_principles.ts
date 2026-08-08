@@ -21,7 +21,7 @@ export type PrincipleToken =
     // margin / alignment
     | "push-end" | "pin-bottom" | "center-measure"
     // structural (frame-emitted)
-    | "reel" | "sticky-top" | "fixed-bar" | "stack-below" | "flex-fill"
+    | "reel" | "sticky-top" | "fixed-bar" | "stack-below" | "flex-fill" | "flex-fill-base"
 
 /**
  * Build the `data-principle` attribute value from one token. Undefined omits the

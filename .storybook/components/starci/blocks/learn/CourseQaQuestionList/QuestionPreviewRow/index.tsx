@@ -60,26 +60,25 @@ export const QuestionPreviewRow = ({ question, currentUserId }: QuestionPreviewR
         ))
     }
 
-    const nameLine = (
-        <>
-            {question.isPinned ? (
-                <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-            ) : null}
-            <Typography size="xs" weight="medium" text={askerName} />
-            {question.isFounderAuthor ? (
-                <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
-            ) : null}
-            <Typography size="xs" color="muted" text={`· ${question.createdTimeAgo}`} />
-        </>
-    )
-
-    const textColumn = (
-        <>
-            <StackH gap={2} items={[() => nameLine]} />
-            <Typography size="sm" lineClamp={2} text={question.preview} />
-            <Cluster gap={3} items={chips} />
-        </>
-    )
+    const textColumnItems = [
+        () => (
+            <StackH
+                gap={2}
+                items={[
+                    ...(question.isPinned ? [() => (
+                        <PushPinIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+                    )] : []),
+                    () => <Typography size="xs" weight="medium" text={askerName} />,
+                    ...(question.isFounderAuthor ? [() => (
+                        <SealCheckIcon weight="fill" aria-hidden focusable="false" className="size-3.5 shrink-0 text-accent-soft-foreground" />
+                    )] : []),
+                    () => <Typography size="xs" color="muted" text={`· ${question.createdTimeAgo}`} />,
+                ]}
+            />
+        ),
+        () => <Typography size="sm" lineClamp={2} text={question.preview} />,
+        () => <Cluster gap={3} items={chips} />,
+    ]
 
     return (
         <StackH
@@ -100,7 +99,7 @@ export const QuestionPreviewRow = ({ question, currentUserId }: QuestionPreviewR
                         />
                     </div>
                 ),
-                () => <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={[() => textColumn]} />,
+                () => <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={textColumnItems} />,
                 () => (
                     <span
                         aria-hidden

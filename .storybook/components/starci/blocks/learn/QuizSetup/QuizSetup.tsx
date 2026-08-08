@@ -200,35 +200,36 @@ const QuizSetup = ({
         />
     )
 
-    const formBody = (
-        <>
-            {resumable != null ? (
-                // A learner who left mid-run almost always means to come back. Making
-                // them scroll past a start button to find their own session is how one
-                // run gets abandoned twice.
-                <Callout
-                    title={resumable.name}
-                    description={`In progress · ${resumable.answered}/${resumable.total} questions`}
-                    actionLabel="Continue"
-                    onAction={resumable.onResume}
-
-                />
-            ) : null}
-
-            {nameField}
-            {lengthField}
-            {levelField}
-            {actionField}
-        </>
-    )
-
     return (
         <div>
             <SurfaceCard
                 label={label}
                 isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={[() => formBody]} />}
+                body={() => (
+                    <StackV
+                        gap={6}
+                        isSkeleton={isSkeleton}
+                        items={[
+                            ...(resumable != null ? [() => (
+                                // A learner who left mid-run almost always means to come back. Making
+                                // them scroll past a start button to find their own session is how one
+                                // run gets abandoned twice.
+                                <Callout
+                                    title={resumable.name}
+                                    description={`In progress · ${resumable.answered}/${resumable.total} questions`}
+                                    actionLabel="Continue"
+                                    onAction={resumable.onResume}
+
+                                />
+                            )] : []),
+                            () => nameField,
+                            () => lengthField,
+                            () => levelField,
+                            () => actionField,
+                        ]}
+                    />
+                )}
             />
         </div>
     )

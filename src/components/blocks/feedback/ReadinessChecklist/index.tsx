@@ -1,16 +1,24 @@
-import React from "react"
-import type { ReactNode } from "react"
+import React, { type ComponentType } from "react"
 import { CheckCircleIcon } from "@phosphor-icons/react"
-import { ListRow } from "@/components/blocks/lists/ListRow"
-import { IconTile } from "@/components/blocks/identity/IconTile"
+import {
+    IdentityTile,
+    type IdentityTileIcon,
+} from "@/components/atoms/display/IdentityTile"
+import { ListRow } from "@/components/composites/lists/List"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import { StackV } from "@/components/frames/Stack"
+import type { ComponentTypeWithSkeleton, SkeletonProps } from "@/components/frames/_slot"
 
 /** One row of a {@link ReadinessChecklist}. */
 export interface ReadinessChecklistItem {
     /** Stable row key. */
     id: string
-    /** Icon shown when the item is NOT ready (a `ready` row swaps it for a check). */
-    icon: ReactNode
+    /**
+     * Icon shown when the item is NOT ready (a `ready` row swaps it for a check).
+     * A COMPONENT reference — never a built ReactNode — so {@link IdentityTile}
+     * owns icon scale.
+     */
+    icon: IdentityTileIcon
     /** Row title — the thing being checked (e.g. "Ollama agent"). */
     label: string
     /** Subtitle shown when {@link ReadinessChecklistItem.ready} is true. */
@@ -31,9 +39,63 @@ export interface ReadinessChecklistProps {
     pendingLabel: string
 }
 
+/** Stable leading for every ready row — one identity, never recreated per render. */
+const ReadyLeading = ({ isSkeleton }: SkeletonProps) => (
+    <IdentityTile
+        icon={CheckCircleIcon}
+        tone="success"
+        size="sm"
+        {...(isSkeleton ? { isSkeleton: true as const } : {})}
+    />
+)
+
+/** Cache of pending-leading adapters keyed by icon component identity. */
+const pendingLeadingCache = new WeakMap<IdentityTileIcon, ComponentTypeWithSkeleton>()
+
+/** Return a stable pending leading for `Icon` (one adapter per icon component). */
+const pendingLeading = (Icon: IdentityTileIcon): ComponentTypeWithSkeleton => {
+    const cached = pendingLeadingCache.get(Icon)
+    if (cached) {
+        return cached
+    }
+    const PendingLeading = ({ isSkeleton }: SkeletonProps) => (
+        <IdentityTile
+            icon={Icon}
+            tone="neutral"
+            size="sm"
+            {...(isSkeleton ? { isSkeleton: true as const } : {})}
+        />
+    )
+    pendingLeadingCache.set(Icon, PendingLeading)
+    return PendingLeading
+}
+
+/** Cache of trailing chip adapters keyed by ready flag + label pair. */
+const trailingCache = new Map<string, ComponentType>()
+
+/** Return a stable trailing StatusChip for the ready/pending labels. */
+const statusTrailing = (
+    ready: boolean,
+    readyLabel: string,
+    pendingLabel: string,
+): ComponentType => {
+    const key = `${ready ? "ready" : "pending"}:${readyLabel}:${pendingLabel}`
+    const cached = trailingCache.get(key)
+    if (cached) {
+        return cached
+    }
+    const Trailing = () => (
+        <StatusChip tone={ready ? "success" : "neutral"}>
+            {ready ? readyLabel : pendingLabel}
+        </StatusChip>
+    )
+    trailingCache.set(key, Trailing)
+    return Trailing
+}
+
 /**
  * A vertical list of prerequisite/setup checks, each rendered as a
- * {@link ListRow}: a leading `IconTile` (success-toned check when ready,
+ * {@link ListRow}: a leading {@link IdentityTile} (success-toned check when ready,
  * the caller's own icon in neutral tone while pending), the item's label as
  * title, a ready/pending description as subtitle, and a trailing
  * {@link StatusChip} spelling out the state. Purely presentational — the
@@ -42,39 +104,31 @@ export interface ReadinessChecklistProps {
  * strings.
  *
  * @param props - See {@link ReadinessChecklistProps}.
- *
- * @see Story: .storybook/stories/blocks/feedback/ReadinessChecklist/ReadinessChecklist.stories
  */
-export const ReadinessChecklist = ({ items, readyLabel, pendingLabel}: ReadinessChecklistProps) => {
-    return (
-        <div>
+export const ReadinessChecklist = ({ items, readyLabel, pendingLabel }: ReadinessChecklistProps) => {
+    const Rows = () => (
+        <>
             {items.map((item, index) => (
                 <ListRow
                     key={item.id}
-                    // p-3, not ListRow's bare py-2: this checklist always renders
-                    // INSIDE a bounded card, where a row with no horizontal padding
-                    // sits flush against the card edge. Padding on the ROW keeps the
-                    // divider full-width (border-b is on the row box, outside padding).
-                    className="p-3"
+                    density="comfortable"
                     divider={index < items.length - 1}
-                    leading={(
-                        <IconTile
-                            // circle-check, not a bare tick — icon.md §2: every
-                            // "done / passed" mark is `CheckCircleIcon`.
-                            icon={item.ready ? <CheckCircleIcon aria-hidden focusable="false" /> : item.icon}
-                            tone={item.ready ? "success" : "neutral"}
-                            size="sm"
-                        />
-                    )}
+                    leading={item.ready ? ReadyLeading : pendingLeading(item.icon)}
                     title={item.label}
                     subtitle={item.ready ? item.readyDescription : item.pendingDescription}
-                    trailing={(
-                        <StatusChip tone={item.ready ? "success" : "neutral"}>
-                            {item.ready ? readyLabel : pendingLabel}
-                        </StatusChip>
-                    )}
+                    trailing={statusTrailing(item.ready, readyLabel, pendingLabel)}
                 />
             ))}
-        </div>
+        </>
+    )
+
+    return (
+        <StackV
+            identity={{ tier: "block", component: "ReadinessChecklist" }}
+            gap={1}
+            principle="sibling-stack"
+            explain="Same-kind peer stack of checklist rows — not group-boundary, because these are repeating sibling rows rather than section groups."
+            items={[Rows]}
+        />
     )
 }

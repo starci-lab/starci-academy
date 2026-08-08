@@ -188,134 +188,166 @@ const ContentPage = ({
     tabsAriaLabel,
     isSkeleton = false,
 }: ContentPageProps) => {
-    const lessonFooter = (
-        <>
-            <ContentReaction
+    const contentBody = (
+        <StackV
+            gap={6}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major page regions rather than nested section groups."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <ContentHeader
 
-                myReaction={myReaction}
-                counts={reactionCounts}
-                viewCount={viewCount}
-                onReact={onReact}
-                isSkeleton={isSkeleton}
+                        breadcrumbItems={breadcrumbItems}
+                        title={title}
+                        description={description}
+                        isRead={isRead}
+                        minutesRead={minutesRead}
+                        challengeCount={challengeCount}
+                        outcomes={outcomes}
+                        isSkeleton={isSkeleton}
 
-            />
-            {/* MOBILE/TABLET-ONLY via HideAbove: on desktop the right rail's own
-            "Practice this lesson" already surfaces this, so `at="lg"` removes it
-            from view above that width rather than the screen mounting two
-            different trees. Mode/challenge gate mirrors `src`'s `UpNextCard`
-            exactly; `isHighlight` does NOT — `src`'s own card is unaccented here,
-            but this nudge is the one focal action a mobile reader sees after the
-            reaction bar. */}
-            {!isSkeleton && mode === "content" && (challengeCount ?? 0) > 0 ? (
-                <HideAbove
-                    at="lg"
-                    body={() => (
-                        <MilestoneUpNextCard
+                    />
+                ),
+                // ModeNav / Article / (reaction cluster) sit CLOSER together than the identity/outcomes
+                // block above: they are all "reading this lesson", one continuous
+                // surface, not separate regions.
+                () => (
+                    <StackV
+                        gap={4}
+                        principle="content-row"
+                        explain="Lesson reading surface — not block-boundary, because mode nav, article, and footer share one continuous reading unit rather than major block separation."
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <ContentModeNav
 
-                            isHighlight
-                            eyebrow="Up next · Practice this lesson"
-                            title={`Do this lesson's ${challengeCount} challenges`}
-                            description="Apply what you just learned. Challenges are graded automatically and count toward your progress."
-                            ctaLabel="Start challenges"
-                            onPress={() => onModeChange("challenges")}
+                                    modes={modes}
+                                    mode={mode}
+                                    onModeChange={onModeChange}
+                                    languages={languages}
+                                    language={language}
+                                    onLanguageChange={onLanguageChange}
+                                    languageAriaLabel={languageAriaLabel}
+                                    ariaLabel={tabsAriaLabel}
 
-                        />
-                    )}
-                />
-            ) : null}
-            <ContentRelatedList
+                                />
+                            ),
+                            () => (
+                                <ContentArticle
 
-                items={relatedItems}
-                label={relatedLabel}
-                isSkeleton={isSkeleton}
+                                    body={body}
+                                    isLocked={isLocked}
+                                    offer={offer}
+                                    hintText={hintText}
+                                    isSkeleton={isSkeleton}
 
-            />
-            <ContentDiscussion
+                                />
+                            ),
+                            // A reader stopped by the paywall has ONE decision in front of them. Four more
+                            // things to do underneath would compete with it, so the whole footer waits
+                            // until the lesson is actually open.
+                            ...(!isLocked
+                                ? [
+                                    () => (
+                                        <StackV
+                                            gap={6}
+                                            principle="block-boundary"
+                                            explain="Block-to-block spacing — not group-boundary, because reaction and pager are major post-article regions rather than nested section groups."
+                                            isSkeleton={isSkeleton}
+                                            items={[
+                                                () => (
+                                                    <ContentReaction
 
-                label={discussionLabel}
-                currentUserId={currentUserId}
-                currentUser={currentUser}
-                comments={comments}
-                total={commentsTotal}
-                repliesByParent={repliesByParent}
-                onSubmitComment={onSubmitComment}
-                onReply={onReply}
-                onEdit={onEditComment}
-                onDelete={onDeleteComment}
-                onReactComment={onReactComment}
-                onLoadReplies={onLoadReplies}
-                hasMore={hasMoreComments}
-                isLoadingMore={isLoadingMoreComments}
-                onLoadMore={onLoadMoreComments}
-                errorMessage={discussionErrorMessage}
-                isSkeleton={isSkeleton}
+                                                        myReaction={myReaction}
+                                                        counts={reactionCounts}
+                                                        viewCount={viewCount}
+                                                        onReact={onReact}
+                                                        isSkeleton={isSkeleton}
 
-            />
-            <ContentPager
+                                                    />
+                                                ),
+                                                // MOBILE/TABLET-ONLY via HideAbove: on desktop the right rail's own
+                                                // "Practice this lesson" already surfaces this, so `at="lg"` removes it
+                                                // from view above that width rather than the screen mounting two
+                                                // different trees. Mode/challenge gate mirrors `src`'s `UpNextCard`
+                                                // exactly; `isHighlight` does NOT — `src`'s own card is unaccented here,
+                                                // but this nudge is the one focal action a mobile reader sees after the
+                                                // reaction bar.
+                                                ...(!isSkeleton && mode === "content" && (challengeCount ?? 0) > 0
+                                                    ? [
+                                                        () => (
+                                                            <HideAbove
+                                                                at="lg"
+                                                                body={() => (
+                                                                    <MilestoneUpNextCard
 
-                previous={previous}
-                next={next}
-                ariaLabel={pagerAriaLabel}
-                isSkeleton={isSkeleton}
+                                                                        isHighlight
+                                                                        eyebrow="Up next · Practice this lesson"
+                                                                        title={`Do this lesson's ${challengeCount} challenges`}
+                                                                        description="Apply what you just learned. Challenges are graded automatically and count toward your progress."
+                                                                        ctaLabel="Start challenges"
+                                                                        onPress={() => onModeChange("challenges")}
 
-            />
-        </>
+                                                                    />
+                                                                )}
+                                                            />
+                                                        ),
+                                                    ]
+                                                    : []),
+                                                () => (
+                                                    <ContentRelatedList
+
+                                                        items={relatedItems}
+                                                        label={relatedLabel}
+                                                        isSkeleton={isSkeleton}
+
+                                                    />
+                                                ),
+                                                () => (
+                                                    <ContentDiscussion
+
+                                                        label={discussionLabel}
+                                                        currentUserId={currentUserId}
+                                                        currentUser={currentUser}
+                                                        comments={comments}
+                                                        total={commentsTotal}
+                                                        repliesByParent={repliesByParent}
+                                                        onSubmitComment={onSubmitComment}
+                                                        onReply={onReply}
+                                                        onEdit={onEditComment}
+                                                        onDelete={onDeleteComment}
+                                                        onReactComment={onReactComment}
+                                                        onLoadReplies={onLoadReplies}
+                                                        hasMore={hasMoreComments}
+                                                        isLoadingMore={isLoadingMoreComments}
+                                                        onLoadMore={onLoadMoreComments}
+                                                        errorMessage={discussionErrorMessage}
+                                                        isSkeleton={isSkeleton}
+
+                                                    />
+                                                ),
+                                                () => (
+                                                    <ContentPager
+
+                                                        previous={previous}
+                                                        next={next}
+                                                        ariaLabel={pagerAriaLabel}
+                                                        isSkeleton={isSkeleton}
+
+                                                    />
+                                                ),
+                                            ]}
+                                        />
+                                    ),
+                                ]
+                                : []),
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
-
-    const readingSection = (
-        <>
-            <ContentModeNav
-
-                modes={modes}
-                mode={mode}
-                onModeChange={onModeChange}
-                languages={languages}
-                language={language}
-                onLanguageChange={onLanguageChange}
-                languageAriaLabel={languageAriaLabel}
-                ariaLabel={tabsAriaLabel}
-
-            />
-            <ContentArticle
-
-                body={body}
-                isLocked={isLocked}
-                offer={offer}
-                hintText={hintText}
-                isSkeleton={isSkeleton}
-
-            />
-            {/* A reader stopped by the paywall has ONE decision in front of them. Four more
-                things to do underneath would compete with it, so the whole footer waits
-                until the lesson is actually open. */}
-            {!isLocked ? (
-                <StackV gap={6} isSkeleton={isSkeleton} items={[() => lessonFooter]} />
-            ) : null}
-        </>
-    )
-
-    const contentSections = (
-        <>
-            <ContentHeader
-
-                breadcrumbItems={breadcrumbItems}
-                title={title}
-                description={description}
-                isRead={isRead}
-                minutesRead={minutesRead}
-                challengeCount={challengeCount}
-                outcomes={outcomes}
-                isSkeleton={isSkeleton}
-
-            />
-            {/* ModeNav / Article / (reaction cluster) sit CLOSER together than the identity/outcomes
-                block above: they are all "reading this lesson", one continuous
-                surface, not separate regions. */}
-            <StackV gap={4} isSkeleton={isSkeleton} items={[() => readingSection]} />
-        </>
-    )
-
-    const contentBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => contentSections]} />
 
     return <Container size="md" padding={6} body={() => contentBody} />
 }

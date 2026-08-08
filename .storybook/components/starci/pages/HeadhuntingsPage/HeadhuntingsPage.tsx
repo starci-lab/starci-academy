@@ -87,45 +87,55 @@ const HeadhuntingsPage = ({
     consultantsAriaLabel,
     isSkeleton = false,
 }: HeadhuntingsPageProps) => {
-    const directorySection = (
-        <>
-            <ConsultantDirectoryCompanySearch
+    const headhuntingsBody = (
+        <StackV
+            gap={6}
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <ConsultantDirectoryHeader
 
-                query={companyQuery}
-                onQueryChange={onCompanyQueryChange}
-                suggestions={companySuggestions}
-                isLoadingSuggestions={isLoadingCompanySuggestions}
-                onSelectCompany={onSelectCompany}
+                        breadcrumbItems={breadcrumbItems}
+                        title={title}
+                        description={description}
+                        isSkeleton={isSkeleton}
 
-            />
-            <ConsultantDirectoryGrid
+                    />
+                ),
+                () => (
+                    <StackV
+                        gap={4}
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <ConsultantDirectoryCompanySearch
 
-                consultants={consultants}
-                count={consultantCount}
-                isLoading={isLoadingConsultants}
-                onOpenConsultant={onOpenConsultant}
-                emptyTitle={consultantsEmptyTitle}
-                ariaLabel={consultantsAriaLabel}
+                                    query={companyQuery}
+                                    onQueryChange={onCompanyQueryChange}
+                                    suggestions={companySuggestions}
+                                    isLoadingSuggestions={isLoadingCompanySuggestions}
+                                    onSelectCompany={onSelectCompany}
 
-            />
-        </>
+                                />
+                            ),
+                            () => (
+                                <ConsultantDirectoryGrid
+
+                                    consultants={consultants}
+                                    count={consultantCount}
+                                    isLoading={isLoadingConsultants}
+                                    onOpenConsultant={onOpenConsultant}
+                                    emptyTitle={consultantsEmptyTitle}
+                                    ariaLabel={consultantsAriaLabel}
+
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
-
-    const headhuntingsSections = (
-        <>
-            <ConsultantDirectoryHeader
-
-                breadcrumbItems={breadcrumbItems}
-                title={title}
-                description={description}
-                isSkeleton={isSkeleton}
-
-            />
-            <StackV gap={4} isSkeleton={isSkeleton} items={[() => directorySection]} />
-        </>
-    )
-
-    const headhuntingsBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => headhuntingsSections]} />
 
     return <Container size="md" padding={6} body={() => headhuntingsBody} />
 }

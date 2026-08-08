@@ -91,57 +91,57 @@ const KeyValueRow = ({
     // sync with this one.
     // Label column: label + hint form a TIGHT cluster (§10b `tight` = gap-1) — the
     // same "a label continuing into its hint" shape the registry names `title-subtitle`.
-    const pairContent = (
-        <>
-            <StackV
-                gap={2}
-                classNames={["min-w-0"]}
-                principle="title-subtitle"
-                explain="Title over supporting line — not label-field, because neither line is a form control label."
-                isSkeleton={isSkeleton}
-                items={[
-                    () => (
-                        <span>
-                            <Typography size="sm"
-                                text={label}
-                                color={isSkeleton ? undefined : (emphasis ? undefined : "muted")}
-                                weight={isSkeleton ? undefined : (emphasis ? "medium" : undefined)}
-                                isSkeleton={isSkeleton}
-                            />
-                        </span>
-                    ),
-                    ...(hint != null ? [() => (
-                        <span>
-                            <Typography size="xs"
-                                text={hint}
-                                color={isSkeleton ? undefined : "muted"}
-                                isSkeleton={isSkeleton}
-                            />
-                        </span>
-                    )] : []),
-                ]}
-            />
-            <span
-                className={cn("flex shrink-0 items-center", copyable && !isSkeleton && "gap-2")}
-                data-principle={copyable && !isSkeleton ? "flex-action" : undefined}
-            >
-                <span>
-                    {emphasis ? (
-                        <Typography text={value} weight={isSkeleton ? undefined : "bold"} tabularNums={!isSkeleton} isSkeleton={isSkeleton} />
-                    ) : (
-                        <Typography size="sm" text={value} weight={isSkeleton ? undefined : "medium"} tabularNums={!isSkeleton} isSkeleton={isSkeleton} />
-                    )}
-                </span>
-                {copyable && !isSkeleton ? (
+    const labelColumn = (
+        <StackV
+            gap={2}
+            classNames={["min-w-0"]}
+            principle="title-subtitle"
+            explain="Title over supporting line — not label-field, because neither line is a form control label."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
                     <span>
-                        {/* `value` is guaranteed a real string whenever `!isSkeleton` (the
-                            discriminated union above) — the `?? ""` only satisfies narrowing
-                            across the destructure and is never seen. */}
-                        <SnippetIcon copyString={value ?? ""} />
+                        <Typography size="sm"
+                            text={label}
+                            color={isSkeleton ? undefined : (emphasis ? undefined : "muted")}
+                            weight={isSkeleton ? undefined : (emphasis ? "medium" : undefined)}
+                            isSkeleton={isSkeleton}
+                        />
                     </span>
-                ) : null}
+                ),
+                ...(hint != null ? [() => (
+                    <span>
+                        <Typography size="xs"
+                            text={hint}
+                            color={isSkeleton ? undefined : "muted"}
+                            isSkeleton={isSkeleton}
+                        />
+                    </span>
+                )] : []),
+            ]}
+        />
+    )
+    const valueColumn = (
+        <span
+            className={cn("flex shrink-0 items-center", copyable && !isSkeleton && "gap-2")}
+            data-principle={copyable && !isSkeleton ? "flex-action" : undefined}
+        >
+            <span>
+                {emphasis ? (
+                    <Typography text={value} weight={isSkeleton ? undefined : "bold"} tabularNums={!isSkeleton} isSkeleton={isSkeleton} />
+                ) : (
+                    <Typography size="sm" text={value} weight={isSkeleton ? undefined : "medium"} tabularNums={!isSkeleton} isSkeleton={isSkeleton} />
+                )}
             </span>
-        </>
+            {copyable && !isSkeleton ? (
+                <span>
+                    {/* `value` is guaranteed a real string whenever `!isSkeleton` (the
+                        discriminated union above) — the `?? ""` only satisfies narrowing
+                        across the destructure and is never seen. */}
+                    <SnippetIcon copyString={value ?? ""} />
+                </span>
+            ) : null}
+        </span>
     )
     const row = (
         <StackH
@@ -151,7 +151,10 @@ const KeyValueRow = ({
             principle="value-row"
             explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
             isSkeleton={isSkeleton}
-            items={[() => pairContent]}
+            items={[
+                () => labelColumn,
+                () => valueColumn,
+            ]}
         />
     )
     if (!divider) {

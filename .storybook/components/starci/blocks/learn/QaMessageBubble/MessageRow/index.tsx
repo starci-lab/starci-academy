@@ -86,26 +86,27 @@ export const MessageRow = ({
         />
     ) : null
 
-    const bubbleBody = (
-        <>
-            {authorRow}
-
-            <QaChatBubble role={isMine ? "user" : "assistant"}>
-                <div className="[&_p]:m-0">
-                    <MarkdownContent source={answer.body} measure="compact" />
-                </div>
-            </QaChatBubble>
-
-            {reactionRow}
-        </>
-    )
-
     return (
         <div className={cn("flex w-full", isMine ? "justify-end" : "justify-start")}>
             <div className="max-w-[92%]">
-                <StackV gap={2} principle="title-subtitle"
+                <StackV
+                    gap={2}
+                    principle="title-subtitle"
                     explain="Title over supporting line — not label-field, because neither line is a form control label."
-                    align={isMine ? "end" : undefined} classNames={["min-w-0"]} items={[() => bubbleBody]}  />
+                    align={isMine ? "end" : undefined}
+                    classNames={["min-w-0"]}
+                    items={[
+                        () => authorRow,
+                        () => (
+                            <QaChatBubble role={isMine ? "user" : "assistant"}>
+                                <div className="[&_p]:m-0">
+                                    <MarkdownContent source={answer.body} measure="compact" />
+                                </div>
+                            </QaChatBubble>
+                        ),
+                        ...(reactionRow != null ? [() => reactionRow] : []),
+                    ]}
+                />
             </div>
         </div>
     )

@@ -96,56 +96,68 @@ const FoundationsCategoryPage = ({
     resourceListAriaLabel,
     isSkeleton = false,
 }: FoundationsCategoryPageProps) => {
-    const resourcesSection = (
-        <>
-            <FoundationSearchBar
+    const categoryBody = (
+        <StackV
+            gap={7}
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <FoundationsHeader
 
-                query={searchQuery}
-                onQueryChange={onSearchQueryChange}
-                suggestions={suggestions}
-                onSelectSuggestion={onSelectSuggestion}
-                resultCount={resultCount}
-                isCountLoading={isResultCountLoading}
-                isSkeleton={isSkeleton}
+                        breadcrumbItems={breadcrumbItems}
+                        title={title}
+                        description={description}
+                        isSkeleton={isSkeleton}
 
-            />
-            <FoundationResourceList
+                    />
+                ),
+                () => (
+                    <TrialEnrollBanner
 
-                resources={resources}
-                isLoading={isSkeleton || isResourcesLoading}
-                error={resourcesError}
-                searchQuery={searchQuery}
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={onPageChange}
-                ariaLabel={resourceListAriaLabel}
+                        isVisible={isTrialNudgeVisible}
+                        onEnroll={onEnrollTrial}
+                        isSkeleton={isSkeleton}
 
-            />
-        </>
+                    />
+                ),
+                () => (
+                    <StackV
+                        gap={6}
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <FoundationSearchBar
+
+                                    query={searchQuery}
+                                    onQueryChange={onSearchQueryChange}
+                                    suggestions={suggestions}
+                                    onSelectSuggestion={onSelectSuggestion}
+                                    resultCount={resultCount}
+                                    isCountLoading={isResultCountLoading}
+                                    isSkeleton={isSkeleton}
+
+                                />
+                            ),
+                            () => (
+                                <FoundationResourceList
+
+                                    resources={resources}
+                                    isLoading={isSkeleton || isResourcesLoading}
+                                    error={resourcesError}
+                                    searchQuery={searchQuery}
+                                    currentPage={currentPage}
+                                    totalPages={totalPages}
+                                    onPageChange={onPageChange}
+                                    ariaLabel={resourceListAriaLabel}
+
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
-
-    const categorySections = (
-        <>
-            <FoundationsHeader
-
-                breadcrumbItems={breadcrumbItems}
-                title={title}
-                description={description}
-                isSkeleton={isSkeleton}
-
-            />
-            <TrialEnrollBanner
-
-                isVisible={isTrialNudgeVisible}
-                onEnroll={onEnrollTrial}
-                isSkeleton={isSkeleton}
-
-            />
-            <StackV gap={6} isSkeleton={isSkeleton} items={[() => resourcesSection]} />
-        </>
-    )
-
-    const categoryBody = <StackV gap={7} isSkeleton={isSkeleton} items={[() => categorySections]} />
 
     return <Container size="md" padding={6} body={() => categoryBody} />
 }

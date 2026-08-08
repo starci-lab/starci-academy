@@ -182,92 +182,109 @@ const ChallengeResultPage = ({
     // cluster's height so the page does not jump once the first attempt lands.
     const hasSelection = isSkeleton || selectedAttemptId != null
 
-    const scoreSection = (
-        <>
-            <SubmissionScoreCard
+    const resultBody = (
+        <StackV
+            gap={7}
+            items={[
+                () => (
+                    <SubmissionResultHeader
 
-                label={scoreLabel}
-                score={score ?? 0}
-                maxScore={maxScore}
-                isPassing={isPassing}
-                passScore={passScore}
-                shortFeedback={shortFeedback}
-                submissionUrl={submissionUrl}
-                submissionLabel={submissionLabel}
-                gradedByModel={gradedByModel}
-                modelCategory={modelCategory}
-                gradedByLabel={gradedByLabel}
-                timeAgo={timeAgo}
-                isSkeleton={isSkeleton}
+                        backLabel={backLabel}
+                        onBack={onBack}
+                        title={title}
+                        description={description}
+                        isSkeleton={isSkeleton}
 
-            />
-            <SubmissionFindingsList
+                    />
+                ),
+                () => (
+                    <StackV
+                        gap={6}
+                        items={[
+                            () => (
+                                <SubmissionAttemptSelector
 
-                label={findingsLabel}
-                findings={findings}
-                repositoryUrl={repositoryUrl}
-                isLoading={isFindingsLoading}
-                isEmpty={isFindingsEmpty}
-                error={findingsError}
-                onRetry={onRetryFindings}
-                retryLabel={retryFindingsLabel}
-                isSkeleton={isSkeleton}
+                                    attempts={attempts}
+                                    selectedId={selectedAttemptId}
+                                    onSelect={onSelectAttempt}
+                                    ariaLabel={attemptsAriaLabel}
+                                    overflowCount={overflowCount}
+                                    overflowLabel={overflowLabel}
+                                    onOverflowPress={onOverflowPress}
+                                    isLoading={isAttemptsLoading}
+                                    isEmpty={isAttemptsEmpty}
+                                    error={attemptsError}
+                                    onRetry={onRetryAttempts}
+                                    retryLabel={retryAttemptsLabel}
+                                    isSkeleton={isSkeleton}
 
-            />
-            {/* Nothing left to fix on a passing attempt — see file header. */}
-            {!isPassing ? (
-                <ContentRelatedList
+                                />
+                            ),
+                            ...(hasSelection
+                                ? [
+                                    () => (
+                                        <StackV
+                                            gap={6}
+                                            items={[
+                                                () => (
+                                                    <SubmissionScoreCard
 
-                    items={relatedItems}
-                    label={relatedLabel}
-                    isSkeleton={isSkeleton}
+                                                        label={scoreLabel}
+                                                        score={score ?? 0}
+                                                        maxScore={maxScore}
+                                                        isPassing={isPassing}
+                                                        passScore={passScore}
+                                                        shortFeedback={shortFeedback}
+                                                        submissionUrl={submissionUrl}
+                                                        submissionLabel={submissionLabel}
+                                                        gradedByModel={gradedByModel}
+                                                        modelCategory={modelCategory}
+                                                        gradedByLabel={gradedByLabel}
+                                                        timeAgo={timeAgo}
+                                                        isSkeleton={isSkeleton}
 
-                />
-            ) : null}
-        </>
+                                                    />
+                                                ),
+                                                () => (
+                                                    <SubmissionFindingsList
+
+                                                        label={findingsLabel}
+                                                        findings={findings}
+                                                        repositoryUrl={repositoryUrl}
+                                                        isLoading={isFindingsLoading}
+                                                        isEmpty={isFindingsEmpty}
+                                                        error={findingsError}
+                                                        onRetry={onRetryFindings}
+                                                        retryLabel={retryFindingsLabel}
+                                                        isSkeleton={isSkeleton}
+
+                                                    />
+                                                ),
+                                                // Nothing left to fix on a passing attempt — see file header.
+                                                ...(!isPassing
+                                                    ? [
+                                                        () => (
+                                                            <ContentRelatedList
+
+                                                                items={relatedItems}
+                                                                label={relatedLabel}
+                                                                isSkeleton={isSkeleton}
+
+                                                            />
+                                                        ),
+                                                    ]
+                                                    : []),
+                                            ]}
+                                        />
+                                    ),
+                                ]
+                                : []),
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
-
-    const attemptsSection = (
-        <>
-            <SubmissionAttemptSelector
-
-                attempts={attempts}
-                selectedId={selectedAttemptId}
-                onSelect={onSelectAttempt}
-                ariaLabel={attemptsAriaLabel}
-                overflowCount={overflowCount}
-                overflowLabel={overflowLabel}
-                onOverflowPress={onOverflowPress}
-                isLoading={isAttemptsLoading}
-                isEmpty={isAttemptsEmpty}
-                error={attemptsError}
-                onRetry={onRetryAttempts}
-                retryLabel={retryAttemptsLabel}
-                isSkeleton={isSkeleton}
-
-            />
-            {hasSelection ? (
-                <StackV gap={6} items={[() => scoreSection]} />
-            ) : null}
-        </>
-    )
-
-    const pageSections = (
-        <>
-            <SubmissionResultHeader
-
-                backLabel={backLabel}
-                onBack={onBack}
-                title={title}
-                description={description}
-                isSkeleton={isSkeleton}
-
-            />
-            <StackV gap={6} items={[() => attemptsSection]} />
-        </>
-    )
-
-    const resultBody = <StackV gap={7} items={[() => pageSections]} />
 
     return (
         <>

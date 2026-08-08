@@ -61,12 +61,6 @@ const ContentPager = ({
 
     const items: Array<SurfaceCardPressableGroupItem> = []
     if (previous) {
-        const previousLabel = (
-            <>
-                <Typography size="xs" color="muted" text="Previous content" />
-                <Typography size="sm" weight="medium" lineClamp={2} underlineOnGroupHover text={previous.title} />
-            </>
-        )
         const previousCard = (
             <StackH
                 gap={4}
@@ -81,7 +75,24 @@ const ContentPager = ({
                     // (`SurfaceCard.tsx`) already forces for icons in this exact tile shape.
                     // Weight omitted → Phosphor default `regular`, correct at `size-5`.
                     () => <CaretLeftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />,
-                    ({ isSkeleton }: SkeletonProps) => <StackV gap={1} isSkeleton={isSkeleton} items={[() => previousLabel]} />,
+                    ({ isSkeleton }: SkeletonProps) => (
+                        <StackV
+                            gap={1}
+                            isSkeleton={isSkeleton}
+                            items={[
+                                () => <Typography size="xs" color="muted" text="Previous content" />,
+                                () => (
+                                    <Typography
+                                        size="sm"
+                                        weight="medium"
+                                        lineClamp={2}
+                                        underlineOnGroupHover
+                                        text={previous.title}
+                                    />
+                                ),
+                            ]}
+                        />
+                    ),
                 ]}
             />
         )
@@ -92,12 +103,6 @@ const ContentPager = ({
         })
     }
     if (next) {
-        const nextLabel = (
-            <>
-                <Typography size="xs" color="muted" align="end" text="Next content" />
-                <Typography size="sm" weight="medium" align="end" lineClamp={2} underlineOnGroupHover text={next.title} />
-            </>
-        )
         const nextCard = (
             <StackH
                 gap={4}
@@ -107,9 +112,30 @@ const ContentPager = ({
                 justify="end"
                 isSkeleton={isSkeleton}
                 items={[
-                    ({ isSkeleton }: SkeletonProps) => <StackV gap={1} principle="name-handle"
-                        explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
-                        align="end" isSkeleton={isSkeleton} items={[() => nextLabel]} />,
+                    ({ isSkeleton }: SkeletonProps) => (
+                        <StackV
+                            gap={1}
+                            principle="name-handle"
+                            explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
+                            align="end"
+                            isSkeleton={isSkeleton}
+                            items={[
+                                () => (
+                                    <Typography size="xs" color="muted" align="end" text="Next content" />
+                                ),
+                                () => (
+                                    <Typography
+                                        size="sm"
+                                        weight="medium"
+                                        align="end"
+                                        lineClamp={2}
+                                        underlineOnGroupHover
+                                        text={next.title}
+                                    />
+                                ),
+                            ]}
+                        />
+                    ),
                     // Same DIV position/size reasoning as the mirrored left caret above.
                     () => <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />,
                 ]}

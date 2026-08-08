@@ -152,59 +152,62 @@ const QuizRecapList = ({
     skeletonCount = 3,
 }: QuizRecapListProps) => {
     if (isSkeleton) {
-        const skeletonCardBody = (
-            <>
-                <HeroSkeleton className="h-5 w-16 rounded-full" />
-                <HeroSkeleton className="h-4 w-full rounded" />
-                <HeroSkeleton className="h-4 w-2/3 rounded" />
-            </>
-        )
-        const skeletonCards = Array.from({ length: skeletonCount }, (_unused, index) => (
-            <SurfaceCard
-                key={index}
-
-                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={[() => skeletonCardBody]} />}
-            />
-        ))
-        const loadingBody = (
-            <>
-                <HeroSkeleton className="h-3.5 w-40 rounded" />
-                {skeletonCards}
-            </>
-        )
         return (
             <div>
-                <StackV gap={6} isSkeleton={isSkeleton} items={[() => loadingBody]} />
+                <StackV
+                    gap={6}
+                    isSkeleton={isSkeleton}
+                    items={[
+                        () => <HeroSkeleton className="h-3.5 w-40 rounded" />,
+                        ...Array.from({ length: skeletonCount }, (_unused, index) => () => (
+                            <SurfaceCard
+                                key={index}
+
+                                body={() => (
+                                    <StackV
+                                        gap={6}
+                                        isSkeleton={isSkeleton}
+                                        items={[
+                                            () => <HeroSkeleton className="h-5 w-16 rounded-full" />,
+                                            () => <HeroSkeleton className="h-4 w-full rounded" />,
+                                            () => <HeroSkeleton className="h-4 w-2/3 rounded" />,
+                                        ]}
+                                    />
+                                )}
+                            />
+                        )),
+                    ]}
+                />
             </div>
         )
     }
     const unrated = (cards ?? []).filter((card) => card.rating == null).length
 
-    const recapCards = (cards ?? []).map((card) => (
-        <SurfaceCard
-            key={card.key}
-
-            body={() => recapCardBody(card, ratingOptions, onRate, ratingAriaLabel)}
-        />
-    ))
-
-    const recapBody = (
-        <>
-            {/* Counted, not celebrated. The recap is work; the learner is here to finish
-                it, not to be congratulated for starting it. */}
-            <Typography
-                size="sm"
-                color="muted"
-                text={unrated > 0 ? `${unrated}/${(cards ?? []).length} cards left to self-grade` : `All ${(cards ?? []).length} cards self-graded`}
-
-            />
-            {recapCards}
-        </>
-    )
-
     return (
         <div>
-            <StackV gap={6} isSkeleton={isSkeleton} items={[() => recapBody]} />
+            <StackV
+                gap={6}
+                isSkeleton={isSkeleton}
+                items={[
+                    // Counted, not celebrated. The recap is work; the learner is here to finish
+                    // it, not to be congratulated for starting it.
+                    () => (
+                        <Typography
+                            size="sm"
+                            color="muted"
+                            text={unrated > 0 ? `${unrated}/${(cards ?? []).length} cards left to self-grade` : `All ${(cards ?? []).length} cards self-graded`}
+
+                        />
+                    ),
+                    ...(cards ?? []).map((card) => () => (
+                        <SurfaceCard
+                            key={card.key}
+
+                            body={() => recapCardBody(card, ratingOptions, onRate, ratingAriaLabel)}
+                        />
+                    )),
+                ]}
+            />
         </div>
     )
 }

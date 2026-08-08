@@ -285,25 +285,6 @@ const deliverableBody = (item: ChallengeDeliverableItem) => {
     // the `src` anchor (`SubmissionRow`: primary `shrink-0` + secondary `min-w-0 flex-1`)
     // makes the SECONDARY button wider than the PRIMARY one — inverted visual weight. Both
     // buttons hug their own text, neither stretches.
-    const actions = (
-        <>
-            <Button
-                label="Submit"
-                variant="primary"
-                onPress={item.onSubmit}
-                isDisabled={item.url.trim().length === 0}
-                isPending={item.isPending}
-
-            />
-            <Button
-                label="View History"
-                variant="secondary"
-                onPress={item.onViewHistory}
-
-            />
-        </>
-    )
-
     // Graded is a STATE of this same leaf (mirrors QuizQuestion's `verdict` toggle),
     // never a second component — see file header.
     //
@@ -371,50 +352,79 @@ const deliverableBody = (item: ChallengeDeliverableItem) => {
         />
     ) : null
 
-    const panel = (
-        <>
-            {item.description != null ? (
-                <MarkdownContent source={item.description} measure="compact" />
-            ) : null}
+    return (
+        <StackV
+            identity={{ tier: "block", component: "ChallengeDeliverableList" }}
+            gap={4}
+            items={[
+                ...(item.description != null ? [() => {
+                    const description = item.description as string
+                    return <MarkdownContent source={description} measure="compact" />
+                }] : []),
+                () => (
+                    <InputText
+                        variant="secondary"
+                        value={item.url}
+                        onValueChange={item.onUrlChange}
+                        errorMessage={item.urlError}
+                        placeholder="https://github.com/…"
+                        ariaLabel={`Submission URL — ${item.title}`}
+                        isDisabled={item.isPending}
 
-            <InputText
-                variant="secondary"
-                value={item.url}
-                onValueChange={item.onUrlChange}
-                errorMessage={item.urlError}
-                placeholder="https://github.com/…"
-                ariaLabel={`Submission URL — ${item.title}`}
-                isDisabled={item.isPending}
-
-            />
-
-            {/* Grading-status strip — BETWEEN the URL field and the button row, the exact spot
-                `src`'s `SubmissionRow` places `AIProcessingText` (lines 173-195: after
-                `TextField`, before `GradeModelDropdown`). This surfaces the "grading in
-                progress" / "grading failed" states; `isPending` alone only locks the input
-                and can't say which branch it's in. `jobError` prints RAW (untranslated)
-                because `src` also prints it raw: it's a server error string, not a sentence
-                meant for a reader. */}
-            {item.jobStatus != null ? (
-                <Callout
-                    status={JOB_STATUS_CALLOUT[item.jobStatus].status}
-                    title={JOB_STATUS_CALLOUT[item.jobStatus].title}
-                    description={JOB_STATUS_CALLOUT[item.jobStatus].description}
-                    body={item.jobStatus === "failed" && item.jobError != null
-                        ? () => <Typography size="xs" color="danger" text={item.jobError} />
-                        : undefined}
+                    />
+                ),
+                // Grading-status strip — BETWEEN the URL field and the button row, the exact spot
+                // `src`'s `SubmissionRow` places `AIProcessingText` (lines 173-195: after
+                // `TextField`, before `GradeModelDropdown`). This surfaces the "grading in
+                // progress" / "grading failed" states; `isPending` alone only locks the input
+                // and can't say which branch it's in. `jobError` prints RAW (untranslated)
+                // because `src` also prints it raw: it's a server error string, not a sentence
+                // meant for a reader.
+                ...(item.jobStatus != null ? [() => {
+                    const jobStatus = item.jobStatus as NonNullable<typeof item.jobStatus>
+                    const callout = JOB_STATUS_CALLOUT[jobStatus]
+                    return (
+                        <Callout
+                            status={callout.status}
+                            title={callout.title}
+                            description={callout.description}
+                            body={jobStatus === "failed" && item.jobError != null
+                                ? () => <Typography size="xs" color="danger" text={item.jobError} />
+                                : undefined}
 
 
-                />
-            ) : null}
+                        />
+                    )
+                }] : []),
+                () => (
+                    <StackH
+                        gap={3}
+                        items={[
+                            () => (
+                                <Button
+                                    label="Submit"
+                                    variant="primary"
+                                    onPress={item.onSubmit}
+                                    isDisabled={item.url.trim().length === 0}
+                                    isPending={item.isPending}
 
-            <StackH gap={3} items={[() => actions]} />
+                                />
+                            ),
+                            () => (
+                                <Button
+                                    label="View History"
+                                    variant="secondary"
+                                    onPress={item.onViewHistory}
 
-            {gradedSection}
-        </>
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+                ...(gradedSection != null ? [() => gradedSection] : []),
+            ]}
+        />
     )
-
-    return <StackV identity={{ tier: "block", component: "ChallengeDeliverableList" }} gap={4} items={[() => panel]} />
 }
 
 /**
@@ -453,41 +463,44 @@ const ChallengeDeliverableList = ({
     // Does not go through the header's `labelEnd` even though that slot looks like it
     // might fit: `action` (the gear button) WINS over `labelEnd` in
     // `surface-card-header.tsx:90-104`, so the label would never render.
-    const listBody = (
-        <>
-            {autosaveStatus != null ? (
-                <Typography
-                    size="xs"
-                    color={autosaveStatus === "failed" ? "danger" : "muted"}
-                    text={AUTOSAVE_LABEL[autosaveStatus]}
-
-                />
-            ) : null}
-            <SurfaceCardAccordion
-                label="Submit"
-                action={() => (
-                    <Button
-                        isIconOnly
-                        prefixIcon={GearSixIcon}
-                        ariaLabel="Grading settings"
-                        variant="tertiary"
-                        size="sm"
-                        onPress={onOpenGradingSettings}
-                        isSkeleton={isSkeleton}
+    return (
+        <StackV
+            identity={{ tier: "block", component: "ChallengeDeliverableList" }}
+            gap={3}
+            isSkeleton={isSkeleton}
+            items={[
+                ...(autosaveStatus != null ? [() => (
+                    <Typography
+                        size="xs"
+                        color={autosaveStatus === "failed" ? "danger" : "muted"}
+                        text={AUTOSAVE_LABEL[autosaveStatus]}
 
                     />
-                )}
-                items={accordionItems}
-                defaultExpandedKeys={firstOpenId != null ? new Set([firstOpenId]) : undefined}
-                isSkeleton={isSkeleton}
+                )] : []),
+                () => (
+                    <SurfaceCardAccordion
+                        label="Submit"
+                        action={() => (
+                            <Button
+                                isIconOnly
+                                prefixIcon={GearSixIcon}
+                                ariaLabel="Grading settings"
+                                variant="tertiary"
+                                size="sm"
+                                onPress={onOpenGradingSettings}
+                                isSkeleton={isSkeleton}
+
+                            />
+                        )}
+                        items={accordionItems}
+                        defaultExpandedKeys={firstOpenId != null ? new Set([firstOpenId]) : undefined}
+                        isSkeleton={isSkeleton}
 
 
-            />
-        </>
-    )
-
-    return (
-        <StackV identity={{ tier: "block", component: "ChallengeDeliverableList" }} gap={3} isSkeleton={isSkeleton} items={[() => listBody]} />
+                    />
+                ),
+            ]}
+        />
     )
 }
 

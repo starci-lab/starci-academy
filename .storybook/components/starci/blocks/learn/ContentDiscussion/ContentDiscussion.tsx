@@ -86,102 +86,109 @@ const ContentDiscussion = ({
     // no icon here: a chat-bubble icon needs an ASSOCIATION step to read as
     // "discussion" (not a universal symbol like check/locklock), and the label text already
     // carries the full fact on its own.
-    const labelLines = (
-        <>
-            {isSkeleton ? (
-                <Typography weight="medium" isSkeleton />
-            ) : (
-                <Typography weight="medium" text={`${label} · ${total}`} />
-            )}
-            {isSkeleton || total > 0 ? (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    isSkeleton={isSkeleton}
-
-                    text={`${answeredCount}/${total} questions answered, accumulated over time`}
-
-                />
-            ) : null}
-        </>
-    )
-
-    const discussionHeader = (
-        <>
-            <StackV gap={2} isSkeleton={isSkeleton} items={[() => labelLines]} />
-            <ContentCommentComposer
-                onSubmit={onSubmitComment}
-                currentUser={currentUser}
-                collapsible
-                ariaLabel="Write a comment"
-
-
-            />
-        </>
-    )
-
-    const commentList = (
-        <>
-            {(isSkeleton ? SKELETON_ROWS : comments).map((comment) => (
-                <ContentCommentThread
-                    key={comment.id}
-                    comment={comment}
-                    currentUserId={currentUserId}
-                    currentUser={currentUser}
-                    depth={0}
-                    repliesByParent={repliesByParent}
-                    onReply={onReply}
-                    onEdit={onEdit}
-                    onDelete={onDelete}
-                    onReactComment={onReactComment}
-                    onLoadReplies={onLoadReplies}
-
-                />
-            ))}
-            {!isSkeleton && hasMore ? (
-                <Button
-                    variant="ghost"
-                    size="sm"
-
-                    label={isLoadingMore ? "Loading…" : "Show more comments"}
-                    isDisabled={isLoadingMore}
-                    onPress={onLoadMore}
-                />
-            ) : null}
-        </>
-    )
-
-    const discussionBody = (
-        <>
-            {/* These 3 seams match the real-src `Discussion/index.tsx:98-114` exactly:
- [label+archive]<->composer = grouped (gap-3) · [icon+label]<->archive-line
- = tight (gap-1) · icon<->label = related (gap-2). */}
-            <StackV gap={4} isSkeleton={isSkeleton} items={[() => discussionHeader]} />
-
-            {errorMessage != null ? (
-                <EmptyState
-                    icon={WarningCircleIcon}
-                    title={errorMessage}
-
-                />
-            ) : !isSkeleton && comments.length === 0 ? (
-                // Nobody has written yet. This is an INVITATION, so it is drawn —
-                // hiding the section would hide the invitation with it.
-                <EmptyState
-                    icon={ChatsCircleIcon}
-                    title="No discussion yet"
-                    description="Ask the first question about this lesson"
-
-                />
-            ) : (
-                <StackV gap={4} isSkeleton={isSkeleton} items={[() => commentList]} />
-            )}
-        </>
-    )
-
     return (
         <div>
-            <StackV gap={4} isSkeleton={isSkeleton} items={[() => discussionBody]} />
+            <StackV
+                gap={4}
+                isSkeleton={isSkeleton}
+                items={[
+                    // These 3 seams match the real-src `Discussion/index.tsx:98-114` exactly:
+                    // [label+archive]<->composer = grouped (gap-3) · [icon+label]<->archive-line
+                    // = tight (gap-1) · icon<->label = related (gap-2).
+                    () => (
+                        <StackV
+                            gap={4}
+                            isSkeleton={isSkeleton}
+                            items={[
+                                () => (
+                                    <StackV
+                                        gap={2}
+                                        isSkeleton={isSkeleton}
+                                        items={[
+                                            () => (
+                                                isSkeleton ? (
+                                                    <Typography weight="medium" isSkeleton />
+                                                ) : (
+                                                    <Typography weight="medium" text={`${label} · ${total}`} />
+                                                )
+                                            ),
+                                            ...(isSkeleton || total > 0 ? [() => (
+                                                <Typography
+                                                    size="xs"
+                                                    color="muted"
+                                                    isSkeleton={isSkeleton}
+
+                                                    text={`${answeredCount}/${total} questions answered, accumulated over time`}
+
+                                                />
+                                            )] : []),
+                                        ]}
+                                    />
+                                ),
+                                () => (
+                                    <ContentCommentComposer
+                                        onSubmit={onSubmitComment}
+                                        currentUser={currentUser}
+                                        collapsible
+                                        ariaLabel="Write a comment"
+
+
+                                    />
+                                ),
+                            ]}
+                        />
+                    ),
+                    ...(errorMessage != null ? [() => (
+                        <EmptyState
+                            icon={WarningCircleIcon}
+                            title={errorMessage}
+
+                        />
+                    )] : !isSkeleton && comments.length === 0 ? [() => (
+                        // Nobody has written yet. This is an INVITATION, so it is drawn —
+                        // hiding the section would hide the invitation with it.
+                        <EmptyState
+                            icon={ChatsCircleIcon}
+                            title="No discussion yet"
+                            description="Ask the first question about this lesson"
+
+                        />
+                    )] : [() => (
+                        <StackV
+                            gap={4}
+                            isSkeleton={isSkeleton}
+                            items={[
+                                ...(isSkeleton ? SKELETON_ROWS : comments).map((comment) => () => (
+                                    <ContentCommentThread
+                                        key={comment.id}
+                                        comment={comment}
+                                        currentUserId={currentUserId}
+                                        currentUser={currentUser}
+                                        depth={0}
+                                        repliesByParent={repliesByParent}
+                                        onReply={onReply}
+                                        onEdit={onEdit}
+                                        onDelete={onDelete}
+                                        onReactComment={onReactComment}
+                                        onLoadReplies={onLoadReplies}
+
+                                    />
+                                )),
+                                ...(!isSkeleton && hasMore ? [() => (
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+
+                                        label={isLoadingMore ? "Loading…" : "Show more comments"}
+                                        isDisabled={isLoadingMore}
+                                        onPress={onLoadMore}
+                                    />
+                                )] : []),
+                            ]}
+                        />
+                    )]),
+                ]}
+            />
         </div>
     )
 }

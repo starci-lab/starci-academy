@@ -165,41 +165,42 @@ const QuizQuestion = ({
         />
     )
 
-    const questionBody = (
-        <>
-            {levelRow}
-
-            <MarkdownContent
-                source={question}
-                measure="reading"
-
-            />
-
-            {/* Read-only rather than emptied: the whole value of a drill is comparing
-                what you SAID with what was expected, and clearing the field takes that
-                comparison away exactly when it becomes useful. */}
-            <InputTextarea
-                value={answer}
-                onValueChange={onAnswerChange}
-                placeholder="Answer as if you're speaking to the interviewer"
-                ariaLabel="Answer"
-                rows={4}
-                isDisabled={isGraded}
-
-            />
-
-            {gradedDetails}
-
-            {actionRow}
-        </>
-    )
-
     return (
         <div>
             <SurfaceCard
                 isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={6} items={[() => questionBody]} />}
+                body={() => (
+                    <StackV
+                        gap={6}
+                        items={[
+                            ...(levelRow != null ? [() => levelRow] : []),
+                            () => (
+                                <MarkdownContent
+                                    source={question}
+                                    measure="reading"
+
+                                />
+                            ),
+                            // Read-only rather than emptied: the whole value of a drill is comparing
+                            // what you SAID with what was expected, and clearing the field takes that
+                            // comparison away exactly when it becomes useful.
+                            () => (
+                                <InputTextarea
+                                    value={answer}
+                                    onValueChange={onAnswerChange}
+                                    placeholder="Answer as if you're speaking to the interviewer"
+                                    ariaLabel="Answer"
+                                    rows={4}
+                                    isDisabled={isGraded}
+
+                                />
+                            ),
+                            ...(gradedDetails != null ? [() => gradedDetails] : []),
+                            () => actionRow,
+                        ]}
+                    />
+                )}
             />
         </div>
     )

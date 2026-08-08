@@ -13,6 +13,7 @@ import {
 import { ChoiceSwitch } from "@/components/atoms/forms"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { Box } from "@/components/frames/Box"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import type { ComponentTypeWithSkeleton , SkeletonProps } from "@/components/frames/_slot"
 
 /**
@@ -43,6 +44,9 @@ export const meta = { tier: "composite", name: "List" } as const
 // ─────────────────────────────────────────────────────────────────────────────
 // .Row — the generic GitHub-style list row (was `lists/ListRow`)
 // ─────────────────────────────────────────────────────────────────────────────
+
+/** Intrinsic row padding owned by {@link ListRow} — not caller placement. */
+export type ListRowDensity = "default" | "comfortable"
 
 /** Props for {@link ListRow}. */
 export interface ListRowProps {
@@ -81,6 +85,12 @@ export interface ListRowProps {
      * separated list. Omit on the final row of a group.
      */
     divider?: boolean
+    /**
+     * Intrinsic row padding. `default` keeps the existing `py-2` density;
+     * `comfortable` is exact `p-3` (for rows that sit flush inside a card).
+     * Does not encode gap, alignment, color, width, or child placement.
+     */
+    density?: ListRowDensity
     /**
      * Optional press handler. When provided (or {@link ListRowProps.href} is
      * set) the row becomes interactive with a hover surface and is keyboard /
@@ -121,6 +131,7 @@ const Row = ({
     meta: MetaSlot,
     trailing: TrailingSlot,
     divider = false,
+    density = "default",
     onPress,
     href,
     isSkeleton = false,
@@ -130,7 +141,8 @@ const Row = ({
     const isPressable = !isSkeleton && Boolean(onPress || href)
 
     const baseClassName = cn(
-        "flex min-w-0 items-center gap-3 py-2",
+        "flex min-w-0 items-center gap-3",
+        density === "comfortable" ? "p-3" : "py-2",
         divider && "border-b border-separator",
         isPressable &&
             "rounded-2xl transition-colors hover:bg-surface-secondary focus-visible:bg-surface-secondary focus-visible:outline-none",
@@ -163,7 +175,8 @@ const Row = ({
                     <StackH
                         gap={3}
                         isSkeleton={isSkeleton}
-                        classNames={["shrink-0"]}
+                        principle="flex-action"
+                        explain="Meta and trailing share one action cluster — not identity, because they are trailing controls rather than an identity pair."
                         items={[
                             ...(MetaSlot ? [() => <MetaSlot />] : []),
                             ...(TrailingSlot ? [() => <TrailingSlot />] : []),
@@ -298,18 +311,30 @@ const Labeled = ({
             as="section"
             gap={4}
             isSkeleton={isSkeleton}
+            principle="content-row"
+            explain="Section heading over its repeating body — not block-boundary, because this is one labeled list unit rather than major block separation."
             items={[
                 ({ isSkeleton }: SkeletonProps) => (
                     <StackH
                         gap={3}
                         isSkeleton={isSkeleton}
+                        principle="flex-action"
+                        explain="Optional icon beside the section label — not identity, because the glyph labels the list rather than pairing with a person or entity."
                         items={[
                             ...(Icon ? [() => <Icon />] : []),
                             () => <Label>{label}</Label>,
                         ]}
                     />
                 ),
-                ({ isSkeleton }: SkeletonProps) => <StackV gap={3} isSkeleton={isSkeleton} items={[() => rows]} />,
+                ({ isSkeleton }: SkeletonProps) => (
+                    <StackV
+                        gap={3}
+                        isSkeleton={isSkeleton}
+                        principle="sibling-stack"
+                        explain="Same-kind peer stack of list rows — not group-boundary, because these are repeating sibling rows under one label rather than section groups."
+                        items={[() => rows]}
+                    />
+                ),
                 // `isSkeleton`-gated: while loading there is no data behind the CTA yet,
                 // same reasoning as the `meta`/`trailing` omission on `Row` above.
                 ...(!isSkeleton && Action ? [() => <div><Action /></div>] : []),
@@ -355,7 +380,8 @@ export interface ListMetaProps {
 const Meta = ({ chip: Chip, items }: ListMetaProps) => (
     <StackH
         gap={3}
-        classNames={["min-w-0"]}
+        principle="chip-row"
+        explain="Signal chip beside muted meta segments — not icon-text, because the chip is a status token rather than a glyph+label pair."
 
         items={[
             ...(Chip ? [() => <span className="shrink-0"><Chip /></span>] : []),
@@ -451,12 +477,16 @@ const ToggleRow = ({
             explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
             items={[
                 () => (
-                    <TitledText
-                        title={label}
-                        subtitle={description}
+                    <FillAvailable
+                        at="base"
                         isSkeleton={isSkeleton}
-                        classNames={["flex-1"]}
-
+                        body={({ isSkeleton: skeleton }: SkeletonProps) => (
+                            <TitledText
+                                title={label}
+                                subtitle={description}
+                                isSkeleton={skeleton}
+                            />
+                        )}
                     />
                 ),
                 () => isSkeleton ? (

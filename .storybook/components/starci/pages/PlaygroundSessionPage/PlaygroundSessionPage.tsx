@@ -175,77 +175,76 @@ const PlaygroundSessionPage = ({
 
     // The workspace region: two panes side by side, plus the docked sheet
     // anchored (not laid out) against this box — see the file header.
-    const workspaceRegion = (
-        <>
-            <div className="overflow-hidden">
-                <StackH
-                    gap={6}
-                    principle="block-boundary"
-                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
-                    align="start"
-                    divider
-                    classNames={["h-full", "min-h-0"]}
-
-                    items={[
-                        () => guidePane,
-                        () => resourcePane,
-                    ]}
-                />
-            </div>
-            <div className="absolute inset-x-0 bottom-0 z-10">
-                <StackV
-                    gap={1}
-
-                    items={[
-                        () => (
-                            <PlaygroundConnectSheet
-
-                                connection={connection}
-                                latencyMs={latencyMs}
-                                device={device}
-                                agentLog={agentLog}
-                                onReconnect={onReconnect}
-                                open={isConnectSheetOpen}
-                                onOpenChange={onConnectSheetOpenChange}
-
-                            />
-                        ),
-                    ]}
-                />
-            </div>
-        </>
-    )
-
-    const sessionSections = (
-        <>
-            <WorkSessionHeader
-
-                backLabel={backLabel}
-                onBack={onBack}
-                title={title}
-                counter={counter}
-                total={total}
-                current={current}
-                doneSteps={doneSteps}
-                onStepPress={onStepPress}
-                finishLabel={finishLabel}
-                onFinish={onFinish}
-
-            />
-            <div className="relative">
-                <StackV
-                    gap={1}
-                    classNames={["min-h-0", "flex-1"]}
-
-                    items={[() => workspaceRegion]}
-                />
-            </div>
-        </>
-    )
-
     return (
         <div className="h-[calc(100vh-4rem)]">
-            <StackV gap={1} items={[() => sessionSections]} />
+            <StackV
+                gap={1}
+                items={[
+                    () => (
+                        <WorkSessionHeader
+
+                            backLabel={backLabel}
+                            onBack={onBack}
+                            title={title}
+                            counter={counter}
+                            total={total}
+                            current={current}
+                            doneSteps={doneSteps}
+                            onStepPress={onStepPress}
+                            finishLabel={finishLabel}
+                            onFinish={onFinish}
+
+                        />
+                    ),
+                    () => (
+                        <div className="relative">
+                            <StackV
+                                gap={1}
+                                classNames={["min-h-0", "flex-1"]}
+
+                                items={[
+                                    () => (
+                                        <div className="overflow-hidden">
+                                            <StackH
+                                                principle="block-boundary"
+                                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                                                divider
+                                                items={[
+                                                    () => guidePane,
+                                                    () => resourcePane,
+                                                ]}
+                                            />
+                                        </div>
+                                    ),
+                                    () => (
+                                        <div className="absolute inset-x-0 bottom-0 z-10">
+                                            <StackV
+                                                gap={1}
+
+                                                items={[
+                                                    () => (
+                                                        <PlaygroundConnectSheet
+
+                                                            connection={connection}
+                                                            latencyMs={latencyMs}
+                                                            device={device}
+                                                            agentLog={agentLog}
+                                                            onReconnect={onReconnect}
+                                                            open={isConnectSheetOpen}
+                                                            onOpenChange={onConnectSheetOpenChange}
+
+                                                        />
+                                                    ),
+                                                ]}
+                                            />
+                                        </div>
+                                    ),
+                                ]}
+                            />
+                        </div>
+                    ),
+                ]}
+            />
         </div>
     )
 }

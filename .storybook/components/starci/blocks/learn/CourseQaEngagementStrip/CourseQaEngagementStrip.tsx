@@ -54,30 +54,32 @@ const CourseQaEngagementStrip = ({
 }: CourseQaEngagementStripProps) => {
     const hasEnrollment = enrollmentCount != null
 
-    const lines = (
-        <>
-            {isSkeleton || hasEnrollment ? (
-                <Typography
-                    size="sm"
-                    color="muted"
-                    isSkeleton={isSkeleton}
-                    text={hasEnrollment ? `${enrollmentCount!.toLocaleString("vi-VN")} learners enrolled in this course` : undefined}
-
-                />
-            ) : null}
-            <Typography
-                size="sm"
-                color="muted"
-                isSkeleton={isSkeleton}
-                text={isSkeleton ? undefined : questionLine(totalQuestions, answeredQuestions)}
-
-            />
-        </>
-    )
-
     return (
         <div>
-            <StackV gap={1} isSkeleton={isSkeleton} items={[() => lines]} />
+            <StackV
+                gap={1}
+                isSkeleton={isSkeleton}
+                items={[
+                    ...(isSkeleton || hasEnrollment ? [() => (
+                        <Typography
+                            size="sm"
+                            color="muted"
+                            isSkeleton={isSkeleton}
+                            text={hasEnrollment ? `${enrollmentCount!.toLocaleString("vi-VN")} learners enrolled in this course` : undefined}
+
+                        />
+                    )] : []),
+                    () => (
+                        <Typography
+                            size="sm"
+                            color="muted"
+                            isSkeleton={isSkeleton}
+                            text={isSkeleton ? undefined : questionLine(totalQuestions, answeredQuestions)}
+
+                        />
+                    ),
+                ]}
+            />
         </div>
     )
 }

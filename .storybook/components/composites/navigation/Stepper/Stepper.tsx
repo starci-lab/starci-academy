@@ -120,30 +120,32 @@ const StepperBase = ({
                 const connectorPassed = index <= safeIndex
                 const isClickable = state === "done" && onStepPress !== undefined
 
-                const indicatorAndCopy = (
-                    <>
-                        <StepIndicator state={state} index={index} />
-                        <div
-                            className={cn(
-                                "flex flex-col gap-0",
-                                isVertical ? "" : "items-center text-center",
-                            )}
-                        >
+                const copyBlock = (
+                    <div
+                        className={cn(
+                            "flex flex-col gap-0",
+                            isVertical ? "" : "items-center text-center",
+                        )}
+                    >
+                        <span>
+                            <Typography size="sm"
+                                text={step.label}
+                                weight={state === "current" ? "medium" : undefined}
+                                color={state === "upcoming" ? "muted" : undefined}
+                            />
+                        </span>
+                        {step.description ? (
                             <span>
-                                <Typography size="sm"
-                                    text={step.label}
-                                    weight={state === "current" ? "medium" : undefined}
-                                    color={state === "upcoming" ? "muted" : undefined}
-                                />
+                                <Typography size="xs" text={step.description} color="muted" />
                             </span>
-                            {step.description ? (
-                                <span>
-                                    <Typography size="xs" text={step.description} color="muted" />
-                                </span>
-                            ) : null}
-                        </div>
-                    </>
+                        ) : null}
+                    </div>
                 )
+
+                const identityItems = [
+                    () => <StepIndicator state={state} index={index} />,
+                    () => copyBlock,
+                ]
 
                 // Horizontal: each step is a column; a flex-1 connector sits before every
                 // step after the first so the line spans the gap between indicators.
@@ -166,10 +168,22 @@ const StepperBase = ({
                                     onClick={() => onStepPress(index)}
                                     className="rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                                 >
-                                    <StackV gap={3} principle="identity" align="center" items={[() => indicatorAndCopy]} />
+                                    <StackV
+                                        gap={3}
+                                        principle="identity"
+                                        explain="Step indicator above its label — not title-subtitle, because the upper node is a status glyph rather than a heading line."
+                                        align="center"
+                                        items={identityItems}
+                                    />
                                 </button>
                             ) : (
-                                <StackV gap={3} principle="identity" align="center" items={[() => indicatorAndCopy]} />
+                                <StackV
+                                    gap={3}
+                                    principle="identity"
+                                    explain="Step indicator above its label — not title-subtitle, because the upper node is a status glyph rather than a heading line."
+                                    align="center"
+                                    items={identityItems}
+                                />
                             )}
                         </React.Fragment>
                     )
@@ -178,56 +192,52 @@ const StepperBase = ({
                 // Vertical: indicator + a vertical connector down its left rail, copy on the right.
                 // The step's clickable copy vs. static copy are the SAME shape (label
                 // + optional description) — one node, only the wrapping tag differs.
-                const clickableCopy = (
-                    <>
+                const labelItems = [
+                    () => (
                         <span>
-                            <Typography size="sm" text={step.label} />
-                        </span>
-                        {step.description ? (
-                            <span>
-                                <Typography size="xs" text={step.description} color="muted" />
-                            </span>
-                        ) : null}
-                    </>
-                )
-                const staticCopy = (
-                    <>
-                        <span>
-                            <Typography size="sm"
+                            <Typography
+                                size="sm"
                                 text={step.label}
-                                weight={state === "current" ? "medium" : undefined}
-                                color={state === "upcoming" ? "muted" : undefined}
+                                weight={!isClickable && state === "current" ? "medium" : undefined}
+                                color={!isClickable && state === "upcoming" ? "muted" : undefined}
                             />
                         </span>
-                        {step.description ? (
-                            <span>
-                                <Typography size="xs" text={step.description} color="muted" />
-                            </span>
-                        ) : null}
-                    </>
-                )
-                const railAndConnector = (
-                    <>
-                        <StepIndicator state={state} index={index} />
-                        {index < steps.length - 1 ? (
-                            <span
-                                aria-hidden
-                                className={cn(
-                                    "w-0.5 flex-1",
-                                    index < safeIndex ? "bg-success" : "bg-default",
-                                )}
-                            />
-                        ) : null}
-                    </>
-                )
+                    ),
+                    ...(step.description ? [() => (
+                        <span>
+                            <Typography size="xs" text={step.description} color="muted" />
+                        </span>
+                    )] : []),
+                ]
+                const railItems = [
+                    () => <StepIndicator state={state} index={index} />,
+                    ...(index < steps.length - 1 ? [() => (
+                        <span
+                            aria-hidden
+                            className={cn(
+                                "w-0.5 flex-1",
+                                index < safeIndex ? "bg-success" : "bg-default",
+                            )}
+                        />
+                    )] : []),
+                ]
                 return (
                     <StackH
                         key={step.id}
                         gap={4}
                         principle="content-row"
+                        explain="Rail beside step copy — not identity, because the left column is a progress rail rather than a person/entity cluster."
                         align="stretch"
                         items={[
-                            () => <StackV gap={2} principle="icon-text" align="center" items={[() => railAndConnector]} />,
+                            () => (
+                                <StackV
+                                    gap={2}
+                                    principle="icon-text"
+                                    explain="Indicator over optional connector — not name-handle, because this pairs a glyph with a rail rather than a name/handle identity."
+                                    align="center"
+                                    items={railItems}
+                                />
+                            ),
                             () => isClickable ? (
                                 <button
                                     type="button"
@@ -235,12 +245,22 @@ const StepperBase = ({
                                     // inset-exception: optical nudge lining the label up with the step dot, not a surface inset
                                     className="pt-1 text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                                 >
-                                    <StackV gap={1} items={[() => clickableCopy]} />
+                                    <StackV
+                                        gap={1}
+                                        principle="title-subtitle"
+                                        explain="Step label over optional description — not label-field, because neither line labels a form control."
+                                        items={labelItems}
+                                    />
                                 </button>
                             ) : (
                             // inset-exception: optical nudge lining the label up with the step dot
                                 <div className="pt-1">
-                                    <StackV gap={1} items={[() => staticCopy]} />
+                                    <StackV
+                                        gap={1}
+                                        principle="title-subtitle"
+                                        explain="Step label over optional description — not label-field, because neither line labels a form control."
+                                        items={labelItems}
+                                    />
                                 </div>
                             ),
                         ]}

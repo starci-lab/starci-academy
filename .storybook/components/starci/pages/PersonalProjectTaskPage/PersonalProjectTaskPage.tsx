@@ -176,30 +176,32 @@ const legacyMarkdown = (body: string) => (
 )
 
 /** One legacy code-implementation accordion panel body: guide, then a worked example. */
-const legacyCodeBody = (item: PersonalProjectTaskLegacyCodeImplementationItem) => {
-    const guideSection = (
-        <>
-            <Typography size="xs" weight="medium" color="muted" text="Guide" />
-            {legacyMarkdown(item.guide)}
-        </>
-    )
-    const exampleSection = (
-        <>
-            <Typography size="xs" weight="medium" color="muted" text="Example" />
-            {legacyMarkdown(item.example)}
-        </>
-    )
-    return (
-        <StackV
-            gap={4}
+const legacyCodeBody = (item: PersonalProjectTaskLegacyCodeImplementationItem) => (
+    <StackV
+        gap={4}
 
-            items={[
-                () => <StackV gap={2} items={[() => guideSection]} />,
-                () => <StackV gap={2} items={[() => exampleSection]} />,
-            ]}
-        />
-    )
-}
+        items={[
+            () => (
+                <StackV
+                    gap={2}
+                    items={[
+                        () => <Typography size="xs" weight="medium" color="muted" text="Guide" />,
+                        () => legacyMarkdown(item.guide),
+                    ]}
+                />
+            ),
+            () => (
+                <StackV
+                    gap={2}
+                    items={[
+                        () => <Typography size="xs" weight="medium" color="muted" text="Example" />,
+                        () => legacyMarkdown(item.example),
+                    ]}
+                />
+            ),
+        ]}
+    />
+)
 
 /**
  * The reading column: task identity (`PageHeader`) + the locked banner + the
@@ -266,33 +268,8 @@ const readingColumn = (props: PersonalProjectTaskReadingColumnProps) => {
             ? Array.from({ length: LEGACY_SKELETON_ROWS }, (_unused, index) => ({ id: `code-skeleton-${index}`, title: "", body: () => null }))
             : []
 
-    const legacyAccordions = (
-        <>
-            {hasLegacyCriteria || isSkeleton ? (
-                <SurfaceCardAccordion
-                    variant="nested"
-                    items={criteriaItems}
-                    allowsMultipleExpanded
-                    isSkeleton={isSkeleton}
-
-
-                />
-            ) : null}
-            {hasLegacyCode || isSkeleton ? (
-                <SurfaceCardAccordion
-                    variant="nested"
-                    items={codeItems}
-                    allowsMultipleExpanded
-                    isSkeleton={isSkeleton}
-
-
-                />
-            ) : null}
-        </>
-    )
-
-    const readingSections = (
-        <>
+    const readingSectionsItems = [
+        () => (
             <PageHeader
 
                 isSkeleton={isSkeleton}
@@ -306,44 +283,92 @@ const readingColumn = (props: PersonalProjectTaskReadingColumnProps) => {
                 title={task.title}
                 description={task.description}
             />
+        ),
 
-            {!isSkeleton && isLocked ? (
-                <Callout
-                    status="warning"
-                    title="Preview of a task not yet unlocked"
-                    description="You need to finish the current task before you can work on this one."
+        ...(!isSkeleton && isLocked
+            ? [
+                () => (
+                    <Callout
+                        status="warning"
+                        title="Preview of a task not yet unlocked"
+                        description="You need to finish the current task before you can work on this one."
 
-                />
-            ) : null}
+                    />
+                ),
+            ]
+            : []),
 
-            {showBrief ? (
-                <SurfaceCard
-                    label="Guide"
-                    isSkeleton={isSkeleton}
+        ...(showBrief
+            ? [
+                () => (
+                    <SurfaceCard
+                        label="Guide"
+                        isSkeleton={isSkeleton}
 
-                    body={() => <MarkdownContent source={brief.body} />}
-                />
-            ) : null}
+                        body={() => <MarkdownContent source={brief.body} />}
+                    />
+                ),
+            ]
+            : []),
 
-            {showLegacy ? (
-                <SurfaceCard
-                    label="Evaluation criteria (legacy)"
-                    isSkeleton={isSkeleton}
+        ...(showLegacy
+            ? [
+                () => (
+                    <SurfaceCard
+                        label="Evaluation criteria (legacy)"
+                        isSkeleton={isSkeleton}
 
-                    body={() => <StackV gap={6} items={[() => legacyAccordions]} />}
-                />
-            ) : null}
+                        body={() => (
+                            <StackV
+                                gap={6}
+                                items={[
+                                    ...(hasLegacyCriteria || isSkeleton
+                                        ? [
+                                            () => (
+                                                <SurfaceCardAccordion
+                                                    variant="nested"
+                                                    items={criteriaItems}
+                                                    allowsMultipleExpanded
+                                                    isSkeleton={isSkeleton}
 
+
+                                                />
+                                            ),
+                                        ]
+                                        : []),
+                                    ...(hasLegacyCode || isSkeleton
+                                        ? [
+                                            () => (
+                                                <SurfaceCardAccordion
+                                                    variant="nested"
+                                                    items={codeItems}
+                                                    allowsMultipleExpanded
+                                                    isSkeleton={isSkeleton}
+
+
+                                                />
+                                            ),
+                                        ]
+                                        : []),
+                                ]}
+                            />
+                        )}
+                    />
+                ),
+            ]
+            : []),
+
+        () => (
             <ContentRelatedList
                 label={relatedLabel}
                 items={relatedItems}
                 isSkeleton={isSkeleton}
 
             />
-        </>
-    )
+        ),
+    ]
 
-    return <StackV gap={7} isSkeleton={isSkeleton} items={[() => readingSections]} />
+    return <StackV gap={7} isSkeleton={isSkeleton} items={readingSectionsItems} />
 }
 
 /**
@@ -360,93 +385,116 @@ const submissionPanel = (props: PersonalProjectTaskActColumnProps) => {
     const { panel, isSkeleton } = props
     const hasAttempts = panel.hasAttempts ?? false
 
-    const evaluateActions = (
-        <>
-            <Button
-                label={hasAttempts ? "Re-evaluate" : "Evaluate"}
-                prefixIcon={SparkleIcon}
-                onPress={panel.onEvaluate}
-                isPending={panel.isEvaluatePending}
-                isDisabled={panel.isEvaluateDisabled}
-                isSkeleton={isSkeleton}
+    return (
+        <StackV
+            gap={6}
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <SurfaceCard
+                        label="Project GitHub"
+                        isSkeleton={isSkeleton}
 
-            />
-            <Button
-                label="View feedback"
-                variant="tertiary"
-                onPress={panel.onOpenFeedbackDetails}
-                isDisabled={!hasAttempts}
-                isSkeleton={isSkeleton}
+                        body={() => (
+                            <StackV
+                                gap={6}
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <InputText
+                                            label="GitHub repo URL"
+                                            value={panel.repoUrl}
+                                            onValueChange={panel.onRepoUrlChange}
+                                            errorMessage={panel.repoUrlError}
+                                            placeholder="https://github.com/…"
+                                            ariaLabel="GitHub repo URL"
+                                            isSkeleton={isSkeleton}
 
-            />
-            <Button
-                label="View submission history"
-                variant="tertiary"
-                onPress={panel.onOpenAttempts}
-                isDisabled={!hasAttempts}
-                isSkeleton={isSkeleton}
+                                        />
+                                    ),
+                                    () => (
+                                        <div>
+                                            <ListRow
+                                                leading={SettingsLeading}
+                                                title="Grading settings"
+                                                meta={() => <Typography size="sm" color="muted" text={`${panel.settingsLangLabel} · ${panel.settingsBranch}`} />}
+                                                trailing={SettingsChevron}
+                                                onPress={panel.onOpenSettings}
+                                                isSkeleton={isSkeleton}
 
-            />
-        </>
+                                            />
+                                        </div>
+                                    ),
+                                    () => (
+                                        <StackH
+                                            principle="flex-action"
+                                            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                            at="sm"
+                                            isSkeleton={isSkeleton}
+                                            items={[
+                                                () => (
+                                                    <Button
+                                                        label={hasAttempts ? "Re-evaluate" : "Evaluate"}
+                                                        prefixIcon={SparkleIcon}
+                                                        onPress={panel.onEvaluate}
+                                                        isPending={panel.isEvaluatePending}
+                                                        isDisabled={panel.isEvaluateDisabled}
+                                                        isSkeleton={isSkeleton}
+
+                                                    />
+                                                ),
+                                                () => (
+                                                    <Button
+                                                        label="View feedback"
+                                                        variant="tertiary"
+                                                        onPress={panel.onOpenFeedbackDetails}
+                                                        isDisabled={!hasAttempts}
+                                                        isSkeleton={isSkeleton}
+
+                                                    />
+                                                ),
+                                                () => (
+                                                    <Button
+                                                        label="View submission history"
+                                                        variant="tertiary"
+                                                        onPress={panel.onOpenAttempts}
+                                                        isDisabled={!hasAttempts}
+                                                        isSkeleton={isSkeleton}
+
+                                                    />
+                                                ),
+                                            ]}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        )}
+                    />
+                ),
+
+                ...(isSkeleton || panel.result != null
+                    ? [
+                        () => (
+                            <SubmissionScoreCard
+                                label="Latest grading result"
+                                score={panel.result?.score ?? 0}
+                                maxScore={panel.result?.maxScore}
+                                isPassing={panel.result?.isPassing ?? true}
+                                passScore={panel.result?.passScore}
+                                shortFeedback={panel.result?.shortFeedback}
+                                gradedByModel={panel.result?.gradedByModel}
+                                modelCategory={panel.result?.modelCategory}
+                                timeAgo={panel.result?.timeAgo}
+                                isSkeleton={isSkeleton}
+
+
+                            />
+                        ),
+                    ]
+                    : []),
+            ]}
+        />
     )
-
-    const githubFields = (
-        <>
-            <InputText
-                label="GitHub repo URL"
-                value={panel.repoUrl}
-                onValueChange={panel.onRepoUrlChange}
-                errorMessage={panel.repoUrlError}
-                placeholder="https://github.com/…"
-                ariaLabel="GitHub repo URL"
-                isSkeleton={isSkeleton}
-
-            />
-            <div>
-                <ListRow
-                    leading={SettingsLeading}
-                    title="Grading settings"
-                    meta={() => <Typography size="sm" color="muted" text={`${panel.settingsLangLabel} · ${panel.settingsBranch}`} />}
-                    trailing={SettingsChevron}
-                    onPress={panel.onOpenSettings}
-                    isSkeleton={isSkeleton}
-
-                />
-            </div>
-            <StackH gap={3} at="sm" principle="flex-action" isSkeleton={isSkeleton} items={[() => evaluateActions]} />
-            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
-        </>
-    )
-
-    const panelSections = (
-        <>
-            <SurfaceCard
-                label="Project GitHub"
-                isSkeleton={isSkeleton}
-
-                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={[() => githubFields]} />}
-            />
-
-            {isSkeleton || panel.result != null ? (
-                <SubmissionScoreCard
-                    label="Latest grading result"
-                    score={panel.result?.score ?? 0}
-                    maxScore={panel.result?.maxScore}
-                    isPassing={panel.result?.isPassing ?? true}
-                    passScore={panel.result?.passScore}
-                    shortFeedback={panel.result?.shortFeedback}
-                    gradedByModel={panel.result?.gradedByModel}
-                    modelCategory={panel.result?.modelCategory}
-                    timeAgo={panel.result?.timeAgo}
-                    isSkeleton={isSkeleton}
-
-
-                />
-            ) : null}
-        </>
-    )
-
-    return <StackV gap={6} isSkeleton={isSkeleton} items={[() => panelSections]} />
 }
 
 /**

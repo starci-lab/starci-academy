@@ -184,12 +184,6 @@ const SettingsSidebarNav = ({
                         items={flatItems.map((item) => () => {
                             const isActive = item.href === activeHref
                             const Icon = DESTINATION_ICON[item.key]
-                            const pillContent = (
-                                <>
-                                    <Icon aria-hidden focusable="false" className="size-4 shrink-0" />
-                                    <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap />
-                                </>
-                            )
                             return (
                                 <button
                                     type="button"
@@ -200,8 +194,14 @@ const SettingsSidebarNav = ({
                                         isActive ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
                                     )}
                                 >
-                                    <StackH gap={2} principle="icon-text" align="center" items={[() => pillContent]} />
-                                    explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                                    <StackH
+                                        principle="icon-text"
+                                        explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                                        items={[
+                                            () => <Icon aria-hidden focusable="false" className="size-4 shrink-0" />,
+                                            () => <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap />,
+                                        ]}
+                                    />
                                 </button>
                             )
                         })}

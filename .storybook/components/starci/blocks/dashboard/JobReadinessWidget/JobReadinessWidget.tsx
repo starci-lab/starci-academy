@@ -98,54 +98,69 @@ interface ContentProps {
     isSkeleton: boolean
 }
 
-const Content = ({ codingPercentile, track, isSkeleton }: ContentProps) => {
-    const trackSummary = (
-        <>
-            <StackH
-                gap={4}
-                principle="content-row"
-                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                at="sm"
-                align="center"
-                isSkeleton={isSkeleton}
-                items={[
+const Content = ({ codingPercentile, track, isSkeleton }: ContentProps) => (
+    <StackV
+        gap={4}
+        isSkeleton={isSkeleton}
+        items={[
+            () => (
+                <StackH
+                    gap={4}
+                    principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                    at="sm"
+                    align="center"
+                    isSkeleton={isSkeleton}
+                    items={[
+                        () => (
+                            <StatPair
+                                value={(isSkeleton ? undefined : String(track.depthScore ?? 0)) ?? ""}
+                                label={(isSkeleton ? undefined : track.courseTitle) ?? ""}
+                                isSkeleton={isSkeleton}
+
+                            />
+                        ),
+                        () => <EnumChip value={track.band} map={BAND_MAP} isSkeleton={isSkeleton} />,
+                    ]}
+                />
+            ),
+            ...(!isSkeleton && codingPercentile != null
+                ? [
                     () => (
-                        <StatPair
-                            value={(isSkeleton ? undefined : String(track.depthScore ?? 0)) ?? ""}
-                            label={(isSkeleton ? undefined : track.courseTitle) ?? ""}
-                            isSkeleton={isSkeleton}
+                        <Typography
+                            size="xs"
+                            color="muted"
+                            text={`Ahead of ${codingPercentile}% of learners on coding`}
 
                         />
                     ),
-                    () => <EnumChip value={track.band} map={BAND_MAP} isSkeleton={isSkeleton} />,
-                ]}
-            />
-            {!isSkeleton && codingPercentile != null ? (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    text={`Ahead of ${codingPercentile}% of learners on coding`}
+                ]
+                : []),
+            () => pillarMeter("Capstone project", track.capstoneScore, isSkeleton),
+            () => pillarMeter("Mock interview", track.interviewScore, isSkeleton),
+            () => pillarMeter("CV", track.cvScore, isSkeleton),
+            ...(isSkeleton
+                ? [() => <Button isSkeleton />]
+                : track.nextAction
+                    ? [
+                        () => {
+                            const nextAction = track.nextAction
+                            if (!nextAction) return null
+                            return (
+                                <Button
+                                    variant="primary"
 
-                />
-            ) : null}
-            {pillarMeter("Capstone project", track.capstoneScore, isSkeleton)}
-            {pillarMeter("Mock interview", track.interviewScore, isSkeleton)}
-            {pillarMeter("CV", track.cvScore, isSkeleton)}
-            {isSkeleton ? (
-                <Button isSkeleton />
-            ) : track.nextAction ? (
-                <Button
-                    variant="primary"
+                                    label={nextAction.label}
+                                    onPress={nextAction.onPress}
 
-                    label={track.nextAction.label}
-                    onPress={track.nextAction.onPress}
-
-                />
-            ) : null}
-        </>
-    )
-    return <StackV gap={4} isSkeleton={isSkeleton} items={[() => trackSummary]} />
-}
+                                />
+                            )
+                        },
+                    ]
+                    : []),
+        ]}
+    />
+)
 
 /** Fixed-shape placeholder rendered while {@link JobReadinessWidgetProps.isLoading} — no real track exists yet. */
 const LOADING_TRACK: JobReadinessTrack = {

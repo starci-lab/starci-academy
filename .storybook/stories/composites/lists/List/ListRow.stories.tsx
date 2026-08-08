@@ -494,3 +494,61 @@ export const AsNudgeRow: Story = {
         </div>
     ),
 }
+
+/**
+ * LEAF prop `density` — intrinsic row padding owned by ListRow.
+ * `default` keeps `py-2`; `comfortable` is exact `p-3`.
+ */
+export const Density: Story = {
+    render: () => (
+        <div data-tier="fixture" className="p-8">
+            <BlockAnatomy
+                name="ListRow"
+                tier="composite"
+                leaf="Prop `density`"
+                annotate={TITLE_ONLY_ANNOTATE}
+                reason="Row padding is ListRow-owned density, not caller className. `comfortable` is the exact former className='p-3' consumer shape (checklist rows inside a card)."
+                states={[
+                    {
+                        name: "density = default (py-2)",
+                        why: "Existing row padding — unchanged for every prior call site that does not opt into comfortable.",
+                        code: `<ListRow
+  title="Exercise 1: Loops and conditionals"
+/>`,
+                        render: (
+                            <div data-tier="fixture" className="w-full max-w-md rounded-2xl border border-default">
+                                <ListRow title="Exercise 1: Loops and conditionals" divider />
+                                <ListRow title="Exercise 2: Functions and scope" />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "density = comfortable (p-3)",
+                        why: "Exact p-3 on the row so horizontal padding lives with the divider (border-b on the row box, outside padding) — the checklist-in-card shape.",
+                        code: `<ListRow
+  density="comfortable"
+  title="Ollama agent"
+  subtitle="Connected"
+  divider
+/>`,
+                        render: (
+                            <div data-tier="fixture" className="w-full max-w-md rounded-2xl border border-default">
+                                <ListRow
+                                    density="comfortable"
+                                    title="Ollama agent"
+                                    subtitle="Connected"
+                                    divider
+                                />
+                                <ListRow
+                                    density="comfortable"
+                                    title="Docker engine"
+                                    subtitle="Not detected"
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}

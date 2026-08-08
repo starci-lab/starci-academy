@@ -100,49 +100,6 @@ const FoundationHeader = ({
     const hasTags = (tags?.length ?? 0) > 0
     const hasAuthor = author != null && author.trim().length > 0
 
-    const metaCluster = (
-        <>
-            <StackH
-                gap={3}
-                principle="chip-row"
-                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
-                align="center"
-                at="sm"
-                isSkeleton={isSkeleton}
-                items={[
-                    () => (
-                        <EnumChip
-                            value={isSkeleton ? FoundationKind.Document : kind}
-                            map={KIND_MAP}
-                            isSkeleton={isSkeleton}
-
-                        />
-                    ),
-                    ...(isSkeleton
-                        ? [() => <Chip isSkeleton />]
-                        : isRecommended
-                            ? [() => <Chip tone="success" text="Recommended" />]
-                            : []),
-                    ...(isSkeleton
-                        ? [() => <Chip isSkeleton />, () => <Chip isSkeleton />]
-                        : hasTags
-                            ? (tags ?? []).map((tag) => () => <Chip text={tag.label} />)
-                            : []),
-                ]}
-            />
-            {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton />
-            ) : hasAuthor ? (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    text={`Author: ${author}`}
-
-                />
-            ) : null}
-        </>
-    )
-
     return (
         <div>
             <PageHeader
@@ -161,7 +118,52 @@ const FoundationHeader = ({
                 title={title}
                 description={description}
                 meta={() =>
-                    <StackV gap={4} isSkeleton={isSkeleton} items={[() => metaCluster]} />
+                    <StackV
+                        gap={4}
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <StackH
+                                    gap={3}
+                                    principle="chip-row"
+                                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                    align="center"
+                                    at="sm"
+                                    isSkeleton={isSkeleton}
+                                    items={[
+                                        () => (
+                                            <EnumChip
+                                                value={isSkeleton ? FoundationKind.Document : kind}
+                                                map={KIND_MAP}
+                                                isSkeleton={isSkeleton}
+
+                                            />
+                                        ),
+                                        ...(isSkeleton
+                                            ? [() => <Chip isSkeleton />]
+                                            : isRecommended
+                                                ? [() => <Chip tone="success" text="Recommended" />]
+                                                : []),
+                                        ...(isSkeleton
+                                            ? [() => <Chip isSkeleton />, () => <Chip isSkeleton />]
+                                            : hasTags
+                                                ? (tags ?? []).map((tag) => () => <Chip text={tag.label} />)
+                                                : []),
+                                    ]}
+                                />
+                            ),
+                            ...(isSkeleton ? [() => (
+                                <Typography size="xs" color="muted" isSkeleton />
+                            )] : hasAuthor ? [() => (
+                                <Typography
+                                    size="xs"
+                                    color="muted"
+                                    text={`Author: ${author}`}
+
+                                />
+                            )] : []),
+                        ]}
+                    />
                 }
             />
         </div>

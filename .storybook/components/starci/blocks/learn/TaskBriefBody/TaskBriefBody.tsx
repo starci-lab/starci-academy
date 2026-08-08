@@ -149,99 +149,100 @@ const TaskBriefBody = ({
         body: () => implementationBody(item),
     }))
 
-    const readingColumn = (
-        <>
-            {/* TitleDesc — always present; both lines fall back to their own shimmer bar. */}
-            <StackV
-                gap={2}
-                isSkeleton={isSkeleton}
-
-                items={[
-                    () => <Typography size="h3" weight="bold" isSkeleton={isSkeleton} text={title} />,
-                    ...(isSkeleton
-                        ? [() => <Typography size="sm" color="muted" isSkeleton />]
-                        : description != null && description.trim().length > 0
-                            ? [() => <Typography size="sm" color="muted" text={description} />]
-                            : []),
-                ]}
-            />
-
-            {/* LockedAlert — self-hides when unlocked; honored regardless of `isSkeleton` since
-                `isLocked` is already-resolved data the caller holds, same call as
-                `ContentArticle`'s own `isLocked`. */}
-            {isLocked ? (
-                <Callout
-                    status="warning"
-                    icon={WarningIcon}
-                    title={LOCKED_ALERT_TITLE}
-                    description={LOCKED_ALERT_DESCRIPTION}
-                    actionLabel={LOCKED_ALERT_BUTTON_LABEL}
-                    onAction={onGoToCurrentTask}
-
-                />
-            ) : null}
-
-            {/* BriefMarkdown — SCHEMA V2. Skeleton guesses a plain shimmer paragraph rather
-                than calling `MarkdownContent` with no source, mirroring `ChallengeBrief`'s
-                own list-skeleton judgement call (a viewer needs a real payload; a guessed
-                loading state cannot fabricate one). */}
-            {showBrief ? (
-                isSkeleton ? (
+    return (
+        <StackV
+            identity={{ tier: "block", component: "TaskBriefBody" }}
+            gap={6}
+            isSkeleton={isSkeleton}
+            items={[
+                // TitleDesc — always present; both lines fall back to their own shimmer bar.
+                () => (
                     <StackV
                         gap={2}
                         isSkeleton={isSkeleton}
 
-                        items={Array.from({ length: BRIEF_SKELETON_LINE_COUNT }, () => () => (
-                            <Typography size="base" isSkeleton />
-                        ))}
+                        items={[
+                            () => <Typography size="h3" weight="bold" isSkeleton={isSkeleton} text={title} />,
+                            ...(isSkeleton
+                                ? [() => <Typography size="sm" color="muted" isSkeleton />]
+                                : description != null && description.trim().length > 0
+                                    ? [() => <Typography size="sm" color="muted" text={description} />]
+                                    : []),
+                        ]}
                     />
-                ) : (
-                    <MarkdownContent source={trimmedBrief} measure="reading" />
-                )
-            ) : null}
+                ),
+                // LockedAlert — self-hides when unlocked; honored regardless of `isSkeleton` since
+                // `isLocked` is already-resolved data the caller holds, same call as
+                // `ContentArticle`'s own `isLocked`.
+                ...(isLocked ? [() => (
+                    <Callout
+                        status="warning"
+                        icon={WarningIcon}
+                        title={LOCKED_ALERT_TITLE}
+                        description={LOCKED_ALERT_DESCRIPTION}
+                        actionLabel={LOCKED_ALERT_BUTTON_LABEL}
+                        onAction={onGoToCurrentTask}
 
-            {/* LegacyCriteriaCard — SCHEMA V1 fallback ONLY, never while isSkeleton (see file header). */}
-            {showLegacy ? (
-                <StackV
-                    gap={4}
-                    isSkeleton={isSkeleton}
+                    />
+                )] : []),
+                // BriefMarkdown — SCHEMA V2. Skeleton guesses a plain shimmer paragraph rather
+                // than calling `MarkdownContent` with no source, mirroring `ChallengeBrief`'s
+                // own list-skeleton judgement call (a viewer needs a real payload; a guessed
+                // loading state cannot fabricate one).
+                ...(showBrief ? [() => (
+                    isSkeleton ? (
+                        <StackV
+                            gap={2}
+                            isSkeleton={isSkeleton}
 
-                    items={[
-                        () => <Typography size="sm" weight="semibold" text={CRITERIA_LABEL} />,
-                        () => (
-                            <SurfaceCardAccordion
-                                items={criteriaItems}
-                                allowsMultipleExpanded
-                                emptyState={CriteriaEmptyState}
+                            items={Array.from({ length: BRIEF_SKELETON_LINE_COUNT }, () => () => (
+                                <Typography size="base" isSkeleton />
+                            ))}
+                        />
+                    ) : (
+                        <MarkdownContent source={trimmedBrief} measure="reading" />
+                    )
+                )] : []),
+                // LegacyCriteriaCard — SCHEMA V1 fallback ONLY, never while isSkeleton (see file header).
+                ...(showLegacy ? [() => (
+                    <StackV
+                        gap={4}
+                        isSkeleton={isSkeleton}
+
+                        items={[
+                            () => <Typography size="sm" weight="semibold" text={CRITERIA_LABEL} />,
+                            () => (
+                                <SurfaceCardAccordion
+                                    items={criteriaItems}
+                                    allowsMultipleExpanded
+                                    emptyState={CriteriaEmptyState}
 
 
-                            />
-                        ),
-                        ...(implementationItems.length > 0 ? [() => (
-                            <SurfaceCardAccordion
-                                items={implementationItems}
-                                allowsMultipleExpanded
+                                />
+                            ),
+                            ...(implementationItems.length > 0 ? [() => (
+                                <SurfaceCardAccordion
+                                    items={implementationItems}
+                                    allowsMultipleExpanded
 
 
-                            />
-                        )] : []),
-                    ]}
-                />
-            ) : null}
+                                />
+                            )] : []),
+                        ]}
+                    />
+                )] : []),
+                // RelatedList — the block never gates it; `ContentRelatedList` already self-hides.
+                () => (
+                    <ContentRelatedList
+                        items={relatedItems}
+                        label={relatedLabel}
+                        isSkeleton={isSkeleton}
 
-            {/* RelatedList — the block never gates it; `ContentRelatedList` already self-hides. */}
-            <ContentRelatedList
-                items={relatedItems}
-                label={relatedLabel}
-                isSkeleton={isSkeleton}
 
-
-            />
-        </>
-    )
-
-    return (
-        <StackV identity={{ tier: "block", component: "TaskBriefBody" }} gap={6} isSkeleton={isSkeleton} items={[() => readingColumn]} />
+                    />
+                ),
+            ]}
+        />
     )
 }
 

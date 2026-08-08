@@ -13,6 +13,7 @@ import {
 import { ChoiceSwitch } from "@sb-components/atoms/forms"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { Box } from "@sb-components/frames/Box/Box"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 import type { ComponentTypeWithSkeleton , SkeletonProps } from "@sb-components/frames/_slot"
 
 /**
@@ -43,6 +44,9 @@ export const meta = { tier: "composite", name: "List" } as const
 // ─────────────────────────────────────────────────────────────────────────────
 // .Row — the generic GitHub-style list row (was `lists/ListRow`)
 // ─────────────────────────────────────────────────────────────────────────────
+
+/** Intrinsic row padding owned by {@link ListRow} — not caller placement. */
+export type ListRowDensity = "default" | "comfortable"
 
 /** Props for {@link ListRow}. */
 export interface ListRowProps {
@@ -81,6 +85,12 @@ export interface ListRowProps {
      * separated list. Omit on the final row of a group.
      */
     divider?: boolean
+    /**
+     * Intrinsic row padding. `default` keeps the existing `py-2` density;
+     * `comfortable` is exact `p-3` (for rows that sit flush inside a card).
+     * Does not encode gap, alignment, color, width, or child placement.
+     */
+    density?: ListRowDensity
     /**
      * Optional press handler. When provided (or {@link ListRowProps.href} is
      * set) the row becomes interactive with a hover surface and is keyboard /
@@ -121,6 +131,7 @@ const Row = ({
     meta: MetaSlot,
     trailing: TrailingSlot,
     divider = false,
+    density = "default",
     onPress,
     href,
     isSkeleton = false,
@@ -130,7 +141,8 @@ const Row = ({
     const isPressable = !isSkeleton && Boolean(onPress || href)
 
     const baseClassName = cn(
-        "flex min-w-0 items-center gap-3 py-2",
+        "flex min-w-0 items-center gap-3",
+        density === "comfortable" ? "p-3" : "py-2",
         divider && "border-b border-separator",
         isPressable &&
             "rounded-2xl transition-colors hover:bg-surface-secondary focus-visible:bg-surface-secondary focus-visible:outline-none",
@@ -451,12 +463,16 @@ const ToggleRow = ({
             explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
             items={[
                 () => (
-                    <TitledText
-                        title={label}
-                        subtitle={description}
+                    <FillAvailable
+                        at="base"
                         isSkeleton={isSkeleton}
-                        classNames={["flex-1"]}
-
+                        body={({ isSkeleton: skeleton }: SkeletonProps) => (
+                            <TitledText
+                                title={label}
+                                subtitle={description}
+                                isSkeleton={skeleton}
+                            />
+                        )}
                     />
                 ),
                 () => isSkeleton ? (

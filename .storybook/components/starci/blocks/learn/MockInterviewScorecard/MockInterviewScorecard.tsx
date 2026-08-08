@@ -171,63 +171,41 @@ const MockInterviewScorecard = ({
         />
     ) : null
 
-    const scoreBreakdownBody = (
-        <>
-            {(isSkeleton
-                ? Array.from({ length: SKELETON_SCORE_ROWS }, (_, index) => ({
-                    key: `score-skeleton-${index}`,
-                    label: "",
-                    score: 0,
-                    max: 100,
-                }))
-                : phaseOrQuestionScores
-            ).map((row) => (
-                <ScoreRow
-                    key={row.key}
-                    label={row.label}
-                    score={row.score}
-                    max={row.max}
-                    isSkeleton={isSkeleton}
-                />
-            ))}
-        </>
-    )
+    const scoreBreakdownRows = (isSkeleton
+        ? Array.from({ length: SKELETON_SCORE_ROWS }, (_, index) => ({
+            key: `score-skeleton-${index}`,
+            label: "",
+            score: 0,
+            max: 100,
+        }))
+        : phaseOrQuestionScores
+    ).map((row) => () => (
+        <ScoreRow
+            key={row.key}
+            label={row.label}
+            score={row.score}
+            max={row.max}
+            isSkeleton={isSkeleton}
+        />
+    ))
 
-    const attributeBreakdownBody = (
-        <>
-            {(isSkeleton
-                ? Array.from({ length: SKELETON_ATTRIBUTE_ROWS }, (_, index) => ({
-                    key: `attribute-skeleton-${index}`,
-                    label: "",
-                    score: 0,
-                    max: 100,
-                }))
-                : attributeScores.map((row) => ({ ...row, max: 100 }))
-            ).map((row) => (
-                <ScoreRow
-                    key={row.key}
-                    label={row.label}
-                    score={row.score}
-                    max={row.max}
-                    isSkeleton={isSkeleton}
-                />
-            ))}
-        </>
-    )
-
-    const strengthsBody = (
-        <>
-            <Typography size="sm" weight="medium" text="Strengths" />
-            <SurfaceCardCrossList items={strengthItems} isSkeleton={isSkeleton} />
-        </>
-    )
-
-    const gapsBody = (
-        <>
-            <Typography size="sm" weight="medium" text="Areas to improve" />
-            <SurfaceCardCrossList items={gapItems} isSkeleton={isSkeleton} />
-        </>
-    )
+    const attributeBreakdownRows = (isSkeleton
+        ? Array.from({ length: SKELETON_ATTRIBUTE_ROWS }, (_, index) => ({
+            key: `attribute-skeleton-${index}`,
+            label: "",
+            score: 0,
+            max: 100,
+        }))
+        : attributeScores.map((row) => ({ ...row, max: 100 }))
+    ).map((row) => () => (
+        <ScoreRow
+            key={row.key}
+            label={row.label}
+            score={row.score}
+            max={row.max}
+            isSkeleton={isSkeleton}
+        />
+    ))
 
     const weakAreaRow = weakAreaLabel != null && !isSkeleton ? (
         <StackH
@@ -287,84 +265,99 @@ const MockInterviewScorecard = ({
         />
     )
 
-    const ctaSection = (
-        <>
-            {weakAreaRow}
-            {ctaButtonRow}
-        </>
-    )
-
-    const scorecardBody = (
-        <>
-            {bylineRow}
-
-            {/* Verdict banner. `Callout` has no `isSkeleton` of its own (a message
-                frame, not a data-bearing one) — a bare bar stands in, in the same slot. */}
-            {isSkeleton ? (
-                <HeroSkeleton className="h-20 w-full rounded-2xl" />
-            ) : (
-                <Callout
-                    status={VERDICT_STATUS[verdict]}
-                    icon={VERDICT_ICON[verdict]}
-                    title={`${overallScore}/100 · ${VERDICT_LABEL[verdict]}`}
-
-                />
-            )}
-
-            {hasScoreRows ? (
-                <SurfaceCard
-                    label="Score by section"
-
-
-                    body={() => <StackV gap={4} isSkeleton={isSkeleton} items={[() => scoreBreakdownBody]} />}
-                />
-            ) : null}
-
-            {hasAttributeRows ? (
-                <SurfaceCard
-                    label="Score by criterion"
-
-
-                    body={() => <StackV gap={4} isSkeleton={isSkeleton} items={[() => attributeBreakdownBody]} />}
-                />
-            ) : null}
-
-            {hasStrengths ? (
-                <StackV gap={3} isSkeleton={isSkeleton} items={[() => strengthsBody]} />
-            ) : null}
-
-            {hasGaps ? (
-                <StackV gap={3} isSkeleton={isSkeleton} items={[() => gapsBody]} />
-            ) : null}
-
-            {/* no icon here — §5a.2: a chat-bubble needs an ASSOCIATION step to read as
-                "a question" (not a universal symbol like check/locklock), and the card's own
-                label="Follow-up question" already carries the fact. */}
-            {hasFollowUp ? (
-                <SurfaceCard
-                    label="Follow-up question"
-
-
-                    body={() => (
-                        <div className="italic [&_p]:m-0">
-                            <MarkdownContent
-                                source={followUpQuestion ?? ""}
-                                measure="compact"
-                                isSkeleton={isSkeleton}
-
-                            />
-                        </div>
-                    )}
-                />
-            ) : null}
-
-            <StackV gap={3} isSkeleton={isSkeleton} items={[() => ctaSection]} />
-        </>
-    )
-
     return (
         <div>
-            <StackV gap={6} isSkeleton={isSkeleton} items={[() => scorecardBody]} />
+            <StackV
+                gap={6}
+                isSkeleton={isSkeleton}
+                items={[
+                    () => bylineRow,
+                    // Verdict banner. `Callout` has no `isSkeleton` of its own (a message
+                    // frame, not a data-bearing one) — a bare bar stands in, in the same slot.
+                    () => (
+                        isSkeleton ? (
+                            <HeroSkeleton className="h-20 w-full rounded-2xl" />
+                        ) : (
+                            <Callout
+                                status={VERDICT_STATUS[verdict]}
+                                icon={VERDICT_ICON[verdict]}
+                                title={`${overallScore}/100 · ${VERDICT_LABEL[verdict]}`}
+
+                            />
+                        )
+                    ),
+                    ...(hasScoreRows ? [() => (
+                        <SurfaceCard
+                            label="Score by section"
+
+
+                            body={() => (
+                                <StackV gap={4} isSkeleton={isSkeleton} items={scoreBreakdownRows} />
+                            )}
+                        />
+                    )] : []),
+                    ...(hasAttributeRows ? [() => (
+                        <SurfaceCard
+                            label="Score by criterion"
+
+
+                            body={() => (
+                                <StackV gap={4} isSkeleton={isSkeleton} items={attributeBreakdownRows} />
+                            )}
+                        />
+                    )] : []),
+                    ...(hasStrengths ? [() => (
+                        <StackV
+                            gap={3}
+                            isSkeleton={isSkeleton}
+                            items={[
+                                () => <Typography size="sm" weight="medium" text="Strengths" />,
+                                () => <SurfaceCardCrossList items={strengthItems} isSkeleton={isSkeleton} />,
+                            ]}
+                        />
+                    )] : []),
+                    ...(hasGaps ? [() => (
+                        <StackV
+                            gap={3}
+                            isSkeleton={isSkeleton}
+                            items={[
+                                () => <Typography size="sm" weight="medium" text="Areas to improve" />,
+                                () => <SurfaceCardCrossList items={gapItems} isSkeleton={isSkeleton} />,
+                            ]}
+                        />
+                    )] : []),
+                    // no icon here — §5a.2: a chat-bubble needs an ASSOCIATION step to read as
+                    // "a question" (not a universal symbol like check/locklock), and the card's own
+                    // label="Follow-up question" already carries the fact.
+                    ...(hasFollowUp ? [() => (
+                        <SurfaceCard
+                            label="Follow-up question"
+
+
+                            body={() => (
+                                <div className="italic [&_p]:m-0">
+                                    <MarkdownContent
+                                        source={followUpQuestion ?? ""}
+                                        measure="compact"
+                                        isSkeleton={isSkeleton}
+
+                                    />
+                                </div>
+                            )}
+                        />
+                    )] : []),
+                    () => (
+                        <StackV
+                            gap={3}
+                            isSkeleton={isSkeleton}
+                            items={[
+                                ...(weakAreaRow != null ? [() => weakAreaRow] : []),
+                                () => ctaButtonRow,
+                            ]}
+                        />
+                    ),
+                ]}
+            />
         </div>
     )
 }

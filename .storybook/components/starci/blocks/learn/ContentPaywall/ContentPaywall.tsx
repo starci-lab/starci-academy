@@ -62,46 +62,50 @@ const ContentPaywall = ({
     onPurchase,
     isSkeleton = false,
 }: ContentPaywallProps) => {
-    const offer = (
-        <>
-            <IconTile icon={LockIcon} tone="accent" size="sm" />
-            {/* real source (`PremiumPaywall/index.tsx:54`): `text-xl font-semibold` (a bare div,
-                not routed through Typography) — matches `size="h4"` (heading, 20px), not body `lg`. */}
-            <Typography size="h4" weight="semibold" align="center" text={title} />
-            {description != null ? (
-                <Typography size="sm" color="muted" align="center" text={description} />
-            ) : null}
-            <PriceTagProminent
-                discounted={discountedPriceVnd}
-                original={originalPriceVnd}
-                isSkeleton={isSkeleton}
-
-            />
-            {currentPhase != null ? (
-                <PhaseScarcityNote
-                    currentPhase={currentPhase}
-                    seatsRemaining={seatsRemaining}
-                    nextPhasePriceVnd={nextPhasePriceVnd}
-
-
-                />
-            ) : null}
-            <Button
-                label={ctaLabel}
-                variant="primary"
-                suffixIcon={ArrowRightIcon}
-                iconSlide
-                onPress={onPurchase}
-
-            />
-        </>
-    )
-
     return (
         <div>
-            <StackV gap={4} principle="content-row"
+            <StackV
+                gap={4}
+                principle="content-row"
                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                align="center" items={[() => offer]}  />
+                align="center"
+                items={[
+                    () => <IconTile icon={LockIcon} tone="accent" size="sm" />,
+                    // real source (`PremiumPaywall/index.tsx:54`): `text-xl font-semibold` (a bare div,
+                    // not routed through Typography) — matches `size="h4"` (heading, 20px), not body `lg`.
+                    () => <Typography size="h4" weight="semibold" align="center" text={title} />,
+                    ...(description != null ? [() => (
+                        <Typography size="sm" color="muted" align="center" text={description} />
+                    )] : []),
+                    () => (
+                        <PriceTagProminent
+                            discounted={discountedPriceVnd}
+                            original={originalPriceVnd}
+                            isSkeleton={isSkeleton}
+
+                        />
+                    ),
+                    ...(currentPhase != null ? [() => (
+                        <PhaseScarcityNote
+                            currentPhase={currentPhase}
+                            seatsRemaining={seatsRemaining}
+                            nextPhasePriceVnd={nextPhasePriceVnd}
+
+
+                        />
+                    )] : []),
+                    () => (
+                        <Button
+                            label={ctaLabel}
+                            variant="primary"
+                            suffixIcon={ArrowRightIcon}
+                            iconSlide
+                            onPress={onPurchase}
+
+                        />
+                    ),
+                ]}
+            />
         </div>
     )
 }

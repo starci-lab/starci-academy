@@ -284,141 +284,167 @@ const MockInterviewPage = ({
     createdAt,
     isResultSkeleton = false,
 }: MockInterviewPageProps) => {
-    const setupSection = (
-        <>
-            <PlaygroundSetupHeader
+    const interviewBody = (
+        <StackV
+            gap={7}
+            items={[
+                ...(phase === "setup"
+                    ? [
+                        () => (
+                            <StackV
+                                gap={6}
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <PlaygroundSetupHeader
 
-                breadcrumbLabel={setupBackLabel}
-                onBack={onSetupBack}
-                title={setupTitle}
-                description={setupDescription}
-                isSkeleton={isSkeleton}
+                                            breadcrumbLabel={setupBackLabel}
+                                            onBack={onSetupBack}
+                                            title={setupTitle}
+                                            description={setupDescription}
+                                            isSkeleton={isSkeleton}
 
-            />
-            <MockInterviewSetup
+                                        />
+                                    ),
+                                    () => (
+                                        <MockInterviewSetup
 
-                label={setupLabel}
-                persona={persona}
-                sessionName={sessionName}
-                onSessionNameChange={onSessionNameChange}
-                tier={tier}
-                onTierChange={onTierChange}
-                isDesignAvailable={isDesignAvailable}
-                onStartQna={onStartQna}
-                onStartDesign={onStartDesign}
-                resumable={resumable}
-                startingMode={startingMode}
-                isPending={isSetupPending}
-                errorMessage={setupErrorMessage}
-                isSkeleton={isSkeleton}
+                                            label={setupLabel}
+                                            persona={persona}
+                                            sessionName={sessionName}
+                                            onSessionNameChange={onSessionNameChange}
+                                            tier={tier}
+                                            onTierChange={onTierChange}
+                                            isDesignAvailable={isDesignAvailable}
+                                            onStartQna={onStartQna}
+                                            onStartDesign={onStartDesign}
+                                            resumable={resumable}
+                                            startingMode={startingMode}
+                                            isPending={isSetupPending}
+                                            errorMessage={setupErrorMessage}
+                                            isSkeleton={isSkeleton}
 
-            />
-        </>
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]
+                    : []),
+                ...(phase === "live"
+                    ? [
+                        () => (
+                            <StackV
+                                gap={6}
+                                items={[
+                                    () => (
+                                        <WorkSessionHeader
+
+                                            backLabel={liveBackLabel}
+                                            onBack={onLiveBack}
+                                            title={liveTitle}
+                                            counter={liveCounter}
+                                            timeLeft={liveTimeLeft}
+                                            total={liveTotal}
+                                            current={liveCurrent}
+                                            doneSteps={liveDoneSteps}
+                                            onStepPress={onLiveStepPress}
+                                            finishLabel={liveFinishLabel}
+                                            onFinish={onLiveFinish}
+
+                                        />
+                                    ),
+                                    () => (
+                                        <InterviewerPresence
+
+                                            persona={interviewerPersona}
+                                            speaking={speaking}
+                                            speakingLabel={speakingLabel}
+                                            ttsSupported={ttsSupported}
+                                            ttsEnabled={ttsEnabled}
+                                            onToggleTts={onToggleTts}
+                                            muteLabel={muteLabel}
+                                            unmuteLabel={unmuteLabel}
+                                            questionMarkdown={questionMarkdown}
+                                            isAsking={isAsking}
+
+                                        />
+                                    ),
+                                    () => (
+                                        <VoiceHero
+
+                                            sttSupported={sttSupported}
+                                            listening={listening}
+                                            interimTranscript={interimTranscript}
+                                            value={answerValue}
+                                            onValueChange={onAnswerValueChange}
+                                            onToggleListen={onToggleListen}
+                                            answerMode={answerMode}
+                                            labels={voiceLabels}
+
+                                        />
+                                    ),
+                                    () => (
+                                        <MockInterviewAnswerAction
+
+                                            isLastQuestion={isLastQuestion}
+                                            onSubmit={onAnswerSubmit}
+                                            isDisabled={isAnswerSubmitDisabled}
+                                            isPending={isAnswerSubmitPending}
+
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]
+                    : []),
+                ...(phase === "result"
+                    ? [
+                        () => (
+                            <StackV
+                                gap={6}
+                                isSkeleton={isResultSkeleton}
+                                items={[
+                                    () => (
+                                        <SubmissionResultHeader
+
+                                            backLabel={resultBackLabel}
+                                            onBack={onResultBack}
+                                            title={resultTitle}
+                                            description={resultDescription}
+                                            isSkeleton={isResultSkeleton}
+
+                                        />
+                                    ),
+                                    () => (
+                                        <MockInterviewScorecard
+
+                                            verdict={verdict}
+                                            overallScore={overallScore}
+                                            phaseOrQuestionScores={phaseOrQuestionScores}
+                                            attributeScores={attributeScores}
+                                            strengths={strengths}
+                                            gaps={gaps}
+                                            followUpQuestion={followUpQuestion}
+                                            weakAreaLabel={weakAreaLabel}
+                                            onStudyWeakArea={onStudyWeakArea}
+                                            onCapstone={onCapstone}
+                                            onRetry={onRetry}
+                                            promptTitle={promptTitle}
+                                            createdAt={createdAt}
+                                            isSkeleton={isResultSkeleton}
+
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]
+                    : []),
+            ]}
+        />
     )
-
-    const liveSection = (
-        <>
-            <WorkSessionHeader
-
-                backLabel={liveBackLabel}
-                onBack={onLiveBack}
-                title={liveTitle}
-                counter={liveCounter}
-                timeLeft={liveTimeLeft}
-                total={liveTotal}
-                current={liveCurrent}
-                doneSteps={liveDoneSteps}
-                onStepPress={onLiveStepPress}
-                finishLabel={liveFinishLabel}
-                onFinish={onLiveFinish}
-
-            />
-            <InterviewerPresence
-
-                persona={interviewerPersona}
-                speaking={speaking}
-                speakingLabel={speakingLabel}
-                ttsSupported={ttsSupported}
-                ttsEnabled={ttsEnabled}
-                onToggleTts={onToggleTts}
-                muteLabel={muteLabel}
-                unmuteLabel={unmuteLabel}
-                questionMarkdown={questionMarkdown}
-                isAsking={isAsking}
-
-            />
-            <VoiceHero
-
-                sttSupported={sttSupported}
-                listening={listening}
-                interimTranscript={interimTranscript}
-                value={answerValue}
-                onValueChange={onAnswerValueChange}
-                onToggleListen={onToggleListen}
-                answerMode={answerMode}
-                labels={voiceLabels}
-
-            />
-            <MockInterviewAnswerAction
-
-                isLastQuestion={isLastQuestion}
-                onSubmit={onAnswerSubmit}
-                isDisabled={isAnswerSubmitDisabled}
-                isPending={isAnswerSubmitPending}
-
-            />
-        </>
-    )
-
-    const resultSection = (
-        <>
-            <SubmissionResultHeader
-
-                backLabel={resultBackLabel}
-                onBack={onResultBack}
-                title={resultTitle}
-                description={resultDescription}
-                isSkeleton={isResultSkeleton}
-
-            />
-            <MockInterviewScorecard
-
-                verdict={verdict}
-                overallScore={overallScore}
-                phaseOrQuestionScores={phaseOrQuestionScores}
-                attributeScores={attributeScores}
-                strengths={strengths}
-                gaps={gaps}
-                followUpQuestion={followUpQuestion}
-                weakAreaLabel={weakAreaLabel}
-                onStudyWeakArea={onStudyWeakArea}
-                onCapstone={onCapstone}
-                onRetry={onRetry}
-                promptTitle={promptTitle}
-                createdAt={createdAt}
-                isSkeleton={isResultSkeleton}
-
-            />
-        </>
-    )
-
-    const interviewPhases = (
-        <>
-            {phase === "setup" ? (
-                <StackV gap={6} isSkeleton={isSkeleton} items={[() => setupSection]} />
-            ) : null}
-
-            {phase === "live" ? (
-                <StackV gap={6} items={[() => liveSection]} />
-            ) : null}
-
-            {phase === "result" ? (
-                <StackV gap={6} isSkeleton={isResultSkeleton} items={[() => resultSection]} />
-            ) : null}
-        </>
-    )
-
-    const interviewBody = <StackV gap={7} items={[() => interviewPhases]} />
 
     return <Container size="md" padding={6} body={() => interviewBody} />
 }

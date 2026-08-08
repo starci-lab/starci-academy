@@ -1,17 +1,21 @@
 "use client"
 
 import React, { useCallback } from "react"
-import { Button, Link, Typography } from "@heroui/react"
 import { GraduationCapIcon, TrashIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Typography } from "@/components/atoms/text/Typography"
+import { IdentityTile } from "@/components/atoms/display/IdentityTile"
 import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import { IconTile } from "@/components/blocks/identity/IconTile"
 import { PriceTagInline } from "@/components/blocks/commerce/PriceTag"
+import { FillAvailable } from "@/components/frames/FillAvailable"
+import { StackH, StackV } from "@/components/frames/Stack"
 import { useCourseDisplayPrice } from "@/hooks/useCourseDisplayPrice"
 import { pathConfig } from "@/resources/path"
 import type { CartItemEntity } from "@/modules/api/graphql/queries/types/my-cart"
 import type { CoursesCheckoutPreviewLine } from "@/modules/api/graphql/queries/types/courses-checkout-preview"
+import type { SkeletonProps } from "@/components/frames/_slot"
 
 /** Props for {@link CartLine}. */
 export interface CartLineProps {
@@ -31,7 +35,7 @@ export interface CartLineProps {
 
 /**
  * One shopping-cart line (a {@link SurfaceListCardItem}): the course cover
- * ({@link IconTile}), its title linking to the course page, the per-course price
+ * ({@link IdentityTile}), its title linking to the course page, the per-course price
  * ({@link PriceTag}) — the real charged vs list price from the checkout preview,
  * falling back to the entity display price while the preview loads — and a trash
  * button to remove it. List-item component: props-only; the parent
@@ -55,38 +59,64 @@ export const CartLine = ({ item, previewLine, onRemove, isMutating }: CartLinePr
         [router, locale, item.course.displayId],
     )
 
+    const TitleColumn = ({ isSkeleton }: SkeletonProps) => (
+        <StackV
+            gap={1}
+            isSkeleton={isSkeleton}
+            principle="name-handle"
+            explain="Title over price at the tight name-handle step — not title-subtitle, because the second line is a price control rather than a descriptive subtitle."
+            items={[
+                () => (
+                    <Typography
+                        size="sm"
+                        weight="medium"
+                        truncate
+                        text={item.course.title}
+                        isLink
+                        onPress={onView}
+                        color="default"
+                        underlineOnHover
+                    />
+                ),
+                () => <PriceTagInline discounted={discounted} original={original} />,
+            ]}
+        />
+    )
+
     return (
         <SurfaceListCardItem identity={{ tier: "block", component: "CartLine" }}>
-            <div className="flex items-center gap-3">
-                <IconTile
-                    size="sm"
-                    tone="accent"
-                    icon={<GraduationCapIcon />}
-                    src={item.course.coverImageUrl}
-                    alt={item.course.title}
-                />
-                <div className="flex min-w-0 flex-1 flex-col gap-1">
-                    <Link onPress={onView} className="min-w-0 text-foreground no-underline hover:underline">
-                        <Typography type="body-sm" weight="medium" truncate title={item.course.title}>
-                            {item.course.title}
-                        </Typography>
-                    </Link>
-                    <PriceTagInline discounted={discounted} original={original} />
-                </div>
-                {/* remove = `danger-soft` (soft red tint), same family as the
-                    repeatable-delete / cart-remove ruling (button.md §4/§4b) — reads
-                    destructive without shouting when repeated down the list. */}
-                <Button
-                    isIconOnly
-                    variant="danger-soft"
-                    aria-label={t("cart.remove")}
-                    isDisabled={isMutating}
-                    onPress={() => onRemove(item.courseId)}
-                    className="shrink-0"
-                >
-                    <TrashIcon className="size-5" />
-                </Button>
-            </div>
+            <StackH
+                gap={3}
+                principle="flex-action"
+                explain="Cover, title column, and remove control share one action row — not identity, because the remove button is an action peer rather than an identity cluster."
+                items={[
+                    () => (
+                        <IdentityTile
+                            size="sm"
+                            tone="accent"
+                            icon={GraduationCapIcon}
+                            src={item.course.coverImageUrl}
+                            alt={item.course.title}
+                        />
+                    ),
+                    () => (
+                        <FillAvailable
+                            at="base"
+                            body={TitleColumn}
+                        />
+                    ),
+                    () => (
+                        <Button
+                            isIconOnly
+                            prefixIcon={TrashIcon}
+                            variant="danger-soft"
+                            ariaLabel={t("cart.remove")}
+                            isDisabled={isMutating}
+                            onPress={() => onRemove(item.courseId)}
+                        />
+                    ),
+                ]}
+            />
         </SurfaceListCardItem>
     )
 }

@@ -137,82 +137,100 @@ const CourseQaPage = ({
         setDraft("")
     }
 
-    const questionSection = (
-        <>
-            <CourseQaEngagementStrip
+    const courseQaBody = (
+        <StackV
+            gap={6}
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <CourseQaHeader
 
-                enrollmentCount={enrollmentCount}
-                totalQuestions={totalQuestions}
-                answeredQuestions={answeredQuestions}
-                isSkeleton={isSkeleton}
+                        breadcrumbItems={breadcrumbItems}
+                        title={title}
+                        description={description}
+                        isSkeleton={isSkeleton}
 
-            />
-            <CourseQaComposer
+                    />
+                ),
+                ...(isInvitationEmpty
+                    ? [
+                        () => (
+                            <CourseQaInvite
 
-                mode="collapsible"
-                currentUser={composerUser}
-                value={draft}
-                onValueChange={setDraft}
-                placeholder="Ask a question about this course…"
-                onSubmit={onAskQuestion}
-                isSkeleton={isSkeleton}
+                                title={INVITE_TITLE}
+                                hint={INVITE_HINT}
+                                ctaLabel={INVITE_CTA}
+                                onGoToContent={onGoToContent}
+                                isSkeleton={isSkeleton}
 
-            />
-            <CourseQaToolbar
+                            />
+                        ),
+                    ]
+                    : [
+                        () => (
+                            <StackV
+                                gap={6}
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <CourseQaEngagementStrip
 
-                filter={filter}
-                onFilterChange={onFilterChange}
-                searchValue={searchValue}
-                onSearchChange={onSearchChange}
-                resultCount={totalQuestions}
-                filterAriaLabel={FILTER_ARIA_LABEL}
-                isSkeleton={isSkeleton}
+                                            enrollmentCount={enrollmentCount}
+                                            totalQuestions={totalQuestions}
+                                            answeredQuestions={answeredQuestions}
+                                            isSkeleton={isSkeleton}
 
-            />
-            <CourseQaQuestionList
+                                        />
+                                    ),
+                                    () => (
+                                        <CourseQaComposer
 
-                questions={questions}
-                isLoading={isSkeleton}
-                page={page}
-                totalPages={totalPages}
-                onPageChange={onPageChange}
-                currentUserId={currentUserId}
-                currentUser={listCurrentUser}
-                onAnswered={onAnswered}
-                pagerAriaLabel={PAGER_ARIA_LABEL}
-                isSkeleton={isSkeleton}
+                                            mode="collapsible"
+                                            currentUser={composerUser}
+                                            value={draft}
+                                            onValueChange={setDraft}
+                                            placeholder="Ask a question about this course…"
+                                            onSubmit={onAskQuestion}
+                                            isSkeleton={isSkeleton}
 
-            />
-        </>
+                                        />
+                                    ),
+                                    () => (
+                                        <CourseQaToolbar
+
+                                            filter={filter}
+                                            onFilterChange={onFilterChange}
+                                            searchValue={searchValue}
+                                            onSearchChange={onSearchChange}
+                                            resultCount={totalQuestions}
+                                            filterAriaLabel={FILTER_ARIA_LABEL}
+                                            isSkeleton={isSkeleton}
+
+                                        />
+                                    ),
+                                    () => (
+                                        <CourseQaQuestionList
+
+                                            questions={questions}
+                                            isLoading={isSkeleton}
+                                            page={page}
+                                            totalPages={totalPages}
+                                            onPageChange={onPageChange}
+                                            currentUserId={currentUserId}
+                                            currentUser={listCurrentUser}
+                                            onAnswered={onAnswered}
+                                            pagerAriaLabel={PAGER_ARIA_LABEL}
+                                            isSkeleton={isSkeleton}
+
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]),
+            ]}
+        />
     )
-
-    const courseQaSections = (
-        <>
-            <CourseQaHeader
-
-                breadcrumbItems={breadcrumbItems}
-                title={title}
-                description={description}
-                isSkeleton={isSkeleton}
-
-            />
-            {isInvitationEmpty ? (
-                <CourseQaInvite
-
-                    title={INVITE_TITLE}
-                    hint={INVITE_HINT}
-                    ctaLabel={INVITE_CTA}
-                    onGoToContent={onGoToContent}
-                    isSkeleton={isSkeleton}
-
-                />
-            ) : (
-                <StackV gap={6} isSkeleton={isSkeleton} items={[() => questionSection]} />
-            )}
-        </>
-    )
-
-    const courseQaBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => courseQaSections]} />
 
     return <Container size="md" padding={6} body={() => courseQaBody} />
 }

@@ -79,43 +79,6 @@ const ConsultantCard = ({
         ]} />
     )
 
-    const consultantInfo = (
-        <>
-            <div>
-                <Image
-                    src={avatarUrl}
-                    alt={fullName}
-                    ratio="square"
-                    radius="lg"
-                    isSkeleton={isSkeleton}
-
-                />
-            </div>
-            {nameRow}
-            {isSkeleton || companyTitle ? (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    truncate
-                    prefixIcon={BuildingsIcon}
-                    isSkeleton={isSkeleton}
-                    text={companyTitle}
-
-                />
-            ) : null}
-            {isSkeleton || description ? (
-                <Typography
-                    size="sm"
-                    color="muted"
-                    lineClamp={2}
-                    isSkeleton={isSkeleton}
-                    text={description}
-
-                />
-            ) : null}
-        </>
-    )
-
     return (
         <div>
             <div>
@@ -123,7 +86,56 @@ const ConsultantCard = ({
                     onPress={() => onOpen(id)}
                     isDisabled={isSkeleton}
 
-                    body={() => <StackV gap={4} isSkeleton={isSkeleton} items={[() => consultantInfo]} />}
+                    body={() => (
+                        <StackV
+                            gap={4}
+                            isSkeleton={isSkeleton}
+                            items={[
+                                () => (
+                                    <div>
+                                        <Image
+                                            src={avatarUrl}
+                                            alt={fullName}
+                                            ratio="square"
+                                            radius="lg"
+                                            isSkeleton={isSkeleton}
+
+                                        />
+                                    </div>
+                                ),
+                                () => nameRow,
+                                ...(isSkeleton || companyTitle
+                                    ? [
+                                        () => (
+                                            <Typography
+                                                size="xs"
+                                                color="muted"
+                                                truncate
+                                                prefixIcon={BuildingsIcon}
+                                                isSkeleton={isSkeleton}
+                                                text={companyTitle}
+
+                                            />
+                                        ),
+                                    ]
+                                    : []),
+                                ...(isSkeleton || description
+                                    ? [
+                                        () => (
+                                            <Typography
+                                                size="sm"
+                                                color="muted"
+                                                lineClamp={2}
+                                                isSkeleton={isSkeleton}
+                                                text={description}
+
+                                            />
+                                        ),
+                                    ]
+                                    : []),
+                            ]}
+                        />
+                    )}
                 />
             </div>
         </div>

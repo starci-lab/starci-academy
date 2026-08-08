@@ -123,59 +123,67 @@ const FlashcardDueHero = ({
     // LEAF 1 (also the isSkeleton mirror) — the due-count cluster + Start CTA.
     const breakdown = buildBreakdown(dueReviewCount, newCount)
 
-    const dueCountLines = (
-        <>
-            <Typography
-                size="h2"
-                weight="bold"
-                tabularNums
-                isSkeleton={isSkeleton}
-
-                text={String(dueCount)}
-            />
-            <Typography
-                size="sm"
-                color="muted"
-                isSkeleton={isSkeleton}
-
-                text="cards due today"
-            />
-            {breakdown ? (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    isSkeleton={isSkeleton}
-
-                    text={breakdown}
-                />
-            ) : null}
-        </>
-    )
-
-    const heroBody = (
-        <>
-            <StackV gap={2} items={[() => dueCountLines]} />
-            <Button
-                variant="primary"
-                label="Start reviewing"
-                suffixIcon={ArrowRightIcon}
-                iconSlide
-                onPress={onStart}
-                isPending={isStarting}
-                isSkeleton={isSkeleton}
-
-
-            />
-        </>
-    )
-
     return (
         <SurfaceCard
             label={SECTION_LABEL}
 
             isSkeleton={isSkeleton}
 
-            body={() => <StackV gap={4} items={[() => heroBody]} />}
+            body={() => (
+                <StackV
+                    gap={4}
+                    items={[
+                        () => (
+                            <StackV
+                                gap={2}
+                                items={[
+                                    () => (
+                                        <Typography
+                                            size="h2"
+                                            weight="bold"
+                                            tabularNums
+                                            isSkeleton={isSkeleton}
+
+                                            text={String(dueCount)}
+                                        />
+                                    ),
+                                    () => (
+                                        <Typography
+                                            size="sm"
+                                            color="muted"
+                                            isSkeleton={isSkeleton}
+
+                                            text="cards due today"
+                                        />
+                                    ),
+                                    ...(breakdown ? [() => (
+                                        <Typography
+                                            size="xs"
+                                            color="muted"
+                                            isSkeleton={isSkeleton}
+
+                                            text={breakdown}
+                                        />
+                                    )] : []),
+                                ]}
+                            />
+                        ),
+                        () => (
+                            <Button
+                                variant="primary"
+                                label="Start reviewing"
+                                suffixIcon={ArrowRightIcon}
+                                iconSlide
+                                onPress={onStart}
+                                isPending={isStarting}
+                                isSkeleton={isSkeleton}
+
+
+                            />
+                        ),
+                    ]}
+                />
+            )}
         />
     )
 }

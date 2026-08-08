@@ -20,40 +20,6 @@ export const CardBody = ({
     isSkeleton = false,
     cta,
 }: ContinueCardDataProps & { cta: React.ReactNode }) => {
-    const titleAndMeta = (
-        <>
-            <Typography weight="medium" truncate isSkeleton={isSkeleton} text={title} />
-            {isSkeleton ? (
-                // `ListMeta` (the scaffold the live branch uses here) has no `isSkeleton`
-                // yet and sits outside this round's boundary — CardBody calls that scaffold
-                // DIRECTLY so it builds ONE shimmer bar in place of the meta/subtitle row
-                // (the real shape always has EXACTLY ONE of the two) using atom `Typography`.
-                <Typography size="xs" color="muted" isSkeleton />
-            ) : meta?.length || timeLeft ? (
-                <ListMeta
-                    items={meta ?? []}
-
-                    chip={
-                        timeLeft ? (
-                            // Same kind of information (time left) ⇒ the same element in
-                            // EVERY case; only the TONE escalates: `default` while time
-                            // remains, `warning` when it's about to run out.
-                            () => (
-                                <Chip
-                                    tone={urgent ? "warning" : "default"}
-
-                                    text={timeLeft}
-                                />
-                            )
-                        ) : undefined
-                    }
-                />
-            ) : subtitle ? (
-                <Typography size="xs" color="muted" truncate text={subtitle} />
-            ) : null}
-        </>
-    )
-
     return (
         <>
             {/* The outer row = ONE horizontal track ⇒ `StackH` (children are ARBITRARY, not a
@@ -68,7 +34,46 @@ export const CardBody = ({
                     align="center"
                     isSkeleton={isSkeleton}
                     items={[
-                        ({ isSkeleton }: SkeletonProps) => <StackV gap={3} classNames={["min-w-0", "flex-1"]} isSkeleton={isSkeleton} items={[() => titleAndMeta]} />,
+                        ({ isSkeleton }: SkeletonProps) => (
+                            <StackV
+                                gap={3}
+                                classNames={["min-w-0", "flex-1"]}
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <Typography weight="medium" truncate isSkeleton={isSkeleton} text={title} />
+                                    ),
+                                    ...(isSkeleton ? [() => (
+                                        // `ListMeta` (the scaffold the live branch uses here) has no `isSkeleton`
+                                        // yet and sits outside this round's boundary — CardBody calls that scaffold
+                                        // DIRECTLY so it builds ONE shimmer bar in place of the meta/subtitle row
+                                        // (the real shape always has EXACTLY ONE of the two) using atom `Typography`.
+                                        <Typography size="xs" color="muted" isSkeleton />
+                                    )] : meta?.length || timeLeft ? [() => (
+                                        <ListMeta
+                                            items={meta ?? []}
+
+                                            chip={
+                                                timeLeft ? (
+                                                    // Same kind of information (time left) ⇒ the same element in
+                                                    // EVERY case; only the TONE escalates: `default` while time
+                                                    // remains, `warning` when it's about to run out.
+                                                    () => (
+                                                        <Chip
+                                                            tone={urgent ? "warning" : "default"}
+
+                                                            text={timeLeft}
+                                                        />
+                                                    )
+                                                ) : undefined
+                                            }
+                                        />
+                                    )] : subtitle ? [() => (
+                                        <Typography size="xs" color="muted" truncate text={subtitle} />
+                                    )] : []),
+                                ]}
+                            />
+                        ),
                     ]}
                 />
             </div>

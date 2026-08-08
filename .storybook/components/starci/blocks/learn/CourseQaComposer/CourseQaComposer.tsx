@@ -154,50 +154,6 @@ const CourseQaComposer = ({
     }
 
     // ── LEAF — ExpandedForm: avatar + textarea + action row ───────────────────
-    const actionRow = (
-        <>
-            {showCancel ? (
-                <Button
-                    label="Cancel"
-                    variant="tertiary"
-                    size="sm"
-                    onPress={onCancel}
-                    isDisabled={isPending}
-                    isSkeleton={isSkeleton}
-
-                />
-            ) : null}
-            <Button
-                label={submitLabel}
-                variant="primary"
-                size="sm"
-                onPress={onSubmit}
-                isDisabled={!canSubmit}
-                isPending={isPending}
-                isSkeleton={isSkeleton}
-
-            />
-        </>
-    )
-
-    const form = (
-        <>
-            <InputTextarea
-                value={value}
-                onValueChange={onValueChange}
-                placeholder={placeholder}
-                ariaLabel={placeholder ?? "Content"}
-                rows={3}
-                isDisabled={isPending}
-                isSkeleton={isSkeleton}
-
-            />
-            <StackH gap={3} principle="flex-action"
-                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
-                justify="end" isSkeleton={isSkeleton} items={[() => actionRow]}  />
-        </>
-    )
-
     return (
         <div>
             <StackH
@@ -205,7 +161,61 @@ const CourseQaComposer = ({
                 isSkeleton={isSkeleton}
                 items={[
                     () => avatar,
-                    ({ isSkeleton }: SkeletonProps) => <StackV gap={3} isSkeleton={isSkeleton} classNames={["min-w-0", "flex-1"]} items={[() => form]} />,
+                    ({ isSkeleton }: SkeletonProps) => (
+                        <StackV
+                            gap={3}
+                            isSkeleton={isSkeleton}
+                            classNames={["min-w-0", "flex-1"]}
+                            items={[
+                                () => (
+                                    <InputTextarea
+                                        value={value}
+                                        onValueChange={onValueChange}
+                                        placeholder={placeholder}
+                                        ariaLabel={placeholder ?? "Content"}
+                                        rows={3}
+                                        isDisabled={isPending}
+                                        isSkeleton={isSkeleton}
+
+                                    />
+                                ),
+                                () => (
+                                    <StackH
+                                        gap={3}
+                                        principle="flex-action"
+                                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                        justify="end"
+                                        isSkeleton={isSkeleton}
+                                        items={[
+                                            ...(showCancel ? [() => (
+                                                <Button
+                                                    label="Cancel"
+                                                    variant="tertiary"
+                                                    size="sm"
+                                                    onPress={onCancel}
+                                                    isDisabled={isPending}
+                                                    isSkeleton={isSkeleton}
+
+                                                />
+                                            )] : []),
+                                            () => (
+                                                <Button
+                                                    label={submitLabel}
+                                                    variant="primary"
+                                                    size="sm"
+                                                    onPress={onSubmit}
+                                                    isDisabled={!canSubmit}
+                                                    isPending={isPending}
+                                                    isSkeleton={isSkeleton}
+
+                                                />
+                                            ),
+                                        ]}
+                                    />
+                                ),
+                            ]}
+                        />
+                    ),
                 ]}
             />
         </div>

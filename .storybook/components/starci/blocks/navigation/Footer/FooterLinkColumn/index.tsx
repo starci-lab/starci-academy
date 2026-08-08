@@ -27,12 +27,14 @@ export const FooterLinkColumn = ({ title, links }: FooterLinkColumnProps) => {
         </HeroUILink>
     ))
 
-    const column = (
-        <>
-            <Typography size="sm" weight="bold" text={title} />
-            <StackV gap={2} items={[() => rows]} />
-        </>
+    return (
+        <StackV
+            identity={{ tier: "block", component: "FooterLinkColumn" }}
+            gap={4}
+            items={[
+                () => <Typography size="sm" weight="bold" text={title} />,
+                () => <StackV gap={2} items={[() => rows]} />,
+            ]}
+        />
     )
-
-    return <StackV identity={{ tier: "block", component: "FooterLinkColumn" }} gap={4} items={[() => column]} />
 }

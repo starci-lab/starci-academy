@@ -3,7 +3,7 @@ import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `FillAvailable` — remaining column height from a named container step upward.
+ * `FillAvailable` — parent-owned flex participation (`base` width fill / `lg` height fill).
  */
 
 const meta: Meta<typeof FillAvailable> = {
@@ -17,14 +17,21 @@ export default meta
 
 type Story = StoryObj<typeof FillAvailable>
 
-/** Demo body for the flex-fill switch. */
+/** Demo body for the `lg` flex-fill switch. */
 const RailBody = () => (
     <div data-tier="fixture" className="h-full overflow-y-auto rounded-xl border border-default bg-surface p-3 text-sm">
         Rail body (fills remaining height from `lg` up)
     </div>
 )
 
-/** LEAF prop `at` — `min-h-0` always, `flex-1` from `@app-lg` up. */
+/** Demo body for the `base` flex-fill-base switch. */
+const RowBody = () => (
+    <div data-tier="fixture" className="truncate rounded-xl border border-default bg-surface px-3 py-2 text-sm">
+        Truncating title column that claims remaining row width
+    </div>
+)
+
+/** LEAF prop `at` — `base` → `min-w-0 flex-1`; `lg` → `min-h-0 @app-lg:flex-1`. */
 export const At: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -33,8 +40,26 @@ export const At: Story = {
                 tier="frame"
                 leaf="Prop `at`"
                 parts={[]}
-                reason="FRAME-10: name the container step as a prop, never bury `min-h-0 @app-lg:flex-1` on a rail child. LearnShellLayout and Architecture/Practice rails share this exact fill."
+                reason="FRAME-10: name the container step as a prop. `base` owns parent flex width participation; `lg` owns rail column height fill. Each mode emits one principle."
                 states={[
+                    {
+                        name: "at = 'base' · flex row seam",
+                        why: "Parent is a horizontal flex row; FillAvailable claims remaining width so the title can truncate without overflowing.",
+                        code: `<div className="flex items-center gap-3">
+  <div className="shrink-0">Tile</div>
+  <FillAvailable at="base" body={RowBody} />
+  <div className="shrink-0">Action</div>
+</div>`,
+                        render: (
+                            <div data-tier="fixture" className="flex w-full max-w-md items-center gap-3">
+                                <div data-tier="fixture" className="size-12 shrink-0 rounded-xl bg-accent-soft" />
+                                <FillAvailable at="base" body={RowBody} />
+                                <div data-tier="fixture" className="shrink-0 rounded-lg border border-default px-2 py-1 text-xs">
+                                    Action
+                                </div>
+                            </div>
+                        ),
+                    },
                     {
                         name: "at = 'lg' · flex column shell",
                         why: "Parent is a tall flex column; FillAvailable claims remaining height so the body can scroll.",

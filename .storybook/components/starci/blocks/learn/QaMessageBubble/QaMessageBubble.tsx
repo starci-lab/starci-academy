@@ -34,35 +34,38 @@ const QaMessageBubble = ({
     isSkeleton = false,
 }: QaMessageBubbleProps) => {
     if (isSkeleton) {
-        const skeletonBody = (
-            <>
-                <StackH
+        return (
+            <div className="max-w-[92%]">
+                <StackV
                     gap={2}
-                    principle="separator-dot"
-                    explain="Places a middle-dot separator between short meta peers so the items read as one inline list."
-                    align="center"
+                    isSkeleton={isSkeleton}
                     items={[
                         () => (
                             <StackH
                                 gap={2}
-                                principle="icon-text"
-                                explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                                principle="separator-dot"
+                                explain="Places a middle-dot separator between short meta peers so the items read as one inline list."
                                 align="center"
                                 items={[
-                                    () => <Avatar isSkeleton size="sm" />,
-                                    () => <HeroSkeleton className="h-3 w-16 rounded" />,
+                                    () => (
+                                        <StackH
+                                            gap={2}
+                                            principle="icon-text"
+                                            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                                            align="center"
+                                            items={[
+                                                () => <Avatar isSkeleton size="sm" />,
+                                                () => <HeroSkeleton className="h-3 w-16 rounded" />,
+                                            ]}
+                                        />
+                                    ),
+                                    () => <HeroSkeleton className="h-3 w-10 rounded" />,
                                 ]}
                             />
                         ),
-                        () => <HeroSkeleton className="h-3 w-10 rounded" />,
+                        () => <HeroSkeleton className="h-16 w-full rounded-2xl" />,
                     ]}
                 />
-                <HeroSkeleton className="h-16 w-full rounded-2xl" />
-            </>
-        )
-        return (
-            <div className="max-w-[92%]">
-                <StackV gap={2} isSkeleton={isSkeleton} items={[() => skeletonBody]} />
             </div>
         )
     }
@@ -71,27 +74,27 @@ const QaMessageBubble = ({
     // across the destructure, it never actually fires.
     const realAnswer = answer!
 
-    const replyRows = (realAnswer.replies ?? []).map((reply: QaMessageBubbleAnswer) => (
-        <div key={reply.id} className="pl-8">
-            <MessageRow answer={reply} currentUserId={currentUserId} interactive={null} />
-        </div>
-    ))
-
-    const threadBody = (
-        <>
-            <MessageRow
-                answer={realAnswer}
-                currentUserId={currentUserId}
-
-                interactive={{ canAccept, onAcceptAnswer, onReact }}
-            />
-            {replyRows}
-        </>
-    )
-
     return (
         <div>
-            <StackV gap={2} isSkeleton={isSkeleton} items={[() => threadBody]} />
+            <StackV
+                gap={2}
+                isSkeleton={isSkeleton}
+                items={[
+                    () => (
+                        <MessageRow
+                            answer={realAnswer}
+                            currentUserId={currentUserId}
+
+                            interactive={{ canAccept, onAcceptAnswer, onReact }}
+                        />
+                    ),
+                    ...(realAnswer.replies ?? []).map((reply: QaMessageBubbleAnswer) => () => (
+                        <div key={reply.id} className="pl-8">
+                            <MessageRow answer={reply} currentUserId={currentUserId} interactive={null} />
+                        </div>
+                    )),
+                ]}
+            />
         </div>
     )
 }

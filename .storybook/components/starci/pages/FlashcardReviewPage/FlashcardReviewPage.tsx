@@ -222,117 +222,140 @@ const FlashcardReviewPage = ({
     onCardNext,
     isSessionSkeleton = false,
 }: FlashcardReviewPageProps) => {
-    const overviewDeck = (
-        <>
-            <FlashcardDueHero
+    const reviewBody = (
+        <StackV
+            gap={7}
+            isSkeleton={isSkeleton}
+            items={[
+                ...(phase === "overview"
+                    ? [
+                        () => (
+                            <StackV
+                                gap={6}
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <FlashcardModeSwitch
 
-                dueCount={dueCount}
-                dueReviewCount={dueReviewCount}
-                newCount={dueNewCount}
-                resume={dueResume}
-                onStart={onDueStart}
-                isStarting={isDueStarting}
-                isSkeleton={isSkeleton}
+                                            mode={flashcardMode}
+                                            onModeChange={onFlashcardModeChange}
+                                            ariaLabel={flashcardModeAriaLabel}
 
-            />
-            <FlashcardMasteryStrip
+                                        />
+                                    ),
+                                    () => (
+                                        <StackV
+                                            gap={4}
+                                            isSkeleton={isSkeleton}
+                                            items={[
+                                                () => (
+                                                    <FlashcardDueHero
 
-                mastered={masteryMastered}
-                total={masteryTotal}
-                learning={masteryLearning}
-                newCount={masteryNewCount}
-                streak={masteryStreak}
-                retention={masteryRetention}
-                totalReviewed={masteryTotalReviewed}
-                isSkeleton={isSkeleton}
+                                                        dueCount={dueCount}
+                                                        dueReviewCount={dueReviewCount}
+                                                        newCount={dueNewCount}
+                                                        resume={dueResume}
+                                                        onStart={onDueStart}
+                                                        isStarting={isDueStarting}
+                                                        isSkeleton={isSkeleton}
 
-            />
-            <FlashcardDeckList
+                                                    />
+                                                ),
+                                                () => (
+                                                    <FlashcardMasteryStrip
 
-                decks={decks}
-                query={deckQuery}
-                onQueryChange={onDeckQueryChange}
-                view={deckView}
-                onViewChange={onDeckViewChange}
-                page={deckPage}
-                totalPages={deckTotalPages}
-                onPageChange={onDeckPageChange}
-                onSelectDeck={onSelectDeck}
-                ctaLabel={deckCtaLabel}
-                showProgress={showDeckProgress}
-                isSkeleton={isSkeleton}
+                                                        mastered={masteryMastered}
+                                                        total={masteryTotal}
+                                                        learning={masteryLearning}
+                                                        newCount={masteryNewCount}
+                                                        streak={masteryStreak}
+                                                        retention={masteryRetention}
+                                                        totalReviewed={masteryTotalReviewed}
+                                                        isSkeleton={isSkeleton}
 
-            />
-        </>
+                                                    />
+                                                ),
+                                                () => (
+                                                    <FlashcardDeckList
+
+                                                        decks={decks}
+                                                        query={deckQuery}
+                                                        onQueryChange={onDeckQueryChange}
+                                                        view={deckView}
+                                                        onViewChange={onDeckViewChange}
+                                                        page={deckPage}
+                                                        totalPages={deckTotalPages}
+                                                        onPageChange={onDeckPageChange}
+                                                        onSelectDeck={onSelectDeck}
+                                                        ctaLabel={deckCtaLabel}
+                                                        showProgress={showDeckProgress}
+                                                        isSkeleton={isSkeleton}
+
+                                                    />
+                                                ),
+                                            ]}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]
+                    : []),
+                ...(phase === "session"
+                    ? [
+                        () => (
+                            <StackV
+                                gap={6}
+                                isSkeleton={isSessionSkeleton}
+                                items={[
+                                    () => (
+                                        <WorkSessionHeader
+
+                                            backLabel={sessionBackLabel}
+                                            onBack={onSessionBack}
+                                            title={sessionTitle}
+                                            counter={sessionCounter}
+                                            timeLeft={sessionTimeLeft}
+                                            total={sessionTotal}
+                                            current={sessionCurrent}
+                                            doneSteps={sessionDoneSteps}
+                                            onStepPress={onSessionStepPress}
+                                            finishLabel={sessionFinishLabel}
+                                            onFinish={onSessionFinish}
+
+                                        />
+                                    ),
+                                    () => (
+                                        <FlashcardStudyCard
+
+                                            question={cardQuestion}
+                                            levelLabel={cardLevelLabel}
+                                            tags={cardTags}
+                                            revealed={cardRevealed}
+                                            onReveal={onCardReveal}
+                                            answer={cardAnswer}
+                                            explanation={cardExplanation}
+                                            isLocked={cardIsLocked}
+                                            onUnlock={onCardUnlock}
+                                            ratingOptions={cardRatingOptions}
+                                            onRate={onCardRate}
+                                            isRatingPending={isCardRatingPending}
+                                            isFirst={isCardFirst}
+                                            isLast={isCardLast}
+                                            onPrev={onCardPrev}
+                                            onNext={onCardNext}
+                                            isSkeleton={isSessionSkeleton}
+
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]
+                    : []),
+            ]}
+        />
     )
-
-    const overviewSection = (
-        <>
-            <FlashcardModeSwitch
-
-                mode={flashcardMode}
-                onModeChange={onFlashcardModeChange}
-                ariaLabel={flashcardModeAriaLabel}
-
-            />
-            <StackV gap={4} isSkeleton={isSkeleton} items={[() => overviewDeck]} />
-        </>
-    )
-
-    const sessionSection = (
-        <>
-            <WorkSessionHeader
-
-                backLabel={sessionBackLabel}
-                onBack={onSessionBack}
-                title={sessionTitle}
-                counter={sessionCounter}
-                timeLeft={sessionTimeLeft}
-                total={sessionTotal}
-                current={sessionCurrent}
-                doneSteps={sessionDoneSteps}
-                onStepPress={onSessionStepPress}
-                finishLabel={sessionFinishLabel}
-                onFinish={onSessionFinish}
-
-            />
-            <FlashcardStudyCard
-
-                question={cardQuestion}
-                levelLabel={cardLevelLabel}
-                tags={cardTags}
-                revealed={cardRevealed}
-                onReveal={onCardReveal}
-                answer={cardAnswer}
-                explanation={cardExplanation}
-                isLocked={cardIsLocked}
-                onUnlock={onCardUnlock}
-                ratingOptions={cardRatingOptions}
-                onRate={onCardRate}
-                isRatingPending={isCardRatingPending}
-                isFirst={isCardFirst}
-                isLast={isCardLast}
-                onPrev={onCardPrev}
-                onNext={onCardNext}
-                isSkeleton={isSessionSkeleton}
-
-            />
-        </>
-    )
-
-    const reviewPhases = (
-        <>
-            {phase === "overview" ? (
-                <StackV gap={6} isSkeleton={isSkeleton} items={[() => overviewSection]} />
-            ) : null}
-
-            {phase === "session" ? (
-                <StackV gap={6} isSkeleton={isSessionSkeleton} items={[() => sessionSection]} />
-            ) : null}
-        </>
-    )
-
-    const reviewBody = <StackV gap={7} isSkeleton={isSkeleton} items={[() => reviewPhases]} />
 
     return <Container size="md" padding={6} body={() => reviewBody} />
 }

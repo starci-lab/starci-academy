@@ -139,62 +139,76 @@ const FlashcardDeckList = ({
         if (deck.dueCount) {
             chips.push(() => <Chip tone="warning" text={`${deck.dueCount} due`} />)
         }
-        const titleAndDescription = (
-            <>
-                <Typography size="sm" weight="medium" truncate text={deck.title} />
-                {deck.description ? (
-                    <Typography size="xs" color="muted" lineClamp={2} text={deck.description} />
-                ) : null}
-            </>
-        )
-
-        const progressRow = (
-            <>
-                <div className="flex-1">
-                    <ProgressGauge
-                        value={((deck.masteredCount ?? 0) / deck.totalCount) * 100}
-                        size="sm"
-                        ariaLabel={`Mastery level for the ${deck.title} deck`}
-
-                    />
-                </div>
-                <Typography
-                    size="xs"
-                    color="muted"
-                    text={`${deck.masteredCount ?? 0}/${deck.totalCount}`}
-
-                />
-            </>
-        )
-
-        const ctaRow = (
-            <>
-                <Typography
-                    size="sm"
-                    weight="medium"
-                    color="accent-soft"
-                    text={ctaLabel ?? DEFAULT_CTA_LABEL}
-
-                />
-                <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4 shrink-0 text-accent-soft-foreground" />
-            </>
-        )
-
-        const tileBody = (
-            <>
-                <StackV gap={1} isSkeleton={isSkeleton} items={[() => titleAndDescription]} />
-                <Cluster gap={3} items={chips} />
-                {showProgress && deck.totalCount > 0 ? (
-                    <StackH gap={2} isSkeleton={isSkeleton} items={[() => progressRow]} />
-                ) : null}
-                <StackH gap={2} principle="icon-text"
-                    explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
-                    justify="end" isSkeleton={isSkeleton} items={[() => ctaRow]}  />
-            </>
-        )
 
         return (
-            <StackV gap={3} isSkeleton={isSkeleton} items={[() => tileBody]} />
+            <StackV
+                gap={3}
+                isSkeleton={isSkeleton}
+                items={[
+                    () => (
+                        <StackV
+                            gap={1}
+                            isSkeleton={isSkeleton}
+                            items={[
+                                () => <Typography size="sm" weight="medium" truncate text={deck.title} />,
+                                ...(deck.description ? [() => (
+                                    <Typography size="xs" color="muted" lineClamp={2} text={deck.description} />
+                                )] : []),
+                            ]}
+                        />
+                    ),
+                    () => <Cluster gap={3} items={chips} />,
+                    ...(showProgress && deck.totalCount > 0 ? [() => (
+                        <StackH
+                            gap={2}
+                            isSkeleton={isSkeleton}
+                            items={[
+                                () => (
+                                    <div className="flex-1">
+                                        <ProgressGauge
+                                            value={((deck.masteredCount ?? 0) / deck.totalCount) * 100}
+                                            size="sm"
+                                            ariaLabel={`Mastery level for the ${deck.title} deck`}
+
+                                        />
+                                    </div>
+                                ),
+                                () => (
+                                    <Typography
+                                        size="xs"
+                                        color="muted"
+                                        text={`${deck.masteredCount ?? 0}/${deck.totalCount}`}
+
+                                    />
+                                ),
+                            ]}
+                        />
+                    )] : []),
+                    () => (
+                        <StackH
+                            gap={2}
+                            principle="icon-text"
+                            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                            justify="end"
+                            isSkeleton={isSkeleton}
+                            items={[
+                                () => (
+                                    <Typography
+                                        size="sm"
+                                        weight="medium"
+                                        color="accent-soft"
+                                        text={ctaLabel ?? DEFAULT_CTA_LABEL}
+
+                                    />
+                                ),
+                                () => (
+                                    <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4 shrink-0 text-accent-soft-foreground" />
+                                ),
+                            ]}
+                        />
+                    ),
+                ]}
+            />
         )
     }
 
@@ -260,45 +274,52 @@ const FlashcardDeckList = ({
         <SurfaceCardList isSkeleton={isSkeleton} items={rows} />
     )
 
-    const searchAndView = (
-        <>
-            <div className="min-w-0 flex-1">
-                <InputSearch
-                    value={query}
-                    onValueChange={onQueryChange}
-                    placeholder="Search decks"
-                    ariaLabel="Search decks"
-
-                />
-            </div>
-            <div>
-                <Tabs
-                    items={VIEW_ITEMS}
-                    selectedKey={view}
-                    onSelectionChange={(key) => onViewChange(key as FlashcardDeckListView)}
-                    ariaLabel="Display style"
-
-                />
-            </div>
-        </>
-    )
-
-    const listBody = (
-        <>
-            <StackH gap={3} principle="flex-action"
-                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
-                at="sm" isSkeleton={isSkeleton} items={[() => searchAndView]}  />
-            {track}
-            {!isSkeleton && decks.length > 0 ? (
-                <div>
-                    <Pagination currentPage={page} totalPages={totalPages} onPageChange={onPageChange} />
-                </div>
-            ) : null}
-        </>
-    )
-
     return (
-        <StackV gap={4} isSkeleton={isSkeleton} items={[() => listBody]} />
+        <StackV
+            gap={4}
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <StackH
+                        gap={3}
+                        principle="flex-action"
+                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                        at="sm"
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <div className="min-w-0 flex-1">
+                                    <InputSearch
+                                        value={query}
+                                        onValueChange={onQueryChange}
+                                        placeholder="Search decks"
+                                        ariaLabel="Search decks"
+
+                                    />
+                                </div>
+                            ),
+                            () => (
+                                <div>
+                                    <Tabs
+                                        items={VIEW_ITEMS}
+                                        selectedKey={view}
+                                        onSelectionChange={(key) => onViewChange(key as FlashcardDeckListView)}
+                                        ariaLabel="Display style"
+
+                                    />
+                                </div>
+                            ),
+                        ]}
+                    />
+                ),
+                () => track,
+                ...(!isSkeleton && decks.length > 0 ? [() => (
+                    <div>
+                        <Pagination currentPage={page} totalPages={totalPages} onPageChange={onPageChange} />
+                    </div>
+                )] : []),
+            ]}
+        />
     )
 }
 

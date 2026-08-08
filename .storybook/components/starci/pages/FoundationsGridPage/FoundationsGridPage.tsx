@@ -78,52 +78,64 @@ const FoundationsGridPage = ({
     pagination,
     isSkeleton = false,
 }: FoundationsGridPageProps) => {
-    const categoriesSection = (
-        <>
-            <FoundationCategorySearchBar
+    const gridBody = (
+        <StackV
+            gap={6}
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <FoundationCategoryHeader
 
-                query={searchQuery}
-                onQueryChange={onSearchQueryChange}
-                suggestions={suggestions}
-                onSelectSuggestion={onSelectSuggestion}
-                count={categoryCount}
-                isSkeleton={isSkeleton}
+                        breadcrumbItems={breadcrumbItems}
+                        title={title}
+                        description={description}
+                        isSkeleton={isSkeleton}
 
-            />
-            <FoundationCategoryList
+                    />
+                ),
+                () => (
+                    <TrialEnrollBanner
 
-                categories={categories}
-                searchQuery={searchQuery}
-                onSelectCategory={onSelectCategory}
-                pagination={pagination}
-                isSkeleton={isSkeleton}
+                        isVisible={isTrialBannerVisible}
+                        onEnroll={onEnrollTrial}
+                        isSkeleton={isSkeleton}
 
-            />
-        </>
+                    />
+                ),
+                () => (
+                    <StackV
+                        gap={6}
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <FoundationCategorySearchBar
+
+                                    query={searchQuery}
+                                    onQueryChange={onSearchQueryChange}
+                                    suggestions={suggestions}
+                                    onSelectSuggestion={onSelectSuggestion}
+                                    count={categoryCount}
+                                    isSkeleton={isSkeleton}
+
+                                />
+                            ),
+                            () => (
+                                <FoundationCategoryList
+
+                                    categories={categories}
+                                    searchQuery={searchQuery}
+                                    onSelectCategory={onSelectCategory}
+                                    pagination={pagination}
+                                    isSkeleton={isSkeleton}
+
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
-
-    const gridSections = (
-        <>
-            <FoundationCategoryHeader
-
-                breadcrumbItems={breadcrumbItems}
-                title={title}
-                description={description}
-                isSkeleton={isSkeleton}
-
-            />
-            <TrialEnrollBanner
-
-                isVisible={isTrialBannerVisible}
-                onEnroll={onEnrollTrial}
-                isSkeleton={isSkeleton}
-
-            />
-            <StackV gap={6} isSkeleton={isSkeleton} items={[() => categoriesSection]} />
-        </>
-    )
-
-    const gridBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => gridSections]} />
 
     return <Container size="md" padding={6} body={() => gridBody} />
 }

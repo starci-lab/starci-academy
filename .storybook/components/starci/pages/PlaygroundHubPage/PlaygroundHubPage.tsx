@@ -44,34 +44,38 @@ const PlaygroundHubPage = ({
     onSelectExercise,
     exerciseGridAriaLabel,
     isSkeleton = false,
-}: PlaygroundHubPageProps) => {
-    const hubSection = (
-        <>
-            <PlaygroundHubHeader
-
-                title={title}
-                description={description}
+}: PlaygroundHubPageProps) => (
+    <Container
+        size="md"
+        padding={6}
+        body={() => (
+            <StackV
+                gap={6}
                 isSkeleton={isSkeleton}
+                items={[
+                    () => (
+                        <PlaygroundHubHeader
 
+                            title={title}
+                            description={description}
+                            isSkeleton={isSkeleton}
+
+                        />
+                    ),
+                    () => (
+                        <PlaygroundExerciseGrid
+
+                            exercises={exercises}
+                            onSelect={onSelectExercise}
+                            ariaLabel={exerciseGridAriaLabel}
+                            isSkeleton={isSkeleton}
+
+                        />
+                    ),
+                ]}
             />
-            <PlaygroundExerciseGrid
-
-                exercises={exercises}
-                onSelect={onSelectExercise}
-                ariaLabel={exerciseGridAriaLabel}
-                isSkeleton={isSkeleton}
-
-            />
-        </>
-    )
-
-    return (
-        <Container
-            size="md"
-            padding={6}
-            body={() => <StackV gap={6} isSkeleton={isSkeleton} items={[() => hubSection]} />}
-        />
-    )
-}
+        )}
+    />
+)
 
 export { PlaygroundHubPage }

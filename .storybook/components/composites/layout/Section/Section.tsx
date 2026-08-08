@@ -93,23 +93,6 @@ const Header = ({
     const eyebrowSize = EYEBROW_SIZE[level]
     // eyebrow <-> title <-> description are ONE text unit -> tight gap={2} (§10b
     // "inside a lower-tier component"), not the grouped gap={4} used BETWEEN regions.
-    const titleBlock = (
-        <>
-            {eyebrow != null ? (
-                <span className="min-w-0">
-                    <Typography size={eyebrowSize} text={eyebrow} color="muted" truncate isSkeleton={isSkeleton} />
-                </span>
-            ) : null}
-            <span className="min-w-0">
-                <Typography size={titleSize} text={title} weight={TITLE_WEIGHT[level]} isSkeleton={isSkeleton} />
-            </span>
-            {description != null ? (
-                <span className="min-w-0">
-                    <Typography size={descriptionSize} text={description} color="muted" isSkeleton={isSkeleton} />
-                </span>
-            ) : null}
-        </>
-    )
     return (
         // align="start": a 2-line title block keeps the action anchored at the top.
         <StackH
@@ -118,7 +101,32 @@ const Header = ({
             gap={4}
             isSkeleton={isSkeleton}
             items={[
-                () => <StackV gap={2} principle="title-subtitle" classNames={["min-w-0"]} isSkeleton={isSkeleton} items={[() => titleBlock]} />,
+                () => (
+                    <StackV
+                        gap={2}
+                        principle="title-subtitle"
+                        explain="Eyebrow/title/description stack — not label-field, because none of these lines labels a form control."
+                        classNames={["min-w-0"]}
+                        isSkeleton={isSkeleton}
+                        items={[
+                            ...(eyebrow != null ? [() => (
+                                <span className="min-w-0">
+                                    <Typography size={eyebrowSize} text={eyebrow} color="muted" truncate isSkeleton={isSkeleton} />
+                                </span>
+                            )] : []),
+                            () => (
+                                <span className="min-w-0">
+                                    <Typography size={titleSize} text={title} weight={TITLE_WEIGHT[level]} isSkeleton={isSkeleton} />
+                                </span>
+                            ),
+                            ...(description != null ? [() => (
+                                <span className="min-w-0">
+                                    <Typography size={descriptionSize} text={description} color="muted" isSkeleton={isSkeleton} />
+                                </span>
+                            )] : []),
+                        ]}
+                    />
+                ),
                 ...(Action != null ? [() => (
                     <div className="shrink-0"><Action isSkeleton={isSkeleton} /></div>
                 )] : []),

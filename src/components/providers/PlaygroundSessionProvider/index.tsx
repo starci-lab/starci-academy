@@ -7,7 +7,7 @@ import { CircuitryIcon, CpuIcon, RobotIcon, StackIcon } from "@phosphor-icons/re
 import { SiDocker, SiKubernetes } from "react-icons/si"
 // Brand marks for the RAG rows. `@lobehub/icons` is the dedicated AI-model icon
 // set (Ollama, Qwen, …); the default export of each is its MONOCHROME glyph, so
-// it inherits `currentColor` from the IconTile tone exactly like `SiDocker` —
+// it inherits `currentColor` from the IdentityTile tone exactly like `SiDocker` —
 // NOT the colour variant, which would fight the tile's neutral/success state.
 // (No Nomic mark exists in the set, so the embedding row keeps a Phosphor glyph.)
 import { Ollama, Qwen } from "@lobehub/icons"
@@ -151,7 +151,7 @@ export const PlaygroundSessionProvider = ({ children }: PlaygroundSessionProvide
     // Brand mark from `react-icons` (monochrome glyph, inherits currentColor) rather
     // than a coloured `<img>` SVG — inside IconTile the tile owns the tone, so a
     // full-colour raster mark fought the tile's neutral/success state.
-    const engineBrandIcon = isRag ? null : isK8s ? <SiKubernetes aria-hidden /> : <SiDocker aria-hidden />
+    const engineBrandIcon = isRag ? null : isK8s ? SiKubernetes : SiDocker
 
     /** Adopt a session (resumed or freshly created) into local state + the socket room. */
     const adoptSession = useCallback((session: {
@@ -264,7 +264,7 @@ export const PlaygroundSessionProvider = ({ children }: PlaygroundSessionProvide
     // reported a version).
     const engineRow: ReadinessChecklistItem = {
         id: "engine",
-        icon: engineBrandIcon ?? <CircuitryIcon aria-hidden focusable="false" />,
+        icon: engineBrandIcon ?? CircuitryIcon,
         // name the actual engine before the probe answers ("Docker"), not a generic
         // "tool on the machine" — the row is asking "is Docker installed yet".
         label: byomState.envReport?.label ?? engineName,
@@ -279,7 +279,7 @@ export const PlaygroundSessionProvider = ({ children }: PlaygroundSessionProvide
     }
     const agentRow: ReadinessChecklistItem = {
         id: "agent",
-        icon: <RobotIcon aria-hidden focusable="false" />,
+        icon: RobotIcon,
         label: t("playground.ragSession.readyAgent"),
         readyDescription: t("playground.ragSession.readyAgentReady"),
         pendingDescription: t("playground.ragSession.readyAgentPending"),
@@ -302,7 +302,7 @@ export const PlaygroundSessionProvider = ({ children }: PlaygroundSessionProvide
 
     const ragOllamaRow: ReadinessChecklistItem = {
         id: "engine",
-        icon: <Ollama aria-hidden focusable="false" />,
+        icon: Ollama,
         label: t("playground.ragSession.readyServing"),
         readyDescription: t("playground.ragSession.readyServingReady"),
         pendingDescription: t("playground.ragSession.readyServingPending"),
@@ -310,7 +310,7 @@ export const PlaygroundSessionProvider = ({ children }: PlaygroundSessionProvide
     }
     const ragEmbedRow: ReadinessChecklistItem = {
         id: "embed",
-        icon: <StackIcon aria-hidden focusable="false" />,
+        icon: StackIcon,
         label: t("playground.ragSession.readyEmbed"),
         readyDescription: t("playground.ragSession.readyEmbedReady"),
         pendingDescription: t("playground.ragSession.readyEmbedPending"),
@@ -321,7 +321,7 @@ export const PlaygroundSessionProvider = ({ children }: PlaygroundSessionProvide
         // the generation model IS a Qwen tag (qwen2.5 / qwen2.5-coder), so its row
         // wears the Qwen mark; the embedding row stays a Phosphor glyph because the
         // model there (nomic-embed-text) has no mark in `@lobehub/icons`.
-        icon: <Qwen aria-hidden focusable="false" />,
+        icon: Qwen,
         label: t("playground.ragSession.readyGen"),
         readyDescription: t("playground.ragSession.readyGenReady"),
         pendingDescription: t("playground.ragSession.readyGenPending"),
@@ -339,7 +339,7 @@ export const PlaygroundSessionProvider = ({ children }: PlaygroundSessionProvide
             engineRow,
             {
                 id: "device",
-                icon: <CpuIcon aria-hidden focusable="false" />,
+                icon: CpuIcon,
                 label: t("playground.session.readyDevice"),
                 readyDescription: t("playground.session.readyDeviceReady"),
                 pendingDescription: t("playground.session.readyDevicePending"),

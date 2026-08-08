@@ -70,23 +70,26 @@ const PlaygroundStepGuide = ({
     isSkeleton = false,
 }: PlaygroundStepGuideProps) => {
     if (isSkeleton) {
-        const loadingStep = (
-            <>
-                <HeroSkeleton className="h-6 w-48 rounded" />
-                <StackV
-                    gap={2}
-                    isSkeleton={isSkeleton}
-                    items={[
-                        () => <HeroSkeleton className="h-4 w-full rounded" />,
-                        () => <HeroSkeleton className="h-4 w-2/3 rounded" />,
-                    ]}
-                />
-                <HeroSkeleton className="h-9 w-36 rounded-xl" />
-            </>
-        )
         return (
             <div>
-                <StackV gap={6} isSkeleton={isSkeleton} items={[() => loadingStep]} />
+                <StackV
+                    gap={6}
+                    isSkeleton={isSkeleton}
+                    items={[
+                        () => <HeroSkeleton className="h-6 w-48 rounded" />,
+                        () => (
+                            <StackV
+                                gap={2}
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => <HeroSkeleton className="h-4 w-full rounded" />,
+                                    () => <HeroSkeleton className="h-4 w-2/3 rounded" />,
+                                ]}
+                            />
+                        ),
+                        () => <HeroSkeleton className="h-9 w-36 rounded-xl" />,
+                    ]}
+                />
             </div>
         )
     }
@@ -175,18 +178,18 @@ const PlaygroundStepGuide = ({
         />
     ) : null
 
-    const guideBody = (
-        <>
-            <Typography size="h4" weight="bold" text={step.title} />
-            <MarkdownContent source={step.body} measure="reading" />
-            {commandSection}
-            {verifyControls}
-        </>
-    )
-
     return (
         <div>
-            <StackV gap={6} isSkeleton={isSkeleton} items={[() => guideBody]} />
+            <StackV
+                gap={6}
+                isSkeleton={isSkeleton}
+                items={[
+                    () => <Typography size="h4" weight="bold" text={step.title} />,
+                    () => <MarkdownContent source={step.body} measure="reading" />,
+                    ...(commandSection != null ? [() => commandSection] : []),
+                    () => verifyControls,
+                ]}
+            />
         </div>
     )
 }

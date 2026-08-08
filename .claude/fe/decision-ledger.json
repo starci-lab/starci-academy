@@ -1936,12 +1936,40 @@
       "reason": "Per-target atomicity; held targets need new or out-of-manifest contracts.",
       "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b31r3-status.md",
       "holds": [
-        "ReadinessChecklist: ListRow p-3 + ReactNode icon API → PlaygroundSessionProvider",
-        "CartLine: min-w-0 flex-1 title column with no typed placement frame",
-        "PremiumPaywall: asymmetric pt-6 seam",
-        "EnrollGate: CARD_SURFACE/TEASER_FADE + SB twin drift"
+        "PremiumPaywall: asymmetric pt-6 seam (out of B31r4 scope)",
+        "EnrollGate: CARD_SURFACE/TEASER_FADE + SB twin drift (out of B31r4 scope)"
       ],
-      "next": "Unlock held four with typed placement/padding contracts, then continue page consumers."
+      "resolvedBy": "b31r4-list-density-and-base-fill-2026-08-09",
+      "next": "Continue page consumers; PremiumPaywall/EnrollGate need separate unlock contracts."
+    },
+    {
+      "id": "b31r4-list-density-and-base-fill-2026-08-09",
+      "date": "2026-08-09",
+      "status": "applied-src",
+      "summary": "BATCH 31r4: ListRow density (default|comfortable) on composite List.Row; FillAvailable at=base with flex-fill-base; migrated ReadinessChecklist + CartLine to IdentityTile at zero warnings.",
+      "reason": "Closes the two B31r3 blockers: p-3 ListRow padding as density=comfortable; min-w-0 flex-1 as FillAvailable at=base.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b31r4-status.md",
+      "api": {
+        "ListRowDensity": "default | comfortable",
+        "FillAvailableAt": "base | lg",
+        "flex-fill-base": "min-w-0 flex-1"
+      },
+      "migrated": ["ReadinessChecklist", "CartLine", "PlaygroundSessionProvider readiness icons"],
+      "holds": [],
+      "next": "None for these two contracts. Next IdentityTile consumers remain page/locked paths."
+    },
+    {
+      "id": "b31f-typed-frame-item-mass-closure-2026-08-09",
+      "date": "2026-08-09",
+      "status": "partial",
+      "summary": "BATCH 31f: Closed 137 of 344 no-frame-fragment-item findings (67 SB + 1 src fragment-only files). Remaining 207 findings held under zero-warn ratchet (unrelated classname/self-declare/HeroUI debt).",
+      "reason": "Typed frame items contract — one items entry builds one semantic item. Src twins largely blocked by unrelated ESLint debt.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b31f-status.md",
+      "before": 344,
+      "after": 207,
+      "fixedFindings": 137,
+      "heldFindings": 207,
+      "next": "Clear classname/self-declare debt on held families, then resume fragment closure + src twin mirrors."
     }
   ]
 }

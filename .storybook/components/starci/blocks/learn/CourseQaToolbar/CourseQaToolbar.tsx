@@ -72,60 +72,70 @@ const CourseQaToolbar = ({
         label: FILTER_LABEL[value],
     }))
 
-    const searchAndCount = (
-        <>
-            <div className="min-w-0 flex-1 @app-sm:max-w-sm">
-                <InputSearch
-                    value={searchValue}
-                    onValueChange={onSearchChange}
-                    placeholder="Search questions..."
-                    ariaLabel="Search questions"
-
-                />
-            </div>
-            {isSkeleton ? (
-                <Typography
-                    size="sm"
-                    color="muted"
-                    isSkeleton
-
-
-                />
-            ) : (
-                <Typography
-                    size="sm"
-                    color="muted"
-                    tabularNums
-                    text={resultCountLabel(resultCount)}
-
-
-                />
-            )}
-        </>
-    )
-
-    const strip = (
-        <>
-            <div>
-                <Toolbar
-                    leftTabs={{
-                        items,
-                        selectedKey: filter,
-                        ariaLabel: filterAriaLabel,
-                        onSelectionChange: (key) => onFilterChange(String(key) as CourseQaFilter),
-                    }}
-
-                />
-            </div>
-            <StackH gap={3} principle="flex-action"
-                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
-                justify="between" at="sm" isSkeleton={isSkeleton} items={[() => searchAndCount]}  />
-        </>
-    )
-
     return (
         <div>
-            <StackV gap={4} isSkeleton={isSkeleton} items={[() => strip]} />
+            <StackV
+                gap={4}
+                isSkeleton={isSkeleton}
+                items={[
+                    () => (
+                        <div>
+                            <Toolbar
+                                leftTabs={{
+                                    items,
+                                    selectedKey: filter,
+                                    ariaLabel: filterAriaLabel,
+                                    onSelectionChange: (key) => onFilterChange(String(key) as CourseQaFilter),
+                                }}
+
+                            />
+                        </div>
+                    ),
+                    () => (
+                        <StackH
+                            gap={3}
+                            principle="flex-action"
+                            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                            justify="between"
+                            at="sm"
+                            isSkeleton={isSkeleton}
+                            items={[
+                                () => (
+                                    <div className="min-w-0 flex-1 @app-sm:max-w-sm">
+                                        <InputSearch
+                                            value={searchValue}
+                                            onValueChange={onSearchChange}
+                                            placeholder="Search questions..."
+                                            ariaLabel="Search questions"
+
+                                        />
+                                    </div>
+                                ),
+                                () => (
+                                    isSkeleton ? (
+                                        <Typography
+                                            size="sm"
+                                            color="muted"
+                                            isSkeleton
+
+
+                                        />
+                                    ) : (
+                                        <Typography
+                                            size="sm"
+                                            color="muted"
+                                            tabularNums
+                                            text={resultCountLabel(resultCount)}
+
+
+                                        />
+                                    )
+                                ),
+                            ]}
+                        />
+                    ),
+                ]}
+            />
         </div>
     )
 }

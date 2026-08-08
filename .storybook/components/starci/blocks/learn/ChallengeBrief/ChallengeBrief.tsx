@@ -199,64 +199,65 @@ const ChallengeBrief = ({
     // rhythm, and the word "Hint" alone already carries enough meaning (only a
     // universally recognised symbol earns its own glyph, not a plain-prose label).
 
-    const sections = (
-        <>
-            {showPrerequisites ? (
-                <SurfaceCardList
-                    label="Prerequisites"
-                    items={prerequisiteItems}
-                    isSkeleton={isSkeleton}
-
-
-                />
-            ) : null}
-            {showRequirements ? (
-                <SurfaceCardAccordion
-                    label="Requirements"
-                    items={requirementItems}
-                    allowsMultipleExpanded
-                    isSkeleton={isSkeleton}
-
-
-                />
-            ) : null}
-            {showSteps ? (
-                <SurfaceCardAccordion
-                    label="Guided steps"
-                    items={stepItems}
-                    allowsMultipleExpanded
-                    isSkeleton={isSkeleton}
-
-
-                />
-            ) : null}
-            {showOutputs ? (
-                <SurfaceCardList
-                    label="Expected outputs"
-                    items={outputItems}
-                    isSkeleton={isSkeleton}
-
-
-                />
-            ) : null}
-            {showHint ? (
-                <SurfaceCard
-                    label="Hint"
-                    isSkeleton={isSkeleton}
-
-
-                    body={() =>
-                        isSkeleton
-                            ? <Typography size="sm" isSkeleton />
-                            : markdownBody(trimmedHint)
-                    }
-                />
-            ) : null}
-        </>
-    )
-
     return (
-        <StackV identity={{ tier: "block", component: "ChallengeBrief" }} gap={6} isSkeleton={isSkeleton} items={[() => sections]} />
+        <StackV
+            identity={{ tier: "block", component: "ChallengeBrief" }}
+            gap={6}
+            isSkeleton={isSkeleton}
+            items={[
+                ...(showPrerequisites ? [() => (
+                    <SurfaceCardList
+                        label="Prerequisites"
+                        items={prerequisiteItems}
+                        isSkeleton={isSkeleton}
+
+
+                    />
+                )] : []),
+                ...(showRequirements ? [() => (
+                    <SurfaceCardAccordion
+                        label="Requirements"
+                        items={requirementItems}
+                        allowsMultipleExpanded
+                        isSkeleton={isSkeleton}
+
+
+                    />
+                )] : []),
+                ...(showSteps ? [() => (
+                    <SurfaceCardAccordion
+                        label="Guided steps"
+                        items={stepItems}
+                        allowsMultipleExpanded
+                        isSkeleton={isSkeleton}
+
+
+                    />
+                )] : []),
+                ...(showOutputs ? [() => (
+                    <SurfaceCardList
+                        label="Expected outputs"
+                        items={outputItems}
+                        isSkeleton={isSkeleton}
+
+
+                    />
+                )] : []),
+                ...(showHint ? [() => (
+                    <SurfaceCard
+                        label="Hint"
+                        isSkeleton={isSkeleton}
+
+
+                        body={() =>
+                            isSkeleton
+                                ? <Typography size="sm" isSkeleton />
+                                : markdownBody(trimmedHint)
+                        }
+                    />
+                )] : []),
+            ]}
+        />
     )
 }
 

@@ -163,33 +163,6 @@ const QuizProgressPanel = ({
         onPress: isSkeleton ? undefined : session.onPress,
     }))
 
-    const panelBody = (
-        <>
-            <div>
-                <Tabs
-                    items={tabItems}
-                    selectedKey={view}
-                    onSelectionChange={(key) => onViewChange(key as QuizProgressView)}
-                    ariaLabel={viewAriaLabel}
-                    isSkeleton={isSkeleton}
-
-                />
-            </div>
-            {view === "stats" ? (
-                <div>
-                    <StatGridCard items={statItems} />
-                </div>
-            ) : (
-                <SurfaceCardList
-                    items={historyItems}
-                    isSkeleton={isSkeleton}
-
-
-                />
-            )}
-        </>
-    )
-
     return (
         <div>
             <SurfaceCard
@@ -204,7 +177,38 @@ const QuizProgressPanel = ({
 
                         />
                     ) : (
-                        <StackV gap={6} isSkeleton={isSkeleton} items={[() => panelBody]} />
+                        <StackV
+                            gap={6}
+                            isSkeleton={isSkeleton}
+                            items={[
+                                () => (
+                                    <div>
+                                        <Tabs
+                                            items={tabItems}
+                                            selectedKey={view}
+                                            onSelectionChange={(key) => onViewChange(key as QuizProgressView)}
+                                            ariaLabel={viewAriaLabel}
+                                            isSkeleton={isSkeleton}
+
+                                        />
+                                    </div>
+                                ),
+                                () => (
+                                    view === "stats" ? (
+                                        <div>
+                                            <StatGridCard items={statItems} />
+                                        </div>
+                                    ) : (
+                                        <SurfaceCardList
+                                            items={historyItems}
+                                            isSkeleton={isSkeleton}
+
+
+                                        />
+                                    )
+                                ),
+                            ]}
+                        />
                     )
                 }
             />

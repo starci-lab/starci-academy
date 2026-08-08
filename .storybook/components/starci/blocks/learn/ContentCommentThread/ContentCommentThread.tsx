@@ -156,157 +156,6 @@ const ContentCommentThread = ({
     // action row: reaction + reply + owner edit/delete. `isButton`, NOT `isLink` — real
     // src's own action links carry no underline at all, only a resting→hover COLOR
     // shift, which isLink's underline treatment would misrepresent.
-    const actionRow = (
-        <>
-            <ReactionButton
-                myReaction={comment.myReaction}
-                counts={comment.reactionCounts}
-                onReact={(type) => onReactComment(comment.id, type)}
-
-
-            />
-            <Typography
-                size="xs"
-                weight="medium"
-                color="muted"
-                isButton
-                hoverColor="default"
-                text="Reply"
-                onPress={() => setReplying((prev) => !prev)}
-
-            />
-            {isOwner ? (
-                <>
-                    <Typography
-                        size="xs"
-                        weight="medium"
-                        color="muted"
-                        isButton
-                        hoverColor="default"
-                        text="Edit"
-                        onPress={() => setEditing(true)}
-
-                    />
-                    <Typography
-                        size="xs"
-                        weight="medium"
-                        color="muted"
-                        isButton
-                        hoverColor="danger"
-                        text="Delete"
-                        onPress={() => onDelete(comment.id)}
-
-                    />
-                </>
-            ) : null}
-        </>
-    )
-
-    const bodyAndActions = (
-        <>
-            {/* body, edit form, or deleted placeholder */}
-            {comment.isDeleted ? (
-                <Typography size="sm" color="muted" isItalic text="[Comment removed]" />
-            ) : editing ? (
-                <ContentCommentComposer
-                    initialValue={comment.body}
-                    submitLabel="Save"
-                    ariaLabel="Edit comment"
-                    onCancel={() => setEditing(false)}
-                    onSubmit={(body) => {
-                        onEdit(comment.id, body)
-                        setEditing(false)
-                    }}
-
-                />
-            ) : (
-                <Typography size="sm" preserveWhitespace text={comment.body} />
-            )}
-
-            {!comment.isDeleted && !editing ? (
-                <StackH gap={4} principle="content-row"
-                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                    at="sm" align="center" items={[() => actionRow]}  />
-            ) : null}
-        </>
-    )
-
-    const threadBody = (
-        <>
-            <StackV gap={2} items={[() => bodyAndActions]} />
-
-            {/* reply composer — `ThreadConnector` draws the Facebook-style curved
-                guide from this comment down into the reply's own avatar;
-                `currentUser` is what gives the composer an avatar to connect TO
-                in the first place (see its own file header). */}
-            {replying ? (
-                <StackH
-                    gap={2}
-                    principle="icon-text"
-                    explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
-                    align="start"
-
-                    items={[
-                        () => <ThreadConnector />,
-                        () => (
-                            <ContentCommentComposer
-                                placeholder="Write a reply..."
-                                submitLabel="Reply"
-                                ariaLabel="Write a reply"
-                                currentUser={currentUser}
-                                classNames={["min-w-0", "flex-1"]}
-                                onCancel={() => setReplying(false)}
-                                onSubmit={(body) => {
-                                    onReply(comment.id, body)
-                                    setReplying(false)
-                                    setExpanded(true)
-                                    onLoadReplies(comment.id)
-                                }}
-
-                            />
-                        ),
-                    ]}
-                />
-            ) : null}
-
-            {/* replies toggle + recursive subtree */}
-            {comment.replyCount > 0 ? (
-                <Typography
-                    size="xs"
-                    weight="medium"
-                    color="accent"
-                    isLink
-                    underlineOnHover
-                    text={expanded ? "Hide replies" : `View ${comment.replyCount} replies`}
-                    onPress={toggleReplies}
-
-                />
-            ) : null}
-
-            {expanded && replies.length > 0 ? (
-                <StackV
-                    gap={4}
-
-                    items={replies.map((reply) => () => (
-                        <ContentCommentThread
-                            comment={reply}
-                            currentUserId={currentUserId}
-                            currentUser={currentUser}
-                            depth={depth + 1}
-                            repliesByParent={repliesByParent}
-                            onReply={onReply}
-                            onEdit={onEdit}
-                            onDelete={onDelete}
-                            onReactComment={onReactComment}
-                            onLoadReplies={onLoadReplies}
-
-                        />
-                    ))}
-                />
-            ) : null}
-        </>
-    )
-
     return (
         // `IdentityContentRow` (composite) owns the avatar+byline+column shape — both
         // its seams are `tight` ON PURPOSE, a denser standalone treatment, NOT a
@@ -329,17 +178,170 @@ const ContentCommentThread = ({
                 />
             )}
             // `body` is the former `children` slot (COMPOSITE-8) — a component
-            // reference, not a built node. `threadBody` (StackV wrapping
-            // bodyAndActions + reply composer + replies subtree) is already
-            // computed above per the current render's state, so the wrapper here
-            // only needs to hand it back.
+            // reference, not a built node.
             body={() => (
                 /* `grouped` — separates [body+actions, tight together] from whatever
                     comes after a reply composer/toggle/subtree: the seam right before
                     a reply composer appears needs more
                     room than the tight identity block above it (also where the
                     Facebook-style connector line will run). */
-                <StackV gap={4} items={[() => threadBody]} />
+                <StackV
+                    gap={4}
+                    items={[
+                        () => (
+                            <StackV
+                                gap={2}
+                                items={[
+                                    // body, edit form, or deleted placeholder
+                                    () => (
+                                        comment.isDeleted ? (
+                                            <Typography size="sm" color="muted" isItalic text="[Comment removed]" />
+                                        ) : editing ? (
+                                            <ContentCommentComposer
+                                                initialValue={comment.body}
+                                                submitLabel="Save"
+                                                ariaLabel="Edit comment"
+                                                onCancel={() => setEditing(false)}
+                                                onSubmit={(body) => {
+                                                    onEdit(comment.id, body)
+                                                    setEditing(false)
+                                                }}
+
+                                            />
+                                        ) : (
+                                            <Typography size="sm" preserveWhitespace text={comment.body} />
+                                        )
+                                    ),
+                                    ...(!comment.isDeleted && !editing ? [() => (
+                                        <StackH
+                                            gap={4}
+                                            principle="content-row"
+                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                            at="sm"
+                                            align="center"
+                                            items={[
+                                                () => (
+                                                    <ReactionButton
+                                                        myReaction={comment.myReaction}
+                                                        counts={comment.reactionCounts}
+                                                        onReact={(type) => onReactComment(comment.id, type)}
+
+
+                                                    />
+                                                ),
+                                                () => (
+                                                    <Typography
+                                                        size="xs"
+                                                        weight="medium"
+                                                        color="muted"
+                                                        isButton
+                                                        hoverColor="default"
+                                                        text="Reply"
+                                                        onPress={() => setReplying((prev) => !prev)}
+
+                                                    />
+                                                ),
+                                                ...(isOwner ? [
+                                                    () => (
+                                                        <Typography
+                                                            size="xs"
+                                                            weight="medium"
+                                                            color="muted"
+                                                            isButton
+                                                            hoverColor="default"
+                                                            text="Edit"
+                                                            onPress={() => setEditing(true)}
+
+                                                        />
+                                                    ),
+                                                    () => (
+                                                        <Typography
+                                                            size="xs"
+                                                            weight="medium"
+                                                            color="muted"
+                                                            isButton
+                                                            hoverColor="danger"
+                                                            text="Delete"
+                                                            onPress={() => onDelete(comment.id)}
+
+                                                        />
+                                                    ),
+                                                ] : []),
+                                            ]}
+                                        />
+                                    )] : []),
+                                ]}
+                            />
+                        ),
+                        // reply composer — `ThreadConnector` draws the Facebook-style curved
+                        // guide from this comment down into the reply's own avatar;
+                        // `currentUser` is what gives the composer an avatar to connect TO
+                        // in the first place (see its own file header).
+                        ...(replying ? [() => (
+                            <StackH
+                                gap={2}
+                                principle="icon-text"
+                                explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                                align="start"
+
+                                items={[
+                                    () => <ThreadConnector />,
+                                    () => (
+                                        <ContentCommentComposer
+                                            placeholder="Write a reply..."
+                                            submitLabel="Reply"
+                                            ariaLabel="Write a reply"
+                                            currentUser={currentUser}
+                                            classNames={["min-w-0", "flex-1"]}
+                                            onCancel={() => setReplying(false)}
+                                            onSubmit={(body) => {
+                                                onReply(comment.id, body)
+                                                setReplying(false)
+                                                setExpanded(true)
+                                                onLoadReplies(comment.id)
+                                            }}
+
+                                        />
+                                    ),
+                                ]}
+                            />
+                        )] : []),
+                        // replies toggle + recursive subtree
+                        ...(comment.replyCount > 0 ? [() => (
+                            <Typography
+                                size="xs"
+                                weight="medium"
+                                color="accent"
+                                isLink
+                                underlineOnHover
+                                text={expanded ? "Hide replies" : `View ${comment.replyCount} replies`}
+                                onPress={toggleReplies}
+
+                            />
+                        )] : []),
+                        ...(expanded && replies.length > 0 ? [() => (
+                            <StackV
+                                gap={4}
+
+                                items={replies.map((reply) => () => (
+                                    <ContentCommentThread
+                                        comment={reply}
+                                        currentUserId={currentUserId}
+                                        currentUser={currentUser}
+                                        depth={depth + 1}
+                                        repliesByParent={repliesByParent}
+                                        onReply={onReply}
+                                        onEdit={onEdit}
+                                        onDelete={onDelete}
+                                        onReactComment={onReactComment}
+                                        onLoadReplies={onLoadReplies}
+
+                                    />
+                                ))}
+                            />
+                        )] : []),
+                    ]}
+                />
             )}
         />
     )

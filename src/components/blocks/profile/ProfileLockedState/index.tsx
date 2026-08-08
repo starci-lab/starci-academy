@@ -43,33 +43,6 @@ const ProfileLockedState = ({
     onGoCourses,
     identity,
 }: ProfileLockedStateProps) => {
-    const lockedBody = (
-        <>
-            <ProfileHero
-                user={user}
-
-            />
-            <SurfaceCard
-                padding={6}
-
-
-                body={() => (
-                    <EmptyState
-                        icon={LockIcon}
-                        title="This profile is set to private"
-                        description="The profile owner has hidden their public activity — you can still explore other courses."
-                        body={() => (
-                            <Button
-                                label="Browse courses"
-                                variant="primary"
-                                onPress={onGoCourses}
-                            />
-                        )}
-                    />
-                )}
-            />
-        </>
-    )
     return (
         <StackV
             gap={6}
@@ -77,7 +50,32 @@ const ProfileLockedState = ({
             explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
             padding={6}
             identity={identity}
-            items={[() => lockedBody]}
+            items={[
+                () => (
+                    <ProfileHero
+                        user={user}
+                    />
+                ),
+                () => (
+                    <SurfaceCard
+                        padding={6}
+                        body={() => (
+                            <EmptyState
+                                icon={LockIcon}
+                                title="This profile is set to private"
+                                description="The profile owner has hidden their public activity — you can still explore other courses."
+                                body={() => (
+                                    <Button
+                                        label="Browse courses"
+                                        variant="primary"
+                                        onPress={onGoCourses}
+                                    />
+                                )}
+                            />
+                        )}
+                    />
+                ),
+            ]}
         />
     )
 }

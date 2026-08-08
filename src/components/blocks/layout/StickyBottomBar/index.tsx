@@ -1,13 +1,7 @@
 import React from "react"
-import {
-    cn,
-} from "@heroui/react"
-import type {
-    WithClassNames,
-} from "@/modules/types/base/class-name"
 
 /** Props for the {@link StickyBottomBar} block. */
-export interface StickyBottomBarProps extends WithClassNames<undefined> {
+export interface StickyBottomBarProps {
     /** Bar content (typically a price + a primary action). */
     children: React.ReactNode
 }
@@ -23,10 +17,9 @@ export interface StickyBottomBarProps extends WithClassNames<undefined> {
  */
 export const StickyBottomBar = ({
     children,
-    className,
 }: StickyBottomBarProps) => {
     return (
-        <div className={cn("fixed bottom-0 left-0 right-[var(--app-rail-w,0px)] z-40 border-t border-separator bg-background px-4 py-3", className)}>
+        <div className="fixed bottom-0 left-0 right-[var(--app-rail-w,0px)] z-40 border-t border-separator bg-background px-4 py-3">
             {children}
         </div>
     )

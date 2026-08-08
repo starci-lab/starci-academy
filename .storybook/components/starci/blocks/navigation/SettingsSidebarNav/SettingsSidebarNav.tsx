@@ -27,6 +27,11 @@ import { DesktopNavRow } from "./DesktopNavRow"
  * row). Both render the same component; only the container width differs, so
  * each story shows the branch its own `@app-md` query resolves to. `activeHref`
  * is data, so within each leaf it is a state.
+ *
+ * Held: sticky-under-navbar desktop height host, mobile sticky pill surface, and
+ * active/inactive chip `cn` — no existing frame/composite owns those shapes
+ * (`ShowFrom`/`HideAbove` lack sticky+height; `NavigationRail` owns column fill;
+ * `RailShell` sticky uses `top-24`, not `top-16`).
  */
 
 /** Every account-settings destination this rail can offer — the closed vocabulary the block owns. */
@@ -135,77 +140,76 @@ const SettingsSidebarNav = ({
     const flatItems = groups.flatMap((group) => group.items)
 
     return (
-        <div>
-            {/* ── Desktop rail — hidden below @app-md; wraps the reused `CollapsibleSidebar`
-                (chrome) with this block's own rows/dividers (domain content). */}
-            <div className="hidden shrink-0 @app-md:sticky @app-md:top-16 @app-md:block @app-md:h-[calc(100dvh-4rem)]">
-                <CollapsibleSidebar
-                    title={title}
-                    collapseLabel={collapseLabel}
-                    expandLabel={expandLabel}
-                    storageKey={storageKey}
-                >
-                    {groups.map((group, index) => (
-                        <React.Fragment key={group.key}>
-                            {/* Divider above every group but the first — the inlined
-                                `SidebarNavGroup` gap (see file header). Spacing between it
-                                and its neighbours is owned by `CollapsibleSidebar`'s own
-                                `StackV gap={4}`, not a margin on this Divider. */}
-                            {index > 0 ? <Divider /> : null}
-                            <StackV
-                                gap={1}
-
-                                items={group.items.map((item) => () => (
-                                    <DesktopNavRow
-                                        item={item}
-                                        isActive={item.href === activeHref}
-                                        onNavigate={onNavigate}
-
+        <StackV
+            identity={{ tier: "block", component: "SettingsSidebarNav" }}
+            principle="group-boundary"
+            explain="Separates the desktop rail from the mobile pill bar so each leaf keeps its own seam owner — not sibling-stack, because these are alternate structural leaves rather than repeating peers."
+            items={[
+                () => (
+                    // Held: sticky-under-navbar + viewport-minus-chrome height — no named frame.
+                    <div className="hidden shrink-0 @app-md:sticky @app-md:top-16 @app-md:block @app-md:h-[calc(100dvh-4rem)]">
+                        <CollapsibleSidebar
+                            title={title}
+                            collapseLabel={collapseLabel}
+                            expandLabel={expandLabel}
+                            storageKey={storageKey}
+                        >
+                            {groups.map((group, index) => (
+                                <React.Fragment key={group.key}>
+                                    {index > 0 ? <Divider /> : null}
+                                    <StackV
+                                        principle="sibling-stack"
+                                        explain="Same-kind peer stack of settings rows — not group-boundary, because rows are repeating siblings rather than section groups."
+                                        items={group.items.map((item) => () => (
+                                            <DesktopNavRow
+                                                item={item}
+                                                isActive={item.href === activeHref}
+                                                onNavigate={onNavigate}
+                                            />
+                                        ))}
                                     />
-                                ))}
+                                </React.Fragment>
+                            ))}
+                        </CollapsibleSidebar>
+                    </div>
+                ),
+                () => (
+                    // Held: mobile sticky pill landmark + chip active/inactive cn.
+                    <nav aria-label={mobileNavAriaLabel ?? title} className="sticky top-16 z-30 @app-md:hidden">
+                        <div className="overflow-x-auto border-b border-default bg-background/80 backdrop-blur-xl">
+                            <StackH
+                                principle="flex-action"
+                                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                items={flatItems.map((item) => () => {
+                                    const isActive = item.href === activeHref
+                                    const Icon = DESTINATION_ICON[item.key]
+                                    return (
+                                        <button
+                                            type="button"
+                                            aria-current={isActive ? "page" : undefined}
+                                            onClick={() => onNavigate(item.href)}
+                                            className={cn(
+                                                "shrink-0 rounded-full border px-3 py-2 transition-colors",
+                                                isActive ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
+                                            )}
+                                        >
+                                            <StackH
+                                                principle="icon-text"
+                                                explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                                                items={[
+                                                    () => <Icon aria-hidden focusable="false" className="size-4 shrink-0" />,
+                                                    () => <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap />,
+                                                ]}
+                                            />
+                                        </button>
+                                    )
+                                })}
                             />
-                        </React.Fragment>
-                    ))}
-                </CollapsibleSidebar>
-            </div>
-
-            {/* ── Mobile pill bar — the OTHER leaf: chip-shaped buttons in a horizontal
-                scroll strip, not the rail's row shape. Visible only below @app-md. */}
-            <nav aria-label={mobileNavAriaLabel ?? title} className="sticky top-16 z-30 @app-md:hidden">
-                <div className="overflow-x-auto border-b border-default bg-background/80 backdrop-blur-xl">
-                    <StackH
-                        gap={3}
-                        principle="flex-action"
-                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
-                        padding={{ x: 4, y: 3 }}
-                        items={flatItems.map((item) => () => {
-                            const isActive = item.href === activeHref
-                            const Icon = DESTINATION_ICON[item.key]
-                            return (
-                                <button
-                                    type="button"
-                                    aria-current={isActive ? "page" : undefined}
-                                    onClick={() => onNavigate(item.href)}
-                                    className={cn(
-                                        "shrink-0 rounded-full border px-3 py-2 transition-colors",
-                                        isActive ? "border-accent bg-accent-soft text-accent-soft-foreground" : "border-default text-muted hover:bg-default",
-                                    )}
-                                >
-                                    <StackH
-                                        principle="icon-text"
-                                        explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
-                                        items={[
-                                            () => <Icon aria-hidden focusable="false" className="size-4 shrink-0" />,
-                                            () => <Typography size="sm" text={DESTINATION_LABEL[item.key]} noWrap />,
-                                        ]}
-                                    />
-                                </button>
-                            )
-                        })}
-                    />
-                </div>
-            </nav>
-        </div>
+                        </div>
+                    </nav>
+                ),
+            ]}
+        />
     )
 }
 

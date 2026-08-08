@@ -1,4 +1,4 @@
-import type { LANDING_COURSE_TRACKS } from "../constants"
+import type { LANDING_COURSE_TRACKS } from "@/modules/utils/landing-constants"
 
 /** A course track key (matches {@link LANDING_COURSE_TRACKS}). */
 export type TrackKey = (typeof LANDING_COURSE_TRACKS)[number]

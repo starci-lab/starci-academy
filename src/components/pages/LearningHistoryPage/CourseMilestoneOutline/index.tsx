@@ -18,7 +18,7 @@ import {
 } from "@phosphor-icons/react"
 import {
     useSelectedCourse,
-} from "../hooks/useSelectedCourse"
+} from "@/hooks/useSelectedCourse"
 import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"

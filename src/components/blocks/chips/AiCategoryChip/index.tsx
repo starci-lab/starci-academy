@@ -13,12 +13,11 @@ export type AiCategoryChipConnectedProps = Omit<AiCategoryChipProps, "label">
  *
  * @param props - {@link AiCategoryChipConnectedProps}
  */
-export const AiCategoryChip = ({ category, className }: AiCategoryChipConnectedProps) => {
+export const AiCategoryChip = ({ category }: AiCategoryChipConnectedProps) => {
     const t = useTranslations()
     return (
         <_AiCategoryChip
             category={category}
-            className={className}
             label={t(`aiSettings.categories.${category}`)}
         />
     )

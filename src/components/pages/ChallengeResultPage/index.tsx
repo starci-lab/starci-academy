@@ -16,7 +16,7 @@ import type { AiModelCategory as RealAiModelCategory } from "@/modules/api/graph
 import type { SubmissionAttempt } from "@/components/blocks/learn/SubmissionAttemptSelector"
 import type { SubmissionFinding } from "@/components/blocks/learn/SubmissionFindingsList"
 import type { ContentRelatedItem } from "@/components/blocks/learn/ContentRelatedList"
-import { toBlueprintModelCategory, toBlueprintSeverity } from "./map"
+import { toBlueprintModelCategory, toBlueprintSeverity } from "@/modules/utils/challenge-result-map"
 import { _ChallengeResultPage } from "./component"
 
 /** Render up to this many attempt chips inline; beyond it, the newest few + a "+N" overflow trigger. */

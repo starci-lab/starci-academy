@@ -2,7 +2,7 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { ArrowsDownUpIcon, CpuIcon, MemoryIcon } from "@phosphor-icons/react"
 import type { ComponentMetrics } from "@/modules/api/graphql/queries/types/system-health-status"
-import { formatBytesPerSecond, formatCpuPercent, formatMemory } from "../metricsFormat"
+import { formatBytesPerSecond, formatCpuPercent, formatMemory } from "@/modules/utils/architecture-metrics"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link MetricsInline}. */

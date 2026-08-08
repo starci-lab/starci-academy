@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { type SkeletonProps } from "@/components/frames/_slot"
 import {
-    cn,
     Button as HeroButton,
     Dropdown,
     Kbd,
@@ -33,6 +32,9 @@ import { InputButtonLike } from "@/components/composites/buttons/InputButtonLike
 import { AsyncContent } from "@/components/composites/async/AsyncContent"
 import { ListRow } from "@/components/composites/lists/List"
 import { DrawerShell } from "@/components/composites/layout/DrawerShell"
+import { HideAbove } from "@/components/frames/HideAbove"
+import { ScrollArea } from "@/components/frames/ScrollArea"
+import { ShowFrom } from "@/components/frames/ShowFrom"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /**
@@ -171,16 +173,11 @@ export interface NavbarProps {
     isMobileDrawerOpen: boolean
     /** Fired on backdrop click / Escape / the close button / a row navigating away. */
     onMobileDrawerOpenChange: (isOpen: boolean) => void
-
-    /** Extra class on the root `<nav>` (placement only). */
-    className?: string
 }
 
-/** Props for {@link ShortcutHint}. */
 interface ShortcutHintProps {
     shortcutLabel: string
 }
-
 const ShortcutHint = ({ shortcutLabel }: ShortcutHintProps) => (
     <Kbd><Kbd.Content>{shortcutLabel}</Kbd.Content></Kbd>
 )
@@ -208,7 +205,6 @@ const Navbar = ({
     account,
     isMobileDrawerOpen,
     onMobileDrawerOpenChange,
-    className,
 }: NavbarProps) => {
     const [isNotificationsOpen, setNotificationsOpen] = useState(false)
     const [isAccountOpen, setAccountOpen] = useState(false)
@@ -228,51 +224,6 @@ const Navbar = ({
 
     const activeNavId = navItems.find((item) => item.isActive)?.id ?? ""
 
-    // desktop-only route pills; the mobile drawer renders the same `navItems` as full rows.
-    // `hidden @app-md:flex` is the WRAPPER's call (showing/hiding at a breakpoint is the
-    // surrounding frame's decision, not the atom's — ATOM-5), so it sits on this span,
-    // not on `ButtonRadioGroup`'s own `className`.
-    const logoAndNavPills = (
-        <>
-            <span
-                role="button"
-                tabIndex={0}
-                aria-label="StarCi Academy"
-                onClick={onLogoPress}
-                onKeyDown={(event) => {
-                    if (event.key === "Enter" || event.key === " ") onLogoPress()
-                }}
-                className="inline-flex cursor-pointer items-center"
-            >
-                <Logo />
-            </span>
-            <span className="hidden @app-md:flex">
-                <ButtonRadioGroup
-                    items={navItems.map((item) => ({
-                        value: item.id,
-                        content: <Typography size="sm" text={item.label} />,
-                    }))}
-                    value={activeNavId}
-                    onChange={(id) => navItems.find((item) => item.id === id)?.onPress()}
-                    ariaLabel="Main navigation"
-                />
-            </span>
-        </>
-    )
-
-    // desktop: language + theme inline; the mobile drawer carries them instead
-    const quickControls = (
-        <>
-            <NavbarLanguageMenu
-                languages={languages}
-                activeLocale={activeLocale}
-                onLocaleChange={onLocaleChange}
-
-            />
-            <NavbarThemeSwitch isDarkMode={isDarkMode} onThemeToggle={onThemeToggle} />
-        </>
-    )
-
     const notificationSkeletonRows = [0, 1, 2].map((row) => (
         <ListRow key={row} title="" isSkeleton />
     ))
@@ -289,67 +240,8 @@ const Navbar = ({
             meta={() => <Typography size="xs" color="muted" text={item.timeLabel} />}
             onPress={() => notifications.onItemPress(item)}
             divider={index < notifications.items.length - 1}
-
         />
     ))
-
-    const notificationHeader = (
-        <>
-            <Typography size="sm" weight="bold" text="Notifications" />
-            {notifications.unreadCount > 0 ? (
-                <Button
-                    isIconOnly
-                    variant="ghost"
-                    size="sm"
-                    prefixIcon={ChecksIcon}
-                    ariaLabel="Mark all as read"
-                    onPress={notifications.onMarkAllRead}
-
-                />
-            ) : null}
-        </>
-    )
-
-    // notification popover body: header row → async list → footer link
-    const notificationPanel = (
-        <>
-            <StackH gap={3} principle="sibling-stack" justify="between" items={[() => notificationHeader]}
-                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-            />
-            <AsyncContent
-                isLoading={notifications.isLoading && notifications.items.length === 0}
-                skeleton={() => <StackV gap={1} items={[() => notificationSkeletonRows]} />}
-                isEmpty={notifications.items.length === 0}
-                emptyContent={{ title: "No notifications yet" }}
-                error={notifications.error}
-                errorContent={{
-                    title: notifications.error ?? "",
-                    onRetry: notifications.onRetry,
-                    retryLabel: "Try again",
-                }}
-                content={() => (
-                    <div className="max-h-[420px] overflow-y-auto">
-                        <StackV gap={1} items={[() => notificationRows]} />
-                    </div>
-                )}
-            />
-            <Button
-                variant="ghost"
-                size="sm"
-                classNames={["w-full"]}
-                label="See all"
-                onPress={notifications.onSeeAll}
-
-            />
-        </>
-    )
-
-    const guestAccountRow = (
-        <>
-            <Avatar icon={UserIcon} fallback="icon" />
-            <Typography size="sm" color="muted" text="Sign in to save your learning progress" />
-        </>
-    )
 
     const accountMenuHeader = (
         <AsyncContent
@@ -362,154 +254,16 @@ const Navbar = ({
                     handle={account.user.email}
                 />
             ) : (
-                <StackH gap={3} items={[() => guestAccountRow]} />
+                <StackH
+                    principle="icon-text"
+                    explain="Avatar beside its guest prompt — not name-handle, because this pairs a glyph with instructional text rather than a name/handle identity."
+                    items={[
+                        () => <Avatar icon={UserIcon} fallback="icon" />,
+                        () => <Typography size="sm" color="muted" text="Sign in to save your learning progress" />,
+                    ]}
+                />
             ))}
         />
-    )
-
-    // actions cluster: search · language/theme · cart · notifications · account · mobile menu
-    const barActions = (
-        <>
-            {/* desktop: full input-style search field; mobile: icon only */}
-            <span className="hidden w-[260px] @app-md:flex">
-                <InputButtonLike
-                    placeholder={searchPlaceholder}
-                    icon={MagnifyingGlassIcon}
-                    suffix={() => <ShortcutHint shortcutLabel={shortcutLabel} />}
-                    onPress={onSearchPress}
-                />
-            </span>
-            {/* `@app-md:hidden` moved off the atom onto this wrapper — a breakpoint
-                show/hide is the surrounding frame's decision, not the atom's (ATOM-5). */}
-            <span className="@app-md:hidden">
-                <Button
-                    isIconOnly
-                    variant="ghost"
-                    prefixIcon={MagnifyingGlassIcon}
-                    ariaLabel={searchPlaceholder}
-                    onPress={onSearchPress}
-
-                />
-            </span>
-
-            <div className="hidden @app-md:flex">
-                <StackH gap={3} items={[() => quickControls]} />
-            </div>
-
-            {/* cart — always shown (guests included), count badge only when non-empty.
-                Raw HeroUI `Button` (not our atom, see file header): the atom's
-                `isIconOnly` mode takes a single bare `prefixIcon` COMPONENT, with no
-                room for the `Badge` this trigger anchors around its glyph. */}
-            <HeroButton
-                isIconOnly
-                variant="tertiary"
-                className="rounded-full"
-                aria-label="Cart"
-                onPress={onCartPress}
-
-            >
-                <Badge color="accent" count={cartCount}>
-                    <ShoppingCartIcon className="size-5" />
-                </Badge>
-            </HeroButton>
-
-            {/* notification bell — only meaningful for a signed-in viewer (carried over
-                from the real component's own `if (!authenticated) return null`). Raw
-                HeroUI Popover + Button (see file header: same badge-around-glyph gap as
-                the cart trigger above). */}
-            {account.isAuthed ? (
-                <Popover isOpen={isNotificationsOpen} onOpenChange={setNotificationsOpen}>
-                    <HeroButton
-                        isIconOnly
-                        variant="tertiary"
-                        className="rounded-full"
-                        aria-label="Notifications"
-
-                    >
-                        <Badge color="danger" count={notifications.unreadCount}>
-                            <BellIcon className="size-5" />
-                        </Badge>
-                    </HeroButton>
-                    <PopoverContent placement="bottom right" className="w-[360px]">
-                        {/* inset-exception: vendor popover body padding, wider than tall, not a surface inset */}
-                        <StackV gap={2} principle="control-pad" padding={{ x: 3, y: 2 }} items={[() => notificationPanel]}
-                            explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row."
-                        />
-                    </PopoverContent>
-                </Popover>
-            ) : null}
-
-            {/* account menu — raw HeroUI Dropdown + Button (see file header): the
-                authed trigger swaps its glyph for an `Avatar`, another shape the
-                atom's bare-`IconComponent` slot cannot host. */}
-            <Dropdown isOpen={isAccountOpen} onOpenChange={setAccountOpen}>
-                <HeroButton
-                    isIconOnly
-                    variant="tertiary"
-                    className="rounded-full"
-                    aria-label="Account"
-
-                >
-                    {account.isAuthed ? (
-                        <Avatar
-                            size="sm"
-                            name={account.user?.username}
-                            src={account.user?.avatarUrl ?? undefined}
-                            seed={account.user?.email ?? account.user?.username}
-                        />
-                    ) : (
-                        <UserIcon className="size-5" />
-                    )}
-                </HeroButton>
-                <Dropdown.Popover placement="bottom right" className="w-[300px]">
-                    <StackV gap={1} padding={4} principle="cell-pad" body={() => accountMenuHeader}
-                        explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body."
-                    />
-                    <Divider />
-                    <Dropdown.Menu aria-label="Account">
-                        <Dropdown.Section>
-                            {account.menuItems.map((item) => {
-                                const Icon = item.icon
-                                return (
-                                    <Dropdown.Item
-                                        key={item.id}
-                                        id={item.id}
-                                        textValue={item.label}
-                                        className={item.isDanger ? "text-danger-soft-foreground" : undefined}
-                                        onPress={item.onPress}
-
-                                    >
-                                        {Icon ? <Icon className="size-5" /> : null}
-                                        <Label className={item.isDanger ? "text-danger-soft-foreground" : undefined}>{item.label}</Label>
-                                    </Dropdown.Item>
-                                )
-                            })}
-                        </Dropdown.Section>
-                    </Dropdown.Menu>
-                </Dropdown.Popover>
-            </Dropdown>
-
-            {/* mobile: expand icon → the navigation drawer. `@app-md:hidden` moved off the
-                atom onto this wrapper (ATOM-5 — breakpoint visibility is the frame's call). */}
-            <span className="@app-md:hidden">
-                <Button
-                    isIconOnly
-                    variant="ghost"
-                    prefixIcon={SidebarSimpleIcon}
-                    ariaLabel="Open mobile menu"
-                    onPress={() => onMobileDrawerOpenChange(true)}
-
-                />
-            </span>
-        </>
-    )
-
-    // primary row — fixed 4rem tall, matching the real bar's height contract
-    const primaryRow = (
-        <>
-            <StackH gap={6} items={[() => logoAndNavPills]} />
-            <StackH gap={3} items={[() => barActions]} />
-        </>
     )
 
     const mobileNavRows = navItems.map((item) => (
@@ -517,70 +271,289 @@ const Navbar = ({
             key={item.id}
             variant={item.isActive ? "secondary" : "ghost"}
             align="start"
-            classNames={["w-full"]}
             label={item.label}
             onPress={() => {
                 item.onPress()
                 onMobileDrawerOpenChange(false)
             }}
-
         />
     ))
 
-    const languageRow = (
-        <>
-            <Typography size="sm" text="Language" />
-            <NavbarLanguageMenu
-                languages={languages}
-                activeLocale={activeLocale}
-                onLocaleChange={onLocaleChange}
-
-            />
-        </>
-    )
-
-    const themeRow = (
-        <>
-            <Typography size="sm" text="Theme" />
-            <NavbarThemeSwitch isDarkMode={isDarkMode} onThemeToggle={onThemeToggle} />
-        </>
-    )
-
-    // controls hidden from the mobile bar live here: language + theme
-    const drawerControls = (
-        <>
-            <StackH gap={3} principle="sibling-stack" justify="between" items={[() => languageRow]}
-                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-            />
-            <StackH gap={3} principle="sibling-stack" justify="between" items={[() => themeRow]}
-                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-            />
-        </>
-    )
-
-    const drawerNav = (
-        <>
-            <StackV gap={2} items={[() => mobileNavRows]} />
-            <Divider />
-            <StackV gap={4} items={[() => drawerControls]} />
-        </>
-    )
-
     return (
-        <nav
-
-            className={cn("sticky top-0 z-50 border-b border-default bg-surface", className)}
-        >
+        <nav className="sticky top-0 z-50 border-b border-default bg-surface">
             {/* primary row — fixed 4rem tall, matching the real bar's height contract */}
             <div className="h-16 min-h-16">
                 <StackH
-                    gap={6}
                     principle="block-boundary"
                     explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
-                    justify="between"
-                    padding={{ x: 4 }}
-
-                    items={[() => primaryRow]}
+                    items={[
+                        () => (
+                            <StackH
+                                principle="flex-action"
+                                explain="Groups brand mark and desktop route pills on one horizontal peer row so they share a single hit baseline."
+                                items={[
+                                    () => (
+                                        <span
+                                            role="button"
+                                            tabIndex={0}
+                                            aria-label="StarCi Academy"
+                                            onClick={onLogoPress}
+                                            onKeyDown={(event) => {
+                                                if (event.key === "Enter" || event.key === " ") onLogoPress()
+                                            }}
+                                            className="inline-flex cursor-pointer"
+                                        >
+                                            <Logo />
+                                        </span>
+                                    ),
+                                    () => (
+                                        <ShowFrom
+                                            at="md"
+                                            body={() => (
+                                                <ButtonRadioGroup
+                                                    items={navItems.map((item) => ({
+                                                        value: item.id,
+                                                        content: <Typography size="sm" text={item.label} />,
+                                                    }))}
+                                                    value={activeNavId}
+                                                    onChange={(id) => navItems.find((item) => item.id === id)?.onPress()}
+                                                    ariaLabel="Main navigation"
+                                                />
+                                            )}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                        () => (
+                            <StackH
+                                principle="flex-action"
+                                explain="Groups search, locale, theme, cart, account, and mobile menu triggers on one horizontal peer row so they share a single hit baseline."
+                                items={[
+                                    () => (
+                                        <ShowFrom
+                                            at="md"
+                                            body={() => (
+                                                <InputButtonLike
+                                                    placeholder={searchPlaceholder}
+                                                    icon={MagnifyingGlassIcon}
+                                                    suffix={() => <ShortcutHint shortcutLabel={shortcutLabel} />}
+                                                    onPress={onSearchPress}
+                                                />
+                                            )}
+                                        />
+                                    ),
+                                    () => (
+                                        <HideAbove
+                                            at="md"
+                                            body={() => (
+                                                <Button
+                                                    isIconOnly
+                                                    variant="ghost"
+                                                    prefixIcon={MagnifyingGlassIcon}
+                                                    ariaLabel={searchPlaceholder}
+                                                    onPress={onSearchPress}
+                                                />
+                                            )}
+                                        />
+                                    ),
+                                    () => (
+                                        <ShowFrom
+                                            at="md"
+                                            body={() => (
+                                                <StackH
+                                                    principle="flex-action"
+                                                    explain="Groups language and theme controls on one horizontal peer row so they share a single hit baseline."
+                                                    items={[
+                                                        () => (
+                                                            <NavbarLanguageMenu
+                                                                languages={languages}
+                                                                activeLocale={activeLocale}
+                                                                onLocaleChange={onLocaleChange}
+                                                            />
+                                                        ),
+                                                        () => (
+                                                            <NavbarThemeSwitch
+                                                                isDarkMode={isDarkMode}
+                                                                onThemeToggle={onThemeToggle}
+                                                            />
+                                                        ),
+                                                    ]}
+                                                />
+                                            )}
+                                        />
+                                    ),
+                                    () => (
+                                        <HeroButton
+                                            isIconOnly
+                                            variant="tertiary"
+                                            className="rounded-full"
+                                            aria-label="Cart"
+                                            onPress={onCartPress}
+                                        >
+                                            <Badge color="accent" count={cartCount}>
+                                                <ShoppingCartIcon className="size-5" />
+                                            </Badge>
+                                        </HeroButton>
+                                    ),
+                                    ...(account.isAuthed
+                                        ? [
+                                            () => (
+                                                <Popover isOpen={isNotificationsOpen} onOpenChange={setNotificationsOpen}>
+                                                    <HeroButton
+                                                        isIconOnly
+                                                        variant="tertiary"
+                                                        className="rounded-full"
+                                                        aria-label="Notifications"
+                                                    >
+                                                        <Badge color="danger" count={notifications.unreadCount}>
+                                                            <BellIcon className="size-5" />
+                                                        </Badge>
+                                                    </HeroButton>
+                                                    <PopoverContent placement="bottom right" className="w-[360px]">
+                                                        {/* inset-exception: vendor popover body padding, wider than tall, not a surface inset */}
+                                                        <StackV
+                                                            principle="control-pad"
+                                                            explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row."
+                                                            items={[
+                                                                () => (
+                                                                    <StackH
+                                                                        principle="sibling-stack"
+                                                                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                                        items={[
+                                                                            () => <Typography size="sm" weight="bold" text="Notifications" />,
+                                                                            ...(notifications.unreadCount > 0
+                                                                                ? [
+                                                                                    () => (
+                                                                                        <Button
+                                                                                            isIconOnly
+                                                                                            variant="ghost"
+                                                                                            size="sm"
+                                                                                            prefixIcon={ChecksIcon}
+                                                                                            ariaLabel="Mark all as read"
+                                                                                            onPress={notifications.onMarkAllRead}
+                                                                                        />
+                                                                                    ),
+                                                                                ]
+                                                                                : []),
+                                                                        ]}
+                                                                    />
+                                                                ),
+                                                                () => (
+                                                                    <AsyncContent
+                                                                        isLoading={notifications.isLoading && notifications.items.length === 0}
+                                                                        skeleton={() => (
+                                                                            <StackV
+                                                                                principle="sibling-stack"
+                                                                                explain="Same-kind peer stack of notification skeleton rows — not group-boundary, because rows are repeating siblings rather than section groups."
+                                                                                items={[() => notificationSkeletonRows]}
+                                                                            />
+                                                                        )}
+                                                                        isEmpty={notifications.items.length === 0}
+                                                                        emptyContent={{ title: "No notifications yet" }}
+                                                                        error={notifications.error}
+                                                                        errorContent={{
+                                                                            title: notifications.error ?? "",
+                                                                            onRetry: notifications.onRetry,
+                                                                            retryLabel: "Try again",
+                                                                        }}
+                                                                        content={() => (
+                                                                            <ScrollArea
+                                                                                axis="y"
+                                                                                principle="flex-fill"
+                                                                                explain="Owns local vertical overflow for the notification list so long threads do not grow the popover past the viewport."
+                                                                                body={() => (
+                                                                                    <StackV
+                                                                                        principle="sibling-stack"
+                                                                                        explain="Same-kind peer stack of notification rows — not group-boundary, because rows are repeating siblings rather than section groups."
+                                                                                        items={[() => notificationRows]}
+                                                                                    />
+                                                                                )}
+                                                                            />
+                                                                        )}
+                                                                    />
+                                                                ),
+                                                                () => (
+                                                                    <Button
+                                                                        variant="ghost"
+                                                                        size="sm"
+                                                                        label="See all"
+                                                                        onPress={notifications.onSeeAll}
+                                                                    />
+                                                                ),
+                                                            ]}
+                                                        />
+                                                    </PopoverContent>
+                                                </Popover>
+                                            ),
+                                        ]
+                                        : []),
+                                    () => (
+                                        <Dropdown isOpen={isAccountOpen} onOpenChange={setAccountOpen}>
+                                            <HeroButton
+                                                isIconOnly
+                                                variant="tertiary"
+                                                className="rounded-full"
+                                                aria-label="Account"
+                                            >
+                                                {account.isAuthed ? (
+                                                    <Avatar
+                                                        size="sm"
+                                                        name={account.user?.username}
+                                                        src={account.user?.avatarUrl ?? undefined}
+                                                        seed={account.user?.email ?? account.user?.username}
+                                                    />
+                                                ) : (
+                                                    <UserIcon className="size-5" />
+                                                )}
+                                            </HeroButton>
+                                            <Dropdown.Popover placement="bottom right" className="w-[300px]">
+                                                <StackV
+                                                    principle="cell-pad"
+                                                    explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body."
+                                                    body={() => accountMenuHeader}
+                                                />
+                                                <Divider />
+                                                <Dropdown.Menu aria-label="Account">
+                                                    <Dropdown.Section>
+                                                        {account.menuItems.map((item) => {
+                                                            const Icon = item.icon
+                                                            return (
+                                                                <Dropdown.Item
+                                                                    key={item.id}
+                                                                    id={item.id}
+                                                                    textValue={item.label}
+                                                                    className={item.isDanger ? "text-danger-soft-foreground" : undefined}
+                                                                    onPress={item.onPress}
+                                                                >
+                                                                    {Icon ? <Icon className="size-5" /> : null}
+                                                                    <Label className={item.isDanger ? "text-danger-soft-foreground" : undefined}>{item.label}</Label>
+                                                                </Dropdown.Item>
+                                                            )
+                                                        })}
+                                                    </Dropdown.Section>
+                                                </Dropdown.Menu>
+                                            </Dropdown.Popover>
+                                        </Dropdown>
+                                    ),
+                                    () => (
+                                        <HideAbove
+                                            at="md"
+                                            body={() => (
+                                                <Button
+                                                    isIconOnly
+                                                    variant="ghost"
+                                                    prefixIcon={SidebarSimpleIcon}
+                                                    ariaLabel="Open mobile menu"
+                                                    onPress={() => onMobileDrawerOpenChange(true)}
+                                                />
+                                            )}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]}
                 />
             </div>
 
@@ -592,8 +565,61 @@ const Navbar = ({
                 onOpenChange={onMobileDrawerOpenChange}
                 placement="right"
                 title="Mobile menu"
-
-                body={() => <StackV gap={6} items={[() => drawerNav]} />}
+                body={() => (
+                    <StackV
+                        principle="group-boundary"
+                        explain="Separates mobile route list from language/theme controls so each region keeps its own seam owner — not sibling-stack, because these are distinct section roles rather than repeating peers."
+                        items={[
+                            () => (
+                                <StackV
+                                    principle="sibling-stack"
+                                    explain="Same-kind peer stack of mobile route rows — not group-boundary, because rows are repeating siblings rather than section groups."
+                                    items={[() => mobileNavRows]}
+                                />
+                            ),
+                            () => <Divider />,
+                            () => (
+                                <StackV
+                                    principle="sibling-stack"
+                                    explain="Same-kind peer stack of language and theme rows — not group-boundary, because these are repeating preference peers rather than section groups."
+                                    items={[
+                                        () => (
+                                            <StackH
+                                                principle="sibling-stack"
+                                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                items={[
+                                                    () => <Typography size="sm" text="Language" />,
+                                                    () => (
+                                                        <NavbarLanguageMenu
+                                                            languages={languages}
+                                                            activeLocale={activeLocale}
+                                                            onLocaleChange={onLocaleChange}
+                                                        />
+                                                    ),
+                                                ]}
+                                            />
+                                        ),
+                                        () => (
+                                            <StackH
+                                                principle="sibling-stack"
+                                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                items={[
+                                                    () => <Typography size="sm" text="Theme" />,
+                                                    () => (
+                                                        <NavbarThemeSwitch
+                                                            isDarkMode={isDarkMode}
+                                                            onThemeToggle={onThemeToggle}
+                                                        />
+                                                    ),
+                                                ]}
+                                            />
+                                        ),
+                                    ]}
+                                />
+                            ),
+                        ]}
+                    />
+                )}
             />
         </nav>
     )

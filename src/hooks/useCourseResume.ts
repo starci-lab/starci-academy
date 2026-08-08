@@ -4,7 +4,7 @@ import { useMemo } from "react"
 import { useLocale } from "next-intl"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
-import { resolveResumeHref } from "@/components/pages/CourseContents/map"
+import { resolveResumeHref } from "@/modules/utils/course-contents-map"
 import type {
     MyCourseOutlineCurrentTask,
     MyCourseOutlinePayload,

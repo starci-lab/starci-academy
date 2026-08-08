@@ -82,7 +82,7 @@ export const RemovableToken = ({
     // edit/remove controls) — `Button`/`Typography` each draw their own shimmer,
     // this composite only decides which parts show and how many (COMPOSITE-10).
     const trailing = isSkeleton ? (
-        <Button isSkeleton size="sm" classNames={["shrink-0"]} />
+        <span className="shrink-0"><Button isSkeleton size="sm" /></span>
     ) : onEdit || onRemove ? (
         <StackH
             gap={3}
@@ -143,7 +143,6 @@ export const RemovableToken = ({
                             weight="medium"
                             truncate
                             isSkeleton={isSkeleton}
-                            classNames={isSkeleton ? ["w-1/3"] : undefined}
                             text={label}
                         />
                     ),

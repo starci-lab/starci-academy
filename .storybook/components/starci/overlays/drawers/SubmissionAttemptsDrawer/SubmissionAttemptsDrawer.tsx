@@ -113,7 +113,7 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, isSelected: boolean
     // pushing, not a child margin; the label+chip stay grouped in their own inner track
     // so `between` only ever splits two things, not three.
     const attemptLineContent = [
-        () => <StackH gap={3} align="center" principle="sibling-stack"
+        () => <StackH principle="sibling-stack"
             explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
             items={attemptLabelAndChip} />,
         ...(attempt.processedTimeAgo != null ? [() => (
@@ -147,16 +147,13 @@ const attemptRowContent = (attempt: SubmissionAttemptRecord, isSelected: boolean
     const rowContent = [
         () => (
             <StackH
-                gap={3}
-                align="center"
-                justify="between"
                 principle="content-row"
                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 items={attemptLineContent}
             />
         ),
         ...(attempt.gradedByModel != null ? [() => (
-            <StackH gap={3} align="center" at="sm" principle="sibling-stack"
+            <StackH at="sm" principle="sibling-stack"
                 explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                 items={bylineContent}  />
         )] : []),
@@ -260,39 +257,35 @@ const SubmissionAttemptsDrawer = ({
     ]
 
     return (
-        <div>
-            <DrawerShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                placement={placement}
-                title={`${DRAWER_TITLE} · ${attempts.length}`}
-                body={() => (
-                    <AsyncContent
-                        isLoading={isLoading}
-                        skeleton={() => (
-                            <StackV
-                                gap={3}
-
-                                items={skeletonRows}
-                            />
-                        )}
-                        isEmpty={isEmpty}
-                        emptyContent={emptyContent}
-                        error={error}
-                        errorContent={errorContent}
-
-                        content={() => (
-                            <StackV
-                                gap={4}
-
-
-                                items={listAndPager}
-                            />
-                        )}
-                    />
-                )}
-            />
-        </div>
+        <DrawerShell
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            placement={placement}
+            title={`${DRAWER_TITLE} · ${attempts.length}`}
+            body={() => (
+                <AsyncContent
+                    isLoading={isLoading}
+                    skeleton={() => (
+                        <StackV
+                            principle="sibling-stack"
+                            explain="Skeleton attempt rows — not group-boundary, because these are peer loading placeholders."
+                            items={skeletonRows}
+                        />
+                    )}
+                    isEmpty={isEmpty}
+                    emptyContent={emptyContent}
+                    error={error}
+                    errorContent={errorContent}
+                    content={() => (
+                        <StackV
+                            principle="content-row"
+                            explain="Attempt list over optional pager — not sibling-stack, because these are related content regions."
+                            items={listAndPager}
+                        />
+                    )}
+                />
+            )}
+        />
     )
 }
 

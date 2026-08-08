@@ -9,7 +9,7 @@ import {
 } from "next-intl"
 import {
     useCourseEnrollment,
-} from "../hooks/useCourseEnrollment"
+} from "@/hooks/useCourseEnrollment"
 import {
     AddToCartButton,
 } from "@/components/blocks/commerce/AddToCartButton"

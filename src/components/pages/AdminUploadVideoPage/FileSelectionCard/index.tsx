@@ -15,7 +15,7 @@ import {
 import { Box } from "@/components/frames/Box"
 import type {
     ProcessResult,
-} from "../types"
+} from "@/modules/types/admin-upload-video"
 import {
     DropZone,
 } from "./DropZone"

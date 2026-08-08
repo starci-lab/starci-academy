@@ -2,7 +2,7 @@
 
 import React from "react"
 import { useTranslations } from "next-intl"
-import { useFlashcardNav, type FlashcardMode } from "../useFlashcardNav"
+import { useFlashcardNav, type FlashcardMode } from "@/hooks/useFlashcardNav"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 
 /** Props for {@link FlashcardMobileNav}. */

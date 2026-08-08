@@ -123,10 +123,8 @@ export const _FollowListModal = ({
         key: tabId,
         label: (
             <StackH
-                gap={3}
                 principle="value-row"
                 explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
-                align="center"
                 items={[
                     () => <>{tabLabel[tabId]}</>,
                     () => <Typography size="sm" color="muted" tabularNums text={String(counts[tabId])} />,
@@ -158,7 +156,8 @@ export const _FollowListModal = ({
 
     const listBody: ComponentTypeWithSkeleton = () => (
         <StackV
-            gap={2}
+            principle="sibling-stack"
+            explain="Follow list over its infinite-scroll sentinel — not group-boundary, because these are peer pieces of one scrolling list."
             items={[
                 () => (
                     <SurfaceCardList
@@ -194,7 +193,8 @@ export const _FollowListModal = ({
     // not gap-3 (fe/foundations/gap.md's between-block rule).
     const modalBody: ComponentTypeWithSkeleton = () => (
         <StackV
-            gap={6}
+            principle="block-boundary"
+            explain="Tabs over the follow list — not group-boundary, because this is the modal body's major section seam, and not sibling-stack, because nav and list are different-function zones."
             items={[
                 () => (
                     <Tabs
@@ -215,8 +215,17 @@ export const _FollowListModal = ({
                 // (the sanctioned raw-appearance escape hatch) rather than a
                 // bare `div`.
                 () => (
-                    <Box className="max-h-[60vh]">
-                        <ScrollArea axis="y" body={listBody} />
+                    <Box
+                        className="max-h-[60vh]"
+                        principle="flex-fill"
+                        explain="Caps the follow list viewport so tabs stay put while the list scrolls inside."
+                    >
+                        <ScrollArea
+                            axis="y"
+                            body={listBody}
+                            principle="flex-fill"
+                            explain="Owns local vertical overflow for the capped follow list — the height cap sits on the Box above."
+                        />
                     </Box>
                 ),
             ]}

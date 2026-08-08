@@ -3,7 +3,7 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import { useCallback } from "react"
-import type { RendererTypeOption } from "../../types"
+import type { RendererTypeOption } from "@/modules/types/admin-mpeg-dash-test"
 import type { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
 
 /** Props for {@link RendererTypeButton}. */

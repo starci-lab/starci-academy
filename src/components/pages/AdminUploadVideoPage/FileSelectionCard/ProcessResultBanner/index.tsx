@@ -4,7 +4,7 @@ import { CheckCircleIcon } from "@phosphor-icons/react"
 import React from "react"
 import type {
     ProcessResult,
-} from "../../types"
+} from "@/modules/types/admin-upload-video"
 import { Box } from "@/components/frames/Box"
 
 /** Props for {@link ProcessResultBanner}. */

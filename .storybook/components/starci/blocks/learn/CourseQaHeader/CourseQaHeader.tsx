@@ -53,26 +53,25 @@ const CourseQaHeader = ({
     isSkeleton = false,
 }: CourseQaHeaderProps) => {
     return (
-        <div>
-            <PageHeader
-
-                isSkeleton={isSkeleton}
-                breadcrumb={() =>
-                    isSkeleton || breadcrumbItems?.length ? (
-                        <div className="w-fit">
-                            <Breadcrumbs
-                                collapseOnMobile
-                                collapseFrom={4}
-                                items={breadcrumbItems ?? []}
-                                isSkeleton={isSkeleton}
-                            />
-                        </div>
-                    ) : undefined
-                }
-                title={title}
-                description={description}
-            />
-        </div>
+        // Identity hold: PageHeader does not accept CallerIdentity (ledger PageHeader gap).
+        <PageHeader
+            isSkeleton={isSkeleton}
+            breadcrumb={() =>
+                isSkeleton || breadcrumbItems?.length ? (
+                    // Hold: no hug-width frame for breadcrumb measure (`w-fit` parent placement).
+                    <div className="w-fit">
+                        <Breadcrumbs
+                            collapseOnMobile
+                            collapseFrom={4}
+                            items={breadcrumbItems ?? []}
+                            isSkeleton={isSkeleton}
+                        />
+                    </div>
+                ) : undefined
+            }
+            title={title}
+            description={description}
+        />
     )
 }
 

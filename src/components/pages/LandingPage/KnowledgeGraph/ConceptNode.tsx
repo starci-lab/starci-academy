@@ -5,8 +5,8 @@ import { Handle, type NodeProps, Position } from "@xyflow/react"
 import { Button, Typography, cn } from "@heroui/react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { TRACK_CONFIG, NODE_DEGREE, bubbleRadius, type TrackKey } from "./data"
-import { LANDING_TRACK_TAG } from "../constants"
+import { TRACK_CONFIG, NODE_DEGREE, bubbleRadius, type TrackKey } from "@/modules/utils/knowledge-graph-data"
+import { LANDING_TRACK_TAG } from "@/modules/utils/landing-constants"
 
 /** React Flow node-type id for a knowledge-graph concept. */
 export const CONCEPT_NODE_TYPE = "concept" as const

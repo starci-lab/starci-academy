@@ -101,72 +101,68 @@ const FoundationHeader = ({
     const hasAuthor = author != null && author.trim().length > 0
 
     return (
-        <div>
-            <PageHeader
-
-                isSkeleton={isSkeleton}
-                breadcrumb={() => (
-                    <div className="w-fit">
-                        <Breadcrumbs
-                            collapseOnMobile
-                            collapseFrom={4}
-                            items={breadcrumbItems}
-                            isSkeleton={isSkeleton}
-                        />
-                    </div>
-                )}
-                title={title}
-                description={description}
-                meta={() =>
-                    <StackV
-                        gap={4}
+        // Identity hold: PageHeader does not accept CallerIdentity (ledger PageHeader gap).
+        <PageHeader
+            isSkeleton={isSkeleton}
+            breadcrumb={() => (
+                // Hold: no hug-width frame for breadcrumb measure (`w-fit` parent placement).
+                <div className="w-fit">
+                    <Breadcrumbs
+                        collapseOnMobile
+                        collapseFrom={4}
+                        items={breadcrumbItems}
                         isSkeleton={isSkeleton}
-                        items={[
-                            () => (
-                                <StackH
-                                    gap={3}
-                                    principle="chip-row"
-                                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
-                                    align="center"
-                                    at="sm"
-                                    isSkeleton={isSkeleton}
-                                    items={[
-                                        () => (
-                                            <EnumChip
-                                                value={isSkeleton ? FoundationKind.Document : kind}
-                                                map={KIND_MAP}
-                                                isSkeleton={isSkeleton}
-
-                                            />
-                                        ),
-                                        ...(isSkeleton
-                                            ? [() => <Chip isSkeleton />]
-                                            : isRecommended
-                                                ? [() => <Chip tone="success" text="Recommended" />]
-                                                : []),
-                                        ...(isSkeleton
-                                            ? [() => <Chip isSkeleton />, () => <Chip isSkeleton />]
-                                            : hasTags
-                                                ? (tags ?? []).map((tag) => () => <Chip text={tag.label} />)
-                                                : []),
-                                    ]}
-                                />
-                            ),
-                            ...(isSkeleton ? [() => (
-                                <Typography size="xs" color="muted" isSkeleton />
-                            )] : hasAuthor ? [() => (
-                                <Typography
-                                    size="xs"
-                                    color="muted"
-                                    text={`Author: ${author}`}
-
-                                />
-                            )] : []),
-                        ]}
                     />
-                }
-            />
-        </div>
+                </div>
+            )}
+            title={title}
+            description={description}
+            meta={() =>
+                <StackV
+                    principle="sibling-stack"
+                    explain="Chip row and author line are same-kind peers in the meta cluster — not group-boundary, because they are repeating meta sections rather than nested groups."
+                    isSkeleton={isSkeleton}
+                    items={[
+                        () => (
+                            <StackH
+                                principle="chip-row"
+                                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                at="sm"
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <EnumChip
+                                            value={isSkeleton ? FoundationKind.Document : kind}
+                                            map={KIND_MAP}
+                                            isSkeleton={isSkeleton}
+                                        />
+                                    ),
+                                    ...(isSkeleton
+                                        ? [() => <Chip isSkeleton />]
+                                        : isRecommended
+                                            ? [() => <Chip tone="success" text="Recommended" />]
+                                            : []),
+                                    ...(isSkeleton
+                                        ? [() => <Chip isSkeleton />, () => <Chip isSkeleton />]
+                                        : hasTags
+                                            ? (tags ?? []).map((tag) => () => <Chip text={tag.label} />)
+                                            : []),
+                                ]}
+                            />
+                        ),
+                        ...(isSkeleton ? [() => (
+                            <Typography size="xs" color="muted" isSkeleton />
+                        )] : hasAuthor ? [() => (
+                            <Typography
+                                size="xs"
+                                color="muted"
+                                text={`Author: ${author}`}
+                            />
+                        )] : []),
+                    ]}
+                />
+            }
+        />
     )
 }
 

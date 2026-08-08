@@ -1,7 +1,6 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { CheckCircleIcon } from "@phosphor-icons/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`.
@@ -25,11 +24,6 @@ export interface CheckListCardProps {
      * the top-level shadow look.
      */
     bordered?: boolean
-    /**
-     * Where this list sits inside its parent. Appearance is not passable — it is
-     * already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -47,12 +41,11 @@ export interface CheckListCardProps {
  * @param props - See {@link CheckListCardProps}.
  * @see Story: .storybook/stories/blocks/cards/CheckListCard/CheckListCard.stories
  */
-export const CheckListCard = ({ children, bordered = false, classNames }: CheckListCardProps) => (
+export const CheckListCard = ({ children, bordered = false }: CheckListCardProps) => (
     <ul
         className={cn(
             "overflow-hidden rounded-3xl bg-surface",
             bordered ? "border border-default" : "shadow-surface",
-            classNames,
         )}
         data-tier="composite"
         data-component="CheckListCard"

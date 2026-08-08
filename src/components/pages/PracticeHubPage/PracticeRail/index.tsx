@@ -21,10 +21,10 @@ import { CODING_DOMAIN_ORDER } from "@/modules/api/graphql/queries/types/coding"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { Box } from "@/components/frames/Box"
 import { StackH, StackV } from "@/components/frames/Stack"
-import { usePracticeView } from "../hooks/usePracticeView"
-import { usePracticeFilters } from "../hooks/usePracticeFilters"
-import type { PracticeView } from "../hooks/usePracticeView"
-import type { DomainFilter } from "../types"
+import { usePracticeView } from "@/hooks/usePracticeView"
+import { usePracticeFilters } from "@/hooks/usePracticeFilters"
+import type { PracticeView } from "@/hooks/usePracticeView"
+import type { DomainFilter } from "@/modules/types/practice-hub"
 
 /**
  * The PracticeHubPage LEFT RAIL — the same docs-style sidebar as the flashcards /

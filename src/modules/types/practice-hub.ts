@@ -25,7 +25,7 @@ export type SortKey = "default" | "difficulty" | "points"
 
 /**
  * The decoded PracticeHubPage-catalog filter state, mirrored to the URL query string by
- * {@link import("../hooks/usePracticeFilters").usePracticeFilters}.
+ * {@link import("@/hooks/usePracticeFilters").usePracticeFilters}.
  */
 export interface PracticeFilters {
     /** Free-text title query (client-side `includes` match). */

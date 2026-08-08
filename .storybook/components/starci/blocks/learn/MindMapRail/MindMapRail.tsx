@@ -159,15 +159,12 @@ const MindMapRail = ({
             defaultOpen={defaultFilterOpen}
 
             content={
-                <div>
-                    <ButtonRadioGroup
-                        ariaLabel={tierAriaLabel}
-                        value={tier}
-                        onChange={onTier}
-
-                        items={TIER_ORDER.map((key) => ({ value: key, content: TIER_LABEL[key] }))}
-                    />
-                </div>
+                <ButtonRadioGroup
+                    ariaLabel={tierAriaLabel}
+                    value={tier}
+                    onChange={onTier}
+                    items={TIER_ORDER.map((key) => ({ value: key, content: TIER_LABEL[key] }))}
+                />
             }
         />
     )
@@ -201,13 +198,11 @@ const MindMapRail = ({
                                 />
                             ),
                             () => (
-                                <div>
-                                    {/* `Badge` only wraps the trigger when a non-default tier is active — `dot` has
-                                        no built-in "hide me" reading the way `count` does (§ Badge file header: count
-                                        ≤ 0 hides itself, a bare dot has no such signal), so the ON/OFF state is this
-                                        block's own condition instead of a prop the atom could resolve alone. */}
-                                    {isFiltered ? <Badge dot>{filterTrigger}</Badge> : filterTrigger}
-                                </div>
+                                // `Badge` only wraps the trigger when a non-default tier is active — `dot` has
+                                // no built-in "hide me" reading the way `count` does (§ Badge file header: count
+                                // ≤ 0 hides itself, a bare dot has no such signal), so the ON/OFF state is this
+                                // block's own condition instead of a prop the atom could resolve alone.
+                                isFiltered ? <Badge dot>{filterTrigger}</Badge> : filterTrigger
                             ),
                         ]}
                     />

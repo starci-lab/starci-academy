@@ -9,8 +9,8 @@ import {
     TrophyIcon,
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { DASHBOARD_TABS } from "../types"
-import type { DashboardTab } from "../types"
+import { DASHBOARD_TABS } from "@/modules/types/dashboard-tabs"
+import type { DashboardTab } from "@/modules/types/dashboard-tabs"
 import { ExtendedTabs } from "@/components/blocks/navigation/ExtendedTabs"
 import { useDashboardTabStore } from "@/hooks/zustand/dashboardTab/store"
 import { Box } from "@/components/frames/Box"

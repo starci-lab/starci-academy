@@ -1,7 +1,7 @@
 "use client"
 
 import useSWR from "swr"
-import { PROBLEMS_PAGE_LIMIT } from "../constants"
+import { PROBLEMS_PAGE_LIMIT } from "@/modules/utils/practice-hub"
 import { queryCodingProblems } from "@/modules/api/graphql/queries/query-coding-problems"
 import { type CodingProblem } from "@/modules/api/graphql/queries/types/coding"
 

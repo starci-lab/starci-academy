@@ -9,7 +9,7 @@ import {
 } from "@heroui/react"
 import type {
     ProviderUploadStatus,
-} from "../types"
+} from "@/modules/types/admin-upload-video"
 import {
     ProviderUploadRow,
 } from "./ProviderUploadRow"

@@ -97,7 +97,8 @@ export const _MindMapNodeDrawer = ({
     // so it never shimmers.
     const header: ComponentTypeWithSkeleton = () => (
         <StackV
-            gap={1}
+            principle="title-subtitle"
+            explain="Eyebrow over title over description — not label-field, because none of these lines is a form control label."
             items={[
                 () => <Typography size="xs" color="muted" text={labels.aboutEyebrow} />,
                 () => <Typography size="h4" weight="bold" text={keyword ?? labels.titleFallback} />,
@@ -113,7 +114,8 @@ export const _MindMapNodeDrawer = ({
         { length: SKELETON_SECTION_COUNT },
         () => () => (
             <StackV
-                gap={2}
+                principle="sibling-stack"
+                explain="Skeleton section label over its row list — not group-boundary, because these are peer pieces of one loading section."
                 items={[
                     () => <Skeleton.Typography type="body-xs" width="1/3" />,
                     () => (
@@ -121,7 +123,8 @@ export const _MindMapNodeDrawer = ({
                             {Array.from({ length: SKELETON_ROW_COUNT }, (_row, index) => (
                                 <SurfaceListCardItem key={index}>
                                     <StackV
-                                        gap={2}
+                                        principle="title-subtitle"
+                                        explain="Skeleton title over subtitle bars — not label-field, because neither bar is a form control label."
                                         items={[
                                             () => <Skeleton.Typography type="body-xs" width="1/3" />,
                                             () => <Skeleton.Typography type="body-sm" width="3/4" />,
@@ -141,14 +144,21 @@ export const _MindMapNodeDrawer = ({
             return <AsyncContentError title={labels.loadError} onRetry={onRetry} retryLabel={labels.retry} />
         }
         if (isSkeleton) {
-            return <StackV gap={4} items={skeletonSections} />
+            return (
+                <StackV
+                    principle="sibling-stack"
+                    explain="Skeleton related-content sections — not group-boundary, because these are repeating peer loading blocks."
+                    items={skeletonSections}
+                />
+            )
         }
         if (isEmpty) {
             return <AsyncContentEmpty title={labels.emptyTitle} description={labels.emptyDescription} />
         }
         return (
             <StackV
-                gap={4}
+                principle="content-row"
+                explain="Eyebrow over related-content groups — not sibling-stack, because these are related content regions rather than repeating peers."
                 items={[
                     // section label over the related-content groups (each an interactive nav list)
                     () => <Typography size="sm" weight="semibold" text={labels.eyebrow} />,

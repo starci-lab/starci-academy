@@ -2,9 +2,9 @@
 
 import React from "react"
 import { Card, CardContent } from "@heroui/react"
-import { QUICK_TEST_URLS } from "../constants"
+import { QUICK_TEST_URLS } from "@/modules/utils/admin-mpeg-dash-quick-urls"
 import { QuickTestUrlButton } from "./QuickTestUrlButton"
-import type { QuickTestUrl } from "../types"
+import type { QuickTestUrl } from "@/modules/types/admin-mpeg-dash-test"
 import { Box } from "@/components/frames/Box"
 
 /** Props for {@link QuickTestUrls}. */

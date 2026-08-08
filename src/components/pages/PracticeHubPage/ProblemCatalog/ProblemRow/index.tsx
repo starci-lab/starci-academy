@@ -11,8 +11,8 @@ import {
     CircleHalfIcon,
     CircleIcon,
 } from "@phosphor-icons/react"
-import { CODING_DIFFICULTY_META } from "../../constants"
-import type { ProblemStatus } from "../../types"
+import { CODING_DIFFICULTY_META } from "@/modules/utils/practice-hub"
+import type { ProblemStatus } from "@/modules/types/practice-hub"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import type { CodingProblem } from "@/modules/api/graphql/queries/types/coding"

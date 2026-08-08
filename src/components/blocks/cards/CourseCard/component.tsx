@@ -21,11 +21,10 @@ import {
 import { PriceTagInline } from "@/components/blocks/commerce/PriceTag"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import type { CourseEntity } from "@/modules/types/entities/course"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 import { publicEnv } from "@/resources/env/public"
 
 /** Props for {@link _CourseCard} — presentational; all data + labels already resolved. */
-export interface CourseCardProps extends WithClassNames<undefined> {
+export interface CourseCardProps {
     /** The course summarised by this card (list-item data). */
     course: CourseEntity
     /**
@@ -84,7 +83,6 @@ export const _CourseCard = ({
     loyaltyPending = false,
     layout = "grid",
     action: Action,
-    className,
     viewLabel,
     viewCourseLabel,
     learnersLabel,
@@ -155,7 +153,7 @@ export const _CourseCard = ({
     // price + view CTA on the right — one course per row for fast scanning.
     if (layout === "line") {
         return (
-            <Card className={cn("overflow-hidden rounded-3xl", className)}>
+            <Card className={cn("overflow-hidden rounded-3xl")}>
                 {/* plain div, NOT Card.Content — `.card__content` bakes flex-col
                     (unlayered), so `items-center` on it centers vertically instead of
                     laying the row out horizontally. The card root already insets its
@@ -229,7 +227,7 @@ export const _CourseCard = ({
     }
 
     return (
-        <Card className={cn("flex flex-col overflow-hidden rounded-3xl", className)}>
+        <Card className={cn("flex flex-col overflow-hidden rounded-3xl")}>
             <Card.Content className="flex flex-col gap-3">
                 {/* cover 16:9 — rounded-2xl = the "inner" step under the card's
                     rounded-3xl (was full-bleed/unrounded, mismatched the line thumb);

@@ -4,6 +4,7 @@ import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { InputTextarea } from "@sb-components/atoms/forms"
 import { InputButtonLike } from "@sb-components/composites/buttons/InputButtonLike/InputButtonLike"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -124,101 +125,106 @@ const CourseQaComposer = ({
             src={currentUser?.avatarSrc}
             size="sm"
             isSkeleton={isSkeleton}
-
-
         />
     ) : null
 
     // ── LEAF — CollapsedPrompt: avatar + pill, nothing else composed ──────────
     if (mode === "collapsible" && !expanded) {
         return (
-            <div>
-                <StackH
-                    gap={3}
-                    isSkeleton={isSkeleton}
-                    items={[
-                        () => avatar,
-                        () => (
-                            <div className="min-w-0 flex-1">
+            <StackH
+                identity={{ tier: "block", component: "CourseQaComposer" }}
+                principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                isSkeleton={isSkeleton}
+                items={[
+                    () => avatar,
+                    () => (
+                        <FillAvailable
+                            at="base"
+                            explain="Collapsed prompt takes remaining row width beside the avatar so the pill can shrink instead of shoving the face."
+                            isSkeleton={isSkeleton}
+                            body={() => (
                                 <InputButtonLike
                                     placeholder={placeholder ?? "Ask a question about this course…"}
                                     onPress={() => setExpanded(true)}
                                     isSkeleton={isSkeleton}
                                 />
-                            </div>
-                        ),
-                    ]}
-                />
-            </div>
+                            )}
+                        />
+                    ),
+                ]}
+            />
         )
     }
 
     // ── LEAF — ExpandedForm: avatar + textarea + action row ───────────────────
     return (
-        <div>
-            <StackH
-                gap={3}
-                isSkeleton={isSkeleton}
-                items={[
-                    () => avatar,
-                    ({ isSkeleton }: SkeletonProps) => (
-                        <StackV
-                            gap={3}
-                            isSkeleton={isSkeleton}
-                            classNames={["min-w-0", "flex-1"]}
-                            items={[
-                                () => (
-                                    <InputTextarea
-                                        value={value}
-                                        onValueChange={onValueChange}
-                                        placeholder={placeholder}
-                                        ariaLabel={placeholder ?? "Content"}
-                                        rows={3}
-                                        isDisabled={isPending}
-                                        isSkeleton={isSkeleton}
-
-                                    />
-                                ),
-                                () => (
-                                    <StackH
-                                        gap={3}
-                                        principle="flex-action"
-                                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
-                                        justify="end"
-                                        isSkeleton={isSkeleton}
-                                        items={[
-                                            ...(showCancel ? [() => (
-                                                <Button
-                                                    label="Cancel"
-                                                    variant="tertiary"
-                                                    size="sm"
-                                                    onPress={onCancel}
-                                                    isDisabled={isPending}
-                                                    isSkeleton={isSkeleton}
-
-                                                />
-                                            )] : []),
-                                            () => (
-                                                <Button
-                                                    label={submitLabel}
-                                                    variant="primary"
-                                                    size="sm"
-                                                    onPress={onSubmit}
-                                                    isDisabled={!canSubmit}
-                                                    isPending={isPending}
-                                                    isSkeleton={isSkeleton}
-
-                                                />
-                                            ),
-                                        ]}
-                                    />
-                                ),
-                            ]}
-                        />
-                    ),
-                ]}
-            />
-        </div>
+        <StackH
+            identity={{ tier: "block", component: "CourseQaComposer" }}
+            principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            isSkeleton={isSkeleton}
+            items={[
+                () => avatar,
+                ({ isSkeleton }: SkeletonProps) => (
+                    <FillAvailable
+                        at="base"
+                        explain="Expanded form takes remaining row width beside the avatar so the textarea column can shrink instead of shoving the face."
+                        isSkeleton={isSkeleton}
+                        body={() => (
+                            <StackV
+                                principle="sibling-stack"
+                                explain="Same-kind peer stack of field then actions — not group-boundary, because these are repeating vertical siblings rather than section groups."
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <InputTextarea
+                                            value={value}
+                                            onValueChange={onValueChange}
+                                            placeholder={placeholder}
+                                            ariaLabel={placeholder ?? "Content"}
+                                            rows={3}
+                                            isDisabled={isPending}
+                                            isSkeleton={isSkeleton}
+                                        />
+                                    ),
+                                    () => (
+                                        <StackH
+                                            principle="flex-action"
+                                            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                                            isSkeleton={isSkeleton}
+                                            items={[
+                                                ...(showCancel ? [() => (
+                                                    <Button
+                                                        label="Cancel"
+                                                        variant="tertiary"
+                                                        size="sm"
+                                                        onPress={onCancel}
+                                                        isDisabled={isPending}
+                                                        isSkeleton={isSkeleton}
+                                                    />
+                                                )] : []),
+                                                () => (
+                                                    <Button
+                                                        label={submitLabel}
+                                                        variant="primary"
+                                                        size="sm"
+                                                        onPress={onSubmit}
+                                                        isDisabled={!canSubmit}
+                                                        isPending={isPending}
+                                                        isSkeleton={isSkeleton}
+                                                    />
+                                                ),
+                                            ]}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        )}
+                    />
+                ),
+            ]}
+        />
     )
 }
 

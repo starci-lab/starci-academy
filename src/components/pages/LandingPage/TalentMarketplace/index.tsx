@@ -12,7 +12,7 @@ import {
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { pathConfig } from "@/resources/path"
-import { LANDING_SAMPLE_CANDIDATE } from "../constants"
+import { LANDING_SAMPLE_CANDIDATE } from "@/modules/utils/landing-constants"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { SectionHeading } from "@/components/blocks/marketing/SectionHeading"
 import { ShowcaseMockup, SHOWCASE_THEMES } from "@/components/blocks/marketing/ShowcaseMockup"

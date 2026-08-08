@@ -1,13 +1,10 @@
 "use client"
 
 import React from "react"
-import {
-    Button,
-    Typography,
-} from "@heroui/react"
-import {
-    useTranslations,
-} from "next-intl"
+import { useTranslations } from "next-intl"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackV } from "@/components/frames/Stack"
 import { TierLevelIcon } from "@/components/svg/TierLevelIcon"
 import { TierCardBase } from "@/components/blocks/commerce/TierCardBase"
 
@@ -52,9 +49,7 @@ export const FreeTierCard = ({
             description={t("aiSubscription.free.desc")}
             price={() => (
                 <>
-                    <Typography type="h3" weight="bold">
-                        {t("aiSubscription.free.price")}
-                    </Typography>
+                    <Typography size="h3" weight="bold" text={t("aiSubscription.free.price")} />
                     {/* spacer — matches paid tiers' USD hint block so CTAs align */}
                     <div
                         className="h-[3lh]"
@@ -68,13 +63,19 @@ export const FreeTierCard = ({
             ]}
             isCurrent={isCurrent}
             cta={() => (
-                <Button
-                    variant="secondary"
-                    isDisabled
-                    fullWidth
-                >
-                    {t("aiSubscription.free.cta")}
-                </Button>
+                <StackV
+                    principle="center-measure"
+                    explain="Stretches the disabled free-tier CTA across the card foot so it aligns with paid-tier buy buttons."
+                    items={[
+                        () => (
+                            <Button
+                                variant="secondary"
+                                isDisabled
+                                label={t("aiSubscription.free.cta")}
+                            />
+                        ),
+                    ]}
+                />
             )}
         />
     )

@@ -2,7 +2,6 @@ import { WarningOctagonIcon, type Icon as PhosphorIcon } from "@phosphor-icons/r
 
 import { Typography } from "@/components/atoms/text/Typography"
 import { Button } from "@/components/atoms/buttons/Button"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { StackV } from "@/components/frames/Stack"
 
 /**
@@ -19,10 +18,6 @@ export interface ErrorContentProps {
     onRetry?: () => void
     /** Translated label for the retry button (required to render it). */
     retryLabel?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -44,14 +39,12 @@ export const ErrorContent = ({
     icon: Icon = WarningOctagonIcon,
     onRetry,
     retryLabel,
-    classNames,
 }: ErrorContentProps) => (
     <div data-tier="composite" data-component="ErrorContent">
         <StackV
             gap={4}
             align="center"
             padding={6}
-            classNames={classNames}
             items={[
                 () => <Icon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />,
                 () => (

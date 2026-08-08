@@ -5,14 +5,14 @@ import React, {
 } from "react"
 import { Chip, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { usePracticeFilters } from "../hooks/usePracticeFilters"
-import { useCodingProblemsSwr } from "../hooks/useCodingProblemsSwr"
-import { useMyCodingProgressSwr } from "../hooks/useMyCodingProgressSwr"
+import { usePracticeFilters } from "@/hooks/usePracticeFilters"
+import { useCodingProblemsSwr } from "@/hooks/useCodingProblemsSwr"
+import { useMyCodingProgressSwr } from "@/hooks/useMyCodingProgressSwr"
 import {
     deriveStatus,
     filterProblems,
     sortProblems,
-} from "../utils"
+} from "@/modules/utils/practice-hub"
 import { ProblemRow } from "./ProblemRow"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"

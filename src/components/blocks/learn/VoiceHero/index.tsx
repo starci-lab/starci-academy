@@ -82,33 +82,30 @@ const VoiceHero = ({
 
     if (showTypedFallback) {
         return (
-            <div>
-                <StackV
-                    gap={4}
-
-                    items={[
-                        () => (
-                            <InputTextarea
-                                value={value}
-                                onValueChange={onValueChange}
-                                placeholder={labels.placeholder}
-                                ariaLabel={labels.placeholder}
-                                rows={5}
-
-                            />
-                        ),
-                        ...(canToggle ? [() => (
-                            <Typography
-                                size="sm"
-                                isLink
-                                text={labels.useVoice}
-                                onPress={() => setManualTyped(false)}
-
-                            />
-                        )] : []),
-                    ]}
-                />
-            </div>
+            <StackV
+                identity={{ tier: "block", component: "VoiceHero" }}
+                principle="sibling-stack"
+                explain="Typed field and switch-back link are same-kind peers in the fallback column — not group-boundary, because they are repeating vertical siblings rather than nested groups."
+                items={[
+                    () => (
+                        <InputTextarea
+                            value={value}
+                            onValueChange={onValueChange}
+                            placeholder={labels.placeholder}
+                            ariaLabel={labels.placeholder}
+                            rows={5}
+                        />
+                    ),
+                    ...(canToggle ? [() => (
+                        <Typography
+                            size="sm"
+                            isLink
+                            text={labels.useVoice}
+                            onPress={() => setManualTyped(false)}
+                        />
+                    )] : []),
+                ]}
+            />
         )
     }
 
@@ -120,49 +117,41 @@ const VoiceHero = ({
         : value || (listening ? labels.listening : labels.placeholder)
 
     return (
-        <div>
-            <StackV
-                gap={4}
-                principle="card-caption"
-                explain="Holds caption text under card media so the caption stays attached to the image above it."
-                align="center"
-
-                items={[
-                    () => (
-                        <Button
-                            isIconOnly
-                            size="lg"
-                            variant={listening ? "danger" : "primary"}
-                            prefixIcon={MicrophoneIcon}
-                            ariaLabel={listening ? labels.listening : labels.pushToTalk}
-                            onPress={onToggleListen}
-
-                        />
-                    ),
-                    // real `src` (`VoiceHero/index.tsx:136`): `<Typography color="default">`
-                    // declares NO `type` ⇒ defaults to base (16px), not `lg`.
-                    () => (
-                        <Typography
-                            size="base"
-                            align="center"
-                            color={transcriptIsProvisional ? "muted" : "default"}
-                            isItalic={transcriptIsProvisional}
-                            text={transcriptText}
-
-                        />
-                    ),
-                    ...(canToggle ? [() => (
-                        <Typography
-                            size="sm"
-                            isLink
-                            text={labels.typeInstead}
-                            onPress={() => setManualTyped(true)}
-
-                        />
-                    )] : []),
-                ]}
-            />
-        </div>
+        <StackV
+            identity={{ tier: "block", component: "VoiceHero" }}
+            principle="card-caption"
+            explain="Holds caption text under card media so the caption stays attached to the image above it."
+            items={[
+                () => (
+                    <Button
+                        isIconOnly
+                        size="lg"
+                        variant={listening ? "danger" : "primary"}
+                        prefixIcon={MicrophoneIcon}
+                        ariaLabel={listening ? labels.listening : labels.pushToTalk}
+                        onPress={onToggleListen}
+                    />
+                ),
+                // real `src` (`VoiceHero/index.tsx:136`): `<Typography color="default">`
+                // declares NO `type` ⇒ defaults to base (16px), not `lg`.
+                () => (
+                    <Typography
+                        size="base"
+                        color={transcriptIsProvisional ? "muted" : "default"}
+                        isItalic={transcriptIsProvisional}
+                        text={transcriptText}
+                    />
+                ),
+                ...(canToggle ? [() => (
+                    <Typography
+                        size="sm"
+                        isLink
+                        text={labels.typeInstead}
+                        onPress={() => setManualTyped(true)}
+                    />
+                )] : []),
+            ]}
+        />
     )
 }
 

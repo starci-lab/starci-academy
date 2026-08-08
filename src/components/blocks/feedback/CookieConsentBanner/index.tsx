@@ -1,11 +1,10 @@
 "use client"
 
 import React, { useEffect } from "react"
-import {
-    Button,
-    Typography,
-} from "@heroui/react"
 import { useTranslations } from "next-intl"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackH, StackV } from "@/components/frames/Stack"
 import { StickyBottomBar } from "@/components/blocks/layout/StickyBottomBar"
 import { useCookieConsentStore } from "@/hooks/zustand/cookieConsent/store"
 import { useCookiePreferencesOverlayState } from "@/hooks/zustand/overlay/hooks"
@@ -37,27 +36,63 @@ export const CookieConsentBanner = () => {
     }
 
     return (
-        <StickyBottomBar>
-            <div
-                role="region"
-                aria-label={t("cookieConsent.title")}
-                className="mx-auto flex max-w-[1280px] flex-col gap-3 @app-sm:flex-row @app-sm:items-center"
-            >
-                <Typography type="body-sm" color="muted" className="flex-1">
-                    {t("cookieConsent.body")}
-                </Typography>
-                <div className="flex flex-wrap items-center gap-2">
-                    <Button variant="primary" size="sm" onPress={acceptAll}>
-                        {t("cookieConsent.acceptAll")}
-                    </Button>
-                    <Button variant="secondary" size="sm" onPress={rejectAll}>
-                        {t("cookieConsent.reject")}
-                    </Button>
-                    <Button variant="tertiary" size="sm" onPress={preferences.open}>
-                        {t("cookieConsent.customize")}
-                    </Button>
-                </div>
-            </div>
-        </StickyBottomBar>
+        <StackV
+            principle="block-boundary"
+            explain="Identity host for sticky consent chrome — not group-boundary, because this is the block's sole major seam rather than a mid-sized group, and not sibling-stack, because the sticky bar is not a repeating peer row."
+            identity={{ tier: "block", component: "CookieConsentBanner" }}
+            items={[
+                () => (
+                    <StickyBottomBar>
+                        <StackH
+                            principle="flex-action"
+                            explain="Consent copy beside the Accept/Reject/Customize cluster — not sibling-stack, because the sides are asymmetric roles on one bar."
+                            at="sm"
+                            items={[
+                                () => (
+                                    <Typography
+                                        size="sm"
+                                        color="muted"
+                                        text={t("cookieConsent.body")}
+                                    />
+                                ),
+                                () => (
+                                    <StackH
+                                        principle="flex-action"
+                                        explain="Equal-weight consent CTAs wrap as peers — not chip-row, because these are buttons rather than chips."
+                                        at="sm"
+                                        items={[
+                                            () => (
+                                                <Button
+                                                    variant="primary"
+                                                    size="sm"
+                                                    label={t("cookieConsent.acceptAll")}
+                                                    onPress={acceptAll}
+                                                />
+                                            ),
+                                            () => (
+                                                <Button
+                                                    variant="secondary"
+                                                    size="sm"
+                                                    label={t("cookieConsent.reject")}
+                                                    onPress={rejectAll}
+                                                />
+                                            ),
+                                            () => (
+                                                <Button
+                                                    variant="tertiary"
+                                                    size="sm"
+                                                    label={t("cookieConsent.customize")}
+                                                    onPress={preferences.open}
+                                                />
+                                            ),
+                                        ]}
+                                    />
+                                ),
+                            ]}
+                        />
+                    </StickyBottomBar>
+                ),
+            ]}
+        />
     )
 }

@@ -10,10 +10,10 @@ import {
 } from "@phosphor-icons/react"
 import {
     PHASE_LABEL_KEY,
-} from "../../constants"
+} from "@/modules/utils/course-detail"
 import type {
     CoursePriceRow,
-} from "@/components/pages/CourseDetailPage/types"
+} from "@/modules/types/course-detail"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Box } from "@/components/frames/Box"
 import { StackH } from "@/components/frames/Stack"

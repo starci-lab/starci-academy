@@ -1,9 +1,13 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { Button, TextArea, TextField } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
+import { Avatar } from "@/components/atoms/display/Avatar"
+import { Button } from "@/components/atoms/buttons/Button"
+import { InputTextarea } from "@/components/atoms/forms"
+import { InputButtonLike } from "@/components/composites/buttons/InputButtonLike"
+import { FillAvailable } from "@/components/frames/FillAvailable"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link CommentComposer}. */
 export interface CommentComposerProps {
@@ -20,7 +24,7 @@ export interface CommentComposerProps {
     /** Disables submit while a mutation is in flight. */
     busy?: boolean
     /**
-     * When set, the composer is avatar-led: a leading {@link UserAvatar} sits beside the
+     * When set, the composer is avatar-led: a leading {@link Avatar} sits beside the
      * field, and (with `collapsible`) the collapsed pill shows it too.
      */
     currentUser?: { username: string, avatar?: string } | null
@@ -35,11 +39,9 @@ export interface CommentComposerProps {
 /**
  * A textarea + submit control used for new comments, replies, and edits.
  *
- * For the top-level composer pass `collapsible` + `currentUser`: it renders as a slim
- * avatar + placeholder pill and expands to the textarea on focus (in the style of YouTube / GitHub),
- * so an empty grey box never dominates the discussion zone.
+ * Mirrors Storybook/src `ContentCommentComposer`: Stack + InputTextarea + house Button,
+ * with an optional avatar-led collapsible pill via {@link InputButtonLike}.
  *
- * Presentational: owns only the draft text + expand state; submit/cancel are delegated.
  * @param props - {@link CommentComposerProps}
  */
 export const CommentComposer = ({
@@ -63,6 +65,8 @@ export const CommentComposer = ({
     }, [initialValue])
     const trimmed = body.trim()
     const resolvedPlaceholder = placeholder ?? t("discussion.placeholder")
+    const resolvedSubmit = submitLabel ?? t("discussion.post")
+    const ariaLabel = resolvedPlaceholder
 
     // submit only non-empty drafts, then clear (and re-collapse a collapsible composer)
     const onSubmit = () => {
@@ -87,70 +91,100 @@ export const CommentComposer = ({
     // collapsed pill: avatar + placeholder, the whole row opens the composer
     if (collapsible && !expanded) {
         return (
-            <button
-                type="button"
-                onClick={() => setExpanded(true)}
-                className="flex w-full items-center gap-3 text-left"
-            >
-                {currentUser ? (
-                    <UserAvatar
-                        size="sm"
-                        username={currentUser.username}
-                        avatar={currentUser.avatar}
-                        className="shrink-0"
-                    />
-                ) : null}
-                <span className="flex-1 cursor-pointer rounded-xl border border-default bg-surface px-4 py-2 text-sm text-muted transition-colors hover:bg-default">
-                    {resolvedPlaceholder}
-                </span>
-            </button>
+            <StackH
+                identity={{ tier: "block", component: "CommentComposer" }}
+                principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                items={[
+                    ...(currentUser ? [() => (
+                        <Avatar
+                            src={currentUser.avatar}
+                            name={currentUser.username}
+                            seed={currentUser.username}
+                            size="sm"
+                        />
+                    )] : []),
+                    () => (
+                        <FillAvailable
+                            at="base"
+                            body={() => (
+                                <InputButtonLike
+                                    placeholder={resolvedPlaceholder}
+                                    ariaLabel={ariaLabel}
+                                    onPress={() => setExpanded(true)}
+                                />
+                            )}
+                        />
+                    ),
+                ]}
+            />
         )
     }
 
-    const form = (
-        <div className="flex min-w-0 flex-1 flex-col gap-2">
-            <TextField variant="primary" className="w-full">
-                <TextArea
-                    rows={3}
-                    value={body}
-                    onChange={(event) => setBody(event.target.value)}
-                    placeholder={resolvedPlaceholder}
-                    className="resize-none"
-                    autoFocus={collapsible}
-                />
-            </TextField>
-            <div className="flex items-center justify-start gap-2">
-                <Button
-                    size="sm"
-                    variant="primary"
-                    onPress={onSubmit}
-                    // spinner + auto-disable while the mutation is in flight (blocks double-submit)
-                    isPending={Boolean(busy)}
-                    isDisabled={!trimmed}
-                >
-                    {submitLabel ?? t("discussion.post")}
-                </Button>
-                {onCancelAction || collapsible ? (
-                    <Button size="sm" variant="tertiary" onPress={onCancel} isDisabled={busy}>
-                        {t("common.cancel")}
-                    </Button>
-                ) : null}
-            </div>
-        </div>
-    )
-
-    // avatar-led when a viewer is known, else just the field (reply/edit keep old layout)
     return (
-        <div className="flex w-full gap-3">
-            {currentUser ? (
-                <UserAvatar
-                    size="sm"
-                    username={currentUser.username}
-                    avatar={currentUser.avatar}
-                    className="shrink-0"
-                />
-            ) : null}
-            {form}
-        </div>
+        <StackH
+            identity={{ tier: "block", component: "CommentComposer" }}
+            principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            items={[
+                ...(currentUser ? [() => (
+                    <Avatar
+                        src={currentUser.avatar}
+                        name={currentUser.username}
+                        seed={currentUser.username}
+                        size="sm"
+                    />
+                )] : []),
+                () => (
+                    <FillAvailable
+                        at="base"
+                        body={() => (
+                            <StackV
+                                principle="sibling-stack"
+                                explain="Same-kind peer stack of field then actions — not group-boundary, because these are repeating vertical siblings rather than section groups."
+                                items={[
+                                    () => (
+                                        <InputTextarea
+                                            value={body}
+                                            onValueChange={setBody}
+                                            placeholder={resolvedPlaceholder}
+                                            ariaLabel={ariaLabel}
+                                            rows={3}
+                                            variant="primary"
+                                        />
+                                    ),
+                                    () => (
+                                        <StackH
+                                            principle="flex-action"
+                                            explain="Submit and cancel share one action row — not content-row, because both peers are actions rather than content-plus-meta."
+                                            items={[
+                                                () => (
+                                                    <Button
+                                                        label={resolvedSubmit}
+                                                        size="sm"
+                                                        onPress={onSubmit}
+                                                        isDisabled={!trimmed}
+                                                        isPending={Boolean(busy)}
+                                                    />
+                                                ),
+                                                ...(onCancelAction || collapsible ? [() => (
+                                                    <Button
+                                                        label={t("common.cancel")}
+                                                        variant="tertiary"
+                                                        size="sm"
+                                                        onPress={onCancel}
+                                                        isDisabled={Boolean(busy)}
+                                                    />
+                                                )] : []),
+                                            ]}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        )}
+                    />
+                ),
+            ]}
+        />
     )
 }

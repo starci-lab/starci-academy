@@ -9,18 +9,18 @@ import {
 } from "@phosphor-icons/react"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { StackH, StackV } from "@/components/frames/Stack"
-import { usePracticeFilters } from "../hooks/usePracticeFilters"
+import { usePracticeFilters } from "@/hooks/usePracticeFilters"
 import {
     CODING_DIFFICULTY_META,
     DIFFICULTY_FILTERS,
     SORT_KEYS,
     STATUS_FILTERS,
-} from "../constants"
+} from "@/modules/utils/practice-hub"
 import type {
     DifficultyFilter,
     SortKey,
     StatusFilter,
-} from "../types"
+} from "@/modules/types/practice-hub"
 
 /** Props for {@link PracticeFilters}. */
 export type PracticeFiltersProps = Record<string, never>

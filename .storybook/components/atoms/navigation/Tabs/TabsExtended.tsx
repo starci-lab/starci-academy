@@ -1,7 +1,6 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Tabs as HeroTabs, cn } from "@heroui/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ATOM — `TabsExtended`: the StarCi tab strip, wrapping the HeroUI `Tabs` root. Lives in the
@@ -57,13 +56,6 @@ export interface TabsExtendedProps {
      * (already hug-content via `.extended-tabs`).
      */
     size?: "sm" | "md"
-    /**
-     * `true` → tag the root `HeroTabs` with `` so a
-     * BlockAnatomy panel can badge it. The `children` tree is the caller's
-     * own — it stays untagged here, since it isn't this atom's own render.
-     */
-    /** Position within the parent. Everything about appearance is a prop of its own. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -80,7 +72,6 @@ export const TabsExtended = ({
     selectedKey,
     onSelectionChange,
     children,
-    classNames,
     variant = "secondary",
     size = "md",
 }: TabsExtendedProps) => {
@@ -97,9 +88,7 @@ export const TabsExtended = ({
                 // one-line label (w-fit) instead of stacking words.
                 "whitespace-nowrap",
                 variant === "secondary" ? "extended-tabs" : size === "sm" ? "w-fit" : "w-full",
-                classNames,
             )}
-
         >
             {children}
         </HeroTabs>

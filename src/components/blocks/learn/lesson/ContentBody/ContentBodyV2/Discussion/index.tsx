@@ -24,7 +24,6 @@ import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
 import { SubscriptionEvent } from "@/hooks/socketio/enums/subscription-event"
 import { useContentDiscussionSocketIo } from "@/hooks/socketio/useContentDiscussionSocketIo"
 import { type SubscribeContentDiscussionSocketIoPayload } from "@/hooks/socketio/types/content-discussion"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Page size for a parent's replies (loaded in one shot per parent). */
 const REPLIES_LIMIT = 50
@@ -51,7 +50,7 @@ const DISCUSSION_EVENTS: ReadonlyArray<SubscriptionEvent> = [
  * ({@link ContentReactionBar}); this container only keeps the reaction SWR alive so socket
  * events refresh that bar via the shared cache key. `"use client"` for hooks + socket.
  */
-export const ContentDiscussion = ({ className }: WithClassNames<undefined>) => {
+export const ContentDiscussion = () => {
     const locale = useLocale()
     const contentId = useAppSelector((state) => state.content.entity?.id)
     const currentUser = useAppSelector((state) => state.user.user)
@@ -291,7 +290,6 @@ export const ContentDiscussion = ({ className }: WithClassNames<undefined>) => {
 
     return (
         <Discussion
-            className={className}
             // discussion data
             currentUserId={currentUserId}
             currentUser={currentUser ? { username: currentUser.username, avatar: currentUser.avatar } : null}

@@ -11,10 +11,10 @@ import {
 } from "next/navigation"
 import {
     DASHBOARD_TABS,
-} from "../types"
+} from "@/modules/types/dashboard-tabs"
 import type {
     DashboardTab,
-} from "../types"
+} from "@/modules/types/dashboard-tabs"
 import { useDashboardTabStore } from "@/hooks/zustand/dashboardTab/store"
 
 /** Query-string key the active DashboardPage tab is mirrored to (`/DashboardPage?tab=...`). */

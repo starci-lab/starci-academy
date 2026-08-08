@@ -92,8 +92,20 @@ export const _LanguageModal = ({
         ),
     ]
     const sections = [
-        () => <StackV gap={3} items={popularSectionItems} />,
-        () => <StackV gap={3} items={allSectionItems} />,
+        () => (
+            <StackV
+                principle="sibling-stack"
+                explain="Popular languages label over selectable grid — not group-boundary, because these are peer pieces of one section."
+                items={popularSectionItems}
+            />
+        ),
+        () => (
+            <StackV
+                principle="sibling-stack"
+                explain="All-languages label over selectable grid — not group-boundary, because these are peer pieces of one section."
+                items={allSectionItems}
+            />
+        ),
     ]
 
     return (
@@ -101,7 +113,13 @@ export const _LanguageModal = ({
             isOpen={isOpen}
             onOpenChange={onOpenChange}
             title={labels.title}
-            body={() => <StackV gap={6} items={sections} />}
+            body={() => (
+                <StackV
+                    principle="block-boundary"
+                    explain="Popular section over all-languages section — not group-boundary, because this is the modal body's major section seam, and not sibling-stack, because the two sections are different-function zones."
+                    items={sections}
+                />
+            )}
             identity={{ tier: "overlay", component: "LanguageModal" }}
         />
     )

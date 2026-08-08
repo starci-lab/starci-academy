@@ -5,10 +5,10 @@ import dynamic from "next/dynamic"
 import { Chip, Skeleton } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
-import type { HealthByName } from "../hooks/useSystemHealthPoll"
-import { ARCHITECTURE_MODULE_MAP } from "../modules"
-import { buildLiveScene } from "./scene"
-import { buildFutureScene } from "./future-scene"
+import type { HealthByName } from "@/hooks/useSystemHealthPoll"
+import { ARCHITECTURE_MODULE_MAP } from "@/modules/utils/architecture-modules"
+import { buildLiveScene } from "@/modules/utils/architecture-live-scene"
+import { buildFutureScene } from "@/modules/utils/architecture-future-scene"
 
 /** The R3F canvas is heavy + client-only — lazy so it never ships in the RSC
  *  bundle and never mounts during SSR. */

@@ -47,9 +47,9 @@ const ContentAiSelectionAsk = ({
     <div
         style={{ position: "fixed", left: anchor.x, top: anchor.y }}
         className={cn("z-50 -translate-x-1/2 -translate-y-full", className)}
-
     >
         <StackH
+            identity={{ tier: "block", component: "ContentAiSelectionAsk" }}
             gap={2}
             principle="icon-text"
             explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
@@ -63,14 +63,12 @@ const ContentAiSelectionAsk = ({
                         prefixIcon={SparkleIcon}
                         onPress={onOpen}
                         isElevated
-
                     />
                 ),
                 ...(isNew ? [() => (
                     <Chip
                         text="New"
                         tone="accent"
-
                     />
                 )] : []),
             ]}

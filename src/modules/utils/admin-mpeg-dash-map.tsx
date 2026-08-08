@@ -1,6 +1,6 @@
 import { BroadcastIcon, PlayIcon } from "@phosphor-icons/react"
 import React from "react"
-import type { RendererTypeOption } from "./types"
+import type { RendererTypeOption } from "@/modules/types/admin-mpeg-dash-test"
 import { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
 
 /**

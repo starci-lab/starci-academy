@@ -240,6 +240,8 @@ const _PublicProfileLayout = ({
     return (
         <StackV
             gap={1}
+            principle="group-boundary"
+            explain="Separates the profile tab chrome from the measured body so each region keeps its own seam owner — not sibling-stack, because these are distinct section roles rather than repeating peers."
             identity={{ tier: "layout", component: "PublicProfileLayout" }}
             items={tabsAndBody}
         />

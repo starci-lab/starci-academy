@@ -17,10 +17,10 @@ import {
 } from "@/resources/path"
 import {
     KPI_META,
-} from "./kpiMeta"
+} from "@/modules/utils/kpi-meta"
 import {
     DEFAULT_KPI_TARGETS,
-} from "@/components/pages/DashboardPage/WeeklyGoals/map"
+} from "@/modules/utils/weekly-goals-map"
 import { useQueryMyKpisSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyKpisSwr"
 import { useMutateSetKpiTargetSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetKpiTargetSwr"
 import { useMutateClaimKpiRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateClaimKpiRewardSwr"

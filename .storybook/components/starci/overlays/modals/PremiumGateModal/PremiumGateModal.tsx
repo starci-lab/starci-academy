@@ -73,8 +73,6 @@ export interface PremiumGateModalProps {
      * handoff shape as `TrialConversionStrip`'s `onEnroll`.
      */
     onUpgrade: () => void
-    /** Extra classes on the root. */
-    className?: string
 }
 
 /** Whether the caller named a specific course, or this is a generic gate. */
@@ -138,7 +136,6 @@ const PremiumGateModal = ({
     price,
     isSkeleton = false,
     onUpgrade,
-    className,
 }: PremiumGateModalProps) => {
     const headerVariant: GateHeaderVariant = courseTitle ? "named" : "generic"
     const header = GATE_HEADER[headerVariant]
@@ -152,10 +149,8 @@ const PremiumGateModal = ({
 
     const unlockItems = GATE_UNLOCKS.map((item) => () => (
         <Cluster
-            gap={3}
-            principle="identity"
-            align="center"
-
+            principle="icon-text"
+            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
             items={[
                 () => (
                     <CheckCircleIcon
@@ -172,7 +167,6 @@ const PremiumGateModal = ({
                     <Typography
                         size="sm"
                         text={item.label}
-
                     />
                 ),
             ]}
@@ -187,17 +181,32 @@ const PremiumGateModal = ({
     const gateBody = [
         // "What unlocks" — static chrome, never skeletonised: known before
         // any price data lands, exactly like `ContentModeNav`'s own row.
-        ({ isSkeleton }: SkeletonProps) => <StackV gap={3} isSkeleton={isSkeleton} items={unlockItems} />,
+        ({ isSkeleton }: SkeletonProps) => (
+            <StackV
+                principle="sibling-stack"
+                explain="Repeating unlock lines — not group-boundary, because these are peer checklist rows rather than section groups."
+                isSkeleton={isSkeleton}
+                items={unlockItems}
+            />
+        ),
 
         // Price + scarcity — the ONLY region `isSkeleton` reaches, same
         // `isSkeleton && !price` / `price?.discountedPriceVnd != null` split
         // `TrialConversionStrip` uses for its own price region.
         ...(isSkeleton && !price
-            ? [({ isSkeleton }: SkeletonProps) => <StackV gap={4} isSkeleton={isSkeleton} items={skeletonPrice} />]
+            ? [({ isSkeleton }: SkeletonProps) => (
+                <StackV
+                    principle="content-row"
+                    explain="Price shimmer stack — not sibling-stack, because the bars stand in for a price+scarcity content pair."
+                    isSkeleton={isSkeleton}
+                    items={skeletonPrice}
+                />
+            )]
             : price?.discountedPriceVnd != null
                 ? [({ isSkeleton }: SkeletonProps) => (
                     <StackV
-                        gap={4}
+                        principle="content-row"
+                        explain="Price over scarcity note — not sibling-stack, because these are related content regions rather than repeating peers."
                         isSkeleton={isSkeleton}
                         items={[
                             ({ isSkeleton }: SkeletonProps) => (
@@ -206,12 +215,10 @@ const PremiumGateModal = ({
                                     original={price.originalPriceVnd}
                                     breakdown={breakdown}
                                     isSkeleton={isSkeleton}
-
                                 />
                             ),
                             () => (
                                 <PhaseScarcityNote
-
                                     currentPhase={price.currentPhase}
                                     seatsRemaining={price.seatsRemaining}
                                     nextPhasePriceVnd={price.nextPhasePriceVnd}
@@ -224,27 +231,29 @@ const PremiumGateModal = ({
     ]
 
     return (
-        <div className={className}>
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                title={header.title(courseTitle)}
-                description={header.description}
-                size="md"
-
-                footer={() => (
-                    <Button
-                        variant="primary"
-                        size="lg"
-
-                        label="Unlock now"
-                        onPress={onUpgrade}
-
-                    />
-                )}
-                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={gateBody} />}
-            />
-        </div>
+        <ModalShell
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            title={header.title(courseTitle)}
+            description={header.description}
+            size="md"
+            footer={() => (
+                <Button
+                    variant="primary"
+                    size="lg"
+                    label="Unlock now"
+                    onPress={onUpgrade}
+                />
+            )}
+            body={() => (
+                <StackV
+                    principle="block-boundary"
+                    explain="Unlock list over price CTA region — not group-boundary, because this is the modal body's major section seam."
+                    isSkeleton={isSkeleton}
+                    items={gateBody}
+                />
+            )}
+        />
     )
 }
 

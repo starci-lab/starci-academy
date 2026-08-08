@@ -4,12 +4,6 @@ import React, {
     useCallback,
 } from "react"
 import {
-    Button,
-    Chip,
-    Spinner,
-    Typography,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
 import { formatVnd } from "@/modules/utils/format-vnd"
@@ -17,6 +11,10 @@ import { formatUsd } from "@/modules/utils/format-usd"
 import type { AiSubscriptionTier } from "@/modules/api/graphql/queries/types/ai-subscription-tiers"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackH, StackV } from "@/components/frames/Stack"
 import { TierLevelIcon } from "@/components/svg/TierLevelIcon"
 import { TierCardBase } from "@/components/blocks/commerce/TierCardBase"
 
@@ -102,33 +100,43 @@ export const TierCard = ({
             badge={tier.popular
                 ? () => (
                     <Chip
-                        size="sm"
-                        color="accent"
-                        variant="soft"
-                    >
-                        <Chip.Label>{t("aiSubscription.popular")}</Chip.Label>
-                    </Chip>
+                        tone="accent"
+                        text={t("aiSubscription.popular")}
+                    />
                 )
                 : undefined}
             description={tier.description ?? ""}
             price={() => (
-                <>
-                    {/* VND number prominent + "/month" */}
-                    <div className="flex flex-wrap items-baseline gap-x-2">
-                        <Typography type="h3" weight="bold">
-                            {formatVnd(tier.priceVnd)}
-                        </Typography>
-                        <Typography type="body-sm" color="muted">
-                            {t("aiSubscription.perMonth")}
-                        </Typography>
-                    </div>
-                    {/* secondary USD line — what international gateways charge */}
-                    <div className="h-[3lh]">
-                        <Typography type="body-sm" color="muted">
-                            {t("aiSubscription.priceUsdHint", { amount: formatUsd(tier.priceUsd) })}
-                        </Typography>
-                    </div>
-                </>
+                <StackV
+                    principle="card-caption"
+                    explain="Keeps the USD hint as a caption under the VND amount so price + period read as one cluster."
+                    items={[
+                        () => (
+                            <StackH
+                                principle="value-row"
+                                explain="Holds the VND amount and /month period on one baseline so the period stays readable against the price."
+                                items={[
+                                    () => (
+                                        <Typography size="h3" weight="bold" text={formatVnd(tier.priceVnd)} />
+                                    ),
+                                    () => (
+                                        <Typography size="sm" color="muted" text={t("aiSubscription.perMonth")} />
+                                    ),
+                                ]}
+                            />
+                        ),
+                        // Fixed 3lh slot so free/paid CTAs stay aligned across the grid.
+                        () => (
+                            <div className="h-[3lh]">
+                                <Typography
+                                    size="sm"
+                                    color="muted"
+                                    text={t("aiSubscription.priceUsdHint", { amount: formatUsd(tier.priceUsd) })}
+                                />
+                            </div>
+                        ),
+                    ]}
+                />
             )}
             features={[
                 t("aiSubscription.creditsPer5h", { credits: tier.creditsPer5h }),
@@ -136,23 +144,19 @@ export const TierCard = ({
             ]}
             isCurrent={isCurrent}
             cta={() => (
-                <Button
-                    variant="primary"
-                    fullWidth
-                    onPress={onPress}
-                >
-                    {({ isPending }) => (
-                        <>
-                            {isPending ? (
-                                <Spinner
-                                    color="current"
-                                    size="sm"
-                                />
-                            ) : null}
-                            {t("aiSubscription.buy")}
-                        </>
-                    )}
-                </Button>
+                <StackV
+                    principle="center-measure"
+                    explain="Stretches the buy CTA across the card foot so it aligns with the free-tier disabled button."
+                    items={[
+                        () => (
+                            <Button
+                                variant="primary"
+                                onPress={onPress}
+                                label={t("aiSubscription.buy")}
+                            />
+                        ),
+                    ]}
+                />
             )}
         />
     )

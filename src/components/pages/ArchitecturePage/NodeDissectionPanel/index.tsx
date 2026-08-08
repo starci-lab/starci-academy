@@ -11,11 +11,11 @@ import { Box } from "@/components/frames/Box"
 import { StackV } from "@/components/frames/Stack"
 import { pathConfig } from "@/resources/path"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
-import { ARCHITECTURE_COMPONENT_MAP } from "../constants"
-import { ARCHITECTURE_MODULE_MAP } from "../modules"
-import type { HealthByName } from "../hooks/useSystemHealthPoll"
+import { ARCHITECTURE_COMPONENT_MAP } from "@/modules/utils/architecture-catalog"
+import { ARCHITECTURE_MODULE_MAP } from "@/modules/utils/architecture-modules"
+import type { HealthByName } from "@/hooks/useSystemHealthPoll"
 import { MetricsInline } from "../MetricsInline"
-import { getArchitectureStatusVisual, resolveArchitectureStatus } from "../statusVisual"
+import { getArchitectureStatusVisual, resolveArchitectureStatus } from "@/modules/utils/architecture-status-visual"
 
 /** Props for {@link NodeDissectionPanel}. */
 export interface NodeDissectionPanelProps {

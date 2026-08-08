@@ -11,6 +11,7 @@ import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
 import { TitledText } from "@/components/composites/text/TitledText"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { StackH, StackV } from "@/components/frames/Stack"
 import type { QueryCoursePricePreviewData } from "@/modules/api/graphql/queries/types/course-price-preview"
 
@@ -61,51 +62,61 @@ export const _TrialConversionStrip = ({
     // Header never rests — title/description already arrived as resolved strings
     // (i18n + the outline), not a fetch, so there is nothing here to shimmer.
     const headerRow = (
-        <StackH gap={4} principle="content-row"
-            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-            align="center" items={[
+        <StackH principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title." items={[
                 () => <IconTile icon={LockIcon} tone="accent" size="sm" />,
-                () => <TitledText classNames={["flex-1"]} title={title} subtitle={description} />,
+                () => (
+                    <FillAvailable
+                        at="base"
+                        body={() => (
+                            <TitledText title={title} subtitle={description} />
+                        )}
+                    />
+                ),
             ]} />
     )
 
     // The scarcity line is a CAPTION OF THE PRICE — price + scarcity are one cluster,
     // this is an intra-cluster seam (not the wider seam around the whole card).
     const priceColumn = (
-        <StackV gap={4} isSkeleton={isSkeleton} items={
-            isSkeleton && !price ? [
-                // The header + CTA render instantly, but the price is a second fetch —
-                // mirror the price line instead of showing an empty gap until it lands.
-                () => <Typography size="h4" isSkeleton classNames={["w-1/3"]} />,
-                () => <Typography size="xs" isSkeleton />,
-            ] : price?.discountedPriceVnd != null ? [
-                ({ isSkeleton }: SkeletonProps) => (
-                    <PriceTagProminent
-                        isSkeleton={isSkeleton}
-                        discounted={price.discountedPriceVnd}
-                        original={price.originalPriceVnd}
-                        breakdown={breakdown}
-                    />
-                ),
-                ({ isSkeleton }: SkeletonProps) => (
-                    <PhaseScarcityNote
-                        isSkeleton={isSkeleton}
-                        currentPhase={price.currentPhase}
-                        seatsRemaining={price.seatsRemainingInCurrentPhase}
-                        nextPhasePriceVnd={price.nextPhasePriceVnd}
-                    />
-                ),
-            ] : []
-        } />
+        <StackV
+            principle="card-caption"
+            explain="Keeps the scarcity line as a caption under the price so the two read as one price cluster, not as separate blocks."
+            isSkeleton={isSkeleton}
+            items={
+                isSkeleton && !price ? [
+                    // The header + CTA render instantly, but the price is a second fetch —
+                    // mirror the price line instead of showing an empty gap until it lands.
+                    () => <Typography size="h4" isSkeleton />,
+                    () => <Typography size="xs" isSkeleton />,
+                ] : price?.discountedPriceVnd != null ? [
+                    ({ isSkeleton }: SkeletonProps) => (
+                        <PriceTagProminent
+                            isSkeleton={isSkeleton}
+                            discounted={price.discountedPriceVnd}
+                            original={price.originalPriceVnd}
+                            breakdown={breakdown}
+                        />
+                    ),
+                    ({ isSkeleton }: SkeletonProps) => (
+                        <PhaseScarcityNote
+                            isSkeleton={isSkeleton}
+                            currentPhase={price.currentPhase}
+                            seatsRemaining={price.seatsRemainingInCurrentPhase}
+                            nextPhasePriceVnd={price.nextPhasePriceVnd}
+                        />
+                    ),
+                ] : []
+            }
+        />
     )
 
     // Price is a NUMBER — shrinking it means nothing, unlike a long title that can
     // truncate. The row wraps when tight (`StackH`): the button drops to the next
     // line instead of the price getting squeezed.
     const footerRow = (
-        <StackH gap={6} principle="block-boundary"
-            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
-            align="end" justify="between" at="sm" items={[
+        <StackH principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups." at="sm" items={[
                 () => priceColumn,
                 // ATOM `Button`, NOT the legacy HeroUI one — `suffixIcon` takes a COMPONENT
                 // REF, the atom forces scale + weight; the CTA is never gated on the price
@@ -127,10 +138,14 @@ export const _TrialConversionStrip = ({
         // The frame owns radius/shadow/padding from ONE source: `SurfaceCard`.
         <SurfaceCard identity={{ tier: "block", component: "TrialConversionStrip" }}
             body={() => (
-                <StackV gap={6} items={[
-                    () => headerRow,
-                    () => footerRow,
-                ]} />
+                <StackV
+                    principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                    items={[
+                        () => headerRow,
+                        () => footerRow,
+                    ]}
+                />
             )}
         />
     )

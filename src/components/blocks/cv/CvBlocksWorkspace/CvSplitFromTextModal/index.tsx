@@ -1,10 +1,13 @@
 "use client"
 
 import React, { useState } from "react"
-import { Button, Modal, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { SparkleIcon } from "@phosphor-icons/react"
 import type { CvBlock } from "@/modules/types/entities/cv"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Typography } from "@/components/atoms/text/Typography"
+import { ModalShell } from "@/components/composites/layout/ModalShell"
+import { StackV } from "@/components/frames/Stack"
 import { CvTextOrFileInput } from "../shared/CvTextOrFileInput"
 import { useMutateSplitCvFromTextSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSplitCvFromTextSwr"
 
@@ -57,52 +60,58 @@ export const CvSplitFromTextModal = ({ isOpen, onOpenChange, onSplit }: CvSplitF
     }
 
     return (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-            <Modal.Backdrop>
-                <Modal.Container size="lg">
-                    <Modal.Dialog className={""}>
-                        <Modal.CloseTrigger />
-                        <Modal.Header>
-                            <Typography type="body" weight="semibold" className="pr-8">
-                                {t("cv.builder.splitModalTitle")}
-                            </Typography>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <div className="flex flex-col gap-3">
-                                <Typography type="body-sm" color="muted">
-                                    {t("cv.builder.splitModalDescription")}
-                                </Typography>
-
-                                <CvTextOrFileInput
-                                    fieldId="cv-split-text"
-                                    label={t("cv.builder.splitModalFieldLabel")}
-                                    placeholder={t("cv.builder.splitModalPlaceholder")}
-                                    value={text}
-                                    onChange={setText}
-                                    onExtractingChange={setIsExtracting}
-                                />
-
-                                {hasError ? (
-                                    <Typography type="body-sm" className="text-danger-soft-foreground">
-                                        {t("cv.builder.splitModalError")}
-                                    </Typography>
-                                ) : null}
-
-                                <Button
-                                    variant="primary"
-                                    size="lg"
-                                    className="w-fit self-end"
-                                    isDisabled={!text.trim() || isMutating || isExtracting}
-                                    onPress={onSubmit}
-                                >
-                                    <SparkleIcon aria-hidden className="size-4" />
-                                    {isMutating ? t("cv.builder.splitModalSubmitting") : t("cv.builder.splitModalSubmit")}
-                                </Button>
-                            </div>
-                        </Modal.Body>
-                    </Modal.Dialog>
-                </Modal.Container>
-            </Modal.Backdrop>
-        </Modal>
+        <ModalShell
+            identity={{ tier: "block", component: "CvSplitFromTextModal" }}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            title={t("cv.builder.splitModalTitle")}
+            size="lg"
+            body={() => (
+                <StackV
+                    principle="group-boundary"
+                    explain="Section group spacing — not sibling-stack, because description, input, error, and submit are distinct groups rather than same-kind peers."
+                    items={[
+                        () => (
+                            <Typography
+                                size="sm"
+                                color="muted"
+                                text={t("cv.builder.splitModalDescription")}
+                            />
+                        ),
+                        () => (
+                            <CvTextOrFileInput
+                                fieldId="cv-split-text"
+                                label={t("cv.builder.splitModalFieldLabel")}
+                                placeholder={t("cv.builder.splitModalPlaceholder")}
+                                value={text}
+                                onChange={setText}
+                                onExtractingChange={setIsExtracting}
+                            />
+                        ),
+                        ...(hasError
+                            ? [
+                                () => (
+                                    <Typography
+                                        size="sm"
+                                        color="danger"
+                                        text={t("cv.builder.splitModalError")}
+                                    />
+                                ),
+                            ]
+                            : []),
+                    ]}
+                />
+            )}
+            footer={() => (
+                <Button
+                    variant="primary"
+                    size="lg"
+                    prefixIcon={SparkleIcon}
+                    label={isMutating ? t("cv.builder.splitModalSubmitting") : t("cv.builder.splitModalSubmit")}
+                    isDisabled={!text.trim() || isMutating || isExtracting}
+                    onPress={onSubmit}
+                />
+            )}
+        />
     )
 }

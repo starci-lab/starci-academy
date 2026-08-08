@@ -2,7 +2,6 @@ import type { ReactNode } from "react"
 import { TrayIcon } from "@phosphor-icons/react"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { StackV } from "@/components/frames/Stack"
 
 /**
@@ -23,10 +22,6 @@ export interface EmptyContentProps {
     onRetry?: () => void
     /** Translated label for the retry button (required to render it). */
     retryLabel?: ReactNode
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -42,7 +37,6 @@ export const EmptyContent = ({
     icon,
     onRetry,
     retryLabel,
-    classNames,
 }: EmptyContentProps) => {
     const titleLines = [
         () => <Typography size="sm" weight="medium" align="center" text={title} />,
@@ -57,7 +51,6 @@ export const EmptyContent = ({
             align="center"
             justify="center"
             padding={6}
-            classNames={["w-full", ...(classNames ?? [])]}
             items={[
                 () => (
                     <>

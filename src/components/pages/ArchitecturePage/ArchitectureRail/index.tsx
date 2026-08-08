@@ -3,11 +3,11 @@
 import React, { useMemo } from "react"
 import { Label, ListBox, ScrollShadow, Typography, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { ARCHITECTURE_COMPONENTS } from "../constants"
-import { ARCHITECTURE_MODULES } from "../modules"
-import type { HealthByName } from "../hooks/useSystemHealthPoll"
+import { ARCHITECTURE_COMPONENTS } from "@/modules/utils/architecture-catalog"
+import { ARCHITECTURE_MODULES } from "@/modules/utils/architecture-modules"
+import type { HealthByName } from "@/hooks/useSystemHealthPoll"
 import { MetricsInline } from "../MetricsInline"
-import { getArchitectureStatusVisual, resolveArchitectureStatus } from "../statusVisual"
+import { getArchitectureStatusVisual, resolveArchitectureStatus } from "@/modules/utils/architecture-status-visual"
 
 /** Props for {@link ArchitectureRail}. */
 export interface ArchitectureRailProps {

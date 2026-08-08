@@ -2,6 +2,7 @@ import React from "react"
 import { type SkeletonProps } from "@/components/frames/_slot"
 import { SearchAutocomplete, type SearchAutocompleteItem } from "@/components/atoms/forms/SearchAutocomplete"
 import { Typography } from "@/components/atoms/text/Typography"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { StackH } from "@/components/frames/Stack"
 
 /**
@@ -11,7 +12,7 @@ import { StackH } from "@/components/frames/Stack"
  * earns its own layer over the bare `SearchAutocomplete` atom (domain
  * mapping + count wording, §14d.1).
  *
- * 📐 ONE LEAF (§14d.2). `isSkeleton`, an empty vs. populated suggestion list,
+ *  ONE LEAF (§14d.2). `isSkeleton`, an empty vs. populated suggestion list,
  * and every value `count` can take (unknown / zero / N) are all DATA — no
  * node appears or disappears across them — so they are STATES inside the
  * single `Default` leaf, not leaves of their own.
@@ -66,16 +67,20 @@ const FoundationCategorySearchBar = ({
     }))
 
     return (
-        <div>
-            <StackH
-                gap={4}
-                principle="content-row"
-                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                justify="between"
-                isSkeleton={isSkeleton}
-                items={[
-                    () => (
-                        <div className="min-w-0 flex-1">
+        <StackH
+            identity={{ tier: "block", component: "FoundationCategorySearchBar" }}
+            gap={4}
+            principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            justify="between"
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <FillAvailable
+                        at="base"
+                        explain="Search field takes remaining row width beside the topic count so the input can shrink instead of shoving the meta."
+                        isSkeleton={isSkeleton}
+                        body={() => (
                             <SearchAutocomplete
                                 items={items}
                                 inputValue={query}
@@ -83,28 +88,26 @@ const FoundationCategorySearchBar = ({
                                 onSelect={onSelectSuggestion}
                                 placeholder="Search topics..."
                                 isSkeleton={isSkeleton}
-
                             />
-                        </div>
-                    ),
-                    ...(isSkeleton
-                        ? [() => <Typography size="sm" color="muted" isSkeleton />]
-                        : count !== undefined
-                            ? [
-                                ({ isSkeleton }: SkeletonProps) => (
-                                    <Typography
-                                        isSkeleton={isSkeleton}
-                                        size="sm"
-                                        color="muted"
-                                        text={countLabel(count)}
-
-                                    />
-                                ),
-                            ]
-                            : []),
-                ]}
-            />
-        </div>
+                        )}
+                    />
+                ),
+                ...(isSkeleton
+                    ? [() => <Typography size="sm" color="muted" isSkeleton />]
+                    : count !== undefined
+                        ? [
+                            ({ isSkeleton }: SkeletonProps) => (
+                                <Typography
+                                    isSkeleton={isSkeleton}
+                                    size="sm"
+                                    color="muted"
+                                    text={countLabel(count)}
+                                />
+                            ),
+                        ]
+                        : []),
+            ]}
+        />
     )
 }
 

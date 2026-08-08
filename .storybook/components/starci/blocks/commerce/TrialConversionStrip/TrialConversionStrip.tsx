@@ -11,8 +11,8 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * BLOCK — the trial -> enroll conversion strip on the content-home. Bundles a
@@ -59,8 +59,6 @@ export interface TrialConversionStripProps {
     isSkeleton?: boolean
     /** Fired when the enroll CTA is pressed (caller owns opening the payment flow). */
     onEnroll?: () => void
-    /** Layout utilities on the root, from the closed positioning union (SurfaceCard's `className` door was deleted, COMPOSITE-4). */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -77,7 +75,6 @@ const TrialConversionStripBase = ({
     price,
     isSkeleton = false,
     onEnroll,
-    classNames,
 }: TrialConversionStripProps) => {
     const hasFreeLeft = freeLessonsRemaining > 0
 
@@ -89,9 +86,8 @@ const TrialConversionStripBase = ({
         : undefined
 
     const headerRow = (
-        <StackH gap={4} principle="content-row"
-            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-            align="center" isSkeleton={isSkeleton} items={[
+        <StackH principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title." isSkeleton={isSkeleton} items={[
                 ({ isSkeleton }: SkeletonProps) => (
                     <IconTile
                         isSkeleton={isSkeleton}
@@ -108,16 +104,20 @@ const TrialConversionStripBase = ({
                 // the block decides its own font sizes — one style per spot, with
                 // nothing keeping them in sync.
                 () => (
-                    <TitledText
-                        classNames={["flex-1"]}
-
+                    <FillAvailable
+                        at="base"
                         isSkeleton={isSkeleton && !price}
-                        title="Free trial — unlock the full course"
-                        subtitle={
-                            hasFreeLeft
-                                ? `${freeLessonsRemaining} free lessons left unread — keep reading or unlock the full course now.`
-                                : "You've read every free lesson — unlock the full course to keep going."
-                        }
+                        body={({ isSkeleton: titleSkeleton }: SkeletonProps) => (
+                            <TitledText
+                                isSkeleton={titleSkeleton}
+                                title="Free trial — unlock the full course"
+                                subtitle={
+                                    hasFreeLeft
+                                        ? `${freeLessonsRemaining} free lessons left unread — keep reading or unlock the full course now.`
+                                        : "You've read every free lesson — unlock the full course to keep going."
+                                }
+                            />
+                        )}
                     />
                 ),
             ]} />
@@ -133,33 +133,38 @@ const TrialConversionStripBase = ({
     // rhythm stops reading as groups. With 3 the
     // card reads 24/12/12/24 — two groups, which is what it is.
     const priceColumn = (
-        <StackV gap={4} isSkeleton={isSkeleton} items={
-            isSkeleton && !price ? [
-                // The CTA card renders instantly once the outline
-                // resolves, but the price is a second fetch — mirror the price
-                // line instead of showing an empty gap until it lands.
-                () => <Typography size="h4" isSkeleton />,
-                () => <Typography size="xs" isSkeleton />,
-            ] : price?.discountedPriceVnd != null ? [
-                ({ isSkeleton }: SkeletonProps) => (
-                    <PriceTagProminent
-                        isSkeleton={isSkeleton}
-                        discounted={price.discountedPriceVnd}
-                        original={price.originalPriceVnd}
-                        breakdown={breakdown}
+        <StackV
+            principle="card-caption"
+            explain="Keeps the scarcity line as a caption under the price so the two read as one price cluster, not as separate blocks."
+            isSkeleton={isSkeleton}
+            items={
+                isSkeleton && !price ? [
+                    // The CTA card renders instantly once the outline
+                    // resolves, but the price is a second fetch — mirror the price
+                    // line instead of showing an empty gap until it lands.
+                    () => <Typography size="h4" isSkeleton />,
+                    () => <Typography size="xs" isSkeleton />,
+                ] : price?.discountedPriceVnd != null ? [
+                    ({ isSkeleton }: SkeletonProps) => (
+                        <PriceTagProminent
+                            isSkeleton={isSkeleton}
+                            discounted={price.discountedPriceVnd}
+                            original={price.originalPriceVnd}
+                            breakdown={breakdown}
 
-                    />
-                ),
-                ({ isSkeleton }: SkeletonProps) => (
-                    <PhaseScarcityNote
-                        isSkeleton={isSkeleton}
-                        currentPhase={price.currentPhase}
-                        seatsRemaining={price.seatsRemainingInCurrentPhase}
-                        nextPhasePriceVnd={price.nextPhasePriceVnd}
-                    />
-                ),
-            ] : []
-        } />
+                        />
+                    ),
+                    ({ isSkeleton }: SkeletonProps) => (
+                        <PhaseScarcityNote
+                            isSkeleton={isSkeleton}
+                            currentPhase={price.currentPhase}
+                            seatsRemaining={price.seatsRemainingInCurrentPhase}
+                            nextPhasePriceVnd={price.nextPhasePriceVnd}
+                        />
+                    ),
+                ] : []
+            }
+        />
     )
 
     // Price is a NUMBER — shrinking it means nothing, unlike a long title that
@@ -171,10 +176,7 @@ const TrialConversionStripBase = ({
     // adding a `border-t` on top says the same thing twice in two languages.
     const footerRow = (
         <StackH
-            gap={6}
             principle="block-boundary"
-            align="end"
-            justify="between"
             at="sm"
             isSkeleton={isSkeleton}
             items={[
@@ -203,12 +205,17 @@ const TrialConversionStripBase = ({
         // The frame owns radius/shadow/padding from ONE source: `SurfaceCard`.
         // `padding` defaults to `3` — the system's actual `p-3` card rule.
         <SurfaceCard
-            classNames={classNames}
+            identity={{ tier: "block", component: "TrialConversionStrip" }}
             body={({ isSkeleton }: SkeletonProps) => (
-                <StackV gap={6} isSkeleton={isSkeleton} items={[
-                    () => headerRow,
-                    () => footerRow,
-                ]} />
+                <StackV
+                    principle="block-boundary"
+                    explain="Separates the loss-aversion header from the price/CTA footer so the strip reads as two blocks inside one card."
+                    isSkeleton={isSkeleton}
+                    items={[
+                        () => headerRow,
+                        () => footerRow,
+                    ]}
+                />
             )}
         />
     )

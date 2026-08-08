@@ -6,15 +6,15 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { useLocale, useTranslations } from "next-intl"
 import { pathConfig } from "@/resources/path"
 
-import { OauthAction } from "./enums"
-import { OAUTH_ACTION_MESSAGE_KEY_MAP } from "./map"
+import { OauthAction } from "@/modules/types/enums/oauth-action"
+import { OAUTH_ACTION_MESSAGE_KEY_MAP } from "@/modules/utils/oauth-action-message"
 import { Spacer } from "@/components/blocks/layout/Spacer"
 import { SessionStorage } from "@/modules/storage/session/storage"
 import { SessionStorageId } from "@/modules/storage/session/enums/id"
 import { type SessionStoragePostLoginRedirect } from "@/modules/storage/session/types/post-login-redirect"
 import { StackV } from "@/components/frames/Stack"
 
-export * from "./enums"
+export * from "@/modules/types/enums/oauth-action"
 
 /** Props for {@link OauthRedirectPage}. */
 export interface OauthRedirectPageProps {

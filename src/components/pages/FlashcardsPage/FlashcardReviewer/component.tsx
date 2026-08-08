@@ -16,7 +16,7 @@ import { Box } from "@/components/frames/Box"
 import { Cluster } from "@/components/frames/Cluster"
 import { Container } from "@/components/frames/Container"
 import { StackH, StackV } from "@/components/frames/Stack"
-import { LEVEL_COLOR } from "../constants"
+import { LEVEL_COLOR } from "@/modules/utils/flashcards"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-card"
 

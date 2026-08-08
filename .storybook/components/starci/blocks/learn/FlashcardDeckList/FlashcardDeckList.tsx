@@ -14,6 +14,7 @@ import {
 import { AsyncContentEmpty } from "@sb-components/composites/async/AsyncContent/AsyncContent"
 import { Grid, type GridItem } from "@sb-components/frames/Grid/Grid"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { VariantChipDifficulty, type Difficulty } from "@sb-components/starci/blocks/learn/VariantChip/VariantChip"
@@ -142,12 +143,14 @@ const FlashcardDeckList = ({
 
         return (
             <StackV
-                gap={3}
+                principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                 isSkeleton={isSkeleton}
                 items={[
                     () => (
                         <StackV
-                            gap={1}
+                            principle="name-handle"
+                            explain="Display name with handle — not title-subtitle, because the second line is an identity handle rather than a subtitle."
                             isSkeleton={isSkeleton}
                             items={[
                                 () => <Typography size="sm" weight="medium" truncate text={deck.title} />,
@@ -157,28 +160,31 @@ const FlashcardDeckList = ({
                             ]}
                         />
                     ),
-                    () => <Cluster gap={3} items={chips} />,
+                    () => <Cluster principle="chip-row" explain="Lets chips share one wrapping row so related tags stay together without stacking as a column." items={chips} />,
                     ...(showProgress && deck.totalCount > 0 ? [() => (
                         <StackH
-                            gap={2}
+                            principle="content-row"
+                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                             isSkeleton={isSkeleton}
                             items={[
                                 () => (
-                                    <div className="flex-1">
-                                        <ProgressGauge
-                                            value={((deck.masteredCount ?? 0) / deck.totalCount) * 100}
-                                            size="sm"
-                                            ariaLabel={`Mastery level for the ${deck.title} deck`}
-
-                                        />
-                                    </div>
+                                    <FillAvailable
+                                        at="base"
+                                        explain="Mastery meter takes remaining tile width beside the numeric fraction so the gauge can shrink instead of shoving the count."
+                                        body={() => (
+                                            <ProgressGauge
+                                                value={((deck.masteredCount ?? 0) / deck.totalCount) * 100}
+                                                size="sm"
+                                                ariaLabel={`Mastery level for the ${deck.title} deck`}
+                                            />
+                                        )}
+                                    />
                                 ),
                                 () => (
                                     <Typography
                                         size="xs"
                                         color="muted"
                                         text={`${deck.masteredCount ?? 0}/${deck.totalCount}`}
-
                                     />
                                 ),
                             ]}
@@ -186,10 +192,8 @@ const FlashcardDeckList = ({
                     )] : []),
                     () => (
                         <StackH
-                            gap={2}
                             principle="icon-text"
                             explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
-                            justify="end"
                             isSkeleton={isSkeleton}
                             items={[
                                 () => (
@@ -198,10 +202,10 @@ const FlashcardDeckList = ({
                                         weight="medium"
                                         color="accent-soft"
                                         text={ctaLabel ?? DEFAULT_CTA_LABEL}
-
                                     />
                                 ),
                                 () => (
+                                    // Not GlyphMark: caret is size-4 (GlyphMark is fixed size-5).
                                     <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4 shrink-0 text-accent-soft-foreground" />
                                 ),
                             ]}
@@ -215,20 +219,17 @@ const FlashcardDeckList = ({
     const tiles: Array<GridItem> = source.map((deck) => ({
         key: deck.id,
         content: () => (
-            <div>
-                <SurfaceCard
-                    isSkeleton={isSkeleton}
-                    // Always set, even during a placeholder tile: `Base`'s skeleton-mirror
-                    // branch intercepts BEFORE this ever reaches a real button (see
-                    // SurfaceCard.tsx), so it's inert while `isSkeleton` is true — it only
-                    // needs to be present so the merged `.Pressable` shape (not the plain
-                    // `SurfaceCard` shape) is the one that renders once loading finishes.
-                    onPress={() => onSelectDeck(deck.id)}
-                    ariaLabel={deck.title}
-
-                    body={() => (isSkeleton ? null : deckTileBody(deck))}
-                />
-            </div>
+            <SurfaceCard
+                isSkeleton={isSkeleton}
+                // Always set, even during a placeholder tile: `Base`'s skeleton-mirror
+                // branch intercepts BEFORE this ever reaches a real button (see
+                // SurfaceCard.tsx), so it's inert while `isSkeleton` is true — it only
+                // needs to be present so the merged `.Pressable` shape (not the plain
+                // `SurfaceCard` shape) is the one that renders once loading finishes.
+                onPress={() => onSelectDeck(deck.id)}
+                ariaLabel={deck.title}
+                body={() => (isSkeleton ? null : deckTileBody(deck))}
+            />
         ),
     }))
 
@@ -261,62 +262,60 @@ const FlashcardDeckList = ({
             icon={hasQuery ? MagnifyingGlassIcon : undefined}
             title={hasQuery ? `No decks match “${query}”` : "This course has no decks yet"}
             description={hasQuery ? "Try a different search term." : undefined}
-
-
         />
     ) : view === "grid" ? (
-        <div>
-            <Grid columns={{ base: 1, sm: 2, md: 3 }} principle="content-row"
-                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                items={tiles}  />
-        </div>
+        <Grid
+            columns={{ base: 1, sm: 2, md: 3 }}
+            principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            items={tiles}
+        />
     ) : (
         <SurfaceCardList isSkeleton={isSkeleton} items={rows} />
     )
 
     return (
         <StackV
-            gap={4}
+            identity={{ tier: "block", component: "FlashcardDeckList" }}
+            principle="sibling-stack"
+            explain="Search row, deck track, and pagination are same-kind peers in the picker column — not group-boundary, because they are repeating picker sections rather than nested groups."
             isSkeleton={isSkeleton}
             items={[
                 () => (
                     <StackH
-                        gap={3}
                         principle="flex-action"
                         explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                         at="sm"
                         isSkeleton={isSkeleton}
                         items={[
                             () => (
-                                <div className="min-w-0 flex-1">
-                                    <InputSearch
-                                        value={query}
-                                        onValueChange={onQueryChange}
-                                        placeholder="Search decks"
-                                        ariaLabel="Search decks"
-
-                                    />
-                                </div>
+                                <FillAvailable
+                                    at="base"
+                                    explain="Search field takes remaining header width beside the view tabs so the query input can truncate instead of shoving the toggle."
+                                    body={() => (
+                                        <InputSearch
+                                            value={query}
+                                            onValueChange={onQueryChange}
+                                            placeholder="Search decks"
+                                            ariaLabel="Search decks"
+                                        />
+                                    )}
+                                />
                             ),
                             () => (
-                                <div>
-                                    <Tabs
-                                        items={VIEW_ITEMS}
-                                        selectedKey={view}
-                                        onSelectionChange={(key) => onViewChange(key as FlashcardDeckListView)}
-                                        ariaLabel="Display style"
-
-                                    />
-                                </div>
+                                <Tabs
+                                    items={VIEW_ITEMS}
+                                    selectedKey={view}
+                                    onSelectionChange={(key) => onViewChange(key as FlashcardDeckListView)}
+                                    ariaLabel="Display style"
+                                />
                             ),
                         ]}
                     />
                 ),
                 () => track,
                 ...(!isSkeleton && decks.length > 0 ? [() => (
-                    <div>
-                        <Pagination currentPage={page} totalPages={totalPages} onPageChange={onPageChange} />
-                    </div>
+                    <Pagination currentPage={page} totalPages={totalPages} onPageChange={onPageChange} />
                 )] : []),
             ]}
         />

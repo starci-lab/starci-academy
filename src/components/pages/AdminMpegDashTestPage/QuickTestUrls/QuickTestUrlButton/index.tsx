@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useCallback } from "react"
-import type { QuickTestUrl } from "../../types"
+import type { QuickTestUrl } from "@/modules/types/admin-mpeg-dash-test"
 
 /** Props for {@link QuickTestUrlButton}. */
 export interface QuickTestUrlButtonProps {

@@ -51,7 +51,7 @@ const _LinkGithubModal = ({
     labels,
 }: LinkGithubModalProps) => {
     const introItems = [
-        () => <GithubIcon className="w-16 h-16" />,
+        () => <GithubIcon />,
         () => (
             <Typography
                 size="sm"
@@ -63,16 +63,19 @@ const _LinkGithubModal = ({
     ]
 
     const modalBody = [
-        () => <StackV gap={3} principle="sibling-stack"
-            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-            align="center" items={introItems} />,
+        () => (
+            <StackV
+                principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                items={introItems}
+            />
+        ),
         () => (
             <Button
                 variant="primary"
                 size="lg"
                 suffixIcon={ArrowRightIcon}
                 label={labels.button}
-                classNames={["w-full"]}
                 onPress={onLinkPress}
             />
         ),
@@ -84,7 +87,13 @@ const _LinkGithubModal = ({
             onOpenChange={onOpenChange}
             title={labels.title}
             size="xs"
-            body={() => <StackV gap={6} items={modalBody} />}
+            body={() => (
+                <StackV
+                    principle="block-boundary"
+                    explain="Intro mark over the link CTA — not group-boundary, because this is the modal body's major section seam, and not sibling-stack, because intro and CTA are different-function zones."
+                    items={modalBody}
+                />
+            )}
             identity={{ tier: "overlay", component: "LinkGithubModal" }}
         />
     )

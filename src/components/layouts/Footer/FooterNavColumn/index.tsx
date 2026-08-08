@@ -1,10 +1,11 @@
 "use client"
 
 import React from "react"
-import { Link, Typography } from "@heroui/react"
-import {
-    useRouter,
-} from "@/i18n/navigation"
+import { useRouter } from "@/i18n/navigation"
+import { InlineLink } from "@/components/atoms/navigation/Link"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackV } from "@/components/frames/Stack"
+
 /** A single footer link: an internal `path` (locale-aware push) OR an external
  *  `href` (mailto / off-site) — exactly one is set. */
 export interface FooterNavLink {
@@ -14,7 +15,7 @@ export interface FooterNavLink {
     label: string
     /** Internal route, locale-aware — pushed through the i18n router. */
     path?: string
-    /** External / mailto href — rendered as a plain anchor. */
+    /** External / mailto href — rendered as a plain anchor press. */
     href?: string
 }
 
@@ -29,49 +30,49 @@ export interface FooterNavColumnProps {
 /**
  * FooterNavColumn — one quiet column of the global {@link Footer}: a small muted
  * heading over a vertical stack of links. Internal links (`path`) route through
- * the locale-aware router (so the top loader picks them up); external / mailto
- * links (`href`) render as plain anchors.
+ * the locale-aware router; external / mailto links (`href`) open via `onPress`.
  *
- * `"use client"` for the router press handler. Presentational otherwise — owns its
- * spacing / typography; the caller supplies labels + targets.
- *
- * @param props - column `title`, `links`, and optional className (placement).
+ * Kept as a layout helper for callers that still want the connected column
+ * shape; the live {@link Footer} now composes the starci `FooterLinkColumn`.
  */
 export const FooterNavColumn = ({
     title,
-    links}: FooterNavColumnProps) => {
+    links,
+}: FooterNavColumnProps) => {
     const router = useRouter()
 
+    const rows = links.map((link) => () => (
+        <InlineLink
+            key={link.key}
+            label={link.label}
+            size="sm"
+            onPress={() => {
+                if (link.href) {
+                    window.location.href = link.href
+                    return
+                }
+                if (link.path) {
+                    router.push(link.path)
+                }
+            }}
+        />
+    ))
+
     return (
-        <div className={"flex flex-col gap-3"}>
-            <Typography type="body-sm" weight="semibold">
-                {title}
-            </Typography>
-            <ul className="flex flex-col gap-2">
-                {links.map((link) => (
-                    <li key={link.key}>
-                        {link.href ? (
-                            <Link
-                                href={link.href}
-                                className="text-sm text-muted transition-colors hover:text-foreground"
-                            >
-                                {link.label}
-                            </Link>
-                        ) : (
-                            <Link
-                                onPress={() => {
-                                    if (link.path) {
-                                        router.push(link.path)
-                                    }
-                                }}
-                                className="cursor-pointer text-sm text-muted transition-colors hover:text-foreground"
-                            >
-                                {link.label}
-                            </Link>
-                        )}
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <StackV
+            identity={{ tier: "layout", component: "FooterNavColumn" }}
+            principle="label-field"
+            explain="Column title over its link list — not title-subtitle, because the title names the group of controls below rather than continuing in one voice."
+            items={[
+                () => <Typography size="sm" weight="bold" text={title} />,
+                () => (
+                    <StackV
+                        principle="sibling-stack"
+                        explain="Same-kind peer stack of link rows — not group-boundary, because these are repeating siblings rather than section groups."
+                        items={rows}
+                    />
+                ),
+            ]}
+        />
     )
 }

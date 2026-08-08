@@ -55,90 +55,90 @@ const ConsultantCard = ({
     const { id, fullName, jobTitle, companyTitle, description, avatarUrl } = consultant
 
     const nameRow = (
-        <StackV gap={1} isSkeleton={isSkeleton} items={[
-            () => (
-                <Typography
-                    size="sm"
-                    weight="medium"
-                    truncate
-                    isSkeleton={isSkeleton}
-                    text={fullName}
+        <StackV
+            principle="title-subtitle"
+            explain="Name over role — not label-field, because neither line is a form control label."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <Typography
+                        size="sm"
+                        weight="medium"
+                        truncate
+                        isSkeleton={isSkeleton}
+                        text={fullName}
 
-                />
-            ),
-            ...(isSkeleton || jobTitle ? [() => (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    truncate
-                    isSkeleton={isSkeleton}
-                    text={jobTitle}
+                    />
+                ),
+                ...(isSkeleton || jobTitle ? [() => (
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        truncate
+                        isSkeleton={isSkeleton}
+                        text={jobTitle}
 
-                />
-            )] : []),
-        ]} />
+                    />
+                )] : []),
+            ]}
+        />
     )
 
     return (
-        <div>
-            <div>
-                <SurfaceCard
-                    onPress={() => onOpen(id)}
-                    isDisabled={isSkeleton}
+        <SurfaceCard
+            identity={{ tier: "block", component: "ConsultantCard" }}
+            onPress={() => onOpen(id)}
+            isDisabled={isSkeleton}
+            body={() => (
+                <StackV
+                    principle="sibling-stack"
+                    explain="Same-kind peer stack of tile rows — not group-boundary, because photo/name/company/blurb are repeating vertical siblings rather than section groups."
+                    isSkeleton={isSkeleton}
+                    items={[
+                        () => (
+                            <Image
+                                src={avatarUrl}
+                                alt={fullName}
+                                ratio="square"
+                                radius="lg"
+                                isSkeleton={isSkeleton}
 
-                    body={() => (
-                        <StackV
-                            gap={4}
-                            isSkeleton={isSkeleton}
-                            items={[
+                            />
+                        ),
+                        () => nameRow,
+                        ...(isSkeleton || companyTitle
+                            ? [
                                 () => (
-                                    <div>
-                                        <Image
-                                            src={avatarUrl}
-                                            alt={fullName}
-                                            ratio="square"
-                                            radius="lg"
-                                            isSkeleton={isSkeleton}
+                                    <Typography
+                                        size="xs"
+                                        color="muted"
+                                        truncate
+                                        prefixIcon={BuildingsIcon}
+                                        isSkeleton={isSkeleton}
+                                        text={companyTitle}
 
-                                        />
-                                    </div>
+                                    />
                                 ),
-                                () => nameRow,
-                                ...(isSkeleton || companyTitle
-                                    ? [
-                                        () => (
-                                            <Typography
-                                                size="xs"
-                                                color="muted"
-                                                truncate
-                                                prefixIcon={BuildingsIcon}
-                                                isSkeleton={isSkeleton}
-                                                text={companyTitle}
+                            ]
+                            : []),
+                        ...(isSkeleton || description
+                            ? [
+                                () => (
+                                    <Typography
+                                        size="sm"
+                                        color="muted"
+                                        lineClamp={2}
+                                        isSkeleton={isSkeleton}
+                                        text={description}
 
-                                            />
-                                        ),
-                                    ]
-                                    : []),
-                                ...(isSkeleton || description
-                                    ? [
-                                        () => (
-                                            <Typography
-                                                size="sm"
-                                                color="muted"
-                                                lineClamp={2}
-                                                isSkeleton={isSkeleton}
-                                                text={description}
-
-                                            />
-                                        ),
-                                    ]
-                                    : []),
-                            ]}
-                        />
-                    )}
+                                    />
+                                ),
+                            ]
+                            : []),
+                    ]}
                 />
-            </div>
-        </div>
+            )}
+        />
     )
 }
 

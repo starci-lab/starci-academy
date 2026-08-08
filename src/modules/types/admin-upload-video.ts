@@ -1,6 +1,6 @@
 import type {
     UploadStatus,
-} from "../enums"
+} from "@/modules/types/enums/upload-status"
 
 /** Tracking record for one storage provider's presigned-URL upload. */
 export interface ProviderUploadStatus {

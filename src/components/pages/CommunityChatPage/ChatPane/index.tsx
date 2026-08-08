@@ -13,20 +13,21 @@ import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Props for {@link ChatPane}. */
 export interface ChatPaneProps {
-    /** Conversation whose messages are shown + sent to. */
+    /**
+     * Conversation whose messages are shown + sent to. Omitted/null → shimmer
+     * mirror of the pane (message list + composer) while the active id resolves.
+     */
+    conversationId?: string | null
+}
+
+type ChatPaneLiveProps = {
     conversationId: string
 }
 
 /**
- * `ChatPane` — the connected half (see `tiers/split.md`) of one chat
- * conversation pane: fetches the conversation's messages, joins its
- * Socket.IO room and refetches on every new message (so messages from
- * others appear in real time), and resolves every label before handing
- * them to the presentational {@link _ChatPane}.
- *
- * @param props - {@link ChatPaneProps}
+ * Live connected pane — hooks only run when a conversation id is known.
  */
-export const ChatPane = ({ conversationId }: ChatPaneProps) => {
+const ChatPaneLive = ({ conversationId }: ChatPaneLiveProps) => {
     const t = useTranslations()
     const runGraphQL = useGraphQLWithToast()
     const socket = useCommunityChatSocketIo()
@@ -108,4 +109,39 @@ export const ChatPane = ({ conversationId }: ChatPaneProps) => {
             }}
         />
     )
+}
+
+/**
+ * `ChatPane` — the connected half (see `tiers/split.md`) of one chat
+ * conversation pane: fetches the conversation's messages, joins its
+ * Socket.IO room and refetches on every new message (so messages from
+ * others appear in real time), and resolves every label before handing
+ * them to the presentational {@link _ChatPane}.
+ *
+ * @param props - {@link ChatPaneProps}
+ */
+export const ChatPane = ({ conversationId }: ChatPaneProps) => {
+    const t = useTranslations()
+
+    // Wait for an active conversation id — same shape as the live pane via
+    // intrinsic `isSkeleton` (no parallel public skeleton export).
+    if (!conversationId) {
+        return (
+            <_ChatPane
+                isSkeleton
+                isEmpty={false}
+                messages={[]}
+                isSending={false}
+                onSend={async () => false}
+                labels={{
+                    empty: t("community.chat.empty"),
+                    error: t("community.chat.error"),
+                    retry: t("community.retry"),
+                    placeholder: t("community.chat.placeholder"),
+                    send: t("community.chat.send"),
+                }}
+            />
+        )
+    }
+    return <ChatPaneLive conversationId={conversationId} />
 }

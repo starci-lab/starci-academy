@@ -3,6 +3,7 @@ import type { ReactNode } from "react"
 import { ResizableRail } from "@sb-components/behaviors/ResizableRail/ResizableRail"
 import { Spinner } from "@sb-components/atoms/display/Spinner/Spinner"
 import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
+import { Stage } from "@sb-components/frames/Stage/Stage"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { EnrollGate, type EnrollGateProps } from "@sb-components/starci/blocks/learn/EnrollGate/EnrollGate"
 import { ContentAiFab } from "@sb-components/starci/blocks/learn/ContentAiFab/ContentAiFab"
@@ -133,46 +134,58 @@ const LearnShell = ({
     ]
 
     return (
-        <div>
-            {isEnrollGated && enrollGateProps != null ? (
-                <EnrollGate
-                    title={enrollGateProps.title}
-                    description={enrollGateProps.description}
-                    preview={enrollGateProps.preview}
-                    price={enrollGateProps.price}
-                    onEnroll={enrollGateProps.onEnroll}
-
-
-                />
-            ) : (
-                <div className="min-h-[calc(100dvh-4rem)]">
-                    <StackH
-                        gap={1}
-                        items={railAndContent}
+        <StackV
+            identity={{ tier: "layout", component: "LearnShell" }}
+            principle="group-boundary"
+            explain="Separates the learn surface from floating AI triggers so each region keeps its own seam owner — not sibling-stack, because these are distinct section roles rather than repeating peers."
+            items={[
+                () => (isEnrollGated && enrollGateProps != null ? (
+                    <EnrollGate
+                        title={enrollGateProps.title}
+                        description={enrollGateProps.description}
+                        preview={enrollGateProps.preview}
+                        price={enrollGateProps.price}
+                        onEnroll={enrollGateProps.onEnroll}
                     />
-                </div>
-            )}
-
-            {showAiTriggers ? (
-                <>
-                    <ContentAiFab
-                        onOpen={onOpenAiChat}
-                        isOpen={isAiChatOpen}
-
-
+                ) : (
+                    <Stage
+                        fill="viewport"
+                        canvas={() => (
+                            <StackH
+                                principle="layout-split"
+                                explain="Major layout split — not block-boundary, because this separates the optional rail from the lesson body rather than adjacent blocks."
+                                items={railAndContent}
+                            />
+                        )}
                     />
-                    {selectionAsk != null ? (
-                        <ContentAiSelectionAsk
-                            onOpen={onOpenSelectionAsk}
-                            anchor={selectionAsk.anchor}
-                            isNew={selectionAsk.isNew}
-
-
-                        />
-                    ) : null}
-                </>
-            ) : null}
-        </div>
+                )),
+                () => (showAiTriggers ? (
+                    <StackV
+                        principle="sibling-stack"
+                        explain="Same-kind peer stack of AI trigger chrome — not group-boundary, because FAB and selection-ask are alternate trigger peers rather than section groups."
+                        items={[
+                            () => (
+                                <ContentAiFab
+                                    onOpen={onOpenAiChat}
+                                    isOpen={isAiChatOpen}
+                                />
+                            ),
+                            ...(selectionAsk != null
+                                ? [
+                                    () => (
+                                        <ContentAiSelectionAsk
+                                            onOpen={onOpenSelectionAsk}
+                                            anchor={selectionAsk.anchor}
+                                            isNew={selectionAsk.isNew}
+                                        />
+                                    ),
+                                ]
+                                : []),
+                        ]}
+                    />
+                ) : null),
+            ]}
+        />
     )
 }
 

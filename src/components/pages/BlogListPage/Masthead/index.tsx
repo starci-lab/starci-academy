@@ -3,7 +3,7 @@
 import React from "react"
 import dynamic from "next/dynamic"
 import { useTranslations } from "next-intl"
-import { BACKEND_INFRA_SCENE } from "./scene"
+import { BACKEND_INFRA_SCENE } from "@/modules/utils/blog-masthead-scene"
 
 /**
  * The 3D backend-infra scene is real WebGL (react-three-fiber) — client-only, never SSR'd. While

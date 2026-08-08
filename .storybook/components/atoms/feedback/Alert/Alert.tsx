@@ -1,7 +1,6 @@
 import type { ComponentType, ReactNode, SVGProps } from "react"
 import { Alert as HeroAlert, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { CheckCircleIcon, InfoIcon, WarningIcon, XCircleIcon, XIcon } from "@phosphor-icons/react"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * ATOM — `Alert`: the one port down to HeroUI Alert (`Callout` and `Toast` both compose from here).
@@ -94,10 +93,6 @@ interface AlertBaseOwnProps {
     onClose?: () => void
     /** Accessible label for the × (caller passes a localised string). */
     closeAriaLabel?: string
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -129,7 +124,6 @@ const AlertBase = ({
     action,
     onClose,
     closeAriaLabel,
-    classNames,
     isSkeleton = false,
 }: AlertBaseProps) => {
     const Icon = icon ?? STATUS_ICON[status]
@@ -142,8 +136,7 @@ const AlertBase = ({
             // `STATUS_TINT`/`STATUS_ICON`/`STATUS_CLOSE_TONE` (all `info`-aware)
             // drive the actual paint via explicit className.
             status={status === "info" ? "default" : status}
-            className={cn("shadow-none", tone === "soft" && STATUS_TINT[status], classNames)}
-
+            className={cn("shadow-none", tone === "soft" && STATUS_TINT[status])}
         >
             {/* The scaffold owns the glyph scale — callers hand a bare icon component. */}
             <HeroAlert.Indicator className={GLYPH_SCALE}>

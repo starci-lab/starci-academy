@@ -23,7 +23,7 @@ import {
 } from "@/components/blocks/settings/SettingsBreadcrumb"
 import {
     useSelectedCourse,
-} from "./hooks/useSelectedCourse"
+} from "@/hooks/useSelectedCourse"
 import {
     CourseDetail,
 } from "./CourseDetail"

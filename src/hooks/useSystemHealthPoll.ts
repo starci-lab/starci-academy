@@ -4,7 +4,7 @@ import { useMemo } from "react"
 import useSWR from "swr"
 import { querySystemHealthStatus } from "@/modules/api/graphql/queries/query-system-health-status"
 import type { SystemHealthComponent } from "@/modules/api/graphql/queries/types/system-health-status"
-import { HEALTH_POLL_INTERVAL_MS, HEALTH_POLL_JITTER_MS } from "../constants"
+import { HEALTH_POLL_INTERVAL_MS, HEALTH_POLL_JITTER_MS } from "@/modules/utils/architecture-catalog"
 
 /** Per-component live health, keyed by the component `name` (matches
  *  {@link ARCHITECTURE_COMPONENTS}). */

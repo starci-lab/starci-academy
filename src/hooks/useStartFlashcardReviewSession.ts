@@ -18,7 +18,7 @@ import type { FlashcardReviewMode } from "@/modules/api/graphql/mutations/types/
  * ALWAYS calls `start` directly — no resumable-lookup-and-reuse here anymore
  * (teacher 2026-07-12: "if there's an abandoned session in progress, override
  * it (delete the old one, create a new one)", mirrors the identical fix on
- * {@link import("./useStartFlashcardDueReviewSession").useStartFlashcardDueReviewSession}).
+ * {@link import("@/hooks/useStartFlashcardDueReviewSession").useStartFlashcardDueReviewSession}).
  * The `start` mutation already retires any prior `in_progress` draw for the
  * enrollment+deck before persisting the new one
  * (`FlashcardReviewSessionService.start`), so this button always means

@@ -131,27 +131,25 @@ const QuotaBar = ({
         />
     )
 
-    const bar = (
-        <div>
-            <ProgressBar
-                value={value}
-                max={100}
-                color={fillTone}
-                size="sm"
-                ariaLabel={label}
-                isSkeleton={isSkeleton}
-
-            />
-        </div>
-    )
-
     return (
         <StackV identity={{ tier: "block", component: "QuotaBar" }}
             gap={4}
+            principle="label-field"
+            explain="label-field not title-subtitle: the fill bar is a control under its window label, not a heading pair; not name-handle/icon-text because those are inline identity seams."
             isSkeleton={isSkeleton}
             items={[
                 () => labelRow,
-                () => bar,
+                () => (
+                    <ProgressBar
+                        value={value}
+                        max={100}
+                        color={fillTone}
+                        size="sm"
+                        ariaLabel={label}
+                        isSkeleton={isSkeleton}
+
+                    />
+                ),
                 ...(showCaption ? [() => (
                     <Typography
                         size="xs"

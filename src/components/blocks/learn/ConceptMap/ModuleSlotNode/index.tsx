@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import { useLocale } from "next-intl"
 import { CheckCircleIcon } from "@phosphor-icons/react"
 
+import { GlyphMark } from "@/components/atoms/display/GlyphMark"
 import { COURSE_MODULE_SLOT_NODE_TYPE, SLOT_NODE_HEIGHT, SLOT_NODE_WIDTH } from "../moduleExpansion"
 import { pathConfig } from "@/resources/path"
 import { useAppSelector } from "@/redux/hooks"
@@ -99,7 +100,7 @@ export const CourseModuleSlotNode = (props: NodeProps<CourseModuleSlotFlowNode>)
                 type="target"
             />
             {data.isRead ? (
-                <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success-soft-foreground" />
+                <GlyphMark icon={CheckCircleIcon} tone="success" />
             ) : null}
             <span className="line-clamp-2 leading-snug">{data.label}</span>
         </button>

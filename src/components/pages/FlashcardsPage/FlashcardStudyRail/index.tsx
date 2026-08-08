@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react"
 import useSWR from "swr"
 import { useTranslations } from "next-intl"
-import { useFlashcardNav } from "../useFlashcardNav"
+import { useFlashcardNav } from "@/hooks/useFlashcardNav"
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query-flashcard-decks-by-course"
 import { useAppSelector } from "@/redux/hooks"
 import { _FlashcardStudyRail } from "./component"

@@ -13,7 +13,7 @@ import {
 import {
     DEFAULT_KPI_TARGETS,
     KPI_ORDER,
-} from "./map"
+} from "@/modules/utils/weekly-goals-map"
 import { useQueryMyKpisSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyKpisSwr"
 import type { KpiKey, QueryKpiItemData } from "@/modules/api/graphql/queries/types/my-kpis"
 

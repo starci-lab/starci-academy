@@ -73,70 +73,66 @@ const CourseQaToolbar = ({
     }))
 
     return (
-        <div>
-            <StackV
-                gap={4}
-                isSkeleton={isSkeleton}
-                items={[
-                    () => (
-                        <div>
-                            <Toolbar
-                                leftTabs={{
-                                    items,
-                                    selectedKey: filter,
-                                    ariaLabel: filterAriaLabel,
-                                    onSelectionChange: (key) => onFilterChange(String(key) as CourseQaFilter),
-                                }}
-
-                            />
-                        </div>
-                    ),
-                    () => (
-                        <StackH
-                            gap={3}
-                            principle="flex-action"
-                            explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
-                            justify="between"
-                            at="sm"
-                            isSkeleton={isSkeleton}
-                            items={[
-                                () => (
-                                    <div className="min-w-0 flex-1 @app-sm:max-w-sm">
-                                        <InputSearch
-                                            value={searchValue}
-                                            onValueChange={onSearchChange}
-                                            placeholder="Search questions..."
-                                            ariaLabel="Search questions"
-
-                                        />
-                                    </div>
-                                ),
-                                () => (
-                                    isSkeleton ? (
-                                        <Typography
-                                            size="sm"
-                                            color="muted"
-                                            isSkeleton
-
-
-                                        />
-                                    ) : (
-                                        <Typography
-                                            size="sm"
-                                            color="muted"
-                                            tabularNums
-                                            text={resultCountLabel(resultCount)}
-
-
-                                        />
-                                    )
-                                ),
-                            ]}
-                        />
-                    ),
-                ]}
-            />
-        </div>
+        <StackV
+            identity={{ tier: "block", component: "CourseQaToolbar" }}
+            principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <Toolbar
+                        leftTabs={{
+                            items,
+                            selectedKey: filter,
+                            ariaLabel: filterAriaLabel,
+                            onSelectionChange: (key) => onFilterChange(String(key) as CourseQaFilter),
+                        }}
+                    />
+                ),
+                () => (
+                    <StackH
+                        principle="flex-action"
+                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                        at="sm"
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <StackV
+                                    principle="flex-fill-base"
+                                    explain="Fills the remaining row width — not flex-fill, because this is the base-width fill rather than a breakpoint-owned grow."
+                                    items={[
+                                        () => (
+                                            <InputSearch
+                                                value={searchValue}
+                                                onValueChange={onSearchChange}
+                                                placeholder="Search questions..."
+                                                ariaLabel="Search questions"
+                                            />
+                                        ),
+                                    ]}
+                                />
+                            ),
+                            () => (
+                                isSkeleton ? (
+                                    <Typography
+                                        size="sm"
+                                        color="muted"
+                                        isSkeleton
+                                    />
+                                ) : (
+                                    <Typography
+                                        size="sm"
+                                        color="muted"
+                                        tabularNums
+                                        text={resultCountLabel(resultCount)}
+                                    />
+                                )
+                            ),
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
 }
 

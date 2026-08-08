@@ -5,6 +5,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { AiQuotaLane, type AiQuotaLaneData } from "@sb-components/starci/blocks/ai/AiQuotaLane/AiQuotaLane"
 import { StackV } from "@sb-components/frames/Stack/Stack"
+import type { CallerIdentity } from "@sb-components/frames/_identity"
 
 /**
  * `AiQuotaSubscriptionPanel` — the "Plan" tab body inside `AiQuotaModal`. The
@@ -23,6 +24,9 @@ const TIER_LABEL: Record<AiQuotaTier, string> = {
     max: "MAX",
 }
 
+/** This block's identity — stamped on whichever frame/composite is the export root. */
+const IDENTITY: CallerIdentity = { tier: "block", component: "AiQuotaSubscriptionPanel" }
+
 /** The Premium `AiQuotaLane` feed — same shape {@link AiQuotaLane} itself takes, passed straight through. */
 export interface AiQuotaSubscriptionPanelPremiumLane {
     /** The lane's two windows. Unset while `isLoading` (or before the first fetch lands). */
@@ -35,8 +39,6 @@ export interface AiQuotaSubscriptionPanelPremiumLane {
 interface AiQuotaSubscriptionPanelOwnProps {
     /** Fired when the reader taps the CTA on the no-tier leaf. */
     onSubscribe: () => void
-    /** Extra classes on the root. */
-    className?: string
 }
 
 /**
@@ -67,57 +69,59 @@ const AiQuotaSubscriptionPanel = ({
     premiumLane,
     onSubscribe,
     isSkeleton = false,
-    className,
 }: AiQuotaSubscriptionPanelProps) => {
     if (isSkeleton) {
         return (
-            <div className={className}>
-                <AiQuotaLane isLoading />
-            </div>
+            <StackV
+                identity={IDENTITY}
+                principle="sibling-stack"
+                explain="Skeleton keeps one Premium lane placeholder as the panel body — not group-boundary, because there is no section split yet."
+                items={[() => <AiQuotaLane isLoading />]}
+            />
         )
     }
     if (tier == null) {
         return (
-            <div className={className}>
-                <SurfaceCard
-                    variant="nested"
-                    padding={4}
+            <SurfaceCard
+                identity={IDENTITY}
+                variant="nested"
+                padding={4}
+                body={() => (
+                    <StackV principle="content-row"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title." isSkeleton={isSkeleton} items={[
+                            () => (
+                                <Typography
+                                    size="sm"
+                                    color="muted"
+                                    isSkeleton={isSkeleton}
+                                    text="You don't have a paid plan yet. Upgrade to unlock Premium credit and get graded with premium models."
 
-
-                    body={() => (
-                        <StackV gap={4} principle="content-row"
-                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                            align="start" isSkeleton={isSkeleton} items={[
-                                () => (
-                                    <Typography
-                                        size="sm"
-                                        color="muted"
-                                        isSkeleton={isSkeleton}
-                                        text="You don't have a paid plan yet. Upgrade to unlock Premium credit and get graded with premium models."
-
-                                    />
-                                ),
-                                () => (
-                                    <Button
-                                        label="Subscribe to a paid plan"
-                                        variant="primary"
-                                        size="lg"
-                                        suffixIcon={ArrowRightIcon}
-                                        iconSlide
-                                        isSkeleton={isSkeleton}
-                                        onPress={onSubscribe}
-                                    />
-                                ),
-                            ]} />
-                    )}
-                />
-            </div>
+                                />
+                            ),
+                            () => (
+                                <Button
+                                    label="Subscribe to a paid plan"
+                                    variant="primary"
+                                    size="lg"
+                                    suffixIcon={ArrowRightIcon}
+                                    iconSlide
+                                    isSkeleton={isSkeleton}
+                                    onPress={onSubscribe}
+                                />
+                            ),
+                        ]} />
+                )}
+            />
         )
     }
 
     return (
-        <div className={className}>
-            <StackV gap={4} isSkeleton={isSkeleton} items={[
+        <StackV
+            identity={IDENTITY}
+            principle="sibling-stack"
+            explain="Premium lane and active-plan caption are same-kind siblings in the subscription panel — not group-boundary, because neither is a labelled section."
+            isSkeleton={isSkeleton}
+            items={[
                 () => (
                     <AiQuotaLane
                         data={premiumLane?.data}
@@ -135,8 +139,8 @@ const AiQuotaSubscriptionPanel = ({
 
                     />
                 ),
-            ]} />
-        </div>
+            ]}
+        />
     )
 }
 

@@ -16,7 +16,7 @@ import { ProgressCockpit } from "./ProgressCockpit"
 import { PracticeFilters } from "./PracticeFilters"
 import { ProblemCatalog } from "./ProblemCatalog"
 import { CodingLeaderboard } from "./CodingLeaderboard"
-import { usePracticeView } from "./hooks/usePracticeView"
+import { usePracticeView } from "@/hooks/usePracticeView"
 
 /**
  * `/PracticeHubPage` — the LeetCode-style coding-PracticeHubPage page, laid out docs-style: a

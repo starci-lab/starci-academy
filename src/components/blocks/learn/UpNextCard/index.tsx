@@ -3,6 +3,7 @@
 import type { ReactNode } from "react"
 import { ArrowRightIcon, CheckCircleIcon } from "@phosphor-icons/react"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
+import { GlyphMark } from "@/components/atoms/display/GlyphMark"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Cluster } from "@/components/frames/Cluster"
@@ -77,13 +78,11 @@ export const UpNextCard = ({
             {hasEyebrowRow ? (
                 <StackH
                     gap={2}
+                    principle="icon-text"
+                    explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
                     items={[
                         ...(showCheck ? [() => (
-                            <CheckCircleIcon
-                                aria-hidden
-                                focusable="false"
-                                className="size-5 shrink-0 text-success-soft-foreground"
-                            />
+                            <GlyphMark icon={CheckCircleIcon} tone="success" />
                         )] : []),
                         ...(eyebrow ? [() => (
                             <Typography size="xs" color="muted" text={eyebrow} />
@@ -95,6 +94,8 @@ export const UpNextCard = ({
             {/* the next rung */}
             <StackV
                 gap={2}
+                principle="title-subtitle"
+                explain="Title with supporting subtitle — not name-handle, because the second line elaborates the next rung rather than naming an identity."
                 items={[
                     () => <Typography size="base" weight="semibold" text={title} />,
                     ...(description ? [() => (
@@ -106,6 +107,8 @@ export const UpNextCard = ({
             {/* one primary CTA (+ optional quiet secondary) */}
             <Cluster
                 gap={3}
+                principle="flex-action"
+                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
                 items={[
                     () => (
                         <Button

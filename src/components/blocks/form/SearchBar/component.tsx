@@ -3,14 +3,12 @@ import React from "react"
 import {
     Autocomplete,
     Button,
-    cn,
     InputGroup,
     Label,
     ListBox,
     SearchField,
     TextField,
 } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** One selectable row in the autocomplete list, already localized. */
 export interface SearchBarSuggestion {
@@ -21,7 +19,7 @@ export interface SearchBarSuggestion {
 }
 
 /** Props for {@link _SearchBar} — presentational; labels already resolved. */
-export interface SearchBarProps extends WithClassNames<undefined> {
+export interface SearchBarProps {
     /** Already-localized field label (screen-reader only). */
     fieldLabel: string
     /** Already-localized placeholder text. */
@@ -30,8 +28,6 @@ export interface SearchBarProps extends WithClassNames<undefined> {
     filtersAriaLabel: string
     /** Demo suggestions shown in the autocomplete dropdown, already localized. */
     suggestionItems: Array<SearchBarSuggestion>
-    /** Optional class names on the root `TextField` wrapper. */
-    className?: string
 }
 
 /**
@@ -40,8 +36,8 @@ export interface SearchBarProps extends WithClassNames<undefined> {
  *
  * @param props - {@link SearchBarProps}
  */
-export const _SearchBar = ({ fieldLabel, placeholder, filtersAriaLabel, suggestionItems, className }: SearchBarProps) => (
-    <TextField className={cn("w-full", className)} fullWidth variant="secondary">
+export const _SearchBar = ({ fieldLabel, placeholder, filtersAriaLabel, suggestionItems }: SearchBarProps) => (
+    <TextField className="w-full" fullWidth variant="secondary">
         <Label className="sr-only">{fieldLabel}</Label>
         <InputGroup className="w-full" variant="secondary">
             <div className="min-w-0 flex-1">

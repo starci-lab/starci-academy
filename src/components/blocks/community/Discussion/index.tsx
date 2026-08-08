@@ -1,14 +1,16 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { Button, Label, Spinner, Typography, cn } from "@heroui/react"
 import { ChatsCircleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Spinner } from "@/components/atoms/display/Spinner"
+import { Typography } from "@/components/atoms/text/Typography"
+import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
+import { StackV } from "@/components/frames/Stack"
 import { CommentComposer } from "./CommentComposer"
 import { CommentItem } from "./CommentItem"
 import { ReactionType, type CommentNode } from "@/modules/api/graphql/queries/types/discussion"
-import type { WithClassNames } from "@/modules/types/base/class-name"
-import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 
 export * from "./ReactionBar"
 export * from "./ReactionEmoji"
@@ -19,7 +21,7 @@ export * from "./InteractionBar"
 export * from "./constants"
 
 /** Props for {@link Discussion}. */
-export interface DiscussionProps extends WithClassNames<undefined> {
+export interface DiscussionProps {
     /** Current viewer id (drives owner-only actions); null when unknown. */
     currentUserId: string | null
     /** Current viewer identity for the composer avatar; null when signed out. */
@@ -54,17 +56,10 @@ export interface DiscussionProps extends WithClassNames<undefined> {
 
 /**
  * Bottom-of-lesson discussion zone — FRAMELESS: a label ("Discussion · N") + an honest
- * "archive line" (how many of this lesson's questions already have an answer — the
- * value compounds as more cohorts pass through) above an avatar-led composer and the
- * threaded comment list, sitting directly on the page canvas (no card) so it doesn't
- * stack a second bordered surface under the reading "paper" card. The content reaction
- * picker is NOT here — it lives in the reading-card footer
- * ({@link import("@/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar").ContentReactionBar}).
+ * "archive line" above an avatar-led composer and the threaded comment list, sitting
+ * directly on the page canvas (no card). Mirrors Storybook `ContentDiscussion` shape
+ * with house Typography / Stack / Button / Spinner.
  *
- * Presentational: receives all data + callbacks from a container; holds no data hooks.
- * The archive line is computed from the currently-loaded top-level comments (an honest,
- * real count — not a fabricated aggregate); it only under-counts before "load more" is
- * exhausted, same tradeoff as the course-wide Q&A roll-up's answered count.
  * @param props - {@link DiscussionProps}
  */
 export const Discussion = ({
@@ -83,7 +78,6 @@ export const Discussion = ({
     hasMore,
     isLoadingMore,
     onLoadMore,
-    className,
 }: DiscussionProps) => {
     const t = useTranslations()
 
@@ -95,63 +89,91 @@ export const Discussion = ({
     )
 
     return (
-        <section className={cn("flex flex-col gap-3", className)}>
-            {/* ── label + archive line + composer (related → gap-3) ── */}
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-1">
-                    <div className="flex items-center gap-2">
-                        <ChatsCircleIcon aria-hidden focusable="false" className="size-5 text-muted" />
-                        <Label>{t("discussion.title", { count: total })}</Label>
-                    </div>
-                    {total > 0 ? (
-                        <Typography type="body-xs" color="muted">
-                            {t("discussion.archiveLine", { answered: answeredCount, total })}
-                        </Typography>
-                    ) : null}
-                </div>
-                {/* avatar-led composer: collapses to a slim pill until focused */}
-                <CommentComposer onSubmit={onSubmitComment} currentUser={currentUser} collapsible />
-            </div>
-
-            {/* ── comment list / loading / empty states ── */}
-            {isLoading ? (
-                <div className="flex justify-center py-6">
-                    <Spinner />
-                </div>
-            ) : comments.length === 0 ? (
-                <AsyncContentEmpty
-                    icon={ChatsCircleIcon}
-                    title={t("discussion.empty")}
-                    description={t("discussion.emptyHint")}
-                />
-            ) : (
-                <div className="flex flex-col gap-3">
-                    {comments.map((comment) => (
-                        <CommentItem
-                            key={comment.id}
-                            comment={comment}
-                            currentUserId={currentUserId}
-                            depth={0}
-                            repliesByParent={repliesByParent}
-                            onReply={onReply}
-                            onEdit={onEdit}
-                            onDelete={onDelete}
-                            onReactComment={onReactComment}
-                            onLoadReplies={onLoadReplies}
-                        />
-                    ))}
-                    {hasMore ? (
-                        <Button
-                            variant="tertiary"
-                            className="self-center text-sm text-accent-soft-foreground"
-                            isDisabled={isLoadingMore}
-                            onPress={onLoadMore}
-                        >
-                            {isLoadingMore ? <Spinner size="sm" /> : t("discussion.loadMore")}
-                        </Button>
-                    ) : null}
-                </div>
-            )}
-        </section>
+        <StackV
+            identity={{ tier: "block", component: "Discussion" }}
+            principle="group-boundary"
+            explain="Header+composer group above the comment list — not sibling-stack, because these are section groups rather than repeating peers."
+            items={[
+                () => (
+                    <StackV
+                        principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because label block and composer are repeating siblings in the header group."
+                        items={[
+                            () => (
+                                <StackV
+                                    principle="title-subtitle"
+                                    explain="Discussion title over archive line reads as title over subtitle — not label-field (no form control), not name-handle (no identity pair), not icon-text (no glyph owns this seam)."
+                                    items={[
+                                        () => (
+                                            <Typography
+                                                weight="medium"
+                                                text={t("discussion.title", { count: total })}
+                                            />
+                                        ),
+                                        ...(total > 0 ? [() => (
+                                            <Typography
+                                                size="xs"
+                                                color="muted"
+                                                text={t("discussion.archiveLine", {
+                                                    answered: answeredCount,
+                                                    total,
+                                                })}
+                                            />
+                                        )] : []),
+                                    ]}
+                                />
+                            ),
+                            () => (
+                                <CommentComposer
+                                    onSubmit={onSubmitComment}
+                                    currentUser={currentUser}
+                                    collapsible
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+                ...(isLoading ? [() => (
+                    <Spinner size="md" tone="accent" label={t("discussion.title", { count: total })} />
+                )] : comments.length === 0 ? [() => (
+                    <AsyncContentEmpty
+                        icon={ChatsCircleIcon}
+                        title={t("discussion.empty")}
+                        description={t("discussion.emptyHint")}
+                    />
+                )] : [() => (
+                    <StackV
+                        principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because comment rows are repeating siblings rather than section groups."
+                        items={[
+                            ...comments.map((comment) => () => (
+                                <CommentItem
+                                    key={comment.id}
+                                    comment={comment}
+                                    currentUserId={currentUserId}
+                                    depth={0}
+                                    repliesByParent={repliesByParent}
+                                    onReply={onReply}
+                                    onEdit={onEdit}
+                                    onDelete={onDelete}
+                                    onReactComment={onReactComment}
+                                    onLoadReplies={onLoadReplies}
+                                />
+                            )),
+                            ...(hasMore ? [() => (
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    isDisabled={isLoadingMore}
+                                    isPending={isLoadingMore}
+                                    onPress={onLoadMore}
+                                    label={t("discussion.loadMore")}
+                                />
+                            )] : []),
+                        ]}
+                    />
+                )]),
+            ]}
+        />
     )
 }

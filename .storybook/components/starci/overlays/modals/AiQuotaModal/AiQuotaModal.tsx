@@ -140,16 +140,12 @@ const AiQuotaModal = ({
         )] : []),
     ]
 
-    const header = (
-        <div className="pr-8">
-            <StackH
-                gap={3}
-                principle="identity"
-                explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
-                align="center"
-                items={titleAndTierChip}
-            />
-        </div>
+    const header = () => (
+        <StackH
+            principle="identity"
+            explain="Keeps avatar and identity text as one peer unit so the person label stays beside the face."
+            items={titleAndTierChip}
+        />
     )
 
     // The one panel slot, filled by whichever sibling block the active tab names. The wrapper
@@ -159,60 +155,55 @@ const AiQuotaModal = ({
             <AiQuotaLane
                 data={auto.data}
                 isLoading={auto.isLoading}
-
-
             />
         ) : activeTab === "subscription" ? (
             <AiQuotaSubscriptionPanel
                 tier={tier}
                 premiumLane={subscription}
                 onSubscribe={onSubscribe}
-
-
             />
         ) : (
             <AiQuotaHistoryPanel
                 chartPoints={history.chartPoints}
                 items={history.items}
                 isLoading={history.isLoading}
-
-
             />
         )
 
     const tabsAndPanel = [
         () => (
-            <div>
-                <Tabs
-                    items={TAB_ITEMS}
-                    selectedKey={activeTab}
-                    onSelectionChange={(key) => onTabChange(key as AiQuotaModalTab)}
-                    ariaLabel="AI usage"
-                />
-            </div>
+            <Tabs
+                items={TAB_ITEMS}
+                selectedKey={activeTab}
+                onSelectionChange={(key) => onTabChange(key as AiQuotaModalTab)}
+                ariaLabel="AI usage"
+            />
         ),
         () => panel,
     ]
 
     return (
-        <div>
-            <ModalShell
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                header={() => header}
-                size="lg"
-                scroll="inside"
-                footer={() => (
-                    <LinkSeeMore
-                        label="View full usage"
-                        onPress={onViewDetails}
-                        size="sm"
-
-                    />
-                )}
-                body={() => <StackV gap={6} items={tabsAndPanel} />}
-            />
-        </div>
+        <ModalShell
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            header={header}
+            size="lg"
+            scroll="inside"
+            footer={() => (
+                <LinkSeeMore
+                    label="View full usage"
+                    onPress={onViewDetails}
+                    size="sm"
+                />
+            )}
+            body={() => (
+                <StackV
+                    principle="block-boundary"
+                    explain="Tabs over the active quota panel — not group-boundary, because this is the modal body's major section seam."
+                    items={tabsAndPanel}
+                />
+            )}
+        />
     )
 }
 

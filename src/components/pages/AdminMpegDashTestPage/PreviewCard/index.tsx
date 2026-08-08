@@ -3,7 +3,7 @@
 import React from "react"
 import { Card, CardContent } from "@heroui/react"
 import { useMemo } from "react"
-import { RENDERER_TYPE_OPTION_MAP } from "../map"
+import { RENDERER_TYPE_OPTION_MAP } from "@/modules/utils/admin-mpeg-dash-map"
 import { VideoRenderer } from "@/components/blocks/media/VideoRenderer"
 import type { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
 import { Box } from "@/components/frames/Box"

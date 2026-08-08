@@ -101,11 +101,9 @@ const ConsultantDirectoryGrid = ({
             <AsyncContent
                 isLoading={isLoading}
                 skeleton={() => (
-                    <div>
-                        <Grid columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row"
-                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                            items={skeletonTiles}  />
-                    </div>
+                    <Grid columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                        items={skeletonTiles}  />
                 )}
                 isEmpty={isEmpty}
                 emptyContent={emptyContent}
@@ -118,11 +116,9 @@ const ConsultantDirectoryGrid = ({
                                 <Typography size="sm" color="muted" text={countLabel(count)} />
                             )] : []),
                             () => (
-                                <div>
-                                    <Grid columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row"
-                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                                        items={tiles}  />
-                                </div>
+                                <Grid columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row"
+                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                    items={tiles}  />
                             ),
                         ]} />
                 )}

@@ -3,8 +3,6 @@
 /** @noSkeleton renders an invisible scroll marker, not a value — there is nothing behind it to wait for. */
 
 import React from "react"
-import { cn } from "@heroui/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /** Props for {@link InfiniteScrollSentinel}. */
 export interface InfiniteScrollSentinelProps {
@@ -14,10 +12,6 @@ export interface InfiniteScrollSentinelProps {
     disabled?: boolean
     /** Scroll root to observe within (defaults to the viewport). */
     root?: Element | null
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -44,7 +38,6 @@ export const InfiniteScrollSentinel = ({
     onReach,
     disabled = false,
     root = null,
-    classNames,
 }: InfiniteScrollSentinelProps) => {
     const ref = React.useRef<HTMLDivElement>(null)
     // keep the latest callback without re-subscribing the observer each render
@@ -74,7 +67,7 @@ export const InfiniteScrollSentinel = ({
             aria-hidden
             data-tier="atom"
             data-component="InfiniteScrollSentinel"
-            className={cn("h-px w-full", classNames)}
+            className="h-px w-full"
         />
     )
 }

@@ -97,7 +97,6 @@ export const CommentItem = ({
                             onPress={() => router.push(
                                 pathConfig().locale(locale).profile(comment.author.username).build(),
                             )}
-                            className="text-sm"
                         />
                         {comment.isFounderAuthor ? (
                             <SealCheckIcon

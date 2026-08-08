@@ -13,10 +13,10 @@ import {
 } from "@phosphor-icons/react"
 import {
     usePricingRows,
-} from "../hooks/usePricingRows"
+} from "@/hooks/usePricingRows"
 import {
     useCourseEnrollment,
-} from "../hooks/useCourseEnrollment"
+} from "@/hooks/useCourseEnrollment"
 import { PriceTagInline } from "@/components/blocks/commerce/PriceTag"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StickyBottomBar } from "@/components/blocks/layout/StickyBottomBar"

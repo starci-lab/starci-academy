@@ -1,11 +1,14 @@
 "use client"
 
 import React, { useState } from "react"
-import { Button, Modal, Typography } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { SparkleIcon } from "@phosphor-icons/react"
 import type { ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
 import type { CvBlock } from "@/modules/types/entities/cv"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Typography } from "@/components/atoms/text/Typography"
+import { ModalShell } from "@/components/composites/layout/ModalShell"
+import { StackV } from "@/components/frames/Stack"
 import { CvTextOrFileInput } from "../shared/CvTextOrFileInput"
 import { useMutateTailorCvBlocksSwr } from "@/hooks/swr/api/graphql/mutations/useMutateTailorCvBlocksSwr"
 
@@ -75,54 +78,62 @@ export const CvTailorToJobModal = ({
     }
 
     return (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-            <Modal.Backdrop>
-                <Modal.Container size="lg">
-                    <Modal.Dialog className={""}>
-                        <Modal.CloseTrigger />
-                        <Modal.Header>
-                            <Typography type="body" weight="semibold" className="pr-8">
-                                {t("cv.builder.tailorModalTitle")}
-                            </Typography>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <div className="flex flex-col gap-3">
-                                <Typography type="body-sm" color="muted">
-                                    {t("cv.builder.tailorModalDescription")}
-                                </Typography>
-
-                                <CvTextOrFileInput
-                                    fieldId="cv-tailor-job-description"
-                                    label={t("cv.builder.tailorModalFieldLabel")}
-                                    placeholder={t("cv.builder.tailorModalPlaceholder")}
-                                    value={jobDescription}
-                                    onChange={setJobDescription}
-                                    onExtractingChange={setIsExtracting}
-                                />
-
-                                {hasError ? (
-                                    <Typography type="body-sm" className="text-danger-soft-foreground">
-                                        {t("cv.builder.tailorModalError")}
-                                    </Typography>
-                                ) : null}
-
-                                <Button
-                                    variant="primary"
-                                    size="lg"
-                                    className="w-fit self-end"
-                                    isDisabled={!jobDescription.trim() || isMutating || isExtracting}
-                                    onPress={onSubmit}
-                                >
-                                    <SparkleIcon aria-hidden className="size-4" />
-                                    {isMutating
-                                        ? t("cv.builder.tailorModalSubmitting")
-                                        : t("cv.builder.tailorModalSubmit")}
-                                </Button>
-                            </div>
-                        </Modal.Body>
-                    </Modal.Dialog>
-                </Modal.Container>
-            </Modal.Backdrop>
-        </Modal>
+        <ModalShell
+            identity={{ tier: "block", component: "CvTailorToJobModal" }}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            title={t("cv.builder.tailorModalTitle")}
+            size="lg"
+            body={() => (
+                <StackV
+                    principle="group-boundary"
+                    explain="Section group spacing — not sibling-stack, because description, input, error, and submit are distinct groups rather than same-kind peers."
+                    items={[
+                        () => (
+                            <Typography
+                                size="sm"
+                                color="muted"
+                                text={t("cv.builder.tailorModalDescription")}
+                            />
+                        ),
+                        () => (
+                            <CvTextOrFileInput
+                                fieldId="cv-tailor-job-description"
+                                label={t("cv.builder.tailorModalFieldLabel")}
+                                placeholder={t("cv.builder.tailorModalPlaceholder")}
+                                value={jobDescription}
+                                onChange={setJobDescription}
+                                onExtractingChange={setIsExtracting}
+                            />
+                        ),
+                        ...(hasError
+                            ? [
+                                () => (
+                                    <Typography
+                                        size="sm"
+                                        color="danger"
+                                        text={t("cv.builder.tailorModalError")}
+                                    />
+                                ),
+                            ]
+                            : []),
+                    ]}
+                />
+            )}
+            footer={() => (
+                <Button
+                    variant="primary"
+                    size="lg"
+                    prefixIcon={SparkleIcon}
+                    label={
+                        isMutating
+                            ? t("cv.builder.tailorModalSubmitting")
+                            : t("cv.builder.tailorModalSubmit")
+                    }
+                    isDisabled={!jobDescription.trim() || isMutating || isExtracting}
+                    onPress={onSubmit}
+                />
+            )}
+        />
     )
 }

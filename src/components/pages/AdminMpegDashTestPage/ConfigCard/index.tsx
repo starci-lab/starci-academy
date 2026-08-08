@@ -2,7 +2,7 @@
 
 import React from "react"
 import { Card, CardContent, Input } from "@heroui/react"
-import { RENDERER_TYPE_OPTIONS } from "../map"
+import { RENDERER_TYPE_OPTIONS } from "@/modules/utils/admin-mpeg-dash-map"
 import { RendererTypeButton } from "./RendererTypeButton"
 import type { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
 import { Box } from "@/components/frames/Box"

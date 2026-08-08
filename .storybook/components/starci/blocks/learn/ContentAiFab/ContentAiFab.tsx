@@ -48,15 +48,12 @@ const ContentAiFab = ({
     }
 
     return (
-        <div>
-            <div>
-                <FloatingActionButton
-                    onPress={onOpen}
-                    ariaLabel={ARIA_LABEL}
-                    icon={SparkleIcon}
-                />
-            </div>
-        </div>
+        // Identity hold: FloatingActionButton does not accept CallerIdentity.
+        <FloatingActionButton
+            onPress={onOpen}
+            ariaLabel={ARIA_LABEL}
+            icon={SparkleIcon}
+        />
     )
 }
 

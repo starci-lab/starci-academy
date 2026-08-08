@@ -148,10 +148,8 @@ export const _PremiumGateModal = ({
 
     const unlockItems = GATE_UNLOCKS.map((item) => () => (
         <Cluster
-            gap={3}
             principle="icon-text"
             explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
-            align="center"
 
             items={[
                 () => (
@@ -177,24 +175,39 @@ export const _PremiumGateModal = ({
     ))
 
     const skeletonPrice = [
-        () => <Typography size="h4" isSkeleton classNames={["w-1/3"]} />,
+        () => <Typography size="h4" isSkeleton />,
         () => <Typography size="xs" isSkeleton />,
     ]
 
     const gateBody = [
         // "What unlocks" — static chrome, never skeletonised: known before
         // any price data lands, exactly like `ContentModeNav`'s own row.
-        ({ isSkeleton }: SkeletonProps) => <StackV gap={3} isSkeleton={isSkeleton} items={unlockItems} />,
+        ({ isSkeleton }: SkeletonProps) => (
+            <StackV
+                principle="sibling-stack"
+                explain="Repeating unlock lines — not group-boundary, because these are peer checklist rows rather than section groups."
+                isSkeleton={isSkeleton}
+                items={unlockItems}
+            />
+        ),
 
         // Price + scarcity — the ONLY region `isSkeleton` reaches, same
         // `isSkeleton && !price` / `price?.discountedPriceVnd != null` split
         // `TrialConversionStrip` uses for its own price region.
         ...(isSkeleton && !price
-            ? [({ isSkeleton }: SkeletonProps) => <StackV gap={4} isSkeleton={isSkeleton} items={skeletonPrice} />]
+            ? [({ isSkeleton }: SkeletonProps) => (
+                <StackV
+                    principle="content-row"
+                    explain="Price shimmer stack — not sibling-stack, because the bars stand in for a price+scarcity content pair."
+                    isSkeleton={isSkeleton}
+                    items={skeletonPrice}
+                />
+            )]
             : price?.discountedPriceVnd != null
                 ? [({ isSkeleton }: SkeletonProps) => (
                     <StackV
-                        gap={4}
+                        principle="content-row"
+                        explain="Price over scarcity note — not sibling-stack, because these are related content regions rather than repeating peers."
                         isSkeleton={isSkeleton}
                         items={[
                             ({ isSkeleton }: SkeletonProps) => (
@@ -203,12 +216,10 @@ export const _PremiumGateModal = ({
                                     original={price.originalPriceVnd}
                                     breakdown={breakdown}
                                     isSkeleton={isSkeleton}
-
                                 />
                             ),
                             () => (
                                 <PhaseScarcityNote
-
                                     currentPhase={price.currentPhase}
                                     seatsRemaining={price.seatsRemaining}
                                     nextPhasePriceVnd={price.nextPhasePriceVnd}
@@ -228,18 +239,22 @@ export const _PremiumGateModal = ({
             description={header.description}
             size="md"
             identity={{ tier: "overlay", component: "PremiumGateModal" }}
-
             footer={() => (
                 <Button
                     variant="primary"
                     size="lg"
-                    classNames={["w-full"]}
                     label="Unlock now"
                     onPress={onUpgrade}
-
                 />
             )}
-            body={() => <StackV gap={6} isSkeleton={isSkeleton} items={gateBody} />}
+            body={() => (
+                <StackV
+                    principle="block-boundary"
+                    explain="Unlock list over price CTA region — not group-boundary, because this is the modal body's major section seam."
+                    isSkeleton={isSkeleton}
+                    items={gateBody}
+                />
+            )}
         />
     )
 }

@@ -3,10 +3,10 @@
 import React from "react"
 import { ScrollShadow, Typography, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { ARCHITECTURE_COMPONENTS } from "../../constants"
-import { ARCHITECTURE_MODULES } from "../../modules"
-import type { HealthByName } from "../../hooks/useSystemHealthPoll"
-import { getArchitectureStatusVisual, resolveArchitectureStatus } from "../../statusVisual"
+import { ARCHITECTURE_COMPONENTS } from "@/modules/utils/architecture-catalog"
+import { ARCHITECTURE_MODULES } from "@/modules/utils/architecture-modules"
+import type { HealthByName } from "@/hooks/useSystemHealthPoll"
+import { getArchitectureStatusVisual, resolveArchitectureStatus } from "@/modules/utils/architecture-status-visual"
 import { StackH } from "@/components/frames/Stack"
 
 /** Props for {@link ArchitectureMobileNav}. */

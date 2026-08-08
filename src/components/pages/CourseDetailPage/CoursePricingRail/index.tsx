@@ -16,10 +16,10 @@ import {
 } from "../CourseCtaButtons"
 import {
     usePricingRows,
-} from "../hooks/usePricingRows"
+} from "@/hooks/usePricingRows"
 import {
     PHASE_LABEL_KEY,
-} from "../constants"
+} from "@/modules/utils/course-detail"
 import {
     PhaseRow,
 } from "./PhaseRow"

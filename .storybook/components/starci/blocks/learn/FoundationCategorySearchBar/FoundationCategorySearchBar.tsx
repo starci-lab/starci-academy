@@ -2,6 +2,7 @@ import React from "react"
 import { type SkeletonProps } from "@sb-components/frames/_slot"
 import { SearchAutocomplete, type SearchAutocompleteItem } from "@sb-components/atoms/forms/SearchAutocomplete/SearchAutocomplete"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 import { StackH } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -66,16 +67,20 @@ const FoundationCategorySearchBar = ({
     }))
 
     return (
-        <div>
-            <StackH
-                gap={4}
-                principle="content-row"
-                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                justify="between"
-                isSkeleton={isSkeleton}
-                items={[
-                    () => (
-                        <div className="min-w-0 flex-1">
+        <StackH
+            identity={{ tier: "block", component: "FoundationCategorySearchBar" }}
+            gap={4}
+            principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            justify="between"
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <FillAvailable
+                        at="base"
+                        explain="Search field takes remaining row width beside the topic count so the input can shrink instead of shoving the meta."
+                        isSkeleton={isSkeleton}
+                        body={() => (
                             <SearchAutocomplete
                                 items={items}
                                 inputValue={query}
@@ -83,29 +88,26 @@ const FoundationCategorySearchBar = ({
                                 onSelect={onSelectSuggestion}
                                 placeholder="Search topics..."
                                 isSkeleton={isSkeleton}
-
                             />
-                        </div>
-                    ),
-                    ...(isSkeleton
-                        ? [() => <Typography size="sm" color="muted" isSkeleton />]
-                        : count !== undefined
-                            ? [
-                                ({ isSkeleton }: SkeletonProps) => (
-                                    <Typography
-                                        isSkeleton={isSkeleton}
-                                        size="sm"
-                                        color="muted"
-                                        text={countLabel(count)}
-
-
-                                    />
-                                ),
-                            ]
-                            : []),
-                ]}
-            />
-        </div>
+                        )}
+                    />
+                ),
+                ...(isSkeleton
+                    ? [() => <Typography size="sm" color="muted" isSkeleton />]
+                    : count !== undefined
+                        ? [
+                            ({ isSkeleton }: SkeletonProps) => (
+                                <Typography
+                                    isSkeleton={isSkeleton}
+                                    size="sm"
+                                    color="muted"
+                                    text={countLabel(count)}
+                                />
+                            ),
+                        ]
+                        : []),
+            ]}
+        />
     )
 }
 

@@ -69,20 +69,17 @@ const FoundationResourceBody = ({
 }: FoundationResourceBodyProps) => {
     if (kind === "video") {
         return (
-            <div>
-                <SurfaceCard
-                    isSkeleton={isSkeleton}
-
-                    body={() => (
-                        <EmptyState
-                            icon={VideoCameraIcon}
-                            title={VIDEO_GAP_TITLE}
-                            description={VIDEO_GAP_DESCRIPTION}
-
-                        />
-                    )}
-                />
-            </div>
+            <SurfaceCard
+                identity={{ tier: "block", component: "FoundationResourceBody" }}
+                isSkeleton={isSkeleton}
+                body={() => (
+                    <EmptyState
+                        icon={VideoCameraIcon}
+                        title={VIDEO_GAP_TITLE}
+                        description={VIDEO_GAP_DESCRIPTION}
+                    />
+                )}
+            />
         )
     }
 
@@ -93,36 +90,31 @@ const FoundationResourceBody = ({
             return null
         }
         const destination = linkUrl
+        // Identity hold on this leaf: Button does not accept CallerIdentity.
         return (
-            <div>
-                <Button
-                    label={linkTitle ?? DEFAULT_LINK_LABEL}
-                    variant="primary"
-                    suffixIcon={ArrowSquareOutIcon}
-                    isSkeleton={isSkeleton}
-                    onPress={() => onOpenLink?.(destination)}
-
-                />
-            </div>
+            <Button
+                label={linkTitle ?? DEFAULT_LINK_LABEL}
+                variant="primary"
+                suffixIcon={ArrowSquareOutIcon}
+                isSkeleton={isSkeleton}
+                onPress={() => onOpenLink?.(destination)}
+            />
         )
     }
 
     // "document" — the reading article, same card face the lesson body reads
     // in (matches `src`'s `Card`/`CardContent` wrapper for this kind).
     return (
-        <div>
-            <SurfaceCard
-                isSkeleton={isSkeleton}
-
-                body={() => (
-                    <MarkdownContent
-                        source={markdownBody ?? ""}
-                        measure="reading"
-
-                    />
-                )}
-            />
-        </div>
+        <SurfaceCard
+            identity={{ tier: "block", component: "FoundationResourceBody" }}
+            isSkeleton={isSkeleton}
+            body={() => (
+                <MarkdownContent
+                    source={markdownBody ?? ""}
+                    measure="reading"
+                />
+            )}
+        />
     )
 }
 

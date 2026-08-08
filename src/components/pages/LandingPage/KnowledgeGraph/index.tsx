@@ -30,10 +30,10 @@ import {
     type SimulationNodeDatum,
 } from "d3-force"
 import { pathConfig } from "@/resources/path"
-import { LANDING_TRACK_COURSE_SLUG } from "../constants"
+import { LANDING_TRACK_COURSE_SLUG } from "@/modules/utils/landing-constants"
 import { CONCEPT_NODE_TYPE, type ConceptNodeData, ConceptNode } from "./ConceptNode"
 import { ShuffleBeacon } from "./ShuffleBeacon"
-import { KNOWLEDGE_EDGES, KNOWLEDGE_NODES, NODE_DEGREE, TRACK_CONFIG, bubbleRadius, type TrackKey } from "./data"
+import { KNOWLEDGE_EDGES, KNOWLEDGE_NODES, NODE_DEGREE, TRACK_CONFIG, bubbleRadius, type TrackKey } from "@/modules/utils/knowledge-graph-data"
 
 /** A d3-force simulation node (positions written back onto React Flow each tick). */
 interface SimNode extends SimulationNodeDatum {

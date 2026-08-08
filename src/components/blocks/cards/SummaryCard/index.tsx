@@ -12,7 +12,6 @@ import {
 } from "../PressableCard"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackH, StackV } from "@/components/frames/Stack"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * Props for {@link SummaryCard}. Every field is an already-resolved shape
@@ -31,11 +30,6 @@ export interface SummaryCardProps {
     hint?: string
     /** Called when the card is activated (e.g. jump to a tab). */
     onPress?: () => void
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is
-     * already a prop.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
@@ -65,7 +59,6 @@ export const SummaryCard = ({
     label,
     hint,
     onPress,
-    classNames,
 }: SummaryCardProps) => {
     const rows = [
         () => (
@@ -99,7 +92,6 @@ export const SummaryCard = ({
             className={cn(
                 "card card--default h-full rounded-xl border border-divider/60 p-4 transition-colors",
                 "hover:border-accent/40 hover:bg-accent/5",
-                classNames,
             )}
         >
             <StackV gap={4} items={rows} />

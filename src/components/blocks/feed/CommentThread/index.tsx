@@ -1,11 +1,12 @@
 "use client"
 
 import React, { useState } from "react"
-import { cn } from "@heroui/react"
 import type { QueryCommunityCommentNode } from "@/modules/api/graphql/queries/types/community-comments"
 import type { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import { CommunityCommentRow } from "@/components/blocks/feed/CommunityCommentRow"
 import { Composer } from "@/components/blocks/feed/Composer"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackV } from "@/components/frames/Stack"
 
 /** Deepest level that still gets a visual indent rail; deeper replies render flush. */
 const MAX_INDENT_DEPTH = 4
@@ -76,13 +77,13 @@ const CommentThreadItem = ({
 
     // reveal-a-reply-box affordance, handed to the row's actions slot
     const replyAction = (
-        <button
-            type="button"
-            onClick={() => setReplying((previous) => !previous)}
-            className="cursor-pointer text-xs font-medium text-muted transition-colors hover:text-foreground"
-        >
-            Reply
-        </button>
+        <Typography
+            size="xs"
+            color="muted"
+            isButton
+            text="Reply"
+            onPress={() => setReplying((previous) => !previous)}
+        />
     )
 
     // submit the reply, clear the draft, and collapse the box
@@ -97,80 +98,66 @@ const CommentThreadItem = ({
     }
 
     const replies = node.replies ?? []
+    const nested = depth > 0 && depth <= MAX_INDENT_DEPTH
 
     return (
-        <div
-            className={cn(
-                "flex flex-col gap-3",
-                // indent nested replies with a guide rail, capped so deep threads stay readable
-                depth > 0 && depth <= MAX_INDENT_DEPTH ? "border-l border-default pl-3 @app-sm:pl-4" : undefined,
-            )}
-        >
-            <CommunityCommentRow
-                comment={node}
-                onReact={onReact ? (type) => onReact(node.id, type) : undefined}
-                actions={replyAction}
-            />
-
-            {/* inline reply composer, revealed by the "Reply" affordance */}
-            {replying ? (
-                <Composer
-                    value={replyValue}
-                    onChange={setReplyValue}
-                    onSubmit={submitReply}
-                    avatarSrc={avatarSrc}
-                    placeholder="Write a reply..."
-                    submitLabel="Reply"
-                    className="pl-9"
-                />
-            ) : null}
-
-            {/* recursive reply subtree */}
-            {replies.length > 0 ? (
-                <div className="flex flex-col gap-3">
-                    {replies.map((reply) => (
-                        <CommentThreadItem
-                            key={reply.id}
-                            node={reply}
-                            depth={depth + 1}
-                            onReply={onReply}
-                            onReact={onReact}
-                            avatarSrc={avatarSrc}
-                        />
-                    ))}
-                </div>
-            ) : null}
-        </div>
+        <StackV
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because the comment row, optional reply composer, and nested replies are repeating siblings in one thread unit."
+            nested={nested}
+            items={[
+                () => (
+                    <CommunityCommentRow
+                        comment={node}
+                        onReact={onReact ? (type) => onReact(node.id, type) : undefined}
+                        actions={replyAction}
+                    />
+                ),
+                ...(replying ? [() => (
+                    <Composer
+                        value={replyValue}
+                        onChange={setReplyValue}
+                        onSubmit={submitReply}
+                        avatarSrc={avatarSrc}
+                        placeholder="Write a reply..."
+                        submitLabel="Reply"
+                        nested
+                    />
+                )] : []),
+                ...(replies.length > 0 ? [() => (
+                    <StackV
+                        principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because nested reply rows are repeating siblings rather than section groups."
+                        items={replies.map((reply) => () => (
+                            <CommentThreadItem
+                                key={reply.id}
+                                node={reply}
+                                depth={depth + 1}
+                                onReply={onReply}
+                                onReact={onReact}
+                                avatarSrc={avatarSrc}
+                            />
+                        ))}
+                    />
+                )] : []),
+            ]}
+        />
     )
 }
 
 /**
  * CommentThread assembles a nested discussion from the existing
  * {@link CommunityCommentRow} (one per node) and {@link Composer} (root box + each
- * inline reply). Replies indent one level per depth behind a guide rail that caps
- * after a few levels so deep threads stay readable; every node exposes a "Reply"
- * affordance that reveals its own reply composer, and a top-level composer adds a
- * root comment. Reaction handling is a straight pass-through to each row.
- *
- * Tier-3 presentational block: props-only, no store, no SWR. It owns only the
- * transient draft/reveal state of the composers; posting is delegated via
- * {@link CommentThreadProps.onReply}.
+ * inline reply).
  *
  * @param props - {@link CommentThreadProps}
- *
- * @example
- * <CommentThread
- *   comments={tree}
- *   onReply={(parentId, text) => post(parentId, text)}
- *   onReact={(id, type) => react(id, type)}
- * />
- * @see Story: .storybook/stories/blocks/feed/CommentThread/CommentThread.stories
  */
 export const CommentThread = ({
     comments,
     onReply,
     onReact,
-    avatarSrc}: CommentThreadProps) => {
+    avatarSrc,
+}: CommentThreadProps) => {
     const [rootValue, setRootValue] = useState("")
 
     // submit a new root comment (parentId = null), then clear the box
@@ -184,31 +171,37 @@ export const CommentThread = ({
     }
 
     return (
-        <div className={"flex flex-col gap-4"}>
-            {/* top-level composer for a new root comment */}
-            <Composer
-                value={rootValue}
-                onChange={setRootValue}
-                onSubmit={submitRoot}
-                avatarSrc={avatarSrc}
-                placeholder="Write a comment..."
-            />
-
-            {/* the thread */}
-            {comments.length > 0 ? (
-                <div className="flex flex-col gap-3">
-                    {comments.map((comment) => (
-                        <CommentThreadItem
-                            key={comment.id}
-                            node={comment}
-                            depth={0}
-                            onReply={onReply}
-                            onReact={onReact}
-                            avatarSrc={avatarSrc}
-                        />
-                    ))}
-                </div>
-            ) : null}
-        </div>
+        <StackV
+            identity={{ tier: "block", component: "CommentThread" }}
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because the root composer and thread rows are repeating siblings in one discussion unit."
+            items={[
+                () => (
+                    <Composer
+                        value={rootValue}
+                        onChange={setRootValue}
+                        onSubmit={submitRoot}
+                        avatarSrc={avatarSrc}
+                        placeholder="Write a comment..."
+                    />
+                ),
+                ...(comments.length > 0 ? [() => (
+                    <StackV
+                        principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because top-level comment rows are repeating siblings rather than section groups."
+                        items={comments.map((comment) => () => (
+                            <CommentThreadItem
+                                key={comment.id}
+                                node={comment}
+                                depth={0}
+                                onReply={onReply}
+                                onReact={onReact}
+                                avatarSrc={avatarSrc}
+                            />
+                        ))}
+                    />
+                )] : []),
+            ]}
+        />
     )
 }

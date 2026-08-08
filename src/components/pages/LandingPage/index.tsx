@@ -42,7 +42,7 @@ import { StatStrip } from "./StatStrip"
 import { TalentMarketplace } from "./TalentMarketplace"
 import { LearnLoopScroll } from "./LearnLoopScroll"
 import { KnowledgeGraph } from "./KnowledgeGraph"
-import { KNOWLEDGE_NODES } from "./KnowledgeGraph/data"
+import { KNOWLEDGE_NODES } from "@/modules/utils/knowledge-graph-data"
 import {
     LANDING_COURSE_TRACKS,
     LANDING_FAQ_INDEXES,
@@ -50,7 +50,7 @@ import {
     LANDING_HERO_KEYWORDS,
     LANDING_ROADMAP_TIERS,
     LANDING_TRACK_COURSE_SLUG,
-} from "./constants"
+} from "@/modules/utils/landing-constants"
 import { HeroBanner } from "@/components/blocks/marketing/HeroBanner"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { SectionHeading } from "@/components/blocks/marketing/SectionHeading"

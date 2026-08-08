@@ -1,6 +1,9 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Typography } from "@heroui/react"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackH, StackV } from "@/components/frames/Stack"
+import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
+
 /** Props for {@link FeedItem}. */
 export interface FeedItemProps {
     /**
@@ -39,17 +42,47 @@ export interface FeedItemProps {
  * @param props - {@link FeedItemProps}
  * @see Story: .storybook/stories/blocks/feed/FeedItem/FeedItem.stories
  */
-export const FeedItem = ({ leading, children, timestamp, footer}: FeedItemProps) => {
+export const FeedItem = ({ leading, children, timestamp, footer }: FeedItemProps) => {
+    const textColumn: ComponentTypeWithSkeleton = () => (
+        <StackV
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because action text, timestamp, and optional footer are repeating vertical siblings in one row."
+            items={[
+                () => (
+                    <StackV
+                        principle="title-subtitle"
+                        explain="Action line over muted timestamp reads as title over subtitle — not label-field (no form control), not name-handle (no identity pair), not icon-text (no glyph owns this seam)."
+                        items={[
+                            () => <Typography size="sm" text={children} />,
+                            () => <Typography size="xs" color="muted" text={timestamp} />,
+                        ]}
+                    />
+                ),
+                ...(footer ? [() => <>{footer}</>] : []),
+            ]}
+        />
+    )
+
+    if (!leading) {
+        return (
+            <StackV
+                identity={{ tier: "block", component: "FeedItem" }}
+                principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because this text-only feed row is a single vertical unit."
+                items={[textColumn]}
+            />
+        )
+    }
+
     return (
-        <div className={"flex items-start gap-2"}>
-            {leading ? <div className="shrink-0">{leading}</div> : null}
-            <div className="flex flex-col gap-1 min-w-0">
-                <div className="flex flex-col gap-0">
-                    <Typography type="body-sm">{children}</Typography>
-                    <Typography type="body-xs" color="muted">{timestamp}</Typography>
-                </div>
-                {footer ? <div>{footer}</div> : null}
-            </div>
-        </div>
+        <StackH
+            identity={{ tier: "block", component: "FeedItem" }}
+            principle="content-row"
+            explain="Keeps the leading visual and the action column on one baseline so the meta does not drop under the avatar."
+            items={[
+                () => <>{leading}</>,
+                textColumn,
+            ]}
+        />
     )
 }

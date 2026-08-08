@@ -15,7 +15,7 @@ import {
 } from "@/resources/path"
 import {
     useResumeItems,
-} from "./useResumeItems"
+} from "@/hooks/useResumeItems"
 import { _ContinueLearning } from "./component"
 
 /**

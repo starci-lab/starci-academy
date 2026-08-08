@@ -18,6 +18,7 @@ import { FeedItem } from "../FeedItem"
 import { ReactionBar } from "../ReactionBar"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { StackV } from "@/components/frames/Stack"
 import { ActivityType } from "@/modules/api/graphql/queries/types/my-feed"
 import type { QueryMyFeedItemData } from "@/modules/api/graphql/queries/types/my-feed"
 import type { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
@@ -140,8 +141,11 @@ export const _ActivityFeed = ({
     // categorized-list: each day is its own labeled surface card (label = day
     // header outside the card, rows joined edge-to-edge with inset separators).
     return (
-        <div className="flex flex-col gap-6">
-            {dayGroups.map((group) => (
+        <StackV
+            identity={{ tier: "block", component: "ActivityFeed" }}
+            principle="group-boundary"
+            explain="Day groups are section boundaries in the feed — not sibling-stack, because each labeled day is a group rather than a repeating peer row."
+            items={dayGroups.map((group) => () => (
                 <LabeledCard key={group.key} label={group.label} frameless subtleLabel>
                     <SurfaceListCard bordered={bordered}>
                         {group.rows.map((row, index) => (
@@ -152,7 +156,7 @@ export const _ActivityFeed = ({
                     </SurfaceListCard>
                 </LabeledCard>
             ))}
-        </div>
+        />
     )
 }
 

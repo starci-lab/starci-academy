@@ -121,7 +121,8 @@ export const PricingTable = ({
                 highlighted={tier.isHighlighted}
                 features={() => (
                     <StackV
-                        gap={5}
+                        principle="group-boundary"
+                        explain="Section group spacing — not sibling-stack, because description and feature list are distinct groups rather than same-kind peers."
                         items={[
                             // Optional per-tier description sits above the feature list
                             ...(tier.description ? [() => (

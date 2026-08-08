@@ -2,8 +2,8 @@
 
 import { useCallback, useMemo } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { ARCHITECTURE_COMPONENT_MAP, DEFAULT_ARCHITECTURE_NODE } from "../constants"
-import { isArchitectureModuleId } from "../modules"
+import { ARCHITECTURE_COMPONENT_MAP, DEFAULT_ARCHITECTURE_NODE } from "@/modules/utils/architecture-catalog"
+import { isArchitectureModuleId } from "@/modules/utils/architecture-modules"
 
 /** Query key the selected node is mirrored to (`/architecture?node=kafka`). */
 const NODE_KEY = "node"

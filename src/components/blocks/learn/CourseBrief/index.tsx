@@ -77,39 +77,36 @@ const CourseBriefBase = ({
     ].filter(Boolean)
 
     return (
-        <div>
-            <PageHeader
-
-                isSkeleton={isSkeleton}
-                breadcrumb={
-                    breadcrumbItems?.length
-                        ? ({ isSkeleton: skeleton }: SkeletonProps) => (
-                            <div className="w-fit">
-                                {/* collapse: below @app-sm or trail ≥ 4 crumbs → back-link (the old
+        // Identity hold: PageHeader does not accept CallerIdentity (ledger PageHeader gap).
+        <PageHeader
+            isSkeleton={isSkeleton}
+            breadcrumb={
+                breadcrumbItems?.length
+                    ? ({ isSkeleton: skeleton }: SkeletonProps) => (
+                        // Hold: no hug-width frame for breadcrumb measure (`w-fit` parent placement).
+                        <div className="w-fit">
+                            {/* collapse: below @app-sm or trail ≥ 4 crumbs → back-link (the old
                         capability of ResponsiveBreadcrumb, now a prop of the Breadcrumbs atom). */}
-                                <Breadcrumbs
-                                    collapseOnMobile
-                                    collapseFrom={4}
-                                    items={breadcrumbItems ?? []}
-                                    isSkeleton={skeleton}
-                                />
-                            </div>
-                        )
-                        : undefined
-                }
-                title={title}
-                description={description}
-                meta={
-                    metaParts.length > 0
-                        ? () => (
-                            <span>
-                                <Typography size="xs" color="muted" text={metaParts.join(" · ")} />
-                            </span>
-                        )
-                        : undefined
-                }
-            />
-        </div>
+                            <Breadcrumbs
+                                collapseOnMobile
+                                collapseFrom={4}
+                                items={breadcrumbItems ?? []}
+                                isSkeleton={skeleton}
+                            />
+                        </div>
+                    )
+                    : undefined
+            }
+            title={title}
+            description={description}
+            meta={
+                metaParts.length > 0
+                    ? () => (
+                        <Typography size="xs" color="muted" text={metaParts.join(" · ")} />
+                    )
+                    : undefined
+            }
+        />
     )
 }
 

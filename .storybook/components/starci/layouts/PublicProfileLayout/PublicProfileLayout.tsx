@@ -1,6 +1,8 @@
 import type { ReactNode } from "react"
 import { Container } from "@sb-components/frames/Container/Container"
+import { RailShell } from "@sb-components/frames/RailShell/RailShell"
 import { StackV } from "@sb-components/frames/Stack/Stack"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 import { ProfileHero, type ProfileHeroUser } from "@sb-components/starci/blocks/profile/ProfileHero/ProfileHero"
 import { ProfileTabsBar, type ProfileTab } from "@sb-components/starci/blocks/navigation/ProfileTabsBar/ProfileTabsBar"
 import { ProfileLoadingState } from "@sb-components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState"
@@ -17,6 +19,9 @@ import { ProfileLockedState } from "@sb-components/starci/blocks/profile/Profile
  *   - `Content`  — `ProfileTabsBar` chrome above a two-column `ProfileHero` +
  *     route-panel body; owner-vs-visitor tab gating and the `canHire` CTA fork
  *     are data states within this leaf.
+ *
+ * Mirrored from src `layouts/PublicProfileLayout`: `RailShell` owns the
+ * column-first → row-at-`@app-md` switch, fixed rail width, and shrink strategy.
  */
 
 /** Per-section tab visibility for a VISITOR (the owner always sees every tab) — feeds the `visibleTabs`/`hiddenTabs` computation below. */
@@ -141,38 +146,26 @@ const PublicProfileLayout = ({
     children,
 }: PublicProfileLayoutProps) => {
     if (isLoading) {
-        return (
-            <div>
-                <ProfileLoadingState
-
-                />
-            </div>
-        )
+        return <ProfileLoadingState />
     }
 
     if (!user) {
         return (
-            <div>
-                <ProfileNotFoundState
-                    title={NOT_FOUND_TITLE}
-                    description={NOT_FOUND_DESCRIPTION}
-                    onGoHome={onGoHome}
-
-                />
-            </div>
+            <ProfileNotFoundState
+                title={NOT_FOUND_TITLE}
+                description={NOT_FOUND_DESCRIPTION}
+                onGoHome={onGoHome}
+            />
         )
     }
 
     // Locked profile viewed by a non-owner — mirrors the real `isLocked = Boolean(user?.profileLocked) && !isSelf`.
     if (user.profileLocked && !isSelf) {
         return (
-            <div>
-                <ProfileLockedState
-                    user={user}
-                    onGoCourses={onGoCourses}
-
-                />
-            </div>
+            <ProfileLockedState
+                user={user}
+                onGoCourses={onGoCourses}
+            />
         )
     }
 
@@ -180,10 +173,12 @@ const PublicProfileLayout = ({
     // mirrors the real `PublicProfile`'s own `canHire` gate — see file header
     const canHire = !isSelf && Boolean(user.openToWork) && Boolean(user.social?.github)
 
-    // aside + routed panel — the pair the identity/content two-column body composes
-    const asideAndPanel = [
-        () => (
-            <aside className="w-full @app-md:w-72 @app-md:shrink-0">
+    // identity rail (ProfileHero) beside the active tab's routed panel — RailShell owns the
+    // column-first → row-at-@app-md switch, the fixed rail width, and the shrink strategy
+    // (SettingsLayout's own outer switch uses the same frame — see file header).
+    const profileShell: ComponentTypeWithSkeleton = () => (
+        <RailShell
+            rail={() => (
                 <ProfileHero
                     user={user}
                     isSelf={isSelf}
@@ -194,25 +189,12 @@ const PublicProfileLayout = ({
                     onHire={onHire}
                     onEdit={onEditProfile}
                     onShare={onShare}
-
                 />
-            </aside>
-        ),
-        () => (
-            <main className="min-w-0 flex-1">
-                {children}
-            </main>
-        ),
-    ]
-
-    // column-first, becomes a row from @app-md — same technique SettingsLayout uses for its own outer switch (see file header)
-    const profileBody = (
-        <div className="@app-md:flex-row @app-md:items-start">
-            <StackV
-                gap={7}
-                items={asideAndPanel}
-            />
-        </div>
+            )}
+            body={() => <>{children}</>}
+            principle="layout-split"
+            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+        />
     )
 
     // chrome above the body — mirrors the real Navbar bottom-layer position; see file header
@@ -224,27 +206,25 @@ const PublicProfileLayout = ({
                 onTabChange={onTabChange}
                 hiddenTabs={hiddenTabs}
                 ariaLabel={PROFILE_TABS_ARIA_LABEL}
-
             />
         ),
         () => (
             <Container
                 size="xl"
-                padding={6}
-
-                body={() => profileBody}
+                principle="page-pad"
+                explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
+                body={profileShell}
             />
         ),
     ]
 
     return (
-        <div>
-            <StackV
-                gap={1}
-
-                items={tabsAndBody}
-            />
-        </div>
+        <StackV
+            principle="group-boundary"
+            explain="Separates the profile tab chrome from the measured body so each region keeps its own seam owner — not sibling-stack, because these are distinct section roles rather than repeating peers."
+            identity={{ tier: "layout", component: "PublicProfileLayout" }}
+            items={tabsAndBody}
+        />
     )
 }
 

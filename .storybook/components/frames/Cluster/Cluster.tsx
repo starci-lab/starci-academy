@@ -3,7 +3,8 @@ import { cn } from "@heroui/react"
 import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
-import { ALIGN_CLASS, gapClassNames, JUSTIFY_CLASS, type AllowedGap, type LayoutAlign, type LayoutJustify, type Responsive } from "@sb-components/frames/_spacing"
+import { ALIGN_CLASS, JUSTIFY_CLASS, type AllowedGap, type LayoutAlign, type LayoutJustify, type Responsive } from "@sb-components/frames/_spacing"
+import { resolvePrincipleSpacing, resolvedSpacingClassNames } from "@sb-components/frames/_principle-style"
 import { principleAttr, explainAttr, type PrincipleToken, type ExplainReason } from "@sb-components/frames/_principles"
 import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_identity"
 
@@ -22,9 +23,9 @@ import { resolveIdentity, type CallerIdentity } from "@sb-components/frames/_ide
  * next to a badge next to a button); `Cluster` repeats ONE kind and always wraps.
  * The two are not interchangeable -- pick by the §13b test, not by looks.
  *
- * `gap` is a {@link Responsive}<{@link AllowedGap}> and REQUIRED -- a chip row is
- * the canonical step `3` seam (peers in one set), but the khung refuses to guess it for you.
- * §13: no domain content, no behaviour -- the items' own components carry those.
+ * `gap` is a {@link Responsive}<{@link AllowedGap}> — optional when `principle` is a
+ * gap-owning token (principle owns the seam, same contract as Flex/Stack). Still
+ * required when there is no gap principle. §13: no domain content, no behaviour.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -39,12 +40,13 @@ export interface ClusterBaseProps {
      */
     items?: Array<ComponentTypeWithSkeleton>
     /**
-     * Seam between items on the house gap scale (`gap.md`) -- REQUIRED. Applies to BOTH axes
-     * (row gap and column gap), so wrapped lines breathe the same. `3` (`gap-2`) is the
-     * canonical step for a chip row -- peers in one set -- but the frame refuses to guess it
-     * for you. Responsive: `gap={{ base: 2, md: 3 }}` tightens the seam in a narrow container.
+     * Seam between items on the house gap scale (`gap.md`). Applies to BOTH axes
+     * (row gap and column gap), so wrapped lines breathe the same.
+     * Optional when `principle` is a gap-owning token — the principle resolves the class.
+     * Still required when there is no gap principle.
+     * Responsive: `gap={{ base: 2, md: 3 }}` tightens the seam in a narrow container.
      */
-    gap: Responsive<AllowedGap>
+    gap?: Responsive<AllowedGap>
     /**
      * `true` puts a `-` BETWEEN items, N items get N-1 marks, mirroring `Stack`'s `divider`.
      *
@@ -108,34 +110,39 @@ const ClusterBase = ({
     principle,
     explain,
     isSkeleton,
-    identity}: ClusterBaseProps) => (
-    <div
-        {...resolveIdentity(identity, { tier: "frame", name: "Cluster" })}
-        data-principle={principleAttr(principle)}
-        data-explain={explainAttr(explain)}
-        className={cn(
-            "flex flex-wrap",
-            ...gapClassNames(gap),
-            ALIGN_CLASS[align],
-            JUSTIFY_CLASS[justify],
-            classNames)}
-    >
-        {(items ?? []).map((Item, index) => {
-            // The wrapper is unconditional; only the badge on it is not. Rendering it only when
-            // the overlay is on made the overlay change what it was measuring -- the wrapper is a
-            // flex child, so turning inspection on moved the row it was meant to describe.
-            const body = <div><Item isSkeleton={isSkeleton} /></div>
-            return (
-                <React.Fragment key={index}>
-                    {/* The mark carries no margin of its own -- the track's `gap` already
-                        spaces it -- so `Divider`'s inline shape reproduces it exactly. */}
-                    {separator && index > 0 ? <Divider shape="inline" /> : null}
-                    {body}
-                </React.Fragment>
-            )
-        })}
-    </div>
-)
+    identity}: ClusterBaseProps) => {
+    // Principle owns gap/align/justify when set — same contract as Flex/Stack.
+    const spacing = resolvePrincipleSpacing(principle, gap, undefined, align, justify)
+    const layoutAlign = spacing.principleOwnsLayout
+        ? (spacing.align ?? "center")
+        : align
+    const layoutJustify = spacing.principleOwnsLayout
+        ? (spacing.justify ?? "start")
+        : justify
+    return (
+        <div
+            {...resolveIdentity(identity, { tier: "frame", name: "Cluster" })}
+            data-principle={principleAttr(principle)}
+            data-explain={explainAttr(explain)}
+            className={cn(
+                "flex flex-wrap",
+                ...resolvedSpacingClassNames({ ...spacing, align: undefined, justify: undefined }),
+                layoutAlign != null && ALIGN_CLASS[layoutAlign],
+                layoutJustify != null && JUSTIFY_CLASS[layoutJustify],
+                !spacing.principleOwnsLayout && classNames)}
+        >
+            {(items ?? []).map((Item, index) => {
+                const body = <div><Item isSkeleton={isSkeleton} /></div>
+                return (
+                    <React.Fragment key={index}>
+                        {separator && index > 0 ? <Divider shape="inline" /> : null}
+                        {body}
+                    </React.Fragment>
+                )
+            })}
+        </div>
+    )
+}
 
 /**
  * `Cluster.*` -- the wrapping same-kind row khung namespace. Namespace only -- no

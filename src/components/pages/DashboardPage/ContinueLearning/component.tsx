@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StackV } from "@/components/frames/Stack"
 import { Grid, type GridItem } from "@/components/frames/Grid"
 import { ResumeCard } from "./ResumeCard"
-import { RESUME_LIMIT, type ResumeItem } from "./useResumeItems"
+import { RESUME_LIMIT, type ResumeItem } from "@/hooks/useResumeItems"
 
 /** All display text, already localized by the connected `ContinueLearning`; a story passes i18n keys. */
 export interface ContinueLearningLabels {

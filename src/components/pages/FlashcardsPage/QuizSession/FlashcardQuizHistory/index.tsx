@@ -10,7 +10,7 @@ import { sessionDisplayName } from "@/modules/utils/session-display-name"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { pathConfig } from "@/resources/path"
-import { LEVEL_COLOR } from "../../constants"
+import { LEVEL_COLOR } from "@/modules/utils/flashcards"
 import type { TimeBucketKey } from "@/modules/utils/history-buckets"
 import { _FlashcardQuizHistory, type FlashcardQuizHistoryRow } from "./component"
 

@@ -84,88 +84,82 @@ const ContentHeader = ({
     const hasOutcomes = isSkeleton || (outcomes?.length ?? 0) > 0
 
     return (
-        <div>
-            <StackV
-                gap={6}
-                isSkeleton={isSkeleton}
-                items={[
-                    () => (
-                        <PageHeader
-
-                            isSkeleton={isSkeleton}
-                            breadcrumb={() =>
-                                isSkeleton || breadcrumbItems?.length ? (
-                                    <div className="w-fit">
-                                        <Breadcrumbs
-                                            collapseOnMobile
-                                            collapseFrom={4}
-                                            items={breadcrumbItems ?? []}
-                                            isSkeleton={isSkeleton}
+        <StackV
+            identity={{ tier: "block", component: "ContentHeader" }}
+            principle="sibling-stack"
+            explain="Page identity cluster and outcomes card are same-kind peers on the lesson header — not group-boundary, because they are repeating header sections rather than nested groups."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <PageHeader
+                        isSkeleton={isSkeleton}
+                        breadcrumb={() =>
+                            isSkeleton || breadcrumbItems?.length ? (
+                                // Hold: no hug-width frame for breadcrumb measure (`w-fit` parent placement).
+                                <div className="w-fit">
+                                    <Breadcrumbs
+                                        collapseOnMobile
+                                        collapseFrom={4}
+                                        items={breadcrumbItems ?? []}
+                                        isSkeleton={isSkeleton}
+                                    />
+                                </div>
+                            ) : undefined
+                        }
+                        title={title}
+                        description={description}
+                        meta={() =>
+                            <StackH
+                                principle="sibling-stack"
+                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    ...(isSkeleton ? [() => (
+                                        <Chip isSkeleton />
+                                    )] : isRead ? [() => (
+                                        <Chip
+                                            tone="success"
+                                            icon={CheckCircleIcon}
+                                            text="Read"
                                         />
-                                    </div>
-                                ) : undefined
-                            }
-                            title={title}
-                            description={description}
-                            meta={() =>
-                                <StackH
-                                    gap={3}
-                                    align="center"
-                                    principle="sibling-stack"
-                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                                    isSkeleton={isSkeleton}
-                                    items={[
-                                        ...(isSkeleton ? [() => (
-                                            <Chip isSkeleton />
-                                        )] : isRead ? [() => (
-                                            <Chip
-                                                tone="success"
-                                                icon={CheckCircleIcon}
-                                                text="Read"
-
+                                    )] : []),
+                                    ...(isSkeleton ? [() => (
+                                        <Typography size="xs" color="muted" isSkeleton />
+                                    )] : [
+                                        ...(minutesRead != null ? [() => (
+                                            <Typography
+                                                size="xs"
+                                                color="muted"
+                                                text={`${minutesRead} min read`}
                                             />
                                         )] : []),
-                                        ...(isSkeleton ? [() => (
-                                            <Typography size="xs" color="muted" isSkeleton />
-                                        )] : [
-                                            ...(minutesRead != null ? [() => (
-                                                <Typography
-                                                    size="xs"
-                                                    color="muted"
-                                                    text={`${minutesRead} min read`}
-
-                                                />
-                                            )] : []),
-                                            ...(challengeCount != null ? [() => (
-                                                <Typography
-                                                    size="xs"
-                                                    color="muted"
-                                                    text={`${challengeCount} challenges`}
-
-                                                />
-                                            )] : []),
-                                        ]),
-                                    ]}
-                                />
-                            }
-                        />
-                    ),
-                    ...(hasOutcomes ? [() => (
-                        <SurfaceCardList
-                            label="What you will learn"
-                            isSkeleton={isSkeleton}
-
-                            items={(outcomes ?? []).map((outcome) => ({
-                                key: outcome.key,
-                                leadingIcon: CheckCircleIcon,
-                                leadingIconColor: "success",
-                                title: outcome.text,
-                            }))}
-                        />
-                    )] : []),
-                ]}
-            />
-        </div>
+                                        ...(challengeCount != null ? [() => (
+                                            <Typography
+                                                size="xs"
+                                                color="muted"
+                                                text={`${challengeCount} challenges`}
+                                            />
+                                        )] : []),
+                                    ]),
+                                ]}
+                            />
+                        }
+                    />
+                ),
+                ...(hasOutcomes ? [() => (
+                    <SurfaceCardList
+                        label="What you will learn"
+                        isSkeleton={isSkeleton}
+                        items={(outcomes ?? []).map((outcome) => ({
+                            key: outcome.key,
+                            leadingIcon: CheckCircleIcon,
+                            leadingIconColor: "success",
+                            title: outcome.text,
+                        }))}
+                    />
+                )] : []),
+            ]}
+        />
     )
 }
 

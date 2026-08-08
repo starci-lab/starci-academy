@@ -1,9 +1,11 @@
 "use client"
 
 import React, { useCallback, useMemo } from "react"
-import { Button, Spinner, Tooltip } from "@heroui/react"
 import { ShoppingCartIcon, XIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Tooltip } from "@/components/atoms/overlay/Tooltip"
+import { StackV } from "@/components/frames/Stack"
 import { useCart } from "@/hooks/useCart"
 import { useCartEntry } from "@/hooks/useCartEntry"
 import type { CourseEntity } from "@/modules/types/entities/course"
@@ -87,47 +89,46 @@ export const AddToCartButton = ({
         return null
     }
 
+    const buttonVariant = inCart ? "danger-soft" : variant
+    const ariaLabel = inCart ? t("cart.remove") : t("cart.tooltipAdd")
+    const CartIcon = inCart ? XIcon : ShoppingCartIcon
+
     // compact icon-only (catalog card): a tooltip'd cart/remove icon button.
     if (iconOnly) {
         return (
-            <Tooltip>
-                <Tooltip.Trigger>
-                    <Button
-                        isIconOnly
-                        variant={inCart ? "danger-soft" : variant}
-                        isPending={isMutating}
-                        onPress={onToggle}
-                        aria-label={inCart ? t("cart.remove") : t("cart.tooltipAdd")}
-                    >
-                        {isMutating ? (
-                            <Spinner size="sm" color="current" />
-                        ) : inCart ? (
-                            <XIcon className="size-5" />
-                        ) : (
-                            <ShoppingCartIcon className="size-5" />
-                        )}
-                    </Button>
-                </Tooltip.Trigger>
-                <Tooltip.Content>{inCart ? t("cart.remove") : t("cart.tooltipAdd")}</Tooltip.Content>
+            <Tooltip label={ariaLabel}>
+                <Button
+                    isIconOnly
+                    prefixIcon={CartIcon}
+                    ariaLabel={ariaLabel}
+                    variant={buttonVariant}
+                    isPending={isMutating}
+                    onPress={onToggle}
+                />
             </Tooltip>
         )
     }
 
-    return (
+    const labeled = (
         <Button
-            variant={inCart ? "danger-soft" : variant}
-            fullWidth={fullWidth}
+            variant={buttonVariant}
             isPending={isMutating}
             onPress={onToggle}
-        >
-            {isMutating ? (
-                <Spinner size="sm" color="current" />
-            ) : inCart ? (
-                <XIcon className="size-5" />
-            ) : (
-                <ShoppingCartIcon className="size-5" />
-            )}
-            {inCart ? t("cart.remove") : t("cart.add")}
-        </Button>
+            prefixIcon={CartIcon}
+            label={inCart ? t("cart.remove") : t("cart.add")}
+        />
     )
+
+    if (fullWidth) {
+        return (
+            <StackV
+                identity={{ tier: "block", component: "AddToCartButton" }}
+                principle="center-measure"
+                explain="Stretches the cart CTA across the detail rail so it matches peer full-width enroll buttons."
+                items={[() => labeled]}
+            />
+        )
+    }
+
+    return labeled
 }

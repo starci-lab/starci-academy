@@ -4,6 +4,7 @@ import { Popover } from "@heroui/react"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Cluster } from "@/components/frames/Cluster"
 import { StackV } from "@/components/frames/Stack"
+import { type CallerIdentity } from "@/components/frames/_identity"
 import { KeyValueList } from "@/components/composites/data/KeyValue"
 import { Typography } from "@/components/atoms/text/Typography"
 
@@ -135,7 +136,8 @@ export const PriceTagBase = ({
     breakdown,
     showSavingLine = true,
     labels,
-}: PriceTagProps & { emphasis: PriceEmphasis }) => {
+    identity,
+}: PriceTagProps & { emphasis: PriceEmphasis; identity?: CallerIdentity }) => {
     const hasSaving = original != null && original > discounted
     const savePercent = hasSaving ? savingPercent(original, discounted) : 0
 
@@ -251,8 +253,6 @@ export const PriceTagBase = ({
                         size={AMOUNT_TYPE[emphasis]}
                         weight="bold"
                         isSkeleton={isSkeleton}
-                        classNames={isSkeleton ? ["w-2/3"] : undefined}
-
                         text={formatPrice(discounted, currency)}
                     />
                 ),
@@ -263,8 +263,6 @@ export const PriceTagBase = ({
                             color="muted"
                             isSkeleton={isSkeleton}
                             isStruck
-                            classNames={isSkeleton ? ["w-1/3"] : undefined}
-
                             text={formatPrice(original, currency)}
                         />
                     )]
@@ -302,8 +300,6 @@ export const PriceTagBase = ({
             size="xs"
             color="muted"
             isSkeleton={isSkeleton}
-            classNames={isSkeleton ? ["w-1/2"] : undefined}
-
             text={hasSaving ? `Save ${formatPrice(original - discounted, currency)}` : undefined}
         />
     ) : null
@@ -311,11 +307,12 @@ export const PriceTagBase = ({
     return (
         // The outer column = two DIFFERENT lines (the price row · the "saving" line) =>
         // `StackV`, NOT `Cluster`: a cluster is ONE track of N PEER elements (§13b).
+        // `card-caption`: the saving line is a caption under the amount row — same seam
+        // TrialConversionStrip uses for price + scarcity.
         <StackV
-            // `grouped` (§10b): the price row and the saving line are two DIFFERENT vertical
-            // rows of one design. It was `tight` (1), which §10b reserves for pairs sitting
-            // inside a lower-tier component — the saving line read as if it were glued under the number.
-            gap={4}
+            identity={identity}
+            principle="card-caption"
+            explain="Keeps the save line as a caption under the amount row so price + save read as one cluster."
             isSkeleton={isSkeleton}
             items={[
                 () => priceRow,

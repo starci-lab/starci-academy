@@ -5,7 +5,7 @@ import {
 } from "react"
 import type {
     CourseTotals,
-} from "@/components/pages/CourseDetailPage/types"
+} from "@/modules/types/course-detail"
 import { useAppSelector } from "@/redux/hooks"
 
 /**

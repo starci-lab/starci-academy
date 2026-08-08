@@ -109,12 +109,16 @@ const RatingBar = ({
     }))
 
     return (
-        <div>
-            <div>
-                <SurfaceCardPressableGroup ariaLabel={ariaLabel} columns={{ base: 2, md: 4 }} keyboardShortcut items={items} isSkeleton={isSkeleton} principle="content-row"
-                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title." />
-            </div>
-        </div>
+        <SurfaceCardPressableGroup
+            identity={{ tier: "block", component: "RatingBar" }}
+            ariaLabel={ariaLabel}
+            columns={{ base: 2, md: 4 }}
+            keyboardShortcut
+            items={items}
+            isSkeleton={isSkeleton}
+            principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+        />
     )
 }
 

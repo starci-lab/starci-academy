@@ -1,6 +1,6 @@
 import type {
     BankDetails,
-} from "../types"
+} from "@/modules/types/sepay-checkout"
 
 /** Fallback bank short name when the QR url is missing or unparseable. */
 const DEFAULT_BANK = "MBBank"

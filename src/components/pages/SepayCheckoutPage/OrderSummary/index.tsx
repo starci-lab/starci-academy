@@ -15,10 +15,10 @@ import {
 } from "next/navigation"
 import type {
     BankDetails,
-} from "../types"
+} from "@/modules/types/sepay-checkout"
 import {
     parseBankDetails,
-} from "../utils"
+} from "@/modules/utils/parse-bank-details"
 import {
     DetailRow,
 } from "../DetailRow"

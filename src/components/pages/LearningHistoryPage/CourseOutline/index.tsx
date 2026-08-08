@@ -18,11 +18,11 @@ import {
 } from "@phosphor-icons/react"
 import {
     useSelectedCourse,
-} from "../hooks/useSelectedCourse"
+} from "@/hooks/useSelectedCourse"
 import {
     isAttempted,
     toStatusTone,
-} from "./map"
+} from "@/modules/utils/learning-history-outline-map"
 import { toDifficulty } from "@/modules/utils/difficulty"
 import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCourseOutlineSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"

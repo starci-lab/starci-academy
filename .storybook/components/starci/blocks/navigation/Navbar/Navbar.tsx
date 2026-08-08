@@ -32,6 +32,9 @@ import { InputButtonLike } from "@sb-components/composites/buttons/InputButtonLi
 import { AsyncContent } from "@sb-components/composites/async/AsyncContent/AsyncContent"
 import { ListRow } from "@sb-components/composites/lists/List/List"
 import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
+import { HideAbove } from "@sb-components/frames/HideAbove/HideAbove"
+import { ScrollArea } from "@sb-components/frames/ScrollArea/ScrollArea"
+import { ShowFrom } from "@sb-components/frames/ShowFrom/ShowFrom"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -252,7 +255,8 @@ const Navbar = ({
                 />
             ) : (
                 <StackH
-                    gap={3}
+                    principle="icon-text"
+                    explain="Avatar beside its guest prompt — not name-handle, because this pairs a glyph with instructional text rather than a name/handle identity."
                     items={[
                         () => <Avatar icon={UserIcon} fallback="icon" />,
                         () => <Typography size="sm" color="muted" text="Sign in to save your learning progress" />,
@@ -280,15 +284,13 @@ const Navbar = ({
             {/* primary row — fixed 4rem tall, matching the real bar's height contract */}
             <div className="h-16 min-h-16">
                 <StackH
-                    gap={6}
                     principle="block-boundary"
                     explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
-                    justify="between"
-                    padding={{ x: 4 }}
                     items={[
                         () => (
                             <StackH
-                                gap={6}
+                                principle="flex-action"
+                                explain="Groups brand mark and desktop route pills on one horizontal peer row so they share a single hit baseline."
                                 items={[
                                     () => (
                                         <span
@@ -299,73 +301,87 @@ const Navbar = ({
                                             onKeyDown={(event) => {
                                                 if (event.key === "Enter" || event.key === " ") onLogoPress()
                                             }}
-                                            className="inline-flex cursor-pointer items-center"
+                                            className="inline-flex cursor-pointer"
                                         >
                                             <Logo />
                                         </span>
                                     ),
                                     () => (
-                                        <span className="hidden @app-md:flex">
-                                            <ButtonRadioGroup
-                                                items={navItems.map((item) => ({
-                                                    value: item.id,
-                                                    content: <Typography size="sm" text={item.label} />,
-                                                }))}
-                                                value={activeNavId}
-                                                onChange={(id) => navItems.find((item) => item.id === id)?.onPress()}
-                                                ariaLabel="Main navigation"
-                                            />
-                                        </span>
+                                        <ShowFrom
+                                            at="md"
+                                            body={() => (
+                                                <ButtonRadioGroup
+                                                    items={navItems.map((item) => ({
+                                                        value: item.id,
+                                                        content: <Typography size="sm" text={item.label} />,
+                                                    }))}
+                                                    value={activeNavId}
+                                                    onChange={(id) => navItems.find((item) => item.id === id)?.onPress()}
+                                                    ariaLabel="Main navigation"
+                                                />
+                                            )}
+                                        />
                                     ),
                                 ]}
                             />
                         ),
                         () => (
                             <StackH
-                                gap={3}
+                                principle="flex-action"
+                                explain="Groups search, locale, theme, cart, account, and mobile menu triggers on one horizontal peer row so they share a single hit baseline."
                                 items={[
                                     () => (
-                                        <span className="hidden w-[260px] @app-md:flex">
-                                            <InputButtonLike
-                                                placeholder={searchPlaceholder}
-                                                icon={MagnifyingGlassIcon}
-                                                suffix={() => <ShortcutHint shortcutLabel={shortcutLabel} />}
-                                                onPress={onSearchPress}
-                                            />
-                                        </span>
+                                        <ShowFrom
+                                            at="md"
+                                            body={() => (
+                                                <InputButtonLike
+                                                    placeholder={searchPlaceholder}
+                                                    icon={MagnifyingGlassIcon}
+                                                    suffix={() => <ShortcutHint shortcutLabel={shortcutLabel} />}
+                                                    onPress={onSearchPress}
+                                                />
+                                            )}
+                                        />
                                     ),
                                     () => (
-                                        <span className="@app-md:hidden">
-                                            <Button
-                                                isIconOnly
-                                                variant="ghost"
-                                                prefixIcon={MagnifyingGlassIcon}
-                                                ariaLabel={searchPlaceholder}
-                                                onPress={onSearchPress}
-                                            />
-                                        </span>
+                                        <HideAbove
+                                            at="md"
+                                            body={() => (
+                                                <Button
+                                                    isIconOnly
+                                                    variant="ghost"
+                                                    prefixIcon={MagnifyingGlassIcon}
+                                                    ariaLabel={searchPlaceholder}
+                                                    onPress={onSearchPress}
+                                                />
+                                            )}
+                                        />
                                     ),
                                     () => (
-                                        <div className="hidden @app-md:flex">
-                                            <StackH
-                                                gap={3}
-                                                items={[
-                                                    () => (
-                                                        <NavbarLanguageMenu
-                                                            languages={languages}
-                                                            activeLocale={activeLocale}
-                                                            onLocaleChange={onLocaleChange}
-                                                        />
-                                                    ),
-                                                    () => (
-                                                        <NavbarThemeSwitch
-                                                            isDarkMode={isDarkMode}
-                                                            onThemeToggle={onThemeToggle}
-                                                        />
-                                                    ),
-                                                ]}
-                                            />
-                                        </div>
+                                        <ShowFrom
+                                            at="md"
+                                            body={() => (
+                                                <StackH
+                                                    principle="flex-action"
+                                                    explain="Groups language and theme controls on one horizontal peer row so they share a single hit baseline."
+                                                    items={[
+                                                        () => (
+                                                            <NavbarLanguageMenu
+                                                                languages={languages}
+                                                                activeLocale={activeLocale}
+                                                                onLocaleChange={onLocaleChange}
+                                                            />
+                                                        ),
+                                                        () => (
+                                                            <NavbarThemeSwitch
+                                                                isDarkMode={isDarkMode}
+                                                                onThemeToggle={onThemeToggle}
+                                                            />
+                                                        ),
+                                                    ]}
+                                                />
+                                            )}
+                                        />
                                     ),
                                     () => (
                                         <HeroButton
@@ -397,17 +413,13 @@ const Navbar = ({
                                                     <PopoverContent placement="bottom right" className="w-[360px]">
                                                         {/* inset-exception: vendor popover body padding, wider than tall, not a surface inset */}
                                                         <StackV
-                                                            gap={2}
                                                             principle="control-pad"
                                                             explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row."
-                                                            padding={{ x: 3, y: 2 }}
                                                             items={[
                                                                 () => (
                                                                     <StackH
-                                                                        gap={3}
                                                                         principle="sibling-stack"
                                                                         explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                                                                        justify="between"
                                                                         items={[
                                                                             () => <Typography size="sm" weight="bold" text="Notifications" />,
                                                                             ...(notifications.unreadCount > 0
@@ -430,7 +442,13 @@ const Navbar = ({
                                                                 () => (
                                                                     <AsyncContent
                                                                         isLoading={notifications.isLoading && notifications.items.length === 0}
-                                                                        skeleton={() => <StackV gap={1} items={[() => notificationSkeletonRows]} />}
+                                                                        skeleton={() => (
+                                                                            <StackV
+                                                                                principle="sibling-stack"
+                                                                                explain="Same-kind peer stack of notification skeleton rows — not group-boundary, because rows are repeating siblings rather than section groups."
+                                                                                items={[() => notificationSkeletonRows]}
+                                                                            />
+                                                                        )}
                                                                         isEmpty={notifications.items.length === 0}
                                                                         emptyContent={{ title: "No notifications yet" }}
                                                                         error={notifications.error}
@@ -440,9 +458,18 @@ const Navbar = ({
                                                                             retryLabel: "Try again",
                                                                         }}
                                                                         content={() => (
-                                                                            <div className="max-h-[420px] overflow-y-auto">
-                                                                                <StackV gap={1} items={[() => notificationRows]} />
-                                                                            </div>
+                                                                            <ScrollArea
+                                                                                axis="y"
+                                                                                principle="flex-fill"
+                                                                                explain="Owns local vertical overflow for the notification list so long threads do not grow the popover past the viewport."
+                                                                                body={() => (
+                                                                                    <StackV
+                                                                                        principle="sibling-stack"
+                                                                                        explain="Same-kind peer stack of notification rows — not group-boundary, because rows are repeating siblings rather than section groups."
+                                                                                        items={[() => notificationRows]}
+                                                                                    />
+                                                                                )}
+                                                                            />
                                                                         )}
                                                                     />
                                                                 ),
@@ -482,8 +509,6 @@ const Navbar = ({
                                             </HeroButton>
                                             <Dropdown.Popover placement="bottom right" className="w-[300px]">
                                                 <StackV
-                                                    gap={1}
-                                                    padding={4}
                                                     principle="cell-pad"
                                                     explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body."
                                                     body={() => accountMenuHeader}
@@ -512,15 +537,18 @@ const Navbar = ({
                                         </Dropdown>
                                     ),
                                     () => (
-                                        <span className="@app-md:hidden">
-                                            <Button
-                                                isIconOnly
-                                                variant="ghost"
-                                                prefixIcon={SidebarSimpleIcon}
-                                                ariaLabel="Open mobile menu"
-                                                onPress={() => onMobileDrawerOpenChange(true)}
-                                            />
-                                        </span>
+                                        <HideAbove
+                                            at="md"
+                                            body={() => (
+                                                <Button
+                                                    isIconOnly
+                                                    variant="ghost"
+                                                    prefixIcon={SidebarSimpleIcon}
+                                                    ariaLabel="Open mobile menu"
+                                                    onPress={() => onMobileDrawerOpenChange(true)}
+                                                />
+                                            )}
+                                        />
                                     ),
                                 ]}
                             />
@@ -539,20 +567,26 @@ const Navbar = ({
                 title="Mobile menu"
                 body={() => (
                     <StackV
-                        gap={6}
+                        principle="group-boundary"
+                        explain="Separates mobile route list from language/theme controls so each region keeps its own seam owner — not sibling-stack, because these are distinct section roles rather than repeating peers."
                         items={[
-                            () => <StackV gap={2} items={[() => mobileNavRows]} />,
+                            () => (
+                                <StackV
+                                    principle="sibling-stack"
+                                    explain="Same-kind peer stack of mobile route rows — not group-boundary, because rows are repeating siblings rather than section groups."
+                                    items={[() => mobileNavRows]}
+                                />
+                            ),
                             () => <Divider />,
                             () => (
                                 <StackV
-                                    gap={4}
+                                    principle="sibling-stack"
+                                    explain="Same-kind peer stack of language and theme rows — not group-boundary, because these are repeating preference peers rather than section groups."
                                     items={[
                                         () => (
                                             <StackH
-                                                gap={3}
                                                 principle="sibling-stack"
                                                 explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                                                justify="between"
                                                 items={[
                                                     () => <Typography size="sm" text="Language" />,
                                                     () => (
@@ -567,10 +601,8 @@ const Navbar = ({
                                         ),
                                         () => (
                                             <StackH
-                                                gap={3}
                                                 principle="sibling-stack"
                                                 explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                                                justify="between"
                                                 items={[
                                                     () => <Typography size="sm" text="Theme" />,
                                                     () => (

@@ -13,11 +13,11 @@ import {
 } from "next/navigation"
 import {
     UploadStatus,
-} from "./enums"
+} from "@/modules/types/enums/upload-status"
 import type {
     ProcessResult,
     ProviderUploadStatus,
-} from "./types"
+} from "@/modules/types/admin-upload-video"
 import {
     LoadingScreen,
 } from "./LoadingScreen"

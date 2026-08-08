@@ -5,7 +5,7 @@ import React, {
 } from "react"
 import {
     useDashboardTabUrlSync,
-} from "./hooks/useDashboardTabUrlSync"
+} from "@/hooks/useDashboardTabUrlSync"
 import {
     DashboardTabsBar,
 } from "./DashboardTabsBar"

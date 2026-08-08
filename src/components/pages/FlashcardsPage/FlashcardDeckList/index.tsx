@@ -9,7 +9,7 @@ import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query
 import { type FlashcardDeckEntity } from "@/modules/types/entities/flashcard-deck"
 import { useAppSelector } from "@/redux/hooks"
 import { pathConfig } from "@/resources/path"
-import { useStartFlashcardReviewSession } from "../useStartFlashcardReviewSession"
+import { useStartFlashcardReviewSession } from "@/hooks/useStartFlashcardReviewSession"
 import type { FlashcardReviewMode } from "@/modules/api/graphql/mutations/types/start-flashcard-review-session"
 
 /** Decks shown per page in the topic list before the pager kicks in. */

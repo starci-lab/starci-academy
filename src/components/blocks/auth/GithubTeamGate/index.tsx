@@ -2,18 +2,23 @@
 
 import React, { useCallback, useEffect, useState } from "react"
 import { useParams } from "next/navigation"
-import { Alert, Button, Modal, Typography, cn } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
-import { GraduationCapIcon } from "@phosphor-icons/react"
+import { GraduationCapIcon, GithubLogoIcon } from "@phosphor-icons/react"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryMyGithubTeamStatusSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyGithubTeamStatusSwr"
 import { useLinkGithubOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useJobNotificationsSocketIo } from "@/hooks/socketio/useJobNotificationsSocketIo"
 import { PublicationEvent } from "@/hooks/socketio/enums/publication-event"
+import { Callout } from "@/components/composites/feedback/Callout"
+import { ModalShell } from "@/components/composites/layout/ModalShell"
 import { IconTile } from "@/components/blocks/identity/IconTile"
+import { Button } from "@/components/atoms/buttons/Button"
+import { Chip } from "@/components/atoms/chips/Chip"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackV, StackH } from "@/components/frames/Stack"
+import { Cluster } from "@/components/frames/Cluster"
 import { JobStatus } from "@/modules/types/enums/job-status"
 import { mutateRequestToTeam } from "@/modules/api/graphql/mutations/mutation-request-to-team"
-import { GithubIcon } from "@/components/svg/GithubIcon"
 
 /**
  * Course GitHub-team join — NON-BLOCKING.
@@ -123,133 +128,173 @@ export const GithubTeamGate = () => {
     const primaryStateLabel = anySending
         ? t("githubTeamGate.sending")
         : t(`githubTeamGate.state.${primaryState}`)
-    const primaryStateColor = anySending || primaryState === "pending"
-        ? "text-warning-soft-foreground"
+    const primaryStateTone = anySending || primaryState === "pending"
+        ? "warning"
         : primaryState === "active"
-            ? "text-success-soft-foreground"
-            : "text-muted"
+            ? "success"
+            : "muted"
 
-    /** Leading step number badge. */
-    const stepBadge = (n: number) => (
-        <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-accent-soft text-xs font-medium text-accent-soft-foreground">
-            {n}
-        </span>
+    const linkBody = [
+        () => (
+            <Typography
+                size="sm"
+                color="muted"
+                text={t("githubTeamGate.linkFirst")}
+            />
+        ),
+        () => (
+            <Button
+                variant="primary"
+                prefixIcon={GithubLogoIcon}
+                label={t("githubTeamGate.linkCta")}
+                onPress={() => {
+                    // avoid stacking on the link modal it opens
+                    setModalOpen(false)
+                    setLinkGithubOpen(true)
+                }}
+            />
+        ),
+    ]
+
+    const courseIdentity = [
+        () => (
+            <IconTile
+                size="sm"
+                src={coverImageUrl ?? undefined}
+                icon={<GraduationCapIcon aria-hidden focusable="false" />}
+            />
+        ),
+        () => (
+            <StackV
+                principle="title-subtitle"
+                explain="Course title over team state — not label-field, because neither line is a form control label."
+                items={[
+                    () => (
+                        <Typography
+                            size="sm"
+                            weight="semibold"
+                            truncate
+                            text={primaryTeam?.courseTitle ?? ""}
+                        />
+                    ),
+                    () => (
+                        <Typography
+                            size="xs"
+                            color={primaryStateTone === "muted" ? "muted" : primaryStateTone === "warning" ? "warning" : "success"}
+                            text={primaryStateLabel}
+                        />
+                    ),
+                ]}
+            />
+        ),
+    ]
+
+    const stepRow = (n: number, body: React.ComponentType) => () => (
+        <Cluster
+            principle="icon-text"
+            explain="Step index beside its instruction — not name-handle, because this pairs a badge with procedural copy."
+            items={[
+                () => <Chip tone="accent" text={String(n)} />,
+                body,
+            ]}
+        />
     )
 
+    const joinSteps = [
+        stepRow(1, () => (
+            <StackV
+                principle="sibling-stack"
+                explain="Step copy over its CTA — not group-boundary, because these are peer pieces of one step."
+                items={[
+                    () => <Typography size="sm" text={t("githubTeamGate.step1")} />,
+                    ...(hasUninvited
+                        ? [() => (
+                            <Button
+                                variant="primary"
+                                size="sm"
+                                isDisabled={requesting || anySending}
+                                label={anySending
+                                    ? t("githubTeamGate.sending")
+                                    : t("githubTeamGate.requestCta")}
+                                onPress={onRequest}
+                            />
+                        )]
+                        : []),
+                ]}
+            />
+        )),
+        stepRow(2, () => (
+            <Typography size="sm" text={t("githubTeamGate.step2")} />
+        )),
+        stepRow(3, () => (
+            <StackV
+                principle="sibling-stack"
+                explain="Step copy over recheck CTA — not group-boundary, because these are peer pieces of one step."
+                items={[
+                    () => <Typography size="sm" text={t("githubTeamGate.step3")} />,
+                    () => (
+                        <Button
+                            variant="secondary"
+                            size="sm"
+                            isDisabled={isLoading}
+                            label={t("githubTeamGate.recheckCta")}
+                            onPress={() => mutate()}
+                        />
+                    ),
+                ]}
+            />
+        )),
+    ]
+
+    const linkedBody = [
+        () => (
+            <StackH
+                principle="identity"
+                explain="Keeps course tile and title/state as one peer unit so the course identity stays beside its cover."
+                items={courseIdentity}
+            />
+        ),
+        () => (
+            <StackV
+                principle="sibling-stack"
+                explain="Ordered join steps — not group-boundary, because these are repeating procedure rows."
+                items={joinSteps}
+            />
+        ),
+    ]
+
     return (
-        <>
-            {/* persistent, non-blocking warning on the learn page */}
-            <Alert status="warning" className="bg-warning-soft shadow-none">
-                <Alert.Indicator>
-                    <GithubIcon className="size-5" />
-                </Alert.Indicator>
-                <Alert.Content className="gap-1">
-                    <Alert.Title>{t("githubTeamGate.warningTitle")}</Alert.Title>
-                    <Alert.Description>{t("githubTeamGate.warningBody")}</Alert.Description>
-                </Alert.Content>
-                <button
-                    type="button"
-                    onClick={() => setModalOpen(true)}
-                    className="ml-auto shrink-0 rounded-full bg-warning px-4 py-2 text-sm font-medium text-warning-foreground transition-opacity hover:opacity-90">
-                    {t("githubTeamGate.openCta")}
-                </button>
-            </Alert>
-
-            {/* opt-in, DISMISSABLE guided modal */}
-            <Modal isOpen={modalOpen} onOpenChange={setModalOpen}>
-                <Modal.Backdrop>
-                    <Modal.Container size="sm">
-                        <Modal.Dialog>
-                            <Modal.CloseTrigger />
-                            <Modal.Header>
-                                <Typography type="body" weight="semibold" className="pr-8">
-                                    {t("githubTeamGate.title")}
-                                </Typography>
-                            </Modal.Header>
-                            <Modal.Body className="flex flex-col gap-4 pb-6">
-                                {!linked ? (
-                                    <>
-                                        <p className="text-sm text-default-500">
-                                            {t("githubTeamGate.linkFirst")}
-                                        </p>
-                                        <Button
-                                            variant="primary"
-                                            className="self-start"
-                                            onPress={() => {
-                                                // avoid stacking on the link modal it opens
-                                                setModalOpen(false)
-                                                setLinkGithubOpen(true)
-                                            }}>
-                                            <GithubIcon className="size-4" />
-                                            {t("githubTeamGate.linkCta")}
-                                        </Button>
-                                    </>
-                                ) : (
-                                    <>
-                                        {/* course identity (FLAT — mirrors the enroll modal summary):
-                                            cover IconTile + course title + team state */}
-                                        <div className="flex items-center gap-3">
-                                            <IconTile
-                                                size="sm"
-                                                src={coverImageUrl ?? undefined}
-                                                icon={<GraduationCapIcon aria-hidden focusable="false" />}
-                                            />
-                                            <div className="flex min-w-0 flex-col">
-                                                <Typography type="body-sm" weight="semibold" truncate>
-                                                    {primaryTeam?.courseTitle}
-                                                </Typography>
-                                                <span className={cn("text-xs", primaryStateColor)}>
-                                                    {primaryStateLabel}
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        {/* step-by-step join flow */}
-                                        <ol className="flex flex-col gap-3">
-                                            <li className="flex gap-3">
-                                                {stepBadge(1)}
-                                                <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                                    <p className="text-sm">{t("githubTeamGate.step1")}</p>
-                                                    {hasUninvited ? (
-                                                        <Button
-                                                            variant="primary"
-                                                            size="sm"
-                                                            className="self-start"
-                                                            isDisabled={requesting || anySending}
-                                                            onPress={onRequest}>
-                                                            {anySending
-                                                                ? t("githubTeamGate.sending")
-                                                                : t("githubTeamGate.requestCta")}
-                                                        </Button>
-                                                    ) : null}
-                                                </div>
-                                            </li>
-                                            <li className="flex gap-3">
-                                                {stepBadge(2)}
-                                                <p className="min-w-0 flex-1 text-sm">{t("githubTeamGate.step2")}</p>
-                                            </li>
-                                            <li className="flex gap-3">
-                                                {stepBadge(3)}
-                                                <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                                    <p className="text-sm">{t("githubTeamGate.step3")}</p>
-                                                    <Button
-                                                        variant="secondary"
-                                                        size="sm"
-                                                        className="self-start"
-                                                        isDisabled={isLoading}
-                                                        onPress={() => mutate()}>
-                                                        {t("githubTeamGate.recheckCta")}
-                                                    </Button>
-                                                </div>
-                                            </li>
-                                        </ol>
-                                    </>
-                                )}
-                            </Modal.Body>
-                        </Modal.Dialog>
-                    </Modal.Container>
-                </Modal.Backdrop>
-            </Modal>
-        </>
+        <StackV
+            principle="group-boundary"
+            explain="Banner and guided modal share one feature surface — not sibling-stack, because the banner and the portal are not repeating peers, and not block-boundary, because this is not a page-scale section seam."
+            identity={{ tier: "block", component: "GithubTeamGate" }}
+            items={[
+                () => (
+                    <Callout
+                        status="warning"
+                        icon={GithubLogoIcon}
+                        title={t("githubTeamGate.warningTitle")}
+                        description={t("githubTeamGate.warningBody")}
+                        actionLabel={t("githubTeamGate.openCta")}
+                        onAction={() => setModalOpen(true)}
+                    />
+                ),
+                () => (
+                    <ModalShell
+                        isOpen={modalOpen}
+                        onOpenChange={setModalOpen}
+                        title={t("githubTeamGate.title")}
+                        size="sm"
+                        body={() => (
+                            <StackV
+                                principle="content-row"
+                                explain="Link prompt or join flow — not sibling-stack, because this is the modal body's content region."
+                                items={linked ? linkedBody : linkBody}
+                            />
+                        )}
+                    />
+                ),
+            ]}
+        />
     )
 }

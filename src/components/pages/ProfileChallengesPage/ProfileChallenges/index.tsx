@@ -15,7 +15,7 @@ import {
 } from "@/modules/utils/challenge-difficulty"
 import {
     groupByCourse,
-} from "./groupByCourse"
+} from "@/modules/utils/group-challenges-by-course"
 import {
     ChallengeCourseRow,
 } from "./ChallengeCourseRow"
@@ -96,7 +96,8 @@ export const ProfileChallenges = () => {
         metricStats.push({ key: "rank", value: `#${strength.rank}` })
     }
 
-    const rootClassNames: Array<AllowedClassName> = []
+    const rootClassNames: Array<AllowedClassName> = []
+
 
     return (
         <AsyncContent

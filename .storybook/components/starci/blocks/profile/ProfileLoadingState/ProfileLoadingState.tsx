@@ -8,8 +8,11 @@ import { AvatarGroup, type AvatarGroupItem } from "@sb-components/composites/lis
 import { ProgressBar } from "@sb-components/atoms/display/Progress/Progress"
 import { SurfaceCard, SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Container } from "@sb-components/frames/Container/Container"
+import { Box } from "@sb-components/frames/Box/Box"
+import { RailShell } from "@sb-components/frames/RailShell/RailShell"
 import { StackV, StackH } from "@sb-components/frames/Stack/Stack"
 import { Grid, type GridItem } from "@sb-components/frames/Grid/Grid"
+import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
 
 /**
  * BLOCK — `ProfileLoadingState`: the public-profile first-load skeleton. It
@@ -135,179 +138,180 @@ export const ProfileLoadingState = () => {
         />
     ))
 
-    const overviewBody = (
-        <div className="@app-md:flex-row @app-md:items-start">
-            <StackV
-                gap={6}
-                items={[
-                    () => (
-                        <div className="@app-md:w-72 @app-md:shrink-0">
-                            <StackV
-                                gap={4}
-                                classNames={["w-full"]}
-                                items={[
-                                    () => (
-                                        <StackV
-                                            gap={2}
-                                            principle="title-subtitle"
-                                            explain="Title over supporting line — not label-field, because neither line is a form control label."
-                                            align="start"
-                                            items={[
-                                                () => <HeroSkeleton className="size-32 rounded-full" />,
-                                                () => <Chip isSkeleton />,
-                                            ]}
-                                        />
-                                    ),
-                                    () => (
-                                        <StackV
-                                            gap={1}
-                                            items={[
-                                                () => <Typography size="h3" isSkeleton />,
-                                                () => <Typography size="sm" isSkeleton />,
-                                                () => <Typography size="sm" isSkeleton />,
-                                            ]}
-                                        />
-                                    ),
-                                    () => <Typography size="sm" isSkeleton />,
-                                    () => (
-                                        <StackH
-                                            gap={3}
-                                            principle="chip-row"
-                                            explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
-                                            at="sm"
-                                            items={[
-                                                () => (
-                                                    <StackH
-                                                        gap={2}
+    const identityRail: ComponentTypeWithSkeleton = () => (
+        <StackV
+            gap={4}
+            classNames={["w-full"]}
+            items={[
+                () => (
+                    <StackV
+                        gap={2}
+                        principle="title-subtitle"
+                        explain="Title over supporting line — not label-field, because neither line is a form control label."
+                        align="start"
+                        items={[
+                            // HOLD: no atom offers a 128px circular shimmer (src same gap).
+                            () => <HeroSkeleton className="size-32 rounded-full" />,
+                            () => <Chip isSkeleton />,
+                        ]}
+                    />
+                ),
+                () => (
+                    <StackV
+                        gap={1}
+                        items={[
+                            () => <Typography size="h3" isSkeleton />,
+                            () => <Typography size="sm" isSkeleton />,
+                            () => <Typography size="sm" isSkeleton />,
+                        ]}
+                    />
+                ),
+                () => <Typography size="sm" isSkeleton />,
+                () => (
+                    <StackH
+                        gap={3}
+                        principle="chip-row"
+                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                        at="sm"
+                        items={[
+                            () => (
+                                <StackH
+                                    gap={2}
+                                    items={[
+                                        () => <HeroSkeleton className="size-5 rounded" />,
+                                        () => <Typography size="sm" isSkeleton />,
+                                    ]}
+                                />
+                            ),
+                            () => <Chip isSkeleton />,
+                        ]}
+                    />
+                ),
+                () => (
+                    <StackH
+                        gap={4}
+                        items={[
+                            () => <Typography size="sm" isSkeleton />,
+                            () => <Typography size="sm" isSkeleton />,
+                        ]}
+                    />
+                ),
+                () => <AvatarGroup items={MEDAL_ITEMS} size="sm" isSkeleton />,
+                () => (
+                    <StackV
+                        gap={3}
+                        items={[
+                            () => <Button isSkeleton />,
+                            () => <Button isSkeleton />,
+                        ]}
+                    />
+                ),
+                () => <StackV gap={4} items={[() => metaRows]} />,
+            ]}
+        />
+    )
+
+    const overviewContent: ComponentTypeWithSkeleton = () => (
+        <StackV
+            gap={6}
+            items={[
+                () => (
+                    <StackV
+                        gap={4}
+                        principle="card-caption"
+                        explain="Section title over its readiness cluster — not title-subtitle, because the cluster is a separate surface stack rather than a continuing subtitle line."
+                        items={[
+                            () => <Typography size="h4" isSkeleton />,
+                            () => (
+                                <StackV
+                                    gap={4}
+                                    principle="card-caption"
+                                    explain="Readiness summary card stacked above its track list — not sibling-stack, because the list captions the summary rather than repeating the same kind of peer."
+                                    items={[
+                                        () => (
+                                            <SurfaceCard
+                                                padding={4}
+                                                body={() => (
+                                                    <StackV
+                                                        gap={3}
                                                         items={[
-                                                            () => <HeroSkeleton className="size-5 rounded" />,
+                                                            () => <Typography size="h3" isSkeleton />,
                                                             () => <Typography size="sm" isSkeleton />,
+                                                            () => <Typography size="xs" isSkeleton />,
                                                         ]}
                                                     />
-                                                ),
-                                                () => <Chip isSkeleton />,
-                                            ]}
-                                        />
-                                    ),
-                                    () => (
-                                        <StackH
-                                            gap={4}
-                                            items={[
-                                                () => <Typography size="sm" isSkeleton />,
-                                                () => <Typography size="sm" isSkeleton />,
-                                            ]}
-                                        />
-                                    ),
-                                    () => <AvatarGroup items={MEDAL_ITEMS} size="sm" isSkeleton />,
-                                    () => (
-                                        <StackV
-                                            gap={3}
-                                            items={[
-                                                () => <Button isSkeleton />,
-                                                () => <Button isSkeleton />,
-                                            ]}
-                                        />
-                                    ),
-                                    () => <StackV gap={4} items={[() => metaRows]} />,
-                                ]}
-                            />
-                        </div>
-                    ),
-                    () => (
-                        <StackV
-                            gap={6}
-                            classNames={["min-w-0", "flex-1"]}
-                            items={[
-                                () => (
-                                    <StackV
-                                        gap={4}
-                                        principle="card-caption"
-                                        explain="Section title over its readiness cluster — not title-subtitle, because the cluster is a separate surface stack rather than a continuing subtitle line."
-                                        items={[
-                                            () => <Typography size="h4" isSkeleton />,
-                                            () => (
-                                                <StackV
-                                                    gap={4}
-                                                    principle="card-caption"
-                                                    explain="Readiness summary card stacked above its track list — not sibling-stack, because the list captions the summary rather than repeating the same kind of peer."
-                                                    items={[
-                                                        () => (
-                                                            <SurfaceCard
-                                                                padding={4}
-                                                                body={() => (
-                                                                    <StackV
-                                                                        gap={3}
-                                                                        items={[
-                                                                            () => <Typography size="h3" isSkeleton />,
-                                                                            () => <Typography size="sm" isSkeleton />,
-                                                                            () => <Typography size="xs" isSkeleton />,
-                                                                        ]}
-                                                                    />
-                                                                )}
-                                                            />
-                                                        ),
-                                                        () => <SurfaceCardList items={readinessItems} />,
-                                                    ]}
-                                                />
-                                            ),
-                                        ]}
-                                    />
-                                ),
-                                () => (
-                                    <StackV
-                                        gap={4}
-                                        items={[
-                                            () => <Typography size="h4" isSkeleton />,
-                                            () => <SurfaceCardList items={courseItems} />,
-                                        ]}
-                                    />
-                                ),
-                                () => (
-                                    <StackV
-                                        gap={4}
-                                        items={[
-                                            () => <Typography size="h4" isSkeleton />,
-                                            () => (
-                                                <StackV
-                                                    gap={4}
-                                                    items={[
-                                                        () => <HeroSkeleton className="h-40 w-full rounded-xl" />,
-                                                        () => (
-                                                            <StackH
-                                                                gap={3}
-                                                                items={[
-                                                                    () => <HeroSkeleton className="size-4 rounded-full" />,
-                                                                    () => <Typography size="sm" isSkeleton />,
-                                                                ]}
-                                                            />
-                                                        ),
-                                                    ]}
-                                                />
-                                            ),
-                                        ]}
-                                    />
-                                ),
-                                () => (
-                                    <Grid
-                                        columns={{ base: 1, md: 2 }}
-                                        principle="block-boundary"
-                                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
-                                        items={skillItems}
-                                    />
-                                ),
-                            ]}
-                        />
-                    ),
-                ]}
-            />
-        </div>
+                                                )}
+                                            />
+                                        ),
+                                        () => <SurfaceCardList items={readinessItems} />,
+                                    ]}
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+                () => (
+                    <StackV
+                        gap={4}
+                        items={[
+                            () => <Typography size="h4" isSkeleton />,
+                            () => <SurfaceCardList items={courseItems} />,
+                        ]}
+                    />
+                ),
+                () => (
+                    <StackV
+                        gap={4}
+                        items={[
+                            () => <Typography size="h4" isSkeleton />,
+                            () => (
+                                <StackV
+                                    gap={4}
+                                    items={[
+                                        // HOLD: no atom offers an arbitrary heatmap shimmer (src same gap).
+                                        () => <HeroSkeleton className="h-40 w-full rounded-xl" />,
+                                        () => (
+                                            <StackH
+                                                gap={3}
+                                                items={[
+                                                    () => <HeroSkeleton className="size-4 rounded-full" />,
+                                                    () => <Typography size="sm" isSkeleton />,
+                                                ]}
+                                            />
+                                        ),
+                                    ]}
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+                () => (
+                    <Grid
+                        columns={{ base: 1, md: 2 }}
+                        principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        items={skillItems}
+                    />
+                ),
+            ]}
+        />
+    )
+
+    const overviewBody = (
+        <RailShell
+            principle="layout-split"
+            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+            rail={identityRail}
+            body={overviewContent}
+            at="md"
+        />
     )
 
     return (
-        <div
-            aria-busy="true"
-            aria-label="Loading profile"
-            className="flex w-full flex-col"
+        // A11y ARIA on root held — frames do not forward aria-busy/aria-label (src same hold).
+        <Box
+            className="w-full"
+            identity={{ tier: "block", component: "ProfileLoadingState" }}
         >
             {/* tab strip — full-bleed row under the navbar, same footprint as `ProfileTabsBar`.
                 `px-6 py-3` is a one-off placement wrapper (a full-width strip flush under a sticky
@@ -331,6 +335,6 @@ export const ProfileLoadingState = () => {
             />
 
             <Container size="lg" padding={6} body={() => overviewBody} />
-        </div>
+        </Box>
     )
 }

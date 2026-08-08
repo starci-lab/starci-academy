@@ -1,7 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { CheckCircleIcon, CircleDashedIcon, WarningIcon, XCircleIcon } from "@phosphor-icons/react"
-import type { HealthByName } from "./hooks/useSystemHealthPoll"
+import type { HealthByName } from "@/hooks/useSystemHealthPoll"
 
 /** The 4 states a node can render as — `checking` is the HONEST default
  *  before any probe has resolved (never a fake green). */

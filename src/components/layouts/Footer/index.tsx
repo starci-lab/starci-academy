@@ -1,53 +1,43 @@
 "use client"
 
 import React from "react"
-import { Link, Typography } from "@heroui/react"
 import {
     FaFacebook,
     FaLinkedin,
     FaGithub,
 } from "react-icons/fa6"
-import {
-    useTranslations,
-} from "next-intl"
-import {
-    useRouter,
-} from "@/i18n/navigation"
-import {
-    pathConfig,
-} from "@/resources/path"
+import { useTranslations } from "next-intl"
+import { useRouter } from "@/i18n/navigation"
+import { pathConfig } from "@/resources/path"
 import {
     CONTACT_EMAIL,
     FOUNDER_FACEBOOK,
     FOUNDER_GITHUB,
     FOUNDER_LINKEDIN,
 } from "@/resources/contact"
-import {
-    FooterNavColumn,
-} from "./FooterNavColumn"
 import { BrandLockup } from "@/components/blocks/identity/BrandLockup"
-import { Box } from "@/components/frames/Box"
+import { FooterLinkColumn } from "@/components/blocks/navigation/Footer/FooterLinkColumn"
+import { InlineLink } from "@/components/atoms/navigation/Link"
+import { Typography } from "@/components/atoms/text/Typography"
+import { FooterFrame } from "@/components/frames/FooterFrame"
+import { Measure } from "@/components/frames/Measure"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Founder social links (brand logos → react-icons/fa6 per the icon rule). */
 const SOCIALS = [
-    { key: "facebook", href: FOUNDER_FACEBOOK, icon: FaFacebook },
-    { key: "linkedin", href: FOUNDER_LINKEDIN, icon: FaLinkedin },
-    { key: "github", href: FOUNDER_GITHUB, icon: FaGithub },
+    { id: "facebook", href: FOUNDER_FACEBOOK, icon: FaFacebook, labelKey: "facebook" as const },
+    { id: "linkedin", href: FOUNDER_LINKEDIN, icon: FaLinkedin, labelKey: "linkedin" as const },
+    { id: "github", href: FOUNDER_GITHUB, icon: FaGithub, labelKey: "github" as const },
 ] as const
 
 /** Props for {@link Footer}. */
 export type FooterProps = Record<string, never>
+
 /**
- * Global site footer (editorial-minimal). A single flat band separated from the
- * page by a top border — never a card. Brand lockup + manifesto + founder socials
- * on the left; two quiet link columns (explore · support) on the right; a bottom
- * bar with copyright, the "built by" credit, and the legal stubs.
- *
- * Pure composition: blocks (`BrandLockup`) + the locale-aware router + real route
- * helpers / contact constants. Hidden on the reader/auth shells by the caller
+ * Global site footer (editorial-minimal). Connected layout half: locale copy +
+ * router wiring over the same `FooterFrame` / `Measure` / column vocabulary as
+ * the starci `Footer` block. Hidden on the reader/auth shells by the caller
  * ({@link InnerLayout}).
- *
- * @param props - optional className (placement only).
  */
 export const Footer = () => {
     const t = useTranslations()
@@ -56,75 +46,142 @@ export const Footer = () => {
     const year = new Date().getFullYear()
 
     const exploreLinks = [
-        { key: "courses", label: t("footer.links.courses"), path: paths.course().build() },
-        { key: "blog", label: t("footer.links.blog"), path: paths.blog().build() },
-        { key: "talents", label: t("footer.links.talents"), path: paths.talents().build() },
-        { key: "jobs", label: t("footer.links.jobs"), path: paths.jobs().build() },
-        { key: "community", label: t("footer.links.community"), path: paths.community().build() },
+        { id: "courses", label: t("footer.links.courses"), onPress: () => router.push(paths.course().build()) },
+        { id: "blog", label: t("footer.links.blog"), onPress: () => router.push(paths.blog().build()) },
+        { id: "talents", label: t("footer.links.talents"), onPress: () => router.push(paths.talents().build()) },
+        { id: "jobs", label: t("footer.links.jobs"), onPress: () => router.push(paths.jobs().build()) },
+        { id: "community", label: t("footer.links.community"), onPress: () => router.push(paths.community().build()) },
     ]
     const supportLinks = [
-        { key: "contact", label: t("footer.links.contact"), path: paths.contact().build() },
-        { key: "email", label: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
+        { id: "contact", label: t("footer.links.contact"), onPress: () => router.push(paths.contact().build()) },
+        {
+            id: "email",
+            label: CONTACT_EMAIL,
+            onPress: () => {
+                window.location.href = `mailto:${CONTACT_EMAIL}`
+            },
+        },
     ]
 
+    const socialLinkItems = SOCIALS.map((social) => () => (
+        <InlineLink
+            key={social.id}
+            icon={social.icon}
+            ariaLabel={t(`contact.founder.${social.labelKey}`)}
+            onPress={() => {
+                window.open(social.href, "_blank", "noreferrer")
+            }}
+        />
+    ))
+
     return (
-        <footer className={"border-t border-default bg-surface"}>
-            <div className="mx-auto w-full max-w-6xl px-4 py-12 @app-sm:px-6 @app-lg:px-8">
-                {/* top: brand+manifesto+socials (left) · link columns (right) */}
-                <div className="flex flex-col justify-between gap-10 @app-md:flex-row">
-                    <div className="flex max-w-sm flex-col gap-3">
-                        {/* the column is a flex-col (align-items: stretch by default), which
-                            would otherwise stretch the lockup's auto width to the full column
-                            width while its height stays fixed — self-start opts it out */}
-                        <Box className="self-start">
-                            <BrandLockup />
-                        </Box>
-                        <Typography type="body-sm" color="muted">
-                            {t("footer.tagline")}
-                        </Typography>
-                        <div className="flex items-center gap-3">
-                            {SOCIALS.map(({ key, href, icon: Icon }) => (
-                                <Link
-                                    key={key}
-                                    href={href}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    aria-label={t(`contact.founder.${key}`)}
-                                    className="text-muted transition-colors hover:text-foreground"
-                                >
-                                    <Icon className="size-5" aria-hidden />
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="flex gap-12 @app-sm:gap-16">
-                        <FooterNavColumn title={t("footer.exploreTitle")} links={exploreLinks} />
-                        <FooterNavColumn title={t("footer.supportTitle")} links={supportLinks} />
-                    </div>
-                </div>
-
-                {/* bottom bar: copyright + credit (left) · legal stubs (right) */}
-                <div className="mt-10 flex flex-col gap-3 border-t border-default pt-6 @app-sm:flex-row @app-sm:items-center @app-sm:justify-between">
-                    <Typography type="body-xs" color="muted">
-                        {t("footer.copyright", { year })} · {t("footer.madeBy")}
-                    </Typography>
-                    <div className="flex items-center gap-3">
-                        <Link
-                            onPress={() => router.push(paths.terms().build())}
-                            className="cursor-pointer text-xs text-muted transition-colors hover:text-foreground"
-                        >
-                            {t("footer.links.terms")}
-                        </Link>
-                        <Link
-                            onPress={() => router.push(paths.privacy().build())}
-                            className="cursor-pointer text-xs text-muted transition-colors hover:text-foreground"
-                        >
-                            {t("footer.links.privacy")}
-                        </Link>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        <FooterFrame
+            identity={{ tier: "layout", component: "Footer" }}
+            body={() => (
+                <StackV
+                    principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                    divider
+                    items={[
+                        () => (
+                            <StackH
+                                principle="layout-split"
+                                explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+                                at="md"
+                                items={[
+                                    () => (
+                                        <Measure
+                                            size="sm"
+                                            body={() => (
+                                                <StackV
+                                                    principle="card-caption"
+                                                    explain="Brand lockup over its tagline and socials — not title-subtitle, because the social row is a separate action cluster rather than a continuing subtitle line."
+                                                    items={[
+                                                        () => <BrandLockup />,
+                                                        () => (
+                                                            <Typography
+                                                                size="sm"
+                                                                color="muted"
+                                                                text={t("footer.tagline")}
+                                                            />
+                                                        ),
+                                                        () => (
+                                                            <StackH
+                                                                principle="flex-action"
+                                                                explain="Groups social icon controls on one horizontal peer row so they share a single hit baseline — not chip-row, because these are press targets rather than display tags."
+                                                                items={socialLinkItems}
+                                                            />
+                                                        ),
+                                                    ]}
+                                                />
+                                            )}
+                                        />
+                                    ),
+                                    () => (
+                                        <StackH
+                                            principle="layout-split"
+                                            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+                                            at="sm"
+                                            items={[
+                                                () => (
+                                                    <FooterLinkColumn
+                                                        title={t("footer.exploreTitle")}
+                                                        links={exploreLinks}
+                                                    />
+                                                ),
+                                                () => (
+                                                    <FooterLinkColumn
+                                                        title={t("footer.supportTitle")}
+                                                        links={supportLinks}
+                                                    />
+                                                ),
+                                            ]}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                        () => (
+                            <StackH
+                                principle="sibling-stack"
+                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                at="sm"
+                                items={[
+                                    () => (
+                                        <Typography
+                                            size="xs"
+                                            color="muted"
+                                            text={`${t("footer.copyright", { year })} · ${t("footer.madeBy")}`}
+                                        />
+                                    ),
+                                    () => (
+                                        <StackH
+                                            principle="flex-action"
+                                            explain="Groups legal stubs on one horizontal peer row so they share a single hit baseline — not chip-row, because these are press targets rather than display tags."
+                                            items={[
+                                                () => (
+                                                    <InlineLink
+                                                        label={t("footer.links.terms")}
+                                                        size="xs"
+                                                        onPress={() => router.push(paths.terms().build())}
+                                                    />
+                                                ),
+                                                () => (
+                                                    <InlineLink
+                                                        label={t("footer.links.privacy")}
+                                                        size="xs"
+                                                        onPress={() => router.push(paths.privacy().build())}
+                                                    />
+                                                ),
+                                            ]}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]}
+                />
+            )}
+        />
     )
 }

@@ -11,13 +11,13 @@ import {
 } from "@heroui/react"
 import type {
     ProviderUploadStatus,
-} from "../../types"
+} from "@/modules/types/admin-upload-video"
 import { Box } from "@/components/frames/Box"
 import {
     UPLOAD_STATUS_ICON_MAP,
     UPLOAD_STATUS_TRACK_CLASS_MAP,
     UPLOAD_STATUS_FILL_CLASS_MAP,
-} from "../../map"
+} from "@/modules/utils/admin-upload-video-map"
 
 /** Props for {@link ProviderUploadRow}. */
 export interface ProviderUploadRowProps {

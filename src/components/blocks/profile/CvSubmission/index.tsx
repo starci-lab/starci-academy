@@ -179,17 +179,16 @@ export const CvSubmission = () => {
         ],
     )
 
+    // CVSubmissionForm already stamps block identity — promote it to the root.
     return (
-        <div className={""}>
-            <CVSubmissionForm
-                isUploading={isUploading}
-                isProcessing={isProcessing}
-                uploadProgress={uploadProgress}
-                uploadedFileName={uploadedFileName}
-                uploadedS3Key={uploadedS3Key}
-                onSubmit={onSubmit}
-                onProcess={onProcess}
-            />
-        </div>
+        <CVSubmissionForm
+            isUploading={isUploading}
+            isProcessing={isProcessing}
+            uploadProgress={uploadProgress}
+            uploadedFileName={uploadedFileName}
+            uploadedS3Key={uploadedS3Key}
+            onSubmit={onSubmit}
+            onProcess={onProcess}
+        />
     )
 }

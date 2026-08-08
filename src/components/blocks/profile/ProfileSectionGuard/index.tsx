@@ -46,15 +46,16 @@ export const ProfileSectionGuard = ({
 
     if (isPrivate) {
         return (
-            <div className="flex min-w-0 flex-col">
-                <EmptyState
-                    icon={LockIcon}
-                    title={t("publicProfile.sectionPrivate.title")}
-                    description={t("publicProfile.sectionPrivate.description")}
-                />
-            </div>
+            <EmptyState
+                identity={{ tier: "block", component: "ProfileSectionGuard" }}
+                icon={LockIcon}
+                title={t("publicProfile.sectionPrivate.title")}
+                description={t("publicProfile.sectionPrivate.description")}
+            />
         )
     }
 
+    // Visible path is a passthrough fragment — identity lives on the private
+    // EmptyState root (the only shape this block draws).
     return <>{children}</>
 }

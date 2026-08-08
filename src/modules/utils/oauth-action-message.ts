@@ -1,6 +1,6 @@
 import {
     OauthAction,
-} from "./enums"
+} from "@/modules/types/enums/oauth-action"
 
 /**
  * Maps each OAuth lifecycle step to its i18n key under `auth.oauth`, used as the

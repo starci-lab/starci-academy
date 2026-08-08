@@ -153,12 +153,15 @@ const ContentPager = ({
     }
 
     return (
-        <div>
-            <div>
-                <SurfaceCardPressableGroup ariaLabel={ariaLabel} columns={{ base: 1, sm: 2 }} items={items} isSkeleton={isSkeleton} principle="content-row"
-                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title." />
-            </div>
-        </div>
+        <SurfaceCardPressableGroup
+            identity={{ tier: "block", component: "ContentPager" }}
+            ariaLabel={ariaLabel}
+            columns={{ base: 1, sm: 2 }}
+            items={items}
+            isSkeleton={isSkeleton}
+            principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+        />
     )
 }
 

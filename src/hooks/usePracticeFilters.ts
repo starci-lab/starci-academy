@@ -15,7 +15,7 @@ import type {
     PracticeFilters,
     SortKey,
     StatusFilter,
-} from "../types"
+} from "@/modules/types/practice-hub"
 import { CodingDifficulty, CodingDomain } from "@/modules/api/graphql/queries/types/coding"
 
 /** Query-string keys the catalog filters are mirrored to (`/PracticeHubPage?...`). */

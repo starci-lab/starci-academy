@@ -10,10 +10,10 @@ import { useTranslations } from "next-intl"
 import { CODING_DOMAIN_ORDER } from "@/modules/api/graphql/queries/types/coding"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { StackH } from "@/components/frames/Stack"
-import { usePracticeView } from "../../hooks/usePracticeView"
-import { usePracticeFilters } from "../../hooks/usePracticeFilters"
-import type { PracticeView } from "../../hooks/usePracticeView"
-import type { DomainFilter } from "../../types"
+import { usePracticeView } from "@/hooks/usePracticeView"
+import { usePracticeFilters } from "@/hooks/usePracticeFilters"
+import type { PracticeView } from "@/hooks/usePracticeView"
+import type { DomainFilter } from "@/modules/types/practice-hub"
 
 /** Props for {@link PracticeMobileNav}. */
 export type PracticeMobileNavProps = Record<string, never>

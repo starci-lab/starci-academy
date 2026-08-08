@@ -1,6 +1,8 @@
 import React from "react"
 import { WarningCircleIcon } from "@phosphor-icons/react"
-import { cn } from "@heroui/react"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Button } from "@/components/atoms/buttons/Button"
+import { StackV } from "@/components/frames/Stack"
 
 /** Props for {@link _GradeCreditCaption} — presentational; the caption text already resolved. */
 export interface GradeCreditCaptionProps {
@@ -18,8 +20,8 @@ export interface GradeCreditCaptionProps {
 /**
  * The ONE shared "N/M credits left this week" caption for every AI surface, sitting
  * directly under (or beside) the model picker. Shows a muted line normally, or a
- * `text-danger-soft-foreground` warning line (with icon) when the pool can't afford
- * the next AUTO run. The connected half decides `text`/`blocked` from `myAiQuota`.
+ * `danger` warning line (with icon) when the pool can't afford the next AUTO run.
+ * The connected half decides `text`/`blocked` from `myAiQuota`.
  *
  * @param props - {@link GradeCreditCaptionProps}
  */
@@ -32,28 +34,36 @@ export const _GradeCreditCaption = ({
         return null
     }
 
-    const content = (
-        <span className={cn(
-            "inline-flex items-center gap-1 text-sm",
-            blocked ? "font-medium text-danger-soft-foreground" : "text-muted",
-        )}
-        >
-            {blocked ? <WarningCircleIcon aria-hidden className="size-4 shrink-0" /> : null}
-            {text}
-        </span>
-    )
-
     if (onOpenDetails) {
+        // Interactive path — house Button is the sole root. CallerIdentity held
+        // until atoms accept it (CourseTrialChip pattern).
         return (
-            <button
-                type="button"
-                onClick={onOpenDetails}
-                className="w-fit cursor-pointer outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-accent"
-            >
-                {content}
-            </button>
+            <Button
+                variant="tertiary"
+                size="sm"
+                label={text}
+                prefixIcon={blocked ? WarningCircleIcon : undefined}
+                onPress={onOpenDetails}
+            />
         )
     }
 
-    return <span>{content}</span>
+    return (
+        <StackV
+            identity={{ tier: "block", component: "GradeCreditCaption" }}
+            principle="label-field"
+            explain="Caption under the model picker — not title-subtitle, because this line labels the credit state of the control above rather than continuing a title."
+            items={[
+                () => (
+                    <Typography
+                        size="sm"
+                        weight={blocked ? "medium" : undefined}
+                        color={blocked ? "danger" : "muted"}
+                        prefixIcon={blocked ? WarningCircleIcon : undefined}
+                        text={text}
+                    />
+                ),
+            ]}
+        />
+    )
 }

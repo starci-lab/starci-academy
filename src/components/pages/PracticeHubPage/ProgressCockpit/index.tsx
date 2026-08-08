@@ -3,7 +3,7 @@
 import React from "react"
 import { Label } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { CODING_DIFFICULTY_META } from "../constants"
+import { CODING_DIFFICULTY_META } from "@/modules/utils/practice-hub"
 import { useQueryUserCodingProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingProgressSwr"
 import { useQueryUserCodingRankSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingRankSwr"
 import { useQueryUserCodingSkillsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingSkillsSwr"

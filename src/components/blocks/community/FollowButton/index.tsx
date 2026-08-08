@@ -7,12 +7,14 @@ import {
 import React from "react"
 import {
     Button,
-    cn,
-    Spinner,
-} from "@heroui/react"
+} from "@/components/atoms/buttons/Button"
+import {
+    Box,
+} from "@/components/frames/Box"
 import {
     useTranslations,
 } from "next-intl"
+
 /** Props for {@link FollowButton}. */
 export interface FollowButtonProps {
     /** Current follow state (owned by the parent). */
@@ -55,24 +57,20 @@ export const FollowButton = ({
         : (following ? "secondary" : "primary")
 
     return (
-        <Button
-            variant={variant}
-            size="sm"
-            isDisabled={isPending}
-            onPress={onToggle}
-            className={cn("shrink-0")}
+        <Box
+            as="span"
+            identity={{ tier: "block", component: "FollowButton" }}
+            principle="icon-text"
+            explain="Follow glyph rides with its label inside the house button — not name-handle, because this is an action control rather than a person identity pair."
         >
-            {isPending ? (
-                <Spinner
-                    color="current"
-                    size="sm"
-                />
-            ) : following ? (
-                <UserMinusIcon className="size-4" />
-            ) : (
-                <UserPlusIcon className="size-4" />
-            )}
-            {following ? t("follow.following") : t("follow.follow")}
-        </Button>
+            <Button
+                variant={variant}
+                size="sm"
+                isPending={isPending}
+                onPress={onToggle}
+                prefixIcon={following ? UserMinusIcon : UserPlusIcon}
+                label={following ? t("follow.following") : t("follow.follow")}
+            />
+        </Box>
     )
 }

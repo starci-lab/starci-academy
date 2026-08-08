@@ -1,4 +1,4 @@
-import type { QuickTestUrl } from "../types"
+import type { QuickTestUrl } from "@/modules/types/admin-mpeg-dash-test"
 import { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
 
 /** Preset URLs offered for quick one-click testing of each renderer type. */

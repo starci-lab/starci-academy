@@ -14,7 +14,7 @@ import {
 import { useLocale, useTranslations } from "next-intl"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
-import { DUE_REVIEW_LIMIT, SM2_GRADES } from "../constants"
+import { DUE_REVIEW_LIMIT, SM2_GRADES } from "@/modules/utils/flashcards"
 import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due-flashcards"
 import { buildCloze, extractMarkerTerms, type ClozeQuestion } from "./build-cloze"
 import type { WithClassNames } from "@/modules/types/base/class-name"

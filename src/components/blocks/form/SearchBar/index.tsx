@@ -2,21 +2,13 @@
 
 import React, { useMemo } from "react"
 import { useTranslations } from "next-intl"
-import { _SearchBar, type SearchBarProps, type SearchBarSuggestion } from "./component"
-
-/** Props the connected {@link SearchBar} takes from its caller. */
-export type SearchBarConnectedProps = Omit<
-    SearchBarProps,
-    "fieldLabel" | "placeholder" | "filtersAriaLabel" | "suggestionItems"
->
+import { _SearchBar, type SearchBarSuggestion } from "./component"
 
 /**
  * Search field — the CONNECTED half: resolves the field/placeholder/aria labels
  * and the demo suggestion list via `t()`. See `design/storybook/architecture/split.md`.
- *
- * @param props - {@link SearchBarConnectedProps}
  */
-export const SearchBar = ({ className }: SearchBarConnectedProps) => {
+export const SearchBar = () => {
     const t = useTranslations()
 
     const suggestionItems = useMemo<Array<SearchBarSuggestion>>(
@@ -30,7 +22,6 @@ export const SearchBar = ({ className }: SearchBarConnectedProps) => {
 
     return (
         <_SearchBar
-            className={className}
             fieldLabel={t("search.label")}
             placeholder={t("search.placeholder")}
             filtersAriaLabel={t("search.filtersAria")}

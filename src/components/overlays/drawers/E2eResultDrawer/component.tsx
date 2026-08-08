@@ -98,9 +98,9 @@ export const _E2eResultDrawer = ({
 
     if (isSkeleton) {
         const skeletonRows = [
-            () => <Skeleton className="h-4 w-64 max-w-full rounded" />,
+            () => <Skeleton.Typography type="body-sm" width="2/3" />,
             ...Array.from({ length: skeletonCount }, () => () => (
-                <Skeleton className="h-11 w-full rounded-xl" />
+                <Skeleton.ListRow withLeading={false} withSubtitle={false} />
             )),
         ]
 
@@ -111,7 +111,14 @@ export const _E2eResultDrawer = ({
                 placement={placement}
                 title={DRAWER_TITLE}
                 identity={DRAWER_IDENTITY}
-                body={() => <StackV gap={4} isSkeleton={isSkeleton} items={skeletonRows} />}
+                body={() => (
+                    <StackV
+                        principle="sibling-stack"
+                        explain="Skeleton title bar over attempt-row placeholders — not group-boundary, because these are peer loading bars."
+                        isSkeleton={isSkeleton}
+                        items={skeletonRows}
+                    />
+                )}
             />
         )
     } else {
@@ -151,9 +158,9 @@ export const _E2eResultDrawer = ({
                     key: flow.id,
                     title: (
                         <StackH
-                            gap={2}
+                            principle="icon-text"
+                            explain="Pass/fail chip beside the flow title — not name-handle, because this pairs a status pill with text."
                             isSkeleton={isSkeleton}
-
                             items={chipAndTitle}
                         />
                     ),
@@ -204,7 +211,14 @@ export const _E2eResultDrawer = ({
                     placement={placement}
                     title={DRAWER_TITLE}
                     identity={DRAWER_IDENTITY}
-                    body={() => <StackV gap={4} isSkeleton={isSkeleton} items={countFilterAndAccordion} />}
+                    body={() => (
+                        <StackV
+                            principle="content-row"
+                            explain="Count line, optional language filter, and accordion — not sibling-stack, because these are related content regions."
+                            isSkeleton={isSkeleton}
+                            items={countFilterAndAccordion}
+                        />
+                    )}
                 />
             )
         }

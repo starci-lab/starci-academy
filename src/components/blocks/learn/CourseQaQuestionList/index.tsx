@@ -161,54 +161,50 @@ const CourseQaQuestionList = ({
     }
 
     return (
-        <div>
-            <AsyncContent
-                // *5 — an external override (`isSkeleton`) converges on the same Loading
-                // branch as the list's own fetch flag (`isLoading`).
-                isLoading={isSkeleton || isLoading}
-                skeleton={() => (
-                    <SurfaceCardList
-                        items={skeletonItems()}
-
-                    />
-                )}
-                isEmpty={questions.length === 0}
-                emptyContent={emptyContent}
-                error={error}
-                errorContent={errorContent}
-
-                content={() => (
-                    <StackV
-                        gap={4}
-
-                        items={[
-                            () => (
-                                <SurfaceCardList
-                                    items={questionItems(questions, currentUserId, currentUser, onAnswered)}
-
-                                />
-                            ),
-                            ...(totalPages > 1
-                                ? [
-                                    // *4 — `Pagination` hard-codes its own aria-label; a wrapping
-                                    // <nav> is how the caller's `pagerAriaLabel` still names the region.
-                                    () => (
-                                        <nav aria-label={pagerAriaLabel}>
-                                            <Pagination
-                                                currentPage={page}
-                                                totalPages={totalPages}
-                                                onPageChange={onPageChange}
-
-                                            />
-                                        </nav>
-                                    ),
-                                ]
-                                : []),
-                        ]}
-                    />
-                )}
-            />
-        </div>
+        <AsyncContent
+            // *5 — an external override (`isSkeleton`) converges on the same Loading
+            // branch as the list's own fetch flag (`isLoading`).
+            isLoading={isSkeleton || isLoading}
+            skeleton={() => (
+                <SurfaceCardList
+                    identity={{ tier: "block", component: "CourseQaQuestionList" }}
+                    items={skeletonItems()}
+                />
+            )}
+            isEmpty={questions.length === 0}
+            emptyContent={emptyContent}
+            error={error}
+            errorContent={errorContent}
+            content={() => (
+                <StackV
+                    identity={{ tier: "block", component: "CourseQaQuestionList" }}
+                    principle="sibling-stack"
+                    explain="Question list and pager are same-kind peers in the roll-up column — not group-boundary, because they are repeating list sections rather than nested groups."
+                    items={[
+                        () => (
+                            <SurfaceCardList
+                                items={questionItems(questions, currentUserId, currentUser, onAnswered)}
+                            />
+                        ),
+                        ...(totalPages > 1
+                            ? [
+                                // *4 — `Pagination` hard-codes its own aria-label; a wrapping
+                                // <nav> is how the caller's `pagerAriaLabel` still names the region.
+                                () => (
+                                    <nav aria-label={pagerAriaLabel}>
+                                        <Pagination
+                                            currentPage={page}
+                                            totalPages={totalPages}
+                                            onPageChange={onPageChange}
+                                        />
+                                    </nav>
+                                ),
+                            ]
+                            : []),
+                    ]}
+                />
+            )}
+        />
     )
 }
 

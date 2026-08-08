@@ -16,8 +16,8 @@ import { ArchitectureMobileNav } from "./ArchitectureRail/ArchitectureMobileNav"
 import { ArchitectureMap } from "./ArchitectureMap"
 import { NodeDissectionPanel } from "./NodeDissectionPanel"
 import { CurlTester } from "./CurlTester"
-import { useArchitectureNode } from "./hooks/useArchitectureNode"
-import { useSystemHealthPoll } from "./hooks/useSystemHealthPoll"
+import { useArchitectureNode } from "@/hooks/useArchitectureNode"
+import { useSystemHealthPoll } from "@/hooks/useSystemHealthPoll"
 
 /** Public GitHub repo backing this live atlas — the "don't trust me, go read it" link. */
 const BACKEND_REPO_URL = "https://github.com/starci-lab/starci-academy-backend"

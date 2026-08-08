@@ -1,11 +1,6 @@
 "use client"
 
 import React from "react"
-import {
-    Modal,
-    Typography,
-    cn,
-} from "@heroui/react"
 import { useTranslations } from "next-intl"
 import {
     CV_TWO_COLUMN_TEMPLATES,
@@ -13,6 +8,11 @@ import {
     type CvTemplate,
 } from "@/modules/types/entities/cv"
 import { Chip } from "@/components/atoms/chips/Chip"
+import { Typography } from "@/components/atoms/text/Typography"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
+import { ModalShell } from "@/components/composites/layout/ModalShell"
+import { Grid, type GridItem } from "@/components/frames/Grid"
+import { StackH, StackV } from "@/components/frames/Stack"
 import { CvHtmlDocument } from "../CvHtmlDocument"
 
 /** The templates the gallery offers, in display order. */
@@ -37,6 +37,9 @@ export interface CvTemplateGalleryModalProps {
  * warning (ATS parsers + `.docx` export handle it worse — see
  * `CvGalleryPage-TEMPLATES-BRAINSTORM.md`). Picking a card applies the template and closes.
  *
+ * Thumbnail mount (`width: 820` + `scale(0.34)` + fixed `h-52` crop) has no finite
+ * vocabulary owner — held as contract proposal `CvTemplateThumbMount`, not rewritten.
+ *
  * @param props - {@link CvTemplateGalleryModalProps}
  */
 export const CvTemplateGalleryModal = ({
@@ -52,75 +55,98 @@ export const CvTemplateGalleryModal = ({
         onOpenChange(false)
     }
 
-    return (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-            <Modal.Backdrop>
-                <Modal.Container size="lg">
-                    <Modal.Dialog className={""}>
-                        <Modal.CloseTrigger />
-                        <Modal.Header>
-                            <Typography type="body" weight="semibold" className="pr-8">
-                                {t("cv.builder.template.galleryTitle")}
-                            </Typography>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <div className="grid grid-cols-1 gap-4 @app-sm:grid-cols-2">
-                                {TEMPLATE_ORDER.map((template) => {
-                                    const isTwoColumn = CV_TWO_COLUMN_TEMPLATES.has(template)
-                                    const isSelected = current === template
-                                    const name = t(`cv.builder.template.names.${template}`)
-                                    return (
+    const items: Array<GridItem> = TEMPLATE_ORDER.map((template) => {
+        const isTwoColumn = CV_TWO_COLUMN_TEMPLATES.has(template)
+        const isSelected = current === template
+        const name = t(`cv.builder.template.names.${template}`)
+        return {
+            key: template,
+            content: () => (
+                <SurfaceCard
+                    isSelected={isSelected}
+                    onPress={() => onPick(template)}
+                    ariaLabel={t("cv.builder.template.selectAria", { name })}
+                    body={() => (
+                        <StackV
+                            principle="card-caption"
+                            explain="Thumbnail crop over template caption row — not sibling-stack, because the caption belongs to the media above it."
+                            items={[
+                                () => (
+                                    // HOLD: CvTemplateThumbMount — live HTML CV scaled into a
+                                    // fixed crop. No Measure/PDFView enum owns scale(0.34)×820px.
+                                    <div aria-hidden className="h-52 overflow-hidden border-b border-default bg-white">
                                         <div
-                                            key={template}
-                                            role="button"
-                                            tabIndex={0}
-                                            aria-pressed={isSelected}
-                                            aria-label={t("cv.builder.template.selectAria", { name })}
-                                            onClick={() => onPick(template)}
-                                            onKeyDown={(event) => {
-                                                if (event.key === "Enter" || event.key === " ") {
-                                                    event.preventDefault()
-                                                    onPick(template)
-                                                }
-                                            }}
-                                            className={cn(
-                                                "flex cursor-pointer flex-col overflow-hidden rounded-2xl border bg-surface text-left outline-none transition-colors",
-                                                "focus-visible:ring-2 focus-visible:ring-accent",
-                                                isSelected ? "border-accent" : "border-default hover:border-accent/60",
-                                            )}
+                                            className="pointer-events-none origin-top-left"
+                                            style={{ width: 820, transform: "scale(0.34)" }}
                                         >
-                                            <div aria-hidden className="h-52 overflow-hidden border-b border-default bg-white">
-                                                <div
-                                                    className="pointer-events-none origin-top-left"
-                                                    style={{ width: 820, transform: "scale(0.34)" }}
-                                                >
-                                                    <CvHtmlDocument doc={{ ...doc, style: { ...doc.style, template } }} />
-                                                </div>
-                                            </div>
-                                            <div className="flex items-center justify-between gap-2 px-3 py-2">
-                                                <div className="flex min-w-0 flex-col">
-                                                    <Typography type="body-sm" weight="semibold" className="truncate">
-                                                        {name}
-                                                    </Typography>
-                                                    {isTwoColumn ? (
-                                                        <Typography type="body-xs" color="muted">
-                                                            {t("cv.builder.template.wordHint")}
-                                                        </Typography>
-                                                    ) : null}
-                                                </div>
+                                            <CvHtmlDocument doc={{ ...doc, style: { ...doc.style, template } }} />
+                                        </div>
+                                    </div>
+                                ),
+                                () => (
+                                    <StackH
+                                        principle="content-row"
+                                        explain="Keeps template name and ATS chip on one baseline so the chip does not drop under the title."
+                                        items={[
+                                            () => (
+                                                <StackV
+                                                    principle="title-subtitle"
+                                                    explain="Template name over optional Word hint — not label-field, because neither line is a form control."
+                                                    items={[
+                                                        () => (
+                                                            <Typography
+                                                                size="sm"
+                                                                weight="semibold"
+                                                                truncate
+                                                                text={name}
+                                                            />
+                                                        ),
+                                                        ...(isTwoColumn
+                                                            ? [
+                                                                () => (
+                                                                    <Typography
+                                                                        size="xs"
+                                                                        color="muted"
+                                                                        text={t("cv.builder.template.wordHint")}
+                                                                    />
+                                                                ),
+                                                            ]
+                                                            : []),
+                                                    ]}
+                                                />
+                                            ),
+                                            () => (
                                                 <Chip
                                                     tone={isTwoColumn ? "warning" : "success"}
                                                     text={isTwoColumn ? t("cv.builder.template.atsRisk") : t("cv.builder.template.atsSafe")}
                                                 />
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        </Modal.Body>
-                    </Modal.Dialog>
-                </Modal.Container>
-            </Modal.Backdrop>
-        </Modal>
+                                            ),
+                                        ]}
+                                    />
+                                ),
+                            ]}
+                        />
+                    )}
+                />
+            ),
+        }
+    })
+
+    return (
+        <ModalShell
+            identity={{ tier: "block", component: "CvTemplateGalleryModal" }}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            title={t("cv.builder.template.galleryTitle")}
+            size="lg"
+            body={() => (
+                <Grid
+                    columns={{ base: 1, sm: 2 }}
+                    principle="sibling-stack"
+                    explain="Same-kind peer template tiles — not group-boundary, because each card is a repeating peer rather than a section group."
+                    items={items}
+                />
+            )}
+        />
     )
 }

@@ -8,6 +8,7 @@ import { StackV } from "@/components/frames/Stack"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Button } from "@/components/atoms/buttons/Button"
+import type { CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * `DailyQuest` (dashboard) — "Today's quests": a fixed 3-task checklist plus a
@@ -57,6 +58,9 @@ export interface DailyQuestProps {
     isClaiming?: boolean
 }
 
+/** This block's identity — stamped on whichever frame/composite is the export root. */
+const IDENTITY: CallerIdentity = { tier: "block", component: "DailyQuest" }
+
 /** Row title per task key — the block's own wording (§14d.1). */
 const TASK_LABEL: Record<DailyQuestTaskKey, string> = {
     readContent: "Read a lesson",
@@ -64,8 +68,8 @@ const TASK_LABEL: Record<DailyQuestTaskKey, string> = {
     reviewFlashcards: "Review flashcards",
 }
 
-/** One row's text: title (leading) ↔ current/target (trailing) — plain text, the composite wraps it in `Typography` itself. */
-const rowBody = (task: DailyQuestTask): string => `${TASK_LABEL[task.key]} — ${task.current}/${task.target}`
+/** One row's text: title (leading) <-> current/target (trailing) - plain text, the composite wraps it in `Typography` itself. */
+const rowBody = (task: DailyQuestTask): string => `${TASK_LABEL[task.key]} - ${task.current}/${task.target}`
 
 /**
  * The dashboard's "Today's Quests" content. See the file header for the
@@ -103,7 +107,7 @@ const DailyQuest = ({
                 label={`Claim ${quest.reward} coins`}
                 isPending={isClaiming}
                 onPress={onClaim}
-                classNames={["w-fit"]}
+
 
             />
         ) : (
@@ -117,30 +121,44 @@ const DailyQuest = ({
     ) : null
 
     return (
-        <div>
-            <AsyncContent
-                isLoading={quest === null && isLoading}
-                skeleton={() => <SurfaceCardCrossList items={[]} isSkeleton skeletonRows={3} />}
-                isEmpty={quest === null && !isLoading && !error}
-                emptyContent={{
-                    title: "No quests for today yet.",
-                    onRetry,
-                    retryLabel: "Retry",
+        <AsyncContent
+            isLoading={quest === null && isLoading}
+            skeleton={() => (
+                <SurfaceCardCrossList
+                    identity={IDENTITY}
+                    items={[]}
+                    isSkeleton
+                    skeletonRows={3}
+                />
+            )}
+            isEmpty={quest === null && !isLoading && !error}
+            emptyContent={{
+                identity: IDENTITY,
+                title: "No quests for today yet.",
+                onRetry,
+                retryLabel: "Retry",
 
-                }}
-                error={quest === null ? error : undefined}
-                errorContent={{
-                    title: "Couldn't load today's quests.",
-                    onRetry,
-                    retryLabel: "Retry",
+            }}
+            error={quest === null ? error : undefined}
+            errorContent={{
+                identity: IDENTITY,
+                title: "Couldn't load today's quests.",
+                onRetry,
+                retryLabel: "Retry",
 
-                }}
-                content={() => <StackV gap={4} items={[
-                    () => <SurfaceCardCrossList items={items} />,
-                    () => claimSlot,
-                ]} />}
-            />
-        </div>
+            }}
+            content={() => (
+                <StackV
+                    identity={IDENTITY}
+                    principle="sibling-stack"
+                    explain="Quest checklist and claim state are same-kind siblings in the daily-quest body — not group-boundary, because neither is a labelled section header."
+                    items={[
+                        () => <SurfaceCardCrossList items={items} />,
+                        () => claimSlot,
+                    ]}
+                />
+            )}
+        />
     )
 }
 

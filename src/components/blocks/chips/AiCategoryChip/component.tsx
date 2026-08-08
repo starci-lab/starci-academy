@@ -1,7 +1,7 @@
 import React from "react"
-import { Typography, cn } from "@heroui/react"
+import { Typography } from "@/components/atoms/text/Typography"
+import { StackH } from "@/components/frames/Stack"
 import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
-import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**
  * The model-category → dot color scale — the SINGLE source of truth for the tier
@@ -17,7 +17,7 @@ export const AI_CATEGORY_COLOR: Record<AiModelCategory, string> = {
 }
 
 /** Props for {@link _AiCategoryChip} — presentational; label already resolved. */
-export interface AiCategoryChipProps extends WithClassNames<undefined> {
+export interface AiCategoryChipProps {
     /** Cost/quality category that drives the dot color. */
     category: AiModelCategory
     /** Already-localized category name. */
@@ -34,11 +34,21 @@ export interface AiCategoryChipProps extends WithClassNames<undefined> {
  * @param props - {@link AiCategoryChipProps}
  * @see Story: .storybook/stories/blocks/chips/AiCategoryChip/AiCategoryChip.stories
  */
-export const _AiCategoryChip = ({ category, label, className }: AiCategoryChipProps) => (
-    <span className={cn("inline-flex items-center gap-2", className)}>
-        <span aria-hidden className={cn("size-3 shrink-0 rounded-full", AI_CATEGORY_COLOR[category])} />
-        <Typography type="body-xs" color="muted">
-            {label}
-        </Typography>
-    </span>
+export const _AiCategoryChip = ({ category, label }: AiCategoryChipProps) => (
+    <StackH
+        as="span"
+        inline
+        identity={{ tier: "block", component: "AiCategoryChip" }}
+        principle="icon-text"
+        explain="Tier colour dot rides with its category word — not name-handle, because this is a glyph+label joint not a person name stacked over a handle."
+        items={[
+            () => (
+                <span
+                    aria-hidden
+                    className={`size-3 shrink-0 rounded-full ${AI_CATEGORY_COLOR[category]}`}
+                />
+            ),
+            () => <Typography size="xs" color="muted" text={label} />,
+        ]}
+    />
 )

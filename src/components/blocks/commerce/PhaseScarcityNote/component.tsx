@@ -1,5 +1,4 @@
 import React from "react"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { WarningCircleIcon } from "@phosphor-icons/react"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Cluster } from "@/components/frames/Cluster"
@@ -47,11 +46,7 @@ const _PhaseScarcityNote = ({
     isSkeleton = false,
 }: PhaseScarcityNoteBaseProps) => {
     if (isSkeleton) {
-        return (
-            <Skeleton
-                className="h-4 w-64 max-w-full rounded"
-            />
-        )
+        return <Typography size="sm" isSkeleton />
     }
     // no seat cap at this phase → no honest scarcity reason → stay silent
     if (seatsRemaining == null) {

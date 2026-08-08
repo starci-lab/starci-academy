@@ -3,7 +3,7 @@ import React from "react"
 import { Spinner } from "@/components/atoms/display/Spinner"
 import {
     UploadStatus,
-} from "./enums"
+} from "@/modules/types/enums/upload-status"
 
 /**
  * Status indicator rendered next to each provider row, keyed by upload state.

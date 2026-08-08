@@ -7,7 +7,6 @@ import type { Key } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { ChatPane } from "./ChatPane"
-import { ChatPaneSkeleton } from "./ChatPane/ChatPaneSkeleton"
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { PageContainer } from "@/components/blocks/layout/PageContainer"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
@@ -113,7 +112,7 @@ export const CommunityChatPage = () => {
                                 // conversation id resolves — mirror the real pane's shape
                                 // (message list + composer) so the tab switch/first load
                                 // doesn't jump into a differently-shaped panel afterward.
-                                    <ChatPaneSkeleton withComposer />
+                                    <ChatPane />
                                 )),
                             ]} />
                     ) : (

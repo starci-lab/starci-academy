@@ -3,7 +3,7 @@
 import React from "react"
 import useSWR from "swr"
 import { useTranslations } from "next-intl"
-import { DUE_REVIEW_LIMIT } from "../constants"
+import { DUE_REVIEW_LIMIT } from "@/modules/utils/flashcards"
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query-flashcard-decks-by-course"
 import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due-flashcards"
 import { queryMyFlashcardStats } from "@/modules/api/graphql/queries/query-my-flashcard-stats"

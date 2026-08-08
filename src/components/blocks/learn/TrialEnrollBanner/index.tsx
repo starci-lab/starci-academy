@@ -54,14 +54,12 @@ const TrialEnrollBanner = ({
         // itself DOES own `isSkeleton` and draws two safe `<div>` bars straight
         // inside its content region — call it directly, same precedent as
         // `CourseTeamGate.tsx`.
+        // Identity hold: Alert/Callout do not accept CallerIdentity (PageHeader gap family).
         return (
-            <div>
-                <Alert
-                    isSkeleton
-                    status="accent"
-
-                />
-            </div>
+            <Alert
+                isSkeleton
+                status="accent"
+            />
         )
     }
 
@@ -70,26 +68,23 @@ const TrialEnrollBanner = ({
         return null
     }
 
+    // Identity hold: Callout does not accept CallerIdentity.
     return (
-        <div>
-            <Callout
-                status="accent"
-                title="You're on a trial"
-                description="Unlock the full course and build proof of work employers can see on your profile."
-
-                body={() => (
-                    <Button
-                        label="Unlock the course"
-                        variant="primary"
-                        size="sm"
-                        suffixIcon={ArrowRightIcon}
-                        iconSlide
-                        onPress={onEnroll}
-
-                    />
-                )}
-            />
-        </div>
+        <Callout
+            status="accent"
+            title="You're on a trial"
+            description="Unlock the full course and build proof of work employers can see on your profile."
+            body={() => (
+                <Button
+                    label="Unlock the course"
+                    variant="primary"
+                    size="sm"
+                    suffixIcon={ArrowRightIcon}
+                    iconSlide
+                    onPress={onEnroll}
+                />
+            )}
+        />
     )
 }
 

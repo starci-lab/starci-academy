@@ -4,7 +4,7 @@ import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { StatGridCard, type StatGridCardItem } from "@/components/composites/stats/StatGridCard"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
-import { KPI_ICON_MAP } from "./map"
+import { KPI_ICON_MAP } from "@/modules/utils/weekly-goals-map"
 import type { KpiKey } from "@/modules/api/graphql/queries/types/my-kpis"
 
 /** One weekly-metric row, already resolved by the connected {@link import("./index").WeeklyGoals}. */

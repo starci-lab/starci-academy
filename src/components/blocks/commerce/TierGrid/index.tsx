@@ -3,6 +3,7 @@
 import React from "react"
 import { FreeTierCard } from "@/components/blocks/commerce/FreeTierCard"
 import { TierCard } from "@/components/blocks/commerce/TierCard"
+import { Grid, type GridItem } from "@/components/frames/Grid"
 import { useQueryAiSubscriptionTiersSwr } from "@/hooks/swr/api/graphql/queries/useQueryAiSubscriptionTiersSwr"
 import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
 
@@ -39,24 +40,41 @@ export const TierGrid = ({
     /** The user's current tier slug, or null for the free tier. */
     const currentTier = mySettings?.tier ?? null
 
-    return (
-        <div className={"grid grid-cols-1 gap-6 @app-sm:grid-cols-2"}>
-            <FreeTierCard isCurrent={currentTier === null} isSkeleton={isSkeleton} />
-            {isSkeleton
-                ? Array.from({ length: SKELETON_PAID_CARDS }, (_card, index) => (
+    const items: Array<GridItem> = [
+        {
+            key: "free",
+            content: () => (
+                <FreeTierCard isCurrent={currentTier === null} isSkeleton={isSkeleton} />
+            ),
+        },
+        ...(isSkeleton
+            ? Array.from({ length: SKELETON_PAID_CARDS }, (_card, index) => ({
+                key: `pending-${index}`,
+                content: () => (
                     <TierCard
-                        key={`pending-${index}`}
                         isSkeleton
                         isCurrent={false}
                     />
-                ))
-                : tiers.map((tier) => (
+                ),
+            }))
+            : tiers.map((tier) => ({
+                key: tier.tier,
+                content: () => (
                     <TierCard
-                        key={tier.tier}
                         tier={tier}
                         isCurrent={currentTier === tier.tier}
                     />
-                ))}
-        </div>
+                ),
+            }))),
+    ]
+
+    return (
+        <Grid
+            identity={{ tier: "block", component: "TierGrid" }}
+            columns={{ base: 1, sm: 2 }}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major tier cards rather than nested section groups."
+            items={items}
+        />
     )
 }

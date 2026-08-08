@@ -121,11 +121,8 @@ const AttemptRow = ({ attempt, isSkeleton = false }: AttemptRowProps) => {
     const rowLines = [
         () => (
             <StackH
-                gap={4}
                 principle="content-row"
                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                align="center"
-                justify="between"
                 at="sm"
                 isSkeleton={isSkeleton}
                 items={attemptLabelAndChip}
@@ -152,7 +149,12 @@ const AttemptRow = ({ attempt, isSkeleton = false }: AttemptRowProps) => {
     ]
 
     return (
-        <StackV gap={2} isSkeleton={isSkeleton} items={rowLines} />
+        <StackV
+            principle="sibling-stack"
+            explain="Attempt label/chip over feedback over timestamp — not group-boundary, because these are peer pieces of one attempt row."
+            isSkeleton={isSkeleton}
+            items={rowLines}
+        />
     )
 }
 

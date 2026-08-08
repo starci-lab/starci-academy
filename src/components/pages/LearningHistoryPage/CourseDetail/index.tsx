@@ -23,7 +23,7 @@ import {
 } from "@/components/blocks/course/CourseTrialChip"
 import {
     useSelectedCourse,
-} from "../hooks/useSelectedCourse"
+} from "@/hooks/useSelectedCourse"
 import {
     CourseOutline,
 } from "../CourseOutline"

@@ -1,11 +1,12 @@
 import React from "react"
-import { Typography } from "@heroui/react"
+import { Typography } from "@/components/atoms/text/Typography"
 import { SealCheckIcon } from "@phosphor-icons/react"
 import { ReactionBar } from "../ReactionBar"
 import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import type { QueryCommunityCommentNode } from "@/modules/api/graphql/queries/types/community-comments"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
-import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
+import { IdentityContentRow } from "@/components/composites/lists/IdentityContentRow"
+import { StackH, StackV } from "@/components/frames/Stack"
 
 /** Props for {@link _CommunityCommentRow} — presentational; labels already resolved. */
 export interface CommunityCommentRowProps {
@@ -51,52 +52,97 @@ export const _CommunityCommentRow = ({
     // the owning feature chooses to keep stays reachable on a deleted node.
     if (comment.isDeleted) {
         return (
-            <div>
-                <div className="flex min-w-0 flex-col gap-1">
-                    <Typography type="body-xs" color="muted" className="italic">
-                        {deletedLabel}
-                    </Typography>
-                    {actions ? (
-                        <div className="flex items-center gap-3">{actions}</div>
-                    ) : null}
-                </div>
-            </div>
+            <StackV
+                identity={{ tier: "block", component: "CommunityCommentRow" }}
+                principle="sibling-stack"
+                explain="Same-kind peer stack — not group-boundary, because the deleted placeholder and optional actions are repeating siblings in one row unit."
+                items={[
+                    () => (
+                        <Typography size="xs" color="muted" isItalic text={deletedLabel} />
+                    ),
+                    ...(actions ? [() => (
+                        <StackH
+                            principle="flex-action"
+                            explain="Deleted-row actions share one action row — not content-row, because both peers are controls rather than content-plus-meta."
+                            items={[() => <>{actions}</>]}
+                        />
+                    )] : []),
+                ]}
+            />
         )
     }
 
     return (
-        <div>
-            <div className="flex gap-3">
-                <UserAvatar
-                    username={comment.author.username}
-                    avatar={comment.author.avatar}
-                />
-                <div className="flex min-w-0 flex-1 flex-col gap-1">
-                    <div className="flex items-center gap-1">
-                        <Typography type="body-xs" weight="semibold" truncate>
-                            {displayName}
-                        </Typography>
-                        {comment.isFounderAuthor ? (
-                            <SealCheckIcon
-                                weight="fill"
-                                className="size-3.5 shrink-0 text-accent-soft-foreground"
+        <StackV
+            identity={{ tier: "block", component: "CommunityCommentRow" }}
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because this comment row is a single vertical unit owned by the block root."
+            items={[
+                () => (
+                    <IdentityContentRow
+                        avatarSrc={comment.author.avatar ?? undefined}
+                        avatarName={displayName}
+                        avatarSeed={comment.author.username}
+                        byline={() => (
+                            <StackH
+                                principle="separator-dot"
+                                explain="Places a middle-dot separator between short meta peers so the items read as one inline list."
+                                items={[
+                                    () => (
+                                        <StackH
+                                            principle="icon-text"
+                                            explain="Icon beside its label — not name-handle, because this pairs a glyph with text rather than a name/handle identity."
+                                            items={[
+                                                () => (
+                                                    <Typography size="xs" weight="semibold" truncate text={displayName} />
+                                                ),
+                                                ...(comment.isFounderAuthor ? [() => (
+                                                    <SealCheckIcon
+                                                        weight="fill"
+                                                        aria-hidden
+                                                        focusable="false"
+                                                        className="size-3.5 shrink-0 text-accent-soft-foreground"
+                                                    />
+                                                )] : []),
+                                            ]}
+                                        />
+                                    ),
+                                    () => (
+                                        <Typography size="xs" color="muted" text={timeAgoLabel} />
+                                    ),
+                                ]}
                             />
-                        ) : null}
-                        <Typography type="body-xs" color="muted">
-                            {timeAgoLabel}
-                        </Typography>
-                    </div>
-                    <MarkdownContent markdown={comment.body} flow="embedded" />
-                    <div className="flex items-center gap-3">
-                        <ReactionBar
-                            count={comment.reactions.total}
-                            myReaction={comment.reactions.myReaction}
-                            onReact={onReact}
-                        />
-                        {actions}
-                    </div>
-                </div>
-            </div>
-        </div>
+                        )}
+                        body={() => (
+                            <StackV
+                                principle="sibling-stack"
+                                explain="Same-kind peer stack — not group-boundary, because markdown body and reaction/actions are repeating siblings under the byline."
+                                items={[
+                                    () => (
+                                        <MarkdownContent markdown={comment.body} flow="embedded" />
+                                    ),
+                                    () => (
+                                        <StackH
+                                            principle="flex-action"
+                                            explain="Reaction bar and optional reply controls share one action row — not content-row, because both peers are controls rather than content-plus-meta."
+                                            items={[
+                                                () => (
+                                                    <ReactionBar
+                                                        count={comment.reactions.total}
+                                                        myReaction={comment.reactions.myReaction}
+                                                        onReact={onReact}
+                                                    />
+                                                ),
+                                                ...(actions ? [() => <>{actions}</>] : []),
+                                            ]}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        )}
+                    />
+                ),
+            ]}
+        />
     )
 }

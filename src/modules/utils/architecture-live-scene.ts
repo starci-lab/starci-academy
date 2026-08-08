@@ -5,9 +5,9 @@ import type {
     ArchitectureSceneData,
     SceneTone,
 } from "@/components/blocks/marketing/ArchitectureScene/types"
-import type { HealthByName } from "../hooks/useSystemHealthPoll"
-import { ARCHITECTURE_COMPONENT_MAP } from "../constants"
-import { ARCHITECTURE_MODULES } from "../modules"
+import type { HealthByName } from "@/hooks/useSystemHealthPoll"
+import { ARCHITECTURE_COMPONENT_MAP } from "@/modules/utils/architecture-catalog"
+import { ARCHITECTURE_MODULES } from "@/modules/utils/architecture-modules"
 
 /**
  * Derives a scene's floor-grid bounds from its ACTUAL node cells (+ a fixed

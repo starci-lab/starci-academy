@@ -2,7 +2,6 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { XCircleIcon } from "@phosphor-icons/react"
 import type { ReactNode } from "react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { StackH } from "@/components/frames/Stack"
 
 /** Props for {@link CrossListCard}. */
@@ -16,8 +15,6 @@ export interface CrossListCardProps {
      * keeps the top-level shadow look.
      */
     bordered?: boolean
-    /** Where the list root sits inside its parent. Appearance is not passable — it is already a prop. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -37,12 +34,11 @@ export interface CrossListCardProps {
  * @param props - See {@link CrossListCardProps}.
  * @see Story: .storybook/stories/blocks/cards/CrossListCard/CrossListCard.stories
  */
-export const CrossListCard = ({ children, bordered = false, classNames }: CrossListCardProps) => (
+export const CrossListCard = ({ children, bordered = false }: CrossListCardProps) => (
     <ul
         className={cn(
             "overflow-hidden rounded-3xl bg-surface",
             bordered ? "border border-default" : "shadow-surface",
-            classNames,
         )}
         data-tier="composite"
         data-component="CrossListCard"

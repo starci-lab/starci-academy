@@ -1,9 +1,9 @@
 import React from "react"
-import { Link, cn } from "@heroui/react"
-import type { WithClassNames } from "@/modules/types/base/class-name"
+import { Typography } from "@/components/atoms/text/Typography"
+import { Box } from "@/components/frames/Box"
 
 /** Props for the {@link EntityLink} block. */
-export interface EntityLinkProps extends WithClassNames<undefined> {
+export interface EntityLinkProps {
     /** Token text — a username, lesson/challenge/course title, etc. */
     label: string
     /**
@@ -25,17 +25,31 @@ export interface EntityLinkProps extends WithClassNames<undefined> {
  *
  * @param props - {@link EntityLinkProps}
  */
-export const EntityLink = ({ label, onPress, isPending, className }: EntityLinkProps) => {
-    if (!onPress) {
-        return <span className={cn("font-semibold text-foreground", className)}>{label}</span>
-    }
+export const EntityLink = ({ label, onPress, isPending }: EntityLinkProps) => {
+    const interactive = Boolean(onPress) && !isPending
+
     return (
-        <Link
-            onPress={onPress}
-            isDisabled={isPending}
-            className={cn("inline cursor-pointer font-semibold text-foreground hover:underline underline-offset-4 decoration-[var(--separator-tertiary)]", className)}
+        <Box
+            as="span"
+            identity={{ tier: "block", component: "EntityLink" }}
+            principle="icon-text"
+            explain="Inline entity press target is the breadcrumb/see-more end of icon-text (text-only when no glyph) — not name-handle, because there is no paired handle line."
         >
-            {label}
-        </Link>
+            {interactive ? (
+                <Typography
+                    size="sm"
+                    weight="semibold"
+                    isLink
+                    text={label}
+                    onPress={onPress}
+                />
+            ) : (
+                <Typography
+                    size="sm"
+                    weight="semibold"
+                    text={label}
+                />
+            )}
+        </Box>
     )
 }

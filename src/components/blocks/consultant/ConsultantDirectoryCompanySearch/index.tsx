@@ -52,24 +52,21 @@ const ConsultantDirectoryCompanySearch = ({
         label: company.label,
     }))
 
+    // Sole root is SearchAutocomplete — inert host wrappers removed. Identity
+    // stays held until the atom accepts CallerIdentity (CourseTrialChip pattern).
     return (
-        <div>
-            <div>
-                <SearchAutocomplete
-                    items={items}
-                    inputValue={query}
-                    onInputChange={onQueryChange}
-                    onSelect={onSelectCompany}
-                    isLoading={isLoadingSuggestions}
-                    // Owned wording: this field jumps to ONE company, it does not filter
-                    // the grid below it — the placeholder has to say so or a visitor will
-                    // type a role/skill and get nothing back.
-                    placeholder="Search for a hiring company by name…"
-                    emptyLabel="No companies found"
-
-                />
-            </div>
-        </div>
+        <SearchAutocomplete
+            items={items}
+            inputValue={query}
+            onInputChange={onQueryChange}
+            onSelect={onSelectCompany}
+            isLoading={isLoadingSuggestions}
+            // Owned wording: this field jumps to ONE company, it does not filter
+            // the grid below it — the placeholder has to say so or a visitor will
+            // type a role/skill and get nothing back.
+            placeholder="Search for a hiring company by name…"
+            emptyLabel="No companies found"
+        />
     )
 }
 

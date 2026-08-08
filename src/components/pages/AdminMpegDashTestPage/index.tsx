@@ -5,7 +5,7 @@ import { AdminMpegDashTestHeader } from "./Header"
 import { ConfigCard } from "./ConfigCard"
 import { PreviewCard } from "./PreviewCard"
 import { QuickTestUrls } from "./QuickTestUrls"
-import type { QuickTestUrl } from "./types"
+import type { QuickTestUrl } from "@/modules/types/admin-mpeg-dash-test"
 import { VideoRendererType } from "@/modules/types/enums/video-renderer-type"
 import { Box } from "@/components/frames/Box"
 

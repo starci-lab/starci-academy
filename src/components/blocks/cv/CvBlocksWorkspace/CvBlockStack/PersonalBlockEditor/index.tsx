@@ -7,6 +7,7 @@ import type { DateValue } from "@internationalized/date"
 import { useTranslations } from "next-intl"
 import type { CvBlockEditorProps } from "@/modules/types/entities/cv"
 import { isValidOptionalUrl } from "@/modules/utils/cv-url"
+import { Grid, type GridItem } from "@/components/frames/Grid"
 
 /** Field keys read/written on the single `personal` item's `fields`. */
 const FIELD_KEYS = [
@@ -62,80 +63,93 @@ export const PersonalBlockEditor = ({ block, onChange }: PersonalBlockEditorProp
         setTouchedUrlKeys((prev) => new Set(prev).add(key))
     }
 
+    // Shell is Grid with identity. HeroUI DatePicker/TextField remain —
+    // house form migration is contract `CvBlockEditorFormSurface` (vendor boundary).
+    const items: Array<GridItem> = FIELD_KEYS.map((key) => {
+        const value = typeof fields[key] === "string" ? (fields[key] as string) : ""
+
+        if (key === "birthDate") {
+            return {
+                key,
+                content: () => (
+                    <DatePicker
+                        aria-label={t("cv.blocks.personal.fields.birthDate")}
+                        maxValue={today(getLocalTimeZone())}
+                        value={parseStoredDate(value)}
+                        onChange={(date) => onFieldChange(key, date ? date.toString() : "")}
+                    >
+                        <Label>{t("cv.blocks.personal.fields.birthDate")}</Label>
+                        <DateField.Group fullWidth variant="secondary">
+                            <DateField.Input>
+                                {(segment) => <DateField.Segment segment={segment} />}
+                            </DateField.Input>
+                            <DateField.Suffix>
+                                <DatePicker.Trigger>
+                                    <DatePicker.TriggerIndicator />
+                                </DatePicker.Trigger>
+                            </DateField.Suffix>
+                        </DateField.Group>
+                        <DatePicker.Popover>
+                            <Calendar aria-label={t("cv.blocks.personal.fields.birthDate")}>
+                                <Calendar.Header>
+                                    <Calendar.YearPickerTrigger>
+                                        <Calendar.YearPickerTriggerHeading />
+                                        <Calendar.YearPickerTriggerIndicator />
+                                    </Calendar.YearPickerTrigger>
+                                    <Calendar.NavButton slot="previous" />
+                                    <Calendar.NavButton slot="next" />
+                                </Calendar.Header>
+                                <Calendar.Grid>
+                                    <Calendar.GridHeader>
+                                        {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
+                                    </Calendar.GridHeader>
+                                    <Calendar.GridBody>
+                                        {(date) => <Calendar.Cell date={date} />}
+                                    </Calendar.GridBody>
+                                </Calendar.Grid>
+                                <Calendar.YearPickerGrid>
+                                    <Calendar.YearPickerGridBody>
+                                        {({ year }) => <Calendar.YearPickerCell year={year} />}
+                                    </Calendar.YearPickerGridBody>
+                                </Calendar.YearPickerGrid>
+                            </Calendar>
+                        </DatePicker.Popover>
+                    </DatePicker>
+                ),
+            }
+        }
+
+        const isUrlField = URL_FIELD_KEYS.has(key)
+        const isInvalid = isUrlField && touchedUrlKeys.has(key) && !isValidOptionalUrl(value)
+        return {
+            key,
+            content: () => (
+                <TextField variant="secondary" isInvalid={isInvalid}>
+                    <Label htmlFor={`cv-personal-${key}`}>
+                        {t(`cv.blocks.personal.fields.${key}`)}
+                    </Label>
+                    <Input
+                        id={`cv-personal-${key}`}
+                        placeholder={t(`cv.blocks.personal.placeholders.${key}`)}
+                        value={value}
+                        onChange={(event) => onFieldChange(key, event.target.value)}
+                        onBlur={isUrlField ? () => onBlurUrlField(key) : undefined}
+                    />
+                    {isUrlField ? (
+                        <FieldError>{t("cv.blocks.common.invalidUrl")}</FieldError>
+                    ) : null}
+                </TextField>
+            ),
+        }
+    })
+
     return (
-        <div className={"grid grid-cols-1 gap-3 @app-sm:grid-cols-3"}>
-            {FIELD_KEYS.map((key) => {
-                const value = typeof fields[key] === "string" ? (fields[key] as string) : ""
-
-                if (key === "birthDate") {
-                    return (
-                        <DatePicker
-                            key={key}
-                            aria-label={t("cv.blocks.personal.fields.birthDate")}
-                            maxValue={today(getLocalTimeZone())}
-                            value={parseStoredDate(value)}
-                            onChange={(date) => onFieldChange(key, date ? date.toString() : "")}
-                        >
-                            <Label>{t("cv.blocks.personal.fields.birthDate")}</Label>
-                            <DateField.Group fullWidth variant="secondary">
-                                <DateField.Input>
-                                    {(segment) => <DateField.Segment segment={segment} />}
-                                </DateField.Input>
-                                <DateField.Suffix>
-                                    <DatePicker.Trigger>
-                                        <DatePicker.TriggerIndicator />
-                                    </DatePicker.Trigger>
-                                </DateField.Suffix>
-                            </DateField.Group>
-                            <DatePicker.Popover>
-                                <Calendar aria-label={t("cv.blocks.personal.fields.birthDate")}>
-                                    <Calendar.Header>
-                                        <Calendar.YearPickerTrigger>
-                                            <Calendar.YearPickerTriggerHeading />
-                                            <Calendar.YearPickerTriggerIndicator />
-                                        </Calendar.YearPickerTrigger>
-                                        <Calendar.NavButton slot="previous" />
-                                        <Calendar.NavButton slot="next" />
-                                    </Calendar.Header>
-                                    <Calendar.Grid>
-                                        <Calendar.GridHeader>
-                                            {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
-                                        </Calendar.GridHeader>
-                                        <Calendar.GridBody>
-                                            {(date) => <Calendar.Cell date={date} />}
-                                        </Calendar.GridBody>
-                                    </Calendar.Grid>
-                                    <Calendar.YearPickerGrid>
-                                        <Calendar.YearPickerGridBody>
-                                            {({ year }) => <Calendar.YearPickerCell year={year} />}
-                                        </Calendar.YearPickerGridBody>
-                                    </Calendar.YearPickerGrid>
-                                </Calendar>
-                            </DatePicker.Popover>
-                        </DatePicker>
-                    )
-                }
-
-                const isUrlField = URL_FIELD_KEYS.has(key)
-                const isInvalid = isUrlField && touchedUrlKeys.has(key) && !isValidOptionalUrl(value)
-                return (
-                    <TextField key={key} variant="secondary" isInvalid={isInvalid}>
-                        <Label htmlFor={`cv-personal-${key}`}>
-                            {t(`cv.blocks.personal.fields.${key}`)}
-                        </Label>
-                        <Input
-                            id={`cv-personal-${key}`}
-                            placeholder={t(`cv.blocks.personal.placeholders.${key}`)}
-                            value={value}
-                            onChange={(event) => onFieldChange(key, event.target.value)}
-                            onBlur={isUrlField ? () => onBlurUrlField(key) : undefined}
-                        />
-                        {isUrlField ? (
-                            <FieldError>{t("cv.blocks.common.invalidUrl")}</FieldError>
-                        ) : null}
-                    </TextField>
-                )
-            })}
-        </div>
+        <Grid
+            identity={{ tier: "block", component: "PersonalBlockEditor" }}
+            columns={{ base: 1, sm: 3 }}
+            principle="sibling-stack"
+            explain="Same-kind peer field cells — not group-boundary, because each field is a repeating peer rather than a section group."
+            items={items}
+        />
     )
 }

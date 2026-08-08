@@ -1,7 +1,6 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Tabs as HeroTabs, cn } from "@heroui/react"
-import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 
 /**
  * `TabsExtended` — wrapper atom over HeroUI `Tabs`, for callers that build the
@@ -49,8 +48,6 @@ export interface TabsExtendedProps {
      * (already hug-content via `.extended-tabs`).
      */
     size?: "sm" | "md"
-    /** Position within the parent. Everything about appearance is a prop of its own. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -67,7 +64,6 @@ export const TabsExtended = ({
     selectedKey,
     onSelectionChange,
     children,
-    classNames,
     variant = "secondary",
     size = "md",
 }: TabsExtendedProps) => {
@@ -84,7 +80,6 @@ export const TabsExtended = ({
                 // one-line label (w-fit) instead of stacking words.
                 "whitespace-nowrap",
                 variant === "secondary" ? "extended-tabs" : size === "sm" ? "w-fit" : "w-full",
-                classNames,
             )}
         >
             {children}

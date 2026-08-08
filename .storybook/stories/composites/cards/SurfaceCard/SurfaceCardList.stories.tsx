@@ -3,7 +3,9 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Avatar, AvatarFallback, Button, Chip } from "@heroui/react"
 import { CaretRightIcon, CreditCardIcon, TrayIcon, WalletIcon } from "@phosphor-icons/react"
 import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { AsyncContentError } from "@sb-components/composites/async/AsyncContent/AsyncContent"
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
+import { Button as HouseButton } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 // `EmptyState` accepts icon as a COMPONENT ref and forces `size-8` itself (§4/§5) —
 // phosphor's `weight="duotone"` can no longer tag along, so it's wrapped in a component to KEEP the artwork.
@@ -11,8 +13,9 @@ const TrayDuotone = (props: SVGProps<SVGSVGElement>) => <TrayIcon data-tier="fix
 /**
  * `SurfaceCardList` — a repeating-list frame; `items` is required data. Owns two row shapes
  * (fixed `title` vs free-form `content`), row flags (`selected`/`isDisabled`/`hover`/`tone`), the
- * empty + 1-row edge cases, and the loading mirror. Shares `SurfaceCardHeader` and the `variant`
- * axis with `SurfaceCard`.
+ * empty / error / loading branches, and the shared `SurfaceLabelProps` header
+ * (`label`/`labelEnd`/`action`/`onSeeMore`/`seeMoreLabel`/`subtleLabel`) plus string
+ * `description`. Labeled list IS the canonical section pattern — do not wrap in `LabeledCard`.
  */
 const meta: Meta<typeof SurfaceCardList> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCardList",
@@ -48,6 +51,15 @@ const courseItems: ReadonlyArray<SurfaceCardListItem> = [
     { key: "dsa", title: "Data structures & algorithms", subtitle: "18 lessons · 7 hours", onPress: () => {}, trailing: Caret },
     { key: "system-design", title: "System design", subtitle: "9 lessons · 5 hours", onPress: () => {}, trailing: Caret },
 ]
+/** `action` slot fixture — ComponentTypeWithSkeleton for the labeled header right slot. */
+const ManageAction = () => <HouseButton variant="secondary" size="sm" label="Manage" onPress={() => {}} />
+const ANNOTATE_SEE_MORE: Record<string, AnatomyAnnotation> = {
+    "LinkSeeMore": {
+        tier: "atom",
+        role: "see-more affordance SurfaceCardHeader builds when onSeeMore is passed",
+        storyId: "atoms-navigation-link-linkseemore--default",
+    },
+}
 /**
  * `EmptyState` is a REAL DEP of the `Empty` leaf (its own story, clickable), it
  * matches the icon+title+description+action shape rendered by this leaf, so it points at
@@ -59,6 +71,11 @@ const PART_FEEDBACK_EMPTY: AnatomyAnnotation = {
     role: "Fills the Surface when `items` is empty: icon, title, description, and action.",
     tier: "composite",
     storyId: "composites-feedback-emptystate--action",
+}
+const PART_ASYNC_ERROR: AnatomyAnnotation = {
+    role: "Fills the Surface when `error` is truthy and `errorState` is set — outranks skeleton and empty.",
+    tier: "composite",
+    storyId: "composites-async-asynccontent-asynccontenterror--with-retry",
 }
 /** Story: resting state for this component. */
 export const Default: Story = {
@@ -86,7 +103,11 @@ export const Default: Story = {
         </div>
     ),
 }
-/** With label: Header (SurfaceCardHeader) + Surface + Row. See the full header slot set in `SurfaceCard`. */
+/**
+ * Canonical labeled list — collapses former `LabeledCard` + list shells into ONE
+ * `SurfaceCardList`. Full `SurfaceLabelProps` + string `description` live here; no
+ * outer `LabeledCard` wrapper.
+ */
 export const WithLabel: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -94,15 +115,60 @@ export const WithLabel: Story = {
                 name="SurfaceCardList"
                 tier="composite"
                 leaf="WithLabel"
+                reason="Labeled SurfaceCardList is the section contract for list surfaces: header + bounded rows + optional caption. Do not wrap this in LabeledCard."
+                annotate={ANNOTATE_SEE_MORE}
                 states={[
                     {
-                        name: "label set",
-                        why: "Passing `label` turns on the Header region above the rows, with a `gap-3` seam between them. Dropping both `label` and `description` returns the frame to a bare surface div directly, and the full header slot set (see-more/action/labelEnd/subtleLabel) is demonstrated separately in the `SurfaceCard` story rather than repeated here.",
+                        name: "label + description (canonical)",
+                        why: "One composite owns the section title and the list face. `description` is a string caption outside the surface (DATA path); there is no LabeledCard wrapper and no ReactNode/children door.",
                         code: `<SurfaceCardList
   label="My learning path"
+  description="Courses you are currently enrolled in."
   items={[…]}
 />`,
-                        render: <SurfaceCardList label="My learning path" items={courseItems} />,
+                        render: (
+                            <SurfaceCardList
+                                label="My learning path"
+                                description="Courses you are currently enrolled in."
+                                items={courseItems}
+                            />
+                        ),
+                    },
+                    {
+                        name: "onSeeMore + seeMoreLabel",
+                        why: "`onSeeMore` builds `LinkSeeMore` in the shared header right slot. Same SurfaceLabelProps contract as SurfaceCard / SurfaceCardAccordion.",
+                        code: `<SurfaceCardList
+  label="Featured courses"
+  onSeeMore={() => {}}
+  seeMoreLabel="View all"
+  items={[…]}
+/>`,
+                        render: (
+                            <SurfaceCardList
+                                label="Featured courses"
+                                onSeeMore={() => {}}
+                                seeMoreLabel="View all"
+                                items={courseItems}
+                            />
+                        ),
+                    },
+                    {
+                        name: "labelEnd",
+                        why: "`labelEnd` is a muted passive tag (count/unit), not an action — loses to `action` and `onSeeMore`.",
+                        code: "<SurfaceCardList label=\"Courses\" labelEnd=\"3\" items={[…]} />",
+                        render: <SurfaceCardList label="Courses" labelEnd="3" items={courseItems} />,
+                    },
+                    {
+                        name: "action wins right slot",
+                        why: "`action` is a ComponentTypeWithSkeleton slot the header calls with `isSkeleton` — it outranks see-more and labelEnd.",
+                        code: "<SurfaceCardList label=\"My courses\" action={ManageAction} items={[…]} />",
+                        render: <SurfaceCardList label="My courses" action={ManageAction} items={courseItems} />,
+                    },
+                    {
+                        name: "subtleLabel",
+                        why: "Eyebrow treatment (`text-xs` muted + gap-2) for a secondary bucket under a primary page heading — still the same header, not a second card chrome.",
+                        code: "<SurfaceCardList label=\"Today\" subtleLabel items={[…]} />",
+                        render: <SurfaceCardList label="Today" subtleLabel items={courseItems.slice(0, 2)} />,
                     },
                 ]}
             />
@@ -480,7 +546,51 @@ export const Empty: Story = {
                                 label="My courses"
                                 items={[]}
                                 emptyState={CoursesEmptyState}
-
+                            />
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+/** `errorState` slot fixture for {@link Error} — ComponentType, not a built node. */
+const CoursesErrorState = () => (
+    <AsyncContentError
+        title="Could not load courses"
+        description="Check your connection and try again."
+        onRetry={() => {}}
+        retryLabel="Retry"
+    />
+)
+/**
+ * Error: truthy `error` + `errorState` outranks skeleton and empty (AsyncContent priority).
+ * Both slots stay ComponentType-compatible — no ReactNode door.
+ */
+export const WithError: Story = {
+    render: () => (
+        <div data-tier="fixture" className="p-8">
+            <BlockAnatomy
+                name="SurfaceCardList"
+                tier="composite"
+                leaf="WithError"
+                annotate={{ "AsyncContentError": PART_ASYNC_ERROR }}
+                states={[
+                    {
+                        name: "error + errorState",
+                        why: "A failed fetch with no cached rows falls to `errorState` inside the same surface padding as empty. Error outranks `isSkeleton` and empty — the frame does not invent a parallel error tree.",
+                        code: `<SurfaceCardList
+  label="My courses"
+  items={[]}
+  error={new Error("network")}
+  errorState={CoursesErrorState}
+/>`,
+                        render: (
+                            <SurfaceCardList
+                                label="My courses"
+                                items={[]}
+                                error={new globalThis.Error("network")}
+                                errorState={CoursesErrorState}
                             />
                         ),
                     },
@@ -504,17 +614,18 @@ export const Loading: Story = {
                 leaf="Loading"
                 states={[
                     {
-                        name: "isSkeleton = true",
-                        why: "The Header, Surface, and real Row nodes stay exactly as they are, and only each Row's own `Typography` swaps its `title`/`subtitle` for a shimmer bar. Mirroring the real tree instead of drawing a separate skeleton shape is what keeps the list from jumping once the real titles arrive.",
+                        name: "isSkeleton = true (labeled)",
+                        why: "The labeled section root stays mounted: header label, caption, and each real Row switch to shimmer via `isSkeleton` — no FooSkeleton mirror tree and no LabeledCard wrapper.",
                         code: `<SurfaceCardList
   label="My courses"
+  description="Courses you are currently enrolled in."
   items={items}
   isSkeleton
 />`,
                         render: (
                             <SurfaceCardList
                                 label="My courses"
-
+                                description="Courses you are currently enrolled in."
                                 items={courseItems}
                                 isSkeleton
                             />

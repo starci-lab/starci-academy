@@ -14,8 +14,7 @@ import {
     CONTACT_PHONE_TEL,
 } from "@/resources/contact"
 import { IconTile } from "@/components/blocks/identity/IconTile"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 
 /** Props for {@link ContactChannels}. */
 export type ContactChannelsProps = Record<string, never>
@@ -28,29 +27,37 @@ export type ContactChannelsProps = Record<string, never>
  */
 export const ContactChannels = () => {
     const t = useTranslations()
+
+    const channelItems: Array<SurfaceCardListItem> = [
+        {
+            key: "email",
+            leading: () => <IconTile icon={<EnvelopeSimpleIcon />} tone="accent" size="sm" />,
+            title: CONTACT_EMAIL,
+            subtitle: t("contact.direct.emailLabel"),
+            href: `mailto:${CONTACT_EMAIL}`,
+        },
+        {
+            key: "phone",
+            leading: () => <IconTile icon={<PhoneIcon />} tone="success" size="sm" />,
+            title: CONTACT_PHONE,
+            subtitle: t("contact.direct.phoneLabel"),
+            href: `tel:${CONTACT_PHONE_TEL}`,
+        },
+        {
+            key: "hours",
+            leading: () => <IconTile icon={<ClockIcon />} tone="warning" size="sm" />,
+            title: t("contact.direct.hoursValue"),
+            subtitle: t("contact.direct.hoursLabel"),
+        },
+    ]
+
     return (
         <div className={"flex flex-col gap-6"}>
-            <LabeledCard label={t("contact.direct.title")} flushContent>
-                <SurfaceListCard bordered>
-                    <SurfaceListCardRow
-                        leading={() => <IconTile icon={<EnvelopeSimpleIcon />} tone="accent" size="sm" />}
-                        title={CONTACT_EMAIL}
-                        subtitle={t("contact.direct.emailLabel")}
-                        href={`mailto:${CONTACT_EMAIL}`}
-                    />
-                    <SurfaceListCardRow
-                        leading={() => <IconTile icon={<PhoneIcon />} tone="success" size="sm" />}
-                        title={CONTACT_PHONE}
-                        subtitle={t("contact.direct.phoneLabel")}
-                        href={`tel:${CONTACT_PHONE_TEL}`}
-                    />
-                    <SurfaceListCardRow
-                        leading={() => <IconTile icon={<ClockIcon />} tone="warning" size="sm" />}
-                        title={t("contact.direct.hoursValue")}
-                        subtitle={t("contact.direct.hoursLabel")}
-                    />
-                </SurfaceListCard>
-            </LabeledCard>
+            <SurfaceCardList
+                identity={{ tier: "page", component: "ContactChannels" }}
+                label={t("contact.direct.title")}
+                items={channelItems}
+            />
 
             <FounderCard />
         </div>

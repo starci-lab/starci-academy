@@ -39,6 +39,16 @@ export interface LabeledCardProps {
      */
     description?: ComponentType
     /**
+     * @deprecated B37 Decision E — migration-deprecated. Do not add new call sites.
+     * Kept only while existing consumers still nest a self-framed child under a
+     * LabeledCard shell. Migrate to the SurfaceCard member that owns both the
+     * outer label and the face:
+     * - list rows → `SurfaceCardList` (`SurfaceLabelProps` + `items`)
+     * - accordion sections → `SurfaceCardAccordion`
+     * - generic body → `SurfaceCard` (Base)
+     * Do not invent a replacement boolean; drop `frameless` by collapsing onto
+     * those members. Remains functional until consumers are gone.
+     *
      * When true, drop the inner `<Card>` frame and render children directly under
      * the label — for sections whose content is ITSELF card(s) (e.g. a grid of
      * resume / course cards), so they never nest card-in-card.
@@ -90,6 +100,13 @@ export interface LabeledCardProps {
  * `<Card>…</Card>`. Optionally shows a right-aligned "see more →" link (the caret
  * slides right on hover). Replaces the legacy in-card header (SectionCard); owns
  * the whole look so features just pass label / see-more / children.
+ *
+ * B37 Decision E: prefer `SurfaceCard` / `SurfaceCardList` /
+ * `SurfaceCardAccordion` when the child is already a SurfaceCard face —
+ * those members own `SurfaceLabelProps` (label / empty / error / isSkeleton /
+ * identity) and remove the need for `frameless`. Class F call sites that
+ * legitimately need a generic framed body may keep LabeledCard without
+ * `frameless`.
  *
  * @param props - {@link LabeledCardProps}
  * @see Story: .storybook/stories/blocks/cards/LabeledCard/LabeledCard.stories

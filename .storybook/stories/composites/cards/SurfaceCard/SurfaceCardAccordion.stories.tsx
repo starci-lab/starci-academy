@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, Chip } from "@heroui/react"
 import { FolderOpenIcon } from "@phosphor-icons/react"
 import { SurfaceCardAccordion, type SurfaceCardAccordionItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyState"
+import { Button as HouseButton } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 // `EmptyState` takes the icon as a COMPONENT ref and forces `size-8` itself
 // (§4/§5) — phosphor's `weight="duotone"` can no longer ride along, so it's wrapped
@@ -12,8 +13,9 @@ const FolderOpenDuotone = (props: SVGProps<SVGSVGElement>) => <FolderOpenIcon da
 /**
  * `SurfaceCardAccordion` — a bounded `bg-surface` frame wrapping collapsible sections, the
  * separator running full-bleed to the card edge: same skin as `SurfaceCardList`, differing in
- * that each row expands. Owns `items`, `titleEnd`, expand mode (`allowsMultipleExpanded`/
- * `defaultExpandedKeys`), and `variant` (`"surface" | "nested"`).
+ * that each row expands. Shares `SurfaceLabelProps` for the section header
+ * (`label`/`labelEnd`/`action`/`onSeeMore`/`seeMoreLabel`/`subtleLabel`) plus string
+ * `description`. No `error`/`errorState` branch (topology class D = 0 for LabeledCard+Accordion).
  */
 const meta: Meta<typeof SurfaceCardAccordion> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCardAccordion",
@@ -49,6 +51,15 @@ const items: ReadonlyArray<SurfaceCardAccordionItem> = [
     { id: "input", title: "Input contract", subtitle: "2 resources", body: panel },
     { id: "error", title: "Error handling", subtitle: "4 resources", body: panel },
 ]
+/** `action` slot fixture — ComponentTypeWithSkeleton for the shared header right slot. */
+const ManageAction = () => <HouseButton variant="secondary" size="sm" label="Manage" onPress={() => {}} />
+const ANNOTATE_SEE_MORE: Record<string, AnatomyAnnotation> = {
+    "LinkSeeMore": {
+        tier: "atom",
+        role: "see-more affordance SurfaceCardHeader builds when onSeeMore is passed",
+        storyId: "atoms-navigation-link-linkseemore--default",
+    },
+}
 /**
  * `EmptyState` is a REAL DEP of the `Empty` leaf (its own story, clickable) —
  * matches the icon+title+description shape (NO action) rendering at this leaf ⇒
@@ -104,7 +115,7 @@ export const Default: Story = {
         </div>
     ),
 }
-/** Story: surface with a leading label. */
+/** Story: surface with a leading label — shared SurfaceLabelProps (no error branch). */
 export const WithLabel: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -112,17 +123,84 @@ export const WithLabel: Story = {
                 name="SurfaceCardAccordion"
                 tier="composite"
                 leaf="WithLabel"
-                annotate={ACCORDION_ANNOTATE}
+                annotate={{ ...ACCORDION_ANNOTATE, ...ANNOTATE_SEE_MORE }}
+                reason="Same SurfaceLabelProps header as SurfaceCardList. Topology class D = 0, so no error/errorState add-on."
                 states={[
                     {
-                        name: "label = \"Resources\"",
-                        why: "A Header appears above the Surface, separated from it by a gap-3 seam, carrying the label text. The full header slot set (see-more, action, labelEnd, subtleLabel, description) is demonstrated separately on the SurfaceCard story.",
+                        name: "label + description",
+                        why: "Header and string caption sit outside the accordion face — the labeled accordion contract mirrors SurfaceCardList without inventing a LabeledCard wrapper.",
                         code: `<SurfaceCardAccordion
   label="Resources"
+  description="Expand a topic to read its notes."
   items={[…]}
   defaultExpandedKeys={new Set(["rest"])}
 />`,
-                        render: <SurfaceCardAccordion label="Resources" items={items} defaultExpandedKeys={new Set(["rest"])} />,
+                        render: (
+                            <SurfaceCardAccordion
+                                label="Resources"
+                                description="Expand a topic to read its notes."
+                                items={items}
+                                defaultExpandedKeys={new Set(["rest"])}
+                            />
+                        ),
+                    },
+                    {
+                        name: "onSeeMore + seeMoreLabel",
+                        why: "Shared header right slot builds LinkSeeMore — identical SurfaceLabelProps path as SurfaceCardList.",
+                        code: `<SurfaceCardAccordion
+  label="Resources"
+  onSeeMore={() => {}}
+  seeMoreLabel="Browse all"
+  items={[…]}
+/>`,
+                        render: (
+                            <SurfaceCardAccordion
+                                label="Resources"
+                                onSeeMore={() => {}}
+                                seeMoreLabel="Browse all"
+                                items={items}
+                                defaultExpandedKeys={new Set(["rest"])}
+                            />
+                        ),
+                    },
+                    {
+                        name: "labelEnd",
+                        why: "Muted passive tag in the header right slot when neither action nor onSeeMore claims it.",
+                        code: "<SurfaceCardAccordion label=\"Resources\" labelEnd=\"3\" items={[…]} />",
+                        render: (
+                            <SurfaceCardAccordion
+                                label="Resources"
+                                labelEnd="3"
+                                items={items}
+                                defaultExpandedKeys={new Set(["rest"])}
+                            />
+                        ),
+                    },
+                    {
+                        name: "action",
+                        why: "`action` is a ComponentTypeWithSkeleton slot; wins over see-more and labelEnd.",
+                        code: "<SurfaceCardAccordion label=\"Resources\" action={ManageAction} items={[…]} />",
+                        render: (
+                            <SurfaceCardAccordion
+                                label="Resources"
+                                action={ManageAction}
+                                items={items}
+                                defaultExpandedKeys={new Set(["rest"])}
+                            />
+                        ),
+                    },
+                    {
+                        name: "subtleLabel",
+                        why: "Eyebrow treatment with gap-2 — same SurfaceLabelProps subtle path as SurfaceCardList.",
+                        code: "<SurfaceCardAccordion label=\"Module A\" subtleLabel items={[…]} />",
+                        render: (
+                            <SurfaceCardAccordion
+                                label="Module A"
+                                subtleLabel
+                                items={items}
+                                defaultExpandedKeys={new Set(["rest"])}
+                            />
+                        ),
                     },
                 ]}
             />
@@ -319,7 +397,7 @@ export const Empty: Story = {
         </div>
     ),
 }
-/** Loading: `isSkeleton` forwards straight into the house `Accordion` atom, which draws its own collapsed-row mirror — this composite never builds a separate Skeleton. */
+/** Loading: `isSkeleton` forwards into header + house Accordion atom — no parallel skeleton tree. */
 export const Loading: Story = {
     render: () => (
         <div data-tier="fixture" className="p-8">
@@ -329,14 +407,22 @@ export const Loading: Story = {
                 leaf="Loading"
                 states={[
                     {
-                        name: "isSkeleton = true",
-                        why: "The Accordion atom self-renders its own collapsed-row mirror instead of the real Rows, while the Header above stays unchanged and still shows the real label. This composite never builds a second skeleton tree of its own (COMPOSITE-10) — it only forwards the flag into the atom that owns the shape.",
+                        name: "isSkeleton = true (labeled)",
+                        why: "Header label/caption shimmer via SurfaceCardHeader + RichText, and the Accordion atom self-renders its collapsed-row mirror. This composite never builds a second skeleton tree (COMPOSITE-10).",
                         code: `<SurfaceCardAccordion
   label="Resources"
+  description="Expand a topic to read its notes."
   items={[…]}
   isSkeleton
 />`,
-                        render: <SurfaceCardAccordion label="Resources" items={items} isSkeleton />,
+                        render: (
+                            <SurfaceCardAccordion
+                                label="Resources"
+                                description="Expand a topic to read its notes."
+                                items={items}
+                                isSkeleton
+                            />
+                        ),
                     },
                 ]}
             />

@@ -11,6 +11,7 @@ import {
     Typography,
 } from "@heroui/react"
 import { FieldFrame, fieldName } from "@sb-components/composites/form/_field/FieldFrame"
+import { resolveIdentity, type CallerIdentity } from "@sb-components/atoms/_identity"
 
 /** SearchAutocomplete field-box shimmer — mirrors `@app-sm:max-w-sm` resting width. */
 const SearchAutocompleteSkeleton = () => (
@@ -84,6 +85,8 @@ export interface SearchAutocompleteProps {
     errorMessage?: ReactNode
     /** Adds a required `*` mark after the label. */
     isRequired?: boolean
+    /** Caller identity when a block/layout uses this atom as its root (Contract C). */
+    identity?: CallerIdentity
 }
 
 /**
@@ -110,7 +113,7 @@ const SearchAutocompleteBase = ({
     hint,
     errorMessage,
     isRequired,
-    
+    identity,
 }: SearchAutocompleteProps) => {
     const controlId = useId()
     const invalid = errorMessage != null
@@ -135,8 +138,7 @@ const SearchAutocompleteBase = ({
             skeletonControl={SearchAutocompleteSkeleton}
         >
             <ComboBox
-                data-tier="atom"
-                data-component="SearchAutocomplete"
+                {...resolveIdentity(identity, { tier: "atom", name: "SearchAutocomplete" })}
                 aria-label={fieldName(label, placeholder)}
                 isInvalid={invalid}
                 className={cn("w-full @app-sm:max-w-sm")}

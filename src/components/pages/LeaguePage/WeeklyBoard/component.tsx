@@ -1,12 +1,11 @@
 import React from "react"
 import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
-import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { StandingHeroCard } from "@/components/blocks/dashboard/StandingHeroCard"
 import { Podium, type PodiumEntry } from "@/components/blocks/dashboard/Podium"
 import { rankBadgeIcon } from "@/components/blocks/dashboard/rankBadge"
 import { Confetti } from "@/components/blocks/dashboard/Confetti"
 import { IconTile } from "@/components/blocks/identity/IconTile"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { UserCell } from "@/components/composites/lists/UserCell"
 import { RankDeltaCaret } from "@/components/blocks/profile/RankDeltaCaret"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -194,8 +193,8 @@ const Row = ({ row }: { row: WeeklyBoardRowEntry }) => (
  * `_WeeklyBoard` — the presentational half of {@link import("./index").WeeklyBoard}: the full
  * weekly-league board shell shared with the global board — a {@link StandingHeroCard} of the
  * viewer's own standing, the top-3 {@link Podium}, the promote/demote legend, then rank 4+ in a
- * {@link SurfaceListCard}. Renders ONE tree with `isSkeleton` threaded to every leaf that supports
- * it; the sub-blocks that don't ({@link StandingHeroCard}, {@link Podium}, {@link SurfaceListCard},
+ * {@link SurfaceCardList}. Renders ONE tree with `isSkeleton` threaded to every leaf that supports
+ * it; the sub-blocks that don't ({@link StandingHeroCard}, {@link Podium}, {@link SurfaceCardList},
  * {@link UserCell}, {@link RankDeltaCaret}) are mirrored in place with `Skeleton.*` at the exact
  * site they render, so the shimmer stays co-located instead of a hand-kept parallel tree
  * (`loading-and-skeleton.md`). See `tiers/split.md` — the connected `index.tsx` owns the fetch,
@@ -230,24 +229,20 @@ export const _WeeklyBoard = ({
     const showPodium = isSkeleton || podiumEntries.length > 0
     const showRows = isSkeleton || rows.length > 0
 
-    const rowItems: Array<ComponentTypeWithSkeleton> = isSkeleton
-        ? Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => () => (
-            <SurfaceListCardItem key={`pending-${index}`}>
-                <RowSkeleton />
-            </SurfaceListCardItem>
-        ))
-        : rows.map((row) => () => (
-            <SurfaceListCardItem
-                key={row.userGlobalId}
-                href={row.profileHref}
-                withVerdict={{
-                    enable: (row.rankDelta ?? 0) !== 0,
-                    variant: (row.rankDelta ?? 0) > 0 ? "success" : "danger",
-                }}
-            >
-                <Row row={row} />
-            </SurfaceListCardItem>
-        ))
+    const listItems: Array<SurfaceCardListItem> = isSkeleton
+        ? Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
+            key: `pending-${index}`,
+            content: () => <RowSkeleton />,
+        }))
+        : rows.map((row) => ({
+            key: row.userGlobalId,
+            href: row.profileHref,
+            withVerdict: {
+                enable: (row.rankDelta ?? 0) !== 0,
+                variant: (row.rankDelta ?? 0) > 0 ? "success" : "danger",
+            },
+            content: () => <Row row={row} />,
+        }))
 
     return (
         <Box className={className} identity={{ tier: "block", component: "WeeklyBoard" }}>
@@ -304,7 +299,7 @@ export const _WeeklyBoard = ({
                     ),
 
                     // rank 4+ — the runners the podium can't hold; zone edge-markers via `withVerdict`
-                    ...(showRows ? [() => <SurfaceListCard>{rowItems.map((Item, index) => <Item key={index} isSkeleton={isSkeleton} />)}</SurfaceListCard>] : []),
+                    ...(showRows ? [() => <SurfaceCardList items={listItems} />] : []),
                 ]} />
         </Box>
     )

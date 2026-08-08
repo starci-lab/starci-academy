@@ -19,7 +19,7 @@ import {
 } from "@/components/blocks/entity/EntityToken"
 import { useQueryMyChallengeSubmissionsSwr, MY_CHALLENGE_SUBMISSIONS_LIMIT } from "@/hooks/swr/api/graphql/queries/useQueryMyChallengeSubmissionsSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -150,36 +150,38 @@ export const MySubmissionsPage = () => {
                 description={t("profileSettings.learning.submissions.subtitle")}
             />
 
-            <LabeledCard
+            <SurfaceCard
                 label={t("profileSettings.learning.submissions.title")}
-            >
-                <AsyncContent
-                    isLoading={!swr.data && !swr.error}
-                    skeleton={(
-                        <StackV
-                            gap={3}
-                            principle="sibling-stack"
-                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                            items={[0, 1, 2].map((row) => () => (
-                                <Skeleton.ListRow key={row} withTrailing />
-                            ))}
-                        />
-                    )}
-                    isEmpty={items.length === 0}
-                    emptyContent={{
-                        title: t("profileSettings.learning.submissions.empty"),
-                        description: t("profileSettings.learning.submissions.emptyHint"),
-                    }}
-                    error={!swr.data ? swr.error : undefined}
-                    errorContent={{
-                        title: t("profileSettings.learning.submissions.empty"),
-                        onRetry: () => { void swr.mutate() },
-                        retryLabel: t("profileSettings.learning.loadMore"),
-                    }}
-                >
-                    <StackV gap={4} items={listItems} />
-                </AsyncContent>
-            </LabeledCard>
+
+                body={() => (
+                    <AsyncContent
+                        isLoading={!swr.data && !swr.error}
+                        skeleton={(
+                            <StackV
+                                gap={3}
+                                principle="sibling-stack"
+                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                items={[0, 1, 2].map((row) => () => (
+                                    <Skeleton.ListRow key={row} withTrailing />
+                                ))}
+                            />
+                        )}
+                        isEmpty={items.length === 0}
+                        emptyContent={{
+                            title: t("profileSettings.learning.submissions.empty"),
+                            description: t("profileSettings.learning.submissions.emptyHint"),
+                        }}
+                        error={!swr.data ? swr.error : undefined}
+                        errorContent={{
+                            title: t("profileSettings.learning.submissions.empty"),
+                            onRetry: () => { void swr.mutate() },
+                            retryLabel: t("profileSettings.learning.loadMore"),
+                        }}
+                    >
+                        <StackV gap={4} items={listItems} />
+                    </AsyncContent>
+                )}
+            />
         </div>
     )
 }

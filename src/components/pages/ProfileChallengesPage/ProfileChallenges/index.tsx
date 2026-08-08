@@ -28,7 +28,8 @@ import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { StatRibbon } from "@/components/composites/stats/StatRibbon"
 import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { StackH, StackV } from "@/components/frames/Stack"
 import type { AllowedClassName } from "@/components/atoms/_allowed-class-name"
 import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
@@ -113,27 +114,30 @@ export const ProfileChallenges = () => {
                             ]} />
                         ),
                         () => (
-                            <StackV gap={4} items={[
-                                () => <Skeleton.Typography type="body-sm" width="1/4" />,
-                                () => (
-                                    <SurfaceListCard>
-                                        <SurfaceListCardItem>
-                                            <Skeleton.SegmentBar legendItems={4} />
-                                        </SurfaceListCardItem>
-                                        <SurfaceListCardItem>
-                                            <Skeleton.SegmentBar legendItems={4} />
-                                        </SurfaceListCardItem>
-                                    </SurfaceListCard>
-                                ),
-                            ]} />
+                            <SurfaceCardList
+                                label={t("publicProfile.challengesTab.statsHeading")}
+                                isSkeleton
+                                items={[
+                                    {
+                                        key: "difficulty",
+                                        content: () => <Skeleton.SegmentBar legendItems={4} />,
+                                    },
+                                    {
+                                        key: "language",
+                                        content: () => <Skeleton.SegmentBar legendItems={4} />,
+                                    },
+                                ]}
+                            />
                         ),
                         () => (
                             <StackV gap={4} items={[
                                 () => <Skeleton.Typography type="body-sm" width="1/4" />,
                                 () => (
-                                    <SurfaceListCard>
-                                        {[0, 1, 2].map((row) => (
-                                            <SurfaceListCardItem key={row}>
+                                    <SurfaceCardList
+                                        isSkeleton
+                                        items={[0, 1, 2].map((row) => ({
+                                            key: `repo-skel-${row}`,
+                                            content: () => (
                                                 <StackH gap={4} principle="content-row" align="start"
                                                     explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                     items={[
@@ -148,9 +152,9 @@ export const ProfileChallenges = () => {
                                                                 ]} />
                                                         ),
                                                     ]} />
-                                            </SurfaceListCardItem>
-                                        ))}
-                                    </SurfaceListCard>
+                                            ),
+                                        }))}
+                                    />
                                 ),
                             ]} />
                         ),
@@ -182,14 +186,12 @@ export const ProfileChallenges = () => {
                             />
                         </LabeledCard>
                     ),
-                    () => (
-                        <LabeledCard
-                            label={t("publicProfile.challengesTab.statsHeading")}
-                            frameless
-                        >
-                            <SurfaceListCard>
-                                {difficultySegments.length > 0 ? (
-                                    <SurfaceListCardItem>
+                    () => {
+                        const statsItems: Array<SurfaceCardListItem> = [
+                            ...(difficultySegments.length > 0
+                                ? [{
+                                    key: "difficulty",
+                                    content: () => (
                                         <StackV gap={3} principle="sibling-stack"
                                             explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                             items={[
@@ -201,10 +203,13 @@ export const ProfileChallenges = () => {
                                                     />
                                                 ),
                                             ]} />
-                                    </SurfaceListCardItem>
-                                ) : null}
-                                {langs.length > 0 ? (
-                                    <SurfaceListCardItem>
+                                    ),
+                                } satisfies SurfaceCardListItem]
+                                : []),
+                            ...(langs.length > 0
+                                ? [{
+                                    key: "language",
+                                    content: () => (
                                         <StackV gap={3} principle="sibling-stack"
                                             explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
                                             items={[
@@ -221,11 +226,17 @@ export const ProfileChallenges = () => {
                                                     />
                                                 ),
                                             ]} />
-                                    </SurfaceListCardItem>
-                                ) : null}
-                            </SurfaceListCard>
-                        </LabeledCard>
-                    ),
+                                    ),
+                                } satisfies SurfaceCardListItem]
+                                : []),
+                        ]
+                        return (
+                            <SurfaceCardList
+                                label={t("publicProfile.challengesTab.statsHeading")}
+                                items={statsItems}
+                            />
+                        )
+                    },
                     () => (
                         <LabeledCard
                             label={t("publicProfile.challengesTab.repoHeading")}

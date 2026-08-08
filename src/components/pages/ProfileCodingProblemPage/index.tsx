@@ -29,7 +29,7 @@ import { LanguageChip } from "@/components/blocks/chips/LanguageChip"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { Cluster } from "@/components/frames/Cluster"
 import { Container } from "@/components/frames/Container"
@@ -73,7 +73,7 @@ export const ProfileCodingProblemPage = () => {
         ? dayjs(submission.firstSolvedAt).locale(locale).format("hh:mm MMMM DD, YYYY")
         : undefined
 
-    const rootClassNames: Array<AllowedClassName> = []
+    const rootClassNames: Array<AllowedClassName> = []
 
     return (
         <Container identity={{ tier: "page", component: "ProfileCodingProblemPage" }} size="lg" padding={1} classNames={rootClassNames} body={() => (
@@ -119,13 +119,13 @@ export const ProfileCodingProblemPage = () => {
                                         () => <Skeleton className="h-6 w-1/2" />,
                                         () => <Skeleton className="h-40 w-full rounded-2xl" />,
                                         () => (
-                                            <SurfaceListCard>
-                                                {[0, 1, 2].map((row) => (
-                                                    <SurfaceListCardItem key={row}>
-                                                        <Skeleton.Typography type="body-sm" width="3/4" />
-                                                    </SurfaceListCardItem>
-                                                ))}
-                                            </SurfaceListCard>
+                                            <SurfaceCardList
+                                                isSkeleton
+                                                items={[0, 1, 2].map((row) => ({
+                                                    key: `submission-skel-${row}`,
+                                                    content: () => <Skeleton.Typography type="body-sm" width="3/4" />,
+                                                }))}
+                                            />
                                         ),
                                     ]} />
                             )}
@@ -164,11 +164,12 @@ export const ProfileCodingProblemPage = () => {
                                                     } />
                                             )]
                                             : []),
-                                        () => (
-                                            <LabeledCard label={t("publicProfile.coding.detail.submissionHeading")} frameless>
-                                                {submission ? (
-                                                    <SurfaceListCard>
-                                                        <SurfaceListCardItem>
+                                        () => {
+                                            const submissionItems: Array<SurfaceCardListItem> = submission
+                                                ? [
+                                                    {
+                                                        key: "languages-verdict",
+                                                        content: () => (
                                                             <Cluster gap={4} principle="content-row"
                                                                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                                 justify="between" items={[
@@ -187,8 +188,11 @@ export const ProfileCodingProblemPage = () => {
                                                                         </StatusChip>
                                                                     ),
                                                                 ]} />
-                                                        </SurfaceListCardItem>
-                                                        <SurfaceListCardItem>
+                                                        ),
+                                                    },
+                                                    {
+                                                        key: "passed-date",
+                                                        content: () => (
                                                             <StackH gap={4} principle="content-row"
                                                                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                                 justify="between" items={[
@@ -208,15 +212,22 @@ export const ProfileCodingProblemPage = () => {
                                                                         )]
                                                                         : []),
                                                                 ]} />
-                                                        </SurfaceListCardItem>
-                                                    </SurfaceListCard>
-                                                ) : (
-                                                    <Typography type="body-sm" color="muted">
-                                                        {t("publicProfile.coding.detail.notSolved")}
-                                                    </Typography>
-                                                )}
-                                            </LabeledCard>
-                                        ),
+                                                        ),
+                                                    },
+                                                ]
+                                                : []
+                                            return (
+                                                <SurfaceCardList
+                                                    label={t("publicProfile.coding.detail.submissionHeading")}
+                                                    emptyState={() => (
+                                                        <Typography type="body-sm" color="muted">
+                                                            {t("publicProfile.coding.detail.notSolved")}
+                                                        </Typography>
+                                                    )}
+                                                    items={submissionItems}
+                                                />
+                                            )
+                                        },
                                     ]} />
                             ) : null}
                         </AsyncContent>

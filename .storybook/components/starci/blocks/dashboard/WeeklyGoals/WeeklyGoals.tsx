@@ -1,5 +1,4 @@
 import React from "react"
-import { Skeleton as HeroSkeleton } from "@heroui/react"
 import {
     BookOpenIcon,
     CardsIcon,
@@ -13,6 +12,7 @@ import { AsyncContent } from "@sb-components/composites/async/AsyncContent/Async
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { StatGridCard, type StatGridCardItem } from "@sb-components/composites/stats/StatGridCard/StatGridCard"
 import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
+import { GlyphMark } from "@sb-components/atoms/display/GlyphMark/GlyphMark"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -104,14 +104,13 @@ const goalCellContent = (
 
     const iconLabel = (
         <StackH gap={2} isSkeleton={isSkeleton} items={[
-            () => (isSkeleton ? (
-                <HeroSkeleton
-                    className="size-5 shrink-0 rounded-full"
-
+            () => (
+                <GlyphMark
+                    icon={Icon}
+                    tone="muted"
+                    isSkeleton={isSkeleton}
                 />
-            ) : (
-                <Icon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-            )),
+            ),
             () => (
                 <Typography
                     size="sm"

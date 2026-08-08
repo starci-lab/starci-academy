@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Typography } from "@/components/atoms/text/Typography"
 import { IdentityTile } from "@/components/atoms/display/IdentityTile"
-import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { PriceTagInline } from "@/components/blocks/commerce/PriceTag"
 import { FillAvailable } from "@/components/frames/FillAvailable"
 import { StackH, StackV } from "@/components/frames/Stack"
@@ -34,12 +33,9 @@ export interface CartLineProps {
 }
 
 /**
- * One shopping-cart line (a {@link SurfaceListCardItem}): the course cover
- * ({@link IdentityTile}), its title linking to the course page, the per-course price
- * ({@link PriceTag}) — the real charged vs list price from the checkout preview,
- * falling back to the entity display price while the preview loads — and a trash
- * button to remove it. List-item component: props-only; the parent
- * {@link import("..").CartView} owns the data + handlers.
+ * One shopping-cart line body (cover · title/price · remove). List chrome
+ * (padding, separator, surface) is owned by the parent {@link SurfaceCardList}
+ * `content` slot — this block no longer wraps {@link SurfaceListCardItem}.
  *
  * @param props - {@link CartLineProps}
  */
@@ -84,39 +80,38 @@ export const CartLine = ({ item, previewLine, onRemove, isMutating }: CartLinePr
     )
 
     return (
-        <SurfaceListCardItem identity={{ tier: "block", component: "CartLine" }}>
-            <StackH
-                gap={3}
-                principle="flex-action"
-                explain="Cover, title column, and remove control share one action row — not identity, because the remove button is an action peer rather than an identity cluster."
-                items={[
-                    () => (
-                        <IdentityTile
-                            size="sm"
-                            tone="accent"
-                            icon={GraduationCapIcon}
-                            src={item.course.coverImageUrl}
-                            alt={item.course.title}
-                        />
-                    ),
-                    () => (
-                        <FillAvailable
-                            at="base"
-                            body={TitleColumn}
-                        />
-                    ),
-                    () => (
-                        <Button
-                            isIconOnly
-                            prefixIcon={TrashIcon}
-                            variant="danger-soft"
-                            ariaLabel={t("cart.remove")}
-                            isDisabled={isMutating}
-                            onPress={() => onRemove(item.courseId)}
-                        />
-                    ),
-                ]}
-            />
-        </SurfaceListCardItem>
+        <StackH
+            identity={{ tier: "block", component: "CartLine" }}
+            gap={3}
+            principle="flex-action"
+            explain="Cover, title column, and remove control share one action row — not identity, because the remove button is an action peer rather than an identity cluster."
+            items={[
+                () => (
+                    <IdentityTile
+                        size="sm"
+                        tone="accent"
+                        icon={GraduationCapIcon}
+                        src={item.course.coverImageUrl}
+                        alt={item.course.title}
+                    />
+                ),
+                () => (
+                    <FillAvailable
+                        at="base"
+                        body={TitleColumn}
+                    />
+                ),
+                () => (
+                    <Button
+                        isIconOnly
+                        prefixIcon={TrashIcon}
+                        variant="danger-soft"
+                        ariaLabel={t("cart.remove")}
+                        isDisabled={isMutating}
+                        onPress={() => onRemove(item.courseId)}
+                    />
+                ),
+            ]}
+        />
     )
 }

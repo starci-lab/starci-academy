@@ -2,8 +2,7 @@ import { InputSearch } from "@/components/atoms/forms"
 import React from "react"
 import { ListIcon, SquaresFourIcon } from "@phosphor-icons/react"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
-import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCard, SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { Typography } from "@/components/atoms/text/Typography"
 import { Button } from "@/components/atoms/buttons/Button"
@@ -288,14 +287,12 @@ export const _FlashcardDeckList = ({
         />
     )
 
+    const lineItems: Array<SurfaceCardListItem> = rows.map((deck, index) => ({
+        key: deck?.id ?? `pending-${index}`,
+        content: () => deckLineRowBody(deck),
+    }))
     const lineView = (
-        <SurfaceListCard bordered>
-            {rows.map((deck, index) => (
-                <SurfaceListCardItem key={deck?.id ?? `pending-${index}`}>
-                    {deckLineRowBody(deck)}
-                </SurfaceListCardItem>
-            ))}
-        </SurfaceListCard>
+        <SurfaceCardList variant="nested" isSkeleton={isSkeleton} items={lineItems} />
     )
 
     return (

@@ -21,7 +21,7 @@ import { useParams, useRouter } from "next/navigation"
 import { pathConfig } from "@/resources/path"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { AIProcessingText } from "@/components/blocks/learn/AIProcessingText"
-import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
 import { AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
@@ -516,25 +516,24 @@ export const PracticeProblemPage = () => {
     )
 
     /** LEFT: the learner's prior submissions for this problem. */
-    const submissionsPanel = submissionsData && submissionsData.submissions.length > 0 ? (
-        <SurfaceListCard>
-            {submissionsData.submissions.map((submission: CodingSubmission) => (
-                <SurfaceListCardRow
-                    key={submission.id}
-                    title={new Date(submission.createdAt).toLocaleString()}
-                    meta={() => (
-                        <>
-                            <Typography type="body-xs" color="muted">
-                                {t(`codingPractice.language.${submission.language}`)}
-                            </Typography>
-                            <StatusChip tone={VERDICT_TONE[submission.verdict]}>
-                                {t(`codingPractice.verdict.${submission.verdict}`)}
-                            </StatusChip>
-                        </>
-                    )}
-                />
-            ))}
-        </SurfaceListCard>
+    const submissionItems: Array<SurfaceCardListItem> = (submissionsData?.submissions ?? []).map(
+        (submission: CodingSubmission) => ({
+            key: submission.id,
+            title: new Date(submission.createdAt).toLocaleString(),
+            meta: () => (
+                <>
+                    <Typography type="body-xs" color="muted">
+                        {t(`codingPractice.language.${submission.language}`)}
+                    </Typography>
+                    <StatusChip tone={VERDICT_TONE[submission.verdict]}>
+                        {t(`codingPractice.verdict.${submission.verdict}`)}
+                    </StatusChip>
+                </>
+            ),
+        }),
+    )
+    const submissionsPanel = submissionItems.length > 0 ? (
+        <SurfaceCardList items={submissionItems} />
     ) : (
         <EmptyState title={t("codingPractice.historyEmpty")} />
     )

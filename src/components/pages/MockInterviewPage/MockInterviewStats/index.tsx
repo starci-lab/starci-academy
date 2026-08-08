@@ -6,7 +6,8 @@ import { ArrowRightIcon, ChartLineUpIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
+import { SurfaceCardHeader } from "@/components/composites/cards/SurfaceCard/surface-card-header"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
@@ -244,56 +245,62 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
                         explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                         items={[
                             () => (
-                                <LabeledCard
-                                    label={t("mockInterview.statsReadinessLabel")}
-                                    frameless
-                                    description={() => (
-                                        <Typography type="body-xs" color="muted">
-                                            {t("mockInterview.statsModeSplitCaption", {
-                                                qna: stats.modeSplit.qnaCount,
-                                                design: stats.modeSplit.designCount,
-                                            })}
-                                        </Typography>
-                                    )}
-                                >
-                                    {(() => {
-                                        const avgScore = Math.round(
-                                            stats.trend.reduce((sum, point) => sum + point.overallScore, 0) / Math.max(1, stats.trend.length),
-                                        )
-                                        const recentScores = stats.trend.slice(-3).map((point) => point.overallScore)
-                                        const trendDelta = recentScores.length >= 2
-                                            ? (recentScores[recentScores.length - 1] - recentScores[0]) / (recentScores.length - 1)
-                                            : 0
-                                        const sessionsNeeded = Math.max(1, trendDelta > 0 ? Math.ceil((PASS_BAR - avgScore) / trendDelta) : 1)
-                                        const band = readinessBandOf(avgScore)
-                                        return (
-                                            <VerdictHeroCard
-                                                value={avgScore}
-                                                unit="/100"
-                                                band={band}
-                                                verdict={band === "success" ? t("mockInterview.statsVerdictPass") : t("mockInterview.statsReadinessAlmostSentence", { sessionsNeeded })}
-                                                sub={t("mockInterview.statsReadinessTrendCaption", {
-                                                    passBar: PASS_BAR,
-                                                    count: recentScores.length,
-                                                    scores: recentScores.join(" → "),
+                                // B37 Decision E: VerdictHeroCard self-frames — StackV
+                                // label-field replaces LabeledCard frameless + description slot.
+                                <StackV
+                                    gap={3}
+                                    principle="label-field"
+                                    explain="Section label above its control is label-field — not title-subtitle (no paired title/supporting lines), not name-handle, not icon-text; the label names the surface the way a field label names its control."
+                                    items={[
+                                        () => <SurfaceCardHeader label={t("mockInterview.statsReadinessLabel")} />,
+                                        () => {
+                                            const avgScore = Math.round(
+                                                stats.trend.reduce((sum, point) => sum + point.overallScore, 0) / Math.max(1, stats.trend.length),
+                                            )
+                                            const recentScores = stats.trend.slice(-3).map((point) => point.overallScore)
+                                            const trendDelta = recentScores.length >= 2
+                                                ? (recentScores[recentScores.length - 1] - recentScores[0]) / (recentScores.length - 1)
+                                                : 0
+                                            const sessionsNeeded = Math.max(1, trendDelta > 0 ? Math.ceil((PASS_BAR - avgScore) / trendDelta) : 1)
+                                            const band = readinessBandOf(avgScore)
+                                            return (
+                                                <VerdictHeroCard
+                                                    value={avgScore}
+                                                    unit="/100"
+                                                    band={band}
+                                                    verdict={band === "success" ? t("mockInterview.statsVerdictPass") : t("mockInterview.statsReadinessAlmostSentence", { sessionsNeeded })}
+                                                    sub={t("mockInterview.statsReadinessTrendCaption", {
+                                                        passBar: PASS_BAR,
+                                                        count: recentScores.length,
+                                                        scores: recentScores.join(" → "),
+                                                    })}
+                                                    meter={{ value: avgScore, max: 100, target: PASS_BAR }}
+                                                    action={band !== "success" && onStartInterview ? () => (
+                                                        <Button variant="primary" size="sm" onPress={onStartInterview}>
+                                                            {t("mockInterview.statsReadinessPracticeMoreCta", { count: sessionsNeeded })}
+                                                            <ArrowRightIcon className="size-4" aria-hidden focusable="false" />
+                                                        </Button>
+                                                    ) : undefined}
+                                                />
+                                            )
+                                        },
+                                        () => (
+                                            <Typography type="body-xs" color="muted">
+                                                {t("mockInterview.statsModeSplitCaption", {
+                                                    qna: stats.modeSplit.qnaCount,
+                                                    design: stats.modeSplit.designCount,
                                                 })}
-                                                meter={{ value: avgScore, max: 100, target: PASS_BAR }}
-                                                action={band !== "success" && onStartInterview ? () => (
-                                                    <Button variant="primary" size="sm" onPress={onStartInterview}>
-                                                        {t("mockInterview.statsReadinessPracticeMoreCta", { count: sessionsNeeded })}
-                                                        <ArrowRightIcon className="size-4" aria-hidden focusable="false" />
-                                                    </Button>
-                                                ) : undefined}
-                                            />
-                                        )
-                                    })()}
-                                </LabeledCard>
+                                            </Typography>
+                                        ),
+                                    ]}
+                                />
                             ),
                             ...(stats.byPhase.length > 0
                                 ? [() => (
-                                    <LabeledCard label={t("mockInterview.statsByPhaseTitle")}>
-                                        {renderBreakdown(stats.byPhase, "phase")}
-                                    </LabeledCard>
+                                    <SurfaceCard
+                                        label={t("mockInterview.statsByPhaseTitle")}
+                                        body={() => renderBreakdown(stats.byPhase, "phase")}
+                                    />
                                 )]
                                 : []),
                             () => (

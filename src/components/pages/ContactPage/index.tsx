@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl"
 import { ContactChannels } from "./ContactChannels"
 import { ContactForm } from "./ContactForm"
 import { ContactFaq } from "./ContactFaq"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { PageContainer } from "@/components/blocks/layout/PageContainer"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Grid } from "@/components/frames/Grid"
@@ -58,9 +58,7 @@ export const ContactPage = () => {
                         {
                             key: "form",
                             content: () => (
-                                <LabeledCard label={t("contact.form.title")}>
-                                    <ContactForm />
-                                </LabeledCard>
+                                <SurfaceCard label={t("contact.form.title")} body={ContactForm} />
                             ),
                         },
                     ]}

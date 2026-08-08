@@ -3,6 +3,7 @@
 import { cn } from "@heroui/react"
 import { Button } from "@/components/atoms/buttons/Button"
 import type { IconComponent } from "@/components/atoms/buttons/Button/button-tokens"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * `FloatingActionButton` — a bottom-right floating action button: a round, shadowed accent
@@ -25,6 +26,8 @@ export interface FloatingActionButtonProps {
     icon?: IconComponent
     /** `true` → skeleton mirror (round FAB box, same placement) while loading. */
     isSkeleton?: boolean
+    /** Caller identity resolved on the placement root (not the inner Button). */
+    identity?: CallerIdentity
 }
 
 /**
@@ -44,9 +47,11 @@ export const FloatingActionButton = ({
     ariaLabel,
     icon: Icon,
     isSkeleton = false,
+    identity,
 }: FloatingActionButtonProps) => {
     return (
         <div
+            {...resolveIdentity(identity, { tier: "composite", name: "FloatingActionButton" })}
             className={cn("fixed bottom-6 right-[calc(var(--app-rail-w,0px)+1.5rem)] z-40")}
         >
             <Button

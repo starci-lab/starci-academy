@@ -1,6 +1,7 @@
 import React from "react"
 import { type SkeletonProps } from "@/components/frames/_slot"
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react"
+import { GlyphMark } from "@/components/atoms/display/GlyphMark"
 import { Typography } from "@/components/atoms/text/Typography"
 import { SurfaceCardPressableGroup, type SurfaceCardPressableGroupItem } from "@/components/composites/cards/SurfaceCard"
 import { StackH, StackV } from "@/components/frames/Stack"
@@ -72,10 +73,9 @@ const ContentPager = ({
                     // DIV position: this card is a control with its own FIXED padding
                     // (`SurfaceCardPressableGroup` tile, `cozy` inset) — not hug-content —
                     // so size tracks line-height, not font-size. Title is `text-sm` ⇒ `size-5`,
-                    // matching the sibling `ITEM_ICON_CLS` convention this same file's parent
-                    // (`SurfaceCard.tsx`) already forces for icons in this exact tile shape.
-                    // Weight omitted → Phosphor default `regular`, correct at `size-5`.
-                    () => <CaretLeftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />,
+                    // matching GlyphMark's intrinsic box (and the sibling `ITEM_ICON_CLS`
+                    // convention this same file's parent already forces for icons in this tile).
+                    () => <GlyphMark icon={CaretLeftIcon} tone="muted" />,
                     ({ isSkeleton }: SkeletonProps) => (
                         <StackV
                             gap={1}
@@ -140,7 +140,7 @@ const ContentPager = ({
                         />
                     ),
                     // Same DIV position/size reasoning as the mirrored left caret above.
-                    () => <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />,
+                    () => <GlyphMark icon={CaretRightIcon} tone="muted" />,
                 ]}
             />
         )

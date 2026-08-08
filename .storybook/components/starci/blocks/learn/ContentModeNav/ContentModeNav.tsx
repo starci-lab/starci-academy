@@ -127,9 +127,9 @@ const ContentModeNav = ({
     const availableLanguageCount = (languages ?? []).filter((entry) => !entry.isDisabled).length
     const hasLanguages = availableLanguageCount > 1 && language != null && onLanguageChange != null
 
-    // Identity hold: Toolbar does not accept CallerIdentity.
     return (
         <Toolbar
+            identity={{ tier: "block", component: "ContentModeNav" }}
             leftTabs={{
                 items,
                 selectedKey: mode,

@@ -28,7 +28,7 @@ import {
 import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
 import { pathConfig } from "@/resources/path"
 import { AiSubTier } from "@/modules/api/graphql/queries/query-my-ai-settings"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { QuotaLaneVariant } from "@/hooks/quota-lane-variant"
@@ -71,7 +71,7 @@ export const AiUsagePage = () => {
 
     const bodyItems = [
         () => (
-            <LabeledCard
+            <SurfaceCard
                 label={t("aiQuota.creditPool")}
                 action={() => (
                     <Chip
@@ -86,9 +86,10 @@ export const AiUsagePage = () => {
                         </Chip.Label>
                     </Chip>
                 )}
-            >
-                <AiQuotaLane data={premiumLane} isLoading={isPremiumLaneLoading} />
-            </LabeledCard>
+                body={() => (
+                    <AiQuotaLane data={premiumLane} isLoading={isPremiumLaneLoading} />
+                )}
+            />
         ),
         ...(showUpsell
             ? [() => (

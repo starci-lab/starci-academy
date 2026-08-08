@@ -2,6 +2,7 @@ import type { ComponentType, SVGProps } from "react"
 import { Alert, type AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import type { ComponentTypeWithSkeleton } from "@sb-components/frames/_slot"
+import type { CallerIdentity } from "@sb-components/frames/_identity"
 
 /**
  * `Callout` — a flat tint strip placed inside a surface (surface-in-surface), not a floating
@@ -66,6 +67,8 @@ interface CalloutOwnProps {
     onClose?: () => void
     /** Accessible label for the close button. */
     closeAriaLabel?: string
+    /** Caller identity forwarded to the `Alert` root (no wrapper). */
+    identity?: CallerIdentity
 }
 
 /**
@@ -103,6 +106,7 @@ export const Callout = (props: CalloutProps) => {
         onAction,
         onClose,
         closeAriaLabel,
+        identity,
     } = props
     // Narrowed off the discriminant so `title` stays required in the live branch —
     // destructuring it straight off `props` above would widen it to `string | undefined`
@@ -129,6 +133,7 @@ export const Callout = (props: CalloutProps) => {
             }
             onClose={onClose}
             closeAriaLabel={closeAriaLabel}
+            identity={identity}
         />
     )
 }

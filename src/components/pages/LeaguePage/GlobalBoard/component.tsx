@@ -34,9 +34,9 @@ import {
     IconTile,
 } from "@/components/blocks/identity/IconTile"
 import {
-    SurfaceListCard,
-    SurfaceListCardItem,
-} from "@/components/blocks/cards/SurfaceListCard"
+    SurfaceCardList,
+    type SurfaceCardListItem,
+} from "@/components/composites/cards/SurfaceCard"
 import {
     FollowButton,
 } from "@/components/blocks/community/FollowButton"
@@ -134,8 +134,8 @@ export interface GlobalBoardProps extends WithClassNames<undefined> {
 /**
  * The global (all-users) leaderboard — presentational half of {@link import("./index").GlobalBoard}.
  * Same shell as the weekly board: a {@link StandingHeroCard} of the viewer's platform-wide standing,
- * the top-3 {@link Podium}, then rank 4+ as a followable {@link SurfaceListCard}. `isSkeleton`
- * threads down to every leaf; `StandingHeroCard`/`Podium`/`IconTile`/`SurfaceListCard`/`FollowButton`/
+ * the top-3 {@link Podium}, then rank 4+ as a followable {@link SurfaceCardList}. `isSkeleton`
+ * threads down to every leaf; `StandingHeroCard`/`Podium`/`IconTile`/`SurfaceCardList`/`FollowButton`/
  * `UserCell` take no `isSkeleton` of their own (`missingSkeletonSupport`), so each is mirrored in
  * place with `Skeleton.*` at the exact position it renders, instead of a parallel skeleton tree. See
  * `tiers/split.md` — the connected `index.tsx` owns the fetch, the follow mutation, and every label.
@@ -282,25 +282,27 @@ export const _GlobalBoard = ({
                         />
                     )),
 
-                    // ── rank 4+ ── a followable list; `SurfaceListCard`/`FollowButton`/`UserCell`
+                    // ── rank 4+ ── a followable list; `SurfaceCardList`/`FollowButton`/`UserCell`
                     // have no `isSkeleton` of their own (missingSkeletonSupport): each row is
                     // mirrored in place with `Skeleton.UserCell` + bare bars, same row shape.
-                    ...(isSkeleton || showRows ? [() => (
-                        <SurfaceListCard>
-                            {isSkeleton
-                                ? skeletonRows.map((row) => (
-                                    <SurfaceListCardItem key={row}>
-                                        <StackH gap={4} principle="content-row"
-                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                                            align="center" items={[
-                                                () => <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />,
-                                                () => <Skeleton.UserCell className="min-w-0 flex-1" withHandle={false} />,
-                                                () => <Skeleton className="h-3 w-10 shrink-0 rounded-sm" />,
-                                            ]} />
-                                    </SurfaceListCardItem>
-                                ))
-                                : rows.map((row) => (
-                                    <SurfaceListCardItem key={row.key}>
+                    ...(isSkeleton || showRows ? [() => {
+                        const listItems: Array<SurfaceCardListItem> = isSkeleton
+                            ? skeletonRows.map((row) => ({
+                                key: `skeleton-${row}`,
+                                content: () => (
+                                    <StackH gap={4} principle="content-row"
+                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                        align="center" items={[
+                                            () => <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />,
+                                            () => <Skeleton.UserCell className="min-w-0 flex-1" withHandle={false} />,
+                                            () => <Skeleton className="h-3 w-10 shrink-0 rounded-sm" />,
+                                        ]} />
+                                ),
+                            }))
+                            : [
+                                ...rows.map((row) => ({
+                                    key: row.key,
+                                    content: () => (
                                         <StackH gap={4} principle="content-row"
                                             explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                             align="center" items={[
@@ -341,44 +343,53 @@ export const _GlobalBoard = ({
                                                     />
                                                 )] : []),
                                             ]} />
-                                    </SurfaceListCardItem>
-                                ))}
+                                    ),
+                                })),
+                                // viewer below the fetched slice → ellipsis + pinned self-row
+                                ...(selfRow
+                                    ? [
+                                        {
+                                            key: "hidden-between",
+                                            content: () => (
+                                                <Box principle="control-pad" className="-m-3 bg-surface-secondary px-3 py-2 text-xs text-muted"
+                                                    explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.">
+                                                    <StackH gap={3} principle="sibling-stack"
+                                                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                        align="center" justify="center" items={[
+                                                            () => <span className="text-base leading-none tracking-widest">⋯</span>,
+                                                            ...(hiddenBetweenLabel ? [() => <Typography size="xs" color="muted" text={hiddenBetweenLabel} />] : []),
+                                                        ]} />
+                                                </Box>
+                                            ),
+                                        },
+                                        {
+                                            key: "self-row",
+                                            content: () => (
+                                                <StackH gap={4} principle="content-row"
+                                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                    align="center" items={[
+                                                        () => (
+                                                            <Box className="w-6 shrink-0">
+                                                                <Typography size="xs" align="end" color="accent" weight="semibold" text={String(selfRow.rank)} />
+                                                            </Box>
+                                                        ),
+                                                        () => (
+                                                            <Box className="min-w-0 flex-1">
+                                                                <UserCell username={selfRow.displayName} avatar={selfRow.avatar} />
+                                                            </Box>
+                                                        ),
+                                                        () => (
+                                                            <Typography size="sm" color="accent" weight="semibold" classNames={["shrink-0"]} text={selfRow.pointsLabel} />
+                                                        ),
+                                                    ]} />
+                                            ),
+                                        },
+                                    ]
+                                    : []),
+                            ]
 
-                            {/* viewer below the fetched slice → ellipsis + pinned self-row (hidden while shimmering) */}
-                            {!isSkeleton && selfRow ? (
-                                <>
-                                    <Box principle="control-pad" className="bg-surface-secondary px-3 py-2 text-xs text-muted"
-                                        explain="Control hit-area inset — not row-pad, because this pads a single interactive control rather than a full content row.">
-                                        <StackH gap={3} principle="sibling-stack"
-                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                                            align="center" justify="center" items={[
-                                                () => <span className="text-base leading-none tracking-widest">⋯</span>,
-                                                ...(hiddenBetweenLabel ? [() => <Typography size="xs" color="muted" text={hiddenBetweenLabel} />] : []),
-                                            ]} />
-                                    </Box>
-                                    <SurfaceListCardItem>
-                                        <StackH gap={4} principle="content-row"
-                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                                            align="center" items={[
-                                                () => (
-                                                    <Box className="w-6 shrink-0">
-                                                        <Typography size="xs" align="end" color="accent" weight="semibold" text={String(selfRow.rank)} />
-                                                    </Box>
-                                                ),
-                                                () => (
-                                                    <Box className="min-w-0 flex-1">
-                                                        <UserCell username={selfRow.displayName} avatar={selfRow.avatar} />
-                                                    </Box>
-                                                ),
-                                                () => (
-                                                    <Typography size="sm" color="accent" weight="semibold" classNames={["shrink-0"]} text={selfRow.pointsLabel} />
-                                                ),
-                                            ]} />
-                                    </SurfaceListCardItem>
-                                </>
-                            ) : null}
-                        </SurfaceListCard>
-                    )] : []),
+                        return <SurfaceCardList items={listItems} />
+                    }] : []),
                 ]}
             />
         </Box>

@@ -4,7 +4,7 @@ import { ArrowRightIcon, ChartLineUpIcon } from "@phosphor-icons/react"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
-import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { VerdictHeroCard, type VerdictHeroBand } from "@/components/blocks/stats/VerdictHeroCard"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
@@ -101,12 +101,12 @@ export interface FlashcardReviewStatsProps {
  * suggestions. Four states in the fixed order error → loading → empty → content: `error` falls
  * to the shared `AsyncContentError` frame, `isEmpty` to `AsyncContentEmpty`, and otherwise the
  * tree renders with `isSkeleton` threaded to every leaf that supports it
- * (loading-and-skeleton.md). `VerdictHeroCard`/`SectionCard`/`LabeledCard`/`SurfaceListCard`
- * carry no `isSkeleton` of their own — the hero zone swaps to a hand-mirrored `Skeleton.*` tree
- * in the SAME position while shimmering (its headline `value` is a plain number, not a slot a
- * shimmer can sit in); the weak-topic rows instead feed `Skeleton`/atom-`isSkeleton` content
- * straight through `SurfaceListCardRow`'s own `title`/`meta` slots. See `tiers/split.md` — the
- * connected `index.tsx` owns the fetch, the band decision, and i18n.
+ * (loading-and-skeleton.md). `VerdictHeroCard`/`SectionCard` carry no `isSkeleton` of their
+ * own — the hero zone swaps to a hand-mirrored `Skeleton.*` tree in the SAME position while
+ * shimmering (its headline `value` is a plain number, not a slot a shimmer can sit in); the
+ * weak-topic map is a `SurfaceCardList` with data `items` + `isSkeleton` (B37 class A collapse
+ * of `LabeledCard frameless` + list). See `tiers/split.md` — the connected `index.tsx` owns
+ * the fetch, the band decision, and i18n.
  *
  * @param props - {@link FlashcardReviewStatsProps}
  */
@@ -158,35 +158,20 @@ export const _FlashcardReviewStats = ({
     // value the connected half already used (via the same pure function) to pick its text keys.
     const band = retentionColorOf(retentionRate)
 
-    // ZONE 2 rows — `title`/`meta` are buildable slots now (never a pre-rendered element), so a
-    // shimmering placeholder can no longer smuggle a `Typography isSkeleton` through `title`; it
-    // hand-mirrors the row's own `p-3` + meta-pushed-right shape instead (the row itself has no
-    // `isSkeleton`). Otherwise every attempted tag worst-first.
-    const gapRows = isSkeleton
-        ? Array.from({ length: WEAK_TOPIC_SKELETON_ROW_COUNT }, (_unused, index) => (
-            <Box key={`pending-${index}`} principle="cell-pad" className="p-3"
-                explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body.">
-                <StackH gap={4} principle="content-row" align="center"
-                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                    items={[
-                        () => <Skeleton.Typography type="body-sm" width="1/3" />,
-                        () => (
-                            <Box principle="push-end" className="ml-auto shrink-0"
-                                explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row.">
-                                <Skeleton.Chip />
-                            </Box>
-                        ),
-                    ]} />
-            </Box>
-        ))
-        : weakTags.map((tagStat) => (
-            <SurfaceListCardRow
-                key={tagStat.tag}
-                title={tagStat.tag}
-                meta={() => <Chip tone={retentionColorOf(tagStat.retention)} text={tagStat.chipLabel} />}
-            />
-        ))
-    const showGap = isSkeleton || gapRows.length > 0
+    // ZONE 2 rows — fixed title + Chip meta; skeleton keeps the SAME list shape via
+    // `SurfaceCardList isSkeleton` (title shimmers; meta Chip owns its own resting state).
+    const gapItems: Array<SurfaceCardListItem> = isSkeleton
+        ? Array.from({ length: WEAK_TOPIC_SKELETON_ROW_COUNT }, (_unused, index) => ({
+            key: `pending-${index}`,
+            title: "Topic",
+            meta: () => <Chip isSkeleton />,
+        }))
+        : weakTags.map((tagStat) => ({
+            key: tagStat.tag,
+            title: tagStat.tag,
+            meta: () => <Chip tone={retentionColorOf(tagStat.retention)} text={tagStat.chipLabel} />,
+        }))
+    const showGap = isSkeleton || gapItems.length > 0
     // action row (drill CTA + avg caption) shows while shimmering (placeholder) or once either
     // resolved string is present.
     const showActionRow = isSkeleton || Boolean(weakTopicDrillCta) || Boolean(weakTopicAvgCaption)
@@ -282,15 +267,16 @@ export const _FlashcardReviewStats = ({
             ),
 
             // ZONE 2 — "Weak points by topic" (▽ split by tag, → drill CTA). FULL worst-first
-            // list. Card's main content is a LIST → a labeled list-surface-card (LabeledCard
-            // frameless → SurfaceListCard); the drill CTA + avg caption live OUTSIDE the card
-            // (buttons never inside a list card).
+            // list via `SurfaceCardList` (owns label). Drill CTA + avg caption live OUTSIDE the
+            // card (buttons never inside a list card).
             ...(showGap ? [() => (
                 <StackV gap={4} items={[
                     () => (
-                        <LabeledCard label={labels.weakTopicMapLabel} frameless>
-                            <SurfaceListCard>{gapRows}</SurfaceListCard>
-                        </LabeledCard>
+                        <SurfaceCardList
+                            label={labels.weakTopicMapLabel}
+                            isSkeleton={isSkeleton}
+                            items={gapItems}
+                        />
                     ),
                     ...(showActionRow ? [() => (
                         <StackV gap={3} items={[

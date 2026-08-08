@@ -40,7 +40,7 @@ import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { Box } from "@/components/frames/Box"
 import { Cluster } from "@/components/frames/Cluster"
 import { StackH, StackV } from "@/components/frames/Stack"
@@ -293,18 +293,20 @@ export const ProfileChallengeManagePage = () => {
             <AsyncContent
                 isLoading={(isLoading || !userId) && courseChallenges.length === 0}
                 skeleton={(
-                    <SurfaceListCard>
-                        {[0, 1, 2].map((row) => (
-                            <SurfaceListCardItem key={row}>
+                    <SurfaceCardList
+                        isSkeleton
+                        items={[0, 1, 2].map((row) => ({
+                            key: `manage-skel-${row}`,
+                            content: () => (
                                 <StackV gap={2} principle="title-subtitle"
                                     explain="Title over supporting line — not label-field, because neither line is a form control label."
                                     items={[
                                         () => <Skeleton.Typography type="body-sm" width="1/2" />,
                                         () => <Skeleton.Typography type="body-xs" width="1/3" />,
                                     ]} />
-                            </SurfaceListCardItem>
-                        ))}
-                    </SurfaceListCard>
+                            ),
+                        }))}
+                    />
                 )}
                 isEmpty={filtered.length === 0}
                 emptyContent={hasActiveFilter
@@ -328,23 +330,22 @@ export const ProfileChallengeManagePage = () => {
                     retryLabel: t("publicProfile.loadErrorRetry"),
                 }}
             >
-                <SurfaceListCard>
-                    {filtered.map((challenge, index) => {
+                <SurfaceCardList
+                    items={filtered.map((challenge, index) => {
                         const level = difficultyLevel(challenge.difficulty)
                         const passedAt = challenge.passedAt
                             ? dayjs(challenge.passedAt).locale(locale).format("hh:mm MMMM DD, YYYY")
                             : undefined
                         const selectedLang = challenge.selectedLang
                         const score = challenge.score
-                        return (
-                            <SurfaceListCardItem
-                                key={challenge.id ?? `${challenge.submissionUrl}-${index}`}
-                                hover="underline"
-                                href={username && challenge.id
-                                    ? pathConfig().locale(locale).profile(username).challenges()
-                                        .course(courseSlug ?? "").submission(challenge.id).build()
-                                    : undefined}
-                            >
+                        return {
+                            key: challenge.id ?? `${challenge.submissionUrl}-${index}`,
+                            hover: "underline" as const,
+                            href: username && challenge.id
+                                ? pathConfig().locale(locale).profile(username).challenges()
+                                    .course(courseSlug ?? "").submission(challenge.id).build()
+                                : undefined,
+                            content: () => (
                                 <StackH gap={4} principle="content-row" justify="between" align="center"
                                     explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                     items={[
@@ -382,10 +383,10 @@ export const ProfileChallengeManagePage = () => {
                                             </Typography>
                                         )] : []),
                                     ]} />
-                            </SurfaceListCardItem>
-                        )
+                            ),
+                        } satisfies SurfaceCardListItem
                     })}
-                </SurfaceListCard>
+                />
             </AsyncContent>
         </div>
     )

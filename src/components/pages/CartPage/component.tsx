@@ -7,7 +7,7 @@ import { Typography } from "@/components/atoms/text/Typography"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { Container } from "@/components/frames/Container"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { PriceTagInline } from "@/components/blocks/commerce/PriceTag"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { CartLine } from "@/components/blocks/commerce/CartLine"
@@ -41,22 +41,20 @@ const displayPriceVnd = (course: CourseEntity): number => {
 /**
  * One row's minimal shimmer standing in for {@link CartLine} while the cart's
  * first load is in flight. `CartLine` takes no `isSkeleton` prop, so this mirrors
- * its leading-tile + title/price + trailing-button shape right where the row
- * sits, instead of a hand-kept parallel skeleton tree (missingSkeletonSupport).
+ * its leading-tile + title/price + trailing-button shape as a `content` slot
+ * inside {@link SurfaceCardList} (Decision C — same tree, no parallel list).
  */
-const CartLineSkeletonRow = () => (
-    <SurfaceListCardItem>
-        <StackH gap={4} items={[
-            () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
-            () => (
-                <StackV gap={3} classNames={["min-w-0", "flex-1"]} items={[
-                    () => <Skeleton.Typography type="body-sm" width="1/2" />,
-                    () => <Skeleton className="h-4 w-24 rounded-lg" />,
-                ]} />
-            ),
-            () => <Skeleton className="size-9 shrink-0 rounded-lg" />,
-        ]} />
-    </SurfaceListCardItem>
+const CartLineSkeletonBody = () => (
+    <StackH gap={4} items={[
+        () => <Skeleton className="size-12 shrink-0 rounded-xl" />,
+        () => (
+            <StackV gap={3} classNames={["min-w-0", "flex-1"]} items={[
+                () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                () => <Skeleton className="h-4 w-24 rounded-lg" />,
+            ]} />
+        ),
+        () => <Skeleton className="size-9 shrink-0 rounded-lg" />,
+    ]} />
 )
 
 /** Props for the private {@link ClearCartButton} helper. */
@@ -163,7 +161,7 @@ export interface CartPageProps {
 /**
  * Shopping-cart page — the presentational half of {@link import("./index").CartPage}.
  * Header (always shown) → error/empty/content in that order (`error` beats a stale
- * `isSkeleton`; `isEmpty` only once settled) → cart lines in one `SurfaceListCard` →
+ * `isSkeleton`; `isEmpty` only once settled) → cart lines in one `SurfaceCardList` →
  * a footer with the REAL discounted total (progressive loyalty + multi-course bundle
  * bonus), the saving, a bundle chip, an "add more to save more" nudge, a primary
  * "Checkout" CTA (opens the payment modal), and a tertiary "Clear cart". The cart-line
@@ -245,23 +243,30 @@ export const _CartPage = ({
             <StackV gap={6} principle="block-boundary"
                 explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
                 items={[
-                    () => (
-                        <SurfaceListCard>
-                            {isSkeleton
-                                ? Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => (
-                                    <CartLineSkeletonRow key={index} />
-                                ))
-                                : items.map((item) => (
+                    () => {
+                        const listItems: Array<SurfaceCardListItem> = isSkeleton
+                            ? Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => ({
+                                key: `skeleton-${index}`,
+                                content: () => <CartLineSkeletonBody />,
+                            }))
+                            : items.map((item) => ({
+                                key: item.id,
+                                content: () => (
                                     <CartLine
-                                        key={item.id}
                                         item={item}
                                         previewLine={previewByCourse.get(item.courseId)}
                                         onRemove={onRemove}
                                         isMutating={isMutating}
                                     />
-                                ))}
-                        </SurfaceListCard>
-                    ),
+                                ),
+                            }))
+                        return (
+                            <SurfaceCardList
+                                items={listItems}
+                                isSkeleton={isSkeleton}
+                            />
+                        )
+                    },
                     () => {
                     // Items hoisted so this gap-only column is not scanned as owning nested
                     // justify/principle from its children (check-pattern-coverage opens to `>`).

@@ -13,7 +13,7 @@ import {
 } from "@/components/blocks/settings/SettingsBreadcrumb"
 import { useQueryMyLearningFeedbacksSwr, MY_LEARNING_FEEDBACKS_LIMIT } from "@/hooks/swr/api/graphql/queries/useQueryMyLearningFeedbacksSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Box } from "@/components/frames/Box"
@@ -172,26 +172,28 @@ export const MyFeedbackPage = () => {
                 description={t("profileSettings.learning.feedback.subtitle")}
             />
 
-            <LabeledCard
+            <SurfaceCard
                 label={t("profileSettings.learning.feedback.title")}
-            >
-                <AsyncContent
-                    isLoading={!swr.data && !swr.error}
-                    skeleton={<StackV gap={4} items={skeletonItems} />}
-                    isEmpty={items.length === 0}
-                    emptyContent={{
-                        title: t("profileSettings.learning.feedback.empty"),
-                    }}
-                    error={!swr.data ? swr.error : undefined}
-                    errorContent={{
-                        title: t("profileSettings.learning.feedback.empty"),
-                        onRetry: () => { void swr.mutate() },
-                        retryLabel: t("profileSettings.learning.loadMore"),
-                    }}
-                >
-                    <StackV gap={4} items={feedbackItems} />
-                </AsyncContent>
-            </LabeledCard>
+
+                body={() => (
+                    <AsyncContent
+                        isLoading={!swr.data && !swr.error}
+                        skeleton={<StackV gap={4} items={skeletonItems} />}
+                        isEmpty={items.length === 0}
+                        emptyContent={{
+                            title: t("profileSettings.learning.feedback.empty"),
+                        }}
+                        error={!swr.data ? swr.error : undefined}
+                        errorContent={{
+                            title: t("profileSettings.learning.feedback.empty"),
+                            onRetry: () => { void swr.mutate() },
+                            retryLabel: t("profileSettings.learning.loadMore"),
+                        }}
+                    >
+                        <StackV gap={4} items={feedbackItems} />
+                    </AsyncContent>
+                )}
+            />
         </div>
     )
 }

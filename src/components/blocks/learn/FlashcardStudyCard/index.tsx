@@ -3,6 +3,7 @@ import { type SkeletonProps } from "@/components/frames/_slot"
 import { LockIcon, CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react"
 import { Button } from "@/components/atoms/buttons/Button"
 import { Chip } from "@/components/atoms/chips/Chip"
+import { GlyphMark } from "@/components/atoms/display/GlyphMark"
 import { ChipGroup, type ChipGroupItem } from "@/components/composites/chips/ChipGroup"
 import { Typography } from "@/components/atoms/text/Typography"
 import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
@@ -135,7 +136,9 @@ const FlashcardStudyCard = ({
                         align="center"
                         isSkeleton={isSkeleton}
                         items={[
-                            () => <LockIcon aria-hidden focusable="false" weight="bold" className="size-5 shrink-0 text-muted" />,
+                            // GlyphMark owns size-5 + regular weight; prior `weight="bold"` was
+                            // incorrect at this scale (bold is only for glyphs smaller than size-5).
+                            () => <GlyphMark icon={LockIcon} tone="muted" />,
                             ({ isSkeleton }: SkeletonProps) => (
                                 <StackV
                                     gap={1}

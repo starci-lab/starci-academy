@@ -6,12 +6,11 @@ import { useTranslations } from "next-intl"
 import { useProfileUsername } from "@/hooks/profile/useProfileUsername"
 import { useQueryUserCodingSkillsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingSkillsSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
-import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { SegmentBar } from "@/components/composites/stats/SegmentBar"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StatPair } from "@/components/composites/stats/StatPair"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
+import type { SkeletonProps } from "@/components/frames/_slot"
 import { StackV } from "@/components/frames/Stack"
 import { getLanguageColor, getLanguageLabel } from "@/modules/utils/language"
 
@@ -41,10 +40,8 @@ const DIFF_COLOR: Record<string, string> = {
 /**
  * Overview content — skills proven by solving CODE PROBLEMS (the practice judge):
  * total solved + difficulty depth chips + top-language chips with real counts.
- * Owns its own `LabeledCard`, with `frameless` computed HERE (not hardcoded) so
- * the loaded snapshot (self-framed as a `SurfaceListCard`) skips the outer
- * `Card` — but the skeleton/empty/error states, which have no bounded surface
- * of their own, still get one. The fetch goes through {@link AsyncContent}.
+ * One labeled {@link SurfaceCardList} owns the section header, empty/error, and
+ * `isSkeleton` (B37 class C collapse — no outer `LabeledCard` frameless shell).
  * Counts are real, never relative-to-max, so 2 solves never looks like mastery.
  *
  * @param props - {@link OverviewCodeSkillsProps}
@@ -61,7 +58,8 @@ export const OverviewCodeSkills = ({ label, onSeeMore, seeMoreLabel, fillHeight 
     const totalSolved = byDifficulty.reduce((acc, d) => acc + d.solved, 0)
         || byLanguage.reduce((acc, l) => acc + l.solved, 0)
     const orderedLanguages = [...byLanguage].sort((a, b) => b.solved - a.solved)
-    const hasSkills = !((isLoading || !userId) && totalSolved === 0 && !data) && !(!data && error) && totalSolved > 0
+    const isFirstLoad = (isLoading || !userId) && totalSolved === 0 && !data
+    const showError = !data && error
 
     /** Localized label for a difficulty bucket; falls back to the capitalized key. */
     const diffLabel = (key: string): string => {
@@ -73,57 +71,31 @@ export const OverviewCodeSkills = ({ label, onSeeMore, seeMoreLabel, fillHeight 
         return labels[key] ?? capitalizeKey(key)
     }
 
-    return (
-        <LabeledCard
-
-            label={label}
-            onSeeMore={onSeeMore}
-            seeMoreLabel={seeMoreLabel}
-            fillHeight={fillHeight}
-            frameless={hasSkills}
-        >
-            <AsyncContent
-                isLoading={(isLoading || !userId) && totalSolved === 0 && !data}
-                skeleton={(
-                    <SurfaceListCard>
-                        <SurfaceListCardItem>
-                            <StackV gap={4} items={[
-                                () => <Skeleton.Metric />,
-                                () => <Skeleton.SegmentBar legendItems={2} />,
-                                () => (
-                                    <StackV gap={3} principle="sibling-stack"
-                                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                                        items={[
-                                            () => <Skeleton.Typography type="body-xs" width="1/4" />,
-                                            () => <Skeleton.SegmentBar legendItems={4} />,
-                                        ]} />
-                                ),
-                            ]} />
-                        </SurfaceListCardItem>
-                    </SurfaceListCard>
-                )}
-                isEmpty={totalSolved === 0}
-                emptyContent={{
-                    title: t("publicProfile.skills.empty"),
-                    description: t("publicProfile.skills.emptyHint"),
-                }}
-                error={!data ? error : undefined}
-                errorContent={{
-                    title: t("publicProfile.loadError"),
-                    onRetry: () => { void mutate() },
-                    retryLabel: t("publicProfile.loadErrorRetry"),
-                }}
-            >
-                <SurfaceListCard className="h-full">
-                    <SurfaceListCardItem>
-                        <StackV gap={4} items={[
-                            () => (
+    const snapshotItems: Array<SurfaceCardListItem> = [{
+        key: "snapshot",
+        content: ({ isSkeleton: rowSkeleton }: SkeletonProps) => {
+            const shimmer = rowSkeleton ?? isFirstLoad
+            return (
+                <StackV gap={4} items={[
+                    () => (
+                        shimmer
+                            ? <StatPair isSkeleton />
+                            : (
                                 <StatPair
                                     value={String(totalSolved)}
                                     label={t("publicProfile.skillsSnapshot.solvedLabel")}
                                 />
-                            ),
-                            () => (
+                            )
+                    ),
+                    () => (
+                        shimmer
+                            ? (
+                                <SegmentBar
+                                    isSkeleton
+                                    ariaLabel={`${totalSolved} ${t("publicProfile.skillsSnapshot.solvedLabel")}`}
+                                />
+                            )
+                            : (
                                 <SegmentBar
                                     ariaLabel={`${totalSolved} ${t("publicProfile.skillsSnapshot.solvedLabel")}`}
                                     segments={byDifficulty.map((d) => ({
@@ -133,18 +105,27 @@ export const OverviewCodeSkills = ({ label, onSeeMore, seeMoreLabel, fillHeight 
                                         color: DIFF_COLOR[d.key],
                                     }))}
                                 />
-                            ),
-                            ...(orderedLanguages.length > 0
-                                ? [() => (
-                                    <StackV gap={3} principle="sibling-stack"
-                                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                                        items={[
-                                            () => (
-                                                <Typography type="body-xs" color="muted">
-                                                    {t("publicProfile.skillsSnapshot.languagesLabel")}
-                                                </Typography>
-                                            ),
-                                            () => (
+                            )
+                    ),
+                    ...(shimmer || orderedLanguages.length > 0
+                        ? [() => (
+                            <StackV gap={3} principle="sibling-stack"
+                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                items={[
+                                    () => (
+                                        <Typography type="body-xs" color="muted">
+                                            {t("publicProfile.skillsSnapshot.languagesLabel")}
+                                        </Typography>
+                                    ),
+                                    () => (
+                                        shimmer
+                                            ? (
+                                                <SegmentBar
+                                                    isSkeleton
+                                                    ariaLabel={t("publicProfile.skillsSnapshot.languagesLabel")}
+                                                />
+                                            )
+                                            : (
                                                 <SegmentBar
                                                     ariaLabel={t("publicProfile.skillsSnapshot.languagesLabel")}
                                                     segments={orderedLanguages.map((lang) => ({
@@ -154,14 +135,38 @@ export const OverviewCodeSkills = ({ label, onSeeMore, seeMoreLabel, fillHeight 
                                                         color: getLanguageColor(lang.key),
                                                     }))}
                                                 />
-                                            ),
-                                        ]} />
-                                )]
-                                : []),
-                        ]} />
-                    </SurfaceListCardItem>
-                </SurfaceListCard>
-            </AsyncContent>
-        </LabeledCard>
+                                            )
+                                    ),
+                                ]} />
+                        )]
+                        : []),
+                ]} />
+            )
+        },
+    }]
+
+    return (
+        <SurfaceCardList
+            label={label}
+            onSeeMore={onSeeMore}
+            seeMoreLabel={seeMoreLabel}
+            fillHeight={fillHeight}
+            isSkeleton={isFirstLoad}
+            error={showError ? error : undefined}
+            errorState={() => (
+                <AsyncContentError
+                    title={t("publicProfile.loadError")}
+                    onRetry={() => { void mutate() }}
+                    retryLabel={t("publicProfile.loadErrorRetry")}
+                />
+            )}
+            emptyState={() => (
+                <AsyncContentEmpty
+                    title={t("publicProfile.skills.empty")}
+                    description={t("publicProfile.skills.emptyHint")}
+                />
+            )}
+            items={isFirstLoad || totalSolved > 0 ? snapshotItems : []}
+        />
     )
 }

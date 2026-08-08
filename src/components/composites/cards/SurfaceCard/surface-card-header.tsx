@@ -6,11 +6,16 @@ import { StackH } from "@/components/frames/Stack"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 
 /**
- * The shared header of the `Surface*Card` family. Imported by SurfaceCard,
- * SurfaceListCard, and SurfaceAccordionCard so all three share ONE header.
+ * The shared header of the `Surface*Card` family. Owned by SurfaceCard Base /
+ * List / Accordion (and any twin that reuses this header) so label ownership
+ * stays on the surface member — not on a wrapping LabeledCard `frameless` shell.
  */
 
-/** Shared label props every `Surface*Card` accepts to render a header above the surface. */
+/**
+ * Shared label props every `Surface*Card` accepts to render a header above the surface.
+ * List and Accordion extend this so they own label / see-more / action / subtleLabel /
+ * isSkeleton themselves (B37 surface contract).
+ */
 export interface SurfaceLabelProps {
     /**
      * Section title rendered OUTSIDE (above) the surface. Omit → no header.

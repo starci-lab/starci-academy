@@ -1343,6 +1343,11 @@ export interface SurfaceCardListProps extends SurfaceLabelProps {
      */
     classNames?: Array<AllowedClassName>
     /**
+     * Stretch the labeled list to fill its parent cell (grid/flex). Replaces the
+     * legacy LabeledCard `fillHeight` door — named placement, not a public CSS string.
+     */
+    fillHeight?: boolean
+    /**
      * Caller identity to wear on this composite's root instead of its own — pass this
      * when a block/layout/overlay/page uses this composite as its root element.
      * Omitted → this composite keeps emitting its own data-tier/data-component.
@@ -1502,8 +1507,10 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
 interface ListFreeRowProps {
     /** The row's data. */
     item: SurfaceCardListItem
+    /** Resting state — forwarded into `content` (COMPOSITE-8), no parallel free-form skeleton tree. */
+    isSkeleton?: boolean
 }
-const ListFreeRow = ({ item }: ListFreeRowProps) => {
+const ListFreeRow = ({ item, isSkeleton = false }: ListFreeRowProps) => {
     const { content: Content, onPress, href, isDisabled = false, hover = "fill", classNames } = item
     const withVerdict = itemVerdict(item)
     const interactive = Boolean(onPress || href)
@@ -1523,12 +1530,12 @@ const ListFreeRow = ({ item }: ListFreeRowProps) => {
         return null
     }
     if (href) {
-        return <RowAnchor href={href} onClick={onPress} chrome={itemClassName}><Content /></RowAnchor>
+        return <RowAnchor href={href} onClick={onPress} chrome={itemClassName}><Content isSkeleton={isSkeleton} /></RowAnchor>
     }
     if (onPress) {
-        return <button type="button" onClick={onPress} disabled={isDisabled} className={itemClassName}><Content /></button>
+        return <button type="button" onClick={onPress} disabled={isDisabled} className={itemClassName}><Content isSkeleton={isSkeleton} /></button>
     }
-    return <div className={itemClassName}><Content /></div>
+    return <div className={itemClassName}><Content isSkeleton={isSkeleton} /></div>
 }
 /**
  * Bounded SURFACE list card: one `bg-surface` container with a large radius holding
@@ -1546,6 +1553,7 @@ const List = ({
     description,
     isSkeleton = false,
     classNames,
+    fillHeight = false,
     label,
     labelEnd,
     onSeeMore,
@@ -1560,7 +1568,7 @@ const List = ({
     // keep in sync (§12c).
     const rows = items.map((item) => (
         item.content != null
-            ? <ListFreeRow key={item.key} item={item} />
+            ? <ListFreeRow key={item.key} item={item} isSkeleton={isSkeleton} />
             : <ListRow key={item.key} item={item} isSkeleton={isSkeleton} />
     ))
     // Priority mirrors `AsyncContent`: error → skeleton → empty → content. Error
@@ -1570,15 +1578,17 @@ const List = ({
         ? <Box principle="page-pad"><ErrorState /></Box>
         : !isSkeleton && isEmpty && EmptyState != null ? <Box principle="page-pad"><EmptyState /></Box> : rows
     const bare = label == null && description == null
+    const fillClass = fillHeight ? "h-full flex-1" : undefined
+    // Identity stamps the ONE root: bare → surface div; labeled → section. Never both.
     const surface = (
         <div
-
             className={cn(
                 "overflow-hidden",
                 surfaceFrame(variant),
                 bare && cn(classNames),
+                bare && fillClass,
             )}
-            {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardList" })}
+            {...(bare ? resolveIdentity(identity, { tier: "composite", name: "SurfaceCardList" }) : {})}
         >
             {inner}
         </div>
@@ -1598,9 +1608,8 @@ const List = ({
     ) : surface
     return (
         <section
-
             data-principle={subtleLabel ? "sublabel-field" : "label-field"}
-            className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames)}
+            className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames, fillClass)}
             {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardList" })}
         >
             <div>
@@ -1612,7 +1621,6 @@ const List = ({
                     action={action}
                     subtleLabel={subtleLabel}
                     isSkeleton={isSkeleton}
-
                 />
             </div>
             {withCaption}
@@ -1783,42 +1791,44 @@ const AccordionCard = ({
     // the shape of the shimmer is the atom's, this layer only forwards the flag).
     // else no items → show the empty state in the same bg-surface frame (never a
     // bare, broken accordion).
+    // Identity stamps the ONE root: bare → surface frame; labeled → section. No wrapper.
+    const identityAttrs = bare
+        ? resolveIdentity(identity, { tier: "composite", name: "SurfaceCardAccordion" })
+        : {}
     const frame = !isSkeleton && items.length === 0 && EmptyState != null ? (
         <div
             className={cn("overflow-hidden p-8", surfaceFrame(variant))}
-
+            {...identityAttrs}
         >
             <EmptyState />
         </div>
     ) : (
-        <div className={cn("overflow-hidden", surfaceFrame(variant))}>
+        <div className={cn("overflow-hidden", surfaceFrame(variant))} {...identityAttrs}>
             <AccordionAtom
                 items={atomItems}
                 allowsMultiple={allowsMultipleExpanded}
                 defaultExpandedKeys={defaultExpandedKeys ? Array.from(defaultExpandedKeys) : undefined}
                 isSkeleton={isSkeleton}
-
             />
         </div>
     )
-    // bare = no header AND no caption → render the frame directly
-    if (bare) return <div {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardAccordion" })}>{frame}</div>
-    // description sits OUTSIDE (below) the card, gap-2 — never surface-in-surface
+    // bare = no header AND no caption → render the frame directly (identity already on it)
+    if (bare) return frame
+    // description sits OUTSIDE (below) the card — DATA path: frame wraps RichText so
+    // isSkeleton flows into the caption atom (same as SurfaceCardList / SurfaceCard).
+    const caption = <RichText size="body-xs" color="muted" isSkeleton={isSkeleton} text={description ?? ""} />
     const withCaption = description != null ? (
         <StackV
             gap={3}
-            principle="label-field"
-            explain="Caption under the accordion face is label-field — not title-subtitle (no paired title/supporting lines), not name-handle, not icon-text; the caption labels the surface the way a field label labels its control."
             isSkeleton={isSkeleton}
             items={[
                 () => frame,
-                () => <div>{description}</div>,
+                () => <div>{caption}</div>,
             ]}
         />
     ) : frame
     return (
         <section
-
             data-principle={subtleLabel ? "sublabel-field" : "label-field"}
             className={cn("flex flex-col", surfaceSectionGap(subtleLabel))}
             {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardAccordion" })}
@@ -1832,7 +1842,6 @@ const AccordionCard = ({
                     action={action}
                     subtleLabel={subtleLabel}
                     isSkeleton={isSkeleton}
-
                 />
             </div>
             {withCaption}

@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react"
 import { useTranslations } from "next-intl"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import type { MilestoneTaskBrief } from "@/modules/types/entities/milestone"
 import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGithub/usePersonalProjectGithubForm"
@@ -68,12 +68,14 @@ export const TaskBrief = () => {
     }
 
     return (
-        // the brief IS a labeled card: "Instructions" is the label OUTSIDE, the markdown body inside.
-        <LabeledCard label={t("task.briefTitle")}>
-            {/* data-ai-selectable: the task brief is a valid "ask AI about this passage" region */}
-            <div data-ai-selectable>
-                <MarkdownContent markdown={body} />
-            </div>
-        </LabeledCard>
+        // B37 Decision E/F: generic framed brief → SurfaceCard Base owns label + face.
+        <SurfaceCard
+            label={t("task.briefTitle")}
+            body={() => (
+                <div data-ai-selectable>
+                    <MarkdownContent markdown={body} />
+                </div>
+            )}
+        />
     )
 }

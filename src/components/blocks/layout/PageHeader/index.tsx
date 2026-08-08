@@ -2,6 +2,7 @@ import React from "react"
 import { cn, Typography } from "@heroui/react"
 import type { ReactNode } from "react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * Props for the {@link PageHeader} block.
@@ -47,6 +48,11 @@ export interface PageHeaderProps extends WithClassNames<undefined> {
      * already lives under the session header + Setup/Lab tab strip).
      */
     size?: "page" | "compact"
+    /**
+     * Caller identity to wear on this block's root instead of its own — pass this
+     * when a layout/page uses PageHeader as its root element.
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -77,11 +83,15 @@ export const PageHeader = ({
     meta,
     size = "page",
     className,
+    identity,
 }: PageHeaderProps) => {
     return (
         // outer gap-3: breadcrumb <-> title-block <-> meta (different header tiers);
         // title <-> description stay a tight gap-2 pair inside the title block.
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div
+            {...resolveIdentity(identity, { tier: "block", name: "PageHeader" })}
+            className={cn("flex flex-col gap-3", className)}
+        >
             {/* Breadcrumb row — rendered only when provided, sits above the main title row */}
             {breadcrumb ? (
                 <div>{breadcrumb}</div>

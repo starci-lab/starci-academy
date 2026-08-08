@@ -32,6 +32,7 @@ import { ListRow } from "@/components/blocks/lists/ListRow"
 import { LabeledAccordionCard } from "@/components/blocks/cards/LabeledAccordionCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import { GlyphMark } from "@/components/atoms/display/GlyphMark"
 import { fromGlobalId } from "@/modules/utils/globalId"
 import type { MyCourseOutlineModule, MyCourseOutlinePayload } from "@/modules/api/graphql/queries/types/my-course-outline"
 import { Box } from "@/components/frames/Box"
@@ -181,10 +182,10 @@ export const CourseOutline = ({
                             titleEnd: () => (
                                 <>
                                     {module.isPremium ? (
-                                        <LockIcon
-                                            aria-label={t("profileSettings.learning.outline.premium")}
-                                            focusable="false"
-                                            className="size-5 shrink-0 text-muted"
+                                        <GlyphMark
+                                            icon={LockIcon}
+                                            tone="muted"
+                                            ariaLabel={t("profileSettings.learning.outline.premium")}
                                         />
                                     ) : null}
                                     <Typography

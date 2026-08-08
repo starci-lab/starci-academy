@@ -4,10 +4,8 @@ import { InputSearch } from "@/components/atoms/forms"
 import React, { useMemo, useState } from "react"
 import { CardsIcon, ClockCounterClockwiseIcon, ClockIcon } from "@phosphor-icons/react"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
-import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCard, SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { LabeledAccordionCard } from "@/components/blocks/cards/LabeledAccordionCard"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { Box } from "@/components/frames/Box"
@@ -93,14 +91,16 @@ export interface FlashcardReviewHistoryProps {
 /**
  * "Study cards" run history — the presentational half of {@link FlashcardReviewHistory}, composed
  * on the tier-correct vocabulary (`InputSearch` / `TabsCard` / `LabeledAccordionCard` /
- * `LabeledCard` / `SurfaceListCard` / `ProgressMeter`). Three states in the fixed order
+ * `SurfaceCardList` / `ProgressMeter`). Three states in the fixed order
  * error → skeleton → empty → content (`loading-and-skeleton.md`): `error` falls to the shared
  * `AsyncContentError` frame, `isEmpty` (once settled) to `AsyncContentEmpty`, and otherwise the
  * ONE toolbar+list tree renders with `isSkeleton` threaded to every leaf that carries it.
  *
- * `TabsCard` / `LabeledAccordionCard` / `LabeledCard` / `ProgressMeter` carry no `isSkeleton` of
- * their own (missingSkeletonSupport) — their loading state is mirrored MINIMALLY, right where
- * they sit, with `Skeleton.*` instead of a parallel tree elsewhere in the file.
+ * Time-bucket sections collapse `LabeledCard frameless` + list into `SurfaceCardList` (label /
+ * labelEnd / subtleLabel owned by the list). Skeleton uses the same `SurfaceCardList` + data
+ * `items` (no parallel skeleton tree). `TabsCard` / `LabeledAccordionCard` / `ProgressMeter`
+ * carry no `isSkeleton` of their own (missingSkeletonSupport) — mirrored MINIMALLY in place
+ * with `Skeleton.*`.
  *
  * @param props - {@link FlashcardReviewHistoryProps}
  */
@@ -247,29 +247,31 @@ export const _FlashcardReviewHistory = ({
             ]} />
     )
 
-    // Flat placeholder rows — the loading state's list shape, regardless of `groupMode`
-    // (the real grouped shape isn't known yet). `SurfaceListCard`/`SurfaceListCardItem` are
-    // reused as-is (their own chrome carries no data), only the row CONTENT swaps to `Skeleton.*`.
-    const listSkeleton = (
-        <SurfaceListCard>
-            {Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => (
-                <SurfaceListCardItem key={index}>
-                    <StackH gap={3} items={[
-                        () => (
-                            <StackV gap={1} classNames={["min-w-0", "flex-1"]} items={[
-                                () => <Skeleton.Typography type="body-sm" width="1/2" />,
-                                () => <Skeleton.Typography type="body-xs" width="1/3" />,
-                                () => <Skeleton.ProgressBar className="max-w-[220px]" />,
-                            ]} />
-                        ),
-                        () => <Skeleton className="h-6 w-12 shrink-0 rounded-full" />,
-                    ]} />
-                </SurfaceListCardItem>
-            ))}
-        </SurfaceListCard>
+    // Flat placeholder rows — loading shape regardless of `groupMode` (grouped shape unknown
+    // yet). Same `SurfaceCardList` + data `items` as the live time buckets; free-form `content`
+    // carries the shimmer (List free-form does not auto-forward `isSkeleton` into slots).
+    const skeletonItems: Array<SurfaceCardListItem> = Array.from(
+        { length: SKELETON_ROW_COUNT },
+        (_unused, index) => ({
+            key: `skeleton-${index}`,
+            content: () => (
+                <StackH gap={3} items={[
+                    () => (
+                        <StackV gap={1} classNames={["min-w-0", "flex-1"]} items={[
+                            () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                            () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                            () => <Skeleton.ProgressBar className="max-w-[220px]" />,
+                        ]} />
+                    ),
+                    () => <Skeleton className="h-6 w-12 shrink-0 rounded-full" />,
+                ]} />
+            ),
+        }),
     )
 
-    const body = isSkeleton ? listSkeleton : searchedItems.length === 0 ? (
+    const body = isSkeleton ? (
+        <SurfaceCardList isSkeleton items={skeletonItems} />
+    ) : searchedItems.length === 0 ? (
         <SurfaceCard body={() => <Typography size="sm" color="muted" align="center" text={labels.filterEmpty} />} />
     ) : groupMode === "deck" ? (
         // group=deck — NO `label` (the toolbar's group toggle is the heading); "N runs"
@@ -298,24 +300,20 @@ export const _FlashcardReviewHistory = ({
             }))}
         />
     ) : (
-        // group=time — each non-empty bucket is a `LabeledCard frameless` (time window =
-        // label OUTSIDE + run count via `labelEnd`; content is itself a `SurfaceListCard`
-        // → frameless avoids card-in-card).
+        // group=time — each non-empty bucket is a `SurfaceCardList` owning subtleLabel +
+        // labelEnd (B37: no LabeledCard frameless shell around a list surface).
         <StackV gap={3} items={timeBuckets.map((bucket) => () => (
-            <LabeledCard
-                frameless
+            <SurfaceCardList
+                key={bucket.key}
                 subtleLabel
                 label={labels.timeBucket(bucket.key)}
                 labelEnd={labels.runCount(bucket.items.length)}
-            >
-                <SurfaceListCard>
-                    {bucket.items.map((item) => (
-                        <SurfaceListCardItem key={item.id} onPress={() => onOpenDeck(item.deckId)}>
-                            {runRow(item, true)}
-                        </SurfaceListCardItem>
-                    ))}
-                </SurfaceListCard>
-            </LabeledCard>
+                items={bucket.items.map((item) => ({
+                    key: item.id,
+                    onPress: () => onOpenDeck(item.deckId),
+                    content: () => runRow(item, true),
+                }))}
+            />
         ))} />
     )
 

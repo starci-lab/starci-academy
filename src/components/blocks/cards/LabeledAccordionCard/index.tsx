@@ -129,6 +129,12 @@ const AccordionFrame = ({
 )
 
 /**
+ * B37 hold twin — do not invent Accordion variants here. Canonical twin is
+ * `SurfaceCardAccordion` (`SurfaceLabelProps` + `items` / `emptyState` /
+ * `description` / `isSkeleton` / `identity`). This block remains a HeroUI
+ * Accordion + {@link SurfaceListCard} + optional {@link LabeledCard} `frameless`
+ * shell until a dedicated consumer migration lands.
+ *
  * A "Accordion Card": one bounded `bg-surface` frame holding collapsible sections
  * whose separators run FULL-BLEED to the card edge — the same skin as
  * {@link SurfaceListCard}, but each row expands. Pass {@link LabeledAccordionCardProps.label}

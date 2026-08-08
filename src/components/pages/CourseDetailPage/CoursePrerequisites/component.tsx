@@ -2,8 +2,10 @@ import React from "react"
 import { ListBulletsIcon } from "@phosphor-icons/react"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckListCard"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
+import { SurfaceCardHeader } from "@/components/composites/cards/SurfaceCard/surface-card-header"
 import { Typography } from "@/components/atoms/text/Typography"
+import { StackV } from "@/components/frames/Stack"
 
 /** How many placeholder rows the co-located skeleton shows. */
 const SKELETON_ROW_COUNT = 3
@@ -16,7 +18,7 @@ export interface CoursePrerequisiteItem {
 
 /** All display text, already localized by the connected `CoursePrerequisites`; a story passes i18n keys. */
 export interface CoursePrerequisitesLabels {
-    /** Section label, rendered above the card by `LabeledCard`. */
+    /** Section label rendered above the checklist / SurfaceCard. */
     label: string
     errorTitle: string
     retry: string
@@ -39,6 +41,8 @@ export interface CoursePrerequisitesProps {
     labels: CoursePrerequisitesLabels
 }
 
+const IDENTITY = { tier: "block" as const, component: "CoursePrerequisites" }
+
 /**
  * "Before you start" section — the presentational half of {@link CoursePrerequisites}: the course
  * prerequisites as a neutral bullet list (informational, NOT a warning alert; prerequisites are
@@ -47,6 +51,9 @@ export interface CoursePrerequisitesProps {
  * `isEmpty` to `AsyncContentEmpty`, and otherwise the ONE real tree renders with `isSkeleton`
  * threaded to every leaf so the shimmer mirrors the loaded shape (loading-and-skeleton.md). See
  * `tiers/split.md` — the connected `index.tsx` owns the fetch, redux read, and i18n.
+ *
+ * B37 Decision E: checklist content uses section vocabulary (`SurfaceCardHeader` +
+ * `CheckListCard`); error/empty use `SurfaceCard` Base so async frames stay labeled and framed.
  *
  * @param props - {@link CoursePrerequisitesProps}
  */
@@ -61,28 +68,28 @@ export const _CoursePrerequisites = ({
     // error beats a stale loading flag; empty only once settled (loading-and-skeleton.md §1)
     if (error) {
         return (
-            <LabeledCard
+            <SurfaceCard
                 label={labels.label}
-                frameless
-                identity={{ tier: "block", component: "CoursePrerequisites" }}
-            >
-                <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retry} />
-            </LabeledCard>
+                identity={IDENTITY}
+                body={() => (
+                    <AsyncContentError title={labels.errorTitle} onRetry={onRetry} retryLabel={labels.retry} />
+                )}
+            />
         )
     }
     if (!isSkeleton && isEmpty) {
         return (
-            <LabeledCard
+            <SurfaceCard
                 label={labels.label}
-                frameless
-                identity={{ tier: "block", component: "CoursePrerequisites" }}
-            >
-                <AsyncContentEmpty
-                    icon={ListBulletsIcon}
-                    title={labels.emptyTitle}
-                    description={labels.emptyDescription}
-                />
-            </LabeledCard>
+                identity={IDENTITY}
+                body={() => (
+                    <AsyncContentEmpty
+                        icon={ListBulletsIcon}
+                        title={labels.emptyTitle}
+                        description={labels.emptyDescription}
+                    />
+                )}
+            />
         )
     }
 
@@ -93,18 +100,23 @@ export const _CoursePrerequisites = ({
         : items
 
     return (
-        <LabeledCard
-            label={labels.label}
-            frameless
-            identity={{ tier: "block", component: "CoursePrerequisites" }}
-        >
-            <CheckListCard>
-                {rows.map((item) => (
-                    <CheckListItem key={item.id} showCheck={false}>
-                        <Typography size="sm" text={item.text} isSkeleton={isSkeleton} />
-                    </CheckListItem>
-                ))}
-            </CheckListCard>
-        </LabeledCard>
+        <StackV
+            gap={3}
+            principle="label-field"
+            explain="Section label above its control is label-field — not title-subtitle (no paired title/supporting lines), not name-handle, not icon-text; the label names the surface the way a field label names its control."
+            identity={IDENTITY}
+            items={[
+                () => <SurfaceCardHeader label={labels.label} />,
+                () => (
+                    <CheckListCard>
+                        {rows.map((item) => (
+                            <CheckListItem key={item.id} showCheck={false}>
+                                <Typography size="sm" text={item.text} isSkeleton={isSkeleton} />
+                            </CheckListItem>
+                        ))}
+                    </CheckListCard>
+                ),
+            ]}
+        />
     )
 }

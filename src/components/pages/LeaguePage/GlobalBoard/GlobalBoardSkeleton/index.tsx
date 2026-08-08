@@ -8,7 +8,7 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { Box } from "@/components/frames/Box"
 import { StackH, StackV } from "@/components/frames/Stack"
 
@@ -21,12 +21,26 @@ export type GlobalBoardSkeletonProps = WithClassNames<undefined>
 /**
  * Loading placeholder for {@link import("../").GlobalBoard}: mirrors the real board
  * shell — the `StandingHeroCard` (badge + rank line + meta + goal meter + CTA), the
- * top-3 `Podium` dais, then rank-4+ rows inside a `SurfaceListCard`
+ * top-3 `Podium` dais, then rank-4+ rows inside a `SurfaceCardList`
  * [rank · avatar · name · points]. (Was wrong: no hero, no podium, loose rows.)
  *
  * @param props - {@link GlobalBoardSkeletonProps}
  */
 export const GlobalBoardSkeleton = ({ className }: GlobalBoardSkeletonProps) => {
+    const rowItems: Array<SurfaceCardListItem> = Array.from({ length: SKELETON_ROW_COUNT }, (_row, index) => ({
+        key: `skeleton-${index}`,
+        content: () => (
+            <StackH gap={4} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                align="center" items={[
+                    () => <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />,
+                    () => <Skeleton.Avatar size="sm" />,
+                    () => <Skeleton.Typography type="body-sm" width="1/3" className="min-w-0 flex-1" />,
+                    () => <Skeleton className="h-3 w-10 shrink-0 rounded-sm" />,
+                ]} />
+        ),
+    }))
+
     return (
         <Box identity={{ tier: "page", component: "GlobalBoardSkeleton" }} className={cn(className)}>
             <StackV gap={6} principle="block-boundary"
@@ -88,20 +102,7 @@ export const GlobalBoardSkeleton = ({ className }: GlobalBoardSkeletonProps) => 
                             ))} />
                     ),
                     () => (
-                        <SurfaceListCard>
-                            {Array.from({ length: SKELETON_ROW_COUNT }).map((_row, index) => (
-                                <SurfaceListCardItem key={index}>
-                                    <StackH gap={4} principle="content-row"
-                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                                        align="center" items={[
-                                            () => <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />,
-                                            () => <Skeleton.Avatar size="sm" />,
-                                            () => <Skeleton.Typography type="body-sm" width="1/3" className="min-w-0 flex-1" />,
-                                            () => <Skeleton className="h-3 w-10 shrink-0 rounded-sm" />,
-                                        ]} />
-                                </SurfaceListCardItem>
-                            ))}
-                        </SurfaceListCard>
+                        <SurfaceCardList items={rowItems} />
                     ),
                 ]} />
         </Box>

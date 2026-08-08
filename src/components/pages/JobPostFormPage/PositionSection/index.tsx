@@ -15,7 +15,7 @@ import type { UseFormSetValue } from "react-hook-form"
 import type { SubmitJobPostingFormValues } from "@/hooks/rhf/useSubmitJobPostingForm"
 import { JobEmploymentType } from "@/modules/types/enums/job-employment-type"
 import { WorkMode } from "@/modules/types/enums/work-mode"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { Grid } from "@/components/frames/Grid"
 import { StackV } from "@/components/frames/Stack"
 
@@ -76,225 +76,227 @@ export const PositionSection = ({
     const t = useTranslations()
 
     return (
-        <LabeledCard
+        <SurfaceCard
             label={t("jobs.post.sections.position")}
-        >
-            <StackV gap={4} principle="content-row"
-                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                items={[
-                    () => (
-                        <TextField variant="secondary">
-                            <Label htmlFor="job-post-title">{t("jobs.post.position.title")}</Label>
-                            <Input
-                                id="job-post-title"
-                                placeholder={t("jobs.post.position.titlePlaceholder")}
-                                maxLength={TITLE_MAX}
-                                value={title}
-                                onChange={(event) => setValue("title", event.target.value)}
-                            />
-                        </TextField>
-                    ),
 
-                    () => (
-                        <Grid columns={{ base: 1, sm: 2 }} principle="content-row"
-                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                            items={[
-                                {
-                                    key: "employment-type",
-                                    content: () => (
-                                        <StackV gap={3} principle="label-field"
-                                            explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
-                                            items={[
-                                                () => <Label htmlFor="job-post-employment-type">{t("jobs.post.position.employmentType")}</Label>,
-                                                () => (
-                                                    <Select.Root<{ id: string }, "single">
-                                                        id="job-post-employment-type"
-                                                        aria-label={t("jobs.post.position.employmentType")}
-                                                        selectedKey={employmentType === "" ? NONE_KEY : employmentType}
-                                                        onSelectionChange={(key) =>
-                                                            setValue(
-                                                                "employmentType",
-                                                                key === NONE_KEY ? "" : (String(key) as JobEmploymentType),
-                                                            )
-                                                        }
-                                                    >
-                                                        <Select.Trigger aria-label={t("jobs.post.position.employmentType")}>
-                                                            <Select.Value>
-                                                                {() => {
-                                                                    const found = EMPLOYMENT_TYPE_OPTIONS.find(
-                                                                        (option) => option.value === employmentType,
-                                                                    )
-                                                                    return (
-                                                                        <Typography type="body-sm">
-                                                                            {found ? t(found.labelKey) : t("jobs.post.position.employmentTypeNone")}
-                                                                        </Typography>
-                                                                    )
-                                                                }}
-                                                            </Select.Value>
-                                                            <Select.Indicator />
-                                                        </Select.Trigger>
-                                                        <Select.Popover>
-                                                            <ListBox.Root aria-label={t("jobs.post.position.employmentType")}>
-                                                                <ListBox.Item id={NONE_KEY} textValue={t("jobs.post.position.employmentTypeNone")}>
-                                                                    {t("jobs.post.position.employmentTypeNone")}
-                                                                </ListBox.Item>
-                                                                {EMPLOYMENT_TYPE_OPTIONS.map((option) => (
-                                                                    <ListBox.Item key={option.value} id={option.value} textValue={t(option.labelKey)}>
-                                                                        {t(option.labelKey)}
+            body={() => (
+                <StackV gap={4} principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                    items={[
+                        () => (
+                            <TextField variant="secondary">
+                                <Label htmlFor="job-post-title">{t("jobs.post.position.title")}</Label>
+                                <Input
+                                    id="job-post-title"
+                                    placeholder={t("jobs.post.position.titlePlaceholder")}
+                                    maxLength={TITLE_MAX}
+                                    value={title}
+                                    onChange={(event) => setValue("title", event.target.value)}
+                                />
+                            </TextField>
+                        ),
+
+                        () => (
+                            <Grid columns={{ base: 1, sm: 2 }} principle="content-row"
+                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                items={[
+                                    {
+                                        key: "employment-type",
+                                        content: () => (
+                                            <StackV gap={3} principle="label-field"
+                                                explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
+                                                items={[
+                                                    () => <Label htmlFor="job-post-employment-type">{t("jobs.post.position.employmentType")}</Label>,
+                                                    () => (
+                                                        <Select.Root<{ id: string }, "single">
+                                                            id="job-post-employment-type"
+                                                            aria-label={t("jobs.post.position.employmentType")}
+                                                            selectedKey={employmentType === "" ? NONE_KEY : employmentType}
+                                                            onSelectionChange={(key) =>
+                                                                setValue(
+                                                                    "employmentType",
+                                                                    key === NONE_KEY ? "" : (String(key) as JobEmploymentType),
+                                                                )
+                                                            }
+                                                        >
+                                                            <Select.Trigger aria-label={t("jobs.post.position.employmentType")}>
+                                                                <Select.Value>
+                                                                    {() => {
+                                                                        const found = EMPLOYMENT_TYPE_OPTIONS.find(
+                                                                            (option) => option.value === employmentType,
+                                                                        )
+                                                                        return (
+                                                                            <Typography type="body-sm">
+                                                                                {found ? t(found.labelKey) : t("jobs.post.position.employmentTypeNone")}
+                                                                            </Typography>
+                                                                        )
+                                                                    }}
+                                                                </Select.Value>
+                                                                <Select.Indicator />
+                                                            </Select.Trigger>
+                                                            <Select.Popover>
+                                                                <ListBox.Root aria-label={t("jobs.post.position.employmentType")}>
+                                                                    <ListBox.Item id={NONE_KEY} textValue={t("jobs.post.position.employmentTypeNone")}>
+                                                                        {t("jobs.post.position.employmentTypeNone")}
                                                                     </ListBox.Item>
-                                                                ))}
-                                                            </ListBox.Root>
-                                                        </Select.Popover>
-                                                    </Select.Root>
-                                                ),
+                                                                    {EMPLOYMENT_TYPE_OPTIONS.map((option) => (
+                                                                        <ListBox.Item key={option.value} id={option.value} textValue={t(option.labelKey)}>
+                                                                            {t(option.labelKey)}
+                                                                        </ListBox.Item>
+                                                                    ))}
+                                                                </ListBox.Root>
+                                                            </Select.Popover>
+                                                        </Select.Root>
+                                                    ),
+                                                ]} />
+                                        ),
+                                    },
+
+                                    {
+                                        key: "work-mode",
+                                        content: () => (
+                                            <StackV gap={3} principle="label-field"
+                                                explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
+                                                items={[
+                                                    () => <Label htmlFor="job-post-work-mode">{t("jobs.post.position.workMode")}</Label>,
+                                                    () => (
+                                                        <Select.Root<{ id: string }, "single">
+                                                            id="job-post-work-mode"
+                                                            aria-label={t("jobs.post.position.workMode")}
+                                                            selectedKey={workMode === "" ? NONE_KEY : workMode}
+                                                            onSelectionChange={(key) =>
+                                                                setValue("workMode", key === NONE_KEY ? "" : (String(key) as WorkMode))
+                                                            }
+                                                        >
+                                                            <Select.Trigger aria-label={t("jobs.post.position.workMode")}>
+                                                                <Select.Value>
+                                                                    {() => {
+                                                                        const found = WORK_MODE_OPTIONS.find(
+                                                                            (option) => option.value === workMode,
+                                                                        )
+                                                                        return (
+                                                                            <Typography type="body-sm">
+                                                                                {found ? t(found.labelKey) : t("jobs.post.position.workModeNone")}
+                                                                            </Typography>
+                                                                        )
+                                                                    }}
+                                                                </Select.Value>
+                                                                <Select.Indicator />
+                                                            </Select.Trigger>
+                                                            <Select.Popover>
+                                                                <ListBox.Root aria-label={t("jobs.post.position.workMode")}>
+                                                                    <ListBox.Item id={NONE_KEY} textValue={t("jobs.post.position.workModeNone")}>
+                                                                        {t("jobs.post.position.workModeNone")}
+                                                                    </ListBox.Item>
+                                                                    {WORK_MODE_OPTIONS.map((option) => (
+                                                                        <ListBox.Item key={option.value} id={option.value} textValue={t(option.labelKey)}>
+                                                                            {t(option.labelKey)}
+                                                                        </ListBox.Item>
+                                                                    ))}
+                                                                </ListBox.Root>
+                                                            </Select.Popover>
+                                                        </Select.Root>
+                                                    ),
+                                                ]} />
+                                        ),
+                                    },
+                                ]} />
+                        ),
+
+                        () => (
+                            <TextField variant="secondary">
+                                <Label htmlFor="job-post-location">{t("jobs.post.position.location")}</Label>
+                                <Input
+                                    id="job-post-location"
+                                    placeholder={t("jobs.post.position.locationPlaceholder")}
+                                    maxLength={LOCATION_MAX}
+                                    value={location}
+                                    onChange={(event) => setValue("location", event.target.value)}
+                                />
+                            </TextField>
+                        ),
+
+                        () => (
+                            <StackV gap={3} principle="sibling-stack"
+                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                items={[
+                                    () => (
+                                        <Grid columns={{ base: 1, sm: 2 }} principle="content-row"
+                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                            items={[
+                                                {
+                                                    key: "salary-min",
+                                                    content: () => (
+                                                        <TextField variant="secondary">
+                                                            <Label htmlFor="job-post-salary-min">{t("jobs.post.position.salaryMin")}</Label>
+                                                            <Input
+                                                                id="job-post-salary-min"
+                                                                type="number"
+                                                                inputMode="numeric"
+                                                                min={0}
+                                                                placeholder={t("jobs.post.position.salaryPlaceholder")}
+                                                                value={salaryMin}
+                                                                onChange={(event) => setValue("salaryMin", event.target.value)}
+                                                            />
+                                                        </TextField>
+                                                    ),
+                                                },
+                                                {
+                                                    key: "salary-max",
+                                                    content: () => (
+                                                        <TextField variant="secondary">
+                                                            <Label htmlFor="job-post-salary-max">{t("jobs.post.position.salaryMax")}</Label>
+                                                            <Input
+                                                                id="job-post-salary-max"
+                                                                type="number"
+                                                                inputMode="numeric"
+                                                                min={0}
+                                                                placeholder={t("jobs.post.position.salaryPlaceholder")}
+                                                                value={salaryMax}
+                                                                onChange={(event) => setValue("salaryMax", event.target.value)}
+                                                            />
+                                                        </TextField>
+                                                    ),
+                                                },
                                             ]} />
                                     ),
-                                },
-
-                                {
-                                    key: "work-mode",
-                                    content: () => (
-                                        <StackV gap={3} principle="label-field"
-                                            explain="Form label above its field — not title-subtitle, because the upper line labels an input rather than a heading pair."
-                                            items={[
-                                                () => <Label htmlFor="job-post-work-mode">{t("jobs.post.position.workMode")}</Label>,
-                                                () => (
-                                                    <Select.Root<{ id: string }, "single">
-                                                        id="job-post-work-mode"
-                                                        aria-label={t("jobs.post.position.workMode")}
-                                                        selectedKey={workMode === "" ? NONE_KEY : workMode}
-                                                        onSelectionChange={(key) =>
-                                                            setValue("workMode", key === NONE_KEY ? "" : (String(key) as WorkMode))
-                                                        }
-                                                    >
-                                                        <Select.Trigger aria-label={t("jobs.post.position.workMode")}>
-                                                            <Select.Value>
-                                                                {() => {
-                                                                    const found = WORK_MODE_OPTIONS.find(
-                                                                        (option) => option.value === workMode,
-                                                                    )
-                                                                    return (
-                                                                        <Typography type="body-sm">
-                                                                            {found ? t(found.labelKey) : t("jobs.post.position.workModeNone")}
-                                                                        </Typography>
-                                                                    )
-                                                                }}
-                                                            </Select.Value>
-                                                            <Select.Indicator />
-                                                        </Select.Trigger>
-                                                        <Select.Popover>
-                                                            <ListBox.Root aria-label={t("jobs.post.position.workMode")}>
-                                                                <ListBox.Item id={NONE_KEY} textValue={t("jobs.post.position.workModeNone")}>
-                                                                    {t("jobs.post.position.workModeNone")}
-                                                                </ListBox.Item>
-                                                                {WORK_MODE_OPTIONS.map((option) => (
-                                                                    <ListBox.Item key={option.value} id={option.value} textValue={t(option.labelKey)}>
-                                                                        {t(option.labelKey)}
-                                                                    </ListBox.Item>
-                                                                ))}
-                                                            </ListBox.Root>
-                                                        </Select.Popover>
-                                                    </Select.Root>
-                                                ),
-                                            ]} />
+                                    () => (
+                                        <Typography type="body-xs" color="muted">
+                                            {t("jobs.post.position.salaryHint")}
+                                        </Typography>
                                     ),
-                                },
-                            ]} />
-                    ),
+                                ]} />
+                        ),
 
-                    () => (
-                        <TextField variant="secondary">
-                            <Label htmlFor="job-post-location">{t("jobs.post.position.location")}</Label>
-                            <Input
-                                id="job-post-location"
-                                placeholder={t("jobs.post.position.locationPlaceholder")}
-                                maxLength={LOCATION_MAX}
-                                value={location}
-                                onChange={(event) => setValue("location", event.target.value)}
-                            />
-                        </TextField>
-                    ),
+                        () => (
+                            <TextField variant="secondary">
+                                <Label htmlFor="job-post-description">{t("jobs.post.position.description")}</Label>
+                                <TextArea
+                                    id="job-post-description"
+                                    rows={6}
+                                    placeholder={t("jobs.post.position.descriptionPlaceholder")}
+                                    className="resize-none"
+                                    value={description}
+                                    onChange={(event) => setValue("description", event.target.value)}
+                                />
+                            </TextField>
+                        ),
 
-                    () => (
-                        <StackV gap={3} principle="sibling-stack"
-                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                            items={[
-                                () => (
-                                    <Grid columns={{ base: 1, sm: 2 }} principle="content-row"
-                                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                                        items={[
-                                            {
-                                                key: "salary-min",
-                                                content: () => (
-                                                    <TextField variant="secondary">
-                                                        <Label htmlFor="job-post-salary-min">{t("jobs.post.position.salaryMin")}</Label>
-                                                        <Input
-                                                            id="job-post-salary-min"
-                                                            type="number"
-                                                            inputMode="numeric"
-                                                            min={0}
-                                                            placeholder={t("jobs.post.position.salaryPlaceholder")}
-                                                            value={salaryMin}
-                                                            onChange={(event) => setValue("salaryMin", event.target.value)}
-                                                        />
-                                                    </TextField>
-                                                ),
-                                            },
-                                            {
-                                                key: "salary-max",
-                                                content: () => (
-                                                    <TextField variant="secondary">
-                                                        <Label htmlFor="job-post-salary-max">{t("jobs.post.position.salaryMax")}</Label>
-                                                        <Input
-                                                            id="job-post-salary-max"
-                                                            type="number"
-                                                            inputMode="numeric"
-                                                            min={0}
-                                                            placeholder={t("jobs.post.position.salaryPlaceholder")}
-                                                            value={salaryMax}
-                                                            onChange={(event) => setValue("salaryMax", event.target.value)}
-                                                        />
-                                                    </TextField>
-                                                ),
-                                            },
-                                        ]} />
-                                ),
-                                () => (
-                                    <Typography type="body-xs" color="muted">
-                                        {t("jobs.post.position.salaryHint")}
-                                    </Typography>
-                                ),
-                            ]} />
-                    ),
-
-                    () => (
-                        <TextField variant="secondary">
-                            <Label htmlFor="job-post-description">{t("jobs.post.position.description")}</Label>
-                            <TextArea
-                                id="job-post-description"
-                                rows={6}
-                                placeholder={t("jobs.post.position.descriptionPlaceholder")}
-                                className="resize-none"
-                                value={description}
-                                onChange={(event) => setValue("description", event.target.value)}
-                            />
-                        </TextField>
-                    ),
-
-                    () => (
-                        <TextField variant="secondary">
-                            <Label htmlFor="job-post-requirements">{t("jobs.post.position.requirements")}</Label>
-                            <TextArea
-                                id="job-post-requirements"
-                                rows={5}
-                                placeholder={t("jobs.post.position.requirementsPlaceholder")}
-                                className="resize-none"
-                                value={requirements}
-                                onChange={(event) => setValue("requirements", event.target.value)}
-                            />
-                        </TextField>
-                    ),
-                ]} />
-        </LabeledCard>
+                        () => (
+                            <TextField variant="secondary">
+                                <Label htmlFor="job-post-requirements">{t("jobs.post.position.requirements")}</Label>
+                                <TextArea
+                                    id="job-post-requirements"
+                                    rows={5}
+                                    placeholder={t("jobs.post.position.requirementsPlaceholder")}
+                                    className="resize-none"
+                                    value={requirements}
+                                    onChange={(event) => setValue("requirements", event.target.value)}
+                                />
+                            </TextField>
+                        ),
+                    ]} />
+            )}
+        />
     )
 }

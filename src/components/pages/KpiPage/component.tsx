@@ -3,7 +3,7 @@ import { AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Button } from "@/components/atoms/buttons/Button"
@@ -95,8 +95,8 @@ export interface KpiPageProps {
 
 /**
  * One row's inner content — leading icon + label, current/target, the progress bar,
- * the quick-pick preset buttons, and the coin-reward claim line. `SurfaceListCardItem`
- * (the row's own frame) and `FlexWrapButtonRadio` carry no `isSkeleton` of their own
+ * the quick-pick preset buttons, and the coin-reward claim line. `SurfaceCardList`
+ * free-form `content` and `FlexWrapButtonRadio` carry no `isSkeleton` of their own
  * (`missingSkeletonSupport`), so the preset row is mirrored inline with `Skeleton.Button`
  * right where it sits rather than built as a second, hand-kept tree.
  */
@@ -275,15 +275,13 @@ export const _KpiPage = ({
             body={() => (
                 <StackV gap={7} items={[
                     headerZone,
-                    () => (
-                        <SurfaceListCard>
-                            {rows.map((row) => (
-                                <SurfaceListCardItem key={row.key}>
-                                    {kpiRowBody(row, isSkeleton, labels)}
-                                </SurfaceListCardItem>
-                            ))}
-                        </SurfaceListCard>
-                    ),
+                    () => {
+                        const kpiItems: Array<SurfaceCardListItem> = rows.map((row) => ({
+                            key: row.key,
+                            content: () => kpiRowBody(row, isSkeleton, labels),
+                        }))
+                        return <SurfaceCardList items={kpiItems} />
+                    },
                 ]}
                 />
             )}

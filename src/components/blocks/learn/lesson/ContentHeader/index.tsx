@@ -20,7 +20,8 @@ import {
 } from "../ReadBadge"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckListCard"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCardHeader } from "@/components/composites/cards/SurfaceCard/surface-card-header"
+import { StackV } from "@/components/frames/Stack"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
 import type { ResponsiveBreadcrumbItem } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
@@ -93,16 +94,25 @@ export const ContentHeader = () => {
             />
             {/* "What you'll learn" — first CONTENT block, gap-10 below the header above */}
             {outcomes.length > 0 ? (
-                <LabeledCard frameless label={t("content.outcomes")}>
-                    {/* shared check-list card (same as course value-props / challenge outputs) */}
-                    <CheckListCard>
-                        {outcomes.map((outcome) => (
-                            <CheckListItem key={outcome.id}>
-                                <Typography type="body-sm">{outcome.text}</Typography>
-                            </CheckListItem>
-                        ))}
-                    </CheckListCard>
-                </LabeledCard>
+                // B37 Decision E: CheckListCard self-frames — StackV label-field
+                // replaces LabeledCard frameless around the checklist.
+                <StackV
+                    gap={3}
+                    principle="label-field"
+                    explain="Section label above its control is label-field — not title-subtitle (no paired title/supporting lines), not name-handle, not icon-text; the label names the surface the way a field label names its control."
+                    items={[
+                        () => <SurfaceCardHeader label={t("content.outcomes")} />,
+                        () => (
+                            <CheckListCard>
+                                {outcomes.map((outcome) => (
+                                    <CheckListItem key={outcome.id}>
+                                        <Typography type="body-sm">{outcome.text}</Typography>
+                                    </CheckListItem>
+                                ))}
+                            </CheckListCard>
+                        ),
+                    ]}
+                />
             ) : null}
         </div>
     )

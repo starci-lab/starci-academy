@@ -31,6 +31,7 @@ export const CourseHero = ({ className }: CourseHeroProps) => {
 
     return (
         <PageHeader
+            identity={{ tier: "page", component: "CourseHero" }}
             className={className}
             breadcrumb={<LearnBreadcrumb />}
             title={title}

@@ -2,6 +2,7 @@ import type { ComponentType, SVGProps } from "react"
 import { Alert, type AlertStatus } from "@/components/atoms/feedback/Alert"
 import { Button } from "@/components/atoms/buttons/Button"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
+import type { CallerIdentity } from "@/components/frames/_identity"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -81,6 +82,8 @@ interface CalloutOwnProps {
     onClose?: () => void
     /** Accessible label for the close button. */
     closeAriaLabel?: string
+    /** Caller identity forwarded to the `Alert` root (no wrapper). */
+    identity?: CallerIdentity
 }
 
 /**
@@ -118,6 +121,7 @@ export const Callout = (props: CalloutProps) => {
         onAction,
         onClose,
         closeAriaLabel,
+        identity,
     } = props
     // Narrowed off the discriminant so `title` stays required in the live branch —
     // destructuring it straight off `props` above would widen it to `string | undefined`
@@ -144,6 +148,7 @@ export const Callout = (props: CalloutProps) => {
             }
             onClose={onClose}
             closeAriaLabel={closeAriaLabel}
+            identity={identity}
         />
     )
 }

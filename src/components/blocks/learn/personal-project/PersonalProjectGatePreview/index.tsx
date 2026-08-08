@@ -5,9 +5,10 @@ import { PlayIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux/hooks"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCardHeader } from "@/components/composites/cards/SurfaceCard/surface-card-header"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { Grid } from "@/components/frames/Grid"
+import { StackV } from "@/components/frames/Stack"
 
 /** Course slugs that have a dedicated capstone teaser (`finalProject.gatePreview.<key>`). */
 type CourseSlug = "fullstack-mastery" | "system-design-mastery" | "devops-mastery"
@@ -27,8 +28,8 @@ const COURSE_I18N_KEY: Record<CourseSlug, string> = {
 /**
  * Non-interactive MOCK teaser of the Personal Project (capstone) surface — mirrors
  * {@link import("../PersonalProjectDashboard").PersonalProjectDashboard}'s block
- * layout (hero {@link ContinueCard} + {@link ProgressMeter} + item grid in a
- * {@link LabeledCard}) using the REAL milestone-0 task titles of the active course
+ * layout (hero {@link ContinueCard} + {@link ProgressMeter} + item grid under a
+ * {@link SurfaceCardHeader}) using the REAL milestone-0 task titles of the active course
  * (`state.course.displayId`, not fabricated copy), fed to
  * {@link import("../../shared/EnrollGate").EnrollGate} as its `preview` so a trial
  * viewer sees the actual hands-on work behind the faded enroll card. Decorative only
@@ -58,40 +59,47 @@ export const PersonalProjectGatePreview = () => {
                     showValue
                 />
             </div>
-            <LabeledCard
-                label={t(`finalProject.gatePreview.${key}.milestone`)}
-                frameless
-            >
-                <Grid
-                    columns={{ base: 1, sm: 2 }}
-                    principle="sibling-stack"
-                    explain="Gate-preview task tiles share one section grid — not block-boundary."
-                    items={[
-                        {
-                            key: "item1",
-                            content: () => (
-                                <ContinueCard
-                                    variant="item"
-                                    title={t(`finalProject.gatePreview.${key}.item1Title`)}
-                                    subtitle={taskMeta}
-                                    ctaLabel={t("finalProject.dashboard.continue")}
-                                />
-                            ),
-                        },
-                        {
-                            key: "item2",
-                            content: () => (
-                                <ContinueCard
-                                    variant="item"
-                                    title={t(`finalProject.gatePreview.${key}.item2Title`)}
-                                    subtitle={taskMeta}
-                                    ctaLabel={t("finalProject.dashboard.continue")}
-                                />
-                            ),
-                        },
-                    ]}
-                />
-            </LabeledCard>
+            {/* B37 Decision E: ContinueCard tiles self-frame — StackV label-field
+                replaces LabeledCard frameless around the grid. */}
+            <StackV
+                gap={3}
+                principle="label-field"
+                explain="Section label above its control is label-field — not title-subtitle (no paired title/supporting lines), not name-handle, not icon-text; the label names the surface the way a field label names its control."
+                items={[
+                    () => <SurfaceCardHeader label={t(`finalProject.gatePreview.${key}.milestone`)} />,
+                    () => (
+                        <Grid
+                            columns={{ base: 1, sm: 2 }}
+                            principle="sibling-stack"
+                            explain="Gate-preview task tiles share one section grid — not block-boundary."
+                            items={[
+                                {
+                                    key: "item1",
+                                    content: () => (
+                                        <ContinueCard
+                                            variant="item"
+                                            title={t(`finalProject.gatePreview.${key}.item1Title`)}
+                                            subtitle={taskMeta}
+                                            ctaLabel={t("finalProject.dashboard.continue")}
+                                        />
+                                    ),
+                                },
+                                {
+                                    key: "item2",
+                                    content: () => (
+                                        <ContinueCard
+                                            variant="item"
+                                            title={t(`finalProject.gatePreview.${key}.item2Title`)}
+                                            subtitle={taskMeta}
+                                            ctaLabel={t("finalProject.dashboard.continue")}
+                                        />
+                                    ),
+                                },
+                            ]}
+                        />
+                    ),
+                ]}
+            />
         </div>
     )
 }

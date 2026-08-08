@@ -23,7 +23,7 @@ import type { QueryMyCreditUsageHistoryItem } from "@/modules/api/graphql/querie
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { InfiniteScrollSentinel } from "@/components/blocks/async/InfiniteScrollSentinel"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { SegmentBar } from "@/components/composites/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StackV } from "@/components/frames/Stack"
@@ -123,6 +123,23 @@ export const AiUsageHistory = () => {
             }))
     }, [items, t])
 
+    const historyItems: Array<SurfaceCardListItem> = items.map((item) => ({
+        key: item.id,
+        title: item.model ?? t("aiQuota.history.autoModel"),
+        subtitle: `${purposeLabel(item, t)} · ${dayjs(item.createdAt).format("HH:mm DD/MM")}`,
+        trailing: () => (
+            <Chip
+                size="sm"
+                variant="soft"
+                color={item.credits > 0 ? "warning" : "success"}
+            >
+                <Chip.Label>
+                    {`${item.credits} ${t("aiQuota.history.creditsUnit")}`}
+                </Chip.Label>
+            </Chip>
+        ),
+    }))
+
     return (
         <AsyncContent
             isLoading={isLoading && items.length === 0}
@@ -202,34 +219,16 @@ export const AiUsageHistory = () => {
                             )]
                             : []),
                         () => (
-                            <LabeledCard label={t("aiQuota.history.title")} frameless>
-                                <ScrollShadow className="max-h-96">
-                                    <SurfaceListCard>
-                                        {items.map((item) => (
-                                            <SurfaceListCardRow
-                                                key={item.id}
-                                                title={item.model ?? t("aiQuota.history.autoModel")}
-                                                subtitle={`${purposeLabel(item, t)} · ${dayjs(item.createdAt).format("HH:mm DD/MM")}`}
-                                                trailing={() => (
-                                                    <Chip
-                                                        size="sm"
-                                                        variant="soft"
-                                                        color={item.credits > 0 ? "warning" : "success"}
-                                                    >
-                                                        <Chip.Label>
-                                                            {`${item.credits} ${t("aiQuota.history.creditsUnit")}`}
-                                                        </Chip.Label>
-                                                    </Chip>
-                                                )}
-                                            />
-                                        ))}
-                                    </SurfaceListCard>
-                                    <InfiniteScrollSentinel
-                                        onReach={() => setSize((current) => current + 1)}
-                                        disabled={!hasMore || isLoadingMore}
-                                    />
-                                </ScrollShadow>
-                            </LabeledCard>
+                            <ScrollShadow className="max-h-96">
+                                <SurfaceCardList
+                                    label={t("aiQuota.history.title")}
+                                    items={historyItems}
+                                />
+                                <InfiniteScrollSentinel
+                                    onReach={() => setSize((current) => current + 1)}
+                                    disabled={!hasMore || isLoadingMore}
+                                />
+                            </ScrollShadow>
                         ),
                     ]}
                 />

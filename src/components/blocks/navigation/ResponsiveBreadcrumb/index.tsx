@@ -5,6 +5,7 @@ import type { ReactNode } from "react"
 import { Breadcrumbs, cn } from "@heroui/react"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { HideAbove } from "@/components/frames/HideAbove"
+import { resolveIdentity, type CallerIdentity } from "@/components/frames/_identity"
 
 /** Collapse the full trail into a single "Back" once the path is this deep. */
 const LONG_TRAIL_MIN = 4
@@ -23,6 +24,11 @@ export interface ResponsiveBreadcrumbItem {
 export interface ResponsiveBreadcrumbProps {
     /** The full trail, root → current (current last, usually without `onPress`). */
     items: Array<ResponsiveBreadcrumbItem>
+    /**
+     * Caller identity resolved on the always-mounted `Breadcrumbs` host (no wrapper).
+     * The mobile/long-trail `BackLink` co-path does not accept CallerIdentity.
+     */
+    identity?: CallerIdentity
 }
 
 /**
@@ -38,7 +44,9 @@ export interface ResponsiveBreadcrumbProps {
  * @see Story: .storybook/stories/blocks/navigation/ResponsiveBreadcrumb/ResponsiveBreadcrumb.stories
  */
 export const ResponsiveBreadcrumb = ({
-    items}: ResponsiveBreadcrumbProps) => {
+    items,
+    identity,
+}: ResponsiveBreadcrumbProps) => {
     // back target = deepest ancestor we can navigate to (skips the current crumb)
     const parent = [...items].reverse().find((item) => item.onPress)
     const isLongTrail = items.length >= LONG_TRAIL_MIN
@@ -46,8 +54,9 @@ export const ResponsiveBreadcrumb = ({
 
     return (
         <>
-            {/* desktop + short trail: the full path */}
+            {/* desktop + short trail: the full path — durable host for identity (always mounted) */}
             <Breadcrumbs
+                {...resolveIdentity(identity, { tier: "block", name: "ResponsiveBreadcrumb" })}
                 className={cn(isLongTrail ? "hidden" : "hidden @app-sm:flex")}
             >
                 {items.map((item) => (

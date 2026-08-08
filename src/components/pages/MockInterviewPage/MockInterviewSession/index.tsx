@@ -27,7 +27,7 @@ import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
 import { Callout } from "@/components/composites/feedback/Callout"
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { ModalShell } from "@/components/composites/layout/ModalShell"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
@@ -1621,197 +1621,199 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                                 </button>
                                             ),
                                             () => (configOpen ? (
-                                                <LabeledCard
+                                                <SurfaceCard
                                                     label={t("mockInterview.configTitle")}
                                                     labelEnd={configMode === "auto" ? t("mockInterview.autoCaption") : undefined}
-                                                >
-                                                    <StackV
-                                                        gap={4}
-                                                        items={[
-                                                            () => (
-                                                                <StackV gap={3} items={[
-                                                                    () => <Label>{t("common.sessionNameLabel")}</Label>,
-                                                                    () => (
-                                                                        <TextField variant="secondary" className="w-full">
-                                                                            <Input
-                                                                                className="w-full"
-                                                                                placeholder={t("common.sessionNamePlaceholder")}
-                                                                                name="sessionName"
-                                                                                value={sessionName}
-                                                                                onChange={(event) => setSessionName(event.target.value)}
-                                                                                maxLength={80}
+
+                                                    body={() => (
+                                                        <StackV
+                                                            gap={4}
+                                                            items={[
+                                                                () => (
+                                                                    <StackV gap={3} items={[
+                                                                        () => <Label>{t("common.sessionNameLabel")}</Label>,
+                                                                        () => (
+                                                                            <TextField variant="secondary" className="w-full">
+                                                                                <Input
+                                                                                    className="w-full"
+                                                                                    placeholder={t("common.sessionNamePlaceholder")}
+                                                                                    name="sessionName"
+                                                                                    value={sessionName}
+                                                                                    onChange={(event) => setSessionName(event.target.value)}
+                                                                                    maxLength={80}
+                                                                                />
+                                                                            </TextField>
+                                                                        ),
+                                                                    ]} />
+                                                                ),
+                                                                () => (
+                                                                    <StackV gap={3} items={[
+                                                                        () => <Label>{t("mockInterview.modeToggleLabel")}</Label>,
+                                                                        () => (
+                                                                            <FlexWrapButtonRadio
+                                                                                ariaLabel={t("mockInterview.modeToggleLabel")}
+                                                                                value={configMode}
+                                                                                onChange={setConfigMode}
+                                                                                items={[
+                                                                                    { value: "auto" as const, content: t("mockInterview.modeAuto") },
+                                                                                    { value: "configurable" as const, content: t("mockInterview.modeConfigurable") },
+                                                                                ]}
                                                                             />
-                                                                        </TextField>
-                                                                    ),
-                                                                ]} />
-                                                            ),
-                                                            () => (
-                                                                <StackV gap={3} items={[
-                                                                    () => <Label>{t("mockInterview.modeToggleLabel")}</Label>,
-                                                                    () => (
-                                                                        <FlexWrapButtonRadio
-                                                                            ariaLabel={t("mockInterview.modeToggleLabel")}
-                                                                            value={configMode}
-                                                                            onChange={setConfigMode}
-                                                                            items={[
-                                                                                { value: "auto" as const, content: t("mockInterview.modeAuto") },
-                                                                                { value: "configurable" as const, content: t("mockInterview.modeConfigurable") },
-                                                                            ]}
-                                                                        />
-                                                                    ),
-                                                                ]} />
-                                                            ),
-                                                            ...(configMode === "configurable"
-                                                                ? [() => (
-                                                                    <Box principle="cell-pad" className="rounded-3xl border border-default bg-transparent p-3">
-                                                                        <StackV
-                                                                            gap={4}
-                                                                            items={[
-                                                                                () => (
-                                                                                    <StackV gap={3} items={[
-                                                                                        () => <Label>{t("mockInterview.questionCountLabel")}</Label>,
-                                                                                        () => (
-                                                                                            <FlexWrapButtonRadio
-                                                                                                ariaLabel={t("mockInterview.questionCountLabel")}
-                                                                                                value={questionCount}
-                                                                                                onChange={setQuestionCount}
-                                                                                                items={QUESTION_COUNT_OPTIONS.map((count) => ({
-                                                                                                    value: count,
-                                                                                                    content: t("mockInterview.questionCountOption", { count }),
-                                                                                                }))}
-                                                                                            />
-                                                                                        ),
-                                                                                    ]} />
-                                                                                ),
-                                                                                () => (
-                                                                                    <StackV gap={3} items={[
-                                                                                        () => <Label>{t("mockInterview.kindPickerLabel")}</Label>,
-                                                                                        () => (
-                                                                                            <FlexWrapButtonRadio<KindPickerValue>
-                                                                                                multiple
-                                                                                                ariaLabel={t("mockInterview.kindPickerLabel")}
-                                                                                                values={selectedKinds.length === 0 ? [KIND_ALL] : selectedKinds}
-                                                                                                onToggle={(value) => {
-                                                                                                    if (value === KIND_ALL) {
-                                                                                                        setSelectedKinds([])
-                                                                                                        return
-                                                                                                    }
-                                                                                                    setSelectedKinds((previous) => (previous.includes(value)
-                                                                                                        ? previous.filter((entry) => entry !== value)
-                                                                                                        : [...previous, value]))
-                                                                                                }}
-                                                                                                items={[
-                                                                                                    { value: KIND_ALL, content: t("mockInterview.kindAll") },
-                                                                                                    ...KIND_OPTIONS.map((kind) => ({
-                                                                                                        value: kind,
-                                                                                                        content: t(`mockInterview.kind.${kind}`),
-                                                                                                    })),
-                                                                                                ]}
-                                                                                            />
-                                                                                        ),
-                                                                                    ]} />
-                                                                                ),
-                                                                                () => (
-                                                                                    <StackV gap={3} items={[
-                                                                                        () => <Label>{t("mockInterview.answerModeLabel")}</Label>,
-                                                                                        () => (
-                                                                                            <FlexWrapButtonRadio
-                                                                                                ariaLabel={t("mockInterview.answerModeLabel")}
-                                                                                                value={answerMode}
-                                                                                                onChange={setAnswerMode}
-                                                                                                items={(["voice", "text", "both"] as const).map((value) => ({
-                                                                                                    value,
-                                                                                                    content: t(`mockInterview.answerMode.${value}`),
-                                                                                                }))}
-                                                                                            />
-                                                                                        ),
-                                                                                    ]} />
-                                                                                ),
-                                                                            ]}
-                                                                        />
-                                                                    </Box>
-                                                                )]
-                                                                : []),
-                                                            () => (
-                                                                <StackV gap={3} items={[
-                                                                    () => <Label>{t("mockInterview.tierLabel")}</Label>,
-                                                                    () => (
-                                                                        <FlexWrapButtonRadio
-                                                                            ariaLabel={t("mockInterview.tierLabel")}
-                                                                            value={tier}
-                                                                            onChange={setTier}
-                                                                            items={TIERS.map((value) => ({
-                                                                                value,
-                                                                                content: t(`mockInterview.tier.${value}`),
-                                                                            }))}
-                                                                        />
-                                                                    ),
-                                                                    () => (
-                                                                        <Typography type="body-xs" color="muted">
-                                                                            {t("mockInterview.tierCaption")}
-                                                                        </Typography>
-                                                                    ),
-                                                                ]} />
-                                                            ),
-                                                            () => (
-                                                                <StackV gap={3} items={[
-                                                                    () => <Label>{t("mockInterview.langLabel")}</Label>,
-                                                                    () => (
-                                                                        <FlexWrapButtonRadio
-                                                                            multiple
-                                                                            ariaLabel={t("mockInterview.langLabel")}
-                                                                            values={interviewLangs}
-                                                                            onToggle={toggleInterviewLang}
-                                                                            items={DEFAULT_PROGRAMMING_LANGUAGES.map((value) => ({
-                                                                                value,
-                                                                                content: getLanguageLabel(value),
-                                                                            }))}
-                                                                        />
-                                                                    ),
-                                                                    () => (
-                                                                        <Typography type="body-xs" color="muted">
-                                                                            {t("mockInterview.langCaption")}
-                                                                        </Typography>
-                                                                    ),
-                                                                ]} />
-                                                            ),
-                                                            () => (
-                                                                <StackV gap={3} items={[
-                                                                    () => <Label>{t("mockInterview.modelLabel")}</Label>,
-                                                                    () => (
-                                                                        <Cluster
-                                                                            gap={4}
-                                                                            principle="chip-row"
-                                                                            align="center"
-                                                                            items={[
-                                                                                () => (
-                                                                                    <GradeModelDropdown
-                                                                                        isButton
-                                                                                        models={gradeModels}
-                                                                                        selection={selection}
-                                                                                        canPremium={canPremium}
-                                                                                        task={AiModelTask.Grading}
-                                                                                        floor={AiModelCategory.Medium}
-                                                                                        showAutoLane
-                                                                                        onSelect={setSelection}
-                                                                                        onUpgrade={() => router.push(`/${locale}/profile/settings/ai-subscription`)}
-                                                                                    />
-                                                                                ),
-                                                                                () => (
-                                                                                    <GradeCreditCaption
-                                                                                        creditUsage={aiQuotaSwr.data}
-                                                                                        hasPinnedModel={Boolean(selection.model)}
-                                                                                        autoCreditCost={undefined}
-                                                                                    />
-                                                                                ),
-                                                                            ]}
-                                                                        />
-                                                                    ),
-                                                                ]} />
-                                                            ),
-                                                        ]}
-                                                    />
-                                                </LabeledCard>
+                                                                        ),
+                                                                    ]} />
+                                                                ),
+                                                                ...(configMode === "configurable"
+                                                                    ? [() => (
+                                                                        <Box principle="cell-pad" className="rounded-3xl border border-default bg-transparent p-3">
+                                                                            <StackV
+                                                                                gap={4}
+                                                                                items={[
+                                                                                    () => (
+                                                                                        <StackV gap={3} items={[
+                                                                                            () => <Label>{t("mockInterview.questionCountLabel")}</Label>,
+                                                                                            () => (
+                                                                                                <FlexWrapButtonRadio
+                                                                                                    ariaLabel={t("mockInterview.questionCountLabel")}
+                                                                                                    value={questionCount}
+                                                                                                    onChange={setQuestionCount}
+                                                                                                    items={QUESTION_COUNT_OPTIONS.map((count) => ({
+                                                                                                        value: count,
+                                                                                                        content: t("mockInterview.questionCountOption", { count }),
+                                                                                                    }))}
+                                                                                                />
+                                                                                            ),
+                                                                                        ]} />
+                                                                                    ),
+                                                                                    () => (
+                                                                                        <StackV gap={3} items={[
+                                                                                            () => <Label>{t("mockInterview.kindPickerLabel")}</Label>,
+                                                                                            () => (
+                                                                                                <FlexWrapButtonRadio<KindPickerValue>
+                                                                                                    multiple
+                                                                                                    ariaLabel={t("mockInterview.kindPickerLabel")}
+                                                                                                    values={selectedKinds.length === 0 ? [KIND_ALL] : selectedKinds}
+                                                                                                    onToggle={(value) => {
+                                                                                                        if (value === KIND_ALL) {
+                                                                                                            setSelectedKinds([])
+                                                                                                            return
+                                                                                                        }
+                                                                                                        setSelectedKinds((previous) => (previous.includes(value)
+                                                                                                            ? previous.filter((entry) => entry !== value)
+                                                                                                            : [...previous, value]))
+                                                                                                    }}
+                                                                                                    items={[
+                                                                                                        { value: KIND_ALL, content: t("mockInterview.kindAll") },
+                                                                                                        ...KIND_OPTIONS.map((kind) => ({
+                                                                                                            value: kind,
+                                                                                                            content: t(`mockInterview.kind.${kind}`),
+                                                                                                        })),
+                                                                                                    ]}
+                                                                                                />
+                                                                                            ),
+                                                                                        ]} />
+                                                                                    ),
+                                                                                    () => (
+                                                                                        <StackV gap={3} items={[
+                                                                                            () => <Label>{t("mockInterview.answerModeLabel")}</Label>,
+                                                                                            () => (
+                                                                                                <FlexWrapButtonRadio
+                                                                                                    ariaLabel={t("mockInterview.answerModeLabel")}
+                                                                                                    value={answerMode}
+                                                                                                    onChange={setAnswerMode}
+                                                                                                    items={(["voice", "text", "both"] as const).map((value) => ({
+                                                                                                        value,
+                                                                                                        content: t(`mockInterview.answerMode.${value}`),
+                                                                                                    }))}
+                                                                                                />
+                                                                                            ),
+                                                                                        ]} />
+                                                                                    ),
+                                                                                ]}
+                                                                            />
+                                                                        </Box>
+                                                                    )]
+                                                                    : []),
+                                                                () => (
+                                                                    <StackV gap={3} items={[
+                                                                        () => <Label>{t("mockInterview.tierLabel")}</Label>,
+                                                                        () => (
+                                                                            <FlexWrapButtonRadio
+                                                                                ariaLabel={t("mockInterview.tierLabel")}
+                                                                                value={tier}
+                                                                                onChange={setTier}
+                                                                                items={TIERS.map((value) => ({
+                                                                                    value,
+                                                                                    content: t(`mockInterview.tier.${value}`),
+                                                                                }))}
+                                                                            />
+                                                                        ),
+                                                                        () => (
+                                                                            <Typography type="body-xs" color="muted">
+                                                                                {t("mockInterview.tierCaption")}
+                                                                            </Typography>
+                                                                        ),
+                                                                    ]} />
+                                                                ),
+                                                                () => (
+                                                                    <StackV gap={3} items={[
+                                                                        () => <Label>{t("mockInterview.langLabel")}</Label>,
+                                                                        () => (
+                                                                            <FlexWrapButtonRadio
+                                                                                multiple
+                                                                                ariaLabel={t("mockInterview.langLabel")}
+                                                                                values={interviewLangs}
+                                                                                onToggle={toggleInterviewLang}
+                                                                                items={DEFAULT_PROGRAMMING_LANGUAGES.map((value) => ({
+                                                                                    value,
+                                                                                    content: getLanguageLabel(value),
+                                                                                }))}
+                                                                            />
+                                                                        ),
+                                                                        () => (
+                                                                            <Typography type="body-xs" color="muted">
+                                                                                {t("mockInterview.langCaption")}
+                                                                            </Typography>
+                                                                        ),
+                                                                    ]} />
+                                                                ),
+                                                                () => (
+                                                                    <StackV gap={3} items={[
+                                                                        () => <Label>{t("mockInterview.modelLabel")}</Label>,
+                                                                        () => (
+                                                                            <Cluster
+                                                                                gap={4}
+                                                                                principle="chip-row"
+                                                                                align="center"
+                                                                                items={[
+                                                                                    () => (
+                                                                                        <GradeModelDropdown
+                                                                                            isButton
+                                                                                            models={gradeModels}
+                                                                                            selection={selection}
+                                                                                            canPremium={canPremium}
+                                                                                            task={AiModelTask.Grading}
+                                                                                            floor={AiModelCategory.Medium}
+                                                                                            showAutoLane
+                                                                                            onSelect={setSelection}
+                                                                                            onUpgrade={() => router.push(`/${locale}/profile/settings/ai-subscription`)}
+                                                                                        />
+                                                                                    ),
+                                                                                    () => (
+                                                                                        <GradeCreditCaption
+                                                                                            creditUsage={aiQuotaSwr.data}
+                                                                                            hasPinnedModel={Boolean(selection.model)}
+                                                                                            autoCreditCost={undefined}
+                                                                                        />
+                                                                                    ),
+                                                                                ]}
+                                                                            />
+                                                                        ),
+                                                                    ]} />
+                                                                ),
+                                                            ]}
+                                                        />
+                                                    )}
+                                                />
                                             ) : null),
                                         ]}
                                     />

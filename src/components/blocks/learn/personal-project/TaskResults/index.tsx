@@ -9,7 +9,7 @@ import {
 } from "../TaskResultsSkeleton"
 import { Score } from "@/components/blocks/stats/Score"
 import { StarCiAIBadge } from "@/components/blocks/learn/StarCiAIBadge"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackV } from "@/components/frames/Stack"
 import { useQueryUserPersonalTaskAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptsSwr"
@@ -44,18 +44,19 @@ export const TaskResults = () => {
     }
 
     return (
-        <LabeledCard
+        <SurfaceCard
             identity={{ tier: "block", component: "TaskResults" }}
             label={t("task.resultsTitle")}
             action={() => <StarCiAIBadge />}
-        >
-            <StackV
-                gap={4}
-                items={[
-                    () => <Score current={latestAttempt.score ?? 0} max={20} />,
-                    () => <Typography size="sm" color="muted" text={shortFeedback} />,
-                ]}
-            />
-        </LabeledCard>
+            body={() => (
+                <StackV
+                    gap={4}
+                    items={[
+                        () => <Score current={latestAttempt.score ?? 0} max={20} />,
+                        () => <Typography size="sm" color="muted" text={shortFeedback} />,
+                    ]}
+                />
+            )}
+        />
     )
 }

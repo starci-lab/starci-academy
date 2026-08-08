@@ -7,7 +7,7 @@ import { useAppSelector } from "@/redux/hooks"
 import { queryCodingLeaderboard } from "@/modules/api/graphql/queries/query-coding-leaderboard"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { UserCell } from "@/components/composites/lists/UserCell"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
@@ -51,7 +51,7 @@ interface LeaderboardRowProps {
  * @param props - {@link LeaderboardRowProps}
  */
 const LeaderboardRow = ({ rank, entry, isViewer = false, solvedLabel, youLabel, isSkeleton = false }: LeaderboardRowProps) => (
-    <SurfaceListCardItem className={!isSkeleton && isViewer ? "bg-accent-soft" : undefined}>
+    <Box className={!isSkeleton && isViewer ? "-m-3 bg-accent-soft p-3" : undefined}>
         <StackH
             gap={4}
             align="center"
@@ -106,7 +106,7 @@ const LeaderboardRow = ({ rank, entry, isViewer = false, solvedLabel, youLabel, 
                 ),
             ]}
         />
-    </SurfaceListCardItem>
+    </Box>
 )
 
 /**
@@ -151,28 +151,33 @@ export const CodingLeaderboard = () => {
         return <AsyncContentEmpty title={t("PracticeHubPage.leaderboard.empty")} />
     }
 
+    const listItems: Array<SurfaceCardListItem> = isSkeleton
+        ? Array.from({ length: SKELETON_ROWS }, (_row, index) => ({
+            key: `skeleton-${index}`,
+            content: () => <LeaderboardRow rank={index + 1} isSkeleton />,
+        }))
+        : entries.map((entry, index) => ({
+            key: entry.userId,
+            content: () => (
+                <LeaderboardRow
+                    rank={index + 1}
+                    entry={entry}
+                    isViewer={!!viewerId && entry.userId === viewerId}
+                    solvedLabel={t("PracticeHubPage.leaderboard.solved", { count: entry.solvedCount })}
+                    youLabel={t("PracticeHubPage.leaderboard.you")}
+                />
+            ),
+        }))
+
     return (
         // the board keeps a capped reading measure — a width no closed union carries
         <Box className="mx-auto w-full max-w-2xl" principle="center-measure"
             explain="Caps reading width so long copy does not stretch edge-to-edge across the viewport."
         >
-            <SurfaceListCard identity={{ tier: "block", component: "CodingLeaderboard" }}>
-                {isSkeleton
-                    ? Array.from({ length: SKELETON_ROWS }, (_row, index) => (
-                        <LeaderboardRow key={index} rank={index + 1} isSkeleton />
-                    ))
-                    : entries.map((entry, index) => (
-                        // rank is implicit array order (board is pre-sorted by solvedCount desc)
-                        <LeaderboardRow
-                            key={entry.userId}
-                            rank={index + 1}
-                            entry={entry}
-                            isViewer={!!viewerId && entry.userId === viewerId}
-                            solvedLabel={t("PracticeHubPage.leaderboard.solved", { count: entry.solvedCount })}
-                            youLabel={t("PracticeHubPage.leaderboard.you")}
-                        />
-                    ))}
-            </SurfaceListCard>
+            <SurfaceCardList
+                identity={{ tier: "block", component: "CodingLeaderboard" }}
+                items={listItems}
+            />
         </Box>
     )
 }

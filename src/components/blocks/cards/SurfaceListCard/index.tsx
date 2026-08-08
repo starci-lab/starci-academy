@@ -53,7 +53,14 @@ const RowAnchor = ({
     )
 }
 
-/** Props for {@link SurfaceListCard}. */
+/**
+ * Props for {@link SurfaceListCard}.
+ *
+ * Legacy children API — migrate to `SurfaceCardListProps` (`items`,
+ * `SurfaceLabelProps`, `emptyState` / `error` / `errorState`, `description`,
+ * `isSkeleton`, `identity`). B37 Decision F: keep the inherited `className`
+ * door until every consumer is migrated; do not widen it.
+ */
 export interface SurfaceListCardProps extends WithClassNames<undefined> {
     /** The rows ({@link SurfaceListCardRow}) of the joined list. */
     children: React.ReactNode
@@ -64,6 +71,7 @@ export interface SurfaceListCardProps extends WithClassNames<undefined> {
      * (dark mode) — nested cards need a border to delineate (`components/card.md`
      * §"surface-in-surface / nested" — KEEP border, do NOT convert to shadow).
      * Defaults to `false` (existing top-level usages keep the shadow look).
+     * Prefer `variant="nested"` on `SurfaceCardList` for new call sites.
      */
     bordered?: boolean
     /**
@@ -75,6 +83,10 @@ export interface SurfaceListCardProps extends WithClassNames<undefined> {
 }
 
 /**
+ * @deprecated B37 legacy shell — prefer `SurfaceCardList`
+ * (`composites/cards/SurfaceCard` `.List`). Kept compilable for remaining
+ * children-based call sites; do not add new consumers.
+ *
  * Bounded SURFACE list card: one `bg-surface` container with a border + large
  * radius, holding {@link SurfaceListCardRow}s edge-to-edge (the `Accordion
  * variant="surface"` skin — NOT a real accordion). Each row owns the FULL-BLEED
@@ -89,9 +101,12 @@ export interface SurfaceListCardProps extends WithClassNames<undefined> {
  * REUSE NOTE: `composites/cards/SurfaceCard`'s `.List` member is the newer,
  * DATA-driven (`items`) sibling of this exact shape (its own header even says
  * "was `SurfaceListCard` + its two rows"). This folder keeps the original
- * children-based API on purpose — ~90 call sites across the app compose it with
- * JSX rows today, and moving them to `items` is a call-site migration outside
- * this pass's scope, not a rewrite this file can make alone.
+ * children-based API on purpose — call sites still compose it with JSX rows
+ * today, and moving them to `items` is a call-site migration outside this
+ * pass's scope, not a rewrite this file can make alone.
+ *
+ * B37 Decision F: the public `className` door stays until consumers are gone —
+ * burn it only at zero remaining live users. Do not add further CSS doors.
  *
  * @param props - {@link SurfaceListCardProps}
  * @see Story: .storybook/stories/blocks/cards/SurfaceListCard/SurfaceListCard.stories

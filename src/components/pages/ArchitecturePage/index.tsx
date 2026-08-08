@@ -9,7 +9,7 @@ import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
 import { FillAvailable } from "@/components/frames/FillAvailable"
 import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { pathConfig } from "@/resources/path"
 import { ArchitectureRail } from "./ArchitectureRail"
 import { ArchitectureMobileNav } from "./ArchitectureRail/ArchitectureMobileNav"
@@ -142,9 +142,7 @@ export const ArchitecturePage = () => {
 
                         <NodeDissectionPanel nodeId={node} healthByName={healthByName} />
 
-                        <LabeledCard label={t("curl.heading")}>
-                            <CurlTester />
-                        </LabeledCard>
+                        <SurfaceCard label={t("curl.heading")} body={CurlTester} />
 
                         {/* course-CTA band — closes the loop: this real, live system is
                             exactly what the courses teach you to build → go learn to build it */}

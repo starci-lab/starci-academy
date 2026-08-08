@@ -69,5 +69,10 @@ export const SettingsBreadcrumb = ({
         { key: "current", label: current },
     ]
 
-    return <ResponsiveBreadcrumb items={items} />
+    return (
+        <ResponsiveBreadcrumb
+            identity={{ tier: "block", component: "SettingsBreadcrumb" }}
+            items={items}
+        />
+    )
 }

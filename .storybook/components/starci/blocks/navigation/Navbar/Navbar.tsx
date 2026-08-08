@@ -33,6 +33,7 @@ import { AsyncContent } from "@sb-components/composites/async/AsyncContent/Async
 import { ListRow } from "@sb-components/composites/lists/List/List"
 import { DrawerShell } from "@sb-components/composites/layout/DrawerShell/DrawerShell"
 import { HideAbove } from "@sb-components/frames/HideAbove/HideAbove"
+import { NavbarFrame } from "@sb-components/frames/NavbarFrame/NavbarFrame"
 import { ScrollArea } from "@sb-components/frames/ScrollArea/ScrollArea"
 import { ShowFrom } from "@sb-components/frames/ShowFrom/ShowFrom"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
@@ -280,9 +281,9 @@ const Navbar = ({
     ))
 
     return (
-        <nav className="sticky top-0 z-50 border-b border-default bg-surface">
-            {/* primary row — fixed 4rem tall, matching the real bar's height contract */}
-            <div className="h-16 min-h-16">
+        <NavbarFrame
+            identity={{ tier: "block", component: "Navbar" }}
+            primary={() => (
                 <StackH
                     principle="block-boundary"
                     explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
@@ -555,73 +556,74 @@ const Navbar = ({
                         ),
                     ]}
                 />
-            </div>
-
-            {/* mobile navigation drawer — the ONE local (non-overlay-store) drawer this run's
-                contract calls for; every other overlay in this system opens through the global
-                store (see canon Rule 13), this one is controlled straight by the caller. */}
-            <DrawerShell
-                isOpen={isMobileDrawerOpen}
-                onOpenChange={onMobileDrawerOpenChange}
-                placement="right"
-                title="Mobile menu"
-                body={() => (
-                    <StackV
-                        principle="group-boundary"
-                        explain="Separates mobile route list from language/theme controls so each region keeps its own seam owner — not sibling-stack, because these are distinct section roles rather than repeating peers."
-                        items={[
-                            () => (
-                                <StackV
-                                    principle="sibling-stack"
-                                    explain="Same-kind peer stack of mobile route rows — not group-boundary, because rows are repeating siblings rather than section groups."
-                                    items={[() => mobileNavRows]}
-                                />
-                            ),
-                            () => <Divider />,
-                            () => (
-                                <StackV
-                                    principle="sibling-stack"
-                                    explain="Same-kind peer stack of language and theme rows — not group-boundary, because these are repeating preference peers rather than section groups."
-                                    items={[
-                                        () => (
-                                            <StackH
-                                                principle="sibling-stack"
-                                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                                                items={[
-                                                    () => <Typography size="sm" text="Language" />,
-                                                    () => (
-                                                        <NavbarLanguageMenu
-                                                            languages={languages}
-                                                            activeLocale={activeLocale}
-                                                            onLocaleChange={onLocaleChange}
-                                                        />
-                                                    ),
-                                                ]}
-                                            />
-                                        ),
-                                        () => (
-                                            <StackH
-                                                principle="sibling-stack"
-                                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                                                items={[
-                                                    () => <Typography size="sm" text="Theme" />,
-                                                    () => (
-                                                        <NavbarThemeSwitch
-                                                            isDarkMode={isDarkMode}
-                                                            onThemeToggle={onThemeToggle}
-                                                        />
-                                                    ),
-                                                ]}
-                                            />
-                                        ),
-                                    ]}
-                                />
-                            ),
-                        ]}
-                    />
-                )}
-            />
-        </nav>
+            )}
+            secondary={() => (
+                /* mobile navigation drawer — the ONE local (non-overlay-store) drawer this run's
+                   contract calls for; every other overlay in this system opens through the global
+                   store (see canon Rule 13), this one is controlled straight by the caller. */
+                <DrawerShell
+                    isOpen={isMobileDrawerOpen}
+                    onOpenChange={onMobileDrawerOpenChange}
+                    placement="right"
+                    title="Mobile menu"
+                    body={() => (
+                        <StackV
+                            principle="group-boundary"
+                            explain="Separates mobile route list from language/theme controls so each region keeps its own seam owner — not sibling-stack, because these are distinct section roles rather than repeating peers."
+                            items={[
+                                () => (
+                                    <StackV
+                                        principle="sibling-stack"
+                                        explain="Same-kind peer stack of mobile route rows — not group-boundary, because rows are repeating siblings rather than section groups."
+                                        items={[() => mobileNavRows]}
+                                    />
+                                ),
+                                () => <Divider />,
+                                () => (
+                                    <StackV
+                                        principle="sibling-stack"
+                                        explain="Same-kind peer stack of language and theme rows — not group-boundary, because these are repeating preference peers rather than section groups."
+                                        items={[
+                                            () => (
+                                                <StackH
+                                                    principle="sibling-stack"
+                                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                    items={[
+                                                        () => <Typography size="sm" text="Language" />,
+                                                        () => (
+                                                            <NavbarLanguageMenu
+                                                                languages={languages}
+                                                                activeLocale={activeLocale}
+                                                                onLocaleChange={onLocaleChange}
+                                                            />
+                                                        ),
+                                                    ]}
+                                                />
+                                            ),
+                                            () => (
+                                                <StackH
+                                                    principle="sibling-stack"
+                                                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                    items={[
+                                                        () => <Typography size="sm" text="Theme" />,
+                                                        () => (
+                                                            <NavbarThemeSwitch
+                                                                isDarkMode={isDarkMode}
+                                                                onThemeToggle={onThemeToggle}
+                                                            />
+                                                        ),
+                                                    ]}
+                                                />
+                                            ),
+                                        ]}
+                                    />
+                                ),
+                            ]}
+                        />
+                    )}
+                />
+            )}
+        />
     )
 }
 

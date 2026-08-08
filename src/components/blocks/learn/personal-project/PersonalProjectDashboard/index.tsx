@@ -21,11 +21,12 @@ import { useQueryMilestoneTaskProgressSwr } from "@/hooks/swr/api/graphql/querie
 import { pathConfig } from "@/resources/path"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCardHeader } from "@/components/composites/cards/SurfaceCard/surface-card-header"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Grid } from "@/components/frames/Grid"
+import { StackV } from "@/components/frames/Stack"
 import type { MilestoneEntity } from "@/modules/types/entities/milestone"
 
 /** Props for {@link PersonalProjectDashboard}. */
@@ -48,7 +49,7 @@ const toRepoLabel = (url: string): string =>
  * description + a GitHub status chip) → TIER-3 a {@link ContinueCard} `hero` for
  * the next task (chip "Continue") + progress meter, above the keep-going path =
  * current milestone tasks as {@link ContinueCard} `item` cards (with per-card
- * "Continue >" CTA) in a frameless {@link LabeledCard} grid. The milestone LIST
+ * "Continue >" CTA) in a labeled section grid. The milestone LIST
  * for the whole project lives in the left rail — the body only surfaces "where
  * you are + what's next". Every value is grounded in real BE fields
  * (`milestoneTaskProgress`, enrollment github).
@@ -236,44 +237,55 @@ export const PersonalProjectDashboard = () => {
                     {/* keep-going: ContinueCard item grid — "Continue >" lives on each
                         card (Storybook Item), not as a soft see-more beside the label. */}
                     {currentMilestone ? (
-                        <LabeledCard
-                            label={`${t("finalProject.dashboard.keepGoing")} · ${currentMilestone.title}`}
-                            frameless
-                        >
-                            <Grid
-                                columns={{ base: 1, sm: 2 }}
-                                principle="sibling-stack"
-                                explain="Keep-going task tiles share one section grid — not block-boundary, because they stay inside one labeled group."
-                                items={(currentMilestone.tasks ?? []).map((task) => {
-                                    const isCompleted = progressMap.get(task.id)?.completed ?? false
-                                    const isActive = task.id === currentTaskId
-                                    const isLocked = !isPersonalProjectTaskActionUnlocked(
-                                        task.id,
-                                        progressMap,
-                                        currentTaskId,
-                                    )
-                                    const subtitle = isActive
-                                        ? t("finalProject.dashboard.nextTask")
-                                        : isCompleted
-                                            ? t("finalProject.dashboard.taskDone")
-                                            : isLocked
-                                                ? t("finalProject.dashboard.statLocked")
-                                                : t("finalProject.dashboard.taskTodo")
-                                    return {
-                                        key: task.id,
-                                        content: () => (
-                                            <ContinueCard
-                                                variant="item"
-                                                title={`${task.sortIndex}. ${task.title}`}
-                                                subtitle={subtitle}
-                                                ctaLabel={t("finalProject.dashboard.continue")}
-                                                onPress={() => onSelectTask(task.id)}
-                                            />
-                                        ),
-                                    }
-                                })}
-                            />
-                        </LabeledCard>
+                        // B37 Decision E: ContinueCard tiles self-frame — StackV
+                        // label-field replaces LabeledCard frameless around the grid.
+                        <StackV
+                            gap={3}
+                            principle="label-field"
+                            explain="Section label above its control is label-field — not title-subtitle (no paired title/supporting lines), not name-handle, not icon-text; the label names the surface the way a field label names its control."
+                            items={[
+                                () => (
+                                    <SurfaceCardHeader
+                                        label={`${t("finalProject.dashboard.keepGoing")} · ${currentMilestone.title}`}
+                                    />
+                                ),
+                                () => (
+                                    <Grid
+                                        columns={{ base: 1, sm: 2 }}
+                                        principle="sibling-stack"
+                                        explain="Keep-going task tiles share one section grid — not block-boundary, because they stay inside one labeled group."
+                                        items={(currentMilestone.tasks ?? []).map((task) => {
+                                            const isCompleted = progressMap.get(task.id)?.completed ?? false
+                                            const isActive = task.id === currentTaskId
+                                            const isLocked = !isPersonalProjectTaskActionUnlocked(
+                                                task.id,
+                                                progressMap,
+                                                currentTaskId,
+                                            )
+                                            const subtitle = isActive
+                                                ? t("finalProject.dashboard.nextTask")
+                                                : isCompleted
+                                                    ? t("finalProject.dashboard.taskDone")
+                                                    : isLocked
+                                                        ? t("finalProject.dashboard.statLocked")
+                                                        : t("finalProject.dashboard.taskTodo")
+                                            return {
+                                                key: task.id,
+                                                content: () => (
+                                                    <ContinueCard
+                                                        variant="item"
+                                                        title={`${task.sortIndex}. ${task.title}`}
+                                                        subtitle={subtitle}
+                                                        ctaLabel={t("finalProject.dashboard.continue")}
+                                                        onPress={() => onSelectTask(task.id)}
+                                                    />
+                                                ),
+                                            }
+                                        })}
+                                    />
+                                ),
+                            ]}
+                        />
                     ) : null}
                 </div>
             </AsyncContent>

@@ -49,7 +49,7 @@ import { useQueryMyNotificationsSwr } from "@/hooks/swr/api/graphql/queries/useQ
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
-import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
@@ -306,26 +306,29 @@ export const NotificationsPage = () => {
                                     <AsyncContent
                                         isLoading={isLoading && !data}
                                         skeleton={(
-                                            <SurfaceListCard>
-                                                {[0, 1, 2, 3, 4].map((row) => (
-                                                    <Box key={row} principle="row-pad" className="px-4 py-4"
-                                                        explain="Row content inset — not cell-pad, because this pads a horizontal content row rather than a dense table cell.">
-                                                        <StackH gap={4} principle="content-row" align="center"
-                                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                                                            items={[
-                                                                () => <Skeleton className="size-9 shrink-0 rounded-full" />,
-                                                                () => (
-                                                                    <StackV gap={3} principle="sibling-stack" classNames={["flex-1"]}
-                                                                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                                                                        items={[
-                                                                            () => <Skeleton className="h-4 w-2/3 rounded-medium" />,
-                                                                            () => <Skeleton className="h-3 w-1/3 rounded-medium" />,
-                                                                        ]} />
-                                                                ),
-                                                            ]} />
-                                                    </Box>
-                                                ))}
-                                            </SurfaceListCard>
+                                            <SurfaceCardList
+                                                items={[0, 1, 2, 3, 4].map((row) => ({
+                                                    key: `skeleton-${row}`,
+                                                    content: () => (
+                                                        <Box principle="row-pad" className="px-4 py-4"
+                                                            explain="Row content inset — not cell-pad, because this pads a horizontal content row rather than a dense table cell.">
+                                                            <StackH gap={4} principle="content-row" align="center"
+                                                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                                                                items={[
+                                                                    () => <Skeleton className="size-9 shrink-0 rounded-full" />,
+                                                                    () => (
+                                                                        <StackV gap={3} principle="sibling-stack" classNames={["flex-1"]}
+                                                                            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                                                            items={[
+                                                                                () => <Skeleton className="h-4 w-2/3 rounded-medium" />,
+                                                                                () => <Skeleton className="h-3 w-1/3 rounded-medium" />,
+                                                                            ]} />
+                                                                    ),
+                                                                ]} />
+                                                        </Box>
+                                                    ),
+                                                }))}
+                                            />
                                         )}
                                         error={error}
                                         errorContent={{
@@ -364,55 +367,50 @@ export const NotificationsPage = () => {
                                             <StackV gap={4} principle="content-row"
                                                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                                                 items={[
-                                                    () => (
-                                                        <SurfaceListCard>
-                                                            {items.map((notification) => (
-                                                                <SurfaceListCardRow
-                                                                    key={notification.id}
-                                                                    leading={() => (
-                                                                        <span
-                                                                            className={cn(
-                                                                                "flex size-9 shrink-0 items-center justify-center rounded-full [&>svg]:size-4",
-                                                                                notification.isRead
-                                                                                    ? "bg-default text-muted"
-                                                                                    : "bg-accent-soft text-accent-soft-foreground",
-                                                                            )}
-                                                                        >
-                                                                            {TYPE_ICONS[notification.type]}
-                                                                        </span>
+                                                    () => {
+                                                        const notificationItems: Array<SurfaceCardListItem> = items.map((notification) => ({
+                                                            key: notification.id,
+                                                            leading: () => (
+                                                                <span
+                                                                    className={cn(
+                                                                        "flex size-9 shrink-0 items-center justify-center rounded-full [&>svg]:size-4",
+                                                                        notification.isRead
+                                                                            ? "bg-default text-muted"
+                                                                            : "bg-accent-soft text-accent-soft-foreground",
                                                                     )}
-                                                                    title={t(
-                                                                        notification.title.key,
-                                                                        notification.title.params ?? undefined,
-                                                                    )}
-                                                                    subtitle={notification.body
-                                                                        ? t(
-                                                                            notification.body.key,
-                                                                            notification.body.params ?? undefined,
-                                                                        )
-                                                                        : undefined}
-                                                                    meta={() => (
-                                                                        <Typography type="body-xs" color="muted" className="whitespace-nowrap">
-                                                                            {formatRelative(notification.createdAt)}
-                                                                        </Typography>
-                                                                    )}
-                                                                    // unread dot moves here from beside the title: `title` is plain
-                                                                    // text now (never a built element) and `titleClassName` stays
-                                                                    // lint-forbidden, so the unread signal — already echoed by the
-                                                                    // leading badge's accent tint — rides the row's one remaining slot.
-                                                                    trailing={!notification.isRead ? () => (
-                                                                        <CircleIcon
-                                                                            weight="fill"
-                                                                            aria-hidden
-                                                                            focusable="false"
-                                                                            className="size-1.5 shrink-0 text-accent-soft-foreground"
-                                                                        />
-                                                                    ) : undefined}
-                                                                    onPress={() => onPressItem(notification)}
+                                                                >
+                                                                    {TYPE_ICONS[notification.type]}
+                                                                </span>
+                                                            ),
+                                                            title: t(
+                                                                notification.title.key,
+                                                                notification.title.params ?? undefined,
+                                                            ),
+                                                            subtitle: notification.body
+                                                                ? t(
+                                                                    notification.body.key,
+                                                                    notification.body.params ?? undefined,
+                                                                )
+                                                                : undefined,
+                                                            meta: () => (
+                                                                <Typography type="body-xs" color="muted" className="whitespace-nowrap">
+                                                                    {formatRelative(notification.createdAt)}
+                                                                </Typography>
+                                                            ),
+                                                            // unread dot: `title` is plain text; unread signal rides trailing
+                                                            // (already echoed by the leading badge's accent tint).
+                                                            trailing: !notification.isRead ? () => (
+                                                                <CircleIcon
+                                                                    weight="fill"
+                                                                    aria-hidden
+                                                                    focusable="false"
+                                                                    className="size-1.5 shrink-0 text-accent-soft-foreground"
                                                                 />
-                                                            ))}
-                                                        </SurfaceListCard>
-                                                    ),
+                                                            ) : undefined,
+                                                            onPress: () => { void onPressItem(notification) },
+                                                        }))
+                                                        return <SurfaceCardList items={notificationItems} />
+                                                    },
 
                                                     () => (totalPages > 1 ? (
                                                         <StackH gap={4} principle="content-row" justify="between" align="center"

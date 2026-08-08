@@ -6,7 +6,7 @@ import { AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { Box } from "@/components/frames/Box"
-import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { Typography } from "@/components/atoms/text/Typography"
 
@@ -64,7 +64,7 @@ export interface UpcomingLivestreamCardProps {
  * hides the card (no emptyContent, matching the sibling right-rail widgets that
  * self-hide rather than render an empty state), and otherwise the row list renders —
  * while shimmering, `Skeleton.ListRow` placeholders keep the SAME `SectionCard` +
- * `SurfaceListCard` shape so the box neither shrinks nor jumps when data arrives
+ * `SurfaceCardList` shape so the box neither shrinks nor jumps when data arrives
  * (loading-and-skeleton.md). See `tiers/split.md` — the connected `index.tsx` owns
  * the fetch and i18n.
  *
@@ -85,37 +85,46 @@ export const _UpcomingLivestreamCard = ({
         return null
     }
 
+    const skeletonItems: Array<SurfaceCardListItem> = Array.from(
+        { length: MAX_ROWS },
+        (_unused, index) => ({
+            key: `skeleton-${index}`,
+            content: () => (
+                <Box
+                    principle="row-pad"
+                    explain="Row content inset — not cell-pad, because this pads a horizontal content row rather than a dense table cell."
+                >
+                    <Skeleton.ListRow withSubtitle />
+                </Box>
+            ),
+        }),
+    )
+
+    const sessionItems: Array<SurfaceCardListItem> = sessions.map((session) => ({
+        key: session.key,
+        leading: () => <IconTile icon={<VideoCameraIcon />} tone="accent" size="sm" />,
+        title: session.title,
+        subtitle: session.subtitle,
+        meta: () => (
+            <Typography
+                size="xs"
+                weight="medium"
+                color="accent-soft"
+                text={`${session.relativeLabel} · ${session.dateLabel}`}
+            />
+        ),
+        href: session.href,
+    }))
+
     return (
         <SectionCard
             icon={() => <VideoCameraIcon className="size-5 text-accent-soft-foreground" />}
             title={labels.title}
         >
-            <SurfaceListCard bordered>
-                {isSkeleton
-                    ? Array.from({ length: MAX_ROWS }, (_unused, index) => (
-                        <Box key={index} principle="row-pad" className="px-4"
-                            explain="Row content inset — not cell-pad, because this pads a horizontal content row rather than a dense table cell.">
-                            <Skeleton.ListRow withSubtitle />
-                        </Box>
-                    ))
-                    : sessions.map((session) => (
-                        <SurfaceListCardRow
-                            key={session.key}
-                            leading={() => <IconTile icon={<VideoCameraIcon />} tone="accent" size="sm" />}
-                            title={session.title}
-                            subtitle={session.subtitle}
-                            meta={() => (
-                                <Typography
-                                    size="xs"
-                                    weight="medium"
-                                    color="accent-soft"
-                                    text={`${session.relativeLabel} · ${session.dateLabel}`}
-                                />
-                            )}
-                            href={session.href}
-                        />
-                    ))}
-            </SurfaceListCard>
+            <SurfaceCardList
+                variant="nested"
+                items={isSkeleton ? skeletonItems : sessionItems}
+            />
         </SectionCard>
     )
 }

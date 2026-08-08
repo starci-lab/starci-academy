@@ -71,7 +71,12 @@ export const LearnBreadcrumb = ({ current, section }: LearnBreadcrumbProps) => {
         ...(current != null ? [{ key: "current", label: current }] : []),
     ]
 
-    return <ResponsiveBreadcrumb items={items} />
+    return (
+        <ResponsiveBreadcrumb
+            identity={{ tier: "block", component: "LearnBreadcrumb" }}
+            items={items}
+        />
+    )
 }
 
 export default LearnBreadcrumb

@@ -16,7 +16,7 @@ import {
 import {
     TaskResults,
 } from "../TaskResults"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCard } from "@/components/composites/cards/SurfaceCard"
 import { usePersonalProjectGithubStore } from "@/hooks/zustand/personalProjectGithub/store"
 import { StackV } from "@/components/frames/Stack"
 
@@ -48,38 +48,39 @@ export const TaskSubmissionPanel = () => {
 
     return (
         <div className={"flex flex-col gap-6"}>
-            <LabeledCard
+            <SurfaceCard
                 label={t("finalProject.page.submitGithub.title")}
-            >
-                <StackV
-                    principle="block-boundary"
-                    explain="Github config group and submit CTA are separate sections in the submit panel — not sibling-stack, because the CTA is a distinct action block."
-                    items={[
-                        () => (
-                            <div className="flex flex-col gap-3">
-                                <PersonalProjectSubmission />
-                                <button
-                                    type="button"
-                                    onClick={() => setSettingsOpen(true)}
-                                    aria-label={t("finalProject.page.submitGithub.settingsTitle")}
-                                    aria-expanded={isSettingsOpen}
-                                    className="group flex cursor-pointer items-center justify-between gap-3 rounded-medium bg-default-100 px-3 py-2 text-left outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                                >
-                                    <span className="flex items-center gap-2 text-sm">
-                                        <GearSixIcon className="size-4 shrink-0" />
-                                        <span className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">{t("finalProject.page.submitGithub.settingsTitle")}</span>
-                                    </span>
-                                    <span className="flex min-w-0 items-center gap-2 text-xs text-muted">
-                                        <span className="truncate">{(langLabelMap[lang] ?? lang)} · {branch}</span>
-                                        <CaretRightIcon weight="bold" className="size-4 shrink-0" />
-                                    </span>
-                                </button>
-                            </div>
-                        ),
-                        () => <TaskActions />,
-                    ]}
-                />
-            </LabeledCard>
+                body={() => (
+                    <StackV
+                        principle="block-boundary"
+                        explain="Github config group and submit CTA are separate sections in the submit panel — not sibling-stack, because the CTA is a distinct action block."
+                        items={[
+                            () => (
+                                <div className="flex flex-col gap-3">
+                                    <PersonalProjectSubmission />
+                                    <button
+                                        type="button"
+                                        onClick={() => setSettingsOpen(true)}
+                                        aria-label={t("finalProject.page.submitGithub.settingsTitle")}
+                                        aria-expanded={isSettingsOpen}
+                                        className="group flex cursor-pointer items-center justify-between gap-3 rounded-medium bg-default-100 px-3 py-2 text-left outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                                    >
+                                        <span className="flex items-center gap-2 text-sm">
+                                            <GearSixIcon className="size-4 shrink-0" />
+                                            <span className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">{t("finalProject.page.submitGithub.settingsTitle")}</span>
+                                        </span>
+                                        <span className="flex min-w-0 items-center gap-2 text-xs text-muted">
+                                            <span className="truncate">{(langLabelMap[lang] ?? lang)} · {branch}</span>
+                                            <CaretRightIcon weight="bold" className="size-4 shrink-0" />
+                                        </span>
+                                    </button>
+                                </div>
+                            ),
+                            () => <TaskActions />,
+                        ]}
+                    />
+                )}
+            />
             <TaskResults />
 
             {/* grading-settings Drawer (set-once config: language / branch / token) */}

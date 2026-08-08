@@ -7,8 +7,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/composites/feedback/EmptyState"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { SurfaceListCard, SurfaceListCardRow, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
@@ -123,36 +122,62 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
      *  learner's own session name (or its time-based fallback, see
      *  `sessionDisplayName`); the drawn prompt + date move to the subtitle so
      *  neither is lost. */
-    const renderRow = (attempt: MockInterviewAttemptItem) => (
-        <SurfaceListCardRow
-            key={attempt.id}
-            title={sessionDisplayName(attempt.name, attempt.createdAt, t, locale)}
-            subtitle={`${attempt.promptTitle} · ${formatDate(attempt.createdAt)}`}
-            meta={() => (
-                <Chip size="sm" variant="soft" color={verdictColorOf(attempt.verdict)}>
-                    <Chip.Label>{attempt.overallScore}</Chip.Label>
-                </Chip>
-            )}
-            trailing={() => <CaretRightIcon weight="bold" className="size-4 text-muted" aria-hidden focusable="false" />}
-            onPress={() => router.push(
-                pathConfig()
-                    .locale(locale)
-                    .course(courseDisplayId)
-                    .learn()
-                    .mockInterview()
-                    .interview(attempt.sessionId)
-                    .result()
-                    .build(),
-            )}
-        />
-    )
+    const attemptItem = (attempt: MockInterviewAttemptItem): SurfaceCardListItem => ({
+        key: attempt.id,
+        title: sessionDisplayName(attempt.name, attempt.createdAt, t, locale),
+        subtitle: `${attempt.promptTitle} · ${formatDate(attempt.createdAt)}`,
+        meta: () => (
+            <Chip size="sm" variant="soft" color={verdictColorOf(attempt.verdict)}>
+                <Chip.Label>{attempt.overallScore}</Chip.Label>
+            </Chip>
+        ),
+        trailing: () => <CaretRightIcon weight="bold" className="size-4 text-muted" aria-hidden focusable="false" />,
+        onPress: () => router.push(
+            pathConfig()
+                .locale(locale)
+                .course(courseDisplayId)
+                .learn()
+                .mockInterview()
+                .interview(attempt.sessionId)
+                .result()
+                .build(),
+        ),
+    })
+
+    const skeletonItems: Array<SurfaceCardListItem> = Array.from({ length: 4 }, (_unused, index) => ({
+        key: `skeleton-${index}`,
+        content: () => (
+            <StackH
+                gap={4}
+                principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                classNames={["w-full"]}
+                items={[
+                    () => (
+                        <StackV
+                            gap={2}
+                            principle="title-subtitle"
+                            explain="Title over supporting line — not label-field, because neither line is a form control label."
+                            classNames={["min-w-0", "flex-1"]}
+                            items={[
+                                () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                                () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                            ]}
+                        />
+                    ),
+                    () => <Skeleton className="h-6 w-10 shrink-0 rounded-full" />,
+                    () => <Skeleton className="size-4 shrink-0 rounded" />,
+                ]}
+            />
+        ),
+    }))
 
     return (
         <AsyncContent
             isLoading={attemptsSwr.isLoading && items.length === 0}
             skeleton={(
                 // MIRROR the loaded tree: a funnel toolbar (search + funnel button + count)
-                // above a SurfaceListCard of attempt rows (name/subtitle + verdict score
+                // above a SurfaceCardList of attempt rows (name/subtitle + verdict score
                 // chip + caret).
                 <StackV
                     gap={4}
@@ -182,34 +207,7 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                             />
                         ),
                         () => (
-                            <SurfaceListCard>
-                                {Array.from({ length: 4 }).map((_unused, index) => (
-                                    <SurfaceListCardItem key={index}>
-                                        <StackH
-                                            gap={4}
-                                            principle="content-row"
-                                            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                                            classNames={["w-full"]}
-                                            items={[
-                                                () => (
-                                                    <StackV
-                                                        gap={2}
-                                                        principle="title-subtitle"
-                                                        explain="Title over supporting line — not label-field, because neither line is a form control label."
-                                                        classNames={["min-w-0", "flex-1"]}
-                                                        items={[
-                                                            () => <Skeleton.Typography type="body-sm" width="1/2" />,
-                                                            () => <Skeleton.Typography type="body-xs" width="1/3" />,
-                                                        ]}
-                                                    />
-                                                ),
-                                                () => <Skeleton className="h-6 w-10 shrink-0 rounded-full" />,
-                                                () => <Skeleton className="size-4 shrink-0 rounded" />,
-                                            ]}
-                                        />
-                                    </SurfaceListCardItem>
-                                ))}
-                            </SurfaceListCard>
+                            <SurfaceCardList items={skeletonItems} />
                         ),
                     ]}
                 />
@@ -223,7 +221,7 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
         >
             {items.length === 0 ? (
                 // no attempts at all → a single bounded empty card (matches the
-                // populated SurfaceListCard shape; components/card.md §2).
+                // populated SurfaceCardList shape; components/card.md §2).
                 <Card>
                     <CardContent>
                         <EmptyState
@@ -353,17 +351,13 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                                     <StackV
                                         gap={4}
                                         items={timeBuckets.map((bucket) => () => (
-                                            <LabeledCard
+                                            <SurfaceCardList
                                                 key={bucket.key}
-                                                frameless
                                                 subtleLabel
                                                 label={t(`flashcard.timeBucket.${bucket.key}`)}
                                                 labelEnd={t("flashcard.runCount", { count: bucket.items.length })}
-                                            >
-                                                <SurfaceListCard>
-                                                    {bucket.items.map((attempt) => renderRow(attempt))}
-                                                </SurfaceListCard>
-                                            </LabeledCard>
+                                                items={bucket.items.map((attempt) => attemptItem(attempt))}
+                                            />
                                         ))}
                                     />
                                 )

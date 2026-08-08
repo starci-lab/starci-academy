@@ -7,7 +7,7 @@ import { Button } from "@/components/atoms/buttons/Button"
 import { Chip } from "@/components/atoms/chips/Chip"
 import { Typography } from "@/components/atoms/text/Typography"
 import { StackH, StackV } from "@/components/frames/Stack"
-import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { PriceTagInline } from "@/components/blocks/commerce/PriceTag"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
@@ -81,7 +81,7 @@ export interface MiniCartDrawerProps {
  * Mini-cart drawer — the presentational half of {@link _MiniCartDrawer}'s connected
  * `MiniCartDrawer` (`index.tsx`): the slide-out cart confirmation + combo meter,
  * right on desktop / bottom-sheet on mobile. Composed on `DrawerShell` (the shared
- * panel-scaffold composite): a bordered `SurfaceListCard` reusing {@link CartLine}
+ * panel-scaffold composite): a nested `SurfaceCardList` reusing {@link CartLine}
  * (the SAME row the `/cart` page uses), a bundle-discount `ProgressMeter`, and a
  * footer with the real charged total + saving, a primary "Checkout" and a text
  * link to the full cart page. `error`/`isEmpty` fall to the shared
@@ -142,11 +142,11 @@ export const _MiniCartDrawer = ({
         <StackV gap={3} items={comboMeterItems} />
     )
 
-    // Line list — reuses the SAME `CartLine` as the `/cart` page. `bordered`: this
-    // list is NESTED inside the drawer surface, where `shadow-surface` renders
+    // Line list — reuses the SAME `CartLine` as the `/cart` page. `variant="nested"`:
+    // this list is NESTED inside the drawer surface, where `shadow-surface` renders
     // invisible against the parent (dark mode) — nested cards need a border to
-    // delineate (`card.md` §surface-in-surface). The `/cart` PAGE keeps it
-    // un-bordered (top-level on `bg-background`, shadow shows). `CartLine` has no
+    // delineate (`card.md` §surface-in-surface). The `/cart` PAGE keeps the default
+    // surface variant (top-level on `bg-background`, shadow shows). `CartLine` has no
     // co-located skeleton of its own, so the loading rows are mirrored by hand,
     // same shape (leading tile · two text lines · trailing action).
     const cartLineSkeletonItems = [
@@ -163,38 +163,39 @@ export const _MiniCartDrawer = ({
         ),
         () => <Skeleton className="size-9 shrink-0 rounded-lg" />,
     ]
-    const cartListSection: ComponentTypeWithSkeleton = () => (
-        <SurfaceListCard bordered>
-            {isSkeleton
-                ? Array.from({ length: 2 }).map((_row, index) => (
+    const cartListSection: ComponentTypeWithSkeleton = () => {
+        const listItems: Array<SurfaceCardListItem> = isSkeleton
+            ? Array.from({ length: 2 }, (_row, index) => ({
+                key: `skeleton-${index}`,
+                content: () => (
                     <StackH
-                        key={index}
-                        gap={1}
-                        principle="card-padding"
-                        explain="Card body inset — not page-pad, because this is the surface padding of a card rather than the page chrome."
-                        padding={5}
-                        body={() => (
-                            <StackH
-                                gap={4}
-                                principle="content-row"
-                                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                                align="center"
-                                items={cartLineSkeletonItems}
-                            />
-                        )}
+                        gap={4}
+                        principle="content-row"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                        align="center"
+                        items={cartLineSkeletonItems}
                     />
-                ))
-                : items.map((item) => (
+                ),
+            }))
+            : items.map((item) => ({
+                key: item.id,
+                content: () => (
                     <CartLine
-                        key={item.id}
                         item={item}
                         previewLine={previewByCourse?.get(item.courseId)}
                         onRemove={onRemove}
                         isMutating={isMutating}
                     />
-                ))}
-        </SurfaceListCard>
-    )
+                ),
+            }))
+        return (
+            <SurfaceCardList
+                variant="nested"
+                items={listItems}
+                isSkeleton={isSkeleton}
+            />
+        )
+    }
 
     // Body — error → skeleton → empty → content (BLOCK-8): the empty and error
     // surfaces are the shared `AsyncContent*` composites dropped in as their own

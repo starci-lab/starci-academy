@@ -1,7 +1,7 @@
 import React from "react"
 import { Card, CardContent } from "@heroui/react"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList } from "@/components/composites/cards/SurfaceCard"
 import { Container } from "@/components/frames/Container"
 import { Grid } from "@/components/frames/Grid"
 import { StackH, StackV } from "@/components/frames/Stack"
@@ -9,10 +9,11 @@ import { StackH, StackV } from "@/components/frames/Stack"
 /**
  * Loading placeholder for {@link import("./index").FlashcardQuizResult} — mirrors its
  * REAL layout tree: HERO = 3 `MetricCard` tiles (`Skeleton.Metric`), then the
- * per-card breakdown (`LabeledCard` label → `SurfaceListCard` of status-dot · title ·
- * score-chip rows), then the weak-tags recap card (label → framed card of link rows),
- * so the surface never collapses or jumps when the session query resolves. Used on
- * the revisit-by-URL path (skeleton → result).
+ * per-card breakdown (`SurfaceCardList` of status-dot · title · score-chip rows),
+ * then the weak-tags recap card (label → framed card of link rows), so the surface
+ * never collapses or jumps when the session query resolves. Used on the
+ * revisit-by-URL path (skeleton → result). Parallel twin held for full collapse into
+ * the live `isSkeleton` path (parent wiring outside this agent’s owns).
  */
 export const FlashcardQuizResultSkeleton = () => {
     return (
@@ -46,9 +47,11 @@ export const FlashcardQuizResultSkeleton = () => {
                                 items={[
                                     () => <Skeleton className="h-[14px] w-40 rounded" />,
                                     () => (
-                                        <SurfaceListCard>
-                                            {Array.from({ length: 5 }).map((_unused, index) => (
-                                                <SurfaceListCardItem key={index}>
+                                        <SurfaceCardList
+                                            isSkeleton
+                                            items={Array.from({ length: 5 }, (_unused, index) => ({
+                                                key: `pending-${index}`,
+                                                content: () => (
                                                     <StackH
                                                         gap={4}
                                                         principle="content-row"
@@ -66,9 +69,9 @@ export const FlashcardQuizResultSkeleton = () => {
                                                             () => <Skeleton className="h-5 w-12 shrink-0 rounded-full" />,
                                                         ]}
                                                     />
-                                                </SurfaceListCardItem>
-                                            ))}
-                                        </SurfaceListCard>
+                                                ),
+                                            }))}
+                                        />
                                     ),
                                 ]}
                             />

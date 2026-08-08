@@ -1,22 +1,41 @@
 "use client"
 
 import React from "react"
-import { CheckCircleIcon, CircleIcon } from "@phosphor-icons/react"
-import { AsyncContentError } from "@/components/composites/async/AsyncContent"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import type { CallerIdentity } from "@/components/frames/_identity"
-import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { Box } from "@/components/frames/Box"
-import { Button } from "@/components/atoms/buttons/Button"
-import { Chip } from "@/components/atoms/chips/Chip"
-import { Typography } from "@/components/atoms/text/Typography"
+import {
+    CheckCircleIcon,
+    CircleIcon,
+} from "@phosphor-icons/react"
+import {
+    AsyncContentError,
+} from "@/components/composites/async/AsyncContent"
+import type {
+    CallerIdentity,
+} from "@/components/frames/_identity"
+import type {
+    SkeletonProps,
+} from "@/components/frames/_slot"
+import {
+    SurfaceCardList,
+    type SurfaceCardListItem,
+} from "@/components/composites/cards/SurfaceCard"
+import {
+    Button,
+} from "@/components/atoms/buttons/Button"
+import {
+    Chip,
+} from "@/components/atoms/chips/Chip"
+import {
+    Typography,
+} from "@/components/atoms/text/Typography"
 
 /** How many placeholder rows the co-located skeleton shows while the checklist is loading. */
 const SKELETON_ROW_COUNT = 5
 
-/** This block's own identity (BLOCK-2/split.md) — handed down to whichever root-capable frame renders as its root, per branch. See `_identity.ts`. */
-const IDENTITY: CallerIdentity = { tier: "block", component: "DailyQuest" }
+/** This block's own identity (BLOCK-2/split.md) — handed to SurfaceCardList as its root. */
+const IDENTITY: CallerIdentity = {
+    tier: "block",
+    component: "DailyQuest",
+}
 
 const DailyQuestClaimState = ({
     isSkeleton,
@@ -29,12 +48,16 @@ const DailyQuestClaimState = ({
     isSkeleton ? (
         <Typography isSkeleton size="xs" />
     ) : claimed ? (
-        <Chip tone="success" text={labels.claimed} classNames={["self-start"]} />
+        <Chip tone="success" text={labels.claimed} classNames={[
+            "self-start",
+        ]} />
     ) : allDone ? (
         <Button
             variant="primary"
             size="sm"
-            classNames={["self-start"]}
+            classNames={[
+                "self-start",
+            ]}
             isPending={isClaiming}
             onPress={onClaim}
             label={labels.claim}
@@ -74,7 +97,7 @@ export interface DailyQuestLabels {
 
 /** Props for {@link _DailyQuest} — presentational; all data resolved, no fetch/store/i18n. */
 export interface DailyQuestProps {
-    /** First load, nothing in hand → the checklist (and the claim-state line below the card) shimmers in place. Owned by the connected file. */
+    /** First load, nothing in hand → the checklist (and the claim-state line) shimmers in place. Owned by the connected file. */
     isSkeleton?: boolean
     /** Truthy → the error message (beats loading). The connected file passes its settled fetch error. */
     error?: unknown
@@ -94,19 +117,10 @@ export interface DailyQuestProps {
 }
 
 /**
- * "Today's quest" content — today's daily-quest checklist (read content · pass
- * challenge · review flashcards …), each row showing today's progress, plus a claim
- * action below the card that grants the reward once enough tasks are done. Content
- * only (the parent {@link import("@/components/blocks").LabeledCard} that this block
- * itself renders frames it) — the presentational half of `DailyQuest`. Two states in
- * the fixed order error → content (BLOCK-8): `error` falls to the shared
- * `AsyncContentError` frame (there is no genuine empty state — the quest set is
- * fixed, never a variable-length list that can be zero-length); otherwise the
- * checklist renders — while shimmering, `Skeleton.ListRow` placeholders keep the
- * SAME `LabeledCard` → `SurfaceListCard` shape so the box neither shrinks nor jumps
- * when data arrives (`SurfaceListCardRow` has no `isSkeleton` of its own, so the
- * mirror sits right here rather than in a parallel tree — loading-and-skeleton.md).
- * See `tiers/split.md` — the connected `index.tsx` owns the fetch and i18n.
+ * "Today's quest" checklist — class C collapse: one {@link SurfaceCardList} owns
+ * label / identity / isSkeleton / rows / error (B37). Claim / prompt UI moves from
+ * the former LabeledCard `description` slot into SurfaceCard `action` (ComponentType
+ * door; description stays a string caption).
  *
  * @param props - {@link DailyQuestProps}
  */
@@ -121,18 +135,52 @@ export const _DailyQuest = ({
     tasks = [],
     labels,
 }: DailyQuestProps) => {
-    if (error) {
-        return <AsyncContentError title={labels.loadError} onRetry={onRetry} retryLabel={labels.retry} />
-    }
+    const skeletonItems: Array<SurfaceCardListItem> = Array.from(
+        {
+            length: SKELETON_ROW_COUNT,
+        },
+        (_unused, index) => ({
+            key: `skeleton-${index}`,
+            title: "Loading",
+            leadingIcon: CircleIcon,
+        }),
+    )
+
+    const taskItems: Array<SurfaceCardListItem> = tasks.map((task) => {
+        const done = task.current >= task.target
+        return {
+            key: task.key,
+            leading: done
+                ? () => (
+                    <CheckCircleIcon
+                        aria-hidden
+                        focusable="false"
+                        className="size-5 shrink-0 text-success-soft-foreground"
+                    />
+                )
+                : () => (
+                    <CircleIcon
+                        aria-hidden
+                        focusable="false"
+                        className="size-5 shrink-0 text-foreground"
+                    />
+                ),
+            title: task.title,
+            meta: () => (
+                <Typography size="xs" color="muted" text={`${task.current}/${task.target}`} />
+            ),
+        }
+    })
 
     return (
-        <LabeledCard
+        <SurfaceCardList
             identity={IDENTITY}
             label={labels.title}
-            frameless
-            description={() => (
+            action={({
+                isSkeleton: slotSkeleton,
+            }: SkeletonProps) => (
                 <DailyQuestClaimState
-                    isSkeleton={isSkeleton}
+                    isSkeleton={slotSkeleton ?? isSkeleton}
                     claimed={claimed}
                     allDone={allDone}
                     isClaiming={isClaiming}
@@ -140,35 +188,16 @@ export const _DailyQuest = ({
                     labels={labels}
                 />
             )}
-        >
-            <SurfaceListCard>
-                {isSkeleton
-                    ? Array.from({ length: SKELETON_ROW_COUNT }, (_unused, index) => (
-                        <Box key={index} principle="cell-pad" className="px-3"
-                            explain="Tight cell inset — not card-padding, because this sits inside a dense table or list cell rather than a card body.">
-                            <Skeleton.ListRow withSubtitle={false} withTrailing />
-                        </Box>
-                    ))
-                    : tasks.map((task) => {
-                        const done = task.current >= task.target
-                        return (
-                            <SurfaceListCardRow
-                                key={task.key}
-                                leading={done ? () => (
-                                    <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success-soft-foreground" />
-                                ) : () => (
-                                    <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-foreground" />
-                                )}
-                                // `title` is plain text now (never a built element), so the done/todo
-                                // colour — banned from `titleClassName` globally by lint
-                                // `no-modal-title-classname` — rides on the leading icon alone
-                                // (icon.md §6: icon+title shared colour by state, icon half of the pair).
-                                title={task.title}
-                                meta={() => <Typography size="xs" color="muted" text={`${task.current}/${task.target}`} />}
-                            />
-                        )
-                    })}
-            </SurfaceListCard>
-        </LabeledCard>
+            items={isSkeleton ? skeletonItems : taskItems}
+            isSkeleton={isSkeleton}
+            error={error}
+            errorState={() => (
+                <AsyncContentError
+                    title={labels.loadError}
+                    onRetry={onRetry}
+                    retryLabel={labels.retry}
+                />
+            )}
+        />
     )
 }

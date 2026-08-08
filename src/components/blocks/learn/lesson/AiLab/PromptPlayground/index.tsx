@@ -17,7 +17,7 @@ import {
     LaneModelPicker,
 } from "../LaneModelPicker"
 import { GradeCreditCaption } from "@/components/blocks/grading/GradeCreditCaption"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList } from "@/components/composites/cards/SurfaceCard"
 import {
     ParamControls,
 } from "../ParamControls"
@@ -376,22 +376,22 @@ export const PromptPlayground = ({ playground}: PromptPlaygroundProps) => {
             {priorRuns.length > 0 ? (
                 <div className="flex flex-col gap-2">
                     <span className="text-sm text-muted">{t("aiLab.playground.runHistory")}</span>
-                    <SurfaceListCard bordered>
-                        {priorRuns.map((priorRun) => (
-                            <SurfaceListCardItem key={priorRun.id}>
-                                <div className="flex items-center justify-between gap-3">
-                                    <span className="min-w-0 truncate text-sm">{priorRun.userPrompt}</span>
-                                    <Chip
-                                        size="sm"
-                                        color={priorRun.status === AiLabRunStatus.Failed ? "danger" : "default"}
-                                        variant="soft"
-                                    >
-                                        {t(`aiLab.status.${priorRun.status}`)}
-                                    </Chip>
-                                </div>
-                            </SurfaceListCardItem>
-                        ))}
-                    </SurfaceListCard>
+                    <SurfaceCardList
+                        variant="nested"
+                        items={priorRuns.map((priorRun) => ({
+                            key: priorRun.id,
+                            title: priorRun.userPrompt,
+                            meta: () => (
+                                <Chip
+                                    size="sm"
+                                    color={priorRun.status === AiLabRunStatus.Failed ? "danger" : "default"}
+                                    variant="soft"
+                                >
+                                    {t(`aiLab.status.${priorRun.status}`)}
+                                </Chip>
+                            ),
+                        }))}
+                    />
                 </div>
             ) : null}
         </div>

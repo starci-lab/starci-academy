@@ -25,7 +25,7 @@ import {
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { Box } from "@/components/frames/Box"
 import { Cluster } from "@/components/frames/Cluster"
 import { StackH, StackV } from "@/components/frames/Stack"
@@ -105,8 +105,9 @@ export const SessionsPage = () => {
 
     const sessionList = sessions ?? []
 
-    const skeletonRows = [0, 1, 2].map((row) => () => (
-        <SurfaceListCardItem key={row}>
+    const skeletonItems: Array<SurfaceCardListItem> = [0, 1, 2].map((row) => ({
+        key: `skeleton-${row}`,
+        content: () => (
             <div className="h-12">
                 <StackH
                     gap={4}
@@ -130,8 +131,91 @@ export const SessionsPage = () => {
                     ]}
                 />
             </div>
-        </SurfaceListCardItem>
-    ))
+        ),
+    }))
+
+    const sessionItems: Array<SurfaceCardListItem> = sessionList.map((session: LoginSession) => {
+        const isMobile =
+            session.deviceType === "mobile"
+            || session.deviceType === "tablet"
+        const DeviceIcon = isMobile ? DeviceMobileIcon : DesktopIcon
+        const headline = [
+            session.browser,
+            session.os,
+        ]
+            .filter(Boolean)
+            .join(" • ") || t("sessions.unknownDevice")
+
+        return {
+            key: session.id,
+            content: () => {
+                const rowItems = [
+                    () => <DeviceIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent-soft-foreground" />,
+                    () => (
+                        <div className="flex min-w-0 flex-1 flex-col gap-0">
+                            <Cluster
+                                gap={3}
+                                align="center"
+                                principle="chip-row"
+                                explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                                items={[
+                                    () => (
+                                        <Typography type="body-sm" weight="medium" truncate>
+                                            {headline}
+                                        </Typography>
+                                    ),
+                                    ...(session.current
+                                        ? [() => (
+                                            <Chip color="accent" variant="soft" size="sm">
+                                                <Chip.Label>{t("sessions.thisDevice")}</Chip.Label>
+                                            </Chip>
+                                        )]
+                                        : []),
+                                ]}
+                            />
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                                {session.location ? (
+                                    <Typography type="body-xs" color="muted">{session.location}</Typography>
+                                ) : null}
+                                {session.ipAddress ? (
+                                    <Typography type="body-xs" color="muted">{session.ipAddress}</Typography>
+                                ) : null}
+                                <Typography type="body-xs" color="muted">{formatSeen(session.lastSeenAt)}</Typography>
+                            </div>
+                        </div>
+                    ),
+                    ...(!session.current
+                        ? [() => (
+                            <Box principle="push-end" className="ml-auto shrink-0"
+                                explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row.">
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="text-danger-soft-foreground"
+                                    isDisabled={revokingId === session.sessionId}
+                                    onPress={() => onRevoke(session.sessionId)}
+                                    aria-label={t("sessions.revoke")}
+                                >
+                                    {revokingId === session.sessionId ? (
+                                        <Spinner color="current" size="sm" />
+                                    ) : (
+                                        <SignOutIcon aria-hidden focusable="false" className="size-5" />
+                                    )}
+                                    {t("sessions.revoke")}
+                                </Button>
+                            </Box>
+                        )]
+                        : []),
+                ]
+
+                return (
+                    <StackH gap={4} align="center" principle="content-row"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                        items={rowItems} />
+                )
+            },
+        }
+    })
 
     return (
         <div className="flex flex-col gap-10">
@@ -143,13 +227,7 @@ export const SessionsPage = () => {
 
             <AsyncContent
                 isLoading={isLoading && !sessions}
-                skeleton={(
-                    <SurfaceListCard>
-                        {skeletonRows.map((Row, index) => (
-                            <Row key={index} />
-                        ))}
-                    </SurfaceListCard>
-                )}
+                skeleton={<SurfaceCardList items={skeletonItems} />}
                 isEmpty={sessionList.length === 0}
                 emptyContent={{ title: t("sessions.empty") }}
                 error={error}
@@ -159,89 +237,7 @@ export const SessionsPage = () => {
                     retryLabel: t("common.retry"),
                 }}
             >
-                <SurfaceListCard>
-                    {sessionList.map((session: LoginSession) => {
-                        // pick a device glyph from the coarse device class
-                        const isMobile =
-                            session.deviceType === "mobile"
-                            || session.deviceType === "tablet"
-                        const DeviceIcon = isMobile ? DeviceMobileIcon : DesktopIcon
-                        // headline = "Browser on OS", falling back gracefully
-                        const headline = [
-                            session.browser,
-                            session.os,
-                        ]
-                            .filter(Boolean)
-                            .join(" • ") || t("sessions.unknownDevice")
-
-                        const rowItems = [
-                            () => <DeviceIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent-soft-foreground" />,
-                            () => (
-                                <div className="flex min-w-0 flex-1 flex-col gap-0">
-                                    <Cluster
-                                        gap={3}
-                                        align="center"
-                                        principle="chip-row"
-                                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
-                                        items={[
-                                            () => (
-                                                <Typography type="body-sm" weight="medium" truncate>
-                                                    {headline}
-                                                </Typography>
-                                            ),
-                                            ...(session.current
-                                                ? [() => (
-                                                    <Chip color="accent" variant="soft" size="sm">
-                                                        <Chip.Label>{t("sessions.thisDevice")}</Chip.Label>
-                                                    </Chip>
-                                                )]
-                                                : []),
-                                        ]}
-                                    />
-                                    <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                                        {session.location ? (
-                                            <Typography type="body-xs" color="muted">{session.location}</Typography>
-                                        ) : null}
-                                        {session.ipAddress ? (
-                                            <Typography type="body-xs" color="muted">{session.ipAddress}</Typography>
-                                        ) : null}
-                                        <Typography type="body-xs" color="muted">{formatSeen(session.lastSeenAt)}</Typography>
-                                    </div>
-                                </div>
-                            ),
-                            ...(!session.current
-                                ? [() => (
-                                    <Box principle="push-end" className="ml-auto shrink-0"
-                                        explain="Pushes this peer to the trailing edge so trailing meta stays right-aligned in the row.">
-                                        <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            className="text-danger-soft-foreground"
-                                            isDisabled={revokingId === session.sessionId}
-                                            onPress={() => onRevoke(session.sessionId)}
-                                            aria-label={t("sessions.revoke")}
-                                        >
-                                            {revokingId === session.sessionId ? (
-                                                <Spinner color="current" size="sm" />
-                                            ) : (
-                                                <SignOutIcon aria-hidden focusable="false" className="size-5" />
-                                            )}
-                                            {t("sessions.revoke")}
-                                        </Button>
-                                    </Box>
-                                )]
-                                : []),
-                        ]
-
-                        return (
-                            <SurfaceListCardItem key={session.id}>
-                                <StackH gap={4} align="center" principle="content-row"
-                                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                                    items={rowItems}  />
-                            </SurfaceListCardItem>
-                        )
-                    })}
-                </SurfaceListCard>
+                <SurfaceCardList items={sessionItems} />
             </AsyncContent>
         </div>
     )

@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation"
 import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckListCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { ProgressMeter } from "@/components/composites/stats/ProgressMeter"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { StackH, StackV } from "@/components/frames/Stack"
@@ -509,35 +509,38 @@ export const MockInterviewScorecard = ({
                         )]
                         : []),
                     ...(grade.gaps.length > 0
-                        ? [() => (
-                            <LabeledCard label={t("mockInterview.gapsTitle")} frameless>
-                                <SurfaceListCard>
-                                    {grade.gaps.map((gap, position) => (
-                                        <SurfaceListCardItem key={position}>
-                                            <StackH
-                                                gap={3}
-                                                principle="icon-text"
-                                                explain="Icon beside its label — not name-handle, because this pairs a glyph with gap markdown rather than a name/handle identity."
-                                                items={[
-                                                    () => (
-                                                        <WarningCircleIcon className="size-4 shrink-0 text-warning-soft-foreground" aria-hidden focusable="false" />
-                                                    ),
-                                                    () => (
-                                                        <FillAvailable
-                                                            at="base"
-                                                            explain="Gap prose takes remaining row width beside the warning glyph so long markdown wraps without overflow."
-                                                            body={() => (
-                                                                <MarkdownContent plain markdown={gap} />
-                                                            )}
-                                                        />
-                                                    ),
-                                                ]}
-                                            />
-                                        </SurfaceListCardItem>
-                                    ))}
-                                </SurfaceListCard>
-                            </LabeledCard>
-                        )]
+                        ? [() => {
+                            const gapItems: Array<SurfaceCardListItem> = grade.gaps.map((gap, position) => ({
+                                key: `gap-${position}`,
+                                content: () => (
+                                    <StackH
+                                        gap={3}
+                                        principle="icon-text"
+                                        explain="Icon beside its label — not name-handle, because this pairs a glyph with gap markdown rather than a name/handle identity."
+                                        items={[
+                                            () => (
+                                                <WarningCircleIcon className="size-4 shrink-0 text-warning-soft-foreground" aria-hidden focusable="false" />
+                                            ),
+                                            () => (
+                                                <FillAvailable
+                                                    at="base"
+                                                    explain="Gap prose takes remaining row width beside the warning glyph so long markdown wraps without overflow."
+                                                    body={() => (
+                                                        <MarkdownContent plain markdown={gap} />
+                                                    )}
+                                                />
+                                            ),
+                                        ]}
+                                    />
+                                ),
+                            }))
+                            return (
+                                <SurfaceCardList
+                                    label={t("mockInterview.gapsTitle")}
+                                    items={gapItems}
+                                />
+                            )
+                        }]
                         : []),
                     ...(grade.followUpQuestion
                         ? [() => (

@@ -15,7 +15,7 @@ import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
  */
 
 /** Visual tone of the glyph (drives icon colour only — no tinted background). */
-export type GlyphMarkTone = "default" | "accent" | "success" | "warning"
+export type GlyphMarkTone = "default" | "muted" | "accent" | "success" | "warning"
 
 /** Two weight steps for the glyph; only a glyph smaller than `size-5` needs `bold`. */
 export type IconWeight = "regular" | "bold"
@@ -65,6 +65,7 @@ export type GlyphMarkProps = GlyphMarkOwnProps &
 /** tone → icon colour (no background fill — this is a bare glyph, not a tile). */
 const TONE: Record<GlyphMarkTone, string> = {
     default: "text-foreground",
+    muted: "text-muted",
     accent: "text-accent-soft-foreground",
     success: "text-success-soft-foreground",
     warning: "text-warning-soft-foreground",

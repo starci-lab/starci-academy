@@ -5,8 +5,7 @@ import { Badge, Button, Card, CardContent, Chip, Popover, Typography, cn } from 
 import { CaretDownIcon, ClockCounterClockwiseIcon, FunnelIcon } from "@phosphor-icons/react"
 import { AsyncContentEmpty, AsyncContentError } from "@/components/composites/async/AsyncContent"
 import { Button as PrimitiveButton } from "@/components/atoms/buttons/Button"
-import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -122,16 +121,18 @@ export interface FlashcardQuizHistoryProps extends WithClassNames<undefined> {
 
 /**
  * "Quick Quiz" run history — the presentational half of {@link FlashcardQuizHistory}, composed on
- * `SurfaceListCard`/`LabeledCard`/`SearchInput`/`FlexWrapButtonRadio`. Four states in the fixed order
+ * `SurfaceCardList`/`SearchInput`/`FlexWrapButtonRadio`. Four states in the fixed order
  * error → loading → empty → content: `error` falls to the shared `AsyncContentError` frame, `isEmpty`
  * to `AsyncContentEmpty` (wrapped in the same bounded `Card` shape as the populated list, per
  * `components/card.md` "frameless-section-empty-state-needs-card"), and otherwise the toolbar + row
- * tree renders with `isSkeleton` threaded to every leaf so the shimmer mirrors the loaded shape
- * (loading-and-skeleton.md). None of `SearchInput`/`Popover`/`FlexWrapButtonRadio` carry their own
- * `isSkeleton`, so the toolbar's shimmer is a co-located `Skeleton.*` swap at the same leaf position
- * rather than a parallel tree (loading-and-skeleton.md §1 fallback). Client-side search/facet
- * filtering, row expansion, and the funnel popover are pure UI state owned here — they need no fetch,
- * store, or i18n. See `tiers/split.md` — the connected `index.tsx` owns the fetch, i18n, and navigation.
+ * tree renders with `isSkeleton` threaded so the shimmer mirrors the loaded shape
+ * (loading-and-skeleton.md). Time buckets collapse into `SurfaceCardList` (label / labelEnd /
+ * subtleLabel) with free-form data `items` — no parallel skeleton tree. Expandable rows keep
+ * nested weak-tag buttons inside `content` (no item-level `onPress`, which would wrap the row in
+ * a button). None of `SearchInput`/`Popover`/`FlexWrapButtonRadio` carry their own `isSkeleton`,
+ * so the toolbar's shimmer is a co-located `Skeleton.*` swap at the same leaf position. Client-side
+ * search/facet filtering, row expansion, and the funnel popover are pure UI state owned here. See
+ * `tiers/split.md` — the connected `index.tsx` owns the fetch, i18n, and navigation.
  *
  * @param props - {@link FlashcardQuizHistoryProps}
  */
@@ -194,63 +195,67 @@ export const _FlashcardQuizHistory = ({
     }
     const shownCount = search.trim() || activeFacetCount > 0 ? filteredRows.length : totalCount
 
-    /** One run row — press toggles its weak-tag panel. Rendered inside each time bucket's `SurfaceListCard`. */
-    const renderRow = (row: FlashcardQuizHistoryRow) => {
+    /** One run row body — press toggles its weak-tag panel. Nested tag buttons live inside
+     *  free-form `content` (not item `onPress`) so they are not illegally nested in a row button. */
+    const renderRowContent = (row: FlashcardQuizHistoryRow) => {
         const expanded = expandedId === row.id
         const scoreRatio = row.cardCount > 0 ? row.correctCount / row.cardCount : 0
         return (
-            <SurfaceListCardItem
-                key={row.id}
-                onPress={() => setExpandedId(expanded ? null : row.id)}
-            >
-                <StackH gap={4} principle="content-row" align="center" items={[
-                    () => (
-                        <StackV gap={1} classNames={["min-w-0", "flex-1"]} items={[
-                            () => (
-                                <Typography type="body-sm" weight="medium" truncate>
-                                    {row.displayName}
-                                </Typography>
-                            ),
-                            () => (
-                                <Typography type="body-xs" color="muted" truncate>
-                                    {row.subtitle}
-                                </Typography>
-                            ),
-                        ]} />
-                    ),
-                    () => (
-                        <StackH gap={3} principle="chip-row" align="center" classNames={["shrink-0"]} items={[
-                            ...(row.levelLabel ? [() => (
-                                <Chip key="level" size="sm" variant="soft" color={row.levelColor}>
-                                    {row.levelLabel}
-                                </Chip>
-                            )] : []),
-                            ...(row.coverageLabel ? [() => (
-                                <Chip key="coverage" size="sm" variant="soft" color="default">
-                                    {row.coverageLabel}
-                                </Chip>
-                            )] : []),
-                            ...(row.xpLabel ? [() => (
-                                <Chip key="xp" size="sm" variant="soft" color="warning">
-                                    {row.xpLabel}
-                                </Chip>
-                            )] : []),
-                            () => (
-                                <Chip size="sm" variant="soft" color={scoreColorOf(scoreRatio)}>
-                                    {`${row.correctCount}/${row.cardCount}`}
-                                </Chip>
-                            ),
-                            () => (
-                                <CaretDownIcon
-                                    className={cn("size-4 text-muted transition-transform", expanded && "rotate-180")}
-                                    weight="bold"
-                                    aria-hidden
-                                    focusable="false"
-                                />
-                            ),
-                        ]} />
-                    ),
-                ]} />
+            <>
+                <button
+                    type="button"
+                    onClick={() => setExpandedId(expanded ? null : row.id)}
+                    className="w-full text-left"
+                >
+                    <StackH gap={4} principle="content-row" align="center" items={[
+                        () => (
+                            <StackV gap={1} classNames={["min-w-0", "flex-1"]} items={[
+                                () => (
+                                    <Typography type="body-sm" weight="medium" truncate>
+                                        {row.displayName}
+                                    </Typography>
+                                ),
+                                () => (
+                                    <Typography type="body-xs" color="muted" truncate>
+                                        {row.subtitle}
+                                    </Typography>
+                                ),
+                            ]} />
+                        ),
+                        () => (
+                            <StackH gap={3} principle="chip-row" align="center" classNames={["shrink-0"]} items={[
+                                ...(row.levelLabel ? [() => (
+                                    <Chip key="level" size="sm" variant="soft" color={row.levelColor}>
+                                        {row.levelLabel}
+                                    </Chip>
+                                )] : []),
+                                ...(row.coverageLabel ? [() => (
+                                    <Chip key="coverage" size="sm" variant="soft" color="default">
+                                        {row.coverageLabel}
+                                    </Chip>
+                                )] : []),
+                                ...(row.xpLabel ? [() => (
+                                    <Chip key="xp" size="sm" variant="soft" color="warning">
+                                        {row.xpLabel}
+                                    </Chip>
+                                )] : []),
+                                () => (
+                                    <Chip size="sm" variant="soft" color={scoreColorOf(scoreRatio)}>
+                                        {`${row.correctCount}/${row.cardCount}`}
+                                    </Chip>
+                                ),
+                                () => (
+                                    <CaretDownIcon
+                                        className={cn("size-4 text-muted transition-transform", expanded && "rotate-180")}
+                                        weight="bold"
+                                        aria-hidden
+                                        focusable="false"
+                                    />
+                                ),
+                            ]} />
+                        ),
+                    ]} />
+                </button>
                 {expanded ? (
                     <Box className="mt-3 border-t border-divider pt-3">
                         <StackV
@@ -266,10 +271,7 @@ export const _FlashcardQuizHistory = ({
                                 <button
                                     key={tag.tag}
                                     type="button"
-                                    onClick={(event) => {
-                                        event.stopPropagation()
-                                        onTagPress(tag.href)
-                                    }}
+                                    onClick={() => onTagPress(tag.href)}
                                     className="group w-full rounded-xl border border-default bg-default text-left"
                                 >
                                     <StackH gap={4} principle="control-pad" padding={{ x: 4, y: 3 }} justify="between" align="center" items={[
@@ -289,9 +291,28 @@ export const _FlashcardQuizHistory = ({
                         />
                     </Box>
                 ) : null}
-            </SurfaceListCardItem>
+            </>
         )
     }
+
+    const skeletonItems: Array<SurfaceCardListItem> = Array.from(
+        { length: SKELETON_ROW_COUNT },
+        (_unused, index) => ({
+            key: `skeleton-${index}`,
+            content: () => (
+                <StackH gap={4} principle="content-row" align="center" items={[
+                    () => (
+                        <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={[
+                            () => <Skeleton.Typography type="body-sm" width="1/2" />,
+                            () => <Skeleton.Typography type="body-xs" width="1/3" />,
+                        ]} />
+                    ),
+                    () => <Skeleton className="h-6 w-12 shrink-0 rounded-full" />,
+                    () => <Skeleton className="size-4 shrink-0 rounded" />,
+                ]} />
+            ),
+        }),
+    )
 
     // error beats a stale loading flag; empty only once settled (BLOCK-8, loading-and-skeleton.md).
     if (error) {
@@ -299,7 +320,7 @@ export const _FlashcardQuizHistory = ({
     }
     if (!isSkeleton && isEmpty) {
         // `AsyncContentEmpty` omits its own frame (composites/feedback/EmptyState) — the populated
-        // sibling below is a real `SurfaceListCard` (bounded card), so the empty state needs the same
+        // sibling below is a real bounded list surface, so the empty state needs the same
         // card shape to match (`components/card.md` "frameless-section-empty-state-needs-card").
         return (
             <Card className={className}>
@@ -420,22 +441,7 @@ export const _FlashcardQuizHistory = ({
                 ),
                 () => (
                     isSkeleton ? (
-                        <SurfaceListCard>
-                            {Array.from({ length: SKELETON_ROW_COUNT }).map((_unused, index) => (
-                                <SurfaceListCardItem key={index}>
-                                    <StackH gap={4} principle="content-row" align="center" items={[
-                                        () => (
-                                            <StackV gap={2} classNames={["min-w-0", "flex-1"]} items={[
-                                                () => <Skeleton.Typography type="body-sm" width="1/2" />,
-                                                () => <Skeleton.Typography type="body-xs" width="1/3" />,
-                                            ]} />
-                                        ),
-                                        () => <Skeleton className="h-6 w-12 shrink-0 rounded-full" />,
-                                        () => <Skeleton className="size-4 shrink-0 rounded" />,
-                                    ]} />
-                                </SurfaceListCardItem>
-                            ))}
-                        </SurfaceListCard>
+                        <SurfaceCardList isSkeleton items={skeletonItems} />
                     ) : filteredEmpty ? (
                         <Card>
                             <CardContent>
@@ -448,17 +454,16 @@ export const _FlashcardQuizHistory = ({
                         </Card>
                     ) : (
                         <StackV gap={4} items={timeBuckets.map((bucket) => () => (
-                            <LabeledCard
+                            <SurfaceCardList
                                 key={bucket.key}
-                                frameless
                                 subtleLabel
                                 label={timeBucketLabelOf[bucket.key]}
                                 labelEnd={formatRunCount(bucket.items.length)}
-                            >
-                                <SurfaceListCard>
-                                    {bucket.items.map((row) => renderRow(row))}
-                                </SurfaceListCard>
-                            </LabeledCard>
+                                items={bucket.items.map((row) => ({
+                                    key: row.id,
+                                    content: () => renderRowContent(row),
+                                }))}
+                            />
                         ))} />
                     )
                 ),

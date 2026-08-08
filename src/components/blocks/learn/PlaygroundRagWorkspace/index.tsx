@@ -22,7 +22,8 @@ import {
 import { ExtendedTabs } from "@/components/blocks/navigation/ExtendedTabs"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { SelectableCardGroup } from "@/components/blocks/navigation/SelectableCardGroup"
-import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
+import { Typography as HouseTypography } from "@/components/atoms/text/Typography"
 import { AsyncContentEmpty } from "@/components/composites/async/AsyncContent"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { RagSourceGraph } from "@/components/blocks/rendering/RagSourceGraph"
@@ -386,20 +387,20 @@ export const PlaygroundRagWorkspace = ({
                                         {(sourcesModeByTurn[turn.id] ?? "doc") === "graph" ? (
                                             <RagSourceGraph question={turn.question} sources={turn.sources} />
                                         ) : (
-                                            <SurfaceListCard bordered>
-                                                {turn.sources.map((source, index) => (
-                                                    <SurfaceListCardRow
-                                                        key={`${turn.id}-${index}`}
-                                                        // `title` is plain text now (never a built element), and
-                                                        // `titleClassName` stays lint-forbidden — the monospace
-                                                        // face moves to the row itself, which reads fine for the
-                                                        // snippet subtitle too (both are source code).
-                                                        className="font-mono"
-                                                        title={source.filePath}
-                                                        subtitle={source.snippet}
-                                                    />
-                                                ))}
-                                            </SurfaceListCard>
+                                            <SurfaceCardList
+                                                variant="nested"
+                                                items={turn.sources.map((source, index): SurfaceCardListItem => ({
+                                                    key: `${turn.id}-${index}`,
+                                                    // monospace is data chrome for source paths — lives inside
+                                                    // free-form content (not a SurfaceCard classNames door).
+                                                    content: () => (
+                                                        <div className="font-mono">
+                                                            <HouseTypography size="sm" truncate text={source.filePath} />
+                                                            <HouseTypography size="xs" color="muted" truncate text={source.snippet} />
+                                                        </div>
+                                                    ),
+                                                }))}
+                                            />
                                         )}
                                     </div>
                                 ) : null}

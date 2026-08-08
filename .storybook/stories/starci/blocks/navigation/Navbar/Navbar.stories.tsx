@@ -103,6 +103,7 @@ const ACCOUNT_GUEST: NavbarAccountData = {
 }
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "NavbarFrame": { tier: "frame", role: "the sticky top nav landmark and fixed 4rem primary row — identity root for this block", storyId: "frames-navbarframe-navbarframe--default" },
     "StackH": { tier: "frame", role: "the primary bar's row track (outer justify-between split, and each inner cluster of controls)", storyId: "frames-stack-stackh--default" },
     "StackV": { tier: "frame", role: "the notification popover's own column, and the mobile drawer's stacked regions", storyId: "frames-stack-stackv--default" },
     "Typography": { tier: "atom", role: "a route pill's label, the popover's own title/timestamps, or the guest prompt line", storyId: "atoms-text-typography-typography--overview" },

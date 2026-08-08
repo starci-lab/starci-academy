@@ -11,6 +11,8 @@ import { Radio, RadioContent } from "@/components/atoms/forms/Radio"
 import { RadioGroup } from "@/components/atoms/forms/RadioGroup"
 import { Accordion as AccordionAtom, type AccordionItem as AccordionAtomItem } from "@/components/atoms/navigation/Accordion"
 import { SurfaceCardHeader, surfaceSectionGap, surfaceFrame, type SurfaceLabelProps, type SurfaceCardVariant } from "@/components/composites/cards/SurfaceCard/surface-card-header"
+
+export type { SurfaceLabelProps, SurfaceCardVariant }
 import { type VerdictBand, type VerdictBandVariant, verdictBandClassName } from "@/components/composites/cards/verdict-band"
 import type { ComponentTypeWithSkeleton } from "@/components/frames/_slot"
 import { Avatar } from "@/components/atoms/display/Avatar"
@@ -35,6 +37,10 @@ import {
  * slot set, the `description` outside the card, and two independent frame axes `variant`
  * (`"surface" | "nested"`) and `padding`. Each slot is a component reference the frame calls
  * itself, so `isSkeleton` can reach inside it.
+ *
+ * B37 surface contract: List and Accordion members also extend `SurfaceLabelProps` and
+ * own description / empty / error (List) / isSkeleton / identity — callers must not wrap
+ * them in a LabeledCard `frameless` shell just to attach a section label.
  */
 /** Source-level tier metadata — see `.claude/design/storybook/architecture/elements/*.md`. */
 export const meta = { tier: "composite", name: "SurfaceCard" } as const
@@ -1353,6 +1359,11 @@ export interface SurfaceCardListProps extends SurfaceLabelProps {
      */
     classNames?: Array<AllowedClassName>
     /**
+     * Stretch the labeled list to fill its parent cell (grid/flex). Replaces the
+     * legacy LabeledCard `fillHeight` door — named placement, not a public CSS string.
+     */
+    fillHeight?: boolean
+    /**
      * Caller identity to wear on this composite's root instead of its own — pass this
      * when a block/layout/overlay/page uses this composite as its root element.
      * Omitted → this composite keeps emitting its own data-tier/data-component.
@@ -1558,6 +1569,7 @@ const List = ({
     description,
     isSkeleton = false,
     classNames,
+    fillHeight = false,
     label,
     labelEnd,
     onSeeMore,
@@ -1582,6 +1594,7 @@ const List = ({
         ? <Box principle="page-pad" explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."><ErrorState /></Box>
         : !isSkeleton && isEmpty && EmptyState != null ? <Box principle="page-pad" explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."><EmptyState /></Box> : rows
     const bare = label == null && description == null
+    const fillClass = fillHeight ? "h-full flex-1" : undefined
     const surface = (
         <div
 
@@ -1589,6 +1602,7 @@ const List = ({
                 "overflow-hidden",
                 surfaceFrame(variant),
                 bare && cn(classNames),
+                bare && fillClass,
             )}
             {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardList" })}
         >
@@ -1612,7 +1626,7 @@ const List = ({
         <section
 
             data-principle={subtleLabel ? "sublabel-field" : "label-field"}
-            className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames)}
+            className={cn("flex flex-col", surfaceSectionGap(subtleLabel), classNames, fillClass)}
             {...resolveIdentity(identity, { tier: "composite", name: "SurfaceCardList" })}
         >
             <div>

@@ -1922,11 +1922,26 @@
     {
       "id": "b31r2-identity-tile-mass-migration-2026-08-09",
       "date": "2026-08-09",
-      "status": "partial",
-      "summary": "BATCH 31r2: Landed atoms/display/IdentityTile (SB+src twins, byte-identical). Circular IconTile unchanged. Zero consumers migrated — every legacy block consumer fails zero-warn ratchet. Legacy blocks/identity/IconTile kept (coexistence approved). Deletion deferred.",
-      "reason": "Contract identity-tile.md (atom filing). All 33 live consumer files have pre-existing ESLint warnings; page-folder / LeaderboardListCard / sentence-tier debt holds.",
+      "status": "applied-src",
+      "summary": "BATCH 31r2: Landed atoms/display/IdentityTile (SB+src). Circular IconTile unchanged. Zero consumers migrated in that wave. Committed as 94c5f8fb.",
+      "reason": "Contract identity-tile.md (atom filing).",
       "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b31r2-status.md",
-      "next": "Zero-warn unlock batches per consumer cluster, then migrate to IdentityTile; delete blocks/identity/IconTile at zero imports."
+      "next": "See b31r3 for first consumer unlock wave."
+    },
+    {
+      "id": "b31r3-unlock-block-identity-consumers-2026-08-09",
+      "date": "2026-08-09",
+      "status": "partial",
+      "summary": "BATCH 31r3: Migrated PitchCard + PlaygroundCard to IdentityTile at zero warnings. Held ReadinessChecklist, CartLine, PremiumPaywall, EnrollGate (ListRow padding / flex-1 placement / asymmetric Box seams / drifted SB twin). Legacy block kept.",
+      "reason": "Per-target atomicity; held targets need new or out-of-manifest contracts.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b31r3-status.md",
+      "holds": [
+        "ReadinessChecklist: ListRow p-3 + ReactNode icon API → PlaygroundSessionProvider",
+        "CartLine: min-w-0 flex-1 title column with no typed placement frame",
+        "PremiumPaywall: asymmetric pt-6 seam",
+        "EnrollGate: CARD_SURFACE/TEASER_FADE + SB twin drift"
+      ],
+      "next": "Unlock held four with typed placement/padding contracts, then continue page consumers."
     }
   ]
 }

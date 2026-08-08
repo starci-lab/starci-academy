@@ -1,15 +1,18 @@
 import React from "react"
 import { Typography } from "@/components/atoms/text/Typography"
-import { IconTile } from "../../identity/IconTile"
-import type { IconTileTone } from "../../identity/IconTile"
+import {
+    IdentityTile,
+    type IdentityTileIcon,
+    type IdentityTileTone,
+} from "@/components/atoms/display/IdentityTile"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
 
 /** Props for the {@link PitchCard} block. */
 export interface PitchCardProps {
-    /** Phosphor icon node rendered inside the tinted {@link IconTile}. */
-    icon: React.ReactNode
-    /** Tint of the icon tile; defaults to accent. */
-    tone?: IconTileTone
+    /** Phosphor icon component rendered inside the tinted {@link IdentityTile}. */
+    icon: IdentityTileIcon
+    /** Tint of the identity tile; defaults to accent. */
+    tone?: IdentityTileTone
     /** Card title (the claim). */
     title: React.ReactNode
     /** Supporting body copy (the proof / explanation). */
@@ -19,7 +22,7 @@ export interface PitchCardProps {
 }
 
 /**
- * A single "pitch" card: tinted icon tile, a bold claim, supporting copy, and an
+ * A single "pitch" card: tinted identity tile, a bold claim, supporting copy, and an
  * optional footer action. Tier-3 presentational block built on {@link SectionCard}
  * — owns all styling, content via props. Reused across the wedge / outcome /
  * methodology beats of the landing page.
@@ -43,9 +46,9 @@ export const PitchCard = ({
             contentGap={4}
             fillHeight
         >
-            <IconTile icon={icon} tone={tone} size="md" />
+            <IdentityTile icon={icon} tone={tone} size="md" />
             <Typography size="h5" weight="semibold" text={title} />
-            <Typography size="sm" color="muted" classNames={["flex-1"]} text={body} />
+            <Typography size="sm" color="muted" text={body} />
             {footer}
         </SectionCard>
     )

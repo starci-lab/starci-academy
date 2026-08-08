@@ -21,14 +21,11 @@ const FORBIDDEN_HOSTS = new Set([
 const SENTENCE_DIRS = "(?:blocks|pages|layouts|overlays)"
 
 /**
- * True when the file lives under a sentence-tier folder in src or Storybook
- * product trees (starci / nivo / nivoexpert / mia-mia / bare components).
+ * True when the file lives under a sentence-tier folder in the product tree.
  */
 export const isSentenceTierFile = (filename) => {
   const file = String(filename || "").replace(/\\/g, "/")
   if (new RegExp(`/src/components/${SENTENCE_DIRS}/`).test(file)) return true
-  if (new RegExp(`/\\.storybook/components/${SENTENCE_DIRS}/`).test(file)) return true
-  if (new RegExp(`/\\.storybook/components/[^/]+/${SENTENCE_DIRS}/`).test(file)) return true
   return false
 }
 

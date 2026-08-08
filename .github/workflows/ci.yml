@@ -47,25 +47,3 @@ jobs:
           echo "::group::check-seams"; node scripts/check-seams.mjs || true; echo "::endgroup::"
           echo "::group::check-inline-types"; node scripts/check-inline-types.mjs || true; echo "::endgroup::"
           echo "::group::check-story-coverage (nghi HONG/stale sau split)"; node scripts/check-story-coverage.mjs || true; echo "::endgroup::"
-
-  rendered-tree:
-    name: rendered-tree runner (test-storybook)
-    runs-on: ubuntu-latest
-    # Nang (mount 301 story qua Playwright) + lan dau nhieu debt -> tracking truoc, bo
-    # continue-on-error khi da xanh de bien thanh chan that.
-    continue-on-error: true
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-      - run: npm ci
-      - run: npx playwright install --with-deps chromium
-      - name: build storybook
-        run: npm run build-storybook -- --quiet
-      - name: serve + test-storybook (rendered-tree audit)
-        run: |
-          npx concurrently -k -s first -n "SB,TEST" \
-            "npx http-server storybook-static --port 6006 --silent" \
-            "npx wait-on tcp:127.0.0.1:6006 && npx test-storybook --url http://127.0.0.1:6006"

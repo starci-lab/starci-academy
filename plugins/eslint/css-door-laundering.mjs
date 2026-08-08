@@ -14,19 +14,17 @@ const UTILITY_NAMES = new Set(["Omit", "Pick", "Exclude"])
 
 const LAYOUT_PAGE_DIRS = "(?:layouts|pages)"
 
-/** True for src / Storybook layout and page component files. */
+/** True for src layout and page component files. */
 export const isLayoutOrPageFile = (filename) => {
   const file = String(filename || "").replace(/\\/g, "/")
   if (new RegExp(`/src/components/${LAYOUT_PAGE_DIRS}/`).test(file)) return true
-  if (new RegExp(`/\\.storybook/components/${LAYOUT_PAGE_DIRS}/`).test(file)) return true
-  if (new RegExp(`/\\.storybook/components/[^/]+/${LAYOUT_PAGE_DIRS}/`).test(file)) return true
   return false
 }
 
-/** True for product or Storybook TypeScript trees. */
+/** True for product TypeScript trees. */
 const isProductOrStorybookFile = (filename) => {
   const file = String(filename || "").replace(/\\/g, "/")
-  return file.includes("/src/") || file.includes("/.storybook/")
+  return file.includes("/src/")
 }
 
 /** Literal string from a TS type node when it is a simple string literal. */

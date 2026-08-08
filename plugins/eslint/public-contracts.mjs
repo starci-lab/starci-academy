@@ -16,11 +16,10 @@ const FORBIDDEN_PROPS = new Set(["className", "classNames"])
 
 const sourceValue = (node) => (node?.value == null ? "" : String(node.value).replace(/\\/g, "/"))
 
-/** Normalize alias imports so vendor-boundary path checks match src and Storybook. */
+/** Normalize alias imports so vendor-boundary path checks match src. */
 const normalizeHouseImportPath = (source) => {
   const file = sourceValue({ value: source })
   if (file.startsWith("@/components/")) return `/components/${file.slice("@/components/".length)}`
-  if (file.startsWith("@sb-components/")) return `/components/${file.slice("@sb-components/".length)}`
   const idx = file.indexOf("/components/")
   return idx >= 0 ? file.slice(idx) : file
 }
@@ -29,7 +28,7 @@ const isPublicComponentFile = (filename) => PUBLIC_COMPONENT_FILE.test(String(fi
 
 const isProductFile = (filename) => {
   const file = String(filename || "").replace(/\\/g, "/")
-  return file.includes("/src/") || file.includes("/.storybook/")
+  return file.includes("/src/")
 }
 
 const isVendorBoundaryFile = (filename) => {

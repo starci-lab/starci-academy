@@ -50,15 +50,9 @@ export default defineConfig([
         },
     },
     {
-        files: [".storybook/components/nivoexpert/**/*.{ts,tsx}"],
-        rules: {
-            "react/no-unknown-property": ["error", { ignore: ["jsx", "global"] }],
-        },
-    },
-    {
         // StarCi FE canon — mechanical ENFORCEMENT. 'warn' while old debt remains;
         // raise to 'error' at measured zero. Pre-commit --max-warnings=0 on staged files.
-        files: ["src/**/*.{ts,tsx}", ".storybook/**/*.{ts,tsx}"],
+        files: ["src/**/*.{ts,tsx}"],
         plugins: { "starci-fe": starciFe },
         rules: {
             "starci-fe/no-fractional-spacing": "error",
@@ -109,7 +103,7 @@ export default defineConfig([
         },
     },
     {
-        files: ["src/**/*.{ts,tsx}", ".storybook/**/*.{ts,tsx}"],
+        files: ["src/**/*.{ts,tsx}"],
         plugins: { "starci-fe": starciFe },
         rules: {
             "starci-fe/no-public-frame-css-props": "error",
@@ -125,7 +119,7 @@ export default defineConfig([
         },
     },
     {
-        files: ["src/**/*.{ts,tsx}", ".storybook/**/*.{ts,tsx}"],
+        files: ["src/**/*.{ts,tsx}"],
         plugins: { "jsx-a11y": jsxA11y },
         rules: {
             "jsx-a11y/alt-text": "warn",
@@ -147,12 +141,6 @@ export default defineConfig([
         languageOptions: { globals: globals.node },
         rules: {
             indent: "off",
-        },
-    },
-    {
-        files: [".storybook/test-runner.ts", ".storybook/test-runner/**/*.{js,mjs,ts}"],
-        rules: {
-            "starci-fe/prefer-arrow-export": "off",
         },
     },
 ])

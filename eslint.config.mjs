@@ -103,6 +103,9 @@ export default defineConfig([
             // Sentence tiers compose vocabulary; raw structural hosts are forbidden.
             // Warn while legacy debt migrates; changed files use --max-warnings=0.
             "starci-fe/no-host-element-at-sentence-tier": "warn",
+            // Omit/Pick of className is not closure; layouts must not inherit Navbar/Footer props.
+            // Warn while legacy debt migrates; changed files use --max-warnings=0.
+            "starci-fe/no-css-door-type-laundering": "warn",
         },
     },
     {

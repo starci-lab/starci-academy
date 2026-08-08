@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useCallback, useMemo, useState, type ReactNode } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 import { BookmarkSimpleIcon, SignInIcon, SignOutIcon, UserPlusIcon } from "@phosphor-icons/react"
@@ -34,12 +34,20 @@ import {
     FOUNDER_GITHUB,
     FOUNDER_LINKEDIN,
 } from "@/resources/contact"
-import type {
-    NavbarAccountMenuItem,
-    NavbarNotificationItem,
-    NavLinkItem,
+import {
+    Navbar,
+    type NavbarAccountMenuItem,
+    type NavbarNotificationItem,
+    type NavLinkItem,
 } from "@/components/blocks/navigation/Navbar"
+import { Footer, type FooterProps } from "@/components/blocks/navigation/Footer"
 import { _InnerLayout, type InnerLayoutProps } from "./component"
+
+/** Connected shell props — only the active route's content. */
+export interface InnerLayoutConnectedProps {
+    /** Active route content mounted in the body slot. */
+    children: ReactNode
+}
 
 /**
  * `InnerLayout` — the CONNECTED half of the SRC TWIN. Like `LearnShell`, it takes
@@ -76,7 +84,7 @@ import { _InnerLayout, type InnerLayoutProps } from "./component"
  *
  * @param props - only `children`, the active route's own content.
  */
-export const InnerLayout = ({ children }: Pick<InnerLayoutProps, "children">) => {
+export const InnerLayout = ({ children }: InnerLayoutConnectedProps) => {
     const t = useTranslations()
     const locale = useLocale()
 
@@ -322,7 +330,7 @@ export const InnerLayout = ({ children }: Pick<InnerLayoutProps, "children">) =>
     )
 
     // --- footer -------------------------------------------------------------------
-    const exploreLinks = useMemo<InnerLayoutProps["exploreLinks"]>(
+    const exploreLinks = useMemo<FooterProps["exploreLinks"]>(
         () => [
             { id: "courses", label: t("footer.links.courses"), onPress: () => router.push(pathConfig().locale().course().build()) },
             { id: "blog", label: t("footer.links.blog"), onPress: () => router.push(pathConfig().locale().blog().build()) },
@@ -333,7 +341,7 @@ export const InnerLayout = ({ children }: Pick<InnerLayoutProps, "children">) =>
         [router, t],
     )
 
-    const supportLinks = useMemo<InnerLayoutProps["supportLinks"]>(
+    const supportLinks = useMemo<FooterProps["supportLinks"]>(
         () => [
             { id: "contact", label: t("footer.links.contact"), onPress: () => router.push(pathConfig().locale().contact().build()) },
             { id: "email", label: CONTACT_EMAIL, onPress: () => { window.location.href = `mailto:${CONTACT_EMAIL}` } },
@@ -341,7 +349,7 @@ export const InnerLayout = ({ children }: Pick<InnerLayoutProps, "children">) =>
         [router, t],
     )
 
-    const socials = useMemo<InnerLayoutProps["socials"]>(
+    const socials = useMemo<FooterProps["socials"]>(
         () => [
             { id: "facebook", label: t("contact.founder.facebook"), icon: FaFacebook, onPress: () => window.open(FOUNDER_FACEBOOK, "_blank", "noreferrer") },
             { id: "linkedin", label: t("contact.founder.linkedin"), icon: FaLinkedin, onPress: () => window.open(FOUNDER_LINKEDIN, "_blank", "noreferrer") },
@@ -363,50 +371,54 @@ export const InnerLayout = ({ children }: Pick<InnerLayoutProps, "children">) =>
 
     return (
         <_InnerLayout
-            // --- Navbar ---
-            onLogoPress={onLogoPress}
-            navItems={navItems}
-            searchPlaceholder={t("search.placeholder")}
-            shortcutLabel="Ctrl K"
-            onSearchPress={openSearch}
-            languages={languages.map((language) => ({ code: language.code, label: language.label }))}
-            activeLocale={locale}
-            onLocaleChange={onLocaleChange}
-            isDarkMode={isDarkMode}
-            onThemeToggle={onThemeToggle}
-            cartCount={cartCount}
-            onCartPress={openMiniCart}
-            notifications={{
-                unreadCount: notificationsData?.unreadCount ?? 0,
-                items: notificationItems,
-                isLoading: notificationsLoading,
-                error: notificationsError ? t("notifications.loadError") : null,
-                onItemPress: onNotificationItemPress,
-                onMarkAllRead: onMarkAllNotificationsRead,
-                onSeeAll: onSeeAllNotifications,
-                onRetry: () => { void mutateNotifications() },
-            }}
-            account={{
-                isAuthed: authenticated,
-                user: authenticated && user
-                    ? { username: user.username, email: user.email, avatarUrl: user.avatar }
-                    : undefined,
-                isLoading: authenticated && !user,
-                menuItems: accountMenuItems,
-            }}
-            isMobileDrawerOpen={isMobileDrawerOpen}
-            onMobileDrawerOpenChange={setMobileDrawerOpen}
-            // --- Footer ---
-            exploreLinks={exploreLinks}
-            supportLinks={supportLinks}
-            socials={socials}
-            onTermsPress={onTermsPress}
-            onPrivacyPress={onPrivacyPress}
-            // --- shell ---
             showFooter={showFooter}
-        >
-            {children}
-        </_InnerLayout>
+            navbar={() => (
+                <Navbar
+                    onLogoPress={onLogoPress}
+                    navItems={navItems}
+                    searchPlaceholder={t("search.placeholder")}
+                    shortcutLabel="Ctrl K"
+                    onSearchPress={openSearch}
+                    languages={languages.map((language) => ({ code: language.code, label: language.label }))}
+                    activeLocale={locale}
+                    onLocaleChange={onLocaleChange}
+                    isDarkMode={isDarkMode}
+                    onThemeToggle={onThemeToggle}
+                    cartCount={cartCount}
+                    onCartPress={openMiniCart}
+                    notifications={{
+                        unreadCount: notificationsData?.unreadCount ?? 0,
+                        items: notificationItems,
+                        isLoading: notificationsLoading,
+                        error: notificationsError ? t("notifications.loadError") : null,
+                        onItemPress: onNotificationItemPress,
+                        onMarkAllRead: onMarkAllNotificationsRead,
+                        onSeeAll: onSeeAllNotifications,
+                        onRetry: () => { void mutateNotifications() },
+                    }}
+                    account={{
+                        isAuthed: authenticated,
+                        user: authenticated && user
+                            ? { username: user.username, email: user.email, avatarUrl: user.avatar }
+                            : undefined,
+                        isLoading: authenticated && !user,
+                        menuItems: accountMenuItems,
+                    }}
+                    isMobileDrawerOpen={isMobileDrawerOpen}
+                    onMobileDrawerOpenChange={setMobileDrawerOpen}
+                />
+            )}
+            body={() => <>{children}</>}
+            footer={() => (
+                <Footer
+                    exploreLinks={exploreLinks}
+                    supportLinks={supportLinks}
+                    socials={socials}
+                    onTermsPress={onTermsPress}
+                    onPrivacyPress={onPrivacyPress}
+                />
+            )}
+        />
     )
 }
 

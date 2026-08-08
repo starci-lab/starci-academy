@@ -1,16 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { InnerLayout } from "@sb-components/starci/layouts/InnerLayout/InnerLayout"
-import type { NavLinkItem, NavbarAccountData, NavbarNotificationsData } from "@sb-components/starci/blocks/navigation/Navbar/Navbar"
-import type { FooterLinkItem, FooterSocialLink } from "@sb-components/starci/blocks/navigation/Footer/Footer"
+import { Navbar, type NavLinkItem, type NavbarAccountData, type NavbarNotificationsData } from "@sb-components/starci/blocks/navigation/Navbar/Navbar"
+import { Footer, type FooterLinkItem, type FooterSocialLink } from "@sb-components/starci/blocks/navigation/Footer/Footer"
 import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa6"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `InnerLayout` — the wrapper for every route in the app. `children` is a real
- * slot: the shell stays mounted while the routed page underneath changes. Two
- * structural leaves: `showFooter` gains or loses a whole composed node (the
- * Footer), so it is a leaf rather than a state — the Footer's own shape never
- * changes, it is simply present or gone.
+ * `InnerLayout` — the wrapper for every route in the app. Regions enter as
+ * typed slots (`navbar` / `body` / `footer`); `showFooter` gains or loses the
+ * footer region, so it is a leaf rather than a state.
  */
 const meta: Meta<typeof InnerLayout> = {
     title: "StarCi/Layouts/InnerLayout/InnerLayout",
@@ -89,6 +87,39 @@ const RoutedPage = ({ label }: RoutedPageProps) => (
     </div>
 )
 
+/** Shared shell navbar fixture for both leaves. */
+const DemoNavbar = () => (
+    <Navbar
+        navItems={NAV_ITEMS}
+        onLogoPress={() => {}}
+        searchPlaceholder="Search lessons, courses…"
+        shortcutLabel="Ctrl K"
+        onSearchPress={() => {}}
+        languages={[{ code: "vi", label: "Vietnamese" }, { code: "en", label: "English" }]}
+        activeLocale="vi"
+        onLocaleChange={() => {}}
+        isDarkMode={false}
+        onThemeToggle={() => {}}
+        cartCount={2}
+        onCartPress={() => {}}
+        notifications={NOTIFICATIONS}
+        account={ACCOUNT}
+        isMobileDrawerOpen={false}
+        onMobileDrawerOpenChange={() => {}}
+    />
+)
+
+/** Shared shell footer fixture for both leaves. */
+const DemoFooter = () => (
+    <Footer
+        exploreLinks={EXPLORE_LINKS}
+        supportLinks={SUPPORT_LINKS}
+        socials={SOCIALS}
+        onTermsPress={() => {}}
+        onPrivacyPress={() => {}}
+    />
+)
+
 /** LEAF — a `/learn` route: in-app chrome, no marketing footer. */
 export const NoFooter: Story = {
     render: () => (
@@ -105,62 +136,22 @@ export const NoFooter: Story = {
                         why: "A logged-in learner deep inside the product doesn't need marketing chrome below the fold, so the caller passes `showFooter={false}` and the Footer node drops out entirely — the content column simply runs to the bottom of the viewport instead.",
                         code: `<InnerLayout
     showFooter={false}
-    navItems={navItems}
-    onLogoPress={goHome}
-    searchPlaceholder="Search lessons, courses…"
-    shortcutLabel="Ctrl K"
-    onSearchPress={openSearch}
-    languages={languages}
-    activeLocale="vi"
-    onLocaleChange={setLocale}
-    isDarkMode={false}
-    onThemeToggle={setTheme}
-    cartCount={2}
-    onCartPress={openCart}
-    notifications={notifications}
-    account={account}
-    isMobileDrawerOpen={false}
-    onMobileDrawerOpenChange={setMobileDrawerOpen}
-    exploreLinks={exploreLinks}
-    supportLinks={supportLinks}
-    socials={socials}
-    onTermsPress={openTerms}
-    onPrivacyPress={openPrivacy}
->
-    <LearnContentPage />
-</InnerLayout>`,
+    navbar={NavbarRegion}
+    body={LearnContentPage}
+    footer={FooterRegion}
+/>`,
                         render: (
                             <div data-tier="fixture" style={{ height: "32rem" }} className="overflow-y-auto rounded-2xl border border-default">
                                 <InnerLayout
-
-
                                     showFooter={false}
-                                    navItems={NAV_ITEMS}
-                                    onLogoPress={() => {}}
-                                    searchPlaceholder="Search lessons, courses…"
-                                    shortcutLabel="Ctrl K"
-                                    onSearchPress={() => {}}
-                                    languages={[{ code: "vi", label: "Vietnamese" }, { code: "en", label: "English" }]}
-                                    activeLocale="vi"
-                                    onLocaleChange={() => {}}
-                                    isDarkMode={false}
-                                    onThemeToggle={() => {}}
-                                    cartCount={2}
-                                    onCartPress={() => {}}
-                                    notifications={NOTIFICATIONS}
-                                    account={ACCOUNT}
-                                    isMobileDrawerOpen={false}
-                                    onMobileDrawerOpenChange={() => {}}
-                                    exploreLinks={EXPLORE_LINKS}
-                                    supportLinks={SUPPORT_LINKS}
-                                    socials={SOCIALS}
-                                    onTermsPress={() => {}}
-                                    onPrivacyPress={() => {}}
-                                >
-                                    <div className="p-6">
-                                        <RoutedPage label="Lesson content" />
-                                    </div>
-                                </InnerLayout>
+                                    navbar={DemoNavbar}
+                                    body={() => (
+                                        <div className="p-6">
+                                            <RoutedPage label="Lesson content" />
+                                        </div>
+                                    )}
+                                    footer={DemoFooter}
+                                />
                             </div>
                         ),
                     },
@@ -186,47 +177,22 @@ export const WithFooter: Story = {
                         why: "The landing page wants site links/socials below the fold, so the caller passes `showFooter` — the layout grows a whole extra region under the content, still pinned to the bottom of a short page by the same `flex-1` that lets a tall page push it off-screen naturally.",
                         code: `<InnerLayout
     showFooter
-    /* …same nav props as above… */
-    exploreLinks={exploreLinks}
-    supportLinks={supportLinks}
-    socials={socials}
-    onTermsPress={openTerms}
-    onPrivacyPress={openPrivacy}
->
-    <LandingScreen />
-</InnerLayout>`,
+    navbar={NavbarRegion}
+    body={LandingScreen}
+    footer={FooterRegion}
+/>`,
                         render: (
                             <div data-tier="fixture" style={{ height: "40rem" }} className="overflow-y-auto rounded-2xl border border-default">
                                 <InnerLayout
-
-
                                     showFooter
-                                    navItems={NAV_ITEMS}
-                                    onLogoPress={() => {}}
-                                    searchPlaceholder="Search lessons, courses…"
-                                    shortcutLabel="Ctrl K"
-                                    onSearchPress={() => {}}
-                                    languages={[{ code: "vi", label: "Vietnamese" }, { code: "en", label: "English" }]}
-                                    activeLocale="vi"
-                                    onLocaleChange={() => {}}
-                                    isDarkMode={false}
-                                    onThemeToggle={() => {}}
-                                    cartCount={2}
-                                    onCartPress={() => {}}
-                                    notifications={NOTIFICATIONS}
-                                    account={ACCOUNT}
-                                    isMobileDrawerOpen={false}
-                                    onMobileDrawerOpenChange={() => {}}
-                                    exploreLinks={EXPLORE_LINKS}
-                                    supportLinks={SUPPORT_LINKS}
-                                    socials={SOCIALS}
-                                    onTermsPress={() => {}}
-                                    onPrivacyPress={() => {}}
-                                >
-                                    <div className="p-6">
-                                        <RoutedPage label="Home" />
-                                    </div>
-                                </InnerLayout>
+                                    navbar={DemoNavbar}
+                                    body={() => (
+                                        <div className="p-6">
+                                            <RoutedPage label="Home" />
+                                        </div>
+                                    )}
+                                    footer={DemoFooter}
+                                />
                             </div>
                         ),
                     },

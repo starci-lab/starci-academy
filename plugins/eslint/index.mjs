@@ -19,6 +19,7 @@ import { noRuntimeNamespace } from "./namespaces.mjs"
 import { noPublicClassNameProp } from "./public-contracts.mjs"
 import { noFrameFragmentItem } from "./frame-items.mjs"
 import { noHostElementAtSentenceTier } from "./sentence-hosts.mjs"
+import { noCssDoorTypeLaundering } from "./css-door-laundering.mjs"
 
 /** Static className string from one JSXAttribute (literal or pure template quasi). */
 function classNameText(node) {
@@ -1106,5 +1107,6 @@ export default {
     "no-public-classname-prop": noPublicClassNameProp,
     "no-frame-fragment-item": noFrameFragmentItem,
     "no-host-element-at-sentence-tier": noHostElementAtSentenceTier,
+    "no-css-door-type-laundering": noCssDoorTypeLaundering,
   },
 }

@@ -86,37 +86,6 @@ const SubmissionScoreCard = ({
     // so there is nothing left to need.
     const pointsNeeded = !isPassing && passScore != null ? Math.max(passScore - score, 0) : null
 
-    const scoreRow = (
-        <>
-            <Typography
-                size="h2"
-                weight="bold"
-                tabularNums
-                color={verdictTone}
-                isSkeleton={isSkeleton}
-                text={String(score)}
-
-            />
-            {maxScore != null ? (
-                <Typography
-                    size="sm"
-                    color="muted"
-                    tabularNums
-                    isSkeleton={isSkeleton}
-                    text={`/ ${maxScore}`}
-
-                />
-            ) : null}
-            <Chip
-                tone={verdictTone}
-                icon={isPassing ? CheckCircleIcon : XCircleIcon}
-                text={isPassing ? "Passed" : "Not yet passed"}
-                isSkeleton={isSkeleton}
-
-            />
-        </>
-    )
-
     const modelByline = gradedByModel != null ? (
         <StackH
             gap={3}
@@ -157,55 +126,93 @@ const SubmissionScoreCard = ({
         />
     ) : null
 
-    const scoreSummary = (
-        <>
-            <StackH gap={4} principle="value-row"
-                explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
-                align="baseline" at="sm" isSkeleton={isSkeleton} items={[() => scoreRow]}  />
-
-            {pointsNeeded != null && pointsNeeded > 0 ? (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    isSkeleton={isSkeleton}
-                    text={`Need ${pointsNeeded} more points to reach the ${passScore}-point pass mark`}
-
-                />
-            ) : null}
-
-            {shortFeedback != null ? (
-                <Typography
-                    size="sm"
-                    isSkeleton={isSkeleton}
-                    text={shortFeedback}
-
-                />
-            ) : null}
-
-            {submissionUrl != null ? (
-                <Typography
-                    size="sm"
-                    isLink
-                    href={submissionUrl}
-                    isSkeleton={isSkeleton}
-                    text={submissionLabel ?? "View submission"}
-
-                />
-            ) : null}
-
-            {modelByline}
-        </>
-    )
-
     return (
-        <div>
-            <SurfaceCard
-                label={label}
-                isSkeleton={isSkeleton}
+        <SurfaceCard
+            identity={{ tier: "block", component: "SubmissionScoreCard" }}
+            label={label}
+            isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={4} isSkeleton={isSkeleton} items={[() => scoreSummary]} />}
-            />
-        </div>
+            body={() => (
+                <StackV
+                    gap={4}
+                    principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                    isSkeleton={isSkeleton}
+                    items={[
+                        () => (
+                            <StackH
+                                gap={4}
+                                principle="value-row"
+                                explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
+                                align="baseline"
+                                at="sm"
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <Typography
+                                            size="h2"
+                                            weight="bold"
+                                            tabularNums
+                                            color={verdictTone}
+                                            isSkeleton={isSkeleton}
+                                            text={String(score)}
+
+                                        />
+                                    ),
+                                    ...(maxScore != null ? [() => (
+                                        <Typography
+                                            size="sm"
+                                            color="muted"
+                                            tabularNums
+                                            isSkeleton={isSkeleton}
+                                            text={`/ ${maxScore}`}
+
+                                        />
+                                    )] : []),
+                                    () => (
+                                        <Chip
+                                            tone={verdictTone}
+                                            icon={isPassing ? CheckCircleIcon : XCircleIcon}
+                                            text={isPassing ? "Passed" : "Not yet passed"}
+                                            isSkeleton={isSkeleton}
+
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                        ...(pointsNeeded != null && pointsNeeded > 0 ? [() => (
+                            <Typography
+                                size="xs"
+                                color="muted"
+                                isSkeleton={isSkeleton}
+                                text={`Need ${pointsNeeded} more points to reach the ${passScore}-point pass mark`}
+
+                            />
+                        )] : []),
+                        ...(shortFeedback != null ? [() => (
+                            <Typography
+                                size="sm"
+                                isSkeleton={isSkeleton}
+                                text={shortFeedback}
+
+                            />
+                        )] : []),
+                        ...(submissionUrl != null ? [() => (
+                            <Typography
+                                size="sm"
+                                isLink
+                                href={submissionUrl}
+                                isSkeleton={isSkeleton}
+                                text={submissionLabel ?? "View submission"}
+
+                            />
+                        )] : []),
+                        ...(modelByline != null ? [() => modelByline] : []),
+                    ]}
+                />
+            )}
+        />
     )
 }
 

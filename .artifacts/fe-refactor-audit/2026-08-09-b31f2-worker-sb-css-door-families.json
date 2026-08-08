@@ -1,0 +1,57 @@
+{
+  "batch": "31f2",
+  "worker": "sb-css-door-families",
+  "checkpoint": "0d0091c0",
+  "status": "partial",
+  "note": "Partial wave — ContentCommentComposer unlocked in B31f2 follow-up (consumer FillAvailable); HeadhuntingCompaniesLayout + ProfileLockedState already fixed. SurfaceCard/Page remain for other workers.",
+  "attempted": [
+    ".storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+    ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx"
+  ],
+  "fixed": [
+    {
+      "file": ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx",
+      "actions": [
+        "Removed public classNames door (zero live consumers: stories + app layout pass children only)",
+        "Expanded nav/content fragment into two StackH peer items"
+      ]
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+      "actions": [
+        "Removed public classNames door",
+        "Replaced internal min-w-0 flex-1 + collapsed host div with FillAvailable at=base",
+        "Expanded buttonRow/fieldColumn/composerRow fragments into StackH/StackV peer items",
+        "Consumer ContentCommentThread reply row wraps Composer in FillAvailable at=base instead of classNames={['min-w-0','flex-1']}"
+      ]
+    }
+  ],
+  "held": [
+    {
+      "file": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      "reason": "Not touched this wave — held for other worker / other-debt classname family"
+    },
+    {
+      "file": ".storybook/components/composites/layout/Page/Page.tsx",
+      "reason": "Not touched this wave — held for other worker / other-debt classname family"
+    }
+  ],
+  "alsoFixedOutsideManifest": [
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLockedState/ProfileLockedState.tsx",
+      "note": "Assigned in TARGETS (sb-navigation-profile-families). Zero classNames consumers (PublicProfileLayout + stories omit it). Mirrored src twin: removed classNames door, split hero/SurfaceCard into StackV peer items. eslint --max-warnings=0 pass."
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentCommentThread/ContentCommentThread.tsx",
+      "note": "Not in css-door manifest but required consumer edit for Composer unlock — FillAvailable at=base around reply Composer; eslint --max-warnings=0 pass."
+    }
+  ],
+  "verification": {
+    "eslintMaxWarnings0": {
+      ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx": "pass",
+      ".storybook/components/starci/blocks/profile/ProfileLockedState/ProfileLockedState.tsx": "pass",
+      ".storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx": "pass",
+      ".storybook/components/starci/blocks/learn/ContentCommentThread/ContentCommentThread.tsx": "pass"
+    }
+  }
+}

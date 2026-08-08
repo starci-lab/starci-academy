@@ -1,0 +1,13 @@
+{
+  "batch": "31h1",
+  "worker": "src-blocks",
+  "status": "partial",
+  "fixed": ["Footer + FooterLinkColumn vertical closure"],
+  "held": [
+    {
+      "file": "src/components/blocks/learn/FlashcardModeSwitch/index.tsx",
+      "reason": "Tabs atom has no identity prop"
+    }
+  ],
+  "priorB31hClosuresRetained": ["CourseQaInvite", "TabTrigger", "MindMapFullscreenButton"]
+}

@@ -15,7 +15,7 @@ import { StackH, StackV } from "@/components/frames/Stack"
  * component's own file header for the full contract; this file only adds the
  * states.
  *
- * 📐 LEAF by STRUCTURE (§14d.2): which pillar bars render is a DATA condition
+ * LEAF by STRUCTURE (§14d.2): which pillar bars render is a DATA condition
  * (a pillar with no score is omitted, never zero-filled), not a different
  * shape this block draws — so loading / empty / error / content-with-various-
  * pillars are all states of the same one leaf ("Content").
@@ -98,54 +98,71 @@ interface ContentProps {
     isSkeleton: boolean
 }
 
-const Content = ({ codingPercentile, track, isSkeleton }: ContentProps) => {
-    const trackSummary = (
-        <>
-            <StackH
-                gap={4}
-                principle="content-row"
-                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                at="sm"
-                align="center"
-                isSkeleton={isSkeleton}
-                items={[
+const Content = ({ codingPercentile, track, isSkeleton }: ContentProps) => (
+    <StackV
+        gap={4}
+        principle="sibling-stack"
+        explain="Same-kind peer stack of readiness rows — not group-boundary, because summary/meters/CTA are repeating vertical siblings rather than section groups."
+        isSkeleton={isSkeleton}
+        items={[
+            () => (
+                <StackH
+                    gap={4}
+                    principle="content-row"
+                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                    at="sm"
+                    align="center"
+                    isSkeleton={isSkeleton}
+                    items={[
+                        () => (
+                            <StatPair
+                                value={(isSkeleton ? undefined : String(track.depthScore ?? 0)) ?? ""}
+                                label={(isSkeleton ? undefined : track.courseTitle) ?? ""}
+                                isSkeleton={isSkeleton}
+
+                            />
+                        ),
+                        () => <EnumChip value={track.band} map={BAND_MAP} isSkeleton={isSkeleton} />,
+                    ]}
+                />
+            ),
+            ...(!isSkeleton && codingPercentile != null
+                ? [
                     () => (
-                        <StatPair
-                            value={(isSkeleton ? undefined : String(track.depthScore ?? 0)) ?? ""}
-                            label={(isSkeleton ? undefined : track.courseTitle) ?? ""}
-                            isSkeleton={isSkeleton}
+                        <Typography
+                            size="xs"
+                            color="muted"
+                            text={`Ahead of ${codingPercentile}% of learners on coding`}
 
                         />
                     ),
-                    () => <EnumChip value={track.band} map={BAND_MAP} isSkeleton={isSkeleton} />,
-                ]}
-            />
-            {!isSkeleton && codingPercentile != null ? (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    text={`Ahead of ${codingPercentile}% of learners on coding`}
+                ]
+                : []),
+            () => pillarMeter("Capstone project", track.capstoneScore, isSkeleton),
+            () => pillarMeter("Mock interview", track.interviewScore, isSkeleton),
+            () => pillarMeter("CV", track.cvScore, isSkeleton),
+            ...(isSkeleton
+                ? [() => <Button isSkeleton />]
+                : track.nextAction
+                    ? [
+                        () => {
+                            const nextAction = track.nextAction
+                            if (!nextAction) return null
+                            return (
+                                <Button
+                                    variant="primary"
 
-                />
-            ) : null}
-            {pillarMeter("Capstone project", track.capstoneScore, isSkeleton)}
-            {pillarMeter("Mock interview", track.interviewScore, isSkeleton)}
-            {pillarMeter("CV", track.cvScore, isSkeleton)}
-            {isSkeleton ? (
-                <Button isSkeleton classNames={["self-start"]} />
-            ) : track.nextAction ? (
-                <Button
-                    variant="primary"
-                    classNames={["self-start"]}
-                    label={track.nextAction.label}
-                    onPress={track.nextAction.onPress}
+                                    label={nextAction.label}
+                                    onPress={nextAction.onPress}
 
-                />
-            ) : null}
-        </>
-    )
-    return <StackV gap={4} isSkeleton={isSkeleton} items={[() => trackSummary]} />
-}
+                                />
+                            )
+                        },
+                    ]
+                    : []),
+        ]}
+    />
+)
 
 /** Fixed-shape placeholder rendered while {@link JobReadinessWidgetProps.isLoading} — no real track exists yet. */
 const LOADING_TRACK: JobReadinessTrack = {

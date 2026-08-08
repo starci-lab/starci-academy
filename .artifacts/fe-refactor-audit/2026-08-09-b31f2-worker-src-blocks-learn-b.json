@@ -1,0 +1,133 @@
+{
+  "batch": "31f2",
+  "date": "2026-08-09",
+  "worker": "src-blocks-learn-b",
+  "checkpoint": "0d0091c0",
+  "rule": "starci-fe/no-frame-fragment-item",
+  "alsoClosed": [
+    "starci-fe/require-frame-self-declare",
+    "starci-fe/require-identity-root",
+    "starci-fe/no-public-classname-prop",
+    "starci-fe/no-host-element-at-sentence-tier"
+  ],
+  "status": "done",
+  "fixedCount": 7,
+  "heldCount": 10,
+  "findingsBefore": 32,
+  "fixed": [
+    {
+      "file": "src/components/blocks/learn/MindMapRail/index.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin peer items (search row + AsyncContent; InputSearch + filter trigger). Closed self-declare with block-boundary. Replaced host divs with FillAvailable at=base + bare Badge/filter peers (src-only no-host-element)."
+    },
+    {
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin score-row peer items + conditional chip/feedback spreads. Added identity on StackV root (both empty and scored leaves)."
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardMasteryStrip/index.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin value-row + SegmentBar peer items. Identity on SurfaceCard; sibling-stack on body StackV. Dropped wrapper div."
+    },
+    {
+      "file": "src/components/blocks/learn/QuizProgressPanel/index.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin Tabs + pane peer items. Identity on SurfaceCard; block-boundary on body StackV. Removed host div wrappers around Tabs/StatGridCard."
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionScoreCard/index.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin score-row peers + conditional feedback/link/byline spreads. Identity on SurfaceCard; sibling-stack on body StackV."
+    },
+    {
+      "file": "src/components/blocks/learn/QuizQuestion/index.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin question-body peer items. Identity on SurfaceCard; block-boundary on outer + title-subtitle on expected-answer StackV."
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDueHero/index.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin due-count + Start peer items (conditional breakdown). Identity on SurfaceCard leaves; title-subtitle + sibling-stack. Dropped Button classNames w-fit to match SB."
+    }
+  ],
+  "held": [
+    {
+      "file": "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:2 — PageHeader has no identity prop (identity-host gap); cannot close require-identity-root without forbidden wrapper or Page API change"
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/index.tsx",
+      "frag": 1,
+      "reason": "HeroUI-gap (starci-fe/no-heroui-outside-vocabulary) — skip per wave rule"
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "frag": 6,
+      "reason": "other-debt:6 (>4) — require-frame-self-declare family; prefer other<=4"
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:6 (>4) — identity + self-declare family"
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewSetup/index.tsx",
+      "frag": 2,
+      "reason": "other-debt:7 (>4) — identity + self-declare family"
+    },
+    {
+      "file": "src/components/blocks/learn/QuizSetup/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:6 (>4) — identity + self-declare family"
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "frag": 4,
+      "reason": "other-debt:10 — huge debt (identity, classname, skeleton, self-declare)"
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+      "frag": 2,
+      "reason": "other-debt:11 — huge debt (identity, classname, self-declare)"
+    },
+    {
+      "file": "src/components/blocks/learn/QuizRecapList/index.tsx",
+      "frag": 3,
+      "reason": "other-debt:10 — huge debt (identity, classname, self-declare)"
+    },
+    {
+      "file": "src/components/blocks/learn/TaskBriefBody/index.tsx",
+      "frag": 1,
+      "reason": "other-debt:9 — huge debt (self-declare, classname, skeleton)"
+    }
+  ],
+  "verification": {
+    "eslintMaxWarnings0": {
+      "src/components/blocks/learn/MindMapRail/index.tsx": "pass",
+      "src/components/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx": "pass",
+      "src/components/blocks/learn/FlashcardMasteryStrip/index.tsx": "pass",
+      "src/components/blocks/learn/QuizProgressPanel/index.tsx": "pass",
+      "src/components/blocks/learn/SubmissionScoreCard/index.tsx": "pass",
+      "src/components/blocks/learn/QuizQuestion/index.tsx": "pass",
+      "src/components/blocks/learn/FlashcardDueHero/index.tsx": "pass"
+    }
+  },
+  "twinParity": "Fragment item shapes mirrored from .storybook/components/starci/blocks/learn/* twins (B31f). Src additionally declares principle+explain and identity (src-only rules). MindMapRail/QuizProgressPanel drop SB host divs for FillAvailable / bare peers (src no-host-element).",
+  "note": "Prefer other<=4 wave. No new principles. No commit."
+}

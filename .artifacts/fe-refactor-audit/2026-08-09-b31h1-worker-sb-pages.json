@@ -1,0 +1,7 @@
+{
+  "batch": "31h1",
+  "worker": "sb-pages",
+  "status": "held",
+  "fixed": [],
+  "held": "No complete zero-warn page slices outside locked Nivo paths"
+}

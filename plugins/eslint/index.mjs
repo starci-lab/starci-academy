@@ -18,6 +18,7 @@ import { noContentPageBoxClassName } from "./contentpage.mjs"
 import { noRuntimeNamespace } from "./namespaces.mjs"
 import { noPublicClassNameProp } from "./public-contracts.mjs"
 import { noFrameFragmentItem } from "./frame-items.mjs"
+import { noHostElementAtSentenceTier } from "./sentence-hosts.mjs"
 
 /** Static className string from one JSXAttribute (literal or pure template quasi). */
 function classNameText(node) {
@@ -1104,5 +1105,6 @@ export default {
     "no-runtime-namespace": noRuntimeNamespace,
     "no-public-classname-prop": noPublicClassNameProp,
     "no-frame-fragment-item": noFrameFragmentItem,
+    "no-host-element-at-sentence-tier": noHostElementAtSentenceTier,
   },
 }

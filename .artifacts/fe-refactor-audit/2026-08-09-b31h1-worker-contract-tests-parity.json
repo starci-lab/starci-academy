@@ -1,0 +1,19 @@
+{
+  "batch": "31h1",
+  "worker": "contract-tests-parity",
+  "status": "done",
+  "notes": [
+    "audit-frames auto-discovers ShowFrom/Measure/FooterFrame twins",
+    "semantic-contracts.test.mjs unchanged (composite resolvers only)",
+    "principle-style.test.mjs unchanged (ShowFrom/Measure have no principle)"
+  ],
+  "gates": {
+    "sentence-hosts.test.mjs": "pass",
+    "public-contracts.test.mjs": "pass",
+    "frame-items.test.mjs": "pass",
+    "sentence-tier.test.mjs": "pass",
+    "principle-style.test.mjs": "pass",
+    "semantic-contracts.test.mjs": "pass",
+    "audit:fe": "pass"
+  }
+}

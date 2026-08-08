@@ -58,51 +58,65 @@ const ChallengeScoreCard = ({
     // `weight="bold"`: the number STANDING ALONE as the card's focal point = Tier A, always
     // bold; without weight, HeroUI defaults to 600 (semibold), not the 700 (bold) canon
     // requires. Cross-check: `ChallengeHeader.tsx`, same role, also declares weight="bold".
-    const scoreReading = (
-        <>
-            <Typography
-                size="h3"
-                weight="bold"
-                tabularNums
-                isSkeleton={isSkeleton}
-                text={earnedScore}
-
-            />
-            <Typography
-                size="sm"
-                color="muted"
-                tabularNums
-                isSkeleton={isSkeleton}
-                text={`/ ${maxScore} points`}
-
-            />
-        </>
-    )
-
-    const scoreBody = (
-        <>
-            <StackH gap={2} principle="title-subtitle"
-                explain="Title over supporting line — not label-field, because neither line is a form control label."
-                align="baseline" isSkeleton={isSkeleton} items={[() => scoreReading]}  />
-            <ProgressMeter
-                value={earnedScore}
-                max={safeMax}
-                color={meterColor}
-                target={targetScore}
-                targetLabel={`${Math.round(passThreshold * 100)}%`}
-                isSkeleton={isSkeleton}
-            />
-        </>
-    )
-
     return (
-        <SurfaceCard identity={{ tier: "block", component: "ChallengeScoreCard" }}
+        <SurfaceCard
+            identity={{ tier: "block", component: "ChallengeScoreCard" }}
             label="Your results"
             description="Passing needs every requirement completed, not just the total score."
             isSkeleton={isSkeleton}
 
 
-            body={() => <StackV gap={4} isSkeleton={isSkeleton} items={[() => scoreBody]} />}
+            body={() => (
+                <StackV
+                    gap={4}
+                    principle="content-row"
+                    explain="Score reading over the pass meter — not label-field, because neither line is a form control label."
+                    isSkeleton={isSkeleton}
+                    items={[
+                        () => (
+                            <StackH
+                                gap={2}
+                                principle="title-subtitle"
+                                explain="Title over supporting line — not label-field, because neither line is a form control label."
+                                align="baseline"
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <Typography
+                                            size="h3"
+                                            weight="bold"
+                                            tabularNums
+                                            isSkeleton={isSkeleton}
+                                            text={earnedScore}
+
+                                        />
+                                    ),
+                                    () => (
+                                        <Typography
+                                            size="sm"
+                                            color="muted"
+                                            tabularNums
+                                            isSkeleton={isSkeleton}
+                                            text={`/ ${maxScore} points`}
+
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                        () => (
+                            <ProgressMeter
+                                value={earnedScore}
+                                max={safeMax}
+                                color={meterColor}
+                                target={targetScore}
+                                targetLabel={`${Math.round(passThreshold * 100)}%`}
+                                isSkeleton={isSkeleton}
+                            />
+                        ),
+                    ]}
+                />
+            )}
         />
     )
 }

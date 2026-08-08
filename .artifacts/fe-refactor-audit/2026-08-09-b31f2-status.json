@@ -1,0 +1,139 @@
+{
+  "batch": "31f2",
+  "date": "2026-08-09",
+  "checkpoint": "0d0091c0",
+  "rule": "starci-fe/no-frame-fragment-item",
+  "status": "partial",
+  "objective": "Unlock held typed-frame items by blocker cluster; measure by zero-warning families",
+  "findings": {
+    "before": 207,
+    "after": 105,
+    "fixed": 102,
+    "held": 105
+  },
+  "files": {
+    "beforeWithFrag": 73,
+    "afterWithFrag": 32,
+    "changedRetained": 44
+  },
+  "beforeRuleHistogramFocused": {
+    "starci-fe/no-public-classname-prop": 160,
+    "starci-fe/no-frame-fragment-item": 207,
+    "starci-fe/handler-on-prefix": 2,
+    "starci-fe/require-frame-self-declare": 231,
+    "starci-fe/no-emoji-in-source": 6,
+    "starci-fe/require-identity-root": 30,
+    "starci-fe/no-classname-at-sentence-tier": 5,
+    "starci-fe/no-inline-skeleton-branch": 5,
+    "starci-fe/no-raw-shape-at-sentence-tier": 14,
+    "starci-fe/no-heroui-outside-vocabulary": 8,
+    "starci-fe/no-cn-above-vocabulary": 8,
+    "starci-fe/require-export-jsdoc": 2,
+    "starci-fe/no-per-part-classname-prop": 1,
+    "starci-fe/page-folder-two-files-only": 1,
+    "starci-fe/no-parallel-skeleton": 1
+  },
+  "afterRuleHistogramOnHeldFiles": {
+    "starci-fe/require-frame-self-declare": 178,
+    "starci-fe/no-public-classname-prop": 133,
+    "starci-fe/no-frame-fragment-item": 105,
+    "starci-fe/require-identity-root": 17,
+    "starci-fe/no-raw-shape-at-sentence-tier": 12,
+    "starci-fe/no-heroui-outside-vocabulary": 8,
+    "starci-fe/no-cn-above-vocabulary": 8,
+    "starci-fe/no-classname-at-sentence-tier": 5,
+    "starci-fe/no-emoji-in-source": 4,
+    "starci-fe/no-inline-skeleton-branch": 4,
+    "starci-fe/no-per-part-classname-prop": 1,
+    "starci-fe/page-folder-two-files-only": 1,
+    "starci-fe/no-parallel-skeleton": 1,
+    "starci-fe/handler-on-prefix": 1
+  },
+  "workers": {
+    "sb-css-door-families": { "fixed": 2, "held": 2, "note": "ContentCommentComposer + HeadhuntingCompaniesLayout; SurfaceCard/Page held" },
+    "sb-navigation-profile-families": { "fixed": 5, "held": 0 },
+    "src-composites-twins": { "fixed": 2, "held": 2, "note": "SegmentBar + Section; SurfaceCard/Page held" },
+    "src-blocks-learn-a": { "fixed": 11, "held": 6, "retracted": 1, "note": "ChallengeHeader retracted (PageHeader identity-host gap)" },
+    "src-blocks-learn-b": { "fixed": 7, "held": 10 },
+    "src-blocks-navigation-dashboard": { "fixed": 1, "held": 6, "note": "JobReadinessWidget only; nav shells HeroUI-held" },
+    "src-blocks-profile-remaining": { "fixed": 3, "held": 2 },
+    "src-clean-pages": { "fixed": 9, "held": 0 },
+    "authoring-handler-only": { "fixed": 1, "held": 0, "note": "SB MindMapPage" },
+    "hero-ui-gap-report": { "status": "report-only" },
+    "structural-locked-report": { "status": "report-only" },
+    "coordinator-parity-gates": { "status": "done" }
+  },
+  "zeroWarningFamilies": {
+    "storybook": [
+      "ContentCommentComposer",
+      "ContentCommentThread",
+      "HeadhuntingCompaniesLayout",
+      "CollapsibleSidebar",
+      "Footer",
+      "Navbar",
+      "SettingsSidebarNav",
+      "ProfileLoadingState",
+      "ProfileLockedState",
+      "MindMapPage",
+      "InnerLayout"
+    ],
+    "src": [
+      "SegmentBar",
+      "Section",
+      "ChallengeBrief",
+      "ChallengeDeliverableList",
+      "ChallengeScoreCard",
+      "ContentArticle",
+      "ContentHeader",
+      "ContentPager",
+      "ContentPaywall",
+      "ContentReaction",
+      "ContinueCard/CardBody",
+      "CourseQaEngagementStrip",
+      "CourseQaToolbar",
+      "FlashcardDueHero",
+      "FlashcardMasteryStrip",
+      "MindMapRail",
+      "QuizProgressPanel",
+      "QuizQuestion",
+      "SubmissionScoreCard",
+      "TaskResultSummary",
+      "JobReadinessWidget",
+      "ConsultantCard",
+      "ProfileFollowers",
+      "ProfileRankAvatar",
+      "ChallengeResultPage",
+      "CourseQaPage",
+      "FoundationResourcePage",
+      "FoundationsCategoryPage",
+      "FoundationsGridPage",
+      "HeadhuntingsPage",
+      "LeaderboardPage",
+      "PlaygroundHubPage",
+      "PlaygroundPreparePage"
+    ]
+  },
+  "retractedFamilies": [
+    {
+      "file": "src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "reason": "PageHeader identity-host gap (same as FoundationHeader hold)"
+    }
+  ],
+  "heldBlockers": {
+    "A_publicCssDoors": ["SB SurfaceCard", "SB Page", "src SurfaceCard", "src Page", "src comment/composer families with classname debt"],
+    "B_frameIdentityRawShape": ["FoundationHeader", "ProfileHero", "ProfileLoadingState src", "high self-declare learn blocks"],
+    "C_heroUiGaps": ["Navbar", "Footer", "FooterLinkColumn", "CollapsibleSidebar src", "SettingsSidebarNav", "DesktopNavRow", "ReactionButton"],
+    "D_structuralLocked": ["QuizSession", "src MindMapPage", "PersonalProjectTaskPage", "EnrollGate SB"]
+  },
+  "vocabularyGaps": [
+    "Dropdown menu family",
+    "Kbd",
+    "Popover badge/icon trigger richer than Popover.Base",
+    "Inline/text Link (only LinkBack + LinkSeeMore)",
+    "cn shell composites for CollapsibleSidebar / SettingsSidebarNav"
+  ],
+  "storybookSrcParity": "SB nav/profile CSS doors closed; src Navbar/Footer/CollapsibleSidebar/SettingsSidebarNav remain HeroUI-held. Learn twins mirrored where other<=4. ChallengeHeader retracted on src despite SB fragment shape. SurfaceCard/Page both trees held.",
+  "overlap": "none",
+  "gates": "all pass",
+  "committed": false
+}

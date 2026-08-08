@@ -139,6 +139,8 @@ const PlaygroundPreparePageSwap = ({ identity, body: Body }: PlaygroundPreparePa
     <Container
         size="md"
         padding={6}
+        principle="page-pad"
+        explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
         identity={identity}
         body={Body}
     />
@@ -215,75 +217,97 @@ const _PlaygroundPreparePage = ({
     const allReady = checklistItems.length > 0 && checklistItems.every((item) => item.ready)
     const pendingCount = checklistItems.filter((item) => !item.ready).length
 
-    const readinessSection = (
-        <>
-            <PlaygroundEnterBanner
+    const prepareBody = (
+        <StackV
+            gap={6}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <PlaygroundSetupHeader
 
-                allReady={allReady}
-                pendingCount={pendingCount}
-                onEnter={onEnter}
-                isSkeleton={isSkeleton}
+                        breadcrumbLabel={breadcrumbLabel}
+                        onBack={onBack}
+                        title={title}
+                        description={description}
+                        isSkeleton={isSkeleton}
 
-            />
-            {deviceInfo ? (
-                <PlaygroundDeviceSnapshot
+                    />
+                ),
+                () => (
+                    <StackV
+                        gap={6}
+                        principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <PlaygroundEnterBanner
 
-                    deviceInfo={deviceInfo}
-                    isSkeleton={isSkeleton}
+                                    allReady={allReady}
+                                    pendingCount={pendingCount}
+                                    onEnter={onEnter}
+                                    isSkeleton={isSkeleton}
 
-                />
-            ) : null}
-            <PlaygroundSetupSteps
+                                />
+                            ),
+                            ...(deviceInfo
+                                ? [
+                                    () => (
+                                        <PlaygroundDeviceSnapshot
 
-                flavor={flavor}
-                engineName={engineName}
-                osGuides={osGuides}
-                pairCommand={pairCommand}
-                pairingCodeSecondsLeft={pairingCodeSecondsLeft}
-                pairingCodeExpired={pairingCodeExpired}
-                onRefreshPairingCode={onRefreshPairingCode}
-                isRefreshingPairingCode={isRefreshingPairingCode}
-                agentReady={readinessOf(checklistItems, "agent")}
-                engineReady={readinessOf(checklistItems, "engine")}
-                genModelReady={readinessOf(checklistItems, "genModel")}
-                embedModelReady={readinessOf(checklistItems, "embedModel")}
-                recommendedGenModel={recommendedGenModel}
-                deviceKnown={deviceInfo != null}
-                engineDetail={engineDetail}
-                onVerify={onVerify}
-                isSkeleton={isSkeleton}
+                                            deviceInfo={deviceInfo}
+                                            isSkeleton={isSkeleton}
 
-            />
-            <PlaygroundReadinessChecklist
+                                        />
+                                    ),
+                                ]
+                                : []),
+                            () => (
+                                <PlaygroundSetupSteps
 
-                items={checklistItems}
-                isSkeleton={isSkeleton}
+                                    flavor={flavor}
+                                    engineName={engineName}
+                                    osGuides={osGuides}
+                                    pairCommand={pairCommand}
+                                    pairingCodeSecondsLeft={pairingCodeSecondsLeft}
+                                    pairingCodeExpired={pairingCodeExpired}
+                                    onRefreshPairingCode={onRefreshPairingCode}
+                                    isRefreshingPairingCode={isRefreshingPairingCode}
+                                    agentReady={readinessOf(checklistItems, "agent")}
+                                    engineReady={readinessOf(checklistItems, "engine")}
+                                    genModelReady={readinessOf(checklistItems, "genModel")}
+                                    embedModelReady={readinessOf(checklistItems, "embedModel")}
+                                    recommendedGenModel={recommendedGenModel}
+                                    deviceKnown={deviceInfo != null}
+                                    engineDetail={engineDetail}
+                                    onVerify={onVerify}
+                                    isSkeleton={isSkeleton}
 
-            />
-        </>
+                                />
+                            ),
+                            () => (
+                                <PlaygroundReadinessChecklist
+
+                                    items={checklistItems}
+                                    isSkeleton={isSkeleton}
+
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
-
-    const prepareSections = (
-        <>
-            <PlaygroundSetupHeader
-
-                breadcrumbLabel={breadcrumbLabel}
-                onBack={onBack}
-                title={title}
-                description={description}
-                isSkeleton={isSkeleton}
-
-            />
-            <StackV gap={6} isSkeleton={isSkeleton} items={[() => readinessSection]} />
-        </>
-    )
-
-    const prepareBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => prepareSections]} />
 
     return (
         <Container
             size="md"
             padding={6}
+            principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
             identity={{ tier: "page", component: "PlaygroundPreparePage" }}
             body={() => prepareBody}
         />

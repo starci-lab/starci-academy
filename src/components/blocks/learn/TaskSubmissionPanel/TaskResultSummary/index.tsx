@@ -20,56 +20,76 @@ interface TaskResultSummaryProps {
 export const TaskResultSummary = ({ result, isSkeleton }: TaskResultSummaryProps) => {
     if (result == null) {
         return (
-            <Typography
-                size="sm"
-                color="muted"
+            <StackV
+                identity={{ tier: "block", component: "TaskResultSummary" }}
+                gap={2}
+                principle="title-subtitle"
+                explain="Title over supporting line — not label-field, because neither line is a form control label."
                 isSkeleton={isSkeleton}
-                text="No grading runs yet."
+                items={[
+                    () => (
+                        <Typography
+                            size="sm"
+                            color="muted"
+                            isSkeleton={isSkeleton}
+                            text="No grading runs yet."
 
+                        />
+                    ),
+                ]}
             />
         )
     }
-    const scoreRow = (
-        <>
-            <Typography
-                size="h3"
-                weight="bold"
-                tabularNums
-                isSkeleton={isSkeleton}
-                text={String(result.score)}
-
-            />
-            <Typography
-                size="sm"
-                color="muted"
-                tabularNums
-                isSkeleton={isSkeleton}
-                text={`/ ${result.maxScore}`}
-
-            />
-            {result.aiBadge != null ? (
-                <Chip
-                    tone="accent"
-                    icon={SparkleIcon}
-                    text={result.aiBadge}
-                    isSkeleton={isSkeleton}
-
-                />
-            ) : null}
-        </>
-    )
-
     return (
         <StackV
+            identity={{ tier: "block", component: "TaskResultSummary" }}
             gap={2}
             principle="title-subtitle"
             explain="Title over supporting line — not label-field, because neither line is a form control label."
             isSkeleton={isSkeleton}
 
             items={[
-                ({ isSkeleton }: SkeletonProps) => <StackH gap={4} principle="content-row"
-                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                    align="baseline" at="sm" isSkeleton={isSkeleton} items={[() => scoreRow]} />,
+                ({ isSkeleton }: SkeletonProps) => (
+                    <StackH
+                        gap={4}
+                        principle="content-row"
+                        explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+                        align="baseline"
+                        at="sm"
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <Typography
+                                    size="h3"
+                                    weight="bold"
+                                    tabularNums
+                                    isSkeleton={isSkeleton}
+                                    text={String(result.score)}
+
+                                />
+                            ),
+                            () => (
+                                <Typography
+                                    size="sm"
+                                    color="muted"
+                                    tabularNums
+                                    isSkeleton={isSkeleton}
+                                    text={`/ ${result.maxScore}`}
+
+                                />
+                            ),
+                            ...(result.aiBadge != null ? [() => (
+                                <Chip
+                                    tone="accent"
+                                    icon={SparkleIcon}
+                                    text={result.aiBadge}
+                                    isSkeleton={isSkeleton}
+
+                                />
+                            )] : []),
+                        ]}
+                    />
+                ),
                 ...(result.shortFeedback != null ? [() => (
                     <Typography
                         size="sm"

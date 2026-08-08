@@ -1,0 +1,1620 @@
+{
+  "batch": "31f2",
+  "date": "2026-08-09",
+  "checkpoint": "0d0091c0",
+  "rule": "starci-fe/no-frame-fragment-item",
+  "totalFragFindings": 207,
+  "totalFiles": 73,
+  "ruleHistogram": {
+    "starci-fe/no-public-classname-prop": 160,
+    "starci-fe/no-frame-fragment-item": 207,
+    "starci-fe/handler-on-prefix": 2,
+    "starci-fe/require-frame-self-declare": 231,
+    "starci-fe/no-emoji-in-source": 6,
+    "starci-fe/require-identity-root": 30,
+    "starci-fe/no-classname-at-sentence-tier": 5,
+    "starci-fe/no-inline-skeleton-branch": 5,
+    "starci-fe/no-raw-shape-at-sentence-tier": 14,
+    "starci-fe/no-heroui-outside-vocabulary": 8,
+    "starci-fe/no-cn-above-vocabulary": 8,
+    "starci-fe/require-export-jsdoc": 2,
+    "starci-fe/no-per-part-classname-prop": 1,
+    "starci-fe/page-folder-two-files-only": 1,
+    "starci-fe/no-parallel-skeleton": 1
+  },
+  "clusterCounts": {
+    "A": 20,
+    "D": 2,
+    "authoring": 1,
+    "B": 49,
+    "C": 1
+  },
+  "manifests": {
+    "sb-css-door-families": [
+      ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      ".storybook/components/composites/layout/Page/Page.tsx",
+      ".storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+      ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx"
+    ],
+    "structural-locked-report": [
+      ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+      "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "src/components/pages/MindMapPage/component.tsx",
+      "src/components/pages/PersonalProjectTaskPage/index.tsx"
+    ],
+    "sb-navigation-profile-families": [
+      ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      ".storybook/components/starci/blocks/profile/ProfileLockedState/ProfileLockedState.tsx"
+    ],
+    "authoring-handler-only": [
+      ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx"
+    ],
+    "src-blocks-profile-remaining": [
+      "src/components/blocks/consultant/ConsultantCard/index.tsx",
+      "src/components/blocks/profile/ProfileHero/ProfileFollowers/index.tsx",
+      "src/components/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "src/components/blocks/profile/ProfileHero/index.tsx",
+      "src/components/blocks/profile/ProfileLoadingState/index.tsx"
+    ],
+    "src-blocks-navigation-dashboard": [
+      "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+      "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "src/components/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "src/components/blocks/navigation/Footer/index.tsx",
+      "src/components/blocks/navigation/Navbar/index.tsx",
+      "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "src/components/blocks/navigation/SettingsSidebarNav/index.tsx"
+    ],
+    "src-blocks-learn-a": [
+      "src/components/blocks/learn/ChallengeBrief/index.tsx",
+      "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+      "src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "src/components/blocks/learn/ChallengeScoreCard/index.tsx",
+      "src/components/blocks/learn/ContentArticle/index.tsx",
+      "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "src/components/blocks/learn/ContentHeader/index.tsx",
+      "src/components/blocks/learn/ContentPager/index.tsx",
+      "src/components/blocks/learn/ContentPaywall/index.tsx",
+      "src/components/blocks/learn/ContentReaction/index.tsx",
+      "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+      "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "src/components/blocks/learn/CourseQaEngagementStrip/index.tsx",
+      "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "src/components/blocks/learn/CourseQaToolbar/index.tsx"
+    ],
+    "src-blocks-learn-b": [
+      "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "src/components/blocks/learn/FlashcardDueHero/index.tsx",
+      "src/components/blocks/learn/FlashcardMasteryStrip/index.tsx",
+      "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+      "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "src/components/blocks/learn/MindMapRail/index.tsx",
+      "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "src/components/blocks/learn/MockInterviewSetup/index.tsx",
+      "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+      "src/components/blocks/learn/QuizProgressPanel/index.tsx",
+      "src/components/blocks/learn/QuizQuestion/index.tsx",
+      "src/components/blocks/learn/QuizRecapList/index.tsx",
+      "src/components/blocks/learn/QuizSetup/index.tsx",
+      "src/components/blocks/learn/ReactionButton/index.tsx",
+      "src/components/blocks/learn/SubmissionScoreCard/index.tsx",
+      "src/components/blocks/learn/TaskBriefBody/index.tsx",
+      "src/components/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx"
+    ],
+    "src-composites-twins": [
+      "src/components/composites/cards/SurfaceCard/index.tsx",
+      "src/components/composites/layout/Page/index.tsx",
+      "src/components/composites/layout/Section/index.tsx",
+      "src/components/composites/stats/SegmentBar/index.tsx"
+    ],
+    "src-clean-pages": [
+      "src/components/pages/ChallengeResultPage/component.tsx",
+      "src/components/pages/CourseQaPage/component.tsx",
+      "src/components/pages/FoundationResourcePage/component.tsx",
+      "src/components/pages/FoundationsCategoryPage/component.tsx",
+      "src/components/pages/FoundationsGridPage/component.tsx",
+      "src/components/pages/HeadhuntingsPage/component.tsx",
+      "src/components/pages/LeaderboardPage/component.tsx",
+      "src/components/pages/PlaygroundHubPage/component.tsx",
+      "src/components/pages/PlaygroundPreparePage/component.tsx"
+    ]
+  },
+  "findingCountByManifest": {
+    "sb-css-door-families": 7,
+    "structural-locked-report": 11,
+    "sb-navigation-profile-families": 45,
+    "authoring-handler-only": 2,
+    "src-blocks-profile-remaining": 29,
+    "src-blocks-navigation-dashboard": 25,
+    "src-blocks-learn-a": 33,
+    "src-blocks-learn-b": 32,
+    "src-composites-twins": 5,
+    "src-clean-pages": 18
+  },
+  "files": [
+    {
+      "file": ".storybook/components/composites/cards/SurfaceCard/SurfaceCard.tsx",
+      "frag": 1,
+      "total": 23,
+      "other": 22,
+      "rules": {
+        "starci-fe/no-public-classname-prop": 22,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 22,
+      "frame": 0,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "sb-css-door-families"
+    },
+    {
+      "file": ".storybook/components/composites/layout/Page/Page.tsx",
+      "frag": 2,
+      "total": 6,
+      "other": 4,
+      "rules": {
+        "starci-fe/no-public-classname-prop": 4,
+        "starci-fe/no-frame-fragment-item": 2
+      },
+      "css": 4,
+      "frame": 0,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "sb-css-door-families"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+      "frag": 3,
+      "total": 5,
+      "other": 2,
+      "rules": {
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-frame-fragment-item": 3
+      },
+      "css": 2,
+      "frame": 0,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "sb-css-door-families"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+      "frag": 1,
+      "total": 3,
+      "other": 2,
+      "rules": {
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 2,
+      "frame": 0,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "D",
+      "locked": true,
+      "worker": "structural-locked-report"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "frag": 2,
+      "total": 4,
+      "other": 2,
+      "rules": {
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-frame-fragment-item": 2
+      },
+      "css": 2,
+      "frame": 0,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "sb-navigation-profile-families"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "frag": 8,
+      "total": 10,
+      "other": 2,
+      "rules": {
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-frame-fragment-item": 8
+      },
+      "css": 2,
+      "frame": 0,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "sb-navigation-profile-families"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "frag": 11,
+      "total": 13,
+      "other": 2,
+      "rules": {
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-frame-fragment-item": 11
+      },
+      "css": 2,
+      "frame": 0,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "sb-navigation-profile-families"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "frag": 23,
+      "total": 25,
+      "other": 2,
+      "rules": {
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-frame-fragment-item": 23
+      },
+      "css": 2,
+      "frame": 0,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "sb-navigation-profile-families"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLockedState/ProfileLockedState.tsx",
+      "frag": 1,
+      "total": 3,
+      "other": 2,
+      "rules": {
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 2,
+      "frame": 0,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "sb-navigation-profile-families"
+    },
+    {
+      "file": ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx",
+      "frag": 1,
+      "total": 3,
+      "other": 2,
+      "rules": {
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 2,
+      "frame": 0,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "sb-css-door-families"
+    },
+    {
+      "file": ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      "frag": 2,
+      "total": 3,
+      "other": 1,
+      "rules": {
+        "starci-fe/handler-on-prefix": 1,
+        "starci-fe/no-frame-fragment-item": 2
+      },
+      "css": 0,
+      "frame": 0,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 1,
+      "otherCount": 0,
+      "cluster": "authoring",
+      "locked": false,
+      "worker": "authoring-handler-only"
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantCard/index.tsx",
+      "frag": 1,
+      "total": 3,
+      "other": 2,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 2,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 2,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-profile-remaining"
+    },
+    {
+      "file": "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+      "frag": 1,
+      "total": 5,
+      "other": 4,
+      "rules": {
+        "starci-fe/no-emoji-in-source": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 2,
+      "frame": 1,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 1,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "src-blocks-navigation-dashboard"
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeBrief/index.tsx",
+      "frag": 1,
+      "total": 4,
+      "other": 3,
+      "rules": {
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 2,
+      "frame": 1,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+      "frag": 3,
+      "total": 7,
+      "other": 4,
+      "rules": {
+        "starci-fe/no-emoji-in-source": 1,
+        "starci-fe/require-frame-self-declare": 3,
+        "starci-fe/no-frame-fragment-item": 3
+      },
+      "css": 0,
+      "frame": 3,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 1,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "frag": 1,
+      "total": 3,
+      "other": 2,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 1,
+      "frame": 1,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeScoreCard/index.tsx",
+      "frag": 2,
+      "total": 3,
+      "other": 1,
+      "rules": {
+        "starci-fe/no-frame-fragment-item": 2,
+        "starci-fe/require-frame-self-declare": 1
+      },
+      "css": 0,
+      "frame": 1,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentArticle/index.tsx",
+      "frag": 1,
+      "total": 3,
+      "other": 2,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 2,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "frag": 3,
+      "total": 10,
+      "other": 7,
+      "rules": {
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 4,
+        "starci-fe/require-frame-self-declare": 2,
+        "starci-fe/no-frame-fragment-item": 3
+      },
+      "css": 5,
+      "frame": 2,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "frag": 3,
+      "total": 9,
+      "other": 6,
+      "rules": {
+        "starci-fe/no-emoji-in-source": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-frame-fragment-item": 3,
+        "starci-fe/require-frame-self-declare": 3,
+        "starci-fe/no-public-classname-prop": 1
+      },
+      "css": 1,
+      "frame": 4,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 1,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "frag": 4,
+      "total": 13,
+      "other": 9,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-public-classname-prop": 3,
+        "starci-fe/require-frame-self-declare": 4,
+        "starci-fe/no-frame-fragment-item": 4,
+        "starci-fe/no-inline-skeleton-branch": 1
+      },
+      "css": 3,
+      "frame": 5,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 1,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentHeader/index.tsx",
+      "frag": 2,
+      "total": 6,
+      "other": 4,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-inline-skeleton-branch": 1,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/no-frame-fragment-item": 2,
+        "starci-fe/require-frame-self-declare": 1
+      },
+      "css": 1,
+      "frame": 2,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 1,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentPager/index.tsx",
+      "frag": 2,
+      "total": 4,
+      "other": 2,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-frame-fragment-item": 2
+      },
+      "css": 0,
+      "frame": 2,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentPaywall/index.tsx",
+      "frag": 1,
+      "total": 2,
+      "other": 1,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 1,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentReaction/index.tsx",
+      "frag": 1,
+      "total": 3,
+      "other": 2,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 1,
+      "frame": 1,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+      "frag": 1,
+      "total": 5,
+      "other": 4,
+      "rules": {
+        "starci-fe/no-raw-shape-at-sentence-tier": 2,
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 1,
+      "frame": 3,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "frag": 2,
+      "total": 8,
+      "other": 6,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/require-frame-self-declare": 3,
+        "starci-fe/no-frame-fragment-item": 2
+      },
+      "css": 2,
+      "frame": 4,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaEngagementStrip/index.tsx",
+      "frag": 1,
+      "total": 3,
+      "other": 2,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 2,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "frag": 3,
+      "total": 12,
+      "other": 9,
+      "rules": {
+        "starci-fe/no-public-classname-prop": 6,
+        "starci-fe/require-frame-self-declare": 3,
+        "starci-fe/no-frame-fragment-item": 3
+      },
+      "css": 6,
+      "frame": 3,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaToolbar/index.tsx",
+      "frag": 2,
+      "total": 5,
+      "other": 3,
+      "rules": {
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-frame-fragment-item": 2,
+        "starci-fe/require-frame-self-declare": 1
+      },
+      "css": 2,
+      "frame": 1,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "src-blocks-learn-a"
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "frag": 6,
+      "total": 12,
+      "other": 6,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 6,
+        "starci-fe/no-frame-fragment-item": 6
+      },
+      "css": 0,
+      "frame": 6,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDueHero/index.tsx",
+      "frag": 2,
+      "total": 6,
+      "other": 4,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 2,
+        "starci-fe/no-frame-fragment-item": 2,
+        "starci-fe/no-public-classname-prop": 1
+      },
+      "css": 1,
+      "frame": 3,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardMasteryStrip/index.tsx",
+      "frag": 1,
+      "total": 3,
+      "other": 2,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 2,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+      "frag": 1,
+      "total": 7,
+      "other": 6,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 5,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 6,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "frag": 1,
+      "total": 3,
+      "other": 2,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 2,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapRail/index.tsx",
+      "frag": 2,
+      "total": 3,
+      "other": 1,
+      "rules": {
+        "starci-fe/no-frame-fragment-item": 2,
+        "starci-fe/require-frame-self-declare": 1
+      },
+      "css": 0,
+      "frame": 1,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "frag": 4,
+      "total": 14,
+      "other": 10,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-public-classname-prop": 2,
+        "starci-fe/no-inline-skeleton-branch": 1,
+        "starci-fe/require-frame-self-declare": 6,
+        "starci-fe/no-frame-fragment-item": 4
+      },
+      "css": 2,
+      "frame": 7,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 1,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewSetup/index.tsx",
+      "frag": 2,
+      "total": 9,
+      "other": 7,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 6,
+        "starci-fe/no-frame-fragment-item": 2
+      },
+      "css": 0,
+      "frame": 7,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+      "frag": 2,
+      "total": 13,
+      "other": 11,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-public-classname-prop": 4,
+        "starci-fe/require-frame-self-declare": 6,
+        "starci-fe/no-frame-fragment-item": 2
+      },
+      "css": 4,
+      "frame": 7,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/QuizProgressPanel/index.tsx",
+      "frag": 1,
+      "total": 3,
+      "other": 2,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 2,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/QuizQuestion/index.tsx",
+      "frag": 1,
+      "total": 4,
+      "other": 3,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 2,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 3,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/QuizRecapList/index.tsx",
+      "frag": 3,
+      "total": 13,
+      "other": 10,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 5,
+        "starci-fe/no-public-classname-prop": 4,
+        "starci-fe/no-frame-fragment-item": 3
+      },
+      "css": 4,
+      "frame": 6,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/QuizSetup/index.tsx",
+      "frag": 1,
+      "total": 7,
+      "other": 6,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/require-frame-self-declare": 5,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 6,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/index.tsx",
+      "frag": 1,
+      "total": 4,
+      "other": 3,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 2,
+      "heroui": 1,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionScoreCard/index.tsx",
+      "frag": 2,
+      "total": 4,
+      "other": 2,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-frame-fragment-item": 2,
+        "starci-fe/require-frame-self-declare": 1
+      },
+      "css": 0,
+      "frame": 2,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/TaskBriefBody/index.tsx",
+      "frag": 1,
+      "total": 10,
+      "other": 9,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 5,
+        "starci-fe/no-public-classname-prop": 3,
+        "starci-fe/no-inline-skeleton-branch": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 3,
+      "frame": 5,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 1,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx",
+      "frag": 1,
+      "total": 2,
+      "other": 1,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 1,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-learn-b"
+    },
+    {
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "frag": 2,
+      "total": 13,
+      "other": 11,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 4,
+        "starci-fe/no-frame-fragment-item": 2,
+        "starci-fe/no-raw-shape-at-sentence-tier": 1,
+        "starci-fe/require-frame-self-declare": 2,
+        "starci-fe/no-cn-above-vocabulary": 1
+      },
+      "css": 6,
+      "frame": 4,
+      "heroui": 1,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "src-blocks-navigation-dashboard"
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "frag": 1,
+      "total": 4,
+      "other": 3,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-frame-self-declare": 2,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 2,
+      "heroui": 1,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-navigation-dashboard"
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "frag": 8,
+      "total": 23,
+      "other": 15,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 3,
+        "starci-fe/no-raw-shape-at-sentence-tier": 2,
+        "starci-fe/require-frame-self-declare": 6,
+        "starci-fe/no-frame-fragment-item": 8,
+        "starci-fe/no-cn-above-vocabulary": 1
+      },
+      "css": 5,
+      "frame": 9,
+      "heroui": 1,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-navigation-dashboard"
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "frag": 11,
+      "total": 33,
+      "other": 22,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 4,
+        "starci-fe/no-raw-shape-at-sentence-tier": 5,
+        "starci-fe/no-frame-fragment-item": 11,
+        "starci-fe/require-frame-self-declare": 9,
+        "starci-fe/no-cn-above-vocabulary": 1
+      },
+      "css": 6,
+      "frame": 15,
+      "heroui": 1,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-navigation-dashboard"
+    },
+    {
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "frag": 1,
+      "total": 4,
+      "other": 3,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-cn-above-vocabulary": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 1,
+      "frame": 1,
+      "heroui": 1,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "C",
+      "locked": false,
+      "worker": "src-blocks-navigation-dashboard"
+    },
+    {
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "frag": 1,
+      "total": 9,
+      "other": 8,
+      "rules": {
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-raw-shape-at-sentence-tier": 3,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-cn-above-vocabulary": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 2,
+      "frame": 5,
+      "heroui": 1,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-navigation-dashboard"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "frag": 7,
+      "total": 13,
+      "other": 6,
+      "rules": {
+        "starci-fe/require-identity-root": 1,
+        "starci-fe/no-frame-fragment-item": 7,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/require-frame-self-declare": 4
+      },
+      "css": 1,
+      "frame": 5,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-profile-remaining"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/ProfileFollowers/index.tsx",
+      "frag": 1,
+      "total": 3,
+      "other": 2,
+      "rules": {
+        "starci-fe/require-export-jsdoc": 1,
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 1,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 1,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-profile-remaining"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "frag": 1,
+      "total": 2,
+      "other": 1,
+      "rules": {
+        "starci-fe/require-export-jsdoc": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 0,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 1,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-profile-remaining"
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "frag": 19,
+      "total": 56,
+      "other": 37,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 20,
+        "starci-fe/no-frame-fragment-item": 19,
+        "starci-fe/no-public-classname-prop": 17
+      },
+      "css": 17,
+      "frame": 20,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-blocks-profile-remaining"
+    },
+    {
+      "file": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "frag": 1,
+      "total": 48,
+      "other": 47,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 14,
+        "starci-fe/no-public-classname-prop": 32,
+        "starci-fe/no-per-part-classname-prop": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 32,
+      "frame": 14,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 1,
+      "cluster": "A",
+      "locked": false,
+      "worker": "src-composites-twins"
+    },
+    {
+      "file": "src/components/composites/layout/Page/index.tsx",
+      "frag": 2,
+      "total": 11,
+      "other": 9,
+      "rules": {
+        "starci-fe/no-public-classname-prop": 6,
+        "starci-fe/require-frame-self-declare": 2,
+        "starci-fe/no-frame-fragment-item": 2,
+        "starci-fe/no-inline-skeleton-branch": 1
+      },
+      "css": 6,
+      "frame": 2,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 1,
+      "cluster": "A",
+      "locked": false,
+      "worker": "src-composites-twins"
+    },
+    {
+      "file": "src/components/composites/layout/Section/index.tsx",
+      "frag": 1,
+      "total": 3,
+      "other": 2,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 1,
+      "frame": 1,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "A",
+      "locked": false,
+      "worker": "src-composites-twins"
+    },
+    {
+      "file": "src/components/composites/stats/SegmentBar/index.tsx",
+      "frag": 1,
+      "total": 2,
+      "other": 1,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 1,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-composites-twins"
+    },
+    {
+      "file": "src/components/pages/ChallengeResultPage/component.tsx",
+      "frag": 3,
+      "total": 7,
+      "other": 4,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 4,
+        "starci-fe/no-frame-fragment-item": 3
+      },
+      "css": 0,
+      "frame": 4,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-clean-pages"
+    },
+    {
+      "file": "src/components/pages/CourseQaPage/component.tsx",
+      "frag": 2,
+      "total": 5,
+      "other": 3,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 3,
+        "starci-fe/no-frame-fragment-item": 2
+      },
+      "css": 0,
+      "frame": 3,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-clean-pages"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "frag": 2,
+      "total": 58,
+      "other": 56,
+      "rules": {
+        "starci-fe/page-folder-two-files-only": 1,
+        "starci-fe/no-heroui-outside-vocabulary": 1,
+        "starci-fe/no-parallel-skeleton": 1,
+        "starci-fe/no-classname-at-sentence-tier": 1,
+        "starci-fe/no-public-classname-prop": 5,
+        "starci-fe/no-emoji-in-source": 3,
+        "starci-fe/require-frame-self-declare": 41,
+        "starci-fe/no-cn-above-vocabulary": 3,
+        "starci-fe/no-frame-fragment-item": 2
+      },
+      "css": 9,
+      "frame": 41,
+      "heroui": 1,
+      "structural": 1,
+      "authoring": 3,
+      "otherCount": 1,
+      "cluster": "D",
+      "locked": true,
+      "worker": "structural-locked-report"
+    },
+    {
+      "file": "src/components/pages/FoundationResourcePage/component.tsx",
+      "frag": 2,
+      "total": 5,
+      "other": 3,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 3,
+        "starci-fe/no-frame-fragment-item": 2
+      },
+      "css": 0,
+      "frame": 3,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-clean-pages"
+    },
+    {
+      "file": "src/components/pages/FoundationsCategoryPage/component.tsx",
+      "frag": 2,
+      "total": 5,
+      "other": 3,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 3,
+        "starci-fe/no-frame-fragment-item": 2
+      },
+      "css": 0,
+      "frame": 3,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-clean-pages"
+    },
+    {
+      "file": "src/components/pages/FoundationsGridPage/component.tsx",
+      "frag": 2,
+      "total": 5,
+      "other": 3,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 3,
+        "starci-fe/no-frame-fragment-item": 2
+      },
+      "css": 0,
+      "frame": 3,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-clean-pages"
+    },
+    {
+      "file": "src/components/pages/HeadhuntingsPage/component.tsx",
+      "frag": 2,
+      "total": 5,
+      "other": 3,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 3,
+        "starci-fe/no-frame-fragment-item": 2
+      },
+      "css": 0,
+      "frame": 3,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-clean-pages"
+    },
+    {
+      "file": "src/components/pages/LeaderboardPage/component.tsx",
+      "frag": 2,
+      "total": 6,
+      "other": 4,
+      "rules": {
+        "starci-fe/no-public-classname-prop": 1,
+        "starci-fe/require-frame-self-declare": 3,
+        "starci-fe/no-frame-fragment-item": 2
+      },
+      "css": 1,
+      "frame": 3,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-clean-pages"
+    },
+    {
+      "file": "src/components/pages/MindMapPage/component.tsx",
+      "frag": 1,
+      "total": 12,
+      "other": 11,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 7,
+        "starci-fe/no-public-classname-prop": 3,
+        "starci-fe/handler-on-prefix": 1,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 3,
+      "frame": 7,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 1,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "structural-locked-report"
+    },
+    {
+      "file": "src/components/pages/PersonalProjectTaskPage/index.tsx",
+      "frag": 7,
+      "total": 17,
+      "other": 10,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 10,
+        "starci-fe/no-frame-fragment-item": 7
+      },
+      "css": 0,
+      "frame": 10,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "structural-locked-report"
+    },
+    {
+      "file": "src/components/pages/PlaygroundHubPage/component.tsx",
+      "frag": 1,
+      "total": 3,
+      "other": 2,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 2,
+        "starci-fe/no-frame-fragment-item": 1
+      },
+      "css": 0,
+      "frame": 2,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-clean-pages"
+    },
+    {
+      "file": "src/components/pages/PlaygroundPreparePage/component.tsx",
+      "frag": 2,
+      "total": 6,
+      "other": 4,
+      "rules": {
+        "starci-fe/require-frame-self-declare": 4,
+        "starci-fe/no-frame-fragment-item": 2
+      },
+      "css": 0,
+      "frame": 4,
+      "heroui": 0,
+      "structural": 0,
+      "authoring": 0,
+      "otherCount": 0,
+      "cluster": "B",
+      "locked": false,
+      "worker": "src-clean-pages"
+    }
+  ]
+}

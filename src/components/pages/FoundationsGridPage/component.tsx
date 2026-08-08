@@ -99,57 +99,75 @@ const _FoundationsGridPage = ({
     pagination,
     isSkeleton = false,
 }: FoundationsGridPageProps) => {
-    const categoriesSection = (
-        <>
-            <FoundationCategorySearchBar
+    const gridBody = (
+        <StackV
+            gap={6}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <FoundationCategoryHeader
 
-                query={searchQuery}
-                onQueryChange={onSearchQueryChange}
-                suggestions={suggestions}
-                onSelectSuggestion={onSelectSuggestion}
-                count={categoryCount}
-                isSkeleton={isSkeleton}
+                        breadcrumbItems={breadcrumbItems}
+                        title={title}
+                        description={description}
+                        isSkeleton={isSkeleton}
 
-            />
-            <FoundationCategoryList
+                    />
+                ),
+                () => (
+                    <TrialEnrollBanner
 
-                categories={categories}
-                searchQuery={searchQuery}
-                onSelectCategory={onSelectCategory}
-                pagination={pagination}
-                isSkeleton={isSkeleton}
+                        isVisible={isTrialBannerVisible}
+                        onEnroll={onEnrollTrial}
+                        isSkeleton={isSkeleton}
 
-            />
-        </>
+                    />
+                ),
+                () => (
+                    <StackV
+                        gap={6}
+                        principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <FoundationCategorySearchBar
+
+                                    query={searchQuery}
+                                    onQueryChange={onSearchQueryChange}
+                                    suggestions={suggestions}
+                                    onSelectSuggestion={onSelectSuggestion}
+                                    count={categoryCount}
+                                    isSkeleton={isSkeleton}
+
+                                />
+                            ),
+                            () => (
+                                <FoundationCategoryList
+
+                                    categories={categories}
+                                    searchQuery={searchQuery}
+                                    onSelectCategory={onSelectCategory}
+                                    pagination={pagination}
+                                    isSkeleton={isSkeleton}
+
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
-
-    const gridSections = (
-        <>
-            <FoundationCategoryHeader
-
-                breadcrumbItems={breadcrumbItems}
-                title={title}
-                description={description}
-                isSkeleton={isSkeleton}
-
-            />
-            <TrialEnrollBanner
-
-                isVisible={isTrialBannerVisible}
-                onEnroll={onEnrollTrial}
-                isSkeleton={isSkeleton}
-
-            />
-            <StackV gap={6} isSkeleton={isSkeleton} items={[() => categoriesSection]} />
-        </>
-    )
-
-    const gridBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => gridSections]} />
 
     return (
         <Container
             size="md"
             padding={6}
+            principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
             body={() => gridBody}
             identity={{ tier: "page", component: "FoundationsGridPage" }}
         />

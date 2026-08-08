@@ -1,0 +1,92 @@
+{
+  "worker": "hero-ui-gap-report",
+  "status": "report-only",
+  "note": "No edits. Vocabulary gaps recorded from B31f2 src-blocks-navigation-dashboard holds (Navbar/Footer/CollapsibleSidebar/SettingsSidebarNav + FooterLinkColumn/DesktopNavRow).",
+  "pendingScan": false,
+  "candidates": [
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "herouiImports": ["cn", "Button as HeroButton", "Dropdown", "Kbd", "Label", "Popover", "PopoverContent"],
+      "missingVocabulary": [
+        {
+          "symbol": "Dropdown",
+          "need": "House Dropdown menu atom (Dropdown / Dropdown.Popover / Dropdown.Menu / Dropdown.Section / Dropdown.Item) — none exists under atoms/"
+        },
+        {
+          "symbol": "Kbd",
+          "need": "House Kbd atom for shortcut chrome — none exists under atoms/"
+        },
+        {
+          "symbol": "Popover (icon+badge trigger)",
+          "need": "Popover.Base only exposes triggerLabel/triggerIcon; Navbar needs badge-around-glyph HeroButton trigger + PopoverContent placement/width. Extend Popover atom or add NotificationPopover composite."
+        },
+        {
+          "symbol": "Button as vendor trigger",
+          "need": "HeroButton still used as Popover/Dropdown trigger. House Button exists but react-aria trigger coupling may need atom-owned trigger slot."
+        }
+      ],
+      "partiallyCovered": [
+        {
+          "symbol": "Label",
+          "have": "atoms/forms/Label",
+          "gap": "Used inside Dropdown.Item; blocked until Dropdown atom lands"
+        },
+        {
+          "symbol": "Popover",
+          "have": "atoms/overlay/Popover (Base only)",
+          "gap": "Contract too narrow for notification panel trigger"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "herouiImports": ["Link as HeroUILink", "cn"],
+      "missingVocabulary": [
+        {
+          "symbol": "Link (inline/text)",
+          "need": "General footer/social text Link atom — vocabulary only has LinkBack + LinkSeeMore"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "herouiImports": ["Link as HeroUILink"],
+      "missingVocabulary": [
+        {
+          "symbol": "Link (inline/text)",
+          "need": "Same titled-column text Link atom as Footer"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "herouiImports": ["cn"],
+      "missingVocabulary": [
+        {
+          "symbol": "cn (shell classes)",
+          "need": "Not a missing vendor component — needs shell composite/variant owning sticky/width/collapse classes so block stops assembling via cn"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "herouiImports": ["cn"],
+      "missingVocabulary": [
+        {
+          "symbol": "cn (mobile tab chips)",
+          "need": "SettingsSidebarNav mobile-tab composite/variant owning active/inactive chip classes"
+        }
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "herouiImports": ["cn"],
+      "missingVocabulary": [
+        {
+          "symbol": "cn (nav row chrome)",
+          "need": "SettingsNavRow composite (icon+label pressable row with collapsed/active variants) — hand-rolled <button>+cn today"
+        }
+      ]
+    }
+  ]
+}

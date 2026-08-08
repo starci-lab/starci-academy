@@ -155,88 +155,112 @@ const _CourseQaPage = ({
         setDraft("")
     }
 
-    const questionSection = (
-        <>
-            <CourseQaEngagementStrip
+    const courseQaBody = (
+        <StackV
+            gap={6}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <CourseQaHeader
 
-                enrollmentCount={enrollmentCount}
-                totalQuestions={totalQuestions}
-                answeredQuestions={answeredQuestions}
-                isSkeleton={isSkeleton}
+                        breadcrumbItems={breadcrumbItems}
+                        title={title}
+                        description={description}
+                        isSkeleton={isSkeleton}
 
-            />
-            <CourseQaComposer
+                    />
+                ),
+                ...(isInvitationEmpty
+                    ? [
+                        () => (
+                            <CourseQaInvite
 
-                mode="collapsible"
-                currentUser={composerUser}
-                value={draft}
-                onValueChange={setDraft}
-                placeholder={labels.composerPlaceholder}
-                onSubmit={onSubmit}
-                isSkeleton={isSkeleton}
+                                title={labels.inviteTitle}
+                                hint={labels.inviteHint}
+                                ctaLabel={labels.inviteCta}
+                                onGoToContent={onGoToContent}
+                                isSkeleton={isSkeleton}
 
-            />
-            <CourseQaToolbar
+                            />
+                        ),
+                    ]
+                    : [
+                        () => (
+                            <StackV
+                                gap={6}
+                                principle="block-boundary"
+                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <CourseQaEngagementStrip
 
-                filter={filter}
-                onFilterChange={onFilterChange}
-                searchValue={searchValue}
-                onSearchChange={onSearchChange}
-                resultCount={totalQuestions}
-                filterAriaLabel={labels.filterAriaLabel}
-                searchAriaLabel={labels.searchAriaLabel}
-                isSkeleton={isSkeleton}
+                                            enrollmentCount={enrollmentCount}
+                                            totalQuestions={totalQuestions}
+                                            answeredQuestions={answeredQuestions}
+                                            isSkeleton={isSkeleton}
 
-            />
-            <CourseQaQuestionList
+                                        />
+                                    ),
+                                    () => (
+                                        <CourseQaComposer
 
-                questions={questions}
-                isLoading={isSkeleton}
-                page={page}
-                totalPages={totalPages}
-                onPageChange={onPageChange}
-                currentUserId={currentUserId}
-                currentUser={listCurrentUser}
-                onAnswered={onAnswered}
-                pagerAriaLabel={labels.pagerAriaLabel}
-                isSkeleton={isSkeleton}
+                                            mode="collapsible"
+                                            currentUser={composerUser}
+                                            value={draft}
+                                            onValueChange={setDraft}
+                                            placeholder={labels.composerPlaceholder}
+                                            onSubmit={onSubmit}
+                                            isSkeleton={isSkeleton}
 
-            />
-        </>
+                                        />
+                                    ),
+                                    () => (
+                                        <CourseQaToolbar
+
+                                            filter={filter}
+                                            onFilterChange={onFilterChange}
+                                            searchValue={searchValue}
+                                            onSearchChange={onSearchChange}
+                                            resultCount={totalQuestions}
+                                            filterAriaLabel={labels.filterAriaLabel}
+                                            searchAriaLabel={labels.searchAriaLabel}
+                                            isSkeleton={isSkeleton}
+
+                                        />
+                                    ),
+                                    () => (
+                                        <CourseQaQuestionList
+
+                                            questions={questions}
+                                            isLoading={isSkeleton}
+                                            page={page}
+                                            totalPages={totalPages}
+                                            onPageChange={onPageChange}
+                                            currentUserId={currentUserId}
+                                            currentUser={listCurrentUser}
+                                            onAnswered={onAnswered}
+                                            pagerAriaLabel={labels.pagerAriaLabel}
+                                            isSkeleton={isSkeleton}
+
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]),
+            ]}
+        />
     )
-
-    const courseQaSections = (
-        <>
-            <CourseQaHeader
-
-                breadcrumbItems={breadcrumbItems}
-                title={title}
-                description={description}
-                isSkeleton={isSkeleton}
-
-            />
-            {isInvitationEmpty ? (
-                <CourseQaInvite
-
-                    title={labels.inviteTitle}
-                    hint={labels.inviteHint}
-                    ctaLabel={labels.inviteCta}
-                    onGoToContent={onGoToContent}
-                    isSkeleton={isSkeleton}
-
-                />
-            ) : (
-                <StackV gap={6} isSkeleton={isSkeleton} items={[() => questionSection]} />
-            )}
-        </>
-    )
-
-    const courseQaBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => courseQaSections]} />
 
     return (
         <Container
             size="md"
             padding={6}
+            principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
             body={() => courseQaBody}
             identity={{ tier: "page", component: "CourseQaPage" }}
         />

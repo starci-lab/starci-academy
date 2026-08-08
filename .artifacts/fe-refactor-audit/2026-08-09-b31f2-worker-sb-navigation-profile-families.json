@@ -1,0 +1,140 @@
+{
+  "batch": "31f2",
+  "date": "2026-08-09",
+  "worker": "sb-navigation-profile-families",
+  "checkpoint": "0d0091c0",
+  "rule": "starci-fe/no-frame-fragment-item + starci-fe/no-public-classname-prop",
+  "contract": ".claude/fe/contracts/frame-items.md",
+  "status": "done",
+  "fixedCount": 5,
+  "heldCount": 0,
+  "classification": {
+    "peer-items": 5,
+    "nested-relationship": 0,
+    "conditional-peers": 1,
+    "hold": 0
+  },
+  "fixed": [
+    {
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "frag": 2,
+      "classname": 2,
+      "classification": "peer-items",
+      "classNameDoor": "removed",
+      "consumers": {
+        "scan": "src + .storybook",
+        "live": [
+          {
+            "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+            "pass": "className=\"h-full\"",
+            "resolution": "redundant — CollapsibleSidebar root already bakes h-full; dropped consumer prop"
+          }
+        ],
+        "srcTwinOnly": [
+          "src/components/blocks/navigation/SettingsSidebarNav (src twin — other worker)",
+          "src LearnSidebar / mia-mia DashboardSidebar import src CollapsibleSidebar, not SB"
+        ]
+      },
+      "actions": [
+        "Removed public className door",
+        "Split headerRow (title AnimatePresence + toggle) and panel (header / topSlot / nav) into StackH/StackV peer items",
+        "Reattached orphaned explain= onto flex-action StackH"
+      ],
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "frag": 8,
+      "classname": 2,
+      "classification": "peer-items",
+      "classNameDoor": "removed",
+      "consumers": {
+        "scan": "src + .storybook",
+        "live": [],
+        "note": "InnerLayout + stories omit className; Omit<FooterProps,\"className\"> cleaned on InnerLayout"
+      },
+      "actions": [
+        "Removed public className door (and cn merge)",
+        "Split wordmark / brandMark / brandColumn / linkColumns / topRegion / legalLinks / bottomBar / sections into peer item factories",
+        "Reattached orphaned explain= onto principle frames"
+      ],
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "frag": 11,
+      "classname": 2,
+      "classification": "peer-items + conditional-peers",
+      "classNameDoor": "removed",
+      "consumers": {
+        "scan": "src + .storybook",
+        "live": [],
+        "note": "InnerLayout wraps Navbar without className (sticky owned by parent div)"
+      },
+      "actions": [
+        "Removed public className door (and cn merge)",
+        "Split logo/nav, quickControls, notificationHeader/Panel, guestAccountRow, barActions, primaryRow, language/theme rows, drawerControls/Nav into peer items",
+        "Conditional unread Mark-all + notifications Popover via items spreads",
+        "Reattached orphaned explain= onto principle frames"
+      ],
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "frag": 23,
+      "classname": 2,
+      "classification": "peer-items",
+      "classNameDoor": "removed",
+      "consumers": {
+        "scan": "src + .storybook",
+        "live": [],
+        "note": "PublicProfileLayout + stories render <ProfileLoadingState /> with no className"
+      },
+      "actions": [
+        "Removed public className door (and cn merge)",
+        "Inlined all fragment-laundered readiness/course/skill/identity/overview regions as peer item factories",
+        "Reattached orphaned explain= onto principle frames",
+        "Kept existing StackV+breakpoint wrapper shape (no RailShell / new APIs)"
+      ],
+      "eslint": "pass"
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLockedState/ProfileLockedState.tsx",
+      "frag": 1,
+      "classname": 2,
+      "classification": "peer-items",
+      "classNameDoor": "removed",
+      "consumers": {
+        "scan": "src + .storybook",
+        "live": [],
+        "note": "PublicProfileLayout + stories omit classNames"
+      },
+      "actions": [
+        "Removed public classNames door",
+        "Split lockedBody hero + SurfaceCard into StackV peer items (mirrors src twin)",
+        "Also noted as alsoFixedOutsideManifest by sb-css-door-families — same end state"
+      ],
+      "eslint": "pass"
+    }
+  ],
+  "held": [],
+  "consumerEdits": [
+    {
+      "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      "action": "Dropped redundant className=\"h-full\" on CollapsibleSidebar after door removal"
+    },
+    {
+      "file": ".storybook/components/starci/layouts/InnerLayout/InnerLayout.tsx",
+      "action": "Omit<FooterProps,\"className\"|...> → drop className key (prop no longer exists)"
+    }
+  ],
+  "verification": {
+    "eslintMaxWarnings0": "pass-all-5",
+    "command": "npx eslint --max-warnings=0 <five target files>",
+    "commit": false
+  },
+  "notes": [
+    "No new principles/APIs; no sibling-hiding wrappers; no commit.",
+    "Orphaned explain= text siblings from prior B31f attempt reattached onto principle frames while splitting."
+  ]
+}

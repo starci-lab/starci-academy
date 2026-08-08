@@ -3,7 +3,6 @@ import type { ReactNode } from "react"
 import { Navbar, type NavbarProps } from "@sb-components/starci/blocks/navigation/Navbar/Navbar"
 import { Footer, type FooterProps } from "@sb-components/starci/blocks/navigation/Footer/Footer"
 import { StackV } from "@sb-components/frames/Stack/Stack"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `InnerLayout` — the wrapper for every route in the app. `children` is a real
@@ -14,7 +13,7 @@ import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
  */
 
 /** Props for {@link InnerLayout}. */
-export interface InnerLayoutProps extends NavbarProps, Omit<FooterProps, "className" | "anatPart" | "showAnatomy"> {
+export interface InnerLayoutProps extends NavbarProps, Omit<FooterProps, "anatPart" | "showAnatomy"> {
     /**
      * The active route's content. MANDATORY (RULE 12) — the shell itself
      * never changes shape across routes; only what fills this slot does.
@@ -27,8 +26,6 @@ export interface InnerLayoutProps extends NavbarProps, Omit<FooterProps, "classN
      * this layout only obeys the flag.
      */
     showFooter: boolean
-    /** Layout utilities on the root track, from the closed positioning union. */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -46,7 +43,6 @@ const InnerLayout = ({
     socials,
     onTermsPress,
     onPrivacyPress,
-    classNames,
     ...navbarProps
 }: InnerLayoutProps) => {
     const navMainFooter = [
@@ -56,8 +52,6 @@ const InnerLayout = ({
             <div className="sticky top-0 z-40">
                 <Navbar
                     {...(navbarProps as NavbarProps)}
-
-
                 />
             </div>
         ),
@@ -70,8 +64,6 @@ const InnerLayout = ({
                 socials={socials}
                 onTermsPress={onTermsPress}
                 onPrivacyPress={onPrivacyPress}
-
-
             />
         )] : []),
         // Overlay/chat-rail/provider global mount points — intentionally NOT
@@ -80,7 +72,12 @@ const InnerLayout = ({
 
     return (
         <div className="min-h-dvh">
-            <StackV gap={1} classNames={classNames} items={navMainFooter} />
+            <StackV
+                gap={1}
+                principle="sibling-stack"
+                explain="Same-kind peer stack of shell regions — not group-boundary, because nav, main, and footer are sibling shell tracks rather than nested section groups."
+                items={navMainFooter}
+            />
         </div>
     )
 }

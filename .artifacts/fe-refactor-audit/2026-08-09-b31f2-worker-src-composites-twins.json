@@ -1,0 +1,43 @@
+{
+  "batch": "31f2",
+  "worker": "src-composites-twins",
+  "checkpoint": "0d0091c0",
+  "status": "done",
+  "attempted": [
+    "src/components/composites/stats/SegmentBar/index.tsx",
+    "src/components/composites/layout/Section/index.tsx"
+  ],
+  "fixed": [
+    {
+      "file": "src/components/composites/stats/SegmentBar/index.tsx",
+      "actions": [
+        "Mirrored SB twin fragment split (track / Legend / caption as peer items)",
+        "Closed require-frame-self-declare with principle=sibling-stack + explain"
+      ]
+    },
+    {
+      "file": "src/components/composites/layout/Section/index.tsx",
+      "actions": [
+        "Mirrored SB twin Header title-block peer items (eyebrow/title/description)",
+        "Closed StackH self-declare with principle=content-row + explain (Page Header contract)",
+        "Moved min-w-0 off StackV classNames onto wrapper div (existing placement pattern)"
+      ]
+    }
+  ],
+  "held": [
+    {
+      "file": "src/components/composites/cards/SurfaceCard/index.tsx",
+      "reason": "Not in this disjoint easy wave — held untouched (other-debt: classname + self-declare family)"
+    },
+    {
+      "file": "src/components/composites/layout/Page/index.tsx",
+      "reason": "Not in this disjoint easy wave — held untouched (other-debt: classname + self-declare + skeleton family)"
+    }
+  ],
+  "verification": {
+    "eslintMaxWarnings0": {
+      "src/components/composites/stats/SegmentBar/index.tsx": "pass",
+      "src/components/composites/layout/Section/index.tsx": "pass"
+    }
+  }
+}

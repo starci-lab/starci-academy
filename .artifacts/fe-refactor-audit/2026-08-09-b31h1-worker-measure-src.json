@@ -1,0 +1,8 @@
+{
+  "batch": "31h1",
+  "worker": "measure-src",
+  "status": "done",
+  "fixed": ["src/components/frames/Measure/index.tsx"],
+  "parity": "equivalent to SB Measure",
+  "eslint": "pass"
+}

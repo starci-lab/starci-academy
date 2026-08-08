@@ -1,0 +1,12 @@
+{
+  "batch": "31h1",
+  "worker": "sb-blocks",
+  "status": "partial",
+  "fixed": ["Footer + FooterLinkColumn vertical closure"],
+  "held": "Remaining SB starci hosts need domain owners beyond ShowFrom/Measure/InlineLink",
+  "priorB31hClosuresRetained": [
+    "CourseQaInvite",
+    "FlashcardModeSwitch",
+    "MindMapFullscreenButton"
+  ]
+}

@@ -121,32 +121,43 @@ const Header = ({
     const eyebrowSize = EYEBROW_SIZE[level]
     // eyebrow <-> title <-> description are ONE text unit -> tight gap={2} (§10b
     // "inside a lower-tier component"), not the grouped gap={4} used BETWEEN regions.
-    const titleBlock = (
-        <>
-            {eyebrow != null ? (
-                <span className="min-w-0">
-                    <Typography size={eyebrowSize} text={eyebrow} color="muted" truncate isSkeleton={isSkeleton} />
-                </span>
-            ) : null}
-            <span className="min-w-0">
-                <Typography size={titleSize} text={title} weight={TITLE_WEIGHT[level]} isSkeleton={isSkeleton} />
-            </span>
-            {description != null ? (
-                <span className="min-w-0">
-                    <Typography size={descriptionSize} text={description} color="muted" isSkeleton={isSkeleton} />
-                </span>
-            ) : null}
-        </>
-    )
     return (
         // align="start": a 2-line title block keeps the action anchored at the top.
         <StackH
             align="start"
             justify="between"
             gap={4}
+            principle="content-row"
+            explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
             isSkeleton={isSkeleton}
             items={[
-                () => <StackV gap={2} principle="title-subtitle" classNames={["min-w-0"]} isSkeleton={isSkeleton} items={[() => titleBlock]} explain="Title over supporting line — not label-field, because neither line is a form control label."/>,
+                () => (
+                    <div className="min-w-0">
+                        <StackV
+                            gap={2}
+                            principle="title-subtitle"
+                            explain="Eyebrow/title/description stack — not label-field, because none of these lines labels a form control."
+                            isSkeleton={isSkeleton}
+                            items={[
+                                ...(eyebrow != null ? [() => (
+                                    <span className="min-w-0">
+                                        <Typography size={eyebrowSize} text={eyebrow} color="muted" truncate isSkeleton={isSkeleton} />
+                                    </span>
+                                )] : []),
+                                () => (
+                                    <span className="min-w-0">
+                                        <Typography size={titleSize} text={title} weight={TITLE_WEIGHT[level]} isSkeleton={isSkeleton} />
+                                    </span>
+                                ),
+                                ...(description != null ? [() => (
+                                    <span className="min-w-0">
+                                        <Typography size={descriptionSize} text={description} color="muted" isSkeleton={isSkeleton} />
+                                    </span>
+                                )] : []),
+                            ]}
+                        />
+                    </div>
+                ),
                 ...(Action != null ? [() => (
                     <div className="shrink-0"><Action isSkeleton={isSkeleton} /></div>
                 )] : []),

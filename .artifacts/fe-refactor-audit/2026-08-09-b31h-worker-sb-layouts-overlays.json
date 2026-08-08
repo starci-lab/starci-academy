@@ -1,0 +1,11 @@
+{
+  "batch": "31h",
+  "worker": "sb-layouts-overlays",
+  "status": "held",
+  "fixed": [],
+  "held": [
+    {
+      "reason": "SB InnerLayout/HeadhuntingCompaniesLayout owned by in-flight B31f2 — not absorbed. Remaining overlays need domain owners."
+    }
+  ]
+}

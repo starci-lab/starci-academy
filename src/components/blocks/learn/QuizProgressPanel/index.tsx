@@ -163,52 +163,53 @@ const QuizProgressPanel = ({
         onPress: isSkeleton ? undefined : session.onPress,
     }))
 
-    const panelBody = (
-        <>
-            <div>
-                <Tabs
-                    items={tabItems}
-                    selectedKey={view}
-                    onSelectionChange={(key) => onViewChange(key as QuizProgressView)}
-                    ariaLabel={viewAriaLabel}
-                    isSkeleton={isSkeleton}
-
-                />
-            </div>
-            {view === "stats" ? (
-                <div>
-                    <StatGridCard items={statItems} />
-                </div>
-            ) : (
-                <SurfaceCardList
-                    items={historyItems}
-                    isSkeleton={isSkeleton}
-
-
-                />
-            )}
-        </>
-    )
-
     return (
-        <div>
-            <SurfaceCard
-                label={label}
+        <SurfaceCard
+            identity={{ tier: "block", component: "QuizProgressPanel" }}
+            label={label}
 
-                body={() =>
-                    isEmpty ? (
-                        <EmptyState
-                            icon={ChartLineIcon}
-                            title="No practice sessions yet"
-                            description="Start a session in the panel beside this one — your first run will show its stats and history here."
+            body={() =>
+                isEmpty ? (
+                    <EmptyState
+                        icon={ChartLineIcon}
+                        title="No practice sessions yet"
+                        description="Start a session in the panel beside this one — your first run will show its stats and history here."
 
-                        />
-                    ) : (
-                        <StackV gap={6} isSkeleton={isSkeleton} items={[() => panelBody]} />
-                    )
-                }
-            />
-        </div>
+                    />
+                ) : (
+                    <StackV
+                        gap={6}
+                        principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates the view switch from the active pane rather than nested section groups."
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <Tabs
+                                    items={tabItems}
+                                    selectedKey={view}
+                                    onSelectionChange={(key) => onViewChange(key as QuizProgressView)}
+                                    ariaLabel={viewAriaLabel}
+                                    isSkeleton={isSkeleton}
+
+                                />
+                            ),
+                            () => (
+                                view === "stats" ? (
+                                    <StatGridCard items={statItems} />
+                                ) : (
+                                    <SurfaceCardList
+                                        items={historyItems}
+                                        isSkeleton={isSkeleton}
+
+
+                                    />
+                                )
+                            ),
+                        ]}
+                    />
+                )
+            }
+        />
     )
 }
 

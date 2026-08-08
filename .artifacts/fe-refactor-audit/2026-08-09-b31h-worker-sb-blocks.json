@@ -1,0 +1,25 @@
+{
+  "batch": "31h",
+  "worker": "sb-blocks",
+  "status": "partial",
+  "fixed": [
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaInvite/CourseQaInvite.tsx",
+      "hostsRemoved": 1,
+      "actions": ["Removed wrapper div; SurfaceCard is the semantic root"]
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardModeSwitch/FlashcardModeSwitch.tsx",
+      "hostsRemoved": 1,
+      "actions": ["Removed wrapper div; Tabs atom is the sole root"]
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MindMapFullscreenButton/MindMapFullscreenButton.tsx",
+      "hostsRemoved": 1,
+      "actions": ["Removed wrapper div; StackV sibling-stack owns the zoom rail"]
+    }
+  ],
+  "held": [],
+  "eslintMaxWarnings0": "pass",
+  "note": "Did not absorb B31f2-owned SB Footer/nav/profile diffs."
+}

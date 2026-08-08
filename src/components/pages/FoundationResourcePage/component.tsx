@@ -123,52 +123,64 @@ const _FoundationResourcePage = ({
     isEmpty = false,
     isSkeleton = false,
 }: FoundationResourcePageProps) => {
-    const resourceSection = (
-        <>
-            <FoundationHeader
-
-                breadcrumbItems={breadcrumbItems}
-                title={title}
-                description={description}
-                kind={kind}
-                isRecommended={isRecommended}
-                tags={tags}
-                author={author}
-                isSkeleton={isSkeleton}
-
-            />
-            <FoundationResourceBody
-
-                kind={KIND_TO_RESOURCE_KIND[kind]}
-                markdownBody={markdownBody}
-                linkTitle={linkTitle}
-                linkUrl={linkUrl}
-                onOpenLink={onOpenLink}
-                isSkeleton={isSkeleton}
-
-            />
-        </>
-    )
-
-    const resourceSections = (
-        <>
-            <TrialEnrollBanner
-
-                isVisible={isEnrollmentKnown && !isEnrolled}
-                onEnroll={onEnroll}
-                isSkeleton={isSkeleton}
-
-            />
-            {isEmpty ? (
-                <FoundationResourceEmpty />
-            ) : (
-                <StackV gap={6} isSkeleton={isSkeleton} items={[() => resourceSection]} />
-            )}
-        </>
-    )
-
     const resourceBody = ({ isSkeleton }: SkeletonProps) => (
-        <StackV gap={6} isSkeleton={isSkeleton} items={[() => resourceSections]} />
+        <StackV
+            gap={6}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <TrialEnrollBanner
+
+                        isVisible={isEnrollmentKnown && !isEnrolled}
+                        onEnroll={onEnroll}
+                        isSkeleton={isSkeleton}
+
+                    />
+                ),
+                ...(isEmpty
+                    ? [() => <FoundationResourceEmpty />]
+                    : [
+                        () => (
+                            <StackV
+                                gap={6}
+                                principle="block-boundary"
+                                explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <FoundationHeader
+
+                                            breadcrumbItems={breadcrumbItems}
+                                            title={title}
+                                            description={description}
+                                            kind={kind}
+                                            isRecommended={isRecommended}
+                                            tags={tags}
+                                            author={author}
+                                            isSkeleton={isSkeleton}
+
+                                        />
+                                    ),
+                                    () => (
+                                        <FoundationResourceBody
+
+                                            kind={KIND_TO_RESOURCE_KIND[kind]}
+                                            markdownBody={markdownBody}
+                                            linkTitle={linkTitle}
+                                            linkUrl={linkUrl}
+                                            onOpenLink={onOpenLink}
+                                            isSkeleton={isSkeleton}
+
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]),
+            ]}
+        />
     )
 
     return (
@@ -177,6 +189,8 @@ const _FoundationResourcePage = ({
             identity={{ tier: "page", component: "FoundationResourcePage" }}
             size="md"
             padding={6}
+            principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
             isSkeleton={isSkeleton}
             body={resourceBody}
 

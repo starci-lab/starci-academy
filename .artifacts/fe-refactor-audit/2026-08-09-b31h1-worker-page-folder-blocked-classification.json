@@ -1,0 +1,9 @@
+{
+  "batch": "31h1",
+  "worker": "page-folder-blocked-classification",
+  "status": "report-only",
+  "count": 80,
+  "rule": "starci-fe/page-folder-two-files-only",
+  "note": "Nested page helpers cannot reach zero-warn without page-folder moves (forbidden in B31h1). Sample listed in host-inventory.json pageFolderBlockedSample.",
+  "action": "hold — do not edit structure this batch"
+}

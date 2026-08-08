@@ -1,0 +1,28 @@
+{
+  "batch": "31h1",
+  "worker": "footer-vertical",
+  "status": "done",
+  "fixed": [
+    ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+    ".storybook/components/starci/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+    "src/components/blocks/navigation/Footer/index.tsx",
+    "src/components/blocks/navigation/Footer/FooterLinkColumn/index.tsx"
+  ],
+  "before": {
+    "root": "raw <footer> + Container xl",
+    "srcPublicClassName": true,
+    "srcCn": true,
+    "hosts": ["div.hidden @app-md:flex", "div.max-w-sm", "div text wordmark", "div bottom align", "HeroUI Link"]
+  },
+  "after": {
+    "root": "FooterFrame identity={tier:block, component:Footer}",
+    "publicClassName": false,
+    "cn": false,
+    "ShowFrom": "at=md wordmark",
+    "Measure": "size=sm brand column",
+    "InlineLink": "columns sm, legal xs, socials icon",
+    "wordmarkText": "span chrome (not banned host; Typography lacks 8px/uppercase)"
+  },
+  "eslintBothTrees": "pass",
+  "parity": "SB and src Footer structure equivalent"
+}

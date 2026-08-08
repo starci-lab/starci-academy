@@ -1,0 +1,84 @@
+{
+  "batch": "31f2",
+  "date": "2026-08-09",
+  "worker": "src-clean-pages",
+  "rule": "starci-fe/no-frame-fragment-item",
+  "alsoClosed": [
+    "starci-fe/require-frame-self-declare",
+    "starci-fe/no-public-classname-prop"
+  ],
+  "status": "done",
+  "fixedCount": 9,
+  "heldCount": 0,
+  "findingsBefore": 47,
+  "findingsFixed": 47,
+  "findingsHeld": 0,
+  "fixed": [
+    {
+      "file": "src/components/pages/ChallengeResultPage/component.tsx",
+      "frag": 3,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin item split; closed require-frame-self-declare with page-pad + block-boundary (named card-padding / group-boundary)."
+    },
+    {
+      "file": "src/components/pages/CourseQaPage/component.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin invitation vs populated branch item split; page-pad + block-boundary."
+    },
+    {
+      "file": "src/components/pages/FoundationResourcePage/component.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin empty vs resource cluster item split; page-pad + block-boundary."
+    },
+    {
+      "file": "src/components/pages/FoundationsCategoryPage/component.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin item split; page-pad + block-boundary."
+    },
+    {
+      "file": "src/components/pages/FoundationsGridPage/component.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin item split; page-pad + block-boundary."
+    },
+    {
+      "file": "src/components/pages/HeadhuntingsPage/component.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin item split; page-pad + block-boundary."
+    },
+    {
+      "file": "src/components/pages/LeaderboardPage/component.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin item split; page-pad + block-boundary; closed no-public-classname-prop by wrapping LeaderboardCategoryNav in existing HideAbove at=\"lg\" (no new API)."
+    },
+    {
+      "file": "src/components/pages/PlaygroundHubPage/component.tsx",
+      "frag": 1,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin item split; page-pad + block-boundary."
+    },
+    {
+      "file": "src/components/pages/PlaygroundPreparePage/component.tsx",
+      "frag": 2,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin item split including conditional device snapshot; page-pad on root + swap Containers; block-boundary on stacks."
+    }
+  ],
+  "held": [],
+  "twinParity": "Fragment item shapes mirrored from .storybook/components/starci/pages/* twins (B31f). Src additionally declares principle+explain (src-only require-frame-self-declare). LeaderboardPage src diverges from SB className door by using HideAbove.",
+  "note": "No page-folder moves. No new principles. No commit."
+}

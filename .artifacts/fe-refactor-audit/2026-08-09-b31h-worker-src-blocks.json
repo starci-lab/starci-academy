@@ -1,0 +1,33 @@
+{
+  "batch": "31h",
+  "worker": "src-blocks",
+  "status": "partial",
+  "fixed": [
+    {
+      "file": "src/components/blocks/learn/CourseQaInvite/index.tsx",
+      "hostsRemoved": 1,
+      "actions": ["Removed wrapper div; identity on SurfaceCard"]
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/TabTrigger/index.tsx",
+      "hostsRemoved": 1,
+      "actions": ["Replaced flex host with StackH icon-text + identity"]
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapFullscreenButton/index.tsx",
+      "hostsRemoved": 1,
+      "actions": ["Removed wrapper div; StackV sibling-stack + identity"]
+    }
+  ],
+  "held": [
+    {
+      "file": "src/components/blocks/learn/FlashcardModeSwitch/index.tsx",
+      "reason": "Tabs atom has no identity prop — require-identity-root cannot close without forbidden wrapper; SB twin closed by dropping the host (SB does not enforce identity-root)"
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/**",
+      "reason": "See footer-vertical worker — ShowFrom/MaxWidth/Link gaps"
+    }
+  ],
+  "eslintMaxWarnings0": "pass on fixed files"
+}

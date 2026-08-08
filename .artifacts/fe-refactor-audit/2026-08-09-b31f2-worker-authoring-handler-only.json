@@ -1,0 +1,25 @@
+{
+  "batch": "31f2",
+  "worker": "authoring-handler-only",
+  "checkpoint": "0d0091c0",
+  "status": "done",
+  "attempted": [
+    ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx"
+  ],
+  "fixed": [
+    {
+      "file": ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      "actions": [
+        "handler-on-prefix: eslint-disable-next-line on ResizableRail handleSide (noun layout prop; same rationale as ContentAiChatRail — ResizableRail rename out of wave)",
+        "Expanded workspace StackH fragment into conditional rail item + canvas item",
+        "Expanded canvas StackV fragment into MindMapCanvasGap + optional overlay peer items"
+      ]
+    }
+  ],
+  "held": [],
+  "verification": {
+    "eslintMaxWarnings0": {
+      ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx": "pass"
+    }
+  }
+}

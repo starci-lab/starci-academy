@@ -3,6 +3,7 @@ import { SealCheckIcon } from "@phosphor-icons/react"
 import { ThreadConnector } from "@sb-components/atoms/display/ThreadConnector/ThreadConnector"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { IdentityContentRow } from "@sb-components/composites/lists/IdentityContentRow/IdentityContentRow"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 import { ContentCommentComposer, type ContentCommentComposerViewer } from "@sb-components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer"
 import { ReactionButton, type ReactionType, type ReactionCount } from "@sb-components/starci/blocks/learn/ReactionButton/ReactionButton"
@@ -287,20 +288,24 @@ const ContentCommentThread = ({
                                 items={[
                                     () => <ThreadConnector />,
                                     () => (
-                                        <ContentCommentComposer
-                                            placeholder="Write a reply..."
-                                            submitLabel="Reply"
-                                            ariaLabel="Write a reply"
-                                            currentUser={currentUser}
-                                            classNames={["min-w-0", "flex-1"]}
-                                            onCancel={() => setReplying(false)}
-                                            onSubmit={(body) => {
-                                                onReply(comment.id, body)
-                                                setReplying(false)
-                                                setExpanded(true)
-                                                onLoadReplies(comment.id)
-                                            }}
+                                        <FillAvailable
+                                            at="base"
+                                            body={() => (
+                                                <ContentCommentComposer
+                                                    placeholder="Write a reply..."
+                                                    submitLabel="Reply"
+                                                    ariaLabel="Write a reply"
+                                                    currentUser={currentUser}
+                                                    onCancel={() => setReplying(false)}
+                                                    onSubmit={(body) => {
+                                                        onReply(comment.id, body)
+                                                        setReplying(false)
+                                                        setExpanded(true)
+                                                        onLoadReplies(comment.id)
+                                                    }}
 
+                                                />
+                                            )}
                                         />
                                     ),
                                 ]}

@@ -5,6 +5,7 @@ import { LeaderboardCategoryNav, type LeaderboardCategoryKey, type LeaderboardCa
 import { LeaderboardToolbar } from "@/components/blocks/learn/LeaderboardToolbar"
 import { LeaderboardBoard, type LeaderboardStanding, type LeaderboardPodiumEntry, type LeaderboardRow } from "@/components/blocks/learn/LeaderboardBoard"
 import { Container } from "@/components/frames/Container"
+import { HideAbove } from "@/components/frames/HideAbove"
 import { StackV } from "@/components/frames/Stack"
 
 /**
@@ -129,71 +130,95 @@ const _LeaderboardPage = ({
     meLabel,
     isSkeleton = false,
 }: LeaderboardPageProps) => {
-    const boardSection = (
-        <>
-            <LeaderboardCategoryNav
+    const leaderboardBody = (
+        <StackV
+            gap={7}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <LeaderboardHeader
 
-                className="@app-lg:hidden"
-                items={categoryItems}
-                selected={selectedCategory}
-                onSelect={onCategorySelect}
-                ariaLabel={categoryAriaLabel}
+                        breadcrumbItems={breadcrumbItems}
+                        title={title}
+                        description={description}
+                        isSkeleton={isSkeleton}
 
-            />
-            <LeaderboardToolbar
+                    />
+                ),
+                () => (
+                    <TrialEnrollBanner
 
-                categoryLabel={categoryLabel}
-                updatedAt={updatedAt}
-                onRefresh={onRefresh}
-                isRefreshing={isRefreshing}
-                refreshLabel={refreshLabel}
+                        isVisible={isEnrollmentKnown && !isEnrolled}
+                        onEnroll={onEnroll}
 
-            />
-            <LeaderboardBoard
+                    />
+                ),
+                () => (
+                    <StackV
+                        gap={6}
+                        principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <HideAbove
+                                    at="lg"
+                                    body={() => (
+                                        <LeaderboardCategoryNav
 
-                isLoading={isBoardLoading}
-                isEmpty={isBoardEmpty}
-                error={boardError}
-                onRetry={onBoardRetry}
-                standing={standing}
-                podiumEntries={podiumEntries}
-                rows={rows}
-                selfRow={selfRow}
-                hiddenBetweenCount={hiddenBetweenCount}
-                celebrateKey={celebrateKey}
-                meLabel={meLabel}
-                isSkeleton={isSkeleton}
+                                            items={categoryItems}
+                                            selected={selectedCategory}
+                                            onSelect={onCategorySelect}
+                                            ariaLabel={categoryAriaLabel}
 
-            />
-        </>
+                                        />
+                                    )}
+                                />
+                            ),
+                            () => (
+                                <LeaderboardToolbar
+
+                                    categoryLabel={categoryLabel}
+                                    updatedAt={updatedAt}
+                                    onRefresh={onRefresh}
+                                    isRefreshing={isRefreshing}
+                                    refreshLabel={refreshLabel}
+
+                                />
+                            ),
+                            () => (
+                                <LeaderboardBoard
+
+                                    isLoading={isBoardLoading}
+                                    isEmpty={isBoardEmpty}
+                                    error={boardError}
+                                    onRetry={onBoardRetry}
+                                    standing={standing}
+                                    podiumEntries={podiumEntries}
+                                    rows={rows}
+                                    selfRow={selfRow}
+                                    hiddenBetweenCount={hiddenBetweenCount}
+                                    celebrateKey={celebrateKey}
+                                    meLabel={meLabel}
+                                    isSkeleton={isSkeleton}
+
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
-
-    const leaderboardSections = (
-        <>
-            <LeaderboardHeader
-
-                breadcrumbItems={breadcrumbItems}
-                title={title}
-                description={description}
-                isSkeleton={isSkeleton}
-
-            />
-            <TrialEnrollBanner
-
-                isVisible={isEnrollmentKnown && !isEnrolled}
-                onEnroll={onEnroll}
-
-            />
-            <StackV gap={6} isSkeleton={isSkeleton} items={[() => boardSection]} />
-        </>
-    )
-
-    const leaderboardBody = <StackV gap={7} isSkeleton={isSkeleton} items={[() => leaderboardSections]} />
 
     return (
         <Container
             size="md"
             padding={6}
+            principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
             body={() => leaderboardBody}
             identity={{ tier: "page", component: "LeaderboardPage" }}
         />

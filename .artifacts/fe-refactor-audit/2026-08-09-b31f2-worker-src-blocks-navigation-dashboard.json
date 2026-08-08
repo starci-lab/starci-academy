@@ -1,0 +1,130 @@
+{
+  "batch": "31f2",
+  "date": "2026-08-09",
+  "worker": "src-blocks-navigation-dashboard",
+  "checkpoint": "0d0091c0",
+  "rule": "starci-fe/no-frame-fragment-item",
+  "alsoClosed": [
+    "starci-fe/require-frame-self-declare",
+    "starci-fe/no-public-classname-prop",
+    "starci-fe/no-emoji-in-source"
+  ],
+  "status": "done",
+  "priority": "zero-warn only; JobReadinessWidget if possible; HOLD Navbar/Footer/CollapsibleSidebar/SettingsSidebarNav on HeroUI or >10 other",
+  "fixedCount": 1,
+  "heldCount": 6,
+  "findingsBefore": 1,
+  "findingsFixed": 5,
+  "findingsHeld": 86,
+  "note": "findingsBefore is inventory frag for JobReadinessWidget. findingsFixed is inventory total for JobReadinessWidget. findingsHeld sums inventory totals for held nav files.",
+  "fixed": [
+    {
+      "file": "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+      "frag": 1,
+      "total": 5,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB twin summary/meters/CTA peer items; dropped Button classNames self-start; emoji comment → ASCII; sibling-stack on Content StackV."
+    }
+  ],
+  "held": [
+    {
+      "file": "src/components/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "frag": 1,
+      "total": 4,
+      "other": 3,
+      "reason": "HeroUI Link import (no-heroui-outside-vocabulary) — missing general text/footer Link atom (only LinkBack/LinkSeeMore exist); cannot zero-warn without new contract"
+    },
+    {
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "frag": 1,
+      "total": 4,
+      "other": 3,
+      "reason": "HeroUI cn + hand-rolled <button> host (no-heroui/no-cn/identity/fragment) — needs SettingsNavRow composite; HOLD"
+    },
+    {
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "frag": 2,
+      "total": 13,
+      "other": 11,
+      "reason": "HeroUI cn + other=11 >10 — HOLD per wave; see hero-ui-gap-report"
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "frag": 8,
+      "total": 23,
+      "other": 15,
+      "reason": "HeroUI Link+cn + other=15 >10 — HOLD per wave; see hero-ui-gap-report"
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "frag": 11,
+      "total": 33,
+      "other": 22,
+      "reason": "HeroUI Dropdown/Kbd/Popover/Button/Label/cn + other=22 >10 — HOLD per wave; see hero-ui-gap-report"
+    },
+    {
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "frag": 1,
+      "total": 9,
+      "other": 8,
+      "reason": "HeroUI cn + other=8 with raw hosts/identity — HOLD per wave; see hero-ui-gap-report"
+    }
+  ],
+  "heroUiGaps": [
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "imports": ["cn", "Button as HeroButton", "Dropdown", "Kbd", "Label", "Popover", "PopoverContent"],
+      "missingVocabulary": [
+        "Dropdown (menu/section/item family) — no house atom",
+        "Kbd — no house atom",
+        "Popover icon-trigger + badge panel — existing Popover.Base only covers triggerLabel/triggerIcon, not badge-around-glyph HeroButton trigger used here",
+        "HeroButton as Popover/Dropdown trigger — house Button exists but Navbar still opens vendor Button for react-aria trigger coupling"
+      ],
+      "partiallyCovered": [
+        "Label → atoms/forms/Label exists but used inside Dropdown.Item chrome",
+        "Popover → atoms/overlay/Popover exists as Base-only"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "imports": ["Link as HeroUILink", "cn"],
+      "missingVocabulary": [
+        "Inline/text Link for footer social + legal rows — only LinkBack/LinkSeeMore exist"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/FooterLinkColumn/index.tsx",
+      "imports": ["Link as HeroUILink"],
+      "missingVocabulary": [
+        "Inline/text Link for titled footer columns — same gap as Footer"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "imports": ["cn"],
+      "missingVocabulary": [
+        "No HeroUI component import — cn-above-vocabulary for sticky/width shell classes; needs CollapsibleSidebar shell composite owning width/sticky variants rather than a new vendor atom"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "imports": ["cn"],
+      "missingVocabulary": [
+        "No HeroUI component import — cn for mobile tab chip classes; needs SettingsSidebarNav mobile-tab composite/variant"
+      ]
+    },
+    {
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/DesktopNavRow/index.tsx",
+      "imports": ["cn"],
+      "missingVocabulary": [
+        "No HeroUI component import — cn for active/collapsed row chrome; needs SettingsNavRow composite (icon+label button) rather than a vendor Link atom"
+      ]
+    }
+  ],
+  "verification": {
+    "eslintMaxWarnings0": {
+      "src/components/blocks/dashboard/JobReadinessWidget/index.tsx": "pass"
+    }
+  }
+}

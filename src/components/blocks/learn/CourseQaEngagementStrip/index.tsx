@@ -54,31 +54,34 @@ const CourseQaEngagementStrip = ({
 }: CourseQaEngagementStripProps) => {
     const hasEnrollment = enrollmentCount != null
 
-    const lines = (
-        <>
-            {isSkeleton || hasEnrollment ? (
-                <Typography
-                    size="sm"
-                    color="muted"
-                    isSkeleton={isSkeleton}
-                    text={hasEnrollment ? `${enrollmentCount!.toLocaleString("vi-VN")} learners enrolled in this course` : undefined}
-
-                />
-            ) : null}
-            <Typography
-                size="sm"
-                color="muted"
-                isSkeleton={isSkeleton}
-                text={isSkeleton ? undefined : questionLine(totalQuestions, answeredQuestions)}
-
-            />
-        </>
-    )
-
     return (
-        <div>
-            <StackV gap={1} isSkeleton={isSkeleton} items={[() => lines]} />
-        </div>
+        <StackV
+            identity={{ tier: "block", component: "CourseQaEngagementStrip" }}
+            gap={1}
+            principle="name-handle"
+            explain="Enrollment line over question tally — not title-subtitle, because the second line is an identity handle rather than a subtitle."
+            isSkeleton={isSkeleton}
+            items={[
+                ...(isSkeleton || hasEnrollment ? [() => (
+                    <Typography
+                        size="sm"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        text={hasEnrollment ? `${enrollmentCount!.toLocaleString("vi-VN")} learners enrolled in this course` : undefined}
+
+                    />
+                )] : []),
+                () => (
+                    <Typography
+                        size="sm"
+                        color="muted"
+                        isSkeleton={isSkeleton}
+                        text={isSkeleton ? undefined : questionLine(totalQuestions, answeredQuestions)}
+
+                    />
+                ),
+            ]}
+        />
     )
 }
 

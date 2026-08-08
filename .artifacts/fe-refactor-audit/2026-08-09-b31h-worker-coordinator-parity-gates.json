@@ -1,0 +1,35 @@
+{
+  "batch": "31h",
+  "worker": "coordinator-parity-gates",
+  "status": "done",
+  "ownedFiles": [
+    "plugins/eslint/sentence-hosts.mjs",
+    "plugins/eslint/sentence-hosts.test.mjs",
+    "plugins/eslint/index.mjs",
+    "eslint.config.mjs",
+    ".storybook/components/frames/FooterFrame/FooterFrame.tsx",
+    "src/components/frames/FooterFrame/index.tsx",
+    ".storybook/stories/frames/FooterFrame/FooterFrame.stories.tsx",
+    ".storybook/components/starci/blocks/learn/CourseQaInvite/CourseQaInvite.tsx",
+    "src/components/blocks/learn/CourseQaInvite/index.tsx",
+    "src/components/blocks/learn/lesson/ContentTabBar/TabTrigger/index.tsx",
+    ".storybook/components/starci/blocks/learn/FlashcardModeSwitch/FlashcardModeSwitch.tsx",
+    ".storybook/components/starci/blocks/learn/MindMapFullscreenButton/MindMapFullscreenButton.tsx",
+    "src/components/blocks/learn/MindMapFullscreenButton/index.tsx"
+  ],
+  "overlapWithInFlightB31f2": "none — Footer product not edited; protected B31f2 files left alone",
+  "gates": {
+    "eslintMaxWarnings0Owned": "pass",
+    "sentence-hosts.test.mjs": "pass",
+    "public-contracts.test.mjs": "pass",
+    "frame-items.test.mjs": "pass",
+    "sentence-tier.test.mjs": "pass",
+    "principle-style.test.mjs": "pass",
+    "semantic-contracts.test.mjs": "pass",
+    "tsc": "pass",
+    "audit:fe": "pass",
+    "gitDiffCheckOwned": "pass"
+  },
+  "unrelatedBaselineFailures": [],
+  "committed": false
+}

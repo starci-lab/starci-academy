@@ -102,70 +102,78 @@ export const SegmentBar = ({
     const filledSum = filled.reduce((acc, segment) => acc + segment.value, 0)
     const remainder = Math.max(0, total - filledSum)
 
-    const barContent = (
-        <>
-            {/* ATOM GAP: the proportion-slice track has no atom counterpart, so it stays a
-                real element in both states — `isSkeleton` swaps its slices for a flat
-                neutral fill instead of reaching for a vendor `Skeleton` or hand-rolling a
-                bespoke `animate-pulse` shimmer (COMPOSITE-10). */}
-            <div
-                role="img"
-                aria-label={ariaLabel}
-                className={cn(
-                    "flex w-full overflow-hidden bg-default",
-                    inlineLabels ? "h-7 rounded-lg" : "h-1 rounded-full")}
-            >
-                {isSkeleton ? null : filled.map((segment) => (
-                    <div
-                        key={segment.key}
-                        className={cn(
-                            "h-full min-w-0",
-                            // inset-exception: optical nudge keeping the inline label off the segment edge
-                            inlineLabels && "flex items-center justify-center overflow-hidden px-1")}
-                        style={{
-                            // slices touch flush (no gap) so the bar reads as ONE line —
-                            // a gap would reveal the track at fractional-pixel seams.
-                            // flex-grow = true proportions.
-                            flexGrow: segment.value,
-                            flexBasis: 0,
-                            backgroundColor: segment.color}}
-                    >
-                        {inlineLabels ? (
-                            <span className="truncate text-[10px] font-bold text-white">
-                                {segment.label}&nbsp;{Math.round((segment.value / total) * 100)}%
-                            </span>
-                        ) : null}
-                    </div>
-                ))}
-                {!isSkeleton && remainder > 0 ? (
-                    <div
-                        aria-hidden
-                        className="h-full min-w-0"
-                        style={{ flexGrow: remainder, flexBasis: 0 }}
-                    />
-                ) : null}
-            </div>
-            {!hideLegend ? (
-                <Legend
-                    {...(isSkeleton
-                        ? { isSkeleton: true, items: undefined }
-                        : {
-                            isSkeleton: false,
-                            items: colored.map((segment) => ({
-                                key: segment.key,
-                                label: segment.label,
-                                color: segment.color,
-                                // the strip already prints the % inline in ladder mode, so
-                                // drop the count suffix there; otherwise show the real count.
-                                suffix: !inlineLabels ? ` · ${segment.value}` : "",
-                            })),
-                        })}
+    // ATOM GAP: the proportion-slice track has no atom counterpart, so it stays a
+    // real element in both states — `isSkeleton` swaps its slices for a flat
+    // neutral fill instead of reaching for a vendor `Skeleton` or hand-rolling a
+    // bespoke `animate-pulse` shimmer (COMPOSITE-10).
+    const track = (
+        <div
+            role="img"
+            aria-label={ariaLabel}
+            className={cn(
+                "flex w-full overflow-hidden bg-default",
+                inlineLabels ? "h-7 rounded-lg" : "h-1 rounded-full")}
+        >
+            {isSkeleton ? null : filled.map((segment) => (
+                <div
+                    key={segment.key}
+                    className={cn(
+                        "h-full min-w-0",
+                        // inset-exception: optical nudge keeping the inline label off the segment edge
+                        inlineLabels && "flex items-center justify-center overflow-hidden px-1")}
+                    style={{
+                        // slices touch flush (no gap) so the bar reads as ONE line —
+                        // a gap would reveal the track at fractional-pixel seams.
+                        // flex-grow = true proportions.
+                        flexGrow: segment.value,
+                        flexBasis: 0,
+                        backgroundColor: segment.color}}
+                >
+                    {inlineLabels ? (
+                        <span className="truncate text-[10px] font-bold text-white">
+                            {segment.label}&nbsp;{Math.round((segment.value / total) * 100)}%
+                        </span>
+                    ) : null}
+                </div>
+            ))}
+            {!isSkeleton && remainder > 0 ? (
+                <div
+                    aria-hidden
+                    className="h-full min-w-0"
+                    style={{ flexGrow: remainder, flexBasis: 0 }}
                 />
             ) : null}
-            {caption !== undefined ? (
-                <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={caption} />
-            ) : null}
-        </>
+        </div>
     )
-    return <StackV gap={3} items={[() => barContent]} />
+    return (
+        <StackV
+            gap={3}
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+            isSkeleton={isSkeleton}
+            items={[
+                () => track,
+                ...(!hideLegend ? [() => (
+                    <Legend
+                        {...(isSkeleton
+                            ? { isSkeleton: true, items: undefined }
+                            : {
+                                isSkeleton: false,
+                                items: colored.map((segment) => ({
+                                    key: segment.key,
+                                    label: segment.label,
+                                    color: segment.color,
+                                    // the strip already prints the % inline in ladder mode, so
+                                    // drop the count suffix there; otherwise show the real count.
+                                    suffix: !inlineLabels ? ` · ${segment.value}` : "",
+                                })),
+                            })}
+                    />
+                )] : []),
+                ...(caption !== undefined ? [() => (
+                    <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={caption} />
+                )] : []),
+            ]}
+        />
+    )
 }

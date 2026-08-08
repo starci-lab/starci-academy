@@ -72,52 +72,57 @@ const ContentArticle = ({
     hintText,
     isSkeleton = false,
 }: ContentArticleProps) => {
-    const lessonBody = (
-        <>
-            {hintText != null && !isLocked ? (
-                <Callout
-                    title={hintText}
-
-                />
-            ) : null}
-            {/* Lock fade + select-none owned by LockedContentMask (same owner as ContentPage). */}
-            <LockedContentMask
-                isLocked={isLocked}
-                isSkeleton={isSkeleton}
-                body={() => (
-                    <MarkdownContent
-                        source={body}
-                        measure="reading"
-                        isSkeleton={isSkeleton}
-                    />
-                )}
-            />
-            {isLocked && offer != null ? (
-                <ContentPaywall
-                    title={offer.title}
-                    description={offer.description}
-                    discountedPriceVnd={offer.discountedPriceVnd}
-                    originalPriceVnd={offer.originalPriceVnd}
-                    currentPhase={offer.currentPhase}
-                    seatsRemaining={offer.seatsRemaining}
-                    nextPhasePriceVnd={offer.nextPhasePriceVnd}
-                    ctaLabel={offer.ctaLabel}
-                    onPurchase={offer.onPurchase}
-
-
-                />
-            ) : null}
-        </>
-    )
-
     return (
-        <div>
-            <SurfaceCard
-                isSkeleton={isSkeleton}
+        <SurfaceCard
+            identity={{ tier: "block", component: "ContentArticle" }}
+            isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={6} isSkeleton={isSkeleton} items={[() => lessonBody]} />}
-            />
-        </div>
+            body={() => (
+                <StackV
+                    gap={6}
+                    principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                    isSkeleton={isSkeleton}
+                    items={[
+                        ...(hintText != null && !isLocked ? [() => (
+                            <Callout
+                                title={hintText}
+
+                            />
+                        )] : []),
+                        // Lock fade + select-none owned by LockedContentMask (same owner as ContentPage).
+                        () => (
+                            <LockedContentMask
+                                isLocked={isLocked}
+                                isSkeleton={isSkeleton}
+                                body={() => (
+                                    <MarkdownContent
+                                        source={body}
+                                        measure="reading"
+                                        isSkeleton={isSkeleton}
+                                    />
+                                )}
+                            />
+                        ),
+                        ...(isLocked && offer != null ? [() => (
+                            <ContentPaywall
+                                title={offer.title}
+                                description={offer.description}
+                                discountedPriceVnd={offer.discountedPriceVnd}
+                                originalPriceVnd={offer.originalPriceVnd}
+                                currentPhase={offer.currentPhase}
+                                seatsRemaining={offer.seatsRemaining}
+                                nextPhasePriceVnd={offer.nextPhasePriceVnd}
+                                ctaLabel={offer.ctaLabel}
+                                onPurchase={offer.onPurchase}
+
+
+                            />
+                        )] : []),
+                    ]}
+                />
+            )}
+        />
     )
 }
 

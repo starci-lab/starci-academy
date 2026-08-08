@@ -15,6 +15,7 @@ const rankRingTone = (rank: number | undefined): AvatarRing | undefined => {
     return rank <= 3 ? "warning" : "accent"
 }
 
+/** Props for {@link ProfileRankAvatar}. */
 export interface ProfileRankAvatarProps {
     name: string
     avatarUrl?: string
@@ -23,10 +24,16 @@ export interface ProfileRankAvatarProps {
 }
 
 /** Avatar with an optional rank-tinted ring, plus the "Rank #N" caption underneath. */
-export const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false}: ProfileRankAvatarProps) => {
-    const rankBody = (
-        <>
-            <div>
+export const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false}: ProfileRankAvatarProps) => (
+    <StackV
+        identity={{ tier: "block", component: "ProfileRankAvatar" }}
+        gap={2}
+        principle="title-subtitle"
+        explain="Title over supporting line — not label-field, because neither line is a form control label."
+        align="center"
+        isSkeleton={isSkeleton}
+        items={[
+            () => (
                 <Avatar
                     name={name}
                     src={avatarUrl}
@@ -35,27 +42,21 @@ export const ProfileRankAvatar = ({ name, avatarUrl, rank, isSkeleton = false}: 
 
                     ring={isSkeleton ? undefined : rankRingTone(rank)}
                 />
-            </div>
-            {isSkeleton || rank != null ? (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    weight="medium"
-                    isSkeleton={isSkeleton}
-                    text={rank != null ? `Rank #${rank}` : undefined}
+            ),
+            ...(isSkeleton || rank != null
+                ? [
+                    () => (
+                        <Typography
+                            size="xs"
+                            color="muted"
+                            weight="medium"
+                            isSkeleton={isSkeleton}
+                            text={rank != null ? `Rank #${rank}` : undefined}
 
-                />
-            ) : null}
-        </>
-    )
-    return (
-        <StackV identity={{ tier: "block", component: "ProfileRankAvatar" }}
-            gap={2}
-            principle="title-subtitle"
-            explain="Title over supporting line — not label-field, because neither line is a form control label."
-            align="center"
-            isSkeleton={isSkeleton}
-            items={[() => rankBody]}
-        />
-    )
-}
+                        />
+                    ),
+                ]
+                : []),
+        ]}
+    />
+)

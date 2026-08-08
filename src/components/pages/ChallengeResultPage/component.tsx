@@ -180,97 +180,122 @@ const _ChallengeResultPage = ({
     // cluster's height so the page does not jump once the first attempt lands.
     const hasSelection = isSkeleton || selectedAttemptId != null
 
-    const scoreSection = (
-        <>
-            <SubmissionScoreCard
+    const resultBody = (
+        <StackV
+            gap={7}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            items={[
+                () => (
+                    <SubmissionResultHeader
 
-                label={scoreLabel}
-                score={score ?? 0}
-                maxScore={maxScore}
-                isPassing={isPassing}
-                passScore={passScore}
-                shortFeedback={shortFeedback}
-                submissionUrl={submissionUrl}
-                submissionLabel={submissionLabel}
-                gradedByModel={gradedByModel}
-                modelCategory={modelCategory}
-                gradedByLabel={gradedByLabel}
-                timeAgo={timeAgo}
-                isSkeleton={isSkeleton}
+                        backLabel={backLabel}
+                        onBack={onBack}
+                        title={title}
+                        description={description}
+                        isSkeleton={isSkeleton}
 
-            />
-            <SubmissionFindingsList
+                    />
+                ),
+                () => (
+                    <StackV
+                        gap={6}
+                        principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        items={[
+                            () => (
+                                <SubmissionAttemptSelector
 
-                label={findingsLabel}
-                findings={findings}
-                repositoryUrl={repositoryUrl}
-                isLoading={isFindingsLoading}
-                isEmpty={isFindingsEmpty}
-                error={findingsError}
-                onRetry={onRetryFindings}
-                retryLabel={retryFindingsLabel}
-                isSkeleton={isSkeleton}
+                                    attempts={attempts}
+                                    selectedId={selectedAttemptId}
+                                    onSelect={onSelectAttempt}
+                                    ariaLabel={attemptsAriaLabel}
+                                    overflowCount={overflowCount}
+                                    overflowLabel={overflowLabel}
+                                    onOverflowPress={onOverflowPress}
+                                    isLoading={isAttemptsLoading}
+                                    isEmpty={isAttemptsEmpty}
+                                    error={attemptsError}
+                                    onRetry={onRetryAttempts}
+                                    retryLabel={retryAttemptsLabel}
+                                    isSkeleton={isSkeleton}
 
-            />
-            {/* Nothing left to fix on a passing attempt — see file header. */}
-            {!isPassing ? (
-                <ContentRelatedList
+                                />
+                            ),
+                            ...(hasSelection
+                                ? [
+                                    () => (
+                                        <StackV
+                                            gap={6}
+                                            principle="block-boundary"
+                                            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                                            items={[
+                                                () => (
+                                                    <SubmissionScoreCard
 
-                    items={relatedItems}
-                    label={relatedLabel}
-                    isSkeleton={isSkeleton}
+                                                        label={scoreLabel}
+                                                        score={score ?? 0}
+                                                        maxScore={maxScore}
+                                                        isPassing={isPassing}
+                                                        passScore={passScore}
+                                                        shortFeedback={shortFeedback}
+                                                        submissionUrl={submissionUrl}
+                                                        submissionLabel={submissionLabel}
+                                                        gradedByModel={gradedByModel}
+                                                        modelCategory={modelCategory}
+                                                        gradedByLabel={gradedByLabel}
+                                                        timeAgo={timeAgo}
+                                                        isSkeleton={isSkeleton}
 
-                />
-            ) : null}
-        </>
+                                                    />
+                                                ),
+                                                () => (
+                                                    <SubmissionFindingsList
+
+                                                        label={findingsLabel}
+                                                        findings={findings}
+                                                        repositoryUrl={repositoryUrl}
+                                                        isLoading={isFindingsLoading}
+                                                        isEmpty={isFindingsEmpty}
+                                                        error={findingsError}
+                                                        onRetry={onRetryFindings}
+                                                        retryLabel={retryFindingsLabel}
+                                                        isSkeleton={isSkeleton}
+
+                                                    />
+                                                ),
+                                                // Nothing left to fix on a passing attempt — see file header.
+                                                ...(!isPassing
+                                                    ? [
+                                                        () => (
+                                                            <ContentRelatedList
+
+                                                                items={relatedItems}
+                                                                label={relatedLabel}
+                                                                isSkeleton={isSkeleton}
+
+                                                            />
+                                                        ),
+                                                    ]
+                                                    : []),
+                                            ]}
+                                        />
+                                    ),
+                                ]
+                                : []),
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
-
-    const attemptsSection = (
-        <>
-            <SubmissionAttemptSelector
-
-                attempts={attempts}
-                selectedId={selectedAttemptId}
-                onSelect={onSelectAttempt}
-                ariaLabel={attemptsAriaLabel}
-                overflowCount={overflowCount}
-                overflowLabel={overflowLabel}
-                onOverflowPress={onOverflowPress}
-                isLoading={isAttemptsLoading}
-                isEmpty={isAttemptsEmpty}
-                error={attemptsError}
-                onRetry={onRetryAttempts}
-                retryLabel={retryAttemptsLabel}
-                isSkeleton={isSkeleton}
-
-            />
-            {hasSelection ? (
-                <StackV gap={6} items={[() => scoreSection]} />
-            ) : null}
-        </>
-    )
-
-    const pageSections = (
-        <>
-            <SubmissionResultHeader
-
-                backLabel={backLabel}
-                onBack={onBack}
-                title={title}
-                description={description}
-                isSkeleton={isSkeleton}
-
-            />
-            <StackV gap={6} items={[() => attemptsSection]} />
-        </>
-    )
-
-    const resultBody = <StackV gap={7} items={[() => pageSections]} />
 
     return (
         <Container
             size="xl"
             padding={6}
+            principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
             body={() => resultBody}
             identity={{ tier: "page", component: "ChallengeResultPage" }}
         />

@@ -1,0 +1,44 @@
+{
+  "batch": "31h",
+  "date": "2026-08-09",
+  "status": "partial",
+  "rule": "starci-fe/no-host-element-at-sentence-tier",
+  "inventory": {
+    "beforeHosts": 1799,
+    "beforeFiles": 722,
+    "byTagBefore": {
+      "div": 1708,
+      "section": 36,
+      "nav": 33,
+      "aside": 4,
+      "footer": 8,
+      "header": 6,
+      "main": 4
+    },
+    "byTierBefore": {
+      "blocks": 1368,
+      "pages": 352,
+      "layouts": 53,
+      "overlays": 26
+    },
+    "closedHostsApprox": 6,
+    "note": "After counts not re-scanned globally; six host wrappers closed in retained product files. Inventory snapshot: 2026-08-09-b31h-host-inventory.json"
+  },
+  "footer": {
+    "productMigration": "held-retracted",
+    "frameContract": "complete",
+    "apiBeforeAfter": "see worker-footer-vertical.json",
+    "missingOwners": ["ShowFrom", "MaxWidth", "inline Link atom"]
+  },
+  "completeClosures": [
+    "CourseQaInvite (SB+src)",
+    "TabTrigger (src)",
+    "FlashcardModeSwitch (SB)",
+    "MindMapFullscreenButton (SB+src)",
+    "FooterFrame story + lint rule"
+  ],
+  "protectedInFlightFiles": 44,
+  "overlap": "none",
+  "gates": "all pass on B31h-owned files; tsc+audit:fe green",
+  "committed": false
+}

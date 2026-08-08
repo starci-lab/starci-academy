@@ -87,6 +87,8 @@ const QuizQuestion = ({
     const expectedAnswerBlock = expectedAnswer != null ? (
         <StackV
             gap={3}
+            principle="title-subtitle"
+            explain="Title over supporting line — not label-field, because neither line is a form control label."
             isSkeleton={isSkeleton}
             items={[
                 () => <Typography size="sm" weight="medium" isSkeleton={isSkeleton} text="Expected answer" />,
@@ -167,43 +169,45 @@ const QuizQuestion = ({
         />
     )
 
-    const questionBody = (
-        <>
-            {levelRow}
-
-            <MarkdownContent
-                source={question}
-                measure="reading"
-
-            />
-
-            {/* Read-only rather than emptied: the whole value of a drill is comparing
-                what you SAID with what was expected, and clearing the field takes that
-                comparison away exactly when it becomes useful. */}
-            <InputTextarea
-                value={answer}
-                onValueChange={onAnswerChange}
-                placeholder="Answer as if you're speaking to the interviewer"
-                ariaLabel="Answer"
-                rows={4}
-                isDisabled={isGraded}
-
-            />
-
-            {gradedDetails}
-
-            {actionRow}
-        </>
-    )
-
     return (
-        <div>
-            <SurfaceCard
-                isSkeleton={isSkeleton}
+        <SurfaceCard
+            identity={{ tier: "block", component: "QuizQuestion" }}
+            isSkeleton={isSkeleton}
 
-                body={() => <StackV gap={6} items={[() => questionBody]} />}
-            />
-        </div>
+            body={() => (
+                <StackV
+                    gap={6}
+                    principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                    items={[
+                        ...(levelRow != null ? [() => levelRow] : []),
+                        () => (
+                            <MarkdownContent
+                                source={question}
+                                measure="reading"
+
+                            />
+                        ),
+                        // Read-only rather than emptied: the whole value of a drill is comparing
+                        // what you SAID with what was expected, and clearing the field takes that
+                        // comparison away exactly when it becomes useful.
+                        () => (
+                            <InputTextarea
+                                value={answer}
+                                onValueChange={onAnswerChange}
+                                placeholder="Answer as if you're speaking to the interviewer"
+                                ariaLabel="Answer"
+                                rows={4}
+                                isDisabled={isGraded}
+
+                            />
+                        ),
+                        ...(gradedDetails != null ? [() => gradedDetails] : []),
+                        () => actionRow,
+                    ]}
+                />
+            )}
+        />
     )
 }
 

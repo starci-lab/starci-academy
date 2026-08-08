@@ -1970,6 +1970,47 @@
       "fixedFindings": 137,
       "heldFindings": 207,
       "next": "Clear classname/self-declare debt on held families, then resume fragment closure + src twin mirrors."
+    },
+    {
+      "id": "b31f2-unlock-held-frame-items-by-blocker-2026-08-09",
+      "date": "2026-08-09",
+      "status": "partial",
+      "summary": "BATCH 31f2: Closed 102 of 207 held no-frame-fragment-item findings by vertically clearing CSS-door / self-declare / authoring debt on zero-warning families (44 retained changed files). Remaining 105 findings / 32 files held (HeroUI gaps, SurfaceCard/Page doors, identity-host PageHeader, QuizSession/locked pages).",
+      "reason": "Fragment-only sweep forbidden; completion measured by zero-warning twin/component families. ChallengeHeader retracted (PageHeader identity-host gap).",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b31f2-status.md",
+      "before": 207,
+      "after": 105,
+      "fixedFindings": 102,
+      "heldFindings": 105,
+      "vocabularyGaps": ["Dropdown", "Kbd", "Popover badge trigger", "inline Link", "cn shell composites for nav"],
+      "next": "Land missing HeroUI-replacement vocabulary / SurfaceCard-Page door contracts, then resume src nav + remaining learn holds."
+    },
+    {
+      "id": "b31h-sentence-host-owner-migration-2026-08-09",
+      "date": "2026-08-09",
+      "status": "partial",
+      "summary": "BATCH 31h: Registered starci-fe/no-host-element-at-sentence-tier (src + Storybook sentence trees). Completed FooterFrame story/parity. Footer product held (missing ShowFrom, MaxWidth, inline Link). Closed CourseQaInvite, TabTrigger, MindMapFullscreenButton, SB FlashcardModeSwitch host wrappers.",
+      "reason": "Removing className while retaining raw hosts is a false closure; Footer cannot zero-warn without new typed owners.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b31h-status.md",
+      "inventoryHosts": 1799,
+      "inventoryFiles": 722,
+      "proposedOwners": ["ShowFrom", "MaxWidth", "inline Link atom"],
+      "next": "Land ShowFrom + MaxWidth frames, then FooterFrame vertical migration for both Footer twins."
+    },
+    {
+      "id": "b31h1-footer-vocabulary-and-host-slices-2026-08-09",
+      "date": "2026-08-09",
+      "status": "partial",
+      "summary": "BATCH 31h1: Landed ShowFrom, Measure, InlineLink (SB+src). Closed Footer both trees via FooterFrame+ShowFrom+Measure+InlineLink at zero warnings. Host hits 1799→1774. Mass page/layout host debt held (page-folder + domain owners).",
+      "reason": "Approved vocabulary unlocked Footer vertical closure without Box/fragment/raw-host laundering.",
+      "artifact": ".artifacts/fe-refactor-audit/2026-08-09-b31h1-status.md",
+      "mappings": {
+        "ShowFrom": { "sm": "hidden @app-sm:flex", "md": "hidden @app-md:flex", "lg": "hidden @app-lg:flex" },
+        "Measure": { "sm": "max-w-sm", "md": "max-w-md", "lg": "max-w-lg" }
+      },
+      "hostHitsBefore": 1799,
+      "hostHitsAfter": 1774,
+      "next": "Continue mass host slices with ShowFrom/Measure/InlineLink; unlock page-folder files in a dedicated batch."
     }
   ]
 }

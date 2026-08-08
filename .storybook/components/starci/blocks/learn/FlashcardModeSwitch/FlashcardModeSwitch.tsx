@@ -58,15 +58,12 @@ const FlashcardModeSwitch = ({
     }))
 
     return (
-        <div>
-            <Tabs
-                items={items}
-                selectedKey={mode}
-                onSelectionChange={(key) => onModeChange(key as FlashcardMode)}
-                ariaLabel={ariaLabel}
-
-            />
-        </div>
+        <Tabs
+            items={items}
+            selectedKey={mode}
+            onSelectionChange={(key) => onModeChange(key as FlashcardMode)}
+            ariaLabel={ariaLabel}
+        />
     )
 }
 

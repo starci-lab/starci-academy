@@ -1,0 +1,35 @@
+{
+  "batch": "31f2",
+  "worker": "coordinator-parity-gates",
+  "checkpoint": "0d0091c0",
+  "status": "done",
+  "changedTsFiles": 44,
+  "extraDependencyFix": [
+    {
+      "file": ".storybook/components/starci/layouts/InnerLayout/InnerLayout.tsx",
+      "reason": "Navbar/Footer className Omit cleanup left InnerLayout with dead public classNames door (zero story consumers). Removed door so zero-warn ratchet on changed set passes."
+    }
+  ],
+  "retracted": [
+    {
+      "file": "src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "reason": "PageHeader has no identity prop — require-identity-root cannot close without forbidden wrapper or Page API change. Diff reverted after tsc failure."
+    }
+  ],
+  "gates": {
+    "tsc": "pass",
+    "eslintMaxWarnings0ChangedFiles": "pass",
+    "plugins/eslint/frame-items.test.mjs": "pass",
+    "plugins/eslint/public-contracts.test.mjs": "pass",
+    "plugins/eslint/sentence-tier.test.mjs": "pass",
+    "plugins/eslint/namespaces.test.mjs": "pass",
+    "plugins/eslint/authoring.test.mjs": "pass",
+    "plugins/eslint/contentpage.test.mjs": "pass",
+    "principle-style.test.mjs": "pass",
+    "semantic-contracts.test.mjs": "pass",
+    "audit:fe": "pass",
+    "gitDiffCheck": "pass"
+  },
+  "overlap": "none — manifests remain disjoint for edit ownership; InnerLayout was a transitive CSS-door dependency of sb-navigation-profile Footer/Navbar Omit cleanup",
+  "committed": false
+}

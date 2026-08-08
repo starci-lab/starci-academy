@@ -1,0 +1,6631 @@
+{
+  "batch": "31h",
+  "date": "2026-08-09",
+  "rule": "starci-fe/no-host-element-at-sentence-tier",
+  "phaseA": {
+    "note": "In-flight B31f2 (and ledger) product diffs are protected — B31h must not absorb/overwrite them except Footer twins after reading their full diff.",
+    "modifiedProductFiles": [
+      ".storybook/components/starci/blocks/learn/ContentCommentComposer/ContentCommentComposer.tsx",
+      ".storybook/components/starci/blocks/learn/ContentCommentThread/ContentCommentThread.tsx",
+      ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      ".storybook/components/starci/blocks/profile/ProfileLockedState/ProfileLockedState.tsx",
+      ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx",
+      ".storybook/components/starci/layouts/InnerLayout/InnerLayout.tsx",
+      ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      "src/components/blocks/consultant/ConsultantCard/index.tsx",
+      "src/components/blocks/dashboard/JobReadinessWidget/index.tsx",
+      "src/components/blocks/learn/ChallengeBrief/index.tsx",
+      "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+      "src/components/blocks/learn/ChallengeScoreCard/index.tsx",
+      "src/components/blocks/learn/ContentArticle/index.tsx",
+      "src/components/blocks/learn/ContentHeader/index.tsx",
+      "src/components/blocks/learn/ContentPager/index.tsx",
+      "src/components/blocks/learn/ContentPaywall/index.tsx",
+      "src/components/blocks/learn/ContentReaction/index.tsx",
+      "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+      "src/components/blocks/learn/CourseQaEngagementStrip/index.tsx",
+      "src/components/blocks/learn/CourseQaToolbar/index.tsx",
+      "src/components/blocks/learn/FlashcardDueHero/index.tsx",
+      "src/components/blocks/learn/FlashcardMasteryStrip/index.tsx",
+      "src/components/blocks/learn/MindMapRail/index.tsx",
+      "src/components/blocks/learn/QuizProgressPanel/index.tsx",
+      "src/components/blocks/learn/QuizQuestion/index.tsx",
+      "src/components/blocks/learn/SubmissionScoreCard/index.tsx",
+      "src/components/blocks/learn/TaskSubmissionPanel/TaskResultSummary/index.tsx",
+      "src/components/blocks/profile/ProfileHero/ProfileFollowers/index.tsx",
+      "src/components/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "src/components/composites/layout/Section/index.tsx",
+      "src/components/composites/stats/SegmentBar/index.tsx",
+      "src/components/pages/ChallengeResultPage/component.tsx",
+      "src/components/pages/CourseQaPage/component.tsx",
+      "src/components/pages/FoundationResourcePage/component.tsx",
+      "src/components/pages/FoundationsCategoryPage/component.tsx",
+      "src/components/pages/FoundationsGridPage/component.tsx",
+      "src/components/pages/HeadhuntingsPage/component.tsx",
+      "src/components/pages/LeaderboardPage/component.tsx",
+      "src/components/pages/PlaygroundHubPage/component.tsx",
+      "src/components/pages/PlaygroundPreparePage/component.tsx"
+    ],
+    "b31hAssignedProduct": [
+      ".storybook/components/starci/blocks/navigation/Footer/**",
+      "src/components/blocks/navigation/Footer/**",
+      ".storybook/components/frames/FooterFrame/**",
+      "src/components/frames/FooterFrame/**",
+      ".storybook/stories/frames/FooterFrame/**",
+      "plugins/eslint/sentence-hosts.mjs",
+      "plugins/eslint/sentence-hosts.test.mjs",
+      "plugins/eslint/index.mjs",
+      "eslint.config.mjs"
+    ]
+  },
+  "totals": {
+    "files": 722,
+    "hosts": 1799,
+    "byTag": {
+      "div": 1708,
+      "section": 36,
+      "nav": 33,
+      "aside": 4,
+      "footer": 8,
+      "header": 6,
+      "main": 4
+    },
+    "byTier": {
+      "blocks": 1368,
+      "pages": 352,
+      "layouts": 53,
+      "overlays": 26
+    }
+  },
+  "hits": [
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvHtmlDocument/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 39,
+      "tags": {
+        "div": 39
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiChat/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 28,
+      "tags": {
+        "div": 28
+      }
+    },
+    {
+      "file": "src/components/pages/LandingPage/LearnLoopScroll/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 21,
+      "tags": {
+        "div": 17,
+        "section": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundCliSession/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 20,
+      "tags": {
+        "div": 20
+      }
+    },
+    {
+      "file": "src/components/blocks/profile/ContributionCalendarView/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 18,
+      "tags": {
+        "div": 18
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/PromptPlayground/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 14,
+      "tags": {
+        "div": 14
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundRagWorkspace/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 14,
+      "tags": {
+        "div": 14
+      }
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCard/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 13,
+      "tags": {
+        "div": 13
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/MobileNavbar/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 13,
+      "tags": {
+        "nav": 2,
+        "div": 11
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/pages/LandingPage/LandingPage.tsx",
+      "tree": "sb-nivo",
+      "tier": "pages",
+      "total": 13,
+      "tags": {
+        "div": 4,
+        "section": 9
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonPager/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 12,
+      "tags": {
+        "div": 12
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResult/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 12,
+      "tags": {
+        "div": 12
+      }
+    },
+    {
+      "file": "src/components/pages/LandingPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 12,
+      "tags": {
+        "div": 8,
+        "section": 4
+      }
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSession/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 12,
+      "tags": {
+        "div": 12
+      }
+    },
+    {
+      "file": "src/components/blocks/marketing/SitePreview/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 11,
+      "tags": {
+        "div": 11
+      }
+    },
+    {
+      "file": "src/components/blocks/feed/ChatPanel/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 10,
+      "tags": {
+        "div": 10
+      }
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 10,
+      "tags": {
+        "div": 10
+      }
+    },
+    {
+      "file": "src/components/layouts/Navbar/index.tsx",
+      "tree": "src",
+      "tier": "layouts",
+      "total": 10,
+      "tags": {
+        "nav": 1,
+        "div": 9
+      }
+    },
+    {
+      "file": "src/components/blocks/grading/DiffViewer/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 9,
+      "tags": {
+        "div": 9
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/AIProcessingText/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 9,
+      "tags": {
+        "div": 9
+      }
+    },
+    {
+      "file": "src/components/blocks/marketing/ShowcaseMockup/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 9,
+      "tags": {
+        "div": 9
+      }
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 9,
+      "tags": {
+        "div": 9
+      }
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentItem.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 8,
+      "tags": {
+        "div": 8
+      }
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityCommentRow/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 8,
+      "tags": {
+        "div": 8
+      }
+    },
+    {
+      "file": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 8,
+      "tags": {
+        "div": 8
+      }
+    },
+    {
+      "file": "src/components/pages/AdminLoginPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 8,
+      "tags": {
+        "div": 8
+      }
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 8,
+      "tags": {
+        "div": 8
+      }
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSessionSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 8,
+      "tags": {
+        "div": 8
+      }
+    },
+    {
+      "file": "src/components/pages/PrivacySettingsPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 8,
+      "tags": {
+        "div": 8
+      }
+    },
+    {
+      "file": "src/components/layouts/Footer/index.tsx",
+      "tree": "src",
+      "tier": "layouts",
+      "total": 8,
+      "tags": {
+        "footer": 1,
+        "div": 7
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaQuestionThread/QaQuestionThread.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 8,
+      "tags": {
+        "div": 8
+      }
+    },
+    {
+      "file": ".storybook/components/starci/pages/MindMapPage/MindMapPage.tsx",
+      "tree": "sb-starci",
+      "tier": "pages",
+      "total": 8,
+      "tags": {
+        "div": 8
+      }
+    },
+    {
+      "file": "src/components/blocks/dashboard/LeaderboardListCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 7,
+      "tags": {
+        "div": 7
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 7,
+      "tags": {
+        "div": 7
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 7,
+      "tags": {
+        "div": 7
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/GithubGradingSettings/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 7,
+      "tags": {
+        "div": 7
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundExerciseGrid/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 7,
+      "tags": {
+        "div": 7
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundRagSession/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 7,
+      "tags": {
+        "div": 7
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/QaQuestionThread/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 7,
+      "tags": {
+        "div": 7
+      }
+    },
+    {
+      "file": "src/components/blocks/navigation/Footer/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 7,
+      "tags": {
+        "footer": 2,
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/blocks/stats/DeadlineCallout/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 7,
+      "tags": {
+        "div": 7
+      }
+    },
+    {
+      "file": "src/components/pages/CvEditorPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 7,
+      "tags": {
+        "div": 7
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundExerciseGrid/PlaygroundExerciseGrid.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 7,
+      "tags": {
+        "div": 7
+      }
+    },
+    {
+      "file": ".storybook/components/starci/layouts/PublicProfileLayout/PublicProfileLayout.tsx",
+      "tree": "sb-starci",
+      "tier": "layouts",
+      "total": 7,
+      "tags": {
+        "div": 5,
+        "aside": 1,
+        "main": 1
+      }
+    },
+    {
+      "file": ".storybook/components/mia-mia/blocks/identity/ProfileHero/index.tsx",
+      "tree": "sb-mia-mia",
+      "tier": "blocks",
+      "total": 7,
+      "tags": {
+        "div": 7
+      }
+    },
+    {
+      "file": ".storybook/components/mia-mia/blocks/marketing/SiteFooter/index.tsx",
+      "tree": "sb-mia-mia",
+      "tier": "blocks",
+      "total": 7,
+      "tags": {
+        "footer": 1,
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCardBase/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "section": 1,
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/blocks/feed/CommunityPostCard/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/blocks/grading/GradeModelDropdown/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/PageHeader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardDeckList/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/LearnMobileBar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/QaMessageBubble/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/blocks/marketing/HeroBanner/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 4,
+        "section": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/marketing/TrackCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/blocks/profile/UserStreak/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/map.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/blocks/rendering/PDFView/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": "src/components/pages/LandingPage/TalentMarketplace/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 6,
+      "tags": {
+        "div": 5,
+        "section": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Footer/Footer.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 6,
+      "tags": {
+        "div": 5,
+        "footer": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/pages/PlaygroundSessionPage/PlaygroundSessionPage.tsx",
+      "tree": "sb-starci",
+      "tier": "pages",
+      "total": 6,
+      "tags": {
+        "div": 6
+      }
+    },
+    {
+      "file": ".storybook/components/starci/overlays/drawers/SubmissionAttemptsDrawer/SubmissionAttemptsDrawer.tsx",
+      "tree": "sb-starci",
+      "tier": "overlays",
+      "total": 6,
+      "tags": {
+        "div": 4,
+        "nav": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/cards/PressableCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/blocks/code/CodeConsole/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvPdfPreview/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/blocks/feed/FeedItem/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/blocks/form/Dropzone/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/NotificationBell/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/LearnMobileTabBar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 4,
+        "nav": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/LaneModelPicker/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBodySkeleton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "nav": 1,
+        "div": 3,
+        "aside": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/lists/ListRow/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/blocks/navigation/Navbar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "nav": 2,
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationItem/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/blocks/stats/LanguageDonut/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/pages/DashboardPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewWorkspace/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/pages/PracticeProblemPage/PracticeProblemSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 5,
+      "tags": {
+        "div": 5
+      }
+    },
+    {
+      "file": "src/components/overlays/drawers/PersonalProjectTaskResultHistoryDrawer/component.tsx",
+      "tree": "src",
+      "tier": "overlays",
+      "total": 5,
+      "tags": {
+        "nav": 3,
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/AgentOsSubNav/AgentOsSubNav.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "div": 3,
+        "nav": 2
+      }
+    },
+    {
+      "file": ".storybook/components/mia-mia/blocks/marketing/Hero/index.tsx",
+      "tree": "sb-mia-mia",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "section": 1,
+        "div": 4
+      }
+    },
+    {
+      "file": ".storybook/components/mia-mia/blocks/marketing/ProofStrip/index.tsx",
+      "tree": "sb-mia-mia",
+      "tier": "blocks",
+      "total": 5,
+      "tags": {
+        "section": 1,
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/auth/GithubTeamGate/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/shared/RepeatableItemCard.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/dashboard/Podium/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/dashboard/StandingHeroCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/feed/CommentThread/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "nav": 1,
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/SubPageHeader/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/RootNode/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardCategoryRail/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectDashboard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskResultsSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSubmissionPanel/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundConnectSheet/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/QaConversationHeader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/QaInboxRow/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/TrialEnrollBanner/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/marketing/AdBanner/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/navigation/SettingsSidebarNav/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 3,
+        "nav": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/navigation/SidebarNavGroup/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 1,
+        "header": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/notifications/NotificationList/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/AccordionSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/QuizSession/QuizSessionSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/pages/LandingPage/KnowledgeGraph/ConceptNode.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/pages/OauthRedirectPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/pages/SessionsPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/layouts/Navbar/NotificationBell/index.tsx",
+      "tree": "src",
+      "tier": "layouts",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundConnectSheet/PlaygroundConnectSheet.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/TrialEnrollBanner/TrialEnrollBanner.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/Navbar/Navbar.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "nav": 1,
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/SettingsSidebarNav/SettingsSidebarNav.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 3,
+        "nav": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/navigation/NivoSidebar/NivoSidebar.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 3,
+        "nav": 1
+      }
+    },
+    {
+      "file": ".storybook/components/mia-mia/blocks/identity/FriendRow/index.tsx",
+      "tree": "sb-mia-mia",
+      "tier": "blocks",
+      "total": 4,
+      "tags": {
+        "div": 4
+      }
+    },
+    {
+      "file": "src/components/blocks/ai/AiQuotaSubscriptionPanel/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/cards/LabeledAccordionCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/cards/LabeledCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "section": 2,
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/chips/TagChips/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/code/IOExampleCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/CommentComposer.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantDirectoryGrid/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/shared/CvTextOrFileInput/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/feedback/ErrorPageState/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/form/SchedulePicker/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/AppSplash/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/ConnectSheet/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ChatToolResult/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/ModuleNode/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 1,
+        "nav": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationResourceBody/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/Podium/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ChallengeBody/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentHeaderSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/E2eBody/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectSubmission/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundStepGuide/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ReferenceLinks/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/marketing/MicroservicesDiagram/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/marketing/TopicLane/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Pagination/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/pages/ContentPage/component.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/pages/LandingPage/StatStrip/component.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/VoiceHero/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/pages/MyAttemptsPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/pages/MySubmissionsPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/pages/ProfileRedirectPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 3,
+      "tags": {
+        "div": 2,
+        "aside": 1
+      }
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/component.tsx",
+      "tree": "src",
+      "tier": "layouts",
+      "total": 3,
+      "tags": {
+        "div": 2,
+        "aside": 1
+      }
+    },
+    {
+      "file": "src/components/overlays/drawers/SubmissionAttemptsDrawer/component.tsx",
+      "tree": "src",
+      "tier": "overlays",
+      "total": 3,
+      "tags": {
+        "div": 1,
+        "nav": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/ai/AiQuotaHistoryPanel/AiQuotaHistoryPanel.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/ai/AiQuotaSubscriptionPanel/AiQuotaSubscriptionPanel.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/consultant/ConsultantCard/ConsultantCard.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/consultant/ConsultantDirectoryGrid/ConsultantDirectoryGrid.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaComposer/CourseQaComposer.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/CourseQaQuestionList.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 1,
+        "nav": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaToolbar/CourseQaToolbar.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationResourceBody/FoundationResourceBody.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardBoard/Podium/index.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MindMapRail/MindMapRail.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundStepGuide/PlaygroundStepGuide.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/MessageRow/index.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaMessageBubble/QaMessageBubble.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizProgressPanel/QuizProgressPanel.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/SubmissionFindingsList/SubmissionFindingsList.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileLoadingState/ProfileLoadingState.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/layouts/InnerLayout/InnerLayout.tsx",
+      "tree": "sb-starci",
+      "tier": "layouts",
+      "total": 3,
+      "tags": {
+        "div": 2,
+        "main": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/layouts/LearnShell/LearnShell.tsx",
+      "tree": "sb-starci",
+      "tier": "layouts",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/overlays/drawers/E2eResultDrawer/E2eResultDrawer.tsx",
+      "tree": "sb-starci",
+      "tier": "overlays",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/starci/overlays/modals/AiQuotaModal/AiQuotaModal.tsx",
+      "tree": "sb-starci",
+      "tier": "overlays",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/ChannelInbox/ChannelInbox.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 2,
+        "nav": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/HealthCard/HealthCard.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/ProvisioningState/ProvisioningState.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteManager/ExpertSiteManager.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/DashboardProof/DashboardProof.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/navigation/NivoTopBar/NivoTopBar.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "header": 1,
+        "nav": 1,
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/navigation/SidebarNavGroup/SidebarNavGroup.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 3,
+      "tags": {
+        "div": 2,
+        "header": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/layouts/DashboardShell/DashboardShell.tsx",
+      "tree": "sb-nivo",
+      "tier": "layouts",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/layouts/MarketingLandingShell/MarketingLandingShell.tsx",
+      "tree": "sb-nivo",
+      "tier": "layouts",
+      "total": 3,
+      "tags": {
+        "div": 2,
+        "main": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/pages/ExpertDashboardOverview/ExpertDashboardOverview.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "pages",
+      "total": 3,
+      "tags": {
+        "div": 3
+      }
+    },
+    {
+      "file": "src/components/blocks/ai/AiQuotaHistoryPanel/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/cards/FlipCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/cards/HighlightCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/code/TestCaseResultGrid/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/commerce/TierCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/ReactionBar.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantDirectoryCompanySearch/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantDirectoryHeader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/CertificationBlockEditor/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/EducationBlockEditor/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/LanguageBlockEditor/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/PickFromStarciSelect.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/dashboard/WeeklyChallengeCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/feed/ChatBubble/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/feed/Composer/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/feedback/CookieConsentBanner/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/form/SearchAutocomplete/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/form/SearchInput/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/identity/BrandLockup/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/WaveEffect.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/ResizableRail/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/TopLoader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/MindMapCanvas/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatRail/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ContentModeNav/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/CourseBrief/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaHeader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategoryHeader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategoryList/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationCategorySearchBar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationHeader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationResourceList/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationsHeader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardCategoryNav/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardHeader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/LearnPanelToggles/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/ParamControls/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeBodySkeleton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeImplementationBody/ImplementationCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/Discussion/ContentReactionBar.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentHeader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewScorecard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/MockInterviewSetup/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ModuleHeader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/PersonalProjectGatePreview/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskActions/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/PersonalProjectDashboard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundHeader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundSetupHeader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/QuizRecapList/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/RatingBar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionFindingsList/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/VoiceHero/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/marketing/SectionHeading/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/marketing/TruthList/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/media/QRCode/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 1,
+        "nav": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/navigation/WorkSessionHeader/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLoadingState/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileTabsBar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/rendering/PDFView/PdfViewportPage/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Breadcrumbs/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ListBox/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Menu/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/UserCell/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/blocks/stats/VerdictHeroCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/Header/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/BlogPostPage/ReadingProgress/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/EditProfilePage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/DueReview/DueReviewSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseDetail/CourseDayTimeline/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/MembershipPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/InterviewerPresence/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewDiagram/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewTrackSnapshot/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/MyFeedbackPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProgressCockpit/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/ProfileActivityPage/ProfileAchievements/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/ProfileProjectRoadmapPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/RewardsPage/MyVouchers/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/DetailRow/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": "src/components/overlays/drawers/SubmissionResultHistoryDrawer/component.tsx",
+      "tree": "src",
+      "tier": "overlays",
+      "total": 2,
+      "tags": {
+        "nav": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/consultant/ConsultantDirectoryCompanySearch/ConsultantDirectoryCompanySearch.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/consultant/ConsultantDirectoryHeader/ConsultantDirectoryHeader.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/WeeklyChallengeCard/WeeklyChallengeCard.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentAiFab/ContentAiFab.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentHeader/ContentHeader.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentModeNav/ContentModeNav.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentPager/ContentPager.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContinueCard/CardBody.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseBrief/CourseBrief.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaHeader/CourseQaHeader.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationCategoryHeader/FoundationCategoryHeader.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationCategoryList/FoundationCategoryList.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationCategorySearchBar/FoundationCategorySearchBar.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationHeader/FoundationHeader.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationResourceList/FoundationResourceList.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationsHeader/FoundationsHeader.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardCategoryNav/LeaderboardCategoryNav.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardHeader/LeaderboardHeader.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewScorecard/MockInterviewScorecard.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MockInterviewSetup/MockInterviewSetup.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ModuleHeader/ModuleHeader.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PersonalProjectDashboard/PersonalProjectDashboard.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundSetupHeader/PlaygroundSetupHeader.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizRecapList/QuizRecapList.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/RatingBar/RatingBar.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/VoiceHero/VoiceHero.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 1,
+        "nav": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/WorkSessionHeader/WorkSessionHeader.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/pages/CourseContents/_shared.tsx",
+      "tree": "sb-starci",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/pages/PersonalProjectTaskPage/PersonalProjectTaskPage.tsx",
+      "tree": "sb-starci",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/layouts/HeadhuntingCompaniesLayout/HeadhuntingCompaniesLayout.tsx",
+      "tree": "sb-starci",
+      "tier": "layouts",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/layouts/SettingsLayout/SettingsLayout.tsx",
+      "tree": "sb-starci",
+      "tier": "layouts",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/starci/overlays/drawers/ContentAiChatDrawer/ContentAiChatDrawer.tsx",
+      "tree": "sb-starci",
+      "tier": "overlays",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/account/AccountSecurity/AccountSecurity.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/AgentOsHeader/AgentOsHeader.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/dashboard/QuickActionsCard/QuickActionsCard.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteHeader/ExpertSiteHeader.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadForm/ExpertSiteLeadForm.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/AiSuggestionCard/AiSuggestionCard.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/OperatingLoopHero/OperatingLoopHero.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 1,
+        "section": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/navigation/SidebarNavItem/SidebarNavItem.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/automation/AgentTaskConsole/AgentTaskConsole.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/landing/LandingFooter/LandingFooter.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "footer": 2
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/landing/LeadCaptureCard/LeadCaptureCard.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/landing/OfferSection/OfferSection.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "section": 1,
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/learn/MyCoursesGrid/MyCoursesGrid.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/members/MembersManager/MembersManager.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/pages/CourseStudio/CourseStudio.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "pages",
+      "total": 2,
+      "tags": {
+        "div": 2
+      }
+    },
+    {
+      "file": ".storybook/components/mia-mia/blocks/marketing/CtaBanner/index.tsx",
+      "tree": "sb-mia-mia",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "section": 1,
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/mia-mia/blocks/marketing/SiteHeader/index.tsx",
+      "tree": "sb-mia-mia",
+      "tier": "blocks",
+      "total": 2,
+      "tags": {
+        "nav": 1,
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/ai/QuotaBar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/async/ErrorContent/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/auth/Turnstile/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/cards/ContinueCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/cards/SectionCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/code/SandpackPanel/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/commerce/FreeTierCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/commerce/PhaseScarcityNote/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/commerce/TierGrid/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/FacebookReactionSelector.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/community/Discussion/InteractionBar.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/consultant/ConsultantProfileBody/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/cv/CvBlocksWorkspace/CvTexEditor/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/dashboard/ChangelogList/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/dashboard/Confetti/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/dashboard/ContinueLearning/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/dashboard/DailyQuest/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/dashboard/WeeklyGoals/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/feed/ActivityAvatar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/feed/ActivityFeed/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/feed/Timeline/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/feedback/ErrorState/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/feedback/InfoTooltip/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/form/OtpInput/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/form/SearchBar/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/identity/IconTile/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/identity/ImageDropzone/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/AuroraEffect.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/BubblesEffect.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/CircuitEffect.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/effects/EmberEffect.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/AmbientBackground/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/PageContainer/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/NavLinks/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/shell/Navbar/SearchButton/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/Spacer/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/layout/StickyBottomBar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ConceptMap/Canvas/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiChat/ContentAiChatModeSwitch/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiChat/ContentAiScopePill/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ContentAiSelectionAsk/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ContentMap/ContentMapSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ContentRelatedList/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaInvite/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardModeSwitch/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/FlashcardStudyCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/FoundationSearchBar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/InterviewerPresence/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/Confetti/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/LeaderboardBoard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/AiLab/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/CodeExplainingBody/ExplainingCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ActionToolbar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentBody/ContentBodyV2/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/ContentTabBar/TabTrigger/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/LessonBody/LessonCardSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/lesson/SandboxBody/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/MindMapFullscreenButton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/OnThisPage/ContentActions/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskBrief/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCodeImplementations/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/personal-project/TaskCriteriaList/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundDeviceSnapshot/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundHubHeader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundReadinessChecklist/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/PlaygroundSetupSteps/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/QaChatBubble/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/QuizCard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/QuizEnrollGate/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/QuizSetup/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/ReactionButton/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/RelatedContentList/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionAttemptSelector/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/SubmissionResultHeader/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/learn/TaskSubmissionPanel/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/marketing/ArchitectureFlow/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/marketing/MicroservicesScene/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/media/CoverImage/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/VideoControls/QualitySelector/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/navigation/NavLinks/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/navigation/Pagination/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/navigation/ProfileTabsBar/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/navigation/ProgrammingLanguageTabs/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/profile/CvSubmission/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/profile/MascotBadge/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileHero/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileLockedState/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileNotFoundState/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/profile/ProfileSectionGuard/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/LayoutWidget/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/rendering/MarkdownContent/MarkdownTableParts.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/rendering/RagSourceGraph/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Checkbox/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Disclosure/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Metric/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Paragraph/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Select/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Slider/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/Tabs/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/Skeleton/TextArea/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/skeleton/SkeletonParagraph/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/stats/MilestoneRoadmap/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/stats/Score/component.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/blocks/stats/TopicMasteryGrid/index.tsx",
+      "tree": "src",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/TopBar/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/Header/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/BlogListPage/CategoryFilter/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/BlogListPage/Masthead/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/BlogPostPage/RelatedPosts/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "section": 1
+      }
+    },
+    {
+      "file": "src/components/pages/BookmarksPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/CommunityFeedPage/CommunityComposer/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/CommunityFeedPage/component.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/ContactPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/component.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/CourseQaPage/component.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "nav": 1
+      }
+    },
+    {
+      "file": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/CvGalleryPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ContinueLearning/ContinueLearningSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CoursesTab/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ExploreTab/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueTierBadge/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/DashboardPage/TopLearners/TopLearnersSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardDeckList/FlashcardDeckListSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/FlashcardMobileNav/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/HeadhuntingCompanyPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/LandingPage/KnowledgeGraph/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/LeaguePage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseMilestoneOutline/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/CourseOutline/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/LearningHistoryPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/LoginPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewDiagram/BoxNode.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewHistory/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewScorecard/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewSetupSkeleton/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/MockInterviewPage/MockInterviewStats/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/PersonalProjectTaskPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/PlaygroundPreparePage/component.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeFilters/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/PracticeRail/PracticeMobileNav/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/PracticeHubPage/ProblemCatalog/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/ProfileActivityPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/ProfileActivityPage/ProfileActivity/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/ProfileChallengeManagePage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/ProfileChallengesPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/ProfileChallengeSubmissionPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/ProfileProjectsPage/ProfilePinned/PinnedProjectCard/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/ProfilePublicCvPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/ProfileSkillsPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/PublicArticlePage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/RewardsPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/EnrolledSuccess/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/SepayCheckoutPage/QrPanel/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/SettingsHomePage/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/pages/SystemStatusPage/OverallBanner/index.tsx",
+      "tree": "src",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/layouts/Footer/FooterNavColumn/index.tsx",
+      "tree": "src",
+      "tier": "layouts",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/layouts/InnerLayout/component.tsx",
+      "tree": "src",
+      "tier": "layouts",
+      "total": 1,
+      "tags": {
+        "main": 1
+      }
+    },
+    {
+      "file": "src/components/layouts/LearnShellLayout/index.tsx",
+      "tree": "src",
+      "tier": "layouts",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/layouts/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+      "tree": "src",
+      "tier": "layouts",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": "src/components/layouts/Navbar/NavLinks/index.tsx",
+      "tree": "src",
+      "tier": "layouts",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/ai/AiQuotaLane/AiQuotaLane.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/ai/QuotaBar/QuotaBar.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/consultant/ConsultantProfileBody/ConsultantProfileBody.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/ChangelogList/ChangelogList.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/ContinueLearning/ContinueLearning.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/DailyQuest/DailyQuest.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/dashboard/WeeklyGoals/WeeklyGoals.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ChallengeHeader/ChallengeHeader.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentAiSelectionAsk/ContentAiSelectionAsk.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentArticle/ContentArticle.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentDiscussion/ContentDiscussion.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentPaywall/ContentPaywall.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentReaction/ContentReaction.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ContentRelatedList/ContentRelatedList.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaEngagementStrip/CourseQaEngagementStrip.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaInvite/CourseQaInvite.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/QuestionPreviewRow/index.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardMasteryStrip/FlashcardMasteryStrip.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardModeSwitch/FlashcardModeSwitch.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FlashcardStudyCard/FlashcardStudyCard.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/FoundationSearchBar/FoundationSearchBar.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/InterviewerPresence/InterviewerPresence.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardBoard/Board/index.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardBoard/Confetti/index.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/LeaderboardBoard/LeaderboardBoard.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/MindMapFullscreenButton/MindMapFullscreenButton.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundDeviceSnapshot/PlaygroundDeviceSnapshot.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundHubHeader/PlaygroundHubHeader.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundReadinessChecklist/PlaygroundReadinessChecklist.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/CommandSkeleton/index.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/PlaygroundSetupSteps/PlaygroundSetupSteps.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaChatBubble/QaChatBubble.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QaConversationHeader/QaConversationHeader.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizEnrollGate/QuizEnrollGate.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizQuestion/QuizQuestion.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/QuizSetup/QuizSetup.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/ReactionButton/ReactionButton.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/SubmissionAttemptSelector/SubmissionAttemptSelector.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/SubmissionResultHeader/SubmissionResultHeader.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/SubmissionScoreCard/SubmissionScoreCard.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/learn/TaskSubmissionPanel/TaskSubmissionPanel.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/NavLinks/NavLinks.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/navigation/ProfileTabsBar/ProfileTabsBar.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileHero.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/blocks/profile/ProfileNotFoundState/ProfileNotFoundState.tsx",
+      "tree": "sb-starci",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/overlays/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectTaskAttemptsDrawer.tsx",
+      "tree": "sb-starci",
+      "tier": "overlays",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/starci/overlays/modals/PremiumGateModal/PremiumGateModal.tsx",
+      "tree": "sb-starci",
+      "tier": "overlays",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/account/AccountProfile/AccountProfile.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/AgentCard/AgentCard.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/AgentOsProvisionCard/AgentOsProvisionCard.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/ChannelList/ChannelList.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/KnowledgeSection/KnowledgeSection.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/ModelsSection/ModelsSection.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/N8nWorkflowTable/N8nWorkflowTable.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/OpsEventTable/OpsEventTable.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/PlaygroundPanel/PlaygroundPanel.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/PricingTierCard/PricingTierCard.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/agent-os/ToolsSection/ToolsSection.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/auth/TwoFactorChallenge/TwoFactorChallenge.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/billing/InvoiceDetailModal/InvoiceDetailModal.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/billing/InvoiceList/InvoiceList.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/catalog/BuyConfirmModal/BuyConfirmModal.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/catalog/CatalogProductCard/CatalogProductCard.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/catalog/CatalogTierCard/CatalogTierCard.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/catalog/CategoryTabs/CategoryTabs.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/catalog/MyOrdersList/MyOrdersList.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/catalog/UpgradeTierConfirmModal/UpgradeTierConfirmModal.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/dashboard/KpiRow/KpiRow.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/dashboard/KpiTile/KpiTile.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/dashboard/OperatingLoopRail/OperatingLoopRail.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/dashboard/ProductQuickSelector/ProductQuickSelector.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/dashboard/RecentActivityCard/RecentActivityCard.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/domains/DomainList/DomainList.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/expert-site/DeployStatusCard/DeployStatusCard.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteEditor/ExpertSiteEditor.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteGenerate/ExpertSiteGenerate.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeads/ExpertSiteLeads.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteLeadsPipeline/ExpertSiteLeadsPipeline.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/expert-site/ExpertSiteOfferingsEditor/ExpertSiteOfferingsEditor.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/expert-site/LeadsInboxCard/LeadsInboxCard.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/expert-site/OfferingsSummaryCard/OfferingsSummaryCard.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/AuditCta/AuditCta.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "section": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/ClosingCta/ClosingCta.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "section": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/DemoFlow/DemoFlow.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/FaqAccordion/FaqAccordion.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/Footer/Footer.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "footer": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/HeroBanner/HeroBanner.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "section": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/HumanInTheLoop/HumanInTheLoop.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/LeadLeakageMap/LeadLeakageMap.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/MarketingNavbar/MarketingNavbar.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "header": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/MegaMenu/MegaMenu.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/OperatingLoopVisual/OperatingLoopVisual.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/PartnerStrip/PartnerStrip.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/PricingTeaser/PricingTeaser.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "section": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/ProblemStatement/ProblemStatement.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/ProductQuickSelector/ProductQuickSelector.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/ProductShowcase/ProductShowcase.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "section": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/ProofStrip/ProofStrip.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/SectionHeading/SectionHeading.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/SolutionByIndustry/SolutionByIndustry.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/StoryBeatCard/StoryBeatCard.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/SystemFlow/SystemFlow.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/landing/SystemStoryCard/SystemStoryCard.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/support/SupportTicketList/SupportTicketList.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/support/TicketThread/TicketThread.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/blocks/wallet/WalletOverview/WalletOverview.tsx",
+      "tree": "sb-nivo",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/pages/AccountView/AccountView.tsx",
+      "tree": "sb-nivo",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/pages/AgentOsConsole/AgentOsConsole.tsx",
+      "tree": "sb-nivo",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/pages/AgentOsProvision/AgentOsProvision.tsx",
+      "tree": "sb-nivo",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/pages/CatalogView/CatalogView.tsx",
+      "tree": "sb-nivo",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/pages/ControlPlaneOverview/ControlPlaneOverview.tsx",
+      "tree": "sb-nivo",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/pages/Dashboard/Dashboard.tsx",
+      "tree": "sb-nivo",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/pages/DomainsView/DomainsView.tsx",
+      "tree": "sb-nivo",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/pages/ExpertSiteOverview/ExpertSiteOverview.tsx",
+      "tree": "sb-nivo",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/pages/ExpertSiteView/ExpertSiteView.tsx",
+      "tree": "sb-nivo",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/pages/InvoicesView/InvoicesView.tsx",
+      "tree": "sb-nivo",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/pages/SupportView/SupportView.tsx",
+      "tree": "sb-nivo",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivo/pages/WalletView/WalletView.tsx",
+      "tree": "sb-nivo",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/auth/AuthCard/AuthCard.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/automation/AiOpsSummary/AiOpsSummary.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/automation/N8nWorkflowTable/N8nWorkflowTable.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/automation/OpsEventTable/OpsEventTable.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/classroom/CourseView/CourseView.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/classroom/LessonTOC/LessonTOC.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/classroom/LessonViewer/LessonViewer.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/community/PostCard/PostCard.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/community/PostComposer/PostComposer.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/community/PostModerationCard/PostModerationCard.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/dashboard/AnalyticsView/AnalyticsView.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/dashboard/ExpertDashboardOverview/ExpertDashboardOverview.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/landing/CatalogComingSoonPanel/CatalogComingSoonPanel.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/landing/CommunityPreviewCard/CommunityPreviewCard.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/landing/CourseCatalogGrid/CourseCatalogGrid.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/landing/CourseFeaturedCard/CourseFeaturedCard.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/landing/CourseOfferCard/CourseOfferCard.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/landing/CurriculumPreview/CurriculumPreview.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/landing/HeroIdentity/HeroIdentity.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "section": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/landing/OutcomesList/OutcomesList.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "section": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/landing/ProofStrip/ProofStrip.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/landing/StickyEnrolBar/StickyEnrolBar.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/leads/LeadsPipeline/LeadsPipeline.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/learn/ContinueLearningRail/ContinueLearningRail.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/learn/LearnerOverview/LearnerOverview.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/revenue/OrderTable/OrderTable.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/revenue/RevenueSummary/RevenueSummary.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/blocks/studio/CourseRailList/CourseRailList.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "blocks",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/pages/AcademyManagementDashboard/AcademyManagementDashboard.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/pages/automation/AiManagementDashboard/AiManagementDashboard.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/pages/community/CommunityFeed/CommunityFeed.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    },
+    {
+      "file": ".storybook/components/nivoexpert/pages/revenue/RevenueView/RevenueView.tsx",
+      "tree": "sb-nivoexpert",
+      "tier": "pages",
+      "total": 1,
+      "tags": {
+        "div": 1
+      }
+    }
+  ]
+}

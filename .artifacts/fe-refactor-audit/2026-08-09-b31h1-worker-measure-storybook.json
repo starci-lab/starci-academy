@@ -1,0 +1,17 @@
+{
+  "batch": "31h1",
+  "worker": "measure-storybook",
+  "status": "done",
+  "fixed": [
+    ".storybook/components/frames/Measure/Measure.tsx",
+    ".storybook/stories/frames/Measure/Measure.stories.tsx"
+  ],
+  "mapping": {
+    "sm": "max-w-sm",
+    "md": "max-w-md",
+    "lg": "max-w-lg"
+  },
+  "note": "Footer-proven Tailwind scale — not Container max-w-app-*",
+  "api": ["size", "body", "isSkeleton?"],
+  "eslint": "pass"
+}

@@ -1,0 +1,11 @@
+{
+  "batch": "31h1",
+  "worker": "inline-link-src",
+  "status": "done",
+  "fixed": [
+    "src/components/atoms/navigation/Link/InlineLink.tsx",
+    "src/components/atoms/navigation/Link/index.tsx"
+  ],
+  "parity": "equivalent to SB InlineLink",
+  "eslint": "pass"
+}

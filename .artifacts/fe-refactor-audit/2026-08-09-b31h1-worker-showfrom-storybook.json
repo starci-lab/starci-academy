@@ -1,0 +1,16 @@
+{
+  "batch": "31h1",
+  "worker": "showfrom-storybook",
+  "status": "done",
+  "fixed": [
+    ".storybook/components/frames/ShowFrom/ShowFrom.tsx",
+    ".storybook/stories/frames/ShowFrom/ShowFrom.stories.tsx"
+  ],
+  "mapping": {
+    "sm": "hidden @app-sm:flex",
+    "md": "hidden @app-md:flex",
+    "lg": "hidden @app-lg:flex"
+  },
+  "api": ["at", "body", "isSkeleton?"],
+  "eslint": "pass"
+}

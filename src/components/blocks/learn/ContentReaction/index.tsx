@@ -50,36 +50,39 @@ const ContentReaction = ({
     isPending = false,
     isSkeleton = false,
 }: ContentReactionProps) => {
-    const row = (
-        <>
-            <ReactionButton
-                myReaction={myReaction}
-                counts={counts}
-                onReact={onReact}
-                isPending={isPending}
-                isSkeleton={isSkeleton}
-
-
-            />
-            {isSkeleton ? (
-                <Typography size="xs" color="muted" isSkeleton classNames={["w-1/4"]} />
-            ) : viewCount != null ? (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    text={`${viewCount.toLocaleString("en-US")} views`}
-
-                />
-            ) : null}
-        </>
-    )
-
     return (
-        <div>
-            <StackH gap={3} principle="sibling-stack"
-                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                align="center" justify="between" isSkeleton={isSkeleton} items={[() => row]}  />
-        </div>
+        <StackH
+            identity={{ tier: "block", component: "ContentReaction" }}
+            gap={3}
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+            align="center"
+            justify="between"
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <ReactionButton
+                        myReaction={myReaction}
+                        counts={counts}
+                        onReact={onReact}
+                        isPending={isPending}
+                        isSkeleton={isSkeleton}
+
+
+                    />
+                ),
+                ...(isSkeleton ? [() => (
+                    <Typography size="xs" color="muted" isSkeleton />
+                )] : viewCount != null ? [() => (
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        text={`${viewCount.toLocaleString("en-US")} views`}
+
+                    />
+                )] : []),
+            ]}
+        />
     )
 }
 

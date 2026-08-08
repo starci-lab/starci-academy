@@ -97,49 +97,65 @@ const _HeadhuntingsPage = ({
     consultantsAriaLabel,
     isSkeleton = false,
 }: HeadhuntingsPageProps) => {
-    const directorySection = (
-        <>
-            <ConsultantDirectoryCompanySearch
+    const headhuntingsBody = (
+        <StackV
+            gap={6}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <ConsultantDirectoryHeader
+                        breadcrumbItems={breadcrumbItems}
+                        title={title}
+                        description={description}
+                        isSkeleton={isSkeleton}
 
-                query={companyQuery}
-                onQueryChange={onCompanyQueryChange}
-                suggestions={companySuggestions}
-                isLoadingSuggestions={isLoadingCompanySuggestions}
-                onSelectCompany={onSelectCompany}
+                    />
+                ),
+                () => (
+                    <StackV
+                        gap={4}
+                        principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <ConsultantDirectoryCompanySearch
 
-            />
-            <ConsultantDirectoryGrid
+                                    query={companyQuery}
+                                    onQueryChange={onCompanyQueryChange}
+                                    suggestions={companySuggestions}
+                                    isLoadingSuggestions={isLoadingCompanySuggestions}
+                                    onSelectCompany={onSelectCompany}
 
-                consultants={consultants}
-                count={consultantCount}
-                isLoading={isLoadingConsultants}
-                onOpenConsultant={onOpenConsultant}
-                emptyTitle={consultantsEmptyTitle}
-                ariaLabel={consultantsAriaLabel}
+                                />
+                            ),
+                            () => (
+                                <ConsultantDirectoryGrid
 
-            />
-        </>
+                                    consultants={consultants}
+                                    count={consultantCount}
+                                    isLoading={isLoadingConsultants}
+                                    onOpenConsultant={onOpenConsultant}
+                                    emptyTitle={consultantsEmptyTitle}
+                                    ariaLabel={consultantsAriaLabel}
+
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
-
-    const headhuntingsSections = (
-        <>
-            <ConsultantDirectoryHeader
-                breadcrumbItems={breadcrumbItems}
-                title={title}
-                description={description}
-                isSkeleton={isSkeleton}
-
-            />
-            <StackV gap={4} isSkeleton={isSkeleton} items={[() => directorySection]} />
-        </>
-    )
-
-    const headhuntingsBody = <StackV gap={6} isSkeleton={isSkeleton} items={[() => headhuntingsSections]} />
 
     return (
         <Container
             size="md"
             padding={6}
+            principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
             body={() => headhuntingsBody}
             identity={{ tier: "page", component: "HeadhuntingsPage" }}
         />

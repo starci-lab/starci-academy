@@ -5,7 +5,6 @@ import { EmptyState } from "@sb-components/composites/feedback/EmptyState/EmptyS
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 import { ProfileHero, type ProfileHeroUser } from "@sb-components/starci/blocks/profile/ProfileHero/ProfileHero"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
 
 /**
  * `ProfileLockedState` — the non-owner view of a profile its owner has turned
@@ -21,11 +20,6 @@ export interface ProfileLockedStateProps {
     user: ProfileHeroUser
     /** Fired when the visitor takes the one way forward (browse courses instead). */
     onGoCourses: () => void
-    /**
-     * Where this sits inside its parent. Appearance is not passable — it is already a prop.
-     * Prefer this over `className`; the string form is going away.
-     */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -37,38 +31,41 @@ export interface ProfileLockedStateProps {
 const ProfileLockedState = ({
     user,
     onGoCourses,
-    classNames,
 }: ProfileLockedStateProps) => {
-    const lockedBody = (
-        <>
-            <ProfileHero
-                user={user}
-
-            />
-            <SurfaceCard
-                padding={6}
-
-
-                body={() => (
-                    <EmptyState
-                        icon={LockIcon}
-                        title="This profile is set to private"
-                        description="The profile owner has hidden their public activity — you can still explore other courses."
+    return (
+        <StackV
+            gap={6}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            padding={6}
+            items={[
+                () => (
+                    <ProfileHero
+                        user={user}
+                    />
+                ),
+                () => (
+                    <SurfaceCard
+                        padding={6}
                         body={() => (
-                            <Button
-                                label="Browse courses"
-                                variant="primary"
-                                onPress={onGoCourses}
+                            <EmptyState
+                                icon={LockIcon}
+                                title="This profile is set to private"
+                                description="The profile owner has hidden their public activity — you can still explore other courses."
+                                body={() => (
+                                    <Button
+                                        label="Browse courses"
+                                        variant="primary"
+                                        onPress={onGoCourses}
+                                    />
+                                )}
                             />
                         )}
                     />
-                )}
-            />
-        </>
+                ),
+            ]}
+        />
     )
-    return <StackV gap={6} principle="block-boundary"
-        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
-        padding={6} classNames={classNames} items={[() => lockedBody]}  />
 }
 
 export { ProfileLockedState }

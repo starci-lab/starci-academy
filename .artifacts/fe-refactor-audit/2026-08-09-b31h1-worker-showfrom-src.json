@@ -1,0 +1,8 @@
+{
+  "batch": "31h1",
+  "worker": "showfrom-src",
+  "status": "done",
+  "fixed": ["src/components/frames/ShowFrom/index.tsx"],
+  "parity": "equivalent to SB ShowFrom",
+  "eslint": "pass"
+}

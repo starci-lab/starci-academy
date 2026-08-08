@@ -88,68 +88,75 @@ const FlashcardMasteryStrip = ({
         ? "Loading retention progress"
         : `Retention progress: ${mastered} mastered, ${learning} learning, ${newCount} new, out of ${total} cards`
 
-    const masteryReadout = (
-        <>
-            <StackH
-                gap={2}
-                principle="value-row"
-                explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
-                align="baseline"
-                isSkeleton={isSkeleton}
-                items={[
-                    () => (
-                        <Typography
-                            size="h3"
-                            weight="bold"
-                            isSkeleton={isSkeleton}
-                            text={`${mastered}/${total}`}
-
-                        />
-                    ),
-                    () => (
-                        <Typography
-                            size="sm"
-                            color="muted"
-                            isSkeleton={isSkeleton}
-                            text={`${pct}%`}
-
-                        />
-                    ),
-                ]}
-            />
-            <SegmentBar
-                segments={isSkeleton ? SKELETON_SEGMENTS : segments}
-                max={isSkeleton ? undefined : total}
-                hideLegend={isSkeleton}
-                ariaLabel={ariaLabel}
-                caption={isSkeleton ? undefined : masteryCaption(totalReviewed, retention)}
-
-            />
-        </>
-    )
-
     return (
-        <div>
-            <SurfaceCard
-                label="Mastered"
-                action={() =>
-                    isSkeleton ? (
-                        <Chip isSkeleton />
-                    ) : hasStreak ? (
-                        <Chip
-                            tone="warning"
-                            icon={FlameIcon}
-                            text={`${streak}-day streak`}
+        <SurfaceCard
+            identity={{ tier: "block", component: "FlashcardMasteryStrip" }}
+            label="Mastered"
+            action={() =>
+                isSkeleton ? (
+                    <Chip isSkeleton />
+                ) : hasStreak ? (
+                    <Chip
+                        tone="warning"
+                        icon={FlameIcon}
+                        text={`${streak}-day streak`}
 
-                        />
-                    ) : undefined
-                }
-                isSkeleton={isSkeleton}
+                    />
+                ) : undefined
+            }
+            isSkeleton={isSkeleton}
 
 
-                body={() => <StackV gap={4} isSkeleton={isSkeleton} items={[() => masteryReadout]} />}
-            />
-        </div>
+            body={() => (
+                <StackV
+                    gap={4}
+                    principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                    isSkeleton={isSkeleton}
+                    items={[
+                        () => (
+                            <StackH
+                                gap={2}
+                                principle="value-row"
+                                explain="Holds a label and its numeric value on one baseline so the count stays readable against the label."
+                                align="baseline"
+                                isSkeleton={isSkeleton}
+                                items={[
+                                    () => (
+                                        <Typography
+                                            size="h3"
+                                            weight="bold"
+                                            isSkeleton={isSkeleton}
+                                            text={`${mastered}/${total}`}
+
+                                        />
+                                    ),
+                                    () => (
+                                        <Typography
+                                            size="sm"
+                                            color="muted"
+                                            isSkeleton={isSkeleton}
+                                            text={`${pct}%`}
+
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                        () => (
+                            <SegmentBar
+                                segments={isSkeleton ? SKELETON_SEGMENTS : segments}
+                                max={isSkeleton ? undefined : total}
+                                hideLegend={isSkeleton}
+                                ariaLabel={ariaLabel}
+                                caption={isSkeleton ? undefined : masteryCaption(totalReviewed, retention)}
+
+                            />
+                        ),
+                    ]}
+                />
+            )}
+        />
     )
 }
 

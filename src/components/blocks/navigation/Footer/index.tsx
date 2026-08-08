@@ -1,10 +1,12 @@
 import React from "react"
-import { Link as HeroUILink, cn } from "@heroui/react"
 import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa6"
 import { Logo } from "@/components/atoms/display/Logo"
 import { Typography } from "@/components/atoms/text/Typography"
+import { InlineLink } from "@/components/atoms/navigation/Link"
 import type { IconComponent } from "@/components/atoms/buttons/Button"
-import { Container } from "@/components/frames/Container"
+import { FooterFrame } from "@/components/frames/FooterFrame"
+import { Measure } from "@/components/frames/Measure"
+import { ShowFrom } from "@/components/frames/ShowFrom"
 import { StackH, StackV } from "@/components/frames/Stack"
 import { FooterLinkColumn } from "./FooterLinkColumn"
 
@@ -53,8 +55,6 @@ export interface FooterProps {
     onTermsPress: () => void
     /** Fired when the bottom-bar "Privacy" stub is pressed. */
     onPrivacyPress: () => void
-    /** Extra class on the root `<footer>` (placement only). */
-    className?: string
 }
 
 /**
@@ -69,144 +69,162 @@ const Footer = ({
     socials,
     onTermsPress,
     onPrivacyPress,
-    className,
 }: FooterProps) => {
     const year = new Date().getFullYear()
 
-    const wordmark = (
-        <>
-            <div className="text-sm font-semibold leading-none text-foreground">StarCi</div>
-            <div className="text-[8px] uppercase leading-none text-muted">Academy</div>
-        </>
-    )
-
-    // brand mark + wordmark, inlined (see file header: BrandLockup not
-    // promoted). `StackH`/`StackV` (not a hand-rolled flex span) per §13z —
-    // spacing is words. `Logo` itself stays unbadged here, same as `Navbar`'s
-    // own brand-mark span (not in either block's ANNOTATE map).
-    const brandMark = (
-        <>
-            <Logo size="footer" />
-            <div className="hidden @app-md:flex">
-                <StackV gap={1} items={[() => wordmark]} />
-            </div>
-        </>
-    )
-
-    const socialLinks = socials.map((social) => {
-        const Icon = social.icon
-        return (
-            <HeroUILink
-                key={social.id}
-                onPress={social.onPress}
-                aria-label={social.label}
-                className="text-muted transition-colors hover:text-foreground"
-
-            >
-                <Icon className="size-5" aria-hidden />
-            </HeroUILink>
-        )
-    })
-
-    const brandColumn = (
-        <>
-            <StackH gap={1} classNames={["w-fit", "self-start"]} items={[() => brandMark]} />
-            <Typography
-                size="sm"
-                color="muted"
-                text="Learn by building real systems with your own hands — ready for any technical interview."
-
-            />
-            <StackH gap={3} items={[() => socialLinks]} />
-        </>
-    )
-
-    const linkColumns = (
-        <>
-            <FooterLinkColumn title="Explore" links={exploreLinks} />
-            <FooterLinkColumn title="Support" links={supportLinks} />
-        </>
-    )
-
-    // top region: brand + tagline + socials (left) · two link columns (right)
-    const topRegion = (
-        <>
-            <div className="max-w-sm">
-                <StackV gap={4} items={[() => brandColumn]} />
-            </div>
-            <StackH gap={7} principle="layout-split"
-                explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
-                at="sm" items={[() => linkColumns]}  />
-        </>
-    )
-
-    const legalLinks = (
-        <>
-            <HeroUILink
-                onPress={onTermsPress}
-                className="cursor-pointer text-xs text-muted transition-colors hover:text-foreground"
-
-            >
-                Terms
-            </HeroUILink>
-            <HeroUILink
-                onPress={onPrivacyPress}
-                className="cursor-pointer text-xs text-muted transition-colors hover:text-foreground"
-
-            >
-                Privacy
-            </HeroUILink>
-        </>
-    )
-
-    // bottom bar: copyright + credit (left) · legal stubs (right)
-    const bottomBar = (
-        <>
-            <Typography
-                size="xs"
-                color="muted"
-                text={`(c) ${year} StarCi Academy - Built by Nguyen Van Tu Cuong`} // vn-ok: the author's real name
-
-            />
-            <StackH gap={3} items={[() => legalLinks]} />
-        </>
-    )
-
-    const sections = (
-        <>
-            <StackH
-                gap={7}
-                principle="layout-split"
-                explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
-                justify="between"
+    const brandMark = [
+        () => <Logo size="footer" />,
+        () => (
+            <ShowFrom
                 at="md"
-
-                items={[() => topRegion]}
+                body={() => (
+                    <StackV
+                        gap={1}
+                        principle="name-handle"
+                        explain="Brand name stacked on its academy handle with no seam — not title-subtitle, because title-subtitle opens a 4px joint this lockup keeps closed at 0px."
+                        items={[
+                            () => (
+                                <span className="text-sm font-semibold leading-none text-foreground">
+                                    StarCi
+                                </span>
+                            ),
+                            () => (
+                                <span className="text-[8px] uppercase leading-none text-muted">
+                                    Academy
+                                </span>
+                            ),
+                        ]}
+                    />
+                )}
             />
-            <div className="items-start @app-sm:items-center">
-                <StackH
-                    gap={3}
-                    principle="sibling-stack"
-                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                    justify="between"
-                    at="sm"
+        ),
+    ]
 
-                    items={[() => bottomBar]}
-                />
-            </div>
-        </>
-    )
-
-    const footerBody = (
-        <StackV gap={6} principle="block-boundary"
-            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
-            divider items={[() => sections]}  />
-    )
+    const socialLinkItems = socials.map((social) => () => (
+        <InlineLink
+            key={social.id}
+            icon={social.icon}
+            ariaLabel={social.label}
+            onPress={social.onPress}
+        />
+    ))
 
     return (
-        <footer className={cn("border-t border-default bg-surface", className)}>
-            <Container size="xl" padding={6} body={() => footerBody} />
-        </footer>
+        <FooterFrame
+            identity={{ tier: "block", component: "Footer" }}
+            body={() => (
+                <StackV
+                    gap={6}
+                    principle="block-boundary"
+                    explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                    divider
+                    items={[
+                        () => (
+                            <StackH
+                                gap={7}
+                                principle="layout-split"
+                                explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+                                justify="between"
+                                at="md"
+                                items={[
+                                    () => (
+                                        <Measure
+                                            size="sm"
+                                            body={() => (
+                                                <StackV
+                                                    gap={4}
+                                                    principle="card-caption"
+                                                    explain="Brand lockup over its tagline and socials — not title-subtitle, because the social row is a separate action cluster rather than a continuing subtitle line."
+                                                    items={[
+                                                        () => (
+                                                            <StackH
+                                                                gap={1}
+                                                                principle="name-handle"
+                                                                explain="Logo flush to wordmark as one lockup — not icon-text, because icon-text's 4px joint would open a seam this lockup keeps closed at 0px."
+                                                                items={brandMark}
+                                                            />
+                                                        ),
+                                                        () => (
+                                                            <Typography
+                                                                size="sm"
+                                                                color="muted"
+                                                                text="Learn by building real systems with your own hands — ready for any technical interview."
+                                                            />
+                                                        ),
+                                                        () => (
+                                                            <StackH
+                                                                gap={3}
+                                                                principle="flex-action"
+                                                                explain="Groups social icon controls on one horizontal peer row so they share a single hit baseline — not chip-row, because these are press targets rather than display tags."
+                                                                items={socialLinkItems}
+                                                            />
+                                                        ),
+                                                    ]}
+                                                />
+                                            )}
+                                        />
+                                    ),
+                                    () => (
+                                        <StackH
+                                            gap={7}
+                                            principle="layout-split"
+                                            explain="Major layout split — not block-boundary, because this separates primary page regions rather than adjacent blocks."
+                                            at="sm"
+                                            items={[
+                                                () => <FooterLinkColumn title="Explore" links={exploreLinks} />,
+                                                () => <FooterLinkColumn title="Support" links={supportLinks} />,
+                                            ]}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                        () => (
+                            <StackH
+                                gap={3}
+                                principle="sibling-stack"
+                                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                                justify="between"
+                                align="start"
+                                at="sm"
+                                items={[
+                                    () => (
+                                        <Typography
+                                            size="xs"
+                                            color="muted"
+                                            text={`(c) ${year} StarCi Academy - Built by Nguyen Van Tu Cuong`} // vn-ok: the author's real name
+                                        />
+                                    ),
+                                    () => (
+                                        <StackH
+                                            gap={3}
+                                            principle="flex-action"
+                                            explain="Groups legal stubs on one horizontal peer row so they share a single hit baseline — not chip-row, because these are press targets rather than display tags."
+                                            items={[
+                                                () => (
+                                                    <InlineLink
+                                                        label="Terms"
+                                                        size="xs"
+                                                        onPress={onTermsPress}
+                                                    />
+                                                ),
+                                                () => (
+                                                    <InlineLink
+                                                        label="Privacy"
+                                                        size="xs"
+                                                        onPress={onPrivacyPress}
+                                                    />
+                                                ),
+                                            ]}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        ),
+                    ]}
+                />
+            )}
+        />
     )
 }
 

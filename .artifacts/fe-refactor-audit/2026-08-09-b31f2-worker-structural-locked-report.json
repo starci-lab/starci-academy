@@ -1,0 +1,38 @@
+{
+  "worker": "structural-locked-report",
+  "status": "report-only",
+  "pendingScan": false,
+  "note": "No edits. Out of scope per B31f2 D-cluster rules.",
+  "holds": [
+    {
+      "file": ".storybook/components/starci/blocks/learn/EnrollGate/EnrollGate.tsx",
+      "cluster": "D",
+      "reason": "Structural/authoring hold — mixed fragment + self-declare debt; not a CSS-door-only SB unlock; left untouched",
+      "fragFindings": "see inventory"
+    },
+    {
+      "file": "src/components/pages/FlashcardsPage/QuizSession/index.tsx",
+      "cluster": "D",
+      "reason": "QuizSession explicitly out of scope (20+ unrelated warnings / locked session surface)",
+      "fragFindings": "see inventory"
+    },
+    {
+      "file": "src/components/pages/MindMapPage/component.tsx",
+      "cluster": "D",
+      "reason": "Src MindMapPage held — Nivo/mind-map structural surface; SB MindMapPage handler-only was closed separately under authoring-handler-only",
+      "fragFindings": "see inventory"
+    },
+    {
+      "file": "src/components/pages/PersonalProjectTaskPage/index.tsx",
+      "cluster": "D",
+      "reason": "page-folder-two-files-only + mixed page debt — locked path",
+      "fragFindings": "see inventory"
+    }
+  ],
+  "alsoOutOfScopeNotInManifest": [
+    "Nivo / Nivoexpert vocabulary boundaries",
+    "teacher-hold surfaces",
+    "parallel skeleton redesign (no-parallel-skeleton families requiring redesign)",
+    "SurfaceCard / Page public classname families (22–47 doors) — retained held in sb-css-door + src-composites workers"
+  ]
+}

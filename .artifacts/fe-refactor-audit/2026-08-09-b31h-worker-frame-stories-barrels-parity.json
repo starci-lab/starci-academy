@@ -1,0 +1,25 @@
+{
+  "batch": "31h",
+  "worker": "frame-stories-barrels-parity",
+  "status": "done",
+  "fixed": [
+    {
+      "file": ".storybook/stories/frames/FooterFrame/FooterFrame.stories.tsx",
+      "actions": ["Added FooterFrame story with BlockAnatomy leaf documenting landmark+chrome+xl measure"]
+    }
+  ],
+  "verified": {
+    "FooterFrameSbApi": {
+      "body": "ComponentTypeWithSkeleton",
+      "isSkeleton": "optional boolean",
+      "identity": "optional CallerIdentity",
+      "noClassName": true,
+      "noChildren": true,
+      "intrinsic": "<footer border-t border-default bg-surface> + Container size=xl padding=6"
+    },
+    "FooterFrameSrcApi": "equivalent to SB",
+    "auditFramesDiscovery": "auto-discovers frames/FooterFrame in both trees (no allowlist)",
+    "barrels": "none — direct named exports by folder path (existing convention)"
+  },
+  "eslintMaxWarnings0": "pass"
+}

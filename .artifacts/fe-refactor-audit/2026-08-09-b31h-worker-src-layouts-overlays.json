@@ -1,0 +1,16 @@
+{
+  "batch": "31h",
+  "worker": "src-layouts-overlays",
+  "status": "held",
+  "fixed": [],
+  "held": [
+    {
+      "file": "src/components/layouts/Footer/**",
+      "reason": "Connected layout Footer — max-w-sm + hand hosts; missing MaxWidth/ShowFrom; not the starci block twin"
+    },
+    {
+      "file": "src/components/layouts/InnerLayout/**",
+      "reason": "In-flight / Box min-h-dvh shell — not a complete host-only slice this batch"
+    }
+  ]
+}

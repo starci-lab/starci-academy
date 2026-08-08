@@ -100,6 +100,9 @@ export default defineConfig([
             // --max-warnings=0 and therefore cannot introduce new violations.
             "starci-fe/no-public-classname-prop": "warn",
             "starci-fe/no-frame-fragment-item": "warn",
+            // Sentence tiers compose vocabulary; raw structural hosts are forbidden.
+            // Warn while legacy debt migrates; changed files use --max-warnings=0.
+            "starci-fe/no-host-element-at-sentence-tier": "warn",
         },
     },
     {

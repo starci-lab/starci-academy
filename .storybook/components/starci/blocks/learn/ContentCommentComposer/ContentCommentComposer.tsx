@@ -3,7 +3,7 @@ import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { InputTextarea } from "@sb-components/atoms/forms"
 import { InputButtonLike } from "@sb-components/composites/buttons/InputButtonLike/InputButtonLike"
-import type { AllowedClassName } from "@sb-components/atoms/_allowed-class-name"
+import { FillAvailable } from "@sb-components/frames/FillAvailable/FillAvailable"
 import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
@@ -51,8 +51,6 @@ export interface ContentCommentComposerProps {
     collapsible?: boolean
     /** Accessible name for the field. */
     ariaLabel: string
-    /** Where this sits inside its parent (placement only, e.g. `flex-1` beside a `ThreadConnector`). */
-    classNames?: Array<AllowedClassName>
 }
 
 /**
@@ -70,7 +68,6 @@ const ContentCommentComposer = ({
     currentUser,
     collapsible = false,
     ariaLabel,
-    classNames,
 }: ContentCommentComposerProps) => {
     const [body, setBody] = useState(initialValue ?? "")
     // collapsible composers start closed; reply/edit always render expanded
@@ -99,81 +96,100 @@ const ContentCommentComposer = ({
     // collapsed pill: avatar + placeholder, the whole row opens the composer
     if (collapsible && !expanded) {
         return (
-            <StackH identity={{ tier: "block", component: "ContentCommentComposer" }}
+            <StackH
+                identity={{ tier: "block", component: "ContentCommentComposer" }}
                 gap={4}
                 principle="content-row"
                 explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
                 align="center"
-
                 items={[
                     ...(currentUser ? [() => (
                         <Avatar src={currentUser.avatarUrl} name={currentUser.username} seed={currentUser.username} size="sm" />
                     )] : []),
                     () => (
-                        <div className="min-w-0 flex-1">
-                            <InputButtonLike
-                                placeholder={placeholder}
-                                ariaLabel={ariaLabel}
-                                onPress={() => setExpanded(true)}
-                            />
-                        </div>
+                        <FillAvailable
+                            at="base"
+                            body={() => (
+                                <InputButtonLike
+                                    placeholder={placeholder}
+                                    ariaLabel={ariaLabel}
+                                    onPress={() => setExpanded(true)}
+                                />
+                            )}
+                        />
                     ),
                 ]}
             />
         )
     }
 
-    const buttonRow = (
-        <>
-            <Button
-                label={submitLabel}
-                size="sm"
-                onPress={onSubmit}
-                isDisabled={!trimmed}
-                isPending={isPending}
-
-            />
-            {onCancelAction || collapsible ? (
-                <Button
-                    label="Cancel"
-                    variant="tertiary"
-                    size="sm"
-                    onPress={onCancel}
-                    isDisabled={isPending}
-
-                />
-            ) : null}
-        </>
-    )
-
-    const fieldColumn = (
-        <>
-            <InputTextarea
-                value={body}
-                onValueChange={setBody}
-                placeholder={placeholder}
-                ariaLabel={ariaLabel}
-                rows={3}
-                variant="primary"
-
-            />
-            <StackH gap={3} items={[() => buttonRow]} />
-        </>
-    )
-
-    const composerRow = (
-        <>
-            {currentUser ? (
-                <Avatar src={currentUser.avatarUrl} name={currentUser.username} seed={currentUser.username} size="sm" />
-            ) : null}
-            <StackV gap={3} classNames={["min-w-0", "flex-1"]} items={[() => fieldColumn]} />
-        </>
-    )
-
     return (
-        <StackH identity={{ tier: "block", component: "ContentCommentComposer" }} gap={4} principle="content-row"
+        <StackH
+            identity={{ tier: "block", component: "ContentCommentComposer" }}
+            gap={4}
+            principle="content-row"
             explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-            align="start" classNames={classNames} items={[() => composerRow]}  />
+            align="start"
+            items={[
+                ...(currentUser ? [() => (
+                    <Avatar src={currentUser.avatarUrl} name={currentUser.username} seed={currentUser.username} size="sm" />
+                )] : []),
+                () => (
+                    <FillAvailable
+                        at="base"
+                        body={() => (
+                            <StackV
+                                gap={3}
+                                principle="sibling-stack"
+                                explain="Same-kind peer stack of field then actions — not group-boundary, because these are repeating vertical siblings rather than section groups."
+                                items={[
+                                    () => (
+                                        <InputTextarea
+                                            value={body}
+                                            onValueChange={setBody}
+                                            placeholder={placeholder}
+                                            ariaLabel={ariaLabel}
+                                            rows={3}
+                                            variant="primary"
+
+                                        />
+                                    ),
+                                    () => (
+                                        <StackH
+                                            gap={3}
+                                            principle="flex-action"
+                                            explain="Submit and cancel share one action row — not content-row, because both peers are actions rather than content-plus-meta."
+                                            items={[
+                                                () => (
+                                                    <Button
+                                                        label={submitLabel}
+                                                        size="sm"
+                                                        onPress={onSubmit}
+                                                        isDisabled={!trimmed}
+                                                        isPending={isPending}
+
+                                                    />
+                                                ),
+                                                ...(onCancelAction || collapsible ? [() => (
+                                                    <Button
+                                                        label="Cancel"
+                                                        variant="tertiary"
+                                                        size="sm"
+                                                        onPress={onCancel}
+                                                        isDisabled={isPending}
+
+                                                    />
+                                                )] : []),
+                                            ]}
+                                        />
+                                    ),
+                                ]}
+                            />
+                        )}
+                    />
+                ),
+            ]}
+        />
     )
 }
 

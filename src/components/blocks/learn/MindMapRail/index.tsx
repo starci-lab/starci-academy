@@ -10,6 +10,7 @@ import {
 } from "@/components/composites/async/AsyncContent"
 import { SurfaceCardList, type SurfaceCardListItem } from "@/components/composites/cards/SurfaceCard"
 import type { VerdictBandVariant } from "@/components/composites/cards/verdict-band"
+import { FillAvailable } from "@/components/frames/FillAvailable"
 import { StackH, StackV } from "@/components/frames/Stack"
 
 /**
@@ -162,57 +163,71 @@ const MindMapRail = ({
             defaultOpen={defaultFilterOpen}
 
             content={
-                <div>
-                    <ButtonRadioGroup
-                        ariaLabel={tierAriaLabel}
-                        value={tier}
-                        onChange={onTier}
+                <ButtonRadioGroup
+                    ariaLabel={tierAriaLabel}
+                    value={tier}
+                    onChange={onTier}
 
-                        items={TIER_ORDER.map((key) => ({ value: key, content: TIER_LABEL[key] }))}
-                    />
-                </div>
+                    items={TIER_ORDER.map((key) => ({ value: key, content: TIER_LABEL[key] }))}
+                />
             }
         />
     )
 
-    const searchRow = (
-        <>
-            <div className="min-w-0 flex-1">
-                <InputSearch
-                    value={query}
-                    onValueChange={onQuery}
-                    placeholder={SEARCH_PLACEHOLDER}
-                    ariaLabel={ariaLabel}
+    return (
+        <StackV
+            identity={{ tier: "block", component: "MindMapRail" }}
+            gap={3}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates the search row from the result region rather than nested section groups."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <StackH
+                        gap={3}
+                        principle="flex-action"
+                        explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
+                        at="sm"
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <FillAvailable
+                                    at="base"
+                                    explain="Search field takes the remaining header row so the funnel trigger stays pinned to the end."
+                                    body={() => (
+                                        <InputSearch
+                                            value={query}
+                                            onValueChange={onQuery}
+                                            placeholder={SEARCH_PLACEHOLDER}
+                                            ariaLabel={ariaLabel}
 
-                />
-            </div>
-            <div>
-                {/* `Badge` only wraps the trigger when a non-default tier is active — `dot` has
-                    no built-in "hide me" reading the way `count` does (§ Badge file header: count
-                    ≤ 0 hides itself, a bare dot has no such signal), so the ON/OFF state is this
-                    block's own condition instead of a prop the atom could resolve alone. */}
-                {isFiltered ? <Badge dot>{filterTrigger}</Badge> : filterTrigger}
-            </div>
-        </>
+                                        />
+                                    )}
+                                />
+                            ),
+                            () => (
+                                // `Badge` only wraps the trigger when a non-default tier is active — `dot` has
+                                // no built-in "hide me" reading the way `count` does (§ Badge file header: count
+                                // ≤ 0 hides itself, a bare dot has no such signal), so the ON/OFF state is this
+                                // block's own condition instead of a prop the atom could resolve alone.
+                                isFiltered ? <Badge dot>{filterTrigger}</Badge> : filterTrigger
+                            ),
+                        ]}
+                    />
+                ),
+                () => (
+                    <AsyncContent
+                        isLoading={isLoading || isSkeleton}
+                        skeleton={() => <SurfaceCardList items={skeletonRows()} isSkeleton />}
+                        isEmpty={items.length === 0}
+                        emptyContent={emptyContent}
+
+                        content={() => <SurfaceCardList items={rows} />}
+                    />
+                ),
+            ]}
+        />
     )
-
-    const railBody = (
-        <>
-            <StackH gap={3} principle="flex-action"
-                explain="Groups action controls on one horizontal peer row so they share a single hit baseline."
-                at="sm" isSkeleton={isSkeleton} items={[() => searchRow]}  />
-            <AsyncContent
-                isLoading={isLoading || isSkeleton}
-                skeleton={() => <SurfaceCardList items={skeletonRows()} isSkeleton />}
-                isEmpty={items.length === 0}
-                emptyContent={emptyContent}
-
-                content={() => <SurfaceCardList items={rows} />}
-            />
-        </>
-    )
-
-    return <StackV identity={{ tier: "block", component: "MindMapRail" }} gap={3} isSkeleton={isSkeleton} items={[() => railBody]} />
 }
 
 export { MindMapRail }

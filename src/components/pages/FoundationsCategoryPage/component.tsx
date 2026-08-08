@@ -111,59 +111,82 @@ const _FoundationsCategoryPage = ({
     resourceListAriaLabel,
     isSkeleton = false,
 }: FoundationsCategoryPageProps) => {
-    const resourcesSection = (
-        <>
-            <FoundationSearchBar
+    const categoryBody = (
+        <StackV
+            gap={7}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <FoundationsHeader
 
-                query={searchQuery}
-                onQueryChange={onSearchQueryChange}
-                suggestions={suggestions}
-                onSelectSuggestion={onSelectSuggestion}
-                resultCount={resultCount}
-                isCountLoading={isResultCountLoading}
-                isSkeleton={isSkeleton}
+                        breadcrumbItems={breadcrumbItems}
+                        title={title}
+                        description={description}
+                        isSkeleton={isSkeleton}
 
-            />
-            <FoundationResourceList
+                    />
+                ),
+                () => (
+                    <TrialEnrollBanner
 
-                resources={resources}
-                isLoading={isSkeleton || isResourcesLoading}
-                error={resourcesError}
-                searchQuery={searchQuery}
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={onPageChange}
-                ariaLabel={resourceListAriaLabel}
+                        isVisible={isTrialNudgeVisible}
+                        onEnroll={onEnrollTrial}
+                        isSkeleton={isSkeleton}
 
-            />
-        </>
+                    />
+                ),
+                () => (
+                    <StackV
+                        gap={6}
+                        principle="block-boundary"
+                        explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+                        isSkeleton={isSkeleton}
+                        items={[
+                            () => (
+                                <FoundationSearchBar
+
+                                    query={searchQuery}
+                                    onQueryChange={onSearchQueryChange}
+                                    suggestions={suggestions}
+                                    onSelectSuggestion={onSelectSuggestion}
+                                    resultCount={resultCount}
+                                    isCountLoading={isResultCountLoading}
+                                    isSkeleton={isSkeleton}
+
+                                />
+                            ),
+                            () => (
+                                <FoundationResourceList
+
+                                    resources={resources}
+                                    isLoading={isSkeleton || isResourcesLoading}
+                                    error={resourcesError}
+                                    searchQuery={searchQuery}
+                                    currentPage={currentPage}
+                                    totalPages={totalPages}
+                                    onPageChange={onPageChange}
+                                    ariaLabel={resourceListAriaLabel}
+
+                                />
+                            ),
+                        ]}
+                    />
+                ),
+            ]}
+        />
     )
-
-    const categorySections = (
-        <>
-            <FoundationsHeader
-
-                breadcrumbItems={breadcrumbItems}
-                title={title}
-                description={description}
-                isSkeleton={isSkeleton}
-
-            />
-            <TrialEnrollBanner
-
-                isVisible={isTrialNudgeVisible}
-                onEnroll={onEnrollTrial}
-                isSkeleton={isSkeleton}
-
-            />
-            <StackV gap={6} isSkeleton={isSkeleton} items={[() => resourcesSection]} />
-        </>
-    )
-
-    const categoryBody = <StackV gap={7} isSkeleton={isSkeleton} items={[() => categorySections]} />
 
     return (
-        <Container identity={IDENTITY} size="md" padding={6} body={() => categoryBody} />
+        <Container
+            identity={IDENTITY}
+            size="md"
+            padding={6}
+            principle="page-pad"
+            explain="Page chrome inset — not card-padding, because this pads the whole page rather than a nested card surface."
+            body={() => categoryBody}
+        />
     )
 }
 

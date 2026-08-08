@@ -1,0 +1,16 @@
+{
+  "batch": "31h1",
+  "worker": "src-layouts-overlays",
+  "status": "held",
+  "fixed": [],
+  "held": [
+    {
+      "file": "src/components/layouts/Footer/**",
+      "reason": "Connected layout Footer — separate from block twin; still multi-host"
+    },
+    {
+      "file": "src/components/layouts/InnerLayout/**",
+      "reason": "Pre-existing Box/PinnedTrack debt — not absorbed"
+    }
+  ]
+}

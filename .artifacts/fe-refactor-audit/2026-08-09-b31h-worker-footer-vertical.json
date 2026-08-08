@@ -1,0 +1,60 @@
+{
+  "batch": "31h",
+  "worker": "footer-vertical",
+  "status": "held-retracted",
+  "note": "Phase C Footer product edits not retained. Independent lint rule + FooterFrame contract kept.",
+  "footerApiBefore": {
+    "sb": {
+      "root": "<footer className=\"border-t border-default bg-surface\">",
+      "publicClassName": false,
+      "cn": false,
+      "measure": "Container size=xl padding=6 inline",
+      "rawHosts": ["div.hidden @app-md:flex wordmark", "div text wordmark lines", "div.max-w-sm", "div.items-start @app-sm:items-center"]
+    },
+    "src": {
+      "root": "<footer className={cn(\"border-t border-default bg-surface\", className)}>",
+      "publicClassName": true,
+      "cn": true,
+      "measure": "Container size=xl padding=6 inline",
+      "rawHosts": ["same structural set", "fragments not yet peer-split"]
+    }
+  },
+  "footerApiAfter": "unchanged vs pre-B31h (B31f2 SB Footer diff left protected; src Footer untouched by B31h)",
+  "holds": [
+    {
+      "subtree": "wordmark show-from-md",
+      "missingOwner": "ShowFrom (or ShowAbove) frame — inverse of HideAbove: base hidden + @app-{at}:flex|block",
+      "evidence": "div.hidden @app-md:flex"
+    },
+    {
+      "subtree": "brand column measure",
+      "missingOwner": "MaxWidth / MeasureCap frame owning max-w-sm|md|lg as a typed size prop",
+      "evidence": "div.max-w-sm"
+    },
+    {
+      "subtree": "src Footer HeroUI Link + cn",
+      "missingOwner": "inline/text Link atom (only LinkBack/LinkSeeMore exist) + drop cn once chrome moves to FooterFrame",
+      "evidence": "starci-fe/no-heroui-outside-vocabulary + no-cn-above-vocabulary"
+    },
+    {
+      "subtree": "wordmark typography 8px uppercase",
+      "missingOwner": "Typography size/role covering text-[8px] uppercase leading-none, or BrandLockup promoted without BrandLogo size drift",
+      "evidence": "raw div text chrome"
+    }
+  ],
+  "proposedOwners": [
+    {
+      "name": "ShowFrom",
+      "tier": "frame",
+      "api": "body: ComponentTypeWithSkeleton; at: sm|md|lg|xl — owns hidden + @app-{at}:flex",
+      "twinOf": "HideAbove"
+    },
+    {
+      "name": "MaxWidth",
+      "tier": "frame",
+      "api": "body: ComponentTypeWithSkeleton; size: sm|md|lg — owns max-w-*",
+      "note": "Finite measure cap for brand/column widths"
+    }
+  ],
+  "productEdits": "none retained"
+}

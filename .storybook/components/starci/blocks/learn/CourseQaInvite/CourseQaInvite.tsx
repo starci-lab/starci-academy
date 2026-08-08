@@ -43,30 +43,25 @@ const CourseQaInvite = ({
     onGoToContent,
     isSkeleton = false,
 }: CourseQaInviteProps) => (
-    <div>
-        <SurfaceCard
-
-            body={() => (
-                <EmptyState
-                    icon={QuestionIcon}
-                    title={title}
-                    description={hint}
-                    action={() => (
-                        <Button
-                            isSkeleton={isSkeleton}
-                            label={ctaLabel}
-                            variant="primary"
-                            suffixIcon={ArrowRightIcon}
-                            iconSlide
-                            onPress={onGoToContent}
-
-                        />
-                    )}
-
-                />
-            )}
-        />
-    </div>
+    <SurfaceCard
+        body={() => (
+            <EmptyState
+                icon={QuestionIcon}
+                title={title}
+                description={hint}
+                action={() => (
+                    <Button
+                        isSkeleton={isSkeleton}
+                        label={ctaLabel}
+                        variant="primary"
+                        suffixIcon={ArrowRightIcon}
+                        iconSlide
+                        onPress={onGoToContent}
+                    />
+                )}
+            />
+        )}
+    />
 )
 
 export { CourseQaInvite }

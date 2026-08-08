@@ -1,0 +1,210 @@
+{
+  "batch": "31h1",
+  "date": "2026-08-09",
+  "rule": "starci-fe/no-host-element-at-sentence-tier",
+  "before": {
+    "files": 722,
+    "hosts": 1799,
+    "byTag": {
+      "div": 1708,
+      "section": 36,
+      "nav": 33,
+      "aside": 4,
+      "footer": 8,
+      "header": 6,
+      "main": 4
+    },
+    "byTier": {
+      "blocks": 1368,
+      "pages": 352,
+      "layouts": 53,
+      "overlays": 26
+    }
+  },
+  "after": {
+    "files": 712,
+    "hosts": 1774,
+    "byTag": {
+      "div": 1687,
+      "section": 36,
+      "nav": 33,
+      "aside": 4,
+      "header": 6,
+      "footer": 5,
+      "main": 3
+    },
+    "byTier": {
+      "blocks": 1349,
+      "pages": 352,
+      "layouts": 47,
+      "overlays": 26
+    }
+  },
+  "delta": {
+    "files": -10,
+    "hosts": -25
+  },
+  "pageFolderBlockedSample": [
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/AdminAiBalancerSkeleton/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/ProviderSection/index.tsx",
+      "hosts": 2
+    },
+    {
+      "file": "src/components/pages/AdminAiBalancerPage/TopBar/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/ConfigCard/RendererTypeButton/index.tsx",
+      "hosts": 3
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/Header/index.tsx",
+      "hosts": 2
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/PreviewCard/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/AdminMpegDashTestPage/QuickTestUrls/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/DropZone/index.tsx",
+      "hosts": 2
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/FileSelectionCard/index.tsx",
+      "hosts": 3
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/Header/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/LoadingScreen/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/TopBar/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/index.tsx",
+      "hosts": 2
+    },
+    {
+      "file": "src/components/pages/AdminUploadVideoPage/UploadProgressCard/ProviderUploadRow/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/AiUsagePage/AiUsageHistory/index.tsx",
+      "hosts": 2
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureMap/index.tsx",
+      "hosts": 2
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "hosts": 4
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/ArchitectureRail/index.tsx",
+      "hosts": 5
+    },
+    {
+      "file": "src/components/pages/ArchitecturePage/NodeDissectionPanel/index.tsx",
+      "hosts": 10
+    },
+    {
+      "file": "src/components/pages/BlogListPage/CategoryFilter/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/BlogListPage/Masthead/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/BlogPostPage/ReadingProgress/index.tsx",
+      "hosts": 2
+    },
+    {
+      "file": "src/components/pages/BlogPostPage/RelatedPosts/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/CommunityFeedPage/CommunityComposer/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactChannels/FounderCard/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/ContactPage/ContactChannels/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/CourseDetailPage/CoursePricingRail/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/CvEditorPage/CvEditorToolbarBar/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CommunityTab/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ContinueLearning/ContinueLearningSkeleton/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/CoursesTab/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardIdentity/ProfileMenuCard/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/DashboardTabsBar/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/ExploreTab/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/FeedTabs/FeedTabsSkeleton/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/LeagueTierBadge/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/index.tsx",
+      "hosts": 1
+    },
+    {
+      "file": "src/components/pages/DashboardPage/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+      "hosts": 4
+    }
+  ],
+  "pageFolderBlockedCount": 80
+}

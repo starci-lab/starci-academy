@@ -1,0 +1,12 @@
+{
+  "batch": "31h",
+  "worker": "src-pages",
+  "status": "held",
+  "fixed": [],
+  "held": [
+    {
+      "pattern": "DashboardPage/*Tab, ContactChannels, FlashcardMobileNav, PracticeMobileNav, …",
+      "reason": "page-folder-two-files-only blocks zero-warn (page-folder moves forbidden). HideAbove/StackV host swaps alone cannot clear the ratchet."
+    }
+  ]
+}

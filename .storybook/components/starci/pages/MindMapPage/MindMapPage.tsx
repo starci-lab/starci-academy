@@ -208,64 +208,64 @@ const MindMapPage = ({
     // The canvas region's floating chrome — in the real app these render as the
     // SAME ReactFlow engine's own Panel children, see the file header's
     // "OVERLAYS ARE FRAMES" note.
-    const canvasOverlays = (
-        <>
-            <div className="absolute inset-x-0 top-4 z-10">
-                <StackV
-                    gap={1}
-                    principle="sibling-stack"
-                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                    align="center"
-                    isSkeleton={isSkeleton}
-                    items={[() => (
-                        <MindMapContinueButton
+    const showOverlays = variant === "standalone" && !isSkeleton
 
-                            resumeHref={resumeHref}
-                            allContentDone={allContentDone}
-                            onResume={onResume}
-                            continueAriaLabel={continueAriaLabel}
-                            isSkeleton={isSkeleton}
-                        />
-                    )]}
-                />
-            </div>
-            <div className="absolute bottom-4 left-4 z-10">
-                <StackV
-                    gap={1}
-                    isSkeleton={isSkeleton}
-                    items={[() => (
-                        <div>
-                            <Legend items={legendItems} />
-                        </div>
-                    )]}
-                />
-            </div>
-            <div className="absolute bottom-4 right-4 z-10">
-                <StackV
-                    gap={1}
-                    isSkeleton={isSkeleton}
-                    items={[() => (
-                        <MindMapFullscreenButton
-
-                            onZoomIn={onZoomIn}
-                            onZoomOut={onZoomOut}
-                            onToggleFullscreen={onToggleFullscreen}
-                            isFullscreen={isFullscreen}
-                            ariaLabels={fullscreenAriaLabels}
-                            isSkeleton={isSkeleton}
-                        />
-                    )]}
-                />
-            </div>
-        </>
-    )
-
-    const canvasRegion = (
-        <>
-            <MindMapCanvasGap isLoading={isSkeleton} />
-            {variant === "standalone" && !isSkeleton ? canvasOverlays : null}
-        </>
-    )
+    const canvasItems = [
+        () => <MindMapCanvasGap isLoading={isSkeleton} />,
+        ...(showOverlays ? [
+            () => (
+                <div className="absolute inset-x-0 top-4 z-10">
+                    <StackV
+                        gap={1}
+                        principle="sibling-stack"
+                        explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                        align="center"
+                        isSkeleton={isSkeleton}
+                        items={[() => (
+                            <MindMapContinueButton
+                                resumeHref={resumeHref}
+                                allContentDone={allContentDone}
+                                onResume={onResume}
+                                continueAriaLabel={continueAriaLabel}
+                                isSkeleton={isSkeleton}
+                            />
+                        )]}
+                    />
+                </div>
+            ),
+            () => (
+                <div className="absolute bottom-4 left-4 z-10">
+                    <StackV
+                        gap={1}
+                        isSkeleton={isSkeleton}
+                        items={[() => (
+                            <div>
+                                <Legend items={legendItems} />
+                            </div>
+                        )]}
+                    />
+                </div>
+            ),
+            () => (
+                <div className="absolute bottom-4 right-4 z-10">
+                    <StackV
+                        gap={1}
+                        isSkeleton={isSkeleton}
+                        items={[() => (
+                            <MindMapFullscreenButton
+                                onZoomIn={onZoomIn}
+                                onZoomOut={onZoomOut}
+                                onToggleFullscreen={onToggleFullscreen}
+                                isFullscreen={isFullscreen}
+                                ariaLabels={fullscreenAriaLabels}
+                                isSkeleton={isSkeleton}
+                            />
+                        )]}
+                    />
+                </div>
+            ),
+        ] : []),
+    ]
 
     const workspaceRail = (
         <ResizableRail
@@ -274,9 +274,9 @@ const MindMapPage = ({
             minWidth={RAIL_MIN_WIDTH}
             maxWidth={RAIL_MAX_WIDTH}
             ariaLabel={railResizeAriaLabel}
+            // eslint-disable-next-line starci-fe/handler-on-prefix -- `handleSide` is a ResizableRail layout prop (which edge the resize handle sits on), a noun not an onXxx event handler
             handleSide="right"
             className="h-full shrink-0 border-r border-default"
-
         >
             <div className="overflow-y-auto">
                 <StackV
@@ -292,26 +292,27 @@ const MindMapPage = ({
         </ResizableRail>
     )
 
-    const workspaceSections = (
-        <>
-            {variant === "workspace" ? workspaceRail : null}
-            {/* The canvas region: the out-of-reach engine's gap, plus (standalone only) the
-                floating chrome that in the real app renders as the SAME engine's own Panel
-                children — see the file header's "OVERLAYS ARE FRAMES" note. */}
-            <div className="relative">
-                <StackV
-                    gap={1}
-                    classNames={["min-w-0", "flex-1"]}
-                    isSkeleton={isSkeleton}
-                    items={[() => canvasRegion]}
-                />
-            </div>
-        </>
-    )
-
     return (
         <div className="h-[calc(100dvh-4rem)]">
-            <StackH gap={1} isSkeleton={isSkeleton} items={[() => workspaceSections]} />
+            <StackH
+                gap={1}
+                isSkeleton={isSkeleton}
+                items={[
+                    ...(variant === "workspace" ? [() => workspaceRail] : []),
+                    // The canvas region: the out-of-reach engine's gap, plus (standalone only) the
+                    // floating chrome that in the real app renders as the SAME engine's own Panel
+                    // children — see the file header's "OVERLAYS ARE FRAMES" note.
+                    () => (
+                        <div className="relative min-w-0 flex-1">
+                            <StackV
+                                gap={1}
+                                isSkeleton={isSkeleton}
+                                items={canvasItems}
+                            />
+                        </div>
+                    ),
+                ]}
+            />
         </div>
     )
 }

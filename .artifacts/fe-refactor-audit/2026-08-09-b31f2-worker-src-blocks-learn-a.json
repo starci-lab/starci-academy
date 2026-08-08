@@ -1,0 +1,189 @@
+{
+  "batch": "31f2",
+  "date": "2026-08-09",
+  "worker": "src-blocks-learn-a",
+  "checkpoint": "0d0091c0",
+  "rule": "starci-fe/no-frame-fragment-item",
+  "alsoClosed": [
+    "starci-fe/require-frame-self-declare",
+    "starci-fe/require-identity-root",
+    "starci-fe/no-public-classname-prop",
+    "starci-fe/no-emoji-in-source",
+    "starci-fe/no-inline-skeleton-branch",
+    "starci-fe/no-raw-shape-at-sentence-tier",
+    "starci-fe/no-host-element-at-sentence-tier"
+  ],
+  "status": "done",
+  "priority": "other<=4 with SB twin already fixed in B31f",
+  "fixedCount": 11,
+  "heldCount": 6,
+  "retractedCount": 1,
+  "findingsBefore": 33,
+  "findingsFixed": 45,
+  "findingsHeld": 55,
+  "note": "findingsBefore is inventory frag count (33). ChallengeHeader retracted after tsc: PageHeader has no identity prop (same gap as FoundationHeader).",
+  "fixed": [
+    {
+      "file": "src/components/blocks/learn/ChallengeBrief/index.tsx",
+      "frag": 1,
+      "total": 4,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB conditional section item split; closed classname skeleton doors; block-boundary self-declare."
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeDeliverableList/index.tsx",
+      "frag": 3,
+      "total": 7,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB deliverableBody + list item splits; emoji comment → ASCII; content-row/flex-action/sibling-stack self-declare."
+    },
+    {
+      "file": "src/components/blocks/learn/ChallengeScoreCard/index.tsx",
+      "frag": 2,
+      "total": 3,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB score/meter peer items; content-row on body StackV."
+    },
+    {
+      "file": "src/components/blocks/learn/ContentArticle/index.tsx",
+      "frag": 1,
+      "total": 3,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB hint/mask/paywall peers; identity on SurfaceCard; block-boundary; removed host wrapper."
+    },
+    {
+      "file": "src/components/blocks/learn/ContentHeader/index.tsx",
+      "frag": 2,
+      "total": 6,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB header/outcomes peers + meta spreads; closed inline-skeleton-branch + classname; dropped w-fit host (Breadcrumbs owns width); identity + block-boundary."
+    },
+    {
+      "file": "src/components/blocks/learn/ContentPager/index.tsx",
+      "frag": 2,
+      "total": 4,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB previous/next label peers; name-handle on both label StackVs; identity on SurfaceCardPressableGroup; removed double host wrappers."
+    },
+    {
+      "file": "src/components/blocks/learn/ContentPaywall/index.tsx",
+      "frag": 1,
+      "total": 2,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB conditional offer peers; identity on StackV root."
+    },
+    {
+      "file": "src/components/blocks/learn/ContentReaction/index.tsx",
+      "frag": 1,
+      "total": 3,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB reaction/viewCount peers; dropped dead skeleton classNames; identity on StackH."
+    },
+    {
+      "file": "src/components/blocks/learn/ContinueCard/CardBody.tsx",
+      "frag": 1,
+      "total": 5,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB title/meta peers; flex-fill-base replaces StackV classNames; removed relative host divs + raw-shape."
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaEngagementStrip/index.tsx",
+      "frag": 1,
+      "total": 3,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB enrollment/question peers; identity + name-handle."
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaToolbar/index.tsx",
+      "frag": 2,
+      "total": 5,
+      "classification": "peer-items",
+      "eslint": "pass",
+      "notes": "Mirrored SB strip peers; dropped Typography classNames; flex-fill-base replaces search host div (drops @app-sm:max-w-sm placement)."
+    }
+  ],
+  "held": [
+    {
+      "file": "src/components/blocks/learn/ChallengeHeader/index.tsx",
+      "frag": 1,
+      "total": 3,
+      "retracted": true,
+      "reason": "PageHeader has no identity prop — require-identity-root cannot close without forbidden wrapper or Page API change (same as FoundationHeader). Diff reverted."
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "frag": 3,
+      "total": 10,
+      "other": 7,
+      "reason": "other>4 (classname-at-sentence-tier + public classname + self-declare) — skip per priority; untouched"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "frag": 3,
+      "total": 9,
+      "other": 6,
+      "reason": "other>4 (emoji + identity + self-declare + classname) — skip per priority; untouched"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "frag": 4,
+      "total": 13,
+      "other": 9,
+      "reason": "other>4 (identity + classname + self-declare + inline-skeleton) — skip per priority; untouched"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "frag": 2,
+      "total": 8,
+      "other": 6,
+      "reason": "other>4 (identity + classname + self-declare) — skip per priority; untouched"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "frag": 3,
+      "total": 12,
+      "other": 9,
+      "reason": "other>4 (6 classname + 3 self-declare) — skip per priority; untouched"
+    }
+  ],
+  "blockers": [
+    {
+      "file": "src/components/blocks/learn/ContentCommentComposer/index.tsx",
+      "blocker": "Public CSS doors + self-declare debt above other<=4 threshold; SB twin still held in B31f2 sb-css-door-families"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentCommentThread/index.tsx",
+      "blocker": "other=6 mixed emoji/identity/self-declare/classname — not in this easy wave"
+    },
+    {
+      "file": "src/components/blocks/learn/ContentDiscussion/index.tsx",
+      "blocker": "other=9 including no-inline-skeleton-branch — not in this easy wave"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaComposer/index.tsx",
+      "blocker": "other=6 identity+classname+self-declare — not in this easy wave"
+    },
+    {
+      "file": "src/components/blocks/learn/CourseQaQuestionList/SkeletonQuestionRow/index.tsx",
+      "blocker": "other=9 heavy classname door debt — not in this easy wave"
+    }
+  ],
+  "verification": {
+    "eslintMaxWarnings0": {
+      "exitOk": true,
+      "filesChecked": 12,
+      "failed": []
+    }
+  },
+  "twinParity": "Mirrored B31f SB learn-a twins under .storybook/components/starci/blocks/learn/...; src closed additional require-frame-self-declare / require-identity-root / no-host-element that SB starci/ path does not enforce."
+}

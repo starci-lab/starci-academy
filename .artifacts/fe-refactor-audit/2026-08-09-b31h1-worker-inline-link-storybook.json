@@ -1,0 +1,16 @@
+{
+  "batch": "31h1",
+  "worker": "inline-link-storybook",
+  "status": "done",
+  "fixed": [
+    ".storybook/components/atoms/navigation/Link/InlineLink.tsx",
+    ".storybook/components/atoms/navigation/Link/Link.tsx",
+    ".storybook/stories/atoms/navigation/Link/InlineLink.stories.tsx"
+  ],
+  "api": {
+    "labelShape": ["label", "size?: sm|xs", "onPress?", "href?", "isSkeleton?"],
+    "iconShape": ["icon: IconComponent", "ariaLabel", "onPress?", "href?", "isSkeleton?"],
+    "derivedFrom": "Footer column/legal/social HeroUI Link consumers — onPress-first, optional href"
+  },
+  "eslint": "pass"
+}

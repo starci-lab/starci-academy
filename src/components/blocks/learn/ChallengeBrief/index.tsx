@@ -92,7 +92,7 @@ const markdownBody = (body: string): ReactNode => (
 const skeletonListRows = (count: number, keyPrefix: string): Array<SurfaceCardListItem> =>
     Array.from({ length: count }, (_unused, index) => ({
         key: `${keyPrefix}-${index}`,
-        content: () => <Typography size="sm" isSkeleton classNames={["w-3/4"]} />,
+        content: () => <Typography size="sm" isSkeleton />,
     }))
 
 /** One expected-output row: a leading check plus the stripped output text. */
@@ -199,64 +199,67 @@ const ChallengeBrief = ({
     // rhythm, and the word "Hint" alone already carries enough meaning (only a
     // universally recognised symbol earns its own glyph, not a plain-prose label).
 
-    const sections = (
-        <>
-            {showPrerequisites ? (
-                <SurfaceCardList
-                    label="Prerequisites"
-                    items={prerequisiteItems}
-                    isSkeleton={isSkeleton}
-
-
-                />
-            ) : null}
-            {showRequirements ? (
-                <SurfaceCardAccordion
-                    label="Requirements"
-                    items={requirementItems}
-                    allowsMultipleExpanded
-                    isSkeleton={isSkeleton}
-
-
-                />
-            ) : null}
-            {showSteps ? (
-                <SurfaceCardAccordion
-                    label="Guided steps"
-                    items={stepItems}
-                    allowsMultipleExpanded
-                    isSkeleton={isSkeleton}
-
-
-                />
-            ) : null}
-            {showOutputs ? (
-                <SurfaceCardList
-                    label="Expected outputs"
-                    items={outputItems}
-                    isSkeleton={isSkeleton}
-
-
-                />
-            ) : null}
-            {showHint ? (
-                <SurfaceCard
-                    label="Hint"
-                    isSkeleton={isSkeleton}
-
-
-                    body={() =>
-                        isSkeleton
-                            ? <Typography size="sm" isSkeleton classNames={["w-3/4"]} />
-                            : markdownBody(trimmedHint)
-                    }
-                />
-            ) : null}
-        </>
-    )
-
     return (
-        <StackV identity={{ tier: "block", component: "ChallengeBrief" }} gap={6} isSkeleton={isSkeleton} items={[() => sections]} />
+        <StackV
+            identity={{ tier: "block", component: "ChallengeBrief" }}
+            gap={6}
+            principle="block-boundary"
+            explain="Block-to-block spacing — not group-boundary, because this separates major blocks rather than nested section groups."
+            isSkeleton={isSkeleton}
+            items={[
+                ...(showPrerequisites ? [() => (
+                    <SurfaceCardList
+                        label="Prerequisites"
+                        items={prerequisiteItems}
+                        isSkeleton={isSkeleton}
+
+
+                    />
+                )] : []),
+                ...(showRequirements ? [() => (
+                    <SurfaceCardAccordion
+                        label="Requirements"
+                        items={requirementItems}
+                        allowsMultipleExpanded
+                        isSkeleton={isSkeleton}
+
+
+                    />
+                )] : []),
+                ...(showSteps ? [() => (
+                    <SurfaceCardAccordion
+                        label="Guided steps"
+                        items={stepItems}
+                        allowsMultipleExpanded
+                        isSkeleton={isSkeleton}
+
+
+                    />
+                )] : []),
+                ...(showOutputs ? [() => (
+                    <SurfaceCardList
+                        label="Expected outputs"
+                        items={outputItems}
+                        isSkeleton={isSkeleton}
+
+
+                    />
+                )] : []),
+                ...(showHint ? [() => (
+                    <SurfaceCard
+                        label="Hint"
+                        isSkeleton={isSkeleton}
+
+
+                        body={() =>
+                            isSkeleton
+                                ? <Typography size="sm" isSkeleton />
+                                : markdownBody(trimmedHint)
+                        }
+                    />
+                )] : []),
+            ]}
+        />
     )
 }
 

@@ -3,6 +3,8 @@
 import type { IconComponent } from "@/types"
 import { LockIcon } from "@phosphor-icons/react"
 import React from "react"
+import { StackH } from "@/components/frames/Stack"
+
 /** Props for {@link TabTrigger}. */
 export interface TabTriggerProps {
     /** Icon rendered before the label. */
@@ -27,9 +29,16 @@ export const TabTrigger = ({
     // When gated, the lock OVERRIDES the tab's own icon (one icon, not icon + lock).
     const Icon = locked ? LockIcon : TabIcon
     return (
-        <div className={"flex items-center gap-2"}>
-            <Icon className="size-4" aria-label={locked ? label : undefined} />
-            <span>{label}</span>
-        </div>
+        <StackH
+            identity={{ tier: "block", component: "TabTrigger" }}
+            gap={2}
+            align="center"
+            principle="icon-text"
+            explain="Icon beside its label on one baseline — not title-subtitle, because these sit on one horizontal line rather than a stacked title voice; not label-field, because the text is not a form control label."
+            items={[
+                () => <Icon className="size-4" aria-label={locked ? label : undefined} />,
+                () => <span>{label}</span>,
+            ]}
+        />
     )
 }

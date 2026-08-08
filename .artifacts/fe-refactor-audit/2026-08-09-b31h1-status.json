@@ -1,0 +1,43 @@
+{
+  "batch": "31h1",
+  "date": "2026-08-09",
+  "status": "partial",
+  "contracts": {
+    "ShowFrom": {
+      "at": ["sm", "md", "lg"],
+      "mapping": {
+        "sm": "hidden @app-sm:flex",
+        "md": "hidden @app-md:flex",
+        "lg": "hidden @app-lg:flex"
+      }
+    },
+    "Measure": {
+      "size": ["sm", "md", "lg"],
+      "mapping": {
+        "sm": "max-w-sm",
+        "md": "max-w-md",
+        "lg": "max-w-lg"
+      }
+    },
+    "InlineLink": {
+      "shapes": ["label+size", "icon+ariaLabel"],
+      "nav": "onPress-first; optional href"
+    }
+  },
+  "footer": {
+    "productMigration": "landed both trees zero-warn",
+    "root": "FooterFrame",
+    "publicClassNameRemoved": true,
+    "cnRemoved": true
+  },
+  "hostHits": {
+    "before": 1799,
+    "after": 1774,
+    "delta": -25,
+    "filesBefore": 722,
+    "filesAfter": 712
+  },
+  "pageFolderBlocked": 80,
+  "gates": "all pass",
+  "committed": false
+}

@@ -60,52 +60,49 @@ const MindMapFullscreenButton = ({
     isSkeleton = false,
 }: MindMapFullscreenButtonProps) => {
     return (
-        <div>
-            <StackV
-                gap={2}
-                isSkeleton={isSkeleton}
-                items={[
-                    () => (
-                        <ButtonBase
-                            isIconOnly
-                            isSkeleton={isSkeleton}
-                            variant="ghost"
-                            size="sm"
-                            prefixIcon={MagnifyingGlassPlusIcon}
-                            ariaLabel={ariaLabels.zoomIn}
-                            onPress={onZoomIn}
-
-                        />
-                    ),
-                    () => (
-                        <ButtonBase
-                            isIconOnly
-                            isSkeleton={isSkeleton}
-                            variant="ghost"
-                            size="sm"
-                            prefixIcon={MagnifyingGlassMinusIcon}
-                            ariaLabel={ariaLabels.zoomOut}
-                            onPress={onZoomOut}
-
-                        />
-                    ),
-                    () => (
-                        <ButtonBase
-                            isIconOnly
-                            isSkeleton={isSkeleton}
-                            variant="ghost"
-                            size="sm"
-                            // Collapse glyph while fullscreen (this button now means "exit"),
-                            // expand glyph otherwise — the one real judgement call this block owns.
-                            prefixIcon={isFullscreen ? ArrowsInIcon : ArrowsOutIcon}
-                            ariaLabel={ariaLabels.toggleFullscreen}
-                            onPress={onToggleFullscreen}
-
-                        />
-                    ),
-                ]}
-            />
-        </div>
+        <StackV
+            gap={2}
+            principle="sibling-stack"
+            explain="Same-kind peer stack of zoom controls — not group-boundary, because these are repeating action siblings rather than section groups."
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <ButtonBase
+                        isIconOnly
+                        isSkeleton={isSkeleton}
+                        variant="ghost"
+                        size="sm"
+                        prefixIcon={MagnifyingGlassPlusIcon}
+                        ariaLabel={ariaLabels.zoomIn}
+                        onPress={onZoomIn}
+                    />
+                ),
+                () => (
+                    <ButtonBase
+                        isIconOnly
+                        isSkeleton={isSkeleton}
+                        variant="ghost"
+                        size="sm"
+                        prefixIcon={MagnifyingGlassMinusIcon}
+                        ariaLabel={ariaLabels.zoomOut}
+                        onPress={onZoomOut}
+                    />
+                ),
+                () => (
+                    <ButtonBase
+                        isIconOnly
+                        isSkeleton={isSkeleton}
+                        variant="ghost"
+                        size="sm"
+                        // Collapse glyph while fullscreen (this button now means "exit"),
+                        // expand glyph otherwise — the one real judgement call this block owns.
+                        prefixIcon={isFullscreen ? ArrowsInIcon : ArrowsOutIcon}
+                        ariaLabel={ariaLabels.toggleFullscreen}
+                        onPress={onToggleFullscreen}
+                    />
+                ),
+            ]}
+        />
     )
 }
 

@@ -105,6 +105,7 @@ const FlashcardDueHero = ({
     if (dueCount === 0 && !isSkeleton) {
         return (
             <SurfaceCard
+                identity={{ tier: "block", component: "FlashcardDueHero" }}
                 label={SECTION_LABEL}
 
 
@@ -123,59 +124,72 @@ const FlashcardDueHero = ({
     // LEAF 1 (also the isSkeleton mirror) — the due-count cluster + Start CTA.
     const breakdown = buildBreakdown(dueReviewCount, newCount)
 
-    const dueCountLines = (
-        <>
-            <Typography
-                size="h2"
-                weight="bold"
-                tabularNums
-                isSkeleton={isSkeleton}
-
-                text={String(dueCount)}
-            />
-            <Typography
-                size="sm"
-                color="muted"
-                isSkeleton={isSkeleton}
-
-                text="cards due today"
-            />
-            {breakdown ? (
-                <Typography
-                    size="xs"
-                    color="muted"
-                    isSkeleton={isSkeleton}
-
-                    text={breakdown}
-                />
-            ) : null}
-        </>
-    )
-
-    const heroBody = (
-        <>
-            <StackV gap={2} items={[() => dueCountLines]} />
-            <Button
-                variant="primary"
-                label="Start reviewing"
-                suffixIcon={ArrowRightIcon}
-                iconSlide
-                onPress={onStart}
-                isPending={isStarting}
-                isSkeleton={isSkeleton}
-
-                classNames={["w-fit"]}
-            />
-        </>
-    )
-
     return (
         <SurfaceCard
+            identity={{ tier: "block", component: "FlashcardDueHero" }}
             label={SECTION_LABEL}
 
             isSkeleton={isSkeleton}
 
-            body={() => <StackV gap={4} items={[() => heroBody]} />}
+            body={() => (
+                <StackV
+                    gap={4}
+                    principle="sibling-stack"
+                    explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+                    items={[
+                        () => (
+                            <StackV
+                                gap={2}
+                                principle="title-subtitle"
+                                explain="Title over supporting line — not label-field, because neither line is a form control label."
+                                items={[
+                                    () => (
+                                        <Typography
+                                            size="h2"
+                                            weight="bold"
+                                            tabularNums
+                                            isSkeleton={isSkeleton}
+
+                                            text={String(dueCount)}
+                                        />
+                                    ),
+                                    () => (
+                                        <Typography
+                                            size="sm"
+                                            color="muted"
+                                            isSkeleton={isSkeleton}
+
+                                            text="cards due today"
+                                        />
+                                    ),
+                                    ...(breakdown ? [() => (
+                                        <Typography
+                                            size="xs"
+                                            color="muted"
+                                            isSkeleton={isSkeleton}
+
+                                            text={breakdown}
+                                        />
+                                    )] : []),
+                                ]}
+                            />
+                        ),
+                        () => (
+                            <Button
+                                variant="primary"
+                                label="Start reviewing"
+                                suffixIcon={ArrowRightIcon}
+                                iconSlide
+                                onPress={onStart}
+                                isPending={isStarting}
+                                isSkeleton={isSkeleton}
+
+
+                            />
+                        ),
+                    ]}
+                />
+            )}
         />
     )
 }

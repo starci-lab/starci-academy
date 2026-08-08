@@ -1,0 +1,11 @@
+{
+  "batch": "31h",
+  "worker": "sb-pages",
+  "status": "held",
+  "fixed": [],
+  "held": [
+    {
+      "reason": "No complete zero-warn vertical slices found outside Nivo (locked). Remaining SB starci pages either need ShowFrom/MaxWidth or carry unrelated debt beyond host rule."
+    }
+  ]
+}

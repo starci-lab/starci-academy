@@ -1,16 +1,20 @@
 /** @noSkeleton table chrome — cells are handed in by the caller. */
-import type { ComponentProps, ReactNode } from "react"
+import type { ReactNode } from "react"
 import { Table as HeroTable } from "@heroui/react"
 
 /** Props for {@link TableRoot}. */
-export type TableRootProps = Omit<ComponentProps<typeof HeroTable>, "className" | "classNames"> & {
+export interface TableRootProps {
     /** Table compound tree. */
     children?: ReactNode
+    /** House table chrome selected by proven consumers. */
+    variant?: "primary"
+    /** Accessible table label. */
+    ariaLabel?: string
 }
 
 /** House table root over HeroUI `Table`. */
-export const TableRoot = ({ children, ...props }: TableRootProps) => (
-    <HeroTable data-tier="atom" data-component="TableRoot" {...props}>{children}</HeroTable>
+export const TableRoot = ({ children, variant, ariaLabel }: TableRootProps) => (
+    <HeroTable data-tier="atom" data-component="TableRoot" variant={variant} aria-label={ariaLabel}>{children}</HeroTable>
 )
 
 /** House scroll container over HeroUI `Table.ScrollContainer`. */

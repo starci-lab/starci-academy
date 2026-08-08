@@ -101,14 +101,12 @@ const ContentRelatedList = ({
     }))
 
     return (
-        <div>
-            <SurfaceCardList
-                label={label}
-                items={rows}
-                isSkeleton={isSkeleton}
+        <SurfaceCardList
+            label={label}
+            items={rows}
+            isSkeleton={isSkeleton}
 
-            />
-        </div>
+        />
     )
 }
 

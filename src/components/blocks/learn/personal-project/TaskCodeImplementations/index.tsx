@@ -56,9 +56,5 @@ export const TaskCodeImplementations = () => {
     // own title dropped — this section now renders under the parent's shared
     // "task.criteriaTitle" LabeledCard (see personal-project/index.tsx) instead of
     // stacking a second hand-rolled header right under the criteria one.
-    return (
-        <div className={""}>
-            <ImplementationCard item={selected} />
-        </div>
-    )
+    return <ImplementationCard item={selected} />
 }

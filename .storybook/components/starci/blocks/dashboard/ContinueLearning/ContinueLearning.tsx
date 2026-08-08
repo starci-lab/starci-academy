@@ -81,36 +81,34 @@ const ContinueLearning = ({
     }))
 
     return (
-        <div>
-            <AsyncContent
-                isLoading={isLoading && items.length === 0}
-                skeleton={() => <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row"
-                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                />}
-                isEmpty={!isLoading && items.length === 0}
-                emptyContent={{
-                    title: hasCourses
-                        ? "You haven't read any lessons or attempted any challenges yet."
-                        : "You haven't joined any courses yet.",
-                    description: hasCourses
-                        ? "Start a lesson so it shows up here under \"Continue learning\"."
-                        : undefined,
-                    action: () => (
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            label="Browse courses"
-                            onPress={onBrowseCourses}
+        <AsyncContent
+            isLoading={isLoading && items.length === 0}
+            skeleton={() => <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            />}
+            isEmpty={!isLoading && items.length === 0}
+            emptyContent={{
+                title: hasCourses
+                    ? "You haven't read any lessons or attempted any challenges yet."
+                    : "You haven't joined any courses yet.",
+                description: hasCourses
+                    ? "Start a lesson so it shows up here under \"Continue learning\"."
+                    : undefined,
+                action: () => (
+                    <Button
+                        variant="primary"
+                        size="sm"
+                        label="Browse courses"
+                        onPress={onBrowseCourses}
 
-                        />
-                    ),
+                    />
+                ),
 
-                }}
-                content={() => <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row"
-                    explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
-                />}
-            />
-        </div>
+            }}
+            content={() => <Grid items={tiles} columns={{ base: 1, sm: 2, lg: 3 }} principle="content-row"
+                explain="Keeps primary content and trailing meta on one baseline so the meta does not drop under the title."
+            />}
+        />
     )
 }
 

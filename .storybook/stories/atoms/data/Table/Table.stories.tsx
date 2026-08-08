@@ -24,7 +24,7 @@ export const Default: Story = {
                     name: "default",
                     why: "The atom is the vendor boundary. Appearance stays private; callers pass data or named slots.",
                     code: "<TableRoot />",
-                    render: (<TableRoot aria-label="Demo"><span data-tier="fixture">table</span></TableRoot>),
+                    render: (<TableRoot ariaLabel="Demo"><span data-tier="fixture">table</span></TableRoot>),
                 }]}
             />
         </div>

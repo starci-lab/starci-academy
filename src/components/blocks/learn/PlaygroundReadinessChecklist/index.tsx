@@ -110,13 +110,10 @@ const PlaygroundReadinessChecklist = ({
     items,
     isSkeleton = false,
 }: PlaygroundReadinessChecklistProps) => (
-    <div>
-        <SurfaceCardList
-            items={items.map((item) => checklistRow(item, isSkeleton))}
-
-
-        />
-    </div>
+    <SurfaceCardList
+        identity={{ tier: "block", component: "PlaygroundReadinessChecklist" }}
+        items={items.map((item) => checklistRow(item, isSkeleton))}
+    />
 )
 
 export { PlaygroundReadinessChecklist }

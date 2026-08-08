@@ -95,80 +95,78 @@ const ChallengeHeader = ({
     // CHIPS FIRST (status, difficulty) then the score as plain text. No
     // `prefixIcon={TrophyIcon}`, and status comes before difficulty.
     return (
-        <div>
-            <PageHeader
+        <PageHeader
 
-                isSkeleton={isSkeleton}
-                breadcrumb={() =>
-                    isSkeleton ? (
-                        <Typography size="sm" isSkeleton />
-                    ) : (
-                        <LinkBack
-                            label={backLabel}
-                            onPress={onBackPress}
+            isSkeleton={isSkeleton}
+            breadcrumb={() =>
+                isSkeleton ? (
+                    <Typography size="sm" isSkeleton />
+                ) : (
+                    <LinkBack
+                        label={backLabel}
+                        onPress={onBackPress}
 
-                        />
-                    )
-                }
-                title={title}
-                // `PageHeader.description` is now a plain `string` (COMPOSITE-4), so this
-                // block no longer wraps it in `RichText` at the call site — the field is
-                // already typed/documented as a plain one-sentence summary, never markdown,
-                // and `PageHeader` now owns the muted styling + skeleton swap itself.
-                description={description}
-                meta={({ isSkeleton }: SkeletonProps) =>
-                    <StackH
-                        gap={3}
-                        align="center"
-                        principle="chip-row"
-                        explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
-                        isSkeleton={isSkeleton}
-                        items={[
-                            ...(isSkeleton ? [() => (
+                    />
+                )
+            }
+            title={title}
+            // `PageHeader.description` is now a plain `string` (COMPOSITE-4), so this
+            // block no longer wraps it in `RichText` at the call site — the field is
+            // already typed/documented as a plain one-sentence summary, never markdown,
+            // and `PageHeader` now owns the muted styling + skeleton swap itself.
+            description={description}
+            meta={({ isSkeleton }: SkeletonProps) =>
+                <StackH
+                    gap={3}
+                    align="center"
+                    principle="chip-row"
+                    explain="Lets chips share one wrapping row so related tags stay together without stacking as a column."
+                    isSkeleton={isSkeleton}
+                    items={[
+                        ...(isSkeleton ? [() => (
+                            <EnumChip
+                                value="inProgress"
+                                map={STATUS_MAP}
+                                isSkeleton
+
+                            />
+                        )] : status != null ? [() => (
+                            <EnumChip
+                                value={status}
+                                map={STATUS_MAP}
+
+                            />
+                        )] : []),
+                        () => (
+                            isSkeleton ? (
                                 <EnumChip
-                                    value="inProgress"
-                                    map={STATUS_MAP}
+                                    value="easy"
+                                    map={DIFFICULTY_MAP}
                                     isSkeleton
 
                                 />
-                            )] : status != null ? [() => (
+                            ) : (
                                 <EnumChip
-                                    value={status}
-                                    map={STATUS_MAP}
+                                    value={difficulty}
+                                    map={DIFFICULTY_MAP}
 
                                 />
-                            )] : []),
-                            () => (
-                                isSkeleton ? (
-                                    <EnumChip
-                                        value="easy"
-                                        map={DIFFICULTY_MAP}
-                                        isSkeleton
+                            )
+                        ),
+                        ...(isSkeleton ? [() => (
+                            <Typography size="xs" color="muted" isSkeleton />
+                        )] : scoreValue != null ? [() => (
+                            <Typography
+                                size="xs"
+                                color="muted"
+                                text={`${scoreValue} points`}
 
-                                    />
-                                ) : (
-                                    <EnumChip
-                                        value={difficulty}
-                                        map={DIFFICULTY_MAP}
-
-                                    />
-                                )
-                            ),
-                            ...(isSkeleton ? [() => (
-                                <Typography size="xs" color="muted" isSkeleton />
-                            )] : scoreValue != null ? [() => (
-                                <Typography
-                                    size="xs"
-                                    color="muted"
-                                    text={`${scoreValue} points`}
-
-                                />
-                            )] : []),
-                        ]}
-                    />
-                }
-            />
-        </div>
+                            />
+                        )] : []),
+                    ]}
+                />
+            }
+        />
     )
 }
 

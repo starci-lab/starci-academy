@@ -128,42 +128,37 @@ const ContentModeNav = ({
     const hasLanguages = availableLanguageCount > 1 && language != null && onLanguageChange != null
 
     return (
-        <div>
-            <div>
-                <Toolbar
-                    leftTabs={{
-                        items,
-                        selectedKey: mode,
-                        ariaLabel,
-                        onSelectionChange: (key) => onModeChange(String(key) as ContentMode),
-                    }}
-                    rightTabs={
-                        hasLanguages
-                            ? {
-                                items: (languages ?? []).map((entry) => ({
-                                    key: entry.key,
-                                    label: entry.label,
-                                    icon: LANGUAGE_ICON,
-                                    isDisabled: entry.isDisabled,
-                                })),
-                                selectedKey: language as string,
-                                ariaLabel: languageAriaLabel ?? "",
-                                onSelectionChange: (key) => onLanguageChange?.(String(key)),
-                            }
-                            : undefined
+        <Toolbar
+            leftTabs={{
+                items,
+                selectedKey: mode,
+                ariaLabel,
+                onSelectionChange: (key) => onModeChange(String(key) as ContentMode),
+            }}
+            rightTabs={
+                hasLanguages
+                    ? {
+                        items: (languages ?? []).map((entry) => ({
+                            key: entry.key,
+                            label: entry.label,
+                            icon: LANGUAGE_ICON,
+                            isDisabled: entry.isDisabled,
+                        })),
+                        selectedKey: language as string,
+                        ariaLabel: languageAriaLabel ?? "",
+                        onSelectionChange: (key) => onLanguageChange?.(String(key)),
                     }
-                    // The language group is a "same lesson, different presentation" toggle, so
-                    // it stays NEUTRAL: only the mode group carries accent, and the row keeps
-                    // ONE accent signal rather than two competing for the eye.
-                    rightTabsNeutral
-                    // A set-once preference, not a second navigation choice — folds behind a
-                    // compact icon-only dropdown below `@app-sm` instead of crowding the reading
-                    // column with 4 inline tabs.
-                    collapseRightOnMobile
-
-                />
-            </div>
-        </div>
+                    : undefined
+            }
+            // The language group is a "same lesson, different presentation" toggle, so
+            // it stays NEUTRAL: only the mode group carries accent, and the row keeps
+            // ONE accent signal rather than two competing for the eye.
+            rightTabsNeutral
+            // A set-once preference, not a second navigation choice — folds behind a
+            // compact icon-only dropdown below `@app-sm` instead of crowding the reading
+            // column with 4 inline tabs.
+            collapseRightOnMobile
+        />
     )
 }
 

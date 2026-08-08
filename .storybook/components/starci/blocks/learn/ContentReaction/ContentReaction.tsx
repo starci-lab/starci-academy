@@ -51,39 +51,37 @@ const ContentReaction = ({
     isSkeleton = false,
 }: ContentReactionProps) => {
     return (
-        <div>
-            <StackH
-                gap={3}
-                principle="sibling-stack"
-                explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
-                align="center"
-                justify="between"
-                isSkeleton={isSkeleton}
-                items={[
-                    () => (
-                        <ReactionButton
-                            myReaction={myReaction}
-                            counts={counts}
-                            onReact={onReact}
-                            isPending={isPending}
-                            isSkeleton={isSkeleton}
+        <StackH
+            gap={3}
+            principle="sibling-stack"
+            explain="Same-kind peer stack — not group-boundary, because these items are repeating siblings rather than section groups."
+            align="center"
+            justify="between"
+            isSkeleton={isSkeleton}
+            items={[
+                () => (
+                    <ReactionButton
+                        myReaction={myReaction}
+                        counts={counts}
+                        onReact={onReact}
+                        isPending={isPending}
+                        isSkeleton={isSkeleton}
 
 
-                        />
-                    ),
-                    ...(isSkeleton ? [() => (
-                        <Typography size="xs" color="muted" isSkeleton />
-                    )] : viewCount != null ? [() => (
-                        <Typography
-                            size="xs"
-                            color="muted"
-                            text={`${viewCount.toLocaleString("en-US")} views`}
+                    />
+                ),
+                ...(isSkeleton ? [() => (
+                    <Typography size="xs" color="muted" isSkeleton />
+                )] : viewCount != null ? [() => (
+                    <Typography
+                        size="xs"
+                        color="muted"
+                        text={`${viewCount.toLocaleString("en-US")} views`}
 
-                        />
-                    )] : []),
-                ]}
-            />
-        </div>
+                    />
+                )] : []),
+            ]}
+        />
     )
 }
 

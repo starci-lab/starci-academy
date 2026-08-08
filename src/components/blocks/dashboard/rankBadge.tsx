@@ -2,9 +2,8 @@ import React from "react"
 import { Icon } from "@iconify/react"
 
 /**
- * `fluent-emoji-flat` art id for a 1-based leaderboard rank: the podium places
- * (1–3) get their place medal, everyone below gets the trophy/cup. Same art lib
- * as {@link import("@/components/pages/DashboardPage/LeagueTierBadge").LeagueTierBadge}.
+ * `fluent-emoji-flat` art id for a 1-based leaderboard rank. The first three
+ * places get their place medal; every lower place gets the trophy art.
  */
 const PLACE_MEDAL: Record<number, string> = {
     1: "fluent-emoji-flat:1st-place-medal",
@@ -12,26 +11,21 @@ const PLACE_MEDAL: Record<number, string> = {
     3: "fluent-emoji-flat:3rd-place-medal",
 }
 
-/** Iconify id for the place medal/trophy art matching a 1-based leaderboard rank. */
+/** Iconify id for the place medal or trophy matching a 1-based leaderboard rank. */
 export const rankBadgeIconId = (rank: number): string =>
     PLACE_MEDAL[rank] ?? "fluent-emoji-flat:trophy"
 
 /**
- * The rank-badge art node for an {@link import("@/components/blocks/identity/IconTile").IconTile}
- * `icon` slot — a place medal (rank 1–3) or the trophy (rank 4+). The tile owns
- * the size (`[&_svg]:size-6`), so the art is passed bare (no width/height); its
- * multicolor fills ignore the tile's `neutral` tone. Rank-driven (NOT tier-driven)
- * so a rank-5 viewer never shows a bronze medal.
+ * Rank-badge art for an identity tile icon slot. The tile owns the rendered
+ * size, so this component supplies only the rank-selected multicolor artwork.
  */
 export const rankBadgeIcon = (rank: number): React.ReactNode => (
     <Icon icon={rankBadgeIconId(rank)} aria-hidden />
 )
 
 /**
- * The small place-medal art for a leaderboard ROW's rank cell — `🥇🥈🥉` for rank
- * 1–3, `null` for rank 4+ (the caller shows the plain number). Compact `size-5`
- * for an inline rank column. Used on the DashboardPage cards' "1,2,3" list (the /league
- * page shows top-3 on the podium instead).
+ * Compact place-medal art for a leaderboard row. Ranks one through three use
+ * medal artwork; lower ranks return `null` so the caller can show plain text.
  */
 export const placeMedalIcon = (rank: number): React.ReactNode | null => (
     rank <= 3

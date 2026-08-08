@@ -30,22 +30,20 @@ const ProfileNotFoundState = ({
     description,
     onGoHome,
 }: ProfileNotFoundStateProps) => (
-    <div>
-        <EmptyState
-            icon={UserCircleMinusIcon}
-            title={title}
-            description={description}
-            action={() => (
-                <Button
-                    label="Back to home"
-                    variant="primary"
-                    prefixIcon={HouseIcon}
-                    onPress={onGoHome}
-                />
-            )}
+    <EmptyState
+        icon={UserCircleMinusIcon}
+        title={title}
+        description={description}
+        action={() => (
+            <Button
+                label="Back to home"
+                variant="primary"
+                prefixIcon={HouseIcon}
+                onPress={onGoHome}
+            />
+        )}
 
-        />
-    </div>
+    />
 )
 
 export { ProfileNotFoundState }

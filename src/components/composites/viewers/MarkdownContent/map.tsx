@@ -381,7 +381,7 @@ export const buildMarkdownRenderers = ({ isDark, reading, mermaidCaptions }: Mar
             <div className={cn("overflow-hidden border border-default bg-surface", blockMy)}>
                 <AccordionTree
                     variant="default"
-                    style={{ "--separator": "color-mix(in oklab, var(--surface-foreground) 6%, transparent)" } as React.CSSProperties}
+                    separatorTone="subtle"
                 >
                     {children}
                 </AccordionTree>

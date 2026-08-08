@@ -117,30 +117,28 @@ const DailyQuest = ({
     ) : null
 
     return (
-        <div>
-            <AsyncContent
-                isLoading={quest === null && isLoading}
-                skeleton={() => <SurfaceCardCrossList items={[]} isSkeleton skeletonRows={3} />}
-                isEmpty={quest === null && !isLoading && !error}
-                emptyContent={{
-                    title: "No quests for today yet.",
-                    onRetry,
-                    retryLabel: "Retry",
+        <AsyncContent
+            isLoading={quest === null && isLoading}
+            skeleton={() => <SurfaceCardCrossList items={[]} isSkeleton skeletonRows={3} />}
+            isEmpty={quest === null && !isLoading && !error}
+            emptyContent={{
+                title: "No quests for today yet.",
+                onRetry,
+                retryLabel: "Retry",
 
-                }}
-                error={quest === null ? error : undefined}
-                errorContent={{
-                    title: "Couldn't load today's quests.",
-                    onRetry,
-                    retryLabel: "Retry",
+            }}
+            error={quest === null ? error : undefined}
+            errorContent={{
+                title: "Couldn't load today's quests.",
+                onRetry,
+                retryLabel: "Retry",
 
-                }}
-                content={() => <StackV gap={4} items={[
-                    () => <SurfaceCardCrossList items={items} />,
-                    () => claimSlot,
-                ]} />}
-            />
-        </div>
+            }}
+            content={() => <StackV gap={4} items={[
+                () => <SurfaceCardCrossList items={items} />,
+                () => claimSlot,
+            ]} />}
+        />
     )
 }
 

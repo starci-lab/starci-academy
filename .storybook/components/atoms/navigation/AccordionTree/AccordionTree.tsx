@@ -1,16 +1,29 @@
 /** @noSkeleton disclosure chrome assembled one panel at a time — content is handed in. */
-import type { ComponentProps, ReactNode } from "react"
+import type { CSSProperties, ReactNode } from "react"
 import { Accordion as HeroAccordion } from "@heroui/react"
 
 /** Props for {@link AccordionTree}. */
-export type AccordionTreeProps = Omit<ComponentProps<typeof HeroAccordion>, "className" | "classNames"> & {
+export interface AccordionTreeProps {
     /** Panel compound tree. */
     children?: ReactNode
+    /** Finite house surface treatment. */
+    variant?: "default" | "surface"
+    /** Finite separator treatment for nested surfaces. */
+    separatorTone?: "subtle"
 }
 
 /** House wrap over HeroUI `Accordion` compound (markdown / incremental panels). */
-export const AccordionTree = ({ children, ...props }: AccordionTreeProps) => (
-    <HeroAccordion data-tier="atom" data-component="AccordionTree" {...props}>{children}</HeroAccordion>
+export const AccordionTree = ({ children, variant, separatorTone }: AccordionTreeProps) => (
+    <HeroAccordion
+        data-tier="atom"
+        data-component="AccordionTree"
+        variant={variant}
+        style={separatorTone === "subtle"
+            ? { "--separator": "color-mix(in oklab, var(--surface-foreground) 6%, transparent)" } as CSSProperties
+            : undefined}
+    >
+        {children}
+    </HeroAccordion>
 )
 
 /** House accordion tree item over HeroUI `Accordion.Item`. */
